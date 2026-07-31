@@ -20,7 +20,7 @@ export interface ProvenanceEntry {
   lane: "calculation" | "cycle" | "content" | "context" | "reflection";
   source_id: string;
   label: string;
-  detail: Record<string, unknown>;
+  detail: Record<string, string | number | boolean | null>;
 }
 
 export interface AssembledReading {
@@ -41,7 +41,7 @@ function record(
   sourceId: string,
   use: AllowedUse,
   label: string,
-  detail: Record<string, unknown> = {},
+  detail: Record<string, string | number | boolean | null> = {},
 ): boolean {
   if (!isPermitted(sourceId, use, ctx.granted)) return false;
   assertUse(sourceId, use);
