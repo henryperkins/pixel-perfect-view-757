@@ -1,8 +1,8 @@
 # Pattern-Like Astrology App — Web MVP
 
-Building the web product surface from spec v0.2, with a real backend, an in-app approximate ephemeris, and a signed content-release ingestion endpoint that an external WordPress editorial plane can publish into.
+Building the web product surface from spec v0.2 — including the normative `platform_topology` and `data_source_registry` YAMLs (139 sources, 54 assigned to launch, 24 permanently excluded) — with a real backend, an in-app approximate ephemeris, and a signed content-release ingestion endpoint that an external WordPress editorial plane can publish into.
 
-Out of scope for this build (documented in the spec but not buildable here): Cloudflare Workflows/Queues/D1/R2, the Swiss Ephemeris OCI container, Fly.io mirror, native iOS/Android clients, push notifications, and the WordPress plugin itself.
+Out of scope for this build (in the topology but not buildable here): Cloudflare Workflows/Queues/D1/R2, the Swiss Ephemeris OCI container, the Fly.io Machines mirror and Managed Postgres target, native iOS/Android clients, push notifications, and the WordPress plugin itself.
 
 ## Design direction
 
@@ -15,18 +15,20 @@ Scientific editorial. Warm off-white canvas (`hsl(40 20% 97%)`), near-black ink,
 3. **Your Pattern** — natal pattern chapters derived from the chart, each openable to its supporting facts and counter-expression. Gaps stay visibly empty rather than filled with generic sun-sign copy.
 4. **Timing** — active and upcoming cycles with start, exact passes, end, phase, and filters by domain and duration; shows calculation status and last refresh.
 5. **Time Travel** — reconstruct cycle state for any chosen date and compare it to today, distinguishing saved context from retrospective reconstruction.
-6. **Context & Privacy** — enabled signal sources with their allowed uses and freshness, pause/revoke, personalization reset, export request, and account deletion.
+6. **Context & Privacy** — sources grouped by the registry's permission tiers: tier 0 calculation minimum (AST-01 through AST-08, AST-20) shown as required and non-revocable, tier 1 first-party reflective context (USR-01 through USR-17) with explicit per-source controls, tier 2 low-content situational context (device timezone/locale, coarse location, daylight, season) opt-in and off by default. Tier 3 is not implemented in this build; tier 4 never is. Each row shows its allowed uses drawn from the registry's `allowed_use_vocabulary`, last-refresh freshness, and confidence. Plus personalization reset, export request, and account deletion.
 7. **Auth** — email sign-in via Lovable Cloud.
 
 ## Calculation
 
-An in-app ephemeris module computes geocentric longitudes for Sun through Pluto plus the lunar nodes using analytical (VSOP-style) series, accurate to roughly arc-minutes. It sits behind a versioned calculation contract — `calcEngine` and `contractVersion` recorded on every snapshot — so a real Swiss Ephemeris service can replace it later without touching the reading layer.
+An in-app ephemeris module computes geocentric longitudes and speeds for Sun through Pluto plus the lunar nodes using analytical (VSOP-style) series, accurate to roughly arc-minutes. It sits behind a versioned calculation contract — engine, contract version, and ephemeris version recorded on every snapshot, satisfying AST-20 calculation provenance — so a real Swiss Ephemeris service can replace it later without touching the reading layer.
 
-Derived from that: natal aspects with orb rules, houses/angles when birth time is known, transit-to-natal cycle instances with ingress, exact passes (including retrograde multi-pass), egress, and phase state. Chart snapshots are immutable and fingerprinted; regenerating an identical input yields an identical fingerprint.
+Covers the required tier-0 astrological sources: planetary positions and speeds (AST-04), houses and angles (AST-05, birth-time dependent), the natal aspect graph (AST-06), structural patterns (AST-07), transits with exact passes (AST-08), stations/ingresses/retrograde loops (AST-09), lunations and eclipses (AST-10), and local solar/daylight/season state (AST-19). Chart snapshots are immutable and fingerprinted; regenerating an identical input yields an identical fingerprint. Birth-time uncertainty is materialized as its own derived feature (DER-03), an envelope that gates which claims are eligible.
 
 ## Reading assembly
 
-Deterministic only. Eligibility filters content to what the calculated facts and the uncertainty class actually support, ranking picks one major theme and at most one supporting influence, and assembly stitches approved fragments. A validation pass rejects any paragraph without a resolvable fact plus content version, and rejects fatalistic, diagnostic, or prediction-shaped output — a rejected candidate falls back to reviewed deterministic copy. Every paragraph writes provenance rows so the evidence drawer is generated, not authored. No LLM in this build.
+Deterministic only. The pipeline mirrors the registry's derived features: eligibility set (DER-18) filters content to what the calculated facts and the uncertainty envelope support; importance scoring (DER-02) plus cycle lifecycle state (DER-01) picks one major theme and at most one supporting influence; repetition/fatigue (DER-14) and narrative continuity (DER-12) suppress restatement of recent readings; source freshness (DER-15) and consent-scope validity (DER-16) are checked before any context signal is allowed to rank anything.
+
+Assembly stitches approved fragments. A safety pass (DER-22) rejects any paragraph without a resolvable fact plus content version, and rejects fatalistic, diagnostic, prediction-shaped, or protected-trait output; a rejected candidate falls back to reviewed deterministic copy. Every paragraph writes rows into a reading evidence graph (DER-17), so the evidence drawer is generated, not authored. No LLM in this build.
 
 ## Content ingestion
 
@@ -36,24 +38,34 @@ Content lives in `content_releases` and is published by an external editorial sy
 - A rollback endpoint moves the pointer back to a prior release without touching published readings.
 - Until a real bundle is posted, a seed migration inserts one signed baseline release (pattern families, cycle interpretations, phase variants, domain modifiers, reflection prompts, safety rules) so every screen has real content from first load.
 
+## Source registry as executable policy
+
+The registry is not documentation here — it ships as a typed module and is enforced at runtime.
+
+- Each launch source keeps its id, category, permission tier, sensitivity, confidence, cadence, `allowed_uses`, `prohibited_uses`, and retention rule.
+- Every context signal written to the database carries its source id. Ranking and assembly call a policy check that refuses any signal whose declared `allowed_uses` do not include the use being attempted — so a signal permitted for `theme_ranking` can never reach `chart_fact`.
+- Evidence lanes are enforced structurally: celestial facts may create eligibility and timing; user/context may rank, select domain, adapt tone, and schedule, but can never alter a chart fact or be surfaced as an astrological finding (this is what the drawer's Celestial Fact / Your Context labels are reading from); operational signals may only deliver, cache, localize, retry, and audit.
+- The 24 `NO-*` exclusions are encoded as a rejected-source list. Nothing outside the registry can enter reading assembly, and prohibited uses — ad targeting, protected-trait inference, chart mutation from context, medical/legal/financial guidance, hidden training on private data — are blocked at the policy boundary rather than by convention.
+- The topology's data boundaries hold: the editorial plane never receives birth profiles, journal text, relationship records, health signals, or private readings; telemetry carries only deidentified counters, latency, validation failures, and error classes.
+
 ## Data and privacy
 
-Lovable Cloud (Postgres) with RLS on every table, each row owned by `auth.uid()`; content releases are readable by all authenticated users and writable only by the service role. Tables: `profiles`, `consents`, `birth_profiles`, `chart_snapshots`, `natal_features`, `cycle_instances`, `context_signals`, `content_releases`, `daily_readings`, `reading_sources`, `reading_feedback`, `check_ins`, `audit_events`. Every table gets explicit grants alongside its policies.
+Lovable Cloud (Postgres) with RLS on every table, each row owned by `auth.uid()`; content releases are readable by all authenticated users and writable only by the service role. Tables: `profiles`, `consents`, `birth_profiles`, `chart_snapshots`, `natal_features`, `cycle_instances`, `context_signals`, `content_releases`, `daily_readings`, `reading_sources`, `reading_feedback`, `check_ins`, `life_events`, `audit_events`. Every table gets explicit grants alongside its policies.
 
-Sensitive fields (birth values, reflection text, generated prose) are stored as ciphertext under a per-user data-encryption key, wrapped by a root key held as a server secret; deletion destroys the wrapped key and the active rows. Mutating endpoints take an idempotency key enforced by a unique constraint, so a retried daily-reading job cannot produce a duplicate.
+Retention follows the registry per source — raw geocoder queries expire in 24 hours while normalized coordinates persist with the chart; birth profiles live until deletion or replacement. Fields marked `highly_sensitive` or `sensitive` (birth values, journal and reflection text, life-event timeline, check-ins, relationship context, generated prose, the evidence graph) are stored as ciphertext under a per-user data-encryption key, wrapped by a root key held as a server secret; deletion destroys the wrapped key and the active rows. Mutating endpoints take an idempotency key enforced by a unique constraint, so a retried daily-reading job cannot produce a duplicate.
 
 ## Technical notes
 
 - TanStack Start. Routes under `src/routes`; authenticated surfaces under `_authenticated`. Reads go through route loaders with `ensureQueryData` plus `useSuspenseQuery`.
-- Calculation, reading assembly, validation, and crypto live in server functions (`*.functions.ts` wrappers over `*.server.ts` logic) — no ephemeris or key material reaches the client bundle.
+- Calculation, reading assembly, policy enforcement, and crypto live in server functions (`*.functions.ts` wrappers over `*.server.ts` logic) — no ephemeris or key material reaches the client bundle.
 - The public ingestion route lives at `src/routes/api/public/content-releases.ts` and verifies its own caller.
 - Fonts load via `<link>` in `__root.tsx`. Each route gets its own `head()` with a unique title and description.
 
 ## Build order
 
-1. Cloud enabled, schema + RLS + grants, encryption helpers, design tokens and app shell.
-2. Onboarding, ephemeris module, chart snapshot, uncertainty report.
+1. Cloud enabled, schema + RLS + grants, encryption helpers, registry policy module, design tokens and app shell.
+2. Onboarding, ephemeris module, chart snapshot, uncertainty envelope.
 3. Content release schema, ingestion endpoint, seeded baseline release.
-4. Cycle detection, deterministic reading assembly, validation, Today with evidence.
+4. Cycle detection, deterministic reading assembly, safety validation, Today with evidence.
 5. Your Pattern, Timing, Time Travel.
-6. Context & Privacy: sources, check-ins, feedback, export, deletion.
+6. Context & Privacy: tiered sources, check-ins, life events, feedback, export, deletion.
