@@ -20,13 +20,15 @@ Scientific editorial. Warm off-white canvas (`hsl(40 20% 97%)`), near-black ink,
 
 ## Calculation
 
-An in-app ephemeris module computes geocentric longitudes for Sun through Pluto plus the lunar nodes using analytical (VSOP-style) series, accurate to roughly arc-minutes. It sits behind a versioned calculation contract — `calcEngine` and `contractVersion` recorded on every snapshot — so a real Swiss Ephemeris service can replace it later without touching the reading layer.
+An in-app ephemeris module computes geocentric longitudes and speeds for Sun through Pluto plus the lunar nodes using analytical (VSOP-style) series, accurate to roughly arc-minutes. It sits behind a versioned calculation contract — engine, contract version, and ephemeris version recorded on every snapshot, satisfying AST-20 calculation provenance — so a real Swiss Ephemeris service can replace it later without touching the reading layer.
 
-Derived from that: natal aspects with orb rules, houses/angles when birth time is known, transit-to-natal cycle instances with ingress, exact passes (including retrograde multi-pass), egress, and phase state. Chart snapshots are immutable and fingerprinted; regenerating an identical input yields an identical fingerprint.
+Covers the required tier-0 astrological sources: planetary positions and speeds (AST-04), houses and angles (AST-05, birth-time dependent), the natal aspect graph (AST-06), structural patterns (AST-07), transits with exact passes (AST-08), stations/ingresses/retrograde loops (AST-09), lunations and eclipses (AST-10), and local solar/daylight/season state (AST-19). Chart snapshots are immutable and fingerprinted; regenerating an identical input yields an identical fingerprint. Birth-time uncertainty is materialized as its own derived feature (DER-03), an envelope that gates which claims are eligible.
 
 ## Reading assembly
 
-Deterministic only. Eligibility filters content to what the calculated facts and the uncertainty class actually support, ranking picks one major theme and at most one supporting influence, and assembly stitches approved fragments. A validation pass rejects any paragraph without a resolvable fact plus content version, and rejects fatalistic, diagnostic, or prediction-shaped output — a rejected candidate falls back to reviewed deterministic copy. Every paragraph writes provenance rows so the evidence drawer is generated, not authored. No LLM in this build.
+Deterministic only. The pipeline mirrors the registry's derived features: eligibility set (DER-18) filters content to what the calculated facts and the uncertainty envelope support; importance scoring (DER-02) plus cycle lifecycle state (DER-01) picks one major theme and at most one supporting influence; repetition/fatigue (DER-14) and narrative continuity (DER-12) suppress restatement of recent readings; source freshness (DER-15) and consent-scope validity (DER-16) are checked before any context signal is allowed to rank anything.
+
+Assembly stitches approved fragments. A safety pass (DER-22) rejects any paragraph without a resolvable fact plus content version, and rejects fatalistic, diagnostic, prediction-shaped, or protected-trait output; a rejected candidate falls back to reviewed deterministic copy. Every paragraph writes rows into a reading evidence graph (DER-17), so the evidence drawer is generated, not authored. No LLM in this build.
 
 ## Content ingestion
 
