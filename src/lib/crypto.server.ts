@@ -16,6 +16,10 @@ function b64(bytes: Uint8Array): string {
   return btoa(s);
 }
 
+function toBuffer(u: Uint8Array): ArrayBuffer {
+  return u.buffer.slice(u.byteOffset, u.byteOffset + u.byteLength) as ArrayBuffer;
+}
+
 function unb64(s: string): Uint8Array {
   const raw = atob(s);
   const out = new Uint8Array(raw.length);
@@ -36,7 +40,7 @@ async function rootKey(): Promise<CryptoKey> {
 async function sealBytes(key: CryptoKey, data: Uint8Array): Promise<string> {
   const iv = crypto.getRandomValues(new Uint8Array(12));
   const ct = new Uint8Array(
-    await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, data),
+    await crypto.subtle.encrypt({ name: "AES-GCM", iv: toBuffer(iv) }, key, toBuffer(data)),
   );
   const joined = new Uint8Array(iv.length + ct.length);
   joined.set(iv);
@@ -49,7 +53,7 @@ async function openBytes(key: CryptoKey, payload: string): Promise<Uint8Array> {
   const iv = joined.slice(0, 12);
   const ct = joined.slice(12);
   return new Uint8Array(
-    await crypto.subtle.decrypt({ name: "AES-GCM", iv }, key, ct),
+    await crypto.subtle.decrypt({ name: "AES-GCM", iv: toBuffer(iv) }, key, toBuffer(ct)),
   );
 }
 
@@ -60,7 +64,7 @@ export async function createWrappedDek(): Promise<string> {
 
 export async function unwrapDek(wrapped: string): Promise<CryptoKey> {
   const raw = await openBytes(await rootKey(), wrapped);
-  return crypto.subtle.importKey("raw", raw, "AES-GCM", false, [
+  return crypto.subtle.importKey("raw", toBuffer(raw), "AES-GCM", false, [
     "encrypt",
     "decrypt",
   ]);
