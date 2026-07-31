@@ -1,8 +1,8 @@
 # Pattern-Like Astrology App — Web MVP
 
-Building the web product surface from spec v0.2, with a real backend, an in-app approximate ephemeris, and a signed content-release ingestion endpoint that an external WordPress editorial plane can publish into.
+Building the web product surface from spec v0.2 — including the normative `platform_topology` and `data_source_registry` YAMLs (139 sources, 54 assigned to launch, 24 permanently excluded) — with a real backend, an in-app approximate ephemeris, and a signed content-release ingestion endpoint that an external WordPress editorial plane can publish into.
 
-Out of scope for this build (documented in the spec but not buildable here): Cloudflare Workflows/Queues/D1/R2, the Swiss Ephemeris OCI container, Fly.io mirror, native iOS/Android clients, push notifications, and the WordPress plugin itself.
+Out of scope for this build (in the topology but not buildable here): Cloudflare Workflows/Queues/D1/R2, the Swiss Ephemeris OCI container, the Fly.io Machines mirror and Managed Postgres target, native iOS/Android clients, push notifications, and the WordPress plugin itself.
 
 ## Design direction
 
