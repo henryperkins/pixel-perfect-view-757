@@ -38,16 +38,26 @@ Content lives in `content_releases` and is published by an external editorial sy
 - A rollback endpoint moves the pointer back to a prior release without touching published readings.
 - Until a real bundle is posted, a seed migration inserts one signed baseline release (pattern families, cycle interpretations, phase variants, domain modifiers, reflection prompts, safety rules) so every screen has real content from first load.
 
+## Source registry as executable policy
+
+The registry is not documentation here — it ships as a typed module and is enforced at runtime.
+
+- Each launch source keeps its id, category, permission tier, sensitivity, confidence, cadence, `allowed_uses`, `prohibited_uses`, and retention rule.
+- Every context signal written to the database carries its source id. Ranking and assembly call a policy check that refuses any signal whose declared `allowed_uses` do not include the use being attempted — so a signal permitted for `theme_ranking` can never reach `chart_fact`.
+- Evidence lanes are enforced structurally: celestial facts may create eligibility and timing; user/context may rank, select domain, adapt tone, and schedule, but can never alter a chart fact or be surfaced as an astrological finding (this is what the drawer's Celestial Fact / Your Context labels are reading from); operational signals may only deliver, cache, localize, retry, and audit.
+- The 24 `NO-*` exclusions are encoded as a rejected-source list. Nothing outside the registry can enter reading assembly, and prohibited uses — ad targeting, protected-trait inference, chart mutation from context, medical/legal/financial guidance, hidden training on private data — are blocked at the policy boundary rather than by convention.
+- The topology's data boundaries hold: the editorial plane never receives birth profiles, journal text, relationship records, health signals, or private readings; telemetry carries only deidentified counters, latency, validation failures, and error classes.
+
 ## Data and privacy
 
-Lovable Cloud (Postgres) with RLS on every table, each row owned by `auth.uid()`; content releases are readable by all authenticated users and writable only by the service role. Tables: `profiles`, `consents`, `birth_profiles`, `chart_snapshots`, `natal_features`, `cycle_instances`, `context_signals`, `content_releases`, `daily_readings`, `reading_sources`, `reading_feedback`, `check_ins`, `audit_events`. Every table gets explicit grants alongside its policies.
+Lovable Cloud (Postgres) with RLS on every table, each row owned by `auth.uid()`; content releases are readable by all authenticated users and writable only by the service role. Tables: `profiles`, `consents`, `birth_profiles`, `chart_snapshots`, `natal_features`, `cycle_instances`, `context_signals`, `content_releases`, `daily_readings`, `reading_sources`, `reading_feedback`, `check_ins`, `life_events`, `audit_events`. Every table gets explicit grants alongside its policies.
 
-Sensitive fields (birth values, reflection text, generated prose) are stored as ciphertext under a per-user data-encryption key, wrapped by a root key held as a server secret; deletion destroys the wrapped key and the active rows. Mutating endpoints take an idempotency key enforced by a unique constraint, so a retried daily-reading job cannot produce a duplicate.
+Retention follows the registry per source — raw geocoder queries expire in 24 hours while normalized coordinates persist with the chart; birth profiles live until deletion or replacement. Fields marked `highly_sensitive` or `sensitive` (birth values, journal and reflection text, life-event timeline, check-ins, relationship context, generated prose, the evidence graph) are stored as ciphertext under a per-user data-encryption key, wrapped by a root key held as a server secret; deletion destroys the wrapped key and the active rows. Mutating endpoints take an idempotency key enforced by a unique constraint, so a retried daily-reading job cannot produce a duplicate.
 
 ## Technical notes
 
 - TanStack Start. Routes under `src/routes`; authenticated surfaces under `_authenticated`. Reads go through route loaders with `ensureQueryData` plus `useSuspenseQuery`.
-- Calculation, reading assembly, validation, and crypto live in server functions (`*.functions.ts` wrappers over `*.server.ts` logic) — no ephemeris or key material reaches the client bundle.
+- Calculation, reading assembly, policy enforcement, and crypto live in server functions (`*.functions.ts` wrappers over `*.server.ts` logic) — no ephemeris or key material reaches the client bundle.
 - The public ingestion route lives at `src/routes/api/public/content-releases.ts` and verifies its own caller.
 - Fonts load via `<link>` in `__root.tsx`. Each route gets its own `head()` with a unique title and description.
 
