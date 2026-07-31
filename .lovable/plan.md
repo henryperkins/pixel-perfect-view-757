@@ -63,9 +63,9 @@ Retention follows the registry per source — raw geocoder queries expire in 24 
 
 ## Build order
 
-1. Cloud enabled, schema + RLS + grants, encryption helpers, design tokens and app shell.
-2. Onboarding, ephemeris module, chart snapshot, uncertainty report.
+1. Cloud enabled, schema + RLS + grants, encryption helpers, registry policy module, design tokens and app shell.
+2. Onboarding, ephemeris module, chart snapshot, uncertainty envelope.
 3. Content release schema, ingestion endpoint, seeded baseline release.
-4. Cycle detection, deterministic reading assembly, validation, Today with evidence.
+4. Cycle detection, deterministic reading assembly, safety validation, Today with evidence.
 5. Your Pattern, Timing, Time Travel.
-6. Context & Privacy: sources, check-ins, feedback, export, deletion.
+6. Context & Privacy: tiered sources, check-ins, life events, feedback, export, deletion.
