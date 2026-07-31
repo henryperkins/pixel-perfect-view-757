@@ -15,7 +15,7 @@ Scientific editorial. Warm off-white canvas (`hsl(40 20% 97%)`), near-black ink,
 3. **Your Pattern** — natal pattern chapters derived from the chart, each openable to its supporting facts and counter-expression. Gaps stay visibly empty rather than filled with generic sun-sign copy.
 4. **Timing** — active and upcoming cycles with start, exact passes, end, phase, and filters by domain and duration; shows calculation status and last refresh.
 5. **Time Travel** — reconstruct cycle state for any chosen date and compare it to today, distinguishing saved context from retrospective reconstruction.
-6. **Context & Privacy** — enabled signal sources with their allowed uses and freshness, pause/revoke, personalization reset, export request, and account deletion.
+6. **Context & Privacy** — sources grouped by the registry's permission tiers: tier 0 calculation minimum (AST-01 through AST-08, AST-20) shown as required and non-revocable, tier 1 first-party reflective context (USR-01 through USR-17) with explicit per-source controls, tier 2 low-content situational context (device timezone/locale, coarse location, daylight, season) opt-in and off by default. Tier 3 is not implemented in this build; tier 4 never is. Each row shows its allowed uses drawn from the registry's `allowed_use_vocabulary`, last-refresh freshness, and confidence. Plus personalization reset, export request, and account deletion.
 7. **Auth** — email sign-in via Lovable Cloud.
 
 ## Calculation
