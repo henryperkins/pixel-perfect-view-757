@@ -10,33 +10,132 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
+import { Route as AuthenticatedPatternRouteImport } from './routes/_authenticated/pattern'
+import { Route as AuthenticatedPrivacyRouteImport } from './routes/_authenticated/privacy'
+import { Route as AuthenticatedTimeTravelRouteImport } from './routes/_authenticated/time-travel'
+import { Route as AuthenticatedTimingRouteImport } from './routes/_authenticated/timing'
+import { Route as ApiPublicContentReleasesRouteImport } from './routes/api/public/content-releases'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedOnboardingRoute = AuthenticatedOnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedPatternRoute = AuthenticatedPatternRouteImport.update({
+  id: '/pattern',
+  path: '/pattern',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedPrivacyRoute = AuthenticatedPrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedTimeTravelRoute = AuthenticatedTimeTravelRouteImport.update({
+  id: '/time-travel',
+  path: '/time-travel',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedTimingRoute = AuthenticatedTimingRouteImport.update({
+  id: '/timing',
+  path: '/timing',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const ApiPublicContentReleasesRoute =
+  ApiPublicContentReleasesRouteImport.update({
+    id: '/api/public/content-releases',
+    path: '/api/public/content-releases',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/pattern': typeof AuthenticatedPatternRoute
+  '/privacy': typeof AuthenticatedPrivacyRoute
+  '/time-travel': typeof AuthenticatedTimeTravelRoute
+  '/timing': typeof AuthenticatedTimingRoute
+  '/api/public/content-releases': typeof ApiPublicContentReleasesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/pattern': typeof AuthenticatedPatternRoute
+  '/privacy': typeof AuthenticatedPrivacyRoute
+  '/time-travel': typeof AuthenticatedTimeTravelRoute
+  '/timing': typeof AuthenticatedTimingRoute
+  '/api/public/content-releases': typeof ApiPublicContentReleasesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
+  '/_authenticated/pattern': typeof AuthenticatedPatternRoute
+  '/_authenticated/privacy': typeof AuthenticatedPrivacyRoute
+  '/_authenticated/time-travel': typeof AuthenticatedTimeTravelRoute
+  '/_authenticated/timing': typeof AuthenticatedTimingRoute
+  '/api/public/content-releases': typeof ApiPublicContentReleasesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/onboarding'
+    | '/pattern'
+    | '/privacy'
+    | '/time-travel'
+    | '/timing'
+    | '/api/public/content-releases'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/onboarding'
+    | '/pattern'
+    | '/privacy'
+    | '/time-travel'
+    | '/timing'
+    | '/api/public/content-releases'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/_authenticated/onboarding'
+    | '/_authenticated/pattern'
+    | '/_authenticated/privacy'
+    | '/_authenticated/time-travel'
+    | '/_authenticated/timing'
+    | '/api/public/content-releases'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  ApiPublicContentReleasesRoute: typeof ApiPublicContentReleasesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +147,89 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/onboarding': {
+      id: '/_authenticated/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof AuthenticatedOnboardingRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/pattern': {
+      id: '/_authenticated/pattern'
+      path: '/pattern'
+      fullPath: '/pattern'
+      preLoaderRoute: typeof AuthenticatedPatternRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/privacy': {
+      id: '/_authenticated/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof AuthenticatedPrivacyRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/time-travel': {
+      id: '/_authenticated/time-travel'
+      path: '/time-travel'
+      fullPath: '/time-travel'
+      preLoaderRoute: typeof AuthenticatedTimeTravelRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/timing': {
+      id: '/_authenticated/timing'
+      path: '/timing'
+      fullPath: '/timing'
+      preLoaderRoute: typeof AuthenticatedTimingRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/api/public/content-releases': {
+      id: '/api/public/content-releases'
+      path: '/api/public/content-releases'
+      fullPath: '/api/public/content-releases'
+      preLoaderRoute: typeof ApiPublicContentReleasesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
+  AuthenticatedPatternRoute: typeof AuthenticatedPatternRoute
+  AuthenticatedPrivacyRoute: typeof AuthenticatedPrivacyRoute
+  AuthenticatedTimeTravelRoute: typeof AuthenticatedTimeTravelRoute
+  AuthenticatedTimingRoute: typeof AuthenticatedTimingRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
+  AuthenticatedPatternRoute: AuthenticatedPatternRoute,
+  AuthenticatedPrivacyRoute: AuthenticatedPrivacyRoute,
+  AuthenticatedTimeTravelRoute: AuthenticatedTimeTravelRoute,
+  AuthenticatedTimingRoute: AuthenticatedTimingRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
+  ApiPublicContentReleasesRoute: ApiPublicContentReleasesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

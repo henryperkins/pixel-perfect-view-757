@@ -719,3 +719,23 @@ export async function updatePrefs(
   if (error) throw new Error(error.message);
   return { ok: true };
 }
+
+// ---------------------------------------------------------------------------
+// timing / time travel
+// ---------------------------------------------------------------------------
+
+export async function getCyclesFor(db: DB, userId: string, day: string) {
+  const snapRow = await loadSnapshot(db, userId);
+  if (!snapRow) return { needsOnboarding: true as const };
+  const chart = snapshotToChart(snapRow);
+  const cycles = computeCycles(chart, new Date(`${day}T12:00:00Z`));
+  return {
+    needsOnboarding: false as const,
+    day,
+    engine: `${chart.engine}@${chart.engineVersion}`,
+    contractVersion: chart.contractVersion,
+    computedAt: new Date().toISOString(),
+    uncertainty: chart.uncertainty,
+    cycles: cycles.slice(0, 40),
+  };
+}

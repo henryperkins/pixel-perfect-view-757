@@ -154,3 +154,42 @@ export const eraseData = createServerFn({ method: "POST" })
     const m = await import("./pattern.server");
     return m.eraseEverything(context.supabase as unknown as DB, context.userId);
   });
+
+export const fetchCycles = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: unknown) =>
+    z.object({ day: z.string().regex(/^\d{4}-\d{2}-\d{2}$/) }).parse(d),
+  )
+  .handler(async ({ data, context }) => {
+    const m = await import("./pattern.server");
+    return m.getCyclesFor(context.supabase as unknown as DB, context.userId, data.day);
+  });
+
+export const fetchJournal = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const m = await import("./pattern.server");
+    return m.listJournal(context.supabase as unknown as DB, context.userId);
+  });
+
+export const addEvent = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: unknown) =>
+    z
+      .object({
+        occurredOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+        domain: z.string().min(1).max(40),
+        label: z.string().min(1).max(400),
+      })
+      .parse(d),
+  )
+  .handler(async ({ data, context }) => {
+    const m = await import("./pattern.server");
+    return m.addLifeEvent(
+      context.supabase as unknown as DB,
+      context.userId,
+      data.occurredOn,
+      data.domain,
+      data.label,
+    );
+  });
