@@ -78,14 +78,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Pattern — a calculated astrology reading" },
+      { title: "Today — Pattern" },
       {
         name: "description",
         content:
-          "Daily readings assembled from your calculated chart, with the evidence behind every claim.",
+          "One calculated theme for today, the cycle behind it, and the exact facts it rests on.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:title", content: "Today — Pattern" },
+      { name: "twitter:title", content: "Today — Pattern" },
+      { property: "og:description", content: "One calculated theme for today, the cycle behind it, and the exact facts it rests on." },
+      { name: "twitter:description", content: "One calculated theme for today, the cycle behind it, and the exact facts it rests on." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/46e99c44-f166-49c8-b27a-03d999639f7a/id-preview-71390778--16964b03-ff4a-4ee1-b4a5-76757e94bec3.lovable.app-1785589778671.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/46e99c44-f166-49c8-b27a-03d999639f7a/id-preview-71390778--16964b03-ff4a-4ee1-b4a5-76757e94bec3.lovable.app-1785589778671.png" },
     ],
     links: [
       {

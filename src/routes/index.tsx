@@ -21,7 +21,7 @@ export const Route = createFileRoute("/")({
       {
         property: "og:description",
         content:
-          "A deterministic daily reading with visible provenance: bodies, aspect, orb, exact date.",
+          "One calculated theme for today, the cycle behind it, and the exact facts it rests on.",
       },
     ],
   }),
