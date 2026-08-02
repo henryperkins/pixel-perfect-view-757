@@ -18,6 +18,7 @@ import { Route as AuthenticatedPrivacyRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedTimeTravelRouteImport } from './routes/_authenticated/time-travel'
 import { Route as AuthenticatedTimingRouteImport } from './routes/_authenticated/timing'
 import { Route as ApiPublicContentReleasesRouteImport } from './routes/api/public/content-releases'
+import { Route as ApiPublicContentReleasesRollbackRouteImport } from './routes/api/public/content-releases.rollback'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -64,6 +65,12 @@ const ApiPublicContentReleasesRoute =
     path: '/api/public/content-releases',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicContentReleasesRollbackRoute =
+  ApiPublicContentReleasesRollbackRouteImport.update({
+    id: '/rollback',
+    path: '/rollback',
+    getParentRoute: () => ApiPublicContentReleasesRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -73,7 +80,8 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof AuthenticatedPrivacyRoute
   '/time-travel': typeof AuthenticatedTimeTravelRoute
   '/timing': typeof AuthenticatedTimingRoute
-  '/api/public/content-releases': typeof ApiPublicContentReleasesRoute
+  '/api/public/content-releases': typeof ApiPublicContentReleasesRouteWithChildren
+  '/api/public/content-releases/rollback': typeof ApiPublicContentReleasesRollbackRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -83,7 +91,8 @@ export interface FileRoutesByTo {
   '/privacy': typeof AuthenticatedPrivacyRoute
   '/time-travel': typeof AuthenticatedTimeTravelRoute
   '/timing': typeof AuthenticatedTimingRoute
-  '/api/public/content-releases': typeof ApiPublicContentReleasesRoute
+  '/api/public/content-releases': typeof ApiPublicContentReleasesRouteWithChildren
+  '/api/public/content-releases/rollback': typeof ApiPublicContentReleasesRollbackRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -95,7 +104,8 @@ export interface FileRoutesById {
   '/_authenticated/privacy': typeof AuthenticatedPrivacyRoute
   '/_authenticated/time-travel': typeof AuthenticatedTimeTravelRoute
   '/_authenticated/timing': typeof AuthenticatedTimingRoute
-  '/api/public/content-releases': typeof ApiPublicContentReleasesRoute
+  '/api/public/content-releases': typeof ApiPublicContentReleasesRouteWithChildren
+  '/api/public/content-releases/rollback': typeof ApiPublicContentReleasesRollbackRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -108,6 +118,7 @@ export interface FileRouteTypes {
     | '/time-travel'
     | '/timing'
     | '/api/public/content-releases'
+    | '/api/public/content-releases/rollback'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -118,6 +129,7 @@ export interface FileRouteTypes {
     | '/time-travel'
     | '/timing'
     | '/api/public/content-releases'
+    | '/api/public/content-releases/rollback'
   id:
     | '__root__'
     | '/'
@@ -129,13 +141,14 @@ export interface FileRouteTypes {
     | '/_authenticated/time-travel'
     | '/_authenticated/timing'
     | '/api/public/content-releases'
+    | '/api/public/content-releases/rollback'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
-  ApiPublicContentReleasesRoute: typeof ApiPublicContentReleasesRoute
+  ApiPublicContentReleasesRoute: typeof ApiPublicContentReleasesRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -203,6 +216,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicContentReleasesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/content-releases/rollback': {
+      id: '/api/public/content-releases/rollback'
+      path: '/rollback'
+      fullPath: '/api/public/content-releases/rollback'
+      preLoaderRoute: typeof ApiPublicContentReleasesRollbackRouteImport
+      parentRoute: typeof ApiPublicContentReleasesRoute
+    }
   }
 }
 
@@ -225,22 +245,27 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface ApiPublicContentReleasesRouteChildren {
+  ApiPublicContentReleasesRollbackRoute: typeof ApiPublicContentReleasesRollbackRoute
+}
+
+const ApiPublicContentReleasesRouteChildren: ApiPublicContentReleasesRouteChildren =
+  {
+    ApiPublicContentReleasesRollbackRoute:
+      ApiPublicContentReleasesRollbackRoute,
+  }
+
+const ApiPublicContentReleasesRouteWithChildren =
+  ApiPublicContentReleasesRoute._addFileChildren(
+    ApiPublicContentReleasesRouteChildren,
+  )
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
-  ApiPublicContentReleasesRoute: ApiPublicContentReleasesRoute,
+  ApiPublicContentReleasesRoute: ApiPublicContentReleasesRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
