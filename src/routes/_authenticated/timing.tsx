@@ -99,32 +99,41 @@ function TimingPage() {
               </button>
             </div>
 
-            <table className="mt-6 w-full text-left font-mono text-xs">
-              <thead>
-                <tr className="border-b border-rule">
-                  <th className="py-2 pr-3 technical text-muted-foreground">Cycle</th>
-                  <th className="py-2 pr-3 technical text-muted-foreground">Phase</th>
-                  <th className="py-2 pr-3 technical text-muted-foreground">Opens</th>
-                  <th className="py-2 pr-3 technical text-muted-foreground">Exact</th>
-                  <th className="py-2 pr-3 technical text-muted-foreground">Closes</th>
-                  <th className="py-2 technical text-muted-foreground">Weight</th>
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((c) => (
-                  <tr key={c.cycle_key} className="border-b border-rule">
-                    <td className="py-2 pr-3 text-foreground">
-                      {c.transit_body} {c.aspect} natal {c.natal_point}
-                    </td>
-                    <td className="py-2 pr-3">{c.phase}</td>
-                    <td className="py-2 pr-3">{c.ingress_at?.slice(0, 10) ?? "—"}</td>
-                    <td className="py-2 pr-3">{c.exact_at?.slice(0, 10) ?? "—"}</td>
-                    <td className="py-2 pr-3">{c.egress_at?.slice(0, 10) ?? "—"}</td>
-                    <td className="py-2">{c.importance.toFixed(3)}</td>
+            <div className="mt-6 -mx-6 overflow-x-auto px-6">
+              <table className="w-full min-w-[46rem] text-left font-mono text-xs">
+                <thead>
+                  <tr className="border-b border-rule">
+                    <th className="py-2 pr-3 technical text-muted-foreground">Cycle</th>
+                    <th className="py-2 pr-3 technical text-muted-foreground">Phase</th>
+                    <th className="py-2 pr-3 technical text-muted-foreground">Opens</th>
+                    <th className="py-2 pr-3 technical text-muted-foreground">Exact</th>
+                    <th className="py-2 pr-3 technical text-muted-foreground">Closes</th>
+                    <th className="py-2 technical text-muted-foreground">Weight</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {rows.map((c) => (
+                    <tr key={c.cycle_key} className="border-b border-rule">
+                      <td className="py-2 pr-3 whitespace-nowrap text-foreground">
+                        {c.transit_body} {c.aspect} natal {c.natal_point}
+                      </td>
+                      <td className="py-2 pr-3 whitespace-nowrap">{c.phase}</td>
+                      <td className="py-2 pr-3 whitespace-nowrap">
+                        {c.ingress_at?.slice(0, 10) ?? "—"}
+                      </td>
+                      <td className="py-2 pr-3 whitespace-nowrap">
+                        {c.exact_at?.slice(0, 10) ?? "—"}
+                      </td>
+                      <td className="py-2 pr-3 whitespace-nowrap">
+                        {c.egress_at?.slice(0, 10) ?? "—"}
+                      </td>
+                      <td className="py-2 whitespace-nowrap">{c.importance.toFixed(3)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
             {rows.length === 0 ? (
               <p className="mt-4 border border-rule bg-evidence p-4 text-sm text-evidence-foreground">
                 Nothing active in that filter. An empty window is a valid result.

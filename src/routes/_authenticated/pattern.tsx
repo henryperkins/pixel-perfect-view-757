@@ -101,24 +101,27 @@ function PatternView({ data }: { data: PatternData }) {
 
         <section className="mt-12">
           <h2 className="technical text-muted-foreground">Placements</h2>
-          <table className="mt-3 w-full text-left font-mono text-xs">
-            <tbody>
-              {data.placements.map((p) => (
-                <tr key={p.key} className="border-b border-rule">
-                  <td className="py-1.5 pr-3 text-foreground">{p.label}</td>
-                  <td className="py-1.5 pr-3">{p.position}</td>
-                  <td className="py-1.5 pr-3">
-                    {p.angleDependent && !data.uncertainty.housesReliable
-                      ? "house suppressed"
-                      : p.house
-                        ? `house ${p.house}`
-                        : "—"}
-                  </td>
-                  <td className="py-1.5">{p.retrograde ? "Rx" : ""}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div className="mt-3 -mx-6 overflow-x-auto px-6">
+            <table className="w-full min-w-[34rem] text-left font-mono text-xs">
+              <tbody>
+                {data.placements.map((p) => (
+                  <tr key={p.key} className="border-b border-rule">
+                    <td className="py-1.5 pr-3 whitespace-nowrap text-foreground">{p.label}</td>
+                    <td className="py-1.5 pr-3 whitespace-nowrap">{p.position}</td>
+                    <td className="py-1.5 pr-3 whitespace-nowrap">
+                      {p.angleDependent && !data.uncertainty.housesReliable
+                        ? "house suppressed"
+                        : p.house
+                          ? `house ${p.house}`
+                          : "—"}
+                    </td>
+                    <td className="py-1.5">{p.retrograde ? "Rx" : ""}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
         </section>
 
         <section className="mt-10">

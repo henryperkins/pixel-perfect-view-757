@@ -100,22 +100,25 @@ function TimeTravelPage() {
               <h2 className="technical text-muted-foreground">
                 Reconstructed cycle state · {pastData.day}
               </h2>
-              <table className="mt-3 w-full text-left font-mono text-xs">
-                <tbody>
-                  {pastData.cycles.slice(0, 15).map((c) => (
-                    <tr key={c.cycle_key} className="border-b border-rule">
-                      <td className="py-1.5 pr-3 text-foreground">
-                        {c.transit_body} {c.aspect} natal {c.natal_point}
-                      </td>
-                      <td className="py-1.5 pr-3">{c.phase}</td>
-                      <td className="py-1.5 pr-3">{c.orb.toFixed(2)}°</td>
-                      <td className="py-1.5">
-                        {nowKeys.has(c.cycle_key) ? "still active today" : "closed since"}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <div className="mt-3 -mx-6 overflow-x-auto px-6">
+                <table className="w-full min-w-[38rem] text-left font-mono text-xs">
+                  <tbody>
+                    {pastData.cycles.slice(0, 15).map((c) => (
+                      <tr key={c.cycle_key} className="border-b border-rule">
+                        <td className="py-1.5 pr-3 whitespace-nowrap text-foreground">
+                          {c.transit_body} {c.aspect} natal {c.natal_point}
+                        </td>
+                        <td className="py-1.5 pr-3 whitespace-nowrap">{c.phase}</td>
+                        <td className="py-1.5 pr-3 whitespace-nowrap">{c.orb.toFixed(2)}°</td>
+                        <td className="py-1.5 whitespace-nowrap">
+                          {nowKeys.has(c.cycle_key) ? "still active today" : "closed since"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
             </section>
 
             <section className="mt-10">

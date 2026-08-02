@@ -47,7 +47,13 @@ function TodayPage() {
     );
   }
 
-  if (!session) return <Landing />;
+  if (!session)
+    return (
+      <Shell signedIn={false}>
+        <Landing />
+      </Shell>
+    );
+
   return (
     <Shell>
       <TodayReading />
