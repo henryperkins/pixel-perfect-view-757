@@ -739,3 +739,39 @@ export async function getCyclesFor(db: DB, userId: string, day: string) {
     cycles: cycles.slice(0, 40),
   };
 }
+
+// ---------------------------------------------------------------------------
+// content releases (editorial provenance, read-only)
+// ---------------------------------------------------------------------------
+
+export async function listReleases(db: DB) {
+  const { data, error } = await db
+    .from("content_releases")
+    .select("id, version, checksum, created_at, is_active, bundle")
+    .order("created_at", { ascending: false })
+    .limit(50);
+  if (error) throw new Error(error.message);
+
+  return (data ?? []).map((r) => {
+    const bundle = (r.bundle ?? {}) as Record<string, unknown>;
+    const keys = Object.keys(bundle);
+    const count = (prefix: string) =>
+      keys.filter((k) => k.startsWith(prefix)).length;
+    const entries = Object.entries(bundle).reduce((acc, [, v]) => {
+      if (v && typeof v === "object") return acc + Object.keys(v as object).length;
+      return acc + 1;
+    }, 0);
+    return {
+      id: r.id,
+      version: r.version,
+      checksum: r.checksum,
+      created_at: r.created_at,
+      is_active: r.is_active,
+      families: keys.length,
+      entries,
+      cycles: count("cycles"),
+      natal: count("natal"),
+      familyKeys: keys.slice(0, 12),
+    };
+  });
+}
