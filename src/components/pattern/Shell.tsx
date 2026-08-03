@@ -9,6 +9,7 @@ const NAV = [
   { to: "/timing", label: "Timing" },
   { to: "/time-travel", label: "Time travel" },
   { to: "/privacy", label: "Context & privacy" },
+  { to: "/content", label: "Content" },
 ] as const;
 
 export function Shell({

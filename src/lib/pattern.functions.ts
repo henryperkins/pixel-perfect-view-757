@@ -193,3 +193,10 @@ export const addEvent = createServerFn({ method: "POST" })
       data.label,
     );
   });
+
+export const fetchReleases = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const m = await import("./pattern.server");
+    return m.listReleases(context.supabase as unknown as DB);
+  });
