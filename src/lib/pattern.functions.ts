@@ -198,5 +198,23 @@ export const fetchReleases = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
     const m = await import("./pattern.server");
-    return m.listReleases(context.supabase as unknown as DB);
+    const db = context.supabase as unknown as DB;
+    const [releases, admin] = await Promise.all([
+      m.listReleases(db),
+      m.isAdmin(db, context.userId),
+    ]);
+    return { releases, isAdmin: admin };
   });
+
+export const activateContentRelease = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: unknown) => z.object({ releaseId: z.string().uuid() }).parse(d))
+  .handler(async ({ data, context }) => {
+    const m = await import("./pattern.server");
+    return m.activateRelease(
+      context.supabase as unknown as DB,
+      context.userId,
+      data.releaseId,
+    );
+  });
+

@@ -1,9 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
+import { useState } from "react";
+import { toast } from "sonner";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
-import { fetchReleases } from "@/lib/pattern.functions";
+import { activateContentRelease, fetchReleases } from "@/lib/pattern.functions";
 
 export const Route = createFileRoute("/_authenticated/content")({
   head: () => ({
@@ -25,9 +27,53 @@ export const Route = createFileRoute("/_authenticated/content")({
   component: ContentPage,
 });
 
+type Release = {
+  id: string;
+  version: string;
+  checksum: string;
+  created_at: string;
+  is_active: boolean;
+  families: number;
+  entries: number;
+  familyKeys: string[];
+};
+
 function ContentPage() {
-  const releases = useServerFn(fetchReleases);
-  const query = useQuery({ queryKey: ["releases"], queryFn: () => releases({}) });
+  const releasesFn = useServerFn(fetchReleases);
+  const activateFn = useServerFn(activateContentRelease);
+  const queryClient = useQueryClient();
+  const query = useQuery({ queryKey: ["releases"], queryFn: () => releasesFn({}) });
+  const [pending, setPending] = useState<Release | null>(null);
+  const [result, setResult] = useState<
+    { kind: "success" | "error"; version: string; message: string } | null
+  >(null);
+
+  const releases: Release[] = query.data?.releases ?? [];
+  const isAdmin = query.data?.isAdmin ?? false;
+
+  const rollback = useMutation({
+    mutationFn: (release: Release) => activateFn({ data: { releaseId: release.id } }),
+    onSuccess: (data, release) => {
+      setPending(null);
+      setResult({
+        kind: "success",
+        version: release.version,
+        message: `Active release is now ${data.version} · checksum ${data.checksum.slice(0, 16)}…. Readings already published keep the version they were assembled from.`,
+      });
+      toast.success(`Rolled back to ${data.version}`);
+      void queryClient.invalidateQueries({ queryKey: ["releases"] });
+      void queryClient.invalidateQueries({ queryKey: ["today"] });
+    },
+    onError: (error: Error, release) => {
+      setPending(null);
+      setResult({
+        kind: "error",
+        version: release.version,
+        message: error.message || "The release pointer could not be moved.",
+      });
+      toast.error("Rollback failed");
+    },
+  });
 
   return (
     <Shell>
@@ -39,6 +85,35 @@ function ContentPage() {
             signed editorial endpoint. Readings record the release they were assembled from,
             so any paragraph can be traced back to the exact text version that produced it.
           </p>
+
+          {result ? (
+            <div
+              role="status"
+              className={`mt-6 border p-4 ${
+                result.kind === "success"
+                  ? "border-rule bg-evidence"
+                  : "border-destructive/40 bg-evidence"
+              }`}
+            >
+              <p
+                className={`technical ${
+                  result.kind === "success" ? "text-primary" : "text-destructive"
+                }`}
+              >
+                {result.kind === "success"
+                  ? `Rollback applied · ${result.version}`
+                  : `Rollback failed · ${result.version}`}
+              </p>
+              <p className="prose-reading mt-2 text-foreground">{result.message}</p>
+              <button
+                type="button"
+                onClick={() => setResult(null)}
+                className="technical mt-3 border border-rule px-3 py-1.5 text-foreground transition-colors hover:bg-card"
+              >
+                Dismiss
+              </button>
+            </div>
+          ) : null}
 
           {query.isPending ? (
             <div className="mt-8 space-y-4" aria-busy="true" aria-live="polite">
@@ -81,7 +156,7 @@ function ContentPage() {
                 {query.isFetching ? "Retrying…" : "Retry"}
               </button>
             </div>
-          ) : (query.data ?? []).length === 0 ? (
+          ) : releases.length === 0 ? (
             <div className="mt-8 border border-rule bg-evidence p-4">
               <p className="technical text-evidence-foreground">No published release</p>
               <p className="prose-reading mt-2 text-foreground">
@@ -100,11 +175,8 @@ function ContentPage() {
             </div>
           ) : (
             <div className="mt-8 space-y-4">
-              {(query.data ?? []).map((r) => (
-                <article
-                  key={r.id}
-                  className="border border-rule bg-card p-4"
-                >
+              {releases.map((r) => (
+                <article key={r.id} className="border border-rule bg-card p-4">
                   <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
                     <h2 className="font-mono text-sm text-foreground">{r.version}</h2>
                     <span className="technical text-muted-foreground">
@@ -139,6 +211,30 @@ function ContentPage() {
                       ))}
                     </ul>
                   ) : null}
+
+                  {isAdmin ? (
+                    <div className="mt-4 border-t border-rule pt-3">
+                      {r.is_active ? (
+                        <span className="technical text-muted-foreground">
+                          Current pointer — nothing to roll back
+                        </span>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setResult(null);
+                            setPending(r);
+                          }}
+                          disabled={rollback.isPending}
+                          className="technical border border-rule px-3 py-1.5 text-foreground transition-colors hover:bg-evidence disabled:opacity-50"
+                        >
+                          {rollback.isPending && rollback.variables?.id === r.id
+                            ? "Rolling back…"
+                            : "Roll back to this release"}
+                        </button>
+                      )}
+                    </div>
+                  ) : null}
                 </article>
               ))}
             </div>
@@ -148,9 +244,7 @@ function ContentPage() {
         <Rail title="Editorial plane">
           <Field
             label="Releases"
-            value={
-              query.isPending ? "—" : query.error ? "unknown" : (query.data ?? []).length
-            }
+            value={query.isPending ? "—" : query.error ? "unknown" : releases.length}
           />
           <Field
             label="Active"
@@ -159,18 +253,77 @@ function ContentPage() {
                 ? "—"
                 : query.error
                   ? "unknown"
-                  : ((query.data ?? []).find((r) => r.is_active)?.version ?? "built-in")
+                  : (releases.find((r) => r.is_active)?.version ?? "built-in")
             }
           />
 
           <Field label="Publishing" value="signed endpoint only" />
-          <Field label="Rollback" value="pointer flip" />
+          <Field
+            label="Rollback"
+            value={query.isPending ? "—" : isAdmin ? "pointer flip · admin" : "admin only"}
+          />
           <p className="prose-reading pt-2 text-xs text-muted-foreground">
-            Releases are read-only in the app. Publishing and rollback happen over
-            HMAC-signed requests from the editorial plane; nothing here can change copy.
+            {isAdmin
+              ? "Publishing new copy stays signed-endpoint-only. Admins may move the active pointer to an already-published release; existing readings keep the version they were assembled from."
+              : "Releases are read-only here. Publishing and rollback happen over HMAC-signed requests from the editorial plane; nothing on this screen can change copy."}
           </p>
         </Rail>
       </div>
+
+      {pending ? (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="rollback-title"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 p-4"
+        >
+          <div className="w-full max-w-md border border-rule bg-card p-5">
+            <h2 id="rollback-title" className="text-xl leading-snug">
+              Roll back the active release?
+            </h2>
+            <p className="prose-reading mt-3 text-foreground">
+              Today’s and future readings will be assembled from{" "}
+              <span className="font-mono text-sm">{pending.version}</span> instead of the
+              current release. Already-published readings are not rewritten — each one
+              records the version it came from.
+            </p>
+            <dl className="mt-4 space-y-1 border-t border-rule pt-3">
+              <div className="flex justify-between gap-4">
+                <dt className="technical text-muted-foreground">Target</dt>
+                <dd className="font-mono text-xs text-foreground">{pending.version}</dd>
+              </div>
+              <div className="flex justify-between gap-4">
+                <dt className="technical text-muted-foreground">Checksum</dt>
+                <dd className="font-mono text-xs break-all text-foreground">
+                  {pending.checksum.slice(0, 24)}…
+                </dd>
+              </div>
+              <div className="flex justify-between gap-4">
+                <dt className="technical text-muted-foreground">Entries</dt>
+                <dd className="font-mono text-xs text-foreground">{pending.entries}</dd>
+              </div>
+            </dl>
+            <div className="mt-5 flex flex-wrap gap-3">
+              <button
+                type="button"
+                onClick={() => rollback.mutate(pending)}
+                disabled={rollback.isPending}
+                className="technical border border-primary bg-primary px-3 py-1.5 text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-50"
+              >
+                {rollback.isPending ? "Rolling back…" : "Confirm rollback"}
+              </button>
+              <button
+                type="button"
+                onClick={() => setPending(null)}
+                disabled={rollback.isPending}
+                className="technical border border-rule px-3 py-1.5 text-foreground transition-colors hover:bg-evidence disabled:opacity-50"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </Shell>
   );
 }
