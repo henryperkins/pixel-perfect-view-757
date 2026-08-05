@@ -41,15 +41,62 @@ function ContentPage() {
           </p>
 
           {query.isPending ? (
-            <p className="technical mt-8 text-muted-foreground">Loading releases…</p>
+            <div className="mt-8 space-y-4" aria-busy="true" aria-live="polite">
+              <p className="technical text-muted-foreground">Loading releases…</p>
+              {[0, 1, 2].map((i) => (
+                <div key={i} className="border border-rule bg-card p-4">
+                  <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2">
+                    <div className="h-4 w-40 animate-pulse bg-muted" />
+                    <div className="h-3 w-20 animate-pulse bg-muted" />
+                    <div className="ml-auto h-3 w-16 animate-pulse bg-muted" />
+                  </div>
+                  <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2 border-t border-rule pt-3">
+                    <div className="h-3 w-24 animate-pulse bg-muted" />
+                    <div className="h-3 w-20 animate-pulse bg-muted" />
+                    <div className="h-3 w-36 animate-pulse bg-muted" />
+                  </div>
+                </div>
+              ))}
+            </div>
           ) : query.error ? (
-            <p className="mt-8 text-sm text-destructive">{query.error.message}</p>
+            <div
+              role="alert"
+              className="mt-8 border border-destructive/40 bg-evidence p-4"
+            >
+              <p className="technical text-destructive">Release inventory unreachable</p>
+              <p className="prose-reading mt-2 text-foreground">
+                The editorial plane could not be read, so this list is unknown rather than
+                empty. Published readings are unaffected — they record the release they were
+                assembled from.
+              </p>
+              <p className="mt-3 font-mono text-xs break-words text-muted-foreground">
+                {query.error.message}
+              </p>
+              <button
+                type="button"
+                onClick={() => void query.refetch()}
+                disabled={query.isFetching}
+                className="technical mt-4 border border-rule px-3 py-1.5 text-foreground transition-colors hover:bg-evidence disabled:opacity-50"
+              >
+                {query.isFetching ? "Retrying…" : "Retry"}
+              </button>
+            </div>
           ) : (query.data ?? []).length === 0 ? (
-            <div className="mt-8 bg-evidence p-4">
+            <div className="mt-8 border border-rule bg-evidence p-4">
               <p className="technical text-evidence-foreground">No published release</p>
               <p className="prose-reading mt-2 text-foreground">
-                Readings are falling back to built-in copy until a release is published.
+                Nothing has been ingested through the signed editorial endpoint yet, so
+                readings are assembled from built-in fallback copy. This is a real result,
+                not a loading state — the list stays empty until a release is published.
               </p>
+              <button
+                type="button"
+                onClick={() => void query.refetch()}
+                disabled={query.isFetching}
+                className="technical mt-4 border border-rule px-3 py-1.5 text-foreground transition-colors hover:bg-card disabled:opacity-50"
+              >
+                {query.isFetching ? "Checking…" : "Check again"}
+              </button>
             </div>
           ) : (
             <div className="mt-8 space-y-4">
@@ -99,11 +146,23 @@ function ContentPage() {
         </div>
 
         <Rail title="Editorial plane">
-          <Field label="Releases" value={(query.data ?? []).length} />
+          <Field
+            label="Releases"
+            value={
+              query.isPending ? "—" : query.error ? "unknown" : (query.data ?? []).length
+            }
+          />
           <Field
             label="Active"
-            value={(query.data ?? []).find((r) => r.is_active)?.version ?? "built-in"}
+            value={
+              query.isPending
+                ? "—"
+                : query.error
+                  ? "unknown"
+                  : ((query.data ?? []).find((r) => r.is_active)?.version ?? "built-in")
+            }
           />
+
           <Field label="Publishing" value="signed endpoint only" />
           <Field label="Rollback" value="pointer flip" />
           <p className="prose-reading pt-2 text-xs text-muted-foreground">
