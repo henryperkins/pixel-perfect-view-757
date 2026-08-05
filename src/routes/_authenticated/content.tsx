@@ -146,11 +146,23 @@ function ContentPage() {
         </div>
 
         <Rail title="Editorial plane">
-          <Field label="Releases" value={(query.data ?? []).length} />
+          <Field
+            label="Releases"
+            value={
+              query.isPending ? "—" : query.error ? "unknown" : (query.data ?? []).length
+            }
+          />
           <Field
             label="Active"
-            value={(query.data ?? []).find((r) => r.is_active)?.version ?? "built-in"}
+            value={
+              query.isPending
+                ? "—"
+                : query.error
+                  ? "unknown"
+                  : ((query.data ?? []).find((r) => r.is_active)?.version ?? "built-in")
+            }
           />
+
           <Field label="Publishing" value="signed endpoint only" />
           <Field label="Rollback" value="pointer flip" />
           <p className="prose-reading pt-2 text-xs text-muted-foreground">
