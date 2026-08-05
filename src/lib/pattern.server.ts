@@ -775,3 +775,56 @@ export async function listReleases(db: DB) {
     };
   });
 }
+
+export async function isAdmin(db: DB, userId: string): Promise<boolean> {
+  const { data, error } = await db.rpc("has_role", {
+    _user_id: userId,
+    _role: "admin",
+  });
+  if (error) return false;
+  return Boolean(data);
+}
+
+/**
+ * Flips the active release pointer from inside the app. RLS only allows this
+ * for admins; published readings are never rewritten because each one already
+ * records the release version it was assembled from.
+ */
+export async function activateRelease(db: DB, userId: string, releaseId: string) {
+  if (!(await isAdmin(db, userId))) {
+    throw new Error("Only admins can change the active release.");
+  }
+
+  const { data: target, error: findErr } = await db
+    .from("content_releases")
+    .select("id, version, checksum, bundle")
+    .eq("id", releaseId)
+    .maybeSingle();
+  if (findErr) throw new Error(findErr.message);
+  if (!target) throw new Error("That release no longer exists.");
+
+  const families = Object.keys((target.bundle ?? {}) as Record<string, unknown>);
+  if (families.length === 0) {
+    throw new Error("That release has an empty content graph and cannot be activated.");
+  }
+
+  const { error: deactivateErr } = await db
+    .from("content_releases")
+    .update({ is_active: false })
+    .neq("id", target.id);
+  if (deactivateErr) throw new Error(deactivateErr.message);
+
+  const { error: activateErr } = await db
+    .from("content_releases")
+    .update({ is_active: true })
+    .eq("id", target.id);
+  if (activateErr) throw new Error(activateErr.message);
+
+  await db.from("audit_events").insert({
+    user_id: userId,
+    kind: "content_release_rollback",
+    detail: { version: target.version, checksum: target.checksum },
+  });
+
+  return { version: target.version, checksum: target.checksum };
+}
