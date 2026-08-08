@@ -5,7 +5,12 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
-import { activateContentRelease, fetchReleases } from "@/lib/pattern.functions";
+import {
+  activateContentRelease,
+  fetchEdgePlane,
+  fetchReleases,
+  triggerEdgeRun,
+} from "@/lib/pattern.functions";
 
 export const Route = createFileRoute("/_authenticated/content")({
   head: () => ({
@@ -63,6 +68,7 @@ function ContentPage() {
       toast.success(`Rolled back to ${data.version}`);
       void queryClient.invalidateQueries({ queryKey: ["releases"] });
       void queryClient.invalidateQueries({ queryKey: ["today"] });
+      void queryClient.invalidateQueries({ queryKey: ["edge-plane"] });
     },
     onError: (error: Error, release) => {
       setPending(null);
@@ -328,5 +334,137 @@ function ContentPage() {
         </div>
       ) : null}
     </Shell>
+  );
+}
+
+type Run = {
+  instance_id: string;
+  kind: string;
+  release_version: string | null;
+  artifact_key: string | null;
+  created_at: string;
+};
+
+/**
+ * The durable edge plane: each release publish or rollback mirrors the pointer
+ * into D1 and starts a Workflow instance that writes an immutable R2 artifact.
+ */
+function EdgePlane() {
+  const planeFn = useServerFn(fetchEdgePlane);
+  const triggerFn = useServerFn(triggerEdgeRun);
+  const queryClient = useQueryClient();
+  const query = useQuery({ queryKey: ["edge-plane"], queryFn: () => planeFn({}) });
+
+  const runs: Run[] = query.data?.runs ?? [];
+  const isAdmin = query.data?.isAdmin ?? false;
+  const unavailable = Boolean((query.data as { unavailable?: boolean } | undefined)?.unavailable);
+
+  const start = useMutation({
+    mutationFn: () =>
+      triggerFn({ data: { day: new Date().toISOString().slice(0, 10) } }),
+    onSuccess: (data) => {
+      toast.success(`Durable run started · ${data.instanceId.slice(0, 8)}…`);
+      void queryClient.invalidateQueries({ queryKey: ["edge-plane"] });
+    },
+    onError: (error: Error) => toast.error(error.message || "Could not start the run"),
+  });
+
+  return (
+    <section className="mt-12 border-t border-rule pt-8">
+      <h2 className="text-2xl leading-snug">Durable run ledger</h2>
+      <p className="prose-reading mt-3 text-foreground">
+        Publishing or rolling back a release mirrors the active pointer into the edge
+        records store and starts a durable workflow that writes an immutable reading
+        artifact. Each row below is one completed instance, with the artifact it produced.
+      </p>
+
+      {query.isPending ? (
+        <div className="mt-6 space-y-3" aria-busy="true" aria-live="polite">
+          <p className="technical text-muted-foreground">Loading runs…</p>
+          {[0, 1].map((i) => (
+            <div key={i} className="border border-rule bg-card p-4">
+              <div className="h-3 w-48 animate-pulse bg-muted" />
+              <div className="mt-3 h-3 w-64 animate-pulse bg-muted" />
+            </div>
+          ))}
+        </div>
+      ) : query.error ? (
+        <div role="alert" className="mt-6 border border-destructive/40 bg-evidence p-4">
+          <p className="technical text-destructive">Run ledger unreachable</p>
+          <p className="prose-reading mt-2 text-foreground">
+            The durable plane could not be read. Readings are unaffected — they are
+            assembled from the release recorded on each one.
+          </p>
+          <button
+            type="button"
+            onClick={() => void query.refetch()}
+            disabled={query.isFetching}
+            className="technical mt-4 border border-rule px-3 py-1.5 text-foreground transition-colors hover:bg-evidence disabled:opacity-50"
+          >
+            {query.isFetching ? "Retrying…" : "Retry"}
+          </button>
+        </div>
+      ) : unavailable ? (
+        <div className="mt-6 border border-rule bg-evidence p-4">
+          <p className="technical text-evidence-foreground">Edge plane not configured</p>
+          <p className="prose-reading mt-2 text-foreground">
+            No durable workflow endpoint is wired to this environment, so releases stay
+            app-local and no artifacts are written.
+          </p>
+        </div>
+      ) : runs.length === 0 ? (
+        <div className="mt-6 border border-rule bg-evidence p-4">
+          <p className="technical text-evidence-foreground">No runs yet</p>
+          <p className="prose-reading mt-2 text-foreground">
+            The ledger fills the first time a release is published, rolled back, or a run
+            is started by hand.
+          </p>
+        </div>
+      ) : (
+        <div className="mt-6 overflow-x-auto">
+          <table className="w-full min-w-[36rem] border-collapse text-left">
+            <thead>
+              <tr className="border-b border-rule">
+                <th className="technical pb-2 text-muted-foreground">Instance</th>
+                <th className="technical pb-2 text-muted-foreground">Kind</th>
+                <th className="technical pb-2 text-muted-foreground">Release</th>
+                <th className="technical pb-2 text-muted-foreground">Artifact</th>
+                <th className="technical pb-2 text-muted-foreground">When</th>
+              </tr>
+            </thead>
+            <tbody>
+              {runs.map((r) => (
+                <tr key={r.instance_id} className="border-b border-rule/60">
+                  <td className="py-2 font-mono text-xs text-foreground">
+                    {r.instance_id.slice(0, 8)}…
+                  </td>
+                  <td className="py-2 font-mono text-xs text-muted-foreground">{r.kind}</td>
+                  <td className="py-2 font-mono text-xs text-muted-foreground">
+                    {r.release_version ?? "—"}
+                  </td>
+                  <td className="py-2 font-mono text-xs break-all text-muted-foreground">
+                    {r.artifact_key ?? "—"}
+                  </td>
+                  <td className="py-2 font-mono text-xs text-muted-foreground">
+                    {r.created_at.slice(0, 16).replace("T", " ")}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {isAdmin && !unavailable ? (
+        <button
+          type="button"
+          onClick={() => start.mutate()}
+          disabled={start.isPending}
+          className="technical mt-5 border border-rule px-3 py-1.5 text-foreground transition-colors hover:bg-evidence disabled:opacity-50"
+        >
+          {start.isPending ? "Starting…" : "Start a durable run for today"}
+        </button>
+      ) : null}
+    </section>
   );
 }
