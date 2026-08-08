@@ -239,7 +239,10 @@ function ContentPage() {
               ))}
             </div>
           )}
+
+          <EdgePlane />
         </div>
+
 
         <Rail title="Editorial plane">
           <Field
