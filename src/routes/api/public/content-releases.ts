@@ -72,7 +72,20 @@ export const Route = createFileRoute("/api/public/content-releases")({
           .eq("id", inserted.id);
         if (activateErr) return new Response(activateErr.message, { status: 500 });
 
-        return Response.json({ ok: true, version: parsed.version, checksum });
+        // Mirror into the edge plane and kick off a durable build for today.
+        const w = await import("@/lib/workflows.server");
+        await w.syncReleasePointer(parsed.version, checksum);
+        const run = await w.triggerReadingWorkflow({
+          kind: "release-ingest",
+          version: parsed.version,
+        });
+
+        return Response.json({
+          ok: true,
+          version: parsed.version,
+          checksum,
+          workflowInstanceId: run?.instanceId ?? null,
+        });
       },
     },
   },
