@@ -68,10 +68,18 @@ export const Route = createFileRoute("/api/public/content-releases/rollback")({
           .eq("id", target.id);
         if (activateErr) return new Response(activateErr.message, { status: 500 });
 
+        const w = await import("@/lib/workflows.server");
+        await w.syncReleasePointer(target.version, target.checksum);
+        const run = await w.triggerReadingWorkflow({
+          kind: "release-rollback",
+          version: target.version,
+        });
+
         return Response.json({
           ok: true,
           activeVersion: target.version,
           checksum: target.checksum,
+          workflowInstanceId: run?.instanceId ?? null,
         });
       },
 

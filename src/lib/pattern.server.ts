@@ -826,5 +826,10 @@ export async function activateRelease(db: DB, userId: string, releaseId: string)
     detail: { version: target.version, checksum: target.checksum },
   });
 
+  // Mirror the pointer into the edge plane (D1) so artifacts and durable runs
+  // resolve the same release the app just activated.
+  const { syncReleasePointer } = await import("./workflows.server");
+  await syncReleasePointer(target.version, target.checksum);
+
   return { version: target.version, checksum: target.checksum };
 }

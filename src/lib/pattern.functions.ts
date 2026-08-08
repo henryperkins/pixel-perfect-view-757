@@ -218,3 +218,38 @@ export const activateContentRelease = createServerFn({ method: "POST" })
     );
   });
 
+
+export const fetchEdgePlane = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const m = await import("./pattern.server");
+    const w = await import("./workflows.server");
+    const db = context.supabase as unknown as DB;
+    const [ledger, admin] = await Promise.all([
+      w.listWorkflowRuns(),
+      m.isAdmin(db, context.userId),
+    ]);
+    return { ...ledger, isAdmin: admin };
+  });
+
+export const triggerEdgeRun = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((d: unknown) =>
+    z.object({ day: z.string().regex(/^\d{4}-\d{2}-\d{2}$/) }).parse(d),
+  )
+  .handler(async ({ data, context }) => {
+    const m = await import("./pattern.server");
+    const w = await import("./workflows.server");
+    const db = context.supabase as unknown as DB;
+    if (!(await m.isAdmin(db, context.userId))) {
+      throw new Error("Only admins can start edge runs.");
+    }
+    const started = await w.triggerReadingWorkflow({ kind: "manual-reading", day: data.day });
+    if (!started) throw new Error("The edge workflow plane is unreachable.");
+    await db.from("audit_events").insert({
+      user_id: context.userId,
+      kind: "workflow_run_started",
+      detail: { instanceId: started.instanceId, day: data.day },
+    });
+    return started;
+  });
