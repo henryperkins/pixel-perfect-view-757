@@ -85,11 +85,24 @@ export interface ChartPoint {
   angleDependent: boolean;
 }
 
+/** Positions plus the provenance of whatever engine produced them. */
+export interface EphemerisResult {
+  positions: Record<Body, BodyPosition>;
+  engine: string;
+  engineVersion: string;
+  precision: "high" | "approximate";
+  degraded: boolean;
+  degradedReason: string | null;
+}
+
 export interface Chart {
   engine: string;
   engineVersion: string;
   contractVersion: string;
   houseSystem: string;
+  precision: "high" | "approximate";
+  degraded: boolean;
+  degradedReason: string | null;
   jd: number;
   points: Record<string, ChartPoint>;
   angles: { ascendant: number; midheaven: number };
@@ -105,11 +118,20 @@ export interface Chart {
   };
 }
 
-export function computeChart(input: BirthInput): Chart {
+export function computeChart(input: BirthInput, ephem?: EphemerisResult): Chart {
   const date = new Date(input.utcISO);
   const jd = toJulianDay(date);
-  const positions = allPositions(jd);
+  const source: EphemerisResult = ephem ?? {
+    positions: allPositions(jd),
+    engine: ENGINE_ID,
+    engineVersion: ENGINE_VERSION,
+    precision: "approximate",
+    degraded: true,
+    degradedReason: "Swiss Ephemeris service was not consulted.",
+  };
+  const positions = source.positions;
   const angles = computeAngles(jd, input.latitude, input.longitude);
+
   const houses = wholeSignHouses(angles.ascendant);
 
   const points: Record<string, ChartPoint> = {};
@@ -183,10 +205,14 @@ export function computeChart(input: BirthInput): Chart {
   const moonSpread = (minutes / 1440) * 13.2;
 
   return {
-    engine: ENGINE_ID,
-    engineVersion: ENGINE_VERSION,
+    engine: source.engine,
+    engineVersion: source.engineVersion,
     contractVersion: CONTRACT_VERSION,
     houseSystem: HOUSE_SYSTEM,
+    precision: source.precision,
+    degraded: source.degraded,
+    degradedReason: source.degradedReason,
+
     jd,
     points,
     angles: { ascendant: angles.ascendant, midheaven: angles.midheaven },

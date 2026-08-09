@@ -9,6 +9,9 @@ import {
   type TimeAccuracy,
 } from "./astro/chart";
 import { computeCycles } from "./astro/cycles";
+import { ENGINE_ID, ENGINE_VERSION, toJulianDay } from "./astro/ephemeris";
+import { resolvePositions } from "./astro/swiss.server";
+
 import {
   createWrappedDek,
   decryptField,
@@ -227,13 +230,21 @@ export async function saveBirth(
     .single();
   if (error) throw new Error(error.message);
 
-  const chart = computeChart({
+  const birthInput = {
     utcISO: utc.toISOString(),
     latitude: details.latitude,
     longitude: details.longitude,
     timezone,
     accuracy,
+  };
+  const ephem = await resolvePositions({
+    jd: toJulianDay(utc),
+    utcISO: utc.toISOString(),
+    latitude: details.latitude,
+    longitude: details.longitude,
   });
+  const chart = computeChart(birthInput, ephem);
+
 
   const { data: snap, error: snapErr } = await db
     .from("chart_snapshots")
@@ -245,7 +256,16 @@ export async function saveBirth(
         engine: `${chart.engine}@${chart.engineVersion}`,
         contract_version: chart.contractVersion,
         positions: chart.points as never,
-        houses: { system: chart.houseSystem, cusps: chart.houses } as never,
+        houses: {
+          system: chart.houseSystem,
+          cusps: chart.houses,
+          ephemeris: {
+            precision: chart.precision,
+            degraded: chart.degraded,
+            degradedReason: chart.degradedReason,
+          },
+        } as never,
+
         aspects: chart.aspects as never,
         uncertainty: chart.uncertainty as never,
       },
@@ -306,16 +326,46 @@ export async function loadSnapshot(db: DB, userId: string) {
   return (data as SnapshotRow | null) ?? null;
 }
 
+/** Calculation provenance surfaced to the reader (AST-20). */
+export function ephemerisState(chart: Chart) {
+  return {
+    engine: `${chart.engine}@${chart.engineVersion}`,
+    precision: chart.precision,
+    degraded: chart.degraded,
+    degradedReason: chart.degradedReason,
+    transitEngine: `${ENGINE_ID}@${ENGINE_VERSION}`,
+  };
+}
+
 function snapshotToChart(row: SnapshotRow): Chart {
-  const houses = row.houses as { system: string; cusps: number[] };
+  const houses = row.houses as {
+    system: string;
+    cusps: number[];
+    ephemeris?: {
+      precision?: "high" | "approximate";
+      degraded?: boolean;
+      degradedReason?: string | null;
+    };
+  };
   const [engine, engineVersion] = row.engine.split("@");
   const points = row.positions as Chart["points"];
+  const precision =
+    houses?.ephemeris?.precision ??
+    (engine === "swiss-ephemeris" ? "high" : "approximate");
   return {
     engine: engine ?? "unknown",
     engineVersion: engineVersion ?? "0",
     contractVersion: row.contract_version,
     houseSystem: houses?.system ?? "whole-sign",
+    precision,
+    degraded: houses?.ephemeris?.degraded ?? precision !== "high",
+    degradedReason:
+      houses?.ephemeris?.degradedReason ??
+      (precision === "high"
+        ? null
+        : "This chart was computed with the in-app approximate engine."),
     jd: 0,
+
     points,
     angles: {
       ascendant: points["ascendant"]?.lon ?? 0,
@@ -485,6 +535,7 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
     provenance: assembled.provenance,
     cycles: topCycles,
     uncertainty: chart.uncertainty,
+    ephemeris: ephemerisState(chart),
   };
 }
 
@@ -517,6 +568,7 @@ export async function getPattern(db: DB, userId: string) {
     houseSystem: chart.houseSystem,
     contractVersion: chart.contractVersion,
     uncertainty: chart.uncertainty,
+    ephemeris: ephemerisState(chart),
     placements,
     aspects: chart.aspects.slice(0, 20),
     features: features ?? [],
@@ -736,6 +788,7 @@ export async function getCyclesFor(db: DB, userId: string, day: string) {
     contractVersion: chart.contractVersion,
     computedAt: new Date().toISOString(),
     uncertainty: chart.uncertainty,
+    ephemeris: ephemerisState(chart),
     cycles: cycles.slice(0, 40),
   };
 }

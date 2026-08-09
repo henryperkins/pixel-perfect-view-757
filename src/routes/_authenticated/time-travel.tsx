@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import { fetchCycles, fetchJournal } from "@/lib/pattern.functions";
+import { EphemerisNotice } from "@/components/pattern/EphemerisNotice";
 
 export const Route = createFileRoute("/_authenticated/time-travel")({
   head: () => ({
@@ -96,6 +97,8 @@ function TimeTravelPage() {
               </button>
             </div>
 
+            <EphemerisNotice state={pastData.ephemeris} className="mt-8" />
+
             <section className="mt-8">
               <h2 className="technical text-muted-foreground">
                 Reconstructed cycle state · {pastData.day}
@@ -155,6 +158,7 @@ function TimeTravelPage() {
             <Field label="Then" value={pastData.cycles.length} />
             <Field label="Now" value={nowData?.cycles.length ?? "—"} />
             <Field label="Engine" value={pastData.engine} />
+            <Field label="Precision" value={pastData.ephemeris.precision} />
             <Field label="Contract" value={pastData.contractVersion} />
           </Rail>
         </div>

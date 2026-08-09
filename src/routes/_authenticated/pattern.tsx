@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import { fetchPattern } from "@/lib/pattern.functions";
+import { EphemerisNotice } from "@/components/pattern/EphemerisNotice";
 
 export const Route = createFileRoute("/_authenticated/pattern")({
   head: () => ({
@@ -99,6 +100,8 @@ function PatternView({ data }: { data: PatternData }) {
           ))}
         </div>
 
+        <EphemerisNotice state={data.ephemeris} className="mt-10" />
+
         <section className="mt-12">
           <h2 className="technical text-muted-foreground">Placements</h2>
           <div className="mt-3 -mx-6 overflow-x-auto px-6">
@@ -143,6 +146,7 @@ function PatternView({ data }: { data: PatternData }) {
 
       <Rail title="Calculation">
         <Field label="Engine" value={data.engine} />
+        <Field label="Precision" value={data.ephemeris.precision} />
         <Field label="Contract" value={data.contractVersion} />
         <Field label="Houses" value={data.houseSystem} />
         <Field label="Time accuracy" value={data.uncertainty.accuracy} />

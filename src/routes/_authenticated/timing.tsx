@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import { fetchCycles } from "@/lib/pattern.functions";
+import { EphemerisNotice } from "@/components/pattern/EphemerisNotice";
 
 export const Route = createFileRoute("/_authenticated/timing")({
   head: () => ({
@@ -99,6 +100,8 @@ function TimingPage() {
               </button>
             </div>
 
+            <EphemerisNotice state={data.ephemeris} className="mt-6" />
+
             <div className="mt-6 -mx-6 overflow-x-auto px-6">
               <table className="w-full min-w-[46rem] text-left font-mono text-xs">
                 <thead>
@@ -144,6 +147,7 @@ function TimingPage() {
           <Rail title="Calculation status">
             <Field label="Reference day" value={data.day} />
             <Field label="Engine" value={data.engine} />
+            <Field label="Precision" value={data.ephemeris.precision} />
             <Field label="Contract" value={data.contractVersion} />
             <Field label="Refreshed" value={data.computedAt.slice(11, 19) + "Z"} />
             <Field label="Rows" value={`${rows.length}/${data.cycles.length}`} />
