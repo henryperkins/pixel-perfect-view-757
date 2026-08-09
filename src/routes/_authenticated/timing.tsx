@@ -100,6 +100,8 @@ function TimingPage() {
               </button>
             </div>
 
+            <EphemerisNotice state={data.ephemeris} className="mt-6" />
+
             <div className="mt-6 -mx-6 overflow-x-auto px-6">
               <table className="w-full min-w-[46rem] text-left font-mono text-xs">
                 <thead>

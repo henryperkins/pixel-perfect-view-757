@@ -97,6 +97,8 @@ function TimeTravelPage() {
               </button>
             </div>
 
+            <EphemerisNotice state={pastData.ephemeris} className="mt-8" />
+
             <section className="mt-8">
               <h2 className="technical text-muted-foreground">
                 Reconstructed cycle state · {pastData.day}
