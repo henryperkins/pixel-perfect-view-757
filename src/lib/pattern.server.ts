@@ -256,7 +256,16 @@ export async function saveBirth(
         engine: `${chart.engine}@${chart.engineVersion}`,
         contract_version: chart.contractVersion,
         positions: chart.points as never,
-        houses: { system: chart.houseSystem, cusps: chart.houses } as never,
+        houses: {
+          system: chart.houseSystem,
+          cusps: chart.houses,
+          ephemeris: {
+            precision: chart.precision,
+            degraded: chart.degraded,
+            degradedReason: chart.degradedReason,
+          },
+        } as never,
+
         aspects: chart.aspects as never,
         uncertainty: chart.uncertainty as never,
       },
