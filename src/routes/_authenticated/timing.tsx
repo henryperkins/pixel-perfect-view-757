@@ -145,6 +145,7 @@ function TimingPage() {
           <Rail title="Calculation status">
             <Field label="Reference day" value={data.day} />
             <Field label="Engine" value={data.engine} />
+            <Field label="Precision" value={data.ephemeris.precision} />
             <Field label="Contract" value={data.contractVersion} />
             <Field label="Refreshed" value={data.computedAt.slice(11, 19) + "Z"} />
             <Field label="Rows" value={`${rows.length}/${data.cycles.length}`} />

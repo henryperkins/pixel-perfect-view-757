@@ -156,6 +156,7 @@ function TimeTravelPage() {
             <Field label="Then" value={pastData.cycles.length} />
             <Field label="Now" value={nowData?.cycles.length ?? "—"} />
             <Field label="Engine" value={pastData.engine} />
+            <Field label="Precision" value={pastData.ephemeris.precision} />
             <Field label="Contract" value={pastData.contractVersion} />
           </Rail>
         </div>
