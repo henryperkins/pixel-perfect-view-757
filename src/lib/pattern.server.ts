@@ -9,6 +9,9 @@ import {
   type TimeAccuracy,
 } from "./astro/chart";
 import { computeCycles } from "./astro/cycles";
+import { toJulianDay } from "./astro/ephemeris";
+import { resolvePositions } from "./astro/swiss.server";
+
 import {
   createWrappedDek,
   decryptField,
