@@ -230,13 +230,21 @@ export async function saveBirth(
     .single();
   if (error) throw new Error(error.message);
 
-  const chart = computeChart({
+  const birthInput = {
     utcISO: utc.toISOString(),
     latitude: details.latitude,
     longitude: details.longitude,
     timezone,
     accuracy,
+  };
+  const ephem = await resolvePositions({
+    jd: toJulianDay(utc),
+    utcISO: utc.toISOString(),
+    latitude: details.latitude,
+    longitude: details.longitude,
   });
+  const chart = computeChart(birthInput, ephem);
+
 
   const { data: snap, error: snapErr } = await db
     .from("chart_snapshots")
