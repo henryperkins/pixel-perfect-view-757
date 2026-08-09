@@ -205,10 +205,14 @@ export function computeChart(input: BirthInput, ephem?: EphemerisResult): Chart 
   const moonSpread = (minutes / 1440) * 13.2;
 
   return {
-    engine: ENGINE_ID,
-    engineVersion: ENGINE_VERSION,
+    engine: source.engine,
+    engineVersion: source.engineVersion,
     contractVersion: CONTRACT_VERSION,
     houseSystem: HOUSE_SYSTEM,
+    precision: source.precision,
+    degraded: source.degraded,
+    degradedReason: source.degradedReason,
+
     jd,
     points,
     angles: { ascendant: angles.ascendant, midheaven: angles.midheaven },
