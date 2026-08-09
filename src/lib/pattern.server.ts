@@ -9,7 +9,7 @@ import {
   type TimeAccuracy,
 } from "./astro/chart";
 import { computeCycles } from "./astro/cycles";
-import { toJulianDay } from "./astro/ephemeris";
+import { ENGINE_ID, ENGINE_VERSION, toJulianDay } from "./astro/ephemeris";
 import { resolvePositions } from "./astro/swiss.server";
 
 import {
@@ -326,6 +326,17 @@ export async function loadSnapshot(db: DB, userId: string) {
   return (data as SnapshotRow | null) ?? null;
 }
 
+/** Calculation provenance surfaced to the reader (AST-20). */
+export function ephemerisState(chart: Chart) {
+  return {
+    engine: `${chart.engine}@${chart.engineVersion}`,
+    precision: chart.precision,
+    degraded: chart.degraded,
+    degradedReason: chart.degradedReason,
+    transitEngine: `${ENGINE_ID}@${ENGINE_VERSION}`,
+  };
+}
+
 function snapshotToChart(row: SnapshotRow): Chart {
   const houses = row.houses as {
     system: string;
@@ -524,6 +535,7 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
     provenance: assembled.provenance,
     cycles: topCycles,
     uncertainty: chart.uncertainty,
+    ephemeris: ephemerisState(chart),
   };
 }
 
@@ -556,6 +568,7 @@ export async function getPattern(db: DB, userId: string) {
     houseSystem: chart.houseSystem,
     contractVersion: chart.contractVersion,
     uncertainty: chart.uncertainty,
+    ephemeris: ephemerisState(chart),
     placements,
     aspects: chart.aspects.slice(0, 20),
     features: features ?? [],
@@ -775,6 +788,7 @@ export async function getCyclesFor(db: DB, userId: string, day: string) {
     contractVersion: chart.contractVersion,
     computedAt: new Date().toISOString(),
     uncertainty: chart.uncertainty,
+    ephemeris: ephemerisState(chart),
     cycles: cycles.slice(0, 40),
   };
 }
