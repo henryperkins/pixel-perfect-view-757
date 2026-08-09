@@ -327,15 +327,34 @@ export async function loadSnapshot(db: DB, userId: string) {
 }
 
 function snapshotToChart(row: SnapshotRow): Chart {
-  const houses = row.houses as { system: string; cusps: number[] };
+  const houses = row.houses as {
+    system: string;
+    cusps: number[];
+    ephemeris?: {
+      precision?: "high" | "approximate";
+      degraded?: boolean;
+      degradedReason?: string | null;
+    };
+  };
   const [engine, engineVersion] = row.engine.split("@");
   const points = row.positions as Chart["points"];
+  const precision =
+    houses?.ephemeris?.precision ??
+    (engine === "swiss-ephemeris" ? "high" : "approximate");
   return {
     engine: engine ?? "unknown",
     engineVersion: engineVersion ?? "0",
     contractVersion: row.contract_version,
     houseSystem: houses?.system ?? "whole-sign",
+    precision,
+    degraded: houses?.ephemeris?.degraded ?? precision !== "high",
+    degradedReason:
+      houses?.ephemeris?.degradedReason ??
+      (precision === "high"
+        ? null
+        : "This chart was computed with the in-app approximate engine."),
     jd: 0,
+
     points,
     angles: {
       ascendant: points["ascendant"]?.lon ?? 0,
