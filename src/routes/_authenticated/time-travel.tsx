@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import { fetchCycles, fetchJournal } from "@/lib/pattern.functions";
+import { EphemerisNotice } from "@/components/pattern/EphemerisNotice";
 
 export const Route = createFileRoute("/_authenticated/time-travel")({
   head: () => ({

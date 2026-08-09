@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import { useAuth } from "@/hooks/useAuth";
 import { fetchToday, saveDailyCheckIn, sendFeedback } from "@/lib/pattern.functions";
+import { EphemerisNotice } from "@/components/pattern/EphemerisNotice";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -190,6 +191,8 @@ function TodayReading() {
             <p key={i}>{para}</p>
           ))}
         </div>
+
+        <EphemerisNotice state={data.ephemeris} className="mt-8" />
 
         <section className="mt-10 border-t border-rule pt-6">
           <h2 className="technical text-muted-foreground">Reflection</h2>
