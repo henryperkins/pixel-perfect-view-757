@@ -161,26 +161,30 @@ export async function resolvePositions(req: SwissRequest): Promise<EphemerisResu
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
   try {
+    // AstroWay /v1/chart contract: UTC calendar date + HH:mm:ss, numeric
+    // timezone offset, x-api-key header.
+    const d = new Date(req.utcISO);
+    const iso = d.toISOString();
     const res = await fetch(url, {
       method: "POST",
       signal: controller.signal,
       headers: {
         "content-type": "application/json",
-        ...(key ? { authorization: `Bearer ${key}`, "x-api-key": key } : {}),
+        ...(key ? { "x-api-key": key, authorization: `Bearer ${key}` } : {}),
       },
       body: JSON.stringify({
-        jd_ut: req.jd,
-        datetime_utc: req.utcISO,
+        date: iso.slice(0, 10),
+        time: iso.slice(11, 19),
+        timezoneOffset: 0,
         latitude: req.latitude,
         longitude: req.longitude,
-        bodies: BODIES,
-        flags: ["speed", "geocentric", "apparent"],
       }),
     });
 
     if (!res.ok) {
       return fallback(req.jd, `Swiss Ephemeris service returned HTTP ${res.status}.`);
     }
+
 
     const payload = (await res.json()) as Raw;
     const bucket = pickBucket(payload);
