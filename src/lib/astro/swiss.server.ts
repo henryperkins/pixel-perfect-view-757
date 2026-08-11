@@ -36,8 +36,18 @@ const ALIASES: Record<Body, string[]> = {
   uranus: ["uranus", "Uranus", "7"],
   neptune: ["neptune", "Neptune", "8"],
   pluto: ["pluto", "Pluto", "9"],
-  node: ["node", "north_node", "true_node", "mean_node", "TrueNode", "11"],
+  node: [
+    "node",
+    "north_node",
+    "true_node",
+    "true Node",
+    "TrueNode",
+    "mean_node",
+    "mean Node",
+    "11",
+  ],
 };
+
 
 type Raw = Record<string, unknown>;
 
