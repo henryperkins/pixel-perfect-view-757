@@ -57,8 +57,14 @@ function num(v: unknown): number | null {
 }
 
 function pickBucket(payload: Raw): Raw | null {
-  for (const key of ["positions", "bodies", "planets", "data", "result"]) {
-    const v = payload[key];
+  // AstroWay and similar services nest the chart under `data`.
+  const root =
+    payload["data"] && typeof payload["data"] === "object" && !Array.isArray(payload["data"])
+      ? (payload["data"] as Raw)
+      : payload;
+
+  for (const key of ["positions", "bodies", "planets", "result"]) {
+    const v = root[key];
     if (Array.isArray(v)) {
       const byId: Raw = {};
       for (const entry of v) {
@@ -72,7 +78,7 @@ function pickBucket(payload: Raw): Raw | null {
     }
     if (v && typeof v === "object") return v as Raw;
   }
-  return payload;
+  return root;
 }
 
 function readBody(bucket: Raw, body: Body): BodyPosition | null {
@@ -88,6 +94,7 @@ function readBody(bucket: Raw, body: Body): BodyPosition | null {
   let lon: number | null = null;
   let lat = 0;
   let speed: number | null = null;
+  let retroFlag: boolean | null = null;
 
   if (typeof entry === "number" || typeof entry === "string") {
     lon = num(entry);
@@ -95,7 +102,15 @@ function readBody(bucket: Raw, body: Body): BodyPosition | null {
     const e = entry as Raw;
     lon = num(e["lon"] ?? e["longitude"] ?? e["lambda"] ?? e["ecliptic_longitude"]);
     lat = num(e["lat"] ?? e["latitude"] ?? e["beta"]) ?? 0;
-    speed = num(e["speed"] ?? e["lon_speed"] ?? e["longitude_speed"] ?? e["daily_motion"]);
+    speed = num(
+      e["speed"] ??
+        e["speedLong"] ??
+        e["lon_speed"] ??
+        e["longitude_speed"] ??
+        e["daily_motion"],
+    );
+    if (typeof e["isRetrograde"] === "boolean") retroFlag = e["isRetrograde"];
+    else if (typeof e["retrograde"] === "boolean") retroFlag = e["retrograde"];
   }
   if (lon === null) return null;
 
@@ -106,11 +121,12 @@ function readBody(bucket: Raw, body: Body): BodyPosition | null {
     lon: l,
     lat,
     speed: s,
-    retrograde: typeof speed === "number" ? s < 0 : false,
+    retrograde: retroFlag ?? (typeof speed === "number" ? s < 0 : false),
     sign: signOf(l),
     degree: degreeInSign(l),
   };
 }
+
 
 function fallback(jd: number, reason: string): EphemerisResult {
   return {
