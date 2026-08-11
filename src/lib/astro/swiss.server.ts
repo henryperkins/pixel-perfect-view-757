@@ -206,10 +206,16 @@ export async function resolvePositions(req: SwissRequest): Promise<EphemerisResu
       );
     }
 
+    const meta =
+      payload["data"] && typeof payload["data"] === "object"
+        ? ((payload["data"] as Raw)["meta"] as Raw | undefined)
+        : undefined;
     const version =
+      (meta && typeof meta["engineVersion"] === "string" && meta["engineVersion"]) ||
       (typeof payload["ephemeris_version"] === "string" && payload["ephemeris_version"]) ||
       (typeof payload["version"] === "string" && payload["version"]) ||
       "unknown";
+
 
     return {
       positions,
