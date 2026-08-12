@@ -160,6 +160,70 @@ export function assembleReading(
     });
   }
 
+  // Tier 3 — sensitive wellness. Framing and prompt only, per WEL-01/WEL-03
+  // allowed_uses. Never diagnostic, never fed into the calculation or ranking.
+  if (ctx.wellness) {
+    const { sleep, stress } = ctx.wellness;
+    const bands: string[] = [];
+    const sleepOk =
+      sleep !== null && isPermitted("WEL-01", "framing", ctx.granted);
+    const stressOk =
+      stress !== null && isPermitted("WEL-03", "framing", ctx.granted);
+
+    if (sleepOk) {
+      bands.push(`sleep ${sleep}/5`);
+      record(provenance, ctx, "reflection", "WEL-01", "framing", "Sleep quality (self-reported)", {
+        band: sleep,
+      });
+    }
+    if (stressOk) {
+      bands.push(`stress ${stress}/5`);
+      record(provenance, ctx, "reflection", "WEL-03", "framing", "Stress load (self-reported)", {
+        band: stress,
+      });
+    }
+
+    if (bands.length) {
+      paragraphs.push(
+        `You reported ${bands.join(" and ")} today. That sits beside the reading as context you chose to record \u2014 it is not a diagnosis, it does not change a single degree of the calculation, and it is deleted after 180 days.`,
+      );
+    }
+
+    // Reflection prompt is allowed to adapt to a band (WEL reflection_prompt).
+    if (
+      stressOk &&
+      stress >= 4 &&
+      isPermitted("WEL-03", "reflection_prompt", ctx.granted)
+    ) {
+      prompt = `${prompt} And with pressure running high today, which part of that is actually yours to carry right now?`;
+      record(
+        provenance,
+        ctx,
+        "reflection",
+        "WEL-03",
+        "reflection_prompt",
+        "Prompt adapted to stress band",
+        { band: stress },
+      );
+    } else if (
+      sleepOk &&
+      sleep <= 2 &&
+      isPermitted("WEL-01", "reflection_prompt", ctx.granted)
+    ) {
+      prompt = `${prompt} On thin sleep, notice how much of what you read today is the sky and how much is tiredness.`;
+      record(
+        provenance,
+        ctx,
+        "reflection",
+        "WEL-01",
+        "reflection_prompt",
+        "Prompt adapted to sleep band",
+        { band: sleep },
+      );
+    }
+  }
+
+
   if (isPermitted("USR-01", "framing", ctx.granted)) {
     record(provenance, ctx, "reflection", "USR-01", "framing", "Tone preference", {
       tone: ctx.tone,
