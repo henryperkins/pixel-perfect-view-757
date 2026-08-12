@@ -450,10 +450,12 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
 
   const { data: checkInRow } = await db
     .from("check_ins")
-    .select("mood, energy")
+    .select("mood, energy, sleep, stress")
     .eq("user_id", userId)
     .eq("day", day)
     .maybeSingle();
+
+  const wellnessAllowed = granted.has("WEL-01") || granted.has("WEL-03");
 
   const ctx: ReadingContext = {
     granted,
@@ -461,7 +463,15 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
     depth: profile.depth_pref,
     localBucket: granted.has("AMB-02") ? timeBucket(now, tz) : null,
     checkIn: checkInRow ? { mood: checkInRow.mood, energy: checkInRow.energy } : null,
+    wellness:
+      checkInRow && wellnessAllowed
+        ? {
+            sleep: granted.has("WEL-01") ? checkInRow.sleep : null,
+            stress: granted.has("WEL-03") ? checkInRow.stress : null,
+          }
+        : null,
   };
+
 
   const assembled = assembleReading(chart, cycles, ctx, bundle);
 
