@@ -14,7 +14,14 @@ export interface ReadingContext {
   depth: string;
   localBucket: "morning" | "afternoon" | "evening" | null;
   checkIn: { mood: number | null; energy: number | null } | null;
+  /**
+   * Tier 3 self-reported wellbeing bands (WEL-01 sleep, WEL-03 stress).
+   * Present only when the person has consented to those sources; used for
+   * framing and reflection prompts, never for the calculation.
+   */
+  wellness: { sleep: number | null; stress: number | null } | null;
 }
+
 
 export interface ProvenanceEntry {
   lane: "calculation" | "cycle" | "content" | "context" | "reflection";
