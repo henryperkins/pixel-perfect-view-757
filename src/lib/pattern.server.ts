@@ -419,6 +419,27 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
   const bundle = await activeBundle(db);
   const idem = `${snapRow.fingerprint}:${day}:${bundle.version}`;
 
+  await purgeExpiredWellness(db, userId);
+
+  const { data: checkInRaw } = await db
+    .from("check_ins")
+    .select("mood, energy, sleep, stress")
+    .eq("user_id", userId)
+    .eq("day", day)
+    .maybeSingle();
+  const checkInRow = checkInRaw as unknown as CheckInBands | null;
+
+  const sleepEnabled = granted.has("WEL-01");
+  const stressEnabled = granted.has("WEL-03");
+  const wellnessAllowed = sleepEnabled || stressEnabled;
+  const wellnessState = {
+    sleepEnabled,
+    stressEnabled,
+    retentionDays: WELLNESS_RETENTION_DAYS,
+    sleep: sleepEnabled ? (checkInRow?.sleep ?? null) : null,
+    stress: stressEnabled ? (checkInRow?.stress ?? null) : null,
+  };
+
   const { data: existing } = await db
     .from("daily_readings")
     .select("id, reading_date, headline, body_ct, prompt, confidence, primary_cycle_key, release_version")
@@ -453,6 +474,7 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       provenance: srcs ?? [],
       cycles: cyc ?? [],
       uncertainty: snapRow.uncertainty as Chart["uncertainty"],
+      wellness: wellnessState,
     };
   }
 
@@ -460,30 +482,17 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
   const referenceNoon = new Date(`${day}T12:00:00Z`);
   const cycles = computeCycles(chart, referenceNoon);
 
-  const { data: checkInRaw } = await db
-    .from("check_ins")
-    .select("mood, energy, sleep, stress")
-    .eq("user_id", userId)
-    .eq("day", day)
-    .maybeSingle();
-  const checkInRow = checkInRaw as unknown as CheckInBands | null;
-
-  const wellnessAllowed = granted.has("WEL-01") || granted.has("WEL-03");
-
   const ctx: ReadingContext = {
     granted,
     tone: profile.tone_pref,
     depth: profile.depth_pref,
     localBucket: granted.has("AMB-02") ? timeBucket(now, tz) : null,
     checkIn: checkInRow ? { mood: checkInRow.mood, energy: checkInRow.energy } : null,
-    wellness:
-      checkInRow && wellnessAllowed
-        ? {
-            sleep: granted.has("WEL-01") ? checkInRow.sleep : null,
-            stress: granted.has("WEL-03") ? checkInRow.stress : null,
-          }
-        : null,
+    wellness: wellnessAllowed
+      ? { sleep: wellnessState.sleep, stress: wellnessState.stress }
+      : null,
   };
+
 
 
   const assembled = assembleReading(chart, cycles, ctx, bundle);
