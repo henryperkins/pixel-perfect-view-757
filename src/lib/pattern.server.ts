@@ -568,7 +568,9 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
     cycles: topCycles,
     uncertainty: chart.uncertainty,
     ephemeris: ephemerisState(chart),
+    wellness: wellnessState,
   };
+
 }
 
 // ---------------------------------------------------------------------------
