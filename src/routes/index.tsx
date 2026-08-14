@@ -222,6 +222,37 @@ function TodayReading() {
         <section className="mt-10 border-t border-rule pt-6">
           <h2 className="technical text-muted-foreground">Reflection</h2>
           <p className="prose-reading mt-2 text-foreground">{data.reading.prompt}</p>
+
+          {(wellness?.sleepEnabled || wellness?.stressEnabled) && (
+            <div className="mt-5 rounded-sm border border-rule bg-secondary/30 p-4">
+              <p className="technical text-muted-foreground">
+                Tier 3 · self-reported · kept {wellness.retentionDays} days
+              </p>
+              <div className="mt-3 space-y-3">
+                {wellness.sleepEnabled && (
+                  <BandPicker
+                    label="Sleep"
+                    hint="1 poor · 5 rested"
+                    value={sleepValue}
+                    onChange={setSleep}
+                  />
+                )}
+                {wellness.stressEnabled && (
+                  <BandPicker
+                    label="Stress"
+                    hint="1 calm · 5 pressed"
+                    value={stressValue}
+                    onChange={setStress}
+                  />
+                )}
+              </div>
+              <p className="mt-3 text-xs text-muted-foreground">
+                Framing and prompts only. These bands never enter the calculation or the
+                ranking, and never leave your account.
+              </p>
+            </div>
+          )}
+
           <textarea
             value={note}
             onChange={(e) => setNote(e.target.value)}
