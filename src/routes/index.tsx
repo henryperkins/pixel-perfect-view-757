@@ -89,7 +89,44 @@ function Landing() {
   );
 }
 
+function BandPicker({
+  label,
+  hint,
+  value,
+  onChange,
+}: {
+  label: string;
+  hint: string;
+  value: number | null;
+  onChange: (v: number | null) => void;
+}) {
+  return (
+    <div className="flex flex-wrap items-center gap-3">
+      <span className="w-16 text-sm text-foreground">{label}</span>
+      <div className="flex gap-1" role="group" aria-label={`${label} band`}>
+        {[1, 2, 3, 4, 5].map((n) => (
+          <button
+            key={n}
+            type="button"
+            aria-pressed={value === n}
+            onClick={() => onChange(value === n ? null : n)}
+            className={`h-8 w-8 rounded-sm border font-mono text-xs transition-colors ${
+              value === n
+                ? "border-foreground bg-foreground text-background"
+                : "border-input bg-card hover:bg-secondary"
+            }`}
+          >
+            {n}
+          </button>
+        ))}
+      </div>
+      <span className="technical text-muted-foreground">{hint}</span>
+    </div>
+  );
+}
+
 function TodayReading() {
+
   const today = useServerFn(fetchToday);
   const feedback = useServerFn(sendFeedback);
   const checkIn = useServerFn(saveDailyCheckIn);
