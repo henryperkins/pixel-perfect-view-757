@@ -96,12 +96,20 @@ function TodayReading() {
   const qc = useQueryClient();
   const [openEvidence, setOpenEvidence] = useState(false);
   const [note, setNote] = useState("");
+  const [sleep, setSleep] = useState<number | null>(null);
+  const [stress, setStress] = useState<number | null>(null);
 
   const tz = localTz();
   const query = useQuery({
     queryKey: ["today", tz],
     queryFn: () => today({ data: { timezone: tz } }),
   });
+
+  const wellness = query.data?.needsOnboarding ? null : (query.data?.wellness ?? null);
+  const storedSleep = wellness?.sleep ?? null;
+  const storedStress = wellness?.stress ?? null;
+  const sleepValue = sleep ?? storedSleep;
+  const stressValue = stress ?? storedStress;
 
   const rate = useMutation({
     mutationFn: (vars: { readingId: string; resonance: number }) =>
@@ -113,14 +121,31 @@ function TodayReading() {
   const saveNote = useMutation({
     mutationFn: (vars: { day: string }) =>
       checkIn({
-        data: { day: vars.day, mood: null, energy: null, note: note.trim() || null },
+        data: {
+          day: vars.day,
+          mood: null,
+          energy: null,
+          note: note.trim() || null,
+          sleep: wellness?.sleepEnabled ? sleepValue : null,
+          stress: wellness?.stressEnabled ? stressValue : null,
+        },
       }),
-    onSuccess: () => {
-      toast.success("Reflection saved (encrypted).");
+    onSuccess: (res) => {
+      const bands = [
+        res.stored.sleep ? "sleep" : null,
+        res.stored.stress ? "stress" : null,
+      ].filter(Boolean);
+      toast.success(
+        bands.length
+          ? `Saved (encrypted). ${bands.join(" and ")} recorded for ${wellness?.retentionDays ?? 180} days.`
+          : "Reflection saved (encrypted).",
+      );
       void qc.invalidateQueries({ queryKey: ["journal"] });
+      void qc.invalidateQueries({ queryKey: ["today"] });
     },
     onError: (e: Error) => toast.error(e.message),
   });
+
 
   if (query.isPending) {
     return <p className="technical text-muted-foreground">Calculating…</p>;
