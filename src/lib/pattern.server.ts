@@ -448,12 +448,13 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
   const referenceNoon = new Date(`${day}T12:00:00Z`);
   const cycles = computeCycles(chart, referenceNoon);
 
-  const { data: checkInRow } = await db
+  const { data: checkInRaw } = await db
     .from("check_ins")
     .select("mood, energy, sleep, stress")
     .eq("user_id", userId)
     .eq("day", day)
     .maybeSingle();
+  const checkInRow = checkInRaw as unknown as CheckInBands | null;
 
   const wellnessAllowed = granted.has("WEL-01") || granted.has("WEL-03");
 
