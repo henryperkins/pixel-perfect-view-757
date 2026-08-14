@@ -394,6 +394,18 @@ export async function activeBundle(db: DB): Promise<ContentBundle> {
 // today's reading
 // ---------------------------------------------------------------------------
 
+/** check_ins row shape including the tier 3 wellbeing bands. */
+interface CheckInBands {
+  mood: number | null;
+  energy: number | null;
+  sleep: number | null;
+  stress: number | null;
+}
+
+/** Days a tier 3 band may live before it is nulled out (registry WEL retention). */
+export const WELLNESS_RETENTION_DAYS = 180;
+
+
 export async function getToday(db: DB, userId: string, timeZone: string) {
   const snapRow = await loadSnapshot(db, userId);
   if (!snapRow) return { needsOnboarding: true as const };
