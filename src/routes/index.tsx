@@ -89,19 +89,64 @@ function Landing() {
   );
 }
 
+function BandPicker({
+  label,
+  hint,
+  value,
+  onChange,
+}: {
+  label: string;
+  hint: string;
+  value: number | null;
+  onChange: (v: number | null) => void;
+}) {
+  return (
+    <div className="flex flex-wrap items-center gap-3">
+      <span className="w-16 text-sm text-foreground">{label}</span>
+      <div className="flex gap-1" role="group" aria-label={`${label} band`}>
+        {[1, 2, 3, 4, 5].map((n) => (
+          <button
+            key={n}
+            type="button"
+            aria-pressed={value === n}
+            onClick={() => onChange(value === n ? null : n)}
+            className={`h-8 w-8 rounded-sm border font-mono text-xs transition-colors ${
+              value === n
+                ? "border-foreground bg-foreground text-background"
+                : "border-input bg-card hover:bg-secondary"
+            }`}
+          >
+            {n}
+          </button>
+        ))}
+      </div>
+      <span className="technical text-muted-foreground">{hint}</span>
+    </div>
+  );
+}
+
 function TodayReading() {
+
   const today = useServerFn(fetchToday);
   const feedback = useServerFn(sendFeedback);
   const checkIn = useServerFn(saveDailyCheckIn);
   const qc = useQueryClient();
   const [openEvidence, setOpenEvidence] = useState(false);
   const [note, setNote] = useState("");
+  const [sleep, setSleep] = useState<number | null>(null);
+  const [stress, setStress] = useState<number | null>(null);
 
   const tz = localTz();
   const query = useQuery({
     queryKey: ["today", tz],
     queryFn: () => today({ data: { timezone: tz } }),
   });
+
+  const wellness = query.data?.needsOnboarding ? null : (query.data?.wellness ?? null);
+  const storedSleep = wellness?.sleep ?? null;
+  const storedStress = wellness?.stress ?? null;
+  const sleepValue = sleep ?? storedSleep;
+  const stressValue = stress ?? storedStress;
 
   const rate = useMutation({
     mutationFn: (vars: { readingId: string; resonance: number }) =>
@@ -113,14 +158,31 @@ function TodayReading() {
   const saveNote = useMutation({
     mutationFn: (vars: { day: string }) =>
       checkIn({
-        data: { day: vars.day, mood: null, energy: null, note: note.trim() || null },
+        data: {
+          day: vars.day,
+          mood: null,
+          energy: null,
+          note: note.trim() || null,
+          sleep: wellness?.sleepEnabled ? sleepValue : null,
+          stress: wellness?.stressEnabled ? stressValue : null,
+        },
       }),
-    onSuccess: () => {
-      toast.success("Reflection saved (encrypted).");
+    onSuccess: (res) => {
+      const bands = [
+        res.stored.sleep ? "sleep" : null,
+        res.stored.stress ? "stress" : null,
+      ].filter(Boolean);
+      toast.success(
+        bands.length
+          ? `Saved (encrypted). ${bands.join(" and ")} recorded for ${wellness?.retentionDays ?? 180} days.`
+          : "Reflection saved (encrypted).",
+      );
       void qc.invalidateQueries({ queryKey: ["journal"] });
+      void qc.invalidateQueries({ queryKey: ["today"] });
     },
     onError: (e: Error) => toast.error(e.message),
   });
+
 
   if (query.isPending) {
     return <p className="technical text-muted-foreground">Calculating…</p>;
@@ -197,6 +259,37 @@ function TodayReading() {
         <section className="mt-10 border-t border-rule pt-6">
           <h2 className="technical text-muted-foreground">Reflection</h2>
           <p className="prose-reading mt-2 text-foreground">{data.reading.prompt}</p>
+
+          {(wellness?.sleepEnabled || wellness?.stressEnabled) && (
+            <div className="mt-5 rounded-sm border border-rule bg-secondary/30 p-4">
+              <p className="technical text-muted-foreground">
+                Tier 3 · self-reported · kept {wellness.retentionDays} days
+              </p>
+              <div className="mt-3 space-y-3">
+                {wellness.sleepEnabled && (
+                  <BandPicker
+                    label="Sleep"
+                    hint="1 poor · 5 rested"
+                    value={sleepValue}
+                    onChange={setSleep}
+                  />
+                )}
+                {wellness.stressEnabled && (
+                  <BandPicker
+                    label="Stress"
+                    hint="1 calm · 5 pressed"
+                    value={stressValue}
+                    onChange={setStress}
+                  />
+                )}
+              </div>
+              <p className="mt-3 text-xs text-muted-foreground">
+                Framing and prompts only. These bands never enter the calculation or the
+                ranking, and never leave your account.
+              </p>
+            </div>
+          )}
+
           <textarea
             value={note}
             onChange={(e) => setNote(e.target.value)}

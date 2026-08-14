@@ -104,6 +104,10 @@ export const saveDailyCheckIn = createServerFn({ method: "POST" })
         mood: z.number().int().min(1).max(5).nullable(),
         energy: z.number().int().min(1).max(5).nullable(),
         note: z.string().max(2000).nullable(),
+        // Tier 3 self-reported bands (WEL-01 sleep, WEL-03 stress). Coarse
+        // 1-5 only; the server drops either unless that source is consented.
+        sleep: z.number().int().min(1).max(5).nullable().default(null),
+        stress: z.number().int().min(1).max(5).nullable().default(null),
       })
       .parse(d),
   )
@@ -116,8 +120,11 @@ export const saveDailyCheckIn = createServerFn({ method: "POST" })
       data.mood,
       data.energy,
       data.note,
+      data.sleep,
+      data.stress,
     );
   });
+
 
 export const savePrefs = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])

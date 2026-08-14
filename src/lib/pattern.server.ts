@@ -394,6 +394,18 @@ export async function activeBundle(db: DB): Promise<ContentBundle> {
 // today's reading
 // ---------------------------------------------------------------------------
 
+/** check_ins row shape including the tier 3 wellbeing bands. */
+interface CheckInBands {
+  mood: number | null;
+  energy: number | null;
+  sleep: number | null;
+  stress: number | null;
+}
+
+/** Days a tier 3 band may live before it is nulled out (registry WEL retention). */
+export const WELLNESS_RETENTION_DAYS = 180;
+
+
 export async function getToday(db: DB, userId: string, timeZone: string) {
   const snapRow = await loadSnapshot(db, userId);
   if (!snapRow) return { needsOnboarding: true as const };
@@ -406,6 +418,27 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
   const day = localDayString(now, tz);
   const bundle = await activeBundle(db);
   const idem = `${snapRow.fingerprint}:${day}:${bundle.version}`;
+
+  await purgeExpiredWellness(db, userId);
+
+  const { data: checkInRaw } = await db
+    .from("check_ins")
+    .select("mood, energy, sleep, stress")
+    .eq("user_id", userId)
+    .eq("day", day)
+    .maybeSingle();
+  const checkInRow = checkInRaw as unknown as CheckInBands | null;
+
+  const sleepEnabled = granted.has("WEL-01");
+  const stressEnabled = granted.has("WEL-03");
+  const wellnessAllowed = sleepEnabled || stressEnabled;
+  const wellnessState = {
+    sleepEnabled,
+    stressEnabled,
+    retentionDays: WELLNESS_RETENTION_DAYS,
+    sleep: sleepEnabled ? (checkInRow?.sleep ?? null) : null,
+    stress: stressEnabled ? (checkInRow?.stress ?? null) : null,
+  };
 
   const { data: existing } = await db
     .from("daily_readings")
@@ -441,6 +474,7 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       provenance: srcs ?? [],
       cycles: cyc ?? [],
       uncertainty: snapRow.uncertainty as Chart["uncertainty"],
+      wellness: wellnessState,
     };
   }
 
@@ -448,29 +482,17 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
   const referenceNoon = new Date(`${day}T12:00:00Z`);
   const cycles = computeCycles(chart, referenceNoon);
 
-  const { data: checkInRow } = await db
-    .from("check_ins")
-    .select("mood, energy, sleep, stress")
-    .eq("user_id", userId)
-    .eq("day", day)
-    .maybeSingle();
-
-  const wellnessAllowed = granted.has("WEL-01") || granted.has("WEL-03");
-
   const ctx: ReadingContext = {
     granted,
     tone: profile.tone_pref,
     depth: profile.depth_pref,
     localBucket: granted.has("AMB-02") ? timeBucket(now, tz) : null,
     checkIn: checkInRow ? { mood: checkInRow.mood, energy: checkInRow.energy } : null,
-    wellness:
-      checkInRow && wellnessAllowed
-        ? {
-            sleep: granted.has("WEL-01") ? checkInRow.sleep : null,
-            stress: granted.has("WEL-03") ? checkInRow.stress : null,
-          }
-        : null,
+    wellness: wellnessAllowed
+      ? { sleep: wellnessState.sleep, stress: wellnessState.stress }
+      : null,
   };
+
 
 
   const assembled = assembleReading(chart, cycles, ctx, bundle);
@@ -546,7 +568,9 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
     cycles: topCycles,
     uncertainty: chart.uncertainty,
     ephemeris: ephemerisState(chart),
+    wellness: wellnessState,
   };
+
 }
 
 // ---------------------------------------------------------------------------
@@ -585,6 +609,23 @@ export async function getPattern(db: DB, userId: string) {
   };
 }
 
+/**
+ * Tier 3 retention (registry WEL-01 / WEL-03, 180 days). The bands are nulled
+ * out rather than the check-in row deleted, so mood, energy and the encrypted
+ * note survive while the sensitive wellbeing signal does not.
+ */
+export async function purgeExpiredWellness(db: DB, userId: string) {
+  const cutoff = new Date(Date.now() - WELLNESS_RETENTION_DAYS * 86400000)
+    .toISOString()
+    .slice(0, 10);
+  await db
+    .from("check_ins")
+    .update({ sleep: null, stress: null } as never)
+    .eq("user_id", userId)
+    .lt("day", cutoff)
+    .or("sleep.not.is.null,stress.not.is.null");
+}
+
 export async function saveCheckIn(
   db: DB,
   userId: string,
@@ -592,30 +633,54 @@ export async function saveCheckIn(
   mood: number | null,
   energy: number | null,
   note: string | null,
+  sleep: number | null = null,
+  stress: number | null = null,
 ) {
   const dek = await getDek(db, userId);
+  const granted = await grantedSet(db, userId);
+
+  // Tier 3 bands are only ever written when the person has consented to that
+  // exact source; an unconsented band is dropped, not stored and hidden.
+  const sleepValue = granted.has("WEL-01") ? sleep : null;
+  const stressValue = granted.has("WEL-03") ? stress : null;
+
   const { error } = await db.from("check_ins").upsert(
     {
       user_id: userId,
       day,
       mood,
       energy,
+      sleep: sleepValue,
+      stress: stressValue,
       note_ct: note ? await encryptField(dek, note) : null,
-    },
+    } as never,
     { onConflict: "user_id,day" },
   );
   if (error) throw new Error(error.message);
-  return { ok: true };
+
+  await purgeExpiredWellness(db, userId);
+  return {
+    ok: true,
+    stored: {
+      sleep: sleepValue !== null,
+      stress: stressValue !== null,
+    },
+  };
 }
+
 
 export async function listJournal(db: DB, userId: string) {
   const dek = await getDek(db, userId);
-  const { data: checkIns } = await db
+  await purgeExpiredWellness(db, userId);
+  const { data: checkInsRaw } = await db
     .from("check_ins")
-    .select("id, day, mood, energy, note_ct")
+    .select("id, day, mood, energy, sleep, stress, note_ct")
     .eq("user_id", userId)
     .order("day", { ascending: false })
     .limit(60);
+  const checkIns = checkInsRaw as unknown as
+    | (CheckInBands & { id: string; day: string; note_ct: string | null })[]
+    | null;
   const { data: events } = await db
     .from("life_events")
     .select("id, occurred_on, domain, label_ct")
@@ -636,9 +701,12 @@ export async function listJournal(db: DB, userId: string) {
         day: c.day,
         mood: c.mood,
         energy: c.energy,
+        sleep: c.sleep,
+        stress: c.stress,
         note: c.note_ct ? await decryptField(dek, c.note_ct) : null,
       })),
     ),
+
     events: await Promise.all(
       (events ?? []).map(async (e) => ({
         id: e.id,
