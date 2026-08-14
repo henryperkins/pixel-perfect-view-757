@@ -671,12 +671,16 @@ export async function saveCheckIn(
 
 export async function listJournal(db: DB, userId: string) {
   const dek = await getDek(db, userId);
-  const { data: checkIns } = await db
+  await purgeExpiredWellness(db, userId);
+  const { data: checkInsRaw } = await db
     .from("check_ins")
-    .select("id, day, mood, energy, note_ct")
+    .select("id, day, mood, energy, sleep, stress, note_ct")
     .eq("user_id", userId)
     .order("day", { ascending: false })
     .limit(60);
+  const checkIns = checkInsRaw as unknown as
+    | (CheckInBands & { id: string; day: string; note_ct: string | null })[]
+    | null;
   const { data: events } = await db
     .from("life_events")
     .select("id, occurred_on, domain, label_ct")
@@ -697,9 +701,12 @@ export async function listJournal(db: DB, userId: string) {
         day: c.day,
         mood: c.mood,
         energy: c.energy,
+        sleep: c.sleep,
+        stress: c.stress,
         note: c.note_ct ? await decryptField(dek, c.note_ct) : null,
       })),
     ),
+
     events: await Promise.all(
       (events ?? []).map(async (e) => ({
         id: e.id,
