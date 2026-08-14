@@ -609,6 +609,23 @@ export async function getPattern(db: DB, userId: string) {
   };
 }
 
+/**
+ * Tier 3 retention (registry WEL-01 / WEL-03, 180 days). The bands are nulled
+ * out rather than the check-in row deleted, so mood, energy and the encrypted
+ * note survive while the sensitive wellbeing signal does not.
+ */
+export async function purgeExpiredWellness(db: DB, userId: string) {
+  const cutoff = new Date(Date.now() - WELLNESS_RETENTION_DAYS * 86400000)
+    .toISOString()
+    .slice(0, 10);
+  await db
+    .from("check_ins")
+    .update({ sleep: null, stress: null } as never)
+    .eq("user_id", userId)
+    .lt("day", cutoff)
+    .or("sleep.not.is.null,stress.not.is.null");
+}
+
 export async function saveCheckIn(
   db: DB,
   userId: string,
@@ -616,21 +633,41 @@ export async function saveCheckIn(
   mood: number | null,
   energy: number | null,
   note: string | null,
+  sleep: number | null = null,
+  stress: number | null = null,
 ) {
   const dek = await getDek(db, userId);
+  const granted = await grantedSet(db, userId);
+
+  // Tier 3 bands are only ever written when the person has consented to that
+  // exact source; an unconsented band is dropped, not stored and hidden.
+  const sleepValue = granted.has("WEL-01") ? sleep : null;
+  const stressValue = granted.has("WEL-03") ? stress : null;
+
   const { error } = await db.from("check_ins").upsert(
     {
       user_id: userId,
       day,
       mood,
       energy,
+      sleep: sleepValue,
+      stress: stressValue,
       note_ct: note ? await encryptField(dek, note) : null,
-    },
+    } as never,
     { onConflict: "user_id,day" },
   );
   if (error) throw new Error(error.message);
-  return { ok: true };
+
+  await purgeExpiredWellness(db, userId);
+  return {
+    ok: true,
+    stored: {
+      sleep: sleepValue !== null,
+      stress: stressValue !== null,
+    },
+  };
 }
+
 
 export async function listJournal(db: DB, userId: string) {
   const dek = await getDek(db, userId);
