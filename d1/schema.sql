@@ -1,0 +1,206 @@
+-- Pattern records — Cloudflare D1 (SQLite) schema.
+--
+-- This replaces the hosted Postgres backend. Two things move into application
+-- code because SQLite has no equivalent:
+--   * row ownership (was RLS)  -> every query is scoped by user_id in the
+--     server-side data layer, which only ever runs behind a verified session.
+--   * updated_at triggers      -> written explicitly on each update.
+-- JSON columns are TEXT holding a JSON document.
+
+CREATE TABLE IF NOT EXISTS users (
+  id TEXT PRIMARY KEY,
+  email TEXT NOT NULL UNIQUE,
+  password_hash TEXT NOT NULL,
+  created_at TEXT NOT NULL,
+  last_seen_at TEXT
+);
+
+CREATE TABLE IF NOT EXISTS sessions (
+  id TEXT PRIMARY KEY,           -- sha256 of the cookie token, never the token
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  created_at TEXT NOT NULL,
+  expires_at TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS sessions_user_idx ON sessions (user_id);
+
+CREATE TABLE IF NOT EXISTS user_roles (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  role TEXT NOT NULL,
+  created_at TEXT NOT NULL,
+  UNIQUE (user_id, role)
+);
+
+CREATE TABLE IF NOT EXISTS profiles (
+  id TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+  display_name TEXT,
+  tone_pref TEXT NOT NULL DEFAULT 'plain',
+  depth_pref TEXT NOT NULL DEFAULT 'standard',
+  wrapped_dek TEXT,
+  onboarded_at TEXT,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS source_consents (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  source_id TEXT NOT NULL,
+  tier INTEGER NOT NULL DEFAULT 1,
+  granted INTEGER NOT NULL DEFAULT 0,
+  granted_at TEXT,
+  revoked_at TEXT,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  updated_at TEXT NOT NULL DEFAULT (datetime('now')),
+  UNIQUE (user_id, source_id)
+);
+
+CREATE TABLE IF NOT EXISTS birth_profiles (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL UNIQUE REFERENCES users(id) ON DELETE CASCADE,
+  payload_ct TEXT NOT NULL,
+  time_accuracy TEXT NOT NULL DEFAULT 'exact',
+  timezone TEXT NOT NULL DEFAULT 'UTC',
+  fingerprint TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS chart_snapshots (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  birth_profile_id TEXT NOT NULL REFERENCES birth_profiles(id) ON DELETE CASCADE,
+  fingerprint TEXT NOT NULL,
+  engine TEXT NOT NULL,
+  contract_version TEXT NOT NULL,
+  positions TEXT NOT NULL DEFAULT '{}',
+  houses TEXT NOT NULL DEFAULT '{}',
+  aspects TEXT NOT NULL DEFAULT '[]',
+  uncertainty TEXT NOT NULL DEFAULT '{}',
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  UNIQUE (user_id, fingerprint)
+);
+
+CREATE TABLE IF NOT EXISTS natal_features (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  snapshot_id TEXT NOT NULL REFERENCES chart_snapshots(id) ON DELETE CASCADE,
+  feature_key TEXT NOT NULL,
+  family TEXT NOT NULL,
+  title TEXT NOT NULL,
+  strength REAL NOT NULL DEFAULT 0,
+  payload TEXT NOT NULL DEFAULT '{}',
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS natal_features_snapshot_idx ON natal_features (snapshot_id);
+
+CREATE TABLE IF NOT EXISTS cycle_instances (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  snapshot_id TEXT NOT NULL REFERENCES chart_snapshots(id) ON DELETE CASCADE,
+  cycle_key TEXT NOT NULL,
+  transit_body TEXT NOT NULL,
+  natal_point TEXT NOT NULL,
+  aspect TEXT NOT NULL,
+  domain TEXT NOT NULL DEFAULT 'general',
+  phase TEXT NOT NULL DEFAULT 'active',
+  orb REAL NOT NULL DEFAULT 0,
+  importance REAL NOT NULL DEFAULT 0,
+  ingress_at TEXT,
+  exact_at TEXT,
+  egress_at TEXT,
+  computed_for TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  UNIQUE (user_id, cycle_key, computed_for)
+);
+CREATE INDEX IF NOT EXISTS cycle_instances_day_idx ON cycle_instances (user_id, computed_for);
+
+CREATE TABLE IF NOT EXISTS context_signals (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  source_id TEXT NOT NULL,
+  value TEXT NOT NULL DEFAULT '{}',
+  confidence REAL NOT NULL DEFAULT 0.5,
+  captured_at TEXT NOT NULL DEFAULT (datetime('now')),
+  expires_at TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS context_signals_user_idx ON context_signals (user_id, source_id);
+
+CREATE TABLE IF NOT EXISTS content_releases (
+  id TEXT PRIMARY KEY,
+  version TEXT NOT NULL UNIQUE,
+  checksum TEXT NOT NULL,
+  bundle TEXT NOT NULL,
+  is_active INTEGER NOT NULL DEFAULT 0,
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS daily_readings (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  reading_date TEXT NOT NULL,
+  snapshot_id TEXT,
+  release_version TEXT,
+  headline TEXT NOT NULL,
+  body_ct TEXT NOT NULL,
+  prompt TEXT,
+  confidence TEXT NOT NULL DEFAULT 'medium',
+  primary_cycle_key TEXT,
+  idempotency_key TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  UNIQUE (user_id, idempotency_key)
+);
+CREATE INDEX IF NOT EXISTS daily_readings_user_date_idx ON daily_readings (user_id, reading_date DESC);
+
+CREATE TABLE IF NOT EXISTS reading_sources (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  reading_id TEXT NOT NULL REFERENCES daily_readings(id) ON DELETE CASCADE,
+  lane TEXT NOT NULL,
+  source_id TEXT NOT NULL,
+  label TEXT NOT NULL,
+  detail TEXT NOT NULL DEFAULT '{}'
+);
+CREATE INDEX IF NOT EXISTS reading_sources_reading_idx ON reading_sources (reading_id);
+
+CREATE TABLE IF NOT EXISTS reading_feedback (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  reading_id TEXT NOT NULL REFERENCES daily_readings(id) ON DELETE CASCADE,
+  resonance INTEGER NOT NULL,
+  labels TEXT NOT NULL DEFAULT '[]',
+  note_ct TEXT,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  UNIQUE (user_id, reading_id)
+);
+
+CREATE TABLE IF NOT EXISTS check_ins (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  day TEXT NOT NULL,
+  mood INTEGER,
+  energy INTEGER,
+  sleep INTEGER,
+  stress INTEGER,
+  note_ct TEXT,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  UNIQUE (user_id, day)
+);
+
+CREATE TABLE IF NOT EXISTS life_events (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  occurred_on TEXT NOT NULL,
+  domain TEXT NOT NULL DEFAULT 'general',
+  label_ct TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS audit_events (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  kind TEXT NOT NULL,
+  detail TEXT NOT NULL DEFAULT '{}',
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS audit_events_user_idx ON audit_events (user_id, created_at DESC);
