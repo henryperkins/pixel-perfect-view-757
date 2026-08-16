@@ -1,7 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireAuth } from "./auth-middleware";
-import type { DB } from "./pattern.server";
 
 export const fetchToday = createServerFn({ method: "POST" })
   .middleware([requireAuth])
