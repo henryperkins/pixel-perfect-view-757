@@ -25,7 +25,77 @@ import { DEFAULT_BUNDLE, type ContentBundle } from "./content/default-bundle";
 import { assembleReading, type ReadingContext } from "./reading.server";
 import { LAUNCH_SOURCES, PROHIBITED_SOURCES, SOURCE_MAP } from "./registry";
 
-export type DB = SupabaseClient<Database>;
+export type DB = DBClient;
+
+// Row shapes for the records plane. SQLite has no generated types, so the
+// selects below name what they read.
+interface ConsentRow {
+  source_id: string;
+  granted: boolean;
+  tier: number;
+  granted_at: string | null;
+  revoked_at: string | null;
+}
+interface FeatureRow {
+  feature_key: string;
+  family: string;
+  title: string;
+  strength: number;
+  payload: unknown;
+}
+interface LifeEventRow {
+  id: string;
+  occurred_on: string;
+  domain: string;
+  label_ct: string;
+}
+interface FeedbackRow {
+  reading_id: string;
+  resonance: number;
+  labels: string[];
+  created_at: string;
+}
+interface ReadingRow {
+  reading_date: string;
+  headline: string;
+  body_ct: string;
+  prompt: string | null;
+  confidence: string;
+  release_version: string | null;
+}
+interface AuditRow {
+  kind: string;
+  detail: unknown;
+  created_at: string;
+}
+interface CycleRow {
+  cycle_key: string;
+  transit_body: string;
+  natal_point: string;
+  aspect: string;
+  orb: number;
+  phase: string;
+  domain: string;
+  importance: number;
+  ingress_at: string | null;
+  exact_at: string | null;
+  egress_at: string | null;
+}
+interface ProvenanceRow {
+  lane: string;
+  source_id: string;
+  label: string;
+  detail: unknown;
+}
+interface ReleaseRow {
+  id: string;
+  version: string;
+  checksum: string;
+  created_at: string;
+  is_active: boolean;
+  bundle: Record<string, unknown> | null;
+}
+
 
 export interface BirthDetails {
   birthDate: string; // YYYY-MM-DD, local civil
