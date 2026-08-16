@@ -3,7 +3,8 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import { Shell } from "@/components/pattern/Shell";
-import { supabase } from "@/integrations/supabase/client";
+import { signIn, signUp } from "@/lib/auth.client";
+
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
@@ -36,25 +37,19 @@ function AuthPage() {
     setBusy(true);
     try {
       if (mode === "signup") {
-        const { error } = await supabase.auth.signUp({
-          email,
-          password,
-          options: { emailRedirectTo: window.location.origin },
-        });
-        if (error) throw error;
-        toast.success("Account created. Check your email if confirmation is required.");
+        await signUp({ data: { email, password } });
+        toast.success("Account created.");
       } else {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) throw error;
+        await signIn({ data: { email, password } });
       }
-      const { data } = await supabase.auth.getSession();
-      if (data.session) void navigate({ to: "/" });
+      void navigate({ to: "/" });
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Sign-in failed");
     } finally {
       setBusy(false);
     }
   }
+
 
   return (
     <Shell signedIn={false}>
