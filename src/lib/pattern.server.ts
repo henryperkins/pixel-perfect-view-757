@@ -173,7 +173,7 @@ function timeBucket(instant: Date, timeZone: string): "morning" | "afternoon" | 
 
 export async function getDek(db: DB, userId: string) {
   const { data, error } = await db
-    .from("profiles")
+    .from<{ wrapped_dek: string | null }>("profiles")
     .select("wrapped_dek")
     .eq("id", userId)
     .maybeSingle();
@@ -191,7 +191,7 @@ export async function getDek(db: DB, userId: string) {
 
 export async function loadProfile(db: DB, userId: string) {
   const { data } = await db
-    .from("profiles")
+    .from<ProfileRow>("profiles")
     .select("id, display_name, tone_pref, depth_pref, onboarded_at")
     .eq("id", userId)
     .maybeSingle();
@@ -208,7 +208,7 @@ export async function loadProfile(db: DB, userId: string) {
 
 export async function loadConsents(db: DB, userId: string) {
   const { data } = await db
-    .from("source_consents")
+    .from<ConsentRow>("source_consents")
     .select("source_id, granted, tier, granted_at, revoked_at")
     .eq("user_id", userId);
   return data ?? [];
@@ -285,7 +285,7 @@ export async function saveBirth(
   const payload_ct = await encryptJson(dek, { ...details, utcISO: utc.toISOString() });
 
   const { data: bp, error } = await db
-    .from("birth_profiles")
+    .from<{ id: string }>("birth_profiles")
     .upsert(
       {
         user_id: userId,
@@ -317,7 +317,7 @@ export async function saveBirth(
 
 
   const { data: snap, error: snapErr } = await db
-    .from("chart_snapshots")
+    .from<{ id: string }>("chart_snapshots")
     .upsert(
       {
         user_id: userId,
@@ -387,7 +387,7 @@ interface SnapshotRow {
 
 export async function loadSnapshot(db: DB, userId: string) {
   const { data } = await db
-    .from("chart_snapshots")
+    .from<SnapshotRow>("chart_snapshots")
     .select("id, fingerprint, engine, contract_version, positions, houses, aspects, uncertainty")
     .eq("user_id", userId)
     .order("created_at", { ascending: false })
@@ -449,7 +449,7 @@ function snapshotToChart(row: SnapshotRow): Chart {
 
 export async function activeBundle(db: DB): Promise<ContentBundle> {
   const { data } = await db
-    .from("content_releases")
+    .from<{ version: string; bundle: unknown }>("content_releases")
     .select("version, bundle")
     .eq("is_active", true)
     .order("created_at", { ascending: false })
@@ -492,7 +492,7 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
   await purgeExpiredWellness(db, userId);
 
   const { data: checkInRaw } = await db
-    .from("check_ins")
+    .from<CheckInBands>("check_ins")
     .select("mood, energy, sleep, stress")
     .eq("user_id", userId)
     .eq("day", day)
@@ -511,7 +511,7 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
   };
 
   const { data: existing } = await db
-    .from("daily_readings")
+    .from<ExistingReadingRow>("daily_readings")
     .select("id, reading_date, headline, body_ct, prompt, confidence, primary_cycle_key, release_version")
     .eq("user_id", userId)
     .eq("idempotency_key", idem)
@@ -519,11 +519,11 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
 
   if (existing) {
     const { data: srcs } = await db
-      .from("reading_sources")
+      .from<ProvenanceRow>("reading_sources")
       .select("lane, source_id, label, detail")
       .eq("reading_id", existing.id);
     const { data: cyc } = await db
-      .from("cycle_instances")
+      .from<CycleRow>("cycle_instances")
       .select("cycle_key, transit_body, natal_point, aspect, orb, phase, domain, importance, ingress_at, exact_at, egress_at")
       .eq("user_id", userId)
       .eq("computed_for", day)
@@ -568,7 +568,7 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
   const assembled = assembleReading(chart, cycles, ctx, bundle);
 
   const { data: inserted, error } = await db
-    .from("daily_readings")
+    .from<{ id: string }>("daily_readings")
     .insert({
       user_id: userId,
       reading_date: day,
@@ -652,7 +652,7 @@ export async function getPattern(db: DB, userId: string) {
   if (!snapRow) return { needsOnboarding: true as const };
   const chart = snapshotToChart(snapRow);
   const { data: features } = await db
-    .from("natal_features")
+    .from<FeatureRow>("natal_features")
     .select("feature_key, family, title, strength, payload")
     .eq("snapshot_id", snapRow.id)
     .order("strength", { ascending: false });
@@ -743,7 +743,7 @@ export async function listJournal(db: DB, userId: string) {
   const dek = await getDek(db, userId);
   await purgeExpiredWellness(db, userId);
   const { data: checkInsRaw } = await db
-    .from("check_ins")
+    .from<CheckInBands & { id: string; day: string; note_ct: string | null }>("check_ins")
     .select("id, day, mood, energy, sleep, stress, note_ct")
     .eq("user_id", userId)
     .order("day", { ascending: false })
@@ -752,13 +752,13 @@ export async function listJournal(db: DB, userId: string) {
     | (CheckInBands & { id: string; day: string; note_ct: string | null })[]
     | null;
   const { data: events } = await db
-    .from("life_events")
+    .from<LifeEventRow>("life_events")
     .select("id, occurred_on, domain, label_ct")
     .eq("user_id", userId)
     .order("occurred_on", { ascending: false })
     .limit(60);
   const { data: feedback } = await db
-    .from("reading_feedback")
+    .from<FeedbackRow>("reading_feedback")
     .select("reading_id, resonance, labels, created_at")
     .eq("user_id", userId)
     .order("created_at", { ascending: false })
@@ -831,18 +831,18 @@ export async function exportEverything(db: DB, userId: string) {
     getPattern(db, userId),
   ]);
   const { data: birth } = await db
-    .from("birth_profiles")
+    .from<{ payload_ct: string; time_accuracy: string; timezone: string; created_at: string }>("birth_profiles")
     .select("payload_ct, time_accuracy, timezone, created_at")
     .eq("user_id", userId)
     .maybeSingle();
   const { data: readings } = await db
-    .from("daily_readings")
+    .from<ReadingRow>("daily_readings")
     .select("reading_date, headline, body_ct, prompt, confidence, release_version")
     .eq("user_id", userId)
     .order("reading_date", { ascending: false })
     .limit(400);
   const { data: audit } = await db
-    .from("audit_events")
+    .from<AuditRow>("audit_events")
     .select("kind, detail, created_at")
     .eq("user_id", userId)
     .order("created_at", { ascending: false })
@@ -947,7 +947,7 @@ export async function getCyclesFor(db: DB, userId: string, day: string) {
 
 export async function listReleases(db: DB) {
   const { data, error } = await db
-    .from("content_releases")
+    .from<ReleaseRow>("content_releases")
     .select("id, version, checksum, created_at, is_active, bundle")
     .order("created_at", { ascending: false })
     .limit(50);
@@ -997,7 +997,7 @@ export async function activateRelease(db: DB, userId: string, releaseId: string)
   }
 
   const { data: target, error: findErr } = await db
-    .from("content_releases")
+    .from<{ id: string; version: string; checksum: string; bundle: Record<string, unknown> | null }>("content_releases")
     .select("id, version, checksum, bundle")
     .eq("id", releaseId)
     .maybeSingle();
