@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 
-import { supabase } from "@/integrations/supabase/client";
+import { signOut } from "@/lib/auth.client";
 
 const NAV = [
   { to: "/", label: "Today" },
@@ -46,12 +46,15 @@ export function Shell({
               <button
                 type="button"
                 onClick={() => {
-                  void supabase.auth.signOut();
+                  void signOut().then(() => {
+                    window.location.assign("/auth");
+                  });
                 }}
                 className="technical text-muted-foreground transition-colors hover:text-foreground"
               >
                 Sign out
               </button>
+
             ) : (
               <Link to="/auth" className="technical text-primary">
                 Sign in

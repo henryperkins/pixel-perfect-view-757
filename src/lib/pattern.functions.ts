@@ -1,21 +1,20 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
-import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
-import type { DB } from "./pattern.server";
+import { requireAuth } from "./auth-middleware";
 
 export const fetchToday = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth])
   .inputValidator((d: unknown) => z.object({ timezone: z.string() }).parse(d))
   .handler(async ({ data, context }) => {
     const m = await import("./pattern.server");
-    return m.getToday(context.supabase as unknown as DB, context.userId, data.timezone);
+    return m.getToday(context.db, context.userId, data.timezone);
   });
 
 export const fetchBootstrap = createServerFn({ method: "GET" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth])
   .handler(async ({ context }) => {
     const m = await import("./pattern.server");
-    const db = context.supabase as unknown as DB;
+    const db = context.db;
     const [profile, consents, snapshot] = await Promise.all([
       m.loadProfile(db, context.userId),
       m.loadConsents(db, context.userId),
@@ -25,7 +24,7 @@ export const fetchBootstrap = createServerFn({ method: "GET" })
   });
 
 export const saveBirthProfile = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth])
   .inputValidator((d: unknown) =>
     z
       .object({
@@ -43,7 +42,7 @@ export const saveBirthProfile = createServerFn({ method: "POST" })
     const m = await import("./pattern.server");
     const { accuracy, timezone, ...details } = data;
     return m.saveBirth(
-      context.supabase as unknown as DB,
+      context.db,
       context.userId,
       details,
       accuracy,
@@ -52,14 +51,14 @@ export const saveBirthProfile = createServerFn({ method: "POST" })
   });
 
 export const updateConsent = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth])
   .inputValidator((d: unknown) =>
     z.object({ sourceId: z.string(), granted: z.boolean() }).parse(d),
   )
   .handler(async ({ data, context }) => {
     const m = await import("./pattern.server");
     return m.setConsent(
-      context.supabase as unknown as DB,
+      context.db,
       context.userId,
       data.sourceId,
       data.granted,
@@ -67,14 +66,14 @@ export const updateConsent = createServerFn({ method: "POST" })
   });
 
 export const fetchPattern = createServerFn({ method: "GET" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth])
   .handler(async ({ context }) => {
     const m = await import("./pattern.server");
-    return m.getPattern(context.supabase as unknown as DB, context.userId);
+    return m.getPattern(context.db, context.userId);
   });
 
 export const sendFeedback = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth])
   .inputValidator((d: unknown) =>
     z
       .object({
@@ -87,7 +86,7 @@ export const sendFeedback = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const m = await import("./pattern.server");
     return m.submitFeedback(
-      context.supabase as unknown as DB,
+      context.db,
       context.userId,
       data.readingId,
       data.resonance,
@@ -96,7 +95,7 @@ export const sendFeedback = createServerFn({ method: "POST" })
   });
 
 export const saveDailyCheckIn = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth])
   .inputValidator((d: unknown) =>
     z
       .object({
@@ -114,7 +113,7 @@ export const saveDailyCheckIn = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const m = await import("./pattern.server");
     return m.saveCheckIn(
-      context.supabase as unknown as DB,
+      context.db,
       context.userId,
       data.day,
       data.mood,
@@ -127,7 +126,7 @@ export const saveDailyCheckIn = createServerFn({ method: "POST" })
 
 
 export const savePrefs = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth])
   .inputValidator((d: unknown) =>
     z
       .object({
@@ -140,7 +139,7 @@ export const savePrefs = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const m = await import("./pattern.server");
     return m.updatePrefs(
-      context.supabase as unknown as DB,
+      context.db,
       context.userId,
       data.displayName,
       data.tone,
@@ -149,38 +148,38 @@ export const savePrefs = createServerFn({ method: "POST" })
   });
 
 export const exportData = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth])
   .handler(async ({ context }) => {
     const m = await import("./pattern.server");
-    return m.exportEverything(context.supabase as unknown as DB, context.userId);
+    return m.exportEverything(context.db, context.userId);
   });
 
 export const eraseData = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth])
   .handler(async ({ context }) => {
     const m = await import("./pattern.server");
-    return m.eraseEverything(context.supabase as unknown as DB, context.userId);
+    return m.eraseEverything(context.db, context.userId);
   });
 
 export const fetchCycles = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth])
   .inputValidator((d: unknown) =>
     z.object({ day: z.string().regex(/^\d{4}-\d{2}-\d{2}$/) }).parse(d),
   )
   .handler(async ({ data, context }) => {
     const m = await import("./pattern.server");
-    return m.getCyclesFor(context.supabase as unknown as DB, context.userId, data.day);
+    return m.getCyclesFor(context.db, context.userId, data.day);
   });
 
 export const fetchJournal = createServerFn({ method: "GET" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth])
   .handler(async ({ context }) => {
     const m = await import("./pattern.server");
-    return m.listJournal(context.supabase as unknown as DB, context.userId);
+    return m.listJournal(context.db, context.userId);
   });
 
 export const addEvent = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth])
   .inputValidator((d: unknown) =>
     z
       .object({
@@ -193,7 +192,7 @@ export const addEvent = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const m = await import("./pattern.server");
     return m.addLifeEvent(
-      context.supabase as unknown as DB,
+      context.db,
       context.userId,
       data.occurredOn,
       data.domain,
@@ -202,10 +201,10 @@ export const addEvent = createServerFn({ method: "POST" })
   });
 
 export const fetchReleases = createServerFn({ method: "GET" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth])
   .handler(async ({ context }) => {
     const m = await import("./pattern.server");
-    const db = context.supabase as unknown as DB;
+    const db = context.db;
     const [releases, admin] = await Promise.all([
       m.listReleases(db),
       m.isAdmin(db, context.userId),
@@ -214,12 +213,12 @@ export const fetchReleases = createServerFn({ method: "GET" })
   });
 
 export const activateContentRelease = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth])
   .inputValidator((d: unknown) => z.object({ releaseId: z.string().uuid() }).parse(d))
   .handler(async ({ data, context }) => {
     const m = await import("./pattern.server");
     return m.activateRelease(
-      context.supabase as unknown as DB,
+      context.db,
       context.userId,
       data.releaseId,
     );
@@ -227,11 +226,11 @@ export const activateContentRelease = createServerFn({ method: "POST" })
 
 
 export const fetchEdgePlane = createServerFn({ method: "GET" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth])
   .handler(async ({ context }) => {
     const m = await import("./pattern.server");
     const w = await import("./workflows.server");
-    const db = context.supabase as unknown as DB;
+    const db = context.db;
     const [ledger, admin] = await Promise.all([
       w.listWorkflowRuns(),
       m.isAdmin(db, context.userId),
@@ -240,14 +239,14 @@ export const fetchEdgePlane = createServerFn({ method: "GET" })
   });
 
 export const triggerEdgeRun = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
+  .middleware([requireAuth])
   .inputValidator((d: unknown) =>
     z.object({ day: z.string().regex(/^\d{4}-\d{2}-\d{2}$/) }).parse(d),
   )
   .handler(async ({ data, context }) => {
     const m = await import("./pattern.server");
     const w = await import("./workflows.server");
-    const db = context.supabase as unknown as DB;
+    const db = context.db;
     if (!(await m.isAdmin(db, context.userId))) {
       throw new Error("Only admins can start edge runs.");
     }
