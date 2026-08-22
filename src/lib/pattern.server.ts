@@ -44,16 +44,6 @@ interface ProfileRow {
   depth_pref: string | null;
   onboarded_at: string | null;
 }
-interface SnapshotRow {
-  id: string;
-  fingerprint: string;
-  engine: string;
-  contract_version: string;
-  positions: JsonValue;
-  houses: JsonValue;
-  aspects: JsonValue;
-  uncertainty: JsonValue;
-}
 interface CheckInBands {
   mood: number | null;
   energy: number | null;
@@ -595,8 +585,8 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
 
   const ctx: ReadingContext = {
     granted,
-    tone: profile.tone_pref,
-    depth: profile.depth_pref,
+    tone: profile.tone_pref ?? "measured",
+    depth: profile.depth_pref ?? "standard",
     localBucket: granted.has("AMB-02") ? timeBucket(now, tz) : null,
     checkIn: checkInRow ? { mood: checkInRow.mood, energy: checkInRow.energy } : null,
     wellness: wellnessAllowed
