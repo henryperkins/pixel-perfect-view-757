@@ -3,7 +3,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import { Shell } from "@/components/pattern/Shell";
-import { signIn, signUp } from "@/lib/auth.client";
+import { signIn, signUp } from "@/lib/auth.shared";
 
 
 export const Route = createFileRoute("/auth")({

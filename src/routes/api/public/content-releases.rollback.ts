@@ -42,10 +42,13 @@ export const Route = createFileRoute("/api/public/content-releases/rollback")({
           return new Response("Invalid rollback request", { status: 400 });
         }
 
-        const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+        const { records } = await import("@/lib/d1.server");
+        const db = records();
 
-        const { data: target, error: findErr } = await supabaseAdmin
-          .from("content_releases")
+        const { data: target, error: findErr } = await db
+          .from<{ id: string; version: string; checksum: string; bundle: Record<string, unknown> | null }>(
+            "content_releases",
+          )
           .select("id, version, checksum, bundle")
           .eq("version", parsed.version)
           .maybeSingle();
@@ -58,11 +61,11 @@ export const Route = createFileRoute("/api/public/content-releases/rollback")({
           return new Response("Target release has an empty content graph", { status: 422 });
         }
 
-        await supabaseAdmin
+        await db
           .from("content_releases")
           .update({ is_active: false })
           .neq("id", target.id);
-        const { error: activateErr } = await supabaseAdmin
+        const { error: activateErr } = await db
           .from("content_releases")
           .update({ is_active: true })
           .eq("id", target.id);
@@ -91,9 +94,12 @@ export const Route = createFileRoute("/api/public/content-releases/rollback")({
           return new Response("Invalid signature", { status: 401 });
         }
 
-        const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-        const { data, error } = await supabaseAdmin
-          .from("content_releases")
+        const { records } = await import("@/lib/d1.server");
+        const db = records();
+        const { data, error } = await db
+          .from<{ version: string; checksum: string; is_active: boolean; created_at: string }>(
+            "content_releases",
+          )
           .select("version, checksum, is_active, created_at")
           .order("created_at", { ascending: false })
           .limit(50);

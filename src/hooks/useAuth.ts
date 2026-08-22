@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 
-import { currentSession, type SessionShape } from "@/lib/auth.client";
+import { currentSession, type SessionShape } from "@/lib/auth.shared";
 
 export function useAuth() {
   const [session, setSession] = useState<SessionShape>(null);

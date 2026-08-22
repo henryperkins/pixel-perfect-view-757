@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 
-import { signOut } from "@/lib/auth.client";
+import { signOut } from "@/lib/auth.shared";
 
 const NAV = [
   { to: "/", label: "Today" },

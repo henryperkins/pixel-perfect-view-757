@@ -1,6 +1,6 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 
-import { currentSession } from "@/lib/auth.client";
+import { currentSession } from "@/lib/auth.shared";
 
 export const Route = createFileRoute("/_authenticated")({
   ssr: false,
