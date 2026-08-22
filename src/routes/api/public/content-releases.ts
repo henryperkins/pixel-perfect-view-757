@@ -38,15 +38,16 @@ export const Route = createFileRoute("/api/public/content-releases")({
           .update(JSON.stringify(parsed.bundle))
           .digest("hex");
 
-        const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+        const { records } = await import("@/lib/d1.server");
+        const db = records();
 
         // Store inactive first, then flip the pointer atomically-ish.
-        const { data: inserted, error } = await supabaseAdmin
-          .from("content_releases")
+        const { data: inserted, error } = await db
+          .from<{ id: string }>("content_releases")
           .upsert(
             {
               version: parsed.version,
-              bundle: parsed.bundle as never,
+              bundle: parsed.bundle,
               checksum,
               is_active: false,
             },
@@ -62,11 +63,11 @@ export const Route = createFileRoute("/api/public/content-releases")({
           return new Response("Empty content graph", { status: 422 });
         }
 
-        await supabaseAdmin
+        await db
           .from("content_releases")
           .update({ is_active: false })
           .neq("id", inserted.id);
-        const { error: activateErr } = await supabaseAdmin
+        const { error: activateErr } = await db
           .from("content_releases")
           .update({ is_active: true })
           .eq("id", inserted.id);
