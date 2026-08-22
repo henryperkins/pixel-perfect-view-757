@@ -29,6 +29,47 @@ export type DB = DBClient;
 
 // Row shapes for the records plane. SQLite has no generated types, so the
 // selects below name what they read.
+export type JsonValue =
+  | string
+  | number
+  | boolean
+  | null
+  | JsonValue[]
+  | { [key: string]: JsonValue };
+
+interface ProfileRow {
+  id: string;
+  display_name: string | null;
+  tone_pref: string | null;
+  depth_pref: string | null;
+  onboarded_at: string | null;
+}
+interface SnapshotRow {
+  id: string;
+  fingerprint: string;
+  engine: string;
+  contract_version: string;
+  positions: JsonValue;
+  houses: JsonValue;
+  aspects: JsonValue;
+  uncertainty: JsonValue;
+}
+interface CheckInBands {
+  mood: number | null;
+  energy: number | null;
+  sleep: number | null;
+  stress: number | null;
+}
+interface ExistingReadingRow {
+  id: string;
+  reading_date: string;
+  headline: string;
+  body_ct: string;
+  prompt: string | null;
+  confidence: string;
+  primary_cycle_key: string | null;
+  release_version: string | null;
+}
 interface ConsentRow {
   source_id: string;
   granted: boolean;
@@ -41,7 +82,7 @@ interface FeatureRow {
   family: string;
   title: string;
   strength: number;
-  payload: unknown;
+  payload: JsonValue;
 }
 interface LifeEventRow {
   id: string;
@@ -65,7 +106,7 @@ interface ReadingRow {
 }
 interface AuditRow {
   kind: string;
-  detail: unknown;
+  detail: JsonValue;
   created_at: string;
 }
 interface CycleRow {
@@ -85,7 +126,7 @@ interface ProvenanceRow {
   lane: string;
   source_id: string;
   label: string;
-  detail: unknown;
+  detail: JsonValue;
 }
 interface ReleaseRow {
   id: string;
@@ -449,7 +490,7 @@ function snapshotToChart(row: SnapshotRow): Chart {
 
 export async function activeBundle(db: DB): Promise<ContentBundle> {
   const { data } = await db
-    .from<{ version: string; bundle: unknown }>("content_releases")
+    .from<{ version: string; bundle: JsonValue }>("content_releases")
     .select("version, bundle")
     .eq("is_active", true)
     .order("created_at", { ascending: false })
@@ -693,7 +734,7 @@ export async function purgeExpiredWellness(db: DB, userId: string) {
     .update({ sleep: null, stress: null } as never)
     .eq("user_id", userId)
     .lt("day", cutoff)
-    .or("sleep.not.is.null,stress.not.is.null");
+    .raw("(sleep is not null or stress is not null)");
 }
 
 export async function saveCheckIn(
@@ -978,10 +1019,12 @@ export async function listReleases(db: DB) {
 }
 
 export async function isAdmin(db: DB, userId: string): Promise<boolean> {
-  const { data, error } = await db.rpc("has_role", {
-    _user_id: userId,
-    _role: "admin",
-  });
+  const { data, error } = await db
+    .from<{ role: string }>("user_roles")
+    .select("role")
+    .eq("user_id", userId)
+    .eq("role", "admin")
+    .maybeSingle();
   if (error) return false;
   return Boolean(data);
 }
