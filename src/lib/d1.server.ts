@@ -251,17 +251,24 @@ class Query<Row = Record<string, unknown>> implements PromiseLike<D1Result<Row[]
     return this;
   }
 
-  maybeSingle() {
+  maybeSingle(): RowQuery<Row | null> {
     this.rowMode = "maybeSingle";
     if (this.limitN === null) this.limitN = 1;
-    return this as unknown as Query<T | null>;
+    return this as unknown as RowQuery<Row | null>;
   }
 
-  single() {
+  single(): RowQuery<Row> {
     this.rowMode = "single";
     if (this.limitN === null && this.op === "select") this.limitN = 1;
-    return this as unknown as Query<T>;
+    return this as unknown as RowQuery<Row>;
   }
+
+  /** Adds a raw predicate for cases the builder does not model. */
+  raw(sql: string, params: Primitive[] = []) {
+    this.filters.push({ sql, params });
+    return this;
+  }
+
 
   private where(): Filter {
     if (!this.filters.length) return { sql: "", params: [] };
