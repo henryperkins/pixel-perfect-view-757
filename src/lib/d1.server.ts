@@ -137,7 +137,13 @@ function decodeRow(table: string, row: Record<string, unknown>): Record<string, 
 
 type Filter = { sql: string; params: Primitive[] };
 
-class Query<T = Record<string, unknown>> implements PromiseLike<D1Result<T>> {
+/** A pending statement that resolves to a single row (or null). */
+export interface RowQuery<T> extends PromiseLike<D1Result<T>> {
+  run(): Promise<D1Result<T>>;
+}
+
+class Query<Row = Record<string, unknown>> implements PromiseLike<D1Result<Row[]>> {
+
   private op: "select" | "insert" | "upsert" | "update" | "delete" = "select";
   private columns = "*";
   private rows: Record<string, unknown>[] = [];
