@@ -346,28 +346,28 @@ class Query<Row = Record<string, unknown>> implements PromiseLike<D1Result<Row[]
     return { sql, params };
   }
 
-  async run(): Promise<D1Result<T>> {
+  async run(): Promise<D1Result<Row[]>> {
     try {
       const { sql, params } = this.build();
       const rows = (await exec<Record<string, unknown>>(sql, params)).map((r) =>
         decodeRow(this.table, r),
       );
-      if (this.rowMode === "many") return { data: rows as unknown as T, error: null };
+      if (this.rowMode === "many") return { data: rows as unknown as Row[], error: null };
       const first = rows[0] ?? null;
       if (this.rowMode === "single" && !first) {
-        return { data: null as unknown as T, error: { message: "No row returned." } };
+        return { data: null as unknown as Row[], error: { message: "No row returned." } };
       }
-      return { data: first as unknown as T, error: null };
+      return { data: first as unknown as Row[], error: null };
     } catch (err) {
       return {
-        data: null as unknown as T,
+        data: null as unknown as Row[],
         error: { message: err instanceof Error ? err.message : String(err) },
       };
     }
   }
 
-  then<R1 = D1Result<T>, R2 = never>(
-    onfulfilled?: ((value: D1Result<T>) => R1 | PromiseLike<R1>) | null,
+  then<R1 = D1Result<Row[]>, R2 = never>(
+    onfulfilled?: ((value: D1Result<Row[]>) => R1 | PromiseLike<R1>) | null,
     onrejected?: ((reason: unknown) => R2 | PromiseLike<R2>) | null,
   ): PromiseLike<R1 | R2> {
     return this.run().then(onfulfilled, onrejected);
@@ -377,9 +377,10 @@ class Query<Row = Record<string, unknown>> implements PromiseLike<D1Result<Row[]
 /** Records client. `db.from("table")` mirrors the small builder above. */
 export function records() {
   return {
-    from<T = Record<string, unknown>>(table: string) {
-      return new Query<T>(table);
+    from<Row = Record<string, unknown>>(table: string) {
+      return new Query<Row>(table);
     },
+
     exec,
   };
 }
