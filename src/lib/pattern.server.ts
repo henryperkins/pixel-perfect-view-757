@@ -510,6 +510,36 @@ interface CheckInBands {
 /** Days a tier 3 band may live before it is nulled out (registry WEL retention). */
 export const WELLNESS_RETENTION_DAYS = 180;
 
+export interface ReadingLanguage {
+  mode: "model" | "template";
+  model: string | null;
+  citations: { paragraph: number; facts: string[] }[];
+  dropped: number;
+  reason: string | null;
+  facts: { id: string; statement: string }[];
+}
+
+/** Revives the stored language-layer metadata for a cached reading. */
+function readingLanguage(row: {
+  language_mode: string | null;
+  language_model: string | null;
+  language_meta: JsonValue;
+}): ReadingLanguage {
+  const meta = (row.language_meta ?? {}) as Record<string, unknown>;
+  return {
+    mode: row.language_mode === "model" ? "model" : "template",
+    model: row.language_model ?? null,
+    citations: Array.isArray(meta["citations"])
+      ? (meta["citations"] as ReadingLanguage["citations"])
+      : [],
+    dropped: typeof meta["dropped"] === "number" ? (meta["dropped"] as number) : 0,
+    reason: typeof meta["reason"] === "string" ? (meta["reason"] as string) : null,
+    facts: [],
+  };
+}
+
+
+
 
 export async function getToday(db: DB, userId: string, timeZone: string) {
   const snapRow = await loadSnapshot(db, userId);
