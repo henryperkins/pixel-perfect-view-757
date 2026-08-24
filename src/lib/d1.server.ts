@@ -31,8 +31,12 @@ const JSON_COLUMNS: Record<string, readonly string[]> = {
   reading_feedback: ["labels"],
   audit_events: ["detail"],
   content_releases: ["bundle"],
+  content_drafts: ["bundle", "notes"],
   context_signals: ["value"],
+  daily_readings: ["language_meta"],
+  feature_narratives: ["citations"],
 };
+
 
 /** Columns stored as 0/1 that the app treats as booleans. */
 const BOOL_COLUMNS: Record<string, readonly string[]> = {
@@ -51,6 +55,9 @@ const GENERATED_ID_TABLES = new Set([
   "cycle_instances",
   "context_signals",
   "content_releases",
+  "content_drafts",
+  "feature_narratives",
+
   "daily_readings",
   "reading_sources",
   "reading_feedback",

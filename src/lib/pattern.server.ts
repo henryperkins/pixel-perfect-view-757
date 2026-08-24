@@ -59,7 +59,11 @@ interface ExistingReadingRow {
   confidence: string;
   primary_cycle_key: string | null;
   release_version: string | null;
+  language_mode: string | null;
+  language_model: string | null;
+  language_meta: JsonValue;
 }
+
 interface ConsentRow {
   source_id: string;
   granted: boolean;
@@ -506,6 +510,36 @@ interface CheckInBands {
 /** Days a tier 3 band may live before it is nulled out (registry WEL retention). */
 export const WELLNESS_RETENTION_DAYS = 180;
 
+export interface ReadingLanguage {
+  mode: "model" | "template";
+  model: string | null;
+  citations: { paragraph: number; facts: string[] }[];
+  dropped: number;
+  reason: string | null;
+  facts: { id: string; statement: string }[];
+}
+
+/** Revives the stored language-layer metadata for a cached reading. */
+function readingLanguage(row: {
+  language_mode: string | null;
+  language_model: string | null;
+  language_meta: JsonValue;
+}): ReadingLanguage {
+  const meta = (row.language_meta ?? {}) as Record<string, unknown>;
+  return {
+    mode: row.language_mode === "model" ? "model" : "template",
+    model: row.language_model ?? null,
+    citations: Array.isArray(meta["citations"])
+      ? (meta["citations"] as ReadingLanguage["citations"])
+      : [],
+    dropped: typeof meta["dropped"] === "number" ? (meta["dropped"] as number) : 0,
+    reason: typeof meta["reason"] === "string" ? (meta["reason"] as string) : null,
+    facts: [],
+  };
+}
+
+
+
 
 export async function getToday(db: DB, userId: string, timeZone: string) {
   const snapRow = await loadSnapshot(db, userId);
@@ -543,7 +577,9 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
 
   const { data: existing } = await db
     .from<ExistingReadingRow>("daily_readings")
-    .select("id, reading_date, headline, body_ct, prompt, confidence, primary_cycle_key, release_version")
+    .select(
+      "id, reading_date, headline, body_ct, prompt, confidence, primary_cycle_key, release_version, language_mode, language_model, language_meta",
+    )
     .eq("user_id", userId)
     .eq("idempotency_key", idem)
     .maybeSingle();
@@ -572,12 +608,15 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
         primary_cycle_key: existing.primary_cycle_key,
         release_version: existing.release_version,
       },
+      language: readingLanguage(existing),
       provenance: srcs ?? [],
       cycles: cyc ?? [],
       uncertainty: snapRow.uncertainty as Chart["uncertainty"],
+      ephemeris: ephemerisState(snapshotToChart(snapRow)),
       wellness: wellnessState,
     };
   }
+
 
   const chart = snapshotToChart(snapRow);
   const referenceNoon = new Date(`${day}T12:00:00Z`);
@@ -597,6 +636,57 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
 
 
   const assembled = assembleReading(chart, cycles, ctx, bundle);
+  const topCycles = cycles.slice(0, 12);
+
+  // Language layer. The reading above is the source of truth; this only
+  // rewrites wording from facts already calculated, and falls back to the
+  // template copy whenever verification or the gateway fails.
+  const { generateReadingProse } = await import("./ai/language.server");
+  const { readingFacts } = await import("./ai/facts");
+  const facts = readingFacts(
+    {
+      engine: chart.engine,
+      engineVersion: chart.engineVersion,
+      houseSystem: chart.houseSystem,
+      precision: ephemerisState(chart).precision,
+      uncertainty: chart.uncertainty,
+    },
+    topCycles.slice(0, 5),
+    {
+      localBucket: ctx.localBucket,
+      mood: ctx.checkIn?.mood ?? null,
+      energy: ctx.checkIn?.energy ?? null,
+      sleep: ctx.wellness?.sleep ?? null,
+      stress: ctx.wellness?.stress ?? null,
+    },
+  );
+  const prose = await generateReadingProse({
+    facts,
+    tone: ctx.tone,
+    depth: ctx.depth,
+    fallback: {
+      headline: assembled.headline,
+      body: assembled.body,
+      prompt: assembled.prompt,
+    },
+  });
+
+  const provenance = [...assembled.provenance];
+  if (prose.meta.mode === "model") {
+    provenance.push({
+      lane: "content",
+      source_id: "LLM-01",
+      label: `Language layer · ${prose.meta.model}`,
+      detail: {
+        model: prose.meta.model,
+        paragraphs: prose.meta.citations.length,
+        dropped: prose.meta.dropped,
+        cited: prose.meta.citations
+          .map((c) => `${c.paragraph}:${c.facts.join("+")}`)
+          .join(" "),
+      },
+    });
+  }
 
   const { data: inserted, error } = await db
     .from<{ id: string }>("daily_readings")
@@ -605,20 +695,23 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       reading_date: day,
       snapshot_id: snapRow.id,
       release_version: assembled.release_version,
-      headline: assembled.headline,
-      body_ct: await encryptField(dek, assembled.body),
-      prompt: assembled.prompt,
+      headline: prose.headline,
+      body_ct: await encryptField(dek, prose.body),
+      prompt: prose.prompt,
       confidence: assembled.confidence,
       primary_cycle_key: assembled.primary_cycle_key,
       idempotency_key: idem,
+      language_mode: prose.meta.mode,
+      language_model: prose.meta.model,
+      language_meta: prose.meta as never,
     })
     .select("id")
     .single();
   if (error) throw new Error(error.message);
 
-  if (assembled.provenance.length) {
+  if (provenance.length) {
     await db.from("reading_sources").insert(
-      assembled.provenance.map((p) => ({
+      provenance.map((p) => ({
         user_id: userId,
         reading_id: inserted.id,
         lane: p.lane,
@@ -629,7 +722,6 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
     );
   }
 
-  const topCycles = cycles.slice(0, 12);
   if (topCycles.length) {
     await db.from("cycle_instances").upsert(
       topCycles.map((c) => ({
@@ -658,19 +750,28 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
     timezone: tz,
     reading: {
       id: inserted.id,
-      headline: assembled.headline,
-      body: assembled.body,
-      prompt: assembled.prompt,
+      headline: prose.headline,
+      body: prose.body,
+      prompt: prose.prompt,
       confidence: assembled.confidence,
       primary_cycle_key: assembled.primary_cycle_key,
       release_version: assembled.release_version,
     },
-    provenance: assembled.provenance,
+    language: {
+      mode: prose.meta.mode,
+      model: prose.meta.model,
+      citations: prose.meta.citations,
+      dropped: prose.meta.dropped,
+      reason: prose.meta.reason,
+      facts: facts.map((f) => ({ id: f.id, statement: f.statement })),
+    },
+    provenance,
     cycles: topCycles,
     uncertainty: chart.uncertainty,
     ephemeris: ephemerisState(chart),
     wellness: wellnessState,
   };
+
 
 }
 
@@ -1066,4 +1167,274 @@ export async function activateRelease(db: DB, userId: string, releaseId: string)
   await syncReleasePointer(target.version, target.checksum);
 
   return { version: target.version, checksum: target.checksum };
+}
+
+// ---------------------------------------------------------------------------
+// language layer — natal chapter narratives
+// ---------------------------------------------------------------------------
+
+interface NarrativeRow {
+  feature_key: string;
+  mode: string;
+  model: string | null;
+  narrative_ct: string;
+  citations: JsonValue;
+}
+
+/**
+ * Narrative for one natal chapter, cached per chart snapshot. Generated from
+ * the structure's own payload only, verified claim-by-claim, and stored
+ * encrypted like every other piece of written output.
+ */
+export async function getFeatureNarrative(
+  db: DB,
+  userId: string,
+  featureKey: string,
+) {
+  const snapRow = await loadSnapshot(db, userId);
+  if (!snapRow) return { available: false as const, reason: "No chart calculated yet." };
+
+  const dek = await getDek(db, userId);
+
+  const { data: cached } = await db
+    .from<NarrativeRow>("feature_narratives")
+    .select("feature_key, mode, model, narrative_ct, citations")
+    .eq("user_id", userId)
+    .eq("snapshot_id", snapRow.id)
+    .eq("feature_key", featureKey)
+    .maybeSingle();
+
+  if (cached) {
+    return {
+      available: true as const,
+      featureKey,
+      narrative: await decryptField(dek, cached.narrative_ct),
+      mode: cached.mode === "model" ? ("model" as const) : ("template" as const),
+      model: cached.model,
+      citations: (Array.isArray(cached.citations) ? cached.citations : []) as {
+        paragraph: number;
+        facts: string[];
+      }[],
+      reason: null as string | null,
+    };
+  }
+
+  const { data: feature } = await db
+    .from<FeatureRow>("natal_features")
+    .select("feature_key, family, title, strength, payload")
+    .eq("snapshot_id", snapRow.id)
+    .eq("feature_key", featureKey)
+    .maybeSingle();
+  if (!feature) {
+    return { available: false as const, reason: "That structure is not in this chart." };
+  }
+
+  const chart = snapshotToChart(snapRow);
+  const profile = await loadProfile(db, userId);
+  const { featureFacts } = await import("./ai/facts");
+  const { generateFeatureNarrative } = await import("./ai/language.server");
+
+  const facts = featureFacts(feature, {
+    engine: chart.engine,
+    engineVersion: chart.engineVersion,
+    houseSystem: chart.houseSystem,
+    precision: ephemerisState(chart).precision,
+    uncertainty: chart.uncertainty,
+  });
+
+  const written = await generateFeatureNarrative({
+    facts,
+    title: feature.title,
+    tone: profile.tone_pref ?? "plain",
+  });
+
+  if (!written.narrative) {
+    return {
+      available: false as const,
+      reason:
+        written.meta.reason ??
+        "No narrative could be written from this structure's facts.",
+    };
+  }
+
+  await db.from("feature_narratives").insert({
+    user_id: userId,
+    snapshot_id: snapRow.id,
+    feature_key: featureKey,
+    mode: written.meta.mode,
+    model: written.meta.model,
+    narrative_ct: await encryptField(dek, written.narrative),
+    citations: written.meta.citations as never,
+  });
+
+  return {
+    available: true as const,
+    featureKey,
+    narrative: written.narrative,
+    mode: written.meta.mode,
+    model: written.meta.model,
+    citations: written.meta.citations,
+    reason: null as string | null,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// language layer — drafted interpretation releases (admin)
+// ---------------------------------------------------------------------------
+
+interface DraftRow {
+  id: string;
+  base_version: string | null;
+  model: string | null;
+  bundle: Record<string, unknown> | null;
+  notes: JsonValue;
+  status: string;
+  created_at: string;
+}
+
+/** Slots a drafted release must cover: the ones the engine actually looks up. */
+const DRAFT_SLOTS: { key: string; family: string; transitBody: string; natalPoint: string }[] = [
+  ...["saturn", "jupiter", "mars", "venus", "mercury", "sun", "moon", "uranus", "neptune", "pluto"].flatMap(
+    (body) =>
+      ["hard", "soft"].map((family) => ({
+        key: `${family}:${body}:*`,
+        family,
+        transitBody: body,
+        natalPoint: "any natal point",
+      })),
+  ),
+  { key: "hard:*:*", family: "hard", transitBody: "any body", natalPoint: "any natal point" },
+  { key: "soft:*:*", family: "soft", transitBody: "any body", natalPoint: "any natal point" },
+];
+
+export async function listDrafts(db: DB, userId: string) {
+  if (!(await isAdmin(db, userId))) return [];
+  const { data } = await db
+    .from<DraftRow>("content_drafts")
+    .select("id, base_version, model, bundle, notes, status, created_at")
+    .eq("status", "draft")
+    .order("created_at", { ascending: false })
+    .limit(5);
+
+  return (data ?? []).map((d) => {
+    const bundle = (d.bundle ?? {}) as { cycles?: { key: string; mechanism: string; question: string }[] };
+    return {
+      id: d.id,
+      base_version: d.base_version,
+      model: d.model,
+      created_at: d.created_at,
+      notes: d.notes,
+      entries: bundle.cycles ?? [],
+    };
+  });
+}
+
+/**
+ * Drafts a full interpretation release with the language layer. Nothing is
+ * published: the draft is stored for review, and publishing it creates an
+ * ordinary content release that the existing rollback controls can activate.
+ */
+export async function draftRelease(db: DB, userId: string) {
+  if (!(await isAdmin(db, userId))) {
+    throw new Error("Only admins can draft a release.");
+  }
+
+  const base = await activeBundle(db);
+  const { generateBundleEntries } = await import("./ai/language.server");
+  const drafted = await generateBundleEntries(DRAFT_SLOTS);
+
+  if (drafted.entries.length === 0) {
+    throw new Error("The language layer returned no usable entries; nothing was drafted.");
+  }
+
+  const bundle = {
+    version: "pending",
+    phases: base.phases,
+    natal: base.natal,
+    cycles: drafted.entries,
+  };
+
+  const { data: inserted, error } = await db
+    .from<{ id: string }>("content_drafts")
+    .insert({
+      user_id: userId,
+      base_version: base.version,
+      model: drafted.model,
+      bundle: bundle as never,
+      notes: {
+        requested: DRAFT_SLOTS.length,
+        returned: drafted.entries.length,
+        dropped: drafted.dropped,
+        flagged: drafted.flagged.length,
+      } as never,
+      status: "draft",
+    })
+    .select("id")
+    .single();
+  if (error) throw new Error(error.message);
+
+  await db.from("audit_events").insert({
+    user_id: userId,
+    kind: "content_draft_generated",
+    detail: { model: drafted.model, entries: drafted.entries.length } as never,
+  });
+
+  return {
+    id: inserted.id,
+    entries: drafted.entries.length,
+    dropped: drafted.dropped,
+    model: drafted.model,
+  };
+}
+
+export async function discardDraft(db: DB, userId: string, draftId: string) {
+  if (!(await isAdmin(db, userId))) throw new Error("Only admins can discard a draft.");
+  const { error } = await db
+    .from("content_drafts")
+    .update({ status: "discarded" })
+    .eq("id", draftId);
+  if (error) throw new Error(error.message);
+  return { discarded: true };
+}
+
+/** Turns a reviewed draft into a real (inactive) content release. */
+export async function publishDraft(db: DB, userId: string, draftId: string) {
+  if (!(await isAdmin(db, userId))) throw new Error("Only admins can publish a draft.");
+
+  const { data: draft, error: findErr } = await db
+    .from<DraftRow>("content_drafts")
+    .select("id, base_version, model, bundle, notes, status, created_at")
+    .eq("id", draftId)
+    .maybeSingle();
+  if (findErr) throw new Error(findErr.message);
+  if (!draft || draft.status !== "draft") throw new Error("That draft is no longer open.");
+
+  const stamp = new Date().toISOString().replace(/[-:.TZ]/g, "").slice(0, 14);
+  const version = `ai-${stamp}`;
+  const bundle = { ...((draft.bundle ?? {}) as Record<string, unknown>), version };
+  const serialized = JSON.stringify(bundle);
+  const { createHash } = await import("crypto");
+  const checksum = createHash("sha256").update(serialized).digest("hex");
+
+  const { error: insertErr } = await db.from("content_releases").insert({
+    version,
+    checksum,
+    bundle: bundle as never,
+    is_active: false,
+  });
+  if (insertErr) throw new Error(insertErr.message);
+
+  const { error: markErr } = await db
+    .from("content_drafts")
+    .update({ status: "published" })
+    .eq("id", draft.id);
+  if (markErr) throw new Error(markErr.message);
+
+  await db.from("audit_events").insert({
+    user_id: userId,
+    kind: "content_draft_published",
+    detail: { version, checksum, model: draft.model } as never,
+  });
+
+  return { version, checksum };
 }

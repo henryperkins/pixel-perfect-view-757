@@ -204,3 +204,35 @@ CREATE TABLE IF NOT EXISTS audit_events (
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 CREATE INDEX IF NOT EXISTS audit_events_user_idx ON audit_events (user_id, created_at DESC);
+
+-- ---------------------------------------------------------------------------
+-- language layer (AI-generated prose over deterministic facts)
+-- ---------------------------------------------------------------------------
+
+-- daily_readings gains: language_mode ('model' | 'template'), language_model,
+-- language_meta (citations, dropped paragraphs, safety flags, fallback reason).
+
+CREATE TABLE IF NOT EXISTS feature_narratives (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  snapshot_id TEXT NOT NULL,
+  feature_key TEXT NOT NULL,
+  mode TEXT NOT NULL DEFAULT 'template',
+  model TEXT,
+  narrative_ct TEXT NOT NULL,
+  citations TEXT NOT NULL DEFAULT '[]',
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  UNIQUE (user_id, snapshot_id, feature_key)
+);
+
+CREATE TABLE IF NOT EXISTS content_drafts (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  base_version TEXT,
+  model TEXT,
+  bundle TEXT NOT NULL,
+  notes TEXT NOT NULL DEFAULT '{}',
+  status TEXT NOT NULL DEFAULT 'draft',
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS content_drafts_status_idx ON content_drafts (status, created_at DESC);
