@@ -606,6 +606,57 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
 
 
   const assembled = assembleReading(chart, cycles, ctx, bundle);
+  const topCycles = cycles.slice(0, 12);
+
+  // Language layer. The reading above is the source of truth; this only
+  // rewrites wording from facts already calculated, and falls back to the
+  // template copy whenever verification or the gateway fails.
+  const { generateReadingProse } = await import("./ai/language.server");
+  const { readingFacts } = await import("./ai/facts");
+  const facts = readingFacts(
+    {
+      engine: chart.engine,
+      engineVersion: chart.engineVersion,
+      houseSystem: chart.houseSystem,
+      precision: ephemerisState(chart).precision,
+      uncertainty: chart.uncertainty,
+    },
+    topCycles.slice(0, 5),
+    {
+      localBucket: ctx.localBucket,
+      mood: ctx.checkIn?.mood ?? null,
+      energy: ctx.checkIn?.energy ?? null,
+      sleep: ctx.wellness?.sleep ?? null,
+      stress: ctx.wellness?.stress ?? null,
+    },
+  );
+  const prose = await generateReadingProse({
+    facts,
+    tone: ctx.tone,
+    depth: ctx.depth,
+    fallback: {
+      headline: assembled.headline,
+      body: assembled.body,
+      prompt: assembled.prompt,
+    },
+  });
+
+  const provenance = [...assembled.provenance];
+  if (prose.meta.mode === "model") {
+    provenance.push({
+      lane: "content",
+      source_id: "LLM-01",
+      label: `Language layer · ${prose.meta.model}`,
+      detail: {
+        model: prose.meta.model,
+        paragraphs: prose.meta.citations.length,
+        dropped: prose.meta.dropped,
+        cited: prose.meta.citations
+          .map((c) => `${c.paragraph}:${c.facts.join("+")}`)
+          .join(" "),
+      },
+    });
+  }
 
   const { data: inserted, error } = await db
     .from<{ id: string }>("daily_readings")
@@ -614,20 +665,23 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       reading_date: day,
       snapshot_id: snapRow.id,
       release_version: assembled.release_version,
-      headline: assembled.headline,
-      body_ct: await encryptField(dek, assembled.body),
-      prompt: assembled.prompt,
+      headline: prose.headline,
+      body_ct: await encryptField(dek, prose.body),
+      prompt: prose.prompt,
       confidence: assembled.confidence,
       primary_cycle_key: assembled.primary_cycle_key,
       idempotency_key: idem,
+      language_mode: prose.meta.mode,
+      language_model: prose.meta.model,
+      language_meta: prose.meta as never,
     })
     .select("id")
     .single();
   if (error) throw new Error(error.message);
 
-  if (assembled.provenance.length) {
+  if (provenance.length) {
     await db.from("reading_sources").insert(
-      assembled.provenance.map((p) => ({
+      provenance.map((p) => ({
         user_id: userId,
         reading_id: inserted.id,
         lane: p.lane,
@@ -638,7 +692,6 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
     );
   }
 
-  const topCycles = cycles.slice(0, 12);
   if (topCycles.length) {
     await db.from("cycle_instances").upsert(
       topCycles.map((c) => ({
@@ -667,19 +720,28 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
     timezone: tz,
     reading: {
       id: inserted.id,
-      headline: assembled.headline,
-      body: assembled.body,
-      prompt: assembled.prompt,
+      headline: prose.headline,
+      body: prose.body,
+      prompt: prose.prompt,
       confidence: assembled.confidence,
       primary_cycle_key: assembled.primary_cycle_key,
       release_version: assembled.release_version,
     },
-    provenance: assembled.provenance,
+    language: {
+      mode: prose.meta.mode,
+      model: prose.meta.model,
+      citations: prose.meta.citations,
+      dropped: prose.meta.dropped,
+      reason: prose.meta.reason,
+      facts: facts.map((f) => ({ id: f.id, statement: f.statement })),
+    },
+    provenance,
     cycles: topCycles,
     uncertainty: chart.uncertainty,
     ephemeris: ephemerisState(chart),
     wellness: wellnessState,
   };
+
 
 }
 
