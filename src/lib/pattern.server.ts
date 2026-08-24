@@ -547,7 +547,9 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
 
   const { data: existing } = await db
     .from<ExistingReadingRow>("daily_readings")
-    .select("id, reading_date, headline, body_ct, prompt, confidence, primary_cycle_key, release_version")
+    .select(
+      "id, reading_date, headline, body_ct, prompt, confidence, primary_cycle_key, release_version, language_mode, language_model, language_meta",
+    )
     .eq("user_id", userId)
     .eq("idempotency_key", idem)
     .maybeSingle();
@@ -576,12 +578,15 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
         primary_cycle_key: existing.primary_cycle_key,
         release_version: existing.release_version,
       },
+      language: readingLanguage(existing),
       provenance: srcs ?? [],
       cycles: cyc ?? [],
       uncertainty: snapRow.uncertainty as Chart["uncertainty"],
+      ephemeris: ephemerisState(snapshotToChart(snapRow)),
       wellness: wellnessState,
     };
   }
+
 
   const chart = snapshotToChart(snapRow);
   const referenceNoon = new Date(`${day}T12:00:00Z`);
