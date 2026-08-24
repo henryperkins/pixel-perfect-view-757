@@ -55,6 +55,9 @@ const GENERATED_ID_TABLES = new Set([
   "cycle_instances",
   "context_signals",
   "content_releases",
+  "content_drafts",
+  "feature_narratives",
+
   "daily_readings",
   "reading_sources",
   "reading_feedback",
