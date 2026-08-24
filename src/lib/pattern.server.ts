@@ -59,7 +59,11 @@ interface ExistingReadingRow {
   confidence: string;
   primary_cycle_key: string | null;
   release_version: string | null;
+  language_mode: string | null;
+  language_model: string | null;
+  language_meta: JsonValue;
 }
+
 interface ConsentRow {
   source_id: string;
   granted: boolean;
