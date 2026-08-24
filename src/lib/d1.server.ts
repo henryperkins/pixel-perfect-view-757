@@ -31,8 +31,12 @@ const JSON_COLUMNS: Record<string, readonly string[]> = {
   reading_feedback: ["labels"],
   audit_events: ["detail"],
   content_releases: ["bundle"],
+  content_drafts: ["bundle", "notes"],
   context_signals: ["value"],
+  daily_readings: ["language_meta"],
+  feature_narratives: ["citations"],
 };
+
 
 /** Columns stored as 0/1 that the app treats as booleans. */
 const BOOL_COLUMNS: Record<string, readonly string[]> = {
