@@ -223,7 +223,12 @@ function TodayReading() {
         <Field label="Zone" value={data.timezone} />
         <Field label="Confidence" value={data.reading.confidence} />
         <Field label="Content" value={data.reading.release_version} />
+        <Field
+          label="Language"
+          value={data.language?.mode === "model" ? "model" : "template"}
+        />
       </Rail>
+
 
       <article>
         <h1 className="text-3xl leading-snug">{data.reading.headline}</h1>
