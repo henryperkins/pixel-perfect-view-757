@@ -91,11 +91,13 @@ function PatternView({ data }: { data: PatternData }) {
               </button>
               {open === f.feature_key ? (
                 <div className="border-t border-rule bg-evidence px-4 py-3">
-                  <pre className="overflow-x-auto font-mono text-xs text-evidence-foreground">
+                  <FeatureNarrative featureKey={f.feature_key} />
+                  <pre className="mt-4 overflow-x-auto font-mono text-xs text-evidence-foreground">
                     {JSON.stringify(f.payload, null, 2)}
                   </pre>
                 </div>
               ) : null}
+
             </article>
           ))}
         </div>
