@@ -259,3 +259,43 @@ export const triggerEdgeRun = createServerFn({ method: "POST" })
     });
     return started;
   });
+
+export const fetchFeatureNarrative = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
+  .inputValidator((d: unknown) =>
+    z.object({ featureKey: z.string().min(1).max(120) }).parse(d),
+  )
+  .handler(async ({ data, context }) => {
+    const m = await import("./pattern.server");
+    return m.getFeatureNarrative(context.db, context.userId, data.featureKey);
+  });
+
+export const fetchContentDrafts = createServerFn({ method: "GET" })
+  .middleware([requireAuth])
+  .handler(async ({ context }) => {
+    const m = await import("./pattern.server");
+    return { drafts: await m.listDrafts(context.db, context.userId) };
+  });
+
+export const draftContentRelease = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
+  .handler(async ({ context }) => {
+    const m = await import("./pattern.server");
+    return m.draftRelease(context.db, context.userId);
+  });
+
+export const publishContentDraft = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
+  .inputValidator((d: unknown) => z.object({ draftId: z.string().min(1) }).parse(d))
+  .handler(async ({ data, context }) => {
+    const m = await import("./pattern.server");
+    return m.publishDraft(context.db, context.userId, data.draftId);
+  });
+
+export const discardContentDraft = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
+  .inputValidator((d: unknown) => z.object({ draftId: z.string().min(1) }).parse(d))
+  .handler(async ({ data, context }) => {
+    const m = await import("./pattern.server");
+    return m.discardDraft(context.db, context.userId, data.draftId);
+  });
