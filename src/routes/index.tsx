@@ -223,7 +223,12 @@ function TodayReading() {
         <Field label="Zone" value={data.timezone} />
         <Field label="Confidence" value={data.reading.confidence} />
         <Field label="Content" value={data.reading.release_version} />
+        <Field
+          label="Language"
+          value={data.language?.mode === "model" ? "model" : "template"}
+        />
       </Rail>
+
 
       <article>
         <h1 className="text-3xl leading-snug">{data.reading.headline}</h1>
@@ -357,6 +362,44 @@ function TodayReading() {
                   ))}
                 </ul>
               </div>
+
+              <div>
+                <h3 className="technical text-evidence-foreground">Language layer</h3>
+                {data.language?.mode === "model" ? (
+                  <>
+                    <p className="mt-2 font-mono text-xs">
+                      Wording written by {data.language.model} from the facts below only.
+                      {data.language.dropped > 0
+                        ? ` ${data.language.dropped} paragraph(s) were discarded for citing something that wasn't calculated.`
+                        : ""}
+                    </p>
+                    <ul className="mt-2 space-y-1.5 font-mono text-xs">
+                      {data.language.citations.map((c) => (
+                        <li key={c.paragraph} className="flex flex-wrap gap-x-3">
+                          <span className="text-foreground">¶{c.paragraph}</span>
+                          <span>cites {c.facts.join(", ")}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    {data.language.facts.length ? (
+                      <ul className="mt-3 space-y-1.5 font-mono text-xs text-muted-foreground">
+                        {data.language.facts.map((f) => (
+                          <li key={f.id} className="flex flex-wrap gap-x-3">
+                            <span className="text-foreground">{f.id}</span>
+                            <span>{f.statement}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : null}
+                  </>
+                ) : (
+                  <p className="mt-2 font-mono text-xs">
+                    Template wording.
+                    {data.language?.reason ? ` Fell back because: ${data.language.reason}.` : ""}
+                  </p>
+                )}
+              </div>
+
             </div>
           ) : null}
         </section>

@@ -4,7 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
-import { fetchPattern } from "@/lib/pattern.functions";
+import { fetchFeatureNarrative, fetchPattern } from "@/lib/pattern.functions";
 import { EphemerisNotice } from "@/components/pattern/EphemerisNotice";
 
 export const Route = createFileRoute("/_authenticated/pattern")({
@@ -91,11 +91,13 @@ function PatternView({ data }: { data: PatternData }) {
               </button>
               {open === f.feature_key ? (
                 <div className="border-t border-rule bg-evidence px-4 py-3">
-                  <pre className="overflow-x-auto font-mono text-xs text-evidence-foreground">
+                  <FeatureNarrative featureKey={f.feature_key} />
+                  <pre className="mt-4 overflow-x-auto font-mono text-xs text-evidence-foreground">
                     {JSON.stringify(f.payload, null, 2)}
                   </pre>
                 </div>
               ) : null}
+
             </article>
           ))}
         </div>
@@ -159,6 +161,56 @@ function PatternView({ data }: { data: PatternData }) {
           value={`${data.uncertainty.moonSpreadDeg.toFixed(2)}°`}
         />
       </Rail>
+    </div>
+  );
+}
+
+/**
+ * Narrative for one chapter. Written by the language layer from the
+ * structure's own calculated payload, verified claim-by-claim; when nothing
+ * survives verification the chapter shows the facts alone rather than filler.
+ */
+function FeatureNarrative({ featureKey }: { featureKey: string }) {
+  const load = useServerFn(fetchFeatureNarrative);
+  const query = useQuery({
+    queryKey: ["feature-narrative", featureKey],
+    queryFn: () => load({ data: { featureKey } }),
+    staleTime: Infinity,
+  });
+
+  if (query.isPending) {
+    return <p className="technical text-muted-foreground">Writing this chapter…</p>;
+  }
+  if (query.error) {
+    return (
+      <p className="technical text-muted-foreground">
+        Narrative unavailable: {query.error.message}
+      </p>
+    );
+  }
+  if (!query.data?.available) {
+    return (
+      <p className="technical text-muted-foreground">
+        No narrative for this structure — {query.data?.reason ?? "nothing supportable to say"}.
+        The facts below are the reading.
+      </p>
+    );
+  }
+
+  return (
+    <div>
+      <div className="prose-reading space-y-4 text-foreground">
+        {query.data.narrative.split("\n\n").map((para, i) => (
+          <p key={i}>{para}</p>
+        ))}
+      </div>
+      <p className="mt-3 technical text-muted-foreground">
+        {query.data.mode === "model"
+          ? `Wording by ${query.data.model} · cites ${query.data.citations
+              .map((c) => c.facts.join("+"))
+              .join(" / ")}`
+          : "Template wording"}
+      </p>
     </div>
   );
 }
