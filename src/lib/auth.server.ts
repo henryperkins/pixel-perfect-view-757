@@ -12,7 +12,8 @@ import { records, exec } from "./d1.server";
 
 const COOKIE = "pattern_session";
 const SESSION_DAYS = 30;
-const PBKDF2_ITERATIONS = 210_000;
+// The Workers runtime caps PBKDF2 at 100k iterations.
+const PBKDF2_ITERATIONS = 100_000;
 
 export interface SessionUser {
   userId: string;
@@ -29,13 +30,17 @@ async function sha256Hex(value: string): Promise<string> {
   return toHex(await crypto.subtle.digest("SHA-256", enc.encode(value)));
 }
 
-async function derive(password: string, saltHex: string): Promise<string> {
+async function derive(
+  password: string,
+  saltHex: string,
+  iterations: number = PBKDF2_ITERATIONS,
+): Promise<string> {
   const salt = Uint8Array.from(saltHex.match(/.{2}/g) ?? [], (b) => parseInt(b, 16));
   const key = await crypto.subtle.importKey("raw", enc.encode(password), "PBKDF2", false, [
     "deriveBits",
   ]);
   const bits = await crypto.subtle.deriveBits(
-    { name: "PBKDF2", salt, iterations: PBKDF2_ITERATIONS, hash: "SHA-256" },
+    { name: "PBKDF2", salt, iterations, hash: "SHA-256" },
     key,
     256,
   );
@@ -48,9 +53,10 @@ async function hashPassword(password: string): Promise<string> {
 }
 
 async function verifyPassword(password: string, stored: string): Promise<boolean> {
-  const [scheme, , salt, digest] = stored.split("$");
+  const [scheme, iters, salt, digest] = stored.split("$");
   if (scheme !== "pbkdf2" || !salt || !digest) return false;
-  const candidate = await derive(password, salt);
+  const iterations = Number(iters) || PBKDF2_ITERATIONS;
+  const candidate = await derive(password, salt, iterations);
   if (candidate.length !== digest.length) return false;
   let diff = 0;
   for (let i = 0; i < candidate.length; i++) diff |= candidate.charCodeAt(i) ^ digest.charCodeAt(i);
