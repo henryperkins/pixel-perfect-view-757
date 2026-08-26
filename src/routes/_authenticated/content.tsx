@@ -247,7 +247,9 @@ function ContentPage() {
           )}
 
           <EdgePlane />
+          <DraftPlane isAdmin={isAdmin} />
         </div>
+
 
 
         <Rail title="Editorial plane">
