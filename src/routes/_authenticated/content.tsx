@@ -7,8 +7,12 @@ import { toast } from "sonner";
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import {
   activateContentRelease,
+  discardContentDraft,
+  draftContentRelease,
+  fetchContentDrafts,
   fetchEdgePlane,
   fetchReleases,
+  publishContentDraft,
   triggerEdgeRun,
 } from "@/lib/pattern.functions";
 
@@ -467,6 +471,129 @@ function EdgePlane() {
           {start.isPending ? "Starting…" : "Start a durable run for today"}
         </button>
       ) : null}
+    </section>
+  );
+}
+
+/**
+ * Language-layer drafting: the model writes candidate interpretation copy for
+ * every slot the engine looks up, but nothing it writes becomes live copy
+ * until an admin publishes it as a release and flips the pointer above.
+ */
+function DraftPlane({ isAdmin }: { isAdmin: boolean }) {
+  const listFn = useServerFn(fetchContentDrafts);
+  const draftFn = useServerFn(draftContentRelease);
+  const publishFn = useServerFn(publishContentDraft);
+  const discardFn = useServerFn(discardContentDraft);
+  const queryClient = useQueryClient();
+
+  const query = useQuery({ queryKey: ["content-drafts"], queryFn: () => listFn({}) });
+  const drafts = query.data?.drafts ?? [];
+
+  const refresh = () => {
+    void queryClient.invalidateQueries({ queryKey: ["content-drafts"] });
+    void queryClient.invalidateQueries({ queryKey: ["releases"] });
+  };
+
+  const draft = useMutation({
+    mutationFn: () => draftFn({}),
+    onSuccess: (d) => {
+      toast.success(`Drafted ${d.entries} entries with ${d.model}`);
+      refresh();
+    },
+    onError: (e: Error) => toast.error(e.message),
+  });
+
+  const publish = useMutation({
+    mutationFn: (draftId: string) => publishFn({ data: { draftId } }),
+    onSuccess: (d) => {
+      toast.success(`Published ${d.version}. Roll the pointer to it when ready.`);
+      refresh();
+    },
+    onError: (e: Error) => toast.error(e.message),
+  });
+
+  const discard = useMutation({
+    mutationFn: (draftId: string) => discardFn({ data: { draftId } }),
+    onSuccess: () => {
+      toast.success("Draft discarded");
+      refresh();
+    },
+    onError: (e: Error) => toast.error(e.message),
+  });
+
+  if (!isAdmin) return null;
+
+  return (
+    <section className="mt-12 border-t border-rule pt-6">
+      <div className="flex flex-wrap items-baseline justify-between gap-3">
+        <h2 className="technical text-muted-foreground">Drafted copy · language layer</h2>
+        <button
+          type="button"
+          onClick={() => draft.mutate()}
+          disabled={draft.isPending}
+          className="technical border border-rule px-3 py-1.5 text-foreground transition-colors hover:bg-evidence disabled:opacity-50"
+        >
+          {draft.isPending ? "Drafting…" : "Draft a release"}
+        </button>
+      </div>
+      <p className="prose-reading mt-3 text-xs text-muted-foreground">
+        The model writes mechanism and question copy for each cycle slot; anything that
+        predicts, diagnoses or asserts an outcome is dropped before storage. A draft is
+        inert until published as a release and pointed to.
+      </p>
+
+      {query.isPending ? (
+        <p className="mt-4 technical text-muted-foreground" aria-busy="true">
+          Loading drafts…
+        </p>
+      ) : query.error ? (
+        <p role="alert" className="mt-4 technical text-destructive">
+          Drafts unavailable: {query.error.message}
+        </p>
+      ) : drafts.length === 0 ? (
+        <p className="mt-4 technical text-muted-foreground">
+          No open drafts. Live copy is whichever release the pointer names.
+        </p>
+      ) : (
+        <div className="mt-4 space-y-3">
+          {drafts.map((d) => (
+            <article key={d.id} className="border border-rule bg-card p-4">
+              <div className="flex flex-wrap items-baseline justify-between gap-3">
+                <span className="font-mono text-xs text-foreground">
+                  {d.entries.length} entries · from {d.base_version ?? "built-in"}
+                </span>
+                <span className="technical text-muted-foreground">{d.model ?? "—"}</span>
+              </div>
+              <ul className="mt-3 space-y-2 font-mono text-xs text-muted-foreground">
+                {d.entries.slice(0, 4).map((e) => (
+                  <li key={e.key}>
+                    <span className="text-foreground">{e.key}</span> · {e.mechanism}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-4 flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  onClick={() => publish.mutate(d.id)}
+                  disabled={publish.isPending || discard.isPending}
+                  className="technical border border-primary bg-primary px-3 py-1.5 text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-50"
+                >
+                  {publish.isPending ? "Publishing…" : "Publish as release"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => discard.mutate(d.id)}
+                  disabled={publish.isPending || discard.isPending}
+                  className="technical border border-rule px-3 py-1.5 text-foreground transition-colors hover:bg-evidence disabled:opacity-50"
+                >
+                  Discard
+                </button>
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
     </section>
   );
 }
