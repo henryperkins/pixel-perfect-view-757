@@ -55,59 +55,118 @@ function PatternPage() {
   );
 }
 
+const ASPECT_MEANING: Record<string, string> = {
+  conjunction: "same place in the sky — the two blend and act as one",
+  opposition: "facing each other — a pull between two needs",
+  square: "at right angles — friction that asks for a decision",
+  trine: "in easy flow — capacity that comes naturally",
+  sextile: "mild support — works when you reach for it",
+};
+
 function PatternView({ data }: { data: PatternData }) {
-  const [open, setOpen] = useState<string | null>(null);
+  const [open, setOpen] = useState<string | null>(
+    data.features[0]?.feature_key ?? null,
+  );
 
   return (
     <div className="grid animate-rise gap-10 lg:grid-cols-[minmax(0,1fr)_16rem]">
       <div>
         <h1 className="text-3xl">Your pattern</h1>
         <p className="mt-3 max-w-2xl text-sm text-muted-foreground">
-          Chapters below come from structures actually present in the calculation. If a
-          structure isn't there, nothing is written for it.
+          This page has three parts, in order: the <strong>chapters</strong> — structures
+          the calculation actually found in your chart; your <strong>placements</strong> —
+          where each body sat at your birth; and your <strong>connections</strong> — the
+          angles between those bodies. Nothing here is written unless the calculation
+          supports it, so empty space means "not present", not "still loading".
         </p>
 
-        <div className="mt-8 space-y-3">
-          {data.features.length === 0 ? (
-            <p className="border border-rule bg-evidence p-4 text-sm text-evidence-foreground">
-              No structural patterns passed the strength threshold for this chart. That is a
-              real result, not a loading state.
-            </p>
-          ) : null}
-          {data.features.map((f) => (
-            <article key={f.feature_key} className="border border-rule bg-card">
-              <button
-                type="button"
-                onClick={() => setOpen(open === f.feature_key ? null : f.feature_key)}
-                className="flex w-full items-baseline justify-between gap-4 px-4 py-3 text-left"
-              >
-                <span>
-                  <span className="technical text-muted-foreground">{f.family}</span>
-                  <span className="mt-1 block font-serif text-lg">{f.title}</span>
-                </span>
-                <span className="font-mono text-xs text-muted-foreground">
-                  {Number(f.strength).toFixed(2)}
-                </span>
-              </button>
-              {open === f.feature_key ? (
-                <div className="border-t border-rule bg-evidence px-4 py-3">
-                  <FeatureNarrative featureKey={f.feature_key} />
-                  <pre className="mt-4 overflow-x-auto font-mono text-xs text-evidence-foreground">
-                    {JSON.stringify(f.payload, null, 2)}
-                  </pre>
-                </div>
-              ) : null}
+        <section className="mt-10">
+          <div className="flex items-baseline justify-between gap-4 border-b border-rule pb-2">
+            <h2 className="technical text-muted-foreground">
+              1 · Chapters ({data.features.length})
+            </h2>
+            <span className="technical text-muted-foreground">
+              strength = how defined the structure is (0–1)
+            </span>
+          </div>
+          <p className="mt-3 max-w-2xl text-sm text-muted-foreground">
+            Open a chapter to read what the structure means and see the exact facts it was
+            built from.
+          </p>
 
-            </article>
-          ))}
-        </div>
+          <div className="mt-5 space-y-3">
+            {data.features.length === 0 ? (
+              <p className="border border-rule bg-evidence p-4 text-sm text-evidence-foreground">
+                No structural patterns passed the strength threshold for this chart. That is a
+                real result, not a loading state — your placements and connections below are
+                still complete.
+              </p>
+            ) : null}
+            {data.features.map((f) => {
+              const isOpen = open === f.feature_key;
+              return (
+                <article key={f.feature_key} className="border border-rule bg-card">
+                  <button
+                    type="button"
+                    aria-expanded={isOpen}
+                    onClick={() => setOpen(isOpen ? null : f.feature_key)}
+                    className="flex w-full items-baseline justify-between gap-4 px-4 py-3 text-left"
+                  >
+                    <span>
+                      <span className="technical text-muted-foreground">{f.family}</span>
+                      <span className="mt-1 block font-serif text-lg">{f.title}</span>
+                    </span>
+                    <span className="flex shrink-0 items-baseline gap-3">
+                      <span className="font-mono text-xs text-muted-foreground">
+                        strength {Number(f.strength).toFixed(2)}
+                      </span>
+                      <span className="technical text-muted-foreground">
+                        {isOpen ? "Close" : "Read"}
+                      </span>
+                    </span>
+                  </button>
+                  {isOpen ? (
+                    <div className="border-t border-rule bg-evidence px-4 py-3">
+                      <FeatureNarrative featureKey={f.feature_key} />
+                      <details className="mt-4">
+                        <summary className="technical cursor-pointer text-muted-foreground">
+                          Underlying calculated values
+                        </summary>
+                        <pre className="mt-3 overflow-x-auto font-mono text-xs text-evidence-foreground">
+                          {JSON.stringify(f.payload, null, 2)}
+                        </pre>
+                      </details>
+                    </div>
+                  ) : null}
+                </article>
+              );
+            })}
+          </div>
+        </section>
 
         <EphemerisNotice state={data.ephemeris} className="mt-10" />
 
         <section className="mt-12">
-          <h2 className="technical text-muted-foreground">Placements</h2>
-          <div className="mt-3 -mx-6 overflow-x-auto px-6">
+          <h2 className="technical border-b border-rule pb-2 text-muted-foreground">
+            2 · Placements
+          </h2>
+          <p className="mt-3 max-w-2xl text-sm text-muted-foreground">
+            Where each body sat at the moment of your birth. "Rx" means the body appeared to
+            move backwards from Earth.
+            {data.uncertainty.housesReliable
+              ? " Houses are the area of life the body falls into."
+              : " Houses are suppressed here because your birth time isn't precise enough to place them honestly."}
+          </p>
+          <div className="mt-4 -mx-6 overflow-x-auto px-6">
             <table className="w-full min-w-[34rem] text-left font-mono text-xs">
+              <thead>
+                <tr className="border-b border-rule technical text-muted-foreground">
+                  <th className="py-1.5 pr-3 font-normal">Body</th>
+                  <th className="py-1.5 pr-3 font-normal">Sign &amp; degree</th>
+                  <th className="py-1.5 pr-3 font-normal">House</th>
+                  <th className="py-1.5 font-normal">Motion</th>
+                </tr>
+              </thead>
               <tbody>
                 {data.placements.map((p) => (
                   <tr key={p.key} className="border-b border-rule">
@@ -115,38 +174,54 @@ function PatternView({ data }: { data: PatternData }) {
                     <td className="py-1.5 pr-3 whitespace-nowrap">{p.position}</td>
                     <td className="py-1.5 pr-3 whitespace-nowrap">
                       {p.angleDependent && !data.uncertainty.housesReliable
-                        ? "house suppressed"
+                        ? "suppressed"
                         : p.house
                           ? `house ${p.house}`
                           : "—"}
                     </td>
-                    <td className="py-1.5">{p.retrograde ? "Rx" : ""}</td>
+                    <td className="py-1.5">{p.retrograde ? "Rx" : "direct"}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-
         </section>
 
-        <section className="mt-10">
-          <h2 className="technical text-muted-foreground">Natal aspects</h2>
-          <table className="mt-3 w-full text-left font-mono text-xs">
-            <tbody>
-              {data.aspects.map((a, i) => (
-                <tr key={i} className="border-b border-rule">
-                  <td className="py-1.5 pr-3 text-foreground">
-                    {a.a} {a.aspect} {a.b}
-                  </td>
-                  <td className="py-1.5">{a.orb.toFixed(2)}°</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <section className="mt-12">
+          <h2 className="technical border-b border-rule pb-2 text-muted-foreground">
+            3 · Connections between bodies
+          </h2>
+          <p className="mt-3 max-w-2xl text-sm text-muted-foreground">
+            The angles your bodies make with each other. "Orb" is how far the angle is from
+            exact — smaller means stronger.
+          </p>
+          <div className="mt-4 space-y-2">
+            {data.aspects.length === 0 ? (
+              <p className="text-sm text-muted-foreground">
+                No connections inside the orb limits for this chart.
+              </p>
+            ) : null}
+            {data.aspects.map((a, i) => (
+              <div
+                key={i}
+                className="flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b border-rule pb-2"
+              >
+                <span className="font-mono text-xs text-foreground">
+                  {a.a} {a.aspect} {a.b}
+                </span>
+                <span className="font-mono text-xs text-muted-foreground">
+                  orb {a.orb.toFixed(2)}°
+                </span>
+                <span className="w-full text-sm text-muted-foreground sm:w-auto">
+                  {ASPECT_MEANING[a.aspect] ?? "measured angle between the two bodies"}
+                </span>
+              </div>
+            ))}
+          </div>
         </section>
       </div>
 
-      <Rail title="Calculation">
+      <Rail title="How this was calculated">
         <Field label="Engine" value={data.engine} />
         <Field label="Precision" value={data.ephemeris.precision} />
         <Field label="Contract" value={data.contractVersion} />
@@ -160,10 +235,15 @@ function PatternView({ data }: { data: PatternData }) {
           label="Moon spread"
           value={`${data.uncertainty.moonSpreadDeg.toFixed(2)}°`}
         />
+        <p className="pt-2 text-sm text-muted-foreground">
+          "Spread" is how much a value could move given the uncertainty in your birth time.
+          A large spread is why some claims get suppressed.
+        </p>
       </Rail>
     </div>
   );
 }
+
 
 /**
  * Narrative for one chapter. Written by the language layer from the
