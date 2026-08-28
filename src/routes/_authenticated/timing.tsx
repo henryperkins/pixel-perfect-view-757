@@ -28,8 +28,78 @@ export const Route = createFileRoute("/_authenticated/timing")({
 
 const DOMAINS = ["all", "identity", "relationships", "work", "inner-life", "structure"] as const;
 
+const PHASE_LABEL: Record<string, { label: string; help: string }> = {
+  applying: { label: "Building", help: "The aspect is tightening toward its exact pass." },
+  exact: { label: "Exact", help: "The aspect is at its closest point today." },
+  separating: { label: "Fading", help: "The exact pass has happened; the influence is easing off." },
+};
+
+const ASPECT_MEANING: Record<string, string> = {
+  conjunction: "merging with",
+  opposition: "pulling against",
+  square: "pressing on",
+  trine: "supporting",
+  sextile: "opening",
+};
+
+function weightLabel(w: number): string {
+  if (w >= 0.7) return "Major";
+  if (w >= 0.4) return "Prominent";
+  return "Background";
+}
+
 function todayISO() {
   return new Date().toISOString().slice(0, 10);
+}
+
+/** Proportional timeline bar: ingress → exact → egress, with a today marker. */
+function Timeline({
+  ingress,
+  exact,
+  egress,
+  today,
+}: {
+  ingress: string | null;
+  exact: string | null;
+  egress: string | null;
+  today: string;
+}) {
+  const start = ingress ? Date.parse(ingress) : null;
+  const end = egress ? Date.parse(egress) : null;
+  if (start === null || end === null || end <= start) {
+    return <p className="technical text-xs text-muted-foreground">Open-ended window — no closing date within the scan range.</p>;
+  }
+  const span = end - start;
+  const pos = (d: string | null) =>
+    d ? Math.min(100, Math.max(0, ((Date.parse(d) - start) / span) * 100)) : null;
+  const todayPct = pos(today);
+  const exactPct = pos(exact);
+
+  return (
+    <div className="mt-3">
+      <div className="relative h-1.5 rounded-full bg-secondary">
+        {exactPct !== null ? (
+          <div
+            className="absolute top-1/2 h-3 w-px -translate-y-1/2 bg-primary"
+            style={{ left: `${exactPct}%` }}
+            aria-hidden
+          />
+        ) : null}
+        {todayPct !== null ? (
+          <div
+            className="absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-card bg-foreground"
+            style={{ left: `${todayPct}%` }}
+            aria-hidden
+          />
+        ) : null}
+      </div>
+      <div className="mt-1.5 flex justify-between font-mono text-[0.65rem] text-muted-foreground">
+        <span>opens {ingress!.slice(0, 10)}</span>
+        {exact ? <span>peak {exact.slice(0, 10)}</span> : null}
+        <span>closes {egress!.slice(0, 10)}</span>
+      </div>
+    </div>
+  );
 }
 
 function TimingPage() {
@@ -49,16 +119,33 @@ function TimingPage() {
     if (slowOnly && ["moon", "sun", "mercury", "venus"].includes(c.transit_body)) return false;
     return true;
   });
+  const active = rows.filter((c) => c.phase !== "separating" || (c.exact_at ?? "") >= day);
 
   return (
     <Shell>
       {query.isPending ? (
-        <p className="technical text-muted-foreground">Scanning cycles…</p>
+        <div className="max-w-xl space-y-4" aria-busy="true">
+          <div className="h-9 w-48 animate-pulse rounded-sm bg-secondary" />
+          <div className="h-24 animate-pulse rounded-sm border border-rule bg-card" />
+          <div className="h-24 animate-pulse rounded-sm border border-rule bg-card" />
+        </div>
       ) : query.error ? (
-        <p className="text-sm text-destructive">{query.error.message}</p>
+        <div role="alert" className="max-w-xl border border-destructive/40 bg-card p-5">
+          <p className="text-sm text-destructive">{query.error.message}</p>
+          <button
+            type="button"
+            onClick={() => query.refetch()}
+            className="mt-4 rounded-sm border border-input px-3 py-1.5 text-xs hover:bg-secondary"
+          >
+            Retry
+          </button>
+        </div>
       ) : !data ? (
         <div className="max-w-xl">
           <h1 className="text-3xl">No chart yet</h1>
+          <p className="mt-3 text-sm text-muted-foreground">
+            Timing is calculated from your birth chart. Enter your birth details first.
+          </p>
           <Link to="/onboarding" className="mt-6 inline-flex technical text-primary">
             Enter birth details
           </Link>
@@ -67,81 +154,117 @@ function TimingPage() {
         <div className="grid animate-rise gap-10 lg:grid-cols-[minmax(0,1fr)_16rem]">
           <div>
             <h1 className="text-3xl">Timing</h1>
-            <p className="mt-3 max-w-2xl text-sm text-muted-foreground">
-              Windows, not days. Each row is a real transit arc with the dates it opens,
-              perfects and closes.
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+              Your natal chart is fixed; the planets keep moving. This page shows where today's sky
+              forms measurable angles to your birth positions — each one opens on a date, peaks,
+              and closes. Think of them as <em>weather windows</em>, not predictions: they describe
+              the terrain, never what will happen.
             </p>
 
-            <div className="mt-6 flex flex-wrap items-center gap-2">
-              {DOMAINS.map((d) => (
+            <EphemerisNotice state={data.ephemeris} className="mt-6" />
+
+            {/* ---------- Active now ---------- */}
+            <section className="mt-10">
+              <div className="flex items-baseline justify-between gap-4">
+                <h2 className="technical text-muted-foreground">1 · Active windows</h2>
+                <span className="technical text-xs text-muted-foreground">
+                  {active.length} of {rows.length} shown
+                </span>
+              </div>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Sorted by weight. <strong className="font-medium text-foreground">Major</strong>{" "}
+                windows involve slow-moving bodies and last months;{" "}
+                <strong className="font-medium text-foreground">background</strong> windows are
+                brief and subtle.
+              </p>
+
+              {active.length === 0 ? (
+                <p className="mt-4 border border-rule bg-evidence p-4 text-sm text-evidence-foreground">
+                  Nothing active under the current filters. An empty window is a valid result — no
+                  strong transits are being claimed for today.
+                </p>
+              ) : (
+                <ul className="mt-4 space-y-3">
+                  {active.map((c) => {
+                    const phase = PHASE_LABEL[c.phase] ?? { label: c.phase, help: "" };
+                    return (
+                      <li key={c.cycle_key} className="border border-rule bg-card p-4">
+                        <div className="flex flex-wrap items-baseline justify-between gap-2">
+                          <p className="text-sm font-medium text-foreground">
+                            {c.transit_body}{" "}
+                            <span className="text-muted-foreground">
+                              {ASPECT_MEANING[c.aspect] ?? c.aspect}
+                            </span>{" "}
+                            your {c.natal_point}
+                          </p>
+                          <div className="flex items-center gap-2">
+                            <span className="rounded-sm border border-input px-2 py-0.5 text-[0.65rem] uppercase tracking-wider text-muted-foreground">
+                              {c.domain}
+                            </span>
+                            <span className="rounded-sm bg-accent px-2 py-0.5 text-[0.65rem] uppercase tracking-wider text-accent-foreground">
+                              {phase.label}
+                            </span>
+                          </div>
+                        </div>
+                        <p className="mt-1 text-xs text-muted-foreground">{phase.help}</p>
+                        <Timeline
+                          ingress={c.ingress_at}
+                          exact={c.exact_at}
+                          egress={c.egress_at}
+                          today={day}
+                        />
+                        <details className="mt-3">
+                          <summary className="cursor-pointer technical text-xs text-muted-foreground">
+                            Technical values · weight {c.importance.toFixed(3)} ({weightLabel(c.importance)})
+                          </summary>
+                          <dl className="mt-2 grid grid-cols-2 gap-x-6 gap-y-1 font-mono text-xs text-muted-foreground sm:grid-cols-3">
+                            <div><dt className="inline">cycle key </dt><dd className="inline">{c.cycle_key}</dd></div>
+                            <div><dt className="inline">aspect </dt><dd className="inline">{c.aspect}</dd></div>
+                            <div><dt className="inline">phase </dt><dd className="inline">{c.phase}</dd></div>
+                          </dl>
+                        </details>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </section>
+
+            {/* ---------- Filters ---------- */}
+            <section className="mt-10">
+              <h2 className="technical text-muted-foreground">2 · Filter</h2>
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                {DOMAINS.map((d) => (
+                  <button
+                    key={d}
+                    type="button"
+                    onClick={() => setDomain(d)}
+                    className={`rounded-sm border px-2.5 py-1 text-xs transition-colors ${
+                      domain === d
+                        ? "border-primary bg-accent text-accent-foreground"
+                        : "border-input bg-card hover:bg-secondary"
+                    }`}
+                  >
+                    {d}
+                  </button>
+                ))}
                 <button
-                  key={d}
                   type="button"
-                  onClick={() => setDomain(d)}
+                  onClick={() => setSlowOnly((v) => !v)}
                   className={`rounded-sm border px-2.5 py-1 text-xs transition-colors ${
-                    domain === d
+                    slowOnly
                       ? "border-primary bg-accent text-accent-foreground"
                       : "border-input bg-card hover:bg-secondary"
                   }`}
                 >
-                  {d}
+                  slow movers only
                 </button>
-              ))}
-              <button
-                type="button"
-                onClick={() => setSlowOnly((v) => !v)}
-                className={`rounded-sm border px-2.5 py-1 text-xs transition-colors ${
-                  slowOnly
-                    ? "border-primary bg-accent text-accent-foreground"
-                    : "border-input bg-card hover:bg-secondary"
-                }`}
-              >
-                slow movers only
-              </button>
-            </div>
-
-            <EphemerisNotice state={data.ephemeris} className="mt-6" />
-
-            <div className="mt-6 -mx-6 overflow-x-auto px-6">
-              <table className="w-full min-w-[46rem] text-left font-mono text-xs">
-                <thead>
-                  <tr className="border-b border-rule">
-                    <th className="py-2 pr-3 technical text-muted-foreground">Cycle</th>
-                    <th className="py-2 pr-3 technical text-muted-foreground">Phase</th>
-                    <th className="py-2 pr-3 technical text-muted-foreground">Opens</th>
-                    <th className="py-2 pr-3 technical text-muted-foreground">Exact</th>
-                    <th className="py-2 pr-3 technical text-muted-foreground">Closes</th>
-                    <th className="py-2 technical text-muted-foreground">Weight</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {rows.map((c) => (
-                    <tr key={c.cycle_key} className="border-b border-rule">
-                      <td className="py-2 pr-3 whitespace-nowrap text-foreground">
-                        {c.transit_body} {c.aspect} natal {c.natal_point}
-                      </td>
-                      <td className="py-2 pr-3 whitespace-nowrap">{c.phase}</td>
-                      <td className="py-2 pr-3 whitespace-nowrap">
-                        {c.ingress_at?.slice(0, 10) ?? "—"}
-                      </td>
-                      <td className="py-2 pr-3 whitespace-nowrap">
-                        {c.exact_at?.slice(0, 10) ?? "—"}
-                      </td>
-                      <td className="py-2 pr-3 whitespace-nowrap">
-                        {c.egress_at?.slice(0, 10) ?? "—"}
-                      </td>
-                      <td className="py-2 whitespace-nowrap">{c.importance.toFixed(3)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            {rows.length === 0 ? (
-              <p className="mt-4 border border-rule bg-evidence p-4 text-sm text-evidence-foreground">
-                Nothing active in that filter. An empty window is a valid result.
+              </div>
+              <p className="mt-2 text-xs text-muted-foreground">
+                “Slow movers” hides Sun, Moon, Mercury and Venus — leaving only the long structural
+                cycles.
               </p>
-            ) : null}
+            </section>
           </div>
 
           <Rail title="Calculation status">
