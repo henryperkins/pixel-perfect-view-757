@@ -43,7 +43,7 @@ function PatternPage() {
         <p className="text-sm text-destructive">{query.error.message}</p>
       ) : !query.data || query.data.needsOnboarding ? (
         <div className="max-w-xl">
-          <h1 className="text-3xl">No chart yet</h1>
+          <h1 className="text-2xl sm:text-3xl">No chart yet</h1>
           <Link to="/onboarding" className="mt-6 inline-flex technical text-primary">
             Enter birth details
           </Link>
@@ -69,10 +69,10 @@ function PatternView({ data }: { data: PatternData }) {
   );
 
   return (
-    <div className="grid animate-rise gap-10 lg:grid-cols-[minmax(0,1fr)_16rem]">
-      <div>
-        <h1 className="text-3xl">Your pattern</h1>
-        <p className="mt-3 max-w-2xl text-sm text-muted-foreground">
+    <div className="grid animate-rise gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1fr)_16rem]">
+      <div className="min-w-0">
+        <h1 className="text-2xl sm:text-3xl">Your pattern</h1>
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
           This page has three parts, in order: the <strong>chapters</strong> — structures
           the calculation actually found in your chart; your <strong>placements</strong> —
           where each body sat at your birth; and your <strong>connections</strong> — the
@@ -80,8 +80,8 @@ function PatternView({ data }: { data: PatternData }) {
           supports it, so empty space means "not present", not "still loading".
         </p>
 
-        <section className="mt-10">
-          <div className="flex items-baseline justify-between gap-4 border-b border-rule pb-2">
+        <section className="mt-8 sm:mt-10">
+          <div className="grid gap-1 border-b border-rule pb-2 sm:flex sm:items-baseline sm:justify-between sm:gap-4">
             <h2 className="technical text-muted-foreground">
               1 · Chapters ({data.features.length})
             </h2>
@@ -89,7 +89,7 @@ function PatternView({ data }: { data: PatternData }) {
               strength = how defined the structure is (0–1)
             </span>
           </div>
-          <p className="mt-3 max-w-2xl text-sm text-muted-foreground">
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
             Open a chapter to read what the structure means and see the exact facts it was
             built from.
           </p>
@@ -110,19 +110,21 @@ function PatternView({ data }: { data: PatternData }) {
                     type="button"
                     aria-expanded={isOpen}
                     onClick={() => setOpen(isOpen ? null : f.feature_key)}
-                    className="flex w-full items-baseline justify-between gap-4 px-4 py-3 text-left"
+                    className="grid w-full grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-3 gap-y-2 px-4 py-3 text-left"
                   >
-                    <span>
-                      <span className="technical text-muted-foreground">{f.family}</span>
-                      <span className="mt-1 block font-serif text-lg">{f.title}</span>
+                    <span className="min-w-0">
+                      <span className="technical block truncate text-muted-foreground">
+                        {f.family}
+                      </span>
+                      <span className="mt-1 block font-serif text-base leading-snug sm:text-lg">
+                        {f.title}
+                      </span>
                     </span>
-                    <span className="flex shrink-0 items-baseline gap-3">
-                      <span className="font-mono text-xs text-muted-foreground">
-                        strength {Number(f.strength).toFixed(2)}
-                      </span>
-                      <span className="technical text-muted-foreground">
-                        {isOpen ? "Close" : "Read"}
-                      </span>
+                    <span className="technical shrink-0 self-start text-muted-foreground">
+                      {isOpen ? "Close" : "Read"}
+                    </span>
+                    <span className="col-span-2 font-mono text-xs text-muted-foreground sm:col-span-1 sm:col-start-1">
+                      strength {Number(f.strength).toFixed(2)}
                     </span>
                   </button>
                   {isOpen ? (
@@ -132,7 +134,7 @@ function PatternView({ data }: { data: PatternData }) {
                         <summary className="technical cursor-pointer text-muted-foreground">
                           Underlying calculated values
                         </summary>
-                        <pre className="mt-3 overflow-x-auto font-mono text-xs text-evidence-foreground">
+                        <pre className="mt-3 -mx-1 overflow-x-auto px-1 font-mono text-xs text-evidence-foreground">
                           {JSON.stringify(f.payload, null, 2)}
                         </pre>
                       </details>
@@ -144,20 +146,51 @@ function PatternView({ data }: { data: PatternData }) {
           </div>
         </section>
 
-        <EphemerisNotice state={data.ephemeris} className="mt-10" />
 
-        <section className="mt-12">
+        <EphemerisNotice state={data.ephemeris} className="mt-8 sm:mt-10" />
+
+        <section className="mt-10 sm:mt-12">
           <h2 className="technical border-b border-rule pb-2 text-muted-foreground">
             2 · Placements
           </h2>
-          <p className="mt-3 max-w-2xl text-sm text-muted-foreground">
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
             Where each body sat at the moment of your birth. "Rx" means the body appeared to
             move backwards from Earth.
             {data.uncertainty.housesReliable
               ? " Houses are the area of life the body falls into."
               : " Houses are suppressed here because your birth time isn't precise enough to place them honestly."}
           </p>
-          <div className="mt-4 -mx-6 overflow-x-auto px-6">
+
+          {/* Mobile: one row per body, stacked so nothing needs horizontal scrolling */}
+          <ul className="mt-4 sm:hidden">
+            {data.placements.map((p) => {
+              const house =
+                p.angleDependent && !data.uncertainty.housesReliable
+                  ? "suppressed"
+                  : p.house
+                    ? `house ${p.house}`
+                    : "—";
+              return (
+                <li
+                  key={p.key}
+                  className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-3 border-b border-rule py-2.5"
+                >
+                  <span className="min-w-0 truncate font-mono text-xs text-foreground">
+                    {p.label}
+                  </span>
+                  <span className="shrink-0 font-mono text-xs text-foreground">
+                    {p.position}
+                  </span>
+                  <span className="technical text-muted-foreground">{house}</span>
+                  <span className="technical shrink-0 text-muted-foreground">
+                    {p.retrograde ? "Rx" : "direct"}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+
+          <div className="mt-4 hidden overflow-x-auto sm:block">
             <table className="w-full min-w-[34rem] text-left font-mono text-xs">
               <thead>
                 <tr className="border-b border-rule technical text-muted-foreground">
@@ -187,11 +220,11 @@ function PatternView({ data }: { data: PatternData }) {
           </div>
         </section>
 
-        <section className="mt-12">
+        <section className="mt-10 sm:mt-12">
           <h2 className="technical border-b border-rule pb-2 text-muted-foreground">
             3 · Connections between bodies
           </h2>
-          <p className="mt-3 max-w-2xl text-sm text-muted-foreground">
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
             The angles your bodies make with each other. "Orb" is how far the angle is from
             exact — smaller means stronger.
           </p>
@@ -202,45 +235,47 @@ function PatternView({ data }: { data: PatternData }) {
               </p>
             ) : null}
             {data.aspects.map((a, i) => (
-              <div
-                key={i}
-                className="flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b border-rule pb-2"
-              >
-                <span className="font-mono text-xs text-foreground">
-                  {a.a} {a.aspect} {a.b}
-                </span>
-                <span className="font-mono text-xs text-muted-foreground">
-                  orb {a.orb.toFixed(2)}°
-                </span>
-                <span className="w-full text-sm text-muted-foreground sm:w-auto">
+              <div key={i} className="border-b border-rule pb-2.5">
+                <div className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-3">
+                  <span className="min-w-0 font-mono text-xs text-foreground">
+                    {a.a} {a.aspect} {a.b}
+                  </span>
+                  <span className="shrink-0 font-mono text-xs text-muted-foreground">
+                    orb {a.orb.toFixed(2)}°
+                  </span>
+                </div>
+                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
                   {ASPECT_MEANING[a.aspect] ?? "measured angle between the two bodies"}
-                </span>
+                </p>
               </div>
             ))}
           </div>
         </section>
       </div>
 
-      <Rail title="How this was calculated">
-        <Field label="Engine" value={data.engine} />
-        <Field label="Precision" value={data.ephemeris.precision} />
-        <Field label="Contract" value={data.contractVersion} />
-        <Field label="Houses" value={data.houseSystem} />
-        <Field label="Time accuracy" value={data.uncertainty.accuracy} />
-        <Field
-          label="ASC spread"
-          value={`${data.uncertainty.ascendantSpreadDeg.toFixed(2)}°`}
-        />
-        <Field
-          label="Moon spread"
-          value={`${data.uncertainty.moonSpreadDeg.toFixed(2)}°`}
-        />
-        <p className="pt-2 text-sm text-muted-foreground">
-          "Spread" is how much a value could move given the uncertainty in your birth time.
-          A large spread is why some claims get suppressed.
-        </p>
-      </Rail>
+      <div className="border-t border-rule pt-6 lg:border-t-0 lg:pt-0">
+        <Rail title="How this was calculated">
+          <Field label="Engine" value={data.engine} />
+          <Field label="Precision" value={data.ephemeris.precision} />
+          <Field label="Contract" value={data.contractVersion} />
+          <Field label="Houses" value={data.houseSystem} />
+          <Field label="Time accuracy" value={data.uncertainty.accuracy} />
+          <Field
+            label="ASC spread"
+            value={`${data.uncertainty.ascendantSpreadDeg.toFixed(2)}°`}
+          />
+          <Field
+            label="Moon spread"
+            value={`${data.uncertainty.moonSpreadDeg.toFixed(2)}°`}
+          />
+          <p className="pt-2 text-sm leading-relaxed text-muted-foreground">
+            "Spread" is how much a value could move given the uncertainty in your birth time.
+            A large spread is why some claims get suppressed.
+          </p>
+        </Rail>
+      </div>
     </div>
+
   );
 }
 
