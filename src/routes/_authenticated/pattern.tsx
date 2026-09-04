@@ -43,7 +43,7 @@ function PatternPage() {
         <p className="text-sm text-destructive">{query.error.message}</p>
       ) : !query.data || query.data.needsOnboarding ? (
         <div className="max-w-xl">
-          <h1 className="text-3xl">No chart yet</h1>
+          <h1 className="text-2xl sm:text-3xl">No chart yet</h1>
           <Link to="/onboarding" className="mt-6 inline-flex technical text-primary">
             Enter birth details
           </Link>
