@@ -69,10 +69,10 @@ function PatternView({ data }: { data: PatternData }) {
   );
 
   return (
-    <div className="grid animate-rise gap-10 lg:grid-cols-[minmax(0,1fr)_16rem]">
-      <div>
-        <h1 className="text-3xl">Your pattern</h1>
-        <p className="mt-3 max-w-2xl text-sm text-muted-foreground">
+    <div className="grid animate-rise gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1fr)_16rem]">
+      <div className="min-w-0">
+        <h1 className="text-2xl sm:text-3xl">Your pattern</h1>
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
           This page has three parts, in order: the <strong>chapters</strong> — structures
           the calculation actually found in your chart; your <strong>placements</strong> —
           where each body sat at your birth; and your <strong>connections</strong> — the
@@ -80,8 +80,8 @@ function PatternView({ data }: { data: PatternData }) {
           supports it, so empty space means "not present", not "still loading".
         </p>
 
-        <section className="mt-10">
-          <div className="flex items-baseline justify-between gap-4 border-b border-rule pb-2">
+        <section className="mt-8 sm:mt-10">
+          <div className="grid gap-1 border-b border-rule pb-2 sm:flex sm:items-baseline sm:justify-between sm:gap-4">
             <h2 className="technical text-muted-foreground">
               1 · Chapters ({data.features.length})
             </h2>
@@ -89,7 +89,7 @@ function PatternView({ data }: { data: PatternData }) {
               strength = how defined the structure is (0–1)
             </span>
           </div>
-          <p className="mt-3 max-w-2xl text-sm text-muted-foreground">
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
             Open a chapter to read what the structure means and see the exact facts it was
             built from.
           </p>
@@ -110,19 +110,21 @@ function PatternView({ data }: { data: PatternData }) {
                     type="button"
                     aria-expanded={isOpen}
                     onClick={() => setOpen(isOpen ? null : f.feature_key)}
-                    className="flex w-full items-baseline justify-between gap-4 px-4 py-3 text-left"
+                    className="grid w-full grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-3 gap-y-2 px-4 py-3 text-left"
                   >
-                    <span>
-                      <span className="technical text-muted-foreground">{f.family}</span>
-                      <span className="mt-1 block font-serif text-lg">{f.title}</span>
+                    <span className="min-w-0">
+                      <span className="technical block truncate text-muted-foreground">
+                        {f.family}
+                      </span>
+                      <span className="mt-1 block font-serif text-base leading-snug sm:text-lg">
+                        {f.title}
+                      </span>
                     </span>
-                    <span className="flex shrink-0 items-baseline gap-3">
-                      <span className="font-mono text-xs text-muted-foreground">
-                        strength {Number(f.strength).toFixed(2)}
-                      </span>
-                      <span className="technical text-muted-foreground">
-                        {isOpen ? "Close" : "Read"}
-                      </span>
+                    <span className="technical shrink-0 self-start text-muted-foreground">
+                      {isOpen ? "Close" : "Read"}
+                    </span>
+                    <span className="col-span-2 font-mono text-xs text-muted-foreground sm:col-span-1 sm:col-start-1">
+                      strength {Number(f.strength).toFixed(2)}
                     </span>
                   </button>
                   {isOpen ? (
@@ -132,7 +134,7 @@ function PatternView({ data }: { data: PatternData }) {
                         <summary className="technical cursor-pointer text-muted-foreground">
                           Underlying calculated values
                         </summary>
-                        <pre className="mt-3 overflow-x-auto font-mono text-xs text-evidence-foreground">
+                        <pre className="mt-3 -mx-1 overflow-x-auto px-1 font-mono text-xs text-evidence-foreground">
                           {JSON.stringify(f.payload, null, 2)}
                         </pre>
                       </details>
@@ -143,6 +145,7 @@ function PatternView({ data }: { data: PatternData }) {
             })}
           </div>
         </section>
+
 
         <EphemerisNotice state={data.ephemeris} className="mt-10" />
 
