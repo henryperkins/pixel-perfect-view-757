@@ -147,20 +147,50 @@ function PatternView({ data }: { data: PatternData }) {
         </section>
 
 
-        <EphemerisNotice state={data.ephemeris} className="mt-10" />
+        <EphemerisNotice state={data.ephemeris} className="mt-8 sm:mt-10" />
 
-        <section className="mt-12">
+        <section className="mt-10 sm:mt-12">
           <h2 className="technical border-b border-rule pb-2 text-muted-foreground">
             2 · Placements
           </h2>
-          <p className="mt-3 max-w-2xl text-sm text-muted-foreground">
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
             Where each body sat at the moment of your birth. "Rx" means the body appeared to
             move backwards from Earth.
             {data.uncertainty.housesReliable
               ? " Houses are the area of life the body falls into."
               : " Houses are suppressed here because your birth time isn't precise enough to place them honestly."}
           </p>
-          <div className="mt-4 -mx-6 overflow-x-auto px-6">
+
+          {/* Mobile: one row per body, stacked so nothing needs horizontal scrolling */}
+          <ul className="mt-4 sm:hidden">
+            {data.placements.map((p) => {
+              const house =
+                p.angleDependent && !data.uncertainty.housesReliable
+                  ? "suppressed"
+                  : p.house
+                    ? `house ${p.house}`
+                    : "—";
+              return (
+                <li
+                  key={p.key}
+                  className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-3 border-b border-rule py-2.5"
+                >
+                  <span className="min-w-0 truncate font-mono text-xs text-foreground">
+                    {p.label}
+                  </span>
+                  <span className="shrink-0 font-mono text-xs text-foreground">
+                    {p.position}
+                  </span>
+                  <span className="technical text-muted-foreground">{house}</span>
+                  <span className="technical shrink-0 text-muted-foreground">
+                    {p.retrograde ? "Rx" : "direct"}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+
+          <div className="mt-4 hidden overflow-x-auto sm:block">
             <table className="w-full min-w-[34rem] text-left font-mono text-xs">
               <thead>
                 <tr className="border-b border-rule technical text-muted-foreground">
@@ -190,11 +220,11 @@ function PatternView({ data }: { data: PatternData }) {
           </div>
         </section>
 
-        <section className="mt-12">
+        <section className="mt-10 sm:mt-12">
           <h2 className="technical border-b border-rule pb-2 text-muted-foreground">
             3 · Connections between bodies
           </h2>
-          <p className="mt-3 max-w-2xl text-sm text-muted-foreground">
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
             The angles your bodies make with each other. "Orb" is how far the angle is from
             exact — smaller means stronger.
           </p>
@@ -205,45 +235,47 @@ function PatternView({ data }: { data: PatternData }) {
               </p>
             ) : null}
             {data.aspects.map((a, i) => (
-              <div
-                key={i}
-                className="flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b border-rule pb-2"
-              >
-                <span className="font-mono text-xs text-foreground">
-                  {a.a} {a.aspect} {a.b}
-                </span>
-                <span className="font-mono text-xs text-muted-foreground">
-                  orb {a.orb.toFixed(2)}°
-                </span>
-                <span className="w-full text-sm text-muted-foreground sm:w-auto">
+              <div key={i} className="border-b border-rule pb-2.5">
+                <div className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-3">
+                  <span className="min-w-0 font-mono text-xs text-foreground">
+                    {a.a} {a.aspect} {a.b}
+                  </span>
+                  <span className="shrink-0 font-mono text-xs text-muted-foreground">
+                    orb {a.orb.toFixed(2)}°
+                  </span>
+                </div>
+                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
                   {ASPECT_MEANING[a.aspect] ?? "measured angle between the two bodies"}
-                </span>
+                </p>
               </div>
             ))}
           </div>
         </section>
       </div>
 
-      <Rail title="How this was calculated">
-        <Field label="Engine" value={data.engine} />
-        <Field label="Precision" value={data.ephemeris.precision} />
-        <Field label="Contract" value={data.contractVersion} />
-        <Field label="Houses" value={data.houseSystem} />
-        <Field label="Time accuracy" value={data.uncertainty.accuracy} />
-        <Field
-          label="ASC spread"
-          value={`${data.uncertainty.ascendantSpreadDeg.toFixed(2)}°`}
-        />
-        <Field
-          label="Moon spread"
-          value={`${data.uncertainty.moonSpreadDeg.toFixed(2)}°`}
-        />
-        <p className="pt-2 text-sm text-muted-foreground">
-          "Spread" is how much a value could move given the uncertainty in your birth time.
-          A large spread is why some claims get suppressed.
-        </p>
-      </Rail>
+      <div className="border-t border-rule pt-6 lg:border-t-0 lg:pt-0">
+        <Rail title="How this was calculated">
+          <Field label="Engine" value={data.engine} />
+          <Field label="Precision" value={data.ephemeris.precision} />
+          <Field label="Contract" value={data.contractVersion} />
+          <Field label="Houses" value={data.houseSystem} />
+          <Field label="Time accuracy" value={data.uncertainty.accuracy} />
+          <Field
+            label="ASC spread"
+            value={`${data.uncertainty.ascendantSpreadDeg.toFixed(2)}°`}
+          />
+          <Field
+            label="Moon spread"
+            value={`${data.uncertainty.moonSpreadDeg.toFixed(2)}°`}
+          />
+          <p className="pt-2 text-sm leading-relaxed text-muted-foreground">
+            "Spread" is how much a value could move given the uncertainty in your birth time.
+            A large spread is why some claims get suppressed.
+          </p>
+        </Rail>
+      </div>
     </div>
+
   );
 }
 
