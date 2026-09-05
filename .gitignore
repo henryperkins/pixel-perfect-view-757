@@ -30,3 +30,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Impeccable engine binaries (downloaded on demand by wrapper)
+.claude/skills/impeccable/scripts/bin/
+.agents/skills/impeccable/scripts/bin/
