@@ -29,6 +29,7 @@ export const Route = createFileRoute("/_authenticated/timing")({
 const DOMAINS = ["all", "identity", "relationships", "work", "inner-life", "structure"] as const;
 
 const PHASE_LABEL: Record<string, { label: string; help: string }> = {
+  approaching: { label: "Building", help: "The aspect is tightening toward its exact pass." },
   applying: { label: "Building", help: "The aspect is tightening toward its exact pass." },
   exact: { label: "Exact", help: "The aspect is at its closest point today." },
   separating: { label: "Fading", help: "The exact pass has happened; the influence is easing off." },
