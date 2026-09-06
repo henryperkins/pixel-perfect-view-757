@@ -215,6 +215,7 @@ function TodayReading() {
   }
 
   const primary = data.cycles.find((c) => c.cycle_key === data.reading.primary_cycle_key);
+  const timing = data.cycles.slice(0, 5);
 
   return (
     <div className="grid animate-rise gap-10 lg:grid-cols-[10rem_minmax(0,1fr)_14rem]">
@@ -236,7 +237,12 @@ function TodayReading() {
         {primary ? (
           <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 border-y border-rule py-3">
             <span className="technical text-muted-foreground">
-              Phase · <span className="text-foreground">{primary.phase}</span>
+              Phase ·{" "}
+              <span className="text-foreground">{phaseLabel(primary.phase).label}</span>
+            </span>
+            <span className="technical text-muted-foreground">
+              Strength ·{" "}
+              <span className="text-foreground">{strengthLabel(primary.importance)}</span>
             </span>
             <span className="technical text-muted-foreground">
               Orb · <span className="text-foreground">{primary.orb.toFixed(2)}°</span>
@@ -252,6 +258,7 @@ function TodayReading() {
             </span>
           </div>
         ) : null}
+
 
         <div className="prose-reading mt-6 space-y-5 text-foreground">
           {data.reading.body.split("\n\n").map((para, i) => (
