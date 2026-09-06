@@ -589,12 +589,22 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       .from<ProvenanceRow>("reading_sources")
       .select("lane, source_id, label, detail")
       .eq("reading_id", existing.id);
-    const { data: cyc } = await db
-      .from<CycleRow>("cycle_instances")
-      .select("cycle_key, transit_body, natal_point, aspect, orb, phase, domain, importance, ingress_at, exact_at, egress_at")
-      .eq("user_id", userId)
-      .eq("computed_for", day)
-      .order("importance", { ascending: false });
+    // Phase, orb and importance are recomputed against the natal positions in
+    // this snapshot so a reading opened later in the day still reports where
+    // each cycle actually stands. Stored rows are only a fallback.
+    const cachedChart = snapshotToChart(snapRow);
+    const liveCycles = computeCycles(cachedChart, new Date(`${day}T12:00:00Z`)).slice(0, 12);
+    let cyc: CycleRow[] | null = liveCycles;
+    if (!liveCycles.length) {
+      const { data: stored } = await db
+        .from<CycleRow>("cycle_instances")
+        .select("cycle_key, transit_body, natal_point, aspect, orb, phase, domain, importance, ingress_at, exact_at, egress_at")
+        .eq("user_id", userId)
+        .eq("computed_for", day)
+        .order("importance", { ascending: false });
+      cyc = stored ?? null;
+    }
+
     return {
       needsOnboarding: false as const,
       day,
