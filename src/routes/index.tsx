@@ -297,6 +297,58 @@ function TodayReading() {
         <EphemerisNotice state={data.ephemeris} className="mt-8" />
 
         <section className="mt-10 border-t border-rule pt-6">
+          <div className="flex flex-wrap items-baseline justify-between gap-2">
+            <h2 className="technical text-muted-foreground">Timing today</h2>
+            <Link to="/timing" className="technical text-primary">
+              All windows
+            </Link>
+          </div>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Calculated from your birth positions for {data.day}. Phase and strength come from
+            where today's sky sits relative to your chart — not from a generic forecast.
+          </p>
+
+          {timing.length === 0 ? (
+            <p className="mt-4 border border-rule bg-evidence p-4 text-sm text-evidence-foreground">
+              No measurable window against your chart today. An empty result is a valid one.
+            </p>
+          ) : (
+            <ul className="mt-4 space-y-3">
+              {timing.map((c) => {
+                const phase = phaseLabel(c.phase);
+                return (
+                  <li key={c.cycle_key} className="border border-rule bg-card p-4">
+                    <div className="flex flex-wrap items-baseline justify-between gap-2">
+                      <p className="text-sm font-medium text-foreground">
+                        {c.transit_body}{" "}
+                        <span className="text-muted-foreground">
+                          {ASPECT_MEANING[c.aspect] ?? c.aspect}
+                        </span>{" "}
+                        your {c.natal_point}
+                      </p>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="rounded-sm border border-input px-2 py-0.5 text-[0.65rem] uppercase tracking-wider text-muted-foreground">
+                          {strengthLabel(c.importance)}
+                        </span>
+                        <span className="rounded-sm bg-accent px-2 py-0.5 text-[0.65rem] uppercase tracking-wider text-accent-foreground">
+                          {phase.label}
+                        </span>
+                      </div>
+                    </div>
+                    <p className="mt-1 text-xs text-muted-foreground">{phase.help}</p>
+                    <p className="mt-2 font-mono text-[0.7rem] text-muted-foreground">
+                      orb {c.orb.toFixed(2)}° · weight {c.importance.toFixed(3)} ·{" "}
+                      {c.exact_at ? `peak ${c.exact_at.slice(0, 10)}` : "no peak in window"}
+                    </p>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </section>
+
+
+        <section className="mt-10 border-t border-rule pt-6">
           <h2 className="technical text-muted-foreground">Reflection</h2>
           <p className="prose-reading mt-2 text-foreground">{data.reading.prompt}</p>
 
