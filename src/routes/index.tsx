@@ -125,7 +125,35 @@ function BandPicker({
   );
 }
 
+const PHASE_COPY: Record<string, { label: string; help: string }> = {
+  approaching: { label: "Building", help: "Tightening toward its closest pass." },
+  applying: { label: "Building", help: "Tightening toward its closest pass." },
+  exact: { label: "Exact", help: "At its closest point today." },
+  separating: { label: "Fading", help: "Past its closest pass; easing off." },
+};
+
+function phaseLabel(phase: string) {
+  return PHASE_COPY[phase] ?? { label: phase, help: "" };
+}
+
+/** Weight from the transit's own speed, the natal point it touches and the orb. */
+function strengthLabel(weight: number): string {
+  if (weight >= 0.7) return "Major";
+  if (weight >= 0.4) return "Prominent";
+  return "Background";
+}
+
+const ASPECT_MEANING: Record<string, string> = {
+  conjunction: "merging with",
+  opposition: "pulling against",
+  square: "pressing on",
+  trine: "supporting",
+  sextile: "opening",
+  quincunx: "unsettling",
+};
+
 function TodayReading() {
+
 
   const today = useServerFn(fetchToday);
   const feedback = useServerFn(sendFeedback);
