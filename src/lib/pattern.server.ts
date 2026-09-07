@@ -83,7 +83,12 @@ interface LifeEventRow {
   occurred_on: string;
   domain: string;
   label_ct: string;
+  body_ct?: string | null;
+  cycle_key?: string | null;
+  feature_key?: string | null;
+  created_at?: string;
 }
+
 interface FeedbackRow {
   reading_id: string;
   resonance: number;
