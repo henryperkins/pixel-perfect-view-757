@@ -794,15 +794,57 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
 // pattern view, journal, export
 // ---------------------------------------------------------------------------
 
+/**
+ * The reader's own birth record, decrypted. Used by the editable birth page and
+ * by the chart snapshot summary on /pattern.
+ */
+export async function loadBirthRecord(db: DB, userId: string) {
+  const { data } = await db
+    .from<{
+      id: string;
+      payload_ct: string;
+      time_accuracy: string;
+      timezone: string;
+      fingerprint: string;
+      created_at: string;
+      updated_at: string;
+    }>("birth_profiles")
+    .select("id, payload_ct, time_accuracy, timezone, fingerprint, created_at, updated_at")
+    .eq("user_id", userId)
+    .maybeSingle();
+  if (!data) return null;
+  const dek = await getDek(db, userId);
+  const details = await decryptJson<BirthDetails & { utcISO?: string }>(
+    dek,
+    data.payload_ct,
+  );
+  return {
+    birthDate: details.birthDate,
+    birthTime: details.birthTime,
+    placeLabel: details.placeLabel,
+    latitude: details.latitude,
+    longitude: details.longitude,
+    utcISO: details.utcISO ?? null,
+    accuracy: data.time_accuracy,
+    timezone: data.timezone,
+    fingerprint: data.fingerprint,
+    created_at: data.created_at,
+    updated_at: data.updated_at,
+  };
+}
+
 export async function getPattern(db: DB, userId: string) {
   const snapRow = await loadSnapshot(db, userId);
   if (!snapRow) return { needsOnboarding: true as const };
   const chart = snapshotToChart(snapRow);
-  const { data: features } = await db
-    .from<FeatureRow>("natal_features")
-    .select("feature_key, family, title, strength, payload")
-    .eq("snapshot_id", snapRow.id)
-    .order("strength", { ascending: false });
+  const [{ data: features }, birth] = await Promise.all([
+    db
+      .from<FeatureRow>("natal_features")
+      .select("feature_key, family, title, strength, payload")
+      .eq("snapshot_id", snapRow.id)
+      .order("strength", { ascending: false }),
+    loadBirthRecord(db, userId),
+  ]);
 
   const placements = Object.values(chart.points).map((p) => ({
     key: p.key,
@@ -823,8 +865,29 @@ export async function getPattern(db: DB, userId: string) {
     placements,
     aspects: chart.aspects.slice(0, 20),
     features: features ?? [],
+    snapshot: {
+      fingerprint: snapRow.fingerprint,
+      engine: snapRow.engine,
+      contractVersion: snapRow.contract_version,
+      houseCount: Array.isArray(chart.houses) ? chart.houses.length : 0,
+      placementCount: placements.length,
+      aspectCount: chart.aspects.length,
+      birth: birth
+        ? {
+            birthDate: birth.birthDate,
+            birthTime: birth.birthTime,
+            placeLabel: birth.placeLabel,
+            latitude: birth.latitude,
+            longitude: birth.longitude,
+            accuracy: birth.accuracy,
+            timezone: birth.timezone,
+            updated_at: birth.updated_at,
+          }
+        : null,
+    },
   };
 }
+
 
 /**
  * Tier 3 retention (registry WEL-01 / WEL-03, 180 days). The bands are nulled
