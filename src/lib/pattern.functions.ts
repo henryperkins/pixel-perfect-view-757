@@ -178,6 +178,13 @@ export const fetchJournal = createServerFn({ method: "GET" })
     return m.listJournal(context.db, context.userId);
   });
 
+export const fetchBirthRecord = createServerFn({ method: "GET" })
+  .middleware([requireAuth])
+  .handler(async ({ context }) => {
+    const m = await import("./pattern.server");
+    return m.loadBirthRecord(context.db, context.userId);
+  });
+
 export const addEvent = createServerFn({ method: "POST" })
   .middleware([requireAuth])
   .inputValidator((d: unknown) =>
@@ -186,6 +193,9 @@ export const addEvent = createServerFn({ method: "POST" })
         occurredOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
         domain: z.string().min(1).max(40),
         label: z.string().min(1).max(400),
+        body: z.string().max(4000).nullable().optional(),
+        cycleKey: z.string().max(120).nullable().optional(),
+        featureKey: z.string().max(120).nullable().optional(),
       })
       .parse(d),
   )
@@ -197,8 +207,20 @@ export const addEvent = createServerFn({ method: "POST" })
       data.occurredOn,
       data.domain,
       data.label,
+      data.body ?? null,
+      data.cycleKey ?? null,
+      data.featureKey ?? null,
     );
   });
+
+export const removeEvent = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
+  .inputValidator((d: unknown) => z.object({ id: z.string().min(1) }).parse(d))
+  .handler(async ({ data, context }) => {
+    const m = await import("./pattern.server");
+    return m.deleteLifeEvent(context.db, context.userId, data.id);
+  });
+
 
 export const fetchReleases = createServerFn({ method: "GET" })
   .middleware([requireAuth])

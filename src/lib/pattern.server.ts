@@ -83,7 +83,12 @@ interface LifeEventRow {
   occurred_on: string;
   domain: string;
   label_ct: string;
+  body_ct?: string | null;
+  cycle_key?: string | null;
+  feature_key?: string | null;
+  created_at?: string;
 }
+
 interface FeedbackRow {
   reading_id: string;
   resonance: number;
@@ -789,15 +794,57 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
 // pattern view, journal, export
 // ---------------------------------------------------------------------------
 
+/**
+ * The reader's own birth record, decrypted. Used by the editable birth page and
+ * by the chart snapshot summary on /pattern.
+ */
+export async function loadBirthRecord(db: DB, userId: string) {
+  const { data } = await db
+    .from<{
+      id: string;
+      payload_ct: string;
+      time_accuracy: string;
+      timezone: string;
+      fingerprint: string;
+      created_at: string;
+      updated_at: string;
+    }>("birth_profiles")
+    .select("id, payload_ct, time_accuracy, timezone, fingerprint, created_at, updated_at")
+    .eq("user_id", userId)
+    .maybeSingle();
+  if (!data) return null;
+  const dek = await getDek(db, userId);
+  const details = await decryptJson<BirthDetails & { utcISO?: string }>(
+    dek,
+    data.payload_ct,
+  );
+  return {
+    birthDate: details.birthDate,
+    birthTime: details.birthTime,
+    placeLabel: details.placeLabel,
+    latitude: details.latitude,
+    longitude: details.longitude,
+    utcISO: details.utcISO ?? null,
+    accuracy: data.time_accuracy,
+    timezone: data.timezone,
+    fingerprint: data.fingerprint,
+    created_at: data.created_at,
+    updated_at: data.updated_at,
+  };
+}
+
 export async function getPattern(db: DB, userId: string) {
   const snapRow = await loadSnapshot(db, userId);
   if (!snapRow) return { needsOnboarding: true as const };
   const chart = snapshotToChart(snapRow);
-  const { data: features } = await db
-    .from<FeatureRow>("natal_features")
-    .select("feature_key, family, title, strength, payload")
-    .eq("snapshot_id", snapRow.id)
-    .order("strength", { ascending: false });
+  const [{ data: features }, birth] = await Promise.all([
+    db
+      .from<FeatureRow>("natal_features")
+      .select("feature_key, family, title, strength, payload")
+      .eq("snapshot_id", snapRow.id)
+      .order("strength", { ascending: false }),
+    loadBirthRecord(db, userId),
+  ]);
 
   const placements = Object.values(chart.points).map((p) => ({
     key: p.key,
@@ -818,8 +865,29 @@ export async function getPattern(db: DB, userId: string) {
     placements,
     aspects: chart.aspects.slice(0, 20),
     features: features ?? [],
+    snapshot: {
+      fingerprint: snapRow.fingerprint,
+      engine: snapRow.engine,
+      contractVersion: snapRow.contract_version,
+      houseCount: Array.isArray(chart.houses) ? chart.houses.length : 0,
+      placementCount: placements.length,
+      aspectCount: chart.aspects.length,
+      birth: birth
+        ? {
+            birthDate: birth.birthDate,
+            birthTime: birth.birthTime,
+            placeLabel: birth.placeLabel,
+            latitude: birth.latitude,
+            longitude: birth.longitude,
+            accuracy: birth.accuracy,
+            timezone: birth.timezone,
+            updated_at: birth.updated_at,
+          }
+        : null,
+    },
   };
 }
+
 
 /**
  * Tier 3 retention (registry WEL-01 / WEL-03, 180 days). The bands are nulled
@@ -895,7 +963,7 @@ export async function listJournal(db: DB, userId: string) {
     | null;
   const { data: events } = await db
     .from<LifeEventRow>("life_events")
-    .select("id, occurred_on, domain, label_ct")
+    .select("id, occurred_on, domain, label_ct, body_ct, cycle_key, feature_key, created_at")
     .eq("user_id", userId)
     .order("occurred_on", { ascending: false })
     .limit(60);
@@ -925,6 +993,10 @@ export async function listJournal(db: DB, userId: string) {
         occurred_on: e.occurred_on,
         domain: e.domain,
         label: await decryptField(dek, e.label_ct),
+        body: e.body_ct ? await decryptField(dek, e.body_ct) : null,
+        cycle_key: e.cycle_key ?? null,
+        feature_key: e.feature_key ?? null,
+        created_at: e.created_at ?? null,
       })),
     ),
     feedback: feedback ?? [],
@@ -937,6 +1009,9 @@ export async function addLifeEvent(
   occurredOn: string,
   domain: string,
   label: string,
+  body: string | null = null,
+  cycleKey: string | null = null,
+  featureKey: string | null = null,
 ) {
   const dek = await getDek(db, userId);
   const { error } = await db.from("life_events").insert({
@@ -944,10 +1019,24 @@ export async function addLifeEvent(
     occurred_on: occurredOn,
     domain,
     label_ct: await encryptField(dek, label),
+    body_ct: body ? await encryptField(dek, body) : null,
+    cycle_key: cycleKey,
+    feature_key: featureKey,
   });
   if (error) throw new Error(error.message);
   return { ok: true };
 }
+
+export async function deleteLifeEvent(db: DB, userId: string, id: string) {
+  const { error } = await db
+    .from("life_events")
+    .delete()
+    .eq("user_id", userId)
+    .eq("id", id);
+  if (error) throw new Error(error.message);
+  return { ok: true };
+}
+
 
 export async function submitFeedback(
   db: DB,

@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedBirthRouteImport } from './routes/_authenticated/birth'
 import { Route as AuthenticatedContentRouteImport } from './routes/_authenticated/content'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
 import { Route as AuthenticatedPatternRouteImport } from './routes/_authenticated/pattern'
@@ -34,6 +35,11 @@ const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedBirthRoute = AuthenticatedBirthRouteImport.update({
+  id: '/birth',
+  path: '/birth',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedContentRoute = AuthenticatedContentRouteImport.update({
   id: '/content',
@@ -81,6 +87,7 @@ const ApiPublicContentReleasesRollbackRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/birth': typeof AuthenticatedBirthRoute
   '/content': typeof AuthenticatedContentRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/pattern': typeof AuthenticatedPatternRoute
@@ -93,6 +100,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/birth': typeof AuthenticatedBirthRoute
   '/content': typeof AuthenticatedContentRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/pattern': typeof AuthenticatedPatternRoute
@@ -107,6 +115,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/birth': typeof AuthenticatedBirthRoute
   '/_authenticated/content': typeof AuthenticatedContentRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
   '/_authenticated/pattern': typeof AuthenticatedPatternRoute
@@ -121,6 +130,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/birth'
     | '/content'
     | '/onboarding'
     | '/pattern'
@@ -133,6 +143,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/birth'
     | '/content'
     | '/onboarding'
     | '/pattern'
@@ -146,6 +157,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/birth'
     | '/_authenticated/content'
     | '/_authenticated/onboarding'
     | '/_authenticated/pattern'
@@ -185,6 +197,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/birth': {
+      id: '/_authenticated/birth'
+      path: '/birth'
+      fullPath: '/birth'
+      preLoaderRoute: typeof AuthenticatedBirthRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/content': {
       id: '/_authenticated/content'
@@ -246,6 +265,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedBirthRoute: typeof AuthenticatedBirthRoute
   AuthenticatedContentRoute: typeof AuthenticatedContentRoute
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
   AuthenticatedPatternRoute: typeof AuthenticatedPatternRoute
@@ -255,6 +275,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedBirthRoute: AuthenticatedBirthRoute,
   AuthenticatedContentRoute: AuthenticatedContentRoute,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
   AuthenticatedPatternRoute: AuthenticatedPatternRoute,
