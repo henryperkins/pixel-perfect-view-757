@@ -900,7 +900,7 @@ export async function listJournal(db: DB, userId: string) {
     | null;
   const { data: events } = await db
     .from<LifeEventRow>("life_events")
-    .select("id, occurred_on, domain, label_ct")
+    .select("id, occurred_on, domain, label_ct, body_ct, cycle_key, feature_key, created_at")
     .eq("user_id", userId)
     .order("occurred_on", { ascending: false })
     .limit(60);
@@ -930,6 +930,10 @@ export async function listJournal(db: DB, userId: string) {
         occurred_on: e.occurred_on,
         domain: e.domain,
         label: await decryptField(dek, e.label_ct),
+        body: e.body_ct ? await decryptField(dek, e.body_ct) : null,
+        cycle_key: e.cycle_key ?? null,
+        feature_key: e.feature_key ?? null,
+        created_at: e.created_at ?? null,
       })),
     ),
     feedback: feedback ?? [],
@@ -942,6 +946,9 @@ export async function addLifeEvent(
   occurredOn: string,
   domain: string,
   label: string,
+  body: string | null = null,
+  cycleKey: string | null = null,
+  featureKey: string | null = null,
 ) {
   const dek = await getDek(db, userId);
   const { error } = await db.from("life_events").insert({
@@ -949,10 +956,24 @@ export async function addLifeEvent(
     occurred_on: occurredOn,
     domain,
     label_ct: await encryptField(dek, label),
+    body_ct: body ? await encryptField(dek, body) : null,
+    cycle_key: cycleKey,
+    feature_key: featureKey,
   });
   if (error) throw new Error(error.message);
   return { ok: true };
 }
+
+export async function deleteLifeEvent(db: DB, userId: string, id: string) {
+  const { error } = await db
+    .from("life_events")
+    .delete()
+    .eq("user_id", userId)
+    .eq("id", id);
+  if (error) throw new Error(error.message);
+  return { ok: true };
+}
+
 
 export async function submitFeedback(
   db: DB,
