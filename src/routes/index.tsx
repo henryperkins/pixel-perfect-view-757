@@ -347,6 +347,10 @@ function TodayReading() {
           )}
         </section>
 
+        <JournalToday
+          day={data.day}
+          cycleKeys={timing.map((c) => c.cycle_key)}
+        />
 
         <section className="mt-10 border-t border-rule pt-6">
           <h2 className="technical text-muted-foreground">Reflection</h2>
