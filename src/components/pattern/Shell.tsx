@@ -7,6 +7,8 @@ const NAV = [
   { to: "/", label: "Today" },
   { to: "/pattern", label: "Your pattern" },
   { to: "/timing", label: "Timing" },
+  { to: "/journal", label: "Journal" },
+  { to: "/birth", label: "Birth details" },
   { to: "/time-travel", label: "Time travel" },
   { to: "/privacy", label: "Context & privacy" },
   { to: "/content", label: "Content" },
