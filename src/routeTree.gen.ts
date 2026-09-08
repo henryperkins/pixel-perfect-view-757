@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedBirthRouteImport } from './routes/_authenticated/birth'
 import { Route as AuthenticatedContentRouteImport } from './routes/_authenticated/content'
+import { Route as AuthenticatedJournalRouteImport } from './routes/_authenticated/journal'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
 import { Route as AuthenticatedPatternRouteImport } from './routes/_authenticated/pattern'
 import { Route as AuthenticatedPrivacyRouteImport } from './routes/_authenticated/privacy'
@@ -44,6 +45,11 @@ const AuthenticatedBirthRoute = AuthenticatedBirthRouteImport.update({
 const AuthenticatedContentRoute = AuthenticatedContentRouteImport.update({
   id: '/content',
   path: '/content',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedJournalRoute = AuthenticatedJournalRouteImport.update({
+  id: '/journal',
+  path: '/journal',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedOnboardingRoute = AuthenticatedOnboardingRouteImport.update({
@@ -89,6 +95,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/birth': typeof AuthenticatedBirthRoute
   '/content': typeof AuthenticatedContentRoute
+  '/journal': typeof AuthenticatedJournalRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/pattern': typeof AuthenticatedPatternRoute
   '/privacy': typeof AuthenticatedPrivacyRoute
@@ -102,6 +109,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/birth': typeof AuthenticatedBirthRoute
   '/content': typeof AuthenticatedContentRoute
+  '/journal': typeof AuthenticatedJournalRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/pattern': typeof AuthenticatedPatternRoute
   '/privacy': typeof AuthenticatedPrivacyRoute
@@ -117,6 +125,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/_authenticated/birth': typeof AuthenticatedBirthRoute
   '/_authenticated/content': typeof AuthenticatedContentRoute
+  '/_authenticated/journal': typeof AuthenticatedJournalRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
   '/_authenticated/pattern': typeof AuthenticatedPatternRoute
   '/_authenticated/privacy': typeof AuthenticatedPrivacyRoute
@@ -132,6 +141,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/birth'
     | '/content'
+    | '/journal'
     | '/onboarding'
     | '/pattern'
     | '/privacy'
@@ -145,6 +155,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/birth'
     | '/content'
+    | '/journal'
     | '/onboarding'
     | '/pattern'
     | '/privacy'
@@ -159,6 +170,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/_authenticated/birth'
     | '/_authenticated/content'
+    | '/_authenticated/journal'
     | '/_authenticated/onboarding'
     | '/_authenticated/pattern'
     | '/_authenticated/privacy'
@@ -210,6 +222,13 @@ declare module '@tanstack/react-router' {
       path: '/content'
       fullPath: '/content'
       preLoaderRoute: typeof AuthenticatedContentRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/journal': {
+      id: '/_authenticated/journal'
+      path: '/journal'
+      fullPath: '/journal'
+      preLoaderRoute: typeof AuthenticatedJournalRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/onboarding': {
@@ -267,6 +286,7 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedBirthRoute: typeof AuthenticatedBirthRoute
   AuthenticatedContentRoute: typeof AuthenticatedContentRoute
+  AuthenticatedJournalRoute: typeof AuthenticatedJournalRoute
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
   AuthenticatedPatternRoute: typeof AuthenticatedPatternRoute
   AuthenticatedPrivacyRoute: typeof AuthenticatedPrivacyRoute
@@ -277,6 +297,7 @@ interface AuthenticatedRouteRouteChildren {
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedBirthRoute: AuthenticatedBirthRoute,
   AuthenticatedContentRoute: AuthenticatedContentRoute,
+  AuthenticatedJournalRoute: AuthenticatedJournalRoute,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
   AuthenticatedPatternRoute: AuthenticatedPatternRoute,
   AuthenticatedPrivacyRoute: AuthenticatedPrivacyRoute,

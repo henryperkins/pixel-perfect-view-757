@@ -6,7 +6,12 @@ import { toast } from "sonner";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import { useAuth } from "@/hooks/useAuth";
-import { fetchToday, saveDailyCheckIn, sendFeedback } from "@/lib/pattern.functions";
+import {
+  fetchJournal,
+  fetchToday,
+  saveDailyCheckIn,
+  sendFeedback,
+} from "@/lib/pattern.functions";
 import { EphemerisNotice } from "@/components/pattern/EphemerisNotice";
 
 export const Route = createFileRoute("/")({
@@ -151,6 +156,71 @@ const ASPECT_MEANING: Record<string, string> = {
   sextile: "opening",
   quincunx: "unsettling",
 };
+
+/**
+ * Entries the person wrote against today's date or against one of the windows
+ * that is live today. Attachments were captured at write time, so this block
+ * never re-derives them.
+ */
+function JournalToday({ day, cycleKeys }: { day: string; cycleKeys: string[] }) {
+  const load = useServerFn(fetchJournal);
+  const query = useQuery({ queryKey: ["journal"], queryFn: () => load({}) });
+
+  const keys = new Set(cycleKeys);
+  const entries = (query.data?.events ?? []).filter(
+    (e) => e.occurred_on === day || (e.cycle_key ? keys.has(e.cycle_key) : false),
+  );
+
+  return (
+    <section className="mt-10 border-t border-rule pt-6">
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <h2 className="technical text-muted-foreground">Your entries for today</h2>
+        <Link to="/journal" className="technical text-primary">
+          Open journal
+        </Link>
+      </div>
+
+      {query.isPending ? (
+        <div aria-busy className="mt-4 h-16 animate-pulse border border-rule bg-secondary/40" />
+      ) : query.error ? (
+        <p role="alert" className="mt-4 text-sm text-destructive">
+          {query.error.message}
+        </p>
+      ) : entries.length === 0 ? (
+        <p className="mt-3 text-sm text-muted-foreground">
+          Nothing written against today or today's windows yet.{" "}
+          <Link to="/journal" className="text-primary">
+            Write an entry
+          </Link>
+          .
+        </p>
+      ) : (
+        <ul className="mt-4 space-y-3">
+          {entries.map((e) => (
+            <li key={e.id} className="border border-rule bg-card p-4">
+              <div className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-3">
+                <p className="min-w-0 text-sm font-medium text-foreground">{e.label}</p>
+                <span className="shrink-0 font-mono text-xs text-muted-foreground">
+                  {e.occurred_on}
+                </span>
+              </div>
+              {e.body ? (
+                <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-foreground">
+                  {e.body}
+                </p>
+              ) : null}
+              <p className="mt-2 font-mono text-[0.7rem] text-muted-foreground">
+                {e.domain}
+                {e.cycle_key ? ` · window ${e.cycle_key}` : ""}
+                {e.feature_key ? ` · chapter ${e.feature_key}` : ""}
+              </p>
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
+  );
+}
 
 function TodayReading() {
 
@@ -347,6 +417,10 @@ function TodayReading() {
           )}
         </section>
 
+        <JournalToday
+          day={data.day}
+          cycleKeys={timing.map((c) => c.cycle_key)}
+        />
 
         <section className="mt-10 border-t border-rule pt-6">
           <h2 className="technical text-muted-foreground">Reflection</h2>

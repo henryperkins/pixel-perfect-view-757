@@ -80,6 +80,37 @@ function PatternView({ data }: { data: PatternData }) {
           supports it, so empty space means "not present", not "still loading".
         </p>
 
+        <section className="mt-6 border border-rule bg-evidence p-4 sm:mt-8">
+          <div className="grid gap-1 sm:flex sm:items-baseline sm:justify-between sm:gap-4">
+            <h2 className="technical text-muted-foreground">Chart snapshot</h2>
+            <Link to="/birth" className="technical text-primary">
+              Edit birth details
+            </Link>
+          </div>
+          {data.snapshot.birth ? (
+            <p className="mt-2 font-mono text-xs leading-relaxed text-evidence-foreground">
+              {data.snapshot.birth.birthDate} {data.snapshot.birth.birthTime} ·{" "}
+              {data.snapshot.birth.placeLabel} · {data.snapshot.birth.timezone} · time accuracy{" "}
+              {data.snapshot.birth.accuracy}
+            </p>
+          ) : (
+            <p className="mt-2 text-sm text-evidence-foreground">
+              No stored birth record for this snapshot.
+            </p>
+          )}
+          <p className="mt-2 font-mono text-xs leading-relaxed text-muted-foreground">
+            {data.snapshot.engine} · houses {data.houseSystem} · precision{" "}
+            {data.ephemeris.precision} · {data.snapshot.placementCount} placements ·{" "}
+            {data.snapshot.aspectCount} connections · contract{" "}
+            {data.snapshot.contractVersion}
+          </p>
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+            {data.uncertainty.housesReliable
+              ? "Your birth time is precise enough for house and angle claims."
+              : "House and angle claims are suppressed because your birth time isn't precise enough."}
+          </p>
+        </section>
+
         <section className="mt-8 sm:mt-10">
           <div className="grid gap-1 border-b border-rule pb-2 sm:flex sm:items-baseline sm:justify-between sm:gap-4">
             <h2 className="technical text-muted-foreground">
