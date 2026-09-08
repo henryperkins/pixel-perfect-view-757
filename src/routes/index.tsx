@@ -6,7 +6,12 @@ import { toast } from "sonner";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import { useAuth } from "@/hooks/useAuth";
-import { fetchToday, saveDailyCheckIn, sendFeedback } from "@/lib/pattern.functions";
+import {
+  fetchJournal,
+  fetchToday,
+  saveDailyCheckIn,
+  sendFeedback,
+} from "@/lib/pattern.functions";
 import { EphemerisNotice } from "@/components/pattern/EphemerisNotice";
 
 export const Route = createFileRoute("/")({
