@@ -211,8 +211,8 @@ function JournalToday({ day, cycleKeys }: { day: string; cycleKeys: string[] }) 
               ) : null}
               <p className="mt-2 font-mono text-[0.7rem] text-muted-foreground">
                 {e.domain}
-                {e.cycle_key ? ` · window ${e.cycle_key}` : ""}
-                {e.feature_key ? ` · chapter ${e.feature_key}` : ""}
+                {e.cycle_key ? ` · window ${e.cycle_key.replace(/[_-]+/g, " ")}` : ""}
+                {e.feature_key ? ` · chapter ${e.feature_key.replace(/[_-]+/g, " ")}` : ""}
               </p>
             </li>
           ))}
