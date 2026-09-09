@@ -272,8 +272,13 @@ function JournalPage() {
                     ) : null}
                     <p className="mt-2 font-mono text-[0.7rem] text-muted-foreground">
                       {e.domain}
-                      {e.cycle_key ? ` · window ${e.cycle_key}` : ""}
-                      {e.feature_key ? ` · chapter ${e.feature_key}` : ""}
+                      {e.cycle_key ? ` · window ${prettyKey(e.cycle_key)}` : ""}
+                      {e.feature_key
+                        ? ` · chapter ${
+                            features.find((f) => f.feature_key === e.feature_key)?.title ??
+                            prettyKey(e.feature_key)
+                          }`
+                        : ""}
                     </p>
                     <button
                       type="button"
