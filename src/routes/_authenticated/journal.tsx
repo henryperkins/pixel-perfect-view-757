@@ -61,6 +61,9 @@ function JournalPage() {
   });
   const pattern = useQuery({ queryKey: ["pattern"], queryFn: () => patternFn({}) });
 
+  const prettyKey = (key: string) => key.replace(/[_-]+/g, " ");
+
+
   const [occurredOn, setOccurredOn] = useState(today());
   const [domain, setDomain] = useState<string>("general");
   const [label, setLabel] = useState("");
