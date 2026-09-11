@@ -512,6 +512,11 @@ interface CheckInBands {
   stress: number | null;
 }
 
+/** The same shape plus the instant the row was last written. */
+interface CheckInRow extends CheckInBands {
+  updated_at: string | null;
+}
+
 /** Days a tier 3 band may live before it is nulled out (registry WEL retention). */
 export const WELLNESS_RETENTION_DAYS = 180;
 
@@ -562,12 +567,12 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
   await purgeExpiredWellness(db, userId);
 
   const { data: checkInRaw } = await db
-    .from<CheckInBands>("check_ins")
-    .select("mood, energy, sleep, stress")
+    .from<CheckInRow>("check_ins")
+    .select("mood, energy, sleep, stress, updated_at")
     .eq("user_id", userId)
     .eq("day", day)
     .maybeSingle();
-  const checkInRow = checkInRaw as unknown as CheckInBands | null;
+  const checkInRow = checkInRaw as unknown as CheckInRow | null;
 
   const sleepEnabled = granted.has("WEL-01");
   const stressEnabled = granted.has("WEL-03");
@@ -578,6 +583,9 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
     retentionDays: WELLNESS_RETENTION_DAYS,
     sleep: sleepEnabled ? (checkInRow?.sleep ?? null) : null,
     stress: stressEnabled ? (checkInRow?.stress ?? null) : null,
+    mood: checkInRow?.mood ?? null,
+    energy: checkInRow?.energy ?? null,
+    savedAt: checkInRow?.updated_at ?? null,
   };
 
   const { data: existing } = await db
@@ -924,6 +932,7 @@ export async function saveCheckIn(
   const sleepValue = granted.has("WEL-01") ? sleep : null;
   const stressValue = granted.has("WEL-03") ? stress : null;
 
+  const savedAt = new Date().toISOString();
   const { error } = await db.from("check_ins").upsert(
     {
       user_id: userId,
@@ -933,6 +942,7 @@ export async function saveCheckIn(
       sleep: sleepValue,
       stress: stressValue,
       note_ct: note ? await encryptField(dek, note) : null,
+      updated_at: savedAt,
     } as never,
     { onConflict: "user_id,day" },
   );
@@ -941,7 +951,10 @@ export async function saveCheckIn(
   await purgeExpiredWellness(db, userId);
   return {
     ok: true,
+    savedAt,
     stored: {
+      mood: mood !== null,
+      energy: energy !== null,
       sleep: sleepValue !== null,
       stress: stressValue !== null,
     },
