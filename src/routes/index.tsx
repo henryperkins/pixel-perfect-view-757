@@ -431,35 +431,46 @@ function TodayReading() {
           <h2 className="technical text-muted-foreground">Reflection</h2>
           <p className="prose-reading mt-2 text-foreground">{data.reading.prompt}</p>
 
-          {(wellness?.sleepEnabled || wellness?.stressEnabled) && (
-            <div className="mt-5 rounded-sm border border-rule bg-secondary/30 p-4">
-              <p className="technical text-muted-foreground">
-                Tier 3 · self-reported · kept {wellness.retentionDays} days
-              </p>
-              <div className="mt-3 space-y-3">
-                {wellness.sleepEnabled && (
-                  <BandPicker
-                    label="Sleep"
-                    hint="1 poor · 5 rested"
-                    value={sleepValue}
-                    onChange={setSleep}
-                  />
-                )}
-                {wellness.stressEnabled && (
-                  <BandPicker
-                    label="Stress"
-                    hint="1 calm · 5 pressed"
-                    value={stressValue}
-                    onChange={setStress}
-                  />
-                )}
-              </div>
-              <p className="mt-3 text-xs text-muted-foreground">
-                Framing and prompts only. These bands never enter the calculation or the
-                ranking, and never leave your account.
-              </p>
+          <div className="mt-5 rounded-sm border border-rule bg-secondary/30 p-4">
+            <p className="technical text-muted-foreground">Today's check-in</p>
+            <div className="mt-3 space-y-3">
+              <BandPicker
+                label="Mood"
+                hint="1 low · 5 bright"
+                value={moodValue}
+                onChange={setMood}
+              />
+              <BandPicker
+                label="Energy"
+                hint="1 flat · 5 charged"
+                value={energyValue}
+                onChange={setEnergy}
+              />
+              {wellness?.sleepEnabled && (
+                <BandPicker
+                  label="Sleep"
+                  hint="1 poor · 5 rested"
+                  value={sleepValue}
+                  onChange={setSleep}
+                />
+              )}
+              {wellness?.stressEnabled && (
+                <BandPicker
+                  label="Stress"
+                  hint="1 calm · 5 pressed"
+                  value={stressValue}
+                  onChange={setStress}
+                />
+              )}
             </div>
-          )}
+            {(wellness?.sleepEnabled || wellness?.stressEnabled) && (
+              <p className="mt-3 text-xs text-muted-foreground">
+                Sleep and stress are self-reported (tier 3), kept{" "}
+                {wellness.retentionDays} days. Framing and prompts only — they never
+                enter the calculation or the ranking, and never leave your account.
+              </p>
+            )}
+          </div>
 
           <textarea
             value={note}
@@ -468,14 +479,26 @@ function TodayReading() {
             placeholder="Optional. Stored encrypted; only used to weigh what to surface."
             className="mt-3 w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
           />
-          <button
-            type="button"
-            disabled={saveNote.isPending}
-            onClick={() => saveNote.mutate({ day: data.day })}
-            className="mt-3 rounded-sm border border-input bg-card px-4 py-2 text-sm transition-colors hover:bg-secondary disabled:opacity-50"
-          >
-            Save reflection
-          </button>
+          <div className="mt-3 flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              disabled={saveNote.isPending}
+              onClick={() => saveNote.mutate({ day: data.day })}
+              className="rounded-sm border border-input bg-card px-4 py-2 text-sm transition-colors hover:bg-secondary disabled:opacity-50"
+            >
+              {saveNote.isPending ? "Saving…" : "Save check-in"}
+            </button>
+            <span className="font-mono text-[0.7rem] text-muted-foreground" role="status">
+              {saveNote.isPending
+                ? "saving…"
+                : savedAt
+                  ? `saved ${new Date(savedAt).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}`
+                  : "not saved yet today"}
+            </span>
+          </div>
         </section>
 
         <section className="mt-8 border-t border-rule pt-6">
