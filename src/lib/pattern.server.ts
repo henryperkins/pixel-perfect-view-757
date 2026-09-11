@@ -567,12 +567,12 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
   await purgeExpiredWellness(db, userId);
 
   const { data: checkInRaw } = await db
-    .from<CheckInBands>("check_ins")
-    .select("mood, energy, sleep, stress")
+    .from<CheckInRow>("check_ins")
+    .select("mood, energy, sleep, stress, updated_at")
     .eq("user_id", userId)
     .eq("day", day)
     .maybeSingle();
-  const checkInRow = checkInRaw as unknown as CheckInBands | null;
+  const checkInRow = checkInRaw as unknown as CheckInRow | null;
 
   const sleepEnabled = granted.has("WEL-01");
   const stressEnabled = granted.has("WEL-03");
@@ -583,6 +583,9 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
     retentionDays: WELLNESS_RETENTION_DAYS,
     sleep: sleepEnabled ? (checkInRow?.sleep ?? null) : null,
     stress: stressEnabled ? (checkInRow?.stress ?? null) : null,
+    mood: checkInRow?.mood ?? null,
+    energy: checkInRow?.energy ?? null,
+    savedAt: checkInRow?.updated_at ?? null,
   };
 
   const { data: existing } = await db
