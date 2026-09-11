@@ -184,6 +184,7 @@ CREATE TABLE IF NOT EXISTS check_ins (
   stress INTEGER,
   note_ct TEXT,
   created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  updated_at TEXT,
   UNIQUE (user_id, day)
 );
 
