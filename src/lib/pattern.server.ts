@@ -512,6 +512,11 @@ interface CheckInBands {
   stress: number | null;
 }
 
+/** The same shape plus the instant the row was last written. */
+interface CheckInRow extends CheckInBands {
+  updated_at: string | null;
+}
+
 /** Days a tier 3 band may live before it is nulled out (registry WEL retention). */
 export const WELLNESS_RETENTION_DAYS = 180;
 
