@@ -231,6 +231,8 @@ function TodayReading() {
   const qc = useQueryClient();
   const [openEvidence, setOpenEvidence] = useState(false);
   const [note, setNote] = useState("");
+  const [mood, setMood] = useState<number | null>(null);
+  const [energy, setEnergy] = useState<number | null>(null);
   const [sleep, setSleep] = useState<number | null>(null);
   const [stress, setStress] = useState<number | null>(null);
 
@@ -241,10 +243,11 @@ function TodayReading() {
   });
 
   const wellness = query.data?.needsOnboarding ? null : (query.data?.wellness ?? null);
-  const storedSleep = wellness?.sleep ?? null;
-  const storedStress = wellness?.stress ?? null;
-  const sleepValue = sleep ?? storedSleep;
-  const stressValue = stress ?? storedStress;
+  const moodValue = mood ?? wellness?.mood ?? null;
+  const energyValue = energy ?? wellness?.energy ?? null;
+  const sleepValue = sleep ?? wellness?.sleep ?? null;
+  const stressValue = stress ?? wellness?.stress ?? null;
+  const savedAt = wellness?.savedAt ?? null;
 
   const rate = useMutation({
     mutationFn: (vars: { readingId: string; resonance: number }) =>
@@ -258,8 +261,8 @@ function TodayReading() {
       checkIn({
         data: {
           day: vars.day,
-          mood: null,
-          energy: null,
+          mood: moodValue,
+          energy: energyValue,
           note: note.trim() || null,
           sleep: wellness?.sleepEnabled ? sleepValue : null,
           stress: wellness?.stressEnabled ? stressValue : null,
@@ -267,12 +270,14 @@ function TodayReading() {
       }),
     onSuccess: (res) => {
       const bands = [
+        res.stored.mood ? "mood" : null,
+        res.stored.energy ? "energy" : null,
         res.stored.sleep ? "sleep" : null,
         res.stored.stress ? "stress" : null,
       ].filter(Boolean);
       toast.success(
         bands.length
-          ? `Saved (encrypted). ${bands.join(" and ")} recorded for ${wellness?.retentionDays ?? 180} days.`
+          ? `Saved (encrypted): ${bands.join(", ")}.`
           : "Reflection saved (encrypted).",
       );
       void qc.invalidateQueries({ queryKey: ["journal"] });
