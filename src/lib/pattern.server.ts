@@ -932,6 +932,7 @@ export async function saveCheckIn(
   const sleepValue = granted.has("WEL-01") ? sleep : null;
   const stressValue = granted.has("WEL-03") ? stress : null;
 
+  const savedAt = new Date().toISOString();
   const { error } = await db.from("check_ins").upsert(
     {
       user_id: userId,
@@ -941,6 +942,7 @@ export async function saveCheckIn(
       sleep: sleepValue,
       stress: stressValue,
       note_ct: note ? await encryptField(dek, note) : null,
+      updated_at: savedAt,
     } as never,
     { onConflict: "user_id,day" },
   );
@@ -949,7 +951,10 @@ export async function saveCheckIn(
   await purgeExpiredWellness(db, userId);
   return {
     ok: true,
+    savedAt,
     stored: {
+      mood: mood !== null,
+      energy: energy !== null,
       sleep: sleepValue !== null,
       stress: stressValue !== null,
     },
