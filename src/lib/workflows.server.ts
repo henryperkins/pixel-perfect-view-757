@@ -36,20 +36,28 @@ async function call<T>(
   const raw = method === "GET" || body === undefined ? "" : JSON.stringify(body);
   const signature = createHmac("sha256", cfg.secret).update(raw).digest("hex");
 
-  const res = await fetch(`${cfg.url}${path}`, {
-    method,
-    headers: {
-      "x-pattern-signature": signature,
-      ...(method === "POST" ? { "content-type": "application/json" } : {}),
-    },
-    ...(method === "POST" ? { body: raw } : {}),
-  });
+  // The edge plane is a mirror, never the source of truth: any transport-level
+  // failure (DNS, refused connection, TLS, timeout) must degrade to null rather
+  // than reject, so a release that is already active is not reported as failed.
+  try {
+    const res = await fetch(`${cfg.url}${path}`, {
+      method,
+      headers: {
+        "x-pattern-signature": signature,
+        ...(method === "POST" ? { "content-type": "application/json" } : {}),
+      },
+      ...(method === "POST" ? { body: raw } : {}),
+    });
 
-  if (!res.ok) {
-    console.error(`[workflows] ${method} ${path} -> ${res.status}`);
+    if (!res.ok) {
+      console.error(`[workflows] ${method} ${path} -> ${res.status}`);
+      return null;
+    }
+    return (await res.json()) as T;
+  } catch (error) {
+    console.error(`[workflows] ${method} ${path} unreachable`, error);
     return null;
   }
-  return (await res.json()) as T;
 }
 
 /** Mirrors the active content release into D1 so the edge plane agrees with the app. */
