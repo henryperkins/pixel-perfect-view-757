@@ -1,11 +1,34 @@
 import type { Chart } from "./astro/chart";
 import type { CycleInstance } from "./astro/cycles";
 import {
+  aspectFamily,
   DEFAULT_BUNDLE,
   findInterpretation,
   safetyPass,
   type ContentBundle,
 } from "./content/default-bundle";
+import { exactPhrase } from "./astro/cycles";
+
+/**
+ * Cycle arc position, in plain language: how many days to the exact pass and
+ * how far through the ingress -> egress window today sits.
+ */
+function arcParagraph(c: CycleInstance): string {
+  const phrase = exactPhrase(c.days_to_exact ?? null);
+  const pct =
+    c.arc_position === null || c.arc_position === undefined
+      ? null
+      : Math.round(c.arc_position * 100);
+  const where =
+    pct === null
+      ? "The full length of this window extends past the range that was scanned, so treat its edges as open."
+      : pct <= 25
+        ? `You are about ${pct}% of the way through this window \u2014 near the start, where it is still mostly potential.`
+        : pct <= 60
+          ? `You are about ${pct}% of the way through this window \u2014 the middle, where it is most legible.`
+          : `You are about ${pct}% of the way through this window \u2014 the back half, where it is winding down.`;
+  return `Timing: ${phrase}. ${where}`;
+}
 import { assertUse, isPermitted, type AllowedUse } from "./registry";
 
 export interface ReadingContext {
