@@ -150,6 +150,9 @@ export function assembleReading(
       phase: primary.phase,
       ingress_at: primary.ingress_at,
       exact_at: primary.exact_at,
+      days_to_exact: primary.days_to_exact ?? null,
+      arc_position: primary.arc_position ?? null,
+      domain: primary.domain,
       egress_at: primary.egress_at,
       importance: primary.importance,
     });
@@ -163,7 +166,12 @@ export function assembleReading(
 
   if (supporting.length) {
     paragraphs.push(
-      `Also in range: ${supporting.map((s) => `${s.label} (orb ${s.orb}\u00b0, ${s.phase})`).join("; ")}.`,
+      `Also in range: ${supporting
+        .map(
+          (s) =>
+            `${s.label} (orb ${s.orb}\u00b0, ${s.phase}, ${exactPhrase(s.days_to_exact ?? null)}, ${bundle.domains?.[s.domain]?.label ?? s.domain})`,
+        )
+        .join("; ")}.`,
     );
     for (const s of supporting) {
       record(provenance, ctx, "cycle", "AST-08", "timing", s.label, {
