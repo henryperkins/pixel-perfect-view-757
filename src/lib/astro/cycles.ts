@@ -236,6 +236,17 @@ export function computeCycles(chart: Chart, when: Date): CycleInstance[] {
           exact_at: exactJd ? isoFromJd(exactJd) : null,
           egress_at: egressJd ? isoFromJd(egressJd) : null,
           label: `${BODY_LABEL[tb]} ${asp.key} natal ${np.label}`,
+          days_to_exact:
+            exactJd !== null ? Math.round(exactJd - jd) : null,
+          arc_position:
+            ingressJd !== null && egressJd !== null && egressJd > ingressJd
+              ? Number(
+                  Math.min(
+                    1,
+                    Math.max(0, (jd - ingressJd) / (egressJd - ingressJd)),
+                  ).toFixed(3),
+                )
+              : null,
         });
         break;
       }
