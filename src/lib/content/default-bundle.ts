@@ -58,6 +58,38 @@ export const DEFAULT_BUNDLE: ContentBundle = {
     ascendant_placement:
       "The rising sign describes the first impression you make and the mode you default to under mild pressure.",
   },
+  domains: {
+    work: {
+      label: "work and output",
+      hard: "Because this window lands on the working part of your chart, it tends to show up as workload, deadlines and the question of who decides what gets done. Friction here is usually about pace and ownership rather than ability.",
+      soft: "This window lands on the working part of your chart, so it usually reads as momentum: tasks that were stuck move, and effort spent on visible work tends to land better than usual.",
+      prompt: "What piece of work would you defend if someone asked you to drop it this week?",
+    },
+    relationships: {
+      label: "relationships and affection",
+      hard: "This window sits on the relating part of your chart, so it usually surfaces in closeness, money shared with others, or a want that has been left unsaid. Tension here is typically about mismatched expectations rather than bad faith.",
+      soft: "This window sits on the relating part of your chart, and supportive contacts here usually read as ease: it is a straightforward period for saying the warm thing plainly.",
+      prompt: "Who have you been meaning to say something to, and what has been stopping you?",
+    },
+    "inner-life": {
+      label: "inner life and rest",
+      hard: "This window touches the private, restorative part of your chart, so it tends to be felt rather than seen — sleep, mood, and the amount of noise you can tolerate. Health and energy questions often live here.",
+      soft: "This window touches the private, restorative part of your chart, which usually reads as recovery: rest taken now tends to actually restore something.",
+      prompt: "What would genuine rest look like today, as opposed to distraction?",
+    },
+    identity: {
+      label: "identity and direction",
+      hard: "This window lands on how you present and where you are pointed, so it often shows up as a role that no longer describes you accurately.",
+      soft: "This window lands on how you present and where you are pointed, and supportive contacts here usually make it easier to be recognised as you already are.",
+      prompt: "Which description of yourself is out of date?",
+    },
+    structure: {
+      label: "structure and commitments",
+      hard: "This window lands on the structural part of your chart — contracts, obligations, long arrangements. Pressure here is usually about something carrying more weight than it was built for.",
+      soft: "This window lands on the structural part of your chart, so it tends to favour tidying arrangements: what you formalise now generally holds.",
+      prompt: "Which commitment would you renew on purpose, rather than by default?",
+    },
+  },
   cycles: [
     {
       key: "hard:saturn:sun",
