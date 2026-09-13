@@ -14,11 +14,23 @@ export interface Interpretation {
   question: string;
 }
 
+export interface DomainInterpretation {
+  /** Plain-language name for the life area this cycle touches. */
+  label: string;
+  /** Where a tense (hard-aspect) version of this cycle usually shows up. */
+  hard: string;
+  /** Where a supportive (soft-aspect) version usually shows up. */
+  soft: string;
+  /** A reflection prompt scoped to this life area. */
+  prompt: string;
+}
+
 export interface ContentBundle {
   version: string;
   cycles: Interpretation[];
   natal: Record<string, string>;
   phases: Record<string, string>;
+  domains: Record<string, DomainInterpretation>;
 }
 
 const HARD = "hard";
