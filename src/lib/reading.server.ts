@@ -1,11 +1,34 @@
 import type { Chart } from "./astro/chart";
 import type { CycleInstance } from "./astro/cycles";
 import {
+  aspectFamily,
   DEFAULT_BUNDLE,
   findInterpretation,
   safetyPass,
   type ContentBundle,
 } from "./content/default-bundle";
+import { exactPhrase } from "./astro/cycles";
+
+/**
+ * Cycle arc position, in plain language: how many days to the exact pass and
+ * how far through the ingress -> egress window today sits.
+ */
+function arcParagraph(c: CycleInstance): string {
+  const phrase = exactPhrase(c.days_to_exact ?? null);
+  const pct =
+    c.arc_position === null || c.arc_position === undefined
+      ? null
+      : Math.round(c.arc_position * 100);
+  const where =
+    pct === null
+      ? "The full length of this window extends past the range that was scanned, so treat its edges as open."
+      : pct <= 25
+        ? `You are about ${pct}% of the way through this window \u2014 near the start, where it is still mostly potential.`
+        : pct <= 60
+          ? `You are about ${pct}% of the way through this window \u2014 the middle, where it is most legible.`
+          : `You are about ${pct}% of the way through this window \u2014 the back half, where it is winding down.`;
+  return `Timing: ${phrase}. ${where}`;
+}
 import { assertUse, isPermitted, type AllowedUse } from "./registry";
 
 export interface ReadingContext {
@@ -103,13 +126,33 @@ export function assembleReading(
     prompt = interp.question;
     paragraphs.push(TONE_OPENER[ctx.tone] ?? "");
     paragraphs.push(interp.mechanism);
+
+    // Domain-specific framing: the same aspect reads differently depending on
+    // which part of the chart it lands on, so the prose changes with domain.
+    const dom = bundle.domains?.[primary.domain];
+    if (dom) {
+      paragraphs.push(aspectFamily(primary.aspect) === "soft" ? dom.soft : dom.hard);
+      prompt = `${prompt} ${dom.prompt}`;
+      record(provenance, ctx, "content", "AST-05", "provenance", `Domain framing ${primary.domain}`, {
+        domain: primary.domain,
+        label: dom.label,
+        family: aspectFamily(primary.aspect),
+      });
+    }
+
     paragraphs.push(bundle.phases[primary.phase] ?? "");
+
+    // Where in the arc we are, in days rather than jargon.
+    paragraphs.push(arcParagraph(primary));
 
     record(provenance, ctx, "cycle", "AST-08", "timing", primary.label, {
       orb: primary.orb,
       phase: primary.phase,
       ingress_at: primary.ingress_at,
       exact_at: primary.exact_at,
+      days_to_exact: primary.days_to_exact ?? null,
+      arc_position: primary.arc_position ?? null,
+      domain: primary.domain,
       egress_at: primary.egress_at,
       importance: primary.importance,
     });
@@ -123,7 +166,12 @@ export function assembleReading(
 
   if (supporting.length) {
     paragraphs.push(
-      `Also in range: ${supporting.map((s) => `${s.label} (orb ${s.orb}\u00b0, ${s.phase})`).join("; ")}.`,
+      `Also in range: ${supporting
+        .map(
+          (s) =>
+            `${s.label} (orb ${s.orb}\u00b0, ${s.phase}, ${exactPhrase(s.days_to_exact ?? null)}, ${bundle.domains?.[s.domain]?.label ?? s.domain})`,
+        )
+        .join("; ")}.`,
     );
     for (const s of supporting) {
       record(provenance, ctx, "cycle", "AST-08", "timing", s.label, {

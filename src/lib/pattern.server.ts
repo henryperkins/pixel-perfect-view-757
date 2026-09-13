@@ -120,6 +120,9 @@ interface CycleRow {
   ingress_at: string | null;
   exact_at: string | null;
   egress_at: string | null;
+  /** Derived, present on freshly computed cycles; absent on stored fallbacks. */
+  days_to_exact?: number | null;
+  arc_position?: number | null;
 }
 interface ProvenanceRow {
   lane: string;
