@@ -110,6 +110,34 @@ export interface CycleInstance {
   exact_at: string | null;
   egress_at: string | null;
   label: string;
+  /**
+   * Whole days from the reference instant to the exact pass. Negative once the
+   * exact pass is behind us, null when no exact pass falls inside the scan.
+   */
+  days_to_exact: number | null;
+  /**
+   * Where the reference instant sits inside the ingress -> egress window,
+   * 0 at ingress and 1 at egress. Null when either boundary is outside scan.
+   */
+  arc_position: number | null;
+}
+
+/** Days between two ISO instants, rounded to the nearest whole day. */
+export function daysToExact(exactAt: string | null, from: Date): number | null {
+  if (!exactAt) return null;
+  const ms = new Date(exactAt).getTime() - from.getTime();
+  if (!Number.isFinite(ms)) return null;
+  return Math.round(ms / 86400000);
+}
+
+/** Human phrase for a days-to-exact figure. */
+export function exactPhrase(days: number | null): string {
+  if (days === null) return "no exact pass in this scan";
+  if (days === 0) return "exact today";
+  if (days === 1) return "exact tomorrow";
+  if (days === -1) return "exact yesterday";
+  if (days > 0) return `exact in ${days} days`;
+  return `exact ${Math.abs(days)} days ago`;
 }
 
 function orbAt(
