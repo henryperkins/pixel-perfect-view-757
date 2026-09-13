@@ -141,6 +141,36 @@ function phaseLabel(phase: string) {
   return PHASE_COPY[phase] ?? { label: phase, help: "" };
 }
 
+const DOMAIN_LABEL: Record<string, string> = {
+  work: "work and output",
+  relationships: "relationships and affection",
+  "inner-life": "inner life and rest",
+  identity: "identity and direction",
+  structure: "structure and commitments",
+};
+
+/** Whole days from `day` to the exact pass, preferring the calculated value. */
+function daysToExact(
+  cycle: { exact_at: string | null; days_to_exact?: number | null },
+  day: string,
+): number | null {
+  if (cycle.days_to_exact !== null && cycle.days_to_exact !== undefined) {
+    return cycle.days_to_exact;
+  }
+  if (!cycle.exact_at) return null;
+  const ms = new Date(cycle.exact_at).getTime() - new Date(`${day}T12:00:00Z`).getTime();
+  return Number.isFinite(ms) ? Math.round(ms / 86400000) : null;
+}
+
+/** Plain-language days-to-exact, e.g. "exact in 4 days". */
+export function exactPhrase(days: number | null): string {
+  if (days === null) return "no exact pass in range";
+  if (days === 0) return "exact today";
+  if (days === 1) return "exact tomorrow";
+  if (days === -1) return "exact yesterday";
+  return days > 0 ? `exact in ${days} days` : `exact ${Math.abs(days)} days ago`;
+}
+
 /** Weight from the transit's own speed, the natal point it touches and the orb. */
 function strengthLabel(weight: number): string {
   if (weight >= 0.7) return "Major";
