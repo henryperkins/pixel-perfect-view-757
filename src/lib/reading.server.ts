@@ -103,7 +103,24 @@ export function assembleReading(
     prompt = interp.question;
     paragraphs.push(TONE_OPENER[ctx.tone] ?? "");
     paragraphs.push(interp.mechanism);
+
+    // Domain-specific framing: the same aspect reads differently depending on
+    // which part of the chart it lands on, so the prose changes with domain.
+    const dom = bundle.domains?.[primary.domain];
+    if (dom) {
+      paragraphs.push(aspectFamily(primary.aspect) === "soft" ? dom.soft : dom.hard);
+      prompt = `${prompt} ${dom.prompt}`;
+      record(provenance, ctx, "content", "AST-05", "provenance", `Domain framing ${primary.domain}`, {
+        domain: primary.domain,
+        label: dom.label,
+        family: aspectFamily(primary.aspect),
+      });
+    }
+
     paragraphs.push(bundle.phases[primary.phase] ?? "");
+
+    // Where in the arc we are, in days rather than jargon.
+    paragraphs.push(arcParagraph(primary));
 
     record(provenance, ctx, "cycle", "AST-08", "timing", primary.label, {
       orb: primary.orb,
