@@ -28,6 +28,47 @@ export const Route = createFileRoute("/_authenticated/timing")({
 
 const DOMAINS = ["all", "identity", "relationships", "work", "inner-life", "structure"] as const;
 
+const DOMAIN_LABEL: Record<string, string> = {
+  all: "every area",
+  work: "work and output",
+  relationships: "relationships and affection",
+  "inner-life": "inner life and rest",
+  identity: "identity and direction",
+  structure: "structure and commitments",
+};
+
+/** Whole days from `day` to the exact pass, preferring the calculated value. */
+function daysToExact(
+  cycle: { exact_at: string | null; days_to_exact?: number | null },
+  day: string,
+): number | null {
+  if (cycle.days_to_exact !== null && cycle.days_to_exact !== undefined) {
+    return cycle.days_to_exact;
+  }
+  if (!cycle.exact_at) return null;
+  const ms = new Date(cycle.exact_at).getTime() - new Date(`${day}T12:00:00Z`).getTime();
+  return Number.isFinite(ms) ? Math.round(ms / 86400000) : null;
+}
+
+/** Plain-language days-to-exact, e.g. "exact in 4 days". */
+function exactPhrase(days: number | null): string {
+  if (days === null) return "no exact pass in range";
+  if (days === 0) return "exact today";
+  if (days === 1) return "exact tomorrow";
+  if (days === -1) return "exact yesterday";
+  return days > 0 ? `exact in ${days} days` : `exact ${Math.abs(days)} days ago`;
+}
+
+/** How far through the ingress -> egress window today sits, as a sentence. */
+function arcSentence(cycle: { arc_position?: number | null }): string | null {
+  const p = cycle.arc_position;
+  if (p === null || p === undefined) return null;
+  const pct = Math.round(p * 100);
+  if (pct <= 25) return `${pct}% through the window — near the start, still mostly potential.`;
+  if (pct <= 60) return `${pct}% through the window — the middle, where it reads most clearly.`;
+  return `${pct}% through the window — the back half, winding down.`;
+}
+
 const PHASE_LABEL: Record<string, { label: string; help: string }> = {
   approaching: { label: "Building", help: "The aspect is tightening toward its exact pass." },
   applying: { label: "Building", help: "The aspect is tightening toward its exact pass." },
