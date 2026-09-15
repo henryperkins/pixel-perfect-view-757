@@ -163,7 +163,7 @@ function daysToExact(
 }
 
 /** Plain-language days-to-exact, e.g. "exact in 4 days". */
-export function exactPhrase(days: number | null): string {
+function exactPhrase(days: number | null): string {
   if (days === null) return "no exact pass in range";
   if (days === 0) return "exact today";
   if (days === 1) return "exact tomorrow";
