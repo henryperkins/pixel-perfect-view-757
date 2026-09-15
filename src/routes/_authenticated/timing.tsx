@@ -249,6 +249,13 @@ function TimingPage() {
                           </div>
                         </div>
                         <p className="mt-1 text-xs text-muted-foreground">{phase.help}</p>
+                        <p className="mt-2 text-xs text-foreground">
+                          {exactPhrase(daysToExact(c, day))} ·{" "}
+                          {DOMAIN_LABEL[c.domain] ?? c.domain}
+                        </p>
+                        {arcSentence(c) ? (
+                          <p className="mt-1 text-xs text-muted-foreground">{arcSentence(c)}</p>
+                        ) : null}
                         <Timeline
                           ingress={c.ingress_at}
                           exact={c.exact_at}
