@@ -163,7 +163,7 @@ function daysToExact(
 }
 
 /** Plain-language days-to-exact, e.g. "exact in 4 days". */
-export function exactPhrase(days: number | null): string {
+function exactPhrase(days: number | null): string {
   if (days === null) return "no exact pass in range";
   if (days === 0) return "exact today";
   if (days === 1) return "exact tomorrow";
@@ -387,7 +387,16 @@ function TodayReading() {
               </span>
             </span>
             <span className="technical text-muted-foreground">
-              Domain · <span className="text-foreground">{primary.domain}</span>
+              Countdown ·{" "}
+              <span className="text-foreground">
+                {exactPhrase(daysToExact(primary, data.day))}
+              </span>
+            </span>
+            <span className="technical text-muted-foreground">
+              Domain ·{" "}
+              <span className="text-foreground">
+                {DOMAIN_LABEL[primary.domain] ?? primary.domain}
+              </span>
             </span>
           </div>
         ) : null}
@@ -441,7 +450,11 @@ function TodayReading() {
                       </div>
                     </div>
                     <p className="mt-1 text-xs text-muted-foreground">{phase.help}</p>
-                    <p className="mt-2 font-mono text-[0.7rem] text-muted-foreground">
+                    <p className="mt-2 text-xs text-foreground">
+                      {exactPhrase(daysToExact(c, data.day))} ·{" "}
+                      {DOMAIN_LABEL[c.domain] ?? c.domain}
+                    </p>
+                    <p className="mt-1 font-mono text-[0.7rem] text-muted-foreground">
                       orb {c.orb.toFixed(2)}° · weight {c.importance.toFixed(3)} ·{" "}
                       {c.exact_at ? `peak ${c.exact_at.slice(0, 10)}` : "no peak in window"}
                     </p>
