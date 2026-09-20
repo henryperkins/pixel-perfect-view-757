@@ -1553,3 +1553,164 @@ export async function publishDraft(db: DB, userId: string, draftId: string) {
 
   return { version, checksum };
 }
+
+// ---------------------------------------------------------------------------
+// reading quality (language-layer telemetry)
+// ---------------------------------------------------------------------------
+
+/**
+ * Aggregates which fact atoms the language layer actually cited. Nothing here
+ * reads prose or any encrypted field: only the citation metadata already stored
+ * beside each reading. Aggregates span every reading (no user is identified);
+ * the per-reading list is limited to the admin's own readings.
+ */
+const FACT_KINDS: { prefix: string; label: string }[] = [
+  { prefix: "C", label: "Timing window" },
+  { prefix: "N", label: "Natal structure" },
+  { prefix: "E", label: "Calculation engine" },
+  { prefix: "U", label: "Birth-time uncertainty" },
+  { prefix: "F", label: "Consented framing" },
+];
+
+function factKind(id: string): string {
+  const hit = FACT_KINDS.find((k) => id.startsWith(k.prefix));
+  return hit ? hit.label : "Other";
+}
+
+export interface FactUsage {
+  id: string;
+  kind: string;
+  readings: number;
+  paragraphs: number;
+  share: number;
+}
+
+export interface ReadingQualitySample {
+  reading_date: string;
+  mode: "model" | "template";
+  model: string | null;
+  paragraphs: number;
+  dropped: number;
+  facts: string[];
+  reason: string | null;
+}
+
+export async function readingQuality(db: DB, userId: string) {
+  if (!(await isAdmin(db, userId))) return { isAdmin: false as const };
+
+  const { data, error } = await db
+    .from<{
+      user_id: string;
+      reading_date: string;
+      language_mode: string | null;
+      language_model: string | null;
+      language_meta: JsonValue;
+    }>("daily_readings")
+    .select("user_id, reading_date, language_mode, language_model, language_meta")
+    .order("reading_date", { ascending: false })
+    .limit(300);
+  if (error) throw new Error(error.message);
+
+  const rows = data ?? [];
+  const factCounts = new Map<string, { readings: number; paragraphs: number }>();
+  const reasons = new Map<string, number>();
+  const models = new Set<string>();
+  const samples: ReadingQualitySample[] = [];
+
+  let model = 0;
+  let template = 0;
+  let citedParagraphs = 0;
+  let droppedParagraphs = 0;
+  let flagged = 0;
+  let distinctFactsTotal = 0;
+
+  for (const row of rows) {
+    const lang = readingLanguage(row);
+    const meta = (row.language_meta ?? {}) as Record<string, unknown>;
+    const flags = Array.isArray(meta["flagged"]) ? (meta["flagged"] as unknown[]).length : 0;
+    const unique = new Set<string>();
+    for (const c of lang.citations) {
+      for (const f of c.facts ?? []) unique.add(f);
+    }
+
+    if (lang.mode === "model") {
+      model += 1;
+      if (lang.model) models.add(lang.model);
+      citedParagraphs += lang.citations.length;
+      distinctFactsTotal += unique.size;
+    } else {
+      template += 1;
+      const why = lang.reason ?? "no reason recorded";
+      reasons.set(why, (reasons.get(why) ?? 0) + 1);
+    }
+    droppedParagraphs += lang.dropped;
+    flagged += flags;
+
+    for (const id of unique) {
+      const entry = factCounts.get(id) ?? { readings: 0, paragraphs: 0 };
+      entry.readings += 1;
+      factCounts.set(id, entry);
+    }
+    for (const c of lang.citations) {
+      for (const id of new Set(c.facts ?? [])) {
+        const entry = factCounts.get(id) ?? { readings: 0, paragraphs: 0 };
+        entry.paragraphs += 1;
+        factCounts.set(id, entry);
+      }
+    }
+
+    if (row.user_id === userId && samples.length < 12) {
+      samples.push({
+        reading_date: row.reading_date,
+        mode: lang.mode,
+        model: lang.model,
+        paragraphs: lang.citations.length,
+        dropped: lang.dropped,
+        facts: [...unique].sort(),
+        reason: lang.reason,
+      });
+    }
+  }
+
+  const facts: FactUsage[] = [...factCounts.entries()]
+    .map(([id, v]) => ({
+      id,
+      kind: factKind(id),
+      readings: v.readings,
+      paragraphs: v.paragraphs,
+      share: model > 0 ? Math.round((v.readings / model) * 100) : 0,
+    }))
+    .sort((a, b) => b.readings - a.readings || a.id.localeCompare(b.id));
+
+  const kinds = FACT_KINDS.map((k) => ({
+    label: k.label,
+    readings: facts
+      .filter((f) => f.kind === k.label)
+      .reduce((acc, f) => Math.max(acc, f.readings), 0),
+    atoms: facts.filter((f) => f.kind === k.label).length,
+    paragraphs: facts
+      .filter((f) => f.kind === k.label)
+      .reduce((acc, f) => acc + f.paragraphs, 0),
+  })).filter((k) => k.atoms > 0);
+
+  return {
+    isAdmin: true as const,
+    total: rows.length,
+    model,
+    template,
+    modelShare: rows.length > 0 ? Math.round((model / rows.length) * 100) : 0,
+    citedParagraphs,
+    droppedParagraphs,
+    flagged,
+    avgFactsPerReading: model > 0 ? Math.round((distinctFactsTotal / model) * 10) / 10 : 0,
+    avgParagraphs: model > 0 ? Math.round((citedParagraphs / model) * 10) / 10 : 0,
+    models: [...models],
+    facts: facts.slice(0, 24),
+    kinds,
+    reasons: [...reasons.entries()]
+      .map(([reason, count]) => ({ reason, count }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 5),
+    samples,
+  };
+}

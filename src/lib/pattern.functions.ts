@@ -299,6 +299,13 @@ export const fetchContentDrafts = createServerFn({ method: "GET" })
     return { drafts: await m.listDrafts(context.db, context.userId) };
   });
 
+export const fetchReadingQuality = createServerFn({ method: "GET" })
+  .middleware([requireAuth])
+  .handler(async ({ context }) => {
+    const m = await import("./pattern.server");
+    return m.readingQuality(context.db, context.userId);
+  });
+
 export const draftContentRelease = createServerFn({ method: "POST" })
   .middleware([requireAuth])
   .handler(async ({ context }) => {
