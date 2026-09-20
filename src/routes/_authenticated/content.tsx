@@ -11,6 +11,7 @@ import {
   draftContentRelease,
   fetchContentDrafts,
   fetchEdgePlane,
+  fetchReadingQuality,
   fetchReleases,
   publishContentDraft,
   triggerEdgeRun,
