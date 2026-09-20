@@ -252,6 +252,7 @@ function ContentPage() {
           )}
 
           <EdgePlane />
+          <QualityPlane isAdmin={isAdmin} />
           <DraftPlane isAdmin={isAdmin} />
         </div>
 
