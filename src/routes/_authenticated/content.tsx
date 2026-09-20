@@ -478,6 +478,200 @@ function EdgePlane() {
 }
 
 /**
+ * Reading quality: which fact atoms the language layer actually cited, how
+ * often it fell back to deterministic copy, and why. Reads citation metadata
+ * only — never prose, never any encrypted field.
+ */
+function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
+  const qualityFn = useServerFn(fetchReadingQuality);
+  const query = useQuery({
+    queryKey: ["reading-quality"],
+    queryFn: () => qualityFn({}),
+    enabled: isAdmin,
+  });
+
+  if (!isAdmin) return null;
+  const data = query.data && query.data.isAdmin ? query.data : null;
+
+  return (
+    <section className="mt-12 border-t border-rule pt-8">
+      <h2 className="text-2xl leading-snug">Reading quality</h2>
+      <p className="prose-reading mt-3 text-foreground">
+        Every generated paragraph must cite the calculated facts it rests on, and anything
+        citing a fact that was not injected is dropped before it is shown. This is the
+        record of what the language layer actually used, so you can see whether it is
+        adding value or mostly falling back to deterministic copy.
+      </p>
+
+      {query.isPending ? (
+        <div className="mt-6 space-y-3" aria-busy="true" aria-live="polite">
+          <p className="technical text-muted-foreground">Loading citation record…</p>
+          {[0, 1].map((i) => (
+            <div key={i} className="border border-rule bg-card p-4">
+              <div className="h-3 w-48 animate-pulse bg-muted" />
+              <div className="mt-3 h-3 w-64 animate-pulse bg-muted" />
+            </div>
+          ))}
+        </div>
+      ) : query.error ? (
+        <div role="alert" className="mt-6 border border-destructive/40 bg-evidence p-4">
+          <p className="technical text-destructive">Citation record unreachable</p>
+          <p className="prose-reading mt-2 text-foreground">
+            The stored language metadata could not be read. Readings themselves are
+            unaffected.
+          </p>
+          <button
+            type="button"
+            onClick={() => void query.refetch()}
+            disabled={query.isFetching}
+            className="technical mt-4 border border-rule px-3 py-1.5 text-foreground transition-colors hover:bg-evidence disabled:opacity-50"
+          >
+            {query.isFetching ? "Retrying…" : "Retry"}
+          </button>
+        </div>
+      ) : !data || data.total === 0 ? (
+        <div className="mt-6 border border-rule bg-evidence p-4">
+          <p className="technical text-evidence-foreground">No readings recorded yet</p>
+          <p className="prose-reading mt-2 text-foreground">
+            The first assembled reading starts this record.
+          </p>
+        </div>
+      ) : (
+        <>
+          <dl className="mt-6 grid gap-x-6 gap-y-3 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              { label: "Readings", value: String(data.total) },
+              {
+                label: "Written by model",
+                value: `${data.model} · ${data.modelShare}%`,
+              },
+              { label: "Fell back to template", value: String(data.template) },
+              { label: "Facts cited per reading", value: String(data.avgFactsPerReading) },
+              { label: "Cited paragraphs", value: String(data.citedParagraphs) },
+              {
+                label: "Paragraphs dropped unverified",
+                value: String(data.droppedParagraphs),
+              },
+              { label: "Safety rewrites", value: String(data.flagged) },
+              { label: "Models", value: data.models.join(", ") || "—" },
+            ].map((s) => (
+              <div key={s.label} className="border border-rule bg-card p-3">
+                <dt className="technical text-muted-foreground">{s.label}</dt>
+                <dd className="mt-1 font-mono text-sm break-words text-foreground">
+                  {s.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
+
+          <h3 className="technical mt-8 text-muted-foreground">
+            Fact atoms the model cited
+          </h3>
+          <div className="mt-3 overflow-x-auto">
+            <table className="w-full min-w-[32rem] border-collapse text-left">
+              <thead>
+                <tr className="border-b border-rule">
+                  <th className="technical pb-2 text-muted-foreground">Atom</th>
+                  <th className="technical pb-2 text-muted-foreground">What it is</th>
+                  <th className="technical pb-2 text-muted-foreground">Readings</th>
+                  <th className="technical pb-2 text-muted-foreground">Paragraphs</th>
+                  <th className="technical pb-2 text-muted-foreground">Share</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.facts.map((f) => (
+                  <tr key={f.id} className="border-b border-rule/60">
+                    <td className="py-2 font-mono text-xs text-foreground">{f.id}</td>
+                    <td className="py-2 text-xs text-muted-foreground">{f.kind}</td>
+                    <td className="py-2 font-mono text-xs text-muted-foreground">
+                      {f.readings}
+                    </td>
+                    <td className="py-2 font-mono text-xs text-muted-foreground">
+                      {f.paragraphs}
+                    </td>
+                    <td className="py-2 font-mono text-xs text-foreground">{f.share}%</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {data.kinds.length ? (
+            <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
+              {data.kinds.map((k) => (
+                <li key={k.label} className="technical text-muted-foreground">
+                  {k.label} ·{" "}
+                  <span className="text-foreground">
+                    {k.atoms} atom{k.atoms === 1 ? "" : "s"}, {k.paragraphs} paragraphs
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+
+          {data.reasons.length ? (
+            <>
+              <h3 className="technical mt-8 text-muted-foreground">
+                Why readings fell back
+              </h3>
+              <ul className="mt-3 space-y-2">
+                {data.reasons.map((r) => (
+                  <li key={r.reason} className="border border-rule bg-card p-3">
+                    <p className="prose-reading text-sm text-foreground">{r.reason}</p>
+                    <p className="technical mt-1 text-muted-foreground">
+                      {r.count} reading{r.count === 1 ? "" : "s"}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </>
+          ) : null}
+
+          {data.samples.length ? (
+            <>
+              <h3 className="technical mt-8 text-muted-foreground">
+                Your own recent readings
+              </h3>
+              <div className="mt-3 space-y-3">
+                {data.samples.map((s) => (
+                  <article
+                    key={s.reading_date}
+                    className="border border-rule bg-card p-3"
+                  >
+                    <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                      <span className="font-mono text-xs text-foreground">
+                        {s.reading_date}
+                      </span>
+                      <span className="technical text-muted-foreground">
+                        {s.mode === "model" ? (s.model ?? "model") : "template"}
+                      </span>
+                      <span className="technical ml-auto text-muted-foreground">
+                        {s.paragraphs} cited · {s.dropped} dropped
+                      </span>
+                    </div>
+                    {s.facts.length ? (
+                      <ul className="mt-2 flex flex-wrap gap-x-2 gap-y-1 border-t border-rule pt-2 font-mono text-xs text-muted-foreground">
+                        {s.facts.map((f) => (
+                          <li key={f}>{f}</li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="prose-reading mt-2 border-t border-rule pt-2 text-xs text-muted-foreground">
+                        {s.reason ?? "No citations recorded."}
+                      </p>
+                    )}
+                  </article>
+                ))}
+              </div>
+            </>
+          ) : null}
+        </>
+      )}
+    </section>
+  );
+}
+
+/**
  * Language-layer drafting: the model writes candidate interpretation copy for
  * every slot the engine looks up, but nothing it writes becomes live copy
  * until an admin publishes it as a release and flips the pointer above.
