@@ -228,20 +228,48 @@ export interface FeatureProse {
   meta: LanguageMeta;
 }
 
+/**
+ * Bumped whenever the essay brief below changes shape. Cached chapters written
+ * under an older version are rewritten on next read rather than served stale.
+ */
+export const FEATURE_ESSAY_VERSION = "essay-1";
+
 export async function generateFeatureNarrative(input: {
   facts: FactAtom[];
   title: string;
   tone: string;
+  /** "defining" chapters are the reader's strongest structures and run longer. */
+  emphasis?: "defining" | "supporting";
 }): Promise<FeatureProse> {
+  const defining = input.emphasis === "defining";
+  const paras = defining ? "six to eight" : "four to six";
+
   const prompt = [
     `Tone preference: ${input.tone}.`,
     "Facts:",
     factBlock(input.facts),
     "",
-    `Write two paragraphs about the natal structure "${input.title}".`,
-    "Describe what the structure is, mechanically, and what it tends to look like in ordinary life.",
-    "It is a lifelong structure, not an event: do not date it and do not predict from it.",
-    "Cite fact ids per paragraph.",
+    `Write an essay about the natal structure "${input.title}".`,
+    defining
+      ? "This is one of the reader's most strongly defined structures, so write it as a centrepiece chapter."
+      : "This is a supporting structure, so keep it tighter than a centrepiece chapter.",
+    `Write ${paras} paragraphs of three to five sentences each, in this arc:`,
+    "1. the mechanism — what this structure literally is in the chart, in plain words.",
+    "2. the inner experience — how a person with this structure tends to process things internally: what they reach for, what they avoid, what feels effortful versus automatic.",
+    "3. how it shows up with other people, as a tendency in the reader themselves and never as a claim about anyone else.",
+    "4. the cost of the same trait — where the strength overshoots, tips into a habit, or gets expensive.",
+    "5. what it looks like when it is working well, and what usually has to be practised for that.",
+    defining
+      ? "6. how strongly the calculation defines this structure and what that does and does not entitle anyone to say."
+      : "6. how strongly the calculation defines it, briefly.",
+    "",
+    "Write psychology, not fortune telling: describe patterns of attention, motivation and self-image.",
+    "Speak to the reader as 'you'. Be specific and concrete — name ordinary situations rather than abstractions.",
+    "It is a lifelong structure, not an event: do not date it, do not predict from it, do not tell the reader what to do.",
+    "Never assert something as certain when the facts only support a tendency; say 'tends to', 'often', 'you may notice'.",
+    "No zodiac cliches, no mysticism, no flattery, no horoscope voice.",
+    "Cite the fact ids each paragraph rests on. Every paragraph must cite at least one.",
+    "Finish with one reflection question the reader could actually answer about their own life.",
   ].join("\n");
 
   let raw: { headline: string; prompt: string; paragraphs: Written[] };
@@ -262,14 +290,19 @@ export async function generateFeatureNarrative(input: {
     };
   }
 
+  const question = safetyPass((raw.prompt ?? "").trim());
+  const body = question.text
+    ? [...kept, `Something to sit with: ${question.text}`]
+    : kept;
+
   return {
-    narrative: kept.join("\n\n"),
+    narrative: body.join("\n\n"),
     meta: {
       mode: "model",
       model: LANGUAGE_MODEL,
       citations,
       dropped,
-      flagged: [...new Set(flagged)],
+      flagged: [...new Set([...flagged, ...question.flagged])],
       reason: null,
     },
   };
