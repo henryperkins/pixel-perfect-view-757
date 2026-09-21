@@ -225,7 +225,11 @@ function PatternView({ data }: { data: PatternData }) {
             {data.features.map((f) => {
               const isOpen = open === f.feature_key;
               return (
-                <article key={f.feature_key} className="border border-rule bg-card">
+                <article
+                  key={f.feature_key}
+                  id={`chapter-${f.feature_key}`}
+                  className="scroll-mt-24 border border-rule bg-card"
+                >
                   <button
                     type="button"
                     aria-expanded={isOpen}
