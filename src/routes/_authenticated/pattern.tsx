@@ -111,6 +111,95 @@ function PatternView({ data }: { data: PatternData }) {
           </p>
         </section>
 
+        {data.rising ? (
+          <section className="mt-8 sm:mt-10">
+            <h2 className="technical border-b border-rule pb-2 text-muted-foreground">
+              Your main lens · {data.rising.sign} rising
+            </h2>
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-foreground">
+              The sign that was coming up over the horizon at your birth was{" "}
+              <strong>{data.rising.sign}</strong>, at {data.rising.position}. That one
+              measurement sets where every house falls, and the houses are what decide{" "}
+              <em>which part of your life</em> a placement or a timing window actually
+              touches. Everything below is arranged by it.
+            </p>
+            <ul className="mt-4">
+              {data.rising.houses.map((h) => (
+                <li
+                  key={h.house}
+                  className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-3 border-b border-rule py-2.5"
+                >
+                  <span className="min-w-0 text-sm leading-snug text-foreground">
+                    <span className="font-mono text-xs text-muted-foreground">
+                      {h.house} · {h.sign}
+                    </span>
+                    <span className="mt-0.5 block">{h.area}</span>
+                  </span>
+                  <span className="shrink-0 font-mono text-xs text-muted-foreground">
+                    {h.bodies.length ? h.bodies.join(", ") : "empty"}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+              "Empty" means no body sat in that house at your birth — an ordinary result, not
+              a missing area of life.
+            </p>
+          </section>
+        ) : (
+          <section className="mt-8 border border-rule bg-evidence p-4 sm:mt-10">
+            <h2 className="technical text-muted-foreground">Your main lens</h2>
+            <p className="mt-2 text-sm leading-relaxed text-evidence-foreground">
+              Your rising sign is the frame everything else hangs on, but it moves about a
+              degree every four minutes — so it isn't shown here because your recorded birth
+              time isn't precise enough to place it honestly.{" "}
+              <Link to="/birth" className="text-primary">
+                Sharpen your birth time
+              </Link>{" "}
+              and this section appears.
+            </p>
+          </section>
+        )}
+
+        {data.features.length > 0 ? (
+          <section className="mt-8 sm:mt-10">
+            <h2 className="technical border-b border-rule pb-2 text-muted-foreground">
+              What most shapes you
+            </h2>
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+              The {Math.min(3, data.features.length)} strongest structures in your chart —
+              the ones the calculation defines most sharply. Tap one to read it.
+            </p>
+            <div className="mt-4 grid gap-3 sm:grid-cols-3">
+              {data.features.slice(0, 3).map((f, i) => (
+                <button
+                  key={f.feature_key}
+                  type="button"
+                  onClick={() => {
+                    setOpen(f.feature_key);
+                    document
+                      .getElementById(`chapter-${f.feature_key}`)
+                      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }}
+                  className="border border-rule bg-card p-4 text-left transition-colors hover:bg-evidence"
+                >
+                  <span className="technical block text-muted-foreground">
+                    {i + 1} · {f.family}
+                  </span>
+                  <span className="mt-2 block font-serif text-base leading-snug sm:text-lg">
+                    {f.title}
+                  </span>
+                  <span className="mt-2 block font-mono text-xs text-muted-foreground">
+                    strength {Number(f.strength).toFixed(2)}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </section>
+        ) : null}
+
+
+
         <section className="mt-8 sm:mt-10">
           <div className="grid gap-1 border-b border-rule pb-2 sm:flex sm:items-baseline sm:justify-between sm:gap-4">
             <h2 className="technical text-muted-foreground">
@@ -136,7 +225,11 @@ function PatternView({ data }: { data: PatternData }) {
             {data.features.map((f) => {
               const isOpen = open === f.feature_key;
               return (
-                <article key={f.feature_key} className="border border-rule bg-card">
+                <article
+                  key={f.feature_key}
+                  id={`chapter-${f.feature_key}`}
+                  className="scroll-mt-24 border border-rule bg-card"
+                >
                   <button
                     type="button"
                     aria-expanded={isOpen}

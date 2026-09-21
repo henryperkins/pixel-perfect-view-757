@@ -9,7 +9,12 @@ import {
   type TimeAccuracy,
 } from "./astro/chart";
 import { computeCycles } from "./astro/cycles";
-import { ENGINE_ID, ENGINE_VERSION, toJulianDay } from "./astro/ephemeris";
+import {
+  ENGINE_ID,
+  ENGINE_VERSION,
+  signOf,
+  toJulianDay,
+} from "./astro/ephemeris";
 import { resolvePositions } from "./astro/swiss.server";
 
 import {
@@ -844,6 +849,51 @@ export async function loadBirthRecord(db: DB, userId: string) {
   };
 }
 
+/**
+ * Plain-language area of life each house covers. Houses are the frame the
+ * rising sign sets up, so this is only ever shown when the birth time is
+ * precise enough for angle claims (AST-20).
+ */
+const HOUSE_AREA: string[] = [
+  "how you come across and start things",
+  "what you own, earn and value",
+  "how you talk, learn and get around",
+  "home, family and where you come from",
+  "creative output, play and attention",
+  "daily work, routine and upkeep",
+  "close one-to-one relationships",
+  "what you share with others and what changes you",
+  "beliefs, study and distance",
+  "public role, direction and long work",
+  "friendships, groups and the future",
+  "rest, privacy and what runs underneath",
+];
+
+/**
+ * The rising sign as the chart's main lens: the sign on the ascendant and the
+ * signs that fall across each house because of it. Null when the birth time is
+ * too uncertain to place the angles honestly.
+ */
+function risingLens(chart: Chart, placements: { label: string; house: number | null }[]) {
+  if (chart.uncertainty.angleClaimsSuppressed || !chart.uncertainty.housesReliable) {
+    return null;
+  }
+  const asc = chart.angles.ascendant;
+  const cusps = Array.isArray(chart.houses) ? chart.houses : [];
+  if (cusps.length < 12) return null;
+
+  return {
+    sign: signOf(asc),
+    position: formatPosition(asc),
+    houses: cusps.slice(0, 12).map((cusp, i) => ({
+      house: i + 1,
+      sign: signOf(cusp),
+      area: HOUSE_AREA[i] ?? "",
+      bodies: placements.filter((p) => p.house === i + 1).map((p) => p.label),
+    })),
+  };
+}
+
 export async function getPattern(db: DB, userId: string) {
   const snapRow = await loadSnapshot(db, userId);
   if (!snapRow) return { needsOnboarding: true as const };
@@ -873,6 +923,7 @@ export async function getPattern(db: DB, userId: string) {
     contractVersion: chart.contractVersion,
     uncertainty: chart.uncertainty,
     ephemeris: ephemerisState(chart),
+    rising: risingLens(chart, placements),
     placements,
     aspects: chart.aspects.slice(0, 20),
     features: features ?? [],
