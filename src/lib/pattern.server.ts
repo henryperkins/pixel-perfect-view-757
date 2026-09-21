@@ -9,7 +9,12 @@ import {
   type TimeAccuracy,
 } from "./astro/chart";
 import { computeCycles } from "./astro/cycles";
-import { ENGINE_ID, ENGINE_VERSION, toJulianDay } from "./astro/ephemeris";
+import {
+  ENGINE_ID,
+  ENGINE_VERSION,
+  signOf,
+  toJulianDay,
+} from "./astro/ephemeris";
 import { resolvePositions } from "./astro/swiss.server";
 
 import {
