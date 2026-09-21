@@ -923,6 +923,7 @@ export async function getPattern(db: DB, userId: string) {
     contractVersion: chart.contractVersion,
     uncertainty: chart.uncertainty,
     ephemeris: ephemerisState(chart),
+    rising: risingLens(chart, placements),
     placements,
     aspects: chart.aspects.slice(0, 20),
     features: features ?? [],
