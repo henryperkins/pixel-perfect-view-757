@@ -175,7 +175,12 @@ function PatternView({ data }: { data: PatternData }) {
                 <button
                   key={f.feature_key}
                   type="button"
-                  onClick={() => setOpen(f.feature_key)}
+                  onClick={() => {
+                    setOpen(f.feature_key);
+                    document
+                      .getElementById(`chapter-${f.feature_key}`)
+                      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }}
                   className="border border-rule bg-card p-4 text-left transition-colors hover:bg-evidence"
                 >
                   <span className="technical block text-muted-foreground">
