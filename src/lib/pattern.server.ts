@@ -1345,6 +1345,7 @@ interface NarrativeRow {
   model: string | null;
   narrative_ct: string;
   citations: JsonValue;
+  essay_version: string | null;
 }
 
 /**
@@ -1362,15 +1363,28 @@ export async function getFeatureNarrative(
 
   const dek = await getDek(db, userId);
 
+  const { FEATURE_ESSAY_VERSION, generateFeatureNarrative } = await import(
+    "./ai/language.server"
+  );
+
   const { data: cached } = await db
     .from<NarrativeRow>("feature_narratives")
-    .select("feature_key, mode, model, narrative_ct, citations")
+    .select("feature_key, mode, model, narrative_ct, citations, essay_version")
     .eq("user_id", userId)
     .eq("snapshot_id", snapRow.id)
     .eq("feature_key", featureKey)
     .maybeSingle();
 
-  if (cached) {
+  // A chapter written under an older essay brief is discarded rather than
+  // served: the reader should always get the current depth of writing.
+  if (cached && cached.essay_version !== FEATURE_ESSAY_VERSION) {
+    await db
+      .from("feature_narratives")
+      .delete()
+      .eq("user_id", userId)
+      .eq("snapshot_id", snapRow.id)
+      .eq("feature_key", featureKey);
+  } else if (cached) {
     return {
       available: true as const,
       featureKey,
@@ -1398,7 +1412,6 @@ export async function getFeatureNarrative(
   const chart = snapshotToChart(snapRow);
   const profile = await loadProfile(db, userId);
   const { featureFacts } = await import("./ai/facts");
-  const { generateFeatureNarrative } = await import("./ai/language.server");
 
   const facts = featureFacts(feature, {
     engine: chart.engine,
@@ -1408,10 +1421,21 @@ export async function getFeatureNarrative(
     uncertainty: chart.uncertainty,
   });
 
+  // The three most strongly defined structures are the reader's centrepiece
+  // chapters and get the longer essay; the rest stay tighter.
+  const { data: ranked } = await db
+    .from<{ feature_key: string }>("natal_features")
+    .select("feature_key")
+    .eq("snapshot_id", snapRow.id)
+    .order("strength", { ascending: false })
+    .limit(3);
+  const defining = (ranked ?? []).some((r) => r.feature_key === featureKey);
+
   const written = await generateFeatureNarrative({
     facts,
     title: feature.title,
     tone: profile.tone_pref ?? "plain",
+    emphasis: defining ? "defining" : "supporting",
   });
 
   if (!written.narrative) {
@@ -1431,6 +1455,7 @@ export async function getFeatureNarrative(
     model: written.meta.model,
     narrative_ct: await encryptField(dek, written.narrative),
     citations: written.meta.citations as never,
+    essay_version: FEATURE_ESSAY_VERSION,
   });
 
   return {
