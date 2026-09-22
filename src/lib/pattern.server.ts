@@ -1363,15 +1363,28 @@ export async function getFeatureNarrative(
 
   const dek = await getDek(db, userId);
 
+  const { FEATURE_ESSAY_VERSION, generateFeatureNarrative } = await import(
+    "./ai/language.server"
+  );
+
   const { data: cached } = await db
     .from<NarrativeRow>("feature_narratives")
-    .select("feature_key, mode, model, narrative_ct, citations")
+    .select("feature_key, mode, model, narrative_ct, citations, essay_version")
     .eq("user_id", userId)
     .eq("snapshot_id", snapRow.id)
     .eq("feature_key", featureKey)
     .maybeSingle();
 
-  if (cached) {
+  // A chapter written under an older essay brief is discarded rather than
+  // served: the reader should always get the current depth of writing.
+  if (cached && cached.essay_version !== FEATURE_ESSAY_VERSION) {
+    await db
+      .from("feature_narratives")
+      .delete()
+      .eq("user_id", userId)
+      .eq("snapshot_id", snapRow.id)
+      .eq("feature_key", featureKey);
+  } else if (cached) {
     return {
       available: true as const,
       featureKey,
