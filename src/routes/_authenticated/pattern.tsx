@@ -189,6 +189,7 @@ function PatternView({ data }: { data: PatternData }) {
                   <span className="mt-2 block font-serif text-base leading-snug sm:text-lg">
                     {f.title}
                   </span>
+                  <ChapterLead featureKey={f.feature_key} />
                   <span className="mt-2 block font-mono text-xs text-muted-foreground">
                     strength {Number(f.strength).toFixed(2)}
                   </span>
