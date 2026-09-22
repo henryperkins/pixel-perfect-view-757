@@ -406,6 +406,27 @@ function PatternView({ data }: { data: PatternData }) {
 
 
 /**
+ * Opening line of a chapter's essay, shown on the "What most shapes you"
+ * cards. Shares the chapter query, so opening the chapter costs nothing extra.
+ */
+function ChapterLead({ featureKey }: { featureKey: string }) {
+  const load = useServerFn(fetchFeatureNarrative);
+  const query = useQuery({
+    queryKey: ["feature-narrative", featureKey],
+    queryFn: () => load({ data: { featureKey } }),
+    staleTime: Infinity,
+  });
+
+  if (!query.data?.available) return null;
+  const lead = query.data.narrative.split(/(?<=\.)\s/).slice(0, 2).join(" ");
+  return (
+    <span className="mt-2 block text-sm leading-relaxed text-muted-foreground">
+      {lead}
+    </span>
+  );
+}
+
+/**
  * Narrative for one chapter. Written by the language layer from the
  * structure's own calculated payload, verified claim-by-claim; when nothing
  * survives verification the chapter shows the facts alone rather than filler.
