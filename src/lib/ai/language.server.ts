@@ -232,36 +232,27 @@ export interface FeatureProse {
  * Bumped whenever the essay brief below changes shape. Cached chapters written
  * under an older version are rewritten on next read rather than served stale.
  */
-export const FEATURE_ESSAY_VERSION = "essay-1";
+export const FEATURE_ESSAY_VERSION = "essay-2";
 
 export async function generateFeatureNarrative(input: {
   facts: FactAtom[];
   title: string;
   tone: string;
-  /** "defining" chapters are the reader's strongest structures and run longer. */
-  emphasis?: "defining" | "supporting";
 }): Promise<FeatureProse> {
-  const defining = input.emphasis === "defining";
-  const paras = defining ? "six to eight" : "four to six";
-
   const prompt = [
     `Tone preference: ${input.tone}.`,
     "Facts:",
     factBlock(input.facts),
     "",
     `Write an essay about the natal structure "${input.title}".`,
-    defining
-      ? "This is one of the reader's most strongly defined structures, so write it as a centrepiece chapter."
-      : "This is a supporting structure, so keep it tighter than a centrepiece chapter.",
-    `Write ${paras} paragraphs of three to five sentences each, in this arc:`,
+    "Write it as a full centrepiece chapter, regardless of the structure's relative strength.",
+    "Write six to eight paragraphs of three to five sentences each, in this arc:",
     "1. the mechanism — what this structure literally is in the chart, in plain words.",
     "2. the inner experience — how a person with this structure tends to process things internally: what they reach for, what they avoid, what feels effortful versus automatic.",
     "3. how it shows up with other people, as a tendency in the reader themselves and never as a claim about anyone else.",
     "4. the cost of the same trait — where the strength overshoots, tips into a habit, or gets expensive.",
     "5. what it looks like when it is working well, and what usually has to be practised for that.",
-    defining
-      ? "6. how strongly the calculation defines this structure and what that does and does not entitle anyone to say."
-      : "6. how strongly the calculation defines it, briefly.",
+    "6. how strongly the calculation defines this structure and what that does and does not entitle anyone to say.",
     "",
     "Write psychology, not fortune telling: describe patterns of attention, motivation and self-image.",
     "Speak to the reader as 'you'. Be specific and concrete — name ordinary situations rather than abstractions.",
