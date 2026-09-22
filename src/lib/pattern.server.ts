@@ -1421,21 +1421,10 @@ export async function getFeatureNarrative(
     uncertainty: chart.uncertainty,
   });
 
-  // The three most strongly defined structures are the reader's centrepiece
-  // chapters and get the longer essay; the rest stay tighter.
-  const { data: ranked } = await db
-    .from<{ feature_key: string }>("natal_features")
-    .select("feature_key")
-    .eq("snapshot_id", snapRow.id)
-    .order("strength", { ascending: false })
-    .limit(3);
-  const defining = (ranked ?? []).some((r) => r.feature_key === featureKey);
-
   const written = await generateFeatureNarrative({
     facts,
     title: feature.title,
     tone: profile.tone_pref ?? "plain",
-    emphasis: defining ? "defining" : "supporting",
   });
 
   if (!written.narrative) {
