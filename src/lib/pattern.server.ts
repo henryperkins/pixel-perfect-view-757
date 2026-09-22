@@ -1455,6 +1455,7 @@ export async function getFeatureNarrative(
     model: written.meta.model,
     narrative_ct: await encryptField(dek, written.narrative),
     citations: written.meta.citations as never,
+    essay_version: FEATURE_ESSAY_VERSION,
   });
 
   return {
