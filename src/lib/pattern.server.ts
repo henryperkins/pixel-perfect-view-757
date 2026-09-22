@@ -1345,6 +1345,7 @@ interface NarrativeRow {
   model: string | null;
   narrative_ct: string;
   citations: JsonValue;
+  essay_version: string | null;
 }
 
 /**

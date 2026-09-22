@@ -222,6 +222,7 @@ CREATE TABLE IF NOT EXISTS feature_narratives (
   model TEXT,
   narrative_ct TEXT NOT NULL,
   citations TEXT NOT NULL DEFAULT '[]',
+  essay_version TEXT,
   created_at TEXT NOT NULL DEFAULT (datetime('now')),
   UNIQUE (user_id, snapshot_id, feature_key)
 );
