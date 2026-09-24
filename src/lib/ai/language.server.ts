@@ -232,7 +232,7 @@ export interface FeatureProse {
  * Bumped whenever the essay brief below changes shape. Cached chapters written
  * under an older version are rewritten on next read rather than served stale.
  */
-export const FEATURE_ESSAY_VERSION = "essay-2";
+export const FEATURE_ESSAY_VERSION = "essay-3";
 
 export async function generateFeatureNarrative(input: {
   facts: FactAtom[];
@@ -247,8 +247,9 @@ export async function generateFeatureNarrative(input: {
     `Write an essay about the natal structure "${input.title}".`,
     "Write it as a full centrepiece chapter, regardless of the structure's relative strength.",
     "Write six to eight paragraphs of three to five sentences each, in this arc:",
-    "1. the mechanism — what this structure literally is in the chart, in plain words.",
-    "2. the inner experience — how a person with this structure tends to process things internally: what they reach for, what they avoid, what feels effortful versus automatic.",
+    "1. the inner experience, stated plainly — open with what it is like to be this person, with no degrees, orbs, strengths or chart terms in this paragraph.",
+    "2. the mechanism — what this structure literally is in the chart, in plain words; degrees and technical detail belong here, not earlier.",
+    "2b. the inner experience — how a person with this structure tends to process things internally: what they reach for, what they avoid, what feels effortful versus automatic.",
     "3. how it shows up with other people, as a tendency in the reader themselves and never as a claim about anyone else.",
     "4. the cost of the same trait — where the strength overshoots, tips into a habit, or gets expensive.",
     "5. what it looks like when it is working well, and what usually has to be practised for that.",
@@ -257,7 +258,10 @@ export async function generateFeatureNarrative(input: {
     "Write psychology, not fortune telling: describe patterns of attention, motivation and self-image.",
     "Speak to the reader as 'you'. Be specific and concrete — name ordinary situations rather than abstractions.",
     "It is a lifelong structure, not an event: do not date it, do not predict from it, do not tell the reader what to do.",
-    "Never assert something as certain when the facts only support a tendency; say 'tends to', 'often', 'you may notice'.",
+    "Write with confidence: state the pattern directly ('you need', 'you tend to', 'you reach for'). Do not stack hedges such as may, might, could, perhaps, possibly.",
+    "Reserve softer wording only for claims resting on a fact that says it is weighted down or suppressed, or on a structure with strength below 0.4.",
+    "If related-structure facts (R ids) are given, weave at least one into the essay as a composite claim — how this structure and that one combine or pull against each other — citing both ids.",
+    "Each paragraph must add new information; never restate an earlier paragraph's claim in different words.",
     "No zodiac cliches, no mysticism, no flattery, no horoscope voice.",
     "Cite the fact ids each paragraph rests on. Every paragraph must cite at least one.",
     "Finish with one reflection question the reader could actually answer about their own life.",

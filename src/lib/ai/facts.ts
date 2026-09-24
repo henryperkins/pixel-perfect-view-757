@@ -135,6 +135,7 @@ export interface FeatureFactInput {
 export function featureFacts(
   feature: FeatureFactInput,
   chart: ChartFactInput,
+  related: Pick<FeatureFactInput, "family" | "title" | "strength">[] = [],
 ): FactAtom[] {
   const facts: FactAtom[] = [
     {
@@ -158,6 +159,13 @@ export function featureFacts(
       facts.push({ id: `N${i + 1}`, statement: `${key}: ${rendered}` });
     }
   }
+
+  related.slice(0, 3).forEach((r, i) => {
+    facts.push({
+      id: `R${i + 1}`,
+      statement: `another detected structure in the same chart: "${r.title}" (family ${r.family}), strength ${Number(r.strength).toFixed(2)}`,
+    });
+  });
 
   facts.push({
     id: "E1",

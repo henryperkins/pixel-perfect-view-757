@@ -465,13 +465,18 @@ function FeatureNarrative({ featureKey }: { featureKey: string }) {
           <p key={i}>{para}</p>
         ))}
       </div>
-      <p className="mt-3 technical text-muted-foreground">
-        {query.data.mode === "model"
-          ? `Wording by ${query.data.model} · cites ${query.data.citations
-              .map((c) => c.facts.join("+"))
-              .join(" / ")}`
-          : "Template wording"}
-      </p>
+      <details className="mt-3">
+        <summary className="technical cursor-pointer text-muted-foreground">
+          How this was written
+        </summary>
+        <p className="mt-2 technical text-muted-foreground">
+          {query.data.mode === "model"
+            ? `Wording by ${query.data.model} · cites ${query.data.citations
+                .map((c) => c.facts.join("+"))
+                .join(" / ")}`
+            : "Template wording"}
+        </p>
+      </details>
     </div>
   );
 }
