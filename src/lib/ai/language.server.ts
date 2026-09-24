@@ -232,7 +232,7 @@ export interface FeatureProse {
  * Bumped whenever the essay brief below changes shape. Cached chapters written
  * under an older version are rewritten on next read rather than served stale.
  */
-export const FEATURE_ESSAY_VERSION = "essay-3";
+export const FEATURE_ESSAY_VERSION = "essay-4";
 
 export async function generateFeatureNarrative(input: {
   facts: FactAtom[];
@@ -257,11 +257,14 @@ export async function generateFeatureNarrative(input: {
     "",
     "Write psychology, not fortune telling: describe patterns of attention, motivation and self-image.",
     "Speak to the reader as 'you'. Be specific and concrete — name ordinary situations rather than abstractions.",
+    "Ground paragraphs 3 to 6 each in a different concrete everyday scene, choosing from: money and spending, conflict or disagreement, daily habits and routines, work and deadlines, rest and recovery, being cared for, making decisions. Never reuse a scene across paragraphs. Prefer scenes matching any house or domain the facts mention.",
+    "A scene is one short, recognisable moment (e.g. 'when a bill arrives', 'the night before a deadline'), not a list of life areas.",
     "It is a lifelong structure, not an event: do not date it, do not predict from it, do not tell the reader what to do.",
     "Write with confidence: state the pattern directly ('you need', 'you tend to', 'you reach for'). Do not stack hedges such as may, might, could, perhaps, possibly.",
     "Reserve softer wording only for claims resting on a fact that says it is weighted down or suppressed, or on a structure with strength below 0.4.",
     "If related-structure facts (R ids) are given, weave at least one into the essay as a composite claim — how this structure and that one combine or pull against each other — citing both ids.",
     "Each paragraph must add new information; never restate an earlier paragraph's claim in different words.",
+    "Keep one consistent voice across all paragraphs: same register, same warmth, same sentence rhythm from the first paragraph to the last. Do not open paragraphs with the same phrase, and do not summarise the essay at the end.",
     "No zodiac cliches, no mysticism, no flattery, no horoscope voice.",
     "Cite the fact ids each paragraph rests on. Every paragraph must cite at least one.",
     "Finish with one reflection question the reader could actually answer about their own life.",
