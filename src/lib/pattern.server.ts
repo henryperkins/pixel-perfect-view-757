@@ -1413,13 +1413,25 @@ export async function getFeatureNarrative(
   const profile = await loadProfile(db, userId);
   const { featureFacts } = await import("./ai/facts");
 
-  const facts = featureFacts(feature, {
-    engine: chart.engine,
-    engineVersion: chart.engineVersion,
-    houseSystem: chart.houseSystem,
-    precision: ephemerisState(chart).precision,
-    uncertainty: chart.uncertainty,
-  });
+  const { data: others } = await db
+    .from<FeatureRow>("natal_features")
+    .select("feature_key, family, title, strength, payload")
+    .eq("snapshot_id", snapRow.id)
+    .order("strength", { ascending: false })
+    .limit(4);
+  const related = (others ?? []).filter((o) => o.feature_key !== featureKey).slice(0, 3);
+
+  const facts = featureFacts(
+    feature,
+    {
+      engine: chart.engine,
+      engineVersion: chart.engineVersion,
+      houseSystem: chart.houseSystem,
+      precision: ephemerisState(chart).precision,
+      uncertainty: chart.uncertainty,
+    },
+    related,
+  );
 
   const written = await generateFeatureNarrative({
     facts,
