@@ -70,7 +70,7 @@ function PatternView({ data }: { data: PatternData }) {
 
   return (
     <div className="grid animate-rise gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1fr)_16rem]">
-      <div className="min-w-0">
+      <div className="flex min-w-0 flex-col">
         <h1 className="text-2xl sm:text-3xl">Your pattern</h1>
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
           This page has three parts, in order: the <strong>chapters</strong> — structures
@@ -80,9 +80,10 @@ function PatternView({ data }: { data: PatternData }) {
           supports it, so empty space means "not present", not "still loading".
         </p>
 
-        <section className="mt-6 border border-rule bg-evidence p-4 sm:mt-8">
+        <details className="order-5 mt-10 border border-rule bg-evidence p-4 sm:mt-12">
+          <summary className="technical cursor-pointer text-primary">Your chart snapshot</summary>
           <div className="grid gap-1 sm:flex sm:items-baseline sm:justify-between sm:gap-4">
-            <h2 className="technical text-muted-foreground">Chart snapshot</h2>
+            <h2 className="technical mt-3 text-muted-foreground">Birth and calculation record</h2>
             <Link to="/birth" className="technical text-primary">
               Edit birth details
             </Link>
@@ -109,10 +110,10 @@ function PatternView({ data }: { data: PatternData }) {
               ? "Your birth time is precise enough for house and angle claims."
               : "House and angle claims are suppressed because your birth time isn't precise enough."}
           </p>
-        </section>
+        </details>
 
         {data.rising ? (
-          <section className="mt-8 sm:mt-10">
+          <section className="order-3 mt-8 sm:mt-10">
             <h2 className="technical border-b border-rule pb-2 text-muted-foreground">
               Your main lens · {data.rising.sign} rising
             </h2>
@@ -123,8 +124,10 @@ function PatternView({ data }: { data: PatternData }) {
               <em>which part of your life</em> a placement or a timing window actually
               touches. Everything below is arranged by it.
             </p>
-            <ul className="mt-4">
-              {data.rising.houses.map((h) => (
+            <details className="mt-5 border-y border-rule py-3">
+              <summary className="technical cursor-pointer text-primary">Explore all 12 houses</summary>
+              <ul className="mt-3">
+                {data.rising.houses.map((h) => (
                 <li
                   key={h.house}
                   className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-3 border-b border-rule py-2.5"
@@ -139,15 +142,16 @@ function PatternView({ data }: { data: PatternData }) {
                     {h.bodies.length ? h.bodies.join(", ") : "empty"}
                   </span>
                 </li>
-              ))}
-            </ul>
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              "Empty" means no body sat in that house at your birth — an ordinary result, not
-              a missing area of life.
-            </p>
+                ))}
+              </ul>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                "Empty" means no body sat in that house at your birth — an ordinary result, not
+                a missing area of life.
+              </p>
+            </details>
           </section>
         ) : (
-          <section className="mt-8 border border-rule bg-evidence p-4 sm:mt-10">
+          <section className="order-3 mt-8 border border-rule bg-evidence p-4 sm:mt-10">
             <h2 className="technical text-muted-foreground">Your main lens</h2>
             <p className="mt-2 text-sm leading-relaxed text-evidence-foreground">
               Your rising sign is the frame everything else hangs on, but it moves about a
@@ -162,7 +166,7 @@ function PatternView({ data }: { data: PatternData }) {
         )}
 
         {data.features.length > 0 ? (
-          <section className="mt-8 sm:mt-10">
+          <section className="order-2 mt-8 sm:mt-10">
             <h2 className="technical border-b border-rule pb-2 text-muted-foreground">
               What most shapes you
             </h2>
@@ -201,7 +205,7 @@ function PatternView({ data }: { data: PatternData }) {
 
 
 
-        <section className="mt-8 sm:mt-10">
+          <section className="order-4 mt-8 sm:mt-10">
           <div className="grid gap-1 border-b border-rule pb-2 sm:flex sm:items-baseline sm:justify-between sm:gap-4">
             <h2 className="technical text-muted-foreground">
               1 · Chapters ({data.features.length})
@@ -272,9 +276,11 @@ function PatternView({ data }: { data: PatternData }) {
         </section>
 
 
-        <EphemerisNotice state={data.ephemeris} className="mt-8 sm:mt-10" />
+        <div className="order-6">
+          <EphemerisNotice state={data.ephemeris} className="mt-8 sm:mt-10" />
+        </div>
 
-        <section className="mt-10 sm:mt-12">
+        <section className="order-7 mt-10 sm:mt-12">
           <h2 className="technical border-b border-rule pb-2 text-muted-foreground">
             2 · Placements
           </h2>
@@ -345,7 +351,7 @@ function PatternView({ data }: { data: PatternData }) {
           </div>
         </section>
 
-        <section className="mt-10 sm:mt-12">
+        <section className="order-8 mt-10 sm:mt-12">
           <h2 className="technical border-b border-rule pb-2 text-muted-foreground">
             3 · Connections between bodies
           </h2>
@@ -379,7 +385,14 @@ function PatternView({ data }: { data: PatternData }) {
       </div>
 
       <div className="border-t border-rule pt-6 lg:border-t-0 lg:pt-0">
-        <Rail title="How this was calculated">
+        <Rail title="Chart at a glance">
+          <Field label="Rising" value={data.rising?.sign ?? "suppressed"} />
+          <Field label="Chapters" value={data.features.length} />
+          <Field label="Placements" value={data.placements.length} />
+          <Field label="Connections" value={data.aspects.length} />
+          <details className="pt-3">
+            <summary className="technical cursor-pointer text-muted-foreground">Calculation details</summary>
+            <div className="mt-3 space-y-3">
           <Field label="Engine" value={data.engine} />
           <Field label="Precision" value={data.ephemeris.precision} />
           <Field label="Contract" value={data.contractVersion} />
@@ -397,6 +410,8 @@ function PatternView({ data }: { data: PatternData }) {
             "Spread" is how much a value could move given the uncertainty in your birth time.
             A large spread is why some claims get suppressed.
           </p>
+            </div>
+          </details>
         </Rail>
       </div>
     </div>
