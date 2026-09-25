@@ -351,51 +351,39 @@ function TodayReading() {
   const timing = data.cycles.slice(0, 5);
 
   return (
-    <div className="grid animate-rise gap-10 lg:grid-cols-[10rem_minmax(0,1fr)_14rem]">
-      <Rail title="Reading">
-        <Field label="Date" value={data.day} />
-        <Field label="Zone" value={data.timezone} />
-        <Field label="Confidence" value={data.reading.confidence} />
-        <Field label="Content" value={data.reading.release_version} />
-        <Field
-          label="Language"
-          value={data.language?.mode === "model" ? "model" : "template"}
-        />
-      </Rail>
+    <div className="grid animate-rise gap-8 lg:grid-cols-[10rem_minmax(0,1fr)_14rem] lg:gap-10">
+      <div className="order-2 border-t border-rule pt-6 lg:order-1 lg:border-t-0 lg:pt-0">
+        <Rail title="Reading details">
+          <Field label="Date" value={data.day} />
+          <Field label="Zone" value={data.timezone} />
+          <Field label="Confidence" value={data.reading.confidence} />
+          <Field label="Content" value={data.reading.release_version} />
+          <Field
+            label="Language"
+            value={data.language?.mode === "model" ? "model" : "template"}
+          />
+        </Rail>
+      </div>
 
 
-      <article>
+      <article className="order-1 lg:order-2">
+        <p className="technical mb-3 text-muted-foreground">Today · {data.day}</p>
         <h1 className="text-3xl leading-snug">{data.reading.headline}</h1>
 
         {primary ? (
-          <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 border-y border-rule py-3">
+          <div className="mt-5 grid grid-cols-3 gap-3 border-y border-rule py-3">
             <span className="technical text-muted-foreground">
               Phase ·{" "}
-              <span className="text-foreground">{phaseLabel(primary.phase).label}</span>
+              <span className="mt-1 block text-foreground">{phaseLabel(primary.phase).label}</span>
             </span>
             <span className="technical text-muted-foreground">
               Strength ·{" "}
-              <span className="text-foreground">{strengthLabel(primary.importance)}</span>
+              <span className="mt-1 block text-foreground">{strengthLabel(primary.importance)}</span>
             </span>
             <span className="technical text-muted-foreground">
-              Orb · <span className="text-foreground">{primary.orb.toFixed(2)}°</span>
-            </span>
-            <span className="technical text-muted-foreground">
-              Exact ·{" "}
-              <span className="text-foreground">
-                {primary.exact_at ? primary.exact_at.slice(0, 10) : "not in window"}
-              </span>
-            </span>
-            <span className="technical text-muted-foreground">
-              Countdown ·{" "}
-              <span className="text-foreground">
+              Timing ·{" "}
+              <span className="mt-1 block text-foreground">
                 {exactPhrase(daysToExact(primary, data.day))}
-              </span>
-            </span>
-            <span className="technical text-muted-foreground">
-              Domain ·{" "}
-              <span className="text-foreground">
-                {DOMAIN_LABEL[primary.domain] ?? primary.domain}
               </span>
             </span>
           </div>
@@ -407,6 +395,18 @@ function TodayReading() {
             <p key={i}>{para}</p>
           ))}
         </div>
+
+        {primary ? (
+          <details className="mt-5 border-b border-rule pb-5">
+            <summary className="technical cursor-pointer text-primary">Reading calculation</summary>
+            <div className="mt-3 grid gap-2 font-mono text-xs text-muted-foreground sm:grid-cols-2">
+              <p>Orb · <span className="text-foreground">{primary.orb.toFixed(2)}°</span></p>
+              <p>Exact · <span className="text-foreground">{primary.exact_at ? primary.exact_at.slice(0, 10) : "not in window"}</span></p>
+              <p>Domain · <span className="text-foreground">{DOMAIN_LABEL[primary.domain] ?? primary.domain}</span></p>
+              <p>Cycle · <span className="text-foreground">{primary.transit_body} {primary.aspect} {primary.natal_point}</span></p>
+            </div>
+          </details>
+        ) : null}
 
         <EphemerisNotice state={data.ephemeris} className="mt-8" />
 
@@ -637,23 +637,10 @@ function TodayReading() {
         </section>
       </article>
 
-      <Rail title="Technical">
-        <Field
-          label="Time accuracy"
-          value={data.uncertainty?.accuracy ?? "unknown"}
-        />
-        <Field
-          label="ASC spread"
-          value={`${(data.uncertainty?.ascendantSpreadDeg ?? 0).toFixed(2)}°`}
-        />
-        <Field
-          label="Houses"
-          value={data.uncertainty?.housesReliable ? "usable" : "suppressed"}
-        />
-        <Field label="Cycles scanned" value={data.cycles.length} />
-        <div className="pt-2">
-          <p className="technical text-muted-foreground">Does this land?</p>
-          <div className="mt-2 flex gap-2">
+      <div className="order-3 border-t border-rule pt-6 lg:border-t-0 lg:pt-0">
+        <Rail title="Does this land?">
+          <div>
+          <div className="flex gap-2">
             {[
               { v: 1, label: "Yes" },
               { v: 0, label: "Unsure" },
@@ -672,8 +659,18 @@ function TodayReading() {
               </button>
             ))}
           </div>
-        </div>
-      </Rail>
+          <details className="mt-6 border-t border-rule pt-3">
+            <summary className="technical cursor-pointer text-muted-foreground">Technical details</summary>
+            <div className="mt-3 space-y-3">
+              <Field label="Time accuracy" value={data.uncertainty?.accuracy ?? "unknown"} />
+              <Field label="ASC spread" value={`${(data.uncertainty?.ascendantSpreadDeg ?? 0).toFixed(2)}°`} />
+              <Field label="Houses" value={data.uncertainty?.housesReliable ? "usable" : "suppressed"} />
+              <Field label="Cycles scanned" value={data.cycles.length} />
+            </div>
+          </details>
+          </div>
+        </Rail>
+      </div>
     </div>
   );
 }
