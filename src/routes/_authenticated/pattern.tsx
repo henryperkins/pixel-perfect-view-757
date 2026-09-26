@@ -63,6 +63,35 @@ const ASPECT_MEANING: Record<string, string> = {
   sextile: "mild support — works when you reach for it",
 };
 
+const ASPECT_ORDER = ["conjunction", "opposition", "square", "trine", "sextile"];
+const ASPECT_LABEL: Record<string, string> = {
+  conjunction: "Blended",
+  opposition: "Pulled apart",
+  square: "Friction",
+  trine: "Easy flow",
+  sextile: "Light support",
+};
+const ASPECT_DEG: Record<string, number> = {
+  conjunction: 0, opposition: 180, square: 90, trine: 120, sextile: 60,
+};
+
+function AngleGlyph({ kind }: { kind: string }) {
+  const deg = ASPECT_DEG[kind] ?? 45;
+  const r = 14;
+  const rad = ((deg - 90) * Math.PI) / 180;
+  const x = 18 + r * Math.cos(rad);
+  const y = 18 + r * Math.sin(rad);
+  return (
+    <svg viewBox="0 0 36 36" className="h-9 w-9 shrink-0 text-foreground" aria-hidden>
+      <circle cx="18" cy="18" r={r} fill="none" stroke="currentColor" strokeOpacity="0.25" />
+      <line x1="18" y1="18" x2="18" y2={18 - r} stroke="currentColor" />
+      <line x1="18" y1="18" x2={x} y2={y} stroke="currentColor" />
+      <circle cx="18" cy={18 - r} r="2.5" fill="currentColor" />
+      <circle cx={x} cy={y} r="2.5" fill="currentColor" />
+    </svg>
+  );
+}
+
 function PatternView({ data }: { data: PatternData }) {
   const [open, setOpen] = useState<string | null>(
     data.features[0]?.feature_key ?? null,
@@ -353,34 +382,70 @@ function PatternView({ data }: { data: PatternData }) {
 
         <section className="order-8 mt-10 sm:mt-12">
           <h2 className="technical border-b border-rule pb-2 text-muted-foreground">
-            3 · Connections between bodies
+            3 · How your bodies connect
           </h2>
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-            The angles your bodies make with each other. "Orb" is how far the angle is from
-            exact — smaller means stronger.
+            Pairs that interact. Fuller bar = tighter angle = stronger pull.
           </p>
-          <div className="mt-4 space-y-2">
-            {data.aspects.length === 0 ? (
-              <p className="text-sm text-muted-foreground">
-                No connections inside the orb limits for this chart.
-              </p>
-            ) : null}
-            {data.aspects.map((a, i) => (
-              <div key={i} className="border-b border-rule pb-2.5">
-                <div className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-3">
-                  <span className="min-w-0 font-mono text-xs text-foreground">
-                    {a.a} {a.aspect} {a.b}
-                  </span>
-                  <span className="shrink-0 font-mono text-xs text-muted-foreground">
-                    orb {a.orb.toFixed(2)}°
-                  </span>
-                </div>
-                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                  {ASPECT_MEANING[a.aspect] ?? "measured angle between the two bodies"}
-                </p>
-              </div>
-            ))}
-          </div>
+          {data.aspects.length === 0 ? (
+            <p className="mt-4 text-sm text-muted-foreground">
+              No connections inside the orb limits for this chart.
+            </p>
+          ) : (
+            <div className="mt-5 grid gap-6 sm:grid-cols-2">
+              {ASPECT_ORDER.filter((k) => data.aspects.some((a) => a.aspect === k))
+                .concat(
+                  [...new Set(data.aspects.map((a) => a.aspect))].filter(
+                    (k) => !ASPECT_ORDER.includes(k),
+                  ),
+                )
+                .map((kind) => {
+                  const rows = data.aspects
+                    .filter((a) => a.aspect === kind)
+                    .sort((x, y) => x.orb - y.orb);
+                  return (
+                    <div key={kind} className="border-t border-foreground pt-3">
+                      <div className="flex items-center gap-3">
+                        <AngleGlyph kind={kind} />
+                        <div className="min-w-0">
+                          <p className="font-display text-base capitalize text-foreground">
+                            {ASPECT_LABEL[kind] ?? kind}
+                            <span className="ml-2 font-mono text-xs text-muted-foreground">
+                              ×{rows.length}
+                            </span>
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            {ASPECT_MEANING[kind] ?? "measured angle between two bodies"}
+                          </p>
+                        </div>
+                      </div>
+                      <ul className="mt-3 space-y-1.5">
+                        {rows.map((a, i) => {
+                          const pct = Math.max(8, Math.round((1 - Math.min(a.orb, 8) / 8) * 100));
+                          return (
+                            <li
+                              key={i}
+                              className="grid grid-cols-[minmax(0,1fr)_4.5rem] items-center gap-3"
+                              title={`${a.a} ${a.aspect} ${a.b} · orb ${a.orb.toFixed(2)}°`}
+                            >
+                              <span className="truncate text-sm text-foreground">
+                                {a.a} <span className="text-muted-foreground">·</span> {a.b}
+                              </span>
+                              <span
+                                className="h-1.5 bg-muted"
+                                aria-label={`orb ${a.orb.toFixed(2)} degrees`}
+                              >
+                                <span className="block h-full bg-foreground" style={{ width: `${pct}%` }} />
+                              </span>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  );
+                })}
+            </div>
+          )}
         </section>
       </div>
 
