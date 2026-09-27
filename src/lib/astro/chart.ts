@@ -94,11 +94,11 @@ export interface EphemerisResult {
   degraded: boolean;
   degradedReason: string | null;
   /** Service-computed house cusps (1..12) and system name. */
-  houses?: { system: string; cusps: number[] };
+  houses?: { system: string; cusps: number[] } | undefined;
   /** Service-computed angles. */
-  angles?: { ascendant: number; midheaven: number };
+  angles?: { ascendant: number; midheaven: number } | undefined;
   /** Service-computed aspects between tracked points. */
-  aspects?: { a: string; b: string; aspect: AspectKey; orb: number; applying: boolean }[];
+  aspects?: { a: string; b: string; aspect: AspectKey; orb: number; applying: boolean }[] | undefined;
 }
 
 /** House number for a longitude given 12 cusps (any system). */
@@ -253,7 +253,7 @@ export function computeChart(input: BirthInput, ephem?: EphemerisResult): Chart 
     engine: source.engine,
     engineVersion: source.engineVersion,
     contractVersion: CONTRACT_VERSION,
-    houseSystem: HOUSE_SYSTEM,
+    houseSystem,
     precision: source.precision,
     degraded: source.degraded,
     degradedReason: source.degradedReason,
