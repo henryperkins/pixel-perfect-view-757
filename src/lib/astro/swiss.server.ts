@@ -20,9 +20,47 @@ import {
   ENGINE_ID,
   ENGINE_VERSION,
 } from "./ephemeris";
-import type { EphemerisResult } from "./chart";
+import type { AspectKey, EphemerisResult } from "./chart";
 
 const TIMEOUT_MS = 6000;
+
+const HOUSE_SYSTEM_NAME: Record<string, string> = {
+  P: "placidus",
+  K: "koch",
+  W: "whole-sign",
+  E: "equal",
+  R: "regiomontanus",
+  C: "campanus",
+  O: "porphyry",
+};
+
+const NAME_TO_KEY: Record<string, string> = {
+  Sun: "sun",
+  Moon: "moon",
+  Mercury: "mercury",
+  Venus: "venus",
+  Mars: "mars",
+  Jupiter: "jupiter",
+  Saturn: "saturn",
+  Uranus: "uranus",
+  Neptune: "neptune",
+  Pluto: "pluto",
+  "true Node": "node",
+  TrueNode: "node",
+  Ascendant: "ascendant",
+  ASC: "ascendant",
+  MC: "midheaven",
+  Midheaven: "midheaven",
+};
+
+const ASPECT_KINDS = new Set([
+  "conjunction",
+  "sextile",
+  "square",
+  "trine",
+  "quincunx",
+  "opposition",
+]);
 
 /** Body id aliases a Swiss Ephemeris service is likely to use. */
 const ALIASES: Record<Body, string[]> = {
@@ -217,6 +255,48 @@ export async function resolvePositions(req: SwissRequest): Promise<EphemerisResu
       "unknown";
 
 
+    const data =
+      payload["data"] && typeof payload["data"] === "object"
+        ? (payload["data"] as Raw)
+        : payload;
+
+    // Houses and angles straight from the service (Placidus by default).
+    let houses: EphemerisResult["houses"];
+    let angles: EphemerisResult["angles"];
+    const h = data["houses"] as Raw | undefined;
+    if (h && typeof h === "object") {
+      const cusps = Array.isArray(h["cusps"])
+        ? (h["cusps"] as unknown[]).map(num).filter((n): n is number => n !== null)
+        : [];
+      const asc = num(h["ascendant"]);
+      const mc = num(h["mc"] ?? h["midheaven"]);
+      if (cusps.length === 12) {
+        houses = { system: HOUSE_SYSTEM_NAME[String(h["system"] ?? "P")] ?? String(h["system"]), cusps: cusps.map(norm360) };
+      }
+      if (asc !== null && mc !== null) angles = { ascendant: norm360(asc), midheaven: norm360(mc) };
+    }
+
+    // Aspects exactly as the service reported them, limited to tracked bodies.
+    let aspects: EphemerisResult["aspects"];
+    if (Array.isArray(data["aspects"])) {
+      aspects = [];
+      for (const raw of data["aspects"] as Raw[]) {
+        const a = NAME_TO_KEY[String(raw["planet1"] ?? "")];
+        const b = NAME_TO_KEY[String(raw["planet2"] ?? "")];
+        const t = raw["type"] as Raw | undefined;
+        const kind = String(t?.["name"] ?? "").toLowerCase();
+        const orb = num(raw["orb"]);
+        if (!a || !b || orb === null || !ASPECT_KINDS.has(kind)) continue;
+        aspects.push({
+          a,
+          b,
+          aspect: kind as AspectKey,
+          orb: Math.abs(orb),
+          applying: raw["isApplying"] === true,
+        });
+      }
+    }
+
     return {
       positions,
       engine: "swiss-ephemeris",
@@ -224,6 +304,9 @@ export async function resolvePositions(req: SwissRequest): Promise<EphemerisResu
       precision: "high",
       degraded: false,
       degradedReason: null,
+      houses,
+      angles,
+      aspects,
     };
   } catch (err) {
     const reason =
