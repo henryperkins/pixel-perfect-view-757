@@ -93,6 +93,23 @@ export interface EphemerisResult {
   precision: "high" | "approximate";
   degraded: boolean;
   degradedReason: string | null;
+  /** Service-computed house cusps (1..12) and system name. */
+  houses?: { system: string; cusps: number[] } | undefined;
+  /** Service-computed angles. */
+  angles?: { ascendant: number; midheaven: number } | undefined;
+  /** Service-computed aspects between tracked points. */
+  aspects?: { a: string; b: string; aspect: AspectKey; orb: number; applying: boolean }[] | undefined;
+}
+
+/** House number for a longitude given 12 cusps (any system). */
+function houseFromCusps(lon: number, cusps: number[]): number {
+  for (let i = 0; i < 12; i++) {
+    const start = cusps[i]!;
+    const end = cusps[(i + 1) % 12]!;
+    const span = norm360(end - start);
+    if (norm360(lon - start) < span) return i + 1;
+  }
+  return 1;
 }
 
 export interface Chart {
@@ -130,9 +147,13 @@ export function computeChart(input: BirthInput, ephem?: EphemerisResult): Chart 
     degradedReason: "Swiss Ephemeris service was not consulted.",
   };
   const positions = source.positions;
-  const angles = computeAngles(jd, input.latitude, input.longitude);
+  const angles = source.angles ?? computeAngles(jd, input.latitude, input.longitude);
 
-  const houses = wholeSignHouses(angles.ascendant);
+  const serviceHouses = source.houses && source.houses.cusps.length === 12 ? source.houses : null;
+  const houses = serviceHouses ? serviceHouses.cusps : wholeSignHouses(angles.ascendant);
+  const houseSystem = serviceHouses ? serviceHouses.system : HOUSE_SYSTEM;
+  const houseFor = (lon: number) =>
+    serviceHouses ? houseFromCusps(lon, serviceHouses.cusps) : houseOf(lon, angles.ascendant);
 
   const points: Record<string, ChartPoint> = {};
   for (const b of BODIES) {
@@ -143,7 +164,7 @@ export function computeChart(input: BirthInput, ephem?: EphemerisResult): Chart 
       lon: p.lon,
       sign: p.sign,
       degree: p.degree,
-      house: houseOf(p.lon, angles.ascendant),
+      house: houseFor(p.lon),
       speed: p.speed,
       retrograde: p.retrograde,
       angleDependent: false,
@@ -166,7 +187,7 @@ export function computeChart(input: BirthInput, ephem?: EphemerisResult): Chart 
     lon: angles.midheaven,
     sign: signOf(angles.midheaven),
     degree: degreeInSign(angles.midheaven),
-    house: houseOf(angles.midheaven, angles.ascendant),
+    house: serviceHouses ? 10 : houseOf(angles.midheaven, angles.ascendant),
     speed: 361,
     retrograde: false,
     angleDependent: true,
@@ -174,11 +195,35 @@ export function computeChart(input: BirthInput, ephem?: EphemerisResult): Chart 
 
   const keys = Object.keys(points);
   const aspects: AspectHit[] = [];
+  const hardOf = (k: AspectKey) => ASPECTS.find((x) => x.key === k)!.hard;
+  const seen = new Set<string>();
+  if (source.aspects) {
+    // Use the service's aspect list verbatim; our orb policy only decides
+    // which of its connections are tight enough to show.
+    for (const s of source.aspects) {
+      if (!points[s.a] || !points[s.b]) continue;
+      if (s.orb > natalOrb(s.a, s.b, s.aspect)) continue;
+      const id = [s.a, s.b].sort().join("|");
+      if (seen.has(id)) continue;
+      seen.add(id);
+      aspects.push({
+        a: s.a,
+        b: s.b,
+        aspect: s.aspect,
+        orb: Number(s.orb.toFixed(2)),
+        applying: s.applying,
+        hard: hardOf(s.aspect),
+      });
+    }
+  }
   for (let i = 0; i < keys.length; i++) {
     for (let j = i + 1; j < keys.length; j++) {
       const A = points[keys[i]!]!;
       const B = points[keys[j]!]!;
       if (A.angleDependent && B.angleDependent) continue;
+      // With service aspects, only fill in angle contacts the service omits.
+      if (source.aspects && !A.angleDependent && !B.angleDependent) continue;
+      if (seen.has([A.key, B.key].sort().join("|"))) continue;
       const sep = Math.abs(signedDelta(A.lon, B.lon));
       for (const asp of ASPECTS) {
         const orb = Math.abs(sep - asp.angle);
@@ -208,7 +253,7 @@ export function computeChart(input: BirthInput, ephem?: EphemerisResult): Chart 
     engine: source.engine,
     engineVersion: source.engineVersion,
     contractVersion: CONTRACT_VERSION,
-    houseSystem: HOUSE_SYSTEM,
+    houseSystem,
     precision: source.precision,
     degraded: source.degraded,
     degradedReason: source.degradedReason,

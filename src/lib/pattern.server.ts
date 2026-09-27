@@ -895,8 +895,35 @@ function risingLens(chart: Chart, placements: { label: string; house: number | n
 }
 
 export async function getPattern(db: DB, userId: string) {
-  const snapRow = await loadSnapshot(db, userId);
+  let snapRow = await loadSnapshot(db, userId);
   if (!snapRow) return { needsOnboarding: true as const };
+
+  // One-time upgrade: older Swiss charts stored in-app houses and aspects.
+  // Recalculate so houses, angles and aspects come from the service too.
+  const storedSystem = (snapRow.houses as { system?: string } | null)?.system;
+  if (snapRow.engine.startsWith("swiss-ephemeris") && (!storedSystem || storedSystem === "whole-sign")) {
+    const rec = await loadBirthRecord(db, userId);
+    if (rec) {
+      try {
+        await saveBirth(
+          db,
+          userId,
+          {
+            birthDate: rec.birthDate,
+            birthTime: rec.birthTime,
+            placeLabel: rec.placeLabel,
+            latitude: rec.latitude,
+            longitude: rec.longitude,
+          } as BirthDetails,
+          rec.accuracy as TimeAccuracy,
+          rec.timezone,
+        );
+        snapRow = (await loadSnapshot(db, userId)) ?? snapRow;
+      } catch (err) {
+        console.error("[pattern] chart upgrade failed", err);
+      }
+    }
+  }
   const chart = snapshotToChart(snapRow);
   const [{ data: features }, birth] = await Promise.all([
     db
