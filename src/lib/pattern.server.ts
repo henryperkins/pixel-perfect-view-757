@@ -1394,6 +1394,11 @@ export async function getFeatureNarrative(
     "./ai/language.server"
   );
 
+  const chartForKey = snapshotToChart(snapRow);
+  // Chapters are tied to the exact chart they were written from: a recalculated
+  // chart (new house system, engine version) invalidates every saved essay.
+  const essayKey = `${FEATURE_ESSAY_VERSION}|${chartForKey.houseSystem}|${chartForKey.engineVersion}|${chartForKey.jd}`;
+
   const { data: cached } = await db
     .from<NarrativeRow>("feature_narratives")
     .select("feature_key, mode, model, narrative_ct, citations, essay_version")
@@ -1404,7 +1409,7 @@ export async function getFeatureNarrative(
 
   // A chapter written under an older essay brief is discarded rather than
   // served: the reader should always get the current depth of writing.
-  if (cached && cached.essay_version !== FEATURE_ESSAY_VERSION) {
+  if (cached && cached.essay_version !== essayKey) {
     await db
       .from("feature_narratives")
       .delete()
@@ -1483,7 +1488,7 @@ export async function getFeatureNarrative(
     model: written.meta.model,
     narrative_ct: await encryptField(dek, written.narrative),
     citations: written.meta.citations as never,
-    essay_version: FEATURE_ESSAY_VERSION,
+    essay_version: essayKey,
   });
 
   return {

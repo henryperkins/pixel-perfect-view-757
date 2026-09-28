@@ -140,7 +140,7 @@ export function featureFacts(
   const facts: FactAtom[] = [
     {
       id: "N1",
-      statement: `detected natal structure "${feature.title}" of family ${feature.family} (key ${feature.feature_key}), strength ${Number(feature.strength).toFixed(2)}`,
+      statement: `detected natal structure "${feature.title}" of family ${feature.family} (key ${feature.feature_key}), ${emphasisOf(feature.strength)}`,
     },
   ];
 
@@ -163,7 +163,7 @@ export function featureFacts(
   related.slice(0, 3).forEach((r, i) => {
     facts.push({
       id: `R${i + 1}`,
-      statement: `another detected structure in the same chart: "${r.title}" (family ${r.family}), strength ${Number(r.strength).toFixed(2)}`,
+      statement: `another detected structure in the same chart: "${r.title}" (family ${r.family}), ${emphasisOf(r.strength)}`,
     });
   });
 
@@ -188,4 +188,12 @@ export function factBlock(facts: FactAtom[]): string {
 
 export function factIds(facts: FactAtom[]): Set<string> {
   return new Set(facts.map((f) => f.id));
+}
+
+/** App ranking score -> plain words. The score is an internal ordering, not a measurement, so it never reaches prose as a number. */
+function emphasisOf(strength: number): string {
+  const s = Number(strength);
+  if (s >= 0.8) return "ranked among the most prominent structures in this chart (an app ranking, not a measurement; never quote it as a number)";
+  if (s >= 0.5) return "ranked as moderately prominent in this chart (an app ranking, not a measurement; never quote it as a number)";
+  return "ranked as a quieter structure in this chart (an app ranking, not a measurement; never quote it as a number)";
 }
