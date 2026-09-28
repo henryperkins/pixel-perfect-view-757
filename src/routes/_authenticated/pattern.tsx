@@ -426,10 +426,10 @@ function PatternView({ data }: { data: PatternData }) {
                             <li
                               key={i}
                               className="grid grid-cols-[minmax(0,1fr)_4.5rem] items-center gap-3"
-                              title={`${a.a} ${a.aspect} ${a.b} · orb ${a.orb.toFixed(2)}°`}
+                              title={`${bodyName(a.a)} ${a.aspect} ${bodyName(a.b)} · orb ${a.orb.toFixed(2)}°`}
                             >
                               <span className="truncate text-sm text-foreground">
-                                {a.a} <span className="text-muted-foreground">·</span> {a.b}
+                                {bodyName(a.a)} <span className="text-muted-foreground">·</span> {bodyName(a.b)}
                               </span>
                               <span
                                 className="h-1.5 bg-muted"
@@ -559,4 +559,12 @@ function FeatureNarrative({ featureKey }: { featureKey: string }) {
       </details>
     </div>
   );
+}
+
+const BODY_NAME: Record<string, string> = {
+  node: "North Node", north_node: "North Node", true_node: "North Node", mean_node: "North Node",
+  south_node: "South Node", ascendant: "Ascendant", midheaven: "Midheaven", chiron: "Chiron",
+};
+function bodyName(k: string): string {
+  return BODY_NAME[k] ?? k.replace(/[_-]/g, " ").replace(/^\w/, (c) => c.toUpperCase());
 }
