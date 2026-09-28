@@ -261,7 +261,7 @@ export async function generateFeatureNarrative(input: {
     "A scene is one short, recognisable moment (e.g. 'when a bill arrives', 'the night before a deadline'), not a list of life areas.",
     "It is a lifelong structure, not an event: do not date it, do not predict from it, do not tell the reader what to do.",
     "Write with confidence: state the pattern directly ('you need', 'you tend to', 'you reach for'). Do not stack hedges such as may, might, could, perhaps, possibly.",
-    "Reserve softer wording only for claims resting on a fact that says it is weighted down or suppressed, or on a structure with strength below 0.4.",
+    "Reserve softer wording only for claims resting on a fact that says it is weighted down or suppressed, or on a structure ranked as a quieter structure. Never quote ranking scores, strength numbers or confidence weights as numbers.",
     "If related-structure facts (R ids) are given, weave at least one into the essay as a composite claim — how this structure and that one combine or pull against each other — citing both ids.",
     "Each paragraph must add new information; never restate an earlier paragraph's claim in different words.",
     "Keep one consistent voice across all paragraphs: same register, same warmth, same sentence rhythm from the first paragraph to the last. Do not open paragraphs with the same phrase, and do not summarise the essay at the end.",
