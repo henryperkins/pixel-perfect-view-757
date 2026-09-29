@@ -71,6 +71,18 @@ export interface AspectHit {
   orb: number;
   applying: boolean;
   hard: boolean;
+  /** Who reported this connection: the Swiss service or in-app math. */
+  source?: "service" | "in-app";
+}
+
+export interface ChartSources {
+  positions: "service" | "in-app";
+  houses: "service" | "in-app";
+  angles: "service" | "in-app";
+  /** Coordinates the chart was calculated for. */
+  latitude: number;
+  longitude: number;
+  utcISO: string;
 }
 
 export interface ChartPoint {
@@ -125,6 +137,7 @@ export interface Chart {
   angles: { ascendant: number; midheaven: number };
   houses: number[];
   aspects: AspectHit[];
+  sources?: ChartSources;
   uncertainty: {
     accuracy: TimeAccuracy;
     minutes: number;
@@ -213,6 +226,7 @@ export function computeChart(input: BirthInput, ephem?: EphemerisResult): Chart 
         orb: Number(s.orb.toFixed(2)),
         applying: s.applying,
         hard: hardOf(s.aspect),
+        source: "service",
       });
     }
   }
@@ -237,6 +251,7 @@ export function computeChart(input: BirthInput, ephem?: EphemerisResult): Chart 
             orb: Number(orb.toFixed(2)),
             applying: rel * relSpeed < 0,
             hard: asp.hard,
+            source: "in-app",
           });
           break;
         }
@@ -263,6 +278,14 @@ export function computeChart(input: BirthInput, ephem?: EphemerisResult): Chart 
     angles: { ascendant: angles.ascendant, midheaven: angles.midheaven },
     houses,
     aspects,
+    sources: {
+      positions: source.degraded ? "in-app" : "service",
+      houses: serviceHouses ? "service" : "in-app",
+      angles: source.angles ? "service" : "in-app",
+      latitude: input.latitude,
+      longitude: input.longitude,
+      utcISO: input.utcISO,
+    },
     uncertainty: {
       accuracy: input.accuracy,
       minutes,

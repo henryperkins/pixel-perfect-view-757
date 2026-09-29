@@ -377,6 +377,7 @@ export async function saveBirth(
         houses: {
           system: chart.houseSystem,
           cusps: chart.houses,
+          sources: chart.sources,
           ephemeris: {
             precision: chart.precision,
             degraded: chart.degraded,
@@ -459,6 +460,7 @@ function snapshotToChart(row: SnapshotRow): Chart {
   const houses = row.houses as {
     system: string;
     cusps: number[];
+    sources?: Chart["sources"];
     ephemeris?: {
       precision?: "high" | "approximate";
       degraded?: boolean;
@@ -490,6 +492,7 @@ function snapshotToChart(row: SnapshotRow): Chart {
       midheaven: points["midheaven"]?.lon ?? 0,
     },
     houses: houses?.cusps ?? [],
+    sources: houses?.sources,
     aspects: row.aspects as Chart["aspects"],
     uncertainty: row.uncertainty as Chart["uncertainty"],
   };
@@ -900,8 +903,13 @@ export async function getPattern(db: DB, userId: string) {
 
   // One-time upgrade: older Swiss charts stored in-app houses and aspects.
   // Recalculate so houses, angles and aspects come from the service too.
-  const storedSystem = (snapRow.houses as { system?: string } | null)?.system;
-  if (snapRow.engine.startsWith("swiss-ephemeris") && (!storedSystem || storedSystem === "whole-sign")) {
+  // Also recalculate charts saved before per-item sources were recorded, so
+  // the rising sign is re-requested from the service for the saved birthplace.
+  const storedHouses = snapRow.houses as { system?: string; sources?: unknown } | null;
+  const storedSystem = storedHouses?.system;
+  const needsUpgrade =
+    !storedSystem || storedSystem === "whole-sign" || !storedHouses?.sources;
+  if (snapRow.engine.startsWith("swiss-ephemeris") && needsUpgrade) {
     const rec = await loadBirthRecord(db, userId);
     if (rec) {
       try {
@@ -953,6 +961,9 @@ export async function getPattern(db: DB, userId: string) {
     rising: risingLens(chart, placements),
     placements,
     aspects: chart.aspects.slice(0, 20),
+    allAspects: chart.aspects,
+    sources: chart.sources ?? null,
+    houseCusps: chart.houses,
     features: features ?? [],
     snapshot: {
       fingerprint: snapRow.fingerprint,
