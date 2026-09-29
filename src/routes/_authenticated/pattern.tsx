@@ -224,7 +224,7 @@ function PatternView({ data }: { data: PatternData }) {
                   </span>
                   <ChapterLead featureKey={f.feature_key} />
                   <span className="mt-2 block font-mono text-xs text-muted-foreground">
-                    strength {Number(f.strength).toFixed(2)}
+                    {strengthLabel(f)}
                   </span>
                 </button>
               ))}
@@ -240,7 +240,7 @@ function PatternView({ data }: { data: PatternData }) {
               1 · Chapters ({data.features.length})
             </h2>
             <span className="technical text-muted-foreground">
-              strength = how defined the structure is (0–1)
+              ordered from most to least defining
             </span>
           </div>
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
@@ -282,7 +282,7 @@ function PatternView({ data }: { data: PatternData }) {
                       {isOpen ? "Close" : "Read"}
                     </span>
                     <span className="col-span-2 font-mono text-xs text-muted-foreground sm:col-span-1 sm:col-start-1">
-                      strength {Number(f.strength).toFixed(2)}
+                      {strengthLabel(f)}
                     </span>
                   </button>
                   {isOpen ? (
@@ -565,6 +565,22 @@ const BODY_NAME: Record<string, string> = {
   node: "North Node", north_node: "North Node", true_node: "North Node", mean_node: "North Node",
   south_node: "South Node", ascendant: "Ascendant", midheaven: "Midheaven", chiron: "Chiron",
 };
+function strengthLabel(f: { family: string; strength: unknown; payload?: unknown }): string {
+  if (f.family === "distribution") {
+    const el = (f.payload as { elements?: Record<string, number> } | undefined)?.elements;
+    if (el) {
+      const vals = Object.values(el);
+      const total = vals.reduce((a, b) => a + b, 0);
+      const top = Math.max(...vals);
+      return `${top} of ${total} bodies share this element`;
+    }
+  }
+  const s = Number(f.strength);
+  if (s >= 0.85) return "Core to your chart";
+  if (s >= 0.6) return "Clearly present";
+  if (s >= 0.4) return "Noticeable";
+  return "In the background";
+}
 function bodyName(k: string): string {
   return BODY_NAME[k] ?? k.replace(/[_-]/g, " ").replace(/^\w/, (c) => c.toUpperCase());
 }
