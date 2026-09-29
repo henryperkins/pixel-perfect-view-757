@@ -276,6 +276,21 @@ export async function resolvePositions(req: SwissRequest): Promise<EphemerisResu
       if (asc !== null && mc !== null) angles = { ascendant: norm360(asc), midheaven: norm360(mc) };
     }
 
+    // Some responses list the angles as points rather than inside houses.
+    if (!angles) {
+      const pick = (...names: string[]) => {
+        for (const n of names) {
+          const e = bucket[n] ?? (data["angles"] as Raw | undefined)?.[n];
+          const v = num(e && typeof e === "object" ? ((e as Raw)["longitude"] ?? (e as Raw)["lon"]) : e);
+          if (v !== null) return v;
+        }
+        return null;
+      };
+      const asc = pick("Ascendant", "ASC", "ascendant", "asc");
+      const mc = pick("MC", "Midheaven", "midheaven", "mc");
+      if (asc !== null && mc !== null) angles = { ascendant: norm360(asc), midheaven: norm360(mc) };
+    }
+
     // Aspects exactly as the service reported them, limited to tracked bodies.
     let aspects: EphemerisResult["aspects"];
     if (Array.isArray(data["aspects"])) {
