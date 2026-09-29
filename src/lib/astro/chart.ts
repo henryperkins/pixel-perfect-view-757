@@ -137,7 +137,7 @@ export interface Chart {
   angles: { ascendant: number; midheaven: number };
   houses: number[];
   aspects: AspectHit[];
-  sources?: ChartSources;
+  sources?: ChartSources | undefined;
   uncertainty: {
     accuracy: TimeAccuracy;
     minutes: number;
