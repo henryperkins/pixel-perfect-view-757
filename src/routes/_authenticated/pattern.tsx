@@ -108,6 +108,9 @@ function PatternView({ data }: { data: PatternData }) {
           angles between those bodies. Nothing here is written unless the calculation
           supports it, so empty space means "not present", not "still loading".
         </p>
+        <Link to="/sources" className="technical mt-3 text-primary">
+          Check where each value comes from →
+        </Link>
 
         <details className="order-5 mt-10 border border-rule bg-evidence p-4 sm:mt-12">
           <summary className="technical cursor-pointer text-primary">Your chart snapshot</summary>

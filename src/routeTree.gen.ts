@@ -18,6 +18,7 @@ import { Route as AuthenticatedJournalRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
 import { Route as AuthenticatedPatternRouteImport } from './routes/_authenticated/pattern'
 import { Route as AuthenticatedPrivacyRouteImport } from './routes/_authenticated/privacy'
+import { Route as AuthenticatedSourcesRouteImport } from './routes/_authenticated/sources'
 import { Route as AuthenticatedTimeTravelRouteImport } from './routes/_authenticated/time-travel'
 import { Route as AuthenticatedTimingRouteImport } from './routes/_authenticated/timing'
 import { Route as ApiPublicContentReleasesRouteImport } from './routes/api/public/content-releases'
@@ -67,6 +68,11 @@ const AuthenticatedPrivacyRoute = AuthenticatedPrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedSourcesRoute = AuthenticatedSourcesRouteImport.update({
+  id: '/sources',
+  path: '/sources',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedTimeTravelRoute = AuthenticatedTimeTravelRouteImport.update({
   id: '/time-travel',
   path: '/time-travel',
@@ -99,6 +105,7 @@ export interface FileRoutesByFullPath {
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/pattern': typeof AuthenticatedPatternRoute
   '/privacy': typeof AuthenticatedPrivacyRoute
+  '/sources': typeof AuthenticatedSourcesRoute
   '/time-travel': typeof AuthenticatedTimeTravelRoute
   '/timing': typeof AuthenticatedTimingRoute
   '/api/public/content-releases': typeof ApiPublicContentReleasesRouteWithChildren
@@ -113,6 +120,7 @@ export interface FileRoutesByTo {
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/pattern': typeof AuthenticatedPatternRoute
   '/privacy': typeof AuthenticatedPrivacyRoute
+  '/sources': typeof AuthenticatedSourcesRoute
   '/time-travel': typeof AuthenticatedTimeTravelRoute
   '/timing': typeof AuthenticatedTimingRoute
   '/api/public/content-releases': typeof ApiPublicContentReleasesRouteWithChildren
@@ -129,6 +137,7 @@ export interface FileRoutesById {
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
   '/_authenticated/pattern': typeof AuthenticatedPatternRoute
   '/_authenticated/privacy': typeof AuthenticatedPrivacyRoute
+  '/_authenticated/sources': typeof AuthenticatedSourcesRoute
   '/_authenticated/time-travel': typeof AuthenticatedTimeTravelRoute
   '/_authenticated/timing': typeof AuthenticatedTimingRoute
   '/api/public/content-releases': typeof ApiPublicContentReleasesRouteWithChildren
@@ -145,6 +154,7 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/pattern'
     | '/privacy'
+    | '/sources'
     | '/time-travel'
     | '/timing'
     | '/api/public/content-releases'
@@ -159,6 +169,7 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/pattern'
     | '/privacy'
+    | '/sources'
     | '/time-travel'
     | '/timing'
     | '/api/public/content-releases'
@@ -174,6 +185,7 @@ export interface FileRouteTypes {
     | '/_authenticated/onboarding'
     | '/_authenticated/pattern'
     | '/_authenticated/privacy'
+    | '/_authenticated/sources'
     | '/_authenticated/time-travel'
     | '/_authenticated/timing'
     | '/api/public/content-releases'
@@ -252,6 +264,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPrivacyRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/sources': {
+      id: '/_authenticated/sources'
+      path: '/sources'
+      fullPath: '/sources'
+      preLoaderRoute: typeof AuthenticatedSourcesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/time-travel': {
       id: '/_authenticated/time-travel'
       path: '/time-travel'
@@ -290,6 +309,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
   AuthenticatedPatternRoute: typeof AuthenticatedPatternRoute
   AuthenticatedPrivacyRoute: typeof AuthenticatedPrivacyRoute
+  AuthenticatedSourcesRoute: typeof AuthenticatedSourcesRoute
   AuthenticatedTimeTravelRoute: typeof AuthenticatedTimeTravelRoute
   AuthenticatedTimingRoute: typeof AuthenticatedTimingRoute
 }
@@ -301,6 +321,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
   AuthenticatedPatternRoute: AuthenticatedPatternRoute,
   AuthenticatedPrivacyRoute: AuthenticatedPrivacyRoute,
+  AuthenticatedSourcesRoute: AuthenticatedSourcesRoute,
   AuthenticatedTimeTravelRoute: AuthenticatedTimeTravelRoute,
   AuthenticatedTimingRoute: AuthenticatedTimingRoute,
 }
