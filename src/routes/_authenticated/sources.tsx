@@ -148,15 +148,16 @@ function SourcesView({
           <Row
             key={p.key}
             label={p.key === "midheaven" ? "Midheaven (MC)" : p.label}
-            value={p.key === "midheaven" ? `${p.position} · House 10` : p.position}
+            value={p.key === "midheaven" ? `${p.position} · House ${p.house}` : p.position}
             src={s?.angles}
           />
         ))}
         <li className="py-3 text-xs leading-relaxed text-muted-foreground">
-          The Midheaven is the tenth-house cusp in the Placidus system. Its
-          position and the house cusps come from the same Swiss Ephemeris
-          calculation, so “House 10” is its definition here—not a separate
-          score assigned by Pattern.
+          {s?.angles === "service" && data.houseSystem.toLowerCase() === "placidus" ? (
+            "In the Placidus system the Midheaven defines where the tenth house begins, so “House 10” is its definition here—not a separate score assigned by Pattern."
+          ) : (
+            "The Midheaven’s house follows the house system shown above; under whole-sign houses it can land in houses 9–11 rather than 10, and the house number then comes from the same calculation as the source chip here."
+          )}
         </li>
       </Section>
 
