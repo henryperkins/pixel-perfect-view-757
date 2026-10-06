@@ -21,7 +21,7 @@ function arcParagraph(c: CycleInstance): string {
       : Math.round(c.arc_position * 100);
   const where =
     pct === null
-      ? "The full length of this window extends past the range that was scanned, so treat its edges as open."
+      ? "The full length of this window extends past the range that was scanned, so read its edges as open."
       : pct <= 25
         ? `You are about ${pct}% of the way through this window \u2014 near the start, where it is still mostly potential.`
         : pct <= 60
