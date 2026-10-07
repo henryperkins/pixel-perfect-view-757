@@ -232,7 +232,7 @@ export interface FeatureProse {
  * Bumped whenever the essay brief below changes shape. Cached chapters written
  * under an older version are rewritten on next read rather than served stale.
  */
-export const FEATURE_ESSAY_VERSION = "essay-4";
+export const FEATURE_ESSAY_VERSION = "essay-5";
 
 export async function generateFeatureNarrative(input: {
   facts: FactAtom[];
