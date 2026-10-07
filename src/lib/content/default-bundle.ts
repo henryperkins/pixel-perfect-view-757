@@ -224,9 +224,12 @@ const BANNED = [
   /\bwill (?:definitely|certainly|surely)\b/i,
   /\byou (?:must|have to|need to) \b/i,
   /\bguarantee[ds]?\b/i,
-  /\b(?:diagnos|cure|treat)(?:e|es|ed|ing|is)?\b/i,
+  // Medical claims only — everyday "how you treat people" is fine.
+  /\bdiagnos(?:e|es|ed|ing|is)\b/i,
+  /\b(?:cure|treat)(?:s|ed|ing)? (?:your |the |an? )?(?:illness|disease|condition|depression|anxiety|symptoms?)\b/i,
   /\bmedication\b/i,
-  /\binvest\b/i,
+  // Financial advice only — "invest your energy" is fine.
+  /\binvest(?:s|ed|ing)? (?:your )?(?:money|savings|in (?:stocks|shares|crypto|property|real estate))\b/i,
   /\bpregnan/i,
   /\bdivorce\b/i,
   /\bdeath\b/i,
