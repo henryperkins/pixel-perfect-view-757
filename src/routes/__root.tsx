@@ -91,8 +91,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:title", content: "Today — Pattern" },
       { property: "og:description", content: "One calculated theme for today, the cycle behind it, and the exact facts it rests on." },
       { name: "twitter:description", content: "One calculated theme for today, the cycle behind it, and the exact facts it rests on." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/46e99c44-f166-49c8-b27a-03d999639f7a/id-preview-71390778--16964b03-ff4a-4ee1-b4a5-76757e94bec3.lovable.app-1785589778671.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/46e99c44-f166-49c8-b27a-03d999639f7a/id-preview-71390778--16964b03-ff4a-4ee1-b4a5-76757e94bec3.lovable.app-1785589778671.png" },
     ],
     links: [
       {
@@ -103,7 +101,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap",
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
