@@ -3,6 +3,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { ArrowDown, ArrowRight } from "lucide-react";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import { useAuth } from "@/hooks/useAuth";
@@ -18,6 +20,8 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Today — Pattern" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       {
         name: "description",
         content:
@@ -110,19 +114,19 @@ function BandPicker({
       <span className="w-16 text-sm text-foreground">{label}</span>
       <div className="flex gap-1" role="group" aria-label={`${label} band`}>
         {[1, 2, 3, 4, 5].map((n) => (
-          <button
+          <Button variant="outline" size="icon"
             key={n}
             type="button"
             aria-pressed={value === n}
             onClick={() => onChange(value === n ? null : n)}
-            className={`h-8 w-8 rounded-sm border font-mono text-xs transition-colors ${
+            className={`h-9 w-9 rounded-md border font-mono text-xs ${
               value === n
-                ? "border-foreground bg-foreground text-background"
+                ? "border-primary bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground"
                 : "border-input bg-card hover:bg-secondary"
             }`}
           >
             {n}
-          </button>
+          </Button>
         ))}
       </div>
       <span className="technical text-muted-foreground">{hint}</span>
@@ -202,9 +206,9 @@ function JournalToday({ day, cycleKeys }: { day: string; cycleKeys: string[] }) 
   );
 
   return (
-    <section className="mt-10 border-t border-rule pt-6">
+    <section id="today-journal" className="mt-14 border-t border-rule pt-8">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <h2 className="technical text-muted-foreground">Your entries for today</h2>
+        <h2 className="flow-section-title">Your entries for today</h2>
         <Link to="/journal" className="technical text-primary">
           Open journal
         </Link>
@@ -368,7 +372,12 @@ function TodayReading() {
 
       <article className="order-1 lg:order-2">
         <p className="technical mb-3 text-muted-foreground">Today · {data.day}</p>
-        <h1 className="text-3xl leading-snug">{data.reading.headline}</h1>
+        <h1 className="text-3xl leading-snug sm:text-4xl">{data.reading.headline}</h1>
+        <nav aria-label="Today sections" className="mt-5 flex flex-wrap items-center gap-5 text-sm text-primary">
+          <a href="#today-timing" className="inline-flex items-center gap-1.5">Timing <ArrowDown className="h-3 w-3" aria-hidden="true" /></a>
+          <a href="#today-journal">Journal</a>
+          <a href="#today-reflection">Reflection</a>
+        </nav>
 
         {primary ? (
           <div className="mt-5 grid grid-cols-3 gap-3 border-y border-rule py-3">
@@ -410,11 +419,11 @@ function TodayReading() {
 
         <EphemerisNotice state={data.ephemeris} className="mt-8" />
 
-        <section className="mt-10 border-t border-rule pt-6">
+        <section id="today-timing" className="mt-14 border-t border-rule pt-8">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
-            <h2 className="technical text-muted-foreground">Timing today</h2>
-            <Link to="/timing" className="technical text-primary">
-              All windows
+            <h2 className="flow-section-title">Timing today</h2>
+            <Link to="/timing" className="inline-flex items-center gap-2 text-sm text-primary">
+              All windows <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
           </div>
           <p className="mt-2 text-sm text-muted-foreground">
@@ -431,7 +440,7 @@ function TodayReading() {
               {timing.map((c) => {
                 const phase = phaseLabel(c.phase);
                 return (
-                  <li key={c.cycle_key} className="border border-rule bg-card p-4">
+                  <li key={c.cycle_key} className="rounded-md border-l-2 border-primary/40 bg-secondary/40 p-5 transition-colors hover:bg-secondary">
                     <div className="flex flex-wrap items-baseline justify-between gap-2">
                       <p className="text-sm font-medium text-foreground">
                         {c.transit_body}{" "}
@@ -470,8 +479,8 @@ function TodayReading() {
           cycleKeys={timing.map((c) => c.cycle_key)}
         />
 
-        <section className="mt-10 border-t border-rule pt-6">
-          <h2 className="technical text-muted-foreground">Reflection</h2>
+        <section id="today-reflection" className="mt-14 border-t border-rule pt-8">
+          <h2 className="flow-section-title">Reflection</h2>
           <p className="prose-reading mt-2 text-foreground">{data.reading.prompt}</p>
 
           <div className="mt-5 rounded-sm border border-rule bg-secondary/30 p-4">
@@ -523,14 +532,14 @@ function TodayReading() {
             className="mt-3 w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
           />
           <div className="mt-3 flex flex-wrap items-center gap-3">
-            <button
+            <Button variant="outline"
               type="button"
               disabled={saveNote.isPending}
               onClick={() => saveNote.mutate({ day: data.day })}
               className="rounded-sm border border-input bg-card px-4 py-2 text-sm transition-colors hover:bg-secondary disabled:opacity-50"
             >
               {saveNote.isPending ? "Saving…" : "Save check-in"}
-            </button>
+            </Button>
             <span className="font-mono text-[0.7rem] text-muted-foreground" role="status">
               {saveNote.isPending
                 ? "saving…"
@@ -545,13 +554,13 @@ function TodayReading() {
         </section>
 
         <section className="mt-8 border-t border-rule pt-6">
-          <button
+          <Button variant="ghost"
             type="button"
             onClick={() => setOpenEvidence((v) => !v)}
-            className="technical text-primary"
+            className="technical h-auto justify-start px-0 text-primary"
           >
             {openEvidence ? "Hide evidence & provenance" : "Evidence & provenance"}
-          </button>
+          </Button>
 
           {openEvidence ? (
             <div className="mt-4 space-y-6 bg-evidence p-4">
@@ -646,7 +655,7 @@ function TodayReading() {
               { v: 0, label: "Unsure" },
               { v: -1, label: "No" },
             ].map((o) => (
-              <button
+              <Button variant="outline" size="sm"
                 key={o.v}
                 type="button"
                 disabled={rate.isPending}
@@ -656,7 +665,7 @@ function TodayReading() {
                 className="rounded-sm border border-input bg-card px-2.5 py-1 text-xs transition-colors hover:bg-secondary disabled:opacity-50"
               >
                 {o.label}
-              </button>
+              </Button>
             ))}
           </div>
           <details className="mt-6 border-t border-rule pt-3">
