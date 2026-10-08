@@ -2,6 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
+import { ArrowRight, ChevronDown, BookOpen } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import { fetchFeatureNarrative, fetchPattern } from "@/lib/pattern.functions";
@@ -11,6 +13,8 @@ export const Route = createFileRoute("/_authenticated/pattern")({
   head: () => ({
     meta: [
       { title: "Your pattern — Pattern" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       {
         name: "description",
         content:
@@ -100,14 +104,7 @@ function PatternView({ data }: { data: PatternData }) {
   return (
     <div className="grid animate-rise gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1fr)_16rem]">
       <div className="flex min-w-0 flex-col">
-        <h1 className="text-2xl sm:text-3xl">Your pattern</h1>
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-          This page has three parts, in order: the <strong>chapters</strong> — structures
-          the calculation actually found in your chart; your <strong>placements</strong> —
-          where each body sat at your birth; and your <strong>connections</strong> — the
-          angles between those bodies. Nothing here is written unless the calculation
-          supports it, so empty space means "not present", not "still loading".
-        </p>
+        <h1 className="text-3xl sm:text-4xl">Your pattern</h1>
         <Link to="/sources" className="technical mt-3 text-primary">
           Check where each value comes from →
         </Link>
@@ -150,8 +147,8 @@ function PatternView({ data }: { data: PatternData }) {
         </details>
 
         {data.rising ? (
-          <section className="order-3 mt-8 sm:mt-10">
-            <h2 className="technical border-b border-rule pb-2 text-muted-foreground">
+          <section className="order-3 mt-12 sm:mt-16">
+            <h2 className="flow-section-title pb-2">
               Your main lens · {data.rising.sign} rising
             </h2>
             <p className="mt-3 max-w-2xl text-sm leading-relaxed text-foreground">
@@ -203,29 +200,25 @@ function PatternView({ data }: { data: PatternData }) {
         )}
 
         {data.features.length > 0 ? (
-          <section className="order-2 mt-8 sm:mt-10">
-            <h2 className="technical border-b border-rule pb-2 text-muted-foreground">
+          <section className="order-2 mt-10 sm:mt-12">
+            <h2 className="flow-section-title pb-2">
               What most shapes you
             </h2>
-            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-              The {Math.min(3, data.features.length)} strongest structures in your chart —
-              the ones the calculation defines most sharply. Tap one to read it.
-            </p>
             <div className="mt-4 grid gap-3 sm:grid-cols-3">
               {data.features.slice(0, 3).map((f, i) => (
-                <button
+                <Button variant="ghost"
                   key={f.feature_key}
                   type="button"
                   onClick={() => {
                     setOpen(f.feature_key);
                     document
                       .getElementById(`chapter-${f.feature_key}`)
-                      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                      ?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
                   }}
-                  className="border border-rule bg-card p-4 text-left transition-colors hover:bg-evidence"
+                  className="chapter-tile h-auto min-h-64 flex-col items-start justify-start gap-0 whitespace-normal rounded-md border border-rule bg-secondary/60 p-5 text-left hover:bg-accent/40"
                 >
-                  <span className="technical block text-muted-foreground">
-                    {i + 1} · {f.family}
+                  <span className="mb-4 flex w-full items-center justify-between text-primary">
+                    <span className="font-mono text-xs">0{i + 1}</span><BookOpen aria-hidden="true" />
                   </span>
                   <span className="mt-2 block font-serif text-base leading-snug sm:text-lg">
                     {f.title}
@@ -234,7 +227,8 @@ function PatternView({ data }: { data: PatternData }) {
                   <span className="mt-2 block font-mono text-xs text-muted-foreground">
                     {strengthLabel(f)}
                   </span>
-                </button>
+                  <ArrowRight aria-hidden="true" className="chapter-arrow mt-4 self-end text-primary" />
+                </Button>
               ))}
             </div>
           </section>
@@ -242,19 +236,15 @@ function PatternView({ data }: { data: PatternData }) {
 
 
 
-          <section className="order-4 mt-8 sm:mt-10">
+          <section className="order-4 mt-12 sm:mt-16">
           <div className="grid gap-1 border-b border-rule pb-2 sm:flex sm:items-baseline sm:justify-between sm:gap-4">
-            <h2 className="technical text-muted-foreground">
-              1 · Chapters ({data.features.length})
+            <h2 className="flow-section-title">
+              Your chapters <span className="font-sans text-sm text-muted-foreground">{data.features.length}</span>
             </h2>
             <span className="technical text-muted-foreground">
               ordered from most to least defining
             </span>
           </div>
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-            Open a chapter to read what the structure means and see the exact facts it was
-            built from.
-          </p>
 
           <div className="mt-5 space-y-3">
             {data.features.length === 0 ? (
@@ -270,13 +260,14 @@ function PatternView({ data }: { data: PatternData }) {
                 <article
                   key={f.feature_key}
                   id={`chapter-${f.feature_key}`}
-                  className="scroll-mt-24 border border-rule bg-card"
+                  className={`scroll-mt-24 overflow-hidden rounded-md border transition-colors duration-300 ${isOpen ? "border-primary/40 bg-card" : "border-rule bg-background"}`}
                 >
-                  <button
+                  <Button variant="ghost"
                     type="button"
                     aria-expanded={isOpen}
+                    aria-controls={`chapter-content-${f.feature_key}`}
                     onClick={() => setOpen(isOpen ? null : f.feature_key)}
-                    className="grid w-full grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-3 gap-y-2 px-4 py-3 text-left"
+                    className="grid h-auto w-full grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-3 gap-y-2 whitespace-normal rounded-none px-5 py-5 text-left hover:bg-secondary/50"
                   >
                     <span className="min-w-0">
                       <span className="technical block truncate text-muted-foreground">
@@ -286,15 +277,13 @@ function PatternView({ data }: { data: PatternData }) {
                         {f.title}
                       </span>
                     </span>
-                    <span className="technical shrink-0 self-start text-muted-foreground">
-                      {isOpen ? "Close" : "Read"}
-                    </span>
+                    <ChevronDown aria-hidden="true" className={`self-center text-primary transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
                     <span className="col-span-2 font-mono text-xs text-muted-foreground sm:col-span-1 sm:col-start-1">
                       {strengthLabel(f)}
                     </span>
-                  </button>
+                  </Button>
                   {isOpen ? (
-                    <div className="border-t border-rule bg-evidence px-4 py-3">
+                    <div id={`chapter-content-${f.feature_key}`} className="chapter-content border-t border-rule px-5 py-6 sm:px-7">
                       <FeatureNarrative featureKey={f.feature_key} />
                       <details className="mt-4">
                         <summary className="technical cursor-pointer text-muted-foreground">
