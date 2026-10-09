@@ -211,9 +211,12 @@ export function computeCycles(chart: Chart, when: Date): CycleInstance[] {
         const ingressJd = scanBoundary(tb, np.lon, asp.angle, jd, -1, limit, maxOrb);
         const egressJd = scanBoundary(tb, np.lon, asp.angle, jd, 1, limit, maxOrb);
 
+        // Phase follows the exact-pass date so labels never contradict
+        // "exact in N days"; orb is only used when no exact pass was found.
+        const dayOffset = exactJd !== null ? Math.round(exactJd - jd) : null;
         let phase: Phase = "approaching";
-        if (orb < 0.35) phase = "exact";
-        else if (exactJd !== null && exactJd < jd) phase = "separating";
+        if (dayOffset === 0 || (dayOffset === null && orb < 0.35)) phase = "exact";
+        else if (dayOffset !== null && dayOffset < 0) phase = "separating";
 
         const angleDiscount = np.angleDependent && !chart.uncertainty.housesReliable ? 0.6 : 1;
         const importance =

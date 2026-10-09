@@ -322,7 +322,17 @@ function TodayReading() {
 
 
   if (query.isPending) {
-    return <p className="technical text-muted-foreground">Calculating…</p>;
+    return (
+      <div className="max-w-2xl space-y-4" aria-busy="true">
+        <p className="technical text-muted-foreground">
+          Writing today's reading from your chart — the first one each day takes a few seconds.
+        </p>
+        <div className="h-10 w-3/4 animate-pulse rounded-sm bg-secondary" />
+        <div className="h-4 w-full animate-pulse rounded-sm bg-secondary" />
+        <div className="h-4 w-11/12 animate-pulse rounded-sm bg-secondary" />
+        <div className="h-4 w-4/5 animate-pulse rounded-sm bg-secondary" />
+      </div>
+    );
   }
   if (query.error) {
     return (
