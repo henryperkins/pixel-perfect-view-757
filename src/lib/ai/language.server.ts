@@ -66,12 +66,14 @@ async function callGateway<T>(
   user: string,
   schemaName: string,
   schema: JsonSchemaObject,
+  timeoutMs = 90000,
 ): Promise<T> {
   const key = process.env["LOVABLE_API_KEY"];
   if (!key) throw new Error("language layer is not configured");
 
   const res = await fetch(GATEWAY, {
     method: "POST",
+    signal: AbortSignal.timeout(timeoutMs),
     headers: {
       "content-type": "application/json",
       Authorization: `Bearer ${key}`,
@@ -185,7 +187,8 @@ export async function generateReadingProse(
 
   let raw: { headline: string; prompt: string; paragraphs: Written[] };
   try {
-    raw = await callGateway(prompt, "daily_reading", READING_SCHEMA);
+    // Today must not hang: past 12s the template reading is served instead.
+    raw = await callGateway(prompt, "daily_reading", READING_SCHEMA, 12000);
   } catch (e) {
     return { ...fallback, meta: templateMeta((e as Error).message) };
   }
