@@ -60,9 +60,18 @@ function exactPhrase(days: number | null): string {
 }
 
 /** How far through the ingress -> egress window today sits, as a sentence. */
-function arcSentence(cycle: { arc_position?: number | null }): string | null {
+function arcSentence(cycle: {
+  arc_position?: number | null;
+  ingress_at: string | null;
+  egress_at: string | null;
+}): string | null {
   const p = cycle.arc_position;
   if (p === null || p === undefined) return null;
+  // Windows shorter than two days (mostly the Moon) have no meaningful middle.
+  if (cycle.ingress_at && cycle.egress_at) {
+    const span = Date.parse(cycle.egress_at) - Date.parse(cycle.ingress_at);
+    if (span < 2 * 86400000) return "A brief window — it passes within a day or so.";
+  }
   const pct = Math.round(p * 100);
   if (pct <= 25) return `${pct}% through the window — near the start, still mostly potential.`;
   if (pct <= 60) return `${pct}% through the window — the middle, where it reads most clearly.`;
@@ -90,6 +99,22 @@ function weightLabel(w: number): string {
   return "Background";
 }
 
+const POINT_NAME: Record<string, string> = {
+  node: "North Node",
+  ascendant: "Ascendant",
+  midheaven: "Midheaven",
+};
+function pointName(k: string): string {
+  return POINT_NAME[k] ?? k.charAt(0).toUpperCase() + k.slice(1);
+}
+
+/** Phase label derived from days-to-exact so it never contradicts the date line. */
+function phaseKey(c: { phase: string }, days: number | null): string {
+  if (days === null) return c.phase;
+  if (days === 0) return "exact";
+  return days > 0 ? "approaching" : "separating";
+}
+
 function todayISO() {
   return new Date().toISOString().slice(0, 10);
 }
@@ -109,7 +134,7 @@ function Timeline({
   const start = ingress ? Date.parse(ingress) : null;
   const end = egress ? Date.parse(egress) : null;
   if (start === null || end === null || end <= start) {
-    return <p className="technical text-xs text-muted-foreground">Open-ended window — no closing date within the scan range.</p>;
+    return <p className="technical text-xs text-muted-foreground">A long, slow window — it runs for months, beyond the dates calculated here.</p>;
   }
   const span = end - start;
   const pos = (d: string | null) =>
@@ -228,16 +253,18 @@ function TimingPage() {
               ) : (
                 <ul className="mt-4 space-y-3">
                   {active.map((c) => {
-                    const phase = PHASE_LABEL[c.phase] ?? { label: c.phase, help: "" };
+                    const days = daysToExact(c, day);
+                    const pk = phaseKey(c, days);
+                    const phase = PHASE_LABEL[pk] ?? { label: pk, help: "" };
                     return (
                       <li key={c.cycle_key} className="border border-rule bg-card p-4">
                         <div className="flex flex-wrap items-baseline justify-between gap-2">
                           <p className="text-sm font-medium text-foreground">
-                            {c.transit_body}{" "}
+                            {pointName(c.transit_body)}{" "}
                             <span className="text-muted-foreground">
                               {ASPECT_MEANING[c.aspect] ?? c.aspect}
                             </span>{" "}
-                            your {c.natal_point}
+                            your {pointName(c.natal_point)}
                           </p>
                           <div className="flex items-center gap-2">
                             <span className="rounded-sm border border-input px-2 py-0.5 text-[0.65rem] uppercase tracking-wider text-muted-foreground">
