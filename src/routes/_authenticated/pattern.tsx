@@ -215,7 +215,7 @@ function PatternView({ data }: { data: PatternData }) {
                       .getElementById(`chapter-${f.feature_key}`)
                       ?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
                   }}
-                  className="chapter-tile h-auto min-h-64 flex-col items-start justify-start gap-0 whitespace-normal rounded-md border border-rule bg-secondary/60 p-5 text-left hover:bg-accent/40"
+                  className="chapter-tile h-auto flex-col items-start justify-start gap-0 whitespace-normal rounded-md border border-rule bg-secondary/60 p-5 text-left hover:bg-accent/40"
                 >
                   <span className="mb-4 flex w-full items-center justify-between text-primary">
                     <span className="font-mono text-xs">0{i + 1}</span><BookOpen aria-hidden="true" />
@@ -224,8 +224,8 @@ function PatternView({ data }: { data: PatternData }) {
                     {f.title}
                   </span>
                   <ChapterLead featureKey={f.feature_key} />
-                  <span className="mt-2 block font-mono text-xs text-muted-foreground">
-                    {strengthLabel(f)}
+                  <span className="mt-auto block pt-3 font-mono text-xs text-muted-foreground">
+                    {strengthLabel(f, rankOf(f), data.features.length)}
                   </span>
                   <ArrowRight aria-hidden="true" className="chapter-arrow mt-4 self-end text-primary" />
                 </Button>
@@ -254,7 +254,7 @@ function PatternView({ data }: { data: PatternData }) {
                 still complete.
               </p>
             ) : null}
-            {data.features.map((f) => {
+            {data.features.map((f, rank) => {
               const isOpen = open === f.feature_key;
               return (
                 <article
@@ -279,7 +279,7 @@ function PatternView({ data }: { data: PatternData }) {
                     </span>
                     <ChevronDown aria-hidden="true" className={`self-center text-primary transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
                     <span className="col-span-2 font-mono text-xs text-muted-foreground sm:col-span-1 sm:col-start-1">
-                      {strengthLabel(f)}
+                      {strengthLabel(f, rankOf(f), data.features.length)}
                     </span>
                   </Button>
                   {isOpen ? (
@@ -494,6 +494,15 @@ function ChapterLead({ featureKey }: { featureKey: string }) {
     staleTime: Infinity,
   });
 
+  if (query.isPending) {
+    return (
+      <span className="mt-3 block w-full space-y-2" aria-label="Writing the opening lines">
+        {[100, 90, 60].map((w) => (
+          <span key={w} className="block h-2.5 animate-pulse rounded-sm bg-secondary" style={{ width: `${w}%` }} />
+        ))}
+      </span>
+    );
+  }
   if (!query.data?.available) return null;
   const lead = query.data.narrative.split(/(?<=\.)\s/).slice(0, 2).join(" ");
   return (
@@ -517,7 +526,19 @@ function FeatureNarrative({ featureKey }: { featureKey: string }) {
   });
 
   if (query.isPending) {
-    return <p className="technical text-muted-foreground">Writing this chapter…</p>;
+    return (
+      <div aria-busy="true">
+        <p className="technical text-muted-foreground">
+          Writing this chapter from your chart — the first time takes up to half a minute; after
+          that it opens instantly.
+        </p>
+        <div className="mt-4 space-y-2">
+          {[100, 95, 88, 70].map((w) => (
+            <div key={w} className="h-3 animate-pulse rounded-sm bg-secondary" style={{ width: `${w}%` }} />
+          ))}
+        </div>
+      </div>
+    );
   }
   if (query.error) {
     return (
@@ -562,20 +583,27 @@ const BODY_NAME: Record<string, string> = {
   node: "North Node", north_node: "North Node", true_node: "North Node", mean_node: "North Node",
   south_node: "South Node", ascendant: "Ascendant", midheaven: "Midheaven", chiron: "Chiron",
 };
-function strengthLabel(f: { family: string; strength: unknown; payload?: unknown }): string {
+/**
+ * Label relative to this chart's own ranking, so chapters are told apart
+ * instead of all reading "Core to your chart".
+ */
+function strengthLabel(
+  f: { family: string; strength: unknown; payload?: unknown },
+  rank: number,
+  total: number,
+): string {
   if (f.family === "distribution") {
     const el = (f.payload as { elements?: Record<string, number> } | undefined)?.elements;
     if (el) {
       const vals = Object.values(el);
-      const total = vals.reduce((a, b) => a + b, 0);
+      const t = vals.reduce((a, b) => a + b, 0);
       const top = Math.max(...vals);
-      return `${top} of ${total} bodies share this element`;
+      return `${top} of ${t} bodies share this element`;
     }
   }
-  const s = Number(f.strength);
-  if (s >= 0.85) return "Core to your chart";
-  if (s >= 0.6) return "Clearly present";
-  if (s >= 0.4) return "Noticeable";
+  if (rank === 0) return "Strongest in your chart";
+  if (rank < 3) return `Top 3 in your chart · #${rank + 1}`;
+  if (rank < Math.ceil(total / 2)) return "Clearly present";
   return "In the background";
 }
 function bodyName(k: string): string {
