@@ -176,6 +176,13 @@ function exactPhrase(days: number | null): string {
 }
 
 /** Weight from the transit's own speed, the natal point it touches and the orb. */
+const NICE_NAME: Record<string, string> = {
+  node: "North Node", ascendant: "Ascendant", midheaven: "Midheaven",
+};
+function niceName(k: string): string {
+  return NICE_NAME[k] ?? k.charAt(0).toUpperCase() + k.slice(1);
+}
+
 function strengthLabel(weight: number): string {
   if (weight >= 0.7) return "Major";
   if (weight >= 0.4) return "Prominent";
@@ -453,11 +460,11 @@ function TodayReading() {
                   <li key={c.cycle_key} className="rounded-md border-l-2 border-primary/40 bg-secondary/40 p-5 transition-colors hover:bg-secondary">
                     <div className="flex flex-wrap items-baseline justify-between gap-2">
                       <p className="text-sm font-medium text-foreground">
-                        {c.transit_body}{" "}
+                        {niceName(c.transit_body)}{" "}
                         <span className="text-muted-foreground">
                           {ASPECT_MEANING[c.aspect] ?? c.aspect}
                         </span>{" "}
-                        your {c.natal_point}
+                        your {niceName(c.natal_point)}
                       </p>
                       <div className="flex flex-wrap items-center gap-2">
                         <span className="rounded-sm border border-input px-2 py-0.5 text-[0.65rem] uppercase tracking-wider text-muted-foreground">
@@ -474,7 +481,7 @@ function TodayReading() {
                       {DOMAIN_LABEL[c.domain] ?? c.domain}
                     </p>
                     <p className="mt-1 font-mono text-[0.7rem] text-muted-foreground">
-                      orb {c.orb.toFixed(2)}° · weight {c.importance.toFixed(3)} ·{" "}
+                      {c.orb.toFixed(2)}° from exact ·{" "}
                       {c.exact_at ? `peak ${c.exact_at.slice(0, 10)}` : "no peak in window"}
                     </p>
                   </li>
