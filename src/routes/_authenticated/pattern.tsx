@@ -254,7 +254,7 @@ function PatternView({ data }: { data: PatternData }) {
                 still complete.
               </p>
             ) : null}
-            {data.features.map((f, rank) => {
+            {data.features.map((f) => {
               const isOpen = open === f.feature_key;
               return (
                 <article
