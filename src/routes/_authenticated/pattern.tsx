@@ -100,6 +100,11 @@ function PatternView({ data }: { data: PatternData }) {
   const [open, setOpen] = useState<string | null>(
     data.features[0]?.feature_key ?? null,
   );
+  const ranked = [...data.features]
+    .sort((a, b) => Number(b.strength) - Number(a.strength))
+    .map((f) => f.feature_key);
+  const rankOf = (f: { feature_key: string }) => ranked.indexOf(f.feature_key);
+
 
   return (
     <div className="grid animate-rise gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1fr)_16rem]">

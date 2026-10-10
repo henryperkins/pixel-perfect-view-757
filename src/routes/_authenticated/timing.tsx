@@ -291,7 +291,7 @@ function TimingPage() {
                         />
                         <details className="mt-3">
                           <summary className="cursor-pointer technical text-xs text-muted-foreground">
-                            Technical values · weight {c.importance.toFixed(3)} ({weightLabel(c.importance)})
+                            Technical values · {weightLabel(c.importance)} window
                           </summary>
                           <dl className="mt-2 grid grid-cols-2 gap-x-6 gap-y-1 font-mono text-xs text-muted-foreground sm:grid-cols-3">
                             <div><dt className="inline">cycle key </dt><dd className="inline">{c.cycle_key}</dd></div>
