@@ -145,8 +145,9 @@ Each entry in `items`:
   `lensIntegration` exactly when it supplies `N1`. Otherwise the score is `null`
   with the reason it is inapplicable.
 - A **quiet** item (template-only, no model attempt) has `null` scores with a reason,
-  and `quietCheck: { "safe": true|false, "explanation": "…" }`. It is excluded from
-  model-writing score counts.
+  and `quietCheck: { "safe": true|false, "reason": "…" }` (the checker also accepts
+  the earlier field name `explanation`). It is excluded from model-writing score
+  counts.
 - Item `verdict` is `fail` exactly when the item has a substantive finding, a gate
   score below 4, or an unsafe quiet check. The review `verdict` is `fail` when any
   item fails. A self-reported verdict that disagrees with its own findings or scores

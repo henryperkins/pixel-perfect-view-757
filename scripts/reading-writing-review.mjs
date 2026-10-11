@@ -376,7 +376,9 @@ function validateItemReview(where, item, entry, findingIds) {
       throw new Error(`${where} ${dimension} is not applicable; record null with the reason`);
   }
   if (quiet) {
-    if (typeof item.quietCheck?.safe !== "boolean" || !nonEmpty(item.quietCheck.explanation))
+    // Like a score, the check gives its `reason`; `explanation` is the earlier field name.
+    const why = item.quietCheck?.reason ?? item.quietCheck?.explanation;
+    if (typeof item.quietCheck?.safe !== "boolean" || !nonEmpty(why))
       throw new Error(`${where} is a quiet item and needs a quiet check`);
   } else if (item.quietCheck !== null)
     throw new Error(`${where} is not quiet; quietCheck must be null`);

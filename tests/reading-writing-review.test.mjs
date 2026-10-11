@@ -314,6 +314,33 @@ test("a complete passing review pair qualifies the corrected run without human r
   assert.match(summary.limitations.join(" "), /not.*independent model famil/i);
 });
 
+test("a quiet check gives its reason the way scores do", async () => {
+  const prepared = prepareReview({ ...(await inputs()), random: seeded(11) });
+  const quietId = Object.keys(prepared.assignment.items).find(
+    (id) => prepared.assignment.items[id].content.quiet,
+  );
+  const withQuietCheck = (quietCheck) =>
+    review(prepared, "reviewer-a", (artifact) => {
+      artifact.items.find((item) => item.itemId === quietId).quietCheck = quietCheck;
+    });
+  const summary = qualifyReviews({
+    assignment: prepared.assignment,
+    reviews: [
+      withQuietCheck({ safe: true, reason: "No invented signal, claim or instruction." }),
+      review(prepared, "reviewer-b"),
+    ],
+  });
+  assert.equal(summary.passed, true);
+  assert.throws(
+    () =>
+      qualifyReviews({
+        assignment: prepared.assignment,
+        reviews: [withQuietCheck({ safe: true }), review(prepared, "reviewer-b")],
+      }),
+    /needs a quiet check/,
+  );
+});
+
 test("coverage, identity bindings, scores and blindness are validated before any gate", async () => {
   const prepared = prepareReview({ ...(await inputs()), random: seeded(5) });
   const good = () => review(prepared, "reviewer-b");

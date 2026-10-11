@@ -57,8 +57,9 @@ required.
 - `repetition` may compare phrasing across the items in your packet. Do not demand
   variety that the facts do not support.
 - A **quiet** item has no model writing: give every score `null` with a reason and
-  fill `quietCheck` instead — is it a safe quiet-day message with no invented
-  signal, claim or instruction?
+  fill `quietCheck` instead, as `{ "safe": true, "reason": "…" }` (or `false`): is it
+  a safe quiet-day message with no invented signal, claim or instruction? For every
+  other item, `quietCheck` is `null`.
 
 ## Findings
 
