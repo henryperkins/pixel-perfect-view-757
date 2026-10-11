@@ -55,9 +55,9 @@ npm run eval:reading -- --compare /tmp/pattern-before.json /tmp/pattern-after.js
 
 ### Language providers
 
-- **Lovable AI gateway** (default) calls `google/gemini-3.7-flash` with
+- **Lovable AI gateway** (default) calls `google/gemini-3.8-flash` with
   `LOVABLE_API_KEY`. Member readings and natal chapters always use it.
-- **Gemini Enterprise** calls `gemini-3.7-flash` directly on Gemini Enterprise
+- **Gemini Enterprise** calls `gemini-3.8-flash` directly on Gemini Enterprise
   Agent Platform (formerly Vertex AI) with the `GEMINI_ENTERPRISE_API_KEY` secret,
   sent as `x-goog-api-key` to the global `generateContent` endpoint. It receives the
   same system text, user text and JSON schema as the gateway; the 20-second budget,
@@ -66,7 +66,7 @@ npm run eval:reading -- --compare /tmp/pattern-before.json /tmp/pattern-after.js
 Only `/content` admin work can select Gemini Enterprise: synthetic evaluation and
 **Draft a release** each have their own choice, which lasts for the page visit and
 starts at the Lovable gateway; a provider without a server key cannot be selected.
-Reports, diagnostics and drafts record `gemini-enterprise/gemini-3.7-flash` as the
+Reports, diagnostics and drafts record `gemini-enterprise/gemini-3.8-flash` as the
 model and the report `network` names the provider, so one run cannot mix providers
 and the comparison command compares Gemini Enterprise reports only with other
 Gemini Enterprise reports. The report `request` records the provider-neutral
@@ -226,7 +226,9 @@ npm run eval:reading -- --bundle builtin --responses responses.json --source-rep
 
 Extraction accepts only a complete report with all 28 unique cases whose fixtures,
 input hashes, model and copy match the selected shipped bundle, and whose every
-capture is lossless. Accepted, untruncated historical drafts remain usable; a
+capture is lossless. Reports recorded with `google/gemini-3.7-flash`, before the
+2026-10-11 move to 3.8 Flash, and Gemini Enterprise reports carry another model and
+are refused. Accepted, untruncated historical drafts remain usable; a
 historical rejected draft has no proof of lossless capture and is refused. A report
 made with custom active copy matches neither shipped bundle and is refused rather
 than replayed against built-in copy. `--source-report` checks the report's SHA-256,

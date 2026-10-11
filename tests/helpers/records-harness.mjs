@@ -13,7 +13,7 @@ const projectRequire = createRequire(join(projectRoot, "package.json"));
 const { createServer } = await import(pathToFileURL(projectRequire.resolve("vite")).href);
 const gatewayURL = "https://ai.gateway.lovable.dev/v1/chat/completions";
 const geminiEnterpriseURL =
-  "https://aiplatform.googleapis.com/v1/publishers/google/models/gemini-3.7-flash:generateContent";
+  "https://aiplatform.googleapis.com/v1/publishers/google/models/gemini-3.8-flash:generateContent";
 const envNames = [
   "PATTERN_ROOT_KEY",
   "PATTERN_WORKFLOW_URL",

@@ -8,7 +8,7 @@ import { createRecordsHarness } from "./helpers/records-harness.mjs";
 import { BASELINE_RESPONSES, READING_EVAL_CASES } from "../scripts/reading-eval-cases.mjs";
 import { compareReports } from "../scripts/evaluate-readings.mjs";
 
-const ENTERPRISE_MODEL = "gemini-enterprise/gemini-3.7-flash";
+const ENTERPRISE_MODEL = "gemini-enterprise/gemini-3.8-flash";
 let h, runCase, combine, language, bundle;
 before(async () => {
   h = await createRecordsHarness();
@@ -38,7 +38,7 @@ const enterpriseResponse = (draft, leadingParts = []) =>
         finishReason: "STOP",
       },
     ],
-    modelVersion: "gemini-3.7-flash",
+    modelVersion: "gemini-3.8-flash",
   });
 async function makeAdmin() {
   const result = await h.records().from("user_roles").insert({ user_id: h.userA, role: "admin" });
@@ -200,8 +200,8 @@ test("member readings and natal chapters stay on the Lovable gateway", async () 
       prompt: synthetic.case.output.prompt,
     },
   });
-  assert.equal(production.meta.diagnostics.model, "google/gemini-3.7-flash");
-  assert.equal(production.meta.model, "google/gemini-3.7-flash");
+  assert.equal(production.meta.diagnostics.model, "google/gemini-3.8-flash");
+  assert.equal(production.meta.model, "google/gemini-3.8-flash");
   h.setGateway(() =>
     lovableResponse({
       paragraphs: [{ text: "A supplied natal pattern. A second sentence.", facts: ["F1"] }],
@@ -213,7 +213,7 @@ test("member readings and natal chapters stay on the Lovable gateway", async () 
     title: "Synthetic natal chapter",
     tone: "plain",
   });
-  assert.equal(chapter.meta.model, "google/gemini-3.7-flash");
+  assert.equal(chapter.meta.model, "google/gemini-3.8-flash");
   assert.equal(h.gatewayRequests.length, 3);
   assert.equal(h.geminiEnterpriseRequests.length, 0);
 });
@@ -278,7 +278,7 @@ test("provider status and Gemini Enterprise runs are admin-only and expose no ke
       {
         id: "lovable",
         label: "Lovable AI gateway",
-        model: "google/gemini-3.7-flash",
+        model: "google/gemini-3.8-flash",
         configured: true,
       },
       {
