@@ -3,6 +3,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { NotebookPen, Save, Trash2 } from "lucide-react";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import {
@@ -17,6 +19,8 @@ export const Route = createFileRoute("/_authenticated/journal")({
   head: () => ({
     meta: [
       { title: "Journal — Pattern" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       {
         name: "description",
         content:
@@ -118,8 +122,8 @@ function JournalPage() {
             the moment you wrote, so a later recalculation never rewrites your record.
           </p>
 
-          <section className="mt-8 border border-rule bg-card p-4 sm:p-5">
-            <h2 className="technical text-muted-foreground">1 · New entry</h2>
+          <section className="journal-compose mt-8">
+            <h2 className="flow-section-title flex items-center gap-3"><NotebookPen aria-hidden="true" className="h-5 w-5" />New entry</h2>
             <form
               className="mt-4 space-y-4"
               onSubmit={(e) => {
@@ -220,13 +224,13 @@ function JournalPage() {
                 </label>
               </div>
 
-              <button
+              <Button
                 type="submit"
                 disabled={save.isPending}
                 className="rounded-sm bg-primary px-4 py-2 text-sm text-primary-foreground disabled:opacity-60"
               >
-                {save.isPending ? "Saving…" : "Save entry"}
-              </button>
+                <Save aria-hidden="true" />{save.isPending ? "Saving…" : "Save entry"}
+              </Button>
             </form>
           </section>
 
@@ -244,13 +248,13 @@ function JournalPage() {
             ) : journal.error ? (
               <div role="alert" className="mt-4 border border-destructive p-4 text-sm">
                 <p className="text-destructive">{journal.error.message}</p>
-                <button
+                <Button
                   type="button"
                   onClick={() => void journal.refetch()}
                   className="mt-3 technical text-primary"
                 >
                   Retry
-                </button>
+                </Button>
               </div>
             ) : entries.length === 0 ? (
               <p className="mt-4 border border-rule bg-evidence p-4 text-sm text-evidence-foreground">
@@ -261,7 +265,7 @@ function JournalPage() {
             ) : (
               <ul className="mt-4 space-y-3">
                 {entries.map((e) => (
-                  <li key={e.id} className="border border-rule bg-card p-4">
+                  <li key={e.id} className="journal-entry">
                     <div className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-3">
                       <p className="min-w-0 text-sm font-medium text-foreground">{e.label}</p>
                       <span className="shrink-0 font-mono text-xs text-muted-foreground">
@@ -283,14 +287,14 @@ function JournalPage() {
                           }`
                         : ""}
                     </p>
-                    <button
+                    <Button variant="ghost"
                       type="button"
                       onClick={() => remove.mutate(e.id)}
                       disabled={remove.isPending}
                       className="mt-3 technical text-muted-foreground transition-colors hover:text-destructive"
                     >
-                      Delete
-                    </button>
+                      <Trash2 aria-hidden="true" />Delete
+                    </Button>
                   </li>
                 ))}
               </ul>

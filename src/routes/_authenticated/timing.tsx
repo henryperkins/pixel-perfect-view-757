@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import { fetchCycles } from "@/lib/pattern.functions";
@@ -11,6 +12,8 @@ export const Route = createFileRoute("/_authenticated/timing")({
   head: () => ({
     meta: [
       { title: "Timing — Pattern" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       {
         name: "description",
         content:
@@ -133,7 +136,7 @@ function Timeline({
 }) {
   const start = ingress ? Date.parse(ingress) : null;
   const end = egress ? Date.parse(egress) : null;
-  if (start === null || end === null || end <= start) {
+  if (!ingress || !egress || start === null || end === null || end <= start) {
     return <p className="technical text-xs text-muted-foreground">A long, slow window — it runs for months, beyond the dates calculated here.</p>;
   }
   const span = end - start;
@@ -143,8 +146,8 @@ function Timeline({
   const exactPct = pos(exact);
 
   return (
-    <div className="mt-3">
-      <div className="relative h-1.5 rounded-full bg-secondary">
+    <div className="window-timeline">
+      <div className="window-track relative">
         {exactPct !== null ? (
           <div
             className="absolute top-1/2 h-3 w-px -translate-y-1/2 bg-primary"
@@ -154,16 +157,16 @@ function Timeline({
         ) : null}
         {todayPct !== null ? (
           <div
-            className="absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-card bg-foreground"
+            className="window-today absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-card bg-foreground"
             style={{ left: `${todayPct}%` }}
             aria-hidden
           />
         ) : null}
       </div>
-      <div className="mt-1.5 flex justify-between font-mono text-[0.65rem] text-muted-foreground">
-        <span>opens {ingress!.slice(0, 10)}</span>
+      <div className="window-dates mt-2 font-mono text-[0.65rem] text-muted-foreground">
+        <span>opens {ingress.slice(0, 10)}</span>
         {exact ? <span>peak {exact.slice(0, 10)}</span> : null}
-        <span>closes {egress!.slice(0, 10)}</span>
+        <span>closes {egress.slice(0, 10)}</span>
       </div>
     </div>
   );
@@ -199,13 +202,13 @@ function TimingPage() {
       ) : query.error ? (
         <div role="alert" className="max-w-xl border border-destructive/40 bg-card p-5">
           <p className="text-sm text-destructive">{query.error.message}</p>
-          <button
+          <Button
             type="button"
             onClick={() => query.refetch()}
             className="mt-4 rounded-sm border border-input px-3 py-1.5 text-xs hover:bg-secondary"
           >
             Retry
-          </button>
+          </Button>
         </div>
       ) : !data ? (
         <div className="max-w-xl">
@@ -230,6 +233,43 @@ function TimingPage() {
 
             <EphemerisNotice state={data.ephemeris} className="mt-6" />
 
+            {/* ---------- Filters ---------- */}
+            <div className="timing-filters mt-6" role="group" aria-label="Filter timing windows">
+              
+              <div className="domain-options mt-3">
+                {DOMAINS.map((d) => (
+                  <Button variant="outline"
+                    aria-pressed={domain === d}
+                    key={d}
+                    type="button"
+                    onClick={() => setDomain(d)}
+                    className={`rounded-sm border px-2.5 py-1 text-xs transition-colors ${
+                      domain === d
+                        ? "border-primary bg-accent text-accent-foreground"
+                        : "border-input bg-card hover:bg-secondary"
+                    }`}
+                  >
+                    {d === "all" ? "Every area" : d.replace("-", " ")}
+                  </Button>
+                ))}
+                <Button variant="outline"
+                  aria-pressed={slowOnly}
+                  type="button"
+                  onClick={() => setSlowOnly((v) => !v)}
+                  className={`rounded-sm border px-2.5 py-1 text-xs transition-colors ${
+                    slowOnly
+                      ? "border-primary bg-accent text-accent-foreground"
+                      : "border-input bg-card hover:bg-secondary"
+                  }`}
+                >
+                  slow movers only
+                </Button>
+              </div>
+              <p className="mt-2 text-xs text-muted-foreground">
+                “Slow movers” hides Sun, Moon, Mercury and Venus — leaving only the long structural
+                cycles.
+              </p>
+            </div>
             {/* ---------- Active now ---------- */}
             <section className="mt-10">
               <div className="flex items-baseline justify-between gap-4">
@@ -251,22 +291,22 @@ function TimingPage() {
                   strong transits are being claimed for today.
                 </p>
               ) : (
-                <ul className="mt-4 space-y-3">
+                <ul key={`${domain}-${slowOnly}`} className="timing-results mt-4 space-y-3">
                   {active.map((c) => {
                     const days = daysToExact(c, day);
                     const pk = phaseKey(c, days);
                     const phase = PHASE_LABEL[pk] ?? { label: pk, help: "" };
                     return (
-                      <li key={c.cycle_key} className="border border-rule bg-card p-4">
-                        <div className="flex flex-wrap items-baseline justify-between gap-2">
-                          <p className="text-sm font-medium text-foreground">
+                      <li key={c.cycle_key} className="window-card border border-rule bg-card p-5">
+                        <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3 sm:flex sm:justify-between">
+                          <p className="min-w-0 text-base font-medium text-foreground">
                             {pointName(c.transit_body)}{" "}
                             <span className="text-muted-foreground">
                               {ASPECT_MEANING[c.aspect] ?? c.aspect}
                             </span>{" "}
                             your {pointName(c.natal_point)}
                           </p>
-                          <div className="flex items-center gap-2">
+                          <div className="flex shrink-0 flex-col items-end gap-2 sm:flex-row">
                             <span className="rounded-sm border border-input px-2 py-0.5 text-[0.65rem] uppercase tracking-wider text-muted-foreground">
                               {c.domain}
                             </span>
@@ -306,41 +346,7 @@ function TimingPage() {
               )}
             </section>
 
-            {/* ---------- Filters ---------- */}
-            <section className="mt-10">
-              <h2 className="technical text-muted-foreground">2 · Filter</h2>
-              <div className="mt-3 flex flex-wrap items-center gap-2">
-                {DOMAINS.map((d) => (
-                  <button
-                    key={d}
-                    type="button"
-                    onClick={() => setDomain(d)}
-                    className={`rounded-sm border px-2.5 py-1 text-xs transition-colors ${
-                      domain === d
-                        ? "border-primary bg-accent text-accent-foreground"
-                        : "border-input bg-card hover:bg-secondary"
-                    }`}
-                  >
-                    {d}
-                  </button>
-                ))}
-                <button
-                  type="button"
-                  onClick={() => setSlowOnly((v) => !v)}
-                  className={`rounded-sm border px-2.5 py-1 text-xs transition-colors ${
-                    slowOnly
-                      ? "border-primary bg-accent text-accent-foreground"
-                      : "border-input bg-card hover:bg-secondary"
-                  }`}
-                >
-                  slow movers only
-                </button>
-              </div>
-              <p className="mt-2 text-xs text-muted-foreground">
-                “Slow movers” hides Sun, Moon, Mercury and Venus — leaving only the long structural
-                cycles.
-              </p>
-            </section>
+
           </div>
 
           <Rail title="Calculation status">
