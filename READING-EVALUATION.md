@@ -174,6 +174,21 @@ Every case has blank `manualReview` fields. Read the actual candidate body again
 
 These are human judgments, not automated guarantees. Citation membership and the bounded contradiction checks cannot prove arbitrary prose semantically supported. An acceptance improvement can accompany worse writing or unsupported claims, so report validation results and manual judgments separately.
 
+## Current writing gate: AI review lane
+
+From 2026-10-11 the current writing gate uses the AI review lane defined in
+[`daily-writing-ai-review-1`](docs/reviews/daily-reading-writing/review-protocol.md),
+because no human prose reviewer is available. Two fresh, blinded AI reviewer
+contexts score every corrected candidate and distinct displayed or template body.
+Both must give specificity, grounding and coherence at least 4/5 (and synthesis
+coherence at least 4/5 when `S1` is supplied), with no unresolved substantive
+finding. A pass is reported only as **AI writing-review passed**, never as human
+approval. Every qualification summary records `humanReviewCompleted: false`.
+
+AI review artifacts are separate files with their own provenance. Exported
+`manualReview` fields stay untouched. The blinded human review required in the two
+gates below is historical and remains unsatisfied; it is deferred, not replaced.
+
 ## Synthesis qualification gate
 
 When supplied, paragraph 1 or 2 must cite `S1` and all four parents

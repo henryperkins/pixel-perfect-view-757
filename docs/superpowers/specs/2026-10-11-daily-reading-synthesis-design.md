@@ -233,3 +233,13 @@ The admin draft preview shows affected interpretation keys, theme tags, pair-rul
 ## Completion criteria
 
 Complete means source resolution, planning, templates, model input, validation, persistence, evidence display, content lifecycle, cache identity, and evaluation all implement this contract. Every structural check needs a meaningful test. Human review of actual generated synthetic candidates must separately confirm support and writing quality; validator acceptance alone is insufficient.
+
+## Addendum 2026-10-11: AI writing-review lane
+
+No human prose reviewer is available. Writing qualification now follows the AI
+review lane in
+[`daily-writing-ai-review-1`](../../reviews/daily-reading-writing/review-protocol.md):
+two fresh, blinded AI reviewer contexts, explicit adjudication, and
+`humanReviewCompleted: false` in every summary. A pass is reported as
+AI-reviewed synthetic qualification only. The human-review requirement above is
+left as written; it is deferred and remains unsatisfied.

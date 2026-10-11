@@ -308,3 +308,14 @@ and one pre-existing erasure gap was found. Each is now part of the contract abo
   back to built-in copy, which would cache Today under the wrong release and base
   drafts on the wrong catalogue.
 - **Erasure.** Chapter essays and retained audit fingerprints are now covered.
+
+## Addendum 2026-10-11: AI writing-review lane
+
+No human prose reviewer is available. Catalogue approval and lens writing
+qualification follow the AI review lane in
+[`daily-writing-ai-review-1`](../../reviews/daily-reading-writing/review-protocol.md)
+(two fresh, blinded AI reviewer contexts per review, explicit adjudication, and
+`humanReviewCompleted: false`). AI approval is recorded separately from the
+catalogue author's structural review. The independent editorial and blinded
+human requirements above are left as written; they are deferred and remain
+unsatisfied.
