@@ -755,6 +755,343 @@ export function qualifyReviews({ assignment, reviews, adjudication = null }) {
   };
 }
 
+// ---------------------------------------------------------------------------
+// Natal lens catalogue review: every frozen entry, two fresh contexts, no model calls.
+// ---------------------------------------------------------------------------
+
+const DEFAULT_CATALOGUE_INSTRUCTIONS = fileURLToPath(
+  new URL("../docs/reviews/daily-natal-lens/catalogue-reviewer-instructions.md", import.meta.url),
+);
+/** Each check and the substantive finding category that must explain a `false` answer. */
+const CATALOGUE_CHECKS = {
+  conditionalFraming: "unconditional_claim",
+  ordinaryScene: "missing_scene",
+  practicalDistinction: "missing_distinction",
+  roleAndAnchors: "role_mismatch",
+  compoundEligibility: "compound_ineligible",
+  noBiography: "biography",
+  noClinicalExplanation: "clinical_claim",
+  noBehavioralPrediction: "behavioral_prediction",
+  noStereotypeCertainty: "stereotype_certainty",
+  noDirectives: "directive",
+  noRawOrigin: "raw_origin",
+};
+const CATALOGUE_SUBSTANTIVE = new Set(Object.values(CATALOGUE_CHECKS));
+const CATALOGUE_BLIND_FLAGS = ["sawPriorVerdicts", "sawOtherReviews", "sawImplementationContext"];
+
+function frozenCatalogue({ bundle, expectedSha256 = null }) {
+  if (!Array.isArray(bundle?.natalLenses) || !bundle.natalLenses.length)
+    throw new Error("The frozen bundle has no natal lens catalogue");
+  const catalogueSha256 = sha256(JSON.stringify(bundle));
+  if (expectedSha256 !== null && expectedSha256 !== catalogueSha256)
+    throw new Error("The frozen bundle does not match its recorded catalogue hash");
+  const entries = new Map();
+  for (const lens of bundle.natalLenses) {
+    if (!nonEmpty(lens?.key) || entries.has(lens.key))
+      throw new Error("The frozen catalogue has a missing or repeated key");
+    entries.set(lens.key, {
+      key: lens.key,
+      role: lens.role,
+      anchorNatalPoints: [...lens.anchorNatalPoints],
+      selectors: structuredClone(lens.selectors),
+      mechanism: lens.mechanism,
+    });
+  }
+  return { catalogueSha256, bundleVersion: bundle.version, entries };
+}
+
+/**
+ * One reviewer's catalogue packet. The order is reproducible from the catalogue hash and
+ * context ID, so the checker can rebuild and bind every packet without a private key file.
+ */
+export function cataloguePacket({ bundle, expectedSha256 = null, instructions, contextId }) {
+  if (!CONTEXT_ID.test(String(contextId))) throw new Error("A catalogue packet needs a context ID");
+  if (!nonEmpty(instructions)) throw new Error("Catalogue reviewer instructions are required");
+  const frozen = frozenCatalogue({ bundle, expectedSha256 });
+  const order = (key) => sha256(`${frozen.catalogueSha256}:${contextId}:${key}`);
+  const packet = {
+    protocolVersion: PROTOCOL_VERSION,
+    kind: "catalogue-packet",
+    contextId,
+    bundleVersion: frozen.bundleVersion,
+    catalogueSha256: frozen.catalogueSha256,
+    instructionsSha256: sha256(instructions),
+    instructions,
+    entries: [...frozen.entries.values()].sort((x, y) => order(x.key).localeCompare(order(y.key))),
+  };
+  const json = `${JSON.stringify(packet, null, 2)}\n`;
+  return { packet, json, sha256: sha256(json) };
+}
+
+function validateProvenance(label, reviewer, timestamp) {
+  if (!CONTEXT_ID.test(String(reviewer?.contextId)))
+    throw new Error(`${label} has an invalid context ID`);
+  for (const field of ["model", "configuration"])
+    if (!nonEmpty(reviewer[field]))
+      throw new Error(`${label} must record its observed ${field}, or "unknown"`);
+  if (!SHA256.test(String(reviewer.promptSha256)))
+    throw new Error(`${label} needs the SHA-256 of its prompt`);
+  if (!ISO_UTC.test(String(timestamp))) throw new Error(`${label} needs a UTC timestamp`);
+}
+
+function validateCatalogueReview(review, frozen, packetFor) {
+  if (review?.protocolVersion !== PROTOCOL_VERSION || review.kind !== "catalogue-review")
+    throw new Error(`A catalogue review is not a ${PROTOCOL_VERSION} catalogue review`);
+  const id = review.reviewer?.contextId;
+  validateProvenance(`Catalogue review ${id}`, review.reviewer, review.reviewedAt);
+  const blindness = review.blindness ?? {};
+  if (!nonEmpty(blindness.declaration))
+    throw new Error(`Catalogue review ${id} needs a blindness declaration`);
+  if (!Array.isArray(blindness.inputs) || blindness.inputs.join() !== "packet")
+    throw new Error(
+      `Catalogue review ${id} is not blind: it declares inputs other than its packet`,
+    );
+  for (const flag of CATALOGUE_BLIND_FLAGS)
+    if (blindness[flag] !== false) throw new Error(`Catalogue review ${id} is not blind: ${flag}`);
+  if (review.catalogueSha256 !== frozen.catalogueSha256)
+    throw new Error(`Catalogue review ${id} reviewed a different catalogue hash`);
+  if (review.bundleVersion !== frozen.bundleVersion)
+    throw new Error(`Catalogue review ${id} reviewed a different bundle version`);
+  if (review.packetSha256 !== packetFor(id))
+    throw new Error(`Catalogue review ${id} is bound to a different packet than its own`);
+  if (!Array.isArray(review.entries)) throw new Error(`Catalogue review ${id} has no entries`);
+  const seen = new Set();
+  for (const entry of review.entries) {
+    if (!frozen.entries.has(entry?.key))
+      throw new Error(`Catalogue review ${id} has an unknown key ${entry?.key}`);
+    if (seen.has(entry.key))
+      throw new Error(`Catalogue review ${id} has a duplicate key ${entry.key}`);
+    seen.add(entry.key);
+  }
+  for (const key of frozen.entries.keys())
+    if (!seen.has(key)) throw new Error(`Catalogue review ${id} is missing ${key}`);
+  const findingIds = new Set();
+  for (const entry of review.entries) {
+    const where = `Catalogue review ${id} ${entry.key}`;
+    const lens = frozen.entries.get(entry.key);
+    const compound = lens.selectors.length > 1;
+    const checks = entry.checks ?? {};
+    if (Object.keys(checks).sort().join() !== Object.keys(CATALOGUE_CHECKS).sort().join())
+      throw new Error(`${where} must answer exactly the catalogue checks`);
+    for (const check of Object.keys(CATALOGUE_CHECKS)) {
+      if (check === "compoundEligibility") {
+        if (compound && typeof checks[check] !== "boolean")
+          throw new Error(`${where} is a compound entry; compoundEligibility needs true or false`);
+        if (!compound && checks[check] !== null)
+          throw new Error(`${where} has one selector; compoundEligibility must be null`);
+      } else if (typeof checks[check] !== "boolean")
+        throw new Error(`${where} ${check} needs true or false`);
+    }
+    if (!Array.isArray(entry.findings)) throw new Error(`${where} needs a findings array`);
+    for (const finding of entry.findings) {
+      const fid = finding?.findingId;
+      if (!nonEmpty(fid) || findingIds.has(fid))
+        throw new Error(`${where} has a missing or repeated finding ID`);
+      findingIds.add(fid);
+      if (!nonEmpty(finding.passage) || !lens.mechanism.includes(finding.passage))
+        throw new Error(`${where} finding ${fid} passage is not verbatim in the mechanism`);
+      if (!CATALOGUE_SUBSTANTIVE.has(finding.category) && finding.category !== "style")
+        throw new Error(`${where} finding ${fid} has an unknown category`);
+      const severity = finding.category === "style" ? "minor" : "substantive";
+      if (finding.severity !== severity)
+        throw new Error(
+          `${where} finding ${fid} severity must be ${severity} for ${finding.category}`,
+        );
+      if (!nonEmpty(finding.explanation) || !nonEmpty(finding.proposedCorrection))
+        throw new Error(`${where} finding ${fid} needs an explanation and a proposed correction`);
+    }
+    for (const [check, category] of Object.entries(CATALOGUE_CHECKS))
+      if (checks[check] === false && !entry.findings.some((f) => f.category === category))
+        throw new Error(`${where} answers ${check} false without a ${category} finding`);
+    const fails =
+      Object.values(checks).some((value) => value === false) ||
+      entry.findings.some((f) => f.severity === "substantive");
+    if (entry.verdict !== (fails ? "fail" : "pass"))
+      throw new Error(
+        `${where} verdict ${entry.verdict} disagrees with its own checks and findings`,
+      );
+  }
+  const verdict = review.entries.some((entry) => entry.verdict === "fail") ? "fail" : "pass";
+  if (review.verdict !== verdict)
+    throw new Error(`Catalogue review ${id} overall verdict disagrees with its entry verdicts`);
+}
+
+function validateCatalogueAdjudication(adjudication, frozen, reviews) {
+  if (
+    adjudication?.protocolVersion !== PROTOCOL_VERSION ||
+    adjudication.kind !== "catalogue-adjudication"
+  )
+    throw new Error(`The catalogue adjudication is not a ${PROTOCOL_VERSION} adjudication`);
+  if (adjudication.catalogueSha256 !== frozen.catalogueSha256)
+    throw new Error("The catalogue adjudication covers a different catalogue hash");
+  const adjudicator = adjudication.adjudicator ?? {};
+  validateProvenance("The catalogue adjudicator", adjudicator, adjudication.adjudicatedAt);
+  if (reviews.some((r) => r.reviewer.contextId === adjudicator.contextId))
+    throw new Error(`Adjudicator context ${adjudicator.contextId} is not fresh`);
+  const blindness = adjudication.blindness ?? {};
+  if (
+    !nonEmpty(blindness.declaration) ||
+    blindness.sawImplementationContext !== false ||
+    !Array.isArray(blindness.inputs) ||
+    !blindness.inputs.length ||
+    blindness.inputs.some((input) => !["findings", "entries"].includes(input))
+  )
+    throw new Error(
+      "The catalogue adjudication is not blind: it may declare only the disputed findings and entries",
+    );
+  if (!Array.isArray(adjudication.resolutions))
+    throw new Error("The catalogue adjudication needs resolutions");
+  const resolved = new Set();
+  for (const resolution of adjudication.resolutions) {
+    const key = `${resolution?.reviewerContextId}\u0000${resolution?.findingId}`;
+    if (resolved.has(key))
+      throw new Error(`Duplicate resolution for finding ${resolution.findingId}`);
+    resolved.add(key);
+    const review = reviews.find((r) => r.reviewer.contextId === resolution.reviewerContextId);
+    const entry = review?.entries.find((e) =>
+      e.findings.some((f) => f.findingId === resolution.findingId),
+    );
+    const finding = entry?.findings.find((f) => f.findingId === resolution.findingId);
+    if (!finding)
+      throw new Error(
+        `The catalogue adjudication names unknown finding ${resolution.findingId} from ${resolution.reviewerContextId}`,
+      );
+    if (resolution.key !== entry.key)
+      throw new Error(`Resolution for ${resolution.findingId} names the wrong entry`);
+    if (resolution.passage !== finding.passage)
+      throw new Error(`Resolution passage differs from finding ${resolution.findingId}`);
+    if (!["acceptable", "defect"].includes(resolution.resolution))
+      throw new Error(`Resolution for ${resolution.findingId} must be acceptable or defect`);
+    if (!nonEmpty(resolution.explanation))
+      throw new Error(`Resolution for ${resolution.findingId} needs an explanation`);
+    if (resolution.resolution === "acceptable" && finding.severity === "substantive") {
+      const mechanism = frozen.entries.get(entry.key).mechanism;
+      const range = (passage) => {
+        const start = mechanism.indexOf(passage);
+        return [start, start + passage.length];
+      };
+      const [start, end] = range(finding.passage);
+      for (const other of reviews) {
+        if (other.reviewer.contextId === resolution.reviewerContextId) continue;
+        const shared = other.entries
+          .find((e) => e.key === entry.key)
+          ?.findings.find((f) => {
+            const [s, e] = range(f.passage);
+            return f.severity === "substantive" && s < end && start < e;
+          });
+        if (shared)
+          throw new Error(
+            `Finding ${resolution.findingId} is shared with ${other.reviewer.contextId}'s finding ${shared.findingId}; one adjudicator cannot overturn a defect both reviewers raised`,
+          );
+      }
+    }
+  }
+}
+
+/**
+ * Validates at least two catalogue reviews (and any adjudication) against the frozen bundle,
+ * then approves only when no substantive finding stays unresolved. Human approval stays deferred.
+ */
+export function qualifyCatalogue({
+  bundle,
+  expectedSha256 = null,
+  instructions,
+  reviews,
+  adjudication = null,
+}) {
+  const frozen = frozenCatalogue({ bundle, expectedSha256 });
+  if (!Array.isArray(reviews)) throw new Error("Catalogue reviews are required");
+  const contexts = new Set();
+  for (const review of reviews) {
+    const id = review?.reviewer?.contextId;
+    if (contexts.has(id)) throw new Error(`Duplicate reviewer context ${id}`);
+    contexts.add(id);
+  }
+  if (contexts.size < 2)
+    throw new Error("A catalogue review needs at least two reviewer contexts; one never approves");
+  const packetFor = (contextId) =>
+    cataloguePacket({ bundle, expectedSha256, instructions, contextId }).sha256;
+  for (const review of reviews) validateCatalogueReview(review, frozen, packetFor);
+  if (adjudication) validateCatalogueAdjudication(adjudication, frozen, reviews);
+  const acceptable = new Set(
+    (adjudication?.resolutions ?? [])
+      .filter((r) => r.resolution === "acceptable")
+      .map((r) => `${r.reviewerContextId}\u0000${r.findingId}`),
+  );
+  const failures = [...frozen.entries.keys()]
+    .sort()
+    .map((key) => ({
+      key,
+      reasons: reviews.flatMap((review) =>
+        review.entries
+          .find((entry) => entry.key === key)
+          .findings.filter(
+            (f) =>
+              f.severity === "substantive" &&
+              !acceptable.has(`${review.reviewer.contextId}\u0000${f.findingId}`),
+          )
+          .map(
+            (f) =>
+              `unresolved ${f.category} finding ${f.findingId} from ${review.reviewer.contextId}`,
+          ),
+      ),
+    }))
+    .filter((failure) => failure.reasons.length);
+  const passed = failures.length === 0;
+  return {
+    protocolVersion: PROTOCOL_VERSION,
+    kind: "catalogue-qualification",
+    humanReviewCompleted: false,
+    humanApproval: "deferred",
+    authorStructuralReview:
+      "The catalogue author's agent editorial/structural review (docs/reviews/daily-natal-lens/catalogue-review.md) is separate evidence and is not counted here.",
+    result: passed ? "AI catalogue review passed" : "AI catalogue review failed",
+    passed,
+    bundleVersion: frozen.bundleVersion,
+    catalogueSha256: frozen.catalogueSha256,
+    instructionsSha256: sha256(instructions),
+    entries: frozen.entries.size,
+    compoundEntries: [...frozen.entries.values()].filter((e) => e.selectors.length > 1).length,
+    reviewerCount: contexts.size,
+    reviewers: reviews.map((review) => ({
+      contextId: review.reviewer.contextId,
+      model: review.reviewer.model,
+      configuration: review.reviewer.configuration,
+      promptSha256: review.reviewer.promptSha256,
+      packetSha256: review.packetSha256,
+      reviewedAt: review.reviewedAt,
+    })),
+    adjudication: adjudication && {
+      contextId: adjudication.adjudicator.contextId,
+      model: adjudication.adjudicator.model,
+      configuration: adjudication.adjudicator.configuration,
+      promptSha256: adjudication.adjudicator.promptSha256,
+      adjudicatedAt: adjudication.adjudicatedAt,
+      resolutions: adjudication.resolutions.length,
+    },
+    failures,
+    minorFindings: reviews.flatMap((review) =>
+      review.entries.flatMap((entry) =>
+        entry.findings
+          .filter((f) => f.severity === "minor")
+          .map((f) => ({ key: entry.key, reviewer: review.reviewer.contextId, finding: f })),
+      ),
+    ),
+    resolvedDisputes: (adjudication?.resolutions ?? []).map((resolution) => ({
+      ...resolution,
+      original: reviews
+        .find((r) => r.reviewer.contextId === resolution.reviewerContextId)
+        .entries.find((e) => e.key === resolution.key)
+        .findings.find((f) => f.findingId === resolution.findingId),
+    })),
+    limitations: [
+      "AI catalogue approval is not human editorial approval, empirical temperament evidence or publication.",
+      "Fresh contexts using one model are separate assessments, not evidence of independent model families.",
+      "The checker validates bookkeeping; it does not establish that any reviewer judgment is true.",
+    ],
+  };
+}
+
 async function readJsonFile(path) {
   const bytes = await readFile(path);
   if (bytes.length > 8_000_000) throw new Error(`${path} is larger than 8 MB`);
@@ -841,9 +1178,58 @@ export async function main([command, ...args]) {
     process.stdout.write(`${summary.result}\n`);
     return;
   }
+  if (command === "catalogue-packets" || command === "catalogue") {
+    const options = parseArgs(args, ["review"]);
+    if (!options.bundle) throw new Error(`${command} needs --bundle`);
+    // A release manifest carries the frozen bundle and its recorded checksum.
+    const source = (await readJsonFile(options.bundle)).value;
+    const bundle = source.bundle ?? source;
+    const expectedSha256 = source.bundle ? (source.checksum ?? null) : null;
+    const instructions = await readFile(
+      options.instructions ?? DEFAULT_CATALOGUE_INSTRUCTIONS,
+      "utf8",
+    );
+    if (command === "catalogue-packets") {
+      if (!options["output-dir"]) throw new Error("catalogue-packets needs --output-dir");
+      const contexts = (options.contexts ?? "catalogue-a,catalogue-b").split(",");
+      if (new Set(contexts).size < 2)
+        throw new Error("At least two distinct reviewer contexts are required");
+      await mkdir(options["output-dir"]);
+      const hashes = {};
+      for (const contextId of contexts) {
+        const packet = cataloguePacket({ bundle, expectedSha256, instructions, contextId });
+        await writeFile(join(options["output-dir"], `packet-${contextId}.json`), packet.json, {
+          flag: "wx",
+        });
+        hashes[contextId] = packet.sha256;
+      }
+      process.stdout.write(`${JSON.stringify({ packets: hashes }, null, 2)}\n`);
+      return;
+    }
+    if (!options.output) throw new Error("catalogue needs --output");
+    if (!options.review?.length) throw new Error("catalogue needs --review files");
+    const reviews = await Promise.all(options.review.map(readJsonFile));
+    const adjudication = options.adjudication ? await readJsonFile(options.adjudication) : null;
+    const summary = qualifyCatalogue({
+      bundle,
+      expectedSha256,
+      instructions,
+      reviews: reviews.map((r) => r.value),
+      adjudication: adjudication?.value ?? null,
+    });
+    summary.files = {
+      reviewSha256: reviews.map((r) => r.sha256),
+      adjudicationSha256: adjudication?.sha256 ?? null,
+    };
+    await writeFile(options.output, `${JSON.stringify(summary, null, 2)}\n`, { flag: "wx" });
+    process.stdout.write(`${summary.result}\n`);
+    return;
+  }
   throw new Error(
     "Usage: reading-writing-review.mjs prepare --before report.json --after report.json --output-dir NEW_DIR\n" +
-      "       reading-writing-review.mjs qualify --assignment assignment.json --review a.json --review b.json [--adjudication adjudication.json] --output NEW_FILE",
+      "       reading-writing-review.mjs qualify --assignment assignment.json --review a.json --review b.json [--adjudication adjudication.json] --output NEW_FILE\n" +
+      "       reading-writing-review.mjs catalogue-packets --bundle frozen-candidate.json --output-dir NEW_DIR\n" +
+      "       reading-writing-review.mjs catalogue --bundle frozen-candidate.json --review a.json --review b.json [--adjudication adjudication.json] --output NEW_FILE",
   );
 }
 

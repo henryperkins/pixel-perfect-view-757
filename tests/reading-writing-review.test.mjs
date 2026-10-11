@@ -4,7 +4,9 @@ import { readFile } from "node:fs/promises";
 import { test } from "node:test";
 import {
   PROTOCOL_VERSION,
+  cataloguePacket,
   prepareReview,
+  qualifyCatalogue,
   qualifyReviews,
 } from "../scripts/reading-writing-review.mjs";
 
@@ -745,4 +747,286 @@ test("unavailable or partial corrected drafts are uncovered failures, never drop
     ["saturn-square-moon-warm", "venus-opposition-venus"],
   );
   assert.equal(summary.automated.after.outcomes.unavailable, 1);
+});
+
+// --- Natal lens catalogue review (Task 9) ---
+
+const CANDIDATE = new URL(
+  "../docs/superpowers/releases/2026-10-11-daily-natal-candidate.json",
+  import.meta.url,
+);
+const CATALOGUE_INSTRUCTIONS = new URL(
+  "../docs/reviews/daily-natal-lens/catalogue-reviewer-instructions.md",
+  import.meta.url,
+);
+const CATALOGUE_SHA256 = "99ddec7c32088a75e7ff84427c83780415d15402287b0e27e2aa9b206ce8d994";
+const CHECK_CATEGORY = {
+  conditionalFraming: "unconditional_claim",
+  ordinaryScene: "missing_scene",
+  practicalDistinction: "missing_distinction",
+  roleAndAnchors: "role_mismatch",
+  compoundEligibility: "compound_ineligible",
+  noBiography: "biography",
+  noClinicalExplanation: "clinical_claim",
+  noBehavioralPrediction: "behavioral_prediction",
+  noStereotypeCertainty: "stereotype_certainty",
+  noDirectives: "directive",
+  noRawOrigin: "raw_origin",
+};
+
+async function catalogueInputs() {
+  const manifest = JSON.parse(await readFile(CANDIDATE, "utf8"));
+  return {
+    bundle: manifest.bundle,
+    expectedSha256: manifest.checksum,
+    instructions: await readFile(CATALOGUE_INSTRUCTIONS, "utf8"),
+  };
+}
+
+function settleCatalogue(artifact) {
+  for (const entry of artifact.entries)
+    entry.verdict =
+      Object.values(entry.checks).some((value) => value === false) ||
+      entry.findings.some((f) => f.severity === "substantive")
+        ? "fail"
+        : "pass";
+  artifact.verdict = artifact.entries.some((e) => e.verdict === "fail") ? "fail" : "pass";
+  return artifact;
+}
+
+function catalogueReview(data, contextId, edit = () => {}) {
+  const { packet, sha256: packetSha256 } = cataloguePacket({ ...data, contextId });
+  const artifact = {
+    protocolVersion: PROTOCOL_VERSION,
+    kind: "catalogue-review",
+    packetSha256,
+    catalogueSha256: packet.catalogueSha256,
+    bundleVersion: packet.bundleVersion,
+    reviewer: {
+      contextId,
+      model: "unknown",
+      configuration: "unknown",
+      promptSha256: "c".repeat(64),
+    },
+    reviewedAt: "2026-10-11T20:00:00Z",
+    blindness: {
+      declaration: "I saw only my catalogue packet.",
+      inputs: ["packet"],
+      sawPriorVerdicts: false,
+      sawOtherReviews: false,
+      sawImplementationContext: false,
+    },
+    entries: packet.entries.map((entry) => ({
+      key: entry.key,
+      checks: Object.fromEntries(
+        Object.keys(CHECK_CATEGORY).map((check) => [
+          check,
+          check === "compoundEligibility" ? (entry.selectors.length > 1 ? true : null) : true,
+        ]),
+      ),
+      findings: [],
+      verdict: "pass",
+    })),
+    verdict: "pass",
+  };
+  edit(artifact);
+  return settleCatalogue(artifact);
+}
+
+const catalogueEntry = (artifact, key) => artifact.entries.find((entry) => entry.key === key);
+const defect = (data, key, overrides = {}) => {
+  const mechanism = data.bundle.natalLenses.find((entry) => entry.key === key).mechanism;
+  return {
+    findingId: `d-${key}`,
+    passage: mechanism.split(" ").slice(0, 3).join(" "),
+    category: "stereotype_certainty",
+    severity: "substantive",
+    explanation: "Reads as a certain trait.",
+    proposedCorrection: "Keep it conditional.",
+    ...overrides,
+  };
+};
+
+test("catalogue packets carry every frozen entry, bound to its hash and a per-context order", async () => {
+  const data = await catalogueInputs();
+  const a = cataloguePacket({ ...data, contextId: "catalogue-a" });
+  const b = cataloguePacket({ ...data, contextId: "catalogue-b" });
+  assert.equal(a.packet.catalogueSha256, CATALOGUE_SHA256);
+  assert.equal(a.packet.bundleVersion, "builtin-0.6.0");
+  assert.equal(a.sha256, sha256(a.json));
+  assert.equal(cataloguePacket({ ...data, contextId: "catalogue-a" }).sha256, a.sha256);
+  assert.notEqual(a.sha256, b.sha256);
+  assert.notDeepEqual(
+    a.packet.entries.map((e) => e.key),
+    b.packet.entries.map((e) => e.key),
+  );
+  assert.equal(a.packet.entries.length, 62);
+  assert.deepEqual(
+    a.packet.entries.map((e) => e.key).sort(),
+    data.bundle.natalLenses.map((e) => e.key).sort(),
+  );
+  for (const entry of a.packet.entries)
+    assert.deepEqual(Object.keys(entry).sort(), [
+      "anchorNatalPoints",
+      "key",
+      "mechanism",
+      "role",
+      "selectors",
+    ]);
+  // The author's own review rationale never reaches a reviewer.
+  assert.ok(!a.json.includes("Stalled task"));
+  assert.equal(a.packet.instructions, data.instructions);
+  assert.throws(
+    () => cataloguePacket({ ...data, expectedSha256: "0".repeat(64), contextId: "catalogue-a" }),
+    /catalogue hash/i,
+  );
+});
+
+test("a complete passing catalogue pair is AI approval only", async () => {
+  const data = await catalogueInputs();
+  const summary = qualifyCatalogue({
+    ...data,
+    reviews: [catalogueReview(data, "catalogue-a"), catalogueReview(data, "catalogue-b")],
+  });
+  assert.equal(summary.passed, true);
+  assert.equal(summary.result, "AI catalogue review passed");
+  assert.equal(summary.humanReviewCompleted, false);
+  assert.equal(summary.humanApproval, "deferred");
+  assert.match(summary.authorStructuralReview, /separate/i);
+  assert.deepEqual([summary.entries, summary.compoundEntries, summary.reviewerCount], [62, 2, 2]);
+  assert.equal(summary.catalogueSha256, CATALOGUE_SHA256);
+});
+
+test("catalogue coverage, bindings, checks and verdicts are validated", async () => {
+  const data = await catalogueInputs();
+  const good = () => catalogueReview(data, "catalogue-b");
+  const single = "nl-sun-01";
+  const compound = "nl-moon-10-house-01";
+  for (const [name, edit, message] of [
+    ["missing key", (r) => r.entries.pop(), /missing/i],
+    ["duplicate key", (r) => r.entries.push(structuredClone(r.entries[0])), /duplicate/i],
+    [
+      "unknown key",
+      (r) => r.entries.push({ ...structuredClone(r.entries[0]), key: "nl-x" }),
+      /unknown/i,
+    ],
+    ["catalogue hash", (r) => (r.catalogueSha256 = "0".repeat(64)), /catalogue hash/i],
+    ["packet", (r) => (r.packetSha256 = good().packetSha256), /packet/i],
+    ["unblinded", (r) => (r.blindness.inputs = ["packet", "catalogue-review.md"]), /blind/i],
+    [
+      "false check without finding",
+      (r) => (catalogueEntry(r, single).checks.noDirectives = false),
+      /finding/i,
+    ],
+    [
+      "compound check on a single entry",
+      (r) => (catalogueEntry(r, single).checks.compoundEligibility = true),
+      /compound/i,
+    ],
+    [
+      "compound check missing",
+      (r) => (catalogueEntry(r, compound).checks.compoundEligibility = null),
+      /compound/i,
+    ],
+    [
+      "passage not verbatim",
+      (r) =>
+        catalogueEntry(r, single).findings.push(defect(data, single, { passage: "Not there." })),
+      /passage/i,
+    ],
+  ])
+    assert.throws(
+      () =>
+        qualifyCatalogue({
+          ...data,
+          reviews: [catalogueReview(data, "catalogue-a", edit), good()],
+        }),
+      message,
+      name,
+    );
+  const inconsistent = catalogueReview(data, "catalogue-a");
+  catalogueEntry(inconsistent, single).findings.push(defect(data, single));
+  assert.throws(() => qualifyCatalogue({ ...data, reviews: [inconsistent, good()] }), /verdict/i);
+  assert.throws(() => qualifyCatalogue({ ...data, reviews: [good()] }), /two/i);
+  assert.throws(
+    () => qualifyCatalogue({ ...data, reviews: [good(), good()] }),
+    /duplicate reviewer/i,
+  );
+});
+
+test("a catalogue defect fails until a fresh adjudication finds it acceptable; shared defects stand", async () => {
+  const data = await catalogueInputs();
+  const key = "nl-moon-09";
+  const flagged = (contextId) =>
+    catalogueReview(data, contextId, (r) => {
+      catalogueEntry(r, key).checks.noStereotypeCertainty = false;
+      catalogueEntry(r, key).findings.push(defect(data, key, { findingId: `${contextId}-1` }));
+    });
+  const a = flagged("catalogue-a");
+  const b = catalogueReview(data, "catalogue-b");
+  const failed = qualifyCatalogue({ ...data, reviews: [a, b] });
+  assert.equal(failed.passed, false);
+  assert.ok(failed.failures.some((f) => f.key === key));
+  const resolution = (resolution) => ({
+    reviewerContextId: "catalogue-a",
+    findingId: "catalogue-a-1",
+    key,
+    passage: defect(data, key).passage,
+    resolution,
+    explanation: "The sentence keeps the possibility conditional.",
+  });
+  const adjudication = (resolutions, overrides = {}) => ({
+    protocolVersion: PROTOCOL_VERSION,
+    kind: "catalogue-adjudication",
+    catalogueSha256: CATALOGUE_SHA256,
+    adjudicator: {
+      contextId: "catalogue-adjudicator-1",
+      model: "unknown",
+      configuration: "unknown",
+      promptSha256: "d".repeat(64),
+    },
+    adjudicatedAt: "2026-10-11T21:00:00Z",
+    blindness: {
+      declaration: "I saw the disputed findings and their entries only.",
+      inputs: ["findings", "entries"],
+      sawImplementationContext: false,
+    },
+    resolutions,
+    ...overrides,
+  });
+  const resolved = qualifyCatalogue({
+    ...data,
+    reviews: [a, b],
+    adjudication: adjudication([resolution("acceptable")]),
+  });
+  assert.equal(resolved.passed, true);
+  assert.equal(resolved.resolvedDisputes[0].original.category, "stereotype_certainty");
+  assert.equal(
+    qualifyCatalogue({
+      ...data,
+      reviews: [a, b],
+      adjudication: adjudication([resolution("defect")]),
+    }).passed,
+    false,
+  );
+  assert.throws(
+    () =>
+      qualifyCatalogue({
+        ...data,
+        reviews: [a, b],
+        adjudication: adjudication([resolution("acceptable")], {
+          adjudicator: { ...adjudication([]).adjudicator, contextId: "catalogue-b" },
+        }),
+      }),
+    /fresh/i,
+  );
+  assert.throws(
+    () =>
+      qualifyCatalogue({
+        ...data,
+        reviews: [a, flagged("catalogue-b")],
+        adjudication: adjudication([resolution("acceptable")]),
+      }),
+    /shared/i,
+  );
 });

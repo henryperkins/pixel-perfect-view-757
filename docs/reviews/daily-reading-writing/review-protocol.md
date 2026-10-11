@@ -313,6 +313,39 @@ substantive finding fails the gate. The summary records:
 The checker's tests establish bookkeeping. They do not establish that any reviewer
 judgment is true.
 
+## Natal lens catalogue review
+
+The frozen natal catalogue (currently `builtin-0.6.0`, 62 entries, bundle hash
+`99ddec7c…d994`) is approved under this lane only by at least two fresh reviewer
+contexts that each cover every frozen key. Each receives its packet inline, built by
+`scripts/reading-writing-review.mjs catalogue-packets`: every entry's `key`, `role`,
+`anchorNatalPoints`, `selectors` and `mechanism`, plus the
+[catalogue reviewer instructions](../daily-natal-lens/catalogue-reviewer-instructions.md).
+The author's own editorial and structural review is never shown to them. The packet
+order is reproducible from the catalogue hash and the context ID, so the checker can
+rebuild each packet and bind each review to it.
+
+Every entry answers eleven checks: conditional framing, ordinary scene, practical
+distinction, role and anchors, compound eligibility (compound entries only), and the
+absence of biography, clinical explanation, behavioral prediction, stereotype
+certainty, directives and raw origin claims. A `false` check needs a finding of the
+matching substantive category that quotes the mechanism verbatim. `style` findings are
+minor.
+
+```sh
+node scripts/reading-writing-review.mjs catalogue-packets --bundle docs/superpowers/releases/2026-10-11-daily-natal-candidate.json --output-dir NEW_DIR
+node scripts/reading-writing-review.mjs catalogue --bundle docs/superpowers/releases/2026-10-11-daily-natal-candidate.json --review catalogue-a.json --review catalogue-b.json --output catalogue-qualification.json
+```
+
+`catalogue` checks the bundle against the manifest's recorded checksum, and refuses
+missing, duplicate or unknown keys, a different catalogue hash or packet, undeclared
+inputs and inconsistent checks or verdicts. A `catalogue-adjudication` (inputs:
+`findings` and `entries`; a fresh context) may find a disputed defect `acceptable`
+or confirm it as a `defect`; a defect both reviewers raised on overlapping text
+stands. Approval is reported only as **AI catalogue review passed**, with
+`humanApproval: "deferred"`. It is recorded separately from the catalogue author's
+structural review and never activates the catalogue.
+
 ## Semantic regression examples
 
 These passages come from the pre-correction baseline
