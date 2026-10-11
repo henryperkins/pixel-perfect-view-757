@@ -29,6 +29,10 @@ export function bodyName(key: string): string {
   return BODY_NAME[key] ?? key.replace(/[_-]/g, " ").replace(/^\w/, (c) => c.toUpperCase());
 }
 
+export function chapterParagraphId(key: string, paragraph: number) {
+  return `chapter-${key}-paragraph-${paragraph}`;
+}
+
 /** Relative labels describe the calculated ranking, without inventing a score. */
 export function strengthLabel(feature: PatternFeature, rank: number, total: number): string {
   if (feature.family === "distribution") {

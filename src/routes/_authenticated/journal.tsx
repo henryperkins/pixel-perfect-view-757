@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { NotebookPen, Save, Trash2 } from "lucide-react";
@@ -18,6 +18,12 @@ import {
 } from "@/lib/pattern.functions";
 
 export const Route = createFileRoute("/_authenticated/journal")({
+  validateSearch: (search: Record<string, unknown>): { chapter?: string } => {
+    const chapter = search["chapter"];
+    return typeof chapter === "string" && chapter.length > 0 && chapter.length <= 120
+      ? { chapter }
+      : {};
+  },
   head: () => ({
     meta: [
       { title: "Journal — Pattern" },
@@ -41,6 +47,7 @@ export const Route = createFileRoute("/_authenticated/journal")({
 const DOMAINS = ["general", "work", "relationships", "health", "money"] as const;
 
 function JournalPage() {
+  const { chapter } = Route.useSearch();
   const { session } = useAuth();
   const calendar = useCalendarRefresh();
   const journalFn = useServerFn(fetchJournal);
@@ -62,7 +69,11 @@ function JournalPage() {
     refetchOnWindowFocus: "always",
   });
   useCalendarQueryRefresh(calendar, ["today", session?.userId]);
-  const pattern = useQuery({ queryKey: ["pattern"], queryFn: () => patternFn({}) });
+  const pattern = useQuery({
+    queryKey: ["pattern", session?.userId],
+    queryFn: () => patternFn({}),
+    enabled: Boolean(session),
+  });
 
   const prettyKey = (key: string) => key.replace(/[_-]+/g, " ");
 
@@ -72,14 +83,25 @@ function JournalPage() {
   const [label, setLabel] = useState("");
   const [body, setBody] = useState("");
   const [cycleKey, setCycleKey] = useState("");
-  const [featureKey, setFeatureKey] = useState("");
+  const [featureKey, setFeatureKey] = useState(chapter ?? "");
+
+  // A new chapter link updates only the attachment. Subsequent query refreshes
+  // must not overwrite the reader's manual selection or their entry draft.
+  useEffect(() => setFeatureKey(chapter ?? ""), [chapter]);
 
   const cycles = day.data && !day.data.needsOnboarding ? day.data.cycles.slice(0, 8) : [];
   const features = pattern.data && !pattern.data.needsOnboarding ? pattern.data.features : [];
+  const chapterUnavailable =
+    Boolean(featureKey) && !features.some((f) => f.feature_key === featureKey);
 
   const save = useMutation({
-    mutationFn: () =>
-      addFn({
+    mutationFn: () => {
+      // Check again when saving: a recalculated chart may have removed the
+      // chapter after the link was opened or a manual selection was made.
+      if (chapterUnavailable) {
+        throw new Error("Choose an available chapter or select No chapter before saving.");
+      }
+      return addFn({
         data: {
           occurredOn,
           domain,
@@ -88,7 +110,8 @@ function JournalPage() {
           cycleKey: cycleKey || null,
           featureKey: featureKey || null,
         },
-      }),
+      });
+    },
     onSuccess: async () => {
       setLabel("");
       setBody("");
@@ -212,21 +235,40 @@ function JournalPage() {
                   <select
                     value={featureKey}
                     onChange={(e) => setFeatureKey(e.target.value)}
+                    aria-describedby={chapterUnavailable ? "chapter-attachment-status" : undefined}
                     className="mt-1 w-full rounded-sm border border-input bg-background px-3 py-2 text-sm"
                   >
                     <option value="">No chapter</option>
+                    {chapterUnavailable ? (
+                      <option value={featureKey} disabled>
+                        {pattern.isPending ? "Loading chapter…" : "Chapter unavailable"}
+                      </option>
+                    ) : null}
                     {features.map((f) => (
                       <option key={f.feature_key} value={f.feature_key}>
                         {f.title}
                       </option>
                     ))}
                   </select>
+                  {chapterUnavailable ? (
+                    <span
+                      id="chapter-attachment-status"
+                      role="status"
+                      className="mt-1 block text-xs leading-relaxed text-muted-foreground"
+                    >
+                      {pattern.isPending
+                        ? "Checking the linked chapter…"
+                        : pattern.isError
+                          ? "Chapters could not be loaded. Select No chapter to save without an attachment."
+                          : "This chapter is no longer available in your current chart. Choose another chapter or select No chapter."}
+                    </span>
+                  ) : null}
                 </label>
               </div>
 
               <Button
                 type="submit"
-                disabled={save.isPending || !occurredOn}
+                disabled={save.isPending || !occurredOn || chapterUnavailable}
                 className="rounded-sm bg-primary px-4 py-2 text-sm text-primary-foreground disabled:opacity-60"
               >
                 <Save aria-hidden="true" />

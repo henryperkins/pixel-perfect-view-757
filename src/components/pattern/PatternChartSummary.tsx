@@ -39,35 +39,48 @@ export function PatternChartSummary({ data }: { data: PatternData }) {
             : null;
 
   return (
-    <section
-      className="pattern-chart-summary mt-6 border-y border-rule py-5"
-      aria-labelledby="pattern-chart-summary-heading"
-    >
-      <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-1">
-        <h2 id="pattern-chart-summary-heading" className="text-lg text-primary sm:text-xl">
-          Chart summary
-        </h2>
-        <Button asChild variant="link" className="min-h-11 px-0">
-          <Link to="/birth">
-            Edit birth details <ArrowRight aria-hidden="true" />
-          </Link>
-        </Button>
-      </div>
-      <dl className="mt-4 grid grid-cols-2 gap-x-5 gap-y-5 lg:grid-cols-4">
-        {fields.map(({ label, value }) => (
-          <div key={label} className="min-w-0">
-            <dt className="technical text-muted-foreground">{label}</dt>
-            <dd className="mt-2 font-mono text-xs leading-relaxed text-foreground [overflow-wrap:anywhere]">
-              {value}
-            </dd>
-          </div>
-        ))}
-      </dl>
-      {limits ? (
-        <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground">{limits}</p>
+    <section className="pattern-chart-summary" aria-label="Chart summary">
+      <details className="pattern-summary-details">
+        <summary>
+          <span className="pattern-summary-title">Chart summary</span>
+          <span className="pattern-summary-precision">
+            <span>{highPrecision ? "High precision" : "Approximate positions"}</span>
+            <span>Birth time: {TIME_ACCURACY[data.uncertainty.accuracy].toLowerCase()}</span>
+          </span>
+        </summary>
+        <div className="pattern-summary-fields">
+          <dl className="grid grid-cols-2 gap-x-5 gap-y-5 lg:grid-cols-4">
+            {fields.map(({ label, value }) => (
+              <div key={label} className="min-w-0">
+                <dt className="technical text-muted-foreground">{label}</dt>
+                <dd className="mt-2 font-mono text-xs leading-relaxed text-foreground [overflow-wrap:anywhere]">
+                  {value}
+                </dd>
+              </div>
+            ))}
+          </dl>
+          <Button asChild variant="link" className="mt-3 min-h-11 px-0">
+            <Link to="/birth">
+              Edit birth details <ArrowRight aria-hidden="true" />
+            </Link>
+          </Button>
+        </div>
+      </details>
+      {data.ephemeris.degraded ? (
+        <div className="pattern-summary-warning" role="status">
+          <p>
+            {data.ephemeris.degradedReason ??
+              "The Swiss Ephemeris service was unavailable, so positions come from the in-app analytical engine."}
+          </p>
+          <p>
+            Positions are accurate to roughly arc-minutes. Degree-exact and fast-Moon claims are
+            indicative rather than precise.
+          </p>
+        </div>
       ) : null}
+      {limits ? <p className="pattern-summary-limit">{limits}</p> : null}
       {!data.snapshot.birth ? (
-        <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+        <p className="pattern-summary-limit">
           Birth record unavailable. This summary describes the stored chart snapshot.
         </p>
       ) : null}

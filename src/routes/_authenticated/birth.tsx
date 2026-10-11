@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
+import { clearPatternQueries } from "@/lib/pattern-query-cache";
 import { toast } from "sonner";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
@@ -91,10 +92,10 @@ function BirthPage() {
           accuracy,
         },
       }),
-    onSuccess: () => {
+    onSuccess: async () => {
+      await clearPatternQueries(qc);
       toast.success("Chart recalculated from the corrected details.");
       void qc.invalidateQueries({ queryKey: ["birth-record"] });
-      void qc.invalidateQueries({ queryKey: ["pattern"] });
       void qc.invalidateQueries({ queryKey: ["today"] });
       void qc.invalidateQueries({ queryKey: ["cycles"] });
     },
@@ -149,10 +150,10 @@ function BirthPage() {
         <div className="min-w-0">
           <h1 className="text-2xl sm:text-3xl">Birth record</h1>
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-            Everything on your pattern and timing pages is calculated from these four
-            things: the date, the time, how sure you are of the time, and the place.
-            Correct any of them and the chart is recalculated straight away — nothing is
-            kept from the old version except your written entries.
+            Everything on your pattern and timing pages is calculated from these four things: the
+            date, the time, how sure you are of the time, and the place. Correct any of them and the
+            chart is recalculated straight away — nothing is kept from the old version except your
+            written entries.
           </p>
 
           {query.isPending ? (
@@ -176,8 +177,8 @@ function BirthPage() {
             <>
               {!record ? (
                 <p className="mt-6 border-l-2 border-primary bg-evidence px-3 py-2 text-sm text-evidence-foreground">
-                  You have no birth record yet. Fill this in and your chart will be
-                  calculated for the first time.
+                  You have no birth record yet. Fill this in and your chart will be calculated for
+                  the first time.
                 </p>
               ) : null}
 
@@ -217,9 +218,7 @@ function BirthPage() {
                         }`}
                       >
                         <span className="block font-medium">{a.label}</span>
-                        <span className="block text-xs text-muted-foreground">
-                          {a.note}
-                        </span>
+                        <span className="block text-xs text-muted-foreground">{a.note}</span>
                       </button>
                     ))}
                   </div>
@@ -227,9 +226,7 @@ function BirthPage() {
 
                 {accuracy !== "unknown" ? (
                   <label className="block">
-                    <span className="technical text-muted-foreground">
-                      Birth time (local)
-                    </span>
+                    <span className="technical text-muted-foreground">Birth time (local)</span>
                     <input
                       type="time"
                       value={birthTime}
@@ -239,9 +236,8 @@ function BirthPage() {
                   </label>
                 ) : (
                   <p className="border-l-2 border-primary bg-evidence px-3 py-2 text-xs text-evidence-foreground">
-                    With an unknown time, houses, ascendant, midheaven and fast Moon
-                    claims are suppressed rather than guessed. Everything else still
-                    calculates.
+                    With an unknown time, houses, ascendant, midheaven and fast Moon claims are
+                    suppressed rather than guessed. Everything else still calculates.
                   </p>
                 )}
 
@@ -330,10 +326,7 @@ function BirthPage() {
                 label="Fingerprint"
                 value={<span className="break-all">{record.fingerprint.slice(0, 16)}…</span>}
               />
-              <Field
-                label="Last changed"
-                value={new Date(record.updated_at).toLocaleString()}
-              />
+              <Field label="Last changed" value={new Date(record.updated_at).toLocaleString()} />
             </>
           ) : (
             <p className="text-xs text-muted-foreground">Nothing stored yet.</p>

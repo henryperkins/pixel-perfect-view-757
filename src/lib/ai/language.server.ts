@@ -629,6 +629,8 @@ export async function generateSyntheticReadingProse(input: ReadingProseInput): P
 
 export interface FeatureProse {
   narrative: string;
+  /** Verified JSON paragraph boundaries, including the separate reflection. */
+  paragraphs: string[];
   meta: LanguageMeta;
 }
 
@@ -712,13 +714,14 @@ export async function generateFeatureNarrative(input: {
   try {
     raw = await callGateway(prompt, "natal_chapter", FEATURE_SCHEMA);
   } catch (e) {
-    return { narrative: "", meta: templateMeta((e as Error).message) };
+    return { narrative: "", paragraphs: [], meta: templateMeta((e as Error).message) };
   }
 
   const { kept, citations, dropped, flagged } = verify(raw.paragraphs ?? [], factIds(input.facts));
   if (kept.length === 0) {
     return {
       narrative: "",
+      paragraphs: [],
       meta: templateMeta("generated narrative failed fact verification"),
     };
   }
@@ -728,6 +731,7 @@ export async function generateFeatureNarrative(input: {
 
   return {
     narrative: body.join("\n\n"),
+    paragraphs: body,
     meta: {
       mode: "model",
       model: LANGUAGE_MODEL,

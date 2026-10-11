@@ -32,6 +32,7 @@ import { assertUse, isPermitted, LAUNCH_SOURCES, PROHIBITED_SOURCES, SOURCE_MAP 
 import { checkInInputSchema } from "./check-in";
 import { daysToLocalDate, localDayString, localNoon, validTimeZone, zonedToUtc } from "./local-day";
 import { summarizeReadingQuality, type QualityReading, type QualityFeedback } from "./ai/quality";
+import { diagnosticLabel, type DailyGatewayCode } from "./ai/diagnostics";
 
 export { localDayString, zonedToUtc } from "./local-day";
 
@@ -955,13 +956,14 @@ export async function getPattern(db: DB, userId: string) {
     }
   }
   const chart = snapshotToChart(snapRow);
-  const [{ data: features }, birth] = await Promise.all([
+  const [{ data: features }, birth, narrativeContext] = await Promise.all([
     db
       .from<FeatureRow>("natal_features")
       .select("feature_key, family, title, strength, payload")
       .eq("snapshot_id", snapRow.id)
       .order("strength", { ascending: false }),
     loadBirthRecord(db, userId),
+    featureNarrativeContext(db, userId, snapRow, chart),
   ]);
 
   const placements = Object.values(chart.points).map((p) => ({
@@ -975,6 +977,7 @@ export async function getPattern(db: DB, userId: string) {
 
   return {
     needsOnboarding: false as const,
+    narrativeCacheKey: narrativeContext.cacheKey,
     engine: `${chart.engine}@${chart.engineVersion}`,
     houseSystem: chart.houseSystem,
     contractVersion: chart.contractVersion,
@@ -1444,6 +1447,115 @@ interface NarrativeRow {
   essay_version: string | null;
 }
 
+interface NarrativeFact {
+  id: string;
+  statement: string;
+}
+
+/** Share the exact effective tone and essay policy between page and chapter caches. */
+async function featureNarrativeContext(db: DB, userId: string, snap: SnapshotRow, chart: Chart) {
+  const [profile, granted, { FEATURE_ESSAY_VERSION }] = await Promise.all([
+    loadProfile(db, userId),
+    grantedSet(db, userId),
+    import("./ai/language.server"),
+  ]);
+  const tone = isPermitted("USR-01", "external_language", granted)
+    ? normalizeTone(profile.tone_pref ?? "plain")
+    : "plain";
+  const essayKey = `${FEATURE_ESSAY_VERSION}|${chart.houseSystem}|${chart.engineVersion}|${chart.jd}|${tone}`;
+  const cacheKey = await fingerprint(["natal-chapter", userId, snap.id, essayKey]);
+  return { tone, essayKey, cacheKey };
+}
+
+const NARRATIVE_ENVELOPE = "pattern-natal-evidence-1";
+
+/** Older encrypted essays remain readable, without inventing their original inputs. */
+function unpackNarrative(plaintext: string): {
+  narrative: string;
+  paragraphs: string[];
+  facts: NarrativeFact[];
+  evidenceAvailable: boolean;
+} {
+  let value: unknown;
+  try {
+    value = JSON.parse(plaintext);
+  } catch {
+    return {
+      narrative: plaintext,
+      paragraphs: plaintext.split("\n\n"),
+      facts: [],
+      evidenceAvailable: false,
+    };
+  }
+  if (
+    value &&
+    typeof value === "object" &&
+    "format" in value &&
+    value.format === NARRATIVE_ENVELOPE
+  ) {
+    if (
+      !("narrative" in value) ||
+      typeof value.narrative !== "string" ||
+      !("paragraphs" in value) ||
+      !Array.isArray(value.paragraphs) ||
+      !value.paragraphs.every((paragraph) => typeof paragraph === "string") ||
+      value.paragraphs.join("\n\n") !== value.narrative ||
+      !("facts" in value) ||
+      !Array.isArray(value.facts) ||
+      !value.facts.every(
+        (fact) =>
+          fact &&
+          typeof fact === "object" &&
+          typeof fact.id === "string" &&
+          typeof fact.statement === "string",
+      )
+    )
+      throw new Error("This saved chapter could not be loaded. Please try again.");
+    return {
+      narrative: value.narrative,
+      paragraphs: value.paragraphs,
+      facts: value.facts,
+      evidenceAvailable: true,
+    };
+  }
+  return {
+    narrative: plaintext,
+    paragraphs: plaintext.split("\n\n"),
+    facts: [],
+    evidenceAvailable: false,
+  };
+}
+
+/** Map the gateway's closed labels to recovery guidance, never expose raw errors. */
+function unavailableNarrative(reason: string | null) {
+  const transientCodes: DailyGatewayCode[] = [
+    "timeout",
+    "http",
+    "rate_limit",
+    "network",
+    "bad_json",
+    "empty_response",
+  ];
+  if (transientCodes.some((code) => diagnosticLabel(code) === reason)) {
+    return {
+      available: false as const,
+      retryable: true,
+      reason:
+        reason === diagnosticLabel("timeout")
+          ? "This chapter took too long to prepare. You can try again."
+          : "The writing service could not finish this chapter. You can try again.",
+    };
+  }
+  return {
+    available: false as const,
+    retryable: false,
+    reason:
+      reason === "generated narrative failed fact verification"
+        ? "No verified reading could be written from this structure's calculated values."
+        : "Chapter writing is currently unavailable. The calculated values are still available.",
+  };
+}
+
 /**
  * Narrative for one natal chapter, cached per chart snapshot. Generated from
  * the structure's own payload only, verified claim-by-claim, and stored
@@ -1451,44 +1563,48 @@ interface NarrativeRow {
  */
 export async function getFeatureNarrative(db: DB, userId: string, featureKey: string) {
   const snapRow = await loadSnapshot(db, userId);
-  if (!snapRow) return { available: false as const, reason: "No chart calculated yet." };
+  if (!snapRow)
+    return { available: false as const, retryable: false, reason: "No chart calculated yet." };
 
   const dek = await getDek(db, userId);
 
-  const { FEATURE_ESSAY_VERSION, generateFeatureNarrative } = await import("./ai/language.server");
+  const { generateFeatureNarrative } = await import("./ai/language.server");
 
   const chartForKey = snapshotToChart(snapRow);
-  const profile = await loadProfile(db, userId);
-  const granted = await grantedSet(db, userId);
-  const tone = isPermitted("USR-01", "external_language", granted)
-    ? normalizeTone(profile.tone_pref ?? "plain")
-    : "plain";
   // Chapters are tied to the exact chart they were written from: a recalculated
   // chart (new house system, engine version) invalidates every saved essay.
-  const essayKey = `${FEATURE_ESSAY_VERSION}|${chartForKey.houseSystem}|${chartForKey.engineVersion}|${chartForKey.jd}|${tone}`;
+  const { tone, essayKey, cacheKey } = await featureNarrativeContext(
+    db,
+    userId,
+    snapRow,
+    chartForKey,
+  );
 
-  const { data: cached } = await db
+  const { data: cached, error: cacheError } = await db
     .from<NarrativeRow>("feature_narratives")
     .select("feature_key, mode, model, narrative_ct, citations, essay_version")
     .eq("user_id", userId)
     .eq("snapshot_id", snapRow.id)
     .eq("feature_key", featureKey)
     .maybeSingle();
+  if (cacheError) throw new Error("This chapter could not be loaded. Please try again.");
 
   // A chapter written under an older essay brief is discarded rather than
   // served: the reader should always get the current depth of writing.
   if (cached && cached.essay_version !== essayKey) {
-    await db
+    const { error } = await db
       .from("feature_narratives")
       .delete()
       .eq("user_id", userId)
       .eq("snapshot_id", snapRow.id)
       .eq("feature_key", featureKey);
+    if (error) throw new Error("This chapter could not be refreshed. Please try again.");
   } else if (cached) {
     return {
       available: true as const,
       featureKey,
-      narrative: await decryptField(dek, cached.narrative_ct),
+      cacheKey,
+      ...unpackNarrative(await decryptField(dek, cached.narrative_ct)),
       mode: cached.mode === "model" ? ("model" as const) : ("template" as const),
       model: cached.model,
       citations: (Array.isArray(cached.citations) ? cached.citations : []) as {
@@ -1499,14 +1615,20 @@ export async function getFeatureNarrative(db: DB, userId: string, featureKey: st
     };
   }
 
-  const { data: feature } = await db
+  const { data: feature, error: featureError } = await db
     .from<FeatureRow>("natal_features")
     .select("feature_key, family, title, strength, payload")
     .eq("snapshot_id", snapRow.id)
     .eq("feature_key", featureKey)
     .maybeSingle();
+  if (featureError)
+    throw new Error("This chapter's calculated values could not be loaded. Please try again.");
   if (!feature) {
-    return { available: false as const, reason: "That structure is not in this chart." };
+    return {
+      available: false as const,
+      retryable: false,
+      reason: "That structure is not in this chart.",
+    };
   }
 
   const chart = snapshotToChart(snapRow);
@@ -1514,12 +1636,14 @@ export async function getFeatureNarrative(db: DB, userId: string, featureKey: st
   for (const source of ["AST-05", "AST-07", "AST-08", "AST-20"])
     assertUse(source, "external_language");
 
-  const { data: others } = await db
+  const { data: others, error: relatedError } = await db
     .from<FeatureRow>("natal_features")
     .select("feature_key, family, title, strength, payload")
     .eq("snapshot_id", snapRow.id)
     .order("strength", { ascending: false })
     .limit(4);
+  if (relatedError)
+    throw new Error("This chapter's related structures could not be loaded. Please try again.");
   const related = (others ?? []).filter((o) => o.feature_key !== featureKey).slice(0, 3);
 
   const facts = featureFacts(
@@ -1541,27 +1665,34 @@ export async function getFeatureNarrative(db: DB, userId: string, featureKey: st
   });
 
   if (!written.narrative) {
-    return {
-      available: false as const,
-      reason: written.meta.reason ?? "No narrative could be written from this structure's facts.",
-    };
+    return unavailableNarrative(written.meta.reason);
   }
 
-  await db.from("feature_narratives").insert({
+  const { error: saveError } = await db.from("feature_narratives").insert({
     user_id: userId,
     snapshot_id: snapRow.id,
     feature_key: featureKey,
     mode: written.meta.mode,
     model: written.meta.model,
-    narrative_ct: await encryptField(dek, written.narrative),
+    narrative_ct: await encryptJson(dek, {
+      format: NARRATIVE_ENVELOPE,
+      narrative: written.narrative,
+      paragraphs: written.paragraphs,
+      facts,
+    }),
     citations: written.meta.citations,
     essay_version: essayKey,
   });
+  if (saveError) throw new Error("This chapter could not be saved. Please try again.");
 
   return {
     available: true as const,
     featureKey,
+    cacheKey,
     narrative: written.narrative,
+    paragraphs: written.paragraphs,
+    facts,
+    evidenceAvailable: true,
     mode: written.meta.mode,
     model: written.meta.model,
     citations: written.meta.citations,

@@ -18,7 +18,6 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Shell } from "@/components/pattern/Shell";
-import { EphemerisNotice } from "@/components/pattern/EphemerisNotice";
 import { PatternChapter } from "@/components/pattern/PatternChapter";
 import { PatternChartDetails } from "@/components/pattern/PatternChartDetails";
 import { PatternChartSummary } from "@/components/pattern/PatternChartSummary";
@@ -32,6 +31,7 @@ import {
   type PatternFeature,
 } from "@/components/pattern/pattern-view";
 import { fetchPattern } from "@/lib/pattern.functions";
+import { useAuth } from "@/hooks/useAuth";
 
 export const Route = createFileRoute("/_authenticated/pattern")({
   head: () => ({
@@ -55,8 +55,13 @@ export const Route = createFileRoute("/_authenticated/pattern")({
 });
 
 function PatternPage() {
+  const { session } = useAuth();
   const load = useServerFn(fetchPattern);
-  const query = useQuery({ queryKey: ["pattern"], queryFn: () => load({}) });
+  const query = useQuery({
+    queryKey: ["pattern", session?.userId],
+    queryFn: () => load({}),
+    enabled: Boolean(session),
+  });
 
   return (
     <Shell>
@@ -101,7 +106,7 @@ function PatternPage() {
             </Button>
           </div>
         ) : (
-          <PatternView data={query.data} />
+          <PatternView key={query.data.narrativeCacheKey} data={query.data} />
         )}
       </div>
     </Shell>
@@ -189,7 +194,6 @@ function PatternView({ data }: { data: PatternData }) {
   return (
     <>
       <PatternChartSummary data={data} />
-      <EphemerisNotice state={data.ephemeris} className="pattern-precision" />
 
       <section className="pattern-reading" aria-labelledby="pattern-chapters-heading">
         <div className="pattern-section-heading">
@@ -291,7 +295,7 @@ function PatternView({ data }: { data: PatternData }) {
                     <div className="chapter-content pattern-chapter-content">
                       {visited.has(feature.feature_key) ? (
                         <>
-                          <PatternChapter feature={feature} />
+                          <PatternChapter feature={feature} cacheKey={data.narrativeCacheKey} />
                           <nav aria-label="Nearby chapters" className="pattern-chapter-next">
                             {visible.length > 1 ? (
                               <div>
@@ -317,7 +321,11 @@ function PatternView({ data }: { data: PatternData }) {
                                 </Button>
                               </div>
                             ) : null}
-                            <Link to="/journal" className="pattern-journal-link">
+                            <Link
+                              to="/journal"
+                              search={{ chapter: feature.feature_key }}
+                              className="pattern-journal-link"
+                            >
                               Open journal <ArrowRight aria-hidden="true" />
                             </Link>
                           </nav>

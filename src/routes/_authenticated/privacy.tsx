@@ -5,6 +5,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
+import { clearPatternQueries } from "@/lib/pattern-query-cache";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import {
@@ -70,7 +71,8 @@ function PrivacyPage() {
 
   const toggle = useMutation({
     mutationFn: (vars: { sourceId: string; granted: boolean }) => consentFn({ data: vars }),
-    onSuccess: () => {
+    onSuccess: async () => {
+      await clearPatternQueries(qc);
       void qc.invalidateQueries({ queryKey: ["bootstrap"] });
       void qc.invalidateQueries({ queryKey: ["today"] });
       void qc.invalidateQueries({ queryKey: ["cycles"] });
@@ -88,7 +90,8 @@ function PrivacyPage() {
           depth: vars.depth as "standard" | "technical",
         },
       }),
-    onSuccess: () => {
+    onSuccess: async () => {
+      await clearPatternQueries(qc);
       toast.success("Preferences saved.");
       void qc.invalidateQueries({ queryKey: ["bootstrap"] });
       void qc.invalidateQueries({ queryKey: ["today"] });
