@@ -235,7 +235,33 @@ export interface FeatureProse {
  * Bumped whenever the essay brief below changes shape. Cached chapters written
  * under an older version are rewritten on next read rather than served stale.
  */
-export const FEATURE_ESSAY_VERSION = "essay-5";
+export const FEATURE_ESSAY_VERSION = "essay-6";
+
+const FEATURE_SCHEMA: JsonSchemaObject = {
+  type: "object",
+  properties: {
+    paragraphs: READING_SCHEMA.properties.paragraphs,
+    reflection_question: {
+      type: "string",
+      description: "One question about the reader's own life, ending in a question mark. Not a chapter title or writing instruction.",
+    },
+  },
+  required: ["paragraphs", "reflection_question"],
+  additionalProperties: false,
+};
+
+/** Reject titles and instructions even when the model puts them in the question field. */
+export function chapterReflection(value: unknown): string {
+  const text = typeof value === "string" ? value.trim() : "";
+  if (
+    text.length <= 400 &&
+    /^(what|when|where|which|who|how|why|do|does|did|are|is|have|has|can|could|would)\b/i.test(text) &&
+    text.endsWith("?") &&
+    (text.match(/\?/g) ?? []).length === 1 &&
+    /\b(you|your|yourself)\b/i.test(text)
+  ) return text;
+  return "Where in your everyday life do you recognise this pattern, and when does your experience differ?";
+}
 
 export async function generateFeatureNarrative(input: {
   facts: FactAtom[];
@@ -270,12 +296,12 @@ export async function generateFeatureNarrative(input: {
     "Keep one consistent voice across all paragraphs: same register, same warmth, same sentence rhythm from the first paragraph to the last. Do not open paragraphs with the same phrase, and do not summarise the essay at the end.",
     "No zodiac cliches, no mysticism, no flattery, no horoscope voice.",
     "Cite the fact ids each paragraph rests on. Every paragraph must cite at least one.",
-    "Finish with one reflection question the reader could actually answer about their own life.",
+    "Put one reflection question the reader could actually answer about their own life in reflection_question only. End it with a question mark. Do not put a title, label, or writing instruction in that field, and do not repeat the question in the essay paragraphs.",
   ].join("\n");
 
-  let raw: { headline: string; prompt: string; paragraphs: Written[] };
+  let raw: { reflection_question: string; paragraphs: Written[] };
   try {
-    raw = await callGateway(prompt, "natal_chapter", READING_SCHEMA);
+    raw = await callGateway(prompt, "natal_chapter", FEATURE_SCHEMA);
   } catch (e) {
     return { narrative: "", meta: templateMeta((e as Error).message) };
   }
@@ -291,10 +317,8 @@ export async function generateFeatureNarrative(input: {
     };
   }
 
-  const question = safetyPass((raw.prompt ?? "").trim());
-  const body = question.text
-    ? [...kept, `Something to sit with: ${question.text}`]
-    : kept;
+  const question = safetyPass(chapterReflection(raw.reflection_question));
+  const body = [...kept, `Something to sit with: ${chapterReflection(question.text)}`];
 
   return {
     narrative: body.join("\n\n"),
