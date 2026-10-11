@@ -25,6 +25,7 @@ import {
   DAILY_DIAGNOSTICS_VERSION,
   DAILY_PROMPT_VERSION,
   DAILY_VALIDATOR_VERSION,
+  DAILY_GATEWAY_TIMEOUT_MS,
   MAX_DAILY_DURATION_MS,
   LANGUAGE_MODEL,
   diagnosticLabel,
@@ -441,6 +442,7 @@ function dailyDiagnostics(
     promptVersion: DAILY_PROMPT_VERSION,
     validatorVersion: DAILY_VALIDATOR_VERSION,
     model: LANGUAGE_MODEL,
+    gatewayTimeoutMs: DAILY_GATEWAY_TIMEOUT_MS,
     outcome,
     attempted: started !== null,
     code,
@@ -465,6 +467,10 @@ async function generateDailyProse(
         diagnostics: dailyDiagnostics("skipped", "no_cycle", null),
       },
     };
+  const timingCitationIds = [
+    "C1",
+    ...["P1", "T1"].filter((id) => input.facts.some((fact) => fact.id === id)),
+  ];
   const prompt = [
     `Tone preference: ${normalizeTone(input.tone)}. Depth preference: ${normalizeDepth(input.depth)}.`,
     "Facts:",
@@ -474,6 +480,8 @@ async function generateDailyProse(
     "Write three to five paragraphs of two to four complete sentences each. Keep each paragraph under 200 words and the whole body under 700 words.",
     "The first paragraph must concern the strongest eligible cycle and cite C1 and I1. Across the body cite every supplied I1, D1, P1 and T1 atom.",
     "Cite the supplied IDs each paragraph rests on. This is reference coverage, not permission to invent astronomical facts.",
+    "Any paragraph naming a planet, aspect, orb or ISO exact date must cite the matching calculated cycle ID (C1, C2 or C3), even when it repeats a number from T1. Editorial IDs I1, D1, P1 and T1 cannot replace that cycle citation.",
+    `For a paragraph using the strongest cycle's supplied phase and timing wording, include its cycle alongside the relevant editorial references: "facts": [${timingCitationIds.map((id) => JSON.stringify(id)).join(", ")}]. Cite only IDs and values supplied above.`,
     "Do not write a headline, reflection question, local-time context or wellbeing framing; those are provided separately.",
     "Do not introduce sign or individual house placements. Quote orb degrees as digit literals and ISO dates only when present in a cycle cited by that paragraph.",
     input.suppression.angles
@@ -487,7 +495,13 @@ async function generateDailyProse(
   let raw: unknown;
   const started = performance.now();
   try {
-    raw = await callGateway(prompt, "daily_reading", READING_SCHEMA, 12000, observation);
+    raw = await callGateway(
+      prompt,
+      "daily_reading",
+      READING_SCHEMA,
+      DAILY_GATEWAY_TIMEOUT_MS,
+      observation,
+    );
   } catch (error) {
     const failure = gatewayFailure(error);
     return {

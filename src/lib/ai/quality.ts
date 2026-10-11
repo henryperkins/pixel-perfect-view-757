@@ -71,6 +71,7 @@ export function summarizeReadingQuality(
       validatorVersion: string;
       model: string;
       releaseVersion: string;
+      gatewayTimeoutMs: number | null;
       readings: number;
       attempts: number;
       accepted: number;
@@ -140,12 +141,14 @@ export function summarizeReadingQuality(
         diag.validatorVersion,
         diag.model,
         releaseVersion,
+        diag.gatewayTimeoutMs,
       ]);
       const config = configurations.get(key) ?? {
         promptVersion: diag.promptVersion,
         validatorVersion: diag.validatorVersion,
         model: diag.model,
         releaseVersion,
+        gatewayTimeoutMs: diag.gatewayTimeoutMs,
         readings: 0,
         attempts: 0,
         accepted: 0,

@@ -6,7 +6,12 @@ import type { ContentBundle } from "../content/default-bundle";
 import { daysToLocalDate, localNoon } from "../local-day";
 import { assembleReading } from "../reading.server";
 import { readingFacts } from "./facts";
-import { DAILY_PROMPT_VERSION, DAILY_VALIDATOR_VERSION, LANGUAGE_MODEL } from "./diagnostics";
+import {
+  DAILY_PROMPT_VERSION,
+  DAILY_VALIDATOR_VERSION,
+  DAILY_GATEWAY_TIMEOUT_MS,
+  LANGUAGE_MODEL,
+} from "./diagnostics";
 import { generateSyntheticReadingProse } from "./language.server";
 import {
   READING_EVAL_CASES,
@@ -66,6 +71,7 @@ export async function runSyntheticEvaluationCase(
       promptVersion: DAILY_PROMPT_VERSION,
       validatorVersion: DAILY_VALIDATOR_VERSION,
       model: LANGUAGE_MODEL,
+      gatewayTimeoutMs: DAILY_GATEWAY_TIMEOUT_MS,
       source: "live-synthetic",
       network: "Live language gateway; fixed synthetic facts only",
       warning:

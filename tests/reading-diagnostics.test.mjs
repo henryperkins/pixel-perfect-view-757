@@ -62,8 +62,9 @@ function diagnostics(output, expected) {
   const d = output.meta.diagnostics;
   assert.ok(d, "Daily diagnostics are attached");
   assert.equal(d.version, 1);
-  assert.equal(d.promptVersion, "daily-astro-body-1");
+  assert.equal(d.promptVersion, "daily-astro-body-2");
   assert.equal(d.validatorVersion, "daily-reference-1");
+  assert.equal(d.gatewayTimeoutMs, 20_000);
   assert.equal(d.model, language.LANGUAGE_MODEL);
   for (const [key, value] of Object.entries(expected)) assert.equal(d[key], value, key);
   if (d.attempted) assert.ok(Number.isInteger(d.durationMs) && d.durationMs >= 0);
@@ -389,7 +390,8 @@ test("diagnostic exports and reader validate the exact closed contract", async (
   const module = await vite.ssrLoadModule("/src/lib/ai/diagnostics.ts");
   const result = await language.generateReadingProse(input());
   assert.equal(module.DAILY_DIAGNOSTICS_VERSION, 1);
-  assert.equal(module.DAILY_PROMPT_VERSION, "daily-astro-body-1");
+  assert.equal(module.DAILY_PROMPT_VERSION, "daily-astro-body-2");
+  assert.equal(module.DAILY_GATEWAY_TIMEOUT_MS, 20_000);
   assert.equal(module.DAILY_VALIDATOR_VERSION, "daily-reference-1");
   assert.ok(module.DAILY_DIAGNOSTIC_CODES.includes("accepted"));
   assert.deepEqual(module.readDailyDiagnostics(result.meta.diagnostics), result.meta.diagnostics);
@@ -425,7 +427,7 @@ test("diagnostics reader permits safe future labels and removes unknown fields",
   const d = (await language.generateReadingProse(input())).meta.diagnostics;
   const future = {
     ...d,
-    promptVersion: "daily-astro-body-2",
+    promptVersion: "daily-astro-body-3",
     validatorVersion: "daily-reference-2",
     model: "provider/model-next",
     raw: sentinel,
@@ -449,6 +451,44 @@ test("diagnostics reader permits safe future labels and removes unknown fields",
     { ...d, outcome: "rejected", code: "id", paragraph: 101 },
   ])
     assert.equal(readDailyDiagnostics(invalid), null);
+});
+
+test("older structured diagnostics keep their measurements with an unrecorded gateway budget", async () => {
+  const { readDailyDiagnostics } = await vite.ssrLoadModule("/src/lib/ai/diagnostics.ts");
+  const generated = (await language.generateReadingProse(input())).meta.diagnostics;
+  const { gatewayTimeoutMs: omitted, ...legacy } = generated;
+  void omitted;
+  legacy.promptVersion = "daily-astro-body-1";
+  const parsed = readDailyDiagnostics(legacy);
+  assert.deepEqual(parsed, { ...legacy, gatewayTimeoutMs: null });
+  assert.equal(parsed.attempted, true);
+  assert.equal(parsed.outcome, "accepted");
+  assert.equal(parsed.promptVersion, "daily-astro-body-1", "Do not relabel prior measurements");
+});
+
+test("gateway timeout provenance accepts only bounded integer budgets or unrecorded null", async () => {
+  const { readDailyDiagnostics, MAX_DAILY_DURATION_MS } = await vite.ssrLoadModule(
+    "/src/lib/ai/diagnostics.ts",
+  );
+  const d = (await language.generateReadingProse(input())).meta.diagnostics;
+  for (const budget of [null, 1, 20_000, MAX_DAILY_DURATION_MS]) {
+    const parsed = readDailyDiagnostics({ ...d, gatewayTimeoutMs: budget, raw: sentinel });
+    assert.equal(parsed.gatewayTimeoutMs, budget);
+    assert.equal(parsed.raw, undefined);
+  }
+  for (const budget of [
+    undefined,
+    0,
+    -1,
+    0.5,
+    MAX_DAILY_DURATION_MS + 1,
+    Infinity,
+    NaN,
+    "20000",
+    sentinel,
+    {},
+  ])
+    assert.equal(readDailyDiagnostics({ ...d, gatewayTimeoutMs: budget }), null);
 });
 
 test("response-body timeouts preserve the timeout classification", async () => {

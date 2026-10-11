@@ -14,7 +14,9 @@ It reads the admin role and active copy, without reading birth records, check-in
 notes, or daily readings, and writes no application records. Evaluation outcomes
 do not enter the production Reading quality counts.
 
-Cases run one at a time with the production daily timeout. **Stop after current
+Cases run one at a time with the production daily timeout of 20 seconds per
+request, including response-body reads. The JSON report records this budget as
+`gatewayTimeoutMs`; it is separate from the model request payload. **Stop after current
 case** preserves completed results. Requests are never retried automatically.
 Missing configuration, authentication, credit, or rate-limit failures stop the
 run. A change to the prompt, validator, model or copy during a run also stops it
@@ -53,7 +55,12 @@ The default run replays handwritten JSON through the actual `assembleReading`, `
 
 The baseline answers are validator fixtures, not model outputs or recommended prose. Its acceptance rate only describes those fixtures. It cannot measure the live fallback rate, provider performance, tone quality, or semantic truth. The chart plans are synthetic contacts, not an ephemeris accuracy test. Local dates and daylight-saving conversions use the app's date helpers.
 
-The versioned `synthetic-daily-1` suite contains ten fixed cases:
+The versioned `synthetic-daily-2` suite contains ten fixed cases. Its Mercury
+separating contact now has an exact date before the evaluation day; version 1
+incorrectly paired a separating phase with a future exact date. Saved version-1
+reports remain readable, but cannot be directly compared with version 2 because
+the synthetic inputs changed. Start a new version-2 baseline for future prompt
+or copy comparisons.
 
 | Case                           | Coverage                                                       |
 | ------------------------------ | -------------------------------------------------------------- |
@@ -68,7 +75,16 @@ The versioned `synthetic-daily-1` suite contains ten fixed cases:
 | `multiple-cycles`              | Unsorted contacts, strongest-three cap, weak-contact filtering |
 | `quiet-threshold`              | No contact above the threshold; no language call               |
 
-The JSON report records the effective facts, production prompt and response schema, selected cycle keys, template body, displayed body, citations, bounded rejection code, and prompt/validator/bundle versions. Request headers and credentials are excluded. Attempt durations are local replay timings, not live service latency. Skipped cases are separate from attempts, and `liveAcceptanceRate` is always `null`.
+The JSON report records the effective facts, production prompt and response schema, selected cycle keys, template body, displayed body, citations, bounded rejection code, prompt/validator/bundle versions, and configured gateway timeout budget. Request headers and credentials are excluded. Attempt durations are local replay timings, not live service latency. Skipped cases are separate from attempts, and `liveAcceptanceRate` is always `null`.
+
+Daily prompt `daily-astro-body-2` clarifies that a paragraph naming a planet,
+aspect, orb, or ISO exact date must cite the corresponding calculated cycle ID,
+even when timing fact T1 repeats the value. Editorial references cannot replace
+that calculation reference. Validator `daily-reference-1` remains unchanged.
+Older diagnostics stay instrumented with an unrecorded timeout budget rather
+than acquiring the new value. Prompt and timeout changes affect new daily
+generations; they do not regenerate a cached reading. Natal chapters and
+editorial drafting retain their separate 90-second budget.
 
 To score candidate responses, replace the paragraph objects in the exported file with saved responses for these same synthetic cases. Keep all ten case IDs; the quiet case remains `null` because generation is skipped. Only the fixed JSON format is accepted, and candidate files never execute code or enable network access.
 
@@ -77,7 +93,7 @@ npm run eval:reading -- --responses /tmp/pattern-candidates.json --output /tmp/p
 npm run eval:reading -- --compare /tmp/pattern-before.json /tmp/pattern-after.json --output /tmp/pattern-comparison.json
 ```
 
-Output files must be new paths, so the CLI does not replace a saved baseline. Comparisons require the same fixture version, exact case IDs, and input configuration hashes. Prompt, validator, bundle, and model identities appear side by side; their changes are allowed so the same inputs can assess a revision. Replaying the same saved text against a new prompt cannot assess that prompt's effect: obtain new candidate responses separately for a writing comparison. This CLI deliberately makes no live model calls.
+Output files must be new paths, so the CLI does not replace a saved baseline. Comparisons require the same fixture version, exact case IDs, and input configuration hashes. Prompt, validator, bundle, model, and gateway timeout appear side by side; their changes are allowed so the same inputs can assess a revision. Older reports without a timeout show it as unrecorded, not inferred. A policy change during an in-page run stops it rather than mixing budgets. Replaying the same saved text against a new prompt cannot assess that prompt's effect: obtain new candidate responses separately for a writing comparison. This CLI deliberately makes no live model calls.
 
 Every case has blank `manualReview` fields. Read the actual candidate body against its facts and fill these fields in a copy of the report. For a rejected candidate, review its draft in the candidate file as well as the displayed template body. Use the same reviewer and rubric before and after. Do not turn validation acceptance into a quality score.
 

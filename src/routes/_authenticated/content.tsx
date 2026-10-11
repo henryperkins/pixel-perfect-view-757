@@ -702,9 +702,10 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
 
           <h3 className="mt-8 text-xl">Recorded configurations</h3>
           <p className="mt-2 text-sm text-muted-foreground">
-            Prompt, validator, model and release versions group instrumented generations. Counts
-            describe the retained window; they do not establish which configuration writes better
-            readings.
+            Prompt, validator, model, release and gateway timeout budget group instrumented
+            generations. Earlier measurements with no recorded timeout budget show Unrecorded.
+            Counts describe the retained window; they do not establish which configuration writes
+            better readings.
           </p>
           {data.configurations.length ? (
             <div
@@ -713,15 +714,16 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
               role="region"
               aria-label="Recorded configurations table"
             >
-              <table className="w-full min-w-[58rem] border-collapse text-left text-xs">
+              <table className="w-full min-w-[66rem] border-collapse text-left text-xs">
                 <caption className="sr-only">
-                  Generation measurements grouped by recorded configuration versions
+                  Generation measurements grouped by recorded versions and gateway timeout budget
                 </caption>
                 <thead>
                   <tr className="border-b border-rule">
                     {[
                       "Prompt / validator",
                       "Model / release",
+                      "Gateway timeout",
                       "Generations",
                       "Attempts",
                       "Accepted",
@@ -747,6 +749,7 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
                         row.validatorVersion,
                         row.model,
                         row.releaseVersion,
+                        row.gatewayTimeoutMs,
                       ])}
                       className="border-b border-rule/60"
                     >
@@ -761,6 +764,11 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
                         <span className="mt-1 block text-muted-foreground">
                           {row.releaseVersion}
                         </span>
+                      </td>
+                      <td className="py-3 pr-4 font-mono text-foreground">
+                        {row.gatewayTimeoutMs === null
+                          ? "Unrecorded"
+                          : `${new Intl.NumberFormat("en-US").format(row.gatewayTimeoutMs)} ms`}
                       </td>
                       {[
                         row.readings,

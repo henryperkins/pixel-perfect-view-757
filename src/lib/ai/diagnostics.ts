@@ -1,8 +1,9 @@
 /** Measurement identifiers describe the current brief and guards, not a cache key. */
 export const DAILY_DIAGNOSTICS_VERSION = 1;
-export const DAILY_PROMPT_VERSION = "daily-astro-body-1";
+export const DAILY_PROMPT_VERSION = "daily-astro-body-2";
 export const DAILY_VALIDATOR_VERSION = "daily-reference-1";
 export const MAX_DAILY_DURATION_MS = 120_000;
+export const DAILY_GATEWAY_TIMEOUT_MS = 20_000;
 export const LANGUAGE_MODEL = "google/gemini-3.7-flash";
 
 export const DAILY_DIAGNOSTIC_CODES = [
@@ -58,6 +59,8 @@ export interface DailyDiagnostics {
   attempted: boolean;
   code: DailyDiagnosticCode;
   durationMs: number | null;
+  /** Recorded gateway deadline, not observed duration. Null means the budget was unrecorded. */
+  gatewayTimeoutMs: number | null;
   /** One-based rejected paragraph; null when no particular paragraph is implicated. */
   paragraph: number | null;
 }
@@ -109,7 +112,7 @@ const CODES = new Set<string>(DAILY_DIAGNOSTIC_CODES);
 const SAFE_VERSION = /^[a-zA-Z0-9][a-zA-Z0-9._-]{0,79}$/;
 const SAFE_MODEL = /^[a-zA-Z0-9][a-zA-Z0-9._:/-]{0,119}$/;
 
-/** Strictly revive current diagnostics; legacy freeform reasons are not diagnostics. */
+/** Revive structured measurements without inferring a policy for previously recorded rows. */
 export function readDailyDiagnostics(value: unknown): DailyDiagnostics | null {
   if (!value || typeof value !== "object" || Array.isArray(value)) return null;
   const d = value as Record<string, unknown>;
@@ -129,6 +132,7 @@ export function readDailyDiagnostics(value: unknown): DailyDiagnostics | null {
   const code = d["code"] as DailyDiagnosticCode;
   const attempted = d["attempted"];
   const durationMs = d["durationMs"];
+  const gatewayTimeoutMs = Object.hasOwn(d, "gatewayTimeoutMs") ? d["gatewayTimeoutMs"] : null;
   const paragraph = d["paragraph"];
   if (
     attempted
@@ -137,6 +141,14 @@ export function readDailyDiagnostics(value: unknown): DailyDiagnostics | null {
         durationMs < 0 ||
         durationMs > MAX_DAILY_DURATION_MS
       : durationMs !== null
+  )
+    return null;
+  if (
+    gatewayTimeoutMs !== null &&
+    (typeof gatewayTimeoutMs !== "number" ||
+      !Number.isInteger(gatewayTimeoutMs) ||
+      gatewayTimeoutMs < 1 ||
+      gatewayTimeoutMs > MAX_DAILY_DURATION_MS)
   )
     return null;
   if (
@@ -168,6 +180,7 @@ export function readDailyDiagnostics(value: unknown): DailyDiagnostics | null {
     attempted,
     code,
     durationMs: durationMs as number | null,
+    gatewayTimeoutMs: gatewayTimeoutMs as number | null,
     paragraph: paragraph as number | null,
   };
 }

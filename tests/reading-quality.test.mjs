@@ -257,6 +257,51 @@ test("future prompt versions stay separate and fact-kind readings count distinct
   assert.equal(report.kinds.find((kind) => kind.label === "Published interpretation").readings, 2);
 });
 
+test("timeout budgets split configurations without turning prior diagnostics into legacy", async () => {
+  await admin();
+  await reading(); // Previous structured diagnostics did not record a budget.
+  await reading("accepted", "accepted", { diagnostics: { gatewayTimeoutMs: 20_000 } });
+  await reading("rejected", "id", { diagnostics: { gatewayTimeoutMs: 20_000, paragraph: 1 } });
+  await reading("unavailable", "timeout", { diagnostics: { gatewayTimeoutMs: 30_000 } });
+  await reading("unavailable", "timeout", { diagnostics: { gatewayTimeoutMs: null } });
+  const report = await h.app.readingQuality(h.records(), h.userA);
+  assert.equal(report.measurement.instrumented, 5);
+  assert.equal(report.measurement.legacy, 0);
+  assert.equal(report.measurement.attempts, 5);
+  assert.equal(report.configurations.length, 3);
+  const config = (budget) => report.configurations.find((row) => row.gatewayTimeoutMs === budget);
+  assert.deepEqual(
+    [config(null).readings, config(null).attempts, config(null).fallbackRate],
+    [2, 2, 50],
+  );
+  assert.deepEqual(
+    [
+      config(20_000).readings,
+      config(20_000).accepted,
+      config(20_000).rejected,
+      config(20_000).fallbackRate,
+    ],
+    [2, 1, 1, 50],
+  );
+  assert.deepEqual(
+    [config(30_000).readings, config(30_000).unavailable, config(30_000).fallbackRate],
+    [1, 1, 100],
+  );
+  assert.ok(report.configurations.every((row) => row.promptVersion === "daily-astro-body-1"));
+});
+
+test("malformed recorded timeout budgets cannot fabricate a configuration or leak raw values", async () => {
+  await admin();
+  for (const budget of [0, -1, 1.5, 120_001, "20000", "RAW_PRIVATE_POLICY_SENTINEL", {}])
+    await reading("accepted", "accepted", { diagnostics: { gatewayTimeoutMs: budget } });
+  const report = await h.app.readingQuality(h.records(), h.userA);
+  assert.equal(report.measurement.instrumented, 0);
+  assert.equal(report.measurement.legacy, 7);
+  assert.equal(report.measurement.attempts, 0);
+  assert.deepEqual(report.configurations, []);
+  assert.equal(JSON.stringify(report).includes("RAW_PRIVATE_POLICY_SENTINEL"), false);
+});
+
 test("forged foreign feedback and invalid scores are excluded from owned opt-in cohorts", async () => {
   await admin();
   const id = await reading();

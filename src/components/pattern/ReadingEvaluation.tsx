@@ -397,7 +397,10 @@ export function ReadingEvaluation() {
           <p className="mt-2 font-mono text-xs leading-relaxed text-muted-foreground [overflow-wrap:anywhere]">
             {state.results[0]?.metadata.model} · {state.results[0]?.metadata.promptVersion} ·{" "}
             {state.results[0]?.metadata.validatorVersion} ·{" "}
-            {state.results[0]?.metadata.bundleVersion}
+            {state.results[0]?.metadata.bundleVersion} ·{" "}
+            {state.results[0]?.metadata.gatewayTimeoutMs == null
+              ? "Unrecorded gateway budget"
+              : `${state.results[0].metadata.gatewayTimeoutMs / 1000}s gateway budget`}
           </p>
           <div className="mt-5 space-y-3">
             {state.results.map((result) => (

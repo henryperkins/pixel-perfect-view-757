@@ -129,9 +129,8 @@ export async function evaluateReadings({ responses = undefined } = {}) {
         );
         const { DEFAULT_BUNDLE } = await vite.ssrLoadModule("/src/lib/content/default-bundle.ts");
         const { localNoon, daysToLocalDate } = await vite.ssrLoadModule("/src/lib/local-day.ts");
-        const { DAILY_PROMPT_VERSION, DAILY_VALIDATOR_VERSION } = await vite.ssrLoadModule(
-          "/src/lib/ai/diagnostics.ts",
-        );
+        const { DAILY_PROMPT_VERSION, DAILY_VALIDATOR_VERSION, DAILY_GATEWAY_TIMEOUT_MS } =
+          await vite.ssrLoadModule("/src/lib/ai/diagnostics.ts");
         const cases = [];
         for (const fixed of READING_EVAL_CASES) {
           currentResponse = replayResponses[fixed.id];
@@ -210,6 +209,7 @@ export async function evaluateReadings({ responses = undefined } = {}) {
           promptVersion: DAILY_PROMPT_VERSION,
           validatorVersion: DAILY_VALIDATOR_VERSION,
           model: LANGUAGE_MODEL,
+          gatewayTimeoutMs: DAILY_GATEWAY_TIMEOUT_MS,
           source,
           network: "blocked; gateway replayed in memory",
           warning: WARNING,
@@ -240,6 +240,13 @@ function validateReport(report) {
   if (report?.reportVersion !== REPORT_VERSION || !Array.isArray(report.cases))
     throw new Error("Unsupported evaluation report");
   if (report.partial === true) throw new Error("Cannot compare a partial evaluation report");
+  if (
+    report.gatewayTimeoutMs != null &&
+    (!Number.isInteger(report.gatewayTimeoutMs) ||
+      report.gatewayTimeoutMs < 1 ||
+      report.gatewayTimeoutMs > 120_000)
+  )
+    throw new Error("Report contains an invalid gateway timeout budget");
   const ids = report.cases.map((item) => item.id);
   if (new Set(ids).size !== ids.length) throw new Error("Report contains duplicate case IDs");
   if (JSON.stringify([...ids].sort()) !== JSON.stringify(caseIds().sort()))
@@ -279,10 +286,11 @@ export function compareReports(before, after) {
     "bundleVersion",
     "bundleHash",
     "model",
+    "gatewayTimeoutMs",
     "source",
   ]
-    .filter((field) => before[field] !== after[field])
-    .map((field) => ({ field, before: before[field], after: after[field] }));
+    .filter((field) => (before[field] ?? null) !== (after[field] ?? null))
+    .map((field) => ({ field, before: before[field] ?? null, after: after[field] ?? null }));
   return {
     reportVersion: REPORT_VERSION,
     fixtureVersion: before.fixtureVersion,
@@ -291,6 +299,7 @@ export function compareReports(before, after) {
       validatorVersion: before.validatorVersion,
       bundleHash: before.bundleHash,
       model: before.model,
+      gatewayTimeoutMs: before.gatewayTimeoutMs ?? null,
       source: before.source,
     },
     after: {
@@ -298,6 +307,7 @@ export function compareReports(before, after) {
       validatorVersion: after.validatorVersion,
       bundleHash: after.bundleHash,
       model: after.model,
+      gatewayTimeoutMs: after.gatewayTimeoutMs ?? null,
       source: after.source,
     },
     configurationChanges,

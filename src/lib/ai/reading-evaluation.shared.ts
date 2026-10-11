@@ -43,6 +43,7 @@ export interface ReadingEvaluationMetadata {
   promptVersion: string;
   validatorVersion: string;
   model: string;
+  gatewayTimeoutMs: number;
   source: "live-synthetic";
   network: string;
   warning: string;
@@ -135,6 +136,7 @@ export function combineReadingEvaluationResults(
     "promptVersion",
     "validatorVersion",
     "model",
+    "gatewayTimeoutMs",
     "source",
     "network",
   ] as const;

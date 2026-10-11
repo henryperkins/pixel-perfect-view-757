@@ -1,5 +1,5 @@
 /** Synthetic plans only: these are not birth records or an ephemeris quality test. */
-export const READING_EVAL_FIXTURE_VERSION = "synthetic-daily-1";
+export const READING_EVAL_FIXTURE_VERSION = "synthetic-daily-2";
 
 const CHART = {
   engine: "synthetic-evaluation-engine",
@@ -81,7 +81,13 @@ export const READING_EVAL_CASES = [
   fixedCase(
     "mercury-conjunction-clinical",
     "Clinical tone and separating information-load contact.",
-    [cycle("mercury", "mercury", "conjunction", { phase: "separating", domain: "work" })],
+    [
+      cycle("mercury", "mercury", "conjunction", {
+        phase: "separating",
+        domain: "work",
+        exact_at: "2026-10-10T12:00:00Z",
+      }),
+    ],
     { config: { tone: "clinical" } },
   ),
   fixedCase("venus-opposition-venus", "Short preference contact with relationship framing.", [
