@@ -85,7 +85,10 @@ const PHASE_LABEL: Record<string, { label: string; help: string }> = {
   approaching: { label: "Building", help: "The aspect is tightening toward its exact pass." },
   applying: { label: "Building", help: "The aspect is tightening toward its exact pass." },
   exact: { label: "Exact", help: "The aspect is at its closest point today." },
-  separating: { label: "Fading", help: "The exact pass has happened; the influence is easing off." },
+  separating: {
+    label: "Fading",
+    help: "The exact pass has happened; the influence is easing off.",
+  },
 };
 
 const ASPECT_MEANING: Record<string, string> = {
@@ -137,7 +140,11 @@ function Timeline({
   const start = ingress ? Date.parse(ingress) : null;
   const end = egress ? Date.parse(egress) : null;
   if (!ingress || !egress || start === null || end === null || end <= start) {
-    return <p className="technical text-xs text-muted-foreground">A long, slow window — it runs for months, beyond the dates calculated here.</p>;
+    return (
+      <p className="technical text-xs text-muted-foreground">
+        A long, slow window — it runs for months, beyond the dates calculated here.
+      </p>
+    );
   }
   const span = end - start;
   const pos = (d: string | null) =>
@@ -203,6 +210,7 @@ function TimingPage() {
         <div role="alert" className="max-w-xl border border-destructive/40 bg-card p-5">
           <p className="text-sm text-destructive">{query.error.message}</p>
           <Button
+            variant="outline"
             type="button"
             onClick={() => query.refetch()}
             className="mt-4 rounded-sm border border-input px-3 py-1.5 text-xs hover:bg-secondary"
@@ -222,23 +230,23 @@ function TimingPage() {
         </div>
       ) : (
         <div className="grid animate-rise gap-10 lg:grid-cols-[minmax(0,1fr)_16rem]">
-          <div>
+          <div className="min-w-0">
             <h1 className="text-3xl">Timing</h1>
             <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
               Your natal chart is fixed; the planets keep moving. This page shows where today's sky
-              forms measurable angles to your birth positions — each one opens on a date, peaks,
-              and closes. Think of them as <em>weather windows</em>, not predictions: they describe
-              the terrain, never what will happen.
+              forms measurable angles to your birth positions — each one opens on a date, peaks, and
+              closes. Think of them as <em>weather windows</em>, not predictions: they describe the
+              terrain, never what will happen.
             </p>
 
             <EphemerisNotice state={data.ephemeris} className="mt-6" />
 
             {/* ---------- Filters ---------- */}
             <div className="timing-filters mt-6" role="group" aria-label="Filter timing windows">
-              
               <div className="domain-options mt-3">
                 {DOMAINS.map((d) => (
-                  <Button variant="outline"
+                  <Button
+                    variant="outline"
                     aria-pressed={domain === d}
                     key={d}
                     type="button"
@@ -252,7 +260,8 @@ function TimingPage() {
                     {d === "all" ? "Every area" : d.replace("-", " ")}
                   </Button>
                 ))}
-                <Button variant="outline"
+                <Button
+                  variant="outline"
                   aria-pressed={slowOnly}
                   type="button"
                   onClick={() => setSlowOnly((v) => !v)}
@@ -317,8 +326,7 @@ function TimingPage() {
                         </div>
                         <p className="mt-1 text-xs text-muted-foreground">{phase.help}</p>
                         <p className="mt-2 text-xs text-foreground">
-                          {exactPhrase(daysToExact(c, day))} ·{" "}
-                          {DOMAIN_LABEL[c.domain] ?? c.domain}
+                          {exactPhrase(daysToExact(c, day))} · {DOMAIN_LABEL[c.domain] ?? c.domain}
                         </p>
                         {arcSentence(c) ? (
                           <p className="mt-1 text-xs text-muted-foreground">{arcSentence(c)}</p>
@@ -334,9 +342,18 @@ function TimingPage() {
                             Technical values · {weightLabel(c.importance)} window
                           </summary>
                           <dl className="mt-2 grid grid-cols-2 gap-x-6 gap-y-1 font-mono text-xs text-muted-foreground sm:grid-cols-3">
-                            <div><dt className="inline">cycle key </dt><dd className="inline">{c.cycle_key}</dd></div>
-                            <div><dt className="inline">aspect </dt><dd className="inline">{c.aspect}</dd></div>
-                            <div><dt className="inline">phase </dt><dd className="inline">{c.phase}</dd></div>
+                            <div>
+                              <dt className="inline">cycle key </dt>
+                              <dd className="inline">{c.cycle_key}</dd>
+                            </div>
+                            <div>
+                              <dt className="inline">aspect </dt>
+                              <dd className="inline">{c.aspect}</dd>
+                            </div>
+                            <div>
+                              <dt className="inline">phase </dt>
+                              <dd className="inline">{c.phase}</dd>
+                            </div>
                           </dl>
                         </details>
                       </li>
@@ -345,8 +362,6 @@ function TimingPage() {
                 </ul>
               )}
             </section>
-
-
           </div>
 
           <Rail title="Calculation status">

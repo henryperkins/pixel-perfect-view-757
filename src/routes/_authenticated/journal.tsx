@@ -67,7 +67,6 @@ function JournalPage() {
 
   const prettyKey = (key: string) => key.replace(/[_-]+/g, " ");
 
-
   const [occurredOn, setOccurredOn] = useState(today());
   const [domain, setDomain] = useState<string>("general");
   const [label, setLabel] = useState("");
@@ -76,8 +75,7 @@ function JournalPage() {
   const [featureKey, setFeatureKey] = useState("");
 
   const cycles = day.data && !day.data.needsOnboarding ? day.data.cycles.slice(0, 8) : [];
-  const features =
-    pattern.data && !pattern.data.needsOnboarding ? pattern.data.features : [];
+  const features = pattern.data && !pattern.data.needsOnboarding ? pattern.data.features : [];
 
   const save = useMutation({
     mutationFn: () =>
@@ -117,13 +115,16 @@ function JournalPage() {
         <div className="min-w-0">
           <h1 className="text-2xl sm:text-3xl">Journal</h1>
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-            Write what actually happened. You can attach an entry to one of today's timing
-            windows and to a chapter of your pattern; the attachment is stored as it was at
-            the moment you wrote, so a later recalculation never rewrites your record.
+            Write what actually happened. You can attach an entry to one of today's timing windows
+            and to a chapter of your pattern; the attachment is stored as it was at the moment you
+            wrote, so a later recalculation never rewrites your record.
           </p>
 
           <section className="journal-compose mt-8">
-            <h2 className="flow-section-title flex items-center gap-3"><NotebookPen aria-hidden="true" className="h-5 w-5" />New entry</h2>
+            <h2 className="flow-section-title flex items-center gap-3">
+              <NotebookPen aria-hidden="true" className="h-5 w-5" />
+              New entry
+            </h2>
             <form
               className="mt-4 space-y-4"
               onSubmit={(e) => {
@@ -186,9 +187,7 @@ function JournalPage() {
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="block">
-                  <span className="technical text-muted-foreground">
-                    Attach a timing window
-                  </span>
+                  <span className="technical text-muted-foreground">Attach a timing window</span>
                   <select
                     value={cycleKey}
                     onChange={(e) => setCycleKey(e.target.value)}
@@ -229,7 +228,8 @@ function JournalPage() {
                 disabled={save.isPending}
                 className="rounded-sm bg-primary px-4 py-2 text-sm text-primary-foreground disabled:opacity-60"
               >
-                <Save aria-hidden="true" />{save.isPending ? "Saving…" : "Save entry"}
+                <Save aria-hidden="true" />
+                {save.isPending ? "Saving…" : "Save entry"}
               </Button>
             </form>
           </section>
@@ -249,6 +249,7 @@ function JournalPage() {
               <div role="alert" className="mt-4 border border-destructive p-4 text-sm">
                 <p className="text-destructive">{journal.error.message}</p>
                 <Button
+                  variant="outline"
                   type="button"
                   onClick={() => void journal.refetch()}
                   className="mt-3 technical text-primary"
@@ -258,9 +259,9 @@ function JournalPage() {
               </div>
             ) : entries.length === 0 ? (
               <p className="mt-4 border border-rule bg-evidence p-4 text-sm text-evidence-foreground">
-                Nothing written yet. The journal is where your own account of events lives, so
-                that over time you can compare what you noticed against what was calculated.
-                Nothing here is a prediction.
+                Nothing written yet. The journal is where your own account of events lives, so that
+                over time you can compare what you noticed against what was calculated. Nothing here
+                is a prediction.
               </p>
             ) : (
               <ul className="mt-4 space-y-3">
@@ -287,13 +288,15 @@ function JournalPage() {
                           }`
                         : ""}
                     </p>
-                    <Button variant="ghost"
+                    <Button
+                      variant="ghost"
                       type="button"
                       onClick={() => remove.mutate(e.id)}
                       disabled={remove.isPending}
                       className="mt-3 technical text-muted-foreground transition-colors hover:text-destructive"
                     >
-                      <Trash2 aria-hidden="true" />Delete
+                      <Trash2 aria-hidden="true" />
+                      Delete
                     </Button>
                   </li>
                 ))}

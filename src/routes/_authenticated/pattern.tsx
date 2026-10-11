@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowRight, ArrowLeft, ChevronDown, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -30,10 +30,7 @@ export const Route = createFileRoute("/_authenticated/pattern")({
   component: PatternPage,
 });
 
-type PatternData = Extract<
-  Awaited<ReturnType<typeof fetchPattern>>,
-  { needsOnboarding: false }
->;
+type PatternData = Extract<Awaited<ReturnType<typeof fetchPattern>>, { needsOnboarding: false }>;
 
 function PatternPage() {
   const load = useServerFn(fetchPattern);
@@ -76,7 +73,11 @@ const ASPECT_LABEL: Record<string, string> = {
   sextile: "Light support",
 };
 const ASPECT_DEG: Record<string, number> = {
-  conjunction: 0, opposition: 180, square: 90, trine: 120, sextile: 60,
+  conjunction: 0,
+  opposition: 180,
+  square: 90,
+  trine: 120,
+  sextile: 60,
 };
 
 function AngleGlyph({ kind }: { kind: string }) {
@@ -97,16 +98,48 @@ function AngleGlyph({ kind }: { kind: string }) {
 }
 
 function PatternView({ data }: { data: PatternData }) {
-  const [open, setOpen] = useState<string | null>(
-    data.features[0]?.feature_key ?? null,
+  const [open, setOpen] = useState<string | null>(data.features[0]?.feature_key ?? null);
+  const [visited, setVisited] = useState(
+    () => new Set([data.features[0]?.feature_key].filter((key): key is string => Boolean(key))),
   );
-  const [visited, setVisited] = useState(() => new Set([data.features[0]?.feature_key].filter((key): key is string => Boolean(key))));
-  const selectChapter = (key: string) => { setVisited((previous) => new Set([...previous, key])); setOpen(key); };
+  const [chapterTarget, setChapterTarget] = useState<{ key: string } | null>(null);
+  const selectChapter = (key: string, reveal = false) => {
+    setVisited((previous) => new Set([...previous, key]));
+    setOpen(key);
+    if (reveal) setChapterTarget({ key });
+  };
+
+  useEffect(() => {
+    if (!chapterTarget) return;
+    let active = true;
+    const frame = requestAnimationFrame(() => {
+      const toggle = document.getElementById(`chapter-toggle-${chapterTarget.key}`);
+      if (!toggle) return;
+      toggle.focus({ preventScroll: true });
+      // Let the previous panel finish collapsing before positioning the new chapter.
+      const panels = toggle.closest("section")?.querySelectorAll(".chapter-panel");
+      const transitions = Array.from(panels ?? []).flatMap((panel) =>
+        panel.getAnimations().map((animation) => animation.finished),
+      );
+      void Promise.allSettled(transitions).then(() => {
+        if (!active || !toggle.isConnected) return;
+        toggle.scrollIntoView({
+          block: "start",
+          behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+            ? "instant"
+            : "smooth",
+        });
+      });
+    });
+    return () => {
+      active = false;
+      cancelAnimationFrame(frame);
+    };
+  }, [chapterTarget]);
   const ranked = [...data.features]
     .sort((a, b) => Number(b.strength) - Number(a.strength))
     .map((f) => f.feature_key);
   const rankOf = (f: { feature_key: string }) => ranked.indexOf(f.feature_key);
-
 
   return (
     <div className="grid animate-rise gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1fr)_16rem]">
@@ -143,8 +176,7 @@ function PatternView({ data }: { data: PatternData }) {
           <p className="mt-2 font-mono text-xs leading-relaxed text-muted-foreground">
             {data.snapshot.engine} · houses {data.houseSystem} · precision{" "}
             {data.ephemeris.precision} · {data.snapshot.placementCount} placements ·{" "}
-            {data.snapshot.aspectCount} connections · contract{" "}
-            {data.snapshot.contractVersion}
+            {data.snapshot.aspectCount} connections · contract {data.snapshot.contractVersion}
           </p>
           <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
             {data.uncertainty.housesReliable
@@ -155,39 +187,39 @@ function PatternView({ data }: { data: PatternData }) {
 
         {data.rising ? (
           <section className="order-3 mt-12 sm:mt-16">
-            <h2 className="flow-section-title pb-2">
-              Your main lens · {data.rising.sign} rising
-            </h2>
+            <h2 className="flow-section-title pb-2">Your main lens · {data.rising.sign} rising</h2>
             <p className="mt-3 max-w-2xl text-sm leading-relaxed text-foreground">
               The sign that was coming up over the horizon at your birth was{" "}
-              <strong>{data.rising.sign}</strong>, at {data.rising.position}. That one
-              measurement sets where every house falls, and the houses are what decide{" "}
-              <em>which part of your life</em> a placement or a timing window actually
-              touches. Everything below is arranged by it.
+              <strong>{data.rising.sign}</strong>, at {data.rising.position}. That one measurement
+              sets where every house falls, and the houses are what decide{" "}
+              <em>which part of your life</em> a placement or a timing window actually touches.
+              Everything below is arranged by it.
             </p>
             <details className="mt-5 border-y border-rule py-3">
-              <summary className="technical cursor-pointer text-primary">Explore all 12 houses</summary>
+              <summary className="technical cursor-pointer text-primary">
+                Explore all 12 houses
+              </summary>
               <ul className="mt-3">
                 {data.rising.houses.map((h) => (
-                <li
-                  key={h.house}
-                  className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-3 border-b border-rule py-2.5"
-                >
-                  <span className="min-w-0 text-sm leading-snug text-foreground">
-                    <span className="font-mono text-xs text-muted-foreground">
-                      {h.house} · {h.sign}
+                  <li
+                    key={h.house}
+                    className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-3 border-b border-rule py-2.5"
+                  >
+                    <span className="min-w-0 text-sm leading-snug text-foreground">
+                      <span className="font-mono text-xs text-muted-foreground">
+                        {h.house} · {h.sign}
+                      </span>
+                      <span className="mt-0.5 block">{h.area}</span>
                     </span>
-                    <span className="mt-0.5 block">{h.area}</span>
-                  </span>
-                  <span className="shrink-0 font-mono text-xs text-muted-foreground">
-                    {h.bodies.length ? h.bodies.join(", ") : "empty"}
-                  </span>
-                </li>
+                    <span className="shrink-0 font-mono text-xs text-muted-foreground">
+                      {h.bodies.length ? h.bodies.join(", ") : "empty"}
+                    </span>
+                  </li>
                 ))}
               </ul>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                "Empty" means no body sat in that house at your birth — an ordinary result, not
-                a missing area of life.
+                "Empty" means no body sat in that house at your birth — an ordinary result, not a
+                missing area of life.
               </p>
             </details>
           </section>
@@ -195,9 +227,9 @@ function PatternView({ data }: { data: PatternData }) {
           <section className="order-3 mt-8 border border-rule bg-evidence p-4 sm:mt-10">
             <h2 className="technical text-muted-foreground">Your main lens</h2>
             <p className="mt-2 text-sm leading-relaxed text-evidence-foreground">
-              Your rising sign is the frame everything else hangs on, but it moves about a
-              degree every four minutes — so it isn't shown here because your recorded birth
-              time isn't precise enough to place it honestly.{" "}
+              Your rising sign is the frame everything else hangs on, but it moves about a degree
+              every four minutes — so it isn't shown here because your recorded birth time isn't
+              precise enough to place it honestly.{" "}
               <Link to="/birth" className="text-primary">
                 Sharpen your birth time
               </Link>{" "}
@@ -208,22 +240,22 @@ function PatternView({ data }: { data: PatternData }) {
 
         {data.features.length > 0 ? (
           <section className="order-2 mt-10 sm:mt-12">
-            <h2 className="flow-section-title pb-2">
-              What most shapes you
-            </h2>
+            <h2 className="flow-section-title pb-2">What most shapes you</h2>
             <div className="mt-4 grid gap-3 sm:grid-cols-3">
               {data.features.slice(0, 3).map((f, i) => (
-                <Button variant="ghost"
+                <Button
+                  variant="ghost"
                   key={f.feature_key}
                   aria-pressed={open === f.feature_key}
                   type="button"
                   onClick={() => {
-                    selectChapter(f.feature_key);
+                    selectChapter(f.feature_key, true);
                   }}
                   className="chapter-tile h-auto flex-col items-start justify-start gap-0 whitespace-normal rounded-md border border-rule bg-secondary/60 p-5 text-left hover:bg-accent/40"
                 >
                   <span className="mb-4 flex w-full items-center justify-between text-primary">
-                    <span className="font-mono text-xs">0{i + 1}</span><BookOpen aria-hidden="true" />
+                    <span className="font-mono text-xs">0{i + 1}</span>
+                    <BookOpen aria-hidden="true" />
                   </span>
                   <span className="mt-2 block font-serif text-base leading-snug sm:text-lg">
                     {f.title}
@@ -232,19 +264,23 @@ function PatternView({ data }: { data: PatternData }) {
                   <span className="mt-auto block pt-3 font-mono text-xs text-muted-foreground">
                     {strengthLabel(f, rankOf(f), data.features.length)}
                   </span>
-                  <ArrowRight aria-hidden="true" className="chapter-arrow mt-4 self-end text-primary" />
+                  <ArrowRight
+                    aria-hidden="true"
+                    className="chapter-arrow mt-4 self-end text-primary"
+                  />
                 </Button>
               ))}
             </div>
           </section>
         ) : null}
 
-
-
-          <section className="order-4 mt-12 sm:mt-16">
+        <section className="order-4 mt-12 sm:mt-16">
           <div className="grid gap-1 border-b border-rule pb-2 sm:flex sm:items-baseline sm:justify-between sm:gap-4">
             <h2 className="flow-section-title">
-              Your chapters <span className="font-sans text-sm text-muted-foreground">{data.features.length}</span>
+              Your chapters{" "}
+              <span className="font-sans text-sm text-muted-foreground">
+                {data.features.length}
+              </span>
             </h2>
             <span className="technical text-muted-foreground">
               ordered from most to least defining
@@ -254,9 +290,9 @@ function PatternView({ data }: { data: PatternData }) {
           <div className="mt-5 space-y-3">
             {data.features.length === 0 ? (
               <p className="border border-rule bg-evidence p-4 text-sm text-evidence-foreground">
-                No structural patterns passed the strength threshold for this chart. That is a
-                real result, not a loading state — your placements and connections below are
-                still complete.
+                No structural patterns passed the strength threshold for this chart. That is a real
+                result, not a loading state — your placements and connections below are still
+                complete.
               </p>
             ) : null}
             {data.features.map((f) => {
@@ -267,12 +303,14 @@ function PatternView({ data }: { data: PatternData }) {
                   id={`chapter-${f.feature_key}`}
                   className={`scroll-mt-24 overflow-hidden rounded-md border transition-colors duration-300 ${isOpen ? "border-primary/40 bg-card" : "border-rule bg-background"}`}
                 >
-                  <Button variant="ghost"
+                  <Button
+                    variant="ghost"
+                    id={`chapter-toggle-${f.feature_key}`}
                     type="button"
                     aria-expanded={isOpen}
                     aria-controls={`chapter-content-${f.feature_key}`}
-                    onClick={() => isOpen ? setOpen(null) : selectChapter(f.feature_key)}
-                    className="grid h-auto w-full grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-3 gap-y-2 whitespace-normal rounded-none px-5 py-5 text-left hover:bg-secondary/50"
+                    onClick={() => (isOpen ? setOpen(null) : selectChapter(f.feature_key))}
+                    className="chapter-toggle grid h-auto w-full grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-3 gap-y-2 whitespace-normal rounded-none px-5 py-5 text-left hover:bg-secondary/50"
                   >
                     <span className="min-w-0">
                       <span className="technical block truncate text-muted-foreground">
@@ -282,36 +320,67 @@ function PatternView({ data }: { data: PatternData }) {
                         {f.title}
                       </span>
                     </span>
-                    <ChevronDown aria-hidden="true" className={`self-center text-primary transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
+                    <ChevronDown
+                      aria-hidden="true"
+                      className={`self-center text-primary transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+                    />
                     <span className="col-span-2 font-mono text-xs text-muted-foreground sm:col-span-1 sm:col-start-1">
                       {strengthLabel(f, rankOf(f), data.features.length)}
                     </span>
                   </Button>
-                  <div id={`chapter-content-${f.feature_key}`} className={`chapter-panel ${isOpen ? "is-open" : ""}`} inert={!isOpen} aria-hidden={!isOpen}>
-                    <div><div className="chapter-content border-t border-rule px-5 py-6 sm:px-7">
-                      {visited.has(f.feature_key) ? <>
-                      <FeatureNarrative featureKey={f.feature_key} />
-                      <details className="mt-4">
-                        <summary className="technical cursor-pointer text-muted-foreground">
-                          Underlying calculated values
-                        </summary>
-                        <pre className="mt-3 -mx-1 overflow-x-auto px-1 font-mono text-xs text-evidence-foreground">
-                          {JSON.stringify(f.payload, null, 2)}
-                        </pre>
-                      </details>
-                      <nav aria-label="Nearby chapters" className="chapter-next">
-                        <Button variant="outline" disabled={rankOf(f) === 0} onClick={() => { const key = ranked[rankOf(f) - 1]; if (key) selectChapter(key); }}><ArrowLeft aria-hidden="true" />Previous chapter</Button>
-                        <Button variant="outline" disabled={rankOf(f) === ranked.length - 1} onClick={() => { const key = ranked[rankOf(f) + 1]; if (key) selectChapter(key); }}>Next chapter<ArrowRight aria-hidden="true" /></Button>
-                      </nav>
-                      </> : null}
-                    </div></div>
+                  <div
+                    id={`chapter-content-${f.feature_key}`}
+                    className={`chapter-panel ${isOpen ? "is-open" : ""}`}
+                    inert={!isOpen}
+                    aria-hidden={!isOpen}
+                  >
+                    <div>
+                      <div className="chapter-content border-t border-rule px-5 py-6 sm:px-7">
+                        {visited.has(f.feature_key) ? (
+                          <>
+                            <FeatureNarrative featureKey={f.feature_key} />
+                            <details className="mt-4">
+                              <summary className="technical cursor-pointer text-muted-foreground">
+                                Underlying calculated values
+                              </summary>
+                              <pre className="mt-3 -mx-1 overflow-x-auto px-1 font-mono text-xs text-evidence-foreground">
+                                {JSON.stringify(f.payload, null, 2)}
+                              </pre>
+                            </details>
+                            <nav aria-label="Nearby chapters" className="chapter-next">
+                              <Button
+                                variant="outline"
+                                disabled={rankOf(f) === 0}
+                                onClick={() => {
+                                  const key = ranked[rankOf(f) - 1];
+                                  if (key) selectChapter(key, true);
+                                }}
+                              >
+                                <ArrowLeft aria-hidden="true" />
+                                Previous chapter
+                              </Button>
+                              <Button
+                                variant="outline"
+                                disabled={rankOf(f) === ranked.length - 1}
+                                onClick={() => {
+                                  const key = ranked[rankOf(f) + 1];
+                                  if (key) selectChapter(key, true);
+                                }}
+                              >
+                                Next chapter
+                                <ArrowRight aria-hidden="true" />
+                              </Button>
+                            </nav>
+                          </>
+                        ) : null}
+                      </div>
+                    </div>
                   </div>
                 </article>
               );
             })}
           </div>
         </section>
-
 
         <div className="order-6">
           <EphemerisNotice state={data.ephemeris} className="mt-8 sm:mt-10" />
@@ -322,8 +391,8 @@ function PatternView({ data }: { data: PatternData }) {
             2 · Placements
           </h2>
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-            Where each body sat at the moment of your birth. "Rx" means the body appeared to
-            move backwards from Earth.
+            Where each body sat at the moment of your birth. "Rx" means the body appeared to move
+            backwards from Earth.
             {data.uncertainty.housesReliable
               ? " Houses are the area of life the body falls into."
               : " Houses are suppressed here because your birth time isn't precise enough to place them honestly."}
@@ -346,9 +415,7 @@ function PatternView({ data }: { data: PatternData }) {
                   <span className="min-w-0 truncate font-mono text-xs text-foreground">
                     {p.label}
                   </span>
-                  <span className="shrink-0 font-mono text-xs text-foreground">
-                    {p.position}
-                  </span>
+                  <span className="shrink-0 font-mono text-xs text-foreground">{p.position}</span>
                   <span className="technical text-muted-foreground">{house}</span>
                   <span className="technical shrink-0 text-muted-foreground">
                     {p.retrograde ? "Rx" : "direct"}
@@ -437,13 +504,17 @@ function PatternView({ data }: { data: PatternData }) {
                               title={`${bodyName(a.a)} ${a.aspect} ${bodyName(a.b)} · orb ${a.orb.toFixed(2)}°`}
                             >
                               <span className="truncate text-sm text-foreground">
-                                {bodyName(a.a)} <span className="text-muted-foreground">·</span> {bodyName(a.b)}
+                                {bodyName(a.a)} <span className="text-muted-foreground">·</span>{" "}
+                                {bodyName(a.b)}
                               </span>
                               <span
                                 className="h-1.5 bg-muted"
                                 aria-label={`orb ${a.orb.toFixed(2)} degrees`}
                               >
-                                <span className="block h-full bg-foreground" style={{ width: `${pct}%` }} />
+                                <span
+                                  className="block h-full bg-foreground"
+                                  style={{ width: `${pct}%` }}
+                                />
                               </span>
                             </li>
                           );
@@ -464,34 +535,31 @@ function PatternView({ data }: { data: PatternData }) {
           <Field label="Placements" value={data.placements.length} />
           <Field label="Connections" value={data.aspects.length} />
           <details className="pt-3">
-            <summary className="technical cursor-pointer text-muted-foreground">Calculation details</summary>
+            <summary className="technical cursor-pointer text-muted-foreground">
+              Calculation details
+            </summary>
             <div className="mt-3 space-y-3">
-          <Field label="Engine" value={data.engine} />
-          <Field label="Precision" value={data.ephemeris.precision} />
-          <Field label="Contract" value={data.contractVersion} />
-          <Field label="Houses" value={data.houseSystem} />
-          <Field label="Time accuracy" value={data.uncertainty.accuracy} />
-          <Field
-            label="ASC spread"
-            value={`${data.uncertainty.ascendantSpreadDeg.toFixed(2)}°`}
-          />
-          <Field
-            label="Moon spread"
-            value={`${data.uncertainty.moonSpreadDeg.toFixed(2)}°`}
-          />
-          <p className="pt-2 text-sm leading-relaxed text-muted-foreground">
-            "Spread" is how much a value could move given the uncertainty in your birth time.
-            A large spread is why some claims get suppressed.
-          </p>
+              <Field label="Engine" value={data.engine} />
+              <Field label="Precision" value={data.ephemeris.precision} />
+              <Field label="Contract" value={data.contractVersion} />
+              <Field label="Houses" value={data.houseSystem} />
+              <Field label="Time accuracy" value={data.uncertainty.accuracy} />
+              <Field
+                label="ASC spread"
+                value={`${data.uncertainty.ascendantSpreadDeg.toFixed(2)}°`}
+              />
+              <Field label="Moon spread" value={`${data.uncertainty.moonSpreadDeg.toFixed(2)}°`} />
+              <p className="pt-2 text-sm leading-relaxed text-muted-foreground">
+                "Spread" is how much a value could move given the uncertainty in your birth time. A
+                large spread is why some claims get suppressed.
+              </p>
             </div>
           </details>
         </Rail>
       </div>
     </div>
-
   );
 }
-
 
 /**
  * Opening line of a chapter's essay, shown on the "What most shapes you"
@@ -509,18 +577,21 @@ function ChapterLead({ featureKey }: { featureKey: string }) {
     return (
       <span className="mt-3 block w-full space-y-2" aria-label="Writing the opening lines">
         {[100, 90, 60].map((w) => (
-          <span key={w} className="block h-2.5 animate-pulse rounded-sm bg-secondary" style={{ width: `${w}%` }} />
+          <span
+            key={w}
+            className="block h-2.5 animate-pulse rounded-sm bg-secondary"
+            style={{ width: `${w}%` }}
+          />
         ))}
       </span>
     );
   }
   if (!query.data?.available) return null;
-  const lead = query.data.narrative.split(/(?<=\.)\s/).slice(0, 2).join(" ");
-  return (
-    <span className="mt-2 block text-sm leading-relaxed text-muted-foreground">
-      {lead}
-    </span>
-  );
+  const lead = query.data.narrative
+    .split(/(?<=\.)\s/)
+    .slice(0, 2)
+    .join(" ");
+  return <span className="mt-2 block text-sm leading-relaxed text-muted-foreground">{lead}</span>;
 }
 
 /**
@@ -545,7 +616,11 @@ function FeatureNarrative({ featureKey }: { featureKey: string }) {
         </p>
         <div className="mt-4 space-y-2">
           {[100, 95, 88, 70].map((w) => (
-            <div key={w} className="h-3 animate-pulse rounded-sm bg-secondary" style={{ width: `${w}%` }} />
+            <div
+              key={w}
+              className="h-3 animate-pulse rounded-sm bg-secondary"
+              style={{ width: `${w}%` }}
+            />
           ))}
         </div>
       </div>
@@ -561,8 +636,8 @@ function FeatureNarrative({ featureKey }: { featureKey: string }) {
   if (!query.data?.available) {
     return (
       <p className="technical text-muted-foreground">
-        No narrative for this structure — {query.data?.reason ?? "nothing supportable to say"}.
-        The facts below are the reading.
+        No narrative for this structure — {query.data?.reason ?? "nothing supportable to say"}. The
+        facts below are the reading.
       </p>
     );
   }
@@ -591,8 +666,14 @@ function FeatureNarrative({ featureKey }: { featureKey: string }) {
 }
 
 const BODY_NAME: Record<string, string> = {
-  node: "North Node", north_node: "North Node", true_node: "North Node", mean_node: "North Node",
-  south_node: "South Node", ascendant: "Ascendant", midheaven: "Midheaven", chiron: "Chiron",
+  node: "North Node",
+  north_node: "North Node",
+  true_node: "North Node",
+  mean_node: "North Node",
+  south_node: "South Node",
+  ascendant: "Ascendant",
+  midheaven: "Midheaven",
+  chiron: "Chiron",
 };
 /**
  * Label relative to this chart's own ranking, so chapters are told apart

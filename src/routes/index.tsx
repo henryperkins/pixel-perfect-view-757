@@ -6,16 +6,10 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { ArrowDown, ArrowRight } from "lucide-react";
 import celestialScene from "@/assets/celestial-browsing.jpg";
-import { OrbitMark } from "@/components/pattern/OrbitMark";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import { useAuth } from "@/hooks/useAuth";
-import {
-  fetchJournal,
-  fetchToday,
-  saveDailyCheckIn,
-  sendFeedback,
-} from "@/lib/pattern.functions";
+import { fetchJournal, fetchToday, saveDailyCheckIn, sendFeedback } from "@/lib/pattern.functions";
 import { EphemerisNotice } from "@/components/pattern/EphemerisNotice";
 
 export const Route = createFileRoute("/")({
@@ -79,15 +73,19 @@ function Landing() {
       <section className="landing-scene">
         <img src={celestialScene} width={1600} height={900} alt="" />
         <div className="landing-copy">
-          <div className="mb-4 flex items-center gap-3 text-primary"><OrbitMark /><span className="font-serif text-2xl">Pattern</span></div>
           <h1 className="leading-tight">Astrology that shows its work.</h1>
           <p className="prose-reading mt-6 text-foreground">
-            Pattern calculates your chart from birth date, time and place, finds the cycles
-            actually active today, and writes one theme at a time. Every paragraph opens to the
-            bodies, aspect, orb and exact date it came from. Nothing is predicted; nothing is
-            generated from a sun sign.
+            Pattern calculates your chart from birth date, time and place, finds the cycles actually
+            active today, and writes one theme at a time. Every paragraph opens to the bodies,
+            aspect, orb and exact date it came from. Nothing is predicted; nothing is generated from
+            a sun sign.
           </p>
-          <Button asChild size="lg" className="mt-8"><Link to="/auth">Start with your chart<ArrowRight aria-hidden="true" /></Link></Button>
+          <Button asChild size="lg" className="mt-8">
+            <Link to="/auth">
+              Start with your chart
+              <ArrowRight aria-hidden="true" />
+            </Link>
+          </Button>
         </div>
       </section>
       <ul className="landing-foundations grid gap-4 text-sm text-muted-foreground sm:grid-cols-3">
@@ -115,7 +113,9 @@ function BandPicker({
       <span className="w-16 text-sm text-foreground">{label}</span>
       <div className="flex gap-1" role="group" aria-label={`${label} band`}>
         {[1, 2, 3, 4, 5].map((n) => (
-          <Button variant="outline" size="icon"
+          <Button
+            variant="outline"
+            size="icon"
             key={n}
             type="button"
             aria-pressed={value === n}
@@ -178,7 +178,9 @@ function exactPhrase(days: number | null): string {
 
 /** Weight from the transit's own speed, the natal point it touches and the orb. */
 const NICE_NAME: Record<string, string> = {
-  node: "North Node", ascendant: "Ascendant", midheaven: "Midheaven",
+  node: "North Node",
+  ascendant: "Ascendant",
+  midheaven: "Midheaven",
 };
 function niceName(k: string): string {
   return NICE_NAME[k] ?? k.charAt(0).toUpperCase() + k.slice(1);
@@ -265,8 +267,6 @@ function JournalToday({ day, cycleKeys }: { day: string; cycleKeys: string[] }) 
 }
 
 function TodayReading() {
-
-
   const today = useServerFn(fetchToday);
   const feedback = useServerFn(sendFeedback);
   const checkIn = useServerFn(saveDailyCheckIn);
@@ -318,16 +318,13 @@ function TodayReading() {
         res.stored.stress ? "stress" : null,
       ].filter(Boolean);
       toast.success(
-        bands.length
-          ? `Saved (encrypted): ${bands.join(", ")}.`
-          : "Reflection saved (encrypted).",
+        bands.length ? `Saved (encrypted): ${bands.join(", ")}.` : "Reflection saved (encrypted).",
       );
       void qc.invalidateQueries({ queryKey: ["journal"] });
       void qc.invalidateQueries({ queryKey: ["today"] });
     },
     onError: (e: Error) => toast.error(e.message),
   });
-
 
   if (query.isPending) {
     return (
@@ -356,8 +353,8 @@ function TodayReading() {
       <div className="max-w-xl animate-rise">
         <h1 className="text-3xl">Your chart isn't calculated yet</h1>
         <p className="prose-reading mt-4 text-foreground">
-          Pattern needs birth date, time and place before it can say anything specific.
-          Unknown time is fine — the reading will label what it can't support.
+          Pattern needs birth date, time and place before it can say anything specific. Unknown time
+          is fine — the reading will label what it can't support.
         </p>
         <Link
           to="/onboarding"
@@ -375,24 +372,31 @@ function TodayReading() {
   return (
     <div className="today-flow">
       <div className="today-details order-2 border-t border-rule pt-6 lg:border-t-0 lg:pt-0">
-        <details><summary className="technical text-primary">Reading details</summary><Rail title="Reading details">
-          <Field label="Date" value={data.day} />
-          <Field label="Zone" value={data.timezone} />
-          <Field label="Confidence" value={data.reading.confidence} />
-          <Field label="Content" value={data.reading.release_version} />
-          <Field
-            label="Language"
-            value={data.language?.mode === "model" ? "model" : "template"}
-          />
-        </Rail></details>
+        <details>
+          <summary className="technical text-primary">Reading details</summary>
+          <Rail title="Reading details">
+            <Field label="Date" value={data.day} />
+            <Field label="Zone" value={data.timezone} />
+            <Field label="Confidence" value={data.reading.confidence} />
+            <Field label="Content" value={data.reading.release_version} />
+            <Field
+              label="Language"
+              value={data.language?.mode === "model" ? "model" : "template"}
+            />
+          </Rail>
+        </details>
       </div>
-
 
       <article className="today-reading order-1">
         <p className="technical mb-3 text-muted-foreground">Today · {data.day}</p>
         <h1 className="text-3xl leading-snug sm:text-4xl">{data.reading.headline}</h1>
-        <nav aria-label="Today sections" className="today-section-nav mt-5 flex flex-wrap items-center text-sm text-primary">
-          <a href="#today-timing" className="inline-flex items-center gap-1.5">Timing <ArrowDown className="h-3 w-3" aria-hidden="true" /></a>
+        <nav
+          aria-label="Today sections"
+          className="today-section-nav mt-5 flex flex-wrap items-center text-sm text-primary"
+        >
+          <a href="#today-timing" className="inline-flex items-center gap-1.5">
+            Timing <ArrowDown className="h-3 w-3" aria-hidden="true" />
+          </a>
           <a href="#today-journal">Journal</a>
           <a href="#today-reflection">Reflection</a>
         </nav>
@@ -405,7 +409,9 @@ function TodayReading() {
             </span>
             <span className="technical text-muted-foreground">
               Strength ·{" "}
-              <span className="mt-1 block text-foreground">{strengthLabel(primary.importance)}</span>
+              <span className="mt-1 block text-foreground">
+                {strengthLabel(primary.importance)}
+              </span>
             </span>
             <span className="technical text-muted-foreground">
               Timing ·{" "}
@@ -415,7 +421,6 @@ function TodayReading() {
             </span>
           </div>
         ) : null}
-
 
         <div className="prose-reading mt-6 space-y-5 text-foreground">
           {data.reading.body.split("\n\n").map((para, i) => (
@@ -427,10 +432,27 @@ function TodayReading() {
           <details className="mt-5 border-b border-rule pb-5">
             <summary className="technical cursor-pointer text-primary">Reading calculation</summary>
             <div className="mt-3 grid gap-2 font-mono text-xs text-muted-foreground sm:grid-cols-2">
-              <p>Orb · <span className="text-foreground">{primary.orb.toFixed(2)}°</span></p>
-              <p>Exact · <span className="text-foreground">{primary.exact_at ? primary.exact_at.slice(0, 10) : "not in window"}</span></p>
-              <p>Domain · <span className="text-foreground">{DOMAIN_LABEL[primary.domain] ?? primary.domain}</span></p>
-              <p>Cycle · <span className="text-foreground">{primary.transit_body} {primary.aspect} {primary.natal_point}</span></p>
+              <p>
+                Orb · <span className="text-foreground">{primary.orb.toFixed(2)}°</span>
+              </p>
+              <p>
+                Exact ·{" "}
+                <span className="text-foreground">
+                  {primary.exact_at ? primary.exact_at.slice(0, 10) : "not in window"}
+                </span>
+              </p>
+              <p>
+                Domain ·{" "}
+                <span className="text-foreground">
+                  {DOMAIN_LABEL[primary.domain] ?? primary.domain}
+                </span>
+              </p>
+              <p>
+                Cycle ·{" "}
+                <span className="text-foreground">
+                  {primary.transit_body} {primary.aspect} {primary.natal_point}
+                </span>
+              </p>
             </div>
           </details>
         ) : null}
@@ -445,8 +467,8 @@ function TodayReading() {
             </Link>
           </div>
           <p className="mt-2 text-sm text-muted-foreground">
-            Calculated from your birth positions for {data.day}. Phase and strength come from
-            where today's sky sits relative to your chart — not from a generic forecast.
+            Calculated from your birth positions for {data.day}. Phase and strength come from where
+            today's sky sits relative to your chart — not from a generic forecast.
           </p>
 
           {timing.length === 0 ? (
@@ -458,7 +480,10 @@ function TodayReading() {
               {timing.map((c) => {
                 const phase = phaseLabel(c.phase);
                 return (
-                  <li key={c.cycle_key} className="window-card border-l-2 border-primary/40 bg-secondary/40 p-5 transition-colors hover:bg-secondary">
+                  <li
+                    key={c.cycle_key}
+                    className="window-card border-l-2 border-primary/40 bg-secondary/40 p-5 transition-colors hover:bg-secondary"
+                  >
                     <div className="flex flex-wrap items-baseline justify-between gap-2">
                       <p className="text-sm font-medium text-foreground">
                         {niceName(c.transit_body)}{" "}
@@ -478,8 +503,7 @@ function TodayReading() {
                     </div>
                     <p className="mt-1 text-xs text-muted-foreground">{phase.help}</p>
                     <p className="mt-2 text-xs text-foreground">
-                      {exactPhrase(daysToExact(c, data.day))} ·{" "}
-                      {DOMAIN_LABEL[c.domain] ?? c.domain}
+                      {exactPhrase(daysToExact(c, data.day))} · {DOMAIN_LABEL[c.domain] ?? c.domain}
                     </p>
                     <p className="mt-1 font-mono text-[0.7rem] text-muted-foreground">
                       {c.orb.toFixed(2)}° from exact ·{" "}
@@ -492,10 +516,7 @@ function TodayReading() {
           )}
         </section>
 
-        <JournalToday
-          day={data.day}
-          cycleKeys={timing.map((c) => c.cycle_key)}
-        />
+        <JournalToday day={data.day} cycleKeys={timing.map((c) => c.cycle_key)} />
 
         <section id="today-reflection" className="mt-14 border-t border-rule pt-8">
           <h2 className="flow-section-title">Reflection</h2>
@@ -535,9 +556,9 @@ function TodayReading() {
             </div>
             {(wellness?.sleepEnabled || wellness?.stressEnabled) && (
               <p className="mt-3 text-xs text-muted-foreground">
-                Sleep and stress are self-reported (tier 3), kept{" "}
-                {wellness.retentionDays} days. Framing and prompts only — they never
-                enter the calculation or the ranking, and never leave your account.
+                Sleep and stress are self-reported (tier 3), kept {wellness.retentionDays} days.
+                Framing and prompts only — they never enter the calculation or the ranking, and
+                never leave your account.
               </p>
             )}
           </div>
@@ -551,7 +572,8 @@ function TodayReading() {
             className="mt-3 w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
           />
           <div className="mt-3 flex flex-wrap items-center gap-3">
-            <Button variant="outline"
+            <Button
+              variant="outline"
               type="button"
               disabled={saveNote.isPending}
               onClick={() => saveNote.mutate({ day: data.day })}
@@ -573,7 +595,8 @@ function TodayReading() {
         </section>
 
         <section className="mt-8 border-t border-rule pt-6">
-          <Button variant="ghost"
+          <Button
+            variant="ghost"
             type="button"
             aria-expanded={openEvidence}
             aria-controls="today-evidence"
@@ -596,9 +619,7 @@ function TodayReading() {
                         </td>
                         <td className="py-1.5 pr-3">{c.orb.toFixed(2)}°</td>
                         <td className="py-1.5 pr-3">{c.phase}</td>
-                        <td className="py-1.5">
-                          {c.exact_at ? c.exact_at.slice(0, 10) : "—"}
-                        </td>
+                        <td className="py-1.5">{c.exact_at ? c.exact_at.slice(0, 10) : "—"}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -606,16 +627,15 @@ function TodayReading() {
               </div>
 
               <div>
-                <h3 className="technical text-evidence-foreground">
-                  Sources behind this reading
-                </h3>
+                <h3 className="technical text-evidence-foreground">Sources behind this reading</h3>
                 <ul className="mt-2 space-y-1.5 font-mono text-xs">
                   {data.provenance.map((p, i) => (
                     <li key={`${p.source_id}-${i}`} className="flex flex-wrap gap-x-3">
                       <span className="text-foreground">{p.source_id}</span>
                       <span>{p.label}</span>
                       <span className="text-muted-foreground">
-                        [{p.lane === "context" || p.lane === "reflection"
+                        [
+                        {p.lane === "context" || p.lane === "reflection"
                           ? "Your context"
                           : "Celestial fact"}
                         ]
@@ -661,7 +681,6 @@ function TodayReading() {
                   </p>
                 )}
               </div>
-
             </div>
           ) : null}
         </section>
@@ -670,34 +689,42 @@ function TodayReading() {
       <div className="today-details order-3 border-t border-rule pt-6 lg:border-t-0 lg:pt-0">
         <Rail title="Does this land?">
           <div>
-          <div className="flex gap-2">
-            {[
-              { v: 1, label: "Yes" },
-              { v: 0, label: "Unsure" },
-              { v: -1, label: "No" },
-            ].map((o) => (
-              <Button variant="outline" size="sm"
-                key={o.v}
-                type="button"
-                disabled={rate.isPending}
-                onClick={() =>
-                  rate.mutate({ readingId: data.reading.id, resonance: o.v })
-                }
-                className="rounded-sm border border-input bg-card px-2.5 py-1 text-xs transition-colors hover:bg-secondary disabled:opacity-50"
-              >
-                {o.label}
-              </Button>
-            ))}
-          </div>
-          <details className="mt-6 border-t border-rule pt-3">
-            <summary className="technical cursor-pointer text-muted-foreground">Technical details</summary>
-            <div className="mt-3 space-y-3">
-              <Field label="Time accuracy" value={data.uncertainty?.accuracy ?? "unknown"} />
-              <Field label="ASC spread" value={`${(data.uncertainty?.ascendantSpreadDeg ?? 0).toFixed(2)}°`} />
-              <Field label="Houses" value={data.uncertainty?.housesReliable ? "usable" : "suppressed"} />
-              <Field label="Cycles scanned" value={data.cycles.length} />
+            <div className="flex gap-2">
+              {[
+                { v: 1, label: "Yes" },
+                { v: 0, label: "Unsure" },
+                { v: -1, label: "No" },
+              ].map((o) => (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  key={o.v}
+                  type="button"
+                  disabled={rate.isPending}
+                  onClick={() => rate.mutate({ readingId: data.reading.id, resonance: o.v })}
+                  className="rounded-sm border border-input bg-card px-2.5 py-1 text-xs transition-colors hover:bg-secondary disabled:opacity-50"
+                >
+                  {o.label}
+                </Button>
+              ))}
             </div>
-          </details>
+            <details className="mt-6 border-t border-rule pt-3">
+              <summary className="technical cursor-pointer text-muted-foreground">
+                Technical details
+              </summary>
+              <div className="mt-3 space-y-3">
+                <Field label="Time accuracy" value={data.uncertainty?.accuracy ?? "unknown"} />
+                <Field
+                  label="ASC spread"
+                  value={`${(data.uncertainty?.ascendantSpreadDeg ?? 0).toFixed(2)}°`}
+                />
+                <Field
+                  label="Houses"
+                  value={data.uncertainty?.housesReliable ? "usable" : "suppressed"}
+                />
+                <Field label="Cycles scanned" value={data.cycles.length} />
+              </div>
+            </details>
           </div>
         </Rail>
       </div>
