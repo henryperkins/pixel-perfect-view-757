@@ -223,7 +223,14 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
     <div
       className={`pattern-shell min-h-screen bg-background text-foreground ${signedIn ? "has-journey" : ""}`}
     >
-      <a href="#main-content" className="skip-link">
+      <a
+        href="#main-content"
+        className="skip-link"
+        onClick={() => {
+          setMenuOpen(false);
+          setMoreOpen(false);
+        }}
+      >
         Skip to content
       </a>
       <header className="sticky top-0 z-40 border-b border-rule bg-background/85 backdrop-blur-md">

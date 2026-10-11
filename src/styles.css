@@ -2333,6 +2333,12 @@ body {
     transition: none !important;
     scroll-behavior: auto !important;
   }
+  @supports selector(details::details-content) {
+    details::details-content {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
   .chapter-tile:hover,
   .chapter-tile:focus-visible,
   .chapter-tile:hover .chapter-arrow,
