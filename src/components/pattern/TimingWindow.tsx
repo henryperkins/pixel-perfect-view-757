@@ -25,7 +25,15 @@ import {
 
 const PHASE_ICONS = { building: Sunrise, exact: CircleDot, fading: Sunset };
 
-function WindowTimeline({ cycle, day }: { cycle: TimingCycle; day: string }) {
+function WindowTimeline({
+  cycle,
+  day,
+  referenceLabel,
+}: {
+  cycle: TimingCycle;
+  day: string;
+  referenceLabel: string;
+}) {
   const positions = timelinePositions(cycle, day);
   const dates = [
     { label: "Opens", value: cycle.ingress_at },
@@ -41,7 +49,7 @@ function WindowTimeline({ cycle, day }: { cycle: TimingCycle; day: string }) {
             {positions.today !== null ? (
               <span>
                 <span className="timing-legend-dot" />
-                Today
+                {referenceLabel}
               </span>
             ) : null}
             {positions.exact !== null ? (
@@ -61,8 +69,8 @@ function WindowTimeline({ cycle, day }: { cycle: TimingCycle; day: string }) {
               timingDate(cycle.egress_at) +
               ". " +
               (positions.today !== null
-                ? "Today is " + Math.round(positions.today) + "% through this window."
-                : "Today is outside this date range.")
+                ? referenceLabel + " is " + Math.round(positions.today) + "% through this window."
+                : referenceLabel + " is outside this date range.")
             }
           >
             {positions.today !== null ? (
@@ -110,6 +118,8 @@ export function TimingWindow({
   next,
   onToggle,
   onBrowse,
+  referenceLabel = "Today",
+  comparisonLabel,
 }: {
   cycle: TimingCycle;
   day: string;
@@ -119,11 +129,13 @@ export function TimingWindow({
   next: TimingCycle | undefined;
   onToggle: () => void;
   onBrowse: (key: string) => void;
+  referenceLabel?: "Today" | "Selected day";
+  comparisonLabel?: string | undefined;
 }) {
   const phase = windowPhase(cycle, day);
   const copy = PHASE_LABEL[phase];
   const Icon = PHASE_ICONS[phase];
-  const timing = exactPhrase(daysToExact(cycle, day));
+  const timing = exactPhrase(daysToExact(cycle, day), referenceLabel === "Selected day");
   const arc = arcSentence(cycle);
   const toggleId = "timing-toggle-" + cycle.cycle_key;
   const panelId = "timing-panel-" + cycle.cycle_key;
@@ -168,8 +180,15 @@ export function TimingWindow({
         <div>
           {visited ? (
             <div className="timing-window-content">
-              <p className="timing-phase-help">{copy.help}</p>
-              <WindowTimeline cycle={cycle} day={day} />
+              <p className="timing-phase-help">
+                {phase === "exact" && referenceLabel === "Selected day"
+                  ? "The aspect is at its closest point on this day."
+                  : copy.help}
+              </p>
+              {comparisonLabel ? (
+                <p className="timing-comparison-label">{comparisonLabel}</p>
+              ) : null}
+              <WindowTimeline cycle={cycle} day={day} referenceLabel={referenceLabel} />
               {arc ? <p className="timing-arc-copy">{arc}</p> : null}
               <details className="timing-calculated-values">
                 <summary>Calculated values</summary>

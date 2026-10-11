@@ -73,11 +73,13 @@ export function windowPhase(cycle: TimingCycle, day: string): TimingPhase {
   return cycle.phase === "separating" ? "fading" : "building";
 }
 
-export function exactPhrase(days: number | null) {
+export function exactPhrase(days: number | null, selectedDay = false) {
   if (days === null) return "No closest pass in range";
-  if (days === 0) return "Exact today";
-  if (days === 1) return "Exact tomorrow";
-  if (days === -1) return "Exact yesterday";
+  if (days === 0) return selectedDay ? "Exact on this day" : "Exact today";
+  if (days === 1) return selectedDay ? "Exact the next day" : "Exact tomorrow";
+  if (days === -1) return selectedDay ? "Exact the day before" : "Exact yesterday";
+  if (selectedDay)
+    return days > 0 ? "Exact " + days + " days later" : "Exact " + Math.abs(days) + " days earlier";
   return days > 0 ? "Exact in " + days + " days" : "Exact " + Math.abs(days) + " days ago";
 }
 

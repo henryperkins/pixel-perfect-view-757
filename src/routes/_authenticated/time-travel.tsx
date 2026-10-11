@@ -1,32 +1,51 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import { ArrowLeft, ArrowRight, CalendarDays, NotebookPen, RotateCcw, Waves } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import { fetchCycles, fetchJournal } from "@/lib/pattern.functions";
 import { EphemerisNotice } from "@/components/pattern/EphemerisNotice";
+import { TimingWindow } from "@/components/pattern/TimingWindow";
+import { DOMAIN_LABEL, pointName, timingDate } from "@/components/pattern/timing";
+import {
+  dayRelation,
+  isTravelDate,
+  shiftTravelDate,
+  travelDate,
+  travelWeekday,
+  type TravelStep,
+} from "@/components/pattern/time-travel";
 
 export const Route = createFileRoute("/_authenticated/time-travel")({
   head: () => ({
     meta: [
       { title: "Time travel — Pattern" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       {
         name: "description",
         content:
-          "Reconstruct the cycle state for any date and compare it against today's calculation.",
+          "Explore calculated timing windows on another day, compare the aspects with today, and revisit your saved journal context.",
       },
       { property: "og:title", content: "Time travel — Pattern" },
       {
         property: "og:description",
         content:
-          "Retrospective reconstruction is labelled separately from context you saved at the time.",
+          "Move through days, weeks, months, and years. Reconstructed skies and your saved journal records stay clearly identified.",
       },
     ],
   }),
   component: TimeTravelPage,
 });
 
+const STEPS = ["day", "week", "month", "year"] as const;
+const JUMPS = [
+  { label: "A week ago", step: "week" },
+  { label: "A month ago", step: "month" },
+  { label: "A year ago", step: "year" },
+] as const;
 function todayISO() {
   return new Date().toISOString().slice(0, 10);
 }
@@ -34,135 +53,401 @@ function todayISO() {
 function TimeTravelPage() {
   const load = useServerFn(fetchCycles);
   const journalFn = useServerFn(fetchJournal);
-  const [date, setDate] = useState(todayISO());
-  const [applied, setApplied] = useState(todayISO());
+  const [today] = useState(todayISO);
+  const [date, setDate] = useState(today);
+  const [applied, setApplied] = useState(today);
+  const [step, setStep] = useState<TravelStep>("day");
+  const [expanded, setExpanded] = useState<{ day: string; key: string | null } | null>(null);
+  const [visited, setVisited] = useState<Set<string>>(() => new Set());
+  const [revealTarget, setRevealTarget] = useState<{ day: string; key: string } | null>(null);
 
   const past = useQuery({
     queryKey: ["cycles", applied],
     queryFn: () => load({ data: { day: applied } }),
   });
   const now = useQuery({
-    queryKey: ["cycles", todayISO()],
-    queryFn: () => load({ data: { day: todayISO() } }),
+    queryKey: ["cycles", today],
+    queryFn: () => load({ data: { day: today } }),
   });
   const journal = useQuery({ queryKey: ["journal"], queryFn: () => journalFn({}) });
-
   const pastData = past.data && !past.data.needsOnboarding ? past.data : null;
   const nowData = now.data && !now.data.needsOnboarding ? now.data : null;
+  const rows = pastData?.cycles ?? [];
+  const nowKeys = new Set((nowData?.cycles ?? []).map((cycle) => cycle.cycle_key));
+  const canCompare = nowData !== null && !now.isError;
+  const shared = rows.filter((cycle) => nowKeys.has(cycle.cycle_key)).length;
+  const openKey = expanded?.day === applied ? expanded.key : (rows[0]?.cycle_key ?? null);
+  const savedCheckIn = journal.data?.checkIns.find((entry) => entry.day === applied) ?? null;
+  const savedEvents = journal.data?.events.filter((entry) => entry.occurred_on === applied) ?? [];
+  const recentJournalLimit =
+    (journal.data?.checkIns.length ?? 0) >= 60 || (journal.data?.events.length ?? 0) >= 60;
+  const previousDay = shiftTravelDate(applied, -1, step);
+  const nextDay = shiftTravelDate(applied, 1, step);
 
-  const savedCheckIn = journal.data?.checkIns.find((c) => c.day === applied) ?? null;
-  const savedEvents = journal.data?.events.filter((e) => e.occurred_on === applied) ?? [];
+  const visit = (day: string | null) => {
+    if (!day || !isTravelDate(day)) return;
+    setDate(day);
+    setApplied(day);
+    setRevealTarget(null);
+  };
+  const remember = (key: string) =>
+    setVisited((previous) => new Set([...previous, applied + "/" + key]));
+  const toggle = (key: string) => {
+    if (openKey) remember(openKey);
+    remember(key);
+    setExpanded({ day: applied, key: openKey === key ? null : key });
+    setRevealTarget(null);
+  };
+  const browse = (key: string) => {
+    if (openKey) remember(openKey);
+    remember(key);
+    setExpanded({ day: applied, key });
+    setRevealTarget({ day: applied, key });
+  };
 
-  const nowKeys = new Set((nowData?.cycles ?? []).map((c) => c.cycle_key));
+  useEffect(() => {
+    if (!revealTarget || revealTarget.day !== applied) return;
+    let active = true;
+    const frame = requestAnimationFrame(() => {
+      const target = document.getElementById("timing-toggle-" + revealTarget.key);
+      if (!target) return;
+      target.focus({ preventScroll: true });
+      const panels = target.closest(".timing-results")?.querySelectorAll(".timing-window-panel");
+      const transitions = Array.from(panels ?? []).flatMap((panel) =>
+        panel.getAnimations().map((animation) => animation.finished),
+      );
+      void Promise.allSettled(transitions).then(() => {
+        if (!active || !target.isConnected) return;
+        const header =
+          document.querySelector(".pattern-shell > header")?.getBoundingClientRect().height ?? 83;
+        window.scrollTo({
+          top: Math.max(0, window.scrollY + target.getBoundingClientRect().top - header - 20),
+          behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+            ? "instant"
+            : "smooth",
+        });
+      });
+    });
+    return () => {
+      active = false;
+      cancelAnimationFrame(frame);
+    };
+  }, [revealTarget, applied]);
 
   return (
     <Shell>
-      {past.isPending ? (
-        <p className="technical text-muted-foreground">Reconstructing…</p>
-      ) : past.error ? (
-        <p className="text-sm text-destructive">{past.error.message}</p>
-      ) : !pastData ? (
-        <div className="max-w-xl">
-          <h1 className="text-3xl">No chart yet</h1>
-          <Link to="/onboarding" className="mt-6 inline-flex technical text-primary">
-            Enter birth details
-          </Link>
+      <div className="travel-page">
+        <div className="travel-intro">
+          <h1>Time travel</h1>
+          <p>Explore another day’s sky and revisit what you saved.</p>
         </div>
-      ) : (
-        <div className="grid animate-rise gap-10 lg:grid-cols-[minmax(0,1fr)_16rem]">
-          <div>
-            <h1 className="text-3xl">Time travel</h1>
-            <p className="mt-3 max-w-2xl text-sm text-muted-foreground">
-              Pick a date. Pattern recomputes the sky for that day from the same chart
-              snapshot. Reconstruction is not memory — anything you actually saved is
-              labelled as such.
-            </p>
 
-            <div className="mt-6 flex flex-wrap items-end gap-3">
-              <label className="block">
-                <span className="technical text-muted-foreground">Date</span>
-                <input
-                  type="date"
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  className="mt-1.5 rounded-sm border border-input bg-card px-3 py-2 font-mono text-sm outline-none focus:border-ring"
-                />
-              </label>
-              <button
-                type="button"
-                onClick={() => setApplied(date)}
-                className="rounded-sm bg-primary px-4 py-2 text-sm font-medium text-primary-foreground"
-              >
-                Reconstruct
-              </button>
+        <section className="travel-navigator" aria-labelledby="travel-date-title">
+          <h2 id="travel-date-title" className="sr-only">
+            Choose a day
+          </h2>
+          <div className="travel-date-heading">
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              className="travel-direction"
+              disabled={!previousDay}
+              aria-label={"Previous " + step}
+              onClick={() => visit(previousDay)}
+            >
+              <span className="travel-direction-icon">
+                <ArrowLeft aria-hidden="true" />
+              </span>
+            </Button>
+            <div
+              key={applied}
+              className="travel-date-display travel-arrival"
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              <time dateTime={applied}>{travelDate(applied)}</time>
+              <p>
+                {travelWeekday(applied)} <span aria-hidden="true">·</span>{" "}
+                {dayRelation(applied, today)}
+              </p>
             </div>
-
-            <EphemerisNotice state={pastData.ephemeris} className="mt-8" />
-
-            <section className="mt-8">
-              <h2 className="technical text-muted-foreground">
-                Reconstructed cycle state · {pastData.day}
-              </h2>
-              <div className="mt-3 -mx-6 overflow-x-auto px-6">
-                <table className="w-full min-w-[38rem] text-left font-mono text-xs">
-                  <tbody>
-                    {pastData.cycles.slice(0, 15).map((c) => (
-                      <tr key={c.cycle_key} className="border-b border-rule">
-                        <td className="py-1.5 pr-3 whitespace-nowrap text-foreground">
-                          {c.transit_body} {c.aspect} natal {c.natal_point}
-                        </td>
-                        <td className="py-1.5 pr-3 whitespace-nowrap">{c.phase}</td>
-                        <td className="py-1.5 pr-3 whitespace-nowrap">{c.orb.toFixed(2)}°</td>
-                        <td className="py-1.5 whitespace-nowrap">
-                          {nowKeys.has(c.cycle_key) ? "still active today" : "closed since"}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              className="travel-direction"
+              disabled={!nextDay}
+              aria-label={"Next " + step}
+              onClick={() => visit(nextDay)}
+            >
+              <span className="travel-direction-icon">
+                <ArrowRight aria-hidden="true" />
+              </span>
+            </Button>
+          </div>
+          <div className="travel-step-options" role="group" aria-label="Move through time by">
+            {STEPS.map((unit) => (
+              <Button
+                key={unit}
+                type="button"
+                variant="ghost"
+                aria-pressed={step === unit}
+                onClick={() => setStep(unit)}
+              >
+                {pointName(unit)}
+              </Button>
+            ))}
+          </div>
+          <div className="travel-date-tools">
+            <div className="travel-jumps" role="group" aria-label="Jump to a day">
+              {JUMPS.map((jump) => {
+                const target = shiftTravelDate(today, -1, jump.step);
+                return (
+                  <Button
+                    key={jump.step}
+                    type="button"
+                    variant="ghost"
+                    aria-pressed={applied === target}
+                    disabled={!target}
+                    onClick={() => visit(target)}
+                  >
+                    {jump.label}
+                  </Button>
+                );
+              })}
+              <Button
+                type="button"
+                variant="ghost"
+                aria-pressed={applied === today}
+                onClick={() => visit(today)}
+              >
+                Today
+              </Button>
+            </div>
+            <form
+              className="travel-date-form"
+              onSubmit={(event) => {
+                event.preventDefault();
+                visit(date);
+              }}
+            >
+              <label htmlFor="travel-date">
+                <CalendarDays aria-hidden="true" />
+                Choose a date
+              </label>
+              <div>
+                <input
+                  id="travel-date"
+                  type="date"
+                  min="0001-01-01"
+                  max="9999-12-31"
+                  required
+                  value={date}
+                  onChange={(event) => setDate(event.target.value)}
+                  aria-describedby={
+                    date !== applied && !isTravelDate(date) ? "travel-date-error" : undefined
+                  }
+                  aria-invalid={date !== applied && !isTravelDate(date)}
+                />
+                <Button type="submit" disabled={!isTravelDate(date) || date === applied}>
+                  Reconstruct <ArrowRight aria-hidden="true" />
+                </Button>
               </div>
+              {date !== applied && !isTravelDate(date) ? (
+                <p id="travel-date-error">Choose a valid date between year 1 and 9999.</p>
+              ) : null}
+            </form>
+          </div>
+        </section>
 
-            </section>
-
-            <section className="mt-10">
-              <h2 className="technical text-muted-foreground">
-                Saved context for that day
-              </h2>
-              {savedCheckIn || savedEvents.length ? (
-                <div className="mt-3 space-y-2 border border-rule bg-evidence p-4 text-sm text-evidence-foreground">
-                  {savedCheckIn ? (
-                    <p>
-                      Check-in — mood {savedCheckIn.mood ?? "—"}, energy{" "}
-                      {savedCheckIn.energy ?? "—"}
-                      {savedCheckIn.note ? `: ${savedCheckIn.note}` : ""}
-                    </p>
-                  ) : null}
-                  {savedEvents.map((e) => (
-                    <p key={e.id}>
-                      Marked moment ({e.domain}) — {e.label}
-                    </p>
-                  ))}
-                </div>
-              ) : (
-                <p className="mt-3 border border-rule bg-evidence p-4 text-sm text-evidence-foreground">
-                  Nothing was saved on {applied}. Everything above is retrospective
-                  reconstruction only.
+        {past.isPending ? (
+          <div
+            className="travel-loading"
+            role="status"
+            aria-busy="true"
+            aria-label="Reconstructing the selected day"
+          >
+            <Waves aria-hidden="true" />
+            <p>Reconstructing the sky for {travelDate(applied)}…</p>
+          </div>
+        ) : past.error ? (
+          <div className="travel-error" role="alert">
+            <h2>This day couldn’t be reconstructed</h2>
+            <p>{past.error.message}</p>
+            <Button type="button" variant="outline" onClick={() => past.refetch()}>
+              <RotateCcw aria-hidden="true" />
+              Retry reconstruction
+            </Button>
+          </div>
+        ) : !pastData ? (
+          <div className="travel-empty">
+            <h2>No chart yet</h2>
+            <p>Enter your birth details to explore timing on another day.</p>
+            <Button asChild>
+              <Link to="/onboarding">Enter birth details</Link>
+            </Button>
+          </div>
+        ) : (
+          <div key={pastData.day} className="travel-arrival">
+            <EphemerisNotice state={pastData.ephemeris} className="travel-ephemeris" />
+            <section className="travel-windows" aria-labelledby="travel-windows-title">
+              <div className="timing-section-heading">
+                <h2 id="travel-windows-title">Windows on this day</h2>
+                <p role="status" aria-live="polite">
+                  {rows.length} {rows.length === 1 ? "window" : "windows"} · strongest first
                 </p>
+              </div>
+              <div className="travel-comparison">
+                {applied === today ? (
+                  <p>You’re exploring today’s calculated sky.</p>
+                ) : now.isPending ? (
+                  <p role="status">Comparing aspects with today…</p>
+                ) : now.error ? (
+                  <div role="status">
+                    <p>Today’s comparison couldn’t load. The selected day is still available.</p>
+                    <Button type="button" variant="ghost" onClick={() => now.refetch()}>
+                      <RotateCcw aria-hidden="true" />
+                      Retry comparison
+                    </Button>
+                  </div>
+                ) : canCompare ? (
+                  <p>
+                    <strong>
+                      {shared} of {rows.length}
+                    </strong>{" "}
+                    planet-to-point aspects also active today · {timingDate(today)}
+                  </p>
+                ) : (
+                  <p>Today’s chart is unavailable for comparison.</p>
+                )}
+              </div>
+              {rows.length ? (
+                <ul className="timing-results timing-window-list">
+                  {rows.map((cycle, index) => (
+                    <li key={cycle.cycle_key}>
+                      <TimingWindow
+                        cycle={cycle}
+                        day={pastData.day}
+                        open={openKey === cycle.cycle_key}
+                        visited={
+                          visited.has(applied + "/" + cycle.cycle_key) ||
+                          openKey === cycle.cycle_key
+                        }
+                        previous={rows[index - 1]}
+                        next={rows[index + 1]}
+                        onToggle={() => toggle(cycle.cycle_key)}
+                        onBrowse={browse}
+                        referenceLabel={applied === today ? "Today" : "Selected day"}
+                        comparisonLabel={
+                          applied !== today && canCompare
+                            ? nowKeys.has(cycle.cycle_key)
+                              ? "Same aspect active today"
+                              : "Aspect not active today"
+                            : undefined
+                        }
+                      />
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <div className="travel-empty">
+                  <Waves aria-hidden="true" />
+                  <h3>A quieter sky on this day</h3>
+                  <p>
+                    No measurable windows against your chart on {travelDate(applied)}. Try another
+                    day.
+                  </p>
+                </div>
               )}
             </section>
           </div>
+        )}
 
-          <Rail title="Comparison">
-            <Field label="Reconstructed" value={pastData.day} />
-            <Field label="Today" value={nowData?.day ?? "—"} />
-            <Field label="Then" value={pastData.cycles.length} />
-            <Field label="Now" value={nowData?.cycles.length ?? "—"} />
-            <Field label="Engine" value={pastData.engine} />
-            <Field label="Precision" value={pastData.ephemeris.precision} />
-            <Field label="Contract" value={pastData.contractVersion} />
-          </Rail>
-        </div>
-      )}
+        <section className="travel-saved" aria-labelledby="travel-saved-title">
+          <div className="travel-saved-heading">
+            <NotebookPen aria-hidden="true" />
+            <h2 id="travel-saved-title">Saved context for this day</h2>
+          </div>
+          <p className="travel-saved-intro">
+            Your own record, separate from the reconstructed sky.
+          </p>
+          {journal.isPending ? (
+            <p role="status">Loading saved context…</p>
+          ) : journal.error ? (
+            <div role="alert">
+              <p>Saved context couldn’t load. Your entries may still be available.</p>
+              <Button type="button" variant="outline" onClick={() => journal.refetch()}>
+                <RotateCcw aria-hidden="true" />
+                Retry saved context
+              </Button>
+            </div>
+          ) : savedCheckIn || savedEvents.length ? (
+            <div className="travel-saved-records">
+              {savedCheckIn ? (
+                <div className="travel-check-in">
+                  <h3>Check-in</h3>
+                  <p className="travel-check-in-bands">
+                    Mood {savedCheckIn.mood ?? "—"} <span aria-hidden="true">·</span> Energy{" "}
+                    {savedCheckIn.energy ?? "—"}
+                  </p>
+                  {savedCheckIn.note ? (
+                    <p className="travel-saved-note">{savedCheckIn.note}</p>
+                  ) : null}
+                </div>
+              ) : null}
+              {savedEvents.map((event) => (
+                <article key={event.id} className="travel-saved-event">
+                  <p className="travel-event-domain">
+                    Marked moment · {DOMAIN_LABEL[event.domain] ?? pointName(event.domain)}
+                  </p>
+                  <h3>{event.label}</h3>
+                  {event.body ? <p className="travel-saved-note">{event.body}</p> : null}
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className="travel-saved-empty">
+              <p>No saved context found for {travelDate(applied)}.</p>
+              {recentJournalLimit ? (
+                <p>
+                  Recent journal entries are shown here. Older records may be outside this view.
+                </p>
+              ) : null}
+            </div>
+          )}
+          <Link to="/journal" className="travel-journal-link">
+            Open journal <ArrowRight aria-hidden="true" />
+          </Link>
+        </section>
+
+        {pastData ? (
+          <details className="timing-record travel-record">
+            <summary>
+              Comparison & calculation record <span>{timingDate(pastData.day)}</span>
+            </summary>
+            <div>
+              <Rail title="Calculation status">
+                <Field label="Selected day" value={pastData.day} />
+                <Field label="Today" value={nowData?.day ?? "—"} />
+                <Field label="Windows on selected day" value={pastData.cycles.length} />
+                <Field label="Windows today" value={canCompare ? nowData.cycles.length : "—"} />
+                <Field label="Engine" value={pastData.engine} />
+                <Field label="Precision" value={pastData.ephemeris.precision} />
+                <Field label="Contract" value={pastData.contractVersion} />
+                <p>
+                  Each day is recalculated from your chart. Today’s comparison matches the same
+                  planet-to-point aspect; it does not establish that a window has stayed open
+                  between these dates.
+                </p>
+                <Link to="/sources" className="travel-journal-link">
+                  Explore chart sources <ArrowRight aria-hidden="true" />
+                </Link>
+              </Rail>
+            </div>
+          </details>
+        ) : null}
+      </div>
     </Shell>
   );
 }
