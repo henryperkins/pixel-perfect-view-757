@@ -1,0 +1,60 @@
+{
+  "sourceSha256": "166124efbabfb7ad690bda2d178fa4fd8fbbc7f9e7b4df668cdb4db0c6dc588f",
+  "evidence": "User-provided live-synthetic report; saved actual candidates independently replayed offline with matching builtin-0.5.0 bundle",
+  "identityFieldsChecked": [
+    "fixtureVersion",
+    "caseSetHash",
+    "bundleVersion",
+    "bundleHash",
+    "transitCopyHash",
+    "planVersion",
+    "natalPlanVersion",
+    "reliabilityVersion",
+    "promptVersion",
+    "validatorVersion",
+    "model",
+    "gatewayTimeoutMs"
+  ],
+  "identityMismatches": [],
+  "caseFieldMismatches": [],
+  "reportedSummary": {
+    "cases": 28,
+    "gatewayReplays": 0,
+    "modelAttempts": 27,
+    "outcomes": {
+      "accepted": 27,
+      "rejected": 0,
+      "unavailable": 0,
+      "skipped": 1
+    },
+    "reasons": {
+      "accepted": 27,
+      "no_cycle": 1
+    },
+    "replayAcceptanceRate": null,
+    "syntheticModelAcceptanceRate": 1,
+    "liveAcceptanceRate": null
+  },
+  "matchedReplaySummary": {
+    "cases": 28,
+    "gatewayReplays": 27,
+    "outcomes": {
+      "accepted": 27,
+      "rejected": 0,
+      "unavailable": 0,
+      "skipped": 1
+    }
+  },
+  "reportedLatencySeconds": {
+    "min": 6.159,
+    "median": 11.538,
+    "max": 18.432,
+    "sum": 315.934
+  },
+  "natalLensFacts": 0,
+  "manualReviewFieldsFilled": 0,
+  "providerBillingEvidence": "not present; no cost inferred",
+  "sourceCommitEvidence": "No commit SHA/code-file hashes in uploaded report; identities and all generated request/fact/output content match current local server code",
+  "newProviderCalls": 0,
+  "qualification": "Complete natal-free actual-model generation/structural-validation evidence. Paired live comparison and blinded human writing review remain open."
+}

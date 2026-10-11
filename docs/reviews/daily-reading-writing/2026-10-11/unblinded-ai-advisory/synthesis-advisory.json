@@ -1,0 +1,99 @@
+{
+  "reviewType": "AI advisory editorial review; not blinded human qualification or paired baseline evaluation",
+  "source": "review-packet.json",
+  "scope": ["synthesis-tension", "synthesis-reinforcement", "synthesis-reversed", "synthesis-independent", "synthesis-unmatched", "synthesis-suppressed-support", "natal-synthesis-integration"],
+  "scale": "1 poor; 3 usable but generic or incomplete; 5 excellent. Grounding means fidelity to supplied calculation and published editorial facts, not independent validation of astrology or the synthetic calculation.",
+  "cases": [
+    {
+      "id": "synthesis-tension",
+      "candidateScores": {"specificity": 3, "grounding": 5, "synthesisCoherence": 5},
+      "templateScores": {"specificity": 4, "grounding": 5, "synthesisCoherence": 4},
+      "unsupportedPersonalClaim": false,
+      "inventedRelationship": false,
+      "findings": [
+        {"paragraph": 2, "kind": "strong", "quote": "However, giving a plan more scope can increase the structure needed to carry it", "facts": ["S1", "C1", "I1", "C2", "I2"], "assessment": "Accurately connects the opening for initiative to the limits on capacity; no invented relationship."},
+        {"kind": "comparison", "assessment": "Candidate includes I2 in the actual explanatory paragraph; template only names Jupiter/Mars in its final Also in range line. Template preserves phase and exact-in-three-days wording from P1/T1; candidate supplies neither."}
+      ]
+    },
+    {
+      "id": "synthesis-reinforcement",
+      "candidateScores": {"specificity": 3, "grounding": 5, "synthesisCoherence": 4},
+      "templateScores": {"specificity": 4, "grounding": 5, "synthesisCoherence": 4},
+      "unsupportedPersonalClaim": false,
+      "inventedRelationship": false,
+      "findings": [
+        {"paragraph": 2, "kind": "strong", "quote": "Steady persistence pairs naturally with targeted action", "facts": ["S1", "C1", "I1", "C2", "I2"], "assessment": "The reinforcement relation is explicit and is a direct reproduction of the authorized synthesis."},
+        {"paragraph": 1, "kind": "limitation", "quote": "Durable progress relies on small, dependable actions repeated without drama", "facts": ["I1"], "assessment": "Repeats the steady-progress idea developed again in paragraph 2. Candidate never names either transit in its body or uses phase/timing, so it is fluent but relatively interchangeable coaching prose."},
+        {"kind": "comparison", "assessment": "Template identifies Saturn/Sun, preserves P1/T1, and gives the Mars/Sun calculation in its final line. Candidate does add the immediate-task interpretation I2, but mostly stacks authorized phrases rather than adding a sharply observed example."}
+      ]
+    },
+    {
+      "id": "synthesis-reversed",
+      "candidateScores": {"specificity": 4, "grounding": 5, "synthesisCoherence": 5},
+      "templateScores": {"specificity": 4, "grounding": 5, "synthesisCoherence": 4},
+      "unsupportedPersonalClaim": false,
+      "inventedRelationship": false,
+      "findings": [
+        {"paragraph": 2, "kind": "strong", "quote": "Taking on a promising new direction while an established role still requires steady obligations can highlight where capacity needs to catch up with ambition", "facts": ["S1", "I1", "I2"], "assessment": "Faithfully preserves the supplied reversed-order tension; neither the order nor the relationship has been invented."},
+        {"kind": "comparison", "assessment": "Candidate names both Jupiter/Mars and Saturn/Sun and develops both interpretations. Template supplies the timing, but the support-cycle interpretation is compressed into the synthesis and final cycle listing."}
+      ]
+    },
+    {
+      "id": "synthesis-independent",
+      "candidateScores": {"specificity": 3, "grounding": 5, "synthesisCoherence": 5},
+      "templateScores": {"specificity": 4, "grounding": 5, "synthesisCoherence": 5},
+      "unsupportedPersonalClaim": false,
+      "inventedRelationship": false,
+      "findings": [
+        {"paragraph": 2, "kind": "strong", "quote": "A separate cycle of thought and communication resets with fresh curiosity", "facts": ["C2", "I2"], "assessment": "Makes the separation explicit. There is no S1 fact and no unsupported combined Venus/Mercury relationship."},
+        {"paragraph": 1, "kind": "grounding", "quote": "A plan you feel uncertain about can serve as a simple scene for that contrast", "facts": ["D1", "I1"], "assessment": "The uncertain-plan example is in the supplied editorial facts and presented as an example, not a newly inferred biographical event."},
+        {"kind": "comparison", "assessment": "Candidate expands I2 beyond the template's Also in range line, but names neither Venus nor Mercury in its body. Template preserves phase and timing and visibly identifies both calculations."}
+      ]
+    },
+    {
+      "id": "synthesis-unmatched",
+      "candidateScores": {"specificity": 4, "grounding": 5, "synthesisCoherence": 5},
+      "templateScores": {"specificity": 4, "grounding": 5, "synthesisCoherence": 5},
+      "unsupportedPersonalClaim": false,
+      "inventedRelationship": false,
+      "findings": [
+        {"paragraph": 2, "kind": "strong", "quote": "In a separate calculation, Mars's trine to the Sun frames direct engagement with an immediate task", "facts": ["C2", "I2"], "assessment": "Correctly avoids inventing reinforcement or tension when no published synthesis fact is supplied. The term calculation exposes internal framing a little, but is grounded."},
+        {"paragraph": 1, "kind": "minor", "quote": "an unmentioned responsibility that occupies more of your week can make that gap concrete", "facts": ["D1"], "assessment": "Combines D1's unmentioned-interest and time-consuming-responsibility examples. It remains hypothetical, with no material new personal assertion."},
+        {"kind": "comparison", "assessment": "Candidate explains both cycles independently. Template gives a shorter primary reading with support named only at the end, but includes P1/T1."}
+      ]
+    },
+    {
+      "id": "synthesis-suppressed-support",
+      "candidateScores": {"specificity": 4, "grounding": 5, "synthesisCoherence": 5},
+      "templateScores": {"specificity": 4, "grounding": 5, "synthesisCoherence": 5},
+      "unsupportedPersonalClaim": false,
+      "inventedRelationship": false,
+      "findings": [
+        {"paragraph": 2, "kind": "strong", "quote": "Separately, recognizing personal preferences often begins by noticing a contrast with what others want or expect", "facts": ["C2", "I2"], "assessment": "Maintains independence and does not create an absent S1 relationship. Both paragraphs avoid house or Ascendant claims, consistent with U2."},
+        {"kind": "limitation", "assessment": "The packet contains no suppressed calculation text to inspect. Compliance can be assessed against supplied U2, not against unseen facts or the fixture's original suppression process."},
+        {"kind": "comparison", "assessment": "Both candidate and template avoid suppressed placements. Candidate develops the Venus interpretation separately; template only lists its calculation and retains P1/T1."}
+      ]
+    },
+    {
+      "id": "natal-synthesis-integration",
+      "candidateScores": {"specificity": 4, "grounding": 4, "synthesisCoherence": 5},
+      "templateScores": {"specificity": 4, "grounding": 5, "synthesisCoherence": 4},
+      "unsupportedPersonalClaim": false,
+      "inventedRelationship": false,
+      "natalIntegrationEstablished": false,
+      "findings": [
+        {"paragraph": 2, "kind": "minor-certainty-drift", "quote": "though giving a plan more scope also increases the structure needed to support it", "facts": ["S1"], "assessment": "S1 says can increase; candidate drops the possibility qualifier. This makes the editorial relation more categorical, although the relation itself is authorized."},
+        {"paragraph": 2, "kind": "strong", "quote": "Jupiter's trine to Mars frames this low-friction effort", "facts": ["C2", "I2"], "assessment": "Names and grounds the support transit instead of leaving the positive side implicit."},
+        {"kind": "evidence-gap", "assessment": "Only transit calculations, transit interpretations, S1, D1, P1, T1, E1 and U1 are supplied. No natal-context interpretation, natal sign/house fact, or natal-conditioned synthesis appears in either candidate or template. The case title cannot establish natal integration; this packet supports transit synthesis only."},
+        {"kind": "comparison", "assessment": "Template retains S1's possibility wording and supplies phase/timing. Candidate adds the support-cycle interpretation, but neither output demonstrates an integration with natal context from the supplied evidence."}
+      ]
+    }
+  ],
+  "crossCaseFindings": [
+    "No material invented personal event, house placement, or unauthorized inter-cycle relationship was found in these seven candidates.",
+    "All seven model candidate bodies omit the supplied approaching-phase and exact-in-three-days facts; all deterministic templates retain them. This is a coverage/specificity difference, not an incorrect calculated claim.",
+    "Candidate synthesis is strongest where S1 exists, especially tension/reversed. Separate-cycle phrasing is appropriate where S1 is absent.",
+    "Large parts of the prose are copies or close paraphrases of editorial facts. Good grounding should not be confused with highly individualized observational specificity.",
+    "These are synthetic-evaluation-engine fixture facts. No independent ephemeris verification, provider call, unseen baseline comparison, or human qualification was performed."
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "reviewType": "AI advisory editorial review; not a blinded human release gate",
+  "scope": {
+    "casesReviewed": 21,
+    "modelCandidatesReviewed": 20,
+    "candidateParagraphsReviewed": 48,
+    "templateOnlyCases": ["quiet-threshold"],
+    "included": "Original non-synthesis cases and natal-* cases except natal-synthesis-integration",
+    "excluded": "All synthesis-* cases and natal-synthesis-integration",
+    "natalLensLimit": "No N1 lens facts are present. The natal-* names do not demonstrate natal personalization or lens support."
+  },
+  "blockingFinding": false,
+  "findings": [
+    {
+      "case": "natal-moon-fallback",
+      "paragraph": 1,
+      "severity": "moderate editorial revision; no clear release blocker established",
+      "category": "unsupported exclusion and definite situational expansion",
+      "quotes": ["Rather than indicating a sudden change in purpose", "daily obligations have expanded"],
+      "paragraphSourceIds": ["C1", "I1"],
+      "sourceComparison": "C1 supplies the Saturn-square-Sun calculation only. I1 supplies a conditional demanding-role/capacity/boundaries interpretation: an established role can feel demanding and expectations can outpace available capacity. Neither source rules out a sudden change in purpose, nor establishes that daily obligations have expanded. Increased effort might arise without increased obligations.",
+      "recommendation": "Remove the purpose exclusion and retain conditional capacity/effort language, such as where a routine or responsibility can feel more demanding."
+    },
+    {
+      "case": "natal-freedom-reflex",
+      "paragraph": 1,
+      "severity": "minor",
+      "category": "possibility upgraded to frequency",
+      "quote": "A small duty often takes up more room than its calendar footprint suggests.",
+      "paragraphSourceIds": ["C1", "D1", "I1"],
+      "sourceComparison": "I1 says a small obligation can take up more room than its size suggests. D1 provides possible scenes, not frequency. Often adds an unsupported general-frequency claim, although it does not assert a measured user state.",
+      "recommendation": "Use can rather than often."
+    },
+    {
+      "case": "natal-service-aspect",
+      "paragraph": 1,
+      "severity": "minor",
+      "category": "possibility upgraded to frequency",
+      "quote": "A small obligation often takes up more room than its size suggests.",
+      "paragraphSourceIds": ["C1", "I1"],
+      "sourceComparison": "I1 uses can. C1 supplies a calculation and does not establish frequency. This remains general editorial language rather than a definite claim about this person's temperament.",
+      "recommendation": "Use can rather than often."
+    }
+  ],
+  "nonBlockingObservations": [
+    {
+      "case": "multiple-cycles",
+      "paragraph": 2,
+      "quote": "At the same time",
+      "sourceIds": ["C1", "C2", "C3", "I1", "I2", "I3"],
+      "assessment": "The current contacts coexist in the supplied facts. The paragraphs retain separate Saturn, Jupiter, and Venus interpretations. This temporal connector does not assert that the contacts cancel, reinforce, cause, or modify one another. No invented inter-contact relationship was found."
+    },
+    {
+      "cases": ["unknown-birth-time", "approximate-birth-time", "natal-unknown-time"],
+      "sourceIds": ["U1", "U2"],
+      "assessment": "No prohibited Ascendant or house placement prose, or invented angle claim, appears. The model also avoids repeating the separately appended caveat. The packet does not show the final separately appended caveat, so its display is outside this review."
+    },
+    {
+      "cases": ["jupiter-trine-sun-technical", "moon-dst-boundary", "mercury-conjunction-clinical"],
+      "sourceIds": ["C1", "P1", "T1"],
+      "assessment": "Named aspects, 0.42-degree orbs, phase language, dates, relative exact timing, and the Jupiter 30-percent arc position match the supplied calculations and timing facts. Future exact-contact dates are computed astro timing, not behavioral predictions. The DST case's yesterday/date matches the supplied local-day facts."
+    },
+    {
+      "cases": ["saturn-square-moon-warm", "natal-duty-reflex", "natal-service-aspect", "natal-exact-house", "natal-mixed-source"],
+      "assessment": "Quiet-time/task-tracking language repeats across and within related cases, often closely paraphrasing I1/D1. This limits voice variety but is not unsupported temperament certainty. Conditional can/if wording and the named interpretive framing matter; second-person pronouns alone do not make these measured user-state claims."
+    },
+    {
+      "case": "quiet-threshold",
+      "assessment": "There is no model candidate to review. Its template says no cycle is strong enough to name; it does not invent a personalized interpretation. Threshold selection itself cannot be verified from E1/U1 alone."
+    }
+  ],
+  "overallAssessment": "No clear blocking issue found in the assigned candidate prose. Fix the modest unsupported wording in natal-moon-fallback and the two can-to-often shifts. Remaining conclusions are limited to this supplied packet and supplied source statements; source membership was not treated as semantic support. No original attachments, repository files, or model outputs were changed, and no model calls were made."
+}
