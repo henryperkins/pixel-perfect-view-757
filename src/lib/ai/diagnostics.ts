@@ -5,7 +5,7 @@ export const DAILY_PROMPT_VERSION = "daily-astro-body-8";
 export const DAILY_VALIDATOR_VERSION = "daily-reference-5";
 export const MAX_DAILY_DURATION_MS = 120_000;
 export const DAILY_GATEWAY_TIMEOUT_MS = 20_000;
-export const LANGUAGE_MODEL = "google/gemini-3.7-flash";
+export const LANGUAGE_MODEL = "google/gemini-3.8-flash";
 
 /**
  * Admin-selectable providers for /content evaluation and drafting. Member
@@ -17,8 +17,8 @@ export const LANGUAGE_PROVIDER_LABELS: Record<LanguageProvider, string> = {
   lovable: "Lovable AI gateway",
   "gemini-enterprise": "Gemini Enterprise",
 };
-/** The same Gemini model, called directly on Gemini Enterprise Agent Platform. */
-export const GEMINI_ENTERPRISE_MODEL = "gemini-3.7-flash";
+/** The same Gemini model as LANGUAGE_MODEL, called directly on Gemini Enterprise Agent Platform. */
+export const GEMINI_ENTERPRISE_MODEL = "gemini-3.8-flash";
 /** A provider change is a model identity change for diagnostics, reports and comparisons. */
 export function languageModel(provider: LanguageProvider = "lovable"): string {
   return provider === "gemini-enterprise"

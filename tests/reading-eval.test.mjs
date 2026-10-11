@@ -184,6 +184,8 @@ const SOURCE_REPORT = new URL(
   import.meta.url,
 );
 const SOURCE_SHA256 = "166124efbabfb7ad690bda2d178fa4fd8fbbc7f9e7b4df668cdb4db0c6dc588f";
+// The uploaded hosted run used 3.7 Flash. Mechanism checks relabel a copy to the current model.
+const CURRENT_MODEL = "google/gemini-3.8-flash";
 async function sourceReport() {
   const bytes = await readFile(SOURCE_REPORT);
   return {
@@ -207,8 +209,14 @@ test("offline runs use the explicitly selected shipped bundle", async () => {
 });
 
 test("the uploaded natal-free report extracts and replays only against builtin-0.5.0", async () => {
-  const { report, sha256 } = await sourceReport();
+  const { report: uploaded, sha256 } = await sourceReport();
   assert.equal(sha256, SOURCE_SHA256);
+  assert.equal(uploaded.model, "google/gemini-3.7-flash");
+  await assert.rejects(
+    extractResponses(uploaded, { bundleSource: "builtin" }),
+    /does not match the current model google\/gemini-3\.8-flash/,
+  );
+  const report = { ...uploaded, model: CURRENT_MODEL };
   const responses = await extractResponses(report, { bundleSource: "builtin" });
   assert.deepEqual(Object.keys(responses).sort(), READING_EVAL_CASES.map((c) => c.id).sort());
   assert.equal(responses["quiet-threshold"], null);
@@ -248,7 +256,7 @@ test("the uploaded natal-free report extracts and replays only against builtin-0
 });
 
 test("extraction refuses incomplete, mismatched or lossy reports", async () => {
-  const { report } = await sourceReport();
+  const report = { ...(await sourceReport()).report, model: CURRENT_MODEL };
   const variant = (change) => {
     const copy = structuredClone(report);
     change(copy);

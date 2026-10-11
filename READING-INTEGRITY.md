@@ -86,8 +86,9 @@ sync and build trigger. As before this change, replaying a superseded version
 therefore makes it active again.
 
 The separate skip reasons are `no_cycle` and `no_interpretation`. Both avoid model
-traffic and are excluded from attempt-based fallback rates. The model remains
-`google/gemini-3.7-flash`, with one strict-schema call and a 20,000 ms daily deadline.
+traffic and are excluded from attempt-based fallback rates. The model is
+`google/gemini-3.8-flash` (moved from the deprecated `google/gemini-3.7-flash` on
+2026-10-11), with one strict-schema call and a 20,000 ms daily deadline.
 Wellbeing bands, local-time framing, private notes, and authoring notes remain local.
 
 ## Natal lens source contract
