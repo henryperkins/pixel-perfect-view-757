@@ -4,5 +4,5 @@
 - [x] Verify browsing and reduced-motion behavior; check page metadata.
 
 # Chapter question and page checks
-- [ ] Ensure the closing reflection is a real question; refresh older chapters.
-- [ ] Check Today and Timing on screen.
+- [x] Ensure the closing reflection is a real question; refresh older chapters on opening and verify the rewritten Sun chapter.
+- [x] Check Today and Timing on screen; placeholder, capitalized names and long-window wording verified (no brief window in today's data).
