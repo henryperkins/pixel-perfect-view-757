@@ -67,6 +67,14 @@ its cycle and chapter attachment intact after a recompute.
 Done when: changing the birth time changes the snapshot, the Pattern summary, and the
 suppression state, all visible without a page reload trick.
 
+Implementation status (2026-10-11): Pattern now shows a chart summary above the
+chapters with the calculation engine, position precision, house system, snapshot
+birth-time accuracy, and a direct link to `/birth`. Approximate precision and
+suppressed claims remain explicit, and a missing birth record does not fabricate
+details. Local mobile/desktop checks exercise the actual edit form and summary
+refresh with isolated fixtures. Live birth-edit/recalculation acceptance remains
+open.
+
 ## Cross-cutting acceptance
 
 - Mobile-first at 390px before desktop; loading, empty and failure states for every

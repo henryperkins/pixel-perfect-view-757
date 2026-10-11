@@ -21,6 +21,7 @@ import { Shell } from "@/components/pattern/Shell";
 import { EphemerisNotice } from "@/components/pattern/EphemerisNotice";
 import { PatternChapter } from "@/components/pattern/PatternChapter";
 import { PatternChartDetails } from "@/components/pattern/PatternChartDetails";
+import { PatternChartSummary } from "@/components/pattern/PatternChartSummary";
 import { MotionSelection } from "@/components/pattern/MotionSelection";
 import { useResultMotion } from "@/components/pattern/useBrowsingMotion";
 import {
@@ -187,16 +188,8 @@ function PatternView({ data }: { data: PatternData }) {
 
   return (
     <>
+      <PatternChartSummary data={data} />
       <EphemerisNotice state={data.ephemeris} className="pattern-precision" />
-      {!data.rising ? (
-        <p className="pattern-birth-notice">
-          Your rising lens needs a more precise birth time. You can explore the chapters your chart
-          supports below.{" "}
-          <Link to="/birth">
-            Update birth details <ArrowRight aria-hidden="true" />
-          </Link>
-        </p>
-      ) : null}
 
       <section className="pattern-reading" aria-labelledby="pattern-chapters-heading">
         <div className="pattern-section-heading">
