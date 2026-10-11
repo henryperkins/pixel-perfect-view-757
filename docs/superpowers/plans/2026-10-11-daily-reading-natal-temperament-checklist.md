@@ -249,3 +249,16 @@ Independent copy approval and the actual-model writing judgment below remain ope
 ## Checklist preparation evidence
 
 The original checklist preparation was documentation only. This continuation implemented and locally exercised the feature as recorded above and in the validation record. The first offline artifacts used the approved `/tmp/opencode/` directory; Revision 2 artifacts were regenerated in a temporary session directory with the same flags and ordered modes, and their identities are recorded in the validation record. Real Swiss requests, paid model evaluation, independent writing review, publication, deployment and live-production checks remain unperformed. The catalogue has an individual agent editorial record; that is not automatic independent approval.
+
+## Addendum — 2026-10-11, writing qualification round
+
+Recorded by the
+[writing qualification checklist](2026-10-11-daily-reading-writing-qualification-checklist.md);
+the items above are not retroactively ticked. The candidate code reached `main` in
+`4c96fd5` and is served publicly but inactive. `builtin-0.6.0` failed the AI
+catalogue review; `builtin-0.6.1`, which revises three entries, passed it with
+human approval deferred (see the
+[catalogue review](../../reviews/daily-natal-lens/catalogue-review.md)). A hosted
+`natal-candidate` run stopped on its first case for lack of gateway credit, so the
+matched actual-model experiment and its blinded writing review remain open, and
+both runs must use the revision that serves `builtin-0.6.1`.
