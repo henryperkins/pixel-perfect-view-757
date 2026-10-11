@@ -16,6 +16,11 @@
 import { safetyPass } from "../content/default-bundle";
 import { normalizeDepth, normalizeTone } from "../reading.server";
 import { factBlock, factIds, type FactAtom } from "./facts";
+import type {
+  EvaluationJsonValue,
+  SyntheticReadingCandidate,
+  SyntheticReadingRequest,
+} from "./reading-evaluation.shared";
 import {
   DAILY_DIAGNOSTICS_VERSION,
   DAILY_PROMPT_VERSION,
@@ -68,11 +73,16 @@ function templateMeta(reason: string): LanguageMeta {
   return { mode: "template", model: null, citations: [], dropped: 0, flagged: [], reason };
 }
 
-interface JsonSchemaObject {
+interface JsonSchemaObject extends Record<string, EvaluationJsonValue> {
   type: "object";
-  properties: Record<string, unknown>;
+  properties: Record<string, EvaluationJsonValue>;
   required: string[];
   additionalProperties: false;
+}
+
+interface SyntheticObservation {
+  request(value: SyntheticReadingRequest): void;
+  candidate(value: unknown): void;
 }
 
 /** Fixed boundary failures never retain response bodies or exception messages. */
@@ -95,10 +105,23 @@ async function callGateway<T>(
   schemaName: string,
   schema: JsonSchemaObject,
   timeoutMs = 90000,
+  observation?: SyntheticObservation,
 ): Promise<T> {
   const key = process.env["LOVABLE_API_KEY"];
   if (!key) throw new GatewayUnavailable("not_configured");
   const signal = AbortSignal.timeout(timeoutMs);
+  const request: SyntheticReadingRequest = {
+    model: LANGUAGE_MODEL,
+    messages: [
+      { role: "system", content: VOICE },
+      { role: "user", content: user },
+    ],
+    response_format: {
+      type: "json_schema",
+      json_schema: { name: schemaName, strict: true, schema },
+    },
+  };
+  observation?.request(structuredClone(request));
   let res: Response;
   try {
     res = await fetch(GATEWAY, {
@@ -110,17 +133,7 @@ async function callGateway<T>(
         "Lovable-API-Key": key,
         "X-Lovable-AIG-SDK": "fetch",
       },
-      body: JSON.stringify({
-        model: LANGUAGE_MODEL,
-        messages: [
-          { role: "system", content: VOICE },
-          { role: "user", content: user },
-        ],
-        response_format: {
-          type: "json_schema",
-          json_schema: { name: schemaName, strict: true, schema },
-        },
-      }),
+      body: JSON.stringify(request),
     });
   } catch (error) {
     throw gatewayFailure(error, signal);
@@ -147,7 +160,9 @@ async function callGateway<T>(
   const content = payload?.choices?.[0]?.message?.content;
   if (!content) throw new GatewayUnavailable("empty_response");
   try {
-    return JSON.parse(content) as T;
+    const parsed = JSON.parse(content) as T;
+    observation?.candidate(parsed);
+    return parsed;
   } catch (error) {
     throw gatewayFailure(error, signal);
   }
@@ -437,7 +452,10 @@ function dailyDiagnostics(
   };
 }
 
-export async function generateReadingProse(input: ReadingProseInput): Promise<ReadingProse> {
+async function generateDailyProse(
+  input: ReadingProseInput,
+  observation?: SyntheticObservation,
+): Promise<ReadingProse> {
   const { fallback } = input;
   if (!input.hasEligibleCycles || !input.facts.some((f) => f.id === "C1" && f.cycle))
     return {
@@ -469,7 +487,7 @@ export async function generateReadingProse(input: ReadingProseInput): Promise<Re
   let raw: unknown;
   const started = performance.now();
   try {
-    raw = await callGateway(prompt, "daily_reading", READING_SCHEMA, 12000);
+    raw = await callGateway(prompt, "daily_reading", READING_SCHEMA, 12000, observation);
   } catch (error) {
     const failure = gatewayFailure(error);
     return {
@@ -509,6 +527,57 @@ export async function generateReadingProse(input: ReadingProseInput): Promise<Re
   };
 }
 
+/** Production readings expose only the established prose/diagnostics contract. */
+export async function generateReadingProse(input: ReadingProseInput): Promise<ReadingProse> {
+  return generateDailyProse(input);
+}
+
+/** Only whitelisted, bounded paragraph fields are retained for fixed synthetic evaluations. */
+function captureSyntheticCandidate(raw: unknown): SyntheticReadingCandidate | null {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return null;
+  const paragraphs = (raw as { paragraphs?: unknown }).paragraphs;
+  if (!Array.isArray(paragraphs)) return null;
+  let truncated = paragraphs.length > 10;
+  const captured = paragraphs.slice(0, 10).map((paragraph) => {
+    const value =
+      paragraph && typeof paragraph === "object" && !Array.isArray(paragraph)
+        ? (paragraph as { text?: unknown; facts?: unknown })
+        : {};
+    const text = typeof value.text === "string" ? value.text.slice(0, 4000) : null;
+    if (typeof value.text === "string" && value.text.length > 4000) truncated = true;
+    const rawFacts = Array.isArray(value.facts) ? value.facts : [];
+    if (rawFacts.length > 20) truncated = true;
+    const facts = rawFacts
+      .slice(0, 20)
+      .filter((fact): fact is string => typeof fact === "string")
+      .map((fact) => {
+        if (fact.length > 80) truncated = true;
+        return fact.slice(0, 80);
+      });
+    return { text, facts };
+  });
+  return { paragraphs: captured, paragraphCount: paragraphs.length, truncated };
+}
+
+/** Server-only seam used by the closed, checked-in synthetic case runner. Never used by Today. */
+export async function generateSyntheticReadingProse(input: ReadingProseInput): Promise<{
+  prose: ReadingProse;
+  request: SyntheticReadingRequest | null;
+  candidate: SyntheticReadingCandidate | null;
+}> {
+  let request: SyntheticReadingRequest | null = null;
+  let candidate: SyntheticReadingCandidate | null = null;
+  const prose = await generateDailyProse(input, {
+    request(value) {
+      request = value;
+    },
+    candidate(value) {
+      candidate = captureSyntheticCandidate(value);
+    },
+  });
+  return { prose, request, candidate };
+}
+
 // ---------------------------------------------------------------------------
 // natal chapter narratives
 // ---------------------------------------------------------------------------
@@ -530,7 +599,7 @@ const FEATURE_SCHEMA: JsonSchemaObject = {
     // Natal keeps its existing schema and behavior; daily bounds are separate.
     paragraphs: {
       type: "array",
-      items: (READING_SCHEMA.properties["paragraphs"] as { items: unknown }).items,
+      items: (READING_SCHEMA.properties["paragraphs"] as { items: EvaluationJsonValue }).items,
     },
     reflection_question: {
       type: "string",

@@ -1,5 +1,47 @@
 # Reading evaluation
 
+## Run an on-demand model evaluation
+
+Sign in as an admin, open `/content`, and choose **Run synthetic evaluation** in
+Reading quality. This runs the ten fixed cases below immediately: nine eligible
+model requests and one quiet-day check that makes no model call. Each case uses
+the production model, prompt, validator, and the effective active interpretation
+bundle. The model key stays on the server.
+
+The inputs are checked-in synthetic contacts. The endpoint accepts only a fixed
+case ID; it does not accept a chart, prompt, model override, or account context.
+It reads the admin role and active copy, without reading birth records, check-ins,
+notes, or daily readings, and writes no application records. Evaluation outcomes
+do not enter the production Reading quality counts.
+
+Cases run one at a time with the production daily timeout. **Stop after current
+case** preserves completed results. Requests are never retried automatically.
+Missing configuration, authentication, credit, or rate-limit failures stop the
+run. A change to the prompt, validator, model or copy during a run also stops it
+rather than combining unlike configurations.
+
+Review the supplied facts, actual synthetic candidate paragraphs, displayed
+result, and template fallback for each completed case. Rejected drafts remain
+visible for manual review; generated paragraphs are bounded and marked when
+truncated. Provider error bodies, exception text and credentials are excluded.
+Production reading diagnostics continue excluding generated draft text.
+
+Download the JSON report before leaving the page. Results are held only in page
+memory. Partial runs are marked as partial; a before/after comparison needs all
+ten fixed cases. A completed report is compatible with the comparison command:
+
+```sh
+npm run eval:reading -- --compare /tmp/pattern-before.json /tmp/pattern-after.json --output /tmp/pattern-comparison.json
+```
+
+The displayed acceptance rate describes model attempts in this synthetic run,
+including gateway failures and excluding quiet skips and missing configuration.
+It does not estimate acceptance for production users or score writing quality.
+Use the manual rubric below to review specificity, voice, repetition and grounding
+before and after a prompt or copy change.
+
+## Offline replay
+
 Run the fixed suite before changing the daily prompt or published copy:
 
 ```sh

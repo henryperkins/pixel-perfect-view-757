@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
+import { ReadingEvaluation } from "@/components/pattern/ReadingEvaluation";
 import {
   activateContentRelease,
   discardContentDraft,
@@ -959,6 +960,7 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
           ) : null}
         </>
       )}
+      <ReadingEvaluation key={session?.userId ?? "anonymous"} />
     </section>
   );
 }

@@ -42,28 +42,15 @@ export const saveBirthProfile = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const m = await import("./pattern.server");
     const { accuracy, timezone, ...details } = data;
-    return m.saveBirth(
-      context.db,
-      context.userId,
-      details,
-      accuracy,
-      timezone,
-    );
+    return m.saveBirth(context.db, context.userId, details, accuracy, timezone);
   });
 
 export const updateConsent = createServerFn({ method: "POST" })
   .middleware([requireAuth])
-  .inputValidator((d: unknown) =>
-    z.object({ sourceId: z.string(), granted: z.boolean() }).parse(d),
-  )
+  .inputValidator((d: unknown) => z.object({ sourceId: z.string(), granted: z.boolean() }).parse(d))
   .handler(async ({ data, context }) => {
     const m = await import("./pattern.server");
-    return m.setConsent(
-      context.db,
-      context.userId,
-      data.sourceId,
-      data.granted,
-    );
+    return m.setConsent(context.db, context.userId, data.sourceId, data.granted);
   });
 
 export const fetchPattern = createServerFn({ method: "GET" })
@@ -112,7 +99,6 @@ export const saveDailyCheckIn = createServerFn({ method: "POST" })
     );
   });
 
-
 export const savePrefs = createServerFn({ method: "POST" })
   .middleware([requireAuth])
   .inputValidator((d: unknown) =>
@@ -126,13 +112,7 @@ export const savePrefs = createServerFn({ method: "POST" })
   )
   .handler(async ({ data, context }) => {
     const m = await import("./pattern.server");
-    return m.updatePrefs(
-      context.db,
-      context.userId,
-      data.displayName,
-      data.tone,
-      data.depth,
-    );
+    return m.updatePrefs(context.db, context.userId, data.displayName, data.tone, data.depth);
   });
 
 export const exportData = createServerFn({ method: "POST" })
@@ -217,7 +197,6 @@ export const removeEvent = createServerFn({ method: "POST" })
     return m.deleteLifeEvent(context.db, context.userId, data.id);
   });
 
-
 export const fetchReleases = createServerFn({ method: "GET" })
   .middleware([requireAuth])
   .handler(async ({ context }) => {
@@ -235,13 +214,8 @@ export const activateContentRelease = createServerFn({ method: "POST" })
   .inputValidator((d: unknown) => z.object({ releaseId: z.string().uuid() }).parse(d))
   .handler(async ({ data, context }) => {
     const m = await import("./pattern.server");
-    return m.activateRelease(
-      context.db,
-      context.userId,
-      data.releaseId,
-    );
+    return m.activateRelease(context.db, context.userId, data.releaseId);
   });
-
 
 export const fetchEdgePlane = createServerFn({ method: "GET" })
   .middleware([requireAuth])
@@ -280,9 +254,7 @@ export const triggerEdgeRun = createServerFn({ method: "POST" })
 
 export const fetchFeatureNarrative = createServerFn({ method: "POST" })
   .middleware([requireAuth])
-  .inputValidator((d: unknown) =>
-    z.object({ featureKey: z.string().min(1).max(120) }).parse(d),
-  )
+  .inputValidator((d: unknown) => z.object({ featureKey: z.string().min(1).max(120) }).parse(d))
   .handler(async ({ data, context }) => {
     const m = await import("./pattern.server");
     return m.getFeatureNarrative(context.db, context.userId, data.featureKey);
@@ -300,6 +272,20 @@ export const fetchReadingQuality = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     const m = await import("./pattern.server");
     return m.readingQuality(context.db, context.userId);
+  });
+
+/** One fixed synthetic case per request; credentials and facts stay server-side. */
+export const runReadingEvaluationCase = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
+  .inputValidator((d: unknown) =>
+    z
+      .object({ caseId: z.string().min(1).max(80) })
+      .strict()
+      .parse(d),
+  )
+  .handler(async ({ data, context }) => {
+    const m = await import("./pattern.server");
+    return m.runReadingEvaluationCase(context.db, context.userId, data.caseId);
   });
 
 export const draftContentRelease = createServerFn({ method: "POST" })

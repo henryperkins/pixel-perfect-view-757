@@ -239,6 +239,7 @@ export async function evaluateReadings({ responses = undefined } = {}) {
 function validateReport(report) {
   if (report?.reportVersion !== REPORT_VERSION || !Array.isArray(report.cases))
     throw new Error("Unsupported evaluation report");
+  if (report.partial === true) throw new Error("Cannot compare a partial evaluation report");
   const ids = report.cases.map((item) => item.id);
   if (new Set(ids).size !== ids.length) throw new Error("Report contains duplicate case IDs");
   if (JSON.stringify([...ids].sort()) !== JSON.stringify(caseIds().sort()))

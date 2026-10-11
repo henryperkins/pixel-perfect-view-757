@@ -80,6 +80,14 @@ no observation. Attempt-based fallback rates exclude quiet days, missing
 configuration and rows without valid diagnostics; historical outcomes are not
 guessed or regenerated. Gateway response bodies and exception text are excluded.
 
+Admins can also choose **Run synthetic evaluation** in that panel to run the ten
+fixed cases on demand using the production language pipeline and active copy.
+It makes up to nine model calls and one quiet-day check, shows actual drafts and
+fallback reasons, and downloads a report for before/after comparison. These
+synthetic results stay separate from saved readings and live generation counts;
+no birth record, check-in or private note is used. No production schema change
+is required. Stop and partial-download controls preserve completed cases.
+
 Numeric resonance scores appear in aggregate cohorts only while the reader's
 separate **Reading quality feedback** source (USR-15) is enabled. Private saves
 never enable it, and revocation excludes saved scores from future reports. Notes

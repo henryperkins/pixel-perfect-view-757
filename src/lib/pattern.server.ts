@@ -1,6 +1,5 @@
 import type { DBClient } from "./d1.server";
 
-
 import {
   computeChart,
   extractFeatures,
@@ -9,12 +8,7 @@ import {
   type TimeAccuracy,
 } from "./astro/chart";
 import { computeCycles } from "./astro/cycles";
-import {
-  ENGINE_ID,
-  ENGINE_VERSION,
-  signOf,
-  toJulianDay,
-} from "./astro/ephemeris";
+import { ENGINE_ID, ENGINE_VERSION, signOf, toJulianDay } from "./astro/ephemeris";
 import { resolvePositions } from "./astro/swiss.server";
 
 import {
@@ -28,7 +22,12 @@ import {
   unwrapDek,
 } from "./crypto.server";
 import { DEFAULT_BUNDLE, type ContentBundle } from "./content/default-bundle";
-import { assembleReading, normalizeDepth, normalizeTone, type ReadingContext } from "./reading.server";
+import {
+  assembleReading,
+  normalizeDepth,
+  normalizeTone,
+  type ReadingContext,
+} from "./reading.server";
 import { assertUse, isPermitted, LAUNCH_SOURCES, PROHIBITED_SOURCES, SOURCE_MAP } from "./registry";
 import { checkInInputSchema } from "./check-in";
 import { daysToLocalDate, localDayString, localNoon, validTimeZone, zonedToUtc } from "./local-day";
@@ -41,12 +40,7 @@ export type DB = DBClient;
 // Row shapes for the records plane. SQLite has no generated types, so the
 // selects below name what they read.
 export type JsonValue =
-  | string
-  | number
-  | boolean
-  | null
-  | JsonValue[]
-  | { [key: string]: JsonValue };
+  string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
 
 interface ProfileRow {
   id: string;
@@ -150,7 +144,6 @@ interface ReleaseRow {
   bundle: Record<string, unknown> | null;
 }
 
-
 export interface BirthDetails {
   birthDate: string; // YYYY-MM-DD, local civil
   birthTime: string; // HH:MM, local civil
@@ -236,12 +229,7 @@ export async function grantedSet(db: DB, userId: string): Promise<Set<string>> {
   return set;
 }
 
-export async function setConsent(
-  db: DB,
-  userId: string,
-  sourceId: string,
-  granted: boolean,
-) {
+export async function setConsent(db: DB, userId: string, sourceId: string, granted: boolean) {
   if (PROHIBITED_SOURCES.some((p) => p.id === sourceId)) {
     throw new Error(`Source ${sourceId} is prohibited by the registry.`);
   }
@@ -329,7 +317,6 @@ export async function saveBirth(
   });
   const chart = computeChart(birthInput, ephem);
 
-
   const { data: snap, error: snapErr } = await db
     .from<{ id: string }>("chart_snapshots")
     .upsert(
@@ -376,10 +363,7 @@ export async function saveBirth(
     );
   }
 
-  await db
-    .from("profiles")
-    .update({ onboarded_at: new Date().toISOString() })
-    .eq("id", userId);
+  await db.from("profiles").update({ onboarded_at: new Date().toISOString() }).eq("id", userId);
   await db.from("audit_events").insert({
     user_id: userId,
     kind: "birth_profile.saved",
@@ -443,8 +427,7 @@ function snapshotToChart(row: SnapshotRow): Chart {
   const [engine, engineVersion] = row.engine.split("@");
   const points = row.positions as Chart["points"];
   const precision =
-    houses?.ephemeris?.precision ??
-    (engine === "swiss-ephemeris" ? "high" : "approximate");
+    houses?.ephemeris?.precision ?? (engine === "swiss-ephemeris" ? "high" : "approximate");
   return {
     engine: engine ?? "unknown",
     engineVersion: engineVersion ?? "0",
@@ -454,9 +437,7 @@ function snapshotToChart(row: SnapshotRow): Chart {
     degraded: houses?.ephemeris?.degraded ?? precision !== "high",
     degradedReason:
       houses?.ephemeris?.degradedReason ??
-      (precision === "high"
-        ? null
-        : "This chart was computed with the in-app approximate engine."),
+      (precision === "high" ? null : "This chart was computed with the in-app approximate engine."),
     jd: 0,
 
     points,
@@ -471,14 +452,20 @@ function snapshotToChart(row: SnapshotRow): Chart {
   };
 }
 
-export async function activeBundle(db: DB): Promise<ContentBundle> {
-  const { data } = await db
+export async function activeBundle(
+  db: DB,
+  options?: { requireSuccessfulRead: boolean },
+): Promise<ContentBundle> {
+  const { data, error } = await db
     .from<{ version: string; bundle: JsonValue }>("content_releases")
     .select("version, bundle")
     .eq("is_active", true)
     .order("created_at", { ascending: false })
     .limit(1)
     .maybeSingle();
+  if (error && options?.requireSuccessfulRead) {
+    throw new Error("The active interpretation release could not be read. Evaluation stopped.");
+  }
   if (!data) return DEFAULT_BUNDLE;
   const bundle = data.bundle as unknown as ContentBundle;
   return { ...DEFAULT_BUNDLE, ...bundle, version: data.version };
@@ -562,8 +549,6 @@ function cyclesForLocalDay(chart: Chart, day: string, timeZone: string) {
   }));
 }
 
-
-
 export async function getToday(db: DB, userId: string, timeZone: string) {
   const snapRow = await loadSnapshot(db, userId);
   if (!snapRow) return { needsOnboarding: true as const };
@@ -604,13 +589,12 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       ? normalizeDepth(profile.depth_pref ?? "standard")
       : "standard",
     localBucket: isPermitted("AMB-02", "framing", granted) ? timeBucket(now, tz) : null,
-    checkIn: isPermitted("USR-04", "framing", granted) &&
+    checkIn:
+      isPermitted("USR-04", "framing", granted) &&
       (checkInRow?.mood != null || checkInRow?.energy != null)
-      ? { mood: checkInRow?.mood ?? null, energy: checkInRow?.energy ?? null }
-      : null,
-    wellness: wellnessAllowed
-      ? { sleep: wellnessState.sleep, stress: wellnessState.stress }
-      : null,
+        ? { mood: checkInRow?.mood ?? null, energy: checkInRow?.energy ?? null }
+        : null,
+    wellness: wellnessAllowed ? { sleep: wellnessState.sleep, stress: wellnessState.stress } : null,
   };
   // Never reuse pre-fix model prose. Context changes get a new immutable row,
   // while old reading IDs and their feedback remain intact. The keyed digest
@@ -624,8 +608,9 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
     localBucket: ctx.localBucket,
     checkIn: ctx.checkIn,
     wellness: ctx.wellness,
-    grants: ["USR-01", "USR-02", "USR-04", "WEL-01", "WEL-03", "AMB-02", "DEV-01"]
-      .filter((id) => granted.has(id)),
+    grants: ["USR-01", "USR-02", "USR-04", "WEL-01", "WEL-03", "AMB-02", "DEV-01"].filter((id) =>
+      granted.has(id),
+    ),
   });
   const idem = `daily-privacy-2:${snapRow.fingerprint}:${day}:${bundle.version}:${contextKey}`;
 
@@ -672,11 +657,8 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
     };
   }
 
-
   const chart = snapshotToChart(snapRow);
   const cycles = cyclesForLocalDay(chart, day, tz);
-
-
 
   const assembled = assembleReading(chart, cycles, ctx, bundle);
   const topCycles = cycles.slice(0, 12);
@@ -729,7 +711,11 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
         lane: "content",
         source_id: "AST-05",
         label: `Published reference cited by language layer · ${fact.id}`,
-        detail: { statement: fact.statement, paragraphs: paragraphs.join(", "), bundle: bundle.version },
+        detail: {
+          statement: fact.statement,
+          paragraphs: paragraphs.join(", "),
+          bundle: bundle.version,
+        },
       });
     }
     provenance.push({
@@ -740,9 +726,7 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
         model: prose.meta.model,
         paragraphs: prose.meta.citations.length,
         dropped: prose.meta.dropped,
-        cited: prose.meta.citations
-          .map((c) => `${c.paragraph}:${c.facts.join("+")}`)
-          .join(" "),
+        cited: prose.meta.citations.map((c) => `${c.paragraph}:${c.facts.join("+")}`).join(" "),
       },
     });
   }
@@ -830,8 +814,6 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
     ephemeris: ephemerisState(chart),
     wellness: wellnessState,
   };
-
-
 }
 
 // ---------------------------------------------------------------------------
@@ -858,10 +840,7 @@ export async function loadBirthRecord(db: DB, userId: string) {
     .maybeSingle();
   if (!data) return null;
   const dek = await getDek(db, userId);
-  const details = await decryptJson<BirthDetails & { utcISO?: string }>(
-    dek,
-    data.payload_ct,
-  );
+  const details = await decryptJson<BirthDetails & { utcISO?: string }>(dek, data.payload_ct);
   return {
     birthDate: details.birthDate,
     birthTime: details.birthTime,
@@ -932,8 +911,7 @@ export async function getPattern(db: DB, userId: string) {
   // the rising sign is re-requested from the service for the saved birthplace.
   const storedHouses = snapRow.houses as { system?: string; sources?: unknown } | null;
   const storedSystem = storedHouses?.system;
-  const needsUpgrade =
-    !storedSystem || storedSystem === "whole-sign" || !storedHouses?.sources;
+  const needsUpgrade = !storedSystem || storedSystem === "whole-sign" || !storedHouses?.sources;
   if (snapRow.engine.startsWith("swiss-ephemeris") && needsUpgrade) {
     const rec = await loadBirthRecord(db, userId);
     if (rec) {
@@ -1013,7 +991,6 @@ export async function getPattern(db: DB, userId: string) {
   };
 }
 
-
 /**
  * Tier 3 retention (registry WEL-01 / WEL-03, 180 days). The bands are nulled
  * out rather than the check-in row deleted, so mood, energy and the encrypted
@@ -1091,7 +1068,6 @@ export async function saveCheckIn(
     checkIn,
   };
 }
-
 
 export async function listJournal(db: DB, userId: string) {
   const dek = await getDek(db, userId);
@@ -1172,15 +1148,10 @@ export async function addLifeEvent(
 }
 
 export async function deleteLifeEvent(db: DB, userId: string, id: string) {
-  const { error } = await db
-    .from("life_events")
-    .delete()
-    .eq("user_id", userId)
-    .eq("id", id);
+  const { error } = await db.from("life_events").delete().eq("user_id", userId).eq("id", id);
   if (error) throw new Error(error.message);
   return { ok: true };
 }
-
 
 export async function submitFeedback(
   db: DB,
@@ -1197,10 +1168,12 @@ export async function submitFeedback(
     .maybeSingle();
   if (readingError) throw new Error(readingError.message);
   if (!reading) throw new Error("Reading not found for your account.");
-  const { error } = await db.from("reading_feedback").upsert(
-    { user_id: userId, reading_id: readingId, resonance, labels },
-    { onConflict: "user_id,reading_id" },
-  );
+  const { error } = await db
+    .from("reading_feedback")
+    .upsert(
+      { user_id: userId, reading_id: readingId, resonance, labels },
+      { onConflict: "user_id,reading_id" },
+    );
   if (error) throw new Error(error.message);
   return { ok: true };
 }
@@ -1214,7 +1187,9 @@ export async function exportEverything(db: DB, userId: string) {
     getPattern(db, userId),
   ]);
   const { data: birth } = await db
-    .from<{ payload_ct: string; time_accuracy: string; timezone: string; created_at: string }>("birth_profiles")
+    .from<{ payload_ct: string; time_accuracy: string; timezone: string; created_at: string }>(
+      "birth_profiles",
+    )
     .select("payload_ct, time_accuracy, timezone, created_at")
     .eq("user_id", userId)
     .maybeSingle();
@@ -1274,10 +1249,7 @@ export async function eraseEverything(db: DB, userId: string) {
   ] as const) {
     await db.from(table).delete().eq("user_id", userId);
   }
-  await db
-    .from("profiles")
-    .update({ wrapped_dek: null, onboarded_at: null })
-    .eq("id", userId);
+  await db.from("profiles").update({ wrapped_dek: null, onboarded_at: null }).eq("id", userId);
   await db.from("audit_events").insert({
     user_id: userId,
     kind: "account.erased",
@@ -1345,8 +1317,7 @@ export async function listReleases(db: DB) {
   return (data ?? []).map((r) => {
     const bundle = (r.bundle ?? {}) as Record<string, unknown>;
     const keys = Object.keys(bundle);
-    const count = (prefix: string) =>
-      keys.filter((k) => k.startsWith(prefix)).length;
+    const count = (prefix: string) => keys.filter((k) => k.startsWith(prefix)).length;
     const entries = Object.entries(bundle).reduce((acc, [, v]) => {
       if (v && typeof v === "object") return acc + Object.keys(v as object).length;
       return acc + 1;
@@ -1377,6 +1348,16 @@ export async function isAdmin(db: DB, userId: string): Promise<boolean> {
   return Boolean(data);
 }
 
+/** Read-only fixed synthetic evaluation: no user chart, context or reading records. */
+export async function runReadingEvaluationCase(db: DB, userId: string, caseId: string) {
+  if (!(await isAdmin(db, userId))) {
+    throw new Error("Only admins can run a synthetic reading evaluation.");
+  }
+  const evaluation = await import("./ai/reading-evaluation.server");
+  const bundle = await activeBundle(db, { requireSuccessfulRead: true });
+  return evaluation.runSyntheticEvaluationCase(caseId, bundle);
+}
+
 /**
  * Flips the active release pointer from inside the app. RLS only allows this
  * for admins; published readings are never rewritten because each one already
@@ -1388,7 +1369,12 @@ export async function activateRelease(db: DB, userId: string, releaseId: string)
   }
 
   const { data: target, error: findErr } = await db
-    .from<{ id: string; version: string; checksum: string; bundle: Record<string, unknown> | null }>("content_releases")
+    .from<{
+      id: string;
+      version: string;
+      checksum: string;
+      bundle: Record<string, unknown> | null;
+    }>("content_releases")
     .select("id, version, checksum, bundle")
     .eq("id", releaseId)
     .maybeSingle();
@@ -1444,19 +1430,13 @@ interface NarrativeRow {
  * the structure's own payload only, verified claim-by-claim, and stored
  * encrypted like every other piece of written output.
  */
-export async function getFeatureNarrative(
-  db: DB,
-  userId: string,
-  featureKey: string,
-) {
+export async function getFeatureNarrative(db: DB, userId: string, featureKey: string) {
   const snapRow = await loadSnapshot(db, userId);
   if (!snapRow) return { available: false as const, reason: "No chart calculated yet." };
 
   const dek = await getDek(db, userId);
 
-  const { FEATURE_ESSAY_VERSION, generateFeatureNarrative } = await import(
-    "./ai/language.server"
-  );
+  const { FEATURE_ESSAY_VERSION, generateFeatureNarrative } = await import("./ai/language.server");
 
   const chartForKey = snapshotToChart(snapRow);
   const profile = await loadProfile(db, userId);
@@ -1544,9 +1524,7 @@ export async function getFeatureNarrative(
   if (!written.narrative) {
     return {
       available: false as const,
-      reason:
-        written.meta.reason ??
-        "No narrative could be written from this structure's facts.",
+      reason: written.meta.reason ?? "No narrative could be written from this structure's facts.",
     };
   }
 
@@ -1588,14 +1566,24 @@ interface DraftRow {
 
 /** Slots a drafted release must cover: the ones the engine actually looks up. */
 const DRAFT_SLOTS: { key: string; family: string; transitBody: string; natalPoint: string }[] = [
-  ...["saturn", "jupiter", "mars", "venus", "mercury", "sun", "moon", "uranus", "neptune", "pluto"].flatMap(
-    (body) =>
-      ["hard", "soft"].map((family) => ({
-        key: `${family}:${body}:*`,
-        family,
-        transitBody: body,
-        natalPoint: "any natal point",
-      })),
+  ...[
+    "saturn",
+    "jupiter",
+    "mars",
+    "venus",
+    "mercury",
+    "sun",
+    "moon",
+    "uranus",
+    "neptune",
+    "pluto",
+  ].flatMap((body) =>
+    ["hard", "soft"].map((family) => ({
+      key: `${family}:${body}:*`,
+      family,
+      transitBody: body,
+      natalPoint: "any natal point",
+    })),
   ),
   { key: "hard:*:*", family: "hard", transitBody: "any body", natalPoint: "any natal point" },
   { key: "soft:*:*", family: "soft", transitBody: "any body", natalPoint: "any natal point" },
@@ -1611,7 +1599,9 @@ export async function listDrafts(db: DB, userId: string) {
     .limit(5);
 
   return (data ?? []).map((d) => {
-    const bundle = (d.bundle ?? {}) as { cycles?: { key: string; mechanism: string; question: string }[] };
+    const bundle = (d.bundle ?? {}) as {
+      cycles?: { key: string; mechanism: string; question: string }[];
+    };
     return {
       id: d.id,
       base_version: d.base_version,
@@ -1703,7 +1693,10 @@ export async function publishDraft(db: DB, userId: string, draftId: string) {
   if (findErr) throw new Error(findErr.message);
   if (!draft || draft.status !== "draft") throw new Error("That draft is no longer open.");
 
-  const stamp = new Date().toISOString().replace(/[-:.TZ]/g, "").slice(0, 14);
+  const stamp = new Date()
+    .toISOString()
+    .replace(/[-:.TZ]/g, "")
+    .slice(0, 14);
   const version = `ai-${stamp}`;
   const bundle = { ...((draft.bundle ?? {}) as Record<string, unknown>), version };
   const serialized = JSON.stringify(bundle);
@@ -1743,7 +1736,9 @@ export async function readingQuality(db: DB, userId: string) {
 
   const { data, error } = await db
     .from<QualityReading>("daily_readings")
-    .select("id, user_id, reading_date, created_at, strftime('%Y-%m-%dT%H:%M:%fZ', created_at) as generated_at, julianday(created_at) as generated_sort, release_version, language_mode, language_model, language_meta")
+    .select(
+      "id, user_id, reading_date, created_at, strftime('%Y-%m-%dT%H:%M:%fZ', created_at) as generated_at, julianday(created_at) as generated_sort, release_version, language_mode, language_model, language_meta",
+    )
     .order("generated_sort", { ascending: false })
     .order("id", { ascending: false })
     .limit(301);
@@ -1758,7 +1753,10 @@ export async function readingQuality(db: DB, userId: string) {
     .in("user_id", users);
   if (consentError) throw new Error(consentError.message);
   const optedInUsers = new Set(
-    (consents ?? []).filter((row) => isPermitted("USR-15", "quality_measurement", new Set(row.granted ? ["USR-15"] : [])))
+    (consents ?? [])
+      .filter((row) =>
+        isPermitted("USR-15", "quality_measurement", new Set(row.granted ? ["USR-15"] : [])),
+      )
       .map((row) => row.user_id),
   );
   let feedback: QualityFeedback[] = [];
@@ -1767,7 +1765,10 @@ export async function readingQuality(db: DB, userId: string) {
     const result = await db
       .from<QualityFeedback>("reading_feedback")
       .select("reading_id, user_id, resonance")
-      .in("reading_id", rows.filter((row) => optedInUsers.has(row.user_id)).map((row) => row.id))
+      .in(
+        "reading_id",
+        rows.filter((row) => optedInUsers.has(row.user_id)).map((row) => row.id),
+      )
       .in("user_id", [...optedInUsers]);
     if (result.error) throw new Error(result.error.message);
     feedback = result.data ?? [];

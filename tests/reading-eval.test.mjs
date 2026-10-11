@@ -17,6 +17,12 @@ import {
   READING_EVAL_FIXTURE_VERSION,
 } from "../scripts/reading-eval-cases.mjs";
 
+test("before/after comparison rejects a partial flag even when every case is present", async () => {
+  const complete = await evaluateReadings();
+  assert.throws(() => compareReports({ ...complete, partial: true }, complete), /partial/);
+  assert.throws(() => compareReports(complete, { ...complete, partial: true }), /partial/);
+});
+
 test("fixed synthetic baseline exercises the real daily validators without quality scores", async () => {
   const report = await evaluateReadings();
   assert.equal(READING_EVAL_CASES.length, 10);
