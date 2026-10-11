@@ -1,7 +1,8 @@
 import assert from "node:assert/strict";
 import { after, before, test } from "node:test";
 import { createRecordsHarness } from "./helpers/records-harness.mjs";
-import { createHmac } from "node:crypto";
+import { createHash, createHmac } from "node:crypto";
+import { readFile } from "node:fs/promises";
 
 let h, bundle, fallback, schema, policy;
 before(async () => {
@@ -74,12 +75,30 @@ test("schema3_rejects_invalid_natal_rules", () => {
   );
 });
 test("seed_catalogue_has_individual_copy_and_complete_coverage", () => {
-  assert.equal(bundle.version, "builtin-0.6.0");
+  assert.equal(bundle.version, "builtin-0.6.1");
   assert.equal(bundle.schemaVersion, 3);
   assert.equal(bundle.natalLenses.filter((r) => r.selectors.length === 1).length, 60);
   assert.equal(bundle.natalLenses.filter((r) => r.selectors.length === 2).length, 2);
   assert.equal(new Set(bundle.natalLenses.map((r) => r.mechanism)).size, 62);
   schema.validateContentGraph(bundle);
+});
+test("candidate_code_matches_its_frozen_manifest", async () => {
+  // Reviewers judge the manifest; the hosted run serves the code. They must be one copy.
+  const manifest = JSON.parse(
+    await readFile(
+      new URL(
+        "../docs/superpowers/releases/2026-10-11-daily-natal-candidate-0.6.1.json",
+        import.meta.url,
+      ),
+      "utf8",
+    ),
+  );
+  assert.equal(manifest.version, bundle.version);
+  assert.deepEqual(manifest.bundle, JSON.parse(JSON.stringify(bundle)));
+  assert.equal(
+    manifest.checksum,
+    createHash("sha256").update(JSON.stringify(bundle)).digest("hex"),
+  );
 });
 test("deployed_fallback_never_carries_the_natal_catalogue", async () => {
   await h.reset();

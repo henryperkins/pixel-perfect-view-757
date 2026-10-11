@@ -37,7 +37,7 @@ Prompt `daily-astro-body-8` instructs the writer to keep each claim at its sourc
 strength; whether model prose does so is decided only by fresh review of actual
 output. Its identity change regenerates each reader's Today once and leaves older
 rows and feedback intact.
-The inactive natal candidate `builtin-0.6.0` (schema 3) adds only the lens catalogue
+The inactive natal candidate `builtin-0.6.1` (schema 3) adds only the lens catalogue
 and goes live only as an explicitly activated release.
 Lookup checks exact aspect/body/point, exact aspect/body/_, exact aspect/_/point,
 then exact aspect/_/_. Only then does it check the corresponding four aspect-family

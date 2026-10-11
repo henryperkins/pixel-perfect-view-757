@@ -12,7 +12,7 @@ copy. The model key stays on the server.
 | ---------------------------- | ----------------- | ----------------------------------------------------------------------------- |
 | Current active copy          | `active`          | The effective published release, or the built-in fallback when none is active |
 | Natal-free built-in baseline | `builtin`         | `builtin-0.5.0`, without the natal catalogue                                  |
-| Inactive natal candidate     | `natal-candidate` | `builtin-0.6.0`, for this run only                                            |
+| Inactive natal candidate     | `natal-candidate` | `builtin-0.6.1`, for this run only                                            |
 
 The choice is fixed when the run starts, sent with every case and recorded in the
 report as `bundleSource`. Choosing a bundle never publishes, activates or caches it,
@@ -62,7 +62,7 @@ copy change.
 ## Offline replay
 
 Every offline run names its copy explicitly with `--bundle builtin` (natal-free
-`builtin-0.5.0`) or `--bundle natal-candidate` (inactive `builtin-0.6.0`). Active
+`builtin-0.5.0`) or `--bundle natal-candidate` (inactive `builtin-0.6.1`). Active
 copy exists only in the hosted app. Run the fixed suite before changing the daily
 prompt or published copy:
 
@@ -83,7 +83,7 @@ evidence; they cannot be compared against changed v5 inputs.
 
 The offline runner evaluates the bundle named by `--bundle`. The natal-free
 baseline is the built-in fallback (`builtin-0.5.0`); the natal candidate is
-`builtin-0.6.0`. Version-5
+`builtin-0.6.1`. Version-5
 comparisons require an identical normalized transit-copy hash (`transitCopyHash`)
 and model, so the two bundles may differ only by release identity and natal
 catalogue; that difference is listed among the configuration changes.
@@ -163,7 +163,7 @@ each degree/date belongs to the right clause. A close, exact-phase contact with 
 scanned exact date cannot acquire one from the phase label alone.
 
 Built-in fallback copy `builtin-0.5.0` retains six reviewed exact interpretations and
-six directional pair rules; the inactive natal candidate `builtin-0.6.0` adds 62 natal
+six directional pair rules; the inactive natal candidate `builtin-0.6.1` adds 62 natal
 possibilities without changing them. A selected tension/reinforcement relationship produces
 `S1`; independent and unmatched pairs produce no joint narrative premise. Legacy
 active arrays remain authoritative and inherit neither new themes nor new rules.

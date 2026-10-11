@@ -199,7 +199,7 @@ test("offline runs use the explicitly selected shipped bundle", async () => {
   assert.ok(builtin.cases.every((c) => !c.facts.some((fact) => fact.id === "N1")));
   const candidate = await evaluateReadings({ bundleSource: "natal-candidate" });
   assert.equal(candidate.bundleSource, "natal-candidate");
-  assert.equal(candidate.bundleVersion, "builtin-0.6.0");
+  assert.equal(candidate.bundleVersion, "builtin-0.6.1");
   assert.ok(candidate.cases.some((c) => c.facts.some((fact) => fact.id === "N1")));
   assert.equal(candidate.transitCopyHash, builtin.transitCopyHash);
   for (const bundleSource of ["active", "custom", ""])

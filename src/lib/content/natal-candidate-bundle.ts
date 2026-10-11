@@ -13,11 +13,12 @@ const {
  * natal lens catalogue. It is never served as the fallback, so a deploy cannot
  * activate natal lenses. Publishing it as a release (the signed editorial endpoint,
  * or an operator-staged inactive row activated by an admin) is the only switch.
- * Key order matches the original `builtin-0.6.0` serialization so its copy
- * checksum is unchanged.
+ * Key order matches the original `builtin-0.6.0` serialization, so the copy checksum
+ * changes only with the copy. `builtin-0.6.1` revises three entries after the failed
+ * AI catalogue review of `builtin-0.6.0`.
  */
 export const NATAL_CANDIDATE_BUNDLE: ContentBundle = {
-  version: "builtin-0.6.0",
+  version: "builtin-0.6.1",
   schemaVersion: 3,
   natalLenses: NATAL_LENS_CATALOGUE,
   ...fallbackCopy,

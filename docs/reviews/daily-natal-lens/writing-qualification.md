@@ -8,18 +8,23 @@ independent approval.
 
 ## Paired run contract
 
-Run the same version-5 fixtures twice in one isolated environment: the baseline
-with no active release (the natal-free built-in fallback `builtin-0.5.0`) and the
-candidate with the natal candidate release (`builtin-0.6.0`) activated there. The
-comparison requires identical case input hashes, normalized transit copy
-(`transitCopyHash`) and model; the bundles may differ only by release identity and
-catalogue. Keep each run's source identity and the exact request/response, attempt
-count, duration, partial failure and cost evidence. Invoke actual synthetic
-evaluation explicitly; do not activate a production content pointer for the run.
+Run the same version-5 fixtures twice on one deployed source revision, choosing the
+copy with the admin evaluation selector: **Natal-free built-in baseline**
+(`builtin`, `builtin-0.5.0`) and **Inactive natal candidate** (`natal-candidate`,
+currently `builtin-0.6.1`). Choosing a copy never publishes or activates it. The
+strict `--compare-natal` check requires identical source revision, prompt policy,
+case input hashes, normalized transit copy (`transitCopyHash`) and model; the
+bundles may differ only by release identity and catalogue. Keep each run's source
+identity and the exact request/response, attempt count, duration, partial failure
+and cost evidence.
 
-Current paired-run artifacts: **not obtained**. Provider spend: **not invoked**.
-Independent reviewers and blind assignment: **not established**. Scores below
-remain pending; an accepted citation graph is not a quality judgment.
+Current paired-run artifacts (2026-10-11): a complete `builtin` run on source
+`4c96fd5` and a **partial** `natal-candidate` (`builtin-0.6.0`) run that stopped on
+its first case when the language gateway reported no available credit; nothing was
+retried. `builtin-0.6.0` has since failed the AI catalogue review, so the pair must
+be rerun, both runs on the revision that serves `builtin-0.6.1`. Blind writing
+reviewers: **not yet run**. Scores below remain pending; an accepted citation graph
+is not a quality judgment.
 
 | Positive case               | Candidate specificity / grounding / integration | Template specificity / grounding / integration | Unsupported personal claim |
 | --------------------------- | ----------------------------------------------- | ---------------------------------------------- | -------------------------- |

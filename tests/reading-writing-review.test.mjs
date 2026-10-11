@@ -752,14 +752,14 @@ test("unavailable or partial corrected drafts are uncovered failures, never drop
 // --- Natal lens catalogue review (Task 9) ---
 
 const CANDIDATE = new URL(
-  "../docs/superpowers/releases/2026-10-11-daily-natal-candidate.json",
+  "../docs/superpowers/releases/2026-10-11-daily-natal-candidate-0.6.1.json",
   import.meta.url,
 );
 const CATALOGUE_INSTRUCTIONS = new URL(
   "../docs/reviews/daily-natal-lens/catalogue-reviewer-instructions.md",
   import.meta.url,
 );
-const CATALOGUE_SHA256 = "99ddec7c32088a75e7ff84427c83780415d15402287b0e27e2aa9b206ce8d994";
+const CATALOGUE_SHA256 = "b073d625c23b5bede66eba25e37bd3f3397263710dd63ab67d8af06b6e216500";
 const CHECK_CATEGORY = {
   conditionalFraming: "unconditional_claim",
   ordinaryScene: "missing_scene",
@@ -852,7 +852,7 @@ test("catalogue packets carry every frozen entry, bound to its hash and a per-co
   const a = cataloguePacket({ ...data, contextId: "catalogue-a" });
   const b = cataloguePacket({ ...data, contextId: "catalogue-b" });
   assert.equal(a.packet.catalogueSha256, CATALOGUE_SHA256);
-  assert.equal(a.packet.bundleVersion, "builtin-0.6.0");
+  assert.equal(a.packet.bundleVersion, "builtin-0.6.1");
   assert.equal(a.sha256, sha256(a.json));
   assert.equal(cataloguePacket({ ...data, contextId: "catalogue-a" }).sha256, a.sha256);
   assert.notEqual(a.sha256, b.sha256);

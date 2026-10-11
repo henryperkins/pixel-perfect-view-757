@@ -76,7 +76,7 @@ test("version5_comparison_requires_identical_transit_copy_and_inputs", async () 
   const report = await evaluateReadings();
   assert.equal(report.summary.gatewayReplays, 27);
   assert.equal(report.summary.outcomes.accepted, 27);
-  assert.equal(report.bundleVersion, "builtin-0.6.0");
+  assert.equal(report.bundleVersion, "builtin-0.6.1");
   assert.match(report.transitCopyHash, /^[0-9a-f]{64}$/);
   // A natal-free baseline (the built-in fallback) differs only by release identity
   // and catalogue, so it can be compared and the change is reported.

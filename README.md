@@ -130,7 +130,7 @@ and [candidate manifest](docs/superpowers/releases/2026-10-11-daily-synthesis-ca
 
 ## Daily natal lens
 
-The inactive local candidate `builtin-0.6.0` (schema 3) adds 60 individually authored
+The inactive local candidate `builtin-0.6.1` (schema 3) adds 60 individually authored
 personal-body/sign possibilities and two compound Moon entries to the unchanged transit
 copy. It is not the built-in fallback: without an active release, readings use
 `builtin-0.5.0`, which has no catalogue, so deploying code never switches lenses on.
