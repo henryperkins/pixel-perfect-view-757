@@ -123,7 +123,13 @@ test("production reading output keeps synthetic observation out of normal metada
     },
   });
   assert.equal(production.body, synthetic.case.output.body);
-  assert.deepEqual(Object.keys(production).sort(), ["body", "headline", "meta", "prompt"]);
+  assert.deepEqual(Object.keys(production).sort(), [
+    "body",
+    "headline",
+    "meta",
+    "paragraphs",
+    "prompt",
+  ]);
   assert.ok(!("candidate" in production.meta));
   assert.ok(!("request" in production.meta));
   assert.equal(production.meta.diagnostics.outcome, "accepted");

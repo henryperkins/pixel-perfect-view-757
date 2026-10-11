@@ -67,6 +67,8 @@ export interface LanguageMeta {
 export interface ReadingProse {
   headline: string;
   body: string;
+  /** Exact validated boundaries; model text may contain internal blank lines. */
+  paragraphs: string[];
   prompt: string;
   meta: LanguageMeta;
 }
@@ -396,7 +398,7 @@ function dailyReferenceProblem(
 function dailyDraft(
   raw: unknown,
   input: ReadingProseInput,
-): { body: string; citations: Citation[] } | DailyProblem {
+): { body: string; paragraphs: string[]; citations: Citation[] } | DailyProblem {
   if (
     !raw ||
     typeof raw !== "object" ||
@@ -458,7 +460,7 @@ function dailyDraft(
   }
   if (!citations[0]?.facts.includes("C1") || !citations[0]?.facts.includes("I1"))
     return rejection("coverage", "draft failed strongest-cycle and interpretation ID coverage");
-  return { body: kept.join("\n\n"), citations };
+  return { body: kept.join("\n\n"), paragraphs: kept, citations };
 }
 
 function dailyDiagnostics(
@@ -492,6 +494,7 @@ async function generateDailyProse(
   if (!input.hasEligibleCycles || !input.facts.some((f) => f.id === "C1" && f.cycle))
     return {
       ...fallback,
+      paragraphs: fallback.body.split("\n\n"),
       meta: {
         ...templateMeta("no eligible cycle to write from"),
         diagnostics: dailyDiagnostics("skipped", "no_cycle", null),
@@ -537,6 +540,7 @@ async function generateDailyProse(
     const failure = gatewayFailure(error);
     return {
       ...fallback,
+      paragraphs: fallback.body.split("\n\n"),
       meta: {
         ...templateMeta(diagnosticLabel(failure.code)),
         diagnostics: dailyDiagnostics(
@@ -551,6 +555,7 @@ async function generateDailyProse(
   if ("code" in result)
     return {
       ...fallback,
+      paragraphs: fallback.body.split("\n\n"),
       meta: {
         ...templateMeta(result.reason),
         diagnostics: dailyDiagnostics("rejected", result.code, started, result.paragraph),
@@ -559,6 +564,7 @@ async function generateDailyProse(
   return {
     headline: fallback.headline,
     body: result.body,
+    paragraphs: result.paragraphs,
     prompt: fallback.prompt,
     meta: {
       mode: "model",

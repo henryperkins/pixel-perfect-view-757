@@ -101,6 +101,43 @@ interface FeedbackRow {
   labels: string[];
   created_at: string;
 }
+export interface ReadingFeedback {
+  readingId: string;
+  resonance: -1 | 0 | 1;
+  labels: string[];
+  /** First saved time; subsequent choices update the same reading's row. */
+  savedAt: string;
+}
+
+function savedReadingFeedback(row: FeedbackRow): ReadingFeedback {
+  if (
+    ![-1, 0, 1].includes(row.resonance) ||
+    !Array.isArray(row.labels) ||
+    row.labels.some((label) => typeof label !== "string") ||
+    typeof row.created_at !== "string" ||
+    !Number.isFinite(Date.parse(row.created_at))
+  )
+    throw new Error("Your saved rating could not be read. Please retry.");
+  // The explicit comparisons narrow the database number without a write cast.
+  const resonance = row.resonance === -1 ? -1 : row.resonance === 0 ? 0 : 1;
+  return {
+    readingId: row.reading_id,
+    resonance,
+    labels: row.labels,
+    savedAt: row.created_at,
+  };
+}
+
+async function loadReadingFeedback(db: DB, userId: string, readingId: string) {
+  const { data, error } = await db
+    .from<FeedbackRow>("reading_feedback")
+    .select("reading_id, resonance, labels, created_at")
+    .eq("user_id", userId)
+    .eq("reading_id", readingId)
+    .maybeSingle();
+  if (error) throw new Error("Your saved rating could not be loaded. Please retry.");
+  return data ? savedReadingFeedback(data) : null;
+}
 interface ReadingRow {
   reading_date: string;
   headline: string;
@@ -543,6 +580,33 @@ function readingLanguage(row: {
   };
 }
 
+async function savedReadingParagraphs(dek: CryptoKey, row: ExistingReadingRow, body: string) {
+  const meta = row.language_meta;
+  const encrypted =
+    meta && typeof meta === "object" && !Array.isArray(meta) ? meta["paragraphs_ct"] : undefined;
+  if (encrypted !== undefined && encrypted !== null) {
+    try {
+      if (typeof encrypted !== "string") throw new Error("Invalid paragraph envelope");
+      const paragraphs = await decryptJson<unknown>(dek, encrypted);
+      if (
+        !Array.isArray(paragraphs) ||
+        !paragraphs.every((paragraph) => typeof paragraph === "string") ||
+        paragraphs.join("\n\n") !== body
+      )
+        throw new Error("Paragraph boundaries do not match the saved reading");
+      return { paragraphs, paragraphLinksAvailable: true };
+    } catch {
+      throw new Error("Reading paragraph sources could not be loaded. Please retry.");
+    }
+  }
+  // Older model text is flattened: blank lines cannot recover its original
+  // cited paragraph numbers. Keep it readable without inventing source links.
+  return {
+    paragraphs: body.split("\n\n"),
+    paragraphLinksAvailable: row.language_mode !== "model",
+  };
+}
+
 function cyclesForLocalDay(chart: Chart, day: string, timeZone: string) {
   return computeCycles(chart, localNoon(day, timeZone)).map((cycle) => ({
     ...cycle,
@@ -640,6 +704,8 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
     // result is a quiet day; do not resurrect cycles stored for an older chart.
     const cachedChart = snapshotToChart(snapRow);
     const liveCycles = cyclesForLocalDay(cachedChart, day, tz).slice(0, 12);
+    const body = await decryptField(dek, existing.body_ct);
+    const paragraphState = await savedReadingParagraphs(dek, existing, body);
 
     return {
       needsOnboarding: false as const,
@@ -648,13 +714,15 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       reading: {
         id: existing.id,
         headline: existing.headline,
-        body: await decryptField(dek, existing.body_ct),
+        body,
+        ...paragraphState,
         prompt: existing.prompt,
         confidence: existing.confidence,
         primary_cycle_key: existing.primary_cycle_key,
         release_version: existing.release_version,
       },
       language: readingLanguage(existing),
+      feedback: await loadReadingFeedback(db, userId, existing.id),
       provenance: srcs ?? [],
       cycles: liveCycles,
       uncertainty: snapRow.uncertainty as Chart["uncertainty"],
@@ -702,6 +770,10 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
     },
   });
   const body = [prose.body, assembled.contextBody].filter(Boolean).join("\n\n");
+  const paragraphs = [
+    ...(prose.body ? prose.paragraphs : []),
+    ...(assembled.contextBody ? assembled.contextBody.split("\n\n") : []),
+  ];
   const suppliedFacts = facts.map(({ id, statement }) => ({ id, statement }));
 
   const provenance = assembled.provenance.filter(
@@ -752,7 +824,12 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       idempotency_key: idem,
       language_mode: prose.meta.mode,
       language_model: prose.meta.model,
-      language_meta: { ...prose.meta, facts: suppliedFacts, sourceCount: provenance.length },
+      language_meta: {
+        ...prose.meta,
+        facts: suppliedFacts,
+        sourceCount: provenance.length,
+        paragraphs_ct: await encryptJson(dek, paragraphs),
+      },
     })
     .select("id")
     .single();
@@ -815,6 +892,8 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       id: inserted.id,
       headline: prose.headline,
       body,
+      paragraphs,
+      paragraphLinksAvailable: true,
       prompt: prose.prompt,
       confidence: assembled.confidence,
       primary_cycle_key: assembled.primary_cycle_key,
@@ -828,6 +907,7 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       reason: prose.meta.reason,
       facts: suppliedFacts,
     },
+    feedback: await loadReadingFeedback(db, userId, inserted.id),
     provenance,
     cycles: topCycles,
     uncertainty: chart.uncertainty,
@@ -1182,22 +1262,31 @@ export async function submitFeedback(
   resonance: number,
   labels: string[],
 ) {
+  if (
+    ![-1, 0, 1].includes(resonance) ||
+    !Array.isArray(labels) ||
+    labels.length > 6 ||
+    labels.some((label) => typeof label !== "string")
+  )
+    throw new Error("Choose Yes, Mixed, or No before saving your rating.");
   const { data: reading, error: readingError } = await db
     .from<{ id: string }>("daily_readings")
     .select("id")
     .eq("user_id", userId)
     .eq("id", readingId)
     .maybeSingle();
-  if (readingError) throw new Error(readingError.message);
+  if (readingError) throw new Error("The reading could not be checked. Please retry your rating.");
   if (!reading) throw new Error("Reading not found for your account.");
-  const { error } = await db
-    .from("reading_feedback")
+  const { data: saved, error } = await db
+    .from<FeedbackRow>("reading_feedback")
     .upsert(
       { user_id: userId, reading_id: readingId, resonance, labels },
       { onConflict: "user_id,reading_id" },
-    );
-  if (error) throw new Error(error.message);
-  return { ok: true };
+    )
+    .select("reading_id, resonance, labels, created_at")
+    .single();
+  if (error || !saved) throw new Error("Your rating could not be saved. Please retry.");
+  return { ok: true as const, feedback: savedReadingFeedback(saved) };
 }
 
 export async function exportEverything(db: DB, userId: string) {
