@@ -1,0 +1,163 @@
+{
+  "identityVersion": "reading-evaluation-identity-1",
+  "role": "corrected natal-free writing run (Task 6)",
+  "notEvidenceFor": [
+    "writing quality, which is decided only by the blinded AI review in Task 7",
+    "a natal-candidate or natal-lens result",
+    "production-user acceptance"
+  ],
+  "report": {
+    "file": "corrected-report.json",
+    "sha256": "afc9bdbf879c45b5dc3bd437402d05193cf4b3f3edd6ff90c4e2aeab8ed7372b",
+    "bytes": 488742,
+    "originalName": "reading-evaluation-complete-builtin-2026-10-11T18-39-29.json",
+    "provenance": "Downloaded in the owner's signed-in Chrome from the Lovable preview admin Reading quality synthetic evaluation with the copy choice 'Natal-free built-in baseline'; the agent handled no credentials. Uploaded by the owner with Chrome's .crdownload suffix; its bytes and SHA-256 equal the in-page blob hash recorded at download time.",
+    "copiedUnchanged": true
+  },
+  "run": {
+    "host": "https://id-preview--16964b03-ff4a-4ee1-b4a5-76757e94bec3.lovable.app/content",
+    "startedAt": "2026-10-11T18:33:06Z",
+    "finishedAt": "about 2026-10-11T18:38:55Z (observed in the page; the report records no wall-clock times)",
+    "downloadedAt": "2026-10-11T18:39:29Z (from the file name)"
+  },
+  "recorded": {
+    "reportVersion": 1,
+    "source": "live-synthetic",
+    "partial": false,
+    "expectedCases": 28,
+    "fixtureVersion": "synthetic-daily-5",
+    "caseSetHash": "1fec5a7a3842cbc4f374a9058dfa3264294df875db607db2d3a92aa1306f9b07",
+    "bundleVersion": "builtin-0.5.0",
+    "bundleHash": "f68cc97e749d78d6a2332b9d87fb9fc4ce367d61d437ffa19f8485a2778330c1",
+    "transitCopyHash": "4d6048ea1d303410e2845d9dde9960da95749ff7ab20fd886779a4627abc677d",
+    "planVersion": "daily-synthesis-1",
+    "natalPlanVersion": "daily-natal-lens-2",
+    "reliabilityVersion": "natal-reliability-1",
+    "promptVersion": "daily-astro-body-8",
+    "validatorVersion": "daily-reference-5",
+    "model": "google/gemini-3.7-flash",
+    "gatewayTimeoutMs": 20000,
+    "bundleSource": "builtin"
+  },
+  "matchedInputs": {
+    "against": "source-report.json",
+    "caseSetHash": true,
+    "configHashes": "all 28 equal",
+    "bundleHash": true,
+    "transitCopyHash": true,
+    "model": true,
+    "intendedChanges": [
+      {
+        "field": "promptVersion",
+        "before": "daily-astro-body-6",
+        "after": "daily-astro-body-8"
+      },
+      {
+        "field": "bundleSource",
+        "before": null,
+        "after": "builtin"
+      }
+    ]
+  },
+  "coverage": {
+    "cases": 28,
+    "uniqueCaseIds": 28,
+    "modelAttempts": 27,
+    "outcomes": {
+      "accepted": 26,
+      "rejected": 1,
+      "unavailable": 0,
+      "skipped": 1
+    },
+    "reasons": {
+      "accepted": 26,
+      "sentence": 1,
+      "no_cycle": 1
+    },
+    "quietSkips": [
+      "quiet-threshold"
+    ],
+    "rejected": [
+      {
+        "id": "jupiter-trine-sun-technical",
+        "code": "sentence",
+        "paragraph": 2
+      }
+    ],
+    "configHashes": {
+      "saturn-square-sun": "e187b9861c7a46eeac52639583b335ac90b72882388625d8d307abe248de6d06",
+      "saturn-square-moon-warm": "e369f97aed8febe9a65ac50c90708b27b0d3f104456ecae67ec4730714bdc0c0",
+      "jupiter-trine-sun-technical": "3ebf638c593ba318448e4bd4d0553a3897be509d9b84e3e6377e8a8738c509ee",
+      "mercury-conjunction-clinical": "3762ddb52a94d22102acfa17e2f265b37c6d670745c09270f3f53b7834646473",
+      "venus-opposition-venus": "2561b43176c3ef5d795dfe804e9653aba97a655d5136a889ddd5725e597a144d",
+      "unknown-birth-time": "b0480b76e0a296a203b83d8fb1327a600c1b7dbd0529d10ebdbe9e8fd633201c",
+      "approximate-birth-time": "6c4f4b4d3a502f296b2b27b00323692455dcea79aa282a74536c8e6fbdcc7912",
+      "moon-dst-boundary": "d129b104e59a8ebdc841d36bc2cf4cee4e0cc7ede8127c1aa7885271d6a55f63",
+      "multiple-cycles": "a62dc45aeb2c6d54a080097a456288301ead514f352dbc69340d37f1a1b9164e",
+      "quiet-threshold": "bfdfbb5382449b33e3a182b6e21977b4c0c9ed332a5bd1e7c70c2c185e673471",
+      "synthesis-tension": "3fdf4b643c088fcf8cb3578c3229f054fee194a191306b8ba8e4203107d8c455",
+      "synthesis-reinforcement": "33632ae15d14ef1ea063d98729d37cf7563fd296dbb4f423434303b05a455fba",
+      "synthesis-independent": "1ad980f698f0d5aead5b90ecea8fa09276b5423cb8740455c72bee08b2fa2dec",
+      "synthesis-reversed": "db092d7835ae45352a95fe147ec74b91c8b2591f4eaab3ad13d7725a70c044d9",
+      "synthesis-suppressed-support": "424afd236e049451ec2fea793f57f91ad480f49e7605e42d2479a11cb27c70e7",
+      "synthesis-unmatched": "d04a16668194da1ff267e77a54951faacfa31284f8fc2626a39de8848dd32b03",
+      "natal-duty-reflex": "3a65b0d6df3e2a2269ae5e165257d1b4e293ea1874dea4406a656641bbf76ffd",
+      "natal-freedom-reflex": "c1f1ff83440ce74b844630fa448a80e3d12f5ccbb48ca14276541809d46119f3",
+      "natal-service-aspect": "a208d473f64da7640d8a8ff5be04bf47bb25668020bdba637b81beecc03a45e1",
+      "natal-exact-house": "99f54fd01658020790c37408a63adc2aca1287aa584fc87a770d04ce229f9178",
+      "natal-own-target": "98457b7ef5315a0346bc96ec61dceb0c5db32c5197a0cff06e2e412679d198bd",
+      "natal-moon-fallback": "4633dbc57d07af7296919ea2234400223d67d33bd01a9c2adbd5013e0b27630e",
+      "natal-sign-boundary": "d467fd07e26f74a4fea10e634d27166f1c78fdfd6fd9d22721751f06caa95331",
+      "natal-unknown-time": "4392d36cb5a207a2a33cdf69597829321dd6e2ac6281bb743a06609bdc2ebb81",
+      "natal-mixed-source": "557a400f9f662f63301d83258e3534cdd37f7bd54061095236b8d88c91c1edae",
+      "natal-degraded-positions": "1dcc3a56a36f8e14334dcf0ec56b5779aecec8a4f10441444bdfa1d0a61a64ba",
+      "natal-legacy-snapshot": "8266feba507191e2a5b0dbaa6369295d6b1115d593c206259723669808d0c471",
+      "natal-synthesis-integration": "7401a35994fd219f25c7fe86fa908c08961c79433c21e29a928fc92b85ea0875"
+    }
+  },
+  "candidates": {
+    "captured": 27,
+    "truncated": 0,
+    "captureLossless": 27
+  },
+  "natal": {
+    "casesWithN1": [],
+    "note": "Natal-free run; the natal-* names come from the fixed v5 fixture."
+  },
+  "manualReview": {
+    "filledValues": 0,
+    "note": "Left untouched; AI review is recorded in separate artifacts."
+  },
+  "latencyMs": {
+    "min": 5168,
+    "median": 11552,
+    "max": 19508,
+    "sum": 316438,
+    "scope": "Recorded attempt durations for this run only"
+  },
+  "replay": {
+    "file": "corrected-replay.json",
+    "matchingOutcomes": "28/28",
+    "differences": 0,
+    "note": "Validator integrity only; replay cannot show the prompt change's effect."
+  },
+  "build": {
+    "sourceRevision": "4c96fd55d0892e0a289be2e450438ee094b16f34",
+    "evidence": [
+      "The report records no commit SHA or build identity; this revision is inferred from deployment evidence.",
+      "origin/main was pushed from 5e5a7d4 to 4c96fd5 at 2026-10-11T18:30:19Z and ls-remote returned 4c96fd5.",
+      "Lovable get_project reported latest_commit_sha 4c96fd5 (last_edited_at 18:30:27.7Z) before the run and still at 19:55Z, so no later commit reached the preview.",
+      "The report carries prompt daily-astro-body-8 and the bundleSource selector, which exist only from this revision."
+    ]
+  },
+  "cost": {
+    "usage": null,
+    "evidence": "The report returns no billing usage or cost, and no dashboard evidence was captured. At most 27 model calls; no cost is inferred from latency."
+  },
+  "gaps": [
+    "No returned billing usage or cost",
+    "No raw HTTP response",
+    "Deployed commit inferred from push and Lovable sync evidence, not recorded in the report",
+    "No blinded AI review yet and no human review"
+  ]
+}
