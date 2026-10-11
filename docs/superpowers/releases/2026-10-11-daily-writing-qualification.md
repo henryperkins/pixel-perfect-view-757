@@ -41,10 +41,21 @@ Publish in Lovable; never rewrite published history. A rollback is another promp
 identity change: readers regenerate once more, and saved readings and feedback are
 not rewritten. Content needs no rollback, because no content pointer changed.
 
+## Model change after this round
+
+At 21:26Z on 2026-10-11, commit `c87b4b4` moved member readings, natal chapters and
+`/content` generation from the deprecated `google/gemini-3.7-flash` to
+`google/gemini-3.8-flash`. Gemini Enterprise, an admin-only evaluation provider
+added in `21a014f`, also uses 3.8 Flash. Every result above was measured with 3.7
+Flash and does not describe the current model. The model is part of the Today cache
+identity, so members regenerate once more under 3.8 Flash. Member readings still
+use the Lovable gateway and its credit.
+
 ## Next correction round
 
 The [writing review](../../reviews/daily-reading-writing/2026-10-11/writing-review.md)
 names what a second round must change: keep `T1`'s window position separate from the
 exact date, keep the conditions of enabling statements, give the template fallback a
 connected form, and watch repetition. It needs a new prompt identity, a fresh hosted
-run (at most 27 calls, after gateway credit is restored) and fresh blinded reviewers.
+run on 3.8 Flash with a matched 3.8 Flash baseline (at most 27 calls each, on the
+Lovable gateway or Gemini Enterprise, never mixed) and fresh blinded reviewers.
