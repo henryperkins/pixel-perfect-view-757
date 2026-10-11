@@ -544,7 +544,7 @@ function TodayReading({ accountId }: { accountId: string }) {
   const rate = useMutation({
     mutationFn: (vars: { readingId: string; resonance: number }) =>
       feedback({ data: { readingId: vars.readingId, resonance: vars.resonance, labels: [] } }),
-    onSuccess: () => toast.success("Noted. Feedback tunes ranking only."),
+    onSuccess: () => toast.success("Feedback saved."),
     onError: (e: Error) => toast.error(e.message),
   });
 
@@ -879,6 +879,13 @@ function TodayReading({ accountId }: { accountId: string }) {
                 </Button>
               ))}
             </div>
+            <p className="mt-3 text-xs text-muted-foreground">
+              Your rating is saved to your account. Aggregate quality reports require a separate{" "}
+              <Link to="/privacy" className="underline underline-offset-4 hover:text-foreground">
+                permission in Context &amp; privacy
+              </Link>
+              .
+            </p>
             <details className="mt-6 border-t border-rule pt-3">
               <summary className="technical cursor-pointer text-muted-foreground">
                 Technical details

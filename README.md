@@ -70,3 +70,27 @@ contradictions; citation IDs do **not** prove arbitrary semantic support.
 
 See [the reading integrity notes](READING-INTEGRITY.md) for the audit findings and
 the remaining validation limits.
+
+## Reading measurement
+
+The admin Reading quality panel at `/content` reports the most recent 300 persisted
+daily generation outcomes. New readings record bounded rejection codes and
+prompt/validator versions in the existing `language_meta` field. Cached reads add
+no observation. Attempt-based fallback rates exclude quiet days, missing
+configuration and rows without valid diagnostics; historical outcomes are not
+guessed or regenerated. Gateway response bodies and exception text are excluded.
+
+Numeric resonance scores appear in aggregate cohorts only while the reader's
+separate **Reading quality feedback** source (USR-15) is enabled. Private saves
+never enable it, and revocation excludes saved scores from future reports. Notes
+and labels are not read. Cohort counts and coverage describe selected feedback,
+not proof of writing quality.
+
+```sh
+npm run eval:reading -- --output /tmp/pattern-baseline.json
+```
+
+The [fixed evaluation guide](READING-EVALUATION.md) explains ten synthetic cases,
+offline candidate replay, before/after comparisons, and the manual writing rubric.
+Handwritten validator fixtures do not establish a live model fallback rate or a
+quality score. No production schema change or model call is needed for this work.

@@ -6,18 +6,30 @@
  *
  *   1. The model sees a fact block and nothing else — no birth details, no
  *      notes, no free text the reader wrote.
- *   2. Every paragraph must cite the fact ids it used. A paragraph citing an
- *      id that was not injected is dropped before anyone sees it.
- *   3. Whatever survives still passes the DER-22 safety pass, and if nothing
- *      survives — or the gateway fails, is rate limited, or is out of credit —
- *      the deterministic template copy is used instead and labelled as such.
+ *   2. Every paragraph must cite supplied fact ids. A daily draft fails as a
+ *      whole when it breaks the daily guards; natal essays retain their own
+ *      paragraph verification path. ID membership does not prove support.
+ *   3. Wording passes DER-22 checks. Rejected daily drafts and gateway failures
+ *      use labelled deterministic copy; their diagnostics retain only bounded
+ *      codes and timings, never raw errors or generated text.
  */
 import { safetyPass } from "../content/default-bundle";
 import { normalizeDepth, normalizeTone } from "../reading.server";
 import { factBlock, factIds, type FactAtom } from "./facts";
+import {
+  DAILY_DIAGNOSTICS_VERSION,
+  DAILY_PROMPT_VERSION,
+  DAILY_VALIDATOR_VERSION,
+  MAX_DAILY_DURATION_MS,
+  LANGUAGE_MODEL,
+  diagnosticLabel,
+  type DailyDiagnostics,
+  type DailyGatewayCode,
+  type DailyRejectionCode,
+} from "./diagnostics";
+export { LANGUAGE_MODEL, DAILY_PROMPT_VERSION, DAILY_VALIDATOR_VERSION } from "./diagnostics";
 
 const GATEWAY = "https://ai.gateway.lovable.dev/v1/chat/completions";
-export const LANGUAGE_MODEL = "google/gemini-3.7-flash";
 
 const VOICE = [
   "You write for an astrology app that shows its work.",
@@ -42,6 +54,7 @@ export interface LanguageMeta {
   dropped: number;
   flagged: string[];
   reason: string | null;
+  diagnostics?: DailyDiagnostics;
 }
 
 export interface ReadingProse {
@@ -62,7 +75,21 @@ interface JsonSchemaObject {
   additionalProperties: false;
 }
 
-/** One gateway call returning a strict-schema JSON object, or throwing. */
+/** Fixed boundary failures never retain response bodies or exception messages. */
+class GatewayUnavailable extends Error {
+  constructor(readonly code: DailyGatewayCode) {
+    super(diagnosticLabel(code));
+  }
+}
+function gatewayFailure(error: unknown, signal?: AbortSignal): GatewayUnavailable {
+  if (error instanceof GatewayUnavailable) return error;
+  const name = error && typeof error === "object" && "name" in error ? error.name : null;
+  if (signal?.aborted || name === "TimeoutError" || name === "AbortError")
+    return new GatewayUnavailable("timeout");
+  return new GatewayUnavailable(error instanceof SyntaxError ? "bad_json" : "network");
+}
+
+/** One gateway call returning a strict-schema JSON object, or a safe closed failure. */
 async function callGateway<T>(
   user: string,
   schemaName: string,
@@ -70,41 +97,60 @@ async function callGateway<T>(
   timeoutMs = 90000,
 ): Promise<T> {
   const key = process.env["LOVABLE_API_KEY"];
-  if (!key) throw new Error("language layer is not configured");
-
-  const res = await fetch(GATEWAY, {
-    method: "POST",
-    signal: AbortSignal.timeout(timeoutMs),
-    headers: {
-      "content-type": "application/json",
-      Authorization: `Bearer ${key}`,
-      "Lovable-API-Key": key,
-      "X-Lovable-AIG-SDK": "fetch",
-    },
-    body: JSON.stringify({
-      model: LANGUAGE_MODEL,
-      messages: [
-        { role: "system", content: VOICE },
-        { role: "user", content: user },
-      ],
-      response_format: {
-        type: "json_schema",
-        json_schema: { name: schemaName, strict: true, schema },
+  if (!key) throw new GatewayUnavailable("not_configured");
+  const signal = AbortSignal.timeout(timeoutMs);
+  let res: Response;
+  try {
+    res = await fetch(GATEWAY, {
+      method: "POST",
+      signal,
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${key}`,
+        "Lovable-API-Key": key,
+        "X-Lovable-AIG-SDK": "fetch",
       },
-    }),
-  });
-
-  if (!res.ok) {
-    const detail = (await res.text()).slice(0, 300);
-    throw new Error(`gateway ${res.status}: ${detail}`);
+      body: JSON.stringify({
+        model: LANGUAGE_MODEL,
+        messages: [
+          { role: "system", content: VOICE },
+          { role: "user", content: user },
+        ],
+        response_format: {
+          type: "json_schema",
+          json_schema: { name: schemaName, strict: true, schema },
+        },
+      }),
+    });
+  } catch (error) {
+    throw gatewayFailure(error, signal);
   }
-
-  const payload = (await res.json()) as {
-    choices?: { message?: { content?: string } }[];
-  };
-  const content = payload.choices?.[0]?.message?.content;
-  if (!content) throw new Error("gateway returned no content");
-  return JSON.parse(content) as T;
+  if (!res.ok) {
+    const code: DailyGatewayCode =
+      res.status === 429
+        ? "rate_limit"
+        : res.status === 402
+          ? "credit"
+          : res.status === 401 || res.status === 403
+            ? "auth"
+            : res.status === 408 || res.status === 504
+              ? "timeout"
+              : "http";
+    throw new GatewayUnavailable(code);
+  }
+  let payload: { choices?: { message?: { content?: string } }[] } | null;
+  try {
+    payload = await res.json();
+  } catch (error) {
+    throw gatewayFailure(error, signal);
+  }
+  const content = payload?.choices?.[0]?.message?.content;
+  if (!content) throw new GatewayUnavailable("empty_response");
+  try {
+    return JSON.parse(content) as T;
+  } catch (error) {
+    throw gatewayFailure(error, signal);
+  }
 }
 
 interface Written {
@@ -189,28 +235,37 @@ function canonicalAspect(value: string): string {
   return value === "sextiles" ? "sextile" : value;
 }
 
+interface DailyProblem {
+  code: DailyRejectionCode;
+  reason: string;
+  paragraph: number | null;
+}
+function rejection(code: DailyRejectionCode, reason: string): DailyProblem {
+  return { code, reason, paragraph: null };
+}
+
 /** Bounded contradiction checks: IDs and lexical references cannot prove arbitrary prose. */
 function dailyReferenceProblem(
   text: string,
   cited: FactAtom[],
   suppression: ReadingProseInput["suppression"],
-): string | null {
+): DailyProblem | null {
   if (
     suppression.angles &&
     /\b(ascendant|descendant|midheaven|imum coeli|rising sign|asc|mc|ic)\b/i.test(text)
   )
-    return "draft contains suppressed angle wording";
+    return rejection("suppression", "draft contains suppressed angle wording");
   if (suppression.houses && /\b(houses?|cusps?)\b/i.test(text))
-    return "draft contains suppressed house wording";
+    return rejection("suppression", "draft contains suppressed house wording");
   if (SIGNS.test(text) || HOUSE_PLACEMENT.test(text))
-    return "draft contains a placement absent from daily facts";
+    return rejection("placement", "draft contains a placement absent from daily facts");
   const cycles = cited.flatMap((f) => (f.cycle ? [f.cycle] : []));
   const bodies = new Set(
     cycles.flatMap((c) => [canonicalBody(c.transitBody), canonicalBody(c.natalPoint)]),
   );
   for (const match of text.matchAll(new RegExp(`\\b(${BODY_NAMES})\\b`, "gi"))) {
     if (!bodies.has(canonicalBody(match[0])))
-      return "draft names a body absent from its cited cycles";
+      return rejection("body", "draft names a body absent from its cited cycles");
   }
   const pairs = new RegExp(
     `\\b(${BODY_NAMES})\\s+(?:(?:is|was|forms?|makes?|forming|making|in|a|an)\\s+){0,3}(${ASPECT_NAMES})\\s+(?:(?:to|with|of|against|the|your|natal|birth)\\s+){0,4}(${BODY_NAMES})\\b`,
@@ -233,7 +288,7 @@ function dailyReferenceProblem(
               canonicalBody(c.natalPoint) === first)),
       )
     )
-      return "draft contradicts its cited body/aspect relation";
+      return rejection("relation", "draft contradicts its cited body/aspect relation");
   }
   const joinedPairs = new RegExp(
     `\\b(${BODY_NAMES})\\s+(?:and|with)\\s+(?:your |natal )?(${BODY_NAMES})\\s+(?:(?:are|is|form|forms|make|makes|in|a|an)\\s+){0,4}(${ASPECT_NAMES})\\b`,
@@ -251,7 +306,7 @@ function dailyReferenceProblem(
             (canonicalBody(c.transitBody) === second && canonicalBody(c.natalPoint) === first)),
       )
     )
-      return "draft contradicts its cited body/aspect relation";
+      return rejection("relation", "draft contradicts its cited body/aspect relation");
   }
   // The brief requires digit literals for degree references; spelled numbers
   // cannot be compared reliably with the typed orb and therefore fail closed.
@@ -262,7 +317,7 @@ function dailyReferenceProblem(
         before,
       )
     )
-      return "draft contains an uncheckable worded degree value";
+      return rejection("worded_degree", "draft contains an uncheckable worded degree value");
   }
   for (const match of text.matchAll(/(-?\d+(?:\.\d+)?)\s*-?\s*(?:°|degrees?\b)/gi)) {
     const value = Number(match[1]);
@@ -277,11 +332,11 @@ function dailyReferenceProblem(
             Math.abs(Math.round(c.orb * 10 ** decimals) / 10 ** decimals - value) < 1e-7),
       )
     )
-      return "draft contains an orb absent from its cited cycles";
+      return rejection("orb", "draft contains an orb absent from its cited cycles");
   }
   for (const match of text.matchAll(/\b\d{4}-\d{2}-\d{2}\b/g)) {
     if (!cycles.some((c) => c.exactDate === match[0]))
-      return "draft contains a date absent from its cited cycles";
+      return rejection("date", "draft contains a date absent from its cited cycles");
   }
   return null;
 }
@@ -289,24 +344,30 @@ function dailyReferenceProblem(
 function dailyDraft(
   raw: unknown,
   input: ReadingProseInput,
-): { body: string; citations: Citation[] } | string {
+): { body: string; citations: Citation[] } | DailyProblem {
   if (
     !raw ||
     typeof raw !== "object" ||
     !Array.isArray((raw as { paragraphs?: unknown }).paragraphs)
   )
-    return "draft has malformed paragraph data";
+    return rejection("shape", "draft has malformed paragraph data");
   const paragraphs = (raw as { paragraphs: unknown[] }).paragraphs;
   if (paragraphs.length < 3 || paragraphs.length > 5)
-    return "draft must contain three to five paragraphs";
+    return rejection("count", "draft must contain three to five paragraphs");
   const byId = new Map(input.facts.map((f) => [f.id, f]));
   const kept: string[] = [],
     citations: Citation[] = [];
   const covered = new Set<string>();
   const segmenter = new Intl.Segmenter("en", { granularity: "sentence" });
   let words = 0;
-  for (const paragraph of paragraphs) {
-    if (!paragraph || typeof paragraph !== "object") return "draft has malformed paragraph data";
+  for (const [index, paragraph] of paragraphs.entries()) {
+    const rejectParagraph = (code: DailyRejectionCode, reason: string): DailyProblem => ({
+      code,
+      reason,
+      paragraph: index + 1,
+    });
+    if (!paragraph || typeof paragraph !== "object")
+      return rejectParagraph("shape", "draft has malformed paragraph data");
     const p = paragraph as { text?: unknown; facts?: unknown };
     if (
       typeof p.text !== "string" ||
@@ -315,7 +376,7 @@ function dailyDraft(
       !p.facts.length ||
       p.facts.some((id) => typeof id !== "string" || !byId.has(id))
     )
-      return "draft failed supplied-ID validation";
+      return rejectParagraph("id", "draft failed supplied-ID validation");
     const text = p.text.trim();
     const sentences = [...segmenter.segment(text)].map((s) => s.segment.trim()).filter(Boolean);
     if (
@@ -323,19 +384,23 @@ function dailyDraft(
       sentences.length > 4 ||
       sentences.some((s) => !/[.!?]["')\]]*$/.test(s))
     )
-      return "draft paragraphs must contain two to four complete sentences";
+      return rejectParagraph(
+        "sentence",
+        "draft paragraphs must contain two to four complete sentences",
+      );
     const count = text.split(/\s+/).length;
     words += count;
     if (count > 200 || words > 700 || text.length > 1600)
-      return "draft exceeds the daily length limit";
-    if (safetyPass(text).flagged.length) return "draft failed the language safety check";
+      return rejectParagraph("length", "draft exceeds the daily length limit");
+    if (safetyPass(text).flagged.length)
+      return rejectParagraph("safety", "draft failed the language safety check");
     const ids = [...new Set(p.facts as string[])];
     const problem = dailyReferenceProblem(
       text,
       ids.map((id) => byId.get(id)!),
       input.suppression,
     );
-    if (problem) return problem;
+    if (problem) return { ...problem, paragraph: index + 1 };
     ids.forEach((id) => covered.add(id));
     kept.push(text);
     citations.push({ paragraph: kept.length, facts: ids });
@@ -346,14 +411,42 @@ function dailyDraft(
     !citations[0]?.facts.includes("I1") ||
     required.some((id) => !covered.has(id))
   )
-    return "draft failed required cycle/editorial ID coverage";
+    return rejection("coverage", "draft failed required cycle/editorial ID coverage");
   return { body: kept.join("\n\n"), citations };
+}
+
+function dailyDiagnostics(
+  outcome: DailyDiagnostics["outcome"],
+  code: DailyDiagnostics["code"],
+  started: number | null,
+  paragraph: number | null = null,
+): DailyDiagnostics {
+  return {
+    version: DAILY_DIAGNOSTICS_VERSION,
+    promptVersion: DAILY_PROMPT_VERSION,
+    validatorVersion: DAILY_VALIDATOR_VERSION,
+    model: LANGUAGE_MODEL,
+    outcome,
+    attempted: started !== null,
+    code,
+    durationMs:
+      started === null
+        ? null
+        : Math.min(MAX_DAILY_DURATION_MS, Math.max(0, Math.round(performance.now() - started))),
+    paragraph,
+  };
 }
 
 export async function generateReadingProse(input: ReadingProseInput): Promise<ReadingProse> {
   const { fallback } = input;
   if (!input.hasEligibleCycles || !input.facts.some((f) => f.id === "C1" && f.cycle))
-    return { ...fallback, meta: templateMeta("no eligible cycle to write from") };
+    return {
+      ...fallback,
+      meta: {
+        ...templateMeta("no eligible cycle to write from"),
+        diagnostics: dailyDiagnostics("skipped", "no_cycle", null),
+      },
+    };
   const prompt = [
     `Tone preference: ${normalizeTone(input.tone)}. Depth preference: ${normalizeDepth(input.depth)}.`,
     "Facts:",
@@ -374,13 +467,32 @@ export async function generateReadingProse(input: ReadingProseInput): Promise<Re
     .filter(Boolean)
     .join("\n");
   let raw: unknown;
+  const started = performance.now();
   try {
     raw = await callGateway(prompt, "daily_reading", READING_SCHEMA, 12000);
-  } catch (e) {
-    return { ...fallback, meta: templateMeta((e as Error).message) };
+  } catch (error) {
+    const failure = gatewayFailure(error);
+    return {
+      ...fallback,
+      meta: {
+        ...templateMeta(diagnosticLabel(failure.code)),
+        diagnostics: dailyDiagnostics(
+          "unavailable",
+          failure.code,
+          failure.code === "not_configured" ? null : started,
+        ),
+      },
+    };
   }
   const result = dailyDraft(raw, input);
-  if (typeof result === "string") return { ...fallback, meta: templateMeta(result) };
+  if ("code" in result)
+    return {
+      ...fallback,
+      meta: {
+        ...templateMeta(result.reason),
+        diagnostics: dailyDiagnostics("rejected", result.code, started, result.paragraph),
+      },
+    };
   return {
     headline: fallback.headline,
     body: result.body,
@@ -392,6 +504,7 @@ export async function generateReadingProse(input: ReadingProseInput): Promise<Re
       dropped: 0,
       flagged: [],
       reason: null,
+      diagnostics: dailyDiagnostics("accepted", "accepted", started),
     },
   };
 }

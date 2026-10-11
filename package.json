@@ -11,6 +11,7 @@
     "lint": "eslint .",
     "test": "node --test tests/*.test.mjs",
     "test:reading": "node --test tests/reading-*.test.mjs tests/timing-calendar.test.mjs",
+    "eval:reading": "node scripts/evaluate-readings.mjs",
     "test:check-in": "node --test tests/check-in.test.mjs",
     "format": "prettier --write ."
   },

@@ -3,6 +3,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import {
@@ -49,14 +51,21 @@ type Release = {
 };
 
 function ContentPage() {
+  const { session } = useAuth();
   const releasesFn = useServerFn(fetchReleases);
   const activateFn = useServerFn(activateContentRelease);
   const queryClient = useQueryClient();
-  const query = useQuery({ queryKey: ["releases"], queryFn: () => releasesFn({}) });
+  const query = useQuery({
+    queryKey: ["releases", session?.userId],
+    queryFn: () => releasesFn({}),
+    enabled: Boolean(session),
+  });
   const [pending, setPending] = useState<Release | null>(null);
-  const [result, setResult] = useState<
-    { kind: "success" | "error"; version: string; message: string } | null
-  >(null);
+  const [result, setResult] = useState<{
+    kind: "success" | "error";
+    version: string;
+    message: string;
+  } | null>(null);
 
   const releases: Release[] = query.data?.releases ?? [];
   const isAdmin = query.data?.isAdmin ?? false;
@@ -89,12 +98,12 @@ function ContentPage() {
   return (
     <Shell>
       <div className="grid animate-rise gap-10 lg:grid-cols-[minmax(0,1fr)_14rem]">
-        <div>
+        <div className="min-w-0">
           <h1 className="text-3xl leading-snug">Content releases</h1>
           <p className="prose-reading mt-4 text-foreground">
-            Interpretation copy is published as immutable, checksummed releases through the
-            signed editorial endpoint. Readings record the release they were assembled from,
-            so any paragraph can be traced back to the exact text version that produced it.
+            Interpretation copy is published as immutable, checksummed releases through the signed
+            editorial endpoint. Readings record the release they were assembled from, so any
+            paragraph can be traced back to the exact text version that produced it.
           </p>
 
           {result ? (
@@ -145,15 +154,12 @@ function ContentPage() {
               ))}
             </div>
           ) : query.error ? (
-            <div
-              role="alert"
-              className="mt-8 border border-destructive/40 bg-evidence p-4"
-            >
+            <div role="alert" className="mt-8 border border-destructive/40 bg-evidence p-4">
               <p className="technical text-destructive">Release inventory unreachable</p>
               <p className="prose-reading mt-2 text-foreground">
-                The editorial plane could not be read, so this list is unknown rather than
-                empty. Published readings are unaffected — they record the release they were
-                assembled from.
+                The editorial plane could not be read, so this list is unknown rather than empty.
+                Published readings are unaffected — they record the release they were assembled
+                from.
               </p>
               <p className="mt-3 font-mono text-xs break-words text-muted-foreground">
                 {query.error.message}
@@ -171,9 +177,9 @@ function ContentPage() {
             <div className="mt-8 border border-rule bg-evidence p-4">
               <p className="technical text-evidence-foreground">No published release</p>
               <p className="prose-reading mt-2 text-foreground">
-                Nothing has been ingested through the signed editorial endpoint yet, so
-                readings are assembled from built-in fallback copy. This is a real result,
-                not a loading state — the list stays empty until a release is published.
+                Nothing has been ingested through the signed editorial endpoint yet, so readings are
+                assembled from built-in fallback copy. This is a real result, not a loading state —
+                the list stays empty until a release is published.
               </p>
               <button
                 type="button"
@@ -191,11 +197,7 @@ function ContentPage() {
                   <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
                     <h2 className="font-mono text-sm text-foreground">{r.version}</h2>
                     <span className="technical text-muted-foreground">
-                      {r.is_active ? (
-                        <span className="text-primary">active</span>
-                      ) : (
-                        "superseded"
-                      )}
+                      {r.is_active ? <span className="text-primary">active</span> : "superseded"}
                     </span>
                     <span className="technical ml-auto text-muted-foreground">
                       {r.created_at.slice(0, 10)}
@@ -210,8 +212,7 @@ function ContentPage() {
                       Entries · <span className="text-foreground">{r.entries}</span>
                     </span>
                     <span className="technical text-muted-foreground">
-                      Checksum ·{" "}
-                      <span className="text-foreground">{r.checksum.slice(0, 16)}…</span>
+                      Checksum · <span className="text-foreground">{r.checksum.slice(0, 16)}…</span>
                     </span>
                   </div>
 
@@ -256,8 +257,6 @@ function ContentPage() {
           <DraftPlane isAdmin={isAdmin} />
         </div>
 
-
-
         <Rail title="Editorial plane">
           <Field
             label="Releases"
@@ -300,9 +299,9 @@ function ContentPage() {
             </h2>
             <p className="prose-reading mt-3 text-foreground">
               Today’s and future readings will be assembled from{" "}
-              <span className="font-mono text-sm">{pending.version}</span> instead of the
-              current release. Already-published readings are not rewritten — each one
-              records the version it came from.
+              <span className="font-mono text-sm">{pending.version}</span> instead of the current
+              release. Already-published readings are not rewritten — each one records the version
+              it came from.
             </p>
             <dl className="mt-4 space-y-1 border-t border-rule pt-3">
               <div className="flex justify-between gap-4">
@@ -368,8 +367,7 @@ function EdgePlane() {
   const unavailable = Boolean((query.data as { unavailable?: boolean } | undefined)?.unavailable);
 
   const start = useMutation({
-    mutationFn: () =>
-      triggerFn({ data: { day: new Date().toISOString().slice(0, 10) } }),
+    mutationFn: () => triggerFn({ data: { day: new Date().toISOString().slice(0, 10) } }),
     onSuccess: (data) => {
       toast.success(`Durable run started · ${data.instanceId.slice(0, 8)}…`);
       void queryClient.invalidateQueries({ queryKey: ["edge-plane"] });
@@ -381,9 +379,9 @@ function EdgePlane() {
     <section className="mt-12 border-t border-rule pt-8">
       <h2 className="text-2xl leading-snug">Durable run ledger</h2>
       <p className="prose-reading mt-3 text-foreground">
-        Publishing or rolling back a release mirrors the active pointer into the edge
-        records store and starts a durable workflow that writes an immutable reading
-        artifact. Each row below is one completed instance, with the artifact it produced.
+        Publishing or rolling back a release mirrors the active pointer into the edge records store
+        and starts a durable workflow that writes an immutable reading artifact. Each row below is
+        one completed instance, with the artifact it produced.
       </p>
 
       {query.isPending ? (
@@ -400,8 +398,8 @@ function EdgePlane() {
         <div role="alert" className="mt-6 border border-destructive/40 bg-evidence p-4">
           <p className="technical text-destructive">Run ledger unreachable</p>
           <p className="prose-reading mt-2 text-foreground">
-            The durable plane could not be read. Readings are unaffected — they are
-            assembled from the release recorded on each one.
+            The durable plane could not be read. Readings are unaffected — they are assembled from
+            the release recorded on each one.
           </p>
           <button
             type="button"
@@ -416,16 +414,16 @@ function EdgePlane() {
         <div className="mt-6 border border-rule bg-evidence p-4">
           <p className="technical text-evidence-foreground">Edge plane not configured</p>
           <p className="prose-reading mt-2 text-foreground">
-            No durable workflow endpoint is wired to this environment, so releases stay
-            app-local and no artifacts are written.
+            No durable workflow endpoint is wired to this environment, so releases stay app-local
+            and no artifacts are written.
           </p>
         </div>
       ) : runs.length === 0 ? (
         <div className="mt-6 border border-rule bg-evidence p-4">
           <p className="technical text-evidence-foreground">No runs yet</p>
           <p className="prose-reading mt-2 text-foreground">
-            The ledger fills the first time a release is published, rolled back, or a run
-            is started by hand.
+            The ledger fills the first time a release is published, rolled back, or a run is started
+            by hand.
           </p>
         </div>
       ) : (
@@ -477,35 +475,68 @@ function EdgePlane() {
   );
 }
 
-/**
- * Reading quality: which fact atoms the language layer actually cited, how
- * often it fell back to deterministic copy, and why. Reads citation metadata
- * only — never prose, never any encrypted field.
- */
+/** Bounded metadata describes persisted generations, never reading text or private context. */
 function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
+  const { session } = useAuth();
   const qualityFn = useServerFn(fetchReadingQuality);
   const query = useQuery({
-    queryKey: ["reading-quality"],
+    queryKey: ["reading-quality", session?.userId],
     queryFn: () => qualityFn({}),
-    enabled: isAdmin,
+    enabled: Boolean(isAdmin && session),
   });
 
-  if (!isAdmin) return null;
+  if (!isAdmin || (query.data && !query.data.isAdmin)) return null;
   const data = query.data && query.data.isAdmin ? query.data : null;
+  const percent = (value: number | null, missing: string) =>
+    value === null
+      ? missing
+      : new Intl.NumberFormat("en-US", { maximumFractionDigits: 1 }).format(value) + "%";
+  const outcomeLabel = (outcome: string, code: string) =>
+    code === "not_configured"
+      ? "Not configured"
+      : outcome === "accepted"
+        ? "Accepted"
+        : outcome === "rejected"
+          ? "Validation rejected"
+          : outcome === "unavailable"
+            ? "Gateway unavailable"
+            : "Skipped before a model call";
 
   return (
-    <section className="mt-12 border-t border-rule pt-8">
-      <h2 className="text-2xl leading-snug">Reading quality</h2>
+    <section
+      className="mt-12 min-w-0 border-t border-rule pt-8"
+      aria-labelledby="reading-quality-heading"
+    >
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <h2 id="reading-quality-heading" className="text-2xl leading-snug">
+          Reading quality
+        </h2>
+        <Button
+          variant="outline"
+          size="sm"
+          type="button"
+          disabled={query.isFetching}
+          onClick={() => void query.refetch()}
+        >
+          {query.isFetching ? "Refreshing…" : "Refresh measurements"}
+        </Button>
+      </div>
       <p className="prose-reading mt-3 text-foreground">
-        Every generated paragraph must cite the calculated facts it rests on, and anything
-        citing a fact that was not injected is dropped before it is shown. This is the
-        record of what the language layer actually used, so you can see whether it is
-        adding value or mostly falling back to deterministic copy.
+        This report covers up to 300 recent persisted reading generations, ordered by creation time.
+        It counts generations, not page views or all gateway traffic. Opening a cached reading adds
+        no observation. Only instrumented generations have measured outcomes; missing, invalid or
+        incompatible structured diagnostics remain separate as legacy.
+      </p>
+      <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+        When a daily draft fails validation, the whole draft falls back to template wording.
+        Citation checks verify supplied IDs and coverage, with bounded wording checks. They do not
+        establish that every claim is semantically supported by a cited fact. This report contains
+        counts, codes and versions, never reading text or private context.
       </p>
 
       {query.isPending ? (
         <div className="mt-6 space-y-3" aria-busy="true" aria-live="polite">
-          <p className="technical text-muted-foreground">Loading citation record…</p>
+          <p className="technical text-muted-foreground">Loading generation measurements…</p>
           {[0, 1].map((i) => (
             <div key={i} className="border border-rule bg-card p-4">
               <div className="h-3 w-48 animate-pulse bg-muted" />
@@ -515,149 +546,410 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
         </div>
       ) : query.error ? (
         <div role="alert" className="mt-6 border border-destructive/40 bg-evidence p-4">
-          <p className="technical text-destructive">Citation record unreachable</p>
+          <p className="technical text-destructive">Generation measurements unreachable</p>
           <p className="prose-reading mt-2 text-foreground">
-            The stored language metadata could not be read. Readings themselves are
-            unaffected.
+            Stored metadata could not be read. These measurements are unavailable; readings
+            themselves are unaffected.
           </p>
-          <button
+          <Button
+            variant="outline"
+            size="sm"
             type="button"
-            onClick={() => void query.refetch()}
             disabled={query.isFetching}
-            className="technical mt-4 border border-rule px-3 py-1.5 text-foreground transition-colors hover:bg-evidence disabled:opacity-50"
+            onClick={() => void query.refetch()}
+            className="mt-4"
           >
-            {query.isFetching ? "Retrying…" : "Retry"}
-          </button>
+            {query.isFetching ? "Retrying…" : "Retry measurements"}
+          </Button>
         </div>
       ) : !data || data.total === 0 ? (
         <div className="mt-6 border border-rule bg-evidence p-4">
-          <p className="technical text-evidence-foreground">No readings recorded yet</p>
+          <p className="technical text-evidence-foreground">
+            No persisted generations recorded yet
+          </p>
           <p className="prose-reading mt-2 text-foreground">
-            The first assembled reading starts this record.
+            There are no measured attempts or feedback rates to report. The first newly generated
+            reading starts this record; reopening cached readings does not.
           </p>
         </div>
       ) : (
         <>
-          <dl className="mt-6 grid gap-x-6 gap-y-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-6 border-y border-rule py-4 text-sm leading-relaxed text-muted-foreground">
+            <p>
+              <span className="font-medium text-foreground">
+                Window: {data.total} persisted generations
+              </span>
+              {data.window.truncated
+                ? " · most recent " + data.window.limit + "; older retained generations excluded"
+                : " · all retained generations within the cap of " + data.window.limit}
+              .
+            </p>
+            {data.window.oldest && data.window.newest ? (
+              <p className="mt-1 font-mono text-xs [overflow-wrap:anywhere]">
+                Created from <time dateTime={data.window.oldest}>{data.window.oldest}</time> to{" "}
+                <time dateTime={data.window.newest}>{data.window.newest}</time>.
+              </p>
+            ) : null}
+            <p className="mt-2">
+              This is a recent retained sample, not a lifetime total or a random sample of readers.
+            </p>
+          </div>
+
+          <dl className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { label: "Readings", value: String(data.total) },
+              { label: "Instrumented generations", value: String(data.measurement.instrumented) },
+              { label: "Measured model attempts", value: String(data.measurement.attempts) },
+              { label: "Accepted model drafts", value: String(data.measurement.accepted) },
+              { label: "Attempted fallbacks", value: String(data.measurement.fallbackCount) },
               {
-                label: "Written by model",
-                value: `${data.model} · ${data.modelShare}%`,
+                label: "Fallbacks / attempts",
+                value: data.measurement.attempts
+                  ? percent(data.measurement.fallbackRate, "No measured attempts") +
+                    " · " +
+                    data.measurement.fallbackCount +
+                    "/" +
+                    data.measurement.attempts
+                  : "No measured attempts",
               },
-              { label: "Fell back to template", value: String(data.template) },
-              { label: "Facts cited per reading", value: String(data.avgFactsPerReading) },
-              { label: "Cited paragraphs", value: String(data.citedParagraphs) },
-              {
-                label: "Paragraphs dropped unverified",
-                value: String(data.droppedParagraphs),
-              },
-              { label: "Safety rewrites", value: String(data.flagged) },
-              { label: "Models", value: data.models.join(", ") || "—" },
-            ].map((s) => (
-              <div key={s.label} className="border border-rule bg-card p-3">
-                <dt className="technical text-muted-foreground">{s.label}</dt>
-                <dd className="mt-1 font-mono text-sm break-words text-foreground">
-                  {s.value}
+              { label: "Legacy generations", value: String(data.measurement.legacy) },
+            ].map(({ label, value }) => (
+              <div key={label} className="min-w-0 border border-rule bg-card p-3">
+                <dt className="technical text-muted-foreground">{label}</dt>
+                <dd className="mt-2 font-mono text-sm [overflow-wrap:anywhere] text-foreground">
+                  {value}
                 </dd>
               </div>
             ))}
           </dl>
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+            Attempted fallbacks are validation rejections plus attempted gateway failures, divided
+            by measured model attempts. Quiet days, missing configuration and legacy generations are
+            excluded from that denominator.
+          </p>
+          <dl className="mt-4 grid gap-x-6 gap-y-3 sm:grid-cols-2">
+            {[
+              { label: "Validation rejected", value: data.measurement.rejected },
+              {
+                label: "Gateway unavailable after an attempt",
+                value: data.measurement.unavailable,
+              },
+              { label: "Skipped before a model call", value: data.measurement.skipped },
+              { label: "Not configured", value: data.measurement.unconfigured },
+            ].map(({ label, value }) => (
+              <div
+                key={label}
+                className="flex items-baseline justify-between gap-4 border-b border-rule pb-2"
+              >
+                <dt className="text-sm text-muted-foreground">{label}</dt>
+                <dd className="font-mono text-sm text-foreground">{value}</dd>
+              </div>
+            ))}
+          </dl>
 
-          <h3 className="technical mt-8 text-muted-foreground">
-            Fact atoms the model cited
-          </h3>
-          <div className="mt-3 overflow-x-auto">
-            <table className="w-full min-w-[32rem] border-collapse text-left">
+          <h3 className="mt-8 text-xl">Recorded outcome causes</h3>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Closed codes from instrumented generations. A rejected draft records its first failing
+            check, rather than every possible failure. Legacy free-text reasons are not displayed.
+          </p>
+          {data.outcomes.length ? (
+            <div
+              className="mt-3 max-w-full overflow-x-auto"
+              tabIndex={0}
+              role="region"
+              aria-label="Recorded outcome causes table"
+            >
+              <table className="w-full min-w-[32rem] border-collapse text-left text-xs">
+                <caption className="sr-only">
+                  Recorded generation outcomes and bounded cause codes
+                </caption>
+                <thead>
+                  <tr className="border-b border-rule">
+                    <th scope="col" className="technical py-2 pr-4 text-muted-foreground">
+                      Outcome
+                    </th>
+                    <th scope="col" className="technical py-2 pr-4 text-muted-foreground">
+                      Cause code
+                    </th>
+                    <th scope="col" className="technical py-2 pr-4 text-muted-foreground">
+                      Meaning
+                    </th>
+                    <th scope="col" className="technical py-2 text-muted-foreground">
+                      Generations
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.outcomes.map((row) => (
+                    <tr key={row.outcome + "/" + row.code} className="border-b border-rule/60">
+                      <td className="py-3 pr-4 text-foreground">
+                        {outcomeLabel(row.outcome, row.code)}
+                      </td>
+                      <td className="py-3 pr-4 font-mono text-muted-foreground">{row.code}</td>
+                      <td className="py-3 pr-4 text-muted-foreground">{row.label}</td>
+                      <td className="py-3 font-mono text-foreground">{row.count}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <p className="mt-3 border border-rule bg-evidence p-4 text-sm text-muted-foreground">
+              No structured outcomes in this window. Legacy generations have no measured attempt or
+              fallback rate.
+            </p>
+          )}
+
+          <h3 className="mt-8 text-xl">Recorded configurations</h3>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Prompt, validator, model and release versions group instrumented generations. Counts
+            describe the retained window; they do not establish which configuration writes better
+            readings.
+          </p>
+          {data.configurations.length ? (
+            <div
+              className="mt-3 max-w-full overflow-x-auto"
+              tabIndex={0}
+              role="region"
+              aria-label="Recorded configurations table"
+            >
+              <table className="w-full min-w-[58rem] border-collapse text-left text-xs">
+                <caption className="sr-only">
+                  Generation measurements grouped by recorded configuration versions
+                </caption>
+                <thead>
+                  <tr className="border-b border-rule">
+                    {[
+                      "Prompt / validator",
+                      "Model / release",
+                      "Generations",
+                      "Attempts",
+                      "Accepted",
+                      "Validation rejected",
+                      "Gateway unavailable",
+                      "Attempt fallback rate",
+                    ].map((label) => (
+                      <th
+                        key={label}
+                        scope="col"
+                        className="technical py-2 pr-4 text-muted-foreground"
+                      >
+                        {label}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.configurations.map((row) => (
+                    <tr
+                      key={JSON.stringify([
+                        row.promptVersion,
+                        row.validatorVersion,
+                        row.model,
+                        row.releaseVersion,
+                      ])}
+                      className="border-b border-rule/60"
+                    >
+                      <td className="max-w-[12rem] py-3 pr-4 font-mono text-foreground [overflow-wrap:anywhere]">
+                        {row.promptVersion}
+                        <span className="mt-1 block text-muted-foreground">
+                          {row.validatorVersion}
+                        </span>
+                      </td>
+                      <td className="max-w-[13rem] py-3 pr-4 font-mono text-foreground [overflow-wrap:anywhere]">
+                        {row.model}
+                        <span className="mt-1 block text-muted-foreground">
+                          {row.releaseVersion}
+                        </span>
+                      </td>
+                      {[
+                        row.readings,
+                        row.attempts,
+                        row.accepted,
+                        row.rejected,
+                        row.unavailable,
+                      ].map((value, i) => (
+                        <td key={i} className="py-3 pr-4 font-mono text-muted-foreground">
+                          {value}
+                        </td>
+                      ))}
+                      <td className="py-3 pr-4 font-mono text-foreground">
+                        {percent(row.fallbackRate, "No attempts")}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <p className="mt-3 text-sm text-muted-foreground">
+              No instrumented configuration metadata recorded.
+            </p>
+          )}
+
+          <h3 className="mt-8 text-xl">Selected resonance feedback</h3>
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+            Only accounts currently opted into Reading quality feedback (USR-15) contribute valid
+            saved scores. Coverage is rated readings divided by eligible readings. Unrated readings
+            are missing data; they do not count as an Unsure (0) response. These are small,
+            self-selected samples; differences do not show that model wording caused better
+            readings.
+          </p>
+          <div
+            className="mt-3 max-w-full overflow-x-auto"
+            tabIndex={0}
+            role="region"
+            aria-label="Selected resonance feedback table"
+          >
+            <table className="w-full min-w-[52rem] border-collapse text-left text-xs">
+              <caption className="sr-only">
+                Opt-in resonance feedback by model, template and legacy cohorts
+              </caption>
               <thead>
                 <tr className="border-b border-rule">
-                  <th className="technical pb-2 text-muted-foreground">Atom</th>
-                  <th className="technical pb-2 text-muted-foreground">What it is</th>
-                  <th className="technical pb-2 text-muted-foreground">Readings</th>
-                  <th className="technical pb-2 text-muted-foreground">Paragraphs</th>
-                  <th className="technical pb-2 text-muted-foreground">Share</th>
+                  {[
+                    "Cohort",
+                    "Generations",
+                    "Eligible",
+                    "Rated",
+                    "Coverage",
+                    "Yes (+1)",
+                    "Unsure (0)",
+                    "No (−1)",
+                    "Mean (−1 to +1)",
+                  ].map((label) => (
+                    <th
+                      key={label}
+                      scope="col"
+                      className="technical py-2 pr-4 text-muted-foreground"
+                    >
+                      {label}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
-                {data.facts.map((f) => (
-                  <tr key={f.id} className="border-b border-rule/60">
-                    <td className="py-2 font-mono text-xs text-foreground">{f.id}</td>
-                    <td className="py-2 text-xs text-muted-foreground">{f.kind}</td>
-                    <td className="py-2 font-mono text-xs text-muted-foreground">
-                      {f.readings}
+                {data.feedback.map((row) => (
+                  <tr key={row.cohort} className="border-b border-rule/60">
+                    <th scope="row" className="py-3 pr-4 font-normal text-foreground">
+                      {row.cohort === "model"
+                        ? "Model wording"
+                        : row.cohort === "template"
+                          ? "Template wording"
+                          : "Legacy metadata"}
+                    </th>
+                    {[row.readings, row.eligibleReadings, row.ratedReadings].map((value, i) => (
+                      <td key={i} className="py-3 pr-4 font-mono text-muted-foreground">
+                        {value}
+                      </td>
+                    ))}
+                    <td className="py-3 pr-4 font-mono text-foreground">
+                      {percent(row.coverage, "No eligible readings")}
                     </td>
-                    <td className="py-2 font-mono text-xs text-muted-foreground">
-                      {f.paragraphs}
+                    {[row.positive, row.neutral, row.negative].map((value, i) => (
+                      <td key={i} className="py-3 pr-4 font-mono text-muted-foreground">
+                        {value}
+                      </td>
+                    ))}
+                    <td className="py-3 pr-4 font-mono text-foreground">
+                      {row.average === null
+                        ? "No ratings"
+                        : new Intl.NumberFormat("en-US", {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                            signDisplay: "exceptZero",
+                          }).format(row.average)}
                     </td>
-                    <td className="py-2 font-mono text-xs text-foreground">{f.share}%</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
 
-          {data.kinds.length ? (
-            <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
-              {data.kinds.map((k) => (
-                <li key={k.label} className="technical text-muted-foreground">
-                  {k.label} ·{" "}
-                  <span className="text-foreground">
-                    {k.atoms} atom{k.atoms === 1 ? "" : "s"}, {k.paragraphs} paragraphs
-                  </span>
-                </li>
-              ))}
-            </ul>
-          ) : null}
-
-          {data.reasons.length ? (
-            <>
-              <h3 className="technical mt-8 text-muted-foreground">
-                Why readings fell back
-              </h3>
-              <ul className="mt-3 space-y-2">
-                {data.reasons.map((r) => (
-                  <li key={r.reason} className="border border-rule bg-card p-3">
-                    <p className="prose-reading text-sm text-foreground">{r.reason}</p>
-                    <p className="technical mt-1 text-muted-foreground">
-                      {r.count} reading{r.count === 1 ? "" : "s"}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            </>
-          ) : null}
+          <h3 className="mt-8 text-xl">Citation ID usage</h3>
+          <p className="mt-2 text-sm text-muted-foreground">
+            {data.model} model-mode generations and {data.template} template-mode generations appear
+            in this window, including legacy. Citation shares below use the {data.model} model-mode
+            generations as their denominator. Counts show reported references, not semantic support
+            or reading quality.
+          </p>
+          {data.facts.length ? (
+            <div
+              className="mt-3 max-w-full overflow-x-auto"
+              tabIndex={0}
+              role="region"
+              aria-label="Citation ID usage table"
+            >
+              <table className="w-full min-w-[32rem] border-collapse text-left text-xs">
+                <caption className="sr-only">
+                  Supplied fact IDs referenced in stored model-mode citation metadata
+                </caption>
+                <thead>
+                  <tr className="border-b border-rule">
+                    {["ID", "Kind", "Generations", "Paragraphs", "Share of model mode"].map(
+                      (label) => (
+                        <th
+                          key={label}
+                          scope="col"
+                          className="technical py-2 pr-4 text-muted-foreground"
+                        >
+                          {label}
+                        </th>
+                      ),
+                    )}
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.facts.map((row) => (
+                    <tr key={row.id} className="border-b border-rule/60">
+                      <td className="py-3 pr-4 font-mono text-foreground">{row.id}</td>
+                      <td className="py-3 pr-4 text-muted-foreground">{row.kind}</td>
+                      <td className="py-3 pr-4 font-mono text-muted-foreground">{row.readings}</td>
+                      <td className="py-3 pr-4 font-mono text-muted-foreground">
+                        {row.paragraphs}
+                      </td>
+                      <td className="py-3 pr-4 font-mono text-foreground">{row.share}%</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <p className="mt-3 text-sm text-muted-foreground">
+              No citation IDs recorded in this window.
+            </p>
+          )}
 
           {data.samples.length ? (
             <>
-              <h3 className="technical mt-8 text-muted-foreground">
-                Your own recent readings
-              </h3>
+              <h3 className="mt-8 text-xl">Your recent generation metadata</h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Up to 12 of your persisted generations within this window. Dates are reading days;
+                repeated days can have separate generation records.
+              </p>
               <div className="mt-3 space-y-3">
-                {data.samples.map((s) => (
-                  <article
-                    key={s.reading_date}
-                    className="border border-rule bg-card p-3"
-                  >
+                {data.samples.map((row) => (
+                  <article key={row.id} className="min-w-0 border border-rule bg-card p-3">
                     <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                      <span className="font-mono text-xs text-foreground">
-                        {s.reading_date}
+                      <span className="font-mono text-xs text-foreground">{row.reading_date}</span>
+                      <span className="technical text-muted-foreground [overflow-wrap:anywhere]">
+                        {row.mode === "model" ? (row.model ?? "model") : "template"}
                       </span>
                       <span className="technical text-muted-foreground">
-                        {s.mode === "model" ? (s.model ?? "model") : "template"}
-                      </span>
-                      <span className="technical ml-auto text-muted-foreground">
-                        {s.paragraphs} cited · {s.dropped} dropped
+                        {row.paragraphs} reported citation paragraphs
                       </span>
                     </div>
-                    {s.facts.length ? (
+                    {row.reason ? (
+                      <p className="mt-2 text-xs text-muted-foreground">{row.reason}</p>
+                    ) : null}
+                    {row.facts.length ? (
                       <ul className="mt-2 flex flex-wrap gap-x-2 gap-y-1 border-t border-rule pt-2 font-mono text-xs text-muted-foreground">
-                        {s.facts.map((f) => (
-                          <li key={f}>{f}</li>
+                        {row.facts.map((id) => (
+                          <li key={id}>{id}</li>
                         ))}
                       </ul>
                     ) : (
-                      <p className="prose-reading mt-2 border-t border-rule pt-2 text-xs text-muted-foreground">
-                        {s.reason ?? "No citations recorded."}
+                      <p className="mt-2 border-t border-rule pt-2 text-xs text-muted-foreground">
+                        No citation IDs recorded.
                       </p>
                     )}
                   </article>
@@ -734,9 +1026,9 @@ function DraftPlane({ isAdmin }: { isAdmin: boolean }) {
         </button>
       </div>
       <p className="prose-reading mt-3 text-xs text-muted-foreground">
-        The model writes mechanism and question copy for each cycle slot; anything that
-        predicts, diagnoses or asserts an outcome is dropped before storage. A draft is
-        inert until published as a release and pointed to.
+        The model writes mechanism and question copy for each cycle slot; anything that predicts,
+        diagnoses or asserts an outcome is dropped before storage. A draft is inert until published
+        as a release and pointed to.
       </p>
 
       {query.isPending ? (

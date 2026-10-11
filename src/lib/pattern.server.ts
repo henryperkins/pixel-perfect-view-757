@@ -32,6 +32,7 @@ import { assembleReading, normalizeDepth, normalizeTone, type ReadingContext } f
 import { assertUse, isPermitted, LAUNCH_SOURCES, PROHIBITED_SOURCES, SOURCE_MAP } from "./registry";
 import { checkInInputSchema } from "./check-in";
 import { daysToLocalDate, localDayString, localNoon, validTimeZone, zonedToUtc } from "./local-day";
+import { summarizeReadingQuality, type QualityReading, type QualityFeedback } from "./ai/quality";
 
 export { localDayString, zonedToUtc } from "./local-day";
 
@@ -1188,6 +1189,14 @@ export async function submitFeedback(
   resonance: number,
   labels: string[],
 ) {
+  const { data: reading, error: readingError } = await db
+    .from<{ id: string }>("daily_readings")
+    .select("id")
+    .eq("user_id", userId)
+    .eq("id", readingId)
+    .maybeSingle();
+  if (readingError) throw new Error(readingError.message);
+  if (!reading) throw new Error("Reading not found for your account.");
   const { error } = await db.from("reading_feedback").upsert(
     { user_id: userId, reading_id: readingId, resonance, labels },
     { onConflict: "user_id,reading_id" },
@@ -1728,159 +1737,40 @@ export async function publishDraft(db: DB, userId: string, draftId: string) {
 // reading quality (language-layer telemetry)
 // ---------------------------------------------------------------------------
 
-/**
- * Aggregates which fact atoms the language layer actually cited. Nothing here
- * reads prose or any encrypted field: only the citation metadata already stored
- * beside each reading. Aggregates span every reading (no user is identified);
- * the per-reading list is limited to the admin's own readings.
- */
-const FACT_KINDS: { prefix: string; label: string }[] = [
-  { prefix: "C", label: "Timing window" },
-  { prefix: "N", label: "Natal structure" },
-  { prefix: "E", label: "Calculation engine" },
-  { prefix: "U", label: "Birth-time uncertainty" },
-  { prefix: "F", label: "Consented framing" },
-];
-
-function factKind(id: string): string {
-  const hit = FACT_KINDS.find((k) => id.startsWith(k.prefix));
-  return hit ? hit.label : "Other";
-}
-
-export interface FactUsage {
-  id: string;
-  kind: string;
-  readings: number;
-  paragraphs: number;
-  share: number;
-}
-
-export interface ReadingQualitySample {
-  reading_date: string;
-  mode: "model" | "template";
-  model: string | null;
-  paragraphs: number;
-  dropped: number;
-  facts: string[];
-  reason: string | null;
-}
-
+/** Most recent persisted generation outcomes; cache reads are not new attempts. */
 export async function readingQuality(db: DB, userId: string) {
   if (!(await isAdmin(db, userId))) return { isAdmin: false as const };
 
   const { data, error } = await db
-    .from<{
-      user_id: string;
-      reading_date: string;
-      language_mode: string | null;
-      language_model: string | null;
-      language_meta: JsonValue;
-    }>("daily_readings")
-    .select("user_id, reading_date, language_mode, language_model, language_meta")
-    .order("reading_date", { ascending: false })
-    .limit(300);
+    .from<QualityReading>("daily_readings")
+    .select("id, user_id, reading_date, created_at, strftime('%Y-%m-%dT%H:%M:%fZ', created_at) as generated_at, julianday(created_at) as generated_sort, release_version, language_mode, language_model, language_meta")
+    .order("generated_sort", { ascending: false })
+    .order("id", { ascending: false })
+    .limit(301);
   if (error) throw new Error(error.message);
-
-  const rows = data ?? [];
-  const factCounts = new Map<string, { readings: number; paragraphs: number }>();
-  const reasons = new Map<string, number>();
-  const models = new Set<string>();
-  const samples: ReadingQualitySample[] = [];
-
-  let model = 0;
-  let template = 0;
-  let citedParagraphs = 0;
-  let droppedParagraphs = 0;
-  let flagged = 0;
-  let distinctFactsTotal = 0;
-
-  for (const row of rows) {
-    const lang = readingLanguage(row);
-    const meta = (row.language_meta ?? {}) as Record<string, unknown>;
-    const flags = Array.isArray(meta["flagged"]) ? (meta["flagged"] as unknown[]).length : 0;
-    const unique = new Set<string>();
-    for (const c of lang.citations) {
-      for (const f of c.facts ?? []) unique.add(f);
-    }
-
-    if (lang.mode === "model") {
-      model += 1;
-      if (lang.model) models.add(lang.model);
-      citedParagraphs += lang.citations.length;
-      distinctFactsTotal += unique.size;
-    } else {
-      template += 1;
-      const why = lang.reason ?? "no reason recorded";
-      reasons.set(why, (reasons.get(why) ?? 0) + 1);
-    }
-    droppedParagraphs += lang.dropped;
-    flagged += flags;
-
-    for (const id of unique) {
-      const entry = factCounts.get(id) ?? { readings: 0, paragraphs: 0 };
-      entry.readings += 1;
-      factCounts.set(id, entry);
-    }
-    for (const c of lang.citations) {
-      for (const id of new Set(c.facts ?? [])) {
-        const entry = factCounts.get(id) ?? { readings: 0, paragraphs: 0 };
-        entry.paragraphs += 1;
-        factCounts.set(id, entry);
-      }
-    }
-
-    if (row.user_id === userId && samples.length < 12) {
-      samples.push({
-        reading_date: row.reading_date,
-        mode: lang.mode,
-        model: lang.model,
-        paragraphs: lang.citations.length,
-        dropped: lang.dropped,
-        facts: [...unique].sort(),
-        reason: lang.reason,
-      });
-    }
+  const rows = (data ?? []).slice(0, 300);
+  const users = [...new Set(rows.map((row) => row.user_id))];
+  const { data: consents, error: consentError } = await db
+    .from<{ user_id: string; granted: boolean }>("source_consents")
+    .select("user_id, granted")
+    .eq("source_id", "USR-15")
+    .eq("granted", true)
+    .in("user_id", users);
+  if (consentError) throw new Error(consentError.message);
+  const optedInUsers = new Set(
+    (consents ?? []).filter((row) => isPermitted("USR-15", "quality_measurement", new Set(row.granted ? ["USR-15"] : [])))
+      .map((row) => row.user_id),
+  );
+  let feedback: QualityFeedback[] = [];
+  if (optedInUsers.size) {
+    // Ownership is checked again by the summary. Only numeric scores are read.
+    const result = await db
+      .from<QualityFeedback>("reading_feedback")
+      .select("reading_id, user_id, resonance")
+      .in("reading_id", rows.filter((row) => optedInUsers.has(row.user_id)).map((row) => row.id))
+      .in("user_id", [...optedInUsers]);
+    if (result.error) throw new Error(result.error.message);
+    feedback = result.data ?? [];
   }
-
-  const facts: FactUsage[] = [...factCounts.entries()]
-    .map(([id, v]) => ({
-      id,
-      kind: factKind(id),
-      readings: v.readings,
-      paragraphs: v.paragraphs,
-      share: model > 0 ? Math.round((v.readings / model) * 100) : 0,
-    }))
-    .sort((a, b) => b.readings - a.readings || a.id.localeCompare(b.id));
-
-  const kinds = FACT_KINDS.map((k) => ({
-    label: k.label,
-    readings: facts
-      .filter((f) => f.kind === k.label)
-      .reduce((acc, f) => Math.max(acc, f.readings), 0),
-    atoms: facts.filter((f) => f.kind === k.label).length,
-    paragraphs: facts
-      .filter((f) => f.kind === k.label)
-      .reduce((acc, f) => acc + f.paragraphs, 0),
-  })).filter((k) => k.atoms > 0);
-
-  return {
-    isAdmin: true as const,
-    total: rows.length,
-    model,
-    template,
-    modelShare: rows.length > 0 ? Math.round((model / rows.length) * 100) : 0,
-    citedParagraphs,
-    droppedParagraphs,
-    flagged,
-    avgFactsPerReading: model > 0 ? Math.round((distinctFactsTotal / model) * 10) / 10 : 0,
-    avgParagraphs: model > 0 ? Math.round((citedParagraphs / model) * 10) / 10 : 0,
-    models: [...models],
-    facts: facts.slice(0, 24),
-    kinds,
-    reasons: [...reasons.entries()]
-      .map(([reason, count]) => ({ reason, count }))
-      .sort((a, b) => b.count - a.count)
-      .slice(0, 5),
-    samples,
-  };
+  return summarizeReadingQuality(rows, userId, feedback, optedInUsers, (data ?? []).length > 300);
 }

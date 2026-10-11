@@ -186,6 +186,12 @@ function PrivacyPage() {
               The Daily check-in switch controls whether mood and energy frame your reading. You can
               still save a private check-in with that switch off. Saving never turns the switch on.
             </p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Feedback scores are never sent to the language provider. Scores count locally in
+              aggregate admin quality reports only when the Reading quality feedback switch is on.
+              Notes and labels are excluded. Turning this switch off excludes your saved scores from
+              future reports; saving a rating never turns it on.
+            </p>
           </section>
 
           {TIERS.filter((t) => t.tier !== 3 || sourcesForTier(3).length > 0).map((tier) => (

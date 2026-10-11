@@ -16,6 +16,7 @@ export type AllowedUse =
   | "personalisation"
   | "reflection_prompt"
   | "external_language"
+  | "quality_measurement"
   | "provenance";
 
 export type Tier = 0 | 1 | 2 | 3;
@@ -224,6 +225,17 @@ export const SOURCES: SourceDef[] = [
     allowed_uses: ["framing", "personalisation"],
     phase: "launch",
     retention_days: null,
+  },
+  {
+    id: "USR-15",
+    label: "Reading quality feedback",
+    description:
+      "Opt in to counting your saved resonance scores in aggregate admin quality reports. Notes and labels are excluded. Revoking this permission excludes your existing saved scores from future reports.",
+    tier: 1,
+    sensitivity: "ordinary",
+    allowed_uses: ["quality_measurement"],
+    phase: "launch",
+    retention_days: 730,
   },
 
   // ---- Tier 2 — situational (DEV/AMB)
