@@ -21,6 +21,7 @@ export interface QualityFeedback {
 const FACT_KINDS = [
   ["C", "Timing window"],
   ["I", "Published interpretation"],
+  ["S", "Published synthesis"],
   ["D", "Domain framing"],
   ["P", "Phase wording"],
   ["T", "Timing wording"],
@@ -55,6 +56,8 @@ export function summarizeReadingQuality(
     rejected: 0,
     unavailable: 0,
     skipped: 0,
+    quietSkips: 0,
+    noInterpretationSkips: 0,
     unconfigured: 0,
     legacy: 0,
     fallbackCount: 0,
@@ -125,6 +128,8 @@ export function summarizeReadingQuality(
     else {
       measurement.instrumented++;
       if (diag.attempted) measurement.attempts++;
+      if (diag.code === "no_cycle") measurement.quietSkips++;
+      if (diag.code === "no_interpretation") measurement.noInterpretationSkips++;
       if (diag.code === "not_configured") measurement.unconfigured++;
       else measurement[diag.outcome]++;
       const cause = outcomes.get(diag.code) ?? {

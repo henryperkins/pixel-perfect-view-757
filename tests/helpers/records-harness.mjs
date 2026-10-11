@@ -53,6 +53,10 @@ export async function createRecordsHarness() {
       gatewayRequests.push(body);
       return gatewayHandler(body, init);
     }
+    const workflowBase = process.env.PATTERN_WORKFLOW_URL;
+    if (workflowBase && (url === `${workflowBase}/pointer` || url === `${workflowBase}/trigger`)) {
+      return Response.json({ ok: true, instanceId: "mock-workflow-" + randomUUID() });
+    }
     assert.equal(url, testURL, "The harness forbids external network calls");
     assert.equal(init.method, "POST");
     const raw = String(init.body);

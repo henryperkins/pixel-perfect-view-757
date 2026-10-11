@@ -112,7 +112,7 @@ test("synthetic evaluation reads only roles and active copy, leaving every datab
     expected = BASELINE_RESPONSES[fixed.id];
     results.push(await h.app.runReadingEvaluationCase(h.records(), h.userA, fixed.id));
   }
-  assert.equal(h.gatewayRequests.length, 9);
+  assert.equal(h.gatewayRequests.length, READING_EVAL_CASES.length - 1);
   assert.ok(
     h.requests.every(({ sql }) =>
       /^select .* from (?:user_roles|content_releases)\b/i.test(sql.replaceAll('"', "")),

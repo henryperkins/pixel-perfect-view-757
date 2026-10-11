@@ -49,6 +49,8 @@ type Release = {
   families: number;
   entries: number;
   familyKeys: string[];
+  cycles?: number;
+  synthesisRules?: number;
 };
 
 function ContentPage() {
@@ -207,10 +209,10 @@ function ContentPage() {
 
                   <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2 border-t border-rule pt-3">
                     <span className="technical text-muted-foreground">
-                      Families · <span className="text-foreground">{r.families}</span>
+                      Cycles · <span className="text-foreground">{r.cycles ?? 0}</span>
                     </span>
                     <span className="technical text-muted-foreground">
-                      Entries · <span className="text-foreground">{r.entries}</span>
+                      Rules · <span className="text-foreground">{r.synthesisRules ?? 0}</span>
                     </span>
                     <span className="technical text-muted-foreground">
                       Checksum · <span className="text-foreground">{r.checksum.slice(0, 16)}…</span>
@@ -634,7 +636,11 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
                 label: "Gateway unavailable after an attempt",
                 value: data.measurement.unavailable,
               },
-              { label: "Skipped before a model call", value: data.measurement.skipped },
+              { label: "Quiet days · no model call", value: data.measurement.quietSkips },
+              {
+                label: "Missing primary interpretation · no model call",
+                value: data.measurement.noInterpretationSkips,
+              },
               { label: "Not configured", value: data.measurement.unconfigured },
             ].map(({ label, value }) => (
               <div
@@ -1059,10 +1065,19 @@ function DraftPlane({ isAdmin }: { isAdmin: boolean }) {
             <article key={d.id} className="border border-rule bg-card p-4">
               <div className="flex flex-wrap items-baseline justify-between gap-3">
                 <span className="font-mono text-xs text-foreground">
-                  {d.entries.length} entries · from {d.base_version ?? "built-in"}
+                  {d.entries.length} entries ({d.themeCount ?? 0} themes, {d.ruleCount ?? 0} rules)
+                  · from {d.base_version ?? "built-in"}
                 </span>
                 <span className="technical text-muted-foreground">{d.model ?? "—"}</span>
               </div>
+              {d.removedRules && d.removedRules.length > 0 ? (
+                <div className="mt-2 text-xs border border-destructive/30 bg-evidence p-2 text-muted-foreground">
+                  <span className="technical text-destructive">
+                    Synthesis rules removed for review:
+                  </span>{" "}
+                  <span className="font-mono">{d.removedRules.join(", ")}</span>
+                </div>
+              ) : null}
               <ul className="mt-3 space-y-2 font-mono text-xs text-muted-foreground">
                 {d.entries.slice(0, 4).map((e) => (
                   <li key={e.key}>

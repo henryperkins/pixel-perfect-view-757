@@ -81,6 +81,11 @@ test("a concise two-paragraph daily reading needs only its cited cycle and inter
     statement: today.language.facts.find((fact) => fact.id === "I1").statement,
     paragraphs: "1, 2",
     bundle: today.reading.release_version,
+    factId: "I1",
+    kind: "interpretation",
+    sourceKey: today.language.facts.find((fact) => fact.id === "I1").sourceKey,
+    releaseVersion: today.reading.release_version,
+    dependsOn: "C1",
   });
   assert.ok(
     today.provenance.some((entry) => entry.lane === "calculation" && entry.source_id === "AST-05"),
@@ -320,4 +325,133 @@ test("failure to remove an incomplete reading is surfaced rather than reporting 
     1,
     "An incomplete cache read does not silently regenerate",
   );
+});
+
+async function prepareSynthesis(context) {
+  context.mock.timers.enable({ apis: ["Date"], now: new Date("2026-10-11T12:00:00Z") });
+  const e = h.ephemerisModule,
+    jd = e.toJulianDay(new Date());
+  const positions = Object.fromEntries(
+    [
+      ["sun", "saturn", -90],
+      ["mars", "jupiter", -120],
+      ["mercury", "mercury", 0],
+    ].map(([key, transit, offset]) => {
+      const lon = (e.positionOf(transit, jd).lon + offset + 360) % 360;
+      return [
+        key,
+        {
+          key,
+          label: key,
+          lon,
+          sign: e.signOf(lon),
+          degree: e.degreeInSign(lon),
+          house: 1,
+          speed: 1,
+          retrograde: false,
+          angleDependent: false,
+        },
+      ];
+    }),
+  );
+  await h.seedChart(h.records(), h.userA, { positions });
+  h.setGateway(() =>
+    modelResponse([
+      {
+        text: "Giving a plan more scope can increase the structure needed to carry it. A growing task offers one place to notice that tension.",
+        facts: ["S1", "C1", "I1", "C2", "I2"],
+      },
+      {
+        text: "Clearer boundaries can give a demanding responsibility a more workable shape.",
+        facts: ["I1"],
+      },
+    ]),
+  );
+  return h.records();
+}
+
+test("saved synthesis and supporting meanings survive database reopen without recasting content", async (context) => {
+  const db = await prepareSynthesis(context);
+  const first = await h.app.getToday(db, h.userA, "UTC");
+  assert.equal(first.language.mode, "model", first.language.reason);
+  const synthesis = first.language.facts.find((f) => f.id === "S1");
+  assert.equal(synthesis.kind, "synthesis");
+  assert.deepEqual(synthesis.dependsOn, ["C1", "I1", "C2", "I2"]);
+  assert.equal(synthesis.sourceKey, "square:saturn:sun_tension_trine:jupiter:mars");
+  assert.equal(synthesis.releaseVersion, "builtin-0.5.0");
+  assert.equal(first.language.facts.find((f) => f.id === "I2").sourceKey, "trine:jupiter:mars");
+  assert.ok(first.language.facts.some((f) => f.id === "I3"));
+  assert.equal(first.language.interpretationPlan.pairStatus, "selected");
+  assert.equal(first.language.interpretationPlan.synthesis.relationship, "tension");
+  assert.deepEqual(
+    editorialReferences(first)
+      .map((r) => r.detail.factId)
+      .sort(),
+    ["I1", "I2", "S1"],
+  );
+  const consumed = editorialReferences(first).find((r) => r.detail.factId === "S1");
+  assert.equal(consumed.detail.sourceKey, synthesis.sourceKey);
+  assert.equal(consumed.detail.dependsOn, "C1, I1, C2, I2");
+  assert.ok(
+    !editorialReferences(first).some((r) => r.detail.factId === "I3"),
+    "Supplied I3 is not consumed",
+  );
+  const { DEFAULT_BUNDLE } = await h.vite.ssrLoadModule("/src/lib/content/default-bundle.ts");
+  const savedCopy = DEFAULT_BUNDLE.synthesisRules[0].mechanism;
+  try {
+    DEFAULT_BUNDLE.synthesisRules[0].mechanism = "A changed future editorial statement.";
+    h.reopen();
+    const cached = await h.app.getToday(h.records(), h.userA, "UTC");
+    assert.equal(cached.reading.id, first.reading.id);
+    assert.deepEqual(cached.language, first.language);
+    assert.deepEqual(cached.provenance, first.provenance);
+    assert.equal(h.gatewayRequests.length, 1);
+  } finally {
+    DEFAULT_BUNDLE.synthesisRules[0].mechanism = savedCopy;
+  }
+});
+
+test("revived facts allowlist valid fields and discard unsafe or forged editorial metadata", async () => {
+  const db = await prepare();
+  const first = await h.app.getToday(db, h.userA, "UTC");
+  const row = h.sqlite
+    .prepare("SELECT language_meta FROM daily_readings WHERE id=?")
+    .get(first.reading.id);
+  const meta = JSON.parse(row.language_meta);
+  meta.facts = [
+    { id: "C1", statement: "Historical calculation.", privateNote: "PRIVATE_METADATA_SENTINEL" },
+    {
+      id: "I1",
+      statement: "Historical interpretation.",
+      kind: "raw",
+      sourceKey: "<script>",
+      dependsOn: ["C9"],
+      releaseVersion: {},
+      rawError: "PRIVATE_METADATA_SENTINEL",
+    },
+  ];
+  meta.interpretationPlan = { pairStatus: "selected", raw: "PRIVATE_METADATA_SENTINEL" };
+  h.sqlite
+    .prepare("UPDATE daily_readings SET language_meta=? WHERE id=?")
+    .run(JSON.stringify(meta), first.reading.id);
+  const cached = await h.app.getToday(db, h.userA, "UTC");
+  assert.deepEqual(cached.language.facts, [
+    { id: "C1", statement: "Historical calculation." },
+    { id: "I1", statement: "Historical interpretation." },
+  ]);
+  assert.equal(cached.language.interpretationPlan, null);
+  assert.ok(!JSON.stringify(cached.language).includes("PRIVATE_METADATA_SENTINEL"));
+});
+
+test("template synthesis records the same rule identity and only meanings it consumes", async (context) => {
+  const db = await prepareSynthesis(context);
+  h.setGateway(() => new Response("Unavailable", { status: 503 }));
+  const today = await h.app.getToday(db, h.userA, "UTC");
+  assert.equal(today.language.mode, "template");
+  const reference = editorialReferences(today).find((r) => r.detail.factId === "S1");
+  assert.ok(reference, "The template must save synthesis source identity");
+  assert.equal(reference.detail.sourceKey, "square:saturn:sun_tension_trine:jupiter:mars");
+  assert.equal(reference.detail.releaseVersion, "builtin-0.5.0");
+  assert.equal(reference.detail.dependsOn, "C1, I1, C2, I2");
+  assert.ok(!editorialReferences(today).some((r) => r.detail.factId === "I3"));
 });

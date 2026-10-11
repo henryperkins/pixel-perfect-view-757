@@ -10,7 +10,7 @@ const projectRequire = createRequire(join(projectRoot, "package.json"));
 const { createServer } = await import(pathToFileURL(projectRequire.resolve("vite")).href);
 const originalFetch = globalThis.fetch;
 const originalKey = process.env.LOVABLE_API_KEY;
-let vite, assembleReading, readingFacts, generateReadingProse, DEFAULT_BUNDLE;
+let vite, assembleReading, readingFacts, dailyFactBlock, generateReadingProse, DEFAULT_BUNDLE;
 let requests = [],
   draft;
 const chart = {
@@ -111,7 +111,7 @@ before(async () => {
     server: { middlewareMode: true, hmr: false, ws: false },
   });
   ({ assembleReading } = await vite.ssrLoadModule("/src/lib/reading.server.ts"));
-  ({ readingFacts } = await vite.ssrLoadModule("/src/lib/ai/facts.ts"));
+  ({ readingFacts, dailyFactBlock } = await vite.ssrLoadModule("/src/lib/ai/facts.ts"));
   ({ generateReadingProse } = await vite.ssrLoadModule("/src/lib/ai/language.server.ts"));
   ({ DEFAULT_BUNDLE } = await vite.ssrLoadModule("/src/lib/content/default-bundle.ts"));
 });
@@ -535,4 +535,201 @@ test("worded and hyphenated degree values cannot bypass numeric reference checks
     draft.paragraphs[0].text = `Saturn square natal Sun has a ${value} orb. This describes the calculated contact.`;
     assert.equal((await generateReadingProse(input())).meta.mode, "template");
   }
+});
+
+function synthesisPlan() {
+  return plan(chart, [
+    cycle(),
+    cycle("jupiter_trine_mars", 0.3, {
+      transit_body: "jupiter",
+      natal_point: "mars",
+      aspect: "trine",
+    }),
+    cycle("mercury_conjunction_mercury", 0.2, {
+      transit_body: "mercury",
+      natal_point: "mercury",
+      aspect: "conjunction",
+    }),
+  ]);
+}
+const synthesisParents = ["C1", "I1", "C2", "I2"];
+const synthesisParagraph = () => ({
+  text: "Giving a plan more scope can increase the structure needed to carry it. A task growing beyond its agreed limits offers one place to notice that tension.",
+  facts: ["S1", ...synthesisParents],
+});
+
+test("supporting meanings and synthesis retain their exact parents and published identity", () => {
+  const facts = readingFacts(chart, synthesisPlan());
+  for (const [id, key, parent] of [
+    ["I1", "square:saturn:sun", "C1"],
+    ["I2", "trine:jupiter:mars", "C2"],
+    ["I3", "conjunction:mercury:mercury", "C3"],
+  ]) {
+    const fact = facts.find((f) => f.id === id);
+    assert.ok(fact, `${id} supplies the same-index published meaning`);
+    assert.equal(fact.kind, "interpretation");
+    assert.deepEqual(fact.dependsOn, [parent]);
+    assert.equal(fact.sourceKey, key);
+    assert.equal(fact.releaseVersion, "builtin-0.5.0");
+    assert.ok(fact.statement.includes(DEFAULT_BUNDLE.cycles.find((c) => c.key === key).mechanism));
+  }
+  const synthesis = facts.find((f) => f.id === "S1");
+  assert.equal(synthesis?.kind, "synthesis");
+  assert.deepEqual(synthesis.dependsOn, synthesisParents);
+  assert.equal(synthesis.sourceKey, "square:saturn:sun_tension_trine:jupiter:mars");
+  assert.equal(synthesis.releaseVersion, "builtin-0.5.0");
+  assert.equal(synthesis.cycle, undefined);
+  for (const id of synthesisParents) assert.ok(synthesis.statement.includes(id));
+  const block = dailyFactBlock(facts);
+  const positions = ["S1", "I1", "I2", "I3", "D1", "C1"].map((id) => block.indexOf(`${id}:`));
+  assert.ok(positions.every((position, i) => position >= 0 && (!i || position > positions[i - 1])));
+});
+
+for (const [name, mutate] of [
+  ["duplicate IDs", (facts) => facts.push({ ...facts[0] })],
+  [
+    "missing parents",
+    (facts) => {
+      facts.find((f) => f.id === "I2").dependsOn = ["C9"];
+    },
+  ],
+  [
+    "self edges",
+    (facts) => {
+      facts.find((f) => f.id === "C1").dependsOn = ["C1"];
+    },
+  ],
+  [
+    "cyclic edges",
+    (facts) => {
+      facts.find((f) => f.id === "C1").dependsOn = ["I1"];
+    },
+  ],
+  [
+    "same-index substitution",
+    (facts) => {
+      facts.find((f) => f.id === "I2").dependsOn = ["C3"];
+    },
+  ],
+  [
+    "wrong interpretation key",
+    (facts) => {
+      facts.find((f) => f.id === "I2").sourceKey = "trine:saturn:sun";
+    },
+  ],
+  [
+    "cross-release parents",
+    (facts) => {
+      facts.find((f) => f.id === "I2").releaseVersion = "other-release";
+    },
+  ],
+  [
+    "third-contact synthesis",
+    (facts) => {
+      facts.find((f) => f.id === "S1").dependsOn = ["C1", "I1", "C3", "I3"];
+    },
+  ],
+  [
+    "incomplete synthesis",
+    (facts) => {
+      delete facts.find((f) => f.id === "S1").sourceKey;
+    },
+  ],
+  [
+    "synthesis geometry",
+    (facts) => {
+      facts.find((f) => f.id === "S1").cycle = facts[0].cycle;
+    },
+  ],
+])
+  test(`invalid daily graph rejects ${name} before provider traffic`, async () => {
+    const request = input(synthesisPlan());
+    mutate(request.facts);
+    await assert.rejects(() => generateReadingProse(request), {
+      name: "InvalidDailyFactGraph",
+      message: "Invalid daily fact graph",
+    });
+    assert.equal(requests.length, 0);
+  });
+
+for (const index of [0, 1])
+  test(`synthesis in paragraph ${index + 1} is accepted with all parents`, async () => {
+    const paragraphs = validParagraphs().slice(0, 2);
+    paragraphs[index] = synthesisParagraph();
+    draft = { paragraphs };
+    const result = await generateReadingProse(input(synthesisPlan()));
+    assert.equal(result.meta.mode, "model");
+    assert.deepEqual(result.meta.citations[index].facts, ["S1", ...synthesisParents]);
+    const prompt = requests[0].messages[1].content;
+    assert.match(prompt, /paragraph 1 or 2/i);
+    assert.ok(prompt.includes('["S1", "C1", "I1", "C2", "I2"]'));
+  });
+
+for (const [name, makeParagraphs, code] of [
+  ["missing synthesis", () => validParagraphs(), "synthesis_coverage"],
+  [
+    "late synthesis",
+    () => [...validParagraphs().slice(0, 2), synthesisParagraph()],
+    "synthesis_coverage",
+  ],
+  [
+    "missing parent",
+    () => [{ ...synthesisParagraph(), facts: ["S1", "C1", "I1", "I2"] }, validParagraphs()[1]],
+    "dependencies",
+  ],
+  [
+    "later missing parents",
+    () => [synthesisParagraph(), { ...synthesisParagraph(), facts: ["S1"] }],
+    "dependencies",
+  ],
+])
+  test(`daily rejects ${name} and retains the synthesis-aware fallback`, async () => {
+    draft = { paragraphs: makeParagraphs() };
+    const request = input(synthesisPlan());
+    const output = await generateReadingProse(request);
+    assert.equal(output.meta.diagnostics.code, code);
+    assert.equal(output.body, request.fallback.body);
+    assert.match(output.body, /Giving a plan more scope/);
+    assert.equal(requests.length, 1);
+  });
+
+test("supporting interpretation supports ordinary prose but cannot stand in for geometry", async () => {
+  const request = input(synthesisPlan());
+  draft = {
+    paragraphs: [
+      synthesisParagraph(),
+      { text: "Effort can encounter little friction when an aim is well chosen.", facts: ["I2"] },
+    ],
+  };
+  assert.equal((await generateReadingProse(request)).meta.mode, "model");
+  draft.paragraphs[1].text = "The current orb is 1.25 degrees.";
+  assert.equal((await generateReadingProse(request)).meta.diagnostics.code, "orb");
+});
+
+test("missing primary interpretation skips the gateway and keeps deterministic copy", async () => {
+  const request = input(
+    plan(chart, [cycle()], ctx, { ...DEFAULT_BUNDLE, cycles: [], synthesisRules: [] }),
+  );
+  assert.ok(!request.facts.some((f) => f.id === "I1"));
+  const result = await generateReadingProse(request);
+  assert.equal(result.body, request.fallback.body);
+  assert.equal(result.meta.diagnostics.outcome, "skipped");
+  assert.equal(result.meta.diagnostics.code, "no_interpretation");
+  assert.equal(result.meta.diagnostics.attempted, false);
+  assert.equal(requests.length, 0);
+});
+
+test("without published synthesis the prompt prohibits an invented joint premise", async () => {
+  await generateReadingProse(input());
+  assert.match(requests[0].messages[1].content, /do not invent.*(?:joint|relationship)/i);
+});
+
+test("bounded published rule keys remain usable without requiring an invented identifier format", async () => {
+  const bundle = structuredClone(DEFAULT_BUNDLE);
+  bundle.synthesisRules[0].key = "reviewed daily tension";
+  const assembled = plan(chart, synthesisPlan().eligibleCycles, ctx, bundle);
+  draft = { paragraphs: [synthesisParagraph(), validParagraphs()[1]] };
+  const output = await generateReadingProse(input(assembled));
+  assert.equal(output.meta.mode, "model");
+  assert.equal(requests.length, 1);
 });

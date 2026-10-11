@@ -25,17 +25,17 @@ test("before/after comparison rejects a partial flag even when every case is pre
 
 test("fixed synthetic baseline exercises the real daily validators without quality scores", async () => {
   const report = await evaluateReadings();
-  assert.equal(READING_EVAL_CASES.length, 10);
+  assert.equal(READING_EVAL_CASES.length, 16);
   assert.equal(report.fixtureVersion, READING_EVAL_FIXTURE_VERSION);
   assert.equal(report.source, "synthetic-baseline");
   assert.equal(report.network, "blocked; gateway replayed in memory");
   assert.deepEqual(report.summary.outcomes, {
-    accepted: 9,
+    accepted: 15,
     rejected: 0,
     unavailable: 0,
     skipped: 1,
   });
-  assert.equal(report.summary.gatewayReplays, 9);
+  assert.equal(report.summary.gatewayReplays, 15);
   assert.equal(report.summary.liveAcceptanceRate, null);
   assert.equal(report.summary.replayAcceptanceRate, 1);
   assert.match(report.warning, /not.*live|does not.*live/i);
@@ -62,7 +62,7 @@ test("candidate replay records a real validator rejection and deterministic fall
   const report = await evaluateReadings({ responses });
   assert.equal(report.source, "candidate-replay");
   assert.equal(report.summary.outcomes.rejected, 1);
-  assert.equal(report.summary.replayAcceptanceRate, 8 / 9);
+  assert.equal(report.summary.replayAcceptanceRate, 14 / 15);
   const item = report.cases.find((c) => c.id === "saturn-square-sun");
   assert.equal(item.diagnostics.outcome, "rejected");
   assert.equal(item.diagnostics.code, "id");
@@ -88,7 +88,7 @@ test("comparison refuses changed fixtures, case sets, or input configs", async (
   const after = structuredClone(before);
   const compared = compareReports(before, after);
   assert.equal(compared.acceptedDelta, 0);
-  assert.equal(compared.cases.length, 10);
+  assert.equal(compared.cases.length, READING_EVAL_CASES.length);
   assert.equal(
     compared.warning,
     "Replay changes do not establish live acceptance, grounding, or writing quality.",
@@ -152,4 +152,19 @@ test("network and temporary key restore even when evaluation fails", async () =>
   responses["saturn-square-sun"] = { paragraphs: [] };
   await evaluateReadings({ responses });
   assert.equal(process.env.LOVABLE_API_KEY, originalKey);
+});
+
+test("handwritten synthesis rejection examples distinguish validator coverage from human support", async () => {
+  const { SYNTHESIS_VALIDATOR_EXAMPLES } = await import("../scripts/reading-eval-cases.mjs");
+  for (const fixture of SYNTHESIS_VALIDATOR_EXAMPLES) {
+    const responses = structuredClone(BASELINE_RESPONSES);
+    responses[fixture.caseId] = fixture.draft;
+    const report = await evaluateReadings({ responses });
+    assert.equal(
+      report.cases.find((c) => c.id === fixture.caseId).diagnostics.code,
+      fixture.validatorCode,
+    );
+    assert.equal(fixture.manualGrounding, "reject");
+    assert.match(fixture.label, /Handwritten/);
+  }
 });

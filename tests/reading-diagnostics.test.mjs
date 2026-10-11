@@ -62,8 +62,8 @@ function diagnostics(output, expected) {
   const d = output.meta.diagnostics;
   assert.ok(d, "Daily diagnostics are attached");
   assert.equal(d.version, 1);
-  assert.equal(d.promptVersion, "daily-astro-body-4");
-  assert.equal(d.validatorVersion, "daily-reference-3");
+  assert.equal(d.promptVersion, "daily-astro-body-5");
+  assert.equal(d.validatorVersion, "daily-reference-4");
   assert.equal(d.gatewayTimeoutMs, 20_000);
   assert.equal(d.model, language.LANGUAGE_MODEL);
   for (const [key, value] of Object.entries(expected)) assert.equal(d[key], value, key);
@@ -403,9 +403,9 @@ test("diagnostic exports and reader validate the exact closed contract", async (
   const module = await vite.ssrLoadModule("/src/lib/ai/diagnostics.ts");
   const result = await language.generateReadingProse(input());
   assert.equal(module.DAILY_DIAGNOSTICS_VERSION, 1);
-  assert.equal(module.DAILY_PROMPT_VERSION, "daily-astro-body-4");
+  assert.equal(module.DAILY_PROMPT_VERSION, "daily-astro-body-5");
   assert.equal(module.DAILY_GATEWAY_TIMEOUT_MS, 20_000);
-  assert.equal(module.DAILY_VALIDATOR_VERSION, "daily-reference-3");
+  assert.equal(module.DAILY_VALIDATOR_VERSION, "daily-reference-4");
   assert.ok(module.DAILY_DIAGNOSTIC_CODES.includes("accepted"));
   assert.deepEqual(module.readDailyDiagnostics(result.meta.diagnostics), result.meta.diagnostics);
   for (const invalid of [
@@ -440,8 +440,8 @@ test("diagnostics reader permits safe future labels and removes unknown fields",
   const d = (await language.generateReadingProse(input())).meta.diagnostics;
   const future = {
     ...d,
-    promptVersion: "daily-astro-body-4",
-    validatorVersion: "daily-reference-3",
+    promptVersion: "daily-astro-body-5",
+    validatorVersion: "daily-reference-4",
     model: "provider/model-next",
     raw: sentinel,
   };
@@ -517,4 +517,36 @@ test("response-body timeouts preserve the timeout classification", async () => {
     code: "timeout",
     paragraph: null,
   });
+});
+
+test("missing-interpretation skip is bounded and historical quiet skips remain readable", async () => {
+  const { readDailyDiagnostics } = await vite.ssrLoadModule("/src/lib/ai/diagnostics.ts");
+  const result = await language.generateReadingProse({
+    ...input(),
+    facts: facts.filter((f) => f.id !== "I1"),
+  });
+  diagnostics(result, {
+    outcome: "skipped",
+    code: "no_interpretation",
+    attempted: false,
+    paragraph: null,
+  });
+  assert.deepEqual(readDailyDiagnostics(result.meta.diagnostics), result.meta.diagnostics);
+  assert.equal(calls, 0);
+  const historical = {
+    ...result.meta.diagnostics,
+    code: "no_cycle",
+    promptVersion: "daily-astro-body-4",
+    validatorVersion: "daily-reference-3",
+  };
+  assert.equal(readDailyDiagnostics(historical).code, "no_cycle");
+  assert.equal(
+    readDailyDiagnostics({
+      ...result.meta.diagnostics,
+      outcome: "rejected",
+      attempted: true,
+      durationMs: 1,
+    }),
+    null,
+  );
 });

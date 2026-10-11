@@ -21,7 +21,8 @@ import {
   keyedFingerprint,
   unwrapDek,
 } from "./crypto.server";
-import { DEFAULT_BUNDLE, type ContentBundle } from "./content/default-bundle";
+import { DEFAULT_BUNDLE, type ContentBundle, type Interpretation } from "./content/default-bundle";
+import { validateContentGraph, normalizeContentBundle, type SynthesisRule } from "./content/schema";
 import {
   assembleReading,
   normalizeDepth,
@@ -33,6 +34,18 @@ import { checkInInputSchema } from "./check-in";
 import { daysToLocalDate, localDayString, localNoon, validTimeZone, zonedToUtc } from "./local-day";
 import { summarizeReadingQuality, type QualityReading, type QualityFeedback } from "./ai/quality";
 import { diagnosticLabel, type DailyGatewayCode } from "./ai/diagnostics";
+import {
+  DAILY_READING_PLAN_VERSION,
+  DAILY_PROMPT_VERSION,
+  DAILY_VALIDATOR_VERSION,
+  LANGUAGE_MODEL,
+} from "./ai/diagnostics";
+import { readSavedFactAtoms, type FactAtom } from "./ai/facts";
+import {
+  dailyPlanIdentity,
+  readDailyPlanIdentity,
+  type DailyPlanIdentity,
+} from "./content/synthesis";
 
 export { localDayString, zonedToUtc } from "./local-day";
 
@@ -505,8 +518,8 @@ export async function activeBundle(
     throw new Error("The active interpretation release could not be read. Evaluation stopped.");
   }
   if (!data) return DEFAULT_BUNDLE;
-  const bundle = data.bundle as unknown as ContentBundle;
-  return { ...DEFAULT_BUNDLE, ...bundle, version: data.version };
+  validateContentGraph(data.bundle);
+  return normalizeContentBundle(data.bundle, data.version, DEFAULT_BUNDLE);
 }
 
 // ---------------------------------------------------------------------------
@@ -552,7 +565,8 @@ export interface ReadingLanguage {
   citations: { paragraph: number; facts: string[] }[];
   dropped: number;
   reason: string | null;
-  facts: { id: string; statement: string }[];
+  facts: FactAtom[];
+  interpretationPlan: DailyPlanIdentity | null;
 }
 
 /** Revives the stored language-layer metadata for a cached reading. */
@@ -562,6 +576,7 @@ function readingLanguage(row: {
   language_meta: JsonValue;
 }): ReadingLanguage {
   const meta = (row.language_meta ?? {}) as Record<string, unknown>;
+  const facts = readSavedFactAtoms(meta["facts"]);
   return {
     mode: row.language_mode === "model" ? "model" : "template",
     model: row.language_model ?? null,
@@ -570,13 +585,8 @@ function readingLanguage(row: {
       : [],
     dropped: typeof meta["dropped"] === "number" ? (meta["dropped"] as number) : 0,
     reason: typeof meta["reason"] === "string" ? (meta["reason"] as string) : null,
-    facts: Array.isArray(meta["facts"])
-      ? meta["facts"].filter((fact): fact is ReadingLanguage["facts"][number] => {
-          if (!fact || typeof fact !== "object") return false;
-          const value = fact as Record<string, unknown>;
-          return typeof value["id"] === "string" && typeof value["statement"] === "string";
-        })
-      : [],
+    facts,
+    interpretationPlan: readDailyPlanIdentity(meta["interpretationPlan"], facts),
   };
 }
 
@@ -666,6 +676,10 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
   // prevents enumerating low-entropy wellbeing bands from a database dump.
   const contextKey = await keyedFingerprint(userId, {
     version: "daily-privacy-2",
+    planVersion: DAILY_READING_PLAN_VERSION,
+    promptVersion: DAILY_PROMPT_VERSION,
+    validatorVersion: DAILY_VALIDATOR_VERSION,
+    model: LANGUAGE_MODEL,
     snapshot: snapRow,
     timezone: tz,
     tone: ctx.tone,
@@ -774,17 +788,48 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
     ...(prose.body ? prose.paragraphs : []),
     ...(assembled.contextBody ? assembled.contextBody.split("\n\n") : []),
   ];
-  const suppliedFacts = facts.map(({ id, statement }) => ({ id, statement }));
+  const suppliedFacts = readSavedFactAtoms(facts);
+  const interpretationPlan = dailyPlanIdentity(assembled.interpretationPlan);
 
   const provenance = assembled.provenance.filter(
     (entry) => prose.meta.mode !== "model" || entry.lane !== "content",
   );
+  if (prose.meta.mode === "template") {
+    for (const entry of provenance.filter((entry) => entry.lane === "content")) {
+      const fact = facts.find(
+        (f) =>
+          (f.sourceKey &&
+            entry.label === `${f.id === "S1" ? "Synthesis" : "Interpretation"} ${f.sourceKey}`) ||
+          (f.id === "D1" && entry.label === `Domain framing ${assembled.editorial?.domain?.key}`),
+      );
+      if (fact)
+        Object.assign(entry.detail, {
+          factId: fact.id,
+          ...(fact.kind ? { kind: fact.kind } : {}),
+          ...(fact.sourceKey ? { sourceKey: fact.sourceKey } : {}),
+          ...(fact.releaseVersion ? { releaseVersion: fact.releaseVersion } : {}),
+          ...(fact.dependsOn ? { dependsOn: fact.dependsOn.join(", ") } : {}),
+        });
+    }
+    for (const fact of facts.filter((f) => /^(P1|T1)$/.test(f.id))) {
+      provenance.push({
+        lane: "content",
+        source_id: "AST-05",
+        label: `Published template reference · ${fact.id}`,
+        detail: {
+          factId: fact.id,
+          statement: fact.statement,
+          bundle: bundle.version,
+        },
+      });
+    }
+  }
   if (prose.meta.mode === "model") {
     for (const fact of facts) {
       const paragraphs = prose.meta.citations
         .filter((citation) => citation.facts.includes(fact.id))
         .map((citation) => citation.paragraph);
-      if (!paragraphs.length || !/^[IDPT]1$/.test(fact.id)) continue;
+      if (!paragraphs.length || !/^(I[123]|[DPT]1|S1)$/.test(fact.id)) continue;
       provenance.push({
         lane: "content",
         source_id: "AST-05",
@@ -793,6 +838,12 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
           statement: fact.statement,
           paragraphs: paragraphs.join(", "),
           bundle: bundle.version,
+          factId: fact.id,
+          ...(fact.kind ? { kind: fact.kind } : {}),
+          ...(fact.sourceKey ? { sourceKey: fact.sourceKey } : {}),
+          ...(fact.releaseVersion ? { releaseVersion: fact.releaseVersion } : {}),
+          ...(fact.dependsOn ? { dependsOn: fact.dependsOn.join(", ") } : {}),
+          ...(fact.id === "S1" ? { relationship: interpretationPlan.synthesis!.relationship } : {}),
         },
       });
     }
@@ -827,6 +878,7 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       language_meta: {
         ...prose.meta,
         facts: suppliedFacts,
+        interpretationPlan,
         sourceCount: provenance.length,
         paragraphs_ct: await encryptJson(dek, paragraphs),
       },
@@ -906,6 +958,7 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       dropped: prose.meta.dropped,
       reason: prose.meta.reason,
       facts: suppliedFacts,
+      interpretationPlan,
     },
     feedback: await loadReadingFeedback(db, userId, inserted.id),
     provenance,
@@ -1428,11 +1481,22 @@ export async function listReleases(db: DB) {
   return (data ?? []).map((r) => {
     const bundle = (r.bundle ?? {}) as Record<string, unknown>;
     const keys = Object.keys(bundle);
-    const count = (prefix: string) => keys.filter((k) => k.startsWith(prefix)).length;
-    const entries = Object.entries(bundle).reduce((acc, [, v]) => {
-      if (v && typeof v === "object") return acc + Object.keys(v as object).length;
-      return acc + 1;
-    }, 0);
+    const cyclesCount = Array.isArray(bundle["cycles"])
+      ? (bundle["cycles"] as unknown[]).length
+      : 0;
+    const rulesCount = Array.isArray(bundle["synthesisRules"])
+      ? (bundle["synthesisRules"] as unknown[]).length
+      : 0;
+    const natal = bundle["natal"];
+    const natalCount = natal && typeof natal === "object" ? Object.keys(natal).length : 0;
+    const phases = bundle["phases"];
+    const domains = bundle["domains"];
+    const entries =
+      cyclesCount +
+      rulesCount +
+      natalCount +
+      (phases && typeof phases === "object" ? Object.keys(phases).length : 0) +
+      (domains && typeof domains === "object" ? Object.keys(domains).length : 0);
     return {
       id: r.id,
       version: r.version,
@@ -1441,8 +1505,9 @@ export async function listReleases(db: DB) {
       is_active: r.is_active,
       families: keys.length,
       entries,
-      cycles: count("cycles"),
-      natal: count("natal"),
+      cycles: cyclesCount,
+      synthesisRules: rulesCount,
+      natal: natalCount,
       familyKeys: keys.slice(0, 12),
     };
   });
@@ -1492,10 +1557,7 @@ export async function activateRelease(db: DB, userId: string, releaseId: string)
   if (findErr) throw new Error(findErr.message);
   if (!target) throw new Error("That release no longer exists.");
 
-  const families = Object.keys((target.bundle ?? {}) as Record<string, unknown>);
-  if (families.length === 0) {
-    throw new Error("That release has an empty content graph and cannot be activated.");
-  }
+  validateContentGraph(target.bundle);
 
   const { error: deactivateErr } = await db
     .from("content_releases")
@@ -1838,16 +1900,26 @@ export async function listDrafts(db: DB, userId: string) {
     .limit(5);
 
   return (data ?? []).map((d) => {
-    const bundle = (d.bundle ?? {}) as {
-      cycles?: { key: string; mechanism: string; question: string }[];
-    };
+    const bundle = (d.bundle ?? {}) as Partial<ContentBundle>;
+    const cycles = Array.isArray(bundle["cycles"]) ? bundle["cycles"] : [];
+    const synthesisRules = Array.isArray(bundle["synthesisRules"]) ? bundle["synthesisRules"] : [];
+    const themeCount = cycles.reduce(
+      (acc, c) => acc + (Array.isArray(c.themes) ? c.themes.length : 0),
+      0,
+    );
+    const notes = (d.notes ?? {}) as Record<string, unknown>;
+    const reviewReq = notes["synthesisReviewRequired"];
     return {
       id: d.id,
       base_version: d.base_version,
       model: d.model,
       created_at: d.created_at,
       notes: d.notes,
-      entries: bundle.cycles ?? [],
+      entries: cycles,
+      synthesisRules,
+      themeCount,
+      ruleCount: synthesisRules.length,
+      removedRules: Array.isArray(reviewReq) ? (reviewReq as string[]) : [],
     };
   });
 }
@@ -1864,18 +1936,88 @@ export async function draftRelease(db: DB, userId: string) {
 
   const base = await activeBundle(db);
   const { generateBundleEntries } = await import("./ai/language.server");
+  // Only the reusable family slots are redrafted. Reviewed exact-aspect entries
+  // and the synthesis rules that depend on them stay with editorial review.
   const drafted = await generateBundleEntries(DRAFT_SLOTS);
 
-  if (drafted.entries.length === 0) {
+  // A repeated or unpublishable entry is dropped on its own rather than
+  // discarding every other entry in the draft.
+  const draftedMap = new Map<string, Interpretation>();
+  for (const entry of drafted.entries) {
+    if (draftedMap.has(entry.key)) continue;
+    try {
+      validateContentGraph({ cycles: [entry] });
+    } catch {
+      continue;
+    }
+    draftedMap.set(entry.key, entry);
+  }
+  const dropped = drafted.dropped + drafted.entries.length - draftedMap.size;
+
+  if (draftedMap.size === 0) {
     throw new Error("The language layer returned no usable entries; nothing was drafted.");
   }
 
-  const bundle = {
+  const changedKeys = new Set(draftedMap.keys());
+
+  const mergedCycles: Interpretation[] = base.cycles.map((baseCycle) => {
+    const replacement = draftedMap.get(baseCycle.key);
+    if (replacement) {
+      return {
+        key: baseCycle.key,
+        mechanism: replacement.mechanism,
+        question: replacement.question,
+        themes: [], // Cleared theme approval on changed text
+      };
+    }
+    return {
+      key: baseCycle.key,
+      mechanism: baseCycle.mechanism,
+      question: baseCycle.question,
+      themes: baseCycle.themes ? [...baseCycle.themes] : [],
+    };
+  });
+
+  const existingCycleKeys = new Set(base.cycles.map((c) => c.key));
+  for (const draftedEntry of draftedMap.values()) {
+    if (!existingCycleKeys.has(draftedEntry.key)) {
+      mergedCycles.push({
+        key: draftedEntry.key,
+        mechanism: draftedEntry.mechanism,
+        question: draftedEntry.question,
+        themes: [],
+      });
+    }
+  }
+
+  const baseRules = base.synthesisRules ?? [];
+  const removedRuleKeys: string[] = [];
+  const survivingRules: SynthesisRule[] = [];
+
+  for (const rule of baseRules) {
+    if (
+      changedKeys.has(rule.primary.interpretationKey) ||
+      changedKeys.has(rule.supporting.interpretationKey)
+    ) {
+      removedRuleKeys.push(rule.key);
+    } else {
+      survivingRules.push(rule);
+    }
+  }
+
+  const bundle: ContentBundle = {
     version: "pending",
+    schemaVersion: 2,
     phases: base.phases,
     natal: base.natal,
-    cycles: drafted.entries,
+    domains: base.domains,
+    cycles: mergedCycles,
+    synthesisRules: survivingRules,
   };
+
+  validateContentGraph(bundle);
+
+  const themeCount = mergedCycles.reduce((acc, c) => acc + (c.themes?.length ?? 0), 0);
 
   const { data: inserted, error } = await db
     .from<{ id: string }>("content_drafts")
@@ -1886,9 +2028,12 @@ export async function draftRelease(db: DB, userId: string) {
       bundle: bundle,
       notes: {
         requested: DRAFT_SLOTS.length,
-        returned: drafted.entries.length,
-        dropped: drafted.dropped,
+        returned: draftedMap.size,
+        dropped,
         flagged: drafted.flagged.length,
+        synthesisReviewRequired: removedRuleKeys,
+        themeCount,
+        ruleCount: survivingRules.length,
       },
       status: "draft",
     })
@@ -1899,13 +2044,13 @@ export async function draftRelease(db: DB, userId: string) {
   await db.from("audit_events").insert({
     user_id: userId,
     kind: "content_draft_generated",
-    detail: { model: drafted.model, entries: drafted.entries.length },
+    detail: { model: drafted.model, entries: draftedMap.size },
   });
 
   return {
     id: inserted.id,
-    entries: drafted.entries.length,
-    dropped: drafted.dropped,
+    entries: draftedMap.size,
+    dropped,
     model: drafted.model,
   };
 }
@@ -1938,6 +2083,7 @@ export async function publishDraft(db: DB, userId: string, draftId: string) {
     .slice(0, 14);
   const version = `ai-${stamp}`;
   const bundle = { ...((draft.bundle ?? {}) as Record<string, unknown>), version };
+  validateContentGraph(bundle);
   const serialized = JSON.stringify(bundle);
   const { createHash } = await import("crypto");
   const checksum = createHash("sha256").update(serialized).digest("hex");

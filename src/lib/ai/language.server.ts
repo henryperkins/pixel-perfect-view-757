@@ -15,8 +15,8 @@
  */
 import { safetyPass } from "../content/default-bundle";
 import { normalizeDepth, normalizeTone } from "../reading.server";
-import { dailyFactBlock, factBlock, factIds, type FactAtom } from "./facts";
-import { dailyVoice } from "./daily-voice";
+import { assertDailyFactGraph, dailyFactBlock, factBlock, factIds, type FactAtom } from "./facts";
+import { DAILY_SYSTEM_VOICE, dailyVoice } from "./daily-voice";
 import type {
   EvaluationJsonValue,
   SyntheticReadingCandidate,
@@ -110,6 +110,7 @@ async function callGateway<T>(
   schema: JsonSchemaObject,
   timeoutMs = 90000,
   observation?: SyntheticObservation,
+  system: string = VOICE,
 ): Promise<T> {
   const key = process.env["LOVABLE_API_KEY"];
   if (!key) throw new GatewayUnavailable("not_configured");
@@ -117,7 +118,7 @@ async function callGateway<T>(
   const request: SyntheticReadingRequest = {
     model: LANGUAGE_MODEL,
     messages: [
-      { role: "system", content: VOICE },
+      { role: "system", content: system },
       { role: "user", content: user },
     ],
     response_format: {
@@ -448,6 +449,8 @@ function dailyDraft(
     if (safetyPass(text).flagged.length)
       return rejectParagraph("safety", "draft failed the language safety check");
     const ids = [...new Set(p.facts as string[])];
+    if (ids.includes("S1") && !byId.get("S1")!.dependsOn!.every((id) => ids.includes(id)))
+      return rejectParagraph("dependencies", "draft omitted published synthesis parent references");
     const problem =
       dailyReferenceProblem(
         text,
@@ -460,6 +463,11 @@ function dailyDraft(
   }
   if (!citations[0]?.facts.includes("C1") || !citations[0]?.facts.includes("I1"))
     return rejection("coverage", "draft failed strongest-cycle and interpretation ID coverage");
+  if (byId.has("S1") && !citations.slice(0, 2).some((citation) => citation.facts.includes("S1")))
+    return rejection(
+      "synthesis_coverage",
+      "draft omitted published synthesis from its first two paragraphs",
+    );
   return { body: kept.join("\n\n"), paragraphs: kept, citations };
 }
 
@@ -491,6 +499,7 @@ async function generateDailyProse(
   observation?: SyntheticObservation,
 ): Promise<ReadingProse> {
   const { fallback } = input;
+  assertDailyFactGraph(input.facts);
   if (!input.hasEligibleCycles || !input.facts.some((f) => f.id === "C1" && f.cycle))
     return {
       ...fallback,
@@ -498,6 +507,15 @@ async function generateDailyProse(
       meta: {
         ...templateMeta("no eligible cycle to write from"),
         diagnostics: dailyDiagnostics("skipped", "no_cycle", null),
+      },
+    };
+  if (!input.facts.some((f) => f.id === "I1"))
+    return {
+      ...fallback,
+      paragraphs: fallback.body.split("\n\n"),
+      meta: {
+        ...templateMeta(diagnosticLabel("no_interpretation")),
+        diagnostics: dailyDiagnostics("skipped", "no_interpretation", null),
       },
     };
   const timingCitationIds = [
@@ -512,8 +530,11 @@ async function generateDailyProse(
     "Rewrite only the astronomical body of today's reading, using the supplied published interpretation, domain and phase wording.",
     "Keep each paragraph under 200 words and the whole body under 700 words.",
     "The first paragraph must concern the strongest eligible cycle and cite C1 and I1. D1, P1 and T1 are optional: cite them in any paragraph that uses their domain, phase or timing claims, and leave them out when unused.",
+    input.facts.some((f) => f.id === "S1")
+      ? 'Develop the supplied published relationship in paragraph 1 or 2. Every paragraph using S1 must explicitly cite all five IDs: "facts": ["S1", "C1", "I1", "C2", "I2"]. The relationship is editorial interpretation, not an established personal state.'
+      : "Keep C1 as the primary focus. No S1 is supplied: do not invent a joint relationship or premise. I2 and I3 may offer separately supported context without connecting the contacts into a new story.",
     "Cite the supplied IDs each paragraph rests on. This is reference coverage, not permission to invent astronomical facts.",
-    "Any paragraph naming a planet, aspect, orb or ISO exact date must cite the matching calculated cycle ID (C1, C2 or C3), even when it repeats a number from T1. Editorial IDs I1, D1, P1 and T1 cannot replace that cycle citation.",
+    "Any paragraph naming a planet, aspect, orb or ISO exact date must cite the matching calculated cycle ID (C1, C2 or C3), even when it repeats a number from T1. Editorial IDs I1, I2, I3, S1, D1, P1 and T1 cannot replace that cycle citation.",
     `For a paragraph using the strongest cycle's supplied phase and timing wording, include its cycle alongside the relevant editorial references: "facts": [${timingCitationIds.map((id) => JSON.stringify(id)).join(", ")}]. Cite only IDs and values supplied above.`,
     "Do not write a headline, reflection question, local-time context or wellbeing framing; those are provided separately.",
     "Do not introduce sign or individual house placements. Quote orb degrees as digit literals and ISO dates only when present in a cycle cited by that paragraph.",
@@ -535,6 +556,7 @@ async function generateDailyProse(
       READING_SCHEMA,
       DAILY_GATEWAY_TIMEOUT_MS,
       observation,
+      DAILY_SYSTEM_VOICE,
     );
   } catch (error) {
     const failure = gatewayFailure(error);

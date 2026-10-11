@@ -8,6 +8,7 @@ import {
   type ContentBundle,
 } from "./content/default-bundle";
 import { exactPhrase } from "./astro/cycles";
+import { resolveInterpretationPlan, type DailyInterpretationPlan } from "./content/synthesis";
 
 /**
  * Cycle arc position, in plain language: how many days to the exact pass and
@@ -63,6 +64,7 @@ export interface AssembledReading {
   flagged: string[];
   /** The same eligible contacts feed the template and the language layer. */
   eligibleCycles: CycleInstance[];
+  interpretationPlan: DailyInterpretationPlan;
   astroBody: string;
   /** Deterministic caveats and consented context are never sent to the gateway. */
   contextBody: string;
@@ -95,7 +97,12 @@ function eligibleReadingCycles(chart: Chart, cycles: CycleInstance[]): CycleInst
         return false;
       return true;
     })
-    .sort((a, b) => b.importance - a.importance)
+    .sort((a, b) => {
+      if (b.importance !== a.importance) {
+        return b.importance - a.importance;
+      }
+      return a.cycle_key.localeCompare(b.cycle_key);
+    })
     .slice(0, 3);
 }
 
@@ -141,6 +148,7 @@ export function assembleReading(
   });
 
   const ranked = eligibleReadingCycles(chart, cycles);
+  const interpretationPlan = resolveInterpretationPlan(bundle, ranked);
   const primary = ranked[0] ?? null;
   const supporting = ranked.slice(1, 3);
 
@@ -165,6 +173,37 @@ export function assembleReading(
     headline = primary.label;
     prompt = interp.question;
     paragraphs.push(`${TONE_OPENER[tone]}${interp.mechanism}`);
+
+    if (interpretationPlan.synthesis) {
+      paragraphs.push(interpretationPlan.synthesis.mechanism);
+      record(
+        provenance,
+        ctx,
+        "content",
+        "AST-05",
+        "provenance",
+        `Synthesis ${interpretationPlan.synthesis.ruleKey}`,
+        {
+          rule: interpretationPlan.synthesis.ruleKey,
+          relationship: interpretationPlan.synthesis.relationship,
+          bundle: bundle.version,
+        },
+      );
+      const c2Interp = interpretationPlan.interpretations.find((item) => item.index === 2);
+      if (c2Interp) {
+        record(
+          provenance,
+          ctx,
+          "content",
+          "AST-05",
+          "provenance",
+          `Interpretation ${c2Interp.interpretationKey}`,
+          {
+            bundle: bundle.version,
+          },
+        );
+      }
+    }
 
     // Domain-specific framing: the same aspect reads differently depending on
     // which part of the chart it lands on, so the prose changes with domain.
@@ -345,6 +384,7 @@ export function assembleReading(
     release_version: bundle.version,
     flagged: [...astro.flagged, ...context.flagged, ...safePrompt.flagged],
     eligibleCycles: ranked,
+    interpretationPlan,
     astroBody: astro.text,
     contextBody: context.text,
     editorial,

@@ -82,7 +82,39 @@ test("corrected Mercury fixture produces past timing and separating facts throug
 });
 
 test("corrected fixtures have a new identity shared by offline and server evaluation", () => {
-  assert.equal(READING_EVAL_FIXTURE_VERSION, "synthetic-daily-2");
+  assert.equal(READING_EVAL_FIXTURE_VERSION, "synthetic-daily-3");
   assert.equal(scriptVersion, READING_EVAL_FIXTURE_VERSION);
   assert.equal(scriptCases, READING_EVAL_CASES);
 });
+
+for (const [id, status, key] of [
+  ["synthesis-tension", "selected", "square:saturn:sun_tension_trine:jupiter:mars"],
+  ["synthesis-reinforcement", "selected", "trine:saturn:sun_reinforcement_trine:mars:sun"],
+  [
+    "synthesis-independent",
+    "independent",
+    "opposition:venus:venus_independent_conjunction:mercury:mercury",
+  ],
+  ["synthesis-reversed", "selected", "trine:jupiter:mars_tension_square:saturn:sun"],
+  ["synthesis-suppressed-support", "unmatched", null],
+  ["synthesis-unmatched", "unmatched", null],
+])
+  test(`fixed ${id} pins the published pair and parent set`, () => {
+    const fixed = READING_EVAL_CASES.find((c) => c.id === id);
+    assert.ok(fixed, "The fixed synthesis case must exist");
+    const assembled = assembleReading(fixed.chart, fixed.cycles, {
+      ...fixed.config,
+      granted: new Set(fixed.config.granted),
+      localBucket: null,
+      checkIn: null,
+      wellness: null,
+    });
+    assert.equal(assembled.interpretationPlan.pairStatus, status);
+    assert.equal(assembled.interpretationPlan.pairRuleKey, key);
+    const facts = readingFacts(fixed.chart, assembled, fixed.config.timeZone);
+    if (status === "selected")
+      assert.deepEqual(facts.find((f) => f.id === "S1").dependsOn, ["C1", "I1", "C2", "I2"]);
+    else assert.ok(!facts.some((f) => f.id === "S1"));
+    if (id === "synthesis-suppressed-support")
+      assert.ok(!JSON.stringify(facts).includes("ascendant"));
+  });

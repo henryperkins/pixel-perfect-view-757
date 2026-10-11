@@ -76,13 +76,13 @@ the remaining validation limits.
 The admin Reading quality panel at `/content` reports the most recent 300 persisted
 daily generation outcomes. New readings record bounded rejection codes and
 prompt/validator versions in the existing `language_meta` field. Cached reads add
-no observation. Attempt-based fallback rates exclude quiet days, missing
+no observation. Attempt-based fallback rates exclude quiet days, missing primary interpretations, missing
 configuration and rows without valid diagnostics; historical outcomes are not
 guessed or regenerated. Gateway response bodies and exception text are excluded.
 
-Admins can also choose **Run synthetic evaluation** in that panel to run the ten
+Admins can also choose **Run synthetic evaluation** in that panel to run the 16
 fixed cases on demand using the production language pipeline and active copy.
-It makes up to nine model calls and one quiet-day check, shows actual drafts and
+It makes up to 15 model calls and one quiet-day check, shows actual drafts and
 fallback reasons, and downloads a report for before/after comparison. These
 synthetic results stay separate from saved readings and live generation counts;
 no birth record, check-in or private note is used. No production schema change
@@ -98,7 +98,27 @@ not proof of writing quality.
 npm run eval:reading -- --output /tmp/pattern-baseline.json
 ```
 
-The [fixed evaluation guide](READING-EVALUATION.md) explains ten synthetic cases,
+The [fixed evaluation guide](READING-EVALUATION.md) explains 16 synthetic cases,
 offline candidate replay, before/after comparisons, and the manual writing rubric.
 Handwritten validator fixtures do not establish a live model fallback rate or a
 quality score. No production schema change or model call is needed for this work.
+
+## Daily reading synthesis
+
+The strongest three eligible contacts each receive their published meaning when
+copy exists. A deterministic plan selects at most one reviewed relationship between
+the strongest two: tension or reinforcement produces `S1`; independent and unmatched
+pairs retain separate meanings. Exact-aspect copy precedes family fallbacks, and
+an active interpretation array is authoritative. Legacy releases inherit no new
+built-in themes or pair rules. The model and template use the same selected graph.
+
+The evidence panel distinguishes calculated cycles, published meanings, and published
+synthesis. Saved `S1` evidence includes its exact text, rule, content version, and
+`C1/I1/C2/I2` parents. Cached readings use their saved metadata; old readings and
+feedback are preserved. Missing primary copy records `skipped/no_interpretation`
+and returns the deterministic body without a provider request.
+
+This implementation is a local release candidate. Actual-model baseline/candidate
+runs on the v3 fixtures and blinded writing review remain pending. See the
+[synthesis checklist](docs/superpowers/plans/2026-10-11-daily-reading-synthesis-checklist.md)
+and [candidate manifest](docs/superpowers/releases/2026-10-11-daily-synthesis-candidate.json).

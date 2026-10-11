@@ -455,3 +455,70 @@ test("timezone fallback is deterministic and civil dates are never silently norm
   assert.throws(() => localDay.localNoon("2026-13-01", "UTC"));
   assert.equal(localDay.localNoon("2028-02-29", "UTC").toISOString(), "2028-02-29T12:00:00.000Z");
 });
+
+test("the pre-synthesis privacy cache key is replaced while its sources and feedback remain intact", async () => {
+  const fixture = await harness.seedChart(client(), harness.userA);
+  const snapshot = await harness.app.loadSnapshot(client(), harness.userA);
+  const bundle = await harness.app.activeBundle(client());
+  const contextKey = await harness.cryptoModule.keyedFingerprint(harness.userA, {
+    version: "daily-privacy-2",
+    snapshot,
+    timezone: "UTC",
+    tone: "plain",
+    depth: "standard",
+    localBucket: null,
+    checkIn: null,
+    wellness: null,
+    grants: [],
+  });
+  const oldKey = `daily-privacy-2:${fixture.fingerprint}:2026-10-11:${bundle.version}:${contextKey}`;
+  const old = await client()
+    .from("daily_readings")
+    .insert({
+      user_id: harness.userA,
+      reading_date: "2026-10-11",
+      snapshot_id: fixture.snapshotId,
+      release_version: bundle.version,
+      headline: "Pre-synthesis reading",
+      body_ct: await harness.cryptoModule.encryptField(fixture.dek, "Earlier saved wording."),
+      idempotency_key: oldKey,
+      language_mode: "template",
+      language_meta: { facts: [] },
+    })
+    .select("id")
+    .single();
+  assert.equal(old.error, null);
+  await client()
+    .from("reading_sources")
+    .insert({
+      user_id: harness.userA,
+      reading_id: old.data.id,
+      lane: "content",
+      source_id: "AST-05",
+      label: "Historical reference",
+      detail: { bundle: bundle.version },
+    });
+  await harness.app.submitFeedback(client(), harness.userA, old.data.id, 1, []);
+  const source = harness.sqlite
+    .prepare("SELECT * FROM reading_sources WHERE reading_id=?")
+    .all(old.data.id);
+  const feedback = harness.sqlite
+    .prepare("SELECT * FROM reading_feedback WHERE reading_id=?")
+    .all(old.data.id);
+  const current = await today();
+  assert.notEqual(current.reading.id, old.data.id);
+  assert.equal((await today()).reading.id, current.reading.id);
+  assert.deepEqual(
+    harness.sqlite.prepare("SELECT * FROM reading_sources WHERE reading_id=?").all(old.data.id),
+    source,
+  );
+  assert.deepEqual(
+    harness.sqlite.prepare("SELECT * FROM reading_feedback WHERE reading_id=?").all(old.data.id),
+    feedback,
+  );
+  assert.equal(
+    harness.sqlite.prepare("SELECT idempotency_key FROM daily_readings WHERE id=?").get(old.data.id)
+      .idempotency_key,
+    oldKey,
+  );
+});

@@ -124,13 +124,18 @@ export async function evaluateReadings({ responses = undefined } = {}) {
         });
         const { assembleReading } = await vite.ssrLoadModule("/src/lib/reading.server.ts");
         const { readingFacts } = await vite.ssrLoadModule("/src/lib/ai/facts.ts");
-        const { generateReadingProse, LANGUAGE_MODEL } = await vite.ssrLoadModule(
+        const { dailyPlanIdentity } = await vite.ssrLoadModule("/src/lib/content/synthesis.ts");
+        const { generateSyntheticReadingProse, LANGUAGE_MODEL } = await vite.ssrLoadModule(
           "/src/lib/ai/language.server.ts",
         );
         const { DEFAULT_BUNDLE } = await vite.ssrLoadModule("/src/lib/content/default-bundle.ts");
         const { localNoon, daysToLocalDate } = await vite.ssrLoadModule("/src/lib/local-day.ts");
-        const { DAILY_PROMPT_VERSION, DAILY_VALIDATOR_VERSION, DAILY_GATEWAY_TIMEOUT_MS } =
-          await vite.ssrLoadModule("/src/lib/ai/diagnostics.ts");
+        const {
+          DAILY_READING_PLAN_VERSION,
+          DAILY_PROMPT_VERSION,
+          DAILY_VALIDATOR_VERSION,
+          DAILY_GATEWAY_TIMEOUT_MS,
+        } = await vite.ssrLoadModule("/src/lib/ai/diagnostics.ts");
         const cases = [];
         for (const fixed of READING_EVAL_CASES) {
           currentResponse = replayResponses[fixed.id];
@@ -156,7 +161,7 @@ export async function evaluateReadings({ responses = undefined } = {}) {
             DEFAULT_BUNDLE,
           );
           const facts = readingFacts(fixed.chart, assembled, fixed.config.timeZone);
-          const output = await generateReadingProse({
+          const observed = await generateSyntheticReadingProse({
             facts,
             hasEligibleCycles: assembled.eligibleCycles.length > 0,
             tone: fixed.config.tone,
@@ -171,6 +176,7 @@ export async function evaluateReadings({ responses = undefined } = {}) {
               prompt: assembled.prompt,
             },
           });
+          const output = observed.prose;
           if (!output.meta.diagnostics)
             throw new Error("Daily generation diagnostics are required for an evaluation report");
           cases.push({
@@ -182,6 +188,8 @@ export async function evaluateReadings({ responses = undefined } = {}) {
             eligibleCycleKeys: assembled.eligibleCycles.map((cycle) => cycle.cycle_key),
             facts,
             request: currentRequests[0] ?? null,
+            candidate: observed.candidate,
+            interpretationPlan: dailyPlanIdentity(assembled.interpretationPlan),
             diagnostics: output.meta.diagnostics,
             output: {
               mode: output.meta.mode,
@@ -206,6 +214,7 @@ export async function evaluateReadings({ responses = undefined } = {}) {
           caseSetHash: hash(READING_EVAL_CASES),
           bundleVersion: DEFAULT_BUNDLE.version,
           bundleHash: hash(DEFAULT_BUNDLE),
+          planVersion: DAILY_READING_PLAN_VERSION,
           promptVersion: DAILY_PROMPT_VERSION,
           validatorVersion: DAILY_VALIDATOR_VERSION,
           model: LANGUAGE_MODEL,
@@ -281,6 +290,7 @@ export function compareReports(before, after) {
     };
   });
   const configurationChanges = [
+    "planVersion",
     "promptVersion",
     "validatorVersion",
     "bundleVersion",
@@ -295,6 +305,7 @@ export function compareReports(before, after) {
     reportVersion: REPORT_VERSION,
     fixtureVersion: before.fixtureVersion,
     before: {
+      planVersion: before.planVersion ?? null,
       promptVersion: before.promptVersion,
       validatorVersion: before.validatorVersion,
       bundleHash: before.bundleHash,
@@ -303,6 +314,7 @@ export function compareReports(before, after) {
       source: before.source,
     },
     after: {
+      planVersion: after.planVersion ?? null,
       promptVersion: after.promptVersion,
       validatorVersion: after.validatorVersion,
       bundleHash: after.bundleHash,

@@ -32,6 +32,7 @@ export function todayFactLabel(id: string) {
   const cycle = id.match(/^C(\d+)$/);
   if (cycle) return cycle[1] === "1" ? "Primary calculated cycle" : `Calculated cycle ${cycle[1]}`;
   if (/^I\d+$/.test(id)) return "Interpretation reference";
+  if (id === "S1") return "Published synthesis";
   if (/^D\d+$/.test(id)) return "Area-of-life framing";
   if (/^P\d+$/.test(id)) return "Phase wording";
   if (/^T\d+$/.test(id)) return "Timing wording";
@@ -43,6 +44,7 @@ export function todayFactLabel(id: string) {
 
 export function todayFactCategory(id: string) {
   if (/^C\d+$/.test(id)) return "Calculated cycle";
+  if (id === "S1") return "Published synthesis";
   if (/^[IDPT]\d+$/.test(id)) return "Published reference";
   if (/^[EU]\d+$/.test(id)) return "Calculation";
   if (/^R\d+$/.test(id)) return "Reflection";
@@ -91,7 +93,16 @@ export function describeTodayFact(fact: { id: string; statement: string }): Toda
     }
   }
   if (/^I\d+$/.test(fact.id)) {
-    return { label, text: fact.statement.replace(/^Published interpretation [^:]+:\s*/, "") };
+    return { label, text: fact.statement.replace(/^Published interpretation \S+:\s*/, "") };
+  }
+  if (fact.id === "S1") {
+    return {
+      label,
+      text: fact.statement.replace(
+        /^Published (?:tension|reinforcement) synthesis .+? \(parents: [^)]+\):\s*/s,
+        "",
+      ),
+    };
   }
   if (/^D\d+$/.test(fact.id)) {
     return { label, text: fact.statement.replace(/^Published framing for /, "") };

@@ -1,5 +1,5 @@
 /** Synthetic plans only: these are not birth records or an ephemeris quality test. */
-export const READING_EVAL_FIXTURE_VERSION = "synthetic-daily-2";
+export const READING_EVAL_FIXTURE_VERSION = "synthetic-daily-3";
 
 const CHART = {
   engine: "synthetic-evaluation-engine",
@@ -160,4 +160,60 @@ export const READING_EVAL_CASES = [
     cycle("mars", "sun", "square", { importance: 0.02 }),
     cycle("venus", "venus", "opposition", { importance: 0.01 }),
   ]),
+  fixedCase("synthesis-tension", "Reviewed structure and expansion relationship, primary first.", [
+    cycle("saturn", "sun", "square", { importance: 0.7 }),
+    cycle("jupiter", "mars", "trine", { importance: 0.5 }),
+  ]),
+  fixedCase(
+    "synthesis-reinforcement",
+    "Reviewed steady commitment and practical initiative relationship.",
+    [
+      cycle("saturn", "sun", "trine", { importance: 0.7 }),
+      cycle("mars", "sun", "trine", { importance: 0.5 }),
+    ],
+  ),
+  fixedCase(
+    "synthesis-independent",
+    "Reviewed preference and expression contacts remain separate.",
+    [
+      cycle("venus", "venus", "opposition", { importance: 0.7, domain: "relationships" }),
+      cycle("mercury", "mercury", "conjunction", { importance: 0.5 }),
+    ],
+  ),
+  fixedCase(
+    "synthesis-reversed",
+    "Expansion leads the separately reviewed reversed tension rule.",
+    [
+      cycle("saturn", "sun", "square", { importance: 0.5 }),
+      cycle("jupiter", "mars", "trine", { importance: 0.7 }),
+    ],
+  ),
+  fixedCase(
+    "synthesis-suppressed-support",
+    "A strong supporting angle contact is suppressed; retained contacts have no reviewed relationship.",
+    [
+      cycle("saturn", "sun", "square", { importance: 0.8 }),
+      cycle("jupiter", "ascendant", "trine", { importance: 0.7 }),
+      cycle("venus", "venus", "opposition", { importance: 0.3 }),
+    ],
+    {
+      chart: {
+        ...structuredClone(CHART),
+        uncertainty: {
+          ...CHART.uncertainty,
+          accuracy: "unknown",
+          housesReliable: false,
+          angleClaimsSuppressed: true,
+        },
+      },
+    },
+  ),
+  fixedCase(
+    "synthesis-unmatched",
+    "Two reviewed exact meanings do not authorize an unreviewed ordered pair.",
+    [
+      cycle("saturn", "sun", "square", { importance: 0.7 }),
+      cycle("mars", "sun", "trine", { importance: 0.5 }),
+    ],
+  ),
 ];

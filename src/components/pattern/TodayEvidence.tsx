@@ -78,6 +78,18 @@ export function TodayEvidence({
 }: TodayEvidenceProps) {
   const facts = language?.facts ?? [];
   const byId = new Map(facts.map((fact) => [fact.id, fact]));
+  const savedSynthesis = language?.interpretationPlan?.synthesis;
+  const synthesisFact = byId.get("S1");
+  const synthesis =
+    savedSynthesis &&
+    synthesisFact?.kind === "synthesis" &&
+    synthesisFact.sourceKey === savedSynthesis.ruleKey &&
+    synthesisFact.releaseVersion === savedSynthesis.releaseVersion &&
+    synthesisFact.dependsOn?.join("|") === "C1|I1|C2|I2" &&
+    savedSynthesis.dependsOn.join("|") === synthesisFact.dependsOn.join("|") &&
+    savedSynthesis.dependsOn.every((id) => byId.has(id))
+      ? savedSynthesis
+      : null;
   const citations = (language?.citations ?? []).filter(
     (citation) =>
       citation &&
@@ -222,6 +234,13 @@ export function TodayEvidence({
                       </h5>
                       <Category>{todayFactCategory(fact.id)}</Category>
                     </div>
+                    {language?.mode === "model" ? (
+                      <p className="mt-2 text-xs text-muted-foreground">
+                        {citations.some((citation) => citation.facts.includes(fact.id))
+                          ? "Cited in model paragraphs"
+                          : "Supplied · not cited in model paragraphs"}
+                      </p>
+                    ) : null}
                     {described.values ? (
                       <div className="mt-3">
                         <LabelledValues values={described.values} />
@@ -231,6 +250,32 @@ export function TodayEvidence({
                         {described.text}
                       </p>
                     )}
+                    {fact.id === "S1" && synthesis ? (
+                      <div className="mt-3 space-y-2">
+                        <LabelledValues
+                          values={[
+                            {
+                              label: "Relationship",
+                              value: todayPointLabel(synthesis.relationship),
+                            },
+                            { label: "Source version", value: synthesis.releaseVersion },
+                            { label: "Published rule", value: synthesis.ruleKey },
+                          ]}
+                        />
+                        <ul
+                          className="flex flex-wrap gap-x-4"
+                          aria-label="Published synthesis parents"
+                        >
+                          {synthesis.dependsOn.map((id) => (
+                            <li key={id}>
+                              <SourceLink id={todayFactId(readingId, id)}>
+                                {todayFactLabel(id)} <span className="ml-1 text-xs">({id})</span>
+                              </SourceLink>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ) : null}
                     <details className="mt-3">
                       <summary className="cursor-pointer text-xs text-primary">
                         Original supplied text

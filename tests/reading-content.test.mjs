@@ -53,8 +53,8 @@ test("common supportive contacts select their own source copy through the real a
   ]) {
     for (const aspect of ["trine", "sextile"]) {
       const reading = assembleReading(chart, [contact(transit, natal, aspect, domain)], context);
-      assert.equal(reading.editorial.interpretation.key, `soft:${transit}:${natal}`);
       const published = findInterpretation(DEFAULT_BUNDLE, aspect, transit, natal);
+      assert.equal(reading.editorial.interpretation.key, published.key);
       assert.ok(reading.body.includes(published.mechanism));
       assert.deepEqual(reading.flagged, []);
       const facts = readingFacts(chart, reading);
@@ -120,7 +120,7 @@ test("common-domain framing avoids regulated claims when it joins safe source pa
 });
 
 test("built-in daily copy gets a new release identity without changing the natal catalog shape", () => {
-  assert.equal(DEFAULT_BUNDLE.version, "builtin-0.4.0");
+  assert.equal(DEFAULT_BUNDLE.version, "builtin-0.5.0");
   assert.deepEqual(Object.keys(DEFAULT_BUNDLE.natal).sort(), [
     "ascendant_placement",
     "moon_placement",

@@ -6,8 +6,10 @@ import type { ContentBundle } from "../content/default-bundle";
 import { daysToLocalDate, localNoon } from "../local-day";
 import { assembleReading } from "../reading.server";
 import { readingFacts } from "./facts";
+import { dailyPlanIdentity } from "../content/synthesis";
 import {
   DAILY_PROMPT_VERSION,
+  DAILY_READING_PLAN_VERSION,
   DAILY_VALIDATOR_VERSION,
   DAILY_GATEWAY_TIMEOUT_MS,
   LANGUAGE_MODEL,
@@ -68,6 +70,7 @@ export async function runSyntheticEvaluationCase(
       caseSetHash: hash(READING_EVAL_CASES),
       bundleVersion: bundle.version,
       bundleHash: hash(bundle),
+      planVersion: DAILY_READING_PLAN_VERSION,
       promptVersion: DAILY_PROMPT_VERSION,
       validatorVersion: DAILY_VALIDATOR_VERSION,
       model: LANGUAGE_MODEL,
@@ -85,6 +88,7 @@ export async function runSyntheticEvaluationCase(
       localNoon: reference.toISOString(),
       eligibleCycleKeys: assembled.eligibleCycles.map((cycle) => cycle.cycle_key),
       facts,
+      interpretationPlan: dailyPlanIdentity(assembled.interpretationPlan),
       request: observed.request,
       candidate: observed.candidate,
       diagnostics: prose.meta.diagnostics,

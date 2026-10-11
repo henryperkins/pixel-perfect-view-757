@@ -108,6 +108,8 @@ test("attempt rate separates accepted, rejected, unavailable, quiet, unconfigure
     rejected: 1,
     unavailable: 1,
     skipped: 1,
+    quietSkips: 1,
+    noInterpretationSkips: 0,
     unconfigured: 1,
     legacy: 1,
     fallbackCount: 2,
@@ -341,4 +343,19 @@ test("records and consent lookup failures are reported instead of presenting par
   await reading();
   h.setFault({ matches: (sql) => /from\s+"?source_consents"?/i.test(sql) });
   await assert.rejects(h.app.readingQuality(h.records(), h.userA), /failure|failed/i);
+});
+
+test("quality separates synthesis references, quiet skips and missing-interpretation skips", async () => {
+  await admin();
+  await reading("accepted", "accepted", { facts: ["S1", "C1", "I1", "C2", "I2"] });
+  await reading("skipped", "no_cycle", { diagnostics: { attempted: false, durationMs: null } });
+  await reading("skipped", "no_interpretation", {
+    diagnostics: { attempted: false, durationMs: null },
+  });
+  const report = await h.app.readingQuality(h.records(), h.userA);
+  assert.equal(report.kinds.find((k) => k.label === "Published synthesis")?.readings, 1);
+  assert.equal(report.measurement.quietSkips, 1);
+  assert.equal(report.measurement.noInterpretationSkips, 1);
+  assert.equal(report.measurement.skipped, 2);
+  assert.equal(report.measurement.attempts, 1);
 });

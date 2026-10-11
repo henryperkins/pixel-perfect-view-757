@@ -5,6 +5,7 @@ import {
 } from "./reading-evaluation.fixtures.mjs";
 import type { FactAtom } from "./facts";
 import type { DailyDiagnostics } from "./diagnostics";
+import type { DailyPlanIdentity } from "../content/synthesis";
 
 export { READING_EVAL_FIXTURE_VERSION };
 export const READING_EVALUATION_CATALOG = READING_EVAL_CASES.map((fixed) => ({
@@ -40,6 +41,8 @@ export interface ReadingEvaluationMetadata {
   caseSetHash: string;
   bundleVersion: string;
   bundleHash: string;
+  /** Absent in historical reports; never infer their plan policy. */
+  planVersion?: string;
   promptVersion: string;
   validatorVersion: string;
   model: string;
@@ -56,6 +59,7 @@ export interface ReadingEvaluationCaseRow {
   localNoon: string;
   eligibleCycleKeys: string[];
   facts: FactAtom[];
+  interpretationPlan?: DailyPlanIdentity;
   request: SyntheticReadingRequest | null;
   candidate: SyntheticReadingCandidate | null;
   diagnostics: DailyDiagnostics;
@@ -133,6 +137,7 @@ export function combineReadingEvaluationResults(
     "caseSetHash",
     "bundleVersion",
     "bundleHash",
+    "planVersion",
     "promptVersion",
     "validatorVersion",
     "model",

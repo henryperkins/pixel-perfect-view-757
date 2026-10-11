@@ -131,6 +131,24 @@ function EvaluationCase({ result }: { result: ReadingEvaluationCaseResult }) {
             {row.template.body}
           </p>
         </section>
+        {row.interpretationPlan ? (
+          <section
+            className="mt-6 min-w-0 border-t border-rule pt-4"
+            aria-label={`${label} published relationship`}
+          >
+            <h4 className="technical text-muted-foreground">Published relationship</h4>
+            <p className="mt-2 break-words text-sm">
+              {row.interpretationPlan.synthesis?.relationship ?? row.interpretationPlan.pairStatus}
+              {" · "}
+              {row.interpretationPlan.releaseVersion}
+            </p>
+            {row.interpretationPlan.pairRuleKey ? (
+              <p className="mt-1 break-words font-mono text-xs text-muted-foreground">
+                {row.interpretationPlan.pairRuleKey}
+              </p>
+            ) : null}
+          </section>
+        ) : null}
         <section
           className="mt-6 min-w-0 border-t border-rule pt-4"
           aria-label={`${label} supplied facts`}
@@ -142,6 +160,14 @@ function EvaluationCase({ result }: { result: ReadingEvaluationCaseResult }) {
                 <dt className="font-mono text-xs text-foreground">{fact.id}</dt>
                 <dd className="mt-1 text-xs leading-relaxed text-muted-foreground [overflow-wrap:anywhere]">
                   {fact.statement}
+                  {fact.sourceKey ? (
+                    <span className="mt-1 block font-mono">
+                      {fact.sourceKey} · {fact.releaseVersion}
+                    </span>
+                  ) : null}
+                  {fact.dependsOn?.length ? (
+                    <span className="mt-1 block">Parents: {fact.dependsOn.join(", ")}</span>
+                  ) : null}
                 </dd>
               </div>
             ))}
@@ -299,9 +325,12 @@ export function ReadingEvaluation() {
         Synthetic reading evaluation
       </h3>
       <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-        Run the 10 fixed synthetic cases against the configured model, one at a time: up to nine
-        model calls and one quiet-day skip. This uses synthetic chart inputs and no account readings
-        or notes. Results stay in this page until you leave or start again.
+        Run the {READING_EVALUATION_CATALOG.length} fixed synthetic cases against the configured
+        model, one at a time: up to{" "}
+        {READING_EVALUATION_CATALOG.filter((row) => row.expectsModel).length} model calls. Quiet
+        days and cases without a published primary interpretation skip the model. This uses
+        synthetic chart inputs and no account readings or notes. Results stay in this page until you
+        leave or start again.
       </p>
       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
         Acceptance measures the current validator on this case set. Review specificity, voice,

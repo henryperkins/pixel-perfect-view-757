@@ -7,11 +7,14 @@
  * money, or other people.
  */
 
+import type { SynthesisRule, ThemeTag } from "./schema";
+
 export interface Interpretation {
-  /** matches `${aspectFamily}:${transitBody}:${natalPoint}` or a wildcard */
+  /** matches `${aspect}:${transitBody}:${natalPoint}`, `${aspectFamily}:${transitBody}:${natalPoint}`, or a wildcard */
   key: string;
   mechanism: string;
   question: string;
+  themes?: ThemeTag[];
 }
 
 export interface DomainInterpretation {
@@ -27,10 +30,12 @@ export interface DomainInterpretation {
 
 export interface ContentBundle {
   version: string;
+  schemaVersion?: 2;
   cycles: Interpretation[];
   natal: Record<string, string>;
   phases: Record<string, string>;
   domains: Record<string, DomainInterpretation>;
+  synthesisRules?: SynthesisRule[];
 }
 
 const HARD = "hard";
@@ -41,7 +46,8 @@ export function aspectFamily(aspect: string): string {
 }
 
 export const DEFAULT_BUNDLE: ContentBundle = {
-  version: "builtin-0.4.0",
+  version: "builtin-0.5.0",
+  schemaVersion: 2,
   phases: {
     approaching: "The contact is in its approaching phase within the calculated window.",
     exact: "The contact is close to exact within the calculated window.",
@@ -88,6 +94,48 @@ export const DEFAULT_BUNDLE: ContentBundle = {
     },
   },
   cycles: [
+    {
+      key: "square:saturn:sun",
+      mechanism:
+        "An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+      question: "What responsibility is currently asking for clearer boundaries?",
+      themes: ["structure", "autonomy"],
+    },
+    {
+      key: "trine:jupiter:mars",
+      mechanism:
+        "Enthusiasm and practical initiative reinforce one another when an aim is well chosen. Jupiter's trine to Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening.",
+      question: "Where does your initiative have room to expand?",
+      themes: ["expansion", "initiative"],
+    },
+    {
+      key: "trine:saturn:sun",
+      mechanism:
+        "Durable progress comes from small, dependable actions repeated without drama. Saturn's trine to the Sun frames the quiet satisfaction of upholding a commitment at an even pace, where patience stabilizes long-term direction.",
+      question: "Which commitment feels worth sustaining at a steady pace?",
+      themes: ["structure"],
+    },
+    {
+      key: "trine:mars:sun",
+      mechanism:
+        "Energy flows easily when action lines up with what matters to you. Mars's trine to the Sun frames direct engagement with an immediate task, reducing hesitation and allowing effort to produce tangible results.",
+      question: "Where can you apply direct effort without second-guessing yourself?",
+      themes: ["initiative"],
+    },
+    {
+      key: "opposition:venus:venus",
+      mechanism:
+        "Recognizing personal preferences can involve noticing a contrast with what others want or expect. Venus's opposition to natal Venus brings differences in taste and social ease into view, clarifying what you genuinely value in company and quiet.",
+      question: "What preference becomes clearer when you compare your pace with others?",
+      themes: ["connection"],
+    },
+    {
+      key: "conjunction:mercury:mercury",
+      mechanism:
+        "A cycle of thought and communication resets with fresh curiosity. Mercury's conjunction with natal Mercury sharpens interest in new phrasing, questions, or ideas, bringing mental focus back to how you articulate what you mean.",
+      question: "What topic or question is currently holding your attention?",
+      themes: ["expression"],
+    },
     {
       key: "hard:saturn:sun",
       mechanism:
@@ -209,6 +257,54 @@ export const DEFAULT_BUNDLE: ContentBundle = {
       question: "What has been easier than expected lately?",
     },
   ],
+  synthesisRules: [
+    {
+      key: "square:saturn:sun_tension_trine:jupiter:mars",
+      primary: { interpretationKey: "square:saturn:sun", theme: "structure" },
+      supporting: { interpretationKey: "trine:jupiter:mars", theme: "expansion" },
+      relationship: "tension",
+      mechanism:
+        "Giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.",
+    },
+    {
+      key: "trine:jupiter:mars_tension_square:saturn:sun",
+      primary: { interpretationKey: "trine:jupiter:mars", theme: "expansion" },
+      supporting: { interpretationKey: "square:saturn:sun", theme: "structure" },
+      relationship: "tension",
+      mechanism:
+        "Expanding the reach of a project tests the framework supporting it. Taking on a promising new direction while existing commitments are still demanding attention can highlight where capacity needs to catch up with ambition.",
+    },
+    {
+      key: "trine:saturn:sun_reinforcement_trine:mars:sun",
+      primary: { interpretationKey: "trine:saturn:sun", theme: "structure" },
+      supporting: { interpretationKey: "trine:mars:sun", theme: "initiative" },
+      relationship: "reinforcement",
+      mechanism:
+        "Steady persistence pairs naturally with targeted action. Focusing on a durable priority makes it easier to direct effort toward concrete, incremental steps without wasting momentum.",
+    },
+    {
+      key: "trine:mars:sun_reinforcement_trine:saturn:sun",
+      primary: { interpretationKey: "trine:mars:sun", theme: "initiative" },
+      supporting: { interpretationKey: "trine:saturn:sun", theme: "structure" },
+      relationship: "reinforcement",
+      mechanism:
+        "Active initiative finds firmer footing when backed by consistent habits. Putting energy into a defined routine or clear responsibility helps immediate progress hold its ground over time.",
+    },
+    {
+      key: "opposition:venus:venus_independent_conjunction:mercury:mercury",
+      primary: { interpretationKey: "opposition:venus:venus", theme: "connection" },
+      supporting: { interpretationKey: "conjunction:mercury:mercury", theme: "expression" },
+      relationship: "independent",
+      mechanism: null,
+    },
+    {
+      key: "conjunction:mercury:mercury_independent_opposition:venus:venus",
+      primary: { interpretationKey: "conjunction:mercury:mercury", theme: "expression" },
+      supporting: { interpretationKey: "opposition:venus:venus", theme: "connection" },
+      relationship: "independent",
+      mechanism: null,
+    },
+  ],
 };
 
 export function findInterpretation(
@@ -219,6 +315,10 @@ export function findInterpretation(
 ): Interpretation {
   const fam = aspectFamily(aspect);
   const candidates = [
+    `${aspect}:${transitBody}:${natalPoint}`,
+    `${aspect}:${transitBody}:*`,
+    `${aspect}:*:${natalPoint}`,
+    `${aspect}:*:*`,
     `${fam}:${transitBody}:${natalPoint}`,
     `${fam}:${transitBody}:*`,
     `${fam}:*:${natalPoint}`,
@@ -232,6 +332,7 @@ export function findInterpretation(
     key: "fallback",
     mechanism: "A contact is in range but no interpretation is published for it yet.",
     question: "What do you notice today that you would not have predicted yesterday?",
+    themes: [],
   };
 }
 

@@ -1,7 +1,8 @@
 /** Measurement identifiers describe the current brief and guards, not a cache key. */
 export const DAILY_DIAGNOSTICS_VERSION = 1;
-export const DAILY_PROMPT_VERSION = "daily-astro-body-4";
-export const DAILY_VALIDATOR_VERSION = "daily-reference-3";
+export const DAILY_READING_PLAN_VERSION = "daily-synthesis-1";
+export const DAILY_PROMPT_VERSION = "daily-astro-body-5";
+export const DAILY_VALIDATOR_VERSION = "daily-reference-4";
 export const MAX_DAILY_DURATION_MS = 120_000;
 export const DAILY_GATEWAY_TIMEOUT_MS = 20_000;
 export const LANGUAGE_MODEL = "google/gemini-3.7-flash";
@@ -9,6 +10,7 @@ export const LANGUAGE_MODEL = "google/gemini-3.7-flash";
 export const DAILY_DIAGNOSTIC_CODES = [
   "accepted",
   "no_cycle",
+  "no_interpretation",
   "not_configured",
   "timeout",
   "http",
@@ -24,6 +26,8 @@ export const DAILY_DIAGNOSTIC_CODES = [
   "length",
   "id",
   "coverage",
+  "dependencies",
+  "synthesis_coverage",
   "safety",
   "suppression",
   "placement",
@@ -47,7 +51,7 @@ export type DailyGatewayCode =
   | "empty_response";
 export type DailyRejectionCode = Exclude<
   DailyDiagnosticCode,
-  DailyGatewayCode | "accepted" | "no_cycle"
+  DailyGatewayCode | "accepted" | "no_cycle" | "no_interpretation"
 >;
 
 /** Contains bounded measurement fields only. Never put prose, facts or errors here. */
@@ -69,6 +73,7 @@ export interface DailyDiagnostics {
 const LABELS: Record<DailyDiagnosticCode, string> = {
   accepted: "Accepted model wording",
   no_cycle: "No eligible cycle",
+  no_interpretation: "No published primary interpretation",
   not_configured: "language layer is not configured",
   timeout: "language gateway timed out",
   http: "language gateway is unavailable",
@@ -84,6 +89,8 @@ const LABELS: Record<DailyDiagnosticCode, string> = {
   length: "Daily length limit exceeded",
   id: "Invalid supplied fact reference",
   coverage: "Required reference coverage missing",
+  dependencies: "Synthesis parent references missing",
+  synthesis_coverage: "Published synthesis coverage missing",
   safety: "Language safety check rejected draft",
   suppression: "Suppressed chart wording",
   placement: "Placement absent from daily facts",
@@ -165,12 +172,23 @@ export function readDailyDiagnostics(value: unknown): DailyDiagnostics | null {
   if (outcome === "accepted") {
     if (code !== "accepted" || !attempted || paragraph !== null) return null;
   } else if (outcome === "skipped") {
-    if (code !== "no_cycle" || attempted || paragraph !== null) return null;
+    if (
+      !(["no_cycle", "no_interpretation"] as string[]).includes(code) ||
+      attempted ||
+      paragraph !== null
+    )
+      return null;
   } else if (outcome === "unavailable") {
     if (!GATEWAY_CODES.has(code) || attempted !== (code !== "not_configured") || paragraph !== null)
       return null;
   } else if (outcome === "rejected") {
-    if (code === "accepted" || code === "no_cycle" || GATEWAY_CODES.has(code) || !attempted)
+    if (
+      code === "accepted" ||
+      code === "no_cycle" ||
+      code === "no_interpretation" ||
+      GATEWAY_CODES.has(code) ||
+      !attempted
+    )
       return null;
   } else return null;
   return {

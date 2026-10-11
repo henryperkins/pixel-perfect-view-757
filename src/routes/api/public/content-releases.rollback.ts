@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { createHmac, timingSafeEqual } from "crypto";
 import { z } from "zod";
+import { validateContentGraph } from "../../../lib/content/schema";
 
 const bodySchema = z.object({
   version: z
@@ -42,36 +43,36 @@ export const Route = createFileRoute("/api/public/content-releases/rollback")({
           return new Response("Invalid rollback request", { status: 400 });
         }
 
-        const { records } = await import("@/lib/d1.server");
+        const { records } = await import("../../../lib/d1.server");
         const db = records();
 
         const { data: target, error: findErr } = await db
-          .from<{ id: string; version: string; checksum: string; bundle: Record<string, unknown> | null }>(
-            "content_releases",
-          )
+          .from<{
+            id: string;
+            version: string;
+            checksum: string;
+            bundle: Record<string, unknown> | null;
+          }>("content_releases")
           .select("id, version, checksum, bundle")
           .eq("version", parsed.version)
           .maybeSingle();
         if (findErr) return new Response(findErr.message, { status: 500 });
         if (!target) return new Response("Unknown release version", { status: 404 });
 
-        // A release is only a valid rollback target if it still resolves content.
-        const families = Object.keys((target.bundle ?? {}) as Record<string, unknown>);
-        if (families.length === 0) {
-          return new Response("Target release has an empty content graph", { status: 422 });
+        try {
+          validateContentGraph(target.bundle);
+        } catch (err) {
+          return new Response("Target release has an invalid content graph", { status: 422 });
         }
 
-        await db
-          .from("content_releases")
-          .update({ is_active: false })
-          .neq("id", target.id);
+        await db.from("content_releases").update({ is_active: false }).neq("id", target.id);
         const { error: activateErr } = await db
           .from("content_releases")
           .update({ is_active: true })
           .eq("id", target.id);
         if (activateErr) return new Response(activateErr.message, { status: 500 });
 
-        const w = await import("@/lib/workflows.server");
+        const w = await import("../../../lib/workflows.server");
         await w.syncReleasePointer(target.version, target.checksum);
         const run = await w.triggerReadingWorkflow({
           kind: "release-rollback",
@@ -94,7 +95,7 @@ export const Route = createFileRoute("/api/public/content-releases/rollback")({
           return new Response("Invalid signature", { status: 401 });
         }
 
-        const { records } = await import("@/lib/d1.server");
+        const { records } = await import("../../../lib/d1.server");
         const db = records();
         const { data, error } = await db
           .from<{ version: string; checksum: string; is_active: boolean; created_at: string }>(

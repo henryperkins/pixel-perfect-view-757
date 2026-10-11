@@ -69,7 +69,7 @@ test("timing instructions explicitly require the cycle even when T1 repeats its 
   const prompt = accepted.case.request.messages[1].content;
   assert.match(prompt, /even (?:when|if).*T1/i);
   assert.match(prompt, /\["C1", "P1", "T1"\]/);
-  assert.equal(accepted.case.diagnostics.validatorVersion, "daily-reference-3");
+  assert.equal(accepted.case.diagnostics.validatorVersion, "daily-reference-4");
 });
 
 test("daily uses one 20-second call and exports its budget without changing provider settings", async () => {
@@ -78,7 +78,7 @@ test("daily uses one 20-second call and exports its budget without changing prov
   assert.equal(calls, 1);
   assert.equal(result.metadata.gatewayTimeoutMs, 20_000);
   assert.equal(result.case.diagnostics.gatewayTimeoutMs, 20_000);
-  assert.equal(result.metadata.promptVersion, "daily-astro-body-4");
+  assert.equal(result.metadata.promptVersion, "daily-astro-body-5");
   assert.deepEqual(Object.keys(requests[0]).sort(), ["messages", "model", "response_format"]);
 });
 
@@ -184,4 +184,24 @@ test("comparison exposes changed or unrecorded budgets instead of inferring prio
     () => compareReports({ ...current, gatewayTimeoutMs: "20000" }, current),
     /invalid gateway/i,
   );
+});
+
+test("daily has a distinct editorial system brief while natal keeps the original brief", async () => {
+  const { DAILY_SYSTEM_VOICE } = await vite.ssrLoadModule("/src/lib/ai/daily-voice.ts");
+  await runCase("saturn-square-sun", bundle);
+  assert.equal(requests[0].messages[0].content, DAILY_SYSTEM_VOICE);
+  assert.match(requests[0].messages[0].content, /Published interpretations/);
+  responder = async () =>
+    envelope({
+      paragraphs: [{ text: "A supplied pattern.", facts: ["F1"] }],
+      reflection_question: "What do you notice?",
+    });
+  await language.generateFeatureNarrative({
+    facts: [{ id: "F1", statement: "Supplied pattern." }],
+    title: "Synthetic",
+    tone: "plain",
+  });
+  assert.match(requests[1].messages[0].content, /already-calculated facts/);
+  assert.notEqual(requests[1].messages[0].content, DAILY_SYSTEM_VOICE);
+  assert.deepEqual(budgets, [20_000, 90_000]);
 });

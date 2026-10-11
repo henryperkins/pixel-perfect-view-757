@@ -148,7 +148,7 @@ test("complete model run retains the offline fixture hashes and comparison compa
   }
   const report = combineReadingEvaluationResults(results);
   assert.equal(report.partial, false);
-  assert.equal(report.summary.modelAttempts, 9);
+  assert.equal(report.summary.modelAttempts, READING_EVAL_CASES.length - 1);
   assert.equal(report.summary.syntheticModelAcceptanceRate, 1);
   assert.equal(report.summary.liveAcceptanceRate, null);
   const offline = await evaluateReadings();
@@ -174,7 +174,7 @@ test("mixed copy or model configurations cannot combine; partial runs stay expli
   assert.throws(() => combineReadingEvaluationResults([first]), /all fixed cases/i);
   const partial = combineReadingEvaluationResults([first], { partial: true });
   assert.equal(partial.partial, true);
-  assert.equal(partial.expectedCases, 10);
+  assert.equal(partial.expectedCases, READING_EVAL_CASES.length);
   assert.equal(partial.cases.length, 1);
   assert.throws(() => compareReports(partial, partial), /partial/i);
   const incorrectlyMarkedComplete = { ...partial, partial: false };
@@ -182,4 +182,37 @@ test("mixed copy or model configurations cannot combine; partial runs stay expli
     () => compareReports(incorrectlyMarkedComplete, incorrectlyMarkedComplete),
     /fixed case/i,
   );
+});
+
+test("synthesis report retains bounded plan identity and graph metadata", async () => {
+  draft = structuredClone(BASELINE_RESPONSES["synthesis-tension"]);
+  const result = await runSyntheticEvaluationCase("synthesis-tension", DEFAULT_BUNDLE);
+  assert.equal(result.metadata.planVersion, "daily-synthesis-1");
+  assert.equal(result.case.interpretationPlan.pairStatus, "selected");
+  assert.equal(result.case.interpretationPlan.synthesis.relationship, "tension");
+  assert.deepEqual(result.case.facts.find((f) => f.id === "S1").dependsOn, [
+    "C1",
+    "I1",
+    "C2",
+    "I2",
+  ]);
+  assert.equal(result.case.diagnostics.outcome, "accepted");
+});
+
+test("mid-run plan policy changes are rejected while deliberate cross-policy comparisons remain usable", async () => {
+  const first = await runSyntheticEvaluationCase("saturn-square-sun", DEFAULT_BUNDLE);
+  draft = structuredClone(BASELINE_RESPONSES["saturn-square-moon-warm"]);
+  const second = await runSyntheticEvaluationCase("saturn-square-moon-warm", DEFAULT_BUNDLE);
+  second.metadata.planVersion = "daily-synthesis-next";
+  assert.throws(
+    () => combineReadingEvaluationResults([first, second], { partial: true }),
+    /configuration changed/,
+  );
+  const before = await evaluateReadings();
+  const after = structuredClone(before);
+  after.planVersion = "daily-synthesis-next";
+  const compared = compareReports(before, after);
+  assert.ok(compared.configurationChanges.some((c) => c.field === "planVersion"));
+  delete before.planVersion;
+  assert.equal(compareReports(before, after).before.planVersion, null);
 });
