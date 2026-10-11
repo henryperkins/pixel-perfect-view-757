@@ -1,0 +1,1299 @@
+{
+  "canonicalItemSetHash": "bcf4c1c9e70ccc690b3e7102f862e28b0117fa0c2ff4991c61056668c2139854",
+  "items": {
+    "item-da6c0cb538": [
+      {
+        "source": "baseline",
+        "caseId": "saturn-square-sun",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "11c663bd28054b787ac1b06c4914381fc7d0fe03ea9509e402041a1e95e1331f"
+      },
+      {
+        "source": "candidate",
+        "caseId": "saturn-square-sun",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "11c663bd28054b787ac1b06c4914381fc7d0fe03ea9509e402041a1e95e1331f"
+      }
+    ],
+    "item-46eb22c36f": [
+      {
+        "source": "baseline",
+        "caseId": "saturn-square-sun",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "28c68336e8fa9e3b8509b2c584917b8afb9fc1805b1c03ff1ea5449cde009b0b"
+      }
+    ],
+    "item-6f37ff9d52": [
+      {
+        "source": "baseline",
+        "caseId": "saturn-square-moon-warm",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "65a8b45fd804b474f9c90ccf0837c0f25c6f95f960d300123ec6eafc222449c0"
+      },
+      {
+        "source": "candidate",
+        "caseId": "saturn-square-moon-warm",
+        "kind": "template",
+        "outcome": "unavailable",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "65a8b45fd804b474f9c90ccf0837c0f25c6f95f960d300123ec6eafc222449c0"
+      }
+    ],
+    "item-c329e52083": [
+      {
+        "source": "baseline",
+        "caseId": "saturn-square-moon-warm",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "771ef9dc21191d4df09ade86a5de3ca99ffbc57997f1444377dd4bcc5ef36042"
+      }
+    ],
+    "item-9968e212cb": [
+      {
+        "source": "baseline",
+        "caseId": "jupiter-trine-sun-technical",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "48d510243dd9682b757ca825fcba036a67c21c9194811b483290b08970e42e14"
+      },
+      {
+        "source": "candidate",
+        "caseId": "jupiter-trine-sun-technical",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "48d510243dd9682b757ca825fcba036a67c21c9194811b483290b08970e42e14"
+      }
+    ],
+    "item-75c165b573": [
+      {
+        "source": "baseline",
+        "caseId": "jupiter-trine-sun-technical",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "0dc344706c9612048dd19f53924dc623c089131edcd6183c145fdddb572941ba"
+      }
+    ],
+    "item-c620f65cc0": [
+      {
+        "source": "baseline",
+        "caseId": "mercury-conjunction-clinical",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "67922ed6dd9d81ade83561cb6c832a487404deb8a0e0a36509a37575df58f7eb"
+      },
+      {
+        "source": "candidate",
+        "caseId": "mercury-conjunction-clinical",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "67922ed6dd9d81ade83561cb6c832a487404deb8a0e0a36509a37575df58f7eb"
+      }
+    ],
+    "item-6038eb1772": [
+      {
+        "source": "baseline",
+        "caseId": "mercury-conjunction-clinical",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "dec257f9d12c26dc12d972cdc22e8bfa4065ed214e1d2fa65faa3a1067b3b115"
+      }
+    ],
+    "item-f5f520b6ca": [
+      {
+        "source": "baseline",
+        "caseId": "venus-opposition-venus",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "717bd3fde645c2fe048f36508cd546f5e7f80ac30a9cdeb4ac00650abf56359c"
+      },
+      {
+        "source": "candidate",
+        "caseId": "venus-opposition-venus",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "717bd3fde645c2fe048f36508cd546f5e7f80ac30a9cdeb4ac00650abf56359c"
+      }
+    ],
+    "item-e5e16263cc": [
+      {
+        "source": "baseline",
+        "caseId": "venus-opposition-venus",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "30fb3b68c53ebf403de39090a8dca53a730fd53d183ac6eb8210b2d8600b4194"
+      }
+    ],
+    "item-f150063bd0": [
+      {
+        "source": "baseline",
+        "caseId": "unknown-birth-time",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "e87f78966af8b845fda444467944d8ae163552561bdeb7dfe71f8bc81605a513"
+      },
+      {
+        "source": "baseline",
+        "caseId": "natal-unknown-time",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "e87f78966af8b845fda444467944d8ae163552561bdeb7dfe71f8bc81605a513"
+      },
+      {
+        "source": "candidate",
+        "caseId": "unknown-birth-time",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "e87f78966af8b845fda444467944d8ae163552561bdeb7dfe71f8bc81605a513"
+      },
+      {
+        "source": "candidate",
+        "caseId": "natal-unknown-time",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "e87f78966af8b845fda444467944d8ae163552561bdeb7dfe71f8bc81605a513"
+      }
+    ],
+    "item-dcc637e7fb": [
+      {
+        "source": "baseline",
+        "caseId": "unknown-birth-time",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "8db4d4f1fdbff4907fa7eb223489e2f52d4081af7d457224650c0841fdf26146"
+      }
+    ],
+    "item-ddb9b85b76": [
+      {
+        "source": "baseline",
+        "caseId": "approximate-birth-time",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "a1d2e8ab27047994d406c3e6333debba73f69fdcc1085ac21bf96c88d2cc8961"
+      },
+      {
+        "source": "candidate",
+        "caseId": "approximate-birth-time",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "a1d2e8ab27047994d406c3e6333debba73f69fdcc1085ac21bf96c88d2cc8961"
+      }
+    ],
+    "item-cac4701a14": [
+      {
+        "source": "baseline",
+        "caseId": "approximate-birth-time",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "a2d7addebe38a1d88f11a06a7694a03e17abe9303a0b0cd2c5f807bc9d38bfe9"
+      }
+    ],
+    "item-f95b66b088": [
+      {
+        "source": "baseline",
+        "caseId": "moon-dst-boundary",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "dff35ecbd48831a0c685489bf176e5fce98692a631c9ce02c1322e0624dc8835"
+      },
+      {
+        "source": "candidate",
+        "caseId": "moon-dst-boundary",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "dff35ecbd48831a0c685489bf176e5fce98692a631c9ce02c1322e0624dc8835"
+      }
+    ],
+    "item-dfe223b782": [
+      {
+        "source": "baseline",
+        "caseId": "moon-dst-boundary",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "45692cf13861baf60571f501029d6a8c9ac754d55a894a8353f0d70a237fd4fa"
+      }
+    ],
+    "item-46adce31f9": [
+      {
+        "source": "baseline",
+        "caseId": "multiple-cycles",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "329209d25a2173450e98f87c3981a04423fe7c53d6af025f53e818cc8a522b4d"
+      },
+      {
+        "source": "candidate",
+        "caseId": "multiple-cycles",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "329209d25a2173450e98f87c3981a04423fe7c53d6af025f53e818cc8a522b4d"
+      }
+    ],
+    "item-bc55d7c7e3": [
+      {
+        "source": "baseline",
+        "caseId": "multiple-cycles",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "3d1e577e481a227d0fa7bbed41e324fa9379ed013b36ab259a564edc742efcd9"
+      }
+    ],
+    "item-532c177e1c": [
+      {
+        "source": "baseline",
+        "caseId": "quiet-threshold",
+        "kind": "template",
+        "outcome": "skipped",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "458bc90897552ad98b8598f3252998e1c6375e5304faf92931151df9166eb891"
+      },
+      {
+        "source": "candidate",
+        "caseId": "quiet-threshold",
+        "kind": "template",
+        "outcome": "skipped",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "458bc90897552ad98b8598f3252998e1c6375e5304faf92931151df9166eb891"
+      }
+    ],
+    "item-85d7a2f2fe": [
+      {
+        "source": "baseline",
+        "caseId": "synthesis-tension",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "33521c7711f4755c1a76942c7b934127f40f6e3a63d2db67316781df2218f86d"
+      },
+      {
+        "source": "candidate",
+        "caseId": "synthesis-tension",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "33521c7711f4755c1a76942c7b934127f40f6e3a63d2db67316781df2218f86d"
+      }
+    ],
+    "item-b0678b0a38": [
+      {
+        "source": "baseline",
+        "caseId": "synthesis-tension",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "a8ba5cf7c3ee76f9ffe6f9f92247cf7fc6ecae7d0f6d1b4663ffcf1e2d8c15f1"
+      }
+    ],
+    "item-25b95754da": [
+      {
+        "source": "baseline",
+        "caseId": "synthesis-reinforcement",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "0fe65f70ac1c401e67dd143ff0ea99e0c39c009cb39c7fdc66f2fa435fb60548"
+      },
+      {
+        "source": "candidate",
+        "caseId": "synthesis-reinforcement",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "0fe65f70ac1c401e67dd143ff0ea99e0c39c009cb39c7fdc66f2fa435fb60548"
+      }
+    ],
+    "item-b1ab720739": [
+      {
+        "source": "baseline",
+        "caseId": "synthesis-reinforcement",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "bbf5464fc89b2ec0b5163bd436cf64250c3d35c178b424b8732de5949950a619"
+      }
+    ],
+    "item-05a53439ed": [
+      {
+        "source": "baseline",
+        "caseId": "synthesis-independent",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "2c8796accccba2f337f84f4b452ec653ac4bc8a19703b128df856a567cb73cc3"
+      },
+      {
+        "source": "candidate",
+        "caseId": "synthesis-independent",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "2c8796accccba2f337f84f4b452ec653ac4bc8a19703b128df856a567cb73cc3"
+      }
+    ],
+    "item-454c9082de": [
+      {
+        "source": "baseline",
+        "caseId": "synthesis-independent",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "e0a83eed376334192e4983e5bd25c118ba787d3cb16ea2c895467a367731426e"
+      }
+    ],
+    "item-aa2174c300": [
+      {
+        "source": "baseline",
+        "caseId": "synthesis-reversed",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "0005fcc9069405a8206b34a07aad7bd90b195cc581e438a98623647f9dd5a5b4"
+      },
+      {
+        "source": "candidate",
+        "caseId": "synthesis-reversed",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "0005fcc9069405a8206b34a07aad7bd90b195cc581e438a98623647f9dd5a5b4"
+      }
+    ],
+    "item-dce1e5e69a": [
+      {
+        "source": "baseline",
+        "caseId": "synthesis-reversed",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "b7383e4c8d5307bb8d66f3fe6c2aa65a0cf075a448874254a9132d133fda0d71"
+      }
+    ],
+    "item-e1f6aac0f2": [
+      {
+        "source": "baseline",
+        "caseId": "synthesis-suppressed-support",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "62345d183e82bf965b5a3be8e1a3fbf4e539acc0b14c084bbcd724450523b032"
+      },
+      {
+        "source": "candidate",
+        "caseId": "synthesis-suppressed-support",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "62345d183e82bf965b5a3be8e1a3fbf4e539acc0b14c084bbcd724450523b032"
+      }
+    ],
+    "item-c215ca24b1": [
+      {
+        "source": "baseline",
+        "caseId": "synthesis-suppressed-support",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "fb2e0e0ff07985c037ad3315ab945712ffe93bc0318adf4e403f33aee54e6063"
+      }
+    ],
+    "item-c88b6428b6": [
+      {
+        "source": "baseline",
+        "caseId": "synthesis-unmatched",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "7bcb25a695571ff777e0030a218214fe21e1ffee58e81119aaea6257eae716ab"
+      },
+      {
+        "source": "candidate",
+        "caseId": "synthesis-unmatched",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "7bcb25a695571ff777e0030a218214fe21e1ffee58e81119aaea6257eae716ab"
+      }
+    ],
+    "item-47228b90a6": [
+      {
+        "source": "baseline",
+        "caseId": "synthesis-unmatched",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "776ca216d75e0514ae246bc9f75c7947d9b1e136c2756291d8dbafa208adcd67"
+      }
+    ],
+    "item-18bc974a36": [
+      {
+        "source": "baseline",
+        "caseId": "natal-duty-reflex",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "218387c4ffe5bf3132c0662d937db555f96933b2662ff42de26bcd796a3905a1"
+      },
+      {
+        "source": "baseline",
+        "caseId": "natal-freedom-reflex",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "218387c4ffe5bf3132c0662d937db555f96933b2662ff42de26bcd796a3905a1"
+      }
+    ],
+    "item-1b44910009": [
+      {
+        "source": "baseline",
+        "caseId": "natal-duty-reflex",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "8831f4df08c636b75d38f938c8b8f4b527f9640d82bc39b3f426e687f6379356"
+      }
+    ],
+    "item-206e9860a8": [
+      {
+        "source": "baseline",
+        "caseId": "natal-freedom-reflex",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "a51928846dd1ab92e0d26e09b11040ee308b84a018c3b22e09002283be87c285"
+      }
+    ],
+    "item-d850c603ff": [
+      {
+        "source": "baseline",
+        "caseId": "natal-service-aspect",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "68d886d5d9f077388a3efc7564faf81f447bcb2d48d87cb4dc8a1de19d2fbfdd"
+      },
+      {
+        "source": "baseline",
+        "caseId": "natal-exact-house",
+        "kind": "template",
+        "outcome": "unavailable",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "68d886d5d9f077388a3efc7564faf81f447bcb2d48d87cb4dc8a1de19d2fbfdd"
+      },
+      {
+        "source": "baseline",
+        "caseId": "natal-mixed-source",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "68d886d5d9f077388a3efc7564faf81f447bcb2d48d87cb4dc8a1de19d2fbfdd"
+      }
+    ],
+    "item-e9b050bd38": [
+      {
+        "source": "baseline",
+        "caseId": "natal-service-aspect",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "a9d185176a2d0ef4d95a324532298d7f7a5fa65c9310821c39fcb4f44fc37f42"
+      }
+    ],
+    "item-4c2822be04": [
+      {
+        "source": "baseline",
+        "caseId": "natal-own-target",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "b923ead96d2ff24a10c1feb87d7cff0fe723d9562529b9cb3ac381b5a96ef724"
+      },
+      {
+        "source": "baseline",
+        "caseId": "natal-moon-fallback",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "b923ead96d2ff24a10c1feb87d7cff0fe723d9562529b9cb3ac381b5a96ef724"
+      },
+      {
+        "source": "baseline",
+        "caseId": "natal-sign-boundary",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "b923ead96d2ff24a10c1feb87d7cff0fe723d9562529b9cb3ac381b5a96ef724"
+      },
+      {
+        "source": "baseline",
+        "caseId": "natal-degraded-positions",
+        "kind": "template",
+        "outcome": "unavailable",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "b923ead96d2ff24a10c1feb87d7cff0fe723d9562529b9cb3ac381b5a96ef724"
+      },
+      {
+        "source": "baseline",
+        "caseId": "natal-legacy-snapshot",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "b923ead96d2ff24a10c1feb87d7cff0fe723d9562529b9cb3ac381b5a96ef724"
+      },
+      {
+        "source": "candidate",
+        "caseId": "natal-sign-boundary",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "b923ead96d2ff24a10c1feb87d7cff0fe723d9562529b9cb3ac381b5a96ef724"
+      },
+      {
+        "source": "candidate",
+        "caseId": "natal-degraded-positions",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "b923ead96d2ff24a10c1feb87d7cff0fe723d9562529b9cb3ac381b5a96ef724"
+      },
+      {
+        "source": "candidate",
+        "caseId": "natal-legacy-snapshot",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "b923ead96d2ff24a10c1feb87d7cff0fe723d9562529b9cb3ac381b5a96ef724"
+      }
+    ],
+    "item-c7eeb6c1ef": [
+      {
+        "source": "baseline",
+        "caseId": "natal-own-target",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "fe7f4688977caa00f87ba5cb5c6c289e2139c6e48b7a7451336b969c31794d08"
+      }
+    ],
+    "item-d5098717a0": [
+      {
+        "source": "baseline",
+        "caseId": "natal-moon-fallback",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "1b959c5643c8901d03c1a7c50b93194ce397fd0d3168db978ebf476dd3a6049f"
+      }
+    ],
+    "item-99d47cbd4f": [
+      {
+        "source": "baseline",
+        "caseId": "natal-sign-boundary",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "9f44a31e4160931c4554415963041102081fc87c9330143d67e5046513382577"
+      }
+    ],
+    "item-afaa7005a8": [
+      {
+        "source": "baseline",
+        "caseId": "natal-unknown-time",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "1138b82c07b1826f57582a0edb752ed657d55ec3081014e8d9ebb96bb7b9e948"
+      }
+    ],
+    "item-572c0c32ad": [
+      {
+        "source": "baseline",
+        "caseId": "natal-mixed-source",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "ef394108990752fb32b8db0318cc7daca40ea21da31a37d8183266bf994de9bf"
+      }
+    ],
+    "item-7add4f15ca": [
+      {
+        "source": "baseline",
+        "caseId": "natal-legacy-snapshot",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "fcd859fcfd58f1138297ca29d8d7b988599a1583c07deedd213481824f01d51e"
+      }
+    ],
+    "item-1d9823484a": [
+      {
+        "source": "baseline",
+        "caseId": "natal-synthesis-integration",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "00d91a75d92805ad384e78179b812bef014394e26895df0ccd1d44ec07b85372"
+      }
+    ],
+    "item-df023ae441": [
+      {
+        "source": "baseline",
+        "caseId": "natal-synthesis-integration",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "7f3b6d25bbb0ceab1a1c28161b6a89fc39b9e524c0481c013eb5e30ea3b6b252"
+      }
+    ],
+    "item-37f4076d78": [
+      {
+        "source": "candidate",
+        "caseId": "saturn-square-sun",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "32ea34b1e70a85ea209e7967242a88e6056bc13edd60d25e18a74fb8211c628a"
+      }
+    ],
+    "item-65549717fd": [
+      {
+        "source": "candidate",
+        "caseId": "jupiter-trine-sun-technical",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "e3ecfbd312db0a72808b1beb0be36801fe27df0623b0250921a52a32e352cf5c"
+      }
+    ],
+    "item-51003eb7a6": [
+      {
+        "source": "candidate",
+        "caseId": "mercury-conjunction-clinical",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "242385371a1fd26b686707a14cff9353766bb29abddc12b77c8b6e37cf6f9d22"
+      }
+    ],
+    "item-cab05de3e9": [
+      {
+        "source": "candidate",
+        "caseId": "venus-opposition-venus",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "443b44618365cd12e4b7dcbb2a0c74ebcd979a870db7a8fcbd31a5a6da9bd905"
+      }
+    ],
+    "item-6f0c20e821": [
+      {
+        "source": "candidate",
+        "caseId": "unknown-birth-time",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "0f2ec8d4957794cf70208de3f77b05df8ed4fd5ae24aee42252196712a9722d8"
+      }
+    ],
+    "item-d8d6229c53": [
+      {
+        "source": "candidate",
+        "caseId": "approximate-birth-time",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "e66f56a23e3d9ec753c3d056e3ea2dbf459c6a189e01c9eb28261d03f35b7202"
+      }
+    ],
+    "item-83c41afe93": [
+      {
+        "source": "candidate",
+        "caseId": "moon-dst-boundary",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "53e5d4b61bb8812a9cd9c6db1cdf6eba468a074453404dc0edee28ddb2abdd05"
+      }
+    ],
+    "item-1556d21e9a": [
+      {
+        "source": "candidate",
+        "caseId": "multiple-cycles",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "27616df9e41f5aea8bd9a25789daf5750a8f9c08f88046559be16c4176c2e09f"
+      }
+    ],
+    "item-5e53b837c6": [
+      {
+        "source": "candidate",
+        "caseId": "synthesis-tension",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "844503b634715c6fed70fd72cbd35bd1c9b81df25aca223c613464e5fc14363a"
+      }
+    ],
+    "item-f2fd99f6bc": [
+      {
+        "source": "candidate",
+        "caseId": "synthesis-reinforcement",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "b6d4446892b24f24458e792b0397d69c3067aea11842603306b8f5d0e42c734d"
+      }
+    ],
+    "item-5f011eb7e4": [
+      {
+        "source": "candidate",
+        "caseId": "synthesis-independent",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "2b7bdf8ce0ec55fbb37ff95649a535b416f62ce749b5b3645f11b9f854549d1f"
+      }
+    ],
+    "item-bd72385300": [
+      {
+        "source": "candidate",
+        "caseId": "synthesis-reversed",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "9fbbc1a82fbc8b3928439e793f748e3aed747ea10b00a0ac7d0a0260c650e56a"
+      }
+    ],
+    "item-eadccc296f": [
+      {
+        "source": "candidate",
+        "caseId": "synthesis-suppressed-support",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "39fc2fe79983e842b0183a9af1c807587f372b84623952393de56a82cd1a7531"
+      }
+    ],
+    "item-b8314cb9b2": [
+      {
+        "source": "candidate",
+        "caseId": "synthesis-unmatched",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "2df54c453b4262989abf485bfb06862b4cf84502079ee3d5421774dfa3e31a0f"
+      }
+    ],
+    "item-ef312151f1": [
+      {
+        "source": "candidate",
+        "caseId": "natal-duty-reflex",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": true,
+        "lensRule": "nl-moon-10",
+        "contextBodyHash": "47bade08b320679734763dc10e318b0776637054070e63a3fd55c2df3ab30d44"
+      }
+    ],
+    "item-b67e30021f": [
+      {
+        "source": "candidate",
+        "caseId": "natal-duty-reflex",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": true,
+        "lensRule": "nl-moon-10",
+        "contextBodyHash": "7f24882454781aff0615e8b7dd2125581a9213f89440eebab45b74c029e999d4"
+      }
+    ],
+    "item-f76841e2ac": [
+      {
+        "source": "candidate",
+        "caseId": "natal-freedom-reflex",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": true,
+        "lensRule": "nl-moon-09",
+        "contextBodyHash": "4f7aed32cad381d208414531df2a293a1042649bf4bcdf113affaf79f0c06c77"
+      }
+    ],
+    "item-714dc2575f": [
+      {
+        "source": "candidate",
+        "caseId": "natal-freedom-reflex",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": true,
+        "lensRule": "nl-moon-09",
+        "contextBodyHash": "772147ac5b06beabd89b76e57a0d174e6ff89edfffc2d51ca327d9d05421d62d"
+      }
+    ],
+    "item-0e96f64f17": [
+      {
+        "source": "candidate",
+        "caseId": "natal-service-aspect",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": true,
+        "lensRule": "nl-moon-10-aspect-01",
+        "contextBodyHash": "b499e35a00bc353744a43fad0eecddb3674c7981a8e564a33b9b565d6fd6f3e5"
+      }
+    ],
+    "item-90e0417a3e": [
+      {
+        "source": "candidate",
+        "caseId": "natal-service-aspect",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": true,
+        "lensRule": "nl-moon-10-aspect-01",
+        "contextBodyHash": "5672fd05201fd9af267b47bb5fceb5b6ccfe3357ebafc16a02c068ddaaf047ef"
+      }
+    ],
+    "item-dabaa10c55": [
+      {
+        "source": "candidate",
+        "caseId": "natal-exact-house",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": true,
+        "lensRule": "nl-moon-10-house-01",
+        "contextBodyHash": "8e10005e9f493ba009b7dec588006145e2fe4cae0a91d6d2f235bb1f02cef442"
+      }
+    ],
+    "item-188106cf35": [
+      {
+        "source": "candidate",
+        "caseId": "natal-exact-house",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": true,
+        "lensRule": "nl-moon-10-house-01",
+        "contextBodyHash": "ca6a06f50ef3bc3a2fee674f04398c057fe3821cc83257ee5fd3f63515ee800d"
+      }
+    ],
+    "item-777815114c": [
+      {
+        "source": "candidate",
+        "caseId": "natal-own-target",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": true,
+        "lensRule": "nl-sun-03",
+        "contextBodyHash": "7c8f2a80605cdf5fa6756a180b1091b2f31702a4cdf0b46fbb21320bc1aa7d40"
+      }
+    ],
+    "item-288ff5945e": [
+      {
+        "source": "candidate",
+        "caseId": "natal-own-target",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": true,
+        "lensRule": "nl-sun-03",
+        "contextBodyHash": "f5e57f25fc475042b3a1363eceefffac66541e009407c2d35c61aced67dc030a"
+      }
+    ],
+    "item-604ede23a1": [
+      {
+        "source": "candidate",
+        "caseId": "natal-moon-fallback",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": true,
+        "lensRule": "nl-moon-10",
+        "contextBodyHash": "3550998dbf755d6595e8cd17a74027e01ec0c86fa02c34145cde46b4941dadf7"
+      }
+    ],
+    "item-855ac448e8": [
+      {
+        "source": "candidate",
+        "caseId": "natal-moon-fallback",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": true,
+        "lensRule": "nl-moon-10",
+        "contextBodyHash": "202e98a505a5cbfdc714bbfa1d7403daa896b6804f5d6e796c1df8ed2a1cbf36"
+      }
+    ],
+    "item-fea675bc23": [
+      {
+        "source": "candidate",
+        "caseId": "natal-sign-boundary",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "ba931e36a3c18af15f943b9ab88c4f7b225fc28cbaec27489ff95ef05922755e"
+      }
+    ],
+    "item-655695337f": [
+      {
+        "source": "candidate",
+        "caseId": "natal-unknown-time",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "d8a6aa1950d78381611b2974b8fedfb8ae52bc014fc33e202c8ee360b6ea9291"
+      }
+    ],
+    "item-308d6af0e7": [
+      {
+        "source": "candidate",
+        "caseId": "natal-mixed-source",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": true,
+        "lensRule": "nl-moon-10",
+        "contextBodyHash": "6f04076b9125110864ba87bc771859cb41c88f913d5a6913a4c0312678562917"
+      }
+    ],
+    "item-a1c8bdc78e": [
+      {
+        "source": "candidate",
+        "caseId": "natal-mixed-source",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": true,
+        "lensRule": "nl-moon-10",
+        "contextBodyHash": "33ea0c60a721ff45ee83f7fa8dc3d214f8b8634e3a8e9d0011dfe5b79878a67f"
+      }
+    ],
+    "item-889092e0b8": [
+      {
+        "source": "candidate",
+        "caseId": "natal-degraded-positions",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "13f1fb525761e6082da5a33c3e81350310e2059c7beffc856b0a5102ad3d8cdb"
+      }
+    ],
+    "item-57ed357f09": [
+      {
+        "source": "candidate",
+        "caseId": "natal-legacy-snapshot",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": false,
+        "lensRule": null,
+        "contextBodyHash": "d3bfae48882cb67ca274c867e546695365c9b56097a50e23ccd6227160ba6e55"
+      }
+    ],
+    "item-8d714891d8": [
+      {
+        "source": "candidate",
+        "caseId": "natal-synthesis-integration",
+        "kind": "template",
+        "outcome": "accepted",
+        "hasLens": true,
+        "lensRule": "nl-sun-03",
+        "contextBodyHash": "45d3650cb40de0a48b112734421ce55ebb7e7a7b073ecb5c30135facab840121"
+      }
+    ],
+    "item-493bd0abab": [
+      {
+        "source": "candidate",
+        "caseId": "natal-synthesis-integration",
+        "kind": "model",
+        "outcome": "accepted",
+        "hasLens": true,
+        "lensRule": "nl-sun-03",
+        "contextBodyHash": "aeb4f6309b2f408390d5ed9a115830e080890851a19b101666b7fad9b629b553"
+      }
+    ]
+  },
+  "contrastSets": {
+    "contrast-0b9855ea": {
+      "source": "baseline",
+      "kind": "model",
+      "caseIds": [
+        "natal-duty-reflex",
+        "natal-freedom-reflex"
+      ]
+    },
+    "contrast-a6ebe79a": {
+      "source": "baseline",
+      "kind": "template",
+      "caseIds": [
+        "natal-duty-reflex",
+        "natal-freedom-reflex"
+      ]
+    },
+    "contrast-7c4bb2f8": {
+      "source": "candidate",
+      "kind": "model",
+      "caseIds": [
+        "natal-duty-reflex",
+        "natal-freedom-reflex"
+      ]
+    },
+    "contrast-4aed21d7": {
+      "source": "candidate",
+      "kind": "template",
+      "caseIds": [
+        "natal-duty-reflex",
+        "natal-freedom-reflex"
+      ]
+    }
+  },
+  "repetitionSets": {
+    "sequence-27656d70": {
+      "source": "baseline",
+      "kind": "model",
+      "caseIds": [
+        "natal-duty-reflex",
+        "natal-service-aspect",
+        "natal-moon-fallback",
+        "natal-mixed-source"
+      ]
+    },
+    "sequence-938edd1c": {
+      "source": "baseline",
+      "kind": "model",
+      "caseIds": [
+        "natal-own-target",
+        "natal-synthesis-integration"
+      ]
+    },
+    "sequence-bb552177": {
+      "source": "baseline",
+      "kind": "template",
+      "caseIds": [
+        "natal-duty-reflex",
+        "natal-service-aspect",
+        "natal-exact-house",
+        "natal-moon-fallback",
+        "natal-mixed-source"
+      ]
+    },
+    "sequence-96be128a": {
+      "source": "baseline",
+      "kind": "template",
+      "caseIds": [
+        "natal-own-target",
+        "natal-synthesis-integration"
+      ]
+    },
+    "sequence-b5b2f0ab": {
+      "source": "candidate",
+      "kind": "model",
+      "caseIds": [
+        "natal-duty-reflex",
+        "natal-service-aspect",
+        "natal-exact-house",
+        "natal-moon-fallback",
+        "natal-mixed-source"
+      ]
+    },
+    "sequence-fa6ee260": {
+      "source": "candidate",
+      "kind": "model",
+      "caseIds": [
+        "natal-own-target",
+        "natal-synthesis-integration"
+      ]
+    },
+    "sequence-fba301e0": {
+      "source": "candidate",
+      "kind": "template",
+      "caseIds": [
+        "natal-duty-reflex",
+        "natal-service-aspect",
+        "natal-exact-house",
+        "natal-moon-fallback",
+        "natal-mixed-source"
+      ]
+    },
+    "sequence-a1f78331": {
+      "source": "candidate",
+      "kind": "template",
+      "caseIds": [
+        "natal-own-target",
+        "natal-synthesis-integration"
+      ]
+    }
+  },
+  "unavailable": [
+    {
+      "source": "baseline",
+      "caseId": "natal-exact-house",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-8",
+        "validatorVersion": "daily-reference-5",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "unavailable",
+        "attempted": true,
+        "code": "timeout",
+        "durationMs": 60000,
+        "paragraph": null
+      }
+    },
+    {
+      "source": "baseline",
+      "caseId": "natal-degraded-positions",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-8",
+        "validatorVersion": "daily-reference-5",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "unavailable",
+        "attempted": true,
+        "code": "timeout",
+        "durationMs": 60000,
+        "paragraph": null
+      }
+    },
+    {
+      "source": "candidate",
+      "caseId": "saturn-square-moon-warm",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-8",
+        "validatorVersion": "daily-reference-5",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "unavailable",
+        "attempted": true,
+        "code": "timeout",
+        "durationMs": 60000,
+        "paragraph": null
+      }
+    }
+  ],
+  "packets": {
+    "a": {
+      "path": "/tmp/natal-blind-20261011-ni7qb582/packet-a.json",
+      "sha256": "90f96726be8f54de30d3874b9b90a2e47516598061b42cc204942ed7c3fe4dea",
+      "output": "/tmp/natal-blind-20261011-ni7qb582/review-a.json"
+    },
+    "b": {
+      "path": "/tmp/natal-blind-20261011-ni7qb582/packet-b.json",
+      "sha256": "5a4e38587e71af3c11df46f1a32b7dce29a1c658596a43c5492f398d8ab0ce2a",
+      "output": "/tmp/natal-blind-20261011-ni7qb582/review-b.json"
+    }
+  }
+}

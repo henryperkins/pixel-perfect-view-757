@@ -1,0 +1,18 @@
+{
+  "checkedAtUTC": "2026-10-11T23:45:53.684927+00:00",
+  "status": "passed",
+  "reviewHashes": {
+    "a": "93bd33998761e69e0a8a6b0d5562c478940e94761713ce0cf690509cb5cad46a",
+    "b": "4f3d5822eff6dc674b70ba772bc5dcffb9c1005a69ad356543ec2f96527fa79e"
+  },
+  "checks": [
+    "Packet SHA-256 bindings",
+    "Equal canonical item sets and distinct randomized orders",
+    "Fresh-context blindness declarations and allowed read paths",
+    "Complete unique item/contrast/repetition coverage",
+    "Score bounds and N1/S1/quiet applicability",
+    "Exact quoted passages and paragraph numbers",
+    "Finding fact IDs and explicit claim flags",
+    "Original source report bytes retained; manual fields remain null"
+  ]
+}

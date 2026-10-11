@@ -1,0 +1,90 @@
+{
+  "matchingMetadataFields": [
+    "reportVersion",
+    "fixtureVersion",
+    "caseSetHash",
+    "transitCopyHash",
+    "planVersion",
+    "natalPlanVersion",
+    "reliabilityVersion",
+    "promptVersion",
+    "validatorVersion",
+    "model",
+    "gatewayTimeoutMs",
+    "source",
+    "network"
+  ],
+  "matchingCaseCount": 28,
+  "matchingConfigHashes": true,
+  "matchingNonNatalFacts": true,
+  "matchingReliabilityManifests": true,
+  "requestChangedCases": [
+    "natal-duty-reflex",
+    "natal-freedom-reflex",
+    "natal-service-aspect",
+    "natal-exact-house",
+    "natal-own-target",
+    "natal-moon-fallback",
+    "natal-mixed-source",
+    "natal-synthesis-integration"
+  ],
+  "requestChangedOnlySelectedLensCases": true,
+  "matchedSuccessfulModelPairs": 24,
+  "matchedPositiveModelPairs": 7,
+  "matchedNegativeModelPairs": 3,
+  "statistics": {
+    "baseline": {
+      "summaryVerified": true,
+      "counts": {
+        "cases": 28,
+        "modelAttempts": 27,
+        "outcomes": {
+          "accepted": 25,
+          "skipped": 1,
+          "unavailable": 2
+        },
+        "reasons": {
+          "accepted": 25,
+          "no_cycle": 1,
+          "timeout": 2
+        }
+      },
+      "acceptedLatencyMs": {
+        "minimum": 6731,
+        "median": 28190,
+        "maximum": 56833,
+        "mean": 28635.08,
+        "over20000": 16
+      },
+      "manualScoresUnchangedAndNull": true
+    },
+    "candidate": {
+      "summaryVerified": true,
+      "counts": {
+        "cases": 28,
+        "modelAttempts": 27,
+        "outcomes": {
+          "accepted": 26,
+          "unavailable": 1,
+          "skipped": 1
+        },
+        "reasons": {
+          "accepted": 26,
+          "timeout": 1,
+          "no_cycle": 1
+        }
+      },
+      "acceptedLatencyMs": {
+        "minimum": 9476,
+        "median": 19771.5,
+        "maximum": 52415,
+        "mean": 24600.30769230769,
+        "over20000": 13
+      },
+      "manualScoresUnchangedAndNull": true
+    }
+  },
+  "generatingSourceRevisionVerified": false,
+  "providerCostRecorded": false,
+  "memberServingPathVerified": false
+}

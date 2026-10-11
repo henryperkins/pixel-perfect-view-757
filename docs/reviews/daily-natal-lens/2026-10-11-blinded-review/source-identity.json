@@ -1,0 +1,111 @@
+{
+  "createdAtUTC": "2026-10-11T23:39:08.821845+00:00",
+  "createdAtChicago": "2026-10-11T18:39:08.821969-05:00",
+  "checkoutBranch": "feat/daily-reading-synthesis",
+  "checkoutHead": "c3ac5ca77dfe4d37515183eb2a1fe64e3063506d",
+  "checkoutIsGeneratingRevisionProof": false,
+  "sourceIdentityGaps": [
+    "Reports contain no observed generating deployment/build revision",
+    "Provider cost/token usage absent",
+    "Independent human review absent"
+  ],
+  "reports": {
+    "baseline": {
+      "originalPath": "/tmp/codex-remote-attachments/01a12d2c-53a6-71d1-aa0a-c7dcd0922f04/92E7662C-D166-44FC-840B-0B5EA9C7E603/1-reading-evaluation-complete-builtin-2026-10-11T23-09-03.json",
+      "artifact": "baseline-report.json",
+      "sha256": "ce0b8acdc47c5d9d2bffa8eb4bd469364145438a12897009b8d2cddf668d35a9",
+      "metadata": {
+        "reportVersion": 1,
+        "fixtureVersion": "synthetic-daily-5",
+        "caseSetHash": "1fec5a7a3842cbc4f374a9058dfa3264294df875db607db2d3a92aa1306f9b07",
+        "bundleVersion": "builtin-0.5.0",
+        "bundleHash": "f68cc97e749d78d6a2332b9d87fb9fc4ce367d61d437ffa19f8485a2778330c1",
+        "transitCopyHash": "4d6048ea1d303410e2845d9dde9960da95749ff7ab20fd886779a4627abc677d",
+        "planVersion": "daily-synthesis-1",
+        "natalPlanVersion": "daily-natal-lens-2",
+        "reliabilityVersion": "natal-reliability-1",
+        "promptVersion": "daily-astro-body-8",
+        "validatorVersion": "daily-reference-5",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "source": "live-synthetic",
+        "network": "Live Gemini Enterprise Agent Platform; fixed synthetic facts only",
+        "warning": "Actual model outputs for synthetic plans. This run does not establish production-user acceptance, semantic grounding, or writing quality. Manual scores remain blank.",
+        "bundleSource": "builtin",
+        "partial": false,
+        "expectedCases": 28,
+        "summary": {
+          "cases": 28,
+          "gatewayReplays": 0,
+          "modelAttempts": 27,
+          "outcomes": {
+            "accepted": 25,
+            "rejected": 0,
+            "unavailable": 2,
+            "skipped": 1
+          },
+          "reasons": {
+            "accepted": 25,
+            "no_cycle": 1,
+            "timeout": 2
+          },
+          "replayAcceptanceRate": null,
+          "syntheticModelAcceptanceRate": 0.9259259259259259,
+          "liveAcceptanceRate": null
+        }
+      }
+    },
+    "candidate": {
+      "originalPath": "/tmp/codex-remote-attachments/01a12d2c-53a6-71d1-aa0a-c7dcd0922f04/57F35306-D974-40A4-A029-3150B33DDF70/1-reading-evaluation-complete-natal-candidate-2026-10-11T22-53-19.json",
+      "artifact": "candidate-report.json",
+      "sha256": "16af47ded750b4d2b4e31747395331a3657d6f8f26f1056247fe24ba7135343e",
+      "metadata": {
+        "reportVersion": 1,
+        "fixtureVersion": "synthetic-daily-5",
+        "caseSetHash": "1fec5a7a3842cbc4f374a9058dfa3264294df875db607db2d3a92aa1306f9b07",
+        "bundleVersion": "builtin-0.6.1",
+        "bundleHash": "b073d625c23b5bede66eba25e37bd3f3397263710dd63ab67d8af06b6e216500",
+        "transitCopyHash": "4d6048ea1d303410e2845d9dde9960da95749ff7ab20fd886779a4627abc677d",
+        "planVersion": "daily-synthesis-1",
+        "natalPlanVersion": "daily-natal-lens-2",
+        "reliabilityVersion": "natal-reliability-1",
+        "promptVersion": "daily-astro-body-8",
+        "validatorVersion": "daily-reference-5",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "source": "live-synthetic",
+        "network": "Live Gemini Enterprise Agent Platform; fixed synthetic facts only",
+        "warning": "Actual model outputs for synthetic plans. This run does not establish production-user acceptance, semantic grounding, or writing quality. Manual scores remain blank.",
+        "bundleSource": "natal-candidate",
+        "partial": false,
+        "expectedCases": 28,
+        "summary": {
+          "cases": 28,
+          "gatewayReplays": 0,
+          "modelAttempts": 27,
+          "outcomes": {
+            "accepted": 26,
+            "rejected": 0,
+            "unavailable": 1,
+            "skipped": 1
+          },
+          "reasons": {
+            "accepted": 26,
+            "timeout": 1,
+            "no_cycle": 1
+          },
+          "replayAcceptanceRate": null,
+          "syntheticModelAcceptanceRate": 0.9629629629629629,
+          "liveAcceptanceRate": null
+        }
+      }
+    }
+  },
+  "reviewWorkspace": {
+    "path": "/home/ubuntu/pixel-perfect-view-757/.worktrees/natal-writing-blind-review",
+    "branch": "docs/natal-writing-blind-review-2026-10-11",
+    "baseRef": "origin/main",
+    "baseRevision": "bb033d3",
+    "isGeneratingRevisionProof": false
+  }
+}

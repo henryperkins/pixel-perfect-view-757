@@ -1,0 +1,909 @@
+{
+  "reportVersion": 1,
+  "fixtureVersion": "synthetic-daily-5",
+  "before": {
+    "planVersion": "daily-synthesis-1",
+    "natalPlanVersion": "daily-natal-lens-2",
+    "reliabilityVersion": "natal-reliability-1",
+    "promptVersion": "daily-astro-body-8",
+    "validatorVersion": "daily-reference-5",
+    "bundleVersion": "builtin-0.5.0",
+    "bundleHash": "f68cc97e749d78d6a2332b9d87fb9fc4ce367d61d437ffa19f8485a2778330c1",
+    "bundleSource": "builtin",
+    "transitCopyHash": "4d6048ea1d303410e2845d9dde9960da95749ff7ab20fd886779a4627abc677d",
+    "model": "gemini-enterprise/gemini-3.8-flash",
+    "gatewayTimeoutMs": 60000,
+    "source": "live-synthetic"
+  },
+  "after": {
+    "planVersion": "daily-synthesis-1",
+    "natalPlanVersion": "daily-natal-lens-2",
+    "reliabilityVersion": "natal-reliability-1",
+    "promptVersion": "daily-astro-body-8",
+    "validatorVersion": "daily-reference-5",
+    "bundleVersion": "builtin-0.6.1",
+    "bundleHash": "b073d625c23b5bede66eba25e37bd3f3397263710dd63ab67d8af06b6e216500",
+    "bundleSource": "natal-candidate",
+    "transitCopyHash": "4d6048ea1d303410e2845d9dde9960da95749ff7ab20fd886779a4627abc677d",
+    "model": "gemini-enterprise/gemini-3.8-flash",
+    "gatewayTimeoutMs": 60000,
+    "source": "live-synthetic"
+  },
+  "configurationChanges": [
+    {
+      "field": "bundleVersion",
+      "before": "builtin-0.5.0",
+      "after": "builtin-0.6.1"
+    },
+    {
+      "field": "bundleHash",
+      "before": "f68cc97e749d78d6a2332b9d87fb9fc4ce367d61d437ffa19f8485a2778330c1",
+      "after": "b073d625c23b5bede66eba25e37bd3f3397263710dd63ab67d8af06b6e216500"
+    },
+    {
+      "field": "bundleSource",
+      "before": "builtin",
+      "after": "natal-candidate"
+    }
+  ],
+  "warning": "Replay changes do not establish live acceptance, grounding, or writing quality.",
+  "acceptedDelta": 1,
+  "cases": [
+    {
+      "id": "saturn-square-sun",
+      "before": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "after": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "textChanged": true,
+      "manualReviewBefore": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      },
+      "manualReviewAfter": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      }
+    },
+    {
+      "id": "saturn-square-moon-warm",
+      "before": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "after": {
+        "outcome": "unavailable",
+        "code": "timeout"
+      },
+      "textChanged": true,
+      "manualReviewBefore": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      },
+      "manualReviewAfter": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      }
+    },
+    {
+      "id": "jupiter-trine-sun-technical",
+      "before": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "after": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "textChanged": true,
+      "manualReviewBefore": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      },
+      "manualReviewAfter": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      }
+    },
+    {
+      "id": "mercury-conjunction-clinical",
+      "before": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "after": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "textChanged": true,
+      "manualReviewBefore": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      },
+      "manualReviewAfter": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      }
+    },
+    {
+      "id": "venus-opposition-venus",
+      "before": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "after": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "textChanged": true,
+      "manualReviewBefore": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      },
+      "manualReviewAfter": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      }
+    },
+    {
+      "id": "unknown-birth-time",
+      "before": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "after": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "textChanged": true,
+      "manualReviewBefore": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      },
+      "manualReviewAfter": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      }
+    },
+    {
+      "id": "approximate-birth-time",
+      "before": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "after": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "textChanged": true,
+      "manualReviewBefore": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      },
+      "manualReviewAfter": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      }
+    },
+    {
+      "id": "moon-dst-boundary",
+      "before": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "after": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "textChanged": true,
+      "manualReviewBefore": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      },
+      "manualReviewAfter": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      }
+    },
+    {
+      "id": "multiple-cycles",
+      "before": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "after": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "textChanged": true,
+      "manualReviewBefore": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      },
+      "manualReviewAfter": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      }
+    },
+    {
+      "id": "quiet-threshold",
+      "before": {
+        "outcome": "skipped",
+        "code": "no_cycle"
+      },
+      "after": {
+        "outcome": "skipped",
+        "code": "no_cycle"
+      },
+      "textChanged": false,
+      "manualReviewBefore": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      },
+      "manualReviewAfter": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      }
+    },
+    {
+      "id": "synthesis-tension",
+      "before": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "after": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "textChanged": true,
+      "manualReviewBefore": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      },
+      "manualReviewAfter": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      }
+    },
+    {
+      "id": "synthesis-reinforcement",
+      "before": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "after": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "textChanged": true,
+      "manualReviewBefore": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      },
+      "manualReviewAfter": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      }
+    },
+    {
+      "id": "synthesis-independent",
+      "before": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "after": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "textChanged": true,
+      "manualReviewBefore": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      },
+      "manualReviewAfter": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      }
+    },
+    {
+      "id": "synthesis-reversed",
+      "before": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "after": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "textChanged": true,
+      "manualReviewBefore": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      },
+      "manualReviewAfter": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      }
+    },
+    {
+      "id": "synthesis-suppressed-support",
+      "before": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "after": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "textChanged": true,
+      "manualReviewBefore": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      },
+      "manualReviewAfter": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      }
+    },
+    {
+      "id": "synthesis-unmatched",
+      "before": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "after": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "textChanged": true,
+      "manualReviewBefore": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      },
+      "manualReviewAfter": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      }
+    },
+    {
+      "id": "natal-duty-reflex",
+      "before": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "after": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "textChanged": true,
+      "manualReviewBefore": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      },
+      "manualReviewAfter": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      }
+    },
+    {
+      "id": "natal-freedom-reflex",
+      "before": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "after": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "textChanged": true,
+      "manualReviewBefore": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      },
+      "manualReviewAfter": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      }
+    },
+    {
+      "id": "natal-service-aspect",
+      "before": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "after": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "textChanged": true,
+      "manualReviewBefore": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      },
+      "manualReviewAfter": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      }
+    },
+    {
+      "id": "natal-exact-house",
+      "before": {
+        "outcome": "unavailable",
+        "code": "timeout"
+      },
+      "after": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "textChanged": true,
+      "manualReviewBefore": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      },
+      "manualReviewAfter": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      }
+    },
+    {
+      "id": "natal-own-target",
+      "before": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "after": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "textChanged": true,
+      "manualReviewBefore": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      },
+      "manualReviewAfter": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      }
+    },
+    {
+      "id": "natal-moon-fallback",
+      "before": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "after": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "textChanged": true,
+      "manualReviewBefore": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      },
+      "manualReviewAfter": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      }
+    },
+    {
+      "id": "natal-sign-boundary",
+      "before": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "after": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "textChanged": true,
+      "manualReviewBefore": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      },
+      "manualReviewAfter": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      }
+    },
+    {
+      "id": "natal-unknown-time",
+      "before": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "after": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "textChanged": true,
+      "manualReviewBefore": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      },
+      "manualReviewAfter": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      }
+    },
+    {
+      "id": "natal-mixed-source",
+      "before": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "after": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "textChanged": true,
+      "manualReviewBefore": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      },
+      "manualReviewAfter": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      }
+    },
+    {
+      "id": "natal-degraded-positions",
+      "before": {
+        "outcome": "unavailable",
+        "code": "timeout"
+      },
+      "after": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "textChanged": true,
+      "manualReviewBefore": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      },
+      "manualReviewAfter": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      }
+    },
+    {
+      "id": "natal-legacy-snapshot",
+      "before": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "after": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "textChanged": true,
+      "manualReviewBefore": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      },
+      "manualReviewAfter": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      }
+    },
+    {
+      "id": "natal-synthesis-integration",
+      "before": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "after": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "textChanged": true,
+      "manualReviewBefore": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      },
+      "manualReviewAfter": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "notes": null
+      }
+    }
+  ],
+  "mode": "natal",
+  "identity": {
+    "before": {
+      "sha256": "ce0b8acdc47c5d9d2bffa8eb4bd469364145438a12897009b8d2cddf668d35a9",
+      "sourceRevision": null
+    },
+    "after": {
+      "sha256": "16af47ded750b4d2b4e31747395331a3657d6f8f26f1056247fe24ba7135343e",
+      "sourceRevision": null
+    },
+    "sourceRevisionMatch": null
+  },
+  "qualificationGaps": [
+    "The before report's source revision is unproven",
+    "The after report's source revision is unproven"
+  ]
+}

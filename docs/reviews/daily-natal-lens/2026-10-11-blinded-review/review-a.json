@@ -1,0 +1,2880 @@
+{
+  "protocolVersion": "natal-writing-blind-ai-1",
+  "reviewerId": "blind_reviewer_a",
+  "packetSha256": "90f96726be8f54de30d3874b9b90a2e47516598061b42cc204942ed7c3fe4dea",
+  "canonicalItemSetHash": "bcf4c1c9e70ccc690b3e7102f862e28b0117fa0c2ff4991c61056668c2139854",
+  "reviewedAtUTC": "2026-10-11T23:45:07.499569+00:00",
+  "reviewerModel": null,
+  "reviewerConfiguration": null,
+  "modelIdentityNote": "Not exposed; model diversity unestablished",
+  "blindness": {
+    "freshContext": true,
+    "sourceAssignmentsVisible": false,
+    "priorFindingsVisible": false,
+    "otherReviewerVisible": false,
+    "readPaths": [
+      "/tmp/natal-blind-20261011-ni7qb582/instructions.txt",
+      "/tmp/natal-blind-20261011-ni7qb582/packet-a.json"
+    ]
+  },
+  "items": [
+    {
+      "itemId": "item-b1ab720739",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 4,
+      "coherence": 4,
+      "lensIntegration": null,
+      "synthesisCoherence": 4,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": null,
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Dependable commitment and immediate action form a supported incremental-work distinction. The two paragraphs advance from patience to targeted action, although their source phrasing remains conspicuous.",
+      "findings": []
+    },
+    {
+      "itemId": "item-ddb9b85b76",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 3,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The draft/reply scene and pace-versus-scope distinction are grounded. Verbatim framing and two isolated timing paragraphs make this read as assembled source entries rather than a developed reading.",
+      "findings": [
+        {
+          "findingId": "item-ddb9b85b76-f1",
+          "itemId": "item-ddb9b85b76",
+          "paragraph": 3,
+          "quote": "The contact is in its approaching phase within the calculated window.",
+          "factIds": [
+            "P1",
+            "T1"
+          ],
+          "explanation": "An isolated phase paragraph interrupts the practical discussion; the following timing paragraph repeats its technical framing.",
+          "severity": "editorial",
+          "proposedCorrection": "Combine any useful chronology into one short sentence attached to the reading, or omit it at standard depth."
+        }
+      ]
+    },
+    {
+      "itemId": "item-cac4701a14",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 3,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The reply-first opening is concrete and supported, but effort meeting resistance is restated in the same paragraph and the second paragraph mostly lists related task components.",
+      "findings": [
+        {
+          "findingId": "item-cac4701a14-f1",
+          "itemId": "item-cac4701a14",
+          "paragraph": 1,
+          "quote": "A draft revised before it has settled offers another place where effort meets resistance.",
+          "factIds": [
+            "I1"
+          ],
+          "explanation": "The opening already states how effort meets resistance; this sentence repeats that explanation without developing the difference.",
+          "severity": "editorial",
+          "proposedCorrection": "Use the supported distinction between premature revision and premature reply to advance the paragraph, or retain only one scene."
+        }
+      ]
+    },
+    {
+      "itemId": "item-d8d6229c53",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 4,
+      "coherence": 4,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Conditional framing preserves the possibility of acting before a task has settled. The second paragraph broadens the scene to pace, scope and ownership with a clear enough progression; its contribution could be sharper.",
+      "findings": []
+    },
+    {
+      "itemId": "item-e1f6aac0f2",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 4,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Capacity versus role expectations is a useful supported distinction. The title/attention framing is only loosely connected and the three metadata paragraphs dilute the practical reading. No joint meaning is invented without S1.",
+      "findings": [
+        {
+          "findingId": "item-e1f6aac0f2-f1",
+          "itemId": "item-e1f6aac0f2",
+          "paragraph": 5,
+          "quote": "Also in range: venus opposition natal venus (exact in 3 days).",
+          "factIds": [
+            "C2",
+            "T1"
+          ],
+          "explanation": "The raw inventory entry is abrupt and offers no practical contribution to this standard-depth discussion.",
+          "severity": "editorial",
+          "proposedCorrection": "Omit the inventory entry or separately present only its calculated chronology in a consistent prose style."
+        }
+      ]
+    },
+    {
+      "itemId": "item-46adce31f9",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 2,
+      "repetition": 3,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The central obligations/capacity reading remains grounded, but an added gentle-preface formula does not supply a natural warm voice. Unintegrated title framing and a bare additional-contact list weaken progression.",
+      "findings": [
+        {
+          "findingId": "item-46adce31f9-f1",
+          "itemId": "item-46adce31f9",
+          "paragraph": 1,
+          "quote": "Taking this gently:",
+          "factIds": [
+            "I1"
+          ],
+          "explanation": "This prefatory phrase signals warmth mechanically; the capitalized copied sentence after it remains formal.",
+          "severity": "editorial",
+          "proposedCorrection": "Use a conversational opening that preserves the conditional role-and-capacity meaning."
+        }
+      ]
+    },
+    {
+      "itemId": "item-05a53439ed",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 3,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Preference versus others expectations and an unfinished reply are supported practical material. Consecutive source-like paragraphs and detached chronology leave the relationship between preference and expression underdeveloped.",
+      "findings": [
+        {
+          "findingId": "item-05a53439ed-f1",
+          "itemId": "item-05a53439ed",
+          "paragraph": 5,
+          "quote": "Also in range: mercury conjunction natal mercury (exact in 3 days).",
+          "factIds": [
+            "C2",
+            "T1"
+          ],
+          "explanation": "A bare secondary-contact entry ends the reading as a calculation inventory rather than a useful final thought.",
+          "severity": "editorial",
+          "proposedCorrection": "Present any needed secondary chronology compactly in prose or omit it."
+        }
+      ]
+    },
+    {
+      "itemId": "item-8d714891d8",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 2,
+      "coherence": 3,
+      "lensIntegration": 3,
+      "synthesisCoherence": 4,
+      "applicability": {
+        "lensIntegration": null,
+        "synthesisCoherence": null,
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The supplied synthesis supports ambition needing more structure. The curiosity lens is recognizable in paragraph one but copied after the primary interpretation without applying sampling versus choosing to obligations or scope; subsequent title and timing entries add bulk.",
+      "findings": [
+        {
+          "findingId": "item-8d714891d8-f1",
+          "itemId": "item-8d714891d8",
+          "paragraph": 1,
+          "quote": "Following more than one line of curiosity can help a direction take shape. If several possible projects compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages.",
+          "factIds": [
+            "N1",
+            "I1",
+            "S1"
+          ],
+          "explanation": "The lens follows the capacity interpretation as a separate idea; its sampling/choosing distinction does not yet explain the practical scope tension.",
+          "severity": "editorial",
+          "proposedCorrection": "Relate sampling versus choosing conditionally to the supported difference between growing ambition and the structure available to carry it."
+        }
+      ]
+    },
+    {
+      "itemId": "item-18bc974a36",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 2,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Private time versus mentally carried obligation is concrete and source-supported. Paragraph two repeats the calendar and quiet-moment scene already established in paragraph one, and isolated phase/timing entries add no practical development.",
+      "findings": [
+        {
+          "findingId": "item-18bc974a36-f1",
+          "itemId": "item-18bc974a36",
+          "paragraph": 2,
+          "quote": "A full calendar or an obligation that follows you into a quiet moment can offer a scene for tension around the amount of private space you prefer.",
+          "factIds": [
+            "I1",
+            "D1"
+          ],
+          "explanation": "This reuses the full-calendar and quiet-moment material from paragraph one instead of advancing a distinct thought.",
+          "severity": "editorial",
+          "proposedCorrection": "Develop the supported difference between an unclaimed hour and mentally tracking a task, using only one calendar scene."
+        }
+      ]
+    },
+    {
+      "itemId": "item-889092e0b8",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 4,
+      "coherence": 4,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The opening identifies expectations exceeding capacity and the second paragraph illustrates a title obscuring responsibilities. Both are supported; a small connective edit would make their relationship clearer.",
+      "findings": []
+    },
+    {
+      "itemId": "item-d850c603ff",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 2,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The obligation/private-space distinction is supported and concrete. Paragraph two repeats the full-calendar and quiet-moment scenes, while separated chronology paragraphs interrupt the reading.",
+      "findings": [
+        {
+          "findingId": "item-d850c603ff-f1",
+          "itemId": "item-d850c603ff",
+          "paragraph": 2,
+          "quote": "A full calendar or an obligation that follows you into a quiet moment can offer a scene for tension around the amount of private space you prefer.",
+          "factIds": [
+            "I1",
+            "D1"
+          ],
+          "explanation": "This restates the prior paragraph rather than developing the difference between external free time and mentally tracked tasks.",
+          "severity": "editorial",
+          "proposedCorrection": "Retain one scene and develop the supported unclaimed-hour versus mental-task distinction."
+        }
+      ]
+    },
+    {
+      "itemId": "item-c329e52083",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 2,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The conversational contraction fits the requested warm tone and possibilities remain conditional. The quiet moment carrying the next task is repeated in paragraph two, so the reading develops only one useful thought.",
+      "findings": [
+        {
+          "findingId": "item-c329e52083-f1",
+          "itemId": "item-c329e52083",
+          "paragraph": 2,
+          "quote": "An obligation that follows you into a quiet moment can offer a scene for tension around the amount of private space you prefer.",
+          "factIds": [
+            "I1",
+            "D1"
+          ],
+          "explanation": "The opening has already placed the next task inside a quiet moment.",
+          "severity": "editorial",
+          "proposedCorrection": "Advance the supported unclaimed-hour distinction without repeating the opening scene."
+        }
+      ]
+    },
+    {
+      "itemId": "item-655695337f",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 4,
+      "coherence": 4,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The conditional opening relates capacity to boundaries without leaking suppressed houses or angles. The title/responsibility scene is concrete and supported, with a slightly loose bridge between the two paragraphs.",
+      "findings": []
+    },
+    {
+      "itemId": "item-df023ae441",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 4,
+      "coherence": 4,
+      "lensIntegration": null,
+      "synthesisCoherence": 4,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": null,
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Capacity limits lead coherently into low-friction initiative and the supplied scope/structure tension. The resulting distinction is useful; a more explicit connection between increased scope and obligations would make the synthesis more fully developed.",
+      "findings": []
+    },
+    {
+      "itemId": "item-85d7a2f2fe",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 3,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": 4,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": null,
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The supplied scope/structure relationship is retained safely, but the second parent meaning is not developed beyond a closing contact label. Title framing and standalone chronology make the reading feel assembled.",
+      "findings": [
+        {
+          "findingId": "item-85d7a2f2fe-f1",
+          "itemId": "item-85d7a2f2fe",
+          "paragraph": 6,
+          "quote": "Also in range: jupiter trine natal mars (exact in 3 days).",
+          "factIds": [
+            "C2",
+            "I2",
+            "S1"
+          ],
+          "explanation": "This technical label provides the second contact without explaining its initiative meaning, leaving the synthesis less developed than its sources allow.",
+          "severity": "editorial",
+          "proposedCorrection": "Use the supplied low-friction initiative meaning briefly within the scope/structure paragraph."
+        }
+      ]
+    },
+    {
+      "itemId": "item-bc55d7c7e3",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 4,
+      "coherence": 4,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Three concurrent contacts receive separate supported practical meanings: capacity, exploring within an existing plan, and preference differences. The warm voice is natural enough; the final preference paragraph has a weaker connection but does not invent a joint premise.",
+      "findings": []
+    },
+    {
+      "itemId": "item-6038eb1772",
+      "specificity": 3,
+      "grounding": 3,
+      "voice": 3,
+      "repetition": 4,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": true,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Calculated separating phase, orb and past exact date are supported. The opening adds an unsupported central-priority assertion; extensive calculation detail at standard depth also outweighs the practical task-framing paragraph.",
+      "findings": [
+        {
+          "findingId": "item-6038eb1772-f1",
+          "itemId": "item-6038eb1772",
+          "paragraph": 1,
+          "quote": "How you articulate what you mean becomes the central focus",
+          "factIds": [
+            "I1"
+          ],
+          "explanation": "I1 describes returning mental focus to articulation but does not establish that articulation becomes the central or highest-priority focus of this reading or person.",
+          "severity": "substantive",
+          "proposedCorrection": "Describe how the supplied communication frame can return attention to articulation without asserting central priority."
+        },
+        {
+          "findingId": "item-6038eb1772-f2",
+          "itemId": "item-6038eb1772",
+          "paragraph": 1,
+          "quote": "The contact is in its separating phase within the calculated window, holding an orb of 0.42 degrees at the calculation time.",
+          "factIds": [
+            "C1",
+            "P1",
+            "T1"
+          ],
+          "explanation": "This detail is valid chronology but consumes substantial space at standard depth before another sentence repeats the window and date.",
+          "severity": "editorial",
+          "proposedCorrection": "Condense the optional calculated details and connect the remaining space to the supported draft or unfinished-list scene."
+        }
+      ]
+    },
+    {
+      "itemId": "item-493bd0abab",
+      "specificity": 5,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 4,
+      "coherence": 4,
+      "lensIntegration": 4,
+      "synthesisCoherence": 4,
+      "applicability": {
+        "lensIntegration": null,
+        "synthesisCoherence": null,
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Sampling versus choosing is applied to capacity and boundaries within the primary paragraph, improving practical usefulness. The second paragraph develops the source-supported scope/structure tension. The boundary link is slightly compressed rather than fully demonstrated.",
+      "findings": []
+    },
+    {
+      "itemId": "item-e9b050bd38",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 2,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The quiet-task scene preserves possibility and grounds the private-space theme. Paragraph two repeats that scene rather than advancing the reading; the full-calendar clause also feels tacked onto the first paragraph.",
+      "findings": [
+        {
+          "findingId": "item-e9b050bd38-f1",
+          "itemId": "item-e9b050bd38",
+          "paragraph": 2,
+          "quote": "An obligation that follows you into a quiet moment can offer a scene for tension around the amount of private space you prefer.",
+          "factIds": [
+            "I1",
+            "D1"
+          ],
+          "explanation": "The opening already gives the same quiet-moment obligation example.",
+          "severity": "editorial",
+          "proposedCorrection": "Use the supported difference between unclaimed time and mentally occupied time to add a distinct second thought."
+        }
+      ]
+    },
+    {
+      "itemId": "item-57ed357f09",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 3,
+      "coherence": 4,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The capacity/obligation opening is clear and safe. The second paragraph gives supported title-versus-attention scenes but repeats the same explanatory gap in consecutive sentences.",
+      "findings": [
+        {
+          "findingId": "item-57ed357f09-f1",
+          "itemId": "item-57ed357f09",
+          "paragraph": 2,
+          "quote": "A responsibility that occupies more of your week than your title suggests can make the same distance clear.",
+          "factIds": [
+            "D1"
+          ],
+          "explanation": "The prior sentence has already said an unmentioned interest makes the gap concrete; this repeats the explanation rather than distinguishing the scenes.",
+          "severity": "editorial",
+          "proposedCorrection": "Combine the two supported examples or explain their different ways of making the title gap visible."
+        }
+      ]
+    },
+    {
+      "itemId": "item-604ede23a1",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 3,
+      "coherence": 3,
+      "lensIntegration": 3,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": null,
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The preparation-versus-waiting lens is recognizable in the primary paragraph but appended after the capacity reading rather than applied to a particular obligation boundary. The title paragraph and detached chronology weaken progression.",
+      "findings": [
+        {
+          "findingId": "item-604ede23a1-f1",
+          "itemId": "item-604ede23a1",
+          "paragraph": 1,
+          "quote": "A self-contained response to pressure can start with sorting what is manageable before sharing it. An unfinished reply can offer a place to notice the difference between useful preparation and waiting to have everything settled.",
+          "factIds": [
+            "I1",
+            "N1"
+          ],
+          "explanation": "The two lens sentences retain their own separate meaning instead of showing how preparation versus waiting clarifies the primary capacity/boundary tension.",
+          "severity": "editorial",
+          "proposedCorrection": "Apply the supported preparation/waiting distinction conditionally to sharing what can be carried within the role."
+        }
+      ]
+    },
+    {
+      "itemId": "item-99d47cbd4f",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 4,
+      "coherence": 4,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Expectations and capacity form a clear practical distinction, followed by a supported title/responsibility scene. The reading is concise and safe, though a more explicit bridge would sharpen the second paragraph.",
+      "findings": []
+    },
+    {
+      "itemId": "item-cab05de3e9",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 3,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Preference differences are supported and the unfinished reply is a concrete scene. The first two sentences partly restate preference recognition and technical detail interrupts the transition to closeness versus expression.",
+      "findings": [
+        {
+          "findingId": "item-cab05de3e9-f1",
+          "itemId": "item-cab05de3e9",
+          "paragraph": 1,
+          "quote": "At the calculation time, the contact is in its approaching phase with an orb of 0.42 degrees, falling in the middle part of the calculated window.",
+          "factIds": [
+            "C1",
+            "P1",
+            "T1"
+          ],
+          "explanation": "Valid but bulky technical framing interrupts a standard-depth practical reading.",
+          "severity": "editorial",
+          "proposedCorrection": "Condense or omit the optional calculation detail and connect preference differences to the supported reply scene."
+        }
+      ]
+    },
+    {
+      "itemId": "item-1b44910009",
+      "specificity": 4,
+      "grounding": 3,
+      "voice": 3,
+      "repetition": 3,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": true,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The quiet-task and private-space themes are supported, but the opening turns the possible size of an obligation into an unqualified simultaneous fact. The second paragraph repeats the theme before adding substantial chronology.",
+      "findings": [
+        {
+          "findingId": "item-1b44910009-f1",
+          "itemId": "item-1b44910009",
+          "paragraph": 1,
+          "quote": "while a small obligation takes up more room than its size suggests.",
+          "factIds": [
+            "I1"
+          ],
+          "explanation": "I1 says an obligation can occupy disproportionate space. The unqualified while-clause asserts that outcome rather than retaining the possibility.",
+          "severity": "substantive",
+          "proposedCorrection": "Retain the possibility explicitly: the obligation can take up more room than its size suggests."
+        },
+        {
+          "findingId": "item-1b44910009-f2",
+          "itemId": "item-1b44910009",
+          "paragraph": 2,
+          "quote": "In the domain of inner life and rest,",
+          "factIds": [
+            "D1"
+          ],
+          "explanation": "The domain label is source-like scaffolding and adds little to an already clear quiet-time scene.",
+          "severity": "editorial",
+          "proposedCorrection": "Let the concrete unclaimed-hour scene carry the domain without naming it."
+        }
+      ]
+    },
+    {
+      "itemId": "item-c620f65cc0",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 2,
+      "repetition": 3,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Communication/phrasing and task components are supported. The Observation label is a mechanical clinical cue, and the paragraphs remain loosely connected source entries with repeated window wording.",
+      "findings": [
+        {
+          "findingId": "item-c620f65cc0-f1",
+          "itemId": "item-c620f65cc0",
+          "paragraph": 1,
+          "quote": "Observation:",
+          "factIds": [
+            "I1"
+          ],
+          "explanation": "This label gives the clinical tone a report-like wrapper rather than precise familiar prose addressed to the reader.",
+          "severity": "editorial",
+          "proposedCorrection": "Begin directly with the supported communication frame and maintain a reserved active voice."
+        }
+      ]
+    },
+    {
+      "itemId": "item-dcc637e7fb",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 3,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The responsibility/capacity meaning and title scene are supported and suppression limits are respected. The final paragraph repeats calculated-window wording and packs unnecessary detail into standard depth.",
+      "findings": [
+        {
+          "findingId": "item-dcc637e7fb-f1",
+          "itemId": "item-dcc637e7fb",
+          "paragraph": 3,
+          "quote": "The contact is in its approaching phase within the calculated window, and this reading falls in the middle part of the calculated window.",
+          "factIds": [
+            "P1",
+            "T1"
+          ],
+          "explanation": "Repeated calculated-window language makes the ending mechanical and distracts from the practical distinction.",
+          "severity": "editorial",
+          "proposedCorrection": "Condense the optional chronology into one concise sentence without repeating window wording."
+        }
+      ]
+    },
+    {
+      "itemId": "item-5e53b837c6",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 4,
+      "coherence": 4,
+      "lensIntegration": null,
+      "synthesisCoherence": 4,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": null,
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The primary capacity problem progresses into the supplied scope/structure tension and then low-friction initiative. Each meaning is supported, though leading the second paragraph with the initiative parent would clarify the relationship more quickly.",
+      "findings": []
+    },
+    {
+      "itemId": "item-f95b66b088",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 3,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Moment-level comparison versus a whole-day story is a useful supported distinction. The obligation paragraph broadens into a different rest theme without a clear bridge. The body retains T1 chronology; the packet itself supplies a different calendar date in C1, so no new date claim is attributed to the prose.",
+      "findings": [
+        {
+          "findingId": "item-f95b66b088-f1",
+          "itemId": "item-f95b66b088",
+          "paragraph": 2,
+          "quote": "An unclaimed hour can still be mentally full of unfinished tasks.",
+          "factIds": [
+            "I1",
+            "D1"
+          ],
+          "explanation": "This begins a separate obligation theme after the moment-versus-day comparison without developing their relationship.",
+          "severity": "editorial",
+          "proposedCorrection": "Connect the supported quiet-hour example to the single-moment comparison rather than restarting with another rest theme."
+        }
+      ]
+    },
+    {
+      "itemId": "item-65549717fd",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 4,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "All technical details, including the 30 percent arc, are supplied. Exploring an option within an existing plan is useful, but the identity-fit paragraph and dense chronology are assembled rather than developed; the technical voice remains awkward in places.",
+      "findings": [
+        {
+          "findingId": "item-65549717fd-f1",
+          "itemId": "item-65549717fd",
+          "paragraph": 2,
+          "quote": "The contact is close to exact within the calculated window, with the timing exact today in the middle part of the window at an arc position of 30 percent.",
+          "factIds": [
+            "P1",
+            "T1"
+          ],
+          "explanation": "Several calculated descriptors are compressed into an awkward sentence that obscures their clear technical chronology.",
+          "severity": "editorial",
+          "proposedCorrection": "State the supported exact date and orb clearly, then add the supplied arc position only where it contributes to technical depth."
+        }
+      ]
+    },
+    {
+      "itemId": "item-777815114c",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 3,
+      "coherence": 3,
+      "lensIntegration": 3,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": null,
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Curiosity and sampling versus choosing are copied into the primary paragraph but remain a separate idea after the role/capacity interpretation. Title framing and detached technical paragraphs add volume without applying the lens.",
+      "findings": [
+        {
+          "findingId": "item-777815114c-f1",
+          "itemId": "item-777815114c",
+          "paragraph": 1,
+          "quote": "Following more than one line of curiosity can help a direction take shape. If several possible projects compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages.",
+          "factIds": [
+            "I1",
+            "N1"
+          ],
+          "explanation": "Placement in paragraph one does not itself integrate the lens; the sampling/choosing distinction is not applied to capacity or boundaries.",
+          "severity": "editorial",
+          "proposedCorrection": "Relate the supported difference between sampling and choosing to what the established role can carry."
+        }
+      ]
+    },
+    {
+      "itemId": "item-d5098717a0",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 2,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The supported capacity/boundary distinction is stated twice in paragraph one. The title/responsibility scene is grounded but cannot make the repeated opening advance.",
+      "findings": [
+        {
+          "findingId": "item-d5098717a0-f1",
+          "itemId": "item-d5098717a0",
+          "paragraph": 1,
+          "quote": "Saturn's square to the Sun highlights where those expectations outpace capacity, framing the places where deliberate effort is called for.",
+          "factIds": [
+            "I1"
+          ],
+          "explanation": "The paragraph has already identified expectations exceeding capacity and more deliberate effort; this sentence repeats both.",
+          "severity": "editorial",
+          "proposedCorrection": "State the contact framing once and use the supported responsibility scene to advance the distinction."
+        }
+      ]
+    },
+    {
+      "itemId": "item-fea675bc23",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 4,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The conditional role/capacity meaning is supported. The title paragraph is loosely related, and the chronology ending reads as an appended technical record at standard depth.",
+      "findings": [
+        {
+          "findingId": "item-fea675bc23-f1",
+          "itemId": "item-fea675bc23",
+          "paragraph": 3,
+          "quote": "The contact is in its approaching phase within the calculated window.",
+          "factIds": [
+            "P1",
+            "T1"
+          ],
+          "explanation": "The final paragraph restarts with technical framing after the practical material rather than closing its thought.",
+          "severity": "editorial",
+          "proposedCorrection": "Condense optional chronology and use a supported practical relationship as the reading progression."
+        }
+      ]
+    },
+    {
+      "itemId": "item-0e96f64f17",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 2,
+      "coherence": 3,
+      "lensIntegration": 3,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": null,
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Useful support versus taking every obligation is a relevant supplied lens but added after a complete primary block. The second paragraph reuses the full-calendar and quiet-moment scene instead of applying the support distinction.",
+      "findings": [
+        {
+          "findingId": "item-0e96f64f17-f1",
+          "itemId": "item-0e96f64f17",
+          "paragraph": 1,
+          "quote": "Dependable structure can offer support when a response needs time to take shape. An ordinary commitment may distinguish accepting useful support from taking on every obligation to keep the arrangement steady.",
+          "factIds": [
+            "I1",
+            "N1"
+          ],
+          "explanation": "The lens is recognizable but remains a copied adjacent theme rather than an application to the private-space tension.",
+          "severity": "editorial",
+          "proposedCorrection": "Show conditionally how useful support differs from carrying every obligation within the supplied quiet-moment scene."
+        }
+      ]
+    },
+    {
+      "itemId": "item-83c41afe93",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 3,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Company versus quiet and familiar plan versus unplanned space are source-supported choices. The moment-versus-whole-day limit is preserved. Paragraph two shifts to task obligation and technical detail without developing the comparison.",
+      "findings": [
+        {
+          "findingId": "item-83c41afe93-f1",
+          "itemId": "item-83c41afe93",
+          "paragraph": 2,
+          "quote": "An unclaimed hour can still be mentally full of unfinished tasks.",
+          "factIds": [
+            "I1",
+            "D1"
+          ],
+          "explanation": "This starts a different rest theme after the choice comparison, leaving the paragraph relationship underexplained.",
+          "severity": "editorial",
+          "proposedCorrection": "Relate the supported unclaimed-hour scene to the single-moment comparison rather than restarting the reading."
+        }
+      ]
+    },
+    {
+      "itemId": "item-454c9082de",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 4,
+      "coherence": 4,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Taste differences lead into the supported unfinished-reply scene, while the communication contact receives a clearly separate paragraph. Distinct meanings are used safely without inventing a combined mechanism; the late orb sentence is a small distraction.",
+      "findings": []
+    },
+    {
+      "itemId": "item-51003eb7a6",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 4,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The communication focus, past exact date, phase and orb all trace to the supplied facts. Reserved prose fits clinical tone moderately, but calculation detail dominates and the task-components paragraph has no developed bridge.",
+      "findings": [
+        {
+          "findingId": "item-51003eb7a6-f1",
+          "itemId": "item-51003eb7a6",
+          "paragraph": 1,
+          "quote": "At the calculation time, the current orb measures 0.42 degrees, with this reading falling in the middle part of the window.",
+          "factIds": [
+            "C1",
+            "T1"
+          ],
+          "explanation": "This extends already dense chronology at standard depth before an unrelated task-components paragraph.",
+          "severity": "editorial",
+          "proposedCorrection": "Condense the valid chronology and use the available space to connect articulation to the supported draft scene."
+        }
+      ]
+    },
+    {
+      "itemId": "item-a1c8bdc78e",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 4,
+      "coherence": 3,
+      "lensIntegration": 3,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": null,
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The small-obligation/private-space reading is concrete and preserves possibility. Paragraph two gives the supplied preparation-versus-waiting lens intact but detached from the mental-task scene.",
+      "findings": [
+        {
+          "findingId": "item-a1c8bdc78e-f1",
+          "itemId": "item-a1c8bdc78e",
+          "paragraph": 2,
+          "quote": "An unfinished reply can offer a place to notice the difference between useful preparation and waiting to have everything settled.",
+          "factIds": [
+            "I1",
+            "N1"
+          ],
+          "explanation": "The practical lens distinction is presented as a separate second thought instead of clarifying the primary private-space tension.",
+          "severity": "editorial",
+          "proposedCorrection": "Apply the distinction conditionally to sorting what is manageable while an obligation occupies a quiet moment."
+        }
+      ]
+    },
+    {
+      "itemId": "item-b0678b0a38",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 4,
+      "coherence": 4,
+      "lensIntegration": null,
+      "synthesisCoherence": 4,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": null,
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Role capacity leads clearly into low-friction initiative and the supplied tension between larger scope and needed structure. The even-so transition makes the relationship coherent, with room for a more specific example within the supplied growing-task scene.",
+      "findings": []
+    },
+    {
+      "itemId": "item-dabaa10c55",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 2,
+      "coherence": 3,
+      "lensIntegration": 3,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": null,
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "One useful task versus making a whole routine a condition for pausing is a relevant supported lens. It is appended intact after the private-space interpretation; paragraph two then repeats the original calendar/quiet-moment scene.",
+      "findings": [
+        {
+          "findingId": "item-dabaa10c55-f1",
+          "itemId": "item-dabaa10c55",
+          "paragraph": 1,
+          "quote": "A manageable routine can offer a way to meet pressure without settling everything at once. An unfinished list may distinguish one useful task from making the entire routine a condition for taking a pause.",
+          "factIds": [
+            "I1",
+            "N1"
+          ],
+          "explanation": "The lens is identifiable but adjacent rather than applied; the subsequent paragraph returns to the original scene.",
+          "severity": "editorial",
+          "proposedCorrection": "Use the unfinished-list distinction to develop the supplied tension between obligation and uninterrupted space."
+        }
+      ]
+    },
+    {
+      "itemId": "item-f150063bd0",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 3,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Capacity versus expectations and the title gap are supported, and suppressed Ascendant/house material is absent. The copied practical blocks and standalone phase/timing paragraphs offer limited progression.",
+      "findings": [
+        {
+          "findingId": "item-f150063bd0-f1",
+          "itemId": "item-f150063bd0",
+          "paragraph": 4,
+          "quote": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window.",
+          "factIds": [
+            "T1",
+            "P1"
+          ],
+          "explanation": "A labeled timing block repeats window wording from the prior paragraph and makes the conclusion mechanical.",
+          "severity": "editorial",
+          "proposedCorrection": "Condense any needed chronology into clear prose without a separate timing label."
+        }
+      ]
+    },
+    {
+      "itemId": "item-75c165b573",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 3,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Conditional consideration of curiosity is a permissible application of the supplied existing-plan frame. The technical values are supported, but the repeated full contact/window wording and detached identity-fit paragraph make the technical reading mechanical.",
+      "findings": [
+        {
+          "findingId": "item-75c165b573-f1",
+          "itemId": "item-75c165b573",
+          "paragraph": 3,
+          "quote": "The contact of transiting Jupiter trine natal Sun is close to exact within the calculated window.",
+          "factIds": [
+            "C1",
+            "P1",
+            "T1"
+          ],
+          "explanation": "The full contact name is repeated after paragraph one, followed by repeated window wording and exact-today/date information.",
+          "severity": "editorial",
+          "proposedCorrection": "Present the valid date, orb and supplied arc position compactly without repeating the full contact and window framing."
+        }
+      ]
+    },
+    {
+      "itemId": "item-c7eeb6c1ef",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 3,
+      "coherence": 4,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Expected effort versus available capacity is concrete and source-supported, with a relevant title/responsibility scene. The final first-paragraph sentence restates the opening contrast, a minor repetition rather than a grounding problem.",
+      "findings": [
+        {
+          "findingId": "item-c7eeb6c1ef-f1",
+          "itemId": "item-c7eeb6c1ef",
+          "paragraph": 1,
+          "quote": "Saturn's square to the Sun highlights that contrast between what is expected and what is available.",
+          "factIds": [
+            "I1"
+          ],
+          "explanation": "The same expectations/capacity contrast already opens the paragraph; this framing sentence adds little development.",
+          "severity": "editorial",
+          "proposedCorrection": "Integrate the contact framing with the opening rather than restating its contrast."
+        }
+      ]
+    },
+    {
+      "itemId": "item-bd72385300",
+      "specificity": 4,
+      "grounding": 3,
+      "voice": 4,
+      "repetition": 4,
+      "coherence": 4,
+      "lensIntegration": null,
+      "synthesisCoherence": 4,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": null,
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": true,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The project-expansion/capacity synthesis is supported and coherently related to existing commitments. The opening adds a categorical causal link from choosing an aim to low-friction effort that its source does not establish.",
+      "findings": [
+        {
+          "findingId": "item-bd72385300-f1",
+          "itemId": "item-bd72385300",
+          "paragraph": 1,
+          "quote": "An aim that is well chosen lets effort encounter little friction.",
+          "factIds": [
+            "I1"
+          ],
+          "explanation": "I1 links a well-chosen aim to mutually reinforcing enthusiasm and initiative, and separately frames moments of low friction. It does not establish that choosing an aim causes effort to meet little friction.",
+          "severity": "substantive",
+          "proposedCorrection": "Retain the supplied conditional enthusiasm/initiative meaning and describe low-friction moments as the interpretive frame rather than a consequence of aim selection."
+        }
+      ]
+    },
+    {
+      "itemId": "item-da6c0cb538",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 3,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Obligations exceeding capacity and the title gap remain fully supported. The reading is a sequence of copied practical blocks followed by standalone phase/timing records, with only a loose progression between the two scenes.",
+      "findings": [
+        {
+          "findingId": "item-da6c0cb538-f1",
+          "itemId": "item-da6c0cb538",
+          "paragraph": 4,
+          "quote": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window.",
+          "factIds": [
+            "P1",
+            "T1"
+          ],
+          "explanation": "The labeled timing block repeats calculated-window language and closes on metadata rather than the practical distinction.",
+          "severity": "editorial",
+          "proposedCorrection": "Condense any needed chronology and connect the supported title/responsibility scene more clearly to capacity."
+        }
+      ]
+    },
+    {
+      "itemId": "item-308d6af0e7",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 2,
+      "coherence": 3,
+      "lensIntegration": 3,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": null,
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Preparation versus waiting for everything to settle is recognizable but appended intact to the obligation/private-space block. Paragraph two repeats the calendar and quiet-moment scene and the timing blocks add more stock framing.",
+      "findings": [
+        {
+          "findingId": "item-308d6af0e7-f1",
+          "itemId": "item-308d6af0e7",
+          "paragraph": 1,
+          "quote": "A self-contained response to pressure can start with sorting what is manageable before sharing it. An unfinished reply can offer a place to notice the difference between useful preparation and waiting to have everything settled.",
+          "factIds": [
+            "I1",
+            "N1"
+          ],
+          "explanation": "The lens follows a complete primary interpretation without applying its distinction to the quiet obligation scene.",
+          "severity": "editorial",
+          "proposedCorrection": "Use preparation versus waiting conditionally to explain the supported tension between obligation and preferred private space."
+        }
+      ]
+    },
+    {
+      "itemId": "item-b67e30021f",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 4,
+      "coherence": 4,
+      "lensIntegration": 4,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": null,
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The possible disproportionate obligation is preserved. Paragraph two explicitly applies a self-contained response to this tension and offers preparation versus waiting as the practical distinction; the application could be more concretely tied to the quiet moment.",
+      "findings": []
+    },
+    {
+      "itemId": "item-dfe223b782",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 4,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The company/quiet and plan/unplanned-space choices are supported and the single-moment limit is preserved. The second paragraph changes to mentally carried obligations without explaining how it advances the first comparison.",
+      "findings": [
+        {
+          "findingId": "item-dfe223b782-f1",
+          "itemId": "item-dfe223b782",
+          "paragraph": 2,
+          "quote": "An unclaimed hour can still be mentally full of unfinished tasks.",
+          "factIds": [
+            "I1",
+            "D1"
+          ],
+          "explanation": "The paragraph begins another rest theme rather than developing the supported moment-level comparison.",
+          "severity": "editorial",
+          "proposedCorrection": "Connect the unclaimed-hour scene to one of the supplied moment-level choices, preserving its conditional framing."
+        }
+      ]
+    },
+    {
+      "itemId": "item-288ff5945e",
+      "specificity": 5,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 4,
+      "coherence": 4,
+      "lensIntegration": 4,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": null,
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Sampling versus choosing is placed inside the role/capacity discussion and linked to limits becoming clear. That gives a useful practical distinction without diagnosing temperament. The title scene remains supported but its bridge can be tightened.",
+      "findings": []
+    },
+    {
+      "itemId": "item-ef312151f1",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 2,
+      "coherence": 3,
+      "lensIntegration": 3,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": null,
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The primary private-space reading is grounded, and preparation versus waiting is a supported lens. Its copied placement after the main block remains detached; the second paragraph repeats the full-calendar and quiet-moment material.",
+      "findings": [
+        {
+          "findingId": "item-ef312151f1-f1",
+          "itemId": "item-ef312151f1",
+          "paragraph": 1,
+          "quote": "A self-contained response to pressure can start with sorting what is manageable before sharing it. An unfinished reply can offer a place to notice the difference between useful preparation and waiting to have everything settled.",
+          "factIds": [
+            "I1",
+            "N1"
+          ],
+          "explanation": "The practical lens distinction is adjacent to the primary reading without being applied to its obligation scene.",
+          "severity": "editorial",
+          "proposedCorrection": "Apply the preparation/waiting distinction conditionally to the mentally carried task instead of adding a separate intact lens block."
+        }
+      ]
+    },
+    {
+      "itemId": "item-47228b90a6",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 4,
+      "coherence": 4,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The first paragraph meaningfully connects title/responsibility framing to capacity. The immediate-action parent receives its own supported paragraph. There is no unsupported combined mechanism despite the absence of S1; a small transition edit would clarify the progression.",
+      "findings": []
+    },
+    {
+      "itemId": "item-90e0417a3e",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 3,
+      "coherence": 3,
+      "lensIntegration": 3,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": null,
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The support-versus-taking-every-obligation lens is supplied and appears in paragraph one, but remains an adjacent source clause rather than a practical application to mentally carried tasks. Paragraph two repeats the unclaimed-hour theme before dense chronology.",
+      "findings": [
+        {
+          "findingId": "item-90e0417a3e-f1",
+          "itemId": "item-90e0417a3e",
+          "paragraph": 1,
+          "quote": "Dependable structure can offer support when a response needs time to take shape, where an ordinary commitment may distinguish accepting useful support from taking on every obligation to keep the arrangement steady.",
+          "factIds": [
+            "I1",
+            "N1"
+          ],
+          "explanation": "This recognizes N1 but does not show how useful support differs from carrying every obligation within the primary quiet-moment scene.",
+          "severity": "editorial",
+          "proposedCorrection": "Apply the support distinction conditionally to the supported task/private-space tension."
+        }
+      ]
+    },
+    {
+      "itemId": "item-e5e16263cc",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 3,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Preference recognition and the closeness/expression tension are supported. The first two sentences partly repeat recognition, and orb/phase/date material appears as interruptions rather than a useful progression at standard depth.",
+      "findings": [
+        {
+          "findingId": "item-e5e16263cc-f1",
+          "itemId": "item-e5e16263cc",
+          "paragraph": 2,
+          "quote": "The contact is in its approaching phase within the calculated window, and the calculated exact date is 2026-10-14.",
+          "factIds": [
+            "C1",
+            "P1"
+          ],
+          "explanation": "Valid chronology closes immediately after the reply scene without developing that practical thought.",
+          "severity": "editorial",
+          "proposedCorrection": "Condense optional calculation detail and clarify the supported difference between preference and what is expressed."
+        }
+      ]
+    },
+    {
+      "itemId": "item-1d9823484a",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 3,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": 4,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": null,
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The supplied scope/structure tension is coherently adjacent to capacity, but the initiative parent is represented only by a closing calculation label. Title framing and separate chronology make the reading feel assembled.",
+      "findings": [
+        {
+          "findingId": "item-1d9823484a-f1",
+          "itemId": "item-1d9823484a",
+          "paragraph": 6,
+          "quote": "Also in range: jupiter trine natal mars (exact in 3 days).",
+          "factIds": [
+            "C2",
+            "I2",
+            "S1"
+          ],
+          "explanation": "This closing inventory gives the second contact without developing its initiative meaning within the supplied synthesis.",
+          "severity": "editorial",
+          "proposedCorrection": "Briefly use the supplied low-friction initiative meaning in the scope/structure paragraph."
+        }
+      ]
+    },
+    {
+      "itemId": "item-7add4f15ca",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 3,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The capacity/obligation frame and title scene are grounded. Placing a dense calculation paragraph between them interrupts the practical progression; window and exact-date language is repeated.",
+      "findings": [
+        {
+          "findingId": "item-7add4f15ca-f1",
+          "itemId": "item-7add4f15ca",
+          "paragraph": 2,
+          "quote": "The contact between Saturn and the Sun is in its approaching phase within the calculated window.",
+          "factIds": [
+            "C1",
+            "P1",
+            "T1"
+          ],
+          "explanation": "The inserted technical paragraph separates two practical ideas and repeats calculation scaffolding at standard depth.",
+          "severity": "editorial",
+          "proposedCorrection": "Move a condensed optional chronology sentence after the connected practical discussion or omit it."
+        }
+      ]
+    },
+    {
+      "itemId": "item-f76841e2ac",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 2,
+      "coherence": 3,
+      "lensIntegration": 3,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": null,
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Commitment itself versus choice in carrying it out is a distinct supported lens, but it is appended after an intact obligation/private-space block. Paragraph two repeats the full-calendar and quiet-moment scenes before technical records.",
+      "findings": [
+        {
+          "findingId": "item-f76841e2ac-f1",
+          "itemId": "item-f76841e2ac",
+          "paragraph": 1,
+          "quote": "Wanting room to move can be part of a response to pressure. If an ordinary obligation feels narrow, the useful distinction may be between the commitment itself and how much choice it leaves in carrying it out.",
+          "factIds": [
+            "I1",
+            "N1"
+          ],
+          "explanation": "The lens distinction is supplied and recognizable, yet appears as a separate added block rather than developing the primary scene.",
+          "severity": "editorial",
+          "proposedCorrection": "Use the commitment-versus-choice distinction conditionally within the quiet-moment or full-calendar example."
+        }
+      ]
+    },
+    {
+      "itemId": "item-6f37ff9d52",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 2,
+      "repetition": 2,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The reading preserves the possible obligation/private-space tension. The gentle-preface formula gives weak warm voice, and paragraph two repeats the calendar and quiet-moment examples.",
+      "findings": [
+        {
+          "findingId": "item-6f37ff9d52-f1",
+          "itemId": "item-6f37ff9d52",
+          "paragraph": 1,
+          "quote": "Taking this gently:",
+          "factIds": [
+            "I1"
+          ],
+          "explanation": "A stock introductory cue does not create a consistent conversational warm voice.",
+          "severity": "editorial",
+          "proposedCorrection": "Begin conversationally with the supported possibility instead of announcing a gentle approach."
+        },
+        {
+          "findingId": "item-6f37ff9d52-f2",
+          "itemId": "item-6f37ff9d52",
+          "paragraph": 2,
+          "quote": "A full calendar or an obligation that follows you into a quiet moment can offer a scene for tension around the amount of private space you prefer.",
+          "factIds": [
+            "I1",
+            "D1"
+          ],
+          "explanation": "The previous paragraph already gives both calendar and quiet-moment examples.",
+          "severity": "editorial",
+          "proposedCorrection": "Keep one scene and advance the supported distinction between unclaimed time and mentally tracked obligations."
+        }
+      ]
+    },
+    {
+      "itemId": "item-1556d21e9a",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 4,
+      "coherence": 4,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Capacity boundaries, exploration within an existing plan and preference differences are individually supported and remain separate. The prose is clear but mostly source-formal for a warm request; the final topic has only a loose relationship to the preceding paragraphs.",
+      "findings": []
+    },
+    {
+      "itemId": "item-532c177e1c",
+      "specificity": null,
+      "grounding": null,
+      "voice": null,
+      "repetition": null,
+      "coherence": null,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": "Quiet no-signal sample; safety check only"
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": true,
+      "notes": "Quiet no-signal sample; safety check only",
+      "findings": []
+    },
+    {
+      "itemId": "item-f5f520b6ca",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 3,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The preference/others-expectations distinction and unfinished reply are grounded. Copy-like paragraph assembly and isolated phase/timing entries limit progression, with no invented joint or natal-origin meaning.",
+      "findings": [
+        {
+          "findingId": "item-f5f520b6ca-f1",
+          "itemId": "item-f5f520b6ca",
+          "paragraph": 4,
+          "quote": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window.",
+          "factIds": [
+            "P1",
+            "T1"
+          ],
+          "explanation": "The labeled timing record repeats window wording and ends the reading mechanically.",
+          "severity": "editorial",
+          "proposedCorrection": "Condense any useful chronology into prose and connect the supported reply scene more clearly to preference differences."
+        }
+      ]
+    },
+    {
+      "itemId": "item-25b95754da",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 3,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": 4,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": null,
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Dependable action and targeted incremental effort are supported by the supplied reinforcement. The second parent is merely named at the end, and the identity-fit block plus chronology dilute development of that relationship.",
+      "findings": [
+        {
+          "findingId": "item-25b95754da-f1",
+          "itemId": "item-25b95754da",
+          "paragraph": 6,
+          "quote": "Also in range: mars trine natal sun (exact in 3 days).",
+          "factIds": [
+            "C2",
+            "I2",
+            "S1"
+          ],
+          "explanation": "The immediate-action parent receives only a closing calculation label rather than a practical role in the reinforcement discussion.",
+          "severity": "editorial",
+          "proposedCorrection": "Use the supplied direct-engagement meaning briefly within the dependable-action and incremental-step relationship."
+        }
+      ]
+    },
+    {
+      "itemId": "item-c215ca24b1",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 4,
+      "coherence": 4,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Capacity and the title/responsibility gap are supported and reasonably connected. A separate preference paragraph adds a distinct supplied meaning; its bridge is loose, but no joint premise or suppressed natal-origin detail is invented.",
+      "findings": []
+    },
+    {
+      "itemId": "item-5f011eb7e4",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 3,
+      "coherence": 4,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Taste/preferences, closeness/expression and the reply scene are meaningfully grouped, while the communication reading is explicitly separate. The primary paragraph restates preference recognition several times but stays grounded.",
+      "findings": [
+        {
+          "findingId": "item-5f011eb7e4-f1",
+          "itemId": "item-5f011eb7e4",
+          "paragraph": 1,
+          "quote": "Venus's opposition to natal Venus brings these differences into view.",
+          "factIds": [
+            "I1",
+            "D1"
+          ],
+          "explanation": "The opening has already brought preference differences into view; this closing contact sentence partly repeats that thought.",
+          "severity": "editorial",
+          "proposedCorrection": "Combine contact framing with the opening and retain the supported reply scene as the practical development."
+        }
+      ]
+    },
+    {
+      "itemId": "item-9968e212cb",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 3,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Exploring an option within an existing plan is concrete and grounded; all quoted technical values are supplied. The identity-fit scene and timing blocks are detached, so the technical reading provides little developed progression despite valid data.",
+      "findings": [
+        {
+          "findingId": "item-9968e212cb-f1",
+          "itemId": "item-9968e212cb",
+          "paragraph": 4,
+          "quote": "Timing: exact today. This reading falls in the middle part of the calculated window. The calculated arc position is 30%. Current orb at the reading's calculation time: 0.42°.",
+          "factIds": [
+            "C1",
+            "T1"
+          ],
+          "explanation": "This is a raw timing record after an isolated phase paragraph rather than clear technical prose integrated into the reading.",
+          "severity": "editorial",
+          "proposedCorrection": "Write the supplied chronology compactly in prose and connect the supported existing-plan and familiar-project meanings."
+        }
+      ]
+    },
+    {
+      "itemId": "item-37f4076d78",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 3,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The capacity/boundary meaning and title/responsibility scene are supported. The last paragraph repeats window language and concentrates optional technical details at standard depth, limiting the practical ending.",
+      "findings": [
+        {
+          "findingId": "item-37f4076d78-f1",
+          "itemId": "item-37f4076d78",
+          "paragraph": 3,
+          "quote": "This contact is in its approaching phase within the calculated window, and the reading falls in the middle part of that window.",
+          "factIds": [
+            "P1",
+            "T1"
+          ],
+          "explanation": "Repeated window framing adds a mechanical ending before still more orb/date detail.",
+          "severity": "editorial",
+          "proposedCorrection": "Condense the optional chronology and develop the supported title/responsibility connection instead."
+        }
+      ]
+    },
+    {
+      "itemId": "item-855ac448e8",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 4,
+      "coherence": 4,
+      "lensIntegration": 4,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": null,
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The title/responsibility scene connects to the role/capacity tension. Paragraph two conditionally applies preparation versus waiting to a demanding role, satisfying integration with a minor need to tie the reply more closely to manageable capacity.",
+      "findings": []
+    },
+    {
+      "itemId": "item-46eb22c36f",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 4,
+      "coherence": 4,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Boundaries under excess expectations and the title gap are supported. The interpretive contact frame is plainly stated without technical padding; a tighter bridge to the title/responsibility example would strengthen progression.",
+      "findings": []
+    },
+    {
+      "itemId": "item-4c2822be04",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 3,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The obligations/capacity interpretation and title-gap scene are fully grounded. Separate phase/timing paragraphs and intact source blocks make the reading feel assembled and weaken its practical progression.",
+      "findings": [
+        {
+          "findingId": "item-4c2822be04-f1",
+          "itemId": "item-4c2822be04",
+          "paragraph": 4,
+          "quote": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window.",
+          "factIds": [
+            "P1",
+            "T1"
+          ],
+          "explanation": "The timing label and repeated window framing give the conclusion a metadata-record voice.",
+          "severity": "editorial",
+          "proposedCorrection": "Condense useful chronology into a short prose sentence and link the practical paragraphs more directly."
+        }
+      ]
+    },
+    {
+      "itemId": "item-188106cf35",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 4,
+      "coherence": 3,
+      "lensIntegration": 3,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": null,
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The quiet-task scene safely frames possible obligation pressure. One useful task versus a whole routine before pausing is a relevant N1 distinction, but paragraph two presents it as an intact separate block rather than applying it within the primary scene.",
+      "findings": [
+        {
+          "findingId": "item-188106cf35-f1",
+          "itemId": "item-188106cf35",
+          "paragraph": 2,
+          "quote": "An unfinished list may distinguish one useful task from making the entire routine a condition for taking a pause.",
+          "factIds": [
+            "I1",
+            "N1"
+          ],
+          "explanation": "The lens distinction is recognizable but detached from the quiet-moment/calendar example that establishes the main reading.",
+          "severity": "editorial",
+          "proposedCorrection": "Apply the unfinished-list distinction conditionally to the primary tension around preferred uninterrupted space."
+        }
+      ]
+    },
+    {
+      "itemId": "item-c88b6428b6",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 3,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The capacity and title-gap meanings are supported; the immediate-action contact is listed without a combined claim, so no unsupported joint premise is present. The closing calculation inventory and timing blocks weaken the editorial reading.",
+      "findings": [
+        {
+          "findingId": "item-c88b6428b6-f1",
+          "itemId": "item-c88b6428b6",
+          "paragraph": 5,
+          "quote": "Also in range: mars trine natal sun (exact in 3 days).",
+          "factIds": [
+            "C2",
+            "I2",
+            "T1"
+          ],
+          "explanation": "The secondary-contact inventory adds a label and repeated timing without a useful practical thought.",
+          "severity": "editorial",
+          "proposedCorrection": "Omit the label or provide its separate supplied immediate-action meaning in concise prose if needed."
+        }
+      ]
+    },
+    {
+      "itemId": "item-afaa7005a8",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 4,
+      "coherence": 4,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Capacity versus expectations is clear and the title/responsibility scene is source-supported. All suppression limits are respected. A short bridge between actual responsibility and the title gap is the main remaining editorial opportunity.",
+      "findings": []
+    },
+    {
+      "itemId": "item-b8314cb9b2",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 4,
+      "coherence": 4,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The capacity/title-responsibility paragraph is meaningfully connected and supported. A separate immediate-action paragraph retains the action-aligning-with-values condition. There is no invented joint meaning despite S1 being absent.",
+      "findings": []
+    },
+    {
+      "itemId": "item-6f0c20e821",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 4,
+      "coherence": 4,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The interpretive role/capacity framing preserves possibility and suppressed houses/angles remain absent. The title scene is grounded; its domain-preface wording is mildly formal but only a minor edit is needed.",
+      "findings": []
+    },
+    {
+      "itemId": "item-dce1e5e69a",
+      "specificity": 4,
+      "grounding": 3,
+      "voice": 4,
+      "repetition": 4,
+      "coherence": 4,
+      "lensIntegration": null,
+      "synthesisCoherence": 4,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": null,
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": true,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The project-expansion/capacity relationship is supplied and developed coherently. The first sentence adds a causal step from low-friction effort to reinforcement of enthusiasm and initiative, rather than retaining the source relationship.",
+      "findings": [
+        {
+          "findingId": "item-dce1e5e69a-f1",
+          "itemId": "item-dce1e5e69a",
+          "paragraph": 1,
+          "quote": "Effort can encounter little friction when an aim is well chosen, allowing enthusiasm and practical initiative to reinforce one another.",
+          "factIds": [
+            "I1"
+          ],
+          "explanation": "I1 states that enthusiasm and initiative reinforce one another when an aim is well chosen, and separately frames low-friction moments. The rewrite makes low-friction effort the enabling cause of that reinforcement; can does not establish this added causal relation.",
+          "severity": "substantive",
+          "proposedCorrection": "Preserve the well-chosen-aim condition for reinforcement and describe low-friction effort as the supplied interpretive scene without adding an enabling cause."
+        }
+      ]
+    },
+    {
+      "itemId": "item-714dc2575f",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 3,
+      "coherence": 3,
+      "lensIntegration": 3,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": null,
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The commitment-versus-choice lens is source-supported and distinct. The second paragraph first repeats mentally occupied free time, then appends the lens intact rather than showing how that choice distinction clarifies the primary scene.",
+      "findings": [
+        {
+          "findingId": "item-714dc2575f-f1",
+          "itemId": "item-714dc2575f",
+          "paragraph": 2,
+          "quote": "If an ordinary obligation feels narrow, the useful distinction may be between the commitment itself and how much choice it leaves in carrying it out.",
+          "factIds": [
+            "I1",
+            "N1"
+          ],
+          "explanation": "The lens is recognizable but remains an adjacent block after a repeated unclaimed-hour sentence, with no concrete application to the primary task/private-space scene.",
+          "severity": "editorial",
+          "proposedCorrection": "Use the commitment-versus-choice distinction conditionally within the supplied calendar or quiet-moment example."
+        }
+      ]
+    },
+    {
+      "itemId": "item-206e9860a8",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 2,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The quiet moment and disproportionate obligation remain possible rather than asserted personal events. Paragraph two repeats the quiet-moment scene, so the reading advances only one private-space thought.",
+      "findings": [
+        {
+          "findingId": "item-206e9860a8-f1",
+          "itemId": "item-206e9860a8",
+          "paragraph": 2,
+          "quote": "An obligation that follows you into a quiet moment can offer a scene for tension around the amount of private space you prefer.",
+          "factIds": [
+            "I1",
+            "D1"
+          ],
+          "explanation": "The first paragraph already establishes the same quiet-moment obligation scene.",
+          "severity": "editorial",
+          "proposedCorrection": "Develop the supported distinction between an unclaimed hour and mentally tracking unfinished tasks without repeating the opening."
+        }
+      ]
+    },
+    {
+      "itemId": "item-eadccc296f",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 4,
+      "repetition": 4,
+      "coherence": 4,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "Capacity expectations, the title/responsibility gap and personal preference differences are individually supported. The third paragraph is loosely connected but keeps its own meaning rather than inventing a combined mechanism; suppression limits are respected.",
+      "findings": []
+    },
+    {
+      "itemId": "item-aa2174c300",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 3,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": 4,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": null,
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The expansion/capacity synthesis is retained safely and follows the initiative reading. Its commitments parent is only named in the closing inventory, while identity-fit framing and chronology reduce the relationship development.",
+      "findings": [
+        {
+          "findingId": "item-aa2174c300-f1",
+          "itemId": "item-aa2174c300",
+          "paragraph": 6,
+          "quote": "Also in range: saturn square natal sun (exact in 3 days).",
+          "factIds": [
+            "C2",
+            "I2",
+            "S1"
+          ],
+          "explanation": "The commitments/capacity parent appears as a closing calculation entry without its practical contribution to the synthesis.",
+          "severity": "editorial",
+          "proposedCorrection": "Use the supplied obligations-versus-capacity meaning briefly within the project-expansion paragraph."
+        }
+      ]
+    },
+    {
+      "itemId": "item-f2fd99f6bc",
+      "specificity": 4,
+      "grounding": 3,
+      "voice": 4,
+      "repetition": 4,
+      "coherence": 4,
+      "lensIntegration": null,
+      "synthesisCoherence": 4,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": null,
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": true,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The familiar-project scene connects well to dependable action and the supplied reinforcement progresses coherently. The final energy statement removes the supplied condition that action aligns with what matters, strengthening the meaning to immediate engagement generally.",
+      "findings": [
+        {
+          "findingId": "item-f2fd99f6bc-f1",
+          "itemId": "item-f2fd99f6bc",
+          "paragraph": 2,
+          "quote": "where energy flows easily",
+          "factIds": [
+            "I2"
+          ],
+          "explanation": "I2 conditions easy energy on action lining up with what matters to you. The rewrite attaches easy energy to direct engagement with any immediate task, omitting that substantive condition.",
+          "severity": "substantive",
+          "proposedCorrection": "Retain the condition that action lines up with what matters when describing easy energy within the immediate-task frame."
+        }
+      ]
+    },
+    {
+      "itemId": "item-572c0c32ad",
+      "specificity": 4,
+      "grounding": 5,
+      "voice": 3,
+      "repetition": 2,
+      "coherence": 3,
+      "lensIntegration": null,
+      "synthesisCoherence": null,
+      "applicability": {
+        "lensIntegration": "N1 not supplied",
+        "synthesisCoherence": "S1 not supplied",
+        "quiet": null
+      },
+      "unsupportedPersonalClaim": false,
+      "unsupportedSubstantiveClaim": false,
+      "rawNatalOriginLeak": false,
+      "inventedJointPremise": false,
+      "suppressionBreach": false,
+      "safeQuiet": null,
+      "notes": "The obligation/private-space possibilities are grounded. Paragraph two repeats the quiet-moment scene and then repeated calculated-window wording, leaving limited useful development.",
+      "findings": [
+        {
+          "findingId": "item-572c0c32ad-f1",
+          "itemId": "item-572c0c32ad",
+          "paragraph": 2,
+          "quote": "An obligation that follows into a quiet moment can offer a scene for tension around the amount of private space you prefer.",
+          "factIds": [
+            "I1",
+            "D1"
+          ],
+          "explanation": "The opening already gives a quiet moment spent tracking the next task, so this repeats its main scene.",
+          "severity": "editorial",
+          "proposedCorrection": "Develop the supported unclaimed-hour distinction and remove the repeated scene and optional window wording."
+        }
+      ]
+    }
+  ],
+  "contrastChecks": [
+    {
+      "setId": "contrast-4aed21d7",
+      "distinctSupportedDifference": true,
+      "notes": "N1 supports genuinely different practical distinctions: preparation versus waiting for full settlement, compared with the commitment itself versus freedom in carrying it out. These are more than adjective substitutions, although both are appended to otherwise identical reading blocks and therefore integrate weakly.",
+      "passages": [
+        {
+          "itemId": "item-ef312151f1",
+          "quote": "An unfinished reply can offer a place to notice the difference between useful preparation and waiting to have everything settled."
+        },
+        {
+          "itemId": "item-f76841e2ac",
+          "quote": "If an ordinary obligation feels narrow, the useful distinction may be between the commitment itself and how much choice it leaves in carrying it out."
+        }
+      ]
+    },
+    {
+      "setId": "contrast-a6ebe79a",
+      "distinctSupportedDifference": false,
+      "notes": "Both entries refer to the same itemId and identical prose/facts. No distinct source-supported practical choice is present, and inventing one would be inappropriate. This is an identical-item comparison, not evidence of missing N1 integration.",
+      "passages": [
+        {
+          "itemId": "item-18bc974a36",
+          "quote": "Saturn's hard contact with the Moon frames the tension between something you feel responsible for and the amount of uninterrupted space you would prefer."
+        },
+        {
+          "itemId": "item-18bc974a36",
+          "quote": "Saturn's hard contact with the Moon frames the tension between something you feel responsible for and the amount of uninterrupted space you would prefer."
+        }
+      ]
+    },
+    {
+      "setId": "contrast-7c4bb2f8",
+      "distinctSupportedDifference": true,
+      "notes": "The first sample offers preparation versus waiting for everything to settle, explicitly as a response to the private-space tension. The second offers the commitment versus choice in its execution. Their respective N1 meanings support these distinct choices; the second lens remains more detached, but the difference is practical rather than cosmetic.",
+      "passages": [
+        {
+          "itemId": "item-b67e30021f",
+          "quote": "A self-contained response to this tension can start with sorting what is manageable before sharing it. An unfinished reply can offer a place to notice the difference between useful preparation and waiting to have everything settled."
+        },
+        {
+          "itemId": "item-714dc2575f",
+          "quote": "If an ordinary obligation feels narrow, the useful distinction may be between the commitment itself and how much choice it leaves in carrying it out."
+        }
+      ]
+    },
+    {
+      "setId": "contrast-0b9855ea",
+      "distinctSupportedDifference": false,
+      "notes": "Both samples have the same supplied primary/private-space meanings and no N1. Their quiet-task scenes offer the same practical distinction; scene order and additional chronology do not create a different choice. The first also strengthens a possible obligation into an unqualified while-clause, already recorded as a substantive item finding.",
+      "passages": [
+        {
+          "itemId": "item-1b44910009",
+          "quote": "Saturn's hard contact with the Moon frames the tension between something you feel responsible for and the amount of uninterrupted space you would prefer."
+        },
+        {
+          "itemId": "item-206e9860a8",
+          "quote": "Saturn's hard contact with the Moon frames the tension between something you feel responsible for and the amount of uninterrupted space you would prefer."
+        }
+      ]
+    }
+  ],
+  "repetitionChecks": [
+    {
+      "setId": "sequence-938edd1c",
+      "score": 3,
+      "notes": "The expectations/capacity opening is identical, so recurring similar contacts would visibly reuse the frame. The second paragraphs provide supported variation: title versus actual responsibility in one, and ambition versus carrying structure in the other. This is a cross-scenario reuse assessment, not an observed week.",
+      "passages": [
+        {
+          "itemId": "item-c7eeb6c1ef",
+          "quote": "Expectations can outpace available capacity when an established role requires more deliberate effort than usual."
+        },
+        {
+          "itemId": "item-df023ae441",
+          "quote": "Expectations can outpace available capacity when an established role requires more deliberate effort than usual."
+        }
+      ]
+    },
+    {
+      "setId": "sequence-a1f78331",
+      "score": 2,
+      "notes": "The entire primary-plus-curiosity paragraph repeats, including the same free-afternoon sampling/choosing lens. Title framing and technical window wording also recur verbatim; the second sample adds a supplied scope/structure synthesis but retains most of the first reading. Similar source facts justify thematic overlap, not a requirement to invent new scenes, yet likely editorial reuse is strong.",
+      "passages": [
+        {
+          "itemId": "item-777815114c",
+          "quote": "Following more than one line of curiosity can help a direction take shape. If several possible projects compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages."
+        },
+        {
+          "itemId": "item-8d714891d8",
+          "quote": "Following more than one line of curiosity can help a direction take shape. If several possible projects compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages."
+        }
+      ]
+    },
+    {
+      "setId": "sequence-fa6ee260",
+      "score": 3,
+      "notes": "Both repeat the free-afternoon sampling-versus-choosing lens and expectations/capacity frame, but each relates it to limits within the primary paragraph. The second paragraphs then use different supplied material, providing useful variation. The repeated lens distinction remains noticeable if similar contacts recur; unsupplied novelty is not required.",
+      "passages": [
+        {
+          "itemId": "item-288ff5945e",
+          "quote": "If several possible projects compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages."
+        },
+        {
+          "itemId": "item-493bd0abab",
+          "quote": "if several possible projects compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages."
+        }
+      ]
+    },
+    {
+      "setId": "sequence-bb552177",
+      "score": 1,
+      "notes": "The first two items reproduce the full obligation/calendar/quiet-moment reading identically. The third has a supported different role/capacity scene but shares the same isolated phase/timing ending. Full reused blocks dominate this cross-scenario set. Shared facts explain overlap and do not permit fabricated variation, but the editorial experience would be highly repetitive.",
+      "passages": [
+        {
+          "itemId": "item-18bc974a36",
+          "quote": "The everyday scene might be a calendar left too full, or a quiet moment spent mentally keeping track of the next task."
+        },
+        {
+          "itemId": "item-d850c603ff",
+          "quote": "The everyday scene might be a calendar left too full, or a quiet moment spent mentally keeping track of the next task."
+        },
+        {
+          "itemId": "item-4c2822be04",
+          "quote": "The contact is in its approaching phase within the calculated window.\n\nTiming: exact in 3 days. This reading falls in the middle part of the calculated window."
+        }
+      ]
+    },
+    {
+      "setId": "sequence-27656d70",
+      "score": 2,
+      "notes": "Three samples center the same quiet moment occupied by the next task and repeat the unclaimed-hour theme. Reordering those scenes and changing technical placement adds little practical variation. The role/capacity sample provides a genuinely different supported scene, but within it the primary frame is also repeated. These are cross-scenario examples rather than a chronological week.",
+      "passages": [
+        {
+          "itemId": "item-1b44910009",
+          "quote": "A quiet moment can be spent mentally keeping track of the next task"
+        },
+        {
+          "itemId": "item-e9b050bd38",
+          "quote": "The everyday scene might be a quiet moment spent mentally keeping track of the next task."
+        },
+        {
+          "itemId": "item-d5098717a0",
+          "quote": "A routine or responsibility can show where clearer boundaries are needed when expectations outpace available capacity."
+        },
+        {
+          "itemId": "item-572c0c32ad",
+          "quote": "The everyday scene might be a quiet moment spent mentally keeping track of the next task, or a calendar left too full."
+        }
+      ]
+    },
+    {
+      "setId": "sequence-96be128a",
+      "score": 2,
+      "notes": "The role/capacity paragraph, title-gap paragraph and phase/timing wording recur intact. The second sample adds the supplied ambition-versus-structure synthesis and a contact inventory, giving some real meaning variation within a largely repeated reading. Similar primary sources do not warrant inventing a new premise to avoid overlap.",
+      "passages": [
+        {
+          "itemId": "item-4c2822be04",
+          "quote": "An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries."
+        },
+        {
+          "itemId": "item-1d9823484a",
+          "quote": "An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries."
+        }
+      ]
+    },
+    {
+      "setId": "sequence-b5b2f0ab",
+      "score": 3,
+      "notes": "There is supported lens variation between preparation/waiting, useful support/taking every obligation, and one task/completing the whole routine before pausing. However, preparation/waiting repeats across three samples, and the quiet-moment or full-calendar scene recurs across four. The different role/capacity application offers useful variation; likely reuse remains visible without implying an observed week or requiring invented biography.",
+      "passages": [
+        {
+          "itemId": "item-b67e30021f",
+          "quote": "An unfinished reply can offer a place to notice the difference between useful preparation and waiting to have everything settled."
+        },
+        {
+          "itemId": "item-90e0417a3e",
+          "quote": "an ordinary commitment may distinguish accepting useful support from taking on every obligation to keep the arrangement steady."
+        },
+        {
+          "itemId": "item-188106cf35",
+          "quote": "An unfinished list may distinguish one useful task from making the entire routine a condition for taking a pause."
+        },
+        {
+          "itemId": "item-855ac448e8",
+          "quote": "An unfinished reply can offer a place to notice the difference between useful preparation and waiting to have everything settled."
+        },
+        {
+          "itemId": "item-a1c8bdc78e",
+          "quote": "An unfinished reply can offer a place to notice the difference between useful preparation and waiting to have everything settled."
+        }
+      ]
+    },
+    {
+      "setId": "sequence-fba301e0",
+      "score": 1,
+      "notes": "The obligation/calendar/quiet-moment primary block and domain/timing blocks repeat across four samples; the first and fifth bodies are identical. The preparation/waiting lens also repeats in the role/capacity sample. Support/over-obligation and one-task/whole-routine lenses provide real supplied distinctions, yet full reused blocks dominate and those lenses remain appended. This assesses likely recurrence across similar scenarios, not a chronological week; new unsupported variation is not required.",
+      "passages": [
+        {
+          "itemId": "item-ef312151f1",
+          "quote": "The everyday scene might be a calendar left too full, or a quiet moment spent mentally keeping track of the next task."
+        },
+        {
+          "itemId": "item-0e96f64f17",
+          "quote": "An ordinary commitment may distinguish accepting useful support from taking on every obligation to keep the arrangement steady."
+        },
+        {
+          "itemId": "item-dabaa10c55",
+          "quote": "An unfinished list may distinguish one useful task from making the entire routine a condition for taking a pause."
+        },
+        {
+          "itemId": "item-604ede23a1",
+          "quote": "An unfinished reply can offer a place to notice the difference between useful preparation and waiting to have everything settled."
+        },
+        {
+          "itemId": "item-308d6af0e7",
+          "quote": "The everyday scene might be a calendar left too full, or a quiet moment spent mentally keeping track of the next task."
+        }
+      ]
+    }
+  ],
+  "overallNotes": "Independent blinded review of all 79 unique items, four contrast sets and eight cross-scenario repetition sets. One quiet item received safety-only null scores and was safe. Most substantive meanings are supported, including categorical statements retained from source copy and calculated future exact dates; five items have specific added or strengthened meaning findings. No biography, raw natal-origin claims, invented unsupplied joint premise, or suppression breach was identified. The main editorial limitations are source-block assembly, repeated stock scenes/window wording, weak warm/clinical wrappers, and copied lenses whose paragraph placement does not establish application. Two contrast sets have distinct N1-supported practical choices; two compare identical meanings and appropriately offer no invented difference. Grounding, meaningful use, and cross-scenario repetition were assessed separately. Source assignments, generation identities, prior verdicts and the other review remained unseen; reviewer model diversity is unestablished."
+}

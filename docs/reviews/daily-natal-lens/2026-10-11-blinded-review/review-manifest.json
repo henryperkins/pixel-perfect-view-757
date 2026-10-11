@@ -1,0 +1,65 @@
+{
+  "protocolVersion": "natal-writing-blind-ai-1",
+  "reviewInstructionsSha256": "a1d06f7667e74970d2d9183b1c4f470d4094cf9b698cae003495096de28a7508",
+  "canonicalItemSetHash": "bcf4c1c9e70ccc690b3e7102f862e28b0117fa0c2ff4991c61056668c2139854",
+  "reviewerContextIds": {
+    "a": "/root/blind_reviewer_a",
+    "b": "/root/blind_reviewer_b"
+  },
+  "reviewersShareInheritedModelFamily": true,
+  "observedReviewerModelConfiguration": null,
+  "humanReviewCompleted": false,
+  "reviewCoordinatorHadPriorUnblindedContext": true,
+  "reviewersHadPriorUnblindedContext": false,
+  "sourceAssignmentsRevealedAfterBothFrozen": true,
+  "blindingLimits": [
+    "N1 presence and prose style can make treatment or template origin inferable",
+    "Reviewer tool access not technically sandboxed; blindness rests on fresh context and path restriction declarations"
+  ],
+  "transformations": [
+    "Case/run names, provider/model identities, version/release/sourceKey/natalEvidenceId, outcome and generation method omitted",
+    "Exact body and fact statement/cycle/kind/dependency fields retained",
+    "Tone/depth and U fact suppression statements retained",
+    "Original paragraph citation arrays omitted uniformly; structural validity checked separately",
+    "Identical body plus full provided support/tone/depth/quiet/suppression context deduplicated, preserving every mapping"
+  ],
+  "packets": {
+    "a": {
+      "path": "/tmp/natal-blind-20261011-ni7qb582/packet-a.json",
+      "sha256": "90f96726be8f54de30d3874b9b90a2e47516598061b42cc204942ed7c3fe4dea",
+      "output": "/tmp/natal-blind-20261011-ni7qb582/review-a.json",
+      "artifact": "packet-a.json",
+      "reviewArtifact": "review-a.json"
+    },
+    "b": {
+      "path": "/tmp/natal-blind-20261011-ni7qb582/packet-b.json",
+      "sha256": "5a4e38587e71af3c11df46f1a32b7dce29a1c658596a43c5492f398d8ab0ce2a",
+      "output": "/tmp/natal-blind-20261011-ni7qb582/review-b.json",
+      "artifact": "packet-b.json",
+      "reviewArtifact": "review-b.json"
+    }
+  },
+  "reviewerTaskPrompts": {
+    "a": {
+      "artifact": "reviewer-a-task.txt",
+      "sha256": "8e4222a8b115435afd0f97362c479b7cdcf96178657c18b9b39cbba1e9acd7ee"
+    },
+    "b": {
+      "artifact": "reviewer-b-task.txt",
+      "sha256": "8b1eb540ce0a9812264bb0843dadf88ae25905b80062da11c1ea1e3e4312a6bb"
+    }
+  },
+  "unblindedAtUTC": "2026-10-11T23:45:53.683614+00:00",
+  "frozenReviewHashes": {
+    "a": "93bd33998761e69e0a8a6b0d5562c478940e94761713ce0cf690509cb5cad46a",
+    "b": "4f3d5822eff6dc674b70ba772bc5dcffb9c1005a69ad356543ec2f96527fa79e"
+  },
+  "reviewCoverage": {
+    "uniqueItemsPerReviewer": 79,
+    "scoredUniqueItemsPerReviewer": 78,
+    "quietSafeItemsPerReviewer": 1,
+    "instances": 107,
+    "capturedModelInstances": 51,
+    "templateInstances": 56
+  }
+}
