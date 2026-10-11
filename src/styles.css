@@ -324,6 +324,7 @@ body {
   width: 40px;
   height: 40px;
   flex-shrink: 0;
+  transition: transform 420ms var(--ease-flow);
 }
 .orbit-mark svg {
   width: 100%;
@@ -343,30 +344,29 @@ body {
   background: var(--primary);
   box-shadow: 0 0 0 3px var(--background);
 }
-.brand-link:hover .orbit-satellite,
-.brand-link:focus-visible .orbit-satellite {
-  animation-duration: 5s;
+.brand-link:hover .orbit-mark,
+.brand-link:focus-visible .orbit-mark {
+  transform: rotate(-10deg) scale(1.06);
+}
+.orbit-mark[data-ambient="paused"] .orbit-satellite {
+  animation-play-state: paused;
 }
 .journey-nav {
   position: relative;
   isolation: isolate;
 }
-.journey-nav::before {
-  content: "";
+.journey-indicator {
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
-  width: var(--indicator-width, 0px);
-  transform: translateX(var(--indicator-x, 0px));
-  opacity: var(--indicator-opacity, 0);
+  width: 0;
+  transform-origin: left center;
+  opacity: 0;
   background: var(--secondary);
   border-radius: 6px;
   z-index: -1;
-  transition:
-    transform var(--motion-flow) var(--ease-flow),
-    width var(--motion-flow) var(--ease-flow),
-    opacity var(--motion-fast);
+  pointer-events: none;
 }
 .journey-link {
   border-radius: 6px;
@@ -415,7 +415,7 @@ body {
   padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
   box-shadow: var(--shadow-floating);
 }
-.mobile-journey::before {
+.mobile-journey .journey-indicator {
   top: 8px;
   bottom: calc(8px + env(safe-area-inset-bottom));
 }
@@ -614,6 +614,29 @@ body {
 .pattern-options button[aria-pressed="true"] {
   background: var(--primary);
   color: var(--primary-foreground);
+}
+.motion-selection {
+  position: relative;
+  isolation: isolate;
+}
+.motion-selection > button {
+  position: relative;
+  z-index: 1;
+}
+.motion-selection-indicator {
+  position: absolute;
+  inset: 0 auto auto 0;
+  pointer-events: none;
+  z-index: 0;
+  display: none;
+  border-radius: 999px;
+  background: var(--secondary);
+}
+.motion-selection[data-motion-ready="true"] > .motion-selection-indicator {
+  display: block;
+}
+.motion-selection[data-motion-tone="ink"] > .motion-selection-indicator {
+  background: var(--primary);
 }
 .pattern-chapters {
   margin-top: 20px;
@@ -1575,6 +1598,10 @@ body {
   background: var(--secondary);
   color: var(--primary);
 }
+/* Preserve selected-state fallback until the shared indicator has been measured. */
+.motion-selection[data-motion-ready="true"] > button[aria-pressed="true"] {
+  background: transparent;
+}
 .timing-phase-glyph {
   display: inline-flex;
 }
@@ -2130,13 +2157,54 @@ body {
   overflow: hidden;
   background: var(--background);
 }
-.landing-scene > img {
+.landing-art {
   position: absolute;
   inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  transform: translate(var(--scene-x, 0px), var(--scene-y, 0px));
+  transition: transform 700ms var(--ease-flow);
+}
+.landing-art > img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: -2;
+  transform: scale(1.035);
+  animation: celestial-drift 16s ease-in-out infinite alternate;
+}
+.landing-scene[data-ambient="paused"] .landing-art > img {
+  animation-play-state: paused;
+}
+.landing-scene[data-ambient="paused"] .landing-art {
+  transition: none;
+}
+@keyframes celestial-drift {
+  from {
+    transform: scale(1.035) translateY(-3px) rotate(-0.25deg);
+  }
+  to {
+    transform: scale(1.045) translateY(3px) rotate(0.25deg);
+  }
+}
+.landing-cta {
+  transition:
+    background-color var(--motion-fast),
+    transform var(--motion-fast) var(--ease-flow),
+    box-shadow var(--motion-flow);
+}
+.landing-cta svg {
+  transition: transform var(--motion-flow) var(--ease-flow);
+}
+.landing-cta:hover,
+.landing-cta:focus-visible {
+  box-shadow: var(--shadow-tactile);
+}
+.landing-cta:hover svg,
+.landing-cta:focus-visible svg {
+  transform: translateX(4px);
+}
+.landing-cta:active {
+  transform: scale(0.98);
 }
 .landing-copy {
   padding: 48px 28px;
@@ -2151,7 +2219,7 @@ body {
 .landing-foundations {
   padding-top: 28px;
 }
-.dark .landing-scene > img {
+.dark .landing-art > img {
   opacity: 0.15;
 }
 @media (min-width: 1024px) {
@@ -2171,7 +2239,7 @@ body {
   .today-details {
     grid-column: 2;
   }
-  .landing-scene > img {
+  .landing-art > img {
     mask-image: linear-gradient(to right, transparent 40%, black 60%);
   }
 }
@@ -2206,7 +2274,7 @@ body {
   .landing-scene {
     min-height: 590px;
   }
-  .landing-scene > img {
+  .landing-art > img {
     object-position: 30% center;
     opacity: 0.28;
   }
@@ -2215,7 +2283,7 @@ body {
   }
 }
 @media (min-width: 768px) and (max-width: 1023px) {
-  .landing-scene > img {
+  .landing-art > img {
     opacity: 0.2;
   }
 }
@@ -2271,6 +2339,15 @@ body {
   .pattern-shell button:active,
   .journey-link:hover svg,
   .journey-link:focus-visible svg {
+    transform: none;
+  }
+  .landing-art,
+  .landing-art > img,
+  .brand-link:hover .orbit-mark,
+  .brand-link:focus-visible .orbit-mark,
+  .landing-cta:hover svg,
+  .landing-cta:focus-visible svg,
+  .landing-cta:active {
     transform: none;
   }
   .timing-window:hover .timing-phase-mark {

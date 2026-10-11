@@ -8,6 +8,8 @@ import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import { fetchCycles } from "@/lib/pattern.functions";
 import { EphemerisNotice } from "@/components/pattern/EphemerisNotice";
 import { TimingWindow } from "@/components/pattern/TimingWindow";
+import { MotionSelection } from "@/components/pattern/MotionSelection";
+import { useResultMotion } from "@/components/pattern/useBrowsingMotion";
 import {
   PHASE_LABEL,
   timingDate,
@@ -58,12 +60,21 @@ function TimingPage() {
   const [domain, setDomain] = useState<Domain>("all");
   const [slowOnly, setSlowOnly] = useState(false);
   const [phase, setPhase] = useState<PhaseFilter>("all");
-  const [expanded, setExpanded] = useState<{ key: string | null; scope: string } | null>(null);
+  const [expanded, setExpanded] = useState<{
+    key: string | null;
+    scope: string;
+  } | null>(null);
   const [visited, setVisited] = useState<Set<string>>(() => new Set());
-  const [revealTarget, setRevealTarget] = useState<{ key: string; scope: string } | null>(null);
+  const [revealTarget, setRevealTarget] = useState<{
+    key: string;
+    scope: string;
+  } | null>(null);
   const filtersRef = useRef<HTMLDivElement>(null);
   const day = new Date().toISOString().slice(0, 10);
-  const query = useQuery({ queryKey: ["cycles", day], queryFn: () => load({ data: { day } }) });
+  const query = useQuery({
+    queryKey: ["cycles", day],
+    queryFn: () => load({ data: { day } }),
+  });
   const data = query.data && !query.data.needsOnboarding ? query.data : null;
   const referenceDay = data?.day ?? day;
   // computeCycles already returns only windows within their active orb.
@@ -77,10 +88,21 @@ function TimingPage() {
     (cycle) => phase === "all" || windowPhase(cycle, referenceDay) === phase,
   );
   const scope = domain + "-" + phase + "-" + slowOnly;
+  const resultsRef = useResultMotion<HTMLUListElement>(
+    scope,
+    ":scope > li:not([hidden]) .timing-window-toggle",
+  );
   const openKey = expanded?.scope === scope ? expanded.key : (rows[0]?.cycle_key ?? null);
   const filtered = domain !== "all" || slowOnly || phase !== "all";
 
-  const remember = (key: string) => setVisited((previous) => new Set([...previous, key]));
+  const remember = (key: string) =>
+    setVisited((previous) => (previous.has(key) ? previous : new Set([...previous, key])));
+  useEffect(() => {
+    if (openKey)
+      setVisited((previous) =>
+        previous.has(openKey) ? previous : new Set([...previous, openKey]),
+      );
+  }, [openKey]);
   const browse = (key: string) => {
     if (openKey) remember(openKey);
     remember(key);
@@ -170,7 +192,12 @@ function TimingPage() {
             <EphemerisNotice state={data.ephemeris} className="mt-4" />
           </div>
           <div ref={filtersRef} className="timing-filters timing-explorer-filters">
-            <div className="timing-area-options" role="group" aria-label="Area of life">
+            <MotionSelection
+              className="timing-area-options"
+              label="Area of life"
+              value={domain}
+              tone="ink"
+            >
               {DOMAINS.map(({ key, label }) => (
                 <Button
                   key={key}
@@ -193,9 +220,9 @@ function TimingPage() {
                   {label}
                 </Button>
               ))}
-            </div>
+            </MotionSelection>
             <div className="timing-filter-toolbar">
-              <div className="timing-phase-options" role="group" aria-label="Window phase">
+              <MotionSelection className="timing-phase-options" label="Window phase" value={phase}>
                 {PHASES.map(({ key, label, icon: Icon }) => (
                   <Button
                     key={key}
@@ -213,7 +240,7 @@ function TimingPage() {
                     <span>{label}</span>
                   </Button>
                 ))}
-              </div>
+              </MotionSelection>
               <div className="timing-filter-actions">
                 <Button
                   variant="ghost"
@@ -272,24 +299,26 @@ function TimingPage() {
                   </Button>
                 ) : null}
               </div>
-            ) : (
-              <ul key={scope} className="timing-results timing-window-list">
-                {rows.map((cycle, index) => (
-                  <li key={cycle.cycle_key}>
+            ) : null}
+            <ul ref={resultsRef} className="timing-results timing-window-list">
+              {data.cycles.map((cycle) => {
+                const index = rows.findIndex((row) => row.cycle_key === cycle.cycle_key);
+                return (
+                  <li key={cycle.cycle_key} hidden={index === -1}>
                     <TimingWindow
                       cycle={cycle}
                       day={referenceDay}
                       open={openKey === cycle.cycle_key}
                       visited={visited.has(cycle.cycle_key) || openKey === cycle.cycle_key}
-                      previous={rows[index - 1]}
-                      next={rows[index + 1]}
+                      previous={index >= 0 ? rows[index - 1] : undefined}
+                      next={index >= 0 ? rows[index + 1] : undefined}
                       onToggle={() => toggle(cycle.cycle_key)}
                       onBrowse={browse}
                     />
                   </li>
-                ))}
-              </ul>
-            )}
+                );
+              })}
+            </ul>
           </section>
           <div className="timing-context">
             <details className="timing-guide">

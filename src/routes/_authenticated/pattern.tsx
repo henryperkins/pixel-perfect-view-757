@@ -21,6 +21,8 @@ import { Shell } from "@/components/pattern/Shell";
 import { EphemerisNotice } from "@/components/pattern/EphemerisNotice";
 import { PatternChapter } from "@/components/pattern/PatternChapter";
 import { PatternChartDetails } from "@/components/pattern/PatternChartDetails";
+import { MotionSelection } from "@/components/pattern/MotionSelection";
+import { useResultMotion } from "@/components/pattern/useBrowsingMotion";
 import {
   CHAPTER_FAMILIES,
   bodyName,
@@ -135,6 +137,10 @@ function PatternView({ data }: { data: PatternData }) {
   const visible = features.filter(
     (feature) => selectedFamily === "all" || feature.family === selectedFamily,
   );
+  const chaptersRef = useResultMotion<HTMLDivElement>(
+    selectedFamily,
+    ":scope > article:not([hidden]) .pattern-chapter-toggle",
+  );
 
   const selectChapter = (key: string, reveal = false) => {
     setVisited((previous) => (previous.has(key) ? previous : new Set([...previous, key])));
@@ -213,7 +219,12 @@ function PatternView({ data }: { data: PatternData }) {
         )}
 
         {families.length > 1 ? (
-          <div className="pattern-options" role="group" aria-label="Chapter type">
+          <MotionSelection
+            className="pattern-options"
+            label="Chapter type"
+            value={selectedFamily}
+            tone="ink"
+          >
             {["all", ...families].map((value) => (
               <Button
                 key={value}
@@ -225,10 +236,10 @@ function PatternView({ data }: { data: PatternData }) {
                 {value === "all" ? "Every chapter" : (CHAPTER_FAMILIES[value] ?? bodyName(value))}
               </Button>
             ))}
-          </div>
+          </MotionSelection>
         ) : null}
 
-        <div id="pattern-chapters" className="pattern-chapters">
+        <div ref={chaptersRef} id="pattern-chapters" className="pattern-chapters">
           {features.map((feature, rank) => {
             const isOpen = open === feature.feature_key;
             const position = visible.findIndex((item) => item.feature_key === feature.feature_key);

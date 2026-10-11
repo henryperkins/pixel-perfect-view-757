@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { ArrowDown, ArrowRight } from "lucide-react";
 import celestialScene from "@/assets/celestial-browsing.jpg";
+import { CelestialScene } from "@/components/pattern/CelestialScene";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import { useAuth } from "@/hooks/useAuth";
@@ -70,8 +71,7 @@ function TodayPage() {
 function Landing() {
   return (
     <div>
-      <section className="landing-scene">
-        <img src={celestialScene} width={1600} height={900} alt="" />
+      <CelestialScene src={celestialScene}>
         <div className="landing-copy">
           <h1 className="leading-tight">Astrology that shows its work.</h1>
           <p className="prose-reading mt-6 text-foreground">
@@ -80,14 +80,14 @@ function Landing() {
             aspect, orb and exact date it came from. Nothing is predicted; nothing is generated from
             a sun sign.
           </p>
-          <Button asChild size="lg" className="mt-8">
+          <Button asChild size="lg" className="landing-cta mt-8">
             <Link to="/auth">
               Start with your chart
               <ArrowRight aria-hidden="true" />
             </Link>
           </Button>
         </div>
-      </section>
+      </CelestialScene>
       <ul className="landing-foundations grid gap-4 text-sm text-muted-foreground sm:grid-cols-3">
         <li>· Unknown birth time is first class — angle claims get suppressed, not faked.</li>
         <li>· Context you opt into can rank a theme, never invent a chart fact.</li>

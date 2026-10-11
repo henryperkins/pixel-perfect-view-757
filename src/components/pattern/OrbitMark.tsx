@@ -1,7 +1,15 @@
+import { useAmbientMotion } from "@/hooks/use-ambient-motion";
+
 /** Decorative brand orbit, never a representation of calculated chart data. */
 export function OrbitMark({ className = "" }: { className?: string }) {
+  const { ref, active } = useAmbientMotion<HTMLSpanElement>();
   return (
-    <span className={`orbit-mark ${className}`} aria-hidden="true">
+    <span
+      ref={ref}
+      className={`orbit-mark ${className}`}
+      data-ambient={active ? "running" : "paused"}
+      aria-hidden="true"
+    >
       <svg viewBox="0 0 48 48" fill="none">
         <ellipse
           cx="24"

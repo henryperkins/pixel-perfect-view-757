@@ -18,6 +18,10 @@ const NAV = [
 ] as const;
 const NAV_ICONS = [Sun, Orbit, Waves, NotebookPen];
 
+// Only browser effects write this cache. Preserve the indicator's last position across
+// route-local Shell mounts without restructuring authentication or the route tree.
+const navigationPositions = new Map<string, { x: number; width: number; viewport: number }>();
+
 function navLinkClass(active: boolean) {
   return [
     "journey-link relative inline-flex min-h-11 items-center gap-2 whitespace-nowrap px-3 py-2 text-sm font-medium transition-colors",
@@ -45,23 +49,71 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
   }, [pathname]);
 
   useEffect(() => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const animations = new Set<Animation>();
     const update = () => {
-      [desktopNavRef.current, mobileNavRef.current].forEach((nav) => {
-        const active = nav?.querySelector<HTMLElement>('[aria-current="page"]');
-        if (!nav || !active) {
-          nav?.style.setProperty("--indicator-opacity", "0");
+      [desktopNavRef.current, mobileNavRef.current].forEach((nav, index) => {
+        const active = nav?.querySelector<HTMLElement>(
+          ':scope > .journey-link[aria-current="page"], :scope > div > button[data-nav-selected="true"]',
+        );
+        const indicator = nav?.querySelector<HTMLElement>(":scope > .journey-indicator");
+        if (!nav || !nav.isConnected || !indicator || nav.offsetWidth === 0) return;
+        if (!active) {
+          indicator.style.opacity = "0";
           return;
         }
-        nav.style.setProperty("--indicator-x", `${active.offsetLeft}px`);
-        nav.style.setProperty("--indicator-width", `${active.offsetWidth}px`);
-        nav.style.setProperty("--indicator-opacity", "1");
+        const key = index === 0 ? "desktop" : "mobile";
+        const previous = navigationPositions.get(key);
+        const current = {
+          x: active.getBoundingClientRect().left - nav.getBoundingClientRect().left,
+          width: active.offsetWidth,
+          viewport: nav.offsetWidth,
+        };
+        indicator.style.width = `${current.width}px`;
+        indicator.style.transform = `translateX(${current.x}px)`;
+        indicator.style.opacity = "1";
+        navigationPositions.set(key, current);
+        if (
+          previous &&
+          previous.viewport === current.viewport &&
+          (previous.x !== current.x || previous.width !== current.width) &&
+          !reduced.matches &&
+          typeof indicator.animate === "function"
+        ) {
+          const animation = indicator.animate(
+            [
+              {
+                transform: `translateX(${previous.x}px) scaleX(${previous.width / current.width})`,
+              },
+              { transform: `translateX(${current.x}px) scaleX(1)` },
+            ],
+            { duration: 420, easing: "cubic-bezier(.22,.8,.25,1)" },
+          );
+          animations.add(animation);
+          void animation.finished.then(
+            () => animations.delete(animation),
+            () => animations.delete(animation),
+          );
+        }
       });
     };
-    update();
-    const resize = new ResizeObserver(update);
-    if (desktopNavRef.current) resize.observe(desktopNavRef.current);
-    if (mobileNavRef.current) resize.observe(mobileNavRef.current);
-    return () => resize.disconnect();
+    // A route-local Shell can observe the destination just before it unmounts.
+    // Measure after the commit so only the connected, incoming navigation writes
+    // its position and animates from the last route's committed selection.
+    const indicatorFrame = requestAnimationFrame(update);
+    const resize = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(update);
+    if (desktopNavRef.current) resize?.observe(desktopNavRef.current);
+    if (mobileNavRef.current) resize?.observe(mobileNavRef.current);
+    const stopMotion = () => {
+      if (reduced.matches) animations.forEach((animation) => animation.cancel());
+    };
+    reduced.addEventListener("change", stopMotion);
+    return () => {
+      cancelAnimationFrame(indicatorFrame);
+      resize?.disconnect();
+      animations.forEach((animation) => animation.cancel());
+      reduced.removeEventListener("change", stopMotion);
+    };
   }, [pathname, signedIn]);
 
   useEffect(() => {
@@ -100,7 +152,11 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
             (entries) => {
               entries.forEach((entry) => {
                 if (!entry.isIntersecting) return;
-                if (!reduced.matches && entry.target.getBoundingClientRect().top > 100) {
+                if (
+                  !reduced.matches &&
+                  typeof entry.target.animate === "function" &&
+                  entry.target.getBoundingClientRect().top > 100
+                ) {
                   entry.target.animate(
                     [
                       { opacity: 0.65, transform: "translateY(10px)" },
@@ -130,28 +186,38 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
     scan();
     const mutations = new MutationObserver(scan);
     mutations.observe(main, { childList: true, subtree: true });
+    let progressFrame: number | null = null;
     const update = () => {
-      const distance = document.documentElement.scrollHeight - window.innerHeight;
-      setProgress(distance > 0 ? Math.min(100, Math.max(0, (window.scrollY / distance) * 100)) : 0);
+      if (progressFrame !== null) return;
+      progressFrame = requestAnimationFrame(() => {
+        const distance = document.documentElement.scrollHeight - window.innerHeight;
+        setProgress(
+          distance > 0 ? Math.min(100, Math.max(0, (window.scrollY / distance) * 100)) : 0,
+        );
+        progressFrame = null;
+      });
     };
-    const resize = new ResizeObserver(update);
-    resize.observe(main);
+    const resize = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(update);
+    resize?.observe(main);
+    update();
     window.addEventListener("scroll", update, { passive: true });
     const motionChange = () => {
       if (reduced.matches)
-        main.getAnimations({ subtree: true }).forEach((animation) => animation.cancel());
+        main.getAnimations?.({ subtree: true }).forEach((animation) => animation.cancel());
     };
     reduced.addEventListener("change", motionChange);
     return () => {
       reveal?.disconnect();
       mutations.disconnect();
-      resize.disconnect();
+      resize?.disconnect();
+      if (progressFrame !== null) cancelAnimationFrame(progressFrame);
       window.removeEventListener("scroll", update);
       reduced.removeEventListener("change", motionChange);
     };
   }, [pathname]);
 
   const isActive = (to: string) => (to === "/" ? pathname === "/" : pathname.startsWith(to));
+  const secondaryPage = NAV.slice(4).find((item) => isActive(item.to));
 
   return (
     <div
@@ -179,6 +245,7 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
               aria-label="Primary"
               className="journey-nav hidden items-center gap-1 lg:flex"
             >
+              <span className="journey-indicator" aria-hidden="true" />
               {NAV.slice(0, 4).map((item, index) => {
                 const Icon = NAV_ICONS[index];
                 return (
@@ -199,8 +266,14 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
                   size="sm"
                   aria-expanded={moreOpen}
                   aria-controls="more-navigation"
+                  data-nav-selected={secondaryPage ? "true" : undefined}
+                  aria-label={
+                    secondaryPage
+                      ? `More pages, current page: ${secondaryPage.label}`
+                      : "More pages"
+                  }
                   onClick={() => setMoreOpen((v) => !v)}
-                  className="gap-2 text-muted-foreground"
+                  className={`gap-2 ${secondaryPage ? "text-primary" : "text-muted-foreground"}`}
                 >
                   More <ChevronDown aria-hidden="true" className={moreOpen ? "rotate-180" : ""} />
                 </Button>
@@ -330,6 +403,7 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
           aria-label="Quick navigation"
           className="journey-nav mobile-journey lg:hidden"
         >
+          <span className="journey-indicator" aria-hidden="true" />
           {NAV.slice(0, 4).map((item, index) => {
             const Icon = NAV_ICONS[index];
             return (

@@ -5,6 +5,7 @@ import { RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { fetchFeatureNarrative } from "@/lib/pattern.functions";
 import type { PatternFeature } from "./pattern-view";
+import { useReadingArrival } from "./useBrowsingMotion";
 
 /** Keep the verified essay verbatim and its calculated support independently accessible. */
 export function PatternChapter({ feature }: { feature: PatternFeature }) {
@@ -15,6 +16,7 @@ export function PatternChapter({ feature }: { feature: PatternFeature }) {
     staleTime: Infinity,
   });
   const narrative = query.data?.available ? query.data : null;
+  const narrativeRef = useReadingArrival(Boolean(narrative));
 
   return (
     <div>
@@ -45,7 +47,7 @@ export function PatternChapter({ feature }: { feature: PatternFeature }) {
           </Button>
         </div>
       ) : narrative ? (
-        <div className="pattern-narrative prose-reading">
+        <div ref={narrativeRef} className="pattern-narrative prose-reading">
           {narrative.narrative.split("\n\n").map((paragraph, index) => (
             <p key={index}>{paragraph}</p>
           ))}
