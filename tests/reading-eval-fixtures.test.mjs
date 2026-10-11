@@ -82,7 +82,7 @@ test("corrected Mercury fixture produces past timing and separating facts throug
 });
 
 test("corrected fixtures have a new identity shared by offline and server evaluation", () => {
-  assert.equal(READING_EVAL_FIXTURE_VERSION, "synthetic-daily-3");
+  assert.equal(READING_EVAL_FIXTURE_VERSION, "synthetic-daily-5");
   assert.equal(scriptVersion, READING_EVAL_FIXTURE_VERSION);
   assert.equal(scriptCases, READING_EVAL_CASES);
 });

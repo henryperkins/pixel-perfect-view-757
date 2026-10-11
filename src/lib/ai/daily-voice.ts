@@ -7,6 +7,14 @@ export const DAILY_SYSTEM_VOICE = [
   "Use calm, plain, specific prose and conditional everyday comparisons. No zodiac cliches, mysticism, exclamation marks or second-hand claims about other people. Respect all supplied suppression limits.",
 ].join(" ");
 
+/** Appended only when N1 is supplied, so readings without a lens keep the prior request text. */
+export const DAILY_NATAL_SYSTEM_VOICE =
+  "N1 is one conditional symbolic interpretation, not known temperament, a nervous system, attachment style, diagnosis or biography. Express one useful practical distinction within the primary meaning in paragraph 1 or 2, citing N1, C1 and I1 together. Do not add a personality section or verbalize raw natal origins.";
+
+export function dailySystemVoice(hasNatalLens: boolean): string {
+  return hasNatalLens ? `${DAILY_SYSTEM_VOICE} ${DAILY_NATAL_SYSTEM_VOICE}` : DAILY_SYSTEM_VOICE;
+}
+
 const TONES = {
   plain: {
     definition:

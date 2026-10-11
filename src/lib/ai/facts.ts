@@ -5,12 +5,20 @@
  */
 import type { AssembledReading } from "../reading.server";
 import { localDayString } from "../local-day";
-import { aspectFamily } from "../content/default-bundle";
+import { aspectFamily, safetyPass } from "../content/default-bundle";
+import { NATAL_LENS_PLAN_VERSION, type DailyNatalLensPlan } from "../content/natal-lens";
+import { NATAL_RELIABILITY_VERSION, validateNatalReliability } from "../astro/natal-reliability";
+import { NATAL_BODY_ROLE } from "../content/natal-lens-types";
+import {
+  natalLensWordingProblem,
+  natalMechanismHasTechnicalClaim,
+} from "../content/natal-lens-policy";
 
 export interface FactAtom {
   id: string;
   statement: string;
-  kind?: "calculation" | "interpretation" | "synthesis";
+  kind?: "calculation" | "interpretation" | "synthesis" | "temperament";
+  natalEvidenceId?: "NL1";
   dependsOn?: string[];
   sourceKey?: string;
   releaseVersion?: string;
@@ -53,7 +61,8 @@ export interface CycleFactInput {
 /** The model receives exactly the plan used by the template, without local context. */
 export function readingFacts(
   chart: ChartFactInput,
-  plan: Pick<AssembledReading, "eligibleCycles" | "editorial" | "interpretationPlan">,
+  plan: Pick<AssembledReading, "eligibleCycles" | "editorial" | "interpretationPlan"> &
+    Partial<Pick<AssembledReading, "natalLensPlan">>,
   timeZone = "UTC",
 ): FactAtom[] {
   const facts: FactAtom[] = [];
@@ -103,6 +112,17 @@ export function readingFacts(
       releaseVersion: synthesis.releaseVersion,
     });
   }
+  const lens = plan.natalLensPlan?.lens;
+  if (lens)
+    facts.push({
+      id: "N1",
+      kind: "temperament",
+      statement: `Published natal lens, an interpretive possibility: ${lens.mechanism}`,
+      dependsOn: [...lens.dependsOn],
+      sourceKey: lens.ruleKey,
+      releaseVersion: plan.natalLensPlan!.releaseVersion,
+      natalEvidenceId: lens.evidenceId,
+    });
   if (plan.editorial) {
     if (plan.editorial.domain)
       facts.push({
@@ -134,6 +154,7 @@ export function readingFacts(
         "House-placement claims are suppressed and angle claims are weighted down. Their caveat will be appended separately; do not draft house claims or repeat the caveat.",
     });
   }
+  if (plan.natalLensPlan) assertNatalLensFact(facts, plan.natalLensPlan);
   return facts;
 }
 
@@ -149,15 +170,19 @@ export interface FeatureFactInput {
 export function dailyFactBlock(facts: FactAtom[]): string {
   const synthesis = facts.filter((fact) => fact.id === "S1");
   const primary = facts.filter((fact) => fact.id === "I1");
+  const natal = facts.filter((fact) => fact.id === "N1");
   const supporting = facts.filter((fact) => /^I[23]$/.test(fact.id));
   const optional = facts.filter((fact) => /^(D1|P1|T1)$/.test(fact.id));
-  const reference = facts.filter((fact) => !/^(S1|I[123]|D1|P1|T1)$/.test(fact.id));
+  const reference = facts.filter((fact) => !/^(N1|S1|I[123]|D1|P1|T1)$/.test(fact.id));
   return [
     ...(synthesis.length
       ? ["Published relationship of the strongest two contacts:", factBlock(synthesis)]
       : []),
     "Curated meaning of the strongest cycle (C1):",
     factBlock(primary),
+    ...(natal.length
+      ? ["Conditional interpretive lens for the primary meaning:", factBlock(natal)]
+      : []),
     ...(supporting.length
       ? ["Separately published supporting meanings:", factBlock(supporting)]
       : []),
@@ -173,6 +198,64 @@ export class InvalidDailyFactGraph extends Error {
     super("Invalid daily fact graph");
     this.name = "InvalidDailyFactGraph";
   }
+}
+
+export function assertNatalLensFact(facts: FactAtom[], plan: DailyNatalLensPlan): void {
+  assertDailyFactGraph(facts);
+  const natal = facts.filter((f) => f.id === "N1" || f.kind === "temperament");
+  const lens = plan.lens;
+  if (
+    plan.version !== NATAL_LENS_PLAN_VERSION ||
+    (plan.status === "selected") !== !!lens ||
+    (!lens && natal.length)
+  )
+    throw new InvalidDailyFactGraph();
+  if (!lens) return;
+  const fact = natal[0],
+    cycle = facts.find((f) => f.id === "C1")?.cycle;
+  if (
+    natal.length !== 1 ||
+    !fact ||
+    plan.reliabilityVersion !== NATAL_RELIABILITY_VERSION ||
+    fact.statement !== `Published natal lens, an interpretive possibility: ${lens.mechanism}` ||
+    fact.sourceKey !== lens.ruleKey ||
+    fact.releaseVersion !== plan.releaseVersion ||
+    fact.natalEvidenceId !== lens.evidenceId ||
+    lens.dependsOn.join(",") !== "C1,I1" ||
+    lens.evidenceId !== "NL1" ||
+    !cycle ||
+    lens.anchorCycleKey !== `${cycle.transitBody}_${cycle.aspect}_${cycle.natalPoint}` ||
+    !lens.evidence.length ||
+    natalLensWordingProblem(lens.mechanism) ||
+    natalMechanismHasTechnicalClaim(lens.mechanism)
+  )
+    throw new InvalidDailyFactGraph();
+  validateNatalReliability(
+    {
+      version: NATAL_RELIABILITY_VERSION,
+      chartFingerprint: "selected-private-proof",
+      status: "screened",
+      reason: null,
+      ...lens.screen,
+      evidence: lens.evidence,
+    },
+    "selected-private-proof",
+    lens.screen.accuracy,
+  );
+  const sign = lens.evidence[0],
+    extra = lens.evidence[1];
+  if (
+    sign?.kind !== "sign" ||
+    NATAL_BODY_ROLE[sign.body] !== lens.role ||
+    lens.evidence.length > 2 ||
+    (sign.body !== "moon" && sign.body !== cycle.natalPoint) ||
+    extra?.kind === "sign" ||
+    (extra?.kind === "house" && extra.body !== sign.body) ||
+    (extra?.kind === "aspect" &&
+      (![extra.a, extra.b].includes(sign.body) || Math.max(...extra.orbs) > 3)) ||
+    safetyPass(lens.mechanism).flagged.length
+  )
+    throw new InvalidDailyFactGraph();
 }
 
 /** Validate new editorial dependencies while keeping plain historical atoms usable. */
@@ -198,7 +281,7 @@ export function assertDailyFactGraph(facts: FactAtom[]): void {
       invalid();
     if (
       fact.kind !== undefined &&
-      !["calculation", "interpretation", "synthesis"].includes(fact.kind)
+      !["calculation", "interpretation", "synthesis", "temperament"].includes(fact.kind)
     )
       invalid();
     if (
@@ -274,6 +357,33 @@ export function assertDailyFactGraph(facts: FactAtom[]): void {
       }
       editorialVersions.add(fact.releaseVersion!);
     } else if (fact.kind === "synthesis") invalid();
+    if (
+      /^N\d+$/.test(fact.id) ||
+      fact.kind === "temperament" ||
+      fact.natalEvidenceId !== undefined
+    ) {
+      if (
+        fact.id !== "N1" ||
+        fact.kind !== "temperament" ||
+        fact.cycle ||
+        !fact.sourceKey ||
+        !fact.releaseVersion ||
+        fact.natalEvidenceId !== "NL1" ||
+        fact.dependsOn?.join(",") !== "C1,I1" ||
+        byId.get("I1")?.kind !== "interpretation" ||
+        byId.get("I1")?.releaseVersion !== fact.releaseVersion ||
+        !byId.get("C1")?.cycle ||
+        !fact.statement.startsWith("Published natal lens, an interpretive possibility: ") ||
+        fact.statement.length > 760 ||
+        natalLensWordingProblem(fact.statement) ||
+        safetyPass(fact.statement).flagged.length ||
+        natalMechanismHasTechnicalClaim(
+          fact.statement.slice("Published natal lens, an interpretive possibility: ".length),
+        )
+      )
+        invalid();
+      editorialVersions.add(fact.releaseVersion!);
+    }
   }
   if (editorialVersions.size > 1) invalid();
   const visited = new Set<string>(),
@@ -302,8 +412,9 @@ export function readSavedFactAtoms(value: unknown): FactAtom[] {
     )
       return [];
     const fact: FactAtom = { id: f["id"], statement: f["statement"] };
-    if (["calculation", "interpretation", "synthesis"].includes(String(f["kind"])))
+    if (["calculation", "interpretation", "synthesis", "temperament"].includes(String(f["kind"])))
       fact.kind = f["kind"] as NonNullable<FactAtom["kind"]>;
+    if (f["natalEvidenceId"] === "NL1") fact.natalEvidenceId = "NL1";
     if (
       Array.isArray(f["dependsOn"]) &&
       f["dependsOn"].length <= 4 &&

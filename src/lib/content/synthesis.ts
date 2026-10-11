@@ -136,20 +136,20 @@ export function resolveInterpretationPlan(
   const topCycles = eligibleCycles.slice(0, 3);
   const interpretations: ResolvedCycleInterpretation[] = [];
 
-  let index = 1;
-  for (const cycle of topCycles) {
+  for (let i = 0; i < topCycles.length; i++) {
+    const cycle = topCycles[i];
     if (!cycle) continue;
+    const index = (i + 1) as 1 | 2 | 3;
     const interp = findInterpretation(bundle, cycle.aspect, cycle.transit_body, cycle.natal_point);
     if (interp.key !== "fallback") {
       interpretations.push({
-        index: index as 1 | 2 | 3,
+        index,
         cycleKey: cycle.cycle_key,
         interpretationKey: interp.key,
         mechanism: interp.mechanism,
         themes: interp.themes ? [...interp.themes] : [],
       });
     }
-    index += 1;
   }
 
   const releaseVersion = bundle.version;

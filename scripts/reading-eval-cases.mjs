@@ -184,3 +184,51 @@ export const SYNTHESIS_VALIDATOR_EXAMPLES = [
     },
   },
 ];
+
+const SUN_OPENING =
+  "An established responsibility can call for clearer boundaries when its expectations outpace capacity.";
+const MOON_OPENING =
+  "A small obligation can take up more room than its size suggests. The contact frames responsibility against the uninterrupted space a day leaves.";
+function natalDraft(mechanism, opening = SUN_OPENING) {
+  return {
+    paragraphs: [
+      { text: opening, facts: ["C1", "I1"] },
+      { text: mechanism, facts: ["N1", "C1", "I1"] },
+    ],
+  };
+}
+const CAPRICORN_MOON =
+  "A self-contained response to pressure can start with sorting what is manageable before sharing it. An unfinished reply can offer a place to notice the difference between useful preparation and waiting to have everything settled.";
+const GEMINI_SUN =
+  "Following more than one line of curiosity can help a direction take shape. If several notes compete for attention, exploring possibilities and committing to an explanation may be different stages.";
+Object.assign(BASELINE_RESPONSES, {
+  "natal-duty-reflex": natalDraft(CAPRICORN_MOON, MOON_OPENING),
+  "natal-freedom-reflex": natalDraft(
+    "Room to choose the route can matter as much as finishing the task. If an ordinary obligation feels narrow, the useful distinction may be between the commitment itself and how much choice it leaves in carrying it out.",
+    MOON_OPENING,
+  ),
+  "natal-service-aspect": natalDraft(
+    "Dependable structure can offer support when a response needs time to take shape. An ordinary commitment may distinguish accepting useful support from taking on every obligation to keep the arrangement steady.",
+    MOON_OPENING,
+  ),
+  "natal-exact-house": natalDraft(
+    "A manageable routine can offer a way to meet pressure without settling everything at once. An unfinished list may distinguish one useful task from making the entire routine a condition for taking a pause.",
+    MOON_OPENING,
+  ),
+  "natal-own-target": natalDraft(GEMINI_SUN),
+  "natal-moon-fallback": natalDraft(CAPRICORN_MOON),
+  "natal-sign-boundary": sunDraft(),
+  "natal-unknown-time": sunDraft(),
+  "natal-mixed-source": natalDraft(CAPRICORN_MOON, MOON_OPENING),
+  "natal-degraded-positions": sunDraft(),
+  "natal-legacy-snapshot": sunDraft(),
+  "natal-synthesis-integration": {
+    paragraphs: [
+      { text: SUN_OPENING, facts: ["C1", "I1"] },
+      {
+        text: "Giving a plan more scope can increase the structure needed to carry it. Following more than one line of curiosity can help that direction take shape, with exploring possibilities and committing to an explanation treated as different stages.",
+        facts: ["S1", "C1", "I1", "C2", "I2", "N1"],
+      },
+    ],
+  },
+});

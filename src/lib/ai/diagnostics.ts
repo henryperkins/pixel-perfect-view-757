@@ -1,8 +1,8 @@
 /** Measurement identifiers describe the current brief and guards, not a cache key. */
 export const DAILY_DIAGNOSTICS_VERSION = 1;
 export const DAILY_READING_PLAN_VERSION = "daily-synthesis-1";
-export const DAILY_PROMPT_VERSION = "daily-astro-body-5";
-export const DAILY_VALIDATOR_VERSION = "daily-reference-4";
+export const DAILY_PROMPT_VERSION = "daily-astro-body-6";
+export const DAILY_VALIDATOR_VERSION = "daily-reference-5";
 export const MAX_DAILY_DURATION_MS = 120_000;
 export const DAILY_GATEWAY_TIMEOUT_MS = 20_000;
 export const LANGUAGE_MODEL = "google/gemini-3.7-flash";
@@ -28,6 +28,8 @@ export const DAILY_DIAGNOSTIC_CODES = [
   "coverage",
   "dependencies",
   "synthesis_coverage",
+  "natal_coverage",
+  "natal_claim",
   "safety",
   "suppression",
   "placement",
@@ -89,8 +91,10 @@ const LABELS: Record<DailyDiagnosticCode, string> = {
   length: "Daily length limit exceeded",
   id: "Invalid supplied fact reference",
   coverage: "Required reference coverage missing",
-  dependencies: "Synthesis parent references missing",
+  dependencies: "Published parent references missing",
   synthesis_coverage: "Published synthesis coverage missing",
+  natal_coverage: "Published natal lens coverage missing",
+  natal_claim: "Unsupported natal certainty or clinical claim",
   safety: "Language safety check rejected draft",
   suppression: "Suppressed chart wording",
   placement: "Placement absent from daily facts",

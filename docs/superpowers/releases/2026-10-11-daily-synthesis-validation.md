@@ -45,12 +45,14 @@ signed ingest after a failed activation returned success with no release active.
 Drafting now requests only the family slots and drops unusable entries one at a
 time. An identical replay that finds its row inactive now completes the activation.
 Both new regressions were observed failing on the previous code. Afterwards,
-`npm test` (299/299), `npx tsc --noEmit`, owned-path lint, `npm run build`, and
-`git diff --check` passed. The candidate's `codeSha256` was recomputed with a
-stated scheme because the original scheme was not recorded. Still open from that
-review: check every production release against the stricter validator before
-deployment, and add the affected keys, theme tags and rule relationships to the
-admin draft preview.
+`npm test` (301/301), `npx tsc --noEmit`, owned-path lint, `npm run build`, and
+`git diff --check` passed. A third review addressed the draft preview and engine
+resilience: the admin draft preview now renders affected/drafted interpretation
+keys, theme tags per entry, and surviving synthesis rules with pair relationships;
+`findInterpretation` safely handles unnormalized bundles with missing `cycles`; and
+`resolveInterpretationPlan` strictly derives positional cycle indices. Still open
+before deployment: check every production release against the stricter validator,
+and complete the actual-model writing qualification gate.
 
 Chromium inspected the actual `TodayEvidence` component and application CSS on
 an isolated synthetic page at `http://127.0.0.1:5194/__synthesis`, at 1440×900 and

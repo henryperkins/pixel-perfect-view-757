@@ -25,17 +25,17 @@ test("before/after comparison rejects a partial flag even when every case is pre
 
 test("fixed synthetic baseline exercises the real daily validators without quality scores", async () => {
   const report = await evaluateReadings();
-  assert.equal(READING_EVAL_CASES.length, 16);
+  assert.equal(READING_EVAL_CASES.length, 28);
   assert.equal(report.fixtureVersion, READING_EVAL_FIXTURE_VERSION);
   assert.equal(report.source, "synthetic-baseline");
   assert.equal(report.network, "blocked; gateway replayed in memory");
   assert.deepEqual(report.summary.outcomes, {
-    accepted: 15,
+    accepted: 27,
     rejected: 0,
     unavailable: 0,
     skipped: 1,
   });
-  assert.equal(report.summary.gatewayReplays, 15);
+  assert.equal(report.summary.gatewayReplays, 27);
   assert.equal(report.summary.liveAcceptanceRate, null);
   assert.equal(report.summary.replayAcceptanceRate, 1);
   assert.match(report.warning, /not.*live|does not.*live/i);
@@ -62,7 +62,7 @@ test("candidate replay records a real validator rejection and deterministic fall
   const report = await evaluateReadings({ responses });
   assert.equal(report.source, "candidate-replay");
   assert.equal(report.summary.outcomes.rejected, 1);
-  assert.equal(report.summary.replayAcceptanceRate, 14 / 15);
+  assert.equal(report.summary.replayAcceptanceRate, 26 / 27);
   const item = report.cases.find((c) => c.id === "saturn-square-sun");
   assert.equal(item.diagnostics.outcome, "rejected");
   assert.equal(item.diagnostics.code, "id");
@@ -97,10 +97,16 @@ test("comparison refuses changed fixtures, case sets, or input configs", async (
   after.validatorVersion = "daily-new-guard";
   after.model = "synthetic-candidate-model";
   after.bundleHash = "new-copy-hash";
+  assert.throws(() => compareReports(before, after), /transit copy and model/);
+  after.model = before.model;
+  after.transitCopyHash = "new-transit-copy";
+  assert.throws(() => compareReports(before, after), /transit copy and model/);
+  after.transitCopyHash = before.transitCopyHash;
+  after.bundleHash = before.bundleHash;
   const changed = compareReports(before, after);
   assert.deepEqual(
     changed.configurationChanges.map((change) => change.field),
-    ["promptVersion", "validatorVersion", "bundleHash", "model"],
+    ["promptVersion", "validatorVersion"],
   );
   assert.equal(changed.acceptedDelta, 0);
   after.fixtureVersion = "different-fixture";

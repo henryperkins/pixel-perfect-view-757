@@ -222,6 +222,12 @@ function BirthPage() {
                       </button>
                     ))}
                   </div>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                    This is your declared accuracy, not a verified birth time. Saving or
+                    recalculating checks eligible natal origins at the recorded time and both
+                    uncertainty boundaries. Unknown time omits daily natal lenses; if the service or
+                    a sample is unavailable, the ordinary reading remains available.
+                  </p>
                 </fieldset>
 
                 {accuracy !== "unknown" ? (

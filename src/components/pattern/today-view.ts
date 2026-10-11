@@ -33,6 +33,7 @@ export function todayFactLabel(id: string) {
   if (cycle) return cycle[1] === "1" ? "Primary calculated cycle" : `Calculated cycle ${cycle[1]}`;
   if (/^I\d+$/.test(id)) return "Interpretation reference";
   if (id === "S1") return "Published synthesis";
+  if (id === "N1") return "Published natal lens";
   if (/^D\d+$/.test(id)) return "Area-of-life framing";
   if (/^P\d+$/.test(id)) return "Phase wording";
   if (/^T\d+$/.test(id)) return "Timing wording";
@@ -43,6 +44,7 @@ export function todayFactLabel(id: string) {
 }
 
 export function todayFactCategory(id: string) {
+  if (id === "N1") return "Interpretive reference";
   if (/^C\d+$/.test(id)) return "Calculated cycle";
   if (id === "S1") return "Published synthesis";
   if (/^[IDPT]\d+$/.test(id)) return "Published reference";
@@ -104,6 +106,11 @@ export function describeTodayFact(fact: { id: string; statement: string }): Toda
       ),
     };
   }
+  if (fact.id === "N1")
+    return {
+      label,
+      text: fact.statement.replace(/^Published natal lens, an interpretive possibility:\s*/, ""),
+    };
   if (/^D\d+$/.test(fact.id)) {
     return { label, text: fact.statement.replace(/^Published framing for /, "") };
   }

@@ -1,5 +1,108 @@
 import { safetyPass } from "./default-bundle";
 import type { ContentBundle, Interpretation } from "./default-bundle";
+import { BODIES, SIGNS } from "../astro/ephemeris";
+import { ASPECTS } from "../astro/chart";
+import { natalLensWordingProblem, natalMechanismHasTechnicalClaim } from "./natal-lens-policy";
+
+import { NATAL_PERSONAL_BODIES, NATAL_BODY_ROLE, type NatalLensRule } from "./natal-lens-types";
+export * from "./natal-lens-types";
+
+export function natalCatalogueCoverage(rules: NatalLensRule[] = []) {
+  const valid = rules.filter(
+    (r) => r && Array.isArray(r.selectors) && r.selectors[0]?.kind === "sign",
+  );
+  return {
+    base: valid.filter((r) => r.selectors.length === 1).length,
+    compound: valid.filter((r) => r.selectors.length === 2).length,
+    bodySigns: new Set(
+      valid
+        .filter((r) => r.selectors.length === 1)
+        .map((r) => `${r.selectors[0].body}:${r.selectors[0].sign}`),
+    ).size,
+  };
+}
+
+function validateNatalCatalogue(value: unknown, schemaVersion: number | undefined) {
+  if (value === undefined) return;
+  if (!Array.isArray(value) || value.length > 2000)
+    throw new Error("Invalid natalLenses catalogue bounds");
+  if (value.length && schemaVersion !== 3) throw new Error("natalLenses require schemaVersion 3");
+  const keys = new Set<string>(),
+    selectors = new Set<string>();
+  for (const rule of value as NatalLensRule[]) {
+    if (
+      !rule ||
+      typeof rule !== "object" ||
+      typeof rule.key !== "string" ||
+      !rule.key.trim() ||
+      rule.key.length > 100 ||
+      keys.has(rule.key)
+    )
+      throw new Error("Invalid or duplicate natal lens key");
+    keys.add(rule.key);
+    if (
+      !Array.isArray(rule.anchorNatalPoints) ||
+      rule.anchorNatalPoints.length < 1 ||
+      rule.anchorNatalPoints.length > 5 ||
+      new Set(rule.anchorNatalPoints).size !== rule.anchorNatalPoints.length ||
+      rule.anchorNatalPoints.some((b) => !NATAL_PERSONAL_BODIES.includes(b))
+    )
+      throw new Error("Invalid natal lens anchors");
+    if (!Array.isArray(rule.selectors) || rule.selectors.length < 1 || rule.selectors.length > 2)
+      throw new Error("Invalid natal lens selectors");
+    const [sign, extra] = rule.selectors;
+    if (
+      !sign ||
+      sign.kind !== "sign" ||
+      !NATAL_PERSONAL_BODIES.includes(sign.body) ||
+      !SIGNS.includes(sign.sign) ||
+      rule.role !== NATAL_BODY_ROLE[sign.body] ||
+      Object.keys(sign).some((k) => !["kind", "body", "sign"].includes(k))
+    )
+      throw new Error("Invalid natal sign selector or role");
+    let canonicalExtra = "";
+    if (extra?.kind === "aspect") {
+      if (
+        extra.a !== sign.body ||
+        extra.a === extra.b ||
+        !BODIES.includes(extra.b) ||
+        extra.b === ("node" as string) ||
+        !ASPECTS.some((a) => a.key === extra.aspect) ||
+        !Number.isFinite(extra.maxOrb) ||
+        extra.maxOrb <= 0 ||
+        extra.maxOrb > 3 ||
+        Object.keys(extra).some((k) => !["kind", "a", "b", "aspect", "maxOrb"].includes(k))
+      )
+        throw new Error("Invalid natal aspect selector");
+      canonicalExtra = `aspect:${[extra.a, extra.b].sort().join(":")}:${extra.aspect}:${extra.maxOrb}`;
+    } else if (extra?.kind === "house") {
+      if (
+        extra.body !== sign.body ||
+        !Number.isInteger(extra.house) ||
+        extra.house < 1 ||
+        extra.house > 12 ||
+        Object.keys(extra).some((k) => !["kind", "body", "house"].includes(k))
+      )
+        throw new Error("Invalid natal house selector");
+      canonicalExtra = `house:${extra.body}:${extra.house}`;
+    } else if (rule.selectors.length === 2) throw new Error("Invalid natal compound selector");
+    const canonical = `${sign.body}:${sign.sign}|${canonicalExtra}|${[...rule.anchorNatalPoints].sort().join(":")}`;
+    if (selectors.has(canonical)) throw new Error("Duplicate canonical natal selectors/anchors");
+    selectors.add(canonical);
+    const text = rule.mechanism;
+    if (
+      typeof text !== "string" ||
+      !text.trim() ||
+      text.length > 700 ||
+      !/[.!?]$/.test(text.trim()) ||
+      (text.match(/[.!?](?:\s|$)/g)?.length ?? 0) > 3 ||
+      safetyPass(text).flagged.length ||
+      natalLensWordingProblem(text) ||
+      natalMechanismHasTechnicalClaim(text)
+    )
+      throw new Error("Invalid or unsafe natal mechanism");
+  }
+}
 
 export type ThemeTag =
   | "structure"
@@ -43,6 +146,7 @@ interface RawContentBundle {
   schemaVersion?: number;
   cycles?: unknown[];
   synthesisRules?: unknown[];
+  natalLenses?: unknown[];
   natal?: Record<string, string>;
   phases?: Record<string, string>;
   domains?: Record<string, unknown>;
@@ -58,7 +162,11 @@ export function validateContentGraph(raw: unknown): void {
     throw new Error("Interpretation catalogue must be an array");
   }
 
-  if (bundle.schemaVersion !== undefined && bundle.schemaVersion !== 2) {
+  if (
+    bundle.schemaVersion !== undefined &&
+    bundle.schemaVersion !== 2 &&
+    bundle.schemaVersion !== 3
+  ) {
     throw new Error(`Unsupported schemaVersion: ${bundle.schemaVersion}`);
   }
 
@@ -77,10 +185,15 @@ export function validateContentGraph(raw: unknown): void {
     (c) => c && Array.isArray(c.themes) && c.themes.length > 0,
   );
 
-  if ((hasRules || hasAnnotatedThemes) && bundle.schemaVersion !== 2) {
+  if (
+    (hasRules || hasAnnotatedThemes) &&
+    bundle.schemaVersion !== 2 &&
+    bundle.schemaVersion !== 3
+  ) {
     throw new Error("Theme annotations and synthesisRules require schemaVersion 2");
   }
 
+  validateNatalCatalogue(bundle.natalLenses, bundle.schemaVersion);
   if (cycles.length > 2000) {
     throw new Error("Exceeded maximum of 2,000 interpretations");
   }
@@ -278,8 +391,12 @@ export function normalizeContentBundle(
   const domains = { ...defaults.domains, ...((rawObj.domains as ContentBundle["domains"]) || {}) };
 
   const hasAnnotatedThemes = cycles.some((c) => c.themes && c.themes.length > 0);
-  const schemaVersion: 2 | undefined =
-    rawObj.schemaVersion === 2 || synthesisRules.length > 0 || hasAnnotatedThemes ? 2 : undefined;
+  const schemaVersion: 2 | 3 | undefined =
+    rawObj.schemaVersion === 3
+      ? 3
+      : rawObj.schemaVersion === 2 || synthesisRules.length > 0 || hasAnnotatedThemes
+        ? 2
+        : undefined;
 
   const bundle: ContentBundle = {
     version,
@@ -288,6 +405,9 @@ export function normalizeContentBundle(
     phases,
     domains,
     synthesisRules,
+    natalLenses: Array.isArray(rawObj.natalLenses)
+      ? (structuredClone(rawObj.natalLenses) as NatalLensRule[])
+      : [],
   };
 
   if (schemaVersion !== undefined) {

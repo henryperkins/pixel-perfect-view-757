@@ -11,7 +11,8 @@ let vite,
   runSyntheticEvaluationCase,
   generateReadingProse,
   combineReadingEvaluationResults,
-  DEFAULT_BUNDLE;
+  DEFAULT_BUNDLE,
+  NATAL_CANDIDATE_BUNDLE;
 let draft, requests;
 before(async () => {
   process.env.LOVABLE_API_KEY = "synthetic-live-eval-test-no-network";
@@ -35,6 +36,9 @@ before(async () => {
     "/src/lib/ai/reading-evaluation.shared.ts",
   ));
   ({ DEFAULT_BUNDLE } = await vite.ssrLoadModule("/src/lib/content/default-bundle.ts"));
+  ({ NATAL_CANDIDATE_BUNDLE } = await vite.ssrLoadModule(
+    "/src/lib/content/natal-candidate-bundle.ts",
+  ));
 });
 beforeEach(() => {
   requests = [];
@@ -141,10 +145,11 @@ test("production reading output keeps synthetic observation out of normal metada
 });
 
 test("complete model run retains the offline fixture hashes and comparison compatibility", async () => {
+  // The natal suite qualifies the candidate release, as an isolated environment would.
   const results = [];
   for (const fixed of READING_EVAL_CASES) {
     draft = structuredClone(BASELINE_RESPONSES[fixed.id]);
-    results.push(await runSyntheticEvaluationCase(fixed.id, DEFAULT_BUNDLE));
+    results.push(await runSyntheticEvaluationCase(fixed.id, NATAL_CANDIDATE_BUNDLE));
   }
   const report = combineReadingEvaluationResults(results);
   assert.equal(report.partial, false);
@@ -152,7 +157,13 @@ test("complete model run retains the offline fixture hashes and comparison compa
   assert.equal(report.summary.syntheticModelAcceptanceRate, 1);
   assert.equal(report.summary.liveAcceptanceRate, null);
   const offline = await evaluateReadings();
+  assert.equal(report.transitCopyHash, offline.transitCopyHash);
   assert.equal(compareReports(offline, report).acceptedDelta, 0);
+  // A natal-free baseline run on the deployed fallback shares the same transit copy.
+  draft = structuredClone(BASELINE_RESPONSES["saturn-square-sun"]);
+  const fallback = await runSyntheticEvaluationCase("saturn-square-sun", DEFAULT_BUNDLE);
+  assert.equal(fallback.metadata.transitCopyHash, report.transitCopyHash);
+  assert.notEqual(fallback.metadata.bundleHash, report.bundleHash);
   assert.equal(report.caseSetHash, offline.caseSetHash);
   assert.deepEqual(
     report.cases.map((row) => row.configHash),

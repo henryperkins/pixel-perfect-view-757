@@ -3,10 +3,14 @@ import { createHash } from "node:crypto";
 import type { Chart } from "../astro/chart";
 import type { CycleInstance } from "../astro/cycles";
 import type { ContentBundle } from "../content/default-bundle";
+import { transitCopyIdentity } from "../content/natal-candidate-bundle";
 import { daysToLocalDate, localNoon } from "../local-day";
 import { assembleReading } from "../reading.server";
 import { readingFacts } from "./facts";
 import { dailyPlanIdentity } from "../content/synthesis";
+import { NATAL_LENS_PLAN_VERSION } from "../content/natal-lens";
+import { NATAL_RELIABILITY_VERSION } from "../astro/natal-reliability";
+import { syntheticNatalReliability } from "./reading-evaluation.natal";
 import {
   DAILY_PROMPT_VERSION,
   DAILY_READING_PLAN_VERSION,
@@ -36,6 +40,7 @@ export async function runSyntheticEvaluationCase(
   })) as CycleInstance[];
   // These minimal chart plans deliberately contain no birth coordinates, timestamp or identity.
   const chart = fixed.chart as unknown as Chart;
+  const natalReliability = syntheticNatalReliability(fixed);
   const assembled = assembleReading(
     chart,
     cycles,
@@ -48,6 +53,7 @@ export async function runSyntheticEvaluationCase(
       wellness: null,
     },
     bundle,
+    natalReliability,
   );
   const facts = readingFacts(chart, assembled, fixed.config.timeZone);
   const observed = await generateSyntheticReadingProse({
@@ -70,7 +76,10 @@ export async function runSyntheticEvaluationCase(
       caseSetHash: hash(READING_EVAL_CASES),
       bundleVersion: bundle.version,
       bundleHash: hash(bundle),
+      transitCopyHash: hash(transitCopyIdentity(bundle)),
       planVersion: DAILY_READING_PLAN_VERSION,
+      natalPlanVersion: NATAL_LENS_PLAN_VERSION,
+      reliabilityVersion: NATAL_RELIABILITY_VERSION,
       promptVersion: DAILY_PROMPT_VERSION,
       validatorVersion: DAILY_VALIDATOR_VERSION,
       model: LANGUAGE_MODEL,
@@ -89,6 +98,8 @@ export async function runSyntheticEvaluationCase(
       eligibleCycleKeys: assembled.eligibleCycles.map((cycle) => cycle.cycle_key),
       facts,
       interpretationPlan: dailyPlanIdentity(assembled.interpretationPlan),
+      natalLensPlan: assembled.natalLensPlan,
+      natalReliability,
       request: observed.request,
       candidate: observed.candidate,
       diagnostics: prose.meta.diagnostics,
@@ -105,6 +116,8 @@ export async function runSyntheticEvaluationCase(
         voice: null,
         repetition: null,
         grounding: null,
+        lensIntegration: null,
+        unsupportedPersonalClaim: null,
         notes: null,
       },
     },

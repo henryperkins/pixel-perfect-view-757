@@ -593,4 +593,9 @@ test("lifecycle: a complete draft reply rewrites family slots only, keeps review
   );
   assert.equal(draft.entries.length, 26);
   assert.equal(draft.themeCount, 5);
+  assert.equal(draft.ruleCount, 2);
+  assert.ok(Array.isArray(draft.affectedKeys));
+  assert.equal(draft.affectedKeys.length, 21);
+  assert.ok(draft.affectedKeys.includes("hard:*:*"));
+  assert.ok(draft.affectedKeys.includes("hard:jupiter:*"));
 });

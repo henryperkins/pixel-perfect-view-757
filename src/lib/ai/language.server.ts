@@ -16,7 +16,8 @@
 import { safetyPass } from "../content/default-bundle";
 import { normalizeDepth, normalizeTone } from "../reading.server";
 import { assertDailyFactGraph, dailyFactBlock, factBlock, factIds, type FactAtom } from "./facts";
-import { DAILY_SYSTEM_VOICE, dailyVoice } from "./daily-voice";
+import { dailySystemVoice, dailyVoice } from "./daily-voice";
+import { natalLensWordingProblem } from "../content/natal-lens-policy";
 import type {
   EvaluationJsonValue,
   SyntheticReadingCandidate,
@@ -312,6 +313,13 @@ function dailyReferenceProblem(
     return rejection("suppression", "draft contains suppressed house wording");
   if (SIGNS.test(text) || HOUSE_PLACEMENT.test(text))
     return rejection("placement", "draft contains a placement absent from daily facts");
+  if (
+    new RegExp(
+      `\\b(?:natal|birth)\\s+(?:${BODY_NAMES})\\s+(?:(?:is|forms?|makes?|a|an)\\s+){0,3}(?:${ASPECT_NAMES})\\s+(?:(?:to|with|your|the)\\s+){0,3}(?:natal|birth)\\s+(?:${BODY_NAMES})\\b`,
+      "i",
+    ).test(text)
+  )
+    return rejection("placement", "draft contains an unsupported natal aspect");
   const cycles = cited.flatMap((f) => (f.cycle ? [f.cycle] : []));
   const bodies = new Set(
     cycles.flatMap((c) => [canonicalBody(c.transitBody), canonicalBody(c.natalPoint)]),
@@ -448,9 +456,13 @@ function dailyDraft(
       return rejectParagraph("length", "draft exceeds the daily length limit");
     if (safetyPass(text).flagged.length)
       return rejectParagraph("safety", "draft failed the language safety check");
+    if (byId.has("N1") && natalLensWordingProblem(text))
+      return rejectParagraph("natal_claim", "draft asserts natal certainty or a clinical claim");
     const ids = [...new Set(p.facts as string[])];
     if (ids.includes("S1") && !byId.get("S1")!.dependsOn!.every((id) => ids.includes(id)))
       return rejectParagraph("dependencies", "draft omitted published synthesis parent references");
+    if (ids.includes("N1") && !["C1", "I1"].every((id) => ids.includes(id)))
+      return rejectParagraph("dependencies", "draft omitted natal lens parent references");
     const problem =
       dailyReferenceProblem(
         text,
@@ -468,6 +480,8 @@ function dailyDraft(
       "synthesis_coverage",
       "draft omitted published synthesis from its first two paragraphs",
     );
+  if (byId.has("N1") && !citations.slice(0, 2).some((c) => c.facts.includes("N1")))
+    return rejection("natal_coverage", "draft omitted natal lens from its first two paragraphs");
   return { body: kept.join("\n\n"), paragraphs: kept, citations };
 }
 
@@ -522,6 +536,9 @@ async function generateDailyProse(
     "C1",
     ...["P1", "T1"].filter((id) => input.facts.some((fact) => fact.id === id)),
   ];
+  // Natal instructions appear only with N1, so a reading without a lens sends the
+  // same request as before natal lenses existed.
+  const hasNatalLens = input.facts.some((f) => f.id === "N1");
   const prompt = [
     dailyVoice(normalizeTone(input.tone), normalizeDepth(input.depth)),
     "Facts:",
@@ -533,6 +550,9 @@ async function generateDailyProse(
     input.facts.some((f) => f.id === "S1")
       ? 'Develop the supplied published relationship in paragraph 1 or 2. Every paragraph using S1 must explicitly cite all five IDs: "facts": ["S1", "C1", "I1", "C2", "I2"]. The relationship is editorial interpretation, not an established personal state.'
       : "Keep C1 as the primary focus. No S1 is supplied: do not invent a joint relationship or premise. I2 and I3 may offer separately supported context without connecting the contacts into a new story.",
+    hasNatalLens
+      ? 'Apply the supplied N1 possibility to the primary meaning with one practical distinction in paragraph 1 or 2. Every paragraph using it must cite ["N1", "C1", "I1"]. Keep it conditional and recognizable or rejectable, never a confirmed identity, biological explanation or lived event. N1 and S1 may share a paragraph with all parents; do not add a personality section. N1 does not authorize a natal body, sign, house, aspect or other geometry.'
+      : "",
     "Cite the supplied IDs each paragraph rests on. This is reference coverage, not permission to invent astronomical facts.",
     "Any paragraph naming a planet, aspect, orb or ISO exact date must cite the matching calculated cycle ID (C1, C2 or C3), even when it repeats a number from T1. Editorial IDs I1, I2, I3, S1, D1, P1 and T1 cannot replace that cycle citation.",
     `For a paragraph using the strongest cycle's supplied phase and timing wording, include its cycle alongside the relevant editorial references: "facts": [${timingCitationIds.map((id) => JSON.stringify(id)).join(", ")}]. Cite only IDs and values supplied above.`,
@@ -556,7 +576,7 @@ async function generateDailyProse(
       READING_SCHEMA,
       DAILY_GATEWAY_TIMEOUT_MS,
       observation,
-      DAILY_SYSTEM_VOICE,
+      dailySystemVoice(hasNatalLens),
     );
   } catch (error) {
     const failure = gatewayFailure(error);

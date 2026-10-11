@@ -51,6 +51,8 @@ type Release = {
   familyKeys: string[];
   cycles?: number;
   synthesisRules?: number;
+  schemaVersion?: number;
+  natalLensCoverage?: { base: number; compound: number; bodySigns: number };
 };
 
 function ContentPage() {
@@ -213,6 +215,16 @@ function ContentPage() {
                     </span>
                     <span className="technical text-muted-foreground">
                       Rules · <span className="text-foreground">{r.synthesisRules ?? 0}</span>
+                    </span>
+                    <span className="technical text-muted-foreground">
+                      Schema · <span className="text-foreground">{r.schemaVersion ?? 1}</span>
+                    </span>
+                    <span className="technical text-muted-foreground">
+                      Natal lenses ·{" "}
+                      <span className="text-foreground">
+                        {r.natalLensCoverage?.base ?? 0} base, {r.natalLensCoverage?.compound ?? 0}{" "}
+                        compound · {r.natalLensCoverage?.bodySigns ?? 0}/60 body/sign pairs
+                      </span>
                     </span>
                     <span className="technical text-muted-foreground">
                       Checksum · <span className="text-foreground">{r.checksum.slice(0, 16)}…</span>
@@ -1066,10 +1078,20 @@ function DraftPlane({ isAdmin }: { isAdmin: boolean }) {
               <div className="flex flex-wrap items-baseline justify-between gap-3">
                 <span className="font-mono text-xs text-foreground">
                   {d.entries.length} entries ({d.themeCount ?? 0} themes, {d.ruleCount ?? 0} rules)
-                  · from {d.base_version ?? "built-in"}
+                  {" · "}Schema {d.schemaVersion} · {d.natalLensCoverage.base} base natal lenses,{" "}
+                  {d.natalLensCoverage.compound} compound · {d.natalLensCoverage.bodySigns}/60
+                  body/sign pairs · from {d.base_version ?? "built-in"}
                 </span>
                 <span className="technical text-muted-foreground">{d.model ?? "—"}</span>
               </div>
+              {d.affectedKeys && d.affectedKeys.length > 0 ? (
+                <div className="mt-2 text-xs border border-primary/30 bg-evidence p-2 text-muted-foreground">
+                  <span className="technical text-primary font-medium">
+                    Drafted / affected interpretation keys ({d.affectedKeys.length}):
+                  </span>{" "}
+                  <span className="font-mono">{d.affectedKeys.join(", ")}</span>
+                </div>
+              ) : null}
               {d.removedRules && d.removedRules.length > 0 ? (
                 <div className="mt-2 text-xs border border-destructive/30 bg-evidence p-2 text-muted-foreground">
                   <span className="technical text-destructive">
@@ -1078,13 +1100,57 @@ function DraftPlane({ isAdmin }: { isAdmin: boolean }) {
                   <span className="font-mono">{d.removedRules.join(", ")}</span>
                 </div>
               ) : null}
-              <ul className="mt-3 space-y-2 font-mono text-xs text-muted-foreground">
-                {d.entries.slice(0, 4).map((e) => (
-                  <li key={e.key}>
-                    <span className="text-foreground">{e.key}</span> · {e.mechanism}
-                  </li>
-                ))}
-              </ul>
+              {d.synthesisRules && d.synthesisRules.length > 0 ? (
+                <div className="mt-3 border-t border-rule/50 pt-2">
+                  <span className="technical text-xs text-muted-foreground">
+                    Pair rules ({d.synthesisRules.length}):
+                  </span>
+                  <ul className="mt-1.5 space-y-1 font-mono text-xs text-muted-foreground">
+                    {d.synthesisRules.slice(0, 4).map((r) => (
+                      <li key={r.key} className="break-words">
+                        <span className="text-foreground capitalize">{r.relationship}</span>:{" "}
+                        <span>
+                          {r.primary.interpretationKey} ({r.primary.theme})
+                        </span>
+                        {" → "}
+                        <span>
+                          {r.supporting.interpretationKey} ({r.supporting.theme})
+                        </span>
+                      </li>
+                    ))}
+                    {d.synthesisRules.length > 4 ? (
+                      <li className="text-xs text-muted-foreground italic">
+                        + {d.synthesisRules.length - 4} more rules
+                      </li>
+                    ) : null}
+                  </ul>
+                </div>
+              ) : null}
+              <div className="mt-3 border-t border-rule/50 pt-2">
+                <span className="technical text-xs text-muted-foreground">Sample entries:</span>
+                <ul className="mt-1.5 space-y-2 font-mono text-xs text-muted-foreground">
+                  {(d.affectedKeys && d.affectedKeys.length > 0
+                    ? [
+                        ...d.entries.filter((e) => d.affectedKeys.includes(e.key)),
+                        ...d.entries.filter((e) => !d.affectedKeys.includes(e.key)),
+                      ]
+                    : d.entries
+                  )
+                    .slice(0, 4)
+                    .map((e) => (
+                      <li key={e.key}>
+                        <span className="text-foreground">{e.key}</span>
+                        {e.themes && e.themes.length > 0 ? (
+                          <span className="ml-1 text-xs text-primary font-mono">
+                            [{e.themes.join(", ")}]
+                          </span>
+                        ) : null}
+                        {" · "}
+                        {e.mechanism}
+                      </li>
+                    ))}
+                </ul>
+              </div>
               <div className="mt-4 flex flex-wrap gap-3">
                 <button
                   type="button"

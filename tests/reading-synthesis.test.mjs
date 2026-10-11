@@ -722,3 +722,33 @@ test("explicit malformed catalogue containers are rejected rather than inheritin
   for (const bundle of [[], { cycles: {} }, { cycles: null }, { cycles: "missing" }])
     assert.throws(() => validateContentGraph(bundle), /object|array/i);
 });
+
+test("findInterpretation safely handles unnormalized bundles with missing cycles array", () => {
+  const fallback = findInterpretation({}, "square", "saturn", "sun");
+  assert.equal(fallback.key, "fallback");
+  assert.equal(findInterpretation({ cycles: null }, "square", "saturn", "sun").key, "fallback");
+});
+
+test("resolveInterpretationPlan maintains strict positional cycle index with sparse arrays", () => {
+  const c1 = {
+    cycle_key: "saturn_square_sun",
+    aspect: "square",
+    transit_body: "saturn",
+    natal_point: "sun",
+    importance: 0.8,
+  };
+  const c3 = {
+    cycle_key: "mars_trine_sun",
+    aspect: "trine",
+    transit_body: "mars",
+    natal_point: "sun",
+    importance: 0.4,
+  };
+  // Slot 1 is c1 (index 1), slot 2 is undefined, slot 3 is c3 (index 3)
+  const sparse = [c1, undefined, c3];
+  const plan = resolveInterpretationPlan(DEFAULT_BUNDLE, sparse);
+  assert.equal(plan.interpretations.length, 2);
+  assert.equal(plan.interpretations[0].index, 1);
+  assert.equal(plan.interpretations[1].index, 3);
+  assert.equal(plan.interpretations[1].cycleKey, c3.cycle_key);
+});

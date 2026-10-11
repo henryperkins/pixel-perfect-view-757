@@ -125,10 +125,23 @@ export async function evaluateReadings({ responses = undefined } = {}) {
         const { assembleReading } = await vite.ssrLoadModule("/src/lib/reading.server.ts");
         const { readingFacts } = await vite.ssrLoadModule("/src/lib/ai/facts.ts");
         const { dailyPlanIdentity } = await vite.ssrLoadModule("/src/lib/content/synthesis.ts");
+        const { NATAL_LENS_PLAN_VERSION } = await vite.ssrLoadModule(
+          "/src/lib/content/natal-lens.ts",
+        );
+        const { NATAL_RELIABILITY_VERSION } = await vite.ssrLoadModule(
+          "/src/lib/astro/natal-reliability.ts",
+        );
+        const { syntheticNatalReliability } = await vite.ssrLoadModule(
+          "/src/lib/ai/reading-evaluation.natal.ts",
+        );
         const { generateSyntheticReadingProse, LANGUAGE_MODEL } = await vite.ssrLoadModule(
           "/src/lib/ai/language.server.ts",
         );
-        const { DEFAULT_BUNDLE } = await vite.ssrLoadModule("/src/lib/content/default-bundle.ts");
+        // The fixed suite evaluates the inactive natal candidate; live baselines use the
+        // natal-free built-in fallback and compare through the shared transit copy.
+        const { NATAL_CANDIDATE_BUNDLE: bundle, transitCopyIdentity } = await vite.ssrLoadModule(
+          "/src/lib/content/natal-candidate-bundle.ts",
+        );
         const { localNoon, daysToLocalDate } = await vite.ssrLoadModule("/src/lib/local-day.ts");
         const {
           DAILY_READING_PLAN_VERSION,
@@ -147,6 +160,7 @@ export async function evaluateReadings({ responses = undefined } = {}) {
               ? daysToLocalDate(cycle.exact_at, fixed.config.day, fixed.config.timeZone)
               : null,
           }));
+          const natalReliability = syntheticNatalReliability(fixed);
           const assembled = assembleReading(
             fixed.chart,
             cycles,
@@ -158,7 +172,8 @@ export async function evaluateReadings({ responses = undefined } = {}) {
               checkIn: null,
               wellness: null,
             },
-            DEFAULT_BUNDLE,
+            bundle,
+            natalReliability,
           );
           const facts = readingFacts(fixed.chart, assembled, fixed.config.timeZone);
           const observed = await generateSyntheticReadingProse({
@@ -190,6 +205,8 @@ export async function evaluateReadings({ responses = undefined } = {}) {
             request: currentRequests[0] ?? null,
             candidate: observed.candidate,
             interpretationPlan: dailyPlanIdentity(assembled.interpretationPlan),
+            natalLensPlan: assembled.natalLensPlan,
+            natalReliability,
             diagnostics: output.meta.diagnostics,
             output: {
               mode: output.meta.mode,
@@ -204,6 +221,8 @@ export async function evaluateReadings({ responses = undefined } = {}) {
               voice: null,
               repetition: null,
               grounding: null,
+              lensIntegration: null,
+              unsupportedPersonalClaim: null,
               notes: null,
             },
           });
@@ -212,9 +231,12 @@ export async function evaluateReadings({ responses = undefined } = {}) {
           reportVersion: REPORT_VERSION,
           fixtureVersion: READING_EVAL_FIXTURE_VERSION,
           caseSetHash: hash(READING_EVAL_CASES),
-          bundleVersion: DEFAULT_BUNDLE.version,
-          bundleHash: hash(DEFAULT_BUNDLE),
+          bundleVersion: bundle.version,
+          bundleHash: hash(bundle),
+          transitCopyHash: hash(transitCopyIdentity(bundle)),
           planVersion: DAILY_READING_PLAN_VERSION,
+          natalPlanVersion: NATAL_LENS_PLAN_VERSION,
+          reliabilityVersion: NATAL_RELIABILITY_VERSION,
           promptVersion: DAILY_PROMPT_VERSION,
           validatorVersion: DAILY_VALIDATOR_VERSION,
           model: LANGUAGE_MODEL,
@@ -269,6 +291,20 @@ export function compareReports(before, after) {
   validateReport(after);
   if (before.fixtureVersion !== after.fixtureVersion)
     throw new Error("Cannot compare different fixture versions");
+  if (
+    before.fixtureVersion === "synthetic-daily-4" &&
+    ["bundleVersion", "bundleHash", "model"].some((field) => before[field] !== after[field])
+  )
+    throw new Error("Version-4 comparison requires identical frozen source bundle and model");
+  // From version 5 the bundles may differ only by release identity and natal catalogue,
+  // so a natal-free baseline and the natal candidate share every transit sentence.
+  if (
+    /^synthetic-daily-([5-9]|\d{2,})$/.test(before.fixtureVersion) &&
+    (!before.transitCopyHash ||
+      before.transitCopyHash !== after.transitCopyHash ||
+      before.model !== after.model)
+  )
+    throw new Error("Version-5 comparison requires identical transit copy and model");
   const oldCases = new Map(before.cases.map((item) => [item.id, item]));
   if (
     before.caseSetHash !== after.caseSetHash ||
@@ -291,6 +327,8 @@ export function compareReports(before, after) {
   });
   const configurationChanges = [
     "planVersion",
+    "natalPlanVersion",
+    "reliabilityVersion",
     "promptVersion",
     "validatorVersion",
     "bundleVersion",
@@ -306,18 +344,26 @@ export function compareReports(before, after) {
     fixtureVersion: before.fixtureVersion,
     before: {
       planVersion: before.planVersion ?? null,
+      natalPlanVersion: before.natalPlanVersion ?? null,
+      reliabilityVersion: before.reliabilityVersion ?? null,
       promptVersion: before.promptVersion,
       validatorVersion: before.validatorVersion,
+      bundleVersion: before.bundleVersion ?? null,
       bundleHash: before.bundleHash,
+      transitCopyHash: before.transitCopyHash ?? null,
       model: before.model,
       gatewayTimeoutMs: before.gatewayTimeoutMs ?? null,
       source: before.source,
     },
     after: {
       planVersion: after.planVersion ?? null,
+      natalPlanVersion: after.natalPlanVersion ?? null,
+      reliabilityVersion: after.reliabilityVersion ?? null,
       promptVersion: after.promptVersion,
       validatorVersion: after.validatorVersion,
+      bundleVersion: after.bundleVersion ?? null,
       bundleHash: after.bundleHash,
+      transitCopyHash: after.transitCopyHash ?? null,
       model: after.model,
       gatewayTimeoutMs: after.gatewayTimeoutMs ?? null,
       source: after.source,

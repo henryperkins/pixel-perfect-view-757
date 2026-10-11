@@ -1,4 +1,5 @@
 export interface SyntheticFixture {
+  natalWindowSamples?: Omit<import("../astro/natal-reliability").NatalWindowSample, "chart">[];
   id: string;
   description: string;
   chart: {

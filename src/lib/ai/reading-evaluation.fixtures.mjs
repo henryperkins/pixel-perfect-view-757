@@ -1,5 +1,5 @@
 /** Synthetic plans only: these are not birth records or an ephemeris quality test. */
-export const READING_EVAL_FIXTURE_VERSION = "synthetic-daily-3";
+export const READING_EVAL_FIXTURE_VERSION = "synthetic-daily-5";
 
 const CHART = {
   engine: "synthetic-evaluation-engine",
@@ -217,3 +217,158 @@ export const READING_EVAL_CASES = [
     ],
   ),
 ];
+
+/** Raw, synthetic service samples. The shared runner builds Charts and screens them in production code. */
+function natalSamples({
+  accuracy = "near",
+  freedom = false,
+  aspect = false,
+  boundary = false,
+  sunBoundary = false,
+  mixed = false,
+  degraded = false,
+} = {}) {
+  const band = { exact: 2, near: 15, hour: 60, unknown: 720 }[accuracy];
+  const coordinates = {
+    sun: [75, "Gemini"],
+    moon: [freedom ? 255 : 285, freedom ? "Sagittarius" : "Capricorn"],
+    mercury: [105, "Cancer"],
+    venus: [135, "Leo"],
+    mars: [165, "Virgo"],
+    jupiter: [195, "Libra"],
+    saturn: [166, "Virgo"],
+    uranus: [225, "Scorpio"],
+    neptune: [255, "Sagittarius"],
+    pluto: [315, "Aquarius"],
+    node: [345, "Pisces"],
+  };
+  return [-band, 0, band].map((offsetMinutes, index) => {
+    const positions = Object.fromEntries(
+      Object.entries(coordinates).map(([body, pair]) => {
+        const [lon, sign] =
+          boundary && body === "moon"
+            ? [
+                [269.5, "Sagittarius"],
+                [270.1, "Capricorn"],
+                [271, "Capricorn"],
+              ][index]
+            : (boundary || sunBoundary) && body === "sun"
+              ? [
+                  [29.5, "Aries"],
+                  [30.1, "Taurus"],
+                  [31, "Taurus"],
+                ][index]
+              : pair;
+        return [body, { body, lon, sign, degree: lon % 30, lat: 0, speed: 1, retrograde: false }];
+      }),
+    );
+    return {
+      offsetMinutes,
+      ephemeris: {
+        positions,
+        engine: "swiss-ephemeris",
+        engineVersion: "synthetic-swiss-1",
+        precision: "high",
+        degraded: degraded && index === 0,
+        degradedReason: degraded && index === 0 ? "Synthetic failed boundary" : null,
+        ...(mixed && index === 0
+          ? {}
+          : {
+              houses: {
+                system: "placidus",
+                cusps: [120, 150, 180, 210, 240, 270, 300, 330, 0, 30, 60, 90],
+              },
+              angles: { ascendant: 120, midheaven: 30 },
+            }),
+        aspects: aspect
+          ? [{ a: "moon", b: "saturn", aspect: "trine", orb: 1, applying: false }]
+          : [],
+      },
+    };
+  });
+}
+function natalCase(id, description, options = {}, cycles = [cycle("saturn", "sun", "square")]) {
+  const accuracy = options.accuracy ?? "near";
+  return fixedCase(id, description, cycles, {
+    chart: {
+      ...structuredClone(CHART),
+      uncertainty: {
+        ...CHART.uncertainty,
+        accuracy,
+        minutes: { exact: 2, near: 15, hour: 60, unknown: 720 }[accuracy],
+        housesReliable: accuracy === "exact" || accuracy === "near",
+        angleClaimsSuppressed: accuracy === "unknown",
+      },
+    },
+    ...(options.legacy ? {} : { natalWindowSamples: natalSamples(options) }),
+  });
+}
+const moonContact = () => [cycle("saturn", "moon", "square", { domain: "inner-life" })];
+READING_EVAL_CASES.push(
+  natalCase(
+    "natal-duty-reflex",
+    "Matched primary Moon contact, with a reviewed preparation-versus-settled lens.",
+    {},
+    moonContact(),
+  ),
+  natalCase(
+    "natal-freedom-reflex",
+    "Identical primary inputs; only synthetic natal evidence changes the commitment-versus-route distinction.",
+    { freedom: true },
+    moonContact(),
+  ),
+  natalCase(
+    "natal-service-aspect",
+    "A synthetic raw service aspect qualifies the compound Moon lens for a Moon contact.",
+    { accuracy: "exact", aspect: true },
+    moonContact(),
+  ),
+  natalCase(
+    "natal-exact-house",
+    "A synthetic exact-time Placidus house qualifies the routine comparison for a Moon contact.",
+    { accuracy: "exact" },
+    moonContact(),
+  ),
+  natalCase(
+    "natal-own-target",
+    "A screened sign of the transited body leads over an equally screened Moon sign.",
+  ),
+  natalCase(
+    "natal-moon-fallback",
+    "An unscreened transited-body sign falls back to the screened Moon sign.",
+    { sunBoundary: true },
+  ),
+  natalCase(
+    "natal-sign-boundary",
+    "Both Moon and primary-target sign fail the three-sample sign screen.",
+    { boundary: true },
+  ),
+  natalCase(
+    "natal-unknown-time",
+    "Unknown time omits N1 while ordinary transit generation continues.",
+    { accuracy: "unknown" },
+  ),
+  natalCase(
+    "natal-mixed-source",
+    "Missing boundary house source preserves the qualified single Moon sign.",
+    { accuracy: "exact", mixed: true },
+    moonContact(),
+  ),
+  natalCase(
+    "natal-degraded-positions",
+    "Degraded boundary positions make the whole assessment unavailable.",
+    { degraded: true },
+  ),
+  natalCase("natal-legacy-snapshot", "Absent legacy manifest supplies no invented natal lens.", {
+    legacy: true,
+  }),
+  natalCase(
+    "natal-synthesis-integration",
+    "S1 and the transited body's N1 share an early paragraph with every explicit parent.",
+    {},
+    [
+      cycle("saturn", "sun", "square", { importance: 0.7 }),
+      cycle("jupiter", "mars", "trine", { importance: 0.5 }),
+    ],
+  ),
+);

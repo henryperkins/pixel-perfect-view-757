@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import type { fetchToday } from "@/lib/pattern.functions";
 import { timingDate } from "./timing";
+import type { NatalLensEvidence } from "@/lib/astro/natal-reliability";
 import {
   describeTodayFact,
   todayFactCategory,
@@ -67,6 +68,33 @@ function LabelledValues({ values }: { values: { label: string; value: string }[]
   );
 }
 
+function NatalOrigin({ evidence }: { evidence: NatalLensEvidence }) {
+  const origin =
+    evidence.kind === "sign"
+      ? `${todayPointLabel(evidence.body)} in ${evidence.sign}`
+      : evidence.kind === "house"
+        ? `${todayPointLabel(evidence.body)} in Placidus house ${evidence.house}`
+        : `${todayPointLabel(evidence.a)} ${evidence.aspect} ${todayPointLabel(evidence.b)}`;
+  const proof =
+    evidence.kind === "aspect"
+      ? `Raw service orbs: ${evidence.orbs.map((n) => `${n.toFixed(4)}°`).join(" · ")}`
+      : `Boundary margins: ${evidence.marginsDeg.map((n) => `${n.toFixed(3)}°`).join(" · ")}`;
+  return (
+    <li className="min-w-0">
+      <p className="text-sm text-foreground">{origin} · service source</p>
+      <p className="mt-1 break-words font-mono text-xs leading-relaxed text-muted-foreground">
+        {proof} (before · recorded · after)
+      </p>
+      <details className="mt-2 text-xs">
+        <summary className="cursor-pointer text-primary">Saved sample geometry</summary>
+        <pre className="mt-2 whitespace-pre-wrap break-all font-mono text-muted-foreground">
+          {JSON.stringify(evidence, null, 2)}
+        </pre>
+      </details>
+    </li>
+  );
+}
+
 export function TodayEvidence({
   readingId,
   cycles,
@@ -79,6 +107,7 @@ export function TodayEvidence({
   const facts = language?.facts ?? [];
   const byId = new Map(facts.map((fact) => [fact.id, fact]));
   const savedSynthesis = language?.interpretationPlan?.synthesis;
+  const natal = language?.natalLens;
   const synthesisFact = byId.get("S1");
   const synthesis =
     savedSynthesis &&
@@ -271,6 +300,74 @@ export function TodayEvidence({
                               <SourceLink id={todayFactId(readingId, id)}>
                                 {todayFactLabel(id)} <span className="ml-1 text-xs">({id})</span>
                               </SourceLink>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ) : null}
+                    {fact.id === "N1" && natal?.plan.lens ? (
+                      <div className="mt-4 space-y-3">
+                        <p className="text-sm leading-relaxed text-foreground">
+                          This is an astrological possibility you can recognize or reject, applied
+                          to the primary reading rather than a measurement of temperament.
+                        </p>
+                        <LabelledValues
+                          values={[
+                            { label: "Published rule", value: natal.plan.lens.ruleKey },
+                            { label: "Source version", value: natal.plan.releaseVersion },
+                            {
+                              label: "Qualified service",
+                              value: [...new Set(natal.plan.lens.screen.sampleEngines)].join(" · "),
+                            },
+                            {
+                              label: "Declared accuracy",
+                              value: `${todayPointLabel(natal.plan.lens.screen.accuracy)} · ±${natal.plan.lens.screen.sampleOffsetsMinutes[2]} minutes`,
+                            },
+                          ]}
+                        />
+                        <p className="text-sm leading-relaxed text-muted-foreground">
+                          Checked at the recorded time and both uncertainty boundaries. This
+                          three-sample screen does not certify every instant in the interval or
+                          confirm the birth time.
+                        </p>
+                        <h6 className="text-sm font-medium text-foreground">
+                          Natal origin saved with this reading
+                        </h6>
+                        <ul className="space-y-3" aria-label="Saved natal origins">
+                          {natal.plan.lens.evidence.map((evidence, index) => (
+                            <NatalOrigin key={index} evidence={evidence} />
+                          ))}
+                        </ul>
+                        <ul
+                          className="flex flex-wrap gap-x-4"
+                          aria-label="Published natal lens parents"
+                        >
+                          {natal.plan.lens.dependsOn.map((id) => (
+                            <li key={id}>
+                              <SourceLink id={todayFactId(readingId, id)}>
+                                {todayFactLabel(id)} <span className="ml-1 text-xs">({id})</span>
+                              </SourceLink>
+                            </li>
+                          ))}
+                        </ul>
+                        <p className="text-xs text-muted-foreground">
+                          {language?.mode === "model"
+                            ? "Used in cited model paragraphs"
+                            : "Used in published template wording"}
+                        </p>
+                        <ul
+                          className="flex flex-wrap gap-x-4"
+                          aria-label="Natal lens consumed paragraphs"
+                        >
+                          {natal.usedParagraphs.map((paragraph) => (
+                            <li key={paragraph}>
+                              {paragraphLinksAvailable && paragraph <= paragraphCount ? (
+                                <SourceLink id={todayParagraphId(readingId, paragraph)}>
+                                  Paragraph {paragraph}
+                                </SourceLink>
+                              ) : (
+                                <span>Paragraph {paragraph} · link unavailable</span>
+                              )}
                             </li>
                           ))}
                         </ul>

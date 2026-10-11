@@ -25,7 +25,7 @@ const FACT_KINDS = [
   ["D", "Domain framing"],
   ["P", "Phase wording"],
   ["T", "Timing wording"],
-  ["N", "Natal structure"],
+  ["N", "Published natal lens"],
   ["E", "Calculation engine"],
   ["U", "Birth-time uncertainty"],
   ["F", "Historical framing"],

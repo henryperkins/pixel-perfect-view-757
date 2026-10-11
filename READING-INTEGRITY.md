@@ -31,8 +31,10 @@ save/read-back and generated-model quality acceptance remain open.
 
 ## Synthesis source contract
 
-Daily policy versions are `daily-synthesis-1`, `daily-astro-body-5`, and
-`daily-reference-4`; built-in content is `builtin-0.5.0`, schema version 2.
+Daily policy versions are `daily-synthesis-1`, `daily-astro-body-6`, and
+`daily-reference-5`; built-in fallback content is `builtin-0.5.0`, schema version 2.
+The inactive natal candidate `builtin-0.6.0` (schema 3) adds only the lens catalogue
+and goes live only as an explicitly activated release.
 Lookup checks exact aspect/body/point, exact aspect/body/_, exact aspect/_/point,
 then exact aspect/_/_. Only then does it check the corresponding four aspect-family
 keys in the same order. An explicit active array replaces the built-in catalogue;
@@ -83,3 +85,68 @@ The separate skip reasons are `no_cycle` and `no_interpretation`. Both avoid mod
 traffic and are excluded from attempt-based fallback rates. The model remains
 `google/gemini-3.7-flash`, with one strict-schema call and a 20,000 ms daily deadline.
 Wellbeing bands, local-time framing, private notes, and authoring notes remain local.
+
+## Natal lens source contract
+
+The schema-3 graph extends schema 2 without replacing synthesis. Missing legacy
+`natalLenses` normalize to `[]`; explicit empty arrays are authoritative. Cycle
+drafting preserves the catalogue verbatim. Rule bounds, roles, same-body selectors,
+canonical duplicates, safety, technical-claim and bounded certainty/clinical checks
+are enforced at every existing content lifecycle boundary. The 62-entry catalogue's
+agent editorial review is recorded separately from independent approval and writing
+qualification; structural checks cannot approve psychological claims.
+
+`natal-reliability-1` binds the snapshot fingerprint and declared accuracy to exactly
+three service samples with one coherent engine/version. Signs require ≥1° margins
+and consistent positions; aspects require raw membership/orbs, service provenance
+and longitude agreement within 0.05°; exact-time Placidus houses require service
+cusps/angles, stable membership and ≥0.5° cusp margins. Proofs for the same body must
+share their sampled longitudes. Missing house/aspect sources only exclude their
+items; degraded positions make the whole window unavailable. Known-time birth saves
+reuse the center and fetch two concurrent UTC-offset boundaries with six-second
+deadlines and no retry. Unknown/degraded centers add no requests. Today decrypts
+the saved manifest once. Only while the active release carries a catalogue does it
+re-run a missing, stale-version or retryably failed (`service_unavailable`,
+`invalid_sample`) screen through the same birth calculation, before the reading's
+identity is computed, at most once per six hours per snapshot and never for an
+unknown time. It stores only an improvement (a screened result or a no-longer-degraded
+chart); otherwise it records the attempt time, which never enters a reading's identity.
+A manifest from another reliability version is stale, not corrupt: it supplies no lens.
+
+`daily-natal-lens-2` selects one optional lens relevant to published `C1/I1`. The
+transited body's own rules lead in service aspect → Placidus house → sign order; Moon
+rules in the same order are the fallback for other personal targets. Opaque keys
+break ties by code point. It never uses weaker contacts, wellness, journal,
+feedback, feature scores or inferred keywords. The template appends its exact
+mechanism inside the primary paragraph; model facts use that same selection.
+
+`N1` carries only the curated conditional meaning in the provider fact block. Its
+local typed metadata/proofs stay out of serialization. Every model use explicitly
+cites `N1/C1/I1`, with coverage in paragraph 1 or 2; synthesis can share that paragraph.
+A request without `N1` carries no natal instruction, so it matches the pre-lens
+brief byte for byte. `natal_coverage` and `natal_claim` are closed diagnostics. Placements, natal aspects,
+suppression, technical geometry, safety, response shape, model and request budget
+remain guarded. Bounded lexical checks do not prove meaningful integration or catch
+every stereotype; those require the blinded writing gate.
+
+`houses.natalReliability_ct` and `language_meta.natal_lens_ct` use the owner's DEK.
+The version-1 reading envelope saves the selected plan, `N1`, and exact consumed
+paragraph IDs. Its private `screen` labels retain declared accuracy, offsets and
+service engine identities so an archive does not borrow today's source labels.
+Clear metadata contains other facts, safe fact order, counts, statuses and versions;
+new source rows contain source IDs and actual `N1` paragraph IDs, not copy or origins.
+Broken present assessments/envelopes fail read-back before fresh model work rather
+than being replaced with invented evidence. Legacy absent assessments remain valid.
+
+Cache identity uses canonical decrypted assessment data, policy versions, chart
+metadata, immutable copy version, model and existing context inputs. Randomized
+assessment ciphertext is excluded. Same assessed state reuses its row; an assessment
+or source upgrade creates a new row and preserves older feedback. Owner export
+includes exact saved reading evidence and paragraph boundaries for all saved daily
+rows. A row whose text, paragraphs or evidence cannot be read is exported with an
+`unreadable` marker and counted, never reconstructed; owner reads of that row still
+fail closed. A failed export query or deletion is explicit, and a failed deletion
+retains the DEK for retry. Erasure removes the envelopes through existing rows, also
+deletes chapter essays (their clear feature keys can name chart placements), and
+clears the birth fingerprint from retained audit events. No profile table or
+temperament cohort is added. Production quality reporting never decrypts the lens.

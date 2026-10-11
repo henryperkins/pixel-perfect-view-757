@@ -4,12 +4,19 @@ import {
   computeChart,
   extractFeatures,
   formatPosition,
+  type BirthInput,
   type Chart,
   type TimeAccuracy,
 } from "./astro/chart";
 import { computeCycles } from "./astro/cycles";
 import { ENGINE_ID, ENGINE_VERSION, signOf, toJulianDay } from "./astro/ephemeris";
 import { resolvePositions } from "./astro/swiss.server";
+import { resolveNatalReliability } from "./astro/natal-reliability.server";
+import {
+  validateNatalReliability,
+  NATAL_RELIABILITY_VERSION,
+  type NatalReliabilityManifest,
+} from "./astro/natal-reliability";
 
 import {
   createWrappedDek,
@@ -22,7 +29,13 @@ import {
   unwrapDek,
 } from "./crypto.server";
 import { DEFAULT_BUNDLE, type ContentBundle, type Interpretation } from "./content/default-bundle";
-import { validateContentGraph, normalizeContentBundle, type SynthesisRule } from "./content/schema";
+import {
+  validateContentGraph,
+  normalizeContentBundle,
+  natalCatalogueCoverage,
+  type SynthesisRule,
+  type NatalLensRule,
+} from "./content/schema";
 import {
   assembleReading,
   normalizeDepth,
@@ -41,6 +54,8 @@ import {
   LANGUAGE_MODEL,
 } from "./ai/diagnostics";
 import { readSavedFactAtoms, type FactAtom } from "./ai/facts";
+import { NATAL_LENS_PLAN_VERSION } from "./content/natal-lens";
+import { validateSavedNatalLens, type SavedNatalLens } from "./content/natal-lens-storage";
 import {
   dailyPlanIdentity,
   readDailyPlanIdentity,
@@ -151,7 +166,7 @@ async function loadReadingFeedback(db: DB, userId: string, readingId: string) {
   if (error) throw new Error("Your saved rating could not be loaded. Please retry.");
   return data ? savedReadingFeedback(data) : null;
 }
-interface ReadingRow {
+interface ReadingRow extends ExistingReadingRow {
   reading_date: string;
   headline: string;
   body_ct: string;
@@ -318,14 +333,8 @@ export async function setConsent(db: DB, userId: string, sourceId: string, grant
 // birth profile + chart
 // ---------------------------------------------------------------------------
 
-export async function saveBirth(
-  db: DB,
-  userId: string,
-  details: BirthDetails,
-  accuracy: TimeAccuracy,
-  timezone: string,
-) {
-  const dek = await getDek(db, userId);
+/** Birth instant, chart fingerprint and calculation input for saved birth details. */
+async function birthCalculation(details: BirthDetails, accuracy: TimeAccuracy, timezone: string) {
   const effectiveTime = accuracy === "unknown" ? "12:00" : details.birthTime;
   const utc = zonedToUtc(details.birthDate, effectiveTime, timezone);
   const fp = await fingerprint([
@@ -334,51 +343,53 @@ export async function saveBirth(
     details.longitude.toFixed(4),
     accuracy,
   ]);
-
-  const payload_ct = await encryptJson(dek, { ...details, utcISO: utc.toISOString() });
-
-  const { data: bp, error } = await db
-    .from<{ id: string }>("birth_profiles")
-    .upsert(
-      {
-        user_id: userId,
-        payload_ct,
-        time_accuracy: accuracy,
-        timezone,
-        fingerprint: fp,
-      },
-      { onConflict: "user_id" },
-    )
-    .select("id")
-    .single();
-  if (error) throw new Error(error.message);
-
-  const birthInput = {
+  const input: BirthInput = {
     utcISO: utc.toISOString(),
     latitude: details.latitude,
     longitude: details.longitude,
     timezone,
     accuracy,
   };
-  const ephem = await resolvePositions({
-    jd: toJulianDay(utc),
-    utcISO: utc.toISOString(),
-    latitude: details.latitude,
-    longitude: details.longitude,
-  });
-  const chart = computeChart(birthInput, ephem);
+  return { utc, fp, input };
+}
 
+/** One central Swiss request plus the birth-window screen; nothing is persisted. */
+async function calculateChart(input: BirthInput, fp: string) {
+  const ephem = await resolvePositions({
+    jd: toJulianDay(new Date(input.utcISO)),
+    utcISO: input.utcISO,
+    latitude: input.latitude,
+    longitude: input.longitude,
+  });
+  const chart = computeChart(input, ephem);
+  const natalReliability = await resolveNatalReliability(input, fp, ephem);
+  return { chart, natalReliability };
+}
+
+/** Upserts the snapshot for one fingerprint and replaces its derived natal features. */
+async function storeChartSnapshot(
+  db: DB,
+  userId: string,
+  dek: CryptoKey,
+  birthProfileId: string,
+  fp: string,
+  chart: Chart,
+  natalReliability: NatalReliabilityManifest,
+) {
   const { data: snap, error: snapErr } = await db
     .from<{ id: string }>("chart_snapshots")
     .upsert(
       {
         user_id: userId,
-        birth_profile_id: bp.id,
+        birth_profile_id: birthProfileId,
         fingerprint: fp,
         engine: `${chart.engine}@${chart.engineVersion}`,
         contract_version: chart.contractVersion,
         positions: chart.points,
         houses: {
+          natalReliability_ct: await encryptJson(dek, natalReliability),
+          // Attempt time for re-screen backoff; never part of a reading's identity.
+          natalReliabilityCheckedAt: new Date().toISOString(),
           system: chart.houseSystem,
           cusps: chart.houses,
           sources: chart.sources,
@@ -413,6 +424,39 @@ export async function saveBirth(
       })),
     );
   }
+  return snap.id;
+}
+
+export async function saveBirth(
+  db: DB,
+  userId: string,
+  details: BirthDetails,
+  accuracy: TimeAccuracy,
+  timezone: string,
+) {
+  const dek = await getDek(db, userId);
+  const { utc, fp, input: birthInput } = await birthCalculation(details, accuracy, timezone);
+
+  const payload_ct = await encryptJson(dek, { ...details, utcISO: utc.toISOString() });
+
+  const { data: bp, error } = await db
+    .from<{ id: string }>("birth_profiles")
+    .upsert(
+      {
+        user_id: userId,
+        payload_ct,
+        time_accuracy: accuracy,
+        timezone,
+        fingerprint: fp,
+      },
+      { onConflict: "user_id" },
+    )
+    .select("id")
+    .single();
+  if (error) throw new Error(error.message);
+
+  const { chart, natalReliability } = await calculateChart(birthInput, fp);
+  const snapshotId = await storeChartSnapshot(db, userId, dek, bp.id, fp, chart, natalReliability);
 
   await db.from("profiles").update({ onboarded_at: new Date().toISOString() }).eq("id", userId);
   await db.from("audit_events").insert({
@@ -421,7 +465,7 @@ export async function saveBirth(
     detail: { fingerprint: fp, accuracy },
   });
 
-  return { snapshotId: snap.id, fingerprint: fp };
+  return { snapshotId, fingerprint: fp };
 }
 
 interface SnapshotRow {
@@ -433,6 +477,125 @@ interface SnapshotRow {
   houses: unknown;
   aspects: unknown;
   uncertainty: unknown;
+}
+
+/** Absent (legacy) or stale-version assessments return null; a broken present one fails. */
+export async function loadNatalReliability(
+  snapshot: SnapshotRow,
+  dek: CryptoKey,
+): Promise<NatalReliabilityManifest | null> {
+  const houses = snapshot.houses as Record<string, unknown> | null;
+  if (!houses || !Object.hasOwn(houses, "natalReliability_ct")) return null;
+  try {
+    if (typeof houses["natalReliability_ct"] !== "string") throw new Error("Invalid envelope");
+    const value = await decryptJson<unknown>(dek, houses["natalReliability_ct"]);
+    // Another reliability version is stale rather than corrupt: it supplies no lens
+    // and becomes eligible for a re-screen.
+    const version =
+      value && typeof value === "object" ? (value as Record<string, unknown>)["version"] : null;
+    if (
+      typeof version === "string" &&
+      /^natal-reliability-\d+$/.test(version) &&
+      version !== NATAL_RELIABILITY_VERSION
+    )
+      return null;
+    return validateNatalReliability(
+      value,
+      snapshot.fingerprint,
+      (snapshot.uncertainty as Chart["uncertainty"]).accuracy,
+    );
+  } catch {
+    throw new Error("Natal source assessment could not be loaded. Please retry.");
+  }
+}
+
+/** One re-screen attempt per snapshot per window while the service keeps failing. */
+export const NATAL_RESCREEN_BACKOFF_MS = 6 * 60 * 60 * 1000;
+
+/**
+ * Whether Today may re-run the saved birth calculation: a legacy, stale-version or
+ * retryably failed assessment, a configured Swiss service, a known birth time, and
+ * no attempt within the backoff window. Never true for an unknown time.
+ */
+export function natalRescreenDue(
+  snapshot: SnapshotRow,
+  manifest: NatalReliabilityManifest | null,
+  now: Date,
+): boolean {
+  if (!process.env["SWISS_EPHEMERIS_URL"]) return false;
+  const uncertainty = snapshot.uncertainty as Partial<Chart["uncertainty"]> | null;
+  if (!uncertainty?.accuracy || uncertainty.accuracy === "unknown") return false;
+  if (
+    manifest &&
+    !(
+      manifest.status === "unavailable" &&
+      (manifest.reason === "service_unavailable" || manifest.reason === "invalid_sample")
+    )
+  )
+    return false;
+  const houses = snapshot.houses as Record<string, unknown> | null;
+  const checkedAt = Date.parse(String(houses?.["natalReliabilityCheckedAt"] ?? ""));
+  return (
+    !Number.isFinite(checkedAt) ||
+    checkedAt > now.getTime() ||
+    now.getTime() - checkedAt >= NATAL_RESCREEN_BACKOFF_MS
+  );
+}
+
+/**
+ * Re-runs the saved birth calculation (one central Swiss request plus the two
+ * boundary samples). Stores the result only when it improves the snapshot: a
+ * screened assessment, or a chart that is no longer degraded. Otherwise records the
+ * attempt for backoff. Returns whether the stored snapshot changed.
+ */
+export async function rescreenNatalSnapshot(
+  db: DB,
+  userId: string,
+  snapshot: SnapshotRow,
+  dek: CryptoKey,
+): Promise<boolean> {
+  const { data: profile, error } = await db
+    .from<{
+      id: string;
+      payload_ct: string;
+      time_accuracy: string;
+      timezone: string;
+      fingerprint: string;
+    }>("birth_profiles")
+    .select("id, payload_ct, time_accuracy, timezone, fingerprint")
+    .eq("user_id", userId)
+    .maybeSingle();
+  if (error) throw new Error(error.message);
+  if (!profile || profile.fingerprint !== snapshot.fingerprint) return false;
+  const details = await decryptJson<BirthDetails>(dek, profile.payload_ct);
+  const { fp, input } = await birthCalculation(
+    details,
+    profile.time_accuracy as TimeAccuracy,
+    profile.timezone,
+  );
+  const houses = snapshot.houses as Record<string, unknown> | null;
+  if (fp === snapshot.fingerprint) {
+    const { chart, natalReliability } = await calculateChart(input, fp);
+    if (
+      natalReliability.status === "screened" ||
+      (snapshotToChart(snapshot).degraded && !chart.degraded)
+    ) {
+      await storeChartSnapshot(db, userId, dek, profile.id, fp, chart, natalReliability);
+      await db.from("audit_events").insert({
+        user_id: userId,
+        kind: "chart.rescreened",
+        detail: { status: natalReliability.status },
+      });
+      return true;
+    }
+  }
+  const { error: markError } = await db
+    .from("chart_snapshots")
+    .update({ houses: { ...houses, natalReliabilityCheckedAt: new Date().toISOString() } })
+    .eq("id", snapshot.id)
+    .eq("user_id", userId);
+  if (markError) throw new Error(markError.message);
+  return false;
 }
 
 export async function loadSnapshot(db: DB, userId: string) {
@@ -507,15 +670,25 @@ export async function activeBundle(
   db: DB,
   options?: { requireSuccessfulRead: boolean },
 ): Promise<ContentBundle> {
-  const { data, error } = await db
-    .from<{ version: string; bundle: JsonValue }>("content_releases")
-    .select("version, bundle")
-    .eq("is_active", true)
-    .order("created_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
-  if (error && options?.requireSuccessfulRead) {
-    throw new Error("The active interpretation release could not be read. Evaluation stopped.");
+  const read = () =>
+    db
+      .from<{ version: string; bundle: JsonValue }>("content_releases")
+      .select("version, bundle")
+      .eq("is_active", true)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+  // One immediate retry absorbs a transient records-plane failure. A failed read never
+  // falls back to built-in copy: that would cache Today under the wrong release and
+  // base new drafts on the wrong catalogue.
+  let { data, error } = await read();
+  if (error) ({ data, error } = await read());
+  if (error) {
+    throw new Error(
+      options?.requireSuccessfulRead
+        ? "The active interpretation release could not be read. Evaluation stopped."
+        : "The active interpretation release could not be read. Please retry.",
+    );
   }
   if (!data) return DEFAULT_BUNDLE;
   validateContentGraph(data.bundle);
@@ -567,26 +740,93 @@ export interface ReadingLanguage {
   reason: string | null;
   facts: FactAtom[];
   interpretationPlan: DailyPlanIdentity | null;
+  natalLens?: SavedNatalLens | null;
 }
 
 /** Revives the stored language-layer metadata for a cached reading. */
-function readingLanguage(row: {
-  language_mode: string | null;
-  language_model: string | null;
-  language_meta: JsonValue;
-}): ReadingLanguage {
+export async function readingLanguage(
+  row: {
+    language_mode: string | null;
+    language_model: string | null;
+    language_meta: JsonValue;
+    release_version: string | null;
+    primary_cycle_key: string | null;
+  },
+  dek: CryptoKey,
+): Promise<ReadingLanguage> {
   const meta = (row.language_meta ?? {}) as Record<string, unknown>;
-  const facts = readSavedFactAtoms(meta["facts"]);
+  let facts = readSavedFactAtoms(meta["facts"]);
+  const citations = Array.isArray(meta["citations"])
+    ? (meta["citations"] as ReadingLanguage["citations"])
+    : [];
+  let natalLens: SavedNatalLens | null = null;
+  const hasEnvelope = Object.hasOwn(meta, "natal_lens_ct");
+  const natalIdentity = meta["natalLensPlan"] as Record<string, unknown> | undefined;
+  if (
+    hasEnvelope ||
+    citations.some((c) => Array.isArray(c?.facts) && c.facts.includes("N1")) ||
+    facts.some((f) => f.id === "N1") ||
+    (Array.isArray(meta["factOrder"]) && meta["factOrder"].includes("N1")) ||
+    natalIdentity?.["status"] === "selected"
+  ) {
+    try {
+      if (
+        typeof meta["natal_lens_ct"] !== "string" ||
+        facts.some((f) => f.id === "N1") ||
+        typeof meta["paragraphs_ct"] !== "string"
+      )
+        throw new Error("Missing private envelope");
+      const paragraphs = await decryptJson<unknown>(dek, meta["paragraphs_ct"]);
+      const count = meta["astroParagraphCount"];
+      if (
+        !Array.isArray(paragraphs) ||
+        !paragraphs.every((p) => typeof p === "string") ||
+        typeof count !== "number" ||
+        count > paragraphs.length
+      )
+        throw new Error("Missing saved paragraph bounds");
+      natalLens = validateSavedNatalLens(
+        await decryptJson<unknown>(dek, meta["natal_lens_ct"]),
+        facts,
+        {
+          releaseVersion: row.release_version,
+          primaryCycleKey: row.primary_cycle_key,
+          mode: row.language_mode === "model" ? "model" : "template",
+          citations,
+          astroParagraphCount: count,
+        },
+      );
+      if (
+        natalIdentity?.["version"] !== NATAL_LENS_PLAN_VERSION ||
+        natalIdentity?.["reliabilityVersion"] !== NATAL_RELIABILITY_VERSION ||
+        natalIdentity?.["status"] !== "selected"
+      )
+        throw new Error("Invalid saved natal status");
+      if (row.language_mode !== "model" && !paragraphs[0]!.includes(natalLens.plan.lens!.mechanism))
+        throw new Error("Missing consumed template copy");
+      const order = meta["factOrder"];
+      const restored = [...facts, natalLens.fact];
+      if (
+        !Array.isArray(order) ||
+        order.length !== restored.length ||
+        new Set(order).size !== order.length ||
+        order.some((id) => typeof id !== "string" || !restored.some((f) => f.id === id))
+      )
+        throw new Error("Invalid saved fact order");
+      facts = order.map((id) => restored.find((f) => f.id === id)!);
+    } catch {
+      throw new Error("Saved natal reading evidence could not be loaded. Please retry.");
+    }
+  }
   return {
     mode: row.language_mode === "model" ? "model" : "template",
     model: row.language_model ?? null,
-    citations: Array.isArray(meta["citations"])
-      ? (meta["citations"] as ReadingLanguage["citations"])
-      : [],
+    citations,
     dropped: typeof meta["dropped"] === "number" ? (meta["dropped"] as number) : 0,
     reason: typeof meta["reason"] === "string" ? (meta["reason"] as string) : null,
     facts,
     interpretationPlan: readDailyPlanIdentity(meta["interpretationPlan"], facts),
+    natalLens,
   };
 }
 
@@ -625,16 +865,34 @@ function cyclesForLocalDay(chart: Chart, day: string, timeZone: string) {
 }
 
 export async function getToday(db: DB, userId: string, timeZone: string) {
-  const snapRow = await loadSnapshot(db, userId);
-  if (!snapRow) return { needsOnboarding: true as const };
+  let loaded = await loadSnapshot(db, userId);
+  if (!loaded) return { needsOnboarding: true as const };
 
   const dek = await getDek(db, userId);
   const profile = await loadProfile(db, userId);
-  const granted = await grantedSet(db, userId);
   const now = new Date();
+  const bundle = await activeBundle(db);
+  let natalReliability = await loadNatalReliability(loaded, dek);
+  // Only an active natal catalogue justifies Swiss traffic here: a legacy, stale or
+  // retryably failed screen is re-run before the reading's identity is computed, so
+  // the day's first reading already uses the upgraded assessment.
+  if (bundle.natalLenses?.length && natalRescreenDue(loaded, natalReliability, now)) {
+    try {
+      if (await rescreenNatalSnapshot(db, userId, loaded, dek)) {
+        const refreshed = (await loadSnapshot(db, userId)) ?? loaded;
+        const refreshedReliability = await loadNatalReliability(refreshed, dek);
+        loaded = refreshed;
+        natalReliability = refreshedReliability;
+      }
+    } catch (error) {
+      // The saved assessment stays authoritative; today's reading still loads.
+      console.error("[today] natal re-screen failed", error);
+    }
+  }
+  const snapRow = loaded;
+  const granted = await grantedSet(db, userId);
   const tz = isPermitted("DEV-01", "timing", granted) ? validTimeZone(timeZone) : "UTC";
   const day = localDayString(now, tz);
-  const bundle = await activeBundle(db);
 
   await purgeExpiredWellness(db, userId);
 
@@ -674,13 +932,21 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
   // Never reuse pre-fix model prose. Context changes get a new immutable row,
   // while old reading IDs and their feedback remain intact. The keyed digest
   // prevents enumerating low-entropy wellbeing bands from a database dump.
+  const snapshotHouses = { ...(snapRow.houses as Record<string, unknown>) };
+  delete snapshotHouses["natalReliability_ct"];
+  delete snapshotHouses["natalReliabilityCheckedAt"];
   const contextKey = await keyedFingerprint(userId, {
     version: "daily-privacy-2",
     planVersion: DAILY_READING_PLAN_VERSION,
+    natalPlanVersion: NATAL_LENS_PLAN_VERSION,
     promptVersion: DAILY_PROMPT_VERSION,
     validatorVersion: DAILY_VALIDATOR_VERSION,
     model: LANGUAGE_MODEL,
-    snapshot: snapRow,
+    snapshot: { ...snapRow, houses: snapshotHouses },
+    natalReliabilityVersion: NATAL_RELIABILITY_VERSION,
+    natalReliability,
+    // Published versions are immutable copy identities; archived rows use saved text.
+    effectiveCopy: bundle.version,
     timezone: tz,
     tone: ctx.tone,
     depth: ctx.depth,
@@ -735,7 +1001,7 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
         primary_cycle_key: existing.primary_cycle_key,
         release_version: existing.release_version,
       },
-      language: readingLanguage(existing),
+      language: await readingLanguage(existing, dek),
       feedback: await loadReadingFeedback(db, userId, existing.id),
       provenance: srcs ?? [],
       cycles: liveCycles,
@@ -748,7 +1014,7 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
   const chart = snapshotToChart(snapRow);
   const cycles = cyclesForLocalDay(chart, day, tz);
 
-  const assembled = assembleReading(chart, cycles, ctx, bundle);
+  const assembled = assembleReading(chart, cycles, ctx, bundle, natalReliability);
   const topCycles = cycles.slice(0, 12);
 
   // Only chart facts and published editorial references cross the language
@@ -790,6 +1056,20 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
   ];
   const suppliedFacts = readSavedFactAtoms(facts);
   const interpretationPlan = dailyPlanIdentity(assembled.interpretationPlan);
+  const natalFact = suppliedFacts.find((f) => f.id === "N1");
+  const usedNatalParagraphs = natalFact
+    ? prose.meta.mode === "model"
+      ? prose.meta.citations.filter((c) => c.facts.includes("N1")).map((c) => c.paragraph)
+      : [1]
+    : [];
+  const natalLens: SavedNatalLens | null = natalFact
+    ? {
+        version: 1,
+        plan: assembled.natalLensPlan,
+        fact: natalFact,
+        usedParagraphs: usedNatalParagraphs,
+      }
+    : null;
 
   const provenance = assembled.provenance.filter(
     (entry) => prose.meta.mode !== "model" || entry.lane !== "content",
@@ -859,6 +1139,35 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       },
     });
   }
+  if (natalLens) {
+    validateSavedNatalLens(
+      natalLens,
+      suppliedFacts.filter((f) => f.id !== "N1"),
+      {
+        releaseVersion: assembled.release_version,
+        primaryCycleKey: assembled.primary_cycle_key,
+        mode: prose.meta.mode,
+        citations: prose.meta.citations,
+        astroParagraphCount: prose.paragraphs.length,
+      },
+    );
+    const origins = new Set([
+      "AST-20",
+      ...natalLens.plan.lens!.evidence.map((e) =>
+        e.kind === "aspect" ? "AST-08" : e.kind === "house" ? "AST-07" : "AST-05",
+      ),
+    ]);
+    for (const source of origins) {
+      assertUse(source, "external_language");
+      assertUse(source, "provenance");
+      provenance.push({
+        lane: "content",
+        source_id: source,
+        label: "Published natal lens reference · N1",
+        detail: { factId: "N1", paragraphs: usedNatalParagraphs.join(", ") },
+      });
+    }
+  }
 
   const { data: inserted, error } = await db
     .from<{ id: string }>("daily_readings")
@@ -877,7 +1186,15 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       language_model: prose.meta.model,
       language_meta: {
         ...prose.meta,
-        facts: suppliedFacts,
+        facts: suppliedFacts.filter((f) => f.id !== "N1"),
+        factOrder: suppliedFacts.map((f) => f.id),
+        astroParagraphCount: prose.paragraphs.length,
+        natalLensPlan: {
+          version: assembled.natalLensPlan.version,
+          reliabilityVersion: assembled.natalLensPlan.reliabilityVersion,
+          status: assembled.natalLensPlan.status,
+        },
+        ...(natalLens ? { natal_lens_ct: await encryptJson(dek, natalLens) } : {}),
         interpretationPlan,
         sourceCount: provenance.length,
         paragraphs_ct: await encryptJson(dek, paragraphs),
@@ -959,6 +1276,7 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       reason: prose.meta.reason,
       facts: suppliedFacts,
       interpretationPlan,
+      natalLens,
     },
     feedback: await loadReadingFeedback(db, userId, inserted.id),
     provenance,
@@ -1357,18 +1675,56 @@ export async function exportEverything(db: DB, userId: string) {
     .select("payload_ct, time_accuracy, timezone, created_at")
     .eq("user_id", userId)
     .maybeSingle();
-  const { data: readings } = await db
+  const { data: readings, error: readingsError } = await db
     .from<ReadingRow>("daily_readings")
-    .select("reading_date, headline, body_ct, prompt, confidence, release_version")
+    .select(
+      "id, reading_date, headline, body_ct, prompt, confidence, release_version, primary_cycle_key, language_mode, language_model, language_meta",
+    )
     .eq("user_id", userId)
-    .order("reading_date", { ascending: false })
-    .limit(400);
+    .order("reading_date", { ascending: false });
+  if (readingsError) throw new Error("Saved readings could not be exported. Please retry.");
   const { data: audit } = await db
     .from<AuditRow>("audit_events")
     .select("kind, detail, created_at")
     .eq("user_id", userId)
     .order("created_at", { ascending: false })
     .limit(500);
+
+  // A row whose saved text or evidence cannot be read is exported with an explicit
+  // marker instead of blocking every other row; nothing is reconstructed for it.
+  const exportedReadings = await Promise.all(
+    (readings ?? []).map(async (r) => {
+      const unreadable: ("body" | "paragraphs" | "language")[] = [];
+      const body = await decryptField(dek, r.body_ct).catch(() => {
+        unreadable.push("body");
+        return null;
+      });
+      const paragraphState =
+        body === null
+          ? null
+          : await savedReadingParagraphs(dek, r, body).catch(() => {
+              unreadable.push("paragraphs");
+              return null;
+            });
+      const language = await readingLanguage(r, dek).catch(() => {
+        unreadable.push("language");
+        return null;
+      });
+      return {
+        reading_date: r.reading_date,
+        headline: r.headline,
+        body,
+        prompt: r.prompt,
+        confidence: r.confidence,
+        release_version: r.release_version,
+        id: r.id,
+        primary_cycle_key: r.primary_cycle_key,
+        language,
+        ...(paragraphState ?? {}),
+        ...(unreadable.length ? { unreadable } : {}),
+      };
+    }),
+  );
 
   return {
     exported_at: new Date().toISOString(),
@@ -1382,16 +1738,8 @@ export async function exportEverything(db: DB, userId: string) {
         }
       : null,
     pattern,
-    readings: await Promise.all(
-      (readings ?? []).map(async (r) => ({
-        reading_date: r.reading_date,
-        headline: r.headline,
-        body: await decryptField(dek, r.body_ct),
-        prompt: r.prompt,
-        confidence: r.confidence,
-        release_version: r.release_version,
-      })),
-    ),
+    readings: exportedReadings,
+    unreadableReadings: exportedReadings.filter((r) => "unreadable" in r).length,
     journal,
     audit: audit ?? [],
   };
@@ -1404,6 +1752,9 @@ export async function eraseEverything(db: DB, userId: string) {
     "daily_readings",
     "cycle_instances",
     "natal_features",
+    // Chapter essays keep plaintext feature keys (for example a natal aspect or a
+    // stellium sign) that would outlive the encryption key.
+    "feature_narratives",
     "chart_snapshots",
     "context_signals",
     "check_ins",
@@ -1411,9 +1762,22 @@ export async function eraseEverything(db: DB, userId: string) {
     "source_consents",
     "birth_profiles",
   ] as const) {
-    await db.from(table).delete().eq("user_id", userId);
+    const { error } = await db.from(table).delete().eq("user_id", userId);
+    if (error) throw new Error("Personal data could not be fully deleted. Please retry.");
   }
-  await db.from("profiles").update({ wrapped_dek: null, onboarded_at: null }).eq("id", userId);
+  // The audit trail keeps that a birth profile was saved, but not its birth-derived
+  // fingerprint, which an unkeyed hash of the birth time and place would otherwise keep.
+  const { error: auditError } = await db
+    .from("audit_events")
+    .update({ detail: {} })
+    .eq("user_id", userId)
+    .eq("kind", "birth_profile.saved");
+  if (auditError) throw new Error("Personal data could not be fully deleted. Please retry.");
+  const { error } = await db
+    .from("profiles")
+    .update({ wrapped_dek: null, onboarded_at: null })
+    .eq("id", userId);
+  if (error) throw new Error("The account encryption key could not be deleted. Please retry.");
   await db.from("audit_events").insert({
     user_id: userId,
     kind: "account.erased",
@@ -1507,6 +1871,10 @@ export async function listReleases(db: DB) {
       entries,
       cycles: cyclesCount,
       synthesisRules: rulesCount,
+      schemaVersion: bundle["schemaVersion"] === 3 ? 3 : bundle["schemaVersion"] === 2 ? 2 : 1,
+      natalLensCoverage: natalCatalogueCoverage(
+        Array.isArray(bundle["natalLenses"]) ? (bundle["natalLenses"] as NatalLensRule[]) : [],
+      ),
       natal: natalCount,
       familyKeys: keys.slice(0, 12),
     };
@@ -1909,6 +2277,7 @@ export async function listDrafts(db: DB, userId: string) {
     );
     const notes = (d.notes ?? {}) as Record<string, unknown>;
     const reviewReq = notes["synthesisReviewRequired"];
+    const affected = notes["affectedKeys"];
     return {
       id: d.id,
       base_version: d.base_version,
@@ -1917,8 +2286,11 @@ export async function listDrafts(db: DB, userId: string) {
       notes: d.notes,
       entries: cycles,
       synthesisRules,
+      natalLensCoverage: natalCatalogueCoverage(bundle.natalLenses),
       themeCount,
       ruleCount: synthesisRules.length,
+      schemaVersion: bundle.schemaVersion ?? 1,
+      affectedKeys: Array.isArray(affected) ? (affected as string[]) : [],
       removedRules: Array.isArray(reviewReq) ? (reviewReq as string[]) : [],
     };
   });
@@ -2007,12 +2379,13 @@ export async function draftRelease(db: DB, userId: string) {
 
   const bundle: ContentBundle = {
     version: "pending",
-    schemaVersion: 2,
+    schemaVersion: base.schemaVersion === 3 ? 3 : 2,
     phases: base.phases,
     natal: base.natal,
     domains: base.domains,
     cycles: mergedCycles,
     synthesisRules: survivingRules,
+    natalLenses: structuredClone(base.natalLenses ?? []),
   };
 
   validateContentGraph(bundle);
@@ -2031,6 +2404,7 @@ export async function draftRelease(db: DB, userId: string) {
         returned: draftedMap.size,
         dropped,
         flagged: drafted.flagged.length,
+        affectedKeys: Array.from(changedKeys),
         synthesisReviewRequired: removedRuleKeys,
         themeCount,
         ruleCount: survivingRules.length,

@@ -34,9 +34,11 @@ export async function createRecordsHarness() {
   const userB = "local-reading-user-b";
   const requests = [];
   const gatewayRequests = [];
+  const swissRequests = [];
   let sqlite;
   let vite;
   let gatewayHandler = null;
+  let swissHandler = null;
   let fault = null;
   let closed = false;
 
@@ -48,6 +50,11 @@ export async function createRecordsHarness() {
 
   globalThis.fetch = async (input, init = {}) => {
     const url = typeof input === "string" ? input : input instanceof URL ? input.href : input.url;
+    if (url === "https://swiss-fixture.invalid/chart" && swissHandler) {
+      const body = JSON.parse(String(init.body));
+      swissRequests.push(body);
+      return swissHandler(body, init);
+    }
     if (url === gatewayURL && gatewayHandler) {
       const body = JSON.parse(String(init.body));
       gatewayRequests.push(body);
@@ -96,6 +103,7 @@ export async function createRecordsHarness() {
       root: projectRoot,
       configFile: false,
       envFile: false,
+      resolve: { alias: { "@": join(projectRoot, "src") } },
       appType: "custom",
       logLevel: "error",
       server: { middlewareMode: true, hmr: false, ws: false },
@@ -127,8 +135,11 @@ export async function createRecordsHarness() {
       sqlite.exec(schema);
       requests.length = 0;
       gatewayRequests.length = 0;
+      swissRequests.length = 0;
       fault = null;
       gatewayHandler = null;
+      swissHandler = null;
+      delete process.env.SWISS_EPHEMERIS_URL;
       delete process.env.LOVABLE_API_KEY;
       await seedUser(userA);
       await seedUser(userB);
@@ -169,17 +180,23 @@ export async function createRecordsHarness() {
             fingerprint,
             engine: "swiss-ephemeris@local-fixture",
             contract_version: "local-fixture",
-            positions: opts.positions ?? {},
+            positions: opts.positions ?? opts.chart?.points ?? {},
             houses: {
-              system: "Placidus",
-              cusps: [],
+              ...(opts.natalReliability
+                ? {
+                    natalReliability_ct: await cryptoModule.encryptJson(dek, opts.natalReliability),
+                  }
+                : {}),
+              system: opts.chart?.houseSystem ?? "Placidus",
+              cusps: opts.chart?.houses ?? [],
+              ...(opts.chart?.sources ? { sources: opts.chart.sources } : {}),
               ephemeris: {
                 precision: "high",
                 degraded: false,
                 degradedReason: null,
               },
             },
-            aspects: [],
+            aspects: opts.chart?.aspects ?? [],
             uncertainty: {
               accuracy,
               minutes: 0,
@@ -188,6 +205,7 @@ export async function createRecordsHarness() {
               ascendantSpreadDeg: 0,
               moonSpreadDeg: 0,
               angleClaimsSuppressed: false,
+              ...(opts.chart?.uncertainty ?? {}),
               ...(opts.uncertainty ?? {}),
             },
             ...(opts.createdAt ? { created_at: opts.createdAt } : {}),
@@ -214,6 +232,7 @@ export async function createRecordsHarness() {
       userB,
       requests,
       gatewayRequests,
+      swissRequests,
       get sqlite() {
         return sqlite;
       },
@@ -230,6 +249,11 @@ export async function createRecordsHarness() {
         gatewayHandler = handler;
         if (handler) process.env.LOVABLE_API_KEY = "local-test-key-never-a-real-secret";
         else delete process.env.LOVABLE_API_KEY;
+      },
+      setSwiss(handler) {
+        swissHandler = handler;
+        if (handler) process.env.SWISS_EPHEMERIS_URL = "https://swiss-fixture.invalid/chart";
+        else delete process.env.SWISS_EPHEMERIS_URL;
       },
       setFault(value) {
         fault = value;

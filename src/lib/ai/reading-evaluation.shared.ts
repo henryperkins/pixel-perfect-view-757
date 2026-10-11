@@ -6,6 +6,8 @@ import {
 import type { FactAtom } from "./facts";
 import type { DailyDiagnostics } from "./diagnostics";
 import type { DailyPlanIdentity } from "../content/synthesis";
+import type { DailyNatalLensPlan } from "../content/natal-lens";
+import type { NatalReliabilityManifest } from "../astro/natal-reliability";
 
 export { READING_EVAL_FIXTURE_VERSION };
 export const READING_EVALUATION_CATALOG = READING_EVAL_CASES.map((fixed) => ({
@@ -41,8 +43,12 @@ export interface ReadingEvaluationMetadata {
   caseSetHash: string;
   bundleVersion: string;
   bundleHash: string;
+  /** Normalized transit copy without release identity or natal catalogue (version 5+). */
+  transitCopyHash?: string;
   /** Absent in historical reports; never infer their plan policy. */
   planVersion?: string;
+  natalPlanVersion?: string;
+  reliabilityVersion?: string;
   promptVersion: string;
   validatorVersion: string;
   model: string;
@@ -60,6 +66,8 @@ export interface ReadingEvaluationCaseRow {
   eligibleCycleKeys: string[];
   facts: FactAtom[];
   interpretationPlan?: DailyPlanIdentity;
+  natalLensPlan?: DailyNatalLensPlan;
+  natalReliability?: NatalReliabilityManifest | null;
   request: SyntheticReadingRequest | null;
   candidate: SyntheticReadingCandidate | null;
   diagnostics: DailyDiagnostics;
@@ -76,6 +84,8 @@ export interface ReadingEvaluationCaseRow {
     voice: null;
     repetition: null;
     grounding: null;
+    lensIntegration?: null;
+    unsupportedPersonalClaim?: null;
     notes: null;
   };
 }
@@ -137,7 +147,10 @@ export function combineReadingEvaluationResults(
     "caseSetHash",
     "bundleVersion",
     "bundleHash",
+    "transitCopyHash",
     "planVersion",
+    "natalPlanVersion",
+    "reliabilityVersion",
     "promptVersion",
     "validatorVersion",
     "model",

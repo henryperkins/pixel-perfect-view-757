@@ -149,6 +149,28 @@ function EvaluationCase({ result }: { result: ReadingEvaluationCaseResult }) {
             ) : null}
           </section>
         ) : null}
+        {row.natalLensPlan ? (
+          <section
+            className="mt-6 min-w-0 border-t border-rule pt-4"
+            aria-label={`${label} synthetic natal lens`}
+          >
+            <h4 className="text-base">Synthetic natal selection</h4>
+            <p className="mt-2 text-sm">
+              {row.natalLensPlan.status} ·{" "}
+              {row.natalReliability?.status ?? "legacy assessment absent"}
+            </p>
+            {row.natalLensPlan.lens ? (
+              <p className="mt-2 break-words font-mono text-xs text-muted-foreground">
+                {row.natalLensPlan.lens.ruleKey} ·{" "}
+                {row.natalLensPlan.lens.evidence.map((e) => `${e.kind}: service`).join(" · ")}
+              </p>
+            ) : null}
+            <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+              Synthetic source labels exercise screening and selection; they do not establish live
+              Swiss accuracy.
+            </p>
+          </section>
+        ) : null}
         <section
           className="mt-6 min-w-0 border-t border-rule pt-4"
           aria-label={`${label} supplied facts`}
@@ -334,8 +356,9 @@ export function ReadingEvaluation() {
       </p>
       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
         Acceptance measures the current validator on this case set. Review specificity, voice,
-        repetition and grounding yourself; these results do not assign writing-quality scores or
-        establish a production acceptance rate.
+        repetition, grounding and natal lens integration yourself, including unsupported personal
+        claims; these results do not assign writing-quality scores or establish a production
+        acceptance rate.
       </p>
       <div className="mt-4 flex flex-wrap gap-3">
         <Button type="button" onClick={() => void start()} disabled={busy} className="min-h-11">

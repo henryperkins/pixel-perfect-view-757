@@ -186,6 +186,14 @@ function PrivacyPage() {
               authorize sending that context to a model.
             </p>
             <p className="mt-2 text-sm text-muted-foreground">
+              A daily reading may also send one selected, chart-derived natal interpretation to the
+              language provider. Its raw natal origins—signs, houses, aspects and uncertainty
+              proofs—are omitted from the daily prompt. The derived wording remains personal
+              information and can allow inference; it is not anonymous data or a psychological
+              assessment. Its saved copy and detailed origins are encrypted and included in your own
+              export.
+            </p>
+            <p className="mt-2 text-sm text-muted-foreground">
               The Daily check-in switch controls whether mood and energy frame your reading. You can
               still save a private check-in with that switch off. Saving never turns the switch on.
             </p>

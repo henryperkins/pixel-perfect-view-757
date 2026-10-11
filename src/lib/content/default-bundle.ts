@@ -5,9 +5,15 @@
  * ingested. Copy is deliberately observational: it describes a mechanism and a
  * question, never a prediction, an instruction, or a claim about health,
  * money, or other people.
+ *
+ * The fallback carries no natal lens catalogue: deploying code must never
+ * activate natal lenses. The reviewed catalogue ships as the separate candidate
+ * in `natal-candidate-bundle.ts` and goes live only through an explicitly
+ * published and activated release.
  */
 
 import type { SynthesisRule, ThemeTag } from "./schema";
+import type { NatalLensRule } from "./schema";
 
 export interface Interpretation {
   /** matches `${aspect}:${transitBody}:${natalPoint}`, `${aspectFamily}:${transitBody}:${natalPoint}`, or a wildcard */
@@ -30,12 +36,13 @@ export interface DomainInterpretation {
 
 export interface ContentBundle {
   version: string;
-  schemaVersion?: 2;
+  schemaVersion?: 2 | 3;
   cycles: Interpretation[];
   natal: Record<string, string>;
   phases: Record<string, string>;
   domains: Record<string, DomainInterpretation>;
   synthesisRules?: SynthesisRule[];
+  natalLenses?: NatalLensRule[];
 }
 
 const HARD = "hard";
@@ -324,8 +331,9 @@ export function findInterpretation(
     `${fam}:*:${natalPoint}`,
     `${fam}:*:*`,
   ];
+  const cycles = bundle && Array.isArray(bundle.cycles) ? bundle.cycles : [];
   for (const key of candidates) {
-    const hit = bundle.cycles.find((c) => c.key === key);
+    const hit = cycles.find((c) => c.key === key);
     if (hit) return hit;
   }
   return {

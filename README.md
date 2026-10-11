@@ -80,9 +80,9 @@ no observation. Attempt-based fallback rates exclude quiet days, missing primary
 configuration and rows without valid diagnostics; historical outcomes are not
 guessed or regenerated. Gateway response bodies and exception text are excluded.
 
-Admins can also choose **Run synthetic evaluation** in that panel to run the 16
+Admins can also choose **Run synthetic evaluation** in that panel to run the 28
 fixed cases on demand using the production language pipeline and active copy.
-It makes up to 15 model calls and one quiet-day check, shows actual drafts and
+It makes up to 27 model calls and one quiet-day check, shows actual drafts and
 fallback reasons, and downloads a report for before/after comparison. These
 synthetic results stay separate from saved readings and live generation counts;
 no birth record, check-in or private note is used. No production schema change
@@ -98,7 +98,7 @@ not proof of writing quality.
 npm run eval:reading -- --output /tmp/pattern-baseline.json
 ```
 
-The [fixed evaluation guide](READING-EVALUATION.md) explains 16 synthetic cases,
+The [fixed evaluation guide](READING-EVALUATION.md) explains 28 synthetic cases,
 offline candidate replay, before/after comparisons, and the manual writing rubric.
 Handwritten validator fixtures do not establish a live model fallback rate or a
 quality score. No production schema change or model call is needed for this work.
@@ -122,3 +122,44 @@ This implementation is a local release candidate. Actual-model baseline/candidat
 runs on the v3 fixtures and blinded writing review remain pending. See the
 [synthesis checklist](docs/superpowers/plans/2026-10-11-daily-reading-synthesis-checklist.md)
 and [candidate manifest](docs/superpowers/releases/2026-10-11-daily-synthesis-candidate.json).
+
+## Daily natal lens
+
+The inactive local candidate `builtin-0.6.0` (schema 3) adds 60 individually authored
+personal-body/sign possibilities and two compound Moon entries to the unchanged transit
+copy. It is not the built-in fallback: without an active release, readings use
+`builtin-0.5.0`, which has no catalogue, so deploying code never switches lenses on.
+Publishing and activating the candidate as a release is the only switch.
+
+One deterministic lens can qualify the primary cycle's practical distinction, and it
+follows the day's contact. The transited personal body's own rules lead (service
+aspect, then exact-time Placidus house, then sign); Moon rules in the same order are
+the fallback when that body has no screened, published match. An empty or legacy
+active catalogue stays authoritative.
+
+Birth saves screen service positions at the recorded UTC time and the two declared
+uncertainty boundaries (±2/15/60 minutes). Signs need a 1° boundary margin; exact-time
+Placidus houses need a 0.5° cusp margin; aspects use unrounded service orbs and
+geometry. This is a three-sample screen, not interval certification or a measurement
+of temperament. Unknown time, degraded samples and missing copy omit the lens while
+ordinary transit readings continue. While an active release carries a catalogue,
+Today re-runs a missing, stale-version or retryably failed screen (the same three
+service requests) before assembling the reading, at most once per six hours per reader
+and never for an unknown time. Failed attempts change nothing but the attempt time.
+
+Only the selected conditional meaning goes to the daily model as `N1`; selectors
+and natal geometry stay local. Derived wording remains personal information. A
+reading without a lens sends the same request as before lenses existed. Assessments,
+selected copy and exact saved origins are DEK-encrypted. Cached and archived owner
+reads, evidence links and exports restore the saved evidence; an export marks one
+unreadable saved row in place instead of failing. Erasure removes the evidence with
+chart/reading rows, chapter essays and the account key, and keeps no birth
+fingerprint in the retained audit trail. Admin quality sees only IDs and bounded
+codes. Prompt `daily-astro-body-6`, validator `daily-reference-5`, plan
+`daily-natal-lens-2` and reliability `natal-reliability-1` preserve the one-call,
+20-second daily budget and the separate natal essay/question contract.
+
+The [catalogue review](docs/reviews/daily-natal-lens/catalogue-review.md) and
+[local validation record](docs/superpowers/releases/2026-10-11-daily-natal-validation.md)
+record implementation evidence. Independent editorial approval, actual-model paired
+writing qualification, publication and deployment remain open.

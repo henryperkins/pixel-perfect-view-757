@@ -9,6 +9,8 @@ import {
 } from "./content/default-bundle";
 import { exactPhrase } from "./astro/cycles";
 import { resolveInterpretationPlan, type DailyInterpretationPlan } from "./content/synthesis";
+import { resolveDailyNatalLens, type DailyNatalLensPlan } from "./content/natal-lens";
+import type { NatalReliabilityManifest } from "./astro/natal-reliability";
 
 /**
  * Cycle arc position, in plain language: how many days to the exact pass and
@@ -65,6 +67,7 @@ export interface AssembledReading {
   /** The same eligible contacts feed the template and the language layer. */
   eligibleCycles: CycleInstance[];
   interpretationPlan: DailyInterpretationPlan;
+  natalLensPlan: DailyNatalLensPlan;
   astroBody: string;
   /** Deterministic caveats and consented context are never sent to the gateway. */
   contextBody: string;
@@ -132,6 +135,7 @@ export function assembleReading(
   cycles: CycleInstance[],
   ctx: ReadingContext,
   bundle: ContentBundle = DEFAULT_BUNDLE,
+  reliability: NatalReliabilityManifest | null = null,
 ): AssembledReading {
   const provenance: ProvenanceEntry[] = [];
 
@@ -150,6 +154,12 @@ export function assembleReading(
   const ranked = eligibleReadingCycles(chart, cycles);
   const interpretationPlan = resolveInterpretationPlan(bundle, ranked);
   const primary = ranked[0] ?? null;
+  const natalLensPlan = resolveDailyNatalLens(
+    bundle,
+    primary,
+    interpretationPlan.interpretations.find((i) => i.index === 1) ?? null,
+    reliability,
+  );
   const supporting = ranked.slice(1, 3);
 
   const paragraphs: string[] = [];
@@ -172,7 +182,9 @@ export function assembleReading(
     );
     headline = primary.label;
     prompt = interp.question;
-    paragraphs.push(`${TONE_OPENER[tone]}${interp.mechanism}`);
+    paragraphs.push(
+      `${TONE_OPENER[tone]}${interp.mechanism}${natalLensPlan.lens ? ` ${natalLensPlan.lens.mechanism}` : ""}`,
+    );
 
     if (interpretationPlan.synthesis) {
       paragraphs.push(interpretationPlan.synthesis.mechanism);
@@ -385,6 +397,7 @@ export function assembleReading(
     flagged: [...astro.flagged, ...context.flagged, ...safePrompt.flagged],
     eligibleCycles: ranked,
     interpretationPlan,
+    natalLensPlan,
     astroBody: astro.text,
     contextBody: context.text,
     editorial,

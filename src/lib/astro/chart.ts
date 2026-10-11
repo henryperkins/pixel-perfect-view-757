@@ -110,11 +110,12 @@ export interface EphemerisResult {
   /** Service-computed angles. */
   angles?: { ascendant: number; midheaven: number } | undefined;
   /** Service-computed aspects between tracked points. */
-  aspects?: { a: string; b: string; aspect: AspectKey; orb: number; applying: boolean }[] | undefined;
+  aspects?:
+    { a: string; b: string; aspect: AspectKey; orb: number; applying: boolean }[] | undefined;
 }
 
 /** House number for a longitude given 12 cusps (any system). */
-function houseFromCusps(lon: number, cusps: number[]): number {
+export function houseFromCusps(lon: number, cusps: number[]): number {
   for (let i = 0; i < 12; i++) {
     const start = cusps[i]!;
     const end = cusps[(i + 1) % 12]!;
