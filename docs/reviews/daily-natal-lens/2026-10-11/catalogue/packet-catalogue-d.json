@@ -1,0 +1,1009 @@
+{
+  "protocolVersion": "daily-writing-ai-review-1",
+  "kind": "catalogue-packet",
+  "contextId": "catalogue-d",
+  "bundleVersion": "builtin-0.6.0",
+  "catalogueSha256": "99ddec7c32088a75e7ff84427c83780415d15402287b0e27e2aa9b206ce8d994",
+  "instructionsSha256": "531e8cd663061f9f2fe16ba54e793344964d6041a10be8d6ac2f4a2db88ea563",
+  "instructions": "# Catalogue reviewer instructions — `daily-writing-ai-review-1`\n\nYou are reviewing a frozen catalogue of short natal \"lens\" entries for a daily\nastrology reading. When a reader's chart qualifies, the app may add one entry's\n`mechanism` to that day's reading as a conditional, practical lens on the main\nmeaning. Review every entry in your packet on its own text. Do not try to find out\nwho wrote it, how anyone else judged it, or what the app does elsewhere.\n\nEach entry has a `key`, a `role` (self direction, emotional reflex, expression,\npreference or initiative), `anchorNatalPoints` (the bodies it may serve), its\n`selectors` (the chart conditions that choose it: a sign, plus an aspect or house\nfor compound entries) and the `mechanism` text that readers would see.\n\n## Checks for every entry\n\nAnswer each check `true` (the entry passes it) or `false` (it does not):\n\n- `conditionalFraming` — the mechanism stays a possibility (\"can\", \"may\"), never a\n  claim that the reader is, always does or must do something.\n- `ordinaryScene` — it offers an ordinary, recognizable scene (a reply, a list, a\n  routine), not an abstract trait.\n- `practicalDistinction` — it names a useful distinction between two supported\n  options (for example preparation versus needing everything settled).\n- `roleAndAnchors` — the scene fits the entry's role and the bodies it may serve.\n- `compoundEligibility` — only for entries with more than one selector: the extra\n  aspect or house plausibly refines the sign's meaning without claiming a fact about\n  the reader's work, health or life. Use `null` for single-selector entries.\n- `noBiography` — no claim about the reader's past, family or life events.\n- `noClinicalExplanation` — no nervous system, attachment style, trauma response,\n  diagnosis or other clinical or biological explanation.\n- `noBehavioralPrediction` — no prediction of what the reader will do or feel.\n- `noStereotypeCertainty` — no sign stereotype stated as certain.\n- `noDirectives` — no instruction or advice in the imperative.\n- `noRawOrigin` — the mechanism names no planet, sign, house, aspect or degree; the\n  origin stays in the selectors.\n\n## Findings\n\nEvery `false` check needs at least one finding with its category, quoting the exact\npassage from the mechanism:\n\n| Check                    | Finding category        |\n| ------------------------ | ----------------------- |\n| `conditionalFraming`     | `unconditional_claim`   |\n| `ordinaryScene`          | `missing_scene`         |\n| `practicalDistinction`   | `missing_distinction`   |\n| `roleAndAnchors`         | `role_mismatch`         |\n| `compoundEligibility`    | `compound_ineligible`   |\n| `noBiography`            | `biography`             |\n| `noClinicalExplanation`  | `clinical_claim`        |\n| `noBehavioralPrediction` | `behavioral_prediction` |\n| `noStereotypeCertainty`  | `stereotype_certainty`  |\n| `noDirectives`           | `directive`             |\n| `noRawOrigin`            | `raw_origin`            |\n\nThese categories are substantive. Use `style` (minor) for wording that could be\nclearer but is not a defect. An entry's verdict is `fail` exactly when a check is\n`false` or it has a substantive finding; the overall verdict is `fail` when any entry\nfails. Your verdicts must agree with your own checks and findings.\n\n## Output\n\nWrite one JSON object and nothing else to the output path your prompt names. Read no\nfile other than the packet your prompt names, and run nothing. Copy your context\nID, `packetSha256`, `promptSha256` and the dispatch time (as `reviewedAt`) exactly\nas your prompt gives them.\n\nSet `sawImplementationContext` to `true` only if you saw source code, diffs, plans,\nspecifications, ledgers, earlier reviews or reports about this work. Your\nenvironment may attach repository notes, a memory index or a git status with recent\ncommit subjects: name anything like that in your declaration, but it does not by\nitself make that flag `true`.\n\n```json\n{\n  \"protocolVersion\": \"daily-writing-ai-review-1\",\n  \"kind\": \"catalogue-review\",\n  \"packetSha256\": \"<packetSha256 from your prompt>\",\n  \"catalogueSha256\": \"<catalogueSha256 from the packet>\",\n  \"bundleVersion\": \"<bundleVersion from the packet>\",\n  \"reviewer\": {\n    \"contextId\": \"<the context ID you were given>\",\n    \"model\": \"<your model if you know it, otherwise unknown>\",\n    \"configuration\": \"unknown\",\n    \"promptSha256\": \"<promptSha256 from your prompt>\"\n  },\n  \"reviewedAt\": \"<the dispatch time your prompt gives>\",\n  \"blindness\": {\n    \"declaration\": \"<one sentence on what you saw>\",\n    \"inputs\": [\"packet\"],\n    \"sawPriorVerdicts\": false,\n    \"sawOtherReviews\": false,\n    \"sawImplementationContext\": false\n  },\n  \"entries\": [\n    {\n      \"key\": \"<entry key>\",\n      \"checks\": {\n        \"conditionalFraming\": true,\n        \"ordinaryScene\": true,\n        \"practicalDistinction\": true,\n        \"roleAndAnchors\": true,\n        \"compoundEligibility\": null,\n        \"noBiography\": true,\n        \"noClinicalExplanation\": true,\n        \"noBehavioralPrediction\": true,\n        \"noStereotypeCertainty\": true,\n        \"noDirectives\": true,\n        \"noRawOrigin\": true\n      },\n      \"findings\": [],\n      \"verdict\": \"pass\"\n    }\n  ],\n  \"verdict\": \"pass\"\n}\n```\n\nA finding is\n`{ \"findingId\": \"…\", \"passage\": \"<exact text>\", \"category\": \"…\", \"severity\": \"substantive\" | \"minor\", \"explanation\": \"…\", \"proposedCorrection\": \"…\" }`.\nReview every entry exactly once. If you are unsure whether an entry passes a check,\nanswer `false` and explain the doubt in a finding.\n",
+  "entries": [
+    {
+      "key": "nl-moon-09",
+      "role": "emotional_reflex",
+      "anchorNatalPoints": [
+        "sun",
+        "moon",
+        "mercury",
+        "venus",
+        "mars"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "moon",
+          "sign": "Sagittarius"
+        }
+      ],
+      "mechanism": "Room to choose the route can matter as much as finishing the task. If an ordinary obligation feels narrow, the useful distinction may be between the commitment itself and how much choice it leaves in carrying it out."
+    },
+    {
+      "key": "nl-mars-11",
+      "role": "initiative",
+      "anchorNatalPoints": [
+        "mars"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "mars",
+          "sign": "Aquarius"
+        }
+      ],
+      "mechanism": "Effort can find direction by changing an arrangement that limits the task. If a familiar method is awkward, testing an alternative may differ from rejecting useful structure because it is conventional."
+    },
+    {
+      "key": "nl-moon-07",
+      "role": "emotional_reflex",
+      "anchorNatalPoints": [
+        "sun",
+        "moon",
+        "mercury",
+        "venus",
+        "mars"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "moon",
+          "sign": "Libra"
+        }
+      ],
+      "mechanism": "Considering how a response fits the exchange can offer space before answering. An unfinished reply may distinguish making room for another perspective from editing your own preference out of it."
+    },
+    {
+      "key": "nl-mercury-02",
+      "role": "expression",
+      "anchorNatalPoints": [
+        "mercury"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "mercury",
+          "sign": "Taurus"
+        }
+      ],
+      "mechanism": "An explanation can become clearer through concrete examples and an unhurried pace. A revised note may distinguish giving an idea a firm shape from retaining a phrase only because it is familiar."
+    },
+    {
+      "key": "nl-moon-12",
+      "role": "emotional_reflex",
+      "anchorNatalPoints": [
+        "sun",
+        "moon",
+        "mercury",
+        "venus",
+        "mars"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "moon",
+          "sign": "Pisces"
+        }
+      ],
+      "mechanism": "Allowing a response to take shape gradually can offer room for mixed impressions. An unfinished reply may distinguish acknowledging what is unclear from taking on every feeling suggested by the exchange."
+    },
+    {
+      "key": "nl-sun-01",
+      "role": "self_direction",
+      "anchorNatalPoints": [
+        "sun"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "sun",
+          "sign": "Aries"
+        }
+      ],
+      "mechanism": "Starting something yourself can offer a sense of direction. If a task has stalled, the distinction may be between choosing a first step and trying to control its entire outcome."
+    },
+    {
+      "key": "nl-moon-01",
+      "role": "emotional_reflex",
+      "anchorNatalPoints": [
+        "sun",
+        "moon",
+        "mercury",
+        "venus",
+        "mars"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "moon",
+          "sign": "Aries"
+        }
+      ],
+      "mechanism": "A quick, direct response can offer a way to meet pressure. If an unfinished reply feels urgent, naming the immediate point may differ from resolving the whole exchange at once."
+    },
+    {
+      "key": "nl-venus-01",
+      "role": "preference",
+      "anchorNatalPoints": [
+        "venus"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "venus",
+          "sign": "Aries"
+        }
+      ],
+      "mechanism": "A preference can become clearer through a direct choice. If an invitation is appealing, recognizing the initial interest may differ from committing to every part of the plan immediately."
+    },
+    {
+      "key": "nl-moon-10",
+      "role": "emotional_reflex",
+      "anchorNatalPoints": [
+        "sun",
+        "moon",
+        "mercury",
+        "venus",
+        "mars"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "moon",
+          "sign": "Capricorn"
+        }
+      ],
+      "mechanism": "A self-contained response to pressure can start with sorting what is manageable before sharing it. An unfinished reply can offer a place to notice the difference between useful preparation and waiting to have everything settled."
+    },
+    {
+      "key": "nl-mars-08",
+      "role": "initiative",
+      "anchorNatalPoints": [
+        "mars"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "mars",
+          "sign": "Scorpio"
+        }
+      ],
+      "mechanism": "Effort can gather depth through staying with a significant problem. If a task resists a quick answer, sustained attention may differ from making every obstacle a contest that has to be won."
+    },
+    {
+      "key": "nl-venus-11",
+      "role": "preference",
+      "anchorNatalPoints": [
+        "venus"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "venus",
+          "sign": "Aquarius"
+        }
+      ],
+      "mechanism": "A preference can become clearer when a choice leaves room for independence. A shared plan may distinguish valuing an unusual arrangement from needing distance simply to preserve a sense of choice."
+    },
+    {
+      "key": "nl-mercury-07",
+      "role": "expression",
+      "anchorNatalPoints": [
+        "mercury"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "mercury",
+          "sign": "Libra"
+        }
+      ],
+      "mechanism": "An explanation can benefit from testing how it sounds from another position. If a reply is being revised, considering the exchange may differ from balancing every sentence until your own point disappears."
+    },
+    {
+      "key": "nl-moon-06",
+      "role": "emotional_reflex",
+      "anchorNatalPoints": [
+        "sun",
+        "moon",
+        "mercury",
+        "venus",
+        "mars"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "moon",
+          "sign": "Virgo"
+        }
+      ],
+      "mechanism": "Sorting a response into manageable details can offer a way to meet pressure. An unfinished list may distinguish a small useful adjustment from trying to make every detail orderly before resting."
+    },
+    {
+      "key": "nl-mercury-04",
+      "role": "expression",
+      "anchorNatalPoints": [
+        "mercury"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "mercury",
+          "sign": "Cancer"
+        }
+      ],
+      "mechanism": "An explanation can take shape around the context that makes it meaningful. A familiar example may distinguish preserving the point of a memory from assuming its context is already shared."
+    },
+    {
+      "key": "nl-venus-12",
+      "role": "preference",
+      "anchorNatalPoints": [
+        "venus"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "venus",
+          "sign": "Pisces"
+        }
+      ],
+      "mechanism": "A preference can emerge through atmosphere or a loosely defined impression. An ordinary invitation may distinguish being drawn to its feeling from agreeing to details that have not yet become clear."
+    },
+    {
+      "key": "nl-mercury-03",
+      "role": "expression",
+      "anchorNatalPoints": [
+        "mercury"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "mercury",
+          "sign": "Gemini"
+        }
+      ],
+      "mechanism": "Trying several phrasings can offer a way to discover the point of an explanation. If a note has many branches, exploring alternatives may differ from adding another version after the meaning is already clear."
+    },
+    {
+      "key": "nl-moon-10-aspect-01",
+      "role": "emotional_reflex",
+      "anchorNatalPoints": [
+        "sun",
+        "moon",
+        "mercury",
+        "venus",
+        "mars"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "moon",
+          "sign": "Capricorn"
+        },
+        {
+          "kind": "aspect",
+          "a": "moon",
+          "b": "saturn",
+          "aspect": "trine",
+          "maxOrb": 3
+        }
+      ],
+      "mechanism": "Dependable structure can offer support when a response needs time to take shape. An ordinary commitment may distinguish accepting useful support from taking on every obligation to keep the arrangement steady."
+    },
+    {
+      "key": "nl-sun-06",
+      "role": "self_direction",
+      "anchorNatalPoints": [
+        "sun"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "sun",
+          "sign": "Virgo"
+        }
+      ],
+      "mechanism": "A useful contribution can offer a clearer direction than a grand description. If a task needs refining, improving one workable detail may differ from making perfection the condition for participating."
+    },
+    {
+      "key": "nl-venus-07",
+      "role": "preference",
+      "anchorNatalPoints": [
+        "venus"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "venus",
+          "sign": "Libra"
+        }
+      ],
+      "mechanism": "A preference can become clearer by considering the balance of an exchange. An invitation may distinguish enjoying a shared choice from agreeing before your own taste has been named."
+    },
+    {
+      "key": "nl-sun-10",
+      "role": "self_direction",
+      "anchorNatalPoints": [
+        "sun"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "sun",
+          "sign": "Capricorn"
+        }
+      ],
+      "mechanism": "A direction can become clearer through commitments that are manageable over time. An unfinished project may distinguish building something durable from treating every obligation as a measure of worth."
+    },
+    {
+      "key": "nl-sun-03",
+      "role": "self_direction",
+      "anchorNatalPoints": [
+        "sun"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "sun",
+          "sign": "Gemini"
+        }
+      ],
+      "mechanism": "Following more than one line of curiosity can help a direction take shape. If several notes compete for attention, exploring possibilities and committing to an explanation may be different stages."
+    },
+    {
+      "key": "nl-venus-02",
+      "role": "preference",
+      "anchorNatalPoints": [
+        "venus"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "venus",
+          "sign": "Taurus"
+        }
+      ],
+      "mechanism": "A preference can have a tangible reference in familiar comforts. An ordinary object may distinguish what still gives pleasure from what is kept only because it has been there a long time."
+    },
+    {
+      "key": "nl-mars-09",
+      "role": "initiative",
+      "anchorNatalPoints": [
+        "mars"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "mars",
+          "sign": "Sagittarius"
+        }
+      ],
+      "mechanism": "Effort can gather momentum when an ordinary task connects to a larger aim. A promising project may distinguish widening its reach from adding more scope than the next step can carry."
+    },
+    {
+      "key": "nl-mercury-05",
+      "role": "expression",
+      "anchorNatalPoints": [
+        "mercury"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "mercury",
+          "sign": "Leo"
+        }
+      ],
+      "mechanism": "A vivid example can offer an explanation a recognizable voice. If a draft needs emphasis, making the point memorable may differ from making its presentation more prominent than its meaning."
+    },
+    {
+      "key": "nl-venus-09",
+      "role": "preference",
+      "anchorNatalPoints": [
+        "venus"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "venus",
+          "sign": "Sagittarius"
+        }
+      ],
+      "mechanism": "A preference can become clear through the room a choice leaves for discovery. An ordinary plan may distinguish enjoying a commitment from wanting its route to stay entirely open."
+    },
+    {
+      "key": "nl-venus-05",
+      "role": "preference",
+      "anchorNatalPoints": [
+        "venus"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "venus",
+          "sign": "Leo"
+        }
+      ],
+      "mechanism": "A preference can become clear through what feels worth expressing openly. If a choice has a personal flourish, enjoying that expression may differ from needing it to be noticed to count."
+    },
+    {
+      "key": "nl-sun-12",
+      "role": "self_direction",
+      "anchorNatalPoints": [
+        "sun"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "sun",
+          "sign": "Pisces"
+        }
+      ],
+      "mechanism": "A direction can emerge by noticing connections before fixing their shape. A loosely outlined project may distinguish leaving room for discovery from leaving its purpose entirely unspoken."
+    },
+    {
+      "key": "nl-moon-08",
+      "role": "emotional_reflex",
+      "anchorNatalPoints": [
+        "sun",
+        "moon",
+        "mercury",
+        "venus",
+        "mars"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "moon",
+          "sign": "Scorpio"
+        }
+      ],
+      "mechanism": "Keeping a response private for a while can offer room to understand its depth. If a message feels significant, the distinction may be between choosing what to share and needing complete certainty before sharing anything."
+    },
+    {
+      "key": "nl-sun-02",
+      "role": "self_direction",
+      "anchorNatalPoints": [
+        "sun"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "sun",
+          "sign": "Taurus"
+        }
+      ],
+      "mechanism": "A direction can feel worthwhile when it has something tangible to sustain. An ordinary project may distinguish preserving what works from keeping it simply because it is familiar."
+    },
+    {
+      "key": "nl-mars-01",
+      "role": "initiative",
+      "anchorNatalPoints": [
+        "mars"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "mars",
+          "sign": "Aries"
+        }
+      ],
+      "mechanism": "Beginning directly can offer a way to focus effort. If a task is waiting, choosing an immediate step may differ from treating every delay as a reason to push harder."
+    },
+    {
+      "key": "nl-mars-04",
+      "role": "initiative",
+      "anchorNatalPoints": [
+        "mars"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "mars",
+          "sign": "Cancer"
+        }
+      ],
+      "mechanism": "Effort can become clearer when it supports something that feels worth protecting. An ordinary responsibility may distinguish a chosen contribution from taking on the entire arrangement to keep it familiar."
+    },
+    {
+      "key": "nl-mars-06",
+      "role": "initiative",
+      "anchorNatalPoints": [
+        "mars"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "mars",
+          "sign": "Virgo"
+        }
+      ],
+      "mechanism": "Effort can find a clear place in a task that needs one precise improvement. A revision may distinguish correcting the relevant detail from making every remaining flaw a reason to continue."
+    },
+    {
+      "key": "nl-venus-03",
+      "role": "preference",
+      "anchorNatalPoints": [
+        "venus"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "venus",
+          "sign": "Gemini"
+        }
+      ],
+      "mechanism": "Variety and conversation can offer a way to recognize a preference. If several options appeal, enjoying the comparison may differ from needing to keep every option open."
+    },
+    {
+      "key": "nl-sun-05",
+      "role": "self_direction",
+      "anchorNatalPoints": [
+        "sun"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "sun",
+          "sign": "Leo"
+        }
+      ],
+      "mechanism": "Making a contribution visible can offer a way to recognize its purpose. A shared draft may distinguish putting your own stamp on the work from needing every part to carry it."
+    },
+    {
+      "key": "nl-mars-03",
+      "role": "initiative",
+      "anchorNatalPoints": [
+        "mars"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "mars",
+          "sign": "Gemini"
+        }
+      ],
+      "mechanism": "Effort can gather momentum by trying a few routes into a problem. If a task has several pieces, testing an option may differ from changing direction whenever a piece becomes difficult."
+    },
+    {
+      "key": "nl-moon-10-house-01",
+      "role": "emotional_reflex",
+      "anchorNatalPoints": [
+        "sun",
+        "moon",
+        "mercury",
+        "venus",
+        "mars"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "moon",
+          "sign": "Capricorn"
+        },
+        {
+          "kind": "house",
+          "body": "moon",
+          "house": 6
+        }
+      ],
+      "mechanism": "A manageable routine can offer a way to meet pressure without settling everything at once. An unfinished list may distinguish one useful task from making the entire routine a condition for taking a pause."
+    },
+    {
+      "key": "nl-mercury-10",
+      "role": "expression",
+      "anchorNatalPoints": [
+        "mercury"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "mercury",
+          "sign": "Capricorn"
+        }
+      ],
+      "mechanism": "Giving an explanation a sequence can offer a way to make it usable. An outline may distinguish the structure needed to follow the point from deciding that every sentence must be settled before sharing it."
+    },
+    {
+      "key": "nl-venus-06",
+      "role": "preference",
+      "anchorNatalPoints": [
+        "venus"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "venus",
+          "sign": "Virgo"
+        }
+      ],
+      "mechanism": "Small, thoughtful details can offer a way to recognize a preference. An ordinary arrangement may distinguish appreciating care in its form from requiring every detail to be corrected before enjoying it."
+    },
+    {
+      "key": "nl-mars-12",
+      "role": "initiative",
+      "anchorNatalPoints": [
+        "mars"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "mars",
+          "sign": "Pisces"
+        }
+      ],
+      "mechanism": "Effort can take shape by responding to an opening rather than forcing a fixed sequence. A loosely outlined task may distinguish useful flexibility from leaving the next practical step undefined."
+    },
+    {
+      "key": "nl-mars-10",
+      "role": "initiative",
+      "anchorNatalPoints": [
+        "mars"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "mars",
+          "sign": "Capricorn"
+        }
+      ],
+      "mechanism": "Effort can take a workable shape through a sequence of manageable commitments. An unfinished task may distinguish building capacity gradually from measuring progress only by how much responsibility is carried."
+    },
+    {
+      "key": "nl-mercury-01",
+      "role": "expression",
+      "anchorNatalPoints": [
+        "mercury"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "mercury",
+          "sign": "Aries"
+        }
+      ],
+      "mechanism": "A direct first sentence can offer a way into an explanation. If a message is unfinished, stating the point may differ from expecting the first phrasing to carry every nuance."
+    },
+    {
+      "key": "nl-moon-05",
+      "role": "emotional_reflex",
+      "anchorNatalPoints": [
+        "sun",
+        "moon",
+        "mercury",
+        "venus",
+        "mars"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "moon",
+          "sign": "Leo"
+        }
+      ],
+      "mechanism": "Having a response acknowledged can matter alongside expressing it. If a contribution has not been noticed, the distinction may be between making its meaning visible and making it larger to gain attention."
+    },
+    {
+      "key": "nl-mercury-08",
+      "role": "expression",
+      "anchorNatalPoints": [
+        "mercury"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "mercury",
+          "sign": "Scorpio"
+        }
+      ],
+      "mechanism": "Following a question beneath its first answer can offer depth to an explanation. An unfinished note may distinguish investigating the relevant uncertainty from treating every missing detail as a hidden meaning."
+    },
+    {
+      "key": "nl-mercury-06",
+      "role": "expression",
+      "anchorNatalPoints": [
+        "mercury"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "mercury",
+          "sign": "Virgo"
+        }
+      ],
+      "mechanism": "Careful distinctions can offer an explanation a workable shape. A revised sentence may distinguish removing an ambiguity from adding qualifications that obscure an otherwise clear point."
+    },
+    {
+      "key": "nl-venus-08",
+      "role": "preference",
+      "anchorNatalPoints": [
+        "venus"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "venus",
+          "sign": "Scorpio"
+        }
+      ],
+      "mechanism": "Depth and sustained attention can offer a meaningful reference for a preference. If a choice matters strongly, recognizing its value may differ from needing it to carry every form of closeness."
+    },
+    {
+      "key": "nl-moon-04",
+      "role": "emotional_reflex",
+      "anchorNatalPoints": [
+        "sun",
+        "moon",
+        "mercury",
+        "venus",
+        "mars"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "moon",
+          "sign": "Cancer"
+        }
+      ],
+      "mechanism": "A familiar connection can offer a reference when a response is hard to name. An ordinary message may distinguish wanting continuity from assuming that closeness requires an immediate reply."
+    },
+    {
+      "key": "nl-sun-08",
+      "role": "self_direction",
+      "anchorNatalPoints": [
+        "sun"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "sun",
+          "sign": "Scorpio"
+        }
+      ],
+      "mechanism": "A direction can gather meaning through sustained attention to what matters underneath. If a project has several layers, pursuing a significant question may differ from keeping every uncertainty private."
+    },
+    {
+      "key": "nl-sun-07",
+      "role": "self_direction",
+      "anchorNatalPoints": [
+        "sun"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "sun",
+          "sign": "Libra"
+        }
+      ],
+      "mechanism": "Considering more than one perspective can help a direction feel chosen. An undecided plan may distinguish making room for another view from leaving your own position undefined."
+    },
+    {
+      "key": "nl-venus-10",
+      "role": "preference",
+      "anchorNatalPoints": [
+        "venus"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "venus",
+          "sign": "Capricorn"
+        }
+      ],
+      "mechanism": "A preference can have a reference in what remains dependable over time. A familiar arrangement may distinguish valuing its steadiness from keeping it solely because it requires no new decision."
+    },
+    {
+      "key": "nl-mars-05",
+      "role": "initiative",
+      "anchorNatalPoints": [
+        "mars"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "mars",
+          "sign": "Leo"
+        }
+      ],
+      "mechanism": "Effort can gather focus when a task has room for a personal contribution. A shared project may distinguish owning a useful piece from needing every result to reflect your approach."
+    },
+    {
+      "key": "nl-moon-02",
+      "role": "emotional_reflex",
+      "anchorNatalPoints": [
+        "sun",
+        "moon",
+        "mercury",
+        "venus",
+        "mars"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "moon",
+          "sign": "Taurus"
+        }
+      ],
+      "mechanism": "A familiar pace or setting can offer something steady when pressure is present. An altered routine may distinguish the comfort of continuity from keeping an arrangement that no longer fits."
+    },
+    {
+      "key": "nl-moon-03",
+      "role": "emotional_reflex",
+      "anchorNatalPoints": [
+        "sun",
+        "moon",
+        "mercury",
+        "venus",
+        "mars"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "moon",
+          "sign": "Gemini"
+        }
+      ],
+      "mechanism": "Putting a response into words can offer room to understand it. If several explanations come to mind, naming the relevant detail may differ from continuing the conversation to avoid a pause."
+    },
+    {
+      "key": "nl-moon-11",
+      "role": "emotional_reflex",
+      "anchorNatalPoints": [
+        "sun",
+        "moon",
+        "mercury",
+        "venus",
+        "mars"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "moon",
+          "sign": "Aquarius"
+        }
+      ],
+      "mechanism": "Taking a little distance can offer room to consider a response. If an exchange feels crowded, the distinction may be between gaining perspective and making the response so abstract that its immediate point disappears."
+    },
+    {
+      "key": "nl-venus-04",
+      "role": "preference",
+      "anchorNatalPoints": [
+        "venus"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "venus",
+          "sign": "Cancer"
+        }
+      ],
+      "mechanism": "Familiarity can offer a meaningful reference for a preference. A recurring plan may distinguish a choice that still feels welcoming from one maintained only to preserve continuity."
+    },
+    {
+      "key": "nl-mercury-11",
+      "role": "expression",
+      "anchorNatalPoints": [
+        "mercury"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "mercury",
+          "sign": "Aquarius"
+        }
+      ],
+      "mechanism": "An unfamiliar comparison can offer a fresh way to explain a familiar problem. If a method is being questioned, changing the frame may differ from losing the practical question that prompted it."
+    },
+    {
+      "key": "nl-mars-07",
+      "role": "initiative",
+      "anchorNatalPoints": [
+        "mars"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "mars",
+          "sign": "Libra"
+        }
+      ],
+      "mechanism": "Effort can become more directed by considering how an action fits an exchange. An undecided next step may distinguish coordinating with another position from waiting for complete agreement before acting."
+    },
+    {
+      "key": "nl-mars-02",
+      "role": "initiative",
+      "anchorNatalPoints": [
+        "mars"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "mars",
+          "sign": "Taurus"
+        }
+      ],
+      "mechanism": "Effort can find a workable rhythm through a steady, tangible task. An unfinished project may distinguish useful persistence from continuing the same method after the task has changed."
+    },
+    {
+      "key": "nl-mercury-12",
+      "role": "expression",
+      "anchorNatalPoints": [
+        "mercury"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "mercury",
+          "sign": "Pisces"
+        }
+      ],
+      "mechanism": "Images and associations can offer a way into an explanation. A loosely phrased note may distinguish leaving room for nuance from leaving the reader without a point they can follow."
+    },
+    {
+      "key": "nl-sun-04",
+      "role": "self_direction",
+      "anchorNatalPoints": [
+        "sun"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "sun",
+          "sign": "Cancer"
+        }
+      ],
+      "mechanism": "A sense of continuity can offer a reference for choosing a direction. A familiar project may distinguish what still feels meaningful from what is kept only to preserve its history."
+    },
+    {
+      "key": "nl-sun-09",
+      "role": "self_direction",
+      "anchorNatalPoints": [
+        "sun"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "sun",
+          "sign": "Sagittarius"
+        }
+      ],
+      "mechanism": "A larger purpose can make an ordinary commitment worth pursuing. If a plan feels narrow, the distinction may be between its underlying aim and the particular route used to reach it."
+    },
+    {
+      "key": "nl-mercury-09",
+      "role": "expression",
+      "anchorNatalPoints": [
+        "mercury"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "mercury",
+          "sign": "Sagittarius"
+        }
+      ],
+      "mechanism": "An explanation can become clearer when its larger point is named. If a draft covers many details, connecting them to a purpose may differ from skipping the example that makes the purpose understandable."
+    },
+    {
+      "key": "nl-sun-11",
+      "role": "self_direction",
+      "anchorNatalPoints": [
+        "sun"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "sun",
+          "sign": "Aquarius"
+        }
+      ],
+      "mechanism": "An independent perspective can offer a way to choose a direction. If a familiar method feels limiting, questioning the arrangement may differ from needing every choice to be unconventional."
+    }
+  ]
+}

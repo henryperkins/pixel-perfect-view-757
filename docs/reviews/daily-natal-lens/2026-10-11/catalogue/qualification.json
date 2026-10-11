@@ -1,0 +1,179 @@
+{
+  "protocolVersion": "daily-writing-ai-review-1",
+  "kind": "catalogue-qualification",
+  "humanReviewCompleted": false,
+  "humanApproval": "deferred",
+  "authorStructuralReview": "The catalogue author's agent editorial/structural review (docs/reviews/daily-natal-lens/catalogue-review.md) is separate evidence and is not counted here.",
+  "result": "AI catalogue review failed",
+  "passed": false,
+  "bundleVersion": "builtin-0.6.0",
+  "catalogueSha256": "99ddec7c32088a75e7ff84427c83780415d15402287b0e27e2aa9b206ce8d994",
+  "instructionsSha256": "531e8cd663061f9f2fe16ba54e793344964d6041a10be8d6ac2f4a2db88ea563",
+  "entries": 62,
+  "compoundEntries": 2,
+  "reviewerCount": 2,
+  "reviewers": [
+    {
+      "contextId": "catalogue-c",
+      "model": "claude-opus-5-5",
+      "configuration": "Claude Code general-purpose subagent, dispatched with model=opus",
+      "promptSha256": "2d21e47a6f458306b191be037c8865b2a76f6eed2397a0b1bb482c419f6962d3",
+      "packetSha256": "332c4f402787da5a0553cd9e557dc7d5ee4186b765d7942063a66b553f0e4e53",
+      "reviewedAt": "2026-10-11T19:05:24Z"
+    },
+    {
+      "contextId": "catalogue-d",
+      "model": "claude-opus-5-5",
+      "configuration": "Claude Code general-purpose subagent, dispatched with model=opus",
+      "promptSha256": "31596f2841119bd69b8e15ec8dba9c67b02e8c26718c0f1929d16de8b7704560",
+      "packetSha256": "0453dd6ff04a312a1bd60e2f82f932371b32fde354fe9215b39ebcba66d15533",
+      "reviewedAt": "2026-10-11T19:16:42Z"
+    }
+  ],
+  "adjudication": null,
+  "failures": [
+    {
+      "key": "nl-moon-09",
+      "reasons": [
+        "unresolved role_mismatch finding catalogue-c-nl-moon-09-01 from catalogue-c"
+      ]
+    },
+    {
+      "key": "nl-sun-03",
+      "reasons": [
+        "unresolved role_mismatch finding catalogue-c-nl-sun-03-01 from catalogue-c",
+        "unresolved role_mismatch finding nl-sun-03-f1 from catalogue-d"
+      ]
+    },
+    {
+      "key": "nl-venus-08",
+      "reasons": [
+        "unresolved missing_scene finding catalogue-c-nl-venus-08-01 from catalogue-c",
+        "unresolved missing_scene finding nl-venus-08-f1 from catalogue-d"
+      ]
+    }
+  ],
+  "minorFindings": [
+    {
+      "key": "nl-mercury-12",
+      "reviewer": "catalogue-c",
+      "finding": {
+        "findingId": "catalogue-c-nl-mercury-12-01",
+        "passage": "leaving the reader without a point they can follow",
+        "category": "style",
+        "severity": "minor",
+        "explanation": "'The reader' means whoever reads the note, but in a reading addressed to the app's reader it can briefly be taken to mean the reader themself. The meaning is recoverable, so this is wording only.",
+        "proposedCorrection": "A loosely phrased note may distinguish leaving room for nuance from leaving whoever reads it without a point they can follow."
+      }
+    },
+    {
+      "key": "nl-mercury-04",
+      "reviewer": "catalogue-d",
+      "finding": {
+        "findingId": "nl-mercury-04-f1",
+        "passage": "preserving the point of a memory",
+        "category": "style",
+        "severity": "minor",
+        "explanation": "The phrase is slightly opaque: it is not immediately clear that the memory is the familiar example being used in the explanation, or what preserving its point involves. The memory is generic rather than a claim about the reader's past, so this is wording, not a defect.",
+        "proposedCorrection": "An example drawn from memory may distinguish keeping the point it illustrates from assuming its context is already shared."
+      }
+    },
+    {
+      "key": "nl-moon-10-aspect-01",
+      "reviewer": "catalogue-d",
+      "finding": {
+        "findingId": "nl-moon-10-aspect-01-f1",
+        "passage": "taking on every obligation to keep the arrangement steady",
+        "category": "style",
+        "severity": "minor",
+        "explanation": "'The arrangement' has no antecedent, and most of the entry's nouns (structure, support, commitment, obligation, arrangement) are abstract, so the scene is less vivid than its single-selector sibling's unfinished reply. 'An ordinary commitment' is still a recognizable everyday situation, and the supportive-structure emphasis is a plausible refinement for the harmonious aspect without any claim about the reader's work, health or life, so this is wording, not a defect.",
+        "proposedCorrection": "An ordinary commitment, such as a regular shared task, may distinguish accepting useful support from taking on every obligation to keep it steady."
+      }
+    },
+    {
+      "key": "nl-venus-05",
+      "reviewer": "catalogue-d",
+      "finding": {
+        "findingId": "nl-venus-05-f1",
+        "passage": "If a choice has a personal flourish",
+        "category": "style",
+        "severity": "minor",
+        "explanation": "'A choice' is a generic scene noun; the flourish and the wish to have it noticed still make an everyday situation recognizable, but naming a concrete choice would make it more vivid. Wording, not a defect.",
+        "proposedCorrection": "If an outfit or a gift has a personal flourish, enjoying that expression may differ from needing it to be noticed to count."
+      }
+    },
+    {
+      "key": "nl-sun-02",
+      "reviewer": "catalogue-d",
+      "finding": {
+        "findingId": "nl-sun-02-f1",
+        "passage": "keeping it simply because it is familiar",
+        "category": "style",
+        "severity": "minor",
+        "explanation": "'It' could refer to the project or to 'what works'; read against 'what works' the contrast briefly seems contradictory. Naming the thing kept would read more clearly. Wording, not a defect.",
+        "proposedCorrection": "An ordinary project may distinguish preserving what works from keeping a part simply because it is familiar."
+      }
+    },
+    {
+      "key": "nl-mars-04",
+      "reviewer": "catalogue-d",
+      "finding": {
+        "findingId": "nl-mars-04-f1",
+        "passage": "taking on the entire arrangement to keep it familiar",
+        "category": "style",
+        "severity": "minor",
+        "explanation": "'The entire arrangement' has no antecedent, so the overextension is harder to picture than the scene noun 'an ordinary responsibility'. The scene and the distinction are still recognizable, so this is wording, not a defect.",
+        "proposedCorrection": "An ordinary shared responsibility may distinguish a chosen contribution from taking on all of it to keep things familiar."
+      }
+    },
+    {
+      "key": "nl-venus-06",
+      "reviewer": "catalogue-d",
+      "finding": {
+        "findingId": "nl-venus-06-f1",
+        "passage": "An ordinary arrangement",
+        "category": "style",
+        "severity": "minor",
+        "explanation": "'Arrangement' is a vague scene noun that could mean a plan, a room or a set table. 'Care in its form' and 'every detail' still point to an everyday physical arrangement, so the scene is recognizable and this is wording, not a defect; a concrete noun would make it clearer.",
+        "proposedCorrection": "A set table or an arranged room may distinguish appreciating care in its form from requiring every detail to be corrected before enjoying it."
+      }
+    },
+    {
+      "key": "nl-venus-10",
+      "reviewer": "catalogue-d",
+      "finding": {
+        "findingId": "nl-venus-10-f1",
+        "passage": "A familiar arrangement",
+        "category": "style",
+        "severity": "minor",
+        "explanation": "'A familiar arrangement' is a vague scene noun. A standing plan or usual setup is still an everyday, recognizable situation, so this is wording, not a defect; a concrete example would make the scene easier to find.",
+        "proposedCorrection": "A familiar weekly plan may distinguish valuing its steadiness from keeping it solely because it requires no new decision."
+      }
+    },
+    {
+      "key": "nl-mercury-12",
+      "reviewer": "catalogue-d",
+      "finding": {
+        "findingId": "nl-mercury-12-f1",
+        "passage": "leaving the reader without a point they can follow",
+        "category": "style",
+        "severity": "minor",
+        "explanation": "Inside a daily reading addressed to the reader, 'the reader' of the note can be confused with the person reading the app. Naming the note's recipient avoids the ambiguity. Wording, not a defect.",
+        "proposedCorrection": "A loosely phrased note may distinguish leaving room for nuance from leaving its recipient without a point they can follow."
+      }
+    }
+  ],
+  "resolvedDisputes": [],
+  "limitations": [
+    "AI catalogue approval is not human editorial approval, empirical temperament evidence or publication.",
+    "Fresh contexts using one model are separate assessments, not evidence of independent model families.",
+    "The checker validates bookkeeping; it does not establish that any reviewer judgment is true."
+  ],
+  "files": {
+    "reviewSha256": [
+      "b39d71ca3bdd9472adcb64729d442ba1454ec2164b28af4a94491ae6482868a8",
+      "5c69dc7e666467df05fb61e05d096253202a4a941d4c9b2e32a42bdfd8c5000f"
+    ],
+    "adjudicationSha256": null
+  }
+}

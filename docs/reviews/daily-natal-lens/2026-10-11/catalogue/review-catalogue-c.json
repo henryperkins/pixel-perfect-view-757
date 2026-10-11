@@ -1,0 +1,432 @@
+{
+  "protocolVersion": "daily-writing-ai-review-1",
+  "kind": "catalogue-review",
+  "packetSha256": "332c4f402787da5a0553cd9e557dc7d5ee4186b765d7942063a66b553f0e4e53",
+  "catalogueSha256": "99ddec7c32088a75e7ff84427c83780415d15402287b0e27e2aa9b206ce8d994",
+  "bundleVersion": "builtin-0.6.0",
+  "reviewer": {
+    "contextId": "catalogue-c",
+    "model": "claude-opus-5-5",
+    "configuration": "Claude Code general-purpose subagent, dispatched with model=opus",
+    "promptSha256": "2d21e47a6f458306b191be037c8865b2a76f6eed2397a0b1bb482c419f6962d3"
+  },
+  "reviewedAt": "2026-10-11T19:05:24Z",
+  "blindness": {
+    "declaration": "I read only my assigned packet (its instructions and 62 catalogue entries); my environment also attached repository notes (AGENTS.md project instructions), a user memory index, and a git status showing three modified review-document file names and recent commit subjects about the AI catalogue review, and I saw no source code, diffs, plans, specifications, ledgers, earlier reviews, prior verdicts or reports about this work.",
+    "inputs": ["packet"],
+    "sawPriorVerdicts": false,
+    "sawOtherReviews": false,
+    "sawImplementationContext": false
+  },
+  "entries": [
+    {
+      "key": "nl-sun-07",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-mars-01",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-mercury-09",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-moon-10-house-01",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": true, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-moon-04",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-moon-10",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-moon-11",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-venus-05",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-mercury-03",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-venus-02",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-mercury-08",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-venus-09",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-mars-11",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-moon-06",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-venus-08",
+      "checks": {"conditionalFraming": true, "ordinaryScene": false, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [
+        {
+          "findingId": "catalogue-c-nl-venus-08-01",
+          "passage": "If a choice matters strongly, recognizing its value may differ from needing it to carry every form of closeness.",
+          "category": "missing_scene",
+          "severity": "substantive",
+          "explanation": "The only situation offered is an unspecified choice that 'matters strongly', and the other side of the distinction ('carry every form of closeness') is just as abstract. Unlike a reply, a list or an invitation, nothing here gives the reader an ordinary moment or object to picture, so the lens stays close to a trait (depth, intensity). I am unsure it meets the scene requirement, so I mark the check false.",
+          "proposedCorrection": "Depth and sustained attention can offer a meaningful reference for a preference. If a plan with someone close matters strongly, recognizing its value may differ from needing that one plan to express everything the connection means."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "key": "nl-mars-07",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-sun-04",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-mars-02",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-sun-09",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-venus-12",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-mars-03",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-mercury-01",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-venus-04",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-moon-03",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-moon-09",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": false, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [
+        {
+          "findingId": "catalogue-c-nl-moon-09-01",
+          "passage": "Room to choose the route can matter as much as finishing the task.",
+          "category": "role_mismatch",
+          "severity": "substantive",
+          "explanation": "The entry's role is emotional_reflex, but the scene is about how a task or obligation gets carried out ('finishing the task', 'the commitment itself', 'carrying it out'). Apart from 'feels narrow', nothing in the text names a response, a feeling or a moment of pressure, so it reads as a lens on initiative or self-direction (autonomy versus completion) rather than on an emotional reflex. I am unsure it fits the role, so I mark the check false.",
+          "proposedCorrection": "Wanting room to move can be part of a response to pressure. If an ordinary obligation feels narrow, the useful distinction may be between the commitment itself and how much choice it leaves in carrying it out."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "key": "nl-sun-12",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-mercury-12",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [
+        {
+          "findingId": "catalogue-c-nl-mercury-12-01",
+          "passage": "leaving the reader without a point they can follow",
+          "category": "style",
+          "severity": "minor",
+          "explanation": "'The reader' means whoever reads the note, but in a reading addressed to the app's reader it can briefly be taken to mean the reader themself. The meaning is recoverable, so this is wording only.",
+          "proposedCorrection": "A loosely phrased note may distinguish leaving room for nuance from leaving whoever reads it without a point they can follow."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-venus-03",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-venus-10",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-mars-08",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-sun-10",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-venus-11",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-sun-02",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-mercury-05",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-mercury-04",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-mercury-06",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-sun-05",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-moon-02",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-sun-08",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-mars-04",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-moon-07",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-mars-06",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-mars-12",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-mars-05",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-moon-10-aspect-01",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": true, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-venus-07",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-sun-11",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-moon-08",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-venus-01",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-moon-05",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-sun-03",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": false, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [
+        {
+          "findingId": "catalogue-c-nl-sun-03-01",
+          "passage": "If several notes compete for attention, exploring possibilities and committing to an explanation may be different stages.",
+          "category": "role_mismatch",
+          "severity": "substantive",
+          "explanation": "The first sentence frames a self-direction lens, but the scene that carries the distinction (competing notes, committing to an explanation) is about writing and explaining, which belongs to the expression role. For a sun-only self-direction lens, committing to an explanation is not the same as committing to a direction, so the reader is left to translate it. I am unsure the scene fits the role and its anchor, so I mark the check false.",
+          "proposedCorrection": "Following more than one line of curiosity can help a direction take shape. If several interests compete for attention, exploring possibilities and committing to one direction may be different stages."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "key": "nl-sun-06",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-mercury-11",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-mercury-10",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-moon-12",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-moon-01",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-venus-06",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-mercury-07",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-mars-09",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-mars-10",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-mercury-02",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "key": "nl-sun-01",
+      "checks": {"conditionalFraming": true, "ordinaryScene": true, "practicalDistinction": true, "roleAndAnchors": true, "compoundEligibility": null, "noBiography": true, "noClinicalExplanation": true, "noBehavioralPrediction": true, "noStereotypeCertainty": true, "noDirectives": true, "noRawOrigin": true},
+      "findings": [],
+      "verdict": "pass"
+    }
+  ],
+  "verdict": "fail"
+}

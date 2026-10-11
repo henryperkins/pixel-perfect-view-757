@@ -330,9 +330,9 @@ judgment is true.
 
 The frozen natal catalogue (currently `builtin-0.6.0`, 62 entries, bundle hash
 `99ddec7c…d994`) is approved under this lane only by at least two fresh reviewer
-contexts that each cover every frozen key. Each receives its packet inline, built by
-`scripts/reading-writing-review.mjs catalogue-packets`: every entry's `key`, `role`,
-`anchorNatalPoints`, `selectors` and `mechanism`, plus the
+contexts that each cover every frozen key. Each receives its packet inline or as one
+isolated file, built by `scripts/reading-writing-review.mjs catalogue-packets`:
+every entry's `key`, `role`, `anchorNatalPoints`, `selectors` and `mechanism`, plus the
 [catalogue reviewer instructions](../daily-natal-lens/catalogue-reviewer-instructions.md).
 The author's own editorial and structural review is never shown to them. The packet
 order is reproducible from the catalogue hash and the context ID, so the checker can
