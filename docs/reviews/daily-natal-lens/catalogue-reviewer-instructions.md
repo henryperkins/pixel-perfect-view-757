@@ -60,9 +60,9 @@ fails. Your verdicts must agree with your own checks and findings.
 
 ## Output
 
-Reply with one JSON object and nothing else. Use no tools: everything you need is in
-your prompt. Copy your context ID, `packetSha256` and `promptSha256` exactly as your
-prompt gives them.
+Write one JSON object and nothing else to the output path your prompt names. Read no
+other file and run nothing: everything you need is in your prompt. Copy your context
+ID, `packetSha256` and `promptSha256` exactly as your prompt gives them.
 
 ```json
 {

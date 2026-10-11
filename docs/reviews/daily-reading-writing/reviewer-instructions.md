@@ -77,10 +77,10 @@ your own scores and findings.
 
 ## Output
 
-Reply with one JSON object and nothing else. Use no tools: everything you need is in
-your prompt. Copy your context ID, `packetSha256` and `promptSha256` exactly as your
-prompt gives them; the packet cannot contain its own hash or the hash of the prompt
-that carries it.
+Write one JSON object and nothing else to the output path your prompt names. Read no
+other file and run nothing: everything you need is in your prompt. Copy your context
+ID, `packetSha256` and `promptSha256` exactly as your prompt gives them; the packet
+cannot contain its own hash or the hash of the prompt that carries it.
 
 ```json
 {

@@ -31,11 +31,14 @@ are not evidence of independent model families.
 | Reassessor             | A further fresh context, only after an adjudication (see below) | The packet of the context it reassesses                                                              |
 
 At least two reviewer contexts are required; one review never qualifies. Each
-context receives its packet inline in its prompt and returns its review JSON as its
-reply, using no file, search or shell tools, so it cannot open the assignment,
-reports or advisory files. Its review must declare `inputs: ["packet"]` exactly. The
+context receives its packet inline in its prompt and reads no file, search or shell
+output, so it never opens the assignment, reports or advisory files. Its only tool
+use is writing its review JSON to the single output path its prompt names (and
+reading back that file). Its review must declare `inputs: ["packet"]` exactly. The
 operator archives every reviewer, adjudicator and reassessor prompt text beside its
 SHA-256, and keeps the assignment outside reviewer reach until every review is in.
+Because a prompt cannot contain its own hash, the prompt ends with a trailer line
+giving the SHA-256 of all text above it; that text is what the operator archives.
 
 Reviewers never see before/after labels, case or run names, generator identity,
 versions, acceptance or rejection outcomes, advisory findings, existing scores, each
