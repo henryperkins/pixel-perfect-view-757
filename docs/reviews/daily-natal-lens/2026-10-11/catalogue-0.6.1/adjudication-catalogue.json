@@ -1,0 +1,35 @@
+{
+  "protocolVersion": "daily-writing-ai-review-1",
+  "kind": "catalogue-adjudication",
+  "catalogueSha256": "b073d625c23b5bede66eba25e37bd3f3397263710dd63ab67d8af06b6e216500",
+  "adjudicator": {
+    "contextId": "catalogue-adjudicator-1",
+    "model": "claude-opus-5-5",
+    "configuration": "Claude Code general-purpose subagent, dispatched with model=opus",
+    "promptSha256": "561e299ee7b5c52c2558cb3c6da28049a9ebcf226550a53d7ef2c282813c8fb4"
+  },
+  "adjudicatedAt": "2026-10-11T20:11:49Z",
+  "blindness": {
+    "declaration": "I read only this packet (its instructions, two entries and two findings); my environment also attached repository notes (AGENTS.md), a user memory index and a git status with the branch name, recent commit subjects and untracked review file names (including subjects about revising three natal lenses as builtin-0.6.1 and recording a failed catalogue review of builtin-0.6.0), but I opened no source code, diffs, plans, specifications, ledgers, earlier reviews or reports.",
+    "inputs": ["findings", "entries"],
+    "sawImplementationContext": false
+  },
+  "resolutions": [
+    {
+      "reviewerContextId": "catalogue-f",
+      "findingId": "catalogue-f-nl-mars-04-01",
+      "key": "nl-mars-04",
+      "passage": "An ordinary responsibility may distinguish a chosen contribution from taking on the entire arrangement to keep it familiar.",
+      "resolution": "acceptable",
+      "explanation": "The mechanism grounds the lens in an everyday situation, 'An ordinary responsibility', and names two recognizable ways of handling it, 'a chosen contribution' versus 'taking on the entire arrangement to keep it familiar'; 'the entire arrangement' reads naturally as the shared setup that the responsibility and the contribution belong to. That is a generic but ordinary, recognizable scene of the same kind as the check's own example of a routine, not an abstract trait, and the proposed correction keeps the same scene with more specific nouns, so this is wording that could be clearer but still passes the check."
+    },
+    {
+      "reviewerContextId": "catalogue-f",
+      "findingId": "catalogue-f-nl-moon-10-aspect-01-01",
+      "key": "nl-moon-10-aspect-01",
+      "passage": "An ordinary commitment may distinguish accepting useful support from taking on every obligation to keep the arrangement steady.",
+      "resolution": "acceptable",
+      "explanation": "The mechanism places the lens in an everyday moment and situation, 'when a response needs time to take shape' and 'An ordinary commitment', and names two recognizable ways of handling it, 'accepting useful support' versus 'taking on every obligation to keep the arrangement steady'; the support is the one introduced by 'Dependable structure can offer support' and the arrangement is the commitment's own. That is a generic but ordinary, recognizable scene rather than an abstract trait; more concrete nouns would be clearer, but the entry passes the check as written."
+    }
+  ]
+}

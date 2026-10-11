@@ -1,0 +1,27 @@
+You are a fresh, independent reviewer with context ID "catalogue-f". You have no earlier context about this work, and you must not look for any.
+
+Your packet is the single file:
+/tmp/claude-1000/-home-ubuntu-pixel-perfect-view-757/9963b496-dbee-4525-8677-92629f2f2d59/scratchpad/rv3/catalogue-f/packet.json
+
+Read that file with the Read tool. Do not read, list or search any other file or directory, run any command, or open any web page.
+
+Follow the "instructions" field inside the packet exactly and review every entry. Your output file is:
+/tmp/claude-1000/-home-ubuntu-pixel-perfect-view-757/9963b496-dbee-4525-8677-92629f2f2d59/scratchpad/rv3/out/review-catalogue-f.json
+
+Build that file in steps, so that no single step is very large:
+1. Review the first 10 entries in packet order. With the Write tool, create the output file holding the opening of your review object (every field before "entries"), then "entries": [ followed by those 10 entries, each followed by a comma, then a line holding only @@NEXT@@, then these closing lines:
+  ],
+  "verdict": "@@VERDICT@@"
+}
+2. For each next group of up to 10 entries, review them, then use the Edit tool to replace @@NEXT@@ with those entries, each followed by a comma, and a new @@NEXT@@ line after them.
+3. After the last entry, use Edit to remove the comma after the last entry together with the @@NEXT@@ line, and to replace @@VERDICT@@ with your overall verdict.
+4. Read the file back and check that it is one valid JSON object that holds every entry exactly once and no marker.
+Then reply with the single line "review written".
+
+Copy these values into your review:
+- reviewer.contextId: catalogue-f
+- packetSha256: c31c3b5178fa588f09275170f9587c656932557897c9ad29e89d95c35accb0d0
+- reviewer.model: the model you are, if you know it; otherwise "unknown"
+- reviewer.configuration: Claude Code general-purpose subagent, dispatched with model=opus
+- reviewer.promptSha256: the value on the last line of this prompt
+- reviewedAt (the dispatch time): 2026-10-11T19:54:24Z

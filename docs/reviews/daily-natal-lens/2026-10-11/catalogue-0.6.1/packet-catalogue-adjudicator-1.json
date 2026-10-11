@@ -1,0 +1,73 @@
+{
+  "protocolVersion": "daily-writing-ai-review-1",
+  "kind": "catalogue-adjudication-packet",
+  "contextId": "catalogue-adjudicator-1",
+  "bundleVersion": "builtin-0.6.1",
+  "catalogueSha256": "b073d625c23b5bede66eba25e37bd3f3397263710dd63ab67d8af06b6e216500",
+  "instructions": "# Catalogue adjudicator instructions — daily-writing-ai-review-1\n\nYou are adjudicating findings from a review of a frozen catalogue of short natal \"lens\"\nentries for a daily astrology reading. When a reader's chart qualifies, the app may add\none entry's `mechanism` to that day's reading as a conditional, practical lens on the\nmain meaning. A reviewer raised each finding in this packet. Decide each one on the\nentry's own text and the check its category belongs to. Do not try to find out who\nwrote the entries or how anyone else judged them.\n\nEach entry has a `key`, a `role` (self direction, emotional reflex, expression,\npreference or initiative), `anchorNatalPoints` (the bodies it may serve), its\n`selectors` (the chart conditions that choose it: a sign, plus an aspect or house\nfor compound entries) and the `mechanism` text that readers would see.\n\nFor each finding:\n\n1. Read the entry and the finding (its passage, category and explanation).\n2. Apply the check that the finding's category belongs to, as defined below, to the\n   whole mechanism.\n3. Resolve the finding as `defect` when the entry fails that check, or `acceptable`\n   when the entry passes it as written. Wording that could be clearer but still passes\n   the check is acceptable. If you remain unsure, resolve it as `defect` and say why.\n4. Explain in one to three sentences, quoting the text you relied on.\n\n## Checks for every entry\n\nAnswer each check `true` (the entry passes it) or `false` (it does not):\n\n- `conditionalFraming` — the mechanism stays a possibility (\"can\", \"may\"), never a\n  claim that the reader is, always does or must do something.\n- `ordinaryScene` — it offers an ordinary, recognizable scene (a reply, a list, a\n  routine), not an abstract trait.\n- `practicalDistinction` — it names a useful distinction between two supported\n  options (for example preparation versus needing everything settled).\n- `roleAndAnchors` — the scene fits the entry's role and the bodies it may serve.\n- `compoundEligibility` — only for entries with more than one selector: the extra\n  aspect or house plausibly refines the sign's meaning without claiming a fact about\n  the reader's work, health or life. Use `null` for single-selector entries.\n- `noBiography` — no claim about the reader's past, family or life events.\n- `noClinicalExplanation` — no nervous system, attachment style, trauma response,\n  diagnosis or other clinical or biological explanation.\n- `noBehavioralPrediction` — no prediction of what the reader will do or feel.\n- `noStereotypeCertainty` — no sign stereotype stated as certain.\n- `noDirectives` — no instruction or advice in the imperative.\n- `noRawOrigin` — the mechanism names no planet, sign, house, aspect or degree; the\n  origin stays in the selectors.\n\n## Findings\n\nEvery `false` check needs at least one finding with its category, quoting the exact\npassage from the mechanism:\n\n| Check                    | Finding category        |\n| ------------------------ | ----------------------- |\n| `conditionalFraming`     | `unconditional_claim`   |\n| `ordinaryScene`          | `missing_scene`         |\n| `practicalDistinction`   | `missing_distinction`   |\n| `roleAndAnchors`         | `role_mismatch`         |\n| `compoundEligibility`    | `compound_ineligible`   |\n| `noBiography`            | `biography`             |\n| `noClinicalExplanation`  | `clinical_claim`        |\n| `noBehavioralPrediction` | `behavioral_prediction` |\n| `noStereotypeCertainty`  | `stereotype_certainty`  |\n| `noDirectives`           | `directive`             |\n| `noRawOrigin`            | `raw_origin`            |\n\n## Output\n\nWrite one JSON object and nothing else to the output path your prompt names. Read no\nfile other than the packet your prompt names, and run nothing. Copy your context ID,\n`promptSha256` and the dispatch time (as `adjudicatedAt`) exactly as your prompt\ngives them, and copy each finding's `reviewerContextId`, `findingId`, `key` and\n`passage` exactly as the packet gives them.\n\nSet `sawImplementationContext` to `true` only if you saw source code, diffs, plans,\nspecifications, ledgers, earlier reviews or reports about this work. Your environment\nmay attach repository notes, a memory index or a git status with recent commit\nsubjects: name anything like that in your declaration, but it does not by itself make\nthat flag `true`.\n\n```json\n{\n  \"protocolVersion\": \"daily-writing-ai-review-1\",\n  \"kind\": \"catalogue-adjudication\",\n  \"catalogueSha256\": \"<catalogueSha256 from the packet>\",\n  \"adjudicator\": {\n    \"contextId\": \"<the context ID you were given>\",\n    \"model\": \"<your model if you know it, otherwise unknown>\",\n    \"configuration\": \"<the configuration your prompt gives>\",\n    \"promptSha256\": \"<promptSha256 from your prompt>\"\n  },\n  \"adjudicatedAt\": \"<the dispatch time your prompt gives>\",\n  \"blindness\": {\n    \"declaration\": \"<one sentence on what you saw>\",\n    \"inputs\": [\"findings\", \"entries\"],\n    \"sawImplementationContext\": false\n  },\n  \"resolutions\": [\n    {\n      \"reviewerContextId\": \"<from the finding>\",\n      \"findingId\": \"<from the finding>\",\n      \"key\": \"<from the finding>\",\n      \"passage\": \"<exactly as the finding gives it>\",\n      \"resolution\": \"acceptable\",\n      \"explanation\": \"…\"\n    }\n  ]\n}\n```\n\nResolve every finding in the packet exactly once.\n",
+  "entries": [
+    {
+      "key": "nl-mars-04",
+      "role": "initiative",
+      "anchorNatalPoints": [
+        "mars"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "mars",
+          "sign": "Cancer"
+        }
+      ],
+      "mechanism": "Effort can become clearer when it supports something that feels worth protecting. An ordinary responsibility may distinguish a chosen contribution from taking on the entire arrangement to keep it familiar."
+    },
+    {
+      "key": "nl-moon-10-aspect-01",
+      "role": "emotional_reflex",
+      "anchorNatalPoints": [
+        "sun",
+        "moon",
+        "mercury",
+        "venus",
+        "mars"
+      ],
+      "selectors": [
+        {
+          "kind": "sign",
+          "body": "moon",
+          "sign": "Capricorn"
+        },
+        {
+          "kind": "aspect",
+          "a": "moon",
+          "b": "saturn",
+          "aspect": "trine",
+          "maxOrb": 3
+        }
+      ],
+      "mechanism": "Dependable structure can offer support when a response needs time to take shape. An ordinary commitment may distinguish accepting useful support from taking on every obligation to keep the arrangement steady."
+    }
+  ],
+  "findings": [
+    {
+      "reviewerContextId": "catalogue-f",
+      "key": "nl-mars-04",
+      "findingId": "catalogue-f-nl-mars-04-01",
+      "passage": "An ordinary responsibility may distinguish a chosen contribution from taking on the entire arrangement to keep it familiar.",
+      "category": "missing_scene",
+      "severity": "substantive",
+      "explanation": "The only scene is the category 'an ordinary responsibility', and the distinction then turns on 'the entire arrangement', which the text never introduces. With the equally abstract opening ('something that feels worth protecting'), the reader has to invent both the situation and what the arrangement is. I am unsure this is an ordinary, recognizable scene in the way a reply, a list or a routine is, so the check is false.",
+      "proposedCorrection": "Name a concrete scene, for example: 'A shared weekly chore may distinguish doing a chosen part from taking on all of it so that it stays familiar.'"
+    },
+    {
+      "reviewerContextId": "catalogue-f",
+      "key": "nl-moon-10-aspect-01",
+      "findingId": "catalogue-f-nl-moon-10-aspect-01-01",
+      "passage": "An ordinary commitment may distinguish accepting useful support from taking on every obligation to keep the arrangement steady.",
+      "category": "missing_scene",
+      "severity": "substantive",
+      "explanation": "The scene is only the category 'an ordinary commitment'. 'Useful support' does not say what or whose support is meant, and 'the arrangement' has no antecedent, so the mechanism stays among abstractions (structure, support, commitment, obligation, arrangement) and the reader has to invent the situation. I am unsure it offers an ordinary, recognizable scene, so the check is false. The trine selector itself plausibly refines the sign's meaning toward supportive structure, and the text makes no claim about work, health or life.",
+      "proposedCorrection": "Use a concrete scene, for example: 'A regular weekly schedule may distinguish relying on the parts that already hold from taking on every extra task to keep it steady.'"
+    }
+  ]
+}

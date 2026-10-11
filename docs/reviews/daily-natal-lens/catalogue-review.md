@@ -115,9 +115,19 @@ remains deferred, and nothing here activates the catalogue.
   implementation context; its review is archived unedited. Evidence:
   [qualification](2026-10-11/catalogue/qualification.json), prompts, packets and
   reviews in [2026-10-11/catalogue](2026-10-11/catalogue/).
-- **`builtin-0.6.1` (hash `b073d625…6500`): pending** a fresh two-reviewer round.
-  It changes only those three mechanisms: `nl-sun-03` now sets sampling several
-  projects against choosing one to pursue; `nl-venus-08` places its distinction in
-  choosing a gift for someone close; `nl-moon-09` names the response to pressure
-  and keeps the commitment-versus-route distinction. Frozen identity:
-  [candidate manifest](../../superpowers/releases/2026-10-11-daily-natal-candidate-0.6.1.json).
+- **`builtin-0.6.1` (hash `b073d625…6500`): AI catalogue review passed**,
+  2026-10-11. It changes only those three mechanisms: `nl-sun-03` now sets sampling
+  several projects against choosing one to pursue; `nl-venus-08` places its
+  distinction in choosing a gift for someone close; `nl-moon-09` names the response
+  to pressure and keeps the commitment-versus-route distinction. Two fresh contexts
+  (`catalogue-e`, `catalogue-f`) covered all 62 entries. `catalogue-e` passed every
+  entry; `catalogue-f` found no ordinary scene in `nl-mars-04` and
+  `nl-moon-10-aspect-01`. A fresh adjudicator (`catalogue-adjudicator-1`), shown only
+  those findings and entries, resolved both as acceptable: generic but recognizable
+  scenes whose wording could be more concrete. Nine style findings remain as minor
+  editing notes. Frozen identity:
+  [candidate manifest](../../superpowers/releases/2026-10-11-daily-natal-candidate-0.6.1.json)
+  (its `reviewStatus` records the state at freeze time). Evidence:
+  [qualification](2026-10-11/catalogue-0.6.1/qualification.json) and the prompts,
+  packets, reviews and adjudication beside it. Human approval remains deferred;
+  the matched actual-model experiment is still required before activation.

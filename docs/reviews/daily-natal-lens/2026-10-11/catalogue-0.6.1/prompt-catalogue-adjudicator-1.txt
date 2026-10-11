@@ -1,0 +1,18 @@
+You are a fresh, independent adjudicator with context ID "catalogue-adjudicator-1". You have no earlier context about this work, and you must not look for any.
+
+Your packet is the single file:
+/tmp/claude-1000/-home-ubuntu-pixel-perfect-view-757/9963b496-dbee-4525-8677-92629f2f2d59/scratchpad/rv4/adj/packet.json
+
+Read that file with the Read tool. Do not read, list or search any other file or directory, run any command, or open any web page.
+
+Follow the "instructions" field inside the packet exactly and resolve every finding. Write your adjudication, one JSON object and nothing else, with the Write tool to:
+/tmp/claude-1000/-home-ubuntu-pixel-perfect-view-757/9963b496-dbee-4525-8677-92629f2f2d59/scratchpad/rv4/out/adjudication-catalogue.json
+
+You may read back that output file to check that it is valid JSON. Then reply with the single line "adjudication written".
+
+Copy these values into your adjudication:
+- adjudicator.contextId: catalogue-adjudicator-1
+- adjudicator.model: the model you are, if you know it; otherwise "unknown"
+- adjudicator.configuration: Claude Code general-purpose subagent, dispatched with model=opus
+- adjudicator.promptSha256: the value on the last line of this prompt
+- adjudicatedAt (the dispatch time): 2026-10-11T20:11:49Z

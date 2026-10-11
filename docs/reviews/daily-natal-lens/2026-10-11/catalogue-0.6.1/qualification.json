@@ -1,0 +1,198 @@
+{
+  "protocolVersion": "daily-writing-ai-review-1",
+  "kind": "catalogue-qualification",
+  "humanReviewCompleted": false,
+  "humanApproval": "deferred",
+  "authorStructuralReview": "The catalogue author's agent editorial/structural review (docs/reviews/daily-natal-lens/catalogue-review.md) is separate evidence and is not counted here.",
+  "result": "AI catalogue review passed",
+  "passed": true,
+  "bundleVersion": "builtin-0.6.1",
+  "catalogueSha256": "b073d625c23b5bede66eba25e37bd3f3397263710dd63ab67d8af06b6e216500",
+  "instructionsSha256": "531e8cd663061f9f2fe16ba54e793344964d6041a10be8d6ac2f4a2db88ea563",
+  "entries": 62,
+  "compoundEntries": 2,
+  "reviewerCount": 2,
+  "reviewers": [
+    {
+      "contextId": "catalogue-e",
+      "model": "claude-opus-5-5",
+      "configuration": "Claude Code general-purpose subagent, dispatched with model=opus",
+      "promptSha256": "ef097ec88028696ac0162b8c760ac5a6ce0b0915830a505f8325caa90714ae39",
+      "packetSha256": "eb8bebfa7ca155d439ccbdb8ddf9322a450a768cece0baeeca47998acec4f77d",
+      "reviewedAt": "2026-10-11T19:39:35Z"
+    },
+    {
+      "contextId": "catalogue-f",
+      "model": "claude-opus-5-5",
+      "configuration": "Claude Code general-purpose subagent, dispatched with model=opus",
+      "promptSha256": "52ae56f89fe9476c72c0ddde2b117e0cd27434a9d0ece5e6101c2557410447f6",
+      "packetSha256": "c31c3b5178fa588f09275170f9587c656932557897c9ad29e89d95c35accb0d0",
+      "reviewedAt": "2026-10-11T19:54:24Z"
+    }
+  ],
+  "adjudication": {
+    "contextId": "catalogue-adjudicator-1",
+    "model": "claude-opus-5-5",
+    "configuration": "Claude Code general-purpose subagent, dispatched with model=opus",
+    "promptSha256": "561e299ee7b5c52c2558cb3c6da28049a9ebcf226550a53d7ef2c282813c8fb4",
+    "adjudicatedAt": "2026-10-11T20:11:49Z",
+    "resolutions": 2
+  },
+  "failures": [],
+  "minorFindings": [
+    {
+      "key": "nl-mercury-04",
+      "reviewer": "catalogue-e",
+      "finding": {
+        "findingId": "nl-mercury-04-style-1",
+        "passage": "preserving the point of a memory",
+        "category": "style",
+        "severity": "minor",
+        "explanation": "The first option is slightly opaque: a memory does not usually have a 'point', so a reader may need a moment to see that it means keeping clear why a remembered example matters to the explanation. The contrast with assuming shared context still comes through, and the phrase makes no claim about the reader's past, so this is wording rather than a defect.",
+        "proposedCorrection": "A familiar example may distinguish keeping clear why a remembered story matters from assuming its context is already shared."
+      }
+    },
+    {
+      "key": "nl-mars-07",
+      "reviewer": "catalogue-e",
+      "finding": {
+        "findingId": "nl-mars-07-style-1",
+        "passage": "An undecided next step",
+        "category": "style",
+        "severity": "minor",
+        "explanation": "This is the thinnest scene among the initiative entries: 'an undecided next step', together with 'how an action fits an exchange' and 'another position', names no concrete setting, so the reader has to supply the situation. It still describes an everyday decision point shared with someone else rather than a trait, so I count the scene check as met, but naming the situation would make it easier to recognize.",
+        "proposedCorrection": "Effort can become more directed by considering how an action fits a shared plan. A joint task with an undecided next step may distinguish coordinating with the other person's view from waiting for complete agreement before acting."
+      }
+    },
+    {
+      "key": "nl-mars-04",
+      "reviewer": "catalogue-e",
+      "finding": {
+        "findingId": "nl-mars-04-style-1",
+        "passage": "Effort can become clearer",
+        "category": "style",
+        "severity": "minor",
+        "explanation": "Effort itself does not become clearer; what becomes clearer is where the effort goes or what it is for. The intended meaning is recoverable, and 'an ordinary responsibility' is generic but still an everyday situation, so this is wording rather than a defect.",
+        "proposedCorrection": "Effort can find a clearer focus when it supports something that feels worth protecting."
+      }
+    },
+    {
+      "key": "nl-mercury-11",
+      "reviewer": "catalogue-e",
+      "finding": {
+        "findingId": "nl-mercury-11-style-1",
+        "passage": "the practical question that prompted it",
+        "category": "style",
+        "severity": "minor",
+        "explanation": "'it' could refer to the questioning, the method or the change of frame, and the passive 'a method is being questioned' leaves open who is questioning what. The contrast between reframing and losing the practical point still comes through, so this is wording rather than a defect.",
+        "proposedCorrection": "If a familiar method is being questioned, changing the frame may differ from losing the practical question that started the discussion."
+      }
+    },
+    {
+      "key": "nl-mercury-12",
+      "reviewer": "catalogue-e",
+      "finding": {
+        "findingId": "nl-mercury-12-style-1",
+        "passage": "leaving the reader without a point they can follow",
+        "category": "style",
+        "severity": "minor",
+        "explanation": "Because the lens is itself addressed to the person reading the daily reading, 'the reader' can be briefly mistaken for that person rather than for whoever reads the note. Context resolves it, so this is wording rather than a defect.",
+        "proposedCorrection": "A loosely phrased note may distinguish leaving room for nuance from leaving whoever reads it without a point they can follow."
+      }
+    },
+    {
+      "key": "nl-sun-11",
+      "reviewer": "catalogue-e",
+      "finding": {
+        "findingId": "nl-sun-11-style-1",
+        "passage": "questioning the arrangement",
+        "category": "style",
+        "severity": "minor",
+        "explanation": "'the arrangement' has no antecedent; the scene introduces 'a familiar method', so the reader has to infer that the two refer to the same thing. The distinction itself is clear, so this is wording rather than a defect.",
+        "proposedCorrection": "If a familiar method feels limiting, questioning the method may differ from needing every choice to be unconventional."
+      }
+    },
+    {
+      "key": "nl-venus-10",
+      "reviewer": "catalogue-f",
+      "finding": {
+        "findingId": "catalogue-f-nl-venus-10-01",
+        "passage": "A familiar arrangement",
+        "category": "style",
+        "severity": "minor",
+        "explanation": "'Arrangement' is generic. The scene passes because a familiar arrangement is recognizable at about the level of a routine and the distinction (valuing steadiness versus avoiding a new decision) refers clearly back to it, but a more concrete noun would make it easier to picture.",
+        "proposedCorrection": "A standing weekly plan may distinguish valuing its steadiness from keeping it solely because it requires no new decision."
+      }
+    },
+    {
+      "key": "nl-mars-07",
+      "reviewer": "catalogue-f",
+      "finding": {
+        "findingId": "catalogue-f-nl-mars-07-01",
+        "passage": "coordinating with another position",
+        "category": "style",
+        "severity": "minor",
+        "explanation": "'Another position' stands in for another person's view, and coordinating with a position reads awkwardly. The undecided next step and the wait for complete agreement are recognizable enough for the scene to pass, but this phrase could be plainer.",
+        "proposedCorrection": "coordinating with another person's view"
+      }
+    },
+    {
+      "key": "nl-venus-06",
+      "reviewer": "catalogue-f",
+      "finding": {
+        "findingId": "catalogue-f-nl-venus-06-01",
+        "passage": "An ordinary arrangement",
+        "category": "style",
+        "severity": "minor",
+        "explanation": "'An ordinary arrangement' could be a schedule, a room or a table setting. 'Care in its form' and 'every detail' point to a physical arrangement, so the scene passes, but naming one would make it sharper.",
+        "proposedCorrection": "A set table may distinguish appreciating care in its form from requiring every detail to be corrected before enjoying it."
+      }
+    }
+  ],
+  "resolvedDisputes": [
+    {
+      "reviewerContextId": "catalogue-f",
+      "findingId": "catalogue-f-nl-mars-04-01",
+      "key": "nl-mars-04",
+      "passage": "An ordinary responsibility may distinguish a chosen contribution from taking on the entire arrangement to keep it familiar.",
+      "resolution": "acceptable",
+      "explanation": "The mechanism grounds the lens in an everyday situation, 'An ordinary responsibility', and names two recognizable ways of handling it, 'a chosen contribution' versus 'taking on the entire arrangement to keep it familiar'; 'the entire arrangement' reads naturally as the shared setup that the responsibility and the contribution belong to. That is a generic but ordinary, recognizable scene of the same kind as the check's own example of a routine, not an abstract trait, and the proposed correction keeps the same scene with more specific nouns, so this is wording that could be clearer but still passes the check.",
+      "original": {
+        "findingId": "catalogue-f-nl-mars-04-01",
+        "passage": "An ordinary responsibility may distinguish a chosen contribution from taking on the entire arrangement to keep it familiar.",
+        "category": "missing_scene",
+        "severity": "substantive",
+        "explanation": "The only scene is the category 'an ordinary responsibility', and the distinction then turns on 'the entire arrangement', which the text never introduces. With the equally abstract opening ('something that feels worth protecting'), the reader has to invent both the situation and what the arrangement is. I am unsure this is an ordinary, recognizable scene in the way a reply, a list or a routine is, so the check is false.",
+        "proposedCorrection": "Name a concrete scene, for example: 'A shared weekly chore may distinguish doing a chosen part from taking on all of it so that it stays familiar.'"
+      }
+    },
+    {
+      "reviewerContextId": "catalogue-f",
+      "findingId": "catalogue-f-nl-moon-10-aspect-01-01",
+      "key": "nl-moon-10-aspect-01",
+      "passage": "An ordinary commitment may distinguish accepting useful support from taking on every obligation to keep the arrangement steady.",
+      "resolution": "acceptable",
+      "explanation": "The mechanism places the lens in an everyday moment and situation, 'when a response needs time to take shape' and 'An ordinary commitment', and names two recognizable ways of handling it, 'accepting useful support' versus 'taking on every obligation to keep the arrangement steady'; the support is the one introduced by 'Dependable structure can offer support' and the arrangement is the commitment's own. That is a generic but ordinary, recognizable scene rather than an abstract trait; more concrete nouns would be clearer, but the entry passes the check as written.",
+      "original": {
+        "findingId": "catalogue-f-nl-moon-10-aspect-01-01",
+        "passage": "An ordinary commitment may distinguish accepting useful support from taking on every obligation to keep the arrangement steady.",
+        "category": "missing_scene",
+        "severity": "substantive",
+        "explanation": "The scene is only the category 'an ordinary commitment'. 'Useful support' does not say what or whose support is meant, and 'the arrangement' has no antecedent, so the mechanism stays among abstractions (structure, support, commitment, obligation, arrangement) and the reader has to invent the situation. I am unsure it offers an ordinary, recognizable scene, so the check is false. The trine selector itself plausibly refines the sign's meaning toward supportive structure, and the text makes no claim about work, health or life.",
+        "proposedCorrection": "Use a concrete scene, for example: 'A regular weekly schedule may distinguish relying on the parts that already hold from taking on every extra task to keep it steady.'"
+      }
+    }
+  ],
+  "limitations": [
+    "AI catalogue approval is not human editorial approval, empirical temperament evidence or publication.",
+    "Fresh contexts using one model are separate assessments, not evidence of independent model families.",
+    "The checker validates bookkeeping; it does not establish that any reviewer judgment is true."
+  ],
+  "files": {
+    "reviewSha256": [
+      "ff7a2ef36d02d0b8faee17ad99cbe3a887abc8ad88ad9af81e195fc5ede246e8",
+      "e357c2b3379ddc736a91a6b6bbb1992fac2d5fdfc59353db15722018bcb9b04e"
+    ],
+    "adjudicationSha256": "6f6c843bf94a9ace5df1aa8f83d21e99cb2664a3dda9e2603933c2ba9502c03c"
+  }
+}
