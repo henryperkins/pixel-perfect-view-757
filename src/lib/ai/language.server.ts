@@ -240,7 +240,7 @@ export const FEATURE_ESSAY_VERSION = "essay-6";
 const FEATURE_SCHEMA: JsonSchemaObject = {
   type: "object",
   properties: {
-    paragraphs: READING_SCHEMA.properties.paragraphs,
+    paragraphs: READING_SCHEMA.properties["paragraphs"],
     reflection_question: {
       type: "string",
       description: "One question about the reader's own life, ending in a question mark. Not a chapter title or writing instruction.",
