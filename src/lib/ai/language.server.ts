@@ -274,6 +274,25 @@ function mentionsRisingAngle(text: string): boolean {
   );
 }
 
+/** A structural clarity rule: a current measurement cannot share an exact-time sentence. */
+function dailyTimingProblem(sentences: string[]): DailyProblem | null {
+  const orbReference = /\borb\b|-?\d+(?:\.\d+)?\s*-?\s*(?:°|degrees?\b)/i;
+  const exactTiming =
+    /\b\d{4}-\d{2}-\d{2}\b|\bexact\s+(?:on|in|at|today|tomorrow|yesterday|date|pass|alignment|contact|timing|moment|point|instant)\b|\bexact\s+\d+\s+days?\s+ago\b|\b(?:is|was|becomes?|became|reaches?|reached|be|being)\s+exact\b/i;
+  const exactAspect = new RegExp(`\\bexact\\s+(?:${ASPECT_NAMES})\\b`, "i");
+  if (
+    sentences.some(
+      (sentence) =>
+        orbReference.test(sentence) && (exactTiming.test(sentence) || exactAspect.test(sentence)),
+    )
+  )
+    return rejection(
+      "timing",
+      "draft must separate current orb and exact timing into different sentences",
+    );
+  return null;
+}
+
 /** Bounded contradiction checks: IDs and lexical references cannot prove arbitrary prose. */
 function dailyReferenceProblem(
   text: string,
@@ -427,11 +446,12 @@ function dailyDraft(
     if (safetyPass(text).flagged.length)
       return rejectParagraph("safety", "draft failed the language safety check");
     const ids = [...new Set(p.facts as string[])];
-    const problem = dailyReferenceProblem(
-      text,
-      ids.map((id) => byId.get(id)!),
-      input.suppression,
-    );
+    const problem =
+      dailyReferenceProblem(
+        text,
+        ids.map((id) => byId.get(id)!),
+        input.suppression,
+      ) ?? dailyTimingProblem(sentences);
     if (problem) return { ...problem, paragraph: index + 1 };
     kept.push(text);
     citations.push({ paragraph: kept.length, facts: ids });
@@ -494,6 +514,7 @@ async function generateDailyProse(
     `For a paragraph using the strongest cycle's supplied phase and timing wording, include its cycle alongside the relevant editorial references: "facts": [${timingCitationIds.map((id) => JSON.stringify(id)).join(", ")}]. Cite only IDs and values supplied above.`,
     "Do not write a headline, reflection question, local-time context or wellbeing framing; those are provided separately.",
     "Do not introduce sign or individual house placements. Quote orb degrees as digit literals and ISO dates only when present in a cycle cited by that paragraph.",
+    "An orb is the angular deviation from the named aspect measured at this reading's calculation time; the calculated exact date is a separate calendar estimate. If using both, put the current orb and any exact date or relative exact timing in separate sentences. Never attach the current orb to the future or past exact pass. Do not infer an exact date from the phase label when the facts say no exact date was found.",
     input.suppression.angles
       ? "Angle claims are suppressed: do not mention Ascendant, rising sign (including shorthand such as 'your rising'), Midheaven or other angles."
       : "",

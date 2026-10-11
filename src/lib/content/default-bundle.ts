@@ -41,14 +41,11 @@ export function aspectFamily(aspect: string): string {
 }
 
 export const DEFAULT_BUNDLE: ContentBundle = {
-  version: "builtin-0.3.0",
+  version: "builtin-0.4.0",
   phases: {
-    approaching:
-      "This window is building. The pattern is not fully in place yet, so what you notice now is mostly anticipation.",
-    exact:
-      "This is the tightest point of the window. If the pattern is going to be legible anywhere, it is here.",
-    separating:
-      "The window is releasing. Whatever this period surfaced is now settling into its ordinary shape.",
+    approaching: "The contact is in its approaching phase within the calculated window.",
+    exact: "The contact is close to exact within the calculated window.",
+    separating: "The contact is in its separating phase within the calculated window.",
   },
   natal: {
     sun_placement:

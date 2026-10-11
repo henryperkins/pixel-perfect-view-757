@@ -1,7 +1,7 @@
 /** Measurement identifiers describe the current brief and guards, not a cache key. */
 export const DAILY_DIAGNOSTICS_VERSION = 1;
-export const DAILY_PROMPT_VERSION = "daily-astro-body-3";
-export const DAILY_VALIDATOR_VERSION = "daily-reference-2";
+export const DAILY_PROMPT_VERSION = "daily-astro-body-4";
+export const DAILY_VALIDATOR_VERSION = "daily-reference-3";
 export const MAX_DAILY_DURATION_MS = 120_000;
 export const DAILY_GATEWAY_TIMEOUT_MS = 20_000;
 export const LANGUAGE_MODEL = "google/gemini-3.7-flash";
@@ -32,6 +32,7 @@ export const DAILY_DIAGNOSTIC_CODES = [
   "worded_degree",
   "orb",
   "date",
+  "timing",
 ] as const;
 export type DailyDiagnosticCode = (typeof DAILY_DIAGNOSTIC_CODES)[number];
 export type DailyGatewayCode =
@@ -91,6 +92,7 @@ const LABELS: Record<DailyDiagnosticCode, string> = {
   worded_degree: "Uncheckable worded degree value",
   orb: "Orb absent from cited cycles",
   date: "Date absent from cited cycles",
+  timing: "Current orb and exact timing combined in one sentence",
 };
 export function diagnosticLabel(code: DailyDiagnosticCode): string {
   return LABELS[code];

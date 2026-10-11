@@ -77,13 +77,17 @@ or copy comparisons.
 
 The JSON report records the effective facts, production prompt and response schema, selected cycle keys, template body, displayed body, citations, bounded rejection code, prompt/validator/bundle versions, and configured gateway timeout budget. Request headers and credentials are excluded. Attempt durations are local replay timings, not live service latency. Skipped cases are separate from attempts, and `liveAcceptanceRate` is always `null`.
 
-Daily prompt `daily-astro-body-3` defines plain, warm and clinical voices, each
+Daily prompt `daily-astro-body-4` defines plain, warm and clinical voices, each
 with a short style-only example. The effective bundle's curated meaning precedes
 the calculation references. The opening develops that meaning before technical
 detail; domain, phase and timing receive space only when they add a distinct idea.
-Standard and technical depth have separate length/detail guidance.
+Standard and technical depth have separate length/detail guidance. The current
+brief distinguishes conversational warmth from extra emotional claims, uses
+familiar clinical wording, and discourages automatic repetition of the first
+interpretation sentence. Everyday scenes remain conditional; a planet does not
+establish what the reader feels or cause a decision, recovery or moment of clarity.
 
-Validator `daily-reference-2` accepts two to four paragraphs of one to four
+Validator `daily-reference-3` accepts two to four paragraphs of one to four
 complete sentences. The first paragraph still requires C1 and I1; every paragraph
 requires supplied references. D1/P1/T1 coverage is optional, but the prompt requires
 them wherever their claims are used. A paragraph naming a planet, aspect, orb or
@@ -93,8 +97,20 @@ now catches noun-like shorthand such as “your rising shapes…” while allowi
 ordinary phrases such as “your rising workload”. This is a bounded lexical check,
 not a complete test of semantic support or suppression paraphrases.
 
-Built-in copy `builtin-0.3.0` gives common contacts concrete observational scenes
-and adds four missing supportive counterparts. Published active bundles remain
+The fact sheet labels the orb at the reading's calculation time separately from
+the calculated exact date. The prompt requires these in separate sentences.
+The `timing` rejection enforces that structural distinction for a sentence that
+combines an orb/degree reference with an ISO date or recognized exact-time wording.
+Parentheses and semicolons do not separate sentences. Correctly split statements,
+qualified rounding, and precision wording such as “the exact current orb” remain
+valid. This bounded rule does not check every temporal paraphrase or prove that
+each degree/date belongs to the right clause. A close, exact-phase contact with no
+scanned exact date cannot acquire one from the phase label alone.
+
+Built-in copy `builtin-0.4.0` retains the common-contact scenes and four supportive
+counterparts from 0.3.0. Its phase copy now describes calculated timing rather than
+anticipation or emotional resolution; arc copy likewise describes a position in
+the window instead of promising when a pattern becomes legible. Published active bundles remain
 authoritative: their interpretation arrays replace the built-in arrays. The daily
 cache includes the effective bundle version, so the built-in release starts new
 readings for accounts using that bundle while retaining prior rows and feedback.

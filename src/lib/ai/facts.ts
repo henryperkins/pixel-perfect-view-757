@@ -56,14 +56,16 @@ export function readingFacts(
     const exactDate = c.exact_at ? localDayString(new Date(c.exact_at), timeZone) : null;
     const parts = [
       `transiting ${c.transit_body} ${c.aspect} natal ${c.natal_point}`,
-      `orb ${c.orb.toFixed(2)} degrees`,
+      `Current orb at the reading's calculation time: ${c.orb.toFixed(2)} degrees`,
       `phase ${c.phase}`,
       `domain ${c.domain}`,
-      exactDate ? `exact on ${exactDate}` : "no exact date inside the window",
+      exactDate
+        ? `Calculated exact date: ${exactDate}`
+        : "No exact date was found inside the scanned window",
     ];
     facts.push({
       id: `C${i + 1}`,
-      statement: parts.join(", "),
+      statement: `${parts.join(". ")}.`,
       cycle: {
         transitBody: c.transit_body,
         natalPoint: c.natal_point,

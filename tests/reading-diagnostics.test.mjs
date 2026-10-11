@@ -62,8 +62,8 @@ function diagnostics(output, expected) {
   const d = output.meta.diagnostics;
   assert.ok(d, "Daily diagnostics are attached");
   assert.equal(d.version, 1);
-  assert.equal(d.promptVersion, "daily-astro-body-3");
-  assert.equal(d.validatorVersion, "daily-reference-2");
+  assert.equal(d.promptVersion, "daily-astro-body-4");
+  assert.equal(d.validatorVersion, "daily-reference-3");
   assert.equal(d.gatewayTimeoutMs, 20_000);
   assert.equal(d.model, language.LANGUAGE_MODEL);
   for (const [key, value] of Object.entries(expected)) assert.equal(d[key], value, key);
@@ -350,6 +350,19 @@ const rejected = [
     }),
     1,
   ],
+  [
+    "timing",
+    () => ({
+      paragraphs: [
+        {
+          ...paragraphs()[0],
+          text: "The contact is exact on 2026-10-15 at an orb of 1.25 degrees.",
+        },
+        ...paragraphs().slice(1),
+      ],
+    }),
+    1,
+  ],
 ];
 for (const [code, fixture, paragraph] of rejected)
   test(`validator ${code} records a closed rejection without changing fallback`, async () => {
@@ -390,9 +403,9 @@ test("diagnostic exports and reader validate the exact closed contract", async (
   const module = await vite.ssrLoadModule("/src/lib/ai/diagnostics.ts");
   const result = await language.generateReadingProse(input());
   assert.equal(module.DAILY_DIAGNOSTICS_VERSION, 1);
-  assert.equal(module.DAILY_PROMPT_VERSION, "daily-astro-body-3");
+  assert.equal(module.DAILY_PROMPT_VERSION, "daily-astro-body-4");
   assert.equal(module.DAILY_GATEWAY_TIMEOUT_MS, 20_000);
-  assert.equal(module.DAILY_VALIDATOR_VERSION, "daily-reference-2");
+  assert.equal(module.DAILY_VALIDATOR_VERSION, "daily-reference-3");
   assert.ok(module.DAILY_DIAGNOSTIC_CODES.includes("accepted"));
   assert.deepEqual(module.readDailyDiagnostics(result.meta.diagnostics), result.meta.diagnostics);
   for (const invalid of [
@@ -427,8 +440,8 @@ test("diagnostics reader permits safe future labels and removes unknown fields",
   const d = (await language.generateReadingProse(input())).meta.diagnostics;
   const future = {
     ...d,
-    promptVersion: "daily-astro-body-3",
-    validatorVersion: "daily-reference-2",
+    promptVersion: "daily-astro-body-4",
+    validatorVersion: "daily-reference-3",
     model: "provider/model-next",
     raw: sentinel,
   };

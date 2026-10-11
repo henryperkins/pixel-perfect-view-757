@@ -404,7 +404,7 @@ test("local exact-date facts use the consented calendar zone", () => {
   const facts = readingFacts(chart, plan(), "America/Los_Angeles");
   const first = facts.find((f) => f.id === "C1");
   assert.equal(first.cycle.exactDate, "2026-10-14");
-  assert.match(first.statement, /exact on 2026-10-14/);
+  assert.match(first.statement, /Calculated exact date: 2026-10-14/);
 });
 
 for (const text of [
@@ -424,6 +424,50 @@ test("valid exact date and qualified rounded orb are accepted", async () => {
   draft.paragraphs[0].text =
     "Saturn square natal Sun has an orb of about 1.3 degrees. The contact is exact on 2026-10-15.";
   assert.equal((await generateReadingProse(input())).meta.mode, "model");
+});
+
+for (const wording of [
+  "This transit is currently building toward exact alignment on 2026-10-15 at an orb of 1.25 degrees.",
+  "The orb is currently 1.25 degrees and the contact reaches exact tomorrow.",
+  "The current orb is 1.25°; the exact pass was yesterday.",
+  "The current orb is 1.25 degrees (the calculated exact date is 2026-10-15).",
+  "The contact becomes exact in 4 days with an orb of 1.25 degrees.",
+  "Current orb is 1.25 degrees, exact 4 days ago.",
+  "The calculated exact date is 2026-10-15, with a current orb of about 1.3 degrees.",
+  "Saturn makes an exact square to the Sun tomorrow at an orb of 1.25 degrees.",
+  "The contact's exact moment tomorrow has an orb of 1.25 degrees.",
+  "Current orb is 1.25 degrees at the exact point tomorrow.",
+])
+  test(`current measurement is kept separate from exact timing: ${wording}`, async () => {
+    draft.paragraphs[0].text = wording;
+    const output = await generateReadingProse(input());
+    assert.equal(output.meta.mode, "template");
+    assert.equal(output.meta.diagnostics.code, "timing");
+    assert.equal(output.meta.diagnostics.paragraph, 1);
+  });
+
+for (const wording of [
+  "Today's calculated orb is 1.25 degrees. The calculated exact date is 2026-10-15.",
+  "The exact current orb is 1.25°. The contact is approaching.",
+  "The orb is exactly 1.25 degrees. The contact is approaching.",
+  "The current orb is about 1.3 degrees. The calculated exact date is 2026-10-15.",
+  "The exact wording can require a degree of effort. A familiar role offers a useful comparison.",
+  "The calculated arc position is 30% and the exact date is 2026-10-15.",
+])
+  test(`clear current measurement remains valid: ${wording}`, async () => {
+    draft.paragraphs[0].text = wording;
+    assert.equal((await generateReadingProse(input())).meta.mode, "model");
+  });
+
+test("daily facts and prompt distinguish the calculation's orb from its exact date", async () => {
+  const readingInput = input();
+  const first = readingInput.facts.find((fact) => fact.id === "C1");
+  assert.match(first.statement, /Current orb at the reading's calculation time: 1\.25 degrees\./);
+  assert.match(first.statement, /Calculated exact date: 2026-10-15\./);
+  assert.equal(first.cycle.orb, 1.25);
+  assert.equal(first.cycle.exactDate, "2026-10-15");
+  await generateReadingProse(readingInput);
+  assert.match(requests.at(-1).messages[1].content, /separate sentences/i);
 });
 
 test("everyday counts, household routines and ordinary opposition are not astronomy claims", async () => {

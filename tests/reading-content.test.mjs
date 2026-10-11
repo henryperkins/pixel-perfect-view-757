@@ -120,7 +120,7 @@ test("common-domain framing avoids regulated claims when it joins safe source pa
 });
 
 test("built-in daily copy gets a new release identity without changing the natal catalog shape", () => {
-  assert.equal(DEFAULT_BUNDLE.version, "builtin-0.3.0");
+  assert.equal(DEFAULT_BUNDLE.version, "builtin-0.4.0");
   assert.deepEqual(Object.keys(DEFAULT_BUNDLE.natal).sort(), [
     "ascendant_placement",
     "moon_placement",
@@ -128,4 +128,84 @@ test("built-in daily copy gets a new release identity without changing the natal
   ]);
   const reading = assembleReading(chart, [contact("saturn", "sun", "square", "identity")], context);
   assert.equal(reading.release_version, DEFAULT_BUNDLE.version);
+});
+
+test("phase and arc copy describe calculated timing without assuming a reader's experience", () => {
+  for (const [phase, days, arc] of [
+    ["approaching", 3, 0.1],
+    ["exact", 0, 0.5],
+    ["separating", -2, 0.8],
+  ]) {
+    const reading = assembleReading(
+      chart,
+      [
+        {
+          ...contact("saturn", "sun", "square", "identity"),
+          phase,
+          days_to_exact: days,
+          arc_position: arc,
+        },
+      ],
+      { ...context, depth: "technical" },
+    );
+    assert.doesNotMatch(
+      reading.editorial.phase.text + reading.editorial.timing,
+      /anticipation|what you notice|settling|legible|mostly potential|winding down/i,
+    );
+    assert.match(reading.editorial.timing, /Current orb at the reading's calculation time:/);
+    assert.match(reading.editorial.timing, /calculated window/i);
+  }
+});
+
+test("a tight exact-phase contact without a scanned pass does not acquire an exact date", () => {
+  const reading = assembleReading(
+    chart,
+    [
+      {
+        ...contact("saturn", "sun", "square", "identity"),
+        phase: "exact",
+        exact_at: null,
+        days_to_exact: null,
+        orb: 0.25,
+        arc_position: null,
+      },
+    ],
+    { ...context, depth: "technical" },
+  );
+  const facts = readingFacts(chart, reading);
+  assert.equal(facts.find((fact) => fact.id === "C1").cycle.exactDate, null);
+  assert.match(facts.find((fact) => fact.id === "C1").statement, /No exact date was found/);
+  assert.match(reading.editorial.timing, /no exact pass in this scan/);
+  assert.match(reading.editorial.timing, /Current orb at the reading's calculation time: 0\.25°/);
+  assert.doesNotMatch(
+    reading.editorial.phase.text + reading.editorial.timing,
+    /exact today|exact on|exact date is|zero degrees|0°/i,
+  );
+});
+
+test("same-day timing and a nonzero calculation-time orb remain separate facts", () => {
+  const reading = assembleReading(
+    chart,
+    [
+      {
+        ...contact("saturn", "sun", "square", "identity"),
+        phase: "exact",
+        days_to_exact: 0,
+        exact_at: "2026-10-11T01:00:00Z",
+        orb: 0.42,
+      },
+    ],
+    { ...context, depth: "technical" },
+  );
+  assert.equal(
+    readingFacts(chart, reading).find((fact) => fact.id === "C1").cycle.exactDate,
+    "2026-10-11",
+  );
+  assert.match(reading.editorial.timing, /^Timing: exact today\./);
+  assert.match(reading.editorial.timing, /Current orb at the reading's calculation time: 0\.42°\./);
+  assert.ok(
+    ![
+      ...new Intl.Segmenter("en", { granularity: "sentence" }).segment(reading.editorial.timing),
+    ].some(({ segment }) => /exact today/.test(segment) && /0\.42/.test(segment)),
+  );
 });

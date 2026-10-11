@@ -21,13 +21,13 @@ function arcParagraph(c: CycleInstance, technical: boolean): string {
       : Math.round(c.arc_position * 100);
   const where =
     pct === null
-      ? "The full length of this window extends past the range that was scanned, so read its edges as open."
+      ? "The scanned range does not contain both edges of the calculated window."
       : pct <= 25
-        ? "This window is near its start, where it is still mostly potential."
+        ? "This reading falls near the start of the calculated window."
         : pct <= 60
-          ? "This window is in its middle, where it is most legible."
-          : "This window is in its back half, where it is winding down.";
-  return `Timing: ${phrase}. ${where}${technical && pct !== null ? ` The calculated arc position is ${pct}%, with an orb of ${c.orb}\u00b0.` : ""}`;
+          ? "This reading falls in the middle part of the calculated window."
+          : "This reading falls in the later part of the calculated window.";
+  return `Timing: ${phrase}. ${where}${technical ? `${pct !== null ? ` The calculated arc position is ${pct}%.` : ""} Current orb at the reading's calculation time: ${c.orb}\u00b0.` : ""}`;
 }
 import { assertUse, isPermitted, type AllowedUse } from "./registry";
 
