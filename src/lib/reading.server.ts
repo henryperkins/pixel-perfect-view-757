@@ -295,7 +295,7 @@ export function assembleReading(
 
     if (bands.length) {
       contextParagraphs.push(
-        `You reported ${bands.join(" and ")} today. That sits beside the reading as context you chose to record \u2014 it is not a diagnosis, it does not change a single degree of the calculation, and it is deleted after 180 days.`,
+        `You reported ${bands.join(" and ")} today. This is context you chose to record for reflection; it leaves the chart calculation unchanged and is deleted after 180 days.`,
       );
     }
 
