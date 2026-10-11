@@ -1,8 +1,17 @@
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useRef, useState } from "react";
 
+import {
+  LanguageProviderChoice,
+  type LanguageProviderStatus,
+} from "@/components/pattern/LanguageProviderChoice";
 import { Button } from "@/components/ui/button";
-import { diagnosticLabel, readDailyDiagnostics } from "@/lib/ai/diagnostics";
+import {
+  diagnosticLabel,
+  languageModel,
+  readDailyDiagnostics,
+  type LanguageProvider,
+} from "@/lib/ai/diagnostics";
 import {
   combineReadingEvaluationResults,
   READING_EVALUATION_CATALOG,
@@ -221,8 +230,13 @@ function EvaluationCase({ result }: { result: ReadingEvaluationCaseResult }) {
 }
 
 /** A manual, page-memory run: one case request at a time, with no retries. */
-export function ReadingEvaluation() {
+export function ReadingEvaluation({
+  providerStatus,
+}: {
+  providerStatus?: LanguageProviderStatus | undefined;
+}) {
   const runCase = useServerFn(runReadingEvaluationCase);
+  const [provider, setProvider] = useState<LanguageProvider>("lovable");
   const [state, setState] = useState<RunState>(INITIAL_STATE);
   const [bundleSource, setBundleSource] = useState<ReadingEvaluationBundleSource>("active");
   const [downloadError, setDownloadError] = useState<string | null>(null);
@@ -248,9 +262,10 @@ export function ReadingEvaluation() {
     const control = { stop: false };
     activeRun.current = control;
     setDownloadError(null);
-    // Freeze the case sequence and copy choice before the first request.
+    // Freeze the case sequence, copy choice and provider before the first request.
     const cases = READING_EVALUATION_CATALOG.map((fixed) => ({ ...fixed }));
     const frozenSource = bundleSource;
+    const runProvider = provider;
     let results: ReadingEvaluationCaseResult[] = [];
     const publish = (
       status: RunStatus,
@@ -267,7 +282,9 @@ export function ReadingEvaluation() {
         publish("running", fixed.id);
         let result: ReadingEvaluationCaseResult;
         try {
-          result = await runCase({ data: { caseId: fixed.id, bundleSource: frozenSource } });
+          result = await runCase({
+            data: { caseId: fixed.id, bundleSource: frozenSource, provider: runProvider },
+          });
         } catch {
           publish(
             "error",
@@ -281,6 +298,7 @@ export function ReadingEvaluation() {
         if (
           result?.case?.id !== fixed.id ||
           result.metadata?.bundleSource !== frozenSource ||
+          result.metadata?.model !== languageModel(runProvider) ||
           !diagnostics ||
           (diagnostics.outcome === "accepted") !== (result.case.output?.mode === "model")
         ) {
@@ -370,8 +388,8 @@ export function ReadingEvaluation() {
         Synthetic reading evaluation
       </h3>
       <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-        Run the {READING_EVALUATION_CATALOG.length} fixed synthetic cases against the configured
-        model and the evaluation copy chosen below, one at a time: up to{" "}
+        Run the {READING_EVALUATION_CATALOG.length} fixed synthetic cases against the selected
+        provider's model and the evaluation copy chosen below, one at a time: up to{" "}
         {READING_EVALUATION_CATALOG.filter((row) => row.expectsModel).length} model calls. Quiet
         days and cases without a published primary interpretation skip the model. This uses
         synthetic chart inputs and no account readings or notes. Results stay in this page until you
@@ -411,6 +429,14 @@ export function ReadingEvaluation() {
           {COPY_CHOICES.find((choice) => choice.value === bundleSource)?.note} The choice is fixed
           when a run starts.
         </p>
+      </div>
+      <div className="mt-4">
+        <LanguageProviderChoice
+          value={provider}
+          onChange={setProvider}
+          disabled={busy}
+          configured={providerStatus}
+        />
       </div>
       <div className="mt-4 flex flex-wrap gap-3">
         <Button type="button" onClick={() => void start()} disabled={busy} className="min-h-11">

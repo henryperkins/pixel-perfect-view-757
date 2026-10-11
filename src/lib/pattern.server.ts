@@ -50,7 +50,12 @@ import { assertUse, isPermitted, LAUNCH_SOURCES, PROHIBITED_SOURCES, SOURCE_MAP 
 import { checkInInputSchema } from "./check-in";
 import { daysToLocalDate, localDayString, localNoon, validTimeZone, zonedToUtc } from "./local-day";
 import { summarizeReadingQuality, type QualityReading, type QualityFeedback } from "./ai/quality";
-import { diagnosticLabel, type DailyGatewayCode } from "./ai/diagnostics";
+import {
+  diagnosticLabel,
+  LANGUAGE_PROVIDERS,
+  type DailyGatewayCode,
+  type LanguageProvider,
+} from "./ai/diagnostics";
 import {
   DAILY_READING_PLAN_VERSION,
   DAILY_PROMPT_VERSION,
@@ -1902,12 +1907,15 @@ export async function runReadingEvaluationCase(
   userId: string,
   caseId: string,
   bundleSource: ReadingEvaluationBundleSource = "active",
+  provider: LanguageProvider = "lovable",
 ) {
   if (!(await isAdmin(db, userId))) {
     throw new Error("Only admins can run a synthetic reading evaluation.");
   }
   if (!(READING_EVALUATION_BUNDLE_SOURCES as readonly unknown[]).includes(bundleSource))
     throw new Error("Unknown synthetic evaluation bundle.");
+  if (!(LANGUAGE_PROVIDERS as readonly unknown[]).includes(provider))
+    throw new Error("Unknown language provider.");
   const evaluation = await import("./ai/reading-evaluation.server");
   // Evaluation-only copy choice. The two shipped bundles need no records read; nothing
   // here publishes, activates or caches content, so production copy is unaffected.
@@ -1917,8 +1925,17 @@ export async function runReadingEvaluationCase(
       : bundleSource === "natal-candidate"
         ? (await import("./content/natal-candidate-bundle")).NATAL_CANDIDATE_BUNDLE
         : await activeBundle(db, { requireSuccessfulRead: true });
-  const result = await evaluation.runSyntheticEvaluationCase(caseId, bundle);
+  const result = await evaluation.runSyntheticEvaluationCase(caseId, bundle, provider);
   return { ...result, metadata: { ...result.metadata, bundleSource } };
+}
+
+/** Which admin language providers have a server key; never returns key material. */
+export async function listLanguageProviders(db: DB, userId: string) {
+  if (!(await isAdmin(db, userId))) {
+    throw new Error("Only admins can view language providers.");
+  }
+  const { languageProviderStatus } = await import("./ai/language.server");
+  return { providers: languageProviderStatus() };
 }
 
 /**
@@ -2320,16 +2337,18 @@ export async function listDrafts(db: DB, userId: string) {
  * published: the draft is stored for review, and publishing it creates an
  * ordinary content release that the existing rollback controls can activate.
  */
-export async function draftRelease(db: DB, userId: string) {
+export async function draftRelease(db: DB, userId: string, provider: LanguageProvider = "lovable") {
   if (!(await isAdmin(db, userId))) {
     throw new Error("Only admins can draft a release.");
   }
+  if (!(LANGUAGE_PROVIDERS as readonly unknown[]).includes(provider))
+    throw new Error("Unknown language provider.");
 
   const base = await activeBundle(db);
   const { generateBundleEntries } = await import("./ai/language.server");
   // Only the reusable family slots are redrafted. Reviewed exact-aspect entries
   // and the synthesis rules that depend on them stay with editorial review.
-  const drafted = await generateBundleEntries(DRAFT_SLOTS);
+  const drafted = await generateBundleEntries(DRAFT_SLOTS, provider);
 
   // A repeated or unpublishable entry is dropped on its own rather than
   // discarding every other entry in the draft.

@@ -7,13 +7,19 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
+import {
+  LanguageProviderChoice,
+  type LanguageProviderStatus,
+} from "@/components/pattern/LanguageProviderChoice";
 import { ReadingEvaluation } from "@/components/pattern/ReadingEvaluation";
+import type { LanguageProvider } from "@/lib/ai/diagnostics";
 import {
   activateContentRelease,
   discardContentDraft,
   draftContentRelease,
   fetchContentDrafts,
   fetchEdgePlane,
+  fetchLanguageProviders,
   fetchReadingQuality,
   fetchReleases,
   publishContentDraft,
@@ -490,6 +496,20 @@ function EdgePlane() {
   );
 }
 
+/** Admin-only key presence for the provider choices; never key material. */
+function useLanguageProviderStatus(isAdmin: boolean): LanguageProviderStatus | undefined {
+  const { session } = useAuth();
+  const providersFn = useServerFn(fetchLanguageProviders);
+  const query = useQuery({
+    queryKey: ["language-providers", session?.userId],
+    queryFn: () => providersFn({}),
+    enabled: Boolean(isAdmin && session),
+  });
+  return query.data
+    ? Object.fromEntries(query.data.providers.map((p) => [p.id, p.configured]))
+    : undefined;
+}
+
 /** Bounded metadata describes persisted generations, never reading text or private context. */
 function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
   const { session } = useAuth();
@@ -499,6 +519,7 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
     queryFn: () => qualityFn({}),
     enabled: Boolean(isAdmin && session),
   });
+  const providerStatus = useLanguageProviderStatus(isAdmin);
 
   if (!isAdmin || (query.data && !query.data.isAdmin)) return null;
   const data = query.data && query.data.isAdmin ? query.data : null;
@@ -986,7 +1007,7 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
           ) : null}
         </>
       )}
-      <ReadingEvaluation key={session?.userId ?? "anonymous"} />
+      <ReadingEvaluation key={session?.userId ?? "anonymous"} providerStatus={providerStatus} />
     </section>
   );
 }
@@ -1002,6 +1023,8 @@ function DraftPlane({ isAdmin }: { isAdmin: boolean }) {
   const publishFn = useServerFn(publishContentDraft);
   const discardFn = useServerFn(discardContentDraft);
   const queryClient = useQueryClient();
+  const [provider, setProvider] = useState<LanguageProvider>("lovable");
+  const providerStatus = useLanguageProviderStatus(isAdmin);
 
   const query = useQuery({ queryKey: ["content-drafts"], queryFn: () => listFn({}) });
   const drafts = query.data?.drafts ?? [];
@@ -1012,7 +1035,7 @@ function DraftPlane({ isAdmin }: { isAdmin: boolean }) {
   };
 
   const draft = useMutation({
-    mutationFn: () => draftFn({}),
+    mutationFn: () => draftFn({ data: { provider } }),
     onSuccess: (d) => {
       toast.success(`Drafted ${d.entries} entries with ${d.model}`);
       refresh();
@@ -1042,16 +1065,24 @@ function DraftPlane({ isAdmin }: { isAdmin: boolean }) {
 
   return (
     <section className="mt-12 border-t border-rule pt-6">
-      <div className="flex flex-wrap items-baseline justify-between gap-3">
+      <div className="flex flex-wrap items-start justify-between gap-3">
         <h2 className="technical text-muted-foreground">Drafted copy · language layer</h2>
-        <button
-          type="button"
-          onClick={() => draft.mutate()}
-          disabled={draft.isPending}
-          className="technical border border-rule px-3 py-1.5 text-foreground transition-colors hover:bg-evidence disabled:opacity-50"
-        >
-          {draft.isPending ? "Drafting…" : "Draft a release"}
-        </button>
+        <div className="flex min-w-0 flex-wrap items-center gap-3">
+          <LanguageProviderChoice
+            value={provider}
+            onChange={setProvider}
+            disabled={draft.isPending}
+            configured={providerStatus}
+          />
+          <button
+            type="button"
+            onClick={() => draft.mutate()}
+            disabled={draft.isPending}
+            className="technical border border-rule px-3 py-1.5 text-foreground transition-colors hover:bg-evidence disabled:opacity-50"
+          >
+            {draft.isPending ? "Drafting…" : "Draft a release"}
+          </button>
+        </div>
       </div>
       <p className="prose-reading mt-3 text-xs text-muted-foreground">
         The model writes mechanism and question copy for each cycle slot; anything that predicts,

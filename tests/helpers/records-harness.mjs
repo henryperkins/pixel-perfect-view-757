@@ -12,11 +12,14 @@ const projectRoot =
 const projectRequire = createRequire(join(projectRoot, "package.json"));
 const { createServer } = await import(pathToFileURL(projectRequire.resolve("vite")).href);
 const gatewayURL = "https://ai.gateway.lovable.dev/v1/chat/completions";
+const geminiEnterpriseURL =
+  "https://aiplatform.googleapis.com/v1/publishers/google/models/gemini-3.7-flash:generateContent";
 const envNames = [
   "PATTERN_ROOT_KEY",
   "PATTERN_WORKFLOW_URL",
   "PATTERN_WORKFLOW_SECRET",
   "LOVABLE_API_KEY",
+  "GEMINI_ENTERPRISE_API_KEY",
   "SWISS_EPHEMERIS_URL",
   "SWISS_EPHEMERIS_KEY",
 ];
@@ -34,10 +37,12 @@ export async function createRecordsHarness() {
   const userB = "local-reading-user-b";
   const requests = [];
   const gatewayRequests = [];
+  const geminiEnterpriseRequests = [];
   const swissRequests = [];
   let sqlite;
   let vite;
   let gatewayHandler = null;
+  let geminiEnterpriseHandler = null;
   let swissHandler = null;
   let fault = null;
   let closed = false;
@@ -45,7 +50,12 @@ export async function createRecordsHarness() {
   process.env.PATTERN_ROOT_KEY = randomBytes(32).toString("hex");
   process.env.PATTERN_WORKFLOW_URL = testURL.replace(/\/d1\/query$/, "");
   process.env.PATTERN_WORKFLOW_SECRET = secret;
-  for (const name of ["LOVABLE_API_KEY", "SWISS_EPHEMERIS_URL", "SWISS_EPHEMERIS_KEY"])
+  for (const name of [
+    "LOVABLE_API_KEY",
+    "GEMINI_ENTERPRISE_API_KEY",
+    "SWISS_EPHEMERIS_URL",
+    "SWISS_EPHEMERIS_KEY",
+  ])
     delete process.env[name];
 
   globalThis.fetch = async (input, init = {}) => {
@@ -59,6 +69,11 @@ export async function createRecordsHarness() {
       const body = JSON.parse(String(init.body));
       gatewayRequests.push(body);
       return gatewayHandler(body, init);
+    }
+    if (url === geminiEnterpriseURL && geminiEnterpriseHandler) {
+      const body = JSON.parse(String(init.body));
+      geminiEnterpriseRequests.push(body);
+      return geminiEnterpriseHandler(body, init);
     }
     const workflowBase = process.env.PATTERN_WORKFLOW_URL;
     if (workflowBase && (url === `${workflowBase}/pointer` || url === `${workflowBase}/trigger`)) {
@@ -135,12 +150,15 @@ export async function createRecordsHarness() {
       sqlite.exec(schema);
       requests.length = 0;
       gatewayRequests.length = 0;
+      geminiEnterpriseRequests.length = 0;
       swissRequests.length = 0;
       fault = null;
       gatewayHandler = null;
+      geminiEnterpriseHandler = null;
       swissHandler = null;
       delete process.env.SWISS_EPHEMERIS_URL;
       delete process.env.LOVABLE_API_KEY;
+      delete process.env.GEMINI_ENTERPRISE_API_KEY;
       await seedUser(userA);
       await seedUser(userB);
     }
@@ -232,6 +250,7 @@ export async function createRecordsHarness() {
       userB,
       requests,
       gatewayRequests,
+      geminiEnterpriseRequests,
       swissRequests,
       get sqlite() {
         return sqlite;
@@ -249,6 +268,12 @@ export async function createRecordsHarness() {
         gatewayHandler = handler;
         if (handler) process.env.LOVABLE_API_KEY = "local-test-key-never-a-real-secret";
         else delete process.env.LOVABLE_API_KEY;
+      },
+      setGeminiEnterprise(handler) {
+        geminiEnterpriseHandler = handler;
+        if (handler)
+          process.env.GEMINI_ENTERPRISE_API_KEY = "local-test-gemini-key-never-a-real-secret";
+        else delete process.env.GEMINI_ENTERPRISE_API_KEY;
       },
       setSwiss(handler) {
         swissHandler = handler;
