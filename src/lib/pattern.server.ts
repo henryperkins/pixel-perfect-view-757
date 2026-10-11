@@ -30,6 +30,10 @@ import {
 } from "./crypto.server";
 import { DEFAULT_BUNDLE, type ContentBundle, type Interpretation } from "./content/default-bundle";
 import {
+  READING_EVALUATION_BUNDLE_SOURCES,
+  type ReadingEvaluationBundleSource,
+} from "./ai/reading-evaluation.shared";
+import {
   validateContentGraph,
   normalizeContentBundle,
   natalCatalogueCoverage,
@@ -1893,13 +1897,28 @@ export async function isAdmin(db: DB, userId: string): Promise<boolean> {
 }
 
 /** Read-only fixed synthetic evaluation: no user chart, context or reading records. */
-export async function runReadingEvaluationCase(db: DB, userId: string, caseId: string) {
+export async function runReadingEvaluationCase(
+  db: DB,
+  userId: string,
+  caseId: string,
+  bundleSource: ReadingEvaluationBundleSource = "active",
+) {
   if (!(await isAdmin(db, userId))) {
     throw new Error("Only admins can run a synthetic reading evaluation.");
   }
+  if (!(READING_EVALUATION_BUNDLE_SOURCES as readonly unknown[]).includes(bundleSource))
+    throw new Error("Unknown synthetic evaluation bundle.");
   const evaluation = await import("./ai/reading-evaluation.server");
-  const bundle = await activeBundle(db, { requireSuccessfulRead: true });
-  return evaluation.runSyntheticEvaluationCase(caseId, bundle);
+  // Evaluation-only copy choice. The two shipped bundles need no records read; nothing
+  // here publishes, activates or caches content, so production copy is unaffected.
+  const bundle =
+    bundleSource === "builtin"
+      ? DEFAULT_BUNDLE
+      : bundleSource === "natal-candidate"
+        ? (await import("./content/natal-candidate-bundle")).NATAL_CANDIDATE_BUNDLE
+        : await activeBundle(db, { requireSuccessfulRead: true });
+  const result = await evaluation.runSyntheticEvaluationCase(caseId, bundle);
+  return { ...result, metadata: { ...result.metadata, bundleSource } };
 }
 
 /**

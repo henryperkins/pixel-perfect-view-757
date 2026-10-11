@@ -1,4 +1,5 @@
 /** Browser-safe synthetic evaluation catalog and report helpers. No account or gateway access. */
+import { z } from "zod";
 import {
   READING_EVAL_CASES,
   READING_EVAL_FIXTURE_VERSION,
@@ -21,6 +22,22 @@ export const READING_EVALUATION_CATALOG = READING_EVAL_CASES.map((fixed) => ({
 }));
 export const LIVE_EVALUATION_CASES = READING_EVALUATION_CATALOG;
 
+/**
+ * Evaluation-only copy choice. `active` is the effective production copy; the other two
+ * are the shipped natal-free baseline and the inactive natal candidate. Choosing one never
+ * publishes, activates or caches content.
+ */
+export const READING_EVALUATION_BUNDLE_SOURCES = ["active", "builtin", "natal-candidate"] as const;
+export type ReadingEvaluationBundleSource = (typeof READING_EVALUATION_BUNDLE_SOURCES)[number];
+
+/** The only accepted request: a fixed case ID and an optional closed copy selector. */
+export const readingEvaluationInputSchema = z
+  .object({
+    caseId: z.string().min(1).max(80),
+    bundleSource: z.enum(READING_EVALUATION_BUNDLE_SOURCES).optional(),
+  })
+  .strict();
+
 export type EvaluationJsonValue =
   null | boolean | number | string | EvaluationJsonValue[] | { [key: string]: EvaluationJsonValue };
 
@@ -36,6 +53,11 @@ export interface SyntheticReadingCandidate {
   paragraphs: { text: string | null; facts: string[] }[];
   paragraphCount: number | null;
   truncated: boolean;
+  /**
+   * True only when every raw paragraph's text and fact IDs survived capture unchanged,
+   * decided before bounding or filtering. Absent in historical reports.
+   */
+  captureLossless?: boolean;
 }
 export interface ReadingEvaluationMetadata {
   reportVersion: 1;
@@ -53,6 +75,8 @@ export interface ReadingEvaluationMetadata {
   validatorVersion: string;
   model: string;
   gatewayTimeoutMs: number;
+  /** Absent in historical reports; never inferred. */
+  bundleSource?: ReadingEvaluationBundleSource;
   source: "live-synthetic";
   network: string;
   warning: string;
@@ -155,6 +179,7 @@ export function combineReadingEvaluationResults(
     "validatorVersion",
     "model",
     "gatewayTimeoutMs",
+    "bundleSource",
     "source",
     "network",
   ] as const;

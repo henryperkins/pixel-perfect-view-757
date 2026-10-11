@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+import { createHash } from "node:crypto";
+import { readFile } from "node:fs/promises";
 import http from "node:http";
 import net from "node:net";
 import https from "node:https";
@@ -8,6 +10,8 @@ import dnsPromises from "node:dns/promises";
 import {
   compareReports,
   evaluateReadings,
+  extractResponses,
+  main,
   validateResponses,
   withNetworkBlocked,
 } from "../scripts/evaluate-readings.mjs";
@@ -173,4 +177,141 @@ test("handwritten synthesis rejection examples distinguish validator coverage fr
     assert.equal(fixture.manualGrounding, "reject");
     assert.match(fixture.label, /Handwritten/);
   }
+});
+
+const SOURCE_REPORT = new URL(
+  "../docs/reviews/daily-reading-writing/2026-10-11/source-report.json",
+  import.meta.url,
+);
+const SOURCE_SHA256 = "166124efbabfb7ad690bda2d178fa4fd8fbbc7f9e7b4df668cdb4db0c6dc588f";
+async function sourceReport() {
+  const bytes = await readFile(SOURCE_REPORT);
+  return {
+    report: JSON.parse(bytes.toString("utf8")),
+    sha256: createHash("sha256").update(bytes).digest("hex"),
+  };
+}
+
+test("offline runs use the explicitly selected shipped bundle", async () => {
+  const builtin = await evaluateReadings({ bundleSource: "builtin" });
+  assert.equal(builtin.bundleSource, "builtin");
+  assert.equal(builtin.bundleVersion, "builtin-0.5.0");
+  assert.ok(builtin.cases.every((c) => !c.facts.some((fact) => fact.id === "N1")));
+  const candidate = await evaluateReadings({ bundleSource: "natal-candidate" });
+  assert.equal(candidate.bundleSource, "natal-candidate");
+  assert.equal(candidate.bundleVersion, "builtin-0.6.0");
+  assert.ok(candidate.cases.some((c) => c.facts.some((fact) => fact.id === "N1")));
+  assert.equal(candidate.transitCopyHash, builtin.transitCopyHash);
+  for (const bundleSource of ["active", "custom", ""])
+    await assert.rejects(evaluateReadings({ bundleSource }), /bundle/i);
+});
+
+test("the uploaded natal-free report extracts and replays only against builtin-0.5.0", async () => {
+  const { report, sha256 } = await sourceReport();
+  assert.equal(sha256, SOURCE_SHA256);
+  const responses = await extractResponses(report, { bundleSource: "builtin" });
+  assert.deepEqual(Object.keys(responses).sort(), READING_EVAL_CASES.map((c) => c.id).sort());
+  assert.equal(responses["quiet-threshold"], null);
+  for (const row of report.cases.filter((c) => c.diagnostics.attempted))
+    assert.deepEqual(responses[row.id], {
+      paragraphs: row.candidate.paragraphs.map(({ text, facts }) => ({ text, facts })),
+    });
+  await assert.rejects(extractResponses(report, { bundleSource: "natal-candidate" }), /bundle/i);
+  const replay = await evaluateReadings({
+    responses,
+    bundleSource: "builtin",
+    sourceReport: { report, sha256 },
+  });
+  assert.equal(replay.source, "source-report-replay");
+  assert.deepEqual(replay.summary.outcomes, {
+    accepted: 27,
+    rejected: 0,
+    unavailable: 0,
+    skipped: 1,
+  });
+  assert.equal(replay.sourceReport.sha256, SOURCE_SHA256);
+  assert.equal(replay.sourceReport.promptVersion, "daily-astro-body-6");
+  assert.equal(replay.sourceReport.source, "live-synthetic");
+  assert.equal(replay.sourceReport.bundleSource, null);
+  assert.ok(!Object.hasOwn(replay.sourceReport, "sourceRevision"));
+  assert.deepEqual(replay.sourceComparison, { cases: 28, matchingOutcomes: 28, differences: [] });
+  const edited = structuredClone(responses);
+  edited["saturn-square-sun"].paragraphs[0].text += " Added later.";
+  await assert.rejects(
+    evaluateReadings({
+      responses: edited,
+      bundleSource: "builtin",
+      sourceReport: { report, sha256 },
+    }),
+    /differ from the source report/i,
+  );
+});
+
+test("extraction refuses incomplete, mismatched or lossy reports", async () => {
+  const { report } = await sourceReport();
+  const variant = (change) => {
+    const copy = structuredClone(report);
+    change(copy);
+    return copy;
+  };
+  const attempted = (copy) => copy.cases.find((c) => c.id === "saturn-square-sun");
+  const rejected = (row) => {
+    row.diagnostics = { ...row.diagnostics, outcome: "rejected", code: "id", paragraph: 1 };
+  };
+  for (const [name, change, message] of [
+    ["partial", (r) => (r.partial = true), /partial/i],
+    ["missing case", (r) => r.cases.pop(), /fixed case/i],
+    ["duplicate case", (r) => (r.cases[1] = structuredClone(r.cases[0])), /duplicate/i],
+    ["case set", (r) => (r.caseSetHash = "0".repeat(64)), /case set/i],
+    ["input config", (r) => (attempted(r).configHash = "0".repeat(64)), /input config/i],
+    ["model", (r) => (r.model = "another-model"), /model/i],
+    ["custom copy", (r) => (r.bundleHash = "f".repeat(64)), /custom/i],
+    ["truncated", (r) => (attempted(r).candidate.truncated = true), /truncat/i],
+    ["sanitized", (r) => (attempted(r).candidate.captureLossless = false), /lossless/i],
+    ["paragraph count", (r) => (attempted(r).candidate.paragraphCount = 5), /paragraph count/i],
+    ["historical rejected draft", (r) => rejected(attempted(r)), /lossless/i],
+    [
+      "unavailable draft",
+      (r) => {
+        const row = attempted(r);
+        row.diagnostics = { ...row.diagnostics, outcome: "unavailable", code: "timeout" };
+        row.candidate = null;
+      },
+      /no captured draft/i,
+    ],
+    [
+      "malformed paragraph",
+      (r) => (attempted(r).candidate.paragraphs[0].text = null),
+      /malformed/i,
+    ],
+  ])
+    await assert.rejects(
+      extractResponses(variant(change), { bundleSource: "builtin" }),
+      message,
+      name,
+    );
+  const provenRejected = variant((r) => {
+    rejected(attempted(r));
+    attempted(r).candidate.captureLossless = true;
+  });
+  const responses = await extractResponses(provenRejected, { bundleSource: "builtin" });
+  assert.deepEqual(
+    responses["saturn-square-sun"].paragraphs,
+    attempted(report).candidate.paragraphs,
+  );
+  await assert.rejects(extractResponses(report, { bundleSource: "active" }), /bundle/i);
+});
+
+test("the CLI requires an explicit bundle and bounded mode combinations", async () => {
+  for (const [args, message] of [
+    [["--output", "/tmp/never-written.json"], /--bundle/],
+    [["--responses", "x.json", "--output", "/tmp/never-written.json"], /--bundle/],
+    [["--extract-responses", "x.json", "--output", "/tmp/never-written.json"], /--bundle/],
+    [["--bundle", "active", "--output", "/tmp/never-written.json"], /--bundle/],
+    [["--bundle", "builtin", "--extract-responses", "x.json"], /--output/],
+    [["--bundle", "builtin", "--source-report", "x.json", "--output", "y.json"], /--responses/],
+    [["--compare-natal", "a.json", "b.json", "--output", "c.json"], /identity/],
+    [["--compare", "a.json", "b.json", "--bundle", "builtin"], /--bundle/],
+  ])
+    await assert.rejects(main(args), message, args.join(" "));
 });

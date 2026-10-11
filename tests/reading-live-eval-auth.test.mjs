@@ -145,6 +145,120 @@ test("evaluation uses and identifies the effective published copy", async () => 
   assert.match(JSON.stringify(result), /ACTIVE_COPY_SENTINEL/);
 });
 
+const onlyRoles = () =>
+  h.requests.every(({ sql }) => /select .* from user_roles/i.test(sql.replaceAll('"', "")));
+
+test("every bundle selector is denied before copy reads or model calls for non-admins", async () => {
+  for (const selector of ["active", "builtin", "natal-candidate"]) {
+    h.requests.length = 0;
+    await assert.rejects(
+      h.app.runReadingEvaluationCase(h.records(), h.userA, "saturn-square-sun", selector),
+      /Only admins/,
+    );
+    assert.equal(h.gatewayRequests.length, 0);
+    assert.ok(onlyRoles(), selector);
+  }
+  await makeAdmin();
+  h.setFault({ matches: (sql) => /from user_roles/i.test(sql.replaceAll('"', "")) });
+  for (const selector of ["active", "builtin", "natal-candidate"]) {
+    h.requests.length = 0;
+    await assert.rejects(
+      h.app.runReadingEvaluationCase(h.records(), h.userA, "saturn-square-sun", selector),
+      /Only admins/,
+    );
+    assert.equal(h.gatewayRequests.length, 0);
+    assert.ok(onlyRoles(), selector);
+  }
+});
+
+test("unknown bundle selectors fail after the role check without copy reads, writes or dispatch", async () => {
+  await makeAdmin();
+  h.setGateway(() => {
+    throw new Error("An unknown selector must not reach the model");
+  });
+  const previous = snapshot();
+  for (const selector of ["custom", "", "builtin-0.6.0", { version: "x" }, null]) {
+    h.requests.length = 0;
+    await assert.rejects(
+      h.app.runReadingEvaluationCase(h.records(), h.userA, "saturn-square-sun", selector),
+      /evaluation bundle/i,
+    );
+    assert.ok(onlyRoles(), String(selector));
+  }
+  assert.equal(h.gatewayRequests.length, 0);
+  assert.deepEqual(snapshot(), previous);
+});
+
+test("built-in selectors read only roles, ignore the active release and change no records", async () => {
+  await makeAdmin();
+  const { DEFAULT_BUNDLE } = await h.vite.ssrLoadModule("/src/lib/content/default-bundle.ts");
+  const { NATAL_CANDIDATE_BUNDLE } = await h.vite.ssrLoadModule(
+    "/src/lib/content/natal-candidate-bundle.ts",
+  );
+  const active = structuredClone(DEFAULT_BUNDLE);
+  active.version = "active-selector-test";
+  for (const interpretation of active.cycles) interpretation.mechanism += " ACTIVE_COPY_SENTINEL";
+  const released = await h.records().from("content_releases").insert({
+    version: active.version,
+    checksum: "fixture-checksum",
+    bundle: active,
+    is_active: true,
+  });
+  assert.equal(released.error, null);
+  const previous = snapshot();
+  let expected;
+  h.setGateway(() => response(expected));
+  const run = async (caseId, selector) => {
+    expected = BASELINE_RESPONSES[caseId];
+    h.requests.length = 0;
+    const result = await h.app.runReadingEvaluationCase(h.records(), h.userA, caseId, selector);
+    assert.ok(onlyRoles(), `${selector} reads only roles`);
+    return result;
+  };
+  const builtin = await run("natal-duty-reflex", "builtin");
+  assert.equal(builtin.metadata.bundleSource, "builtin");
+  assert.equal(builtin.metadata.bundleVersion, DEFAULT_BUNDLE.version);
+  assert.ok(!builtin.case.facts.some((fact) => fact.id === "N1"), "No catalogue under builtin");
+  const candidate = await run("natal-duty-reflex", "natal-candidate");
+  assert.equal(candidate.metadata.bundleSource, "natal-candidate");
+  assert.equal(candidate.metadata.bundleVersion, NATAL_CANDIDATE_BUNDLE.version);
+  assert.ok(
+    candidate.case.facts.some((fact) => fact.id === "N1"),
+    "Candidate supplies N1",
+  );
+  assert.equal(candidate.metadata.transitCopyHash, builtin.metadata.transitCopyHash);
+  assert.equal(candidate.metadata.caseSetHash, builtin.metadata.caseSetHash);
+  assert.equal(candidate.case.configHash, builtin.case.configHash);
+  assert.equal(candidate.metadata.model, builtin.metadata.model);
+  assert.doesNotMatch(JSON.stringify(h.gatewayRequests), /ACTIVE_COPY_SENTINEL/);
+  assert.deepEqual(snapshot(), previous, "The active pointer and every table stay unchanged");
+  h.requests.length = 0;
+  const explicit = await h.app.runReadingEvaluationCase(
+    h.records(),
+    h.userA,
+    "saturn-square-sun",
+    "active",
+  );
+  assert.equal(explicit.metadata.bundleSource, "active");
+  assert.equal(explicit.metadata.bundleVersion, "active-selector-test");
+  assert.ok(h.requests.some(({ sql }) => /from content_releases/i.test(sql.replaceAll('"', ""))));
+  const implicit = await h.app.runReadingEvaluationCase(h.records(), h.userA, "saturn-square-sun");
+  assert.equal(implicit.metadata.bundleSource, "active");
+});
+
+test("the active selector keeps failing closed when copy cannot be read", async () => {
+  await makeAdmin();
+  h.setGateway(() => {
+    throw new Error("Copy read failures must not reach the model");
+  });
+  h.setFault({ matches: (sql) => /from content_releases/i.test(sql.replaceAll('"', "")) });
+  await assert.rejects(
+    h.app.runReadingEvaluationCase(h.records(), h.userA, "saturn-square-sun", "active"),
+    /release could not be read/,
+  );
+  assert.equal(h.gatewayRequests.length, 0);
+});
+
 test("provider failures never expose raw bodies or exception messages in synthetic reports", async () => {
   await makeAdmin();
   for (const [handler, code] of [

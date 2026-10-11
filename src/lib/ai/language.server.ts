@@ -630,6 +630,20 @@ function captureSyntheticCandidate(raw: unknown): SyntheticReadingCandidate | nu
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) return null;
   const paragraphs = (raw as { paragraphs?: unknown }).paragraphs;
   if (!Array.isArray(paragraphs)) return null;
+  // Decided on the raw draft, before the bounds and filters below can hide a loss.
+  const captureLossless =
+    paragraphs.length <= 10 &&
+    paragraphs.every((paragraph) => {
+      if (!paragraph || typeof paragraph !== "object" || Array.isArray(paragraph)) return false;
+      const { text, facts } = paragraph as { text?: unknown; facts?: unknown };
+      return (
+        typeof text === "string" &&
+        text.length <= 4000 &&
+        Array.isArray(facts) &&
+        facts.length <= 20 &&
+        facts.every((fact) => typeof fact === "string" && fact.length <= 80)
+      );
+    });
   let truncated = paragraphs.length > 10;
   const captured = paragraphs.slice(0, 10).map((paragraph) => {
     const value =
@@ -649,7 +663,7 @@ function captureSyntheticCandidate(raw: unknown): SyntheticReadingCandidate | nu
       });
     return { text, facts };
   });
-  return { paragraphs: captured, paragraphCount: paragraphs.length, truncated };
+  return { paragraphs: captured, paragraphCount: paragraphs.length, truncated, captureLossless };
 }
 
 /** Server-only seam used by the closed, checked-in synthetic case runner. Never used by Today. */

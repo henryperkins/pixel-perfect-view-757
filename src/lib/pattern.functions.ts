@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireAuth } from "./auth-middleware";
 import { checkInInputSchema } from "./check-in";
+import { readingEvaluationInputSchema } from "./ai/reading-evaluation.shared";
 
 export const fetchToday = createServerFn({ method: "POST" })
   .middleware([requireAuth])
@@ -277,15 +278,15 @@ export const fetchReadingQuality = createServerFn({ method: "GET" })
 /** One fixed synthetic case per request; credentials and facts stay server-side. */
 export const runReadingEvaluationCase = createServerFn({ method: "POST" })
   .middleware([requireAuth])
-  .inputValidator((d: unknown) =>
-    z
-      .object({ caseId: z.string().min(1).max(80) })
-      .strict()
-      .parse(d),
-  )
+  .inputValidator((d: unknown) => readingEvaluationInputSchema.parse(d))
   .handler(async ({ data, context }) => {
     const m = await import("./pattern.server");
-    return m.runReadingEvaluationCase(context.db, context.userId, data.caseId);
+    return m.runReadingEvaluationCase(
+      context.db,
+      context.userId,
+      data.caseId,
+      data.bundleSource ?? "active",
+    );
   });
 
 export const draftContentRelease = createServerFn({ method: "POST" })

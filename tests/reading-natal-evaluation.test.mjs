@@ -6,7 +6,11 @@ import {
   READING_EVAL_CASES,
   READING_EVAL_FIXTURE_VERSION,
 } from "../scripts/reading-eval-cases.mjs";
-import { compareReports, evaluateReadings } from "../scripts/evaluate-readings.mjs";
+import {
+  compareNatalReports,
+  compareReports,
+  evaluateReadings,
+} from "../scripts/evaluate-readings.mjs";
 let h, run, combine, bundle;
 before(async () => {
   h = await createRecordsHarness();
@@ -97,4 +101,74 @@ test("version5_comparison_requires_identical_transit_copy_and_inputs", async () 
     freedom.facts.filter((f) => f.id !== "N1"),
   );
   assert.deepEqual(duty.config, freedom.config);
+});
+
+test("strict natal comparison permits only bundle and selector differences", async () => {
+  const baseline = await evaluateReadings({ bundleSource: "builtin" });
+  const candidate = await evaluateReadings({ bundleSource: "natal-candidate" });
+  const identity = (sha256, sourceRevision = "a".repeat(40)) => ({
+    identityVersion: "reading-evaluation-identity-1",
+    report: { sha256 },
+    build: { sourceRevision, evidence: "test fixture" },
+  });
+  const evidence = (overrides = {}) => ({
+    beforeSha256: "1".repeat(64),
+    afterSha256: "2".repeat(64),
+    beforeIdentity: identity("1".repeat(64)),
+    afterIdentity: identity("2".repeat(64)),
+    ...overrides,
+  });
+  const compared = compareNatalReports(baseline, candidate, evidence());
+  assert.equal(compared.mode, "natal");
+  assert.deepEqual(
+    compared.configurationChanges.map((change) => change.field),
+    ["bundleVersion", "bundleHash", "bundleSource"],
+  );
+  assert.deepEqual(compared.qualificationGaps, []);
+  assert.equal(compared.identity.sourceRevisionMatch, true);
+  const unproven = compareNatalReports(
+    baseline,
+    candidate,
+    evidence({ afterIdentity: identity("2".repeat(64), null) }),
+  );
+  assert.equal(unproven.identity.sourceRevisionMatch, null);
+  assert.match(unproven.qualificationGaps.join(" "), /source revision/i);
+  assert.throws(
+    () =>
+      compareNatalReports(
+        baseline,
+        candidate,
+        evidence({ afterIdentity: identity("2".repeat(64), "b".repeat(40)) }),
+      ),
+    /source revision/i,
+  );
+  assert.throws(
+    () => compareNatalReports(baseline, candidate, evidence({ afterSha256: "3".repeat(64) })),
+    /identity record/i,
+  );
+  for (const [field, value] of [
+    ["promptVersion", "daily-astro-body-next"],
+    ["validatorVersion", "daily-reference-next"],
+    ["planVersion", "daily-synthesis-next"],
+    ["natalPlanVersion", "daily-natal-lens-next"],
+    ["reliabilityVersion", "natal-reliability-next"],
+    ["gatewayTimeoutMs", 12_000],
+    ["model", "another-model"],
+    ["transitCopyHash", "c".repeat(64)],
+    ["source", "candidate-replay"],
+  ]) {
+    const changed = structuredClone(candidate);
+    changed[field] = value;
+    assert.throws(() => compareNatalReports(baseline, changed, evidence()), Error, field);
+  }
+  const changedInput = structuredClone(candidate);
+  changedInput.cases[0].configHash = "d".repeat(64);
+  assert.throws(() => compareNatalReports(baseline, changedInput, evidence()), /input config/i);
+  // The ordinary comparison stays permissive about an intentional prompt correction.
+  const corrected = structuredClone(baseline);
+  corrected.promptVersion = "daily-astro-body-next";
+  assert.deepEqual(
+    compareReports(baseline, corrected).configurationChanges.map((change) => change.field),
+    ["promptVersion"],
+  );
 });

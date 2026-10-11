@@ -8,10 +8,30 @@ import {
   READING_EVALUATION_CATALOG,
   serializeReadingEvaluationReport,
   summarizeReadingEvaluation,
+  type ReadingEvaluationBundleSource,
   type ReadingEvaluationCaseResult,
   type ReadingEvaluationCaseRow,
 } from "@/lib/ai/reading-evaluation.shared";
 import { runReadingEvaluationCase } from "@/lib/pattern.functions";
+
+/** Evaluation-only copy; choosing one never publishes or activates a release. */
+const COPY_CHOICES: { value: ReadingEvaluationBundleSource; label: string; note: string }[] = [
+  {
+    value: "active",
+    label: "Current active copy",
+    note: "Uses the effective published release, or the built-in fallback when no release is active.",
+  },
+  {
+    value: "builtin",
+    label: "Natal-free built-in baseline",
+    note: "Uses the shipped built-in copy without the natal catalogue.",
+  },
+  {
+    value: "natal-candidate",
+    label: "Inactive natal candidate",
+    note: "Uses the unpublished natal candidate for this run only. Selecting it activates nothing.",
+  },
+];
 
 type RunStatus = "idle" | "running" | "stopping" | "complete" | "stopped" | "halted" | "error";
 type RunState = {
@@ -204,6 +224,7 @@ function EvaluationCase({ result }: { result: ReadingEvaluationCaseResult }) {
 export function ReadingEvaluation() {
   const runCase = useServerFn(runReadingEvaluationCase);
   const [state, setState] = useState<RunState>(INITIAL_STATE);
+  const [bundleSource, setBundleSource] = useState<ReadingEvaluationBundleSource>("active");
   const [downloadError, setDownloadError] = useState<string | null>(null);
   const mounted = useRef(true);
   const activeRun = useRef<{ stop: boolean } | null>(null);
@@ -227,8 +248,9 @@ export function ReadingEvaluation() {
     const control = { stop: false };
     activeRun.current = control;
     setDownloadError(null);
-    // Freeze the case sequence before the first request.
+    // Freeze the case sequence and copy choice before the first request.
     const cases = READING_EVALUATION_CATALOG.map((fixed) => ({ ...fixed }));
+    const frozenSource = bundleSource;
     let results: ReadingEvaluationCaseResult[] = [];
     const publish = (
       status: RunStatus,
@@ -245,7 +267,7 @@ export function ReadingEvaluation() {
         publish("running", fixed.id);
         let result: ReadingEvaluationCaseResult;
         try {
-          result = await runCase({ data: { caseId: fixed.id } });
+          result = await runCase({ data: { caseId: fixed.id, bundleSource: frozenSource } });
         } catch {
           publish(
             "error",
@@ -258,6 +280,7 @@ export function ReadingEvaluation() {
         const diagnostics = readDailyDiagnostics(result?.case?.diagnostics);
         if (
           result?.case?.id !== fixed.id ||
+          result.metadata?.bundleSource !== frozenSource ||
           !diagnostics ||
           (diagnostics.outcome === "accepted") !== (result.case.output?.mode === "model")
         ) {
@@ -318,7 +341,7 @@ export function ReadingEvaluation() {
       const url = URL.createObjectURL(blob);
       const anchor = document.createElement("a");
       anchor.href = url;
-      anchor.download = `reading-evaluation-${report.partial ? "partial" : "complete"}-${new Date().toISOString().slice(0, 19).replaceAll(":", "-")}.json`;
+      anchor.download = `reading-evaluation-${report.partial ? "partial" : "complete"}-${report.bundleSource ?? "copy"}-${new Date().toISOString().slice(0, 19).replaceAll(":", "-")}.json`;
       anchor.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
     } catch {
@@ -348,7 +371,7 @@ export function ReadingEvaluation() {
       </h3>
       <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
         Run the {READING_EVALUATION_CATALOG.length} fixed synthetic cases against the configured
-        model, one at a time: up to{" "}
+        model and the evaluation copy chosen below, one at a time: up to{" "}
         {READING_EVALUATION_CATALOG.filter((row) => row.expectsModel).length} model calls. Quiet
         days and cases without a published primary interpretation skip the model. This uses
         synthetic chart inputs and no account readings or notes. Results stay in this page until you
@@ -360,6 +383,35 @@ export function ReadingEvaluation() {
         claims; these results do not assign writing-quality scores or establish a production
         acceptance rate.
       </p>
+      <div className="mt-4 max-w-md min-w-0">
+        <label
+          htmlFor="synthetic-evaluation-copy"
+          className="technical block text-muted-foreground"
+        >
+          Evaluation copy
+        </label>
+        <select
+          id="synthetic-evaluation-copy"
+          value={bundleSource}
+          disabled={busy}
+          aria-describedby="synthetic-evaluation-copy-note"
+          onChange={(event) => setBundleSource(event.target.value as ReadingEvaluationBundleSource)}
+          className="mt-1.5 min-h-11 w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          {COPY_CHOICES.map((choice) => (
+            <option key={choice.value} value={choice.value}>
+              {choice.label}
+            </option>
+          ))}
+        </select>
+        <p
+          id="synthetic-evaluation-copy-note"
+          className="mt-1.5 text-xs leading-relaxed text-muted-foreground"
+        >
+          {COPY_CHOICES.find((choice) => choice.value === bundleSource)?.note} The choice is fixed
+          when a run starts.
+        </p>
+      </div>
       <div className="mt-4 flex flex-wrap gap-3">
         <Button type="button" onClick={() => void start()} disabled={busy} className="min-h-11">
           Run synthetic evaluation
@@ -449,7 +501,10 @@ export function ReadingEvaluation() {
           <p className="mt-2 font-mono text-xs leading-relaxed text-muted-foreground [overflow-wrap:anywhere]">
             {state.results[0]?.metadata.model} · {state.results[0]?.metadata.promptVersion} ·{" "}
             {state.results[0]?.metadata.validatorVersion} ·{" "}
-            {state.results[0]?.metadata.bundleVersion} ·{" "}
+            {COPY_CHOICES.find((choice) => choice.value === state.results[0]?.metadata.bundleSource)
+              ?.label ?? "Unrecorded copy choice"}{" "}
+            · {state.results[0]?.metadata.bundleVersion} · bundle{" "}
+            {state.results[0]?.metadata.bundleHash.slice(0, 12)} ·{" "}
             {state.results[0]?.metadata.gatewayTimeoutMs == null
               ? "Unrecorded gateway budget"
               : `${state.results[0].metadata.gatewayTimeoutMs / 1000}s gateway budget`}

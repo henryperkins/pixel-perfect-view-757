@@ -1,6 +1,9 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { after, before, beforeEach, test } from "node:test";
+import { fileURLToPath } from "node:url";
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 import { createServer } from "vite";
 import { BASELINE_RESPONSES, READING_EVAL_CASES } from "../scripts/reading-eval-cases.mjs";
 import { evaluateReadings, compareReports } from "../scripts/evaluate-readings.mjs";
@@ -98,6 +101,133 @@ test("candidate capture is bounded and reports truncation without changing valid
   assert.equal(result.case.candidate.paragraphs[0].facts.length, 20);
   assert.equal(result.case.candidate.paragraphs[0].facts[0].length, 80);
   assert.equal(result.case.candidate.truncated, true);
+});
+
+test("lossless capture is proven before truncation or sanitization", async () => {
+  const accepted = await runSyntheticEvaluationCase("saturn-square-sun", DEFAULT_BUNDLE);
+  assert.equal(accepted.case.diagnostics.outcome, "accepted");
+  assert.equal(accepted.case.candidate.captureLossless, true);
+  // The exact trap: a non-numeric fact ID filter would otherwise look like a clean capture.
+  draft = structuredClone(BASELINE_RESPONSES["saturn-square-sun"]);
+  draft.paragraphs[0].facts = ["C1", "I1", 42];
+  const sanitized = await runSyntheticEvaluationCase("saturn-square-sun", DEFAULT_BUNDLE);
+  assert.equal(sanitized.case.diagnostics.outcome, "rejected");
+  assert.deepEqual(sanitized.case.candidate.paragraphs[0].facts, ["C1", "I1"]);
+  assert.equal(sanitized.case.candidate.truncated, false);
+  assert.equal(sanitized.case.candidate.captureLossless, false);
+  for (const paragraphs of [
+    [{ text: 7, facts: ["C1"] }, BASELINE_RESPONSES["saturn-square-sun"].paragraphs[1]],
+    [{ text: "No facts field." }, BASELINE_RESPONSES["saturn-square-sun"].paragraphs[1]],
+    ["not an object", BASELINE_RESPONSES["saturn-square-sun"].paragraphs[1]],
+  ]) {
+    draft = { paragraphs };
+    const result = await runSyntheticEvaluationCase("saturn-square-sun", DEFAULT_BUNDLE);
+    assert.equal(result.case.candidate.captureLossless, false, JSON.stringify(paragraphs[0]));
+  }
+  draft = {
+    paragraphs: Array.from({ length: 12 }, () => ({ text: "x".repeat(6000), facts: ["C1"] })),
+  };
+  const truncated = await runSyntheticEvaluationCase("saturn-square-sun", DEFAULT_BUNDLE);
+  assert.equal(truncated.case.candidate.truncated, true);
+  assert.equal(truncated.case.candidate.captureLossless, false);
+});
+
+test("evaluation input accepts only a fixed case ID and a closed bundle selector", async () => {
+  const { readingEvaluationInputSchema } = await vite.ssrLoadModule(
+    "/src/lib/ai/reading-evaluation.shared.ts",
+  );
+  assert.deepEqual(readingEvaluationInputSchema.parse({ caseId: "saturn-square-sun" }), {
+    caseId: "saturn-square-sun",
+  });
+  for (const bundleSource of ["active", "builtin", "natal-candidate"])
+    assert.equal(
+      readingEvaluationInputSchema.parse({ caseId: "saturn-square-sun", bundleSource })
+        .bundleSource,
+      bundleSource,
+    );
+  for (const extra of [
+    { bundleSource: "custom" },
+    { bundleSource: { version: "builtin-0.6.0" } },
+    { bundle: DEFAULT_BUNDLE },
+    { chart: {} },
+    { prompt: "Write freely." },
+    { model: "another-model" },
+    { context: { userId: "someone" } },
+  ])
+    assert.throws(() =>
+      readingEvaluationInputSchema.parse({ caseId: "saturn-square-sun", ...extra }),
+    );
+});
+
+test("a bundle selector change cannot combine with completed cases; absent history stays absent", async () => {
+  const first = await runSyntheticEvaluationCase("saturn-square-sun", DEFAULT_BUNDLE);
+  draft = structuredClone(BASELINE_RESPONSES["saturn-square-moon-warm"]);
+  const second = await runSyntheticEvaluationCase("saturn-square-moon-warm", DEFAULT_BUNDLE);
+  const historical = combineReadingEvaluationResults([first, second], { partial: true });
+  assert.ok(!Object.hasOwn(historical, "bundleSource"));
+  const tagged = (result, bundleSource) => ({
+    ...result,
+    metadata: { ...result.metadata, bundleSource },
+  });
+  const report = combineReadingEvaluationResults(
+    [tagged(first, "builtin"), tagged(second, "builtin")],
+    { partial: true },
+  );
+  assert.equal(report.bundleSource, "builtin");
+  assert.throws(
+    () =>
+      combineReadingEvaluationResults([tagged(first, "builtin"), tagged(second, "active")], {
+        partial: true,
+      }),
+    /configuration changed/i,
+  );
+});
+
+test("the admin panel offers a labeled, closed evaluation-copy selector defaulting to active copy", async () => {
+  const stubs = fileURLToPath(
+    new URL("./helpers/reading-evaluation-ui-stubs.mjs", import.meta.url),
+  );
+  const ui = await createServer({
+    configFile: false,
+    envFile: false,
+    appType: "custom",
+    logLevel: "error",
+    resolve: {
+      alias: [
+        { find: /^@tanstack\/react-start$/, replacement: stubs },
+        { find: /^@\/lib\/pattern\.functions$/, replacement: stubs },
+        { find: /^@\//, replacement: fileURLToPath(new URL("../src/", import.meta.url)) },
+      ],
+    },
+    server: { middlewareMode: true, hmr: false, ws: false },
+  });
+  try {
+    const { ReadingEvaluation } = await ui.ssrLoadModule(
+      "/src/components/pattern/ReadingEvaluation.tsx",
+    );
+    const markup = renderToStaticMarkup(createElement(ReadingEvaluation));
+    assert.match(
+      markup,
+      /<label[^>]*for="synthetic-evaluation-copy"[^>]*>Evaluation copy<\/label>/,
+    );
+    const select = markup.match(/<select[^>]*id="synthetic-evaluation-copy"[^>]*>(.*?)<\/select>/);
+    assert.ok(select, "A native select carries the choice");
+    const options = [
+      ...select[1].matchAll(/<option value="([^"]+)"( selected="")?>([^<]+)<\/option>/g),
+    ];
+    assert.deepEqual(
+      options.map(([, value, selected, label]) => [value, Boolean(selected), label]),
+      [
+        ["active", true, "Current active copy"],
+        ["builtin", false, "Natal-free built-in baseline"],
+        ["natal-candidate", false, "Inactive natal candidate"],
+      ],
+    );
+    assert.match(markup, /aria-describedby="synthetic-evaluation-copy-note"/);
+    assert.match(markup, /id="synthetic-evaluation-copy-note"[^>]*>[^<]*published release/);
+  } finally {
+    await ui.close();
+  }
 });
 
 test("quiet and unknown cases never call the gateway", async () => {
