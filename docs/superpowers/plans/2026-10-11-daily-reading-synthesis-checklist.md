@@ -233,3 +233,14 @@ documentation validation only. The implementation continuation subsequently ran
 local tests, typecheck, lint with baseline comparison, build, offline replay, and
 component browser checks, as recorded in the linked validation document. Paid
 model evaluation, content publication, and live-production checks remain pending.
+
+## Addendum — 2026-10-11, writing qualification round
+
+Recorded by the
+[writing qualification checklist](2026-10-11-daily-reading-writing-qualification-checklist.md);
+the items above are not retroactively ticked. The synthesis code and prompt
+`daily-astro-body-8` reached `main` in `4c96fd5` and are publicly served. A complete
+hosted natal-free run on matched inputs exists, but its first blinded AI writing
+review **failed** (see the
+[writing review](../../reviews/daily-reading-writing/2026-10-11/writing-review.md)),
+so the writing-gate item above stays open.

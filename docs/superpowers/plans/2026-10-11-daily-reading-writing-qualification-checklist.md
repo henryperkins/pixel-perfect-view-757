@@ -313,18 +313,16 @@ node --test tests/reading-natal-reliability.test.mjs tests/reading-natal-data.te
 
 ## Completion record
 
-Fill this only during execution, with artifact links and exact dates:
+Filled during execution on 2026-10-11 (UTC). Each outcome is reported separately.
 
-| Outcome                                         | Current status                    | Required evidence                                              |
-| ----------------------------------------------- | --------------------------------- | -------------------------------------------------------------- |
-| Corrected implementation and final clean checks | Pending                           | Final SHA and check logs                                       |
-| Hosted corrected natal-free generation          | Pending                           | Complete matched live report                                   |
-| Blinded AI writing qualification                | Pending                           | Two fresh reviews, dispute record and strict gate summary      |
-| Human writing review                            | Deferred                          | Must remain explicitly deferred while unavailable              |
-| Ordinary/synthesis public release               | Unverified for updated correction | Remote parity, deployment identity and authenticated smoke     |
-| Independent AI natal catalogue review           | Pending                           | All 62 entries reviewed with provenance                        |
-| Matched actual-model natal qualification        | Pending                           | Same-policy pair and eight positive/four negative case results |
-| Live Swiss/owner-path natal verification        | Pending                           | Authorized service/account evidence                            |
-| Natal content activation                        | Inactive                          | Explicit release action, active pointer and rollback proof     |
-
-For this checklist's own documentation-only validation, check Markdown formatting, relative links, whitespace and preservation of the four unrelated files. Do not rerun application tests or make model calls merely to certify the plan.
+| Outcome                                         | Current status                                 | Evidence                                                                                                                                                                                                      |
+| ----------------------------------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Corrected implementation and final clean checks | Done                                           | `4c96fd5`: 395/395 tests, typecheck and build on a clean snapshot before the push; later branch commits 401/401 at `67805ea`                                                                                  |
+| Hosted corrected natal-free generation          | Done                                           | [`corrected-report.json`](../../reviews/daily-reading-writing/2026-10-11/corrected-report.json), matched on all inputs; [comparison](../../reviews/daily-reading-writing/2026-10-11/comparison.json)          |
+| Blinded AI writing qualification                | **Failed, round 1**                            | [writing review](../../reviews/daily-reading-writing/2026-10-11/writing-review.md): 17 corrected-run items fail; a second correction round is required                                                        |
+| Human writing review                            | Deferred                                       | `humanReviewCompleted: false` in every summary                                                                                                                                                                |
+| Ordinary/synthesis public release               | Deployed, not qualified                        | `origin/main` = `4c96fd5`; public app served `4c96fd5` at 19:55Z (published by the owner, most likely); authenticated smoke not run ([release record](../releases/2026-10-11-daily-writing-qualification.md)) |
+| Independent AI natal catalogue review           | `builtin-0.6.0` failed; `builtin-0.6.1` passed | [catalogue review](../../reviews/daily-natal-lens/catalogue-review.md); human approval deferred                                                                                                               |
+| Matched actual-model natal qualification        | Not obtained                                   | The `natal-candidate` run stopped on gateway `credit`; both runs must be repeated on the revision serving `builtin-0.6.1`                                                                                     |
+| Live Swiss/owner-path natal verification        | Pending                                        | Not attempted                                                                                                                                                                                                 |
+| Natal content activation                        | Inactive                                       | No release action requested                                                                                                                                                                                   |

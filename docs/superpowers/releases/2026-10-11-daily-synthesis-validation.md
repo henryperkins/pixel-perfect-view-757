@@ -70,3 +70,27 @@ no unsupported substantive claims or invented personal events. Independent and
 unmatched cases must invent no joint premise. Publication, activation, deployment,
 and live-production verification remain pending. No production records, active
 pointers, saved readings, or feedback were changed by this local qualification.
+
+## Addendum — 2026-10-11, writing qualification round
+
+Recorded by the
+[writing qualification checklist](../plans/2026-10-11-daily-reading-writing-qualification-checklist.md).
+The checks above are historical and stay as written; they described the local phase.
+
+- **Commit and push.** The synthesis work and the prompt correction
+  (`daily-astro-body-8`) reached `main` in merge `4c96fd5`, pushed with a normal
+  fast-forward at 18:30:19Z. The public app served `4c96fd5` by 19:55Z, most likely
+  published by the owner.
+- **Hosted natal-free generation.** Two complete hosted runs of the version-5 suite
+  exist on matched inputs, copy and model: the pre-correction upload (prompt
+  `daily-astro-body-6`, 27 of 27 accepted) and the corrected run (26 accepted, one
+  validator rejection, one quiet skip).
+- **AI writing review.** The first blinded round **failed** for the corrected run:
+  17 items, including both synthesis-reinforcement outputs and the tension,
+  reversed and natal-integration template fallbacks. See the
+  [writing review](../../reviews/daily-reading-writing/2026-10-11/writing-review.md)
+  and the [release record](2026-10-11-daily-writing-qualification.md). Human review
+  is deferred.
+- **Production content.** The active copy is the built-in fallback; one inactive
+  release row exists. No release was checked against the stricter validator beyond
+  that observation, and no content pointer changed.
