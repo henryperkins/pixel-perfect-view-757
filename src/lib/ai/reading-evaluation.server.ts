@@ -16,7 +16,8 @@ import {
   DAILY_READING_PLAN_VERSION,
   DAILY_VALIDATOR_VERSION,
   DAILY_GATEWAY_TIMEOUT_MS,
-  LANGUAGE_MODEL,
+  languageModel,
+  type LanguageProvider,
 } from "./diagnostics";
 import { generateSyntheticReadingProse } from "./language.server";
 import {
@@ -30,6 +31,7 @@ const hash = (value: unknown) => createHash("sha256").update(JSON.stringify(valu
 export async function runSyntheticEvaluationCase(
   caseId: string,
   bundle: ContentBundle,
+  provider: LanguageProvider = "lovable",
 ): Promise<ReadingEvaluationCaseResult> {
   const fixed = READING_EVAL_CASES.find((item) => item.id === caseId);
   if (!fixed) throw new Error("Unknown fixed synthetic evaluation case");
@@ -56,17 +58,24 @@ export async function runSyntheticEvaluationCase(
     natalReliability,
   );
   const facts = readingFacts(chart, assembled, fixed.config.timeZone);
-  const observed = await generateSyntheticReadingProse({
-    facts,
-    hasEligibleCycles: assembled.eligibleCycles.length > 0,
-    tone: fixed.config.tone,
-    depth: fixed.config.depth,
-    suppression: {
-      angles: chart.uncertainty.angleClaimsSuppressed,
-      houses: !chart.uncertainty.housesReliable,
+  const observed = await generateSyntheticReadingProse(
+    {
+      facts,
+      hasEligibleCycles: assembled.eligibleCycles.length > 0,
+      tone: fixed.config.tone,
+      depth: fixed.config.depth,
+      suppression: {
+        angles: chart.uncertainty.angleClaimsSuppressed,
+        houses: !chart.uncertainty.housesReliable,
+      },
+      fallback: {
+        headline: assembled.headline,
+        body: assembled.astroBody,
+        prompt: assembled.prompt,
+      },
     },
-    fallback: { headline: assembled.headline, body: assembled.astroBody, prompt: assembled.prompt },
-  });
+    provider,
+  );
   const { prose } = observed;
   if (!prose.meta.diagnostics) throw new Error("Synthetic evaluation requires daily diagnostics");
   return {
@@ -82,10 +91,13 @@ export async function runSyntheticEvaluationCase(
       reliabilityVersion: NATAL_RELIABILITY_VERSION,
       promptVersion: DAILY_PROMPT_VERSION,
       validatorVersion: DAILY_VALIDATOR_VERSION,
-      model: LANGUAGE_MODEL,
+      model: languageModel(provider),
       gatewayTimeoutMs: DAILY_GATEWAY_TIMEOUT_MS,
       source: "live-synthetic",
-      network: "Live language gateway; fixed synthetic facts only",
+      network:
+        provider === "gemini-enterprise"
+          ? "Live Gemini Enterprise Agent Platform; fixed synthetic facts only"
+          : "Live language gateway; fixed synthetic facts only",
       warning:
         "Actual model outputs for synthetic plans. This run does not establish production-user acceptance, semantic grounding, or writing quality. Manual scores remain blank.",
     },

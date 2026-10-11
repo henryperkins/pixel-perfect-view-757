@@ -5,7 +5,7 @@ import {
   READING_EVAL_FIXTURE_VERSION,
 } from "./reading-evaluation.fixtures.mjs";
 import type { FactAtom } from "./facts";
-import type { DailyDiagnostics } from "./diagnostics";
+import { LANGUAGE_PROVIDERS, type DailyDiagnostics } from "./diagnostics";
 import type { DailyPlanIdentity } from "../content/synthesis";
 import type { DailyNatalLensPlan } from "../content/natal-lens";
 import type { NatalReliabilityManifest } from "../astro/natal-reliability";
@@ -30,11 +30,12 @@ export const LIVE_EVALUATION_CASES = READING_EVALUATION_CATALOG;
 export const READING_EVALUATION_BUNDLE_SOURCES = ["active", "builtin", "natal-candidate"] as const;
 export type ReadingEvaluationBundleSource = (typeof READING_EVALUATION_BUNDLE_SOURCES)[number];
 
-/** The only accepted request: a fixed case ID and an optional closed copy selector. */
+/** The only accepted request: a fixed case ID plus optional closed copy and provider selectors. */
 export const readingEvaluationInputSchema = z
   .object({
     caseId: z.string().min(1).max(80),
     bundleSource: z.enum(READING_EVALUATION_BUNDLE_SOURCES).optional(),
+    provider: z.enum(LANGUAGE_PROVIDERS).optional(),
   })
   .strict();
 
