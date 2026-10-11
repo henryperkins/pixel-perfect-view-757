@@ -77,19 +77,22 @@ your own scores and findings.
 
 ## Output
 
-Write one JSON object and nothing else:
+Reply with one JSON object and nothing else. Use no tools: everything you need is in
+your prompt. Copy your context ID, `packetSha256` and `promptSha256` exactly as your
+prompt gives them; the packet cannot contain its own hash or the hash of the prompt
+that carries it.
 
 ```json
 {
   "protocolVersion": "daily-writing-ai-review-1",
   "kind": "review",
-  "packetSha256": "<packetSha256 given with your packet>",
+  "packetSha256": "<packetSha256 from your prompt>",
   "itemSetHash": "<itemSetHash from the packet>",
   "reviewer": {
     "contextId": "<the context ID you were given>",
     "model": "<your model if you know it, otherwise unknown>",
     "configuration": "unknown",
-    "promptSha256": "<promptSha256 given with your packet>"
+    "promptSha256": "<promptSha256 from your prompt>"
   },
   "reviewedAt": "<current UTC time, ISO 8601>",
   "blindness": {

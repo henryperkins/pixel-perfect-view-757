@@ -176,6 +176,7 @@ function adjudication(prepared, resolutions, overrides = {}) {
     adjudicatedAt: "2026-10-11T19:00:00Z",
     blindness: {
       declaration: "I saw the disputed findings and their items only.",
+      inputs: ["findings", "items"],
       sawOriginLabels: false,
       sawImplementationContext: false,
     },
@@ -183,6 +184,9 @@ function adjudication(prepared, resolutions, overrides = {}) {
     ...overrides,
   };
 }
+
+const statementOf = (prepared, itemId, factId) =>
+  prepared.assignment.items[itemId].content.facts.find((f) => f.id === factId).statement;
 
 const itemReview = (artifact, itemId) => artifact.items.find((item) => item.itemId === itemId);
 
@@ -346,6 +350,11 @@ test("coverage, identity bindings, scores and blindness are validated before any
     ],
     ["unblinded", (r) => (r.blindness.sawPriorVerdicts = true), /blind/i],
     [
+      "declared unblinded input",
+      (r) => (r.blindness.inputs = ["packet", "assignment.json", "source-report.json"]),
+      /blind/i,
+    ],
+    [
       "passage not verbatim",
       (r) =>
         itemReview(r, someItem).findings.push(
@@ -413,13 +422,12 @@ test("a supported-claim failure fails despite high scores until adjudication res
     ),
   );
   const original = finding(prepared, target);
-  const fact = assignment.items[target].content.facts.find((f) => f.id === "I1");
   const resolution = (verdict) => ({
     reviewerContextId: "reviewer-a",
     findingId: original.findingId,
     itemId: target,
     passage: original.passage,
-    factEvidence: [{ factId: "I1", statement: fact.statement.slice(0, 60) }],
+    factEvidence: [{ factId: "I1", statement: statementOf(prepared, target, "I1") }],
     resolution: verdict,
     explanation: "Compared the exact passage with the supplied statement.",
   });
@@ -449,17 +457,51 @@ test("invalid adjudications are rejected", async () => {
   );
   const b = review(prepared, "reviewer-b");
   const original = finding(prepared, target);
-  const statement = assignment.items[target].content.facts.find((f) => f.id === "I1").statement;
+  const statement = statementOf(prepared, target, "I1");
   const valid = {
     reviewerContextId: "reviewer-a",
     findingId: original.findingId,
     itemId: target,
     passage: original.passage,
-    factEvidence: [{ factId: "I1", statement: statement.slice(0, 40) }],
+    factEvidence: [{ factId: "I1", statement }],
     resolution: "supported",
     explanation: "Exact comparison.",
   };
+  // A whole sentence after the statement's label is acceptable evidence.
+  const sentence = statement.slice(statement.indexOf(": ") + 2).split(/(?<=\.) /)[0];
+  assert.equal(
+    qualifyReviews({
+      assignment,
+      reviews: [a, b],
+      adjudication: adjudication(prepared, [
+        { ...valid, factEvidence: [{ factId: "I1", statement: sentence }] },
+      ]),
+    }).passed,
+    true,
+  );
   for (const [name, adj, message] of [
+    [
+      "one-letter evidence",
+      adjudication(prepared, [{ ...valid, factEvidence: [{ factId: "I1", statement: "a" }] }]),
+      /whole sentence/i,
+    ],
+    [
+      "mid-sentence evidence",
+      adjudication(prepared, [
+        { ...valid, factEvidence: [{ factId: "I1", statement: sentence.slice(0, 30) }] },
+      ]),
+      /whole sentence/i,
+    ],
+    [
+      "unblinded adjudicator",
+      adjudication(prepared, [valid], {
+        blindness: {
+          ...adjudication(prepared, []).blindness,
+          inputs: ["findings", "items", "assignment.json"],
+        },
+      }),
+      /blind/i,
+    ],
     ["unknown finding", adjudication(prepared, [{ ...valid, findingId: "nope" }]), /finding/i],
     [
       "passage changed",
@@ -489,23 +531,113 @@ test("invalid adjudications are rejected", async () => {
       message,
       name,
     );
+  // A finding both reviewers raised is not a disagreement: one adjudicator cannot overturn it.
+  const shared = review(prepared, "reviewer-b", (r) =>
+    itemReview(r, target).findings.push(finding(prepared, target, { findingId: "b-shared" })),
+  );
+  assert.throws(
+    () =>
+      qualifyReviews({
+        assignment,
+        reviews: [a, shared],
+        adjudication: adjudication(prepared, [valid]),
+      }),
+    /shared/i,
+  );
+});
+
+test("fewer than two reviewer contexts can neither prepare nor qualify", async () => {
+  const data = await inputs();
+  assert.throws(
+    () => prepareReview({ ...data, random: seeded(31), contexts: ["reviewer-a"] }),
+    /two/i,
+  );
+  assert.throws(() => prepareReview({ ...data, random: seeded(31), contexts: [] }), /two/i);
+  const prepared = prepareReview({ ...data, random: seeded(31) });
+  const single = structuredClone(prepared.assignment);
+  delete single.packets["reviewer-b"];
+  assert.throws(
+    () => qualifyReviews({ assignment: single, reviews: [review(prepared, "reviewer-a")] }),
+    /two/i,
+  );
+  const summary = qualifyReviews({
+    assignment: prepared.assignment,
+    reviews: [review(prepared, "reviewer-a"), review(prepared, "reviewer-b")],
+  });
+  assert.equal(summary.reviewerCount, 2);
+});
+
+test("only distinct, matched hosted reports can be prepared for review", async () => {
+  const data = await inputs();
+  assert.throws(
+    () => prepareReview({ ...data, after: data.before, random: seeded(37) }),
+    /same report/i,
+  );
+  for (const [name, change, message] of [
+    ["model", (r) => (r.model = "another-model"), /model/i],
+    ["case set", (r) => (r.caseSetHash = "0".repeat(64)), /case set/i],
+    ["transit copy", (r) => (r.transitCopyHash = "0".repeat(64)), /transit copy/i],
+    ["input config", (r) => (r.cases[3].configHash = "0".repeat(64)), /input config/i],
+    ["offline replay", (r) => (r.source = "candidate-replay"), /live-synthetic/i],
+  ]) {
+    const changed = structuredClone(data.after.report);
+    change(changed);
+    assert.throws(
+      () =>
+        prepareReview({
+          ...data,
+          after: { report: changed, sha256: sha256(JSON.stringify(changed)) },
+          random: seeded(37),
+        }),
+      message,
+      name,
+    );
+  }
 });
 
 test("adjudication cannot raise a low score; only a fresh blinded reassessment replaces it", async () => {
   const prepared = prepareReview({ ...(await inputs()), random: seeded(19) });
   const { assignment } = prepared;
   const target = itemFor(assignment, "after", "synthesis-reinforcement", "candidate");
-  const low = review(prepared, "reviewer-a", (r) => {
-    itemReview(r, target).scores.coherence = { score: 3, reason: "Repeats persistence." };
+  const other = itemFor(assignment, "after", "saturn-square-moon-warm", "candidate");
+  // Reviewer A disputes a passage and scores the item low because of it.
+  const disputed = finding(prepared, target);
+  const a = review(prepared, "reviewer-a", (r) => {
+    itemReview(r, target).findings.push(disputed);
+    itemReview(r, target).scores.grounding = { score: 3, reason: "The disputed passage." };
   });
   const b = review(prepared, "reviewer-b");
-  const empty = adjudication(prepared, []);
-  const stillLow = qualifyReviews({ assignment, reviews: [low, b], adjudication: empty });
-  assert.equal(stillLow.passed, false);
+  const supported = adjudication(prepared, [
+    {
+      reviewerContextId: "reviewer-a",
+      findingId: disputed.findingId,
+      itemId: target,
+      passage: disputed.passage,
+      factEvidence: [{ factId: "I1", statement: statementOf(prepared, target, "I1") }],
+      resolution: "supported",
+      explanation: "The passage repeats the supplied statement.",
+    },
+  ]);
+  const stillLow = qualifyReviews({ assignment, reviews: [a, b], adjudication: supported });
+  assert.equal(stillLow.passed, false, "Adjudication never raises a score");
   assert.ok(stillLow.corrected.failures.some((f) => f.itemId === target));
   const fresh = review(prepared, "reviewer-c", () => {}, "reviewer-a");
-  assert.throws(() => qualifyReviews({ assignment, reviews: [low, b, fresh] }), /adjudication/i);
-  const reassessed = qualifyReviews({ assignment, reviews: [low, b, fresh], adjudication: empty });
+  assert.throws(() => qualifyReviews({ assignment, reviews: [a, b, fresh] }), /adjudication/i);
+  // An adjudication that resolves none of A's findings cannot open a reassessment.
+  assert.throws(
+    () =>
+      qualifyReviews({
+        assignment,
+        reviews: [a, b, fresh],
+        adjudication: adjudication(prepared, []),
+      }),
+    /supported/i,
+  );
+  const reassessed = qualifyReviews({
+    assignment,
+    reviews: [a, b, fresh],
+    adjudication: supported,
+  });
   assert.equal(reassessed.passed, true);
   assert.deepEqual(
     reassessed.reviewers.map((r) => [r.contextId, r.reassessmentOf, r.superseded]),
@@ -515,19 +647,40 @@ test("adjudication cannot raise a low score; only a fresh blinded reassessment r
       ["reviewer-c", "reviewer-a", false],
     ],
   );
-  // A reassessment cannot launder the original's substantive finding.
-  const flagged = review(prepared, "reviewer-a", (r) =>
-    itemReview(r, target).findings.push(finding(prepared, target)),
+  assert.deepEqual(
+    reassessed.supersededAssessments.map((s) => [s.contextId, s.reassessedBy, s.items.length]),
+    [["reviewer-a", "reviewer-c", 1]],
   );
+  assert.equal(reassessed.supersededAssessments[0].items[0].itemId, target);
+  assert.match(reassessed.supersededAssessments[0].items[0].reasons.join(" "), /grounding 3/);
+  // The reassessment replaces scores only on the adjudicated item, never a whole review.
+  const broad = review(prepared, "reviewer-a", (r) => {
+    itemReview(r, target).findings.push(disputed);
+    itemReview(r, target).scores.grounding = { score: 3, reason: "The disputed passage." };
+    itemReview(r, other).scores.grounding = { score: 2, reason: "Unsupported throughout." };
+  });
+  const scoped = qualifyReviews({
+    assignment,
+    reviews: [broad, b, fresh],
+    adjudication: supported,
+  });
+  assert.equal(scoped.passed, false);
+  assert.ok(scoped.corrected.failures.some((f) => f.itemId === other));
+  // Nor can it launder another substantive finding by the superseded reviewer.
+  const flagged = review(prepared, "reviewer-a", (r) => {
+    itemReview(r, target).findings.push(disputed);
+    itemReview(r, target).scores.grounding = { score: 3, reason: "The disputed passage." };
+    itemReview(r, other).findings.push(finding(prepared, other));
+  });
   const laundered = qualifyReviews({
     assignment,
     reviews: [flagged, b, fresh],
-    adjudication: empty,
+    adjudication: supported,
   });
   assert.equal(laundered.passed, false);
   const reused = review(prepared, "reviewer-b", () => {}, "reviewer-a");
   assert.throws(
-    () => qualifyReviews({ assignment, reviews: [low, b, reused], adjudication: empty }),
+    () => qualifyReviews({ assignment, reviews: [a, b, reused], adjudication: supported }),
     /duplicate reviewer|fresh/i,
   );
 });

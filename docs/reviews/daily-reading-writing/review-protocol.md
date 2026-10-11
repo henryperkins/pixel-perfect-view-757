@@ -28,18 +28,29 @@ are not evidence of independent model families.
 | Implementation agent   | Authors the correction and prepares packets                     | Everything; never reviews its own correction                                                         |
 | Reviewer A, Reviewer B | Two fresh contexts with no inherited implementation history     | Only their own packet, which embeds the rubric and [reviewer instructions](reviewer-instructions.md) |
 | Adjudicator            | A third fresh context, only when a dispute needs one            | The disputed findings, the affected items and their supplied facts                                   |
-| Reassessor             | A further fresh context, only when a score needs fresh judgment | A complete blinded packet of the same item set                                                       |
+| Reassessor             | A further fresh context, only after an adjudication (see below) | The packet of the context it reassesses                                                              |
 
-Reviewers never see before/after labels, case or run names, model/template origin,
-generator identity, versions, acceptance or rejection outcomes, advisory findings,
-existing scores, each other's answers or the implementation conversation. Fact
-statements may reveal the subject of a reading. The protocol blinds origin and
-assignment; it does not claim the nature of the text is perfectly concealed.
+At least two reviewer contexts are required; one review never qualifies. Each
+context receives its packet inline in its prompt and returns its review JSON as its
+reply, using no file, search or shell tools, so it cannot open the assignment,
+reports or advisory files. Its review must declare `inputs: ["packet"]` exactly. The
+operator archives every reviewer, adjudicator and reassessor prompt text beside its
+SHA-256, and keeps the assignment outside reviewer reach until every review is in.
+
+Reviewers never see before/after labels, case or run names, generator identity,
+versions, acceptance or rejection outcomes, advisory findings, existing scores, each
+other's answers or the implementation conversation. Fact statements may reveal the
+subject of a reading. Template items remain recognizable because their paragraphs
+carry no citations (`facts: null`); the blinding covers run, case and outcome, not
+whether an item is model or template prose.
 
 ## Packet
 
 `scripts/reading-writing-review.mjs prepare` builds one packet per reviewer from
 two complete reports (baseline and corrected). It makes no model or network calls.
+It refuses the same report twice, an offline replay (only hosted `live-synthetic`
+reports contain model writing), and reports whose fixture version, case set, input
+configs, model or transit copy differ.
 
 - **Items** cover every captured model candidate, including rejected drafts, and
   each distinct displayed or template body. Items are deduplicated only when the
@@ -218,21 +229,25 @@ contain no joint premise.
 
 ## Disputes, adjudication and reassessment
 
-- A **dispute** is a substantive finding that another assessment does not share, or
-  any substantive finding the implementation agent believes is supported.
+- A **dispute** is a substantive finding that another assessment does not share. A
+  finding both assessments raise on overlapping text is not a dispute: no single
+  adjudicator can overturn it, and the item fails until a new evidence round.
 - An adjudicator compares the exact passage with the exact supplied statements. Each
   resolution names the original reviewer `contextId` and `findingId`, repeats the
-  exact passage, quotes the fact statements verbatim (`factEvidence`), and records
-  `resolution: "supported"` (the passage is supported; the finding is resolved) or
-  `"unsupported"` (the finding stands and the item fails). An unresolved grounding
-  dispute fails the item.
+  exact passage, quotes the fact statements verbatim (`factEvidence`: the whole
+  statement, or whole sentences of it), and records `resolution: "supported"` (the
+  passage is supported; the finding is resolved) or `"unsupported"` (the finding
+  stands and the item fails). An unresolved grounding dispute fails the item. The
+  adjudicator declares only `findings` and `items` as inputs.
 - Adjudication resolves findings only. It never changes a score. A below-threshold
-  score still fails unless a **fresh blinded reassessment** replaces that
-  reviewer's assessment. A reassessment is a complete review artifact from a new
-  context with `reassessmentOf` naming the original `contextId`; it is accepted only
-  together with an adjudication file. The original artifact and all of its
-  substantive findings stay in the record, and those findings still need
-  resolution.
+  score on an item where the adjudication found that reviewer's disputed passage
+  supported still fails unless a **fresh blinded reassessment** replaces that
+  reviewer's scores **on those items only**. A reassessment is a complete review
+  artifact from a new context, with `reassessmentOf` naming the original `contextId`
+  and bound to that context's packet. It is refused unless the adjudication resolved
+  one of the original reviewer's findings as supported. The original artifact, its
+  replaced judgments (`supersededAssessments` in the summary) and all of its
+  substantive findings stay in the record, and those findings still need resolution.
 - Original judgments and adjudication are preserved. Scores are never averaged, and
   no substantive failure is averaged away.
 - If prose or source copy changes, a new evidence round starts with a new
@@ -255,6 +270,7 @@ Adjudication artifact:
   "adjudicatedAt": "2026-10-11T00:00:00Z",
   "blindness": {
     "declaration": "…",
+    "inputs": ["findings", "items"],
     "sawOriginLabels": false,
     "sawImplementationContext": false
   },
@@ -276,14 +292,18 @@ Adjudication artifact:
 
 `scripts/reading-writing-review.mjs qualify` validates both reviews (and any
 adjudication or reassessment) against the assignment and writes a new file. It
-rejects a missing or extra item, a duplicate reviewer context, a packet hash that
-differs from that reviewer's assigned hash, a wrong item-set hash, an out-of-range
-score, a missing applicability reason, a non-blind declaration, an inconsistent
-verdict or an unresolved substantive finding. The summary records:
+rejects an assignment with fewer than two reviewer contexts, a missing or extra
+item, a duplicate reviewer context, a packet hash that differs from that reviewer's
+assigned hash, a wrong item-set hash, an out-of-range score, a missing applicability
+reason, a non-blind declaration (including declared inputs other than the packet),
+an inconsistent verdict, evidence that is not whole sentences, an adjudication of a
+shared finding, and a reassessment without a supported adjudication. An unresolved
+substantive finding fails the gate. The summary records:
 
 - `humanReviewCompleted: false`;
 - automated validator outcomes for each run, separate from AI review results;
-- reviewer provenance, packet hashes and coverage;
+- reviewer provenance, the reviewer count, packet hashes and coverage, and any
+  superseded original judgments;
 - per-item failures for the corrected run, baseline defects, and score deltas
   between matching cases;
 - resolved disputes and uncovered failures;

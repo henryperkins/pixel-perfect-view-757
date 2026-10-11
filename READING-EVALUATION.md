@@ -134,8 +134,10 @@ Each claim keeps the strength its source gives it: a supplied possibility stays 
 possibility, and frequency, necessity or an exclusion needs its own supplied
 support (and is kept when supplied). A contrast may set two supported options side by
 side but does not rule out an alternative no fact mentions, and role or capacity
-scenes do not become the reader's history. A selected reinforcement gives sustained
-commitment and targeted action distinct paragraphs, then stops. Prompt
+scenes do not become the reader's history. A selected reinforcement gives its two
+joined meanings distinct paragraph functions, as `S1` relates them, then stops; the
+instruction names no rule's themes, because any published reinforcement rule can
+arrive there. Prompt
 `daily-astro-body-7` is reserved by separate transit-story work, so this correction
 uses `daily-astro-body-8`; whether its prose improves is decided only by fresh review
 of actual model output.
@@ -314,10 +316,12 @@ production quality counts bounded IDs/codes and does not expose origins. When su
 exercise structural limits, not semantic proof or an empirical temperament claim.
 
 For actual writing qualification, run these same fixtures, primary/synthesis copy,
-model and permitted preferences twice in an isolated environment: the baseline with no
-active release (the natal-free built-in fallback) and the candidate with the natal
-candidate release activated there. No separate checkout or policy switch is needed;
-the comparison verifies identical transit copy. Obtain fresh model results through an
+model and permitted preferences twice on the same deployed code: the baseline with the
+**Natal-free built-in baseline** evaluation copy (`bundleSource: builtin`) and the
+candidate with the **Inactive natal candidate** copy (`bundleSource: natal-candidate`).
+Choosing the candidate publishes and activates nothing, so no release pointer changes.
+No separate checkout or policy switch is needed; the strict `--compare-natal`
+comparison verifies identical transit copy, policies and source revision. Obtain fresh model results through an
 explicitly invoked synthetic evaluation; retain inputs, hashes, outputs, attempts,
 partial failures, durations and cost evidence. No production pointer change is needed. Independent reviewers score candidates and templates blind: each natal
 positive needs specificity, grounding and lens integration ≥4/5, with zero unsupported

@@ -153,6 +153,30 @@ export function prepareReview({
   if (!nonEmpty(instructions)) throw new Error("Reviewer instructions are required");
   if (new Set(contexts).size !== contexts.length || !contexts.every((c) => CONTEXT_ID.test(c)))
     throw new Error("Reviewer contexts must be distinct lowercase identifiers");
+  if (contexts.length < 2) throw new Error("At least two distinct reviewer contexts are required");
+  // Only a distinct pair of matched hosted runs can show what the correction changed.
+  if (before.sha256 === after.sha256)
+    throw new Error("The baseline and corrected inputs are the same report");
+  for (const [label, side] of [
+    ["before", before],
+    ["after", after],
+  ])
+    if (side.report.source !== "live-synthetic")
+      throw new Error(
+        `The ${label} report is not a hosted live-synthetic run; offline replays contain no model writing`,
+      );
+  for (const [field, label] of [
+    ["fixtureVersion", "fixture version"],
+    ["caseSetHash", "case set"],
+    ["model", "model"],
+    ["transitCopyHash", "transit copy"],
+  ])
+    if (before.report[field] !== after.report[field])
+      throw new Error(`Unmatched reports: the ${label} differs`);
+  const afterConfig = new Map(after.report.cases.map((row) => [row.id, row.configHash]));
+  for (const row of before.report.cases)
+    if (row.configHash !== afterConfig.get(row.id))
+      throw new Error(`Unmatched reports: the input config for ${row.id} differs`);
 
   // Items deduplicate only when text and the full fact, tone, depth and quiet context match.
   const entries = new Map();
@@ -376,12 +400,14 @@ function validateReview(review, assignment) {
   if (!ISO_UTC.test(String(review.reviewedAt)))
     throw new Error(`Review ${id} needs a UTC timestamp`);
   const blindness = review.blindness ?? {};
-  if (
-    !nonEmpty(blindness.declaration) ||
-    !Array.isArray(blindness.inputs) ||
-    !blindness.inputs.length
-  )
+  if (!nonEmpty(blindness.declaration))
     throw new Error(`Review ${id} needs a blindness declaration`);
+  if (
+    !Array.isArray(blindness.inputs) ||
+    blindness.inputs.length !== 1 ||
+    blindness.inputs[0] !== "packet"
+  )
+    throw new Error(`Review ${id} is not blind: it declares inputs other than its packet`);
   for (const flag of BLIND_FLAGS)
     if (blindness[flag] !== false) throw new Error(`Review ${id} is not blind: ${flag}`);
   if (review.itemSetHash !== assignment.itemSetHash)
@@ -420,6 +446,25 @@ function validateReview(review, assignment) {
     throw new Error(`Review ${id} overall verdict disagrees with its item verdicts`);
 }
 
+/** True when the quote is the whole statement or runs from a sentence start to a sentence end. */
+function quotesWholeSentences(statement, quote) {
+  if (quote === statement) return true;
+  for (let at = statement.indexOf(quote); at >= 0; at = statement.indexOf(quote, at + 1)) {
+    const startsSentence = at === 0 || /[.!?:]["')\]]*\s+$/.test(statement.slice(0, at));
+    const after = statement.slice(at + quote.length);
+    if (startsSentence && /[.!?]["')\]]*$/.test(quote) && (after === "" || /^\s/.test(after)))
+      return true;
+  }
+  return false;
+}
+
+function passageRange(assignment, itemId, finding) {
+  const text = assignment.items[itemId].content.paragraphs[finding.paragraph - 1].text;
+  const start = text.indexOf(finding.passage);
+  return { paragraph: finding.paragraph, start, end: start + finding.passage.length };
+}
+const overlapping = (a, b) => a.paragraph === b.paragraph && a.start < b.end && b.start < a.end;
+
 function validateAdjudication(adjudication, assignment, reviews) {
   if (adjudication?.protocolVersion !== PROTOCOL_VERSION || adjudication.kind !== "adjudication")
     throw new Error(`The adjudication is not a ${PROTOCOL_VERSION} adjudication`);
@@ -447,6 +492,14 @@ function validateAdjudication(adjudication, assignment, reviews) {
     blindness.sawImplementationContext !== false
   )
     throw new Error("The adjudication is not blind to origin and implementation context");
+  if (
+    !Array.isArray(blindness.inputs) ||
+    !blindness.inputs.length ||
+    blindness.inputs.some((input) => !["findings", "items"].includes(input))
+  )
+    throw new Error(
+      "The adjudication is not blind: it may declare only the disputed findings and their items",
+    );
   if (!Array.isArray(adjudication.resolutions))
     throw new Error("The adjudication needs resolutions");
   const resolved = new Set();
@@ -481,9 +534,31 @@ function validateAdjudication(adjudication, assignment, reviews) {
         throw new Error(
           `Fact evidence for ${resolution.findingId} is not verbatim from supplied fact ${evidence?.factId}`,
         );
+      if (!quotesWholeSentences(fact.statement, evidence.statement))
+        throw new Error(
+          `Fact evidence for ${resolution.findingId} must quote whole sentences of fact ${fact.id}`,
+        );
     }
     if (!nonEmpty(resolution.explanation))
       throw new Error(`Resolution for ${resolution.findingId} needs an explanation`);
+    // Only a disagreement can be adjudicated: a finding another assessment shares stands.
+    if (resolution.resolution === "supported") {
+      const range = passageRange(assignment, item.itemId, finding);
+      for (const other of reviews) {
+        if (other.reviewer.contextId === resolution.reviewerContextId) continue;
+        const shared = other.items
+          .find((i) => i.itemId === item.itemId)
+          ?.findings.find(
+            (f) =>
+              f.severity === "substantive" &&
+              overlapping(range, passageRange(assignment, item.itemId, f)),
+          );
+        if (shared)
+          throw new Error(
+            `Finding ${resolution.findingId} is shared with ${other.reviewer.contextId}'s finding ${shared.findingId}; one adjudicator cannot overturn a finding both assessments raised`,
+          );
+      }
+    }
   }
 }
 
@@ -496,6 +571,11 @@ export function qualifyReviews({ assignment, reviews, adjudication = null }) {
   if (assignment?.protocolVersion !== PROTOCOL_VERSION || assignment.kind !== "assignment")
     throw new Error(`The assignment is not a ${PROTOCOL_VERSION} assignment`);
   if (!Array.isArray(reviews)) throw new Error("Reviews are required");
+  const assigned = Object.keys(assignment.packets ?? {});
+  if (assigned.length < 2)
+    throw new Error(
+      "The assignment needs at least two reviewer contexts; one review never qualifies",
+    );
   const byContext = new Map();
   for (const review of reviews) {
     const id = review?.reviewer?.contextId;
@@ -503,23 +583,35 @@ export function qualifyReviews({ assignment, reviews, adjudication = null }) {
     byContext.set(id, review);
   }
   for (const review of reviews) validateReview(review, assignment);
-  const assigned = Object.keys(assignment.packets);
   for (const contextId of assigned)
     if (!byContext.has(contextId)) throw new Error(`Missing review from ${contextId}`);
   const reassessments = reviews.filter((r) => r.reassessmentOf);
   if (reassessments.length && !adjudication)
     throw new Error("A reassessment is accepted only together with an adjudication record");
-  const reassessed = new Map();
-  for (const review of reassessments) {
-    if (reassessed.has(review.reassessmentOf))
-      throw new Error(`More than one reassessment of ${review.reassessmentOf}`);
-    reassessed.set(review.reassessmentOf, review);
-  }
   if (adjudication) validateAdjudication(adjudication, assignment, reviews);
-
-  const effective = assigned.map(
-    (contextId) => reassessed.get(contextId) ?? byContext.get(contextId),
-  );
+  // A fresh reassessment may replace a reviewer's scores only on items where the
+  // adjudication found one of that reviewer's disputed passages supported.
+  const replaced = new Map();
+  for (const review of reassessments) {
+    if (replaced.has(review.reassessmentOf))
+      throw new Error(`More than one reassessment of ${review.reassessmentOf}`);
+    const items = new Set(
+      adjudication.resolutions
+        .filter(
+          (r) => r.reviewerContextId === review.reassessmentOf && r.resolution === "supported",
+        )
+        .map((r) => r.itemId),
+    );
+    if (!items.size)
+      throw new Error(
+        `A reassessment of ${review.reassessmentOf} needs an adjudication that resolves one of its findings as supported`,
+      );
+    replaced.set(review.reassessmentOf, { by: review, items });
+  }
+  const assessmentFor = (contextId, itemId) => {
+    const swap = replaced.get(contextId);
+    return swap?.items.has(itemId) ? swap.by : byContext.get(contextId);
+  };
   const resolutions = new Map(
     (adjudication?.resolutions ?? []).map((r) => [`${r.reviewerContextId}\u0000${r.findingId}`, r]),
   );
@@ -539,25 +631,28 @@ export function qualifyReviews({ assignment, reviews, adjudication = null }) {
   );
   const itemIds = Object.keys(assignment.items).sort();
   const reviewOf = (review, itemId) => review.items.find((item) => item.itemId === itemId);
+  const gateReasons = (review, itemId) => {
+    const entry = assignment.items[itemId];
+    const item = reviewOf(review, itemId);
+    if (entry.content.quiet)
+      return item.quietCheck.safe === true
+        ? []
+        : [`${review.reviewer.contextId}: quiet message judged unsafe`];
+    return gateDimensions(entry)
+      .filter((dimension) => item.scores[dimension].score < 4)
+      .map(
+        (dimension) =>
+          `${review.reviewer.contextId}: ${dimension} ${item.scores[dimension].score} is below 4`,
+      );
+  };
   const failures = (run) =>
     itemIds
       .filter((itemId) => assignment.items[itemId].mappings.some((m) => m.run === run))
       .map((itemId) => {
         const entry = assignment.items[itemId];
-        const reasons = [];
-        for (const review of effective) {
-          const item = reviewOf(review, itemId);
-          if (entry.content.quiet) {
-            if (item.quietCheck.safe !== true)
-              reasons.push(`${review.reviewer.contextId}: quiet message judged unsafe`);
-            continue;
-          }
-          for (const dimension of gateDimensions(entry))
-            if (item.scores[dimension].score < 4)
-              reasons.push(
-                `${review.reviewer.contextId}: ${dimension} ${item.scores[dimension].score} is below 4`,
-              );
-        }
+        const reasons = assigned.flatMap((contextId) =>
+          gateReasons(assessmentFor(contextId, itemId), itemId),
+        );
         for (const open of unresolved.filter((u) => u.itemId === itemId))
           reasons.push(
             `unresolved substantive finding ${open.finding.findingId} (${open.finding.category}) from ${open.reviewer}`,
@@ -576,14 +671,18 @@ export function qualifyReviews({ assignment, reviews, adjudication = null }) {
   for (const [caseId, after] of Object.entries(assignment.cases.after)) {
     const before = assignment.cases.before[caseId];
     if (!before?.candidate || !after.candidate) continue;
-    for (const review of effective)
+    for (const contextId of assigned)
       for (const dimension of DIMENSIONS) {
-        const was = reviewOf(review, before.candidate).scores[dimension].score;
-        const now = reviewOf(review, after.candidate).scores[dimension].score;
+        const was = reviewOf(assessmentFor(contextId, before.candidate), before.candidate).scores[
+          dimension
+        ].score;
+        const now = reviewOf(assessmentFor(contextId, after.candidate), after.candidate).scores[
+          dimension
+        ].score;
         if (was === null && now === null) continue;
         scoreDeltas.push({
           caseId,
-          reviewer: review.reviewer.contextId,
+          reviewer: contextId,
           dimension,
           before: was,
           after: now,
@@ -600,6 +699,7 @@ export function qualifyReviews({ assignment, reviews, adjudication = null }) {
     passed,
     itemSetHash: assignment.itemSetHash,
     automated: assignment.reports,
+    reviewerCount: assigned.length,
     reviewers: reviews.map((review) => ({
       contextId: review.reviewer.contextId,
       model: review.reviewer.model,
@@ -608,7 +708,16 @@ export function qualifyReviews({ assignment, reviews, adjudication = null }) {
       packetSha256: review.packetSha256,
       reviewedAt: review.reviewedAt,
       reassessmentOf: review.reassessmentOf ?? null,
-      superseded: reassessed.has(review.reviewer.contextId),
+      superseded: replaced.has(review.reviewer.contextId),
+    })),
+    // Original judgments stay visible wherever a reassessment replaced them.
+    supersededAssessments: [...replaced].map(([contextId, swap]) => ({
+      contextId,
+      reassessedBy: swap.by.reviewer.contextId,
+      items: [...swap.items].sort().map((itemId) => ({
+        itemId,
+        reasons: gateReasons(byContext.get(contextId), itemId),
+      })),
     })),
     adjudication: adjudication && {
       contextId: adjudication.adjudicator.contextId,

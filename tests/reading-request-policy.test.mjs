@@ -210,14 +210,18 @@ test("claim-strength guidance is sent with unchanged source statements, parents,
   const [reinforcement, independent, suppressed] = requests.map((r) => r.messages[1].content);
   assert.ok(reinforcement.includes('"facts": ["S1", "C1", "I1", "C2", "I2"]'));
   assert.match(reinforcement, /"can increase" stays "can increase"/);
+  const relationship = reinforcement
+    .split("\n")
+    .find((line) => line.startsWith("Develop the supplied published relationship"));
   assert.match(
-    reinforcement,
-    /one develops the sustained commitment and the other the targeted action that S1 joins/,
+    relationship,
+    /For a reinforcement relationship, give the two joined meanings distinct paragraph functions, as S1 relates them, instead of restating one idea in both paragraphs/,
   );
-  assert.match(reinforcement, /Do not restate the same progress or persistence idea/);
+  // Any published reinforcement rule may arrive here, so the instruction names no rule's themes.
+  assert.doesNotMatch(relationship, /sustained|commitment|targeted|persistence|progress/i);
   for (const prompt of [independent, suppressed]) {
     assert.match(prompt, /No S1 is supplied: do not invent a joint relationship or premise/);
-    assert.doesNotMatch(prompt, /sustained commitment|targeted action/);
+    assert.doesNotMatch(prompt, /For a reinforcement relationship/);
   }
   assert.match(suppressed, /Angle claims are suppressed/);
   assert.match(suppressed, /House claims are suppressed: do not mention houses or cusps\./);

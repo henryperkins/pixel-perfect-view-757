@@ -103,7 +103,8 @@ npm run eval:reading -- --bundle natal-candidate --output /tmp/pattern-baseline.
 The [fixed evaluation guide](READING-EVALUATION.md) explains 28 synthetic cases,
 explicit `--bundle builtin|natal-candidate` selection, offline candidate replay,
 extraction and source-bound replay of downloaded reports, before/after comparisons,
-and the AI writing-review lane that currently stands in for deferred human review.
+and the AI writing-review lane used while human review is deferred (it does not
+replace human review).
 Handwritten validator fixtures do not establish a live model fallback rate or a
 quality score. No production schema change or model call is needed for this work.
 
