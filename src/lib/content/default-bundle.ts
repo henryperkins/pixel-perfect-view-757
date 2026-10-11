@@ -41,7 +41,7 @@ export function aspectFamily(aspect: string): string {
 }
 
 export const DEFAULT_BUNDLE: ContentBundle = {
-  version: "builtin-0.2.0",
+  version: "builtin-0.3.0",
   phases: {
     approaching:
       "This window is building. The pattern is not fully in place yet, so what you notice now is mostly anticipation.",
@@ -61,26 +61,26 @@ export const DEFAULT_BUNDLE: ContentBundle = {
   domains: {
     work: {
       label: "work and output",
-      hard: "Because this window lands on the working part of your chart, it tends to show up as workload, deadlines and the question of who decides what gets done. Friction here is usually about pace and ownership rather than ability.",
-      soft: "This window lands on the working part of your chart, so it usually reads as momentum: tasks that were stuck move, and effort spent on visible work tends to land better than usual.",
+      hard: "Pace, scope, and the part of a task that feels like yours are separate pieces of working on something. An unfinished list or a draft with competing aims can be a place to notice friction between those pieces.",
+      soft: "A task can feel manageable when its purpose and next small piece are easy to describe. A clear outline or a commitment with a clear scope can illustrate that kind of alignment.",
       prompt: "What piece of work would you defend if someone asked you to drop it this week?",
     },
     relationships: {
       label: "relationships and affection",
-      hard: "This window sits on the relating part of your chart, so it usually surfaces in closeness, money shared with others, or a want that has been left unsaid. Tension here is typically about mismatched expectations rather than bad faith.",
-      soft: "This window sits on the relating part of your chart, and supportive contacts here usually read as ease: it is a straightforward period for saying the warm thing plainly.",
+      hard: "Closeness, personal preference, and what you choose to express do not always line up neatly. A reply left unfinished or a plan you feel uncertain about can be a scene for that tension.",
+      soft: "Affection or preference can be straightforward to name in an ordinary moment. A familiar conversation or a few words of appreciation can serve as an example.",
       prompt: "Who have you been meaning to say something to, and what has been stopping you?",
     },
     "inner-life": {
       label: "inner life and rest",
-      hard: "This window touches the private, restorative part of your chart, so it tends to be felt rather than seen — sleep, mood, and the amount of noise you can tolerate. Health and energy questions often live here.",
-      soft: "This window touches the private, restorative part of your chart, which usually reads as recovery: rest taken now tends to actually restore something.",
+      hard: "An unclaimed hour can still be mentally full of unfinished tasks. A full calendar or an obligation that follows you into a quiet moment can offer a scene for tension around the amount of private space you prefer.",
+      soft: "Private time can have a comfortable shape of its own. A familiar corner, an unclaimed hour, or a routine with fewer demands can serve as ordinary examples of that ease.",
       prompt: "What would genuine rest look like today, as opposed to distraction?",
     },
     identity: {
       label: "identity and direction",
-      hard: "This window lands on how you present and where you are pointed, so it often shows up as a role that no longer describes you accurately.",
-      soft: "This window lands on how you present and where you are pointed, and supportive contacts here usually make it easier to be recognised as you already are.",
+      hard: "A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.",
+      soft: "A description of yourself can feel useful when it fits what you actually return to. A familiar project or an interest you can name plainly can offer a scene for that fit.",
       prompt: "Which description of yourself is out of date?",
     },
     structure: {
@@ -94,38 +94,50 @@ export const DEFAULT_BUNDLE: ContentBundle = {
     {
       key: "hard:saturn:sun",
       mechanism:
-        "Saturn transits to the Sun tend to coincide with periods where a role you have been holding loosely gets tested for whether it actually fits.",
+        "An established role can feel heavier when the responsibilities attached to it become visible. Saturn's hard contact with the Sun offers a way to examine the fit between a description you use for yourself and the effort of living up to it. An old introduction or a task accepted by default is an ordinary place to notice that fit.",
       question: "What are you still doing out of habit rather than choice?",
     },
     {
       key: "soft:saturn:sun",
       mechanism:
-        "Supportive Saturn contacts to the Sun usually read as consolidation: nothing dramatic, but effort applied now tends to stick.",
+        "Consistency can have a quiet shape: returning to a project, keeping a modest promise, or making one part of a routine reliable. A supportive Saturn contact with the Sun frames the connection between that repeated effort and a role you want to keep. The emphasis is on what can be sustained at an ordinary pace.",
       question: "What would be worth making durable this month?",
     },
     {
       key: "hard:saturn:moon",
       mechanism:
-        "Saturn to the Moon often coincides with a flatter emotional register and a lower tolerance for noise.",
+        "A small obligation can take up more room than its size suggests. Saturn's hard contact with the Moon frames the tension between something you feel responsible for and the amount of uninterrupted space you would prefer. The everyday scene might be a calendar left too full, or a quiet moment spent mentally keeping track of the next task.",
       question: "What kind of quiet are you actually needing?",
+    },
+    {
+      key: "soft:saturn:moon",
+      mechanism:
+        "A familiar routine can be a reference point when the day has many moving parts. A supportive Saturn contact with the Moon frames the comfort of a small arrangement that is predictable: a usual place, a familiar sequence, or enough room between commitments. This is a way to notice which forms of structure feel easy to inhabit.",
+      question: "Which small arrangement feels comfortable to return to?",
     },
     {
       key: "hard:jupiter:sun",
       mechanism:
-        "Jupiter contacts to the Sun coincide with an expanded sense of what is possible, which is useful and also easy to overspend.",
+        "One possibility can gather several more before you have decided what the first one involves. Jupiter's hard contact with the Sun frames the difference between a larger idea of yourself and the space available to carry it. A project gaining extra branches or a simple plan turning into a long list are everyday versions of that tension.",
       question: "Which of your current options is genuinely larger, and which just feels larger?",
     },
     {
       key: "soft:jupiter:sun",
       mechanism:
-        "A supportive Jupiter contact usually reads as ease rather than event: fewer obstacles than the same effort would normally meet.",
+        "An existing plan can look roomier without becoming a different plan. A supportive Jupiter contact with the Sun frames that sense of permission to explore one more option or describe an ambition more openly. The interesting detail is where curiosity fits alongside what is already underway.",
       question: "Where is the resistance unusually low right now?",
     },
     {
       key: "hard:mars:sun",
       mechanism:
-        "Mars to the Sun tends to shorten the fuse and raise physical restlessness for a few days.",
+        "The wish to act can run ahead of the time a task actually needs. Mars's hard contact with the Sun frames friction around pace and ownership: a draft revised before it has settled, or a reply composed before the point is clear. The scene is about how effort meets resistance.",
       question: "Where is the friction actually pointing?",
+    },
+    {
+      key: "soft:mars:sun",
+      mechanism:
+        "Direct effort has a simple shape when intention and action line up. A supportive Mars contact with the Sun frames the difference between circling a task and engaging with one clear part of it. An unfinished paragraph or a practical errand can provide a small, ordinary scene for that focus.",
+      question: "Where does your effort have a clear place to go?",
     },
     {
       key: "hard:mars:mars",
@@ -154,25 +166,36 @@ export const DEFAULT_BUNDLE: ContentBundle = {
     {
       key: "hard:venus:venus",
       mechanism:
-        "Venus to natal Venus is a short window where taste and preference come back into focus.",
+        "A familiar choice can reveal a preference you have been overlooking. Venus's hard contact with natal Venus frames the gap between what you keep choosing and what still feels appealing. It might be visible in a song you skip, an object you keep without enjoying, or an invitation you are unsure you want to accept.",
       question: "What do you actually like, independent of what is expected?",
+    },
+    {
+      key: "soft:venus:venus",
+      mechanism:
+        "Taste can become clearer in small choices that require little explanation. A supportive Venus contact with natal Venus frames the pleasure of recognising what appeals to you: a colour, a piece of music, or a way of spending an unclaimed hour.",
+      question: "What small preference is easy for you to recognise?",
     },
     {
       key: "hard:mercury:mercury",
       mechanism:
-        "Mercury contacts to itself coincide with a busier information load and a stronger urge to explain yourself.",
+        "Several unfinished explanations can compete for the same small piece of attention. Mercury's hard contact with natal Mercury frames the gap between knowing what you mean and deciding how to say it. A half-written message or a note revised several times offers a concrete scene for that friction.",
       question: "What is worth saying carefully rather than quickly?",
+    },
+    {
+      key: "soft:mercury:mercury",
+      mechanism:
+        "A thought can have a workable shape before it has a polished one. A supportive Mercury contact with natal Mercury frames the connection between an idea and the words, outline, or example that make it understandable. A rough note becoming a clear sentence is one possible scene.",
+      question: "Which idea is taking a clearer shape for you?",
     },
     {
       key: "hard:moon:moon",
       mechanism:
-        "The Moon returning to its natal position is a short, ordinary rhythm — a monthly baseline rather than an event.",
+        "A brief Moon contact with natal Moon offers a frame for comparing an ordinary moment with your familiar rhythm. The scene might be the difference between choosing company and choosing a quiet hour, or between a familiar plan and the wish for some unplanned space. A single moment is enough for that comparison; it need not become a story about the whole day.",
       question: "How does today compare to your usual baseline?",
     },
     {
       key: "hard:sun:sun",
-      mechanism:
-        "Solar contacts to your own Sun mark the annual cycle turning over.",
+      mechanism: "Solar contacts to your own Sun mark the annual cycle turning over.",
       question: "What is different from this time last year?",
     },
     // wildcard fallbacks
@@ -246,10 +269,7 @@ export function safetyPass(text: string): SafetyResult {
   for (const re of BANNED) {
     if (re.test(out)) {
       flagged.push(re.source);
-      out = out.replace(
-        re,
-        "[removed: this reading does not make claims of that kind]",
-      );
+      out = out.replace(re, "[removed: this reading does not make claims of that kind]");
     }
   }
   return { text: out, flagged };

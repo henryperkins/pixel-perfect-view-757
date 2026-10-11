@@ -120,6 +120,21 @@ export interface FeatureFactInput {
   payload: unknown;
 }
 
+/** Put the effective bundle's human meaning before the calculation reference sheet. */
+export function dailyFactBlock(facts: FactAtom[]): string {
+  const primary = facts.filter((fact) => fact.id === "I1");
+  const optional = facts.filter((fact) => /^(D1|P1|T1)$/.test(fact.id));
+  const reference = facts.filter((fact) => !/^(I1|D1|P1|T1)$/.test(fact.id));
+  return [
+    "Curated meaning of the strongest cycle (C1):",
+    factBlock(primary),
+    "Optional framing for that same cycle; cite only what you use:",
+    factBlock(optional),
+    "Calculated references and limits; use these to check any technical claims:",
+    factBlock(reference),
+  ].join("\n");
+}
+
 /** Facts for one natal chapter: the structure's own payload, flattened. */
 export function featureFacts(
   feature: FeatureFactInput,

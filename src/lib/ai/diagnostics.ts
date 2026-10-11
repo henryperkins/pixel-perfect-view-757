@@ -1,7 +1,7 @@
 /** Measurement identifiers describe the current brief and guards, not a cache key. */
 export const DAILY_DIAGNOSTICS_VERSION = 1;
-export const DAILY_PROMPT_VERSION = "daily-astro-body-2";
-export const DAILY_VALIDATOR_VERSION = "daily-reference-1";
+export const DAILY_PROMPT_VERSION = "daily-astro-body-3";
+export const DAILY_VALIDATOR_VERSION = "daily-reference-2";
 export const MAX_DAILY_DURATION_MS = 120_000;
 export const DAILY_GATEWAY_TIMEOUT_MS = 20_000;
 export const LANGUAGE_MODEL = "google/gemini-3.7-flash";

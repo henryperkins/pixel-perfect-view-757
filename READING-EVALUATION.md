@@ -77,12 +77,40 @@ or copy comparisons.
 
 The JSON report records the effective facts, production prompt and response schema, selected cycle keys, template body, displayed body, citations, bounded rejection code, prompt/validator/bundle versions, and configured gateway timeout budget. Request headers and credentials are excluded. Attempt durations are local replay timings, not live service latency. Skipped cases are separate from attempts, and `liveAcceptanceRate` is always `null`.
 
-Daily prompt `daily-astro-body-2` clarifies that a paragraph naming a planet,
-aspect, orb, or ISO exact date must cite the corresponding calculated cycle ID,
-even when timing fact T1 repeats the value. Editorial references cannot replace
-that calculation reference. Validator `daily-reference-1` remains unchanged.
+Daily prompt `daily-astro-body-3` defines plain, warm and clinical voices, each
+with a short style-only example. The effective bundle's curated meaning precedes
+the calculation references. The opening develops that meaning before technical
+detail; domain, phase and timing receive space only when they add a distinct idea.
+Standard and technical depth have separate length/detail guidance.
+
+Validator `daily-reference-2` accepts two to four paragraphs of one to four
+complete sentences. The first paragraph still requires C1 and I1; every paragraph
+requires supplied references. D1/P1/T1 coverage is optional, but the prompt requires
+them wherever their claims are used. A paragraph naming a planet, aspect, orb or
+ISO date still needs the matching calculated cycle ID, even when T1 repeats the
+value. Numeric, relation, safety and suppression checks remain. The angle guard
+now catches noun-like shorthand such as “your rising shapes…” while allowing
+ordinary phrases such as “your rising workload”. This is a bounded lexical check,
+not a complete test of semantic support or suppression paraphrases.
+
+Built-in copy `builtin-0.3.0` gives common contacts concrete observational scenes
+and adds four missing supportive counterparts. Published active bundles remain
+authoritative: their interpretation arrays replace the built-in arrays. The daily
+cache includes the effective bundle version, so the built-in release starts new
+readings for accounts using that bundle while retaining prior rows and feedback.
+An unchanged published bundle keeps its existing daily cache until other context
+changes or the next day. Natal copy and chapter cache behavior are unchanged.
+
+Source trails are saved with new readings and restored on cache reads. The records
+client no longer adds a nonexistent `created_at` column to `reading_sources`.
+If saving that trail fails, generation reports an error and removes only the
+new incomplete reading so a retry can save the whole result. New readings also
+record the expected source count: if cleanup fails, a later cache read reports
+the incomplete trail instead of silently showing it as saved. This does not
+reconstruct source rows missing from older readings, which have no count marker.
+
 Older diagnostics stay instrumented with an unrecorded timeout budget rather
-than acquiring the new value. Prompt and timeout changes affect new daily
+than acquiring the new value. Prompt and timeout versions alone affect new daily
 generations; they do not regenerate a cached reading. Natal chapters and
 editorial drafting retain their separate 90-second budget.
 

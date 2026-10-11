@@ -239,9 +239,12 @@ test("daily model accepts a complete three-paragraph draft with supplied-ID cove
 });
 
 for (const [name, paragraphs] of [
-  ["two paragraphs", () => validParagraphs().slice(0, 2)],
-  ["six paragraphs", () => [...validParagraphs(), ...validParagraphs()]],
-  ["one sentence", () => validParagraphs().map((p) => ({ ...p, text: "One short sentence." }))],
+  ["one paragraph", () => validParagraphs().slice(0, 1)],
+  ["five paragraphs", () => [...validParagraphs(), ...validParagraphs().slice(0, 2)]],
+  [
+    "unfinished sentence",
+    () => validParagraphs().map((p) => ({ ...p, text: "An unfinished thought" })),
+  ],
   [
     "five sentences",
     () =>
@@ -266,6 +269,28 @@ test("known IDs alone cannot satisfy cycle/editorial coverage", async () => {
   assert.ok(!/fact verification|semantically|supported claim/i.test(output.meta.reason));
 });
 
+test("two concise paragraphs can focus on the primary meaning without unused editorial citations", async () => {
+  draft.paragraphs = [
+    { text: "A familiar role can ask more of you than it once did.", facts: ["C1", "I1"] },
+    {
+      text: "The distinction is between keeping a commitment and keeping it unchanged.",
+      facts: ["I1"],
+    },
+  ];
+  const output = await generateReadingProse(input());
+  assert.equal(output.meta.mode, "model");
+  assert.deepEqual(
+    output.meta.citations.map((c) => c.facts),
+    [["C1", "I1"], ["I1"]],
+  );
+  const prompt = requests[0].messages[1].content;
+  assert.ok(
+    prompt.indexOf("I1:") < prompt.indexOf("C1:"),
+    "Meaning precedes calculation references",
+  );
+  assert.match(prompt, /Style example only/);
+});
+
 test("unknown citation IDs fail closed", async () => {
   draft.paragraphs[0].facts = ["C1", "I1", "NOT_SENT"];
   const output = await generateReadingProse(input());
@@ -276,6 +301,15 @@ for (const claim of [
   "Your Ascendant is Aries.",
   "Your Moon occupies the tenth house.",
   "Your Midheaven defines your career.",
+  "Your rising shapes first impressions.",
+  "The rising is emphasized.",
+  "Your rising, rather than your Sun, sets the tone.",
+  "Your natal rising placement sets the tone.",
+  "There is pressure on your rising.",
+  "Your rising's influence shapes first impressions.",
+  "Your rising’s influence shapes first impressions.",
+  "Your rising and Sun describe how you present yourself.",
+  "Your rising adds another layer to first impressions.",
 ])
   test(`suppressed draft rejects ${claim}`, async () => {
     const unknown = {
@@ -291,6 +325,29 @@ for (const claim of [
     const output = await generateReadingProse(input(plan(unknown), unknown));
     assert.equal(output.meta.mode, "template");
   });
+
+for (const wording of [
+  "Your rising workload takes effort.",
+  "Rising expectations take effort.",
+  "Pressure keeps rising.",
+  "The rising cost of effort is apparent.",
+  "Your rising and falling workload takes effort.",
+]) {
+  test(`angle suppression permits ordinary wording: ${wording}`, async () => {
+    const unknown = {
+      ...chart,
+      uncertainty: { ...chart.uncertainty, housesReliable: false, angleClaimsSuppressed: true },
+    };
+    draft.paragraphs[0].text = wording;
+    assert.equal((await generateReadingProse(input(plan(unknown), unknown))).meta.mode, "model");
+  });
+}
+
+test("an unsuppressed bare rising claim still needs an Ascendant cycle citation", async () => {
+  draft.paragraphs[0].text =
+    "Your rising shapes first impressions. This is an additional statement.";
+  assert.equal((await generateReadingProse(input())).meta.diagnostics.code, "body");
+});
 
 test("daily safety flags reject the whole draft instead of retaining redacted prose", async () => {
   draft.paragraphs[0].text = "You must accept this shift. It will definitely happen.";
@@ -323,6 +380,24 @@ test("plain normalization and technical depth behave consistently in the templat
   const technical = plan(chart, [cycle()], { ...ctx, depth: "technical" });
   assert.notEqual(plain.astroBody, technical.astroBody);
   assert.match(technical.astroBody, /1\.25|30%/);
+});
+
+test("daily tone and depth guidance is defined, normalized and separate from facts", async () => {
+  for (const [tone, expected, phrase] of [
+    ["measured", "plain", "Direct and observant"],
+    ["warm", "warm", "Attentive and conversational"],
+    ["clinical", "clinical", "Precise and reserved"],
+  ]) {
+    const factsBefore = JSON.stringify(input().facts);
+    await generateReadingProse({ ...input(), tone, depth: "technical" });
+    const prompt = requests.at(-1).messages[1].content;
+    assert.match(prompt, new RegExp(`Tone: ${expected}\\. ${phrase}`));
+    assert.match(prompt, /Style example only — not a factual source/);
+    assert.match(prompt, /Depth: technical/);
+    assert.equal(JSON.stringify(input().facts), factsBefore);
+  }
+  assert.equal(requests[0].response_format.json_schema.schema.properties.paragraphs.minItems, 2);
+  assert.equal(requests[0].response_format.json_schema.schema.properties.paragraphs.maxItems, 4);
 });
 
 test("local exact-date facts use the consented calendar zone", () => {

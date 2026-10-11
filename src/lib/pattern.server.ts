@@ -630,6 +630,11 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       .select("lane, source_id, label, detail")
       .eq("reading_id", existing.id);
     if (sourceError) throw new Error(sourceError.message);
+    const expectedSources = (existing.language_meta as Record<string, unknown> | null)?.[
+      "sourceCount"
+    ];
+    if (typeof expectedSources === "number" && (srcs ?? []).length !== expectedSources)
+      throw new Error("Reading source trail is incomplete. Please try again later.");
     // Recompute against the same snapshot and effective local noon. An empty
     // result is a quiet day; do not resurrect cycles stored for an older chart.
     const cachedChart = snapshotToChart(snapRow);
@@ -746,14 +751,14 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       idempotency_key: idem,
       language_mode: prose.meta.mode,
       language_model: prose.meta.model,
-      language_meta: { ...prose.meta, facts: suppliedFacts },
+      language_meta: { ...prose.meta, facts: suppliedFacts, sourceCount: provenance.length },
     })
     .select("id")
     .single();
   if (error) throw new Error(error.message);
 
   if (provenance.length) {
-    await db.from("reading_sources").insert(
+    const { error: sourceError } = await db.from("reading_sources").insert(
       provenance.map((p) => ({
         user_id: userId,
         reading_id: inserted.id,
@@ -763,6 +768,20 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
         detail: p.detail,
       })),
     );
+    if (sourceError) {
+      // Do not cache a newly generated reading whose source trail was not saved.
+      // Only this attempt's row is removed; older readings and feedback survive.
+      const { error: cleanupError } = await db
+        .from("daily_readings")
+        .delete()
+        .eq("id", inserted.id)
+        .eq("user_id", userId);
+      if (cleanupError)
+        throw new Error(
+          "Reading sources could not be saved, and the incomplete reading could not be removed.",
+        );
+      throw new Error("Reading sources could not be saved. Please retry.");
+    }
   }
 
   if (topCycles.length) {

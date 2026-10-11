@@ -108,11 +108,9 @@ test("unconsented tone and depth are replaced by ordinary defaults before model 
   const db = await prepare();
   await harness.app.updatePrefs(db, harness.userA, "PRIVATE_NAME_SENTINEL", "warm", "technical");
   await harness.app.getToday(db, harness.userA, "UTC");
-  assert.match(gatewayText(), /Tone preference: plain\. Depth preference: standard\./);
-  assert.doesNotMatch(
-    gatewayText(),
-    /Tone preference: warm|Depth preference: technical|PRIVATE_NAME_SENTINEL/,
-  );
+  assert.match(gatewayText(), /Tone: plain\./);
+  assert.match(gatewayText(), /Depth: standard\./);
+  assert.doesNotMatch(gatewayText(), /Tone: warm|Depth: technical|PRIVATE_NAME_SENTINEL/);
 });
 
 test("opted-in ordinary tone and depth preferences may reach the language provider", async () => {
@@ -120,7 +118,8 @@ test("opted-in ordinary tone and depth preferences may reach the language provid
   await harness.app.updatePrefs(db, harness.userA, null, "warm", "technical");
   for (const id of ["USR-01", "USR-02"]) await harness.app.setConsent(db, harness.userA, id, true);
   await harness.app.getToday(db, harness.userA, "UTC");
-  assert.match(gatewayText(), /Tone preference: warm\. Depth preference: technical\./);
+  assert.match(gatewayText(), /Tone: warm\./);
+  assert.match(gatewayText(), /Depth: technical\./);
 });
 
 test("raw birth details and opted-in ambient context cannot reach the model", async () => {
@@ -143,8 +142,8 @@ test("a reopened cached model reading reports the exact original provider inputs
     (message) => message.role === "user",
   ).content;
   assert.deepEqual(
-    sentPrompt.match(/^[A-Z]\d+: .*$/gm),
-    first.language.facts.map((fact) => `${fact.id}: ${fact.statement}`),
+    sentPrompt.match(/^[A-Z]\d+: .*$/gm).sort(),
+    first.language.facts.map((fact) => `${fact.id}: ${fact.statement}`).sort(),
   );
   harness.reopen();
   const cached = await harness.app.getToday(harness.records(), harness.userA, "UTC");

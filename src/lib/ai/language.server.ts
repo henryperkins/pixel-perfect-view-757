@@ -15,7 +15,8 @@
  */
 import { safetyPass } from "../content/default-bundle";
 import { normalizeDepth, normalizeTone } from "../reading.server";
-import { factBlock, factIds, type FactAtom } from "./facts";
+import { dailyFactBlock, factBlock, factIds, type FactAtom } from "./facts";
+import { dailyVoice } from "./daily-voice";
 import type {
   EvaluationJsonValue,
   SyntheticReadingCandidate,
@@ -215,8 +216,8 @@ const READING_SCHEMA: JsonSchemaObject = {
   properties: {
     paragraphs: {
       type: "array",
-      minItems: 3,
-      maxItems: 5,
+      minItems: 2,
+      maxItems: 4,
       items: {
         type: "object",
         properties: {
@@ -260,6 +261,19 @@ function rejection(code: DailyRejectionCode, reason: string): DailyProblem {
   return { code, reason, paragraph: null };
 }
 
+/** Noun-like chart shorthand, without rejecting adjectival 'your rising workload'. */
+function mentionsRisingAngle(text: string): boolean {
+  return (
+    /\brising\s+(?:sign|placement|ruler|degree|cusp)\b|\b(?:natal|birth|chart)\s+rising\b|\b(?:your|the|my|our|their|its)\s+rising(?:['’]s\b|\s*(?:[.,;:!?—–]|$)|\s+(?:is|was|can|could|may|might|would|will|does|has|adds?|shapes?|describes?|defines?|sets?|reflects?|suggests?|indicates?|represents?|influences?|affects?|means?|speaks?)\b)/i.test(
+      text,
+    ) ||
+    new RegExp(
+      `\\brising\\s+(?:and|or)\\s+(?:(?:your|the|natal)\\s+)?(${BODY_NAMES})\\b`,
+      "i",
+    ).test(text)
+  );
+}
+
 /** Bounded contradiction checks: IDs and lexical references cannot prove arbitrary prose. */
 function dailyReferenceProblem(
   text: string,
@@ -268,7 +282,8 @@ function dailyReferenceProblem(
 ): DailyProblem | null {
   if (
     suppression.angles &&
-    /\b(ascendant|descendant|midheaven|imum coeli|rising sign|asc|mc|ic)\b/i.test(text)
+    (/\b(ascendant|descendant|midheaven|imum coeli|rising sign|asc|mc|ic)\b/i.test(text) ||
+      mentionsRisingAngle(text))
   )
     return rejection("suppression", "draft contains suppressed angle wording");
   if (suppression.houses && /\b(houses?|cusps?)\b/i.test(text))
@@ -279,6 +294,8 @@ function dailyReferenceProblem(
   const bodies = new Set(
     cycles.flatMap((c) => [canonicalBody(c.transitBody), canonicalBody(c.natalPoint)]),
   );
+  if (mentionsRisingAngle(text) && !bodies.has("ascendant"))
+    return rejection("body", "draft names an angle absent from its cited cycles");
   for (const match of text.matchAll(new RegExp(`\\b(${BODY_NAMES})\\b`, "gi"))) {
     if (!bodies.has(canonicalBody(match[0])))
       return rejection("body", "draft names a body absent from its cited cycles");
@@ -368,12 +385,11 @@ function dailyDraft(
   )
     return rejection("shape", "draft has malformed paragraph data");
   const paragraphs = (raw as { paragraphs: unknown[] }).paragraphs;
-  if (paragraphs.length < 3 || paragraphs.length > 5)
-    return rejection("count", "draft must contain three to five paragraphs");
+  if (paragraphs.length < 2 || paragraphs.length > 4)
+    return rejection("count", "draft must contain two to four paragraphs");
   const byId = new Map(input.facts.map((f) => [f.id, f]));
   const kept: string[] = [],
     citations: Citation[] = [];
-  const covered = new Set<string>();
   const segmenter = new Intl.Segmenter("en", { granularity: "sentence" });
   let words = 0;
   for (const [index, paragraph] of paragraphs.entries()) {
@@ -396,13 +412,13 @@ function dailyDraft(
     const text = p.text.trim();
     const sentences = [...segmenter.segment(text)].map((s) => s.segment.trim()).filter(Boolean);
     if (
-      sentences.length < 2 ||
+      sentences.length < 1 ||
       sentences.length > 4 ||
       sentences.some((s) => !/[.!?]["')\]]*$/.test(s))
     )
       return rejectParagraph(
         "sentence",
-        "draft paragraphs must contain two to four complete sentences",
+        "draft paragraphs must contain one to four complete sentences",
       );
     const count = text.split(/\s+/).length;
     words += count;
@@ -417,17 +433,11 @@ function dailyDraft(
       input.suppression,
     );
     if (problem) return { ...problem, paragraph: index + 1 };
-    ids.forEach((id) => covered.add(id));
     kept.push(text);
     citations.push({ paragraph: kept.length, facts: ids });
   }
-  const required = input.facts.filter((f) => /^(C1|I1|D1|P1|T1)$/.test(f.id)).map((f) => f.id);
-  if (
-    !citations[0]?.facts.includes("C1") ||
-    !citations[0]?.facts.includes("I1") ||
-    required.some((id) => !covered.has(id))
-  )
-    return rejection("coverage", "draft failed required cycle/editorial ID coverage");
+  if (!citations[0]?.facts.includes("C1") || !citations[0]?.facts.includes("I1"))
+    return rejection("coverage", "draft failed strongest-cycle and interpretation ID coverage");
   return { body: kept.join("\n\n"), citations };
 }
 
@@ -472,20 +482,20 @@ async function generateDailyProse(
     ...["P1", "T1"].filter((id) => input.facts.some((fact) => fact.id === id)),
   ];
   const prompt = [
-    `Tone preference: ${normalizeTone(input.tone)}. Depth preference: ${normalizeDepth(input.depth)}.`,
+    dailyVoice(normalizeTone(input.tone), normalizeDepth(input.depth)),
     "Facts:",
-    factBlock(input.facts),
+    dailyFactBlock(input.facts),
     "",
     "Rewrite only the astronomical body of today's reading, using the supplied published interpretation, domain and phase wording.",
-    "Write three to five paragraphs of two to four complete sentences each. Keep each paragraph under 200 words and the whole body under 700 words.",
-    "The first paragraph must concern the strongest eligible cycle and cite C1 and I1. Across the body cite every supplied I1, D1, P1 and T1 atom.",
+    "Keep each paragraph under 200 words and the whole body under 700 words.",
+    "The first paragraph must concern the strongest eligible cycle and cite C1 and I1. D1, P1 and T1 are optional: cite them in any paragraph that uses their domain, phase or timing claims, and leave them out when unused.",
     "Cite the supplied IDs each paragraph rests on. This is reference coverage, not permission to invent astronomical facts.",
     "Any paragraph naming a planet, aspect, orb or ISO exact date must cite the matching calculated cycle ID (C1, C2 or C3), even when it repeats a number from T1. Editorial IDs I1, D1, P1 and T1 cannot replace that cycle citation.",
     `For a paragraph using the strongest cycle's supplied phase and timing wording, include its cycle alongside the relevant editorial references: "facts": [${timingCitationIds.map((id) => JSON.stringify(id)).join(", ")}]. Cite only IDs and values supplied above.`,
     "Do not write a headline, reflection question, local-time context or wellbeing framing; those are provided separately.",
     "Do not introduce sign or individual house placements. Quote orb degrees as digit literals and ISO dates only when present in a cycle cited by that paragraph.",
     input.suppression.angles
-      ? "Angle claims are suppressed: do not mention Ascendant, rising sign, Midheaven or other angles."
+      ? "Angle claims are suppressed: do not mention Ascendant, rising sign (including shorthand such as 'your rising'), Midheaven or other angles."
       : "",
     input.suppression.houses ? "House claims are suppressed: do not mention houses or cusps." : "",
     "Do not repeat calculation caveats; the app appends them separately.",

@@ -62,8 +62,8 @@ function diagnostics(output, expected) {
   const d = output.meta.diagnostics;
   assert.ok(d, "Daily diagnostics are attached");
   assert.equal(d.version, 1);
-  assert.equal(d.promptVersion, "daily-astro-body-2");
-  assert.equal(d.validatorVersion, "daily-reference-1");
+  assert.equal(d.promptVersion, "daily-astro-body-3");
+  assert.equal(d.validatorVersion, "daily-reference-2");
   assert.equal(d.gatewayTimeoutMs, 20_000);
   assert.equal(d.model, language.LANGUAGE_MODEL);
   for (const [key, value] of Object.entries(expected)) assert.equal(d[key], value, key);
@@ -230,10 +230,10 @@ test("body stream failures are sanitized and classified", async () => {
 
 const rejected = [
   ["shape", () => null, null],
-  ["count", () => ({ paragraphs: paragraphs().slice(0, 2) }), null],
+  ["count", () => ({ paragraphs: paragraphs().slice(0, 1) }), null],
   [
     "sentence",
-    () => ({ paragraphs: paragraphs().map((p) => ({ ...p, text: "One sentence." })) }),
+    () => ({ paragraphs: paragraphs().map((p) => ({ ...p, text: "An unfinished thought" })) }),
     1,
   ],
   [
@@ -364,7 +364,7 @@ for (const [code, fixture, paragraph] of rejected)
 
 test("located rejection paragraph is one-based", async () => {
   const fixture = paragraphs();
-  fixture[2].text = "Only one sentence.";
+  fixture[2].text = "An unfinished thought";
   responder = async () => response({ paragraphs: fixture });
   diagnostics(await language.generateReadingProse(input()), {
     outcome: "rejected",
@@ -390,9 +390,9 @@ test("diagnostic exports and reader validate the exact closed contract", async (
   const module = await vite.ssrLoadModule("/src/lib/ai/diagnostics.ts");
   const result = await language.generateReadingProse(input());
   assert.equal(module.DAILY_DIAGNOSTICS_VERSION, 1);
-  assert.equal(module.DAILY_PROMPT_VERSION, "daily-astro-body-2");
+  assert.equal(module.DAILY_PROMPT_VERSION, "daily-astro-body-3");
   assert.equal(module.DAILY_GATEWAY_TIMEOUT_MS, 20_000);
-  assert.equal(module.DAILY_VALIDATOR_VERSION, "daily-reference-1");
+  assert.equal(module.DAILY_VALIDATOR_VERSION, "daily-reference-2");
   assert.ok(module.DAILY_DIAGNOSTIC_CODES.includes("accepted"));
   assert.deepEqual(module.readDailyDiagnostics(result.meta.diagnostics), result.meta.diagnostics);
   for (const invalid of [

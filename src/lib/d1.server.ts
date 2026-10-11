@@ -37,7 +37,6 @@ const JSON_COLUMNS: Record<string, readonly string[]> = {
   feature_narratives: ["citations"],
 };
 
-
 /** Columns stored as 0/1 that the app treats as booleans. */
 const BOOL_COLUMNS: Record<string, readonly string[]> = {
   content_releases: ["is_active"],
@@ -69,7 +68,8 @@ const GENERATED_ID_TABLES = new Set([
 
 /** Tables with a created_at / updated_at the app fills with an ISO instant. */
 const CREATED_AT_TABLES = new Set([
-  ...GENERATED_ID_TABLES,
+  // Provenance rows have UUIDs but no created_at column in the records schema.
+  ...[...GENERATED_ID_TABLES].filter((table) => table !== "reading_sources"),
   "profiles",
 ]);
 const UPDATED_AT_TABLES = new Set(["profiles", "source_consents", "birth_profiles"]);
@@ -150,7 +150,6 @@ export interface RowQuery<T> extends PromiseLike<D1Result<T>> {
 }
 
 class Query<Row = Record<string, unknown>> implements PromiseLike<D1Result<Row[]>> {
-
   private op: "select" | "insert" | "upsert" | "update" | "delete" = "select";
   private columns = "*";
   private rows: Record<string, unknown>[] = [];
@@ -276,7 +275,6 @@ class Query<Row = Record<string, unknown>> implements PromiseLike<D1Result<Row[]
     return this;
   }
 
-
   private where(): Filter {
     if (!this.filters.length) return { sql: "", params: [] };
     return {
@@ -324,10 +322,7 @@ class Query<Row = Record<string, unknown>> implements PromiseLike<D1Result<Row[]
         sql:
           `update ${t} set ${cols.map((c) => `"${c}" = ?`).join(", ")}${where.sql}` +
           (this.returning ? ` returning ${this.returning}` : ""),
-        params: [
-          ...cols.map((c) => encode(this.table, c, values[c])),
-          ...where.params,
-        ],
+        params: [...cols.map((c) => encode(this.table, c, values[c])), ...where.params],
       };
     }
 
@@ -335,9 +330,7 @@ class Query<Row = Record<string, unknown>> implements PromiseLike<D1Result<Row[]
     const prepared = this.rows.map((r) => this.withDefaults(r));
     const cols = [...new Set(prepared.flatMap((r) => Object.keys(r)))];
     const tuples = prepared.map(() => `(${cols.map(() => "?").join(", ")})`);
-    const params = prepared.flatMap((r) =>
-      cols.map((c) => encode(this.table, c, r[c] ?? null)),
-    );
+    const params = prepared.flatMap((r) => cols.map((c) => encode(this.table, c, r[c] ?? null)));
     let sql = `insert into ${t} (${cols.map((c) => `"${c}"`).join(", ")}) values ${tuples.join(", ")}`;
     if (this.op === "upsert" && this.conflict.length) {
       const updatable = cols.filter(
