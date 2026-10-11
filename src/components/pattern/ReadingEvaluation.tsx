@@ -1,8 +1,9 @@
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useRef, useState } from "react";
 
+import { LanguageProviderChoice } from "@/components/pattern/LanguageProviderChoice";
 import { Button } from "@/components/ui/button";
-import { diagnosticLabel, readDailyDiagnostics } from "@/lib/ai/diagnostics";
+import { diagnosticLabel, readDailyDiagnostics, type LanguageProvider } from "@/lib/ai/diagnostics";
 import {
   combineReadingEvaluationResults,
   READING_EVALUATION_CATALOG,
@@ -203,6 +204,7 @@ function EvaluationCase({ result }: { result: ReadingEvaluationCaseResult }) {
 /** A manual, page-memory run: one case request at a time, with no retries. */
 export function ReadingEvaluation() {
   const runCase = useServerFn(runReadingEvaluationCase);
+  const [provider, setProvider] = useState<LanguageProvider>("lovable");
   const [state, setState] = useState<RunState>(INITIAL_STATE);
   const [downloadError, setDownloadError] = useState<string | null>(null);
   const mounted = useRef(true);
@@ -227,8 +229,9 @@ export function ReadingEvaluation() {
     const control = { stop: false };
     activeRun.current = control;
     setDownloadError(null);
-    // Freeze the case sequence before the first request.
+    // Freeze the case sequence and provider before the first request.
     const cases = READING_EVALUATION_CATALOG.map((fixed) => ({ ...fixed }));
+    const runProvider = provider;
     let results: ReadingEvaluationCaseResult[] = [];
     const publish = (
       status: RunStatus,
@@ -245,7 +248,7 @@ export function ReadingEvaluation() {
         publish("running", fixed.id);
         let result: ReadingEvaluationCaseResult;
         try {
-          result = await runCase({ data: { caseId: fixed.id } });
+          result = await runCase({ data: { caseId: fixed.id, provider: runProvider } });
         } catch {
           publish(
             "error",
@@ -347,8 +350,8 @@ export function ReadingEvaluation() {
         Synthetic reading evaluation
       </h3>
       <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-        Run the {READING_EVALUATION_CATALOG.length} fixed synthetic cases against the configured
-        model, one at a time: up to{" "}
+        Run the {READING_EVALUATION_CATALOG.length} fixed synthetic cases against the selected
+        provider's model, one at a time: up to{" "}
         {READING_EVALUATION_CATALOG.filter((row) => row.expectsModel).length} model calls. Quiet
         days and cases without a published primary interpretation skip the model. This uses
         synthetic chart inputs and no account readings or notes. Results stay in this page until you
@@ -360,6 +363,9 @@ export function ReadingEvaluation() {
         claims; these results do not assign writing-quality scores or establish a production
         acceptance rate.
       </p>
+      <div className="mt-4">
+        <LanguageProviderChoice value={provider} onChange={setProvider} disabled={busy} />
+      </div>
       <div className="mt-4 flex flex-wrap gap-3">
         <Button type="button" onClick={() => void start()} disabled={busy} className="min-h-11">
           Run synthetic evaluation

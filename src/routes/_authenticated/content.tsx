@@ -7,7 +7,9 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
+import { LanguageProviderChoice } from "@/components/pattern/LanguageProviderChoice";
 import { ReadingEvaluation } from "@/components/pattern/ReadingEvaluation";
+import type { LanguageProvider } from "@/lib/ai/diagnostics";
 import {
   activateContentRelease,
   discardContentDraft,
@@ -1002,6 +1004,7 @@ function DraftPlane({ isAdmin }: { isAdmin: boolean }) {
   const publishFn = useServerFn(publishContentDraft);
   const discardFn = useServerFn(discardContentDraft);
   const queryClient = useQueryClient();
+  const [provider, setProvider] = useState<LanguageProvider>("lovable");
 
   const query = useQuery({ queryKey: ["content-drafts"], queryFn: () => listFn({}) });
   const drafts = query.data?.drafts ?? [];
@@ -1012,7 +1015,7 @@ function DraftPlane({ isAdmin }: { isAdmin: boolean }) {
   };
 
   const draft = useMutation({
-    mutationFn: () => draftFn({}),
+    mutationFn: () => draftFn({ data: { provider } }),
     onSuccess: (d) => {
       toast.success(`Drafted ${d.entries} entries with ${d.model}`);
       refresh();
@@ -1042,16 +1045,23 @@ function DraftPlane({ isAdmin }: { isAdmin: boolean }) {
 
   return (
     <section className="mt-12 border-t border-rule pt-6">
-      <div className="flex flex-wrap items-baseline justify-between gap-3">
+      <div className="flex flex-wrap items-start justify-between gap-3">
         <h2 className="technical text-muted-foreground">Drafted copy · language layer</h2>
-        <button
-          type="button"
-          onClick={() => draft.mutate()}
-          disabled={draft.isPending}
-          className="technical border border-rule px-3 py-1.5 text-foreground transition-colors hover:bg-evidence disabled:opacity-50"
-        >
-          {draft.isPending ? "Drafting…" : "Draft a release"}
-        </button>
+        <div className="flex min-w-0 flex-wrap items-center gap-3">
+          <LanguageProviderChoice
+            value={provider}
+            onChange={setProvider}
+            disabled={draft.isPending}
+          />
+          <button
+            type="button"
+            onClick={() => draft.mutate()}
+            disabled={draft.isPending}
+            className="technical border border-rule px-3 py-1.5 text-foreground transition-colors hover:bg-evidence disabled:opacity-50"
+          >
+            {draft.isPending ? "Drafting…" : "Draft a release"}
+          </button>
+        </div>
       </div>
       <p className="prose-reading mt-3 text-xs text-muted-foreground">
         The model writes mechanism and question copy for each cycle slot; anything that predicts,

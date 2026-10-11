@@ -46,7 +46,7 @@ import { assertUse, isPermitted, LAUNCH_SOURCES, PROHIBITED_SOURCES, SOURCE_MAP 
 import { checkInInputSchema } from "./check-in";
 import { daysToLocalDate, localDayString, localNoon, validTimeZone, zonedToUtc } from "./local-day";
 import { summarizeReadingQuality, type QualityReading, type QualityFeedback } from "./ai/quality";
-import { diagnosticLabel, type DailyGatewayCode } from "./ai/diagnostics";
+import { diagnosticLabel, type DailyGatewayCode, type LanguageProvider } from "./ai/diagnostics";
 import {
   DAILY_READING_PLAN_VERSION,
   DAILY_PROMPT_VERSION,
@@ -1893,13 +1893,27 @@ export async function isAdmin(db: DB, userId: string): Promise<boolean> {
 }
 
 /** Read-only fixed synthetic evaluation: no user chart, context or reading records. */
-export async function runReadingEvaluationCase(db: DB, userId: string, caseId: string) {
+export async function runReadingEvaluationCase(
+  db: DB,
+  userId: string,
+  caseId: string,
+  provider: LanguageProvider = "lovable",
+) {
   if (!(await isAdmin(db, userId))) {
     throw new Error("Only admins can run a synthetic reading evaluation.");
   }
   const evaluation = await import("./ai/reading-evaluation.server");
   const bundle = await activeBundle(db, { requireSuccessfulRead: true });
-  return evaluation.runSyntheticEvaluationCase(caseId, bundle);
+  return evaluation.runSyntheticEvaluationCase(caseId, bundle, provider);
+}
+
+/** Which admin language providers have a server key; never returns key material. */
+export async function listLanguageProviders(db: DB, userId: string) {
+  if (!(await isAdmin(db, userId))) {
+    throw new Error("Only admins can view language providers.");
+  }
+  const { languageProviderStatus } = await import("./ai/language.server");
+  return { providers: languageProviderStatus() };
 }
 
 /**
@@ -2301,7 +2315,7 @@ export async function listDrafts(db: DB, userId: string) {
  * published: the draft is stored for review, and publishing it creates an
  * ordinary content release that the existing rollback controls can activate.
  */
-export async function draftRelease(db: DB, userId: string) {
+export async function draftRelease(db: DB, userId: string, provider: LanguageProvider = "lovable") {
   if (!(await isAdmin(db, userId))) {
     throw new Error("Only admins can draft a release.");
   }
@@ -2310,7 +2324,7 @@ export async function draftRelease(db: DB, userId: string) {
   const { generateBundleEntries } = await import("./ai/language.server");
   // Only the reusable family slots are redrafted. Reviewed exact-aspect entries
   // and the synthesis rules that depend on them stay with editorial review.
-  const drafted = await generateBundleEntries(DRAFT_SLOTS);
+  const drafted = await generateBundleEntries(DRAFT_SLOTS, provider);
 
   // A repeated or unpublishable entry is dropped on its own rather than
   // discarding every other entry in the draft.

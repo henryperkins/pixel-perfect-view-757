@@ -29,15 +29,22 @@ import {
   DAILY_VALIDATOR_VERSION,
   DAILY_GATEWAY_TIMEOUT_MS,
   MAX_DAILY_DURATION_MS,
+  GEMINI_ENTERPRISE_MODEL,
   LANGUAGE_MODEL,
+  LANGUAGE_PROVIDERS,
+  LANGUAGE_PROVIDER_LABELS,
   diagnosticLabel,
+  languageModel,
   type DailyDiagnostics,
   type DailyGatewayCode,
   type DailyRejectionCode,
+  type LanguageProvider,
 } from "./diagnostics";
 export { LANGUAGE_MODEL, DAILY_PROMPT_VERSION, DAILY_VALIDATOR_VERSION } from "./diagnostics";
 
 const GATEWAY = "https://ai.gateway.lovable.dev/v1/chat/completions";
+/** Agent Platform (formerly Vertex AI) global endpoint; the key's bound service account selects the project. */
+const GEMINI_ENTERPRISE = `https://aiplatform.googleapis.com/v1/publishers/google/models/${GEMINI_ENTERPRISE_MODEL}:generateContent`;
 
 const VOICE = [
   "You write for an astrology app that shows its work.",
@@ -104,30 +111,40 @@ function gatewayFailure(error: unknown, signal?: AbortSignal): GatewayUnavailabl
   return new GatewayUnavailable(error instanceof SyntaxError ? "bad_json" : "network");
 }
 
-/** One gateway call returning a strict-schema JSON object, or a safe closed failure. */
-async function callGateway<T>(
-  user: string,
-  schemaName: string,
-  schema: JsonSchemaObject,
-  timeoutMs = 90000,
-  observation?: SyntheticObservation,
-  system: string = VOICE,
-): Promise<T> {
-  const key = process.env["LOVABLE_API_KEY"];
-  if (!key) throw new GatewayUnavailable("not_configured");
-  const signal = AbortSignal.timeout(timeoutMs);
-  const request: SyntheticReadingRequest = {
-    model: LANGUAGE_MODEL,
-    messages: [
-      { role: "system", content: system },
-      { role: "user", content: user },
-    ],
-    response_format: {
-      type: "json_schema",
-      json_schema: { name: schemaName, strict: true, schema },
-    },
-  };
-  observation?.request(structuredClone(request));
+function statusFailure(status: number): DailyGatewayCode {
+  return status === 429
+    ? "rate_limit"
+    : status === 402
+      ? "credit"
+      : status === 401 || status === 403
+        ? "auth"
+        : status === 408 || status === 504
+          ? "timeout"
+          : "http";
+}
+
+function providerKey(provider: LanguageProvider): string | undefined {
+  return provider === "gemini-enterprise"
+    ? process.env["GEMINI_ENTERPRISE_API_KEY"]
+    : process.env["LOVABLE_API_KEY"];
+}
+
+/** Configuration presence only; key values never leave the server. */
+export function languageProviderStatus() {
+  return LANGUAGE_PROVIDERS.map((id) => ({
+    id,
+    label: LANGUAGE_PROVIDER_LABELS[id],
+    model: languageModel(id),
+    configured: Boolean(providerKey(id)),
+  }));
+}
+
+/** Lovable AI gateway: OpenAI-compatible chat completions. */
+async function lovableContent(
+  request: SyntheticReadingRequest,
+  key: string,
+  signal: AbortSignal,
+): Promise<string> {
   let res: Response;
   try {
     res = await fetch(GATEWAY, {
@@ -144,19 +161,7 @@ async function callGateway<T>(
   } catch (error) {
     throw gatewayFailure(error, signal);
   }
-  if (!res.ok) {
-    const code: DailyGatewayCode =
-      res.status === 429
-        ? "rate_limit"
-        : res.status === 402
-          ? "credit"
-          : res.status === 401 || res.status === 403
-            ? "auth"
-            : res.status === 408 || res.status === 504
-              ? "timeout"
-              : "http";
-    throw new GatewayUnavailable(code);
-  }
+  if (!res.ok) throw new GatewayUnavailable(statusFailure(res.status));
   let payload: { choices?: { message?: { content?: string } }[] } | null;
   try {
     payload = await res.json();
@@ -165,6 +170,110 @@ async function callGateway<T>(
   }
   const content = payload?.choices?.[0]?.message?.content;
   if (!content) throw new GatewayUnavailable("empty_response");
+  return content;
+}
+
+/** Reads only Google's bounded error status and reasons, so a bad key or billing stops admin runs. */
+async function geminiEnterpriseFailure(res: Response): Promise<DailyGatewayCode> {
+  let reasons: unknown[] = [];
+  try {
+    const error = ((await res.json()) as { error?: { status?: unknown; details?: unknown } } | null)
+      ?.error;
+    const details: unknown[] = Array.isArray(error?.details) ? error.details : [];
+    reasons = [
+      error?.status,
+      ...details.map((detail) =>
+        detail && typeof detail === "object" ? (detail as { reason?: unknown }).reason : null,
+      ),
+    ];
+  } catch {
+    // The HTTP status alone classifies an unreadable error body.
+  }
+  if (reasons.includes("BILLING_DISABLED")) return "credit";
+  if (
+    ["API_KEY_INVALID", "UNAUTHENTICATED", "PERMISSION_DENIED", "SERVICE_DISABLED"].some((reason) =>
+      reasons.includes(reason),
+    )
+  )
+    return "auth";
+  return statusFailure(res.status);
+}
+
+/** Gemini Enterprise generateContent with the same system text, user text and JSON schema. */
+async function geminiEnterpriseContent(
+  system: string,
+  user: string,
+  schema: JsonSchemaObject,
+  key: string,
+  signal: AbortSignal,
+): Promise<string> {
+  let res: Response;
+  try {
+    res = await fetch(GEMINI_ENTERPRISE, {
+      method: "POST",
+      signal,
+      headers: { "content-type": "application/json", "x-goog-api-key": key },
+      body: JSON.stringify({
+        systemInstruction: { parts: [{ text: system }] },
+        contents: [{ role: "user", parts: [{ text: user }] }],
+        generationConfig: { responseMimeType: "application/json", responseJsonSchema: schema },
+      }),
+    });
+  } catch (error) {
+    throw gatewayFailure(error, signal);
+  }
+  if (!res.ok) throw new GatewayUnavailable(await geminiEnterpriseFailure(res));
+  let payload: { candidates?: { content?: { parts?: unknown } }[] } | null;
+  try {
+    payload = await res.json();
+  } catch (error) {
+    throw gatewayFailure(error, signal);
+  }
+  const parts = payload?.candidates?.[0]?.content?.parts;
+  // Thought summaries are not draft text.
+  const content = (Array.isArray(parts) ? parts : [])
+    .flatMap((part: { text?: unknown; thought?: unknown } | null) =>
+      part?.thought !== true && typeof part?.text === "string" ? [part.text] : [],
+    )
+    .join("");
+  if (!content) throw new GatewayUnavailable("empty_response");
+  return content;
+}
+
+interface GatewayOptions {
+  timeoutMs?: number;
+  observation?: SyntheticObservation | undefined;
+  system?: string;
+  provider?: LanguageProvider;
+}
+
+/** One provider call returning a strict-schema JSON object, or a safe closed failure. */
+async function callGateway<T>(
+  user: string,
+  schemaName: string,
+  schema: JsonSchemaObject,
+  { timeoutMs = 90000, observation, system = VOICE, provider = "lovable" }: GatewayOptions = {},
+): Promise<T> {
+  const key = providerKey(provider);
+  if (!key) throw new GatewayUnavailable("not_configured");
+  const signal = AbortSignal.timeout(timeoutMs);
+  // Gemini Enterprise receives these same messages and schema in its native shape.
+  const request: SyntheticReadingRequest = {
+    model: languageModel(provider),
+    messages: [
+      { role: "system", content: system },
+      { role: "user", content: user },
+    ],
+    response_format: {
+      type: "json_schema",
+      json_schema: { name: schemaName, strict: true, schema },
+    },
+  };
+  observation?.request(structuredClone(request));
+  const content =
+    provider === "gemini-enterprise"
+      ? await geminiEnterpriseContent(system, user, schema, key, signal)
+      : await lovableContent(request, key, signal);
   try {
     const parsed = JSON.parse(content) as T;
     observation?.candidate(parsed);
@@ -486,6 +595,7 @@ function dailyDraft(
 }
 
 function dailyDiagnostics(
+  model: string,
   outcome: DailyDiagnostics["outcome"],
   code: DailyDiagnostics["code"],
   started: number | null,
@@ -495,7 +605,7 @@ function dailyDiagnostics(
     version: DAILY_DIAGNOSTICS_VERSION,
     promptVersion: DAILY_PROMPT_VERSION,
     validatorVersion: DAILY_VALIDATOR_VERSION,
-    model: LANGUAGE_MODEL,
+    model,
     gatewayTimeoutMs: DAILY_GATEWAY_TIMEOUT_MS,
     outcome,
     attempted: started !== null,
@@ -511,8 +621,10 @@ function dailyDiagnostics(
 async function generateDailyProse(
   input: ReadingProseInput,
   observation?: SyntheticObservation,
+  provider: LanguageProvider = "lovable",
 ): Promise<ReadingProse> {
   const { fallback } = input;
+  const model = languageModel(provider);
   assertDailyFactGraph(input.facts);
   if (!input.hasEligibleCycles || !input.facts.some((f) => f.id === "C1" && f.cycle))
     return {
@@ -520,7 +632,7 @@ async function generateDailyProse(
       paragraphs: fallback.body.split("\n\n"),
       meta: {
         ...templateMeta("no eligible cycle to write from"),
-        diagnostics: dailyDiagnostics("skipped", "no_cycle", null),
+        diagnostics: dailyDiagnostics(model, "skipped", "no_cycle", null),
       },
     };
   if (!input.facts.some((f) => f.id === "I1"))
@@ -529,7 +641,7 @@ async function generateDailyProse(
       paragraphs: fallback.body.split("\n\n"),
       meta: {
         ...templateMeta(diagnosticLabel("no_interpretation")),
-        diagnostics: dailyDiagnostics("skipped", "no_interpretation", null),
+        diagnostics: dailyDiagnostics(model, "skipped", "no_interpretation", null),
       },
     };
   const timingCitationIds = [
@@ -570,14 +682,12 @@ async function generateDailyProse(
   let raw: unknown;
   const started = performance.now();
   try {
-    raw = await callGateway(
-      prompt,
-      "daily_reading",
-      READING_SCHEMA,
-      DAILY_GATEWAY_TIMEOUT_MS,
+    raw = await callGateway(prompt, "daily_reading", READING_SCHEMA, {
+      timeoutMs: DAILY_GATEWAY_TIMEOUT_MS,
       observation,
-      dailySystemVoice(hasNatalLens),
-    );
+      system: dailySystemVoice(hasNatalLens),
+      provider,
+    });
   } catch (error) {
     const failure = gatewayFailure(error);
     return {
@@ -586,6 +696,7 @@ async function generateDailyProse(
       meta: {
         ...templateMeta(diagnosticLabel(failure.code)),
         diagnostics: dailyDiagnostics(
+          model,
           "unavailable",
           failure.code,
           failure.code === "not_configured" ? null : started,
@@ -600,7 +711,7 @@ async function generateDailyProse(
       paragraphs: fallback.body.split("\n\n"),
       meta: {
         ...templateMeta(result.reason),
-        diagnostics: dailyDiagnostics("rejected", result.code, started, result.paragraph),
+        diagnostics: dailyDiagnostics(model, "rejected", result.code, started, result.paragraph),
       },
     };
   return {
@@ -610,12 +721,12 @@ async function generateDailyProse(
     prompt: fallback.prompt,
     meta: {
       mode: "model",
-      model: LANGUAGE_MODEL,
+      model,
       citations: result.citations,
       dropped: 0,
       flagged: [],
       reason: null,
-      diagnostics: dailyDiagnostics("accepted", "accepted", started),
+      diagnostics: dailyDiagnostics(model, "accepted", "accepted", started),
     },
   };
 }
@@ -653,21 +764,28 @@ function captureSyntheticCandidate(raw: unknown): SyntheticReadingCandidate | nu
 }
 
 /** Server-only seam used by the closed, checked-in synthetic case runner. Never used by Today. */
-export async function generateSyntheticReadingProse(input: ReadingProseInput): Promise<{
+export async function generateSyntheticReadingProse(
+  input: ReadingProseInput,
+  provider: LanguageProvider = "lovable",
+): Promise<{
   prose: ReadingProse;
   request: SyntheticReadingRequest | null;
   candidate: SyntheticReadingCandidate | null;
 }> {
   let request: SyntheticReadingRequest | null = null;
   let candidate: SyntheticReadingCandidate | null = null;
-  const prose = await generateDailyProse(input, {
-    request(value) {
-      request = value;
+  const prose = await generateDailyProse(
+    input,
+    {
+      request(value) {
+        request = value;
+      },
+      candidate(value) {
+        candidate = captureSyntheticCandidate(value);
+      },
     },
-    candidate(value) {
-      candidate = captureSyntheticCandidate(value);
-    },
-  });
+    provider,
+  );
   return { prose, request, candidate };
 }
 
@@ -836,7 +954,10 @@ export interface DraftResult {
   flagged: string[];
 }
 
-export async function generateBundleEntries(specs: BundleSpec[]): Promise<DraftResult> {
+export async function generateBundleEntries(
+  specs: BundleSpec[],
+  provider: LanguageProvider = "lovable",
+): Promise<DraftResult> {
   const wanted = new Set(specs.map((s) => s.key));
   const prompt = [
     "Each line below is an interpretation slot that needs reusable copy.",
@@ -856,6 +977,7 @@ export async function generateBundleEntries(specs: BundleSpec[]): Promise<DraftR
     prompt,
     "bundle_entries",
     BUNDLE_SCHEMA,
+    { provider },
   );
 
   const entries: DraftedEntry[] = [];
@@ -875,7 +997,7 @@ export async function generateBundleEntries(specs: BundleSpec[]): Promise<DraftR
 
   return {
     entries,
-    model: LANGUAGE_MODEL,
+    model: languageModel(provider),
     dropped,
     flagged: [...new Set(flagged)],
   };

@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { LANGUAGE_PROVIDERS } from "./ai/diagnostics";
 import { requireAuth } from "./auth-middleware";
 import { checkInInputSchema } from "./check-in";
 
@@ -274,25 +275,41 @@ export const fetchReadingQuality = createServerFn({ method: "GET" })
     return m.readingQuality(context.db, context.userId);
   });
 
+export const fetchLanguageProviders = createServerFn({ method: "GET" })
+  .middleware([requireAuth])
+  .handler(async ({ context }) => {
+    const m = await import("./pattern.server");
+    return m.listLanguageProviders(context.db, context.userId);
+  });
+
 /** One fixed synthetic case per request; credentials and facts stay server-side. */
 export const runReadingEvaluationCase = createServerFn({ method: "POST" })
   .middleware([requireAuth])
   .inputValidator((d: unknown) =>
     z
-      .object({ caseId: z.string().min(1).max(80) })
+      .object({
+        caseId: z.string().min(1).max(80),
+        provider: z.enum(LANGUAGE_PROVIDERS).optional(),
+      })
       .strict()
       .parse(d),
   )
   .handler(async ({ data, context }) => {
     const m = await import("./pattern.server");
-    return m.runReadingEvaluationCase(context.db, context.userId, data.caseId);
+    return m.runReadingEvaluationCase(context.db, context.userId, data.caseId, data.provider);
   });
 
 export const draftContentRelease = createServerFn({ method: "POST" })
   .middleware([requireAuth])
-  .handler(async ({ context }) => {
+  .inputValidator((d: unknown) =>
+    z
+      .object({ provider: z.enum(LANGUAGE_PROVIDERS).optional() })
+      .strict()
+      .parse(d ?? {}),
+  )
+  .handler(async ({ data, context }) => {
     const m = await import("./pattern.server");
-    return m.draftRelease(context.db, context.userId);
+    return m.draftRelease(context.db, context.userId, data.provider);
   });
 
 export const publishContentDraft = createServerFn({ method: "POST" })

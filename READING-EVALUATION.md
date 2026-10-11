@@ -2,14 +2,15 @@
 
 ## Run an on-demand model evaluation
 
-Sign in as an admin, open `/content`, and choose **Run synthetic evaluation** in
-Reading quality. This runs the 26 fixed cases below immediately: at most 25 eligible
-model requests and one quiet-day check that makes no model call. Each case uses
-the production model, prompt, validator, and the effective active interpretation
-bundle. The model key stays on the server.
+Sign in as an admin, open `/content`, pick a **Language provider**, and choose
+**Run synthetic evaluation** in Reading quality. This runs the 26 fixed cases below
+immediately: at most 25 eligible model requests and one quiet-day check that makes
+no model call. Each case uses the production prompt, validator, and the effective
+active interpretation bundle. Provider keys stay on the server.
 
 The inputs are checked-in synthetic contacts. The endpoint accepts only a fixed
-case ID; it does not accept a chart, prompt, model override, or account context.
+case ID and one of the two server-defined providers; it does not accept a chart,
+prompt, model override, or account context.
 It reads the admin role and active copy, without reading birth records, check-ins,
 notes, or daily readings, and writes no application records. Evaluation outcomes
 do not enter the production Reading quality counts.
@@ -35,6 +36,31 @@ memory. Partial runs are marked as partial; a before/after comparison needs all
 ```sh
 npm run eval:reading -- --compare /tmp/pattern-before.json /tmp/pattern-after.json --output /tmp/pattern-comparison.json
 ```
+
+### Language providers
+
+- **Lovable AI gateway** (default) calls `google/gemini-3.7-flash` with
+  `LOVABLE_API_KEY`. Member readings and natal chapters always use it.
+- **Gemini Enterprise** calls `gemini-3.7-flash` directly on Gemini Enterprise
+  Agent Platform (formerly Vertex AI) with the `GEMINI_ENTERPRISE_API_KEY` secret,
+  sent as `x-goog-api-key` to the global `generateContent` endpoint. It receives the
+  same system text, user text and JSON schema as the gateway; the 20-second budget,
+  validator and template fallback are unchanged.
+
+Only `/content` admin work can select Gemini Enterprise: synthetic evaluation and
+**Draft a release** each have their own choice, which lasts for the page visit and
+starts at the Lovable gateway; a provider without a server key cannot be selected.
+Reports, diagnostics and drafts record `gemini-enterprise/gemini-3.7-flash` as the
+model and the report `network` names the provider, so one run cannot mix providers
+and the comparison command compares Gemini Enterprise reports only with other
+Gemini Enterprise reports. The report `request` records the provider-neutral
+messages and schema.
+
+To configure it, use an Agent Platform API key from the Google Cloud project behind
+Gemini Enterprise: a key bound to a service account with Agent Platform access and
+restricted to `aiplatform.googleapis.com`. Add it in Lovable as the
+`GEMINI_ENTERPRISE_API_KEY` secret. An invalid key, disabled API or billing, or a rate
+limit stops the run like the gateway's credit and authentication failures.
 
 The displayed acceptance rate describes model attempts in this synthetic run,
 including gateway failures and excluding quiet skips, missing primary interpretations, and missing configuration.
