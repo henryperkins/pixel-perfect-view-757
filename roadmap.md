@@ -35,3 +35,14 @@ Verification: production build, TypeScript, changed-component lint, formatting, 
 - [x] Verify the page and shared Timing behavior; sync to the connected Lovable branch.
 
 Verification: production build, TypeScript, changed-component lint, formatting, and whitespace checks passed. Playwright exercised the real Time Travel and Timing components with synthetic cycle and journal data at 320, 390, 768, 1024, 1440, and 1920px. Date steps and quick jumps, month ends and leap years, valid input bounds, past/future labels, proportional timelines, saved context, retained details, keyboard focus, reduced motion, loading and out-of-order responses, independent retries, empty/incomplete/degraded results, 40-window browsing, and the shared Timing regression passed without browser errors or warnings. Light and dark screenshots were reviewed against the approved Timing design and the previous Time Travel page. Live authenticated charts and journal persistence were not exercised.
+
+# Your Pattern exploration
+
+- [x] Replace duplicate essay previews and the chart sidebar with a centered chapter reader in the approved celestial style.
+- [x] Add factual chapter-type filters and previous/next browsing with retained narratives, evidence, and keyboard focus.
+- [x] Keep verified essay and reflection text intact; request only the first reading initially and add independent chart/chapter retries.
+- [x] Fold the rising lens, placements, complete calculated connections, and birth/calculation record into optional native disclosures.
+- [x] Show numeric connection orbs and the correct 150° quincunx glyph; preserve precision notices and suppress unreliable houses.
+- [x] Verify responsive layouts, dark surfaces, keyboard controls, and reduced motion; sync to the connected Lovable branch.
+
+Verification: production build, TypeScript, changed-component lint, formatting, and whitespace checks passed. Playwright exercised the actual Your Pattern route and components with synthetic chart/narrative fixtures at 320, 390, 768, 1024, 1440, and 1920px. Chapter filters, retained readings and evidence, previous/next focus and sticky-header offsets, complete connection filtering and numeric orbs, journal/source/birth navigation, loading and late responses, independent retries, missing/empty/single/uncertain/degraded data, unfamiliar categories, 42-chapter long-content browsing, keyboard controls, and reduced motion passed without browser errors or warnings. Light and dark screenshots were compared with the approved Timing design and the previous Your Pattern page. Live authenticated charts and database persistence were not exercised.
