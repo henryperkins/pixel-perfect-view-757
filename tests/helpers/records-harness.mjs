@@ -1,0 +1,268 @@
+import assert from "node:assert/strict";
+import { createHmac, randomBytes, randomUUID, timingSafeEqual } from "node:crypto";
+import { DatabaseSync } from "node:sqlite";
+import { mkdtemp, readFile, rm } from "node:fs/promises";
+import { createRequire } from "node:module";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
+
+const projectRoot =
+  process.env.PATTERN_TEST_PROJECT_ROOT ?? fileURLToPath(new URL("../../", import.meta.url));
+const projectRequire = createRequire(join(projectRoot, "package.json"));
+const { createServer } = await import(pathToFileURL(projectRequire.resolve("vite")).href);
+const gatewayURL = "https://ai.gateway.lovable.dev/v1/chat/completions";
+const envNames = [
+  "PATTERN_ROOT_KEY",
+  "PATTERN_WORKFLOW_URL",
+  "PATTERN_WORKFLOW_SECRET",
+  "LOVABLE_API_KEY",
+  "SWISS_EPHEMERIS_URL",
+  "SWISS_EPHEMERIS_KEY",
+];
+
+/** Real application SQL, crypto and server modules with no live network access. */
+export async function createRecordsHarness() {
+  const oldEnv = Object.fromEntries(envNames.map((name) => [name, process.env[name]]));
+  const oldFetch = globalThis.fetch;
+  const directory = await mkdtemp(join(tmpdir(), "pattern-records-"));
+  const file = join(directory, "records.sqlite");
+  const schema = await readFile(join(projectRoot, "d1/schema.sql"), "utf8");
+  const testURL = "http://pattern-records-test.invalid/d1/query";
+  const secret = randomBytes(32).toString("hex");
+  const userA = "local-reading-user-a";
+  const userB = "local-reading-user-b";
+  const requests = [];
+  const gatewayRequests = [];
+  let sqlite;
+  let vite;
+  let gatewayHandler = null;
+  let fault = null;
+  let closed = false;
+
+  process.env.PATTERN_ROOT_KEY = randomBytes(32).toString("hex");
+  process.env.PATTERN_WORKFLOW_URL = testURL.replace(/\/d1\/query$/, "");
+  process.env.PATTERN_WORKFLOW_SECRET = secret;
+  for (const name of ["LOVABLE_API_KEY", "SWISS_EPHEMERIS_URL", "SWISS_EPHEMERIS_KEY"])
+    delete process.env[name];
+
+  globalThis.fetch = async (input, init = {}) => {
+    const url = typeof input === "string" ? input : input instanceof URL ? input.href : input.url;
+    if (url === gatewayURL && gatewayHandler) {
+      const body = JSON.parse(String(init.body));
+      gatewayRequests.push(body);
+      return gatewayHandler(body, init);
+    }
+    assert.equal(url, testURL, "The harness forbids external network calls");
+    assert.equal(init.method, "POST");
+    const raw = String(init.body);
+    const expected = createHmac("sha256", secret).update(raw).digest("hex");
+    const signature = new Headers(init.headers).get("x-pattern-signature") ?? "";
+    if (
+      signature.length !== expected.length ||
+      !timingSafeEqual(Buffer.from(signature), Buffer.from(expected))
+    )
+      return Response.json({ error: "Invalid local test signature" }, { status: 401 });
+    const { sql, params } = JSON.parse(raw);
+    requests.push({ sql, params });
+    if (fault?.matches(sql))
+      return Response.json({ error: "Injected local records failure" }, { status: 503 });
+    try {
+      return Response.json({ results: sqlite.prepare(sql).all(...params) });
+    } catch (error) {
+      return Response.json({ error: error.message }, { status: 400 });
+    }
+  };
+
+  async function close() {
+    if (closed) return;
+    closed = true;
+    sqlite?.close();
+    await vite?.close();
+    globalThis.fetch = oldFetch;
+    for (const name of envNames) {
+      if (oldEnv[name] === undefined) delete process.env[name];
+      else process.env[name] = oldEnv[name];
+    }
+    await rm(directory, { recursive: true, force: true });
+  }
+
+  try {
+    vite = await createServer({
+      root: projectRoot,
+      configFile: false,
+      envFile: false,
+      appType: "custom",
+      logLevel: "error",
+      server: { middlewareMode: true, hmr: false, ws: false },
+    });
+    const app = await vite.ssrLoadModule("/src/lib/pattern.server.ts");
+    const { records } = await vite.ssrLoadModule("/src/lib/d1.server.ts");
+    const cryptoModule = await vite.ssrLoadModule("/src/lib/crypto.server.ts");
+    const factsModule = await vite.ssrLoadModule("/src/lib/ai/facts.ts");
+    const registryModule = await vite.ssrLoadModule("/src/lib/registry.ts");
+    const ephemerisModule = await vite.ssrLoadModule("/src/lib/astro/ephemeris.ts");
+
+    async function seedUser(user) {
+      const result = await records()
+        .from("users")
+        .insert({
+          id: user,
+          email: `${user}@example.invalid`,
+          password_hash: "local-fixture-not-an-auth-password",
+          created_at: new Date().toISOString(),
+        });
+      assert.equal(result.error, null, result.error?.message);
+    }
+
+    async function reset() {
+      sqlite?.close();
+      await rm(file, { force: true });
+      sqlite = new DatabaseSync(file);
+      sqlite.exec("PRAGMA foreign_keys = ON");
+      sqlite.exec(schema);
+      requests.length = 0;
+      gatewayRequests.length = 0;
+      fault = null;
+      gatewayHandler = null;
+      delete process.env.LOVABLE_API_KEY;
+      await seedUser(userA);
+      await seedUser(userB);
+    }
+
+    async function seedChart(client, user = userA, opts = {}) {
+      const dek = await app.getDek(client, user);
+      const fingerprint = opts.fingerprint ?? `local-fixture-${user}-${randomUUID()}`;
+      const birthId = randomUUID();
+      const snapshotId = randomUUID();
+      const accuracy = opts.accuracy ?? "exact";
+      const rows = [
+        [
+          "birth_profiles",
+          {
+            id: birthId,
+            user_id: user,
+            payload_ct: await cryptoModule.encryptJson(dek, {
+              birthDate: "1990-01-01",
+              birthTime: "12:00",
+              placeLabel: "Private birth place sentinel",
+              latitude: 12.34567,
+              longitude: 76.54321,
+              utcISO: "1990-01-01T12:00:00Z",
+            }),
+            fingerprint,
+            time_accuracy: accuracy,
+            timezone: "UTC",
+            ...(opts.createdAt ? { created_at: opts.createdAt } : {}),
+          },
+        ],
+        [
+          "chart_snapshots",
+          {
+            id: snapshotId,
+            user_id: user,
+            birth_profile_id: birthId,
+            fingerprint,
+            engine: "swiss-ephemeris@local-fixture",
+            contract_version: "local-fixture",
+            positions: opts.positions ?? {},
+            houses: {
+              system: "Placidus",
+              cusps: [],
+              ephemeris: {
+                precision: "high",
+                degraded: false,
+                degradedReason: null,
+              },
+            },
+            aspects: [],
+            uncertainty: {
+              accuracy,
+              minutes: 0,
+              housesReliable: true,
+              anglesReliable: true,
+              ascendantSpreadDeg: 0,
+              moonSpreadDeg: 0,
+              angleClaimsSuppressed: false,
+              ...(opts.uncertainty ?? {}),
+            },
+            ...(opts.createdAt ? { created_at: opts.createdAt } : {}),
+          },
+        ],
+      ];
+      for (const [table, row] of rows) {
+        const result = await client.from(table).insert(row);
+        assert.equal(result.error, null, `${table}: ${result.error?.message}`);
+      }
+      return { dek, fingerprint, birthId, snapshotId };
+    }
+
+    await reset();
+    return {
+      app,
+      records,
+      cryptoModule,
+      factsModule,
+      registryModule,
+      ephemerisModule,
+      vite,
+      userA,
+      userB,
+      requests,
+      gatewayRequests,
+      get sqlite() {
+        return sqlite;
+      },
+      seedUser,
+      seedChart,
+      reset,
+      close,
+      reopen() {
+        sqlite.close();
+        sqlite = new DatabaseSync(file);
+        sqlite.exec("PRAGMA foreign_keys = ON");
+      },
+      setGateway(handler) {
+        gatewayHandler = handler;
+        if (handler) process.env.LOVABLE_API_KEY = "local-test-key-never-a-real-secret";
+        else delete process.env.LOVABLE_API_KEY;
+      },
+      setFault(value) {
+        fault = value;
+      },
+    };
+  } catch (error) {
+    await close();
+    throw error;
+  }
+}
+
+export function successfulReadingResponse(body) {
+  const prompt = body.messages.find((message) => message.role === "user").content;
+  const cycle = prompt.match(/C1: transiting (\w+) (\w+) natal (\w+)/);
+  assert.ok(cycle, "The success fixture requires a real eligible cycle");
+  return Response.json({
+    choices: [
+      {
+        message: {
+          content: JSON.stringify({
+            paragraphs: [
+              {
+                text: `${cycle[1]} ${cycle[2]} natal ${cycle[3]} is the strongest named contact. The published interpretation provides reflective context.`,
+                facts: ["C1", "I1"],
+              },
+              {
+                text: "This contact is framed through a defined domain. You can consider how that context fits what you notice.",
+                facts: ["C1", "D1"],
+              },
+              {
+                text: "The supplied phase and timing describe the calculated contact. You can leave room for your own perspective on that window.",
+                facts: ["C1", "P1", "T1"],
+              },
+            ],
+          }),
+        },
+      },
+    ],
+  });
+}

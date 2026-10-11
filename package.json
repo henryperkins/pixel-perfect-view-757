@@ -9,6 +9,8 @@
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",
+    "test": "node --test tests/*.test.mjs",
+    "test:reading": "node --test tests/reading-*.test.mjs tests/timing-calendar.test.mjs",
     "test:check-in": "node --test tests/check-in.test.mjs",
     "format": "prettier --write ."
   },

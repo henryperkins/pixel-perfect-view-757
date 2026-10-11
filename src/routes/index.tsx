@@ -10,6 +10,9 @@ import { CelestialScene } from "@/components/pattern/CelestialScene";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import { useAuth } from "@/hooks/useAuth";
+import { useCalendarQueryRefresh, useCalendarRefresh } from "@/hooks/useCalendarRefresh";
+import { daysToLocalDate } from "@/lib/local-day";
+import { timingDate } from "@/components/pattern/timing";
 import { fetchJournal, fetchToday, saveDailyCheckIn, sendFeedback } from "@/lib/pattern.functions";
 import { EphemerisNotice } from "@/components/pattern/EphemerisNotice";
 
@@ -34,14 +37,6 @@ export const Route = createFileRoute("/")({
   }),
   component: TodayPage,
 });
-
-function localTz() {
-  try {
-    return Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
-  } catch {
-    return "UTC";
-  }
-}
 
 function TodayPage() {
   const { session, loading } = useAuth();
@@ -351,9 +346,9 @@ function TodayCheckIn({
         </div>
         {(wellness.sleepEnabled || wellness.stressEnabled) && (
           <p className="mt-3 text-xs text-muted-foreground">
-            Sleep and stress are self-reported (tier 3), kept {wellness.retentionDays} days. Framing
-            and prompts only — they never enter the calculation or the ranking, and never leave your
-            account.
+            Sleep and stress are self-reported (tier 3), kept {wellness.retentionDays} days. Used
+            locally for framing and reflection prompts; never sent to the language model or used in
+            chart calculation or ranking.
           </p>
         )}
       </div>
@@ -364,7 +359,7 @@ function TodayCheckIn({
         onChange={(event) => edit("note", event.target.value)}
         rows={4}
         maxLength={2000}
-        placeholder="Optional. Stored encrypted; only used to weigh what to surface."
+        placeholder="Optional. Stored encrypted in your account; never sent to the language model."
         className="mt-3 w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
       />
       <div className="mt-3 flex flex-wrap items-center gap-3">
@@ -414,13 +409,16 @@ const DOMAIN_LABEL: Record<string, string> = {
 function daysToExact(
   cycle: { exact_at: string | null; days_to_exact?: number | null },
   day: string,
+  timezone: string,
 ): number | null {
-  if (cycle.days_to_exact !== null && cycle.days_to_exact !== undefined) {
+  if (
+    cycle.days_to_exact !== null &&
+    cycle.days_to_exact !== undefined &&
+    Number.isFinite(cycle.days_to_exact)
+  ) {
     return cycle.days_to_exact;
   }
-  if (!cycle.exact_at) return null;
-  const ms = new Date(cycle.exact_at).getTime() - new Date(`${day}T12:00:00Z`).getTime();
-  return Number.isFinite(ms) ? Math.round(ms / 86400000) : null;
+  return daysToLocalDate(cycle.exact_at, day, timezone);
 }
 
 /** Plain-language days-to-exact, e.g. "exact in 4 days". */
@@ -535,11 +533,13 @@ function TodayReading({ accountId }: { accountId: string }) {
   const feedback = useServerFn(sendFeedback);
   const [openEvidence, setOpenEvidence] = useState(false);
 
-  const tz = localTz();
+  const calendar = useCalendarRefresh();
   const query = useQuery({
-    queryKey: ["today", accountId, tz],
-    queryFn: () => today({ data: { timezone: tz } }),
+    queryKey: ["today", accountId],
+    queryFn: () => today({ data: { timezone: calendar.timezone } }),
+    refetchOnWindowFocus: "always",
   });
+  useCalendarQueryRefresh(calendar, ["today", accountId]);
 
   const rate = useMutation({
     mutationFn: (vars: { readingId: string; resonance: number }) =>
@@ -638,7 +638,7 @@ function TodayReading({ accountId }: { accountId: string }) {
             <span className="technical text-muted-foreground">
               Timing ·{" "}
               <span className="mt-1 block text-foreground">
-                {exactPhrase(daysToExact(primary, data.day))}
+                {exactPhrase(daysToExact(primary, data.day, data.timezone))}
               </span>
             </span>
           </div>
@@ -660,7 +660,7 @@ function TodayReading({ accountId }: { accountId: string }) {
               <p>
                 Exact ·{" "}
                 <span className="text-foreground">
-                  {primary.exact_at ? primary.exact_at.slice(0, 10) : "not in window"}
+                  {primary.exact_at ? timingDate(primary.exact_at, data.timezone) : "not in window"}
                 </span>
               </p>
               <p>
@@ -725,11 +725,14 @@ function TodayReading({ accountId }: { accountId: string }) {
                     </div>
                     <p className="mt-1 text-xs text-muted-foreground">{phase.help}</p>
                     <p className="mt-2 text-xs text-foreground">
-                      {exactPhrase(daysToExact(c, data.day))} · {DOMAIN_LABEL[c.domain] ?? c.domain}
+                      {exactPhrase(daysToExact(c, data.day, data.timezone))} ·{" "}
+                      {DOMAIN_LABEL[c.domain] ?? c.domain}
                     </p>
                     <p className="mt-1 font-mono text-[0.7rem] text-muted-foreground">
                       {c.orb.toFixed(2)}° from exact ·{" "}
-                      {c.exact_at ? `peak ${c.exact_at.slice(0, 10)}` : "no peak in window"}
+                      {c.exact_at
+                        ? `peak ${timingDate(c.exact_at, data.timezone)}`
+                        : "no peak in window"}
                     </p>
                   </li>
                 );
@@ -781,7 +784,9 @@ function TodayReading({ accountId }: { accountId: string }) {
                         </td>
                         <td className="py-1.5 pr-3">{c.orb.toFixed(2)}°</td>
                         <td className="py-1.5 pr-3">{c.phase}</td>
-                        <td className="py-1.5">{c.exact_at ? c.exact_at.slice(0, 10) : "—"}</td>
+                        <td className="py-1.5">
+                          {c.exact_at ? timingDate(c.exact_at, data.timezone) : "—"}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -812,10 +817,14 @@ function TodayReading({ accountId }: { accountId: string }) {
                 {data.language?.mode === "model" ? (
                   <>
                     <p className="mt-2 font-mono text-xs">
-                      Wording written by {data.language.model} from the facts below only.
+                      Wording written by {data.language.model} using the supplied chart facts.
                       {data.language.dropped > 0
-                        ? ` ${data.language.dropped} paragraph(s) were discarded for citing something that wasn't calculated.`
+                        ? ` ${data.language.dropped} paragraph(s) did not pass the wording checks.`
                         : ""}
+                    </p>
+                    <p className="mt-2 font-mono text-xs">
+                      Citation checks confirm that each cited ID was supplied. They do not establish
+                      that the wording is semantically supported by that fact.
                     </p>
                     <ul className="mt-2 space-y-1.5 font-mono text-xs">
                       {data.language.citations.map((c) => (

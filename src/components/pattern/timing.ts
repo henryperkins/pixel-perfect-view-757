@@ -1,4 +1,5 @@
 import type { fetchCycles } from "@/lib/pattern.functions";
+import { daysToLocalDate, localNoon, validTimeZone } from "@/lib/local-day";
 
 export type TimingData = Extract<
   Awaited<ReturnType<typeof fetchCycles>>,
@@ -54,20 +55,18 @@ export function weightLabel(weight: number) {
   return weight >= 0.7 ? "Major" : weight >= 0.4 ? "Prominent" : "Background";
 }
 
-export function daysToExact(cycle: TimingCycle, day: string): number | null {
+export function daysToExact(cycle: TimingCycle, day: string, timezone = "UTC"): number | null {
   if (
     cycle.days_to_exact !== null &&
     cycle.days_to_exact !== undefined &&
     Number.isFinite(cycle.days_to_exact)
   )
     return cycle.days_to_exact;
-  if (!cycle.exact_at) return null;
-  const days = (Date.parse(cycle.exact_at) - Date.parse(day + "T12:00:00Z")) / 86400000;
-  return Number.isFinite(days) ? Math.round(days) : null;
+  return daysToLocalDate(cycle.exact_at, day, validTimeZone(timezone));
 }
 
-export function windowPhase(cycle: TimingCycle, day: string): TimingPhase {
-  const days = daysToExact(cycle, day);
+export function windowPhase(cycle: TimingCycle, day: string, timezone = "UTC"): TimingPhase {
+  const days = daysToExact(cycle, day, timezone);
   if (days !== null) return days === 0 ? "exact" : days > 0 ? "building" : "fading";
   if (cycle.phase === "exact") return "exact";
   return cycle.phase === "separating" ? "fading" : "building";
@@ -83,16 +82,18 @@ export function exactPhrase(days: number | null, selectedDay = false) {
   return days > 0 ? "Exact in " + days + " days" : "Exact " + Math.abs(days) + " days ago";
 }
 
-const DATE_FORMAT = new Intl.DateTimeFormat("en-US", {
-  month: "short",
-  day: "numeric",
-  year: "numeric",
-  timeZone: "UTC",
-});
-
-export function timingDate(value: string | null) {
+export function timingDate(value: string | null, timezone = "UTC") {
   if (!value || !Number.isFinite(Date.parse(value))) return "Not in range";
-  return DATE_FORMAT.format(new Date(value));
+  // A date-only key is a civil day, not an instant to shift into another zone.
+  const dateOnly = /^\d{4}-\d{2}-\d{2}$/.test(value);
+  const instant = new Date(dateOnly ? value + "T12:00:00Z" : value);
+  if (dateOnly && instant.toISOString().slice(0, 10) !== value) return "Not in range";
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: dateOnly ? "UTC" : validTimeZone(timezone),
+  }).format(instant);
 }
 
 export function arcSentence(cycle: TimingCycle): string | null {
@@ -111,8 +112,13 @@ export function arcSentence(cycle: TimingCycle): string | null {
   return pct + "% through the window — the back half, winding down.";
 }
 
-/** Use the same UTC-noon reference as the calculation engine. Never invent a missing endpoint. */
-export function timelinePositions(cycle: TimingCycle, day: string) {
+/** Use the calculation's effective local-noon instant. Never invent a missing endpoint. */
+export function timelinePositions(
+  cycle: TimingCycle,
+  day: string,
+  timezone = "UTC",
+  referenceAt?: string,
+) {
   const start = cycle.ingress_at ? Date.parse(cycle.ingress_at) : NaN;
   const end = cycle.egress_at ? Date.parse(cycle.egress_at) : NaN;
   if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start) return null;
@@ -121,5 +127,6 @@ export function timelinePositions(cycle: TimingCycle, day: string) {
     const pct = ((Date.parse(value) - start) / (end - start)) * 100;
     return Number.isFinite(pct) && pct >= 0 && pct <= 100 ? pct : null;
   };
-  return { today: position(day + "T12:00:00Z"), exact: position(cycle.exact_at) };
+  const reference = referenceAt ?? localNoon(day, validTimeZone(timezone)).toISOString();
+  return { today: position(reference), exact: position(cycle.exact_at) };
 }

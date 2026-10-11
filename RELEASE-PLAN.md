@@ -12,9 +12,9 @@ were live when they wrote them.
 
 ## Done already (shipped ahead of R1)
 
-- Today's Timing block is computed live from the user's natal positions: phase, orb
-  and weight are recalculated per request from the chart snapshot; stored cycle rows
-  are a fallback only. Phase and strength are shown in plain language on `/today`
+- Today's Timing block is computed from the user's natal positions: phase, orb
+  and weight are recalculated per request at effective local noon. A quiet day does
+  not revive windows stored for an older chart. Phase and strength are shown on `/today`
   with the exact values beside them, and `/timing` uses the same wording.
 
 ## R1.1 — Check-ins that provably persist
@@ -76,6 +76,23 @@ refresh with isolated fixtures. Live birth-edit/recalculation acceptance remains
 open.
 
 ## Cross-cutting acceptance
+
+Reading-integrity implementation (2026-10-11): the registry now separates external
+language processing from framing. Check-ins and ambient context never enter model
+requests; consented context and reflection remain locally assembled. Template and
+model paths share eligible cycles and curated editorial references. Provenance
+identifies actual supplied/cited references, and cached model readings retain the
+original fact block. Daily model drafts fail closed on invalid structure, missing
+ID coverage, known contradictions, suppressed claims or safety flags. These checks
+do not prove arbitrary semantic support.
+
+Daily caches now include versioned, keyed context signatures, so consent,
+check-in, preference, effective timezone and chart changes refresh Today while
+preserving prior reading IDs and feedback. Birth reversion selects the current
+birth fingerprint. Today, Timing, Time travel and Journal use the effective local
+calendar; mobile/desktop checks cover date rollover without losing an unsaved
+same-day draft. Local regression and browser checks are recorded in
+[READING-INTEGRITY.md](READING-INTEGRITY.md). Live-account acceptance remains open.
 
 - Mobile-first at 390px before desktop; loading, empty and failure states for every
   new surface.

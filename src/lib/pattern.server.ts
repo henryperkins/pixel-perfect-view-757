@@ -24,12 +24,16 @@ import {
   encryptField,
   encryptJson,
   fingerprint,
+  keyedFingerprint,
   unwrapDek,
 } from "./crypto.server";
 import { DEFAULT_BUNDLE, type ContentBundle } from "./content/default-bundle";
-import { assembleReading, type ReadingContext } from "./reading.server";
-import { LAUNCH_SOURCES, PROHIBITED_SOURCES, SOURCE_MAP } from "./registry";
+import { assembleReading, normalizeDepth, normalizeTone, type ReadingContext } from "./reading.server";
+import { assertUse, isPermitted, LAUNCH_SOURCES, PROHIBITED_SOURCES, SOURCE_MAP } from "./registry";
 import { checkInInputSchema } from "./check-in";
+import { daysToLocalDate, localDayString, localNoon, validTimeZone, zonedToUtc } from "./local-day";
+
+export { localDayString, zonedToUtc } from "./local-day";
 
 export type DB = DBClient;
 
@@ -157,53 +161,6 @@ export interface BirthDetails {
 // ---------------------------------------------------------------------------
 // timezone helpers
 // ---------------------------------------------------------------------------
-
-function offsetMinutes(instant: Date, timeZone: string): number {
-  const dtf = new Intl.DateTimeFormat("en-US", {
-    timeZone,
-    hour12: false,
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
-  const parts = Object.fromEntries(
-    dtf.formatToParts(instant).map((p) => [p.type, p.value]),
-  ) as Record<string, string>;
-  const asUTC = Date.UTC(
-    Number(parts["year"]),
-    Number(parts["month"]) - 1,
-    Number(parts["day"]),
-    Number(parts["hour"] === "24" ? "0" : parts["hour"]),
-    Number(parts["minute"]),
-    Number(parts["second"]),
-  );
-  return (asUTC - instant.getTime()) / 60000;
-}
-
-/** Civil local time in `timeZone` -> UTC instant (AST-04: historical offsets). */
-export function zonedToUtc(dateStr: string, timeStr: string, timeZone: string): Date {
-  const [y, m, d] = dateStr.split("-").map(Number);
-  const [hh, mm] = timeStr.split(":").map(Number);
-  const naive = Date.UTC(y!, (m ?? 1) - 1, d!, hh ?? 12, mm ?? 0, 0);
-  let guess = new Date(naive);
-  for (let i = 0; i < 3; i++) {
-    const off = offsetMinutes(guess, timeZone);
-    guess = new Date(naive - off * 60000);
-  }
-  return guess;
-}
-
-export function localDayString(instant: Date, timeZone: string): string {
-  return new Intl.DateTimeFormat("en-CA", {
-    timeZone,
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).format(instant);
-}
 
 function timeBucket(instant: Date, timeZone: string): "morning" | "afternoon" | "evening" {
   const hour = Number(
@@ -443,12 +400,18 @@ interface SnapshotRow {
 }
 
 export async function loadSnapshot(db: DB, userId: string) {
+  const { data: birth, error: birthError } = await db
+    .from<{ fingerprint: string }>("birth_profiles")
+    .select("fingerprint")
+    .eq("user_id", userId)
+    .maybeSingle();
+  if (birthError) throw new Error(birthError.message);
+  if (!birth) return null;
   const { data, error } = await db
     .from<SnapshotRow>("chart_snapshots")
     .select("id, fingerprint, engine, contract_version, positions, houses, aspects, uncertainty")
     .eq("user_id", userId)
-    .order("created_at", { ascending: false })
-    .limit(1)
+    .eq("fingerprint", birth.fingerprint)
     .maybeSingle();
   if (error) throw new Error(error.message);
   return data;
@@ -581,10 +544,22 @@ function readingLanguage(row: {
       : [],
     dropped: typeof meta["dropped"] === "number" ? (meta["dropped"] as number) : 0,
     reason: typeof meta["reason"] === "string" ? (meta["reason"] as string) : null,
-    facts: [],
+    facts: Array.isArray(meta["facts"])
+      ? meta["facts"].filter((fact): fact is ReadingLanguage["facts"][number] => {
+          if (!fact || typeof fact !== "object") return false;
+          const value = fact as Record<string, unknown>;
+          return typeof value["id"] === "string" && typeof value["statement"] === "string";
+        })
+      : [],
   };
 }
 
+function cyclesForLocalDay(chart: Chart, day: string, timeZone: string) {
+  return computeCycles(chart, localNoon(day, timeZone)).map((cycle) => ({
+    ...cycle,
+    days_to_exact: daysToLocalDate(cycle.exact_at, day, timeZone),
+  }));
+}
 
 
 
@@ -596,10 +571,9 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
   const profile = await loadProfile(db, userId);
   const granted = await grantedSet(db, userId);
   const now = new Date();
-  const tz = granted.has("DEV-01") ? timeZone : "UTC";
+  const tz = isPermitted("DEV-01", "timing", granted) ? validTimeZone(timeZone) : "UTC";
   const day = localDayString(now, tz);
   const bundle = await activeBundle(db);
-  const idem = `${snapRow.fingerprint}:${day}:${bundle.version}`;
 
   await purgeExpiredWellness(db, userId);
 
@@ -620,7 +594,41 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
     savedAt: checkInRow?.savedAt ?? null,
   };
 
-  const { data: existing } = await db
+  const ctx: ReadingContext = {
+    granted,
+    tone: isPermitted("USR-01", "external_language", granted)
+      ? normalizeTone(profile.tone_pref ?? "plain")
+      : "plain",
+    depth: isPermitted("USR-02", "external_language", granted)
+      ? normalizeDepth(profile.depth_pref ?? "standard")
+      : "standard",
+    localBucket: isPermitted("AMB-02", "framing", granted) ? timeBucket(now, tz) : null,
+    checkIn: isPermitted("USR-04", "framing", granted) &&
+      (checkInRow?.mood != null || checkInRow?.energy != null)
+      ? { mood: checkInRow?.mood ?? null, energy: checkInRow?.energy ?? null }
+      : null,
+    wellness: wellnessAllowed
+      ? { sleep: wellnessState.sleep, stress: wellnessState.stress }
+      : null,
+  };
+  // Never reuse pre-fix model prose. Context changes get a new immutable row,
+  // while old reading IDs and their feedback remain intact. The keyed digest
+  // prevents enumerating low-entropy wellbeing bands from a database dump.
+  const contextKey = await keyedFingerprint(userId, {
+    version: "daily-privacy-2",
+    snapshot: snapRow,
+    timezone: tz,
+    tone: ctx.tone,
+    depth: ctx.depth,
+    localBucket: ctx.localBucket,
+    checkIn: ctx.checkIn,
+    wellness: ctx.wellness,
+    grants: ["USR-01", "USR-02", "USR-04", "WEL-01", "WEL-03", "AMB-02", "DEV-01"]
+      .filter((id) => granted.has(id)),
+  });
+  const idem = `daily-privacy-2:${snapRow.fingerprint}:${day}:${bundle.version}:${contextKey}`;
+
+  const { data: existing, error: cacheError } = await db
     .from<ExistingReadingRow>("daily_readings")
     .select(
       "id, reading_date, headline, body_ct, prompt, confidence, primary_cycle_key, release_version, language_mode, language_model, language_meta",
@@ -628,27 +636,18 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
     .eq("user_id", userId)
     .eq("idempotency_key", idem)
     .maybeSingle();
+  if (cacheError) throw new Error(cacheError.message);
 
   if (existing) {
-    const { data: srcs } = await db
+    const { data: srcs, error: sourceError } = await db
       .from<ProvenanceRow>("reading_sources")
       .select("lane, source_id, label, detail")
       .eq("reading_id", existing.id);
-    // Phase, orb and importance are recomputed against the natal positions in
-    // this snapshot so a reading opened later in the day still reports where
-    // each cycle actually stands. Stored rows are only a fallback.
+    if (sourceError) throw new Error(sourceError.message);
+    // Recompute against the same snapshot and effective local noon. An empty
+    // result is a quiet day; do not resurrect cycles stored for an older chart.
     const cachedChart = snapshotToChart(snapRow);
-    const liveCycles = computeCycles(cachedChart, new Date(`${day}T12:00:00Z`)).slice(0, 12);
-    let cyc: CycleRow[] | null = liveCycles;
-    if (!liveCycles.length) {
-      const { data: stored } = await db
-        .from<CycleRow>("cycle_instances")
-        .select("cycle_key, transit_body, natal_point, aspect, orb, phase, domain, importance, ingress_at, exact_at, egress_at")
-        .eq("user_id", userId)
-        .eq("computed_for", day)
-        .order("importance", { ascending: false });
-      cyc = stored ?? null;
-    }
+    const liveCycles = cyclesForLocalDay(cachedChart, day, tz).slice(0, 12);
 
     return {
       needsOnboarding: false as const,
@@ -665,7 +664,7 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       },
       language: readingLanguage(existing),
       provenance: srcs ?? [],
-      cycles: cyc ?? [],
+      cycles: liveCycles,
       uncertainty: snapRow.uncertainty as Chart["uncertainty"],
       ephemeris: ephemerisState(snapshotToChart(snapRow)),
       wellness: wellnessState,
@@ -674,30 +673,19 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
 
 
   const chart = snapshotToChart(snapRow);
-  const referenceNoon = new Date(`${day}T12:00:00Z`);
-  const cycles = computeCycles(chart, referenceNoon);
-
-  const ctx: ReadingContext = {
-    granted,
-    tone: profile.tone_pref ?? "measured",
-    depth: profile.depth_pref ?? "standard",
-    localBucket: granted.has("AMB-02") ? timeBucket(now, tz) : null,
-    checkIn: checkInRow ? { mood: checkInRow.mood, energy: checkInRow.energy } : null,
-    wellness: wellnessAllowed
-      ? { sleep: wellnessState.sleep, stress: wellnessState.stress }
-      : null,
-  };
+  const cycles = cyclesForLocalDay(chart, day, tz);
 
 
 
   const assembled = assembleReading(chart, cycles, ctx, bundle);
   const topCycles = cycles.slice(0, 12);
 
-  // Language layer. The reading above is the source of truth; this only
-  // rewrites wording from facts already calculated, and falls back to the
-  // template copy whenever verification or the gateway fails.
+  // Only chart facts and published editorial references cross the language
+  // boundary. Consented personal context, warnings, and reflection stay local.
   const { generateReadingProse } = await import("./ai/language.server");
   const { readingFacts } = await import("./ai/facts");
+  for (const source of ["AST-05", "AST-07", "AST-08", "AST-20"])
+    assertUse(source, "external_language");
   const facts = readingFacts(
     {
       engine: chart.engine,
@@ -706,28 +694,43 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       precision: ephemerisState(chart).precision,
       uncertainty: chart.uncertainty,
     },
-    topCycles.slice(0, 5),
-    {
-      localBucket: ctx.localBucket,
-      mood: ctx.checkIn?.mood ?? null,
-      energy: ctx.checkIn?.energy ?? null,
-      sleep: ctx.wellness?.sleep ?? null,
-      stress: ctx.wellness?.stress ?? null,
-    },
+    assembled,
+    tz,
   );
   const prose = await generateReadingProse({
     facts,
+    hasEligibleCycles: assembled.eligibleCycles.length > 0,
     tone: ctx.tone,
     depth: ctx.depth,
+    suppression: {
+      angles: chart.uncertainty.angleClaimsSuppressed,
+      houses: !chart.uncertainty.housesReliable,
+    },
     fallback: {
       headline: assembled.headline,
-      body: assembled.body,
+      body: assembled.astroBody,
       prompt: assembled.prompt,
     },
   });
+  const body = [prose.body, assembled.contextBody].filter(Boolean).join("\n\n");
+  const suppliedFacts = facts.map(({ id, statement }) => ({ id, statement }));
 
-  const provenance = [...assembled.provenance];
+  const provenance = assembled.provenance.filter(
+    (entry) => prose.meta.mode !== "model" || entry.lane !== "content",
+  );
   if (prose.meta.mode === "model") {
+    for (const fact of facts) {
+      const paragraphs = prose.meta.citations
+        .filter((citation) => citation.facts.includes(fact.id))
+        .map((citation) => citation.paragraph);
+      if (!paragraphs.length || !/^[IDPT]1$/.test(fact.id)) continue;
+      provenance.push({
+        lane: "content",
+        source_id: "AST-05",
+        label: `Published reference cited by language layer · ${fact.id}`,
+        detail: { statement: fact.statement, paragraphs: paragraphs.join(", "), bundle: bundle.version },
+      });
+    }
     provenance.push({
       lane: "content",
       source_id: "LLM-01",
@@ -751,14 +754,14 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       snapshot_id: snapRow.id,
       release_version: assembled.release_version,
       headline: prose.headline,
-      body_ct: await encryptField(dek, prose.body),
+      body_ct: await encryptField(dek, body),
       prompt: prose.prompt,
       confidence: assembled.confidence,
       primary_cycle_key: assembled.primary_cycle_key,
       idempotency_key: idem,
       language_mode: prose.meta.mode,
       language_model: prose.meta.model,
-      language_meta: prose.meta,
+      language_meta: { ...prose.meta, facts: suppliedFacts },
     })
     .select("id")
     .single();
@@ -806,7 +809,7 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
     reading: {
       id: inserted.id,
       headline: prose.headline,
-      body: prose.body,
+      body,
       prompt: prose.prompt,
       confidence: assembled.confidence,
       primary_cycle_key: assembled.primary_cycle_key,
@@ -818,7 +821,7 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       citations: prose.meta.citations,
       dropped: prose.meta.dropped,
       reason: prose.meta.reason,
-      facts: facts.map((f) => ({ id: f.id, statement: f.statement })),
+      facts: suppliedFacts,
     },
     provenance,
     cycles: topCycles,
@@ -1295,14 +1298,20 @@ export async function updatePrefs(
 // timing / time travel
 // ---------------------------------------------------------------------------
 
-export async function getCyclesFor(db: DB, userId: string, day: string) {
+export async function getCyclesFor(db: DB, userId: string, day?: string, timeZone = "UTC") {
   const snapRow = await loadSnapshot(db, userId);
   if (!snapRow) return { needsOnboarding: true as const };
+  const granted = await grantedSet(db, userId);
+  const timezone = isPermitted("DEV-01", "timing", granted) ? validTimeZone(timeZone) : "UTC";
+  const referenceDay = day ?? localDayString(new Date(), timezone);
+  const referenceAt = localNoon(referenceDay, timezone).toISOString();
   const chart = snapshotToChart(snapRow);
-  const cycles = computeCycles(chart, new Date(`${day}T12:00:00Z`));
+  const cycles = cyclesForLocalDay(chart, referenceDay, timezone);
   return {
     needsOnboarding: false as const,
-    day,
+    day: referenceDay,
+    timezone,
+    referenceAt,
     engine: `${chart.engine}@${chart.engineVersion}`,
     contractVersion: chart.contractVersion,
     computedAt: new Date().toISOString(),
@@ -1441,9 +1450,14 @@ export async function getFeatureNarrative(
   );
 
   const chartForKey = snapshotToChart(snapRow);
+  const profile = await loadProfile(db, userId);
+  const granted = await grantedSet(db, userId);
+  const tone = isPermitted("USR-01", "external_language", granted)
+    ? normalizeTone(profile.tone_pref ?? "plain")
+    : "plain";
   // Chapters are tied to the exact chart they were written from: a recalculated
   // chart (new house system, engine version) invalidates every saved essay.
-  const essayKey = `${FEATURE_ESSAY_VERSION}|${chartForKey.houseSystem}|${chartForKey.engineVersion}|${chartForKey.jd}`;
+  const essayKey = `${FEATURE_ESSAY_VERSION}|${chartForKey.houseSystem}|${chartForKey.engineVersion}|${chartForKey.jd}|${tone}`;
 
   const { data: cached } = await db
     .from<NarrativeRow>("feature_narratives")
@@ -1488,8 +1502,9 @@ export async function getFeatureNarrative(
   }
 
   const chart = snapshotToChart(snapRow);
-  const profile = await loadProfile(db, userId);
   const { featureFacts } = await import("./ai/facts");
+  for (const source of ["AST-05", "AST-07", "AST-08", "AST-20"])
+    assertUse(source, "external_language");
 
   const { data: others } = await db
     .from<FeatureRow>("natal_features")
@@ -1514,7 +1529,7 @@ export async function getFeatureNarrative(
   const written = await generateFeatureNarrative({
     facts,
     title: feature.title,
-    tone: profile.tone_pref ?? "plain",
+    tone,
   });
 
   if (!written.narrative) {

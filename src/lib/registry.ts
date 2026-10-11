@@ -7,12 +7,7 @@
  * Anything in PROHIBITED_SOURCES can never be collected or referenced.
  */
 
-export type Sensitivity =
-  | "public"
-  | "ordinary"
-  | "personal"
-  | "sensitive"
-  | "highly_sensitive";
+export type Sensitivity = "public" | "ordinary" | "personal" | "sensitive" | "highly_sensitive";
 
 export type AllowedUse =
   | "calculation"
@@ -20,6 +15,7 @@ export type AllowedUse =
   | "framing"
   | "personalisation"
   | "reflection_prompt"
+  | "external_language"
   | "provenance";
 
 export type Tier = 0 | 1 | 2 | 3;
@@ -122,7 +118,7 @@ export const SOURCES: SourceDef[] = [
     description: "Geocentric positions of Sun through Pluto.",
     tier: 0,
     sensitivity: "public",
-    allowed_uses: ["calculation", "timing", "provenance"],
+    allowed_uses: ["calculation", "timing", "provenance", "external_language"],
     phase: "launch",
     retention_days: null,
   },
@@ -142,7 +138,7 @@ export const SOURCES: SourceDef[] = [
     description: "Ascendant, Midheaven and the declared house division.",
     tier: 0,
     sensitivity: "public",
-    allowed_uses: ["calculation", "provenance"],
+    allowed_uses: ["calculation", "provenance", "external_language"],
     phase: "launch",
     retention_days: null,
   },
@@ -152,7 +148,7 @@ export const SOURCES: SourceDef[] = [
     description: "Angular separations and orbs between chart points.",
     tier: 0,
     sensitivity: "public",
-    allowed_uses: ["calculation", "timing", "provenance"],
+    allowed_uses: ["calculation", "timing", "provenance", "external_language"],
     phase: "launch",
     retention_days: null,
   },
@@ -163,7 +159,7 @@ export const SOURCES: SourceDef[] = [
       "Declared confidence in the birth time, propagated into every angle-dependent claim.",
     tier: 0,
     sensitivity: "ordinary",
-    allowed_uses: ["calculation", "framing", "provenance"],
+    allowed_uses: ["calculation", "framing", "provenance", "external_language"],
     phase: "launch",
     retention_days: null,
   },
@@ -175,7 +171,7 @@ export const SOURCES: SourceDef[] = [
     description: "How direct or gentle the language should be.",
     tier: 1,
     sensitivity: "ordinary",
-    allowed_uses: ["framing", "personalisation"],
+    allowed_uses: ["framing", "personalisation", "external_language"],
     phase: "launch",
     retention_days: null,
   },
@@ -185,7 +181,7 @@ export const SOURCES: SourceDef[] = [
     description: "How much technical detail to surface by default.",
     tier: 1,
     sensitivity: "ordinary",
-    allowed_uses: ["framing", "personalisation"],
+    allowed_uses: ["framing", "personalisation", "external_language"],
     phase: "launch",
     retention_days: null,
   },
@@ -347,11 +343,7 @@ export function assertUse(sourceId: string, use: AllowedUse): SourceDef {
   return def;
 }
 
-export function isPermitted(
-  sourceId: string,
-  use: AllowedUse,
-  granted: Set<string>,
-): boolean {
+export function isPermitted(sourceId: string, use: AllowedUse, granted: Set<string>): boolean {
   const def = SOURCE_MAP[sourceId];
   if (!def) return false;
   if (!def.allowed_uses.includes(use)) return false;

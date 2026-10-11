@@ -10,7 +10,7 @@ const DATE_FORMAT = new Intl.DateTimeFormat("en-US", {
 const WEEKDAY_FORMAT = new Intl.DateTimeFormat("en-US", { weekday: "long", timeZone: "UTC" });
 const NUMBER_FORMAT = new Intl.NumberFormat("en-US");
 
-/** Match the calculation engine's UTC-noon reference, without normalizing invalid dates. */
+/** Validate a date-only civil day without normalizing invalid dates. */
 export function isTravelDate(value: string) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value) || value.startsWith("0000")) return false;
   const parsed = new Date(value + "T12:00:00Z");

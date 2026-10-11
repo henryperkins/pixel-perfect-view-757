@@ -1,17 +1,22 @@
 /**
- * Fact blocks for the language layer.
- *
- * The AI pass never sees birth details, notes, or any raw user text. It sees
- * only the atoms built here: already-calculated positions, aspects, orbs,
- * phases and dates, plus the permitted framing flags. Each atom carries a
- * stable id so generated prose can be checked claim-by-claim against what was
- * actually injected — anything citing an id that is not in this list is
- * discarded rather than shown.
+ * Facts supplied to the language layer. Citation validation checks supplied IDs
+ * and coverage; it cannot prove semantic support for arbitrary generated prose.
+ * Daily facts contain only the selected astronomical plan and curated copy.
  */
+import type { AssembledReading } from "../reading.server";
+import { localDayString } from "../local-day";
 
 export interface FactAtom {
   id: string;
   statement: string;
+  /** Typed references support bounded daily contradiction checks, not a semantic proof. */
+  cycle?: {
+    transitBody: string;
+    natalPoint: string;
+    aspect: string;
+    orb: number;
+    exactDate: string | null;
+  };
 }
 
 export interface ChartFactInput {
@@ -40,86 +45,70 @@ export interface CycleFactInput {
   exact_at: string | null;
 }
 
-export interface FramingFactInput {
-  localBucket?: string | null;
-  sleep?: number | null;
-  stress?: number | null;
-  mood?: number | null;
-  energy?: number | null;
-}
-
-/** Facts for a daily reading: cycles first, then calculation caveats. */
+/** The model receives exactly the plan used by the template, without local context. */
 export function readingFacts(
   chart: ChartFactInput,
-  cycles: CycleFactInput[],
-  framing: FramingFactInput = {},
+  plan: Pick<AssembledReading, "eligibleCycles" | "editorial">,
+  timeZone = "UTC",
 ): FactAtom[] {
   const facts: FactAtom[] = [];
-
-  cycles.forEach((c, i) => {
+  plan.eligibleCycles.forEach((c, i) => {
+    const exactDate = c.exact_at ? localDayString(new Date(c.exact_at), timeZone) : null;
     const parts = [
       `transiting ${c.transit_body} ${c.aspect} natal ${c.natal_point}`,
       `orb ${c.orb.toFixed(2)} degrees`,
       `phase ${c.phase}`,
       `domain ${c.domain}`,
-      c.exact_at ? `exact on ${c.exact_at.slice(0, 10)}` : "no exact date inside the window",
+      exactDate ? `exact on ${exactDate}` : "no exact date inside the window",
     ];
-    facts.push({ id: `C${i + 1}`, statement: parts.join(", ") });
+    facts.push({
+      id: `C${i + 1}`,
+      statement: parts.join(", "),
+      cycle: {
+        transitBody: c.transit_body,
+        natalPoint: c.natal_point,
+        aspect: c.aspect,
+        orb: c.orb,
+        exactDate,
+      },
+    });
   });
 
+  if (plan.editorial) {
+    facts.push({
+      id: "I1",
+      statement: `Published interpretation ${plan.editorial.interpretation.key}: ${plan.editorial.interpretation.mechanism}`,
+    });
+    if (plan.editorial.domain)
+      facts.push({
+        id: "D1",
+        statement: `Published framing for ${plan.editorial.domain.label}: ${plan.editorial.domain.text}`,
+      });
+    if (plan.editorial.phase.text)
+      facts.push({ id: "P1", statement: `Published phase wording: ${plan.editorial.phase.text}` });
+    facts.push({ id: "T1", statement: plan.editorial.timing });
+  }
   facts.push({
     id: "E1",
-    statement: `positions computed by ${chart.engine} ${chart.engineVersion} at ${chart.precision} precision, ${chart.houseSystem} houses`,
+    statement: `positions computed by ${chart.engine} ${chart.engineVersion} at ${chart.precision} precision${chart.uncertainty.housesReliable ? `, ${chart.houseSystem} houses` : ""}`,
   });
   facts.push({
     id: "U1",
-    statement: `recorded birth-time accuracy is "${chart.uncertainty.accuracy}" (about plus or minus ${chart.uncertainty.minutes} minutes, roughly ${chart.uncertainty.ascendantSpreadDeg.toFixed(2)} degrees of Ascendant spread)`,
+    statement: `recorded birth-time accuracy is "${chart.uncertainty.accuracy}" (about plus or minus ${chart.uncertainty.minutes} minutes)`,
   });
   if (chart.uncertainty.angleClaimsSuppressed) {
     facts.push({
       id: "U2",
       statement:
-        "birth time is too uncertain to use, so every claim depending on the Ascendant or on house placement has been left out of the calculation",
+        "All Ascendant and house-placement claims are suppressed. Their caveat will be appended separately; do not draft those claims or repeat the caveat.",
     });
   } else if (!chart.uncertainty.housesReliable) {
     facts.push({
       id: "U2",
       statement:
-        "house and angle claims are weighted down because of birth-time uncertainty, and are not stated as firm",
+        "House-placement claims are suppressed and angle claims are weighted down. Their caveat will be appended separately; do not draft house claims or repeat the caveat.",
     });
   }
-
-  if (framing.localBucket) {
-    facts.push({
-      id: "F1",
-      statement: `the reader's local time of day is ${framing.localBucket} (framing only, consented)`,
-    });
-  }
-  if (framing.mood !== null && framing.mood !== undefined) {
-    facts.push({
-      id: "F2",
-      statement: `the reader self-reported mood ${framing.mood} of 5 today (framing only, never a claim)`,
-    });
-  }
-  if (framing.energy !== null && framing.energy !== undefined) {
-    facts.push({
-      id: "F3",
-      statement: `the reader self-reported energy ${framing.energy} of 5 today (framing only, never a claim)`,
-    });
-  }
-  if (framing.sleep !== null && framing.sleep !== undefined) {
-    facts.push({
-      id: "F4",
-      statement: `the reader self-reported sleep quality ${framing.sleep} of 5 today (framing and reflection prompt only, never diagnostic, never part of the calculation)`,
-    });
-  }
-  if (framing.stress !== null && framing.stress !== undefined) {
-    facts.push({
-      id: "F5",
-      statement: `the reader self-reported stress load ${framing.stress} of 5 today (framing and reflection prompt only, never diagnostic, never part of the calculation)`,
-    });
-  }
-
   return facts;
 }
 
@@ -193,7 +182,9 @@ export function factIds(facts: FactAtom[]): Set<string> {
 /** App ranking score -> plain words. The score is an internal ordering, not a measurement, so it never reaches prose as a number. */
 function emphasisOf(strength: number): string {
   const s = Number(strength);
-  if (s >= 0.8) return "ranked among the most prominent structures in this chart (an app ranking, not a measurement; never quote it as a number)";
-  if (s >= 0.5) return "ranked as moderately prominent in this chart (an app ranking, not a measurement; never quote it as a number)";
+  if (s >= 0.8)
+    return "ranked among the most prominent structures in this chart (an app ranking, not a measurement; never quote it as a number)";
+  if (s >= 0.5)
+    return "ranked as moderately prominent in this chart (an app ranking, not a measurement; never quote it as a number)";
   return "ranked as a quieter structure in this chart (an app ranking, not a measurement; never quote it as a number)";
 }

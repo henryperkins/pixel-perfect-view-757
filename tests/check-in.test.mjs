@@ -20,7 +20,14 @@ const userB = "local-check-in-user-b";
 const day = new Date().toISOString().slice(0, 10);
 const shiftDay = (days) =>
   new Date(Date.parse(`${day}T12:00:00Z`) + days * 86400000).toISOString().slice(0, 10);
-const envNames = ["PATTERN_ROOT_KEY", "PATTERN_WORKFLOW_URL", "PATTERN_WORKFLOW_SECRET"];
+const envNames = [
+  "PATTERN_ROOT_KEY",
+  "PATTERN_WORKFLOW_URL",
+  "PATTERN_WORKFLOW_SECRET",
+  "LOVABLE_API_KEY",
+  "SWISS_EPHEMERIS_URL",
+  "SWISS_EPHEMERIS_KEY",
+];
 const oldEnv = Object.fromEntries(envNames.map((name) => [name, process.env[name]]));
 const originalFetch = globalThis.fetch;
 let vite;
@@ -42,6 +49,8 @@ before(async () => {
   process.env.PATTERN_ROOT_KEY = randomBytes(32).toString("hex");
   process.env.PATTERN_WORKFLOW_SECRET = randomBytes(32).toString("hex");
   process.env.PATTERN_WORKFLOW_URL = "http://pattern-check-in-test.invalid";
+  for (const name of ["LOVABLE_API_KEY", "SWISS_EPHEMERIS_URL", "SWISS_EPHEMERIS_KEY"])
+    delete process.env[name];
   globalThis.fetch = async (input, init = {}) => {
     const url = typeof input === "string" ? input : input instanceof URL ? input.href : input.url;
     assert.equal(
@@ -85,7 +94,7 @@ before(async () => {
     envFile: false,
     appType: "custom",
     logLevel: "error",
-    server: { middlewareMode: true },
+    server: { middlewareMode: true, hmr: false, ws: false },
   });
   app = await vite.ssrLoadModule("/src/lib/pattern.server.ts");
   ({ records } = await vite.ssrLoadModule("/src/lib/d1.server.ts"));
@@ -145,12 +154,11 @@ const assertBands = (value, expected) => {
   for (const field of ["mood", "energy", "sleep", "stress", "note"])
     assert.equal(value[field], expected[field], field);
 };
-async function seedCachedReading(client, user = userA) {
+async function seedChart(client, user = userA) {
   const dek = await app.getDek(client, user);
   const fingerprint = `local-fixture-${user}`;
   const birthId = randomUUID();
   const snapshotId = randomUUID();
-  const bundle = await app.activeBundle(client);
   const inserts = [
     [
       "birth_profiles",
@@ -192,32 +200,13 @@ async function seedCachedReading(client, user = userA) {
         aspects: [],
         uncertainty: {
           accuracy: "exact",
+          minutes: 0,
           housesReliable: true,
           anglesReliable: true,
+          angleClaimsSuppressed: false,
           ascendantSpreadDeg: 0,
           moonSpreadDeg: 0,
         },
-      },
-    ],
-    [
-      "daily_readings",
-      {
-        user_id: user,
-        reading_date: day,
-        snapshot_id: snapshotId,
-        release_version: bundle.version,
-        headline: "Cached local fixture reading",
-        body_ct: await cryptoModule.encryptField(
-          dek,
-          "This cached reading avoids external language/ephemeris calls.",
-        ),
-        prompt: "What did you notice?",
-        confidence: "medium",
-        primary_cycle_key: null,
-        idempotency_key: `${fingerprint}:${day}:${bundle.version}`,
-        language_mode: "template",
-        language_model: null,
-        language_meta: {},
       },
     ],
   ];
@@ -422,7 +411,7 @@ test("180-day retention clears only expired wellness bands and only the current 
 test("cached Today and Journal load the persisted check-in from the checked-in schema", async () => {
   const client = records();
   await consent(client, userA);
-  await seedCachedReading(client);
+  await seedChart(client);
   const expected = {
     mood: 2,
     energy: 4,
@@ -431,11 +420,20 @@ test("cached Today and Journal load the persisted check-in from the checked-in s
     note: "A locally persisted reflection",
   };
   const saved = await save(client, expected);
+  // Generate through the actual current cache key before closing SQLite.
+  const generated = await app.getToday(client, userA, "UTC");
+  assert.equal(generated.needsOnboarding, false);
+  assertBands(generated.wellness, expected);
   sqlite.close();
   sqlite = new DatabaseSync(file);
   sqlite.exec("PRAGMA foreign_keys = ON");
   const today = await app.getToday(records(), userA, "UTC");
   assert.equal(today.needsOnboarding, false);
+  assert.equal(
+    today.reading.id,
+    generated.reading.id,
+    "the reopened read reuses real cached prose",
+  );
   assertBands(today.wellness, expected);
   assert.equal(today.wellness.savedAt, saved.savedAt);
   const journal = await app.listJournal(records(), userA);
@@ -477,7 +475,7 @@ test("failed writes and missing RETURNING rows cannot report a successful save",
 test("check-in reads, consent reads, and retention failures propagate instead of looking empty", async () => {
   const client = records();
   await consent(client, userA);
-  await seedCachedReading(client);
+  await seedChart(client);
   await save(client);
   const previouslySaved = rawRow();
   fault = {

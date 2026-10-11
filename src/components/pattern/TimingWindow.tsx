@@ -28,13 +28,17 @@ const PHASE_ICONS = { building: Sunrise, exact: CircleDot, fading: Sunset };
 function WindowTimeline({
   cycle,
   day,
+  timezone,
+  referenceAt,
   referenceLabel,
 }: {
   cycle: TimingCycle;
   day: string;
+  timezone: string;
+  referenceAt?: string | undefined;
   referenceLabel: string;
 }) {
-  const positions = timelinePositions(cycle, day);
+  const positions = timelinePositions(cycle, day, timezone, referenceAt);
   const dates = [
     { label: "Opens", value: cycle.ingress_at },
     { label: "Closest pass", value: cycle.exact_at },
@@ -64,9 +68,9 @@ function WindowTimeline({
             role="img"
             aria-label={
               "Calculated window from " +
-              timingDate(cycle.ingress_at) +
+              timingDate(cycle.ingress_at, timezone) +
               " to " +
-              timingDate(cycle.egress_at) +
+              timingDate(cycle.egress_at, timezone) +
               ". " +
               (positions.today !== null
                 ? referenceLabel + " is " + Math.round(positions.today) + "% through this window."
@@ -96,7 +100,7 @@ function WindowTimeline({
             <dd>
               {value && Number.isFinite(Date.parse(value)) ? (
                 <time dateTime={value} title={value}>
-                  {timingDate(value)}
+                  {timingDate(value, timezone)}
                 </time>
               ) : (
                 "Not in range"
@@ -112,6 +116,8 @@ function WindowTimeline({
 export function TimingWindow({
   cycle,
   day,
+  timezone = "UTC",
+  referenceAt,
   open,
   visited,
   previous,
@@ -123,6 +129,8 @@ export function TimingWindow({
 }: {
   cycle: TimingCycle;
   day: string;
+  timezone?: string;
+  referenceAt?: string | undefined;
   open: boolean;
   visited: boolean;
   previous: TimingCycle | undefined;
@@ -132,10 +140,10 @@ export function TimingWindow({
   referenceLabel?: "Today" | "Selected day";
   comparisonLabel?: string | undefined;
 }) {
-  const phase = windowPhase(cycle, day);
+  const phase = windowPhase(cycle, day, timezone);
   const copy = PHASE_LABEL[phase];
   const Icon = PHASE_ICONS[phase];
-  const timing = exactPhrase(daysToExact(cycle, day), referenceLabel === "Selected day");
+  const timing = exactPhrase(daysToExact(cycle, day, timezone), referenceLabel === "Selected day");
   const arc = arcSentence(cycle);
   const toggleId = "timing-toggle-" + cycle.cycle_key;
   const panelId = "timing-panel-" + cycle.cycle_key;
@@ -188,7 +196,13 @@ export function TimingWindow({
               {comparisonLabel ? (
                 <p className="timing-comparison-label">{comparisonLabel}</p>
               ) : null}
-              <WindowTimeline cycle={cycle} day={day} referenceLabel={referenceLabel} />
+              <WindowTimeline
+                cycle={cycle}
+                day={day}
+                timezone={timezone}
+                referenceAt={referenceAt}
+                referenceLabel={referenceLabel}
+              />
               {arc ? <p className="timing-arc-copy">{arc}</p> : null}
               <details className="timing-calculated-values">
                 <summary>Calculated values</summary>

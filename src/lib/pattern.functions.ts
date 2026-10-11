@@ -152,11 +152,19 @@ export const eraseData = createServerFn({ method: "POST" })
 export const fetchCycles = createServerFn({ method: "POST" })
   .middleware([requireAuth])
   .inputValidator((d: unknown) =>
-    z.object({ day: z.string().regex(/^\d{4}-\d{2}-\d{2}$/) }).parse(d),
+    z
+      .object({
+        day: z
+          .string()
+          .regex(/^\d{4}-\d{2}-\d{2}$/)
+          .optional(),
+        timezone: z.string().optional(),
+      })
+      .parse(d),
   )
   .handler(async ({ data, context }) => {
     const m = await import("./pattern.server");
-    return m.getCyclesFor(context.db, context.userId, data.day);
+    return m.getCyclesFor(context.db, context.userId, data.day, data.timezone ?? "UTC");
   });
 
 export const fetchJournal = createServerFn({ method: "GET" })

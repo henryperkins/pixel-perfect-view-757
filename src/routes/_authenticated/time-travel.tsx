@@ -9,6 +9,8 @@ import { fetchCycles, fetchJournal } from "@/lib/pattern.functions";
 import { EphemerisNotice } from "@/components/pattern/EphemerisNotice";
 import { TimingWindow } from "@/components/pattern/TimingWindow";
 import { DOMAIN_LABEL, pointName, timingDate } from "@/components/pattern/timing";
+import { useAuth } from "@/hooks/useAuth";
+import { useCalendarQueryRefresh, useCalendarRefresh } from "@/hooks/useCalendarRefresh";
 import {
   dayRelation,
   isTravelDate,
@@ -46,32 +48,43 @@ const JUMPS = [
   { label: "A month ago", step: "month" },
   { label: "A year ago", step: "year" },
 ] as const;
-function todayISO() {
-  return new Date().toISOString().slice(0, 10);
-}
-
 function TimeTravelPage() {
+  const { session } = useAuth();
+  const calendar = useCalendarRefresh();
+  const timezone = calendar.timezone;
   const load = useServerFn(fetchCycles);
   const journalFn = useServerFn(fetchJournal);
-  const [today] = useState(todayISO);
-  const [date, setDate] = useState(today);
-  const [applied, setApplied] = useState(today);
+  // Until the reader chooses a day, use the server's consented calendar.
+  const [selectedDate, setDate] = useState<string | null>(null);
+  const [selectedApplied, setApplied] = useState<string | null>(null);
   const [step, setStep] = useState<TravelStep>("day");
   const [expanded, setExpanded] = useState<{ day: string; key: string | null } | null>(null);
   const [visited, setVisited] = useState<Set<string>>(() => new Set());
   const [revealTarget, setRevealTarget] = useState<{ day: string; key: string } | null>(null);
 
-  const past = useQuery({
-    queryKey: ["cycles", applied],
-    queryFn: () => load({ data: { day: applied } }),
-  });
   const now = useQuery({
-    queryKey: ["cycles", today],
-    queryFn: () => load({ data: { day: today } }),
+    queryKey: ["cycles", session?.userId, "current"],
+    queryFn: () => load({ data: { timezone } }),
+    enabled: Boolean(session),
+    refetchOnWindowFocus: "always",
   });
-  const journal = useQuery({ queryKey: ["journal"], queryFn: () => journalFn({}) });
-  const pastData = past.data && !past.data.needsOnboarding ? past.data : null;
+  useCalendarQueryRefresh(calendar, ["cycles", session?.userId, "current"]);
   const nowData = now.data && !now.data.needsOnboarding ? now.data : null;
+  const today = nowData?.day ?? "";
+  const date = selectedDate ?? today;
+  const applied = selectedApplied ?? today;
+  const selected = useQuery({
+    queryKey: ["cycles", session?.userId, "selected", applied, timezone],
+    queryFn: () => load({ data: { day: applied, timezone } }),
+    enabled: Boolean(session && applied && applied !== today),
+  });
+  const past = !applied || applied === today ? now : selected;
+  const journal = useQuery({
+    queryKey: ["journal", session?.userId],
+    queryFn: () => journalFn({}),
+    enabled: Boolean(session),
+  });
+  const pastData = past.data && !past.data.needsOnboarding ? past.data : null;
   const rows = pastData?.cycles ?? [];
   const nowKeys = new Set((nowData?.cycles ?? []).map((cycle) => cycle.cycle_key));
   const canCompare = nowData !== null && !now.isError;
@@ -142,124 +155,127 @@ function TimeTravelPage() {
           <p>Explore another day’s sky and revisit what you saved.</p>
         </div>
 
-        <section className="travel-navigator" aria-labelledby="travel-date-title">
-          <h2 id="travel-date-title" className="sr-only">
-            Choose a day
-          </h2>
-          <div className="travel-date-heading">
-            <Button
-              type="button"
-              variant="outline"
-              size="icon"
-              className="travel-direction"
-              disabled={!previousDay}
-              aria-label={"Previous " + step}
-              onClick={() => visit(previousDay)}
-            >
-              <span className="travel-direction-icon">
-                <ArrowLeft aria-hidden="true" />
-              </span>
-            </Button>
-            <div
-              key={applied}
-              className="travel-date-display travel-arrival"
-              aria-live="polite"
-              aria-atomic="true"
-            >
-              <time dateTime={applied}>{travelDate(applied)}</time>
-              <p>
-                {travelWeekday(applied)} <span aria-hidden="true">·</span>{" "}
-                {dayRelation(applied, today)}
-              </p>
-            </div>
-            <Button
-              type="button"
-              variant="outline"
-              size="icon"
-              className="travel-direction"
-              disabled={!nextDay}
-              aria-label={"Next " + step}
-              onClick={() => visit(nextDay)}
-            >
-              <span className="travel-direction-icon">
-                <ArrowRight aria-hidden="true" />
-              </span>
-            </Button>
-          </div>
-          <div className="travel-step-options" role="group" aria-label="Move through time by">
-            {STEPS.map((unit) => (
-              <Button
-                key={unit}
-                type="button"
-                variant="ghost"
-                aria-pressed={step === unit}
-                onClick={() => setStep(unit)}
-              >
-                {pointName(unit)}
-              </Button>
-            ))}
-          </div>
-          <div className="travel-date-tools">
-            <div className="travel-jumps" role="group" aria-label="Jump to a day">
-              {JUMPS.map((jump) => {
-                const target = shiftTravelDate(today, -1, jump.step);
-                return (
-                  <Button
-                    key={jump.step}
-                    type="button"
-                    variant="ghost"
-                    aria-pressed={applied === target}
-                    disabled={!target}
-                    onClick={() => visit(target)}
-                  >
-                    {jump.label}
-                  </Button>
-                );
-              })}
+        {applied ? (
+          <section className="travel-navigator" aria-labelledby="travel-date-title">
+            <h2 id="travel-date-title" className="sr-only">
+              Choose a day
+            </h2>
+            <div className="travel-date-heading">
               <Button
                 type="button"
-                variant="ghost"
-                aria-pressed={applied === today}
-                onClick={() => visit(today)}
+                variant="outline"
+                size="icon"
+                className="travel-direction"
+                disabled={!previousDay}
+                aria-label={"Previous " + step}
+                onClick={() => visit(previousDay)}
               >
-                Today
+                <span className="travel-direction-icon">
+                  <ArrowLeft aria-hidden="true" />
+                </span>
+              </Button>
+              <div
+                key={applied}
+                className="travel-date-display travel-arrival"
+                aria-live="polite"
+                aria-atomic="true"
+              >
+                <time dateTime={applied}>{travelDate(applied)}</time>
+                <p>
+                  {travelWeekday(applied)} <span aria-hidden="true">·</span>{" "}
+                  {today ? dayRelation(applied, today) : "Comparing with today…"}
+                </p>
+              </div>
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                className="travel-direction"
+                disabled={!nextDay}
+                aria-label={"Next " + step}
+                onClick={() => visit(nextDay)}
+              >
+                <span className="travel-direction-icon">
+                  <ArrowRight aria-hidden="true" />
+                </span>
               </Button>
             </div>
-            <form
-              className="travel-date-form"
-              onSubmit={(event) => {
-                event.preventDefault();
-                visit(date);
-              }}
-            >
-              <label htmlFor="travel-date">
-                <CalendarDays aria-hidden="true" />
-                Choose a date
-              </label>
-              <div>
-                <input
-                  id="travel-date"
-                  type="date"
-                  min="0001-01-01"
-                  max="9999-12-31"
-                  required
-                  value={date}
-                  onChange={(event) => setDate(event.target.value)}
-                  aria-describedby={
-                    date !== applied && !isTravelDate(date) ? "travel-date-error" : undefined
-                  }
-                  aria-invalid={date !== applied && !isTravelDate(date)}
-                />
-                <Button type="submit" disabled={!isTravelDate(date) || date === applied}>
-                  Reconstruct <ArrowRight aria-hidden="true" />
+            <div className="travel-step-options" role="group" aria-label="Move through time by">
+              {STEPS.map((unit) => (
+                <Button
+                  key={unit}
+                  type="button"
+                  variant="ghost"
+                  aria-pressed={step === unit}
+                  onClick={() => setStep(unit)}
+                >
+                  {pointName(unit)}
+                </Button>
+              ))}
+            </div>
+            <div className="travel-date-tools">
+              <div className="travel-jumps" role="group" aria-label="Jump to a day">
+                {JUMPS.map((jump) => {
+                  const target = shiftTravelDate(today, -1, jump.step);
+                  return (
+                    <Button
+                      key={jump.step}
+                      type="button"
+                      variant="ghost"
+                      aria-pressed={applied === target}
+                      disabled={!target}
+                      onClick={() => visit(target)}
+                    >
+                      {jump.label}
+                    </Button>
+                  );
+                })}
+                <Button
+                  type="button"
+                  variant="ghost"
+                  aria-pressed={applied === today}
+                  disabled={!today}
+                  onClick={() => visit(today)}
+                >
+                  Today
                 </Button>
               </div>
-              {date !== applied && !isTravelDate(date) ? (
-                <p id="travel-date-error">Choose a valid date between year 1 and 9999.</p>
-              ) : null}
-            </form>
-          </div>
-        </section>
+              <form
+                className="travel-date-form"
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  visit(date);
+                }}
+              >
+                <label htmlFor="travel-date">
+                  <CalendarDays aria-hidden="true" />
+                  Choose a date
+                </label>
+                <div>
+                  <input
+                    id="travel-date"
+                    type="date"
+                    min="0001-01-01"
+                    max="9999-12-31"
+                    required
+                    value={date}
+                    onChange={(event) => setDate(event.target.value)}
+                    aria-describedby={
+                      date !== applied && !isTravelDate(date) ? "travel-date-error" : undefined
+                    }
+                    aria-invalid={date !== applied && !isTravelDate(date)}
+                  />
+                  <Button type="submit" disabled={!isTravelDate(date) || date === applied}>
+                    Reconstruct <ArrowRight aria-hidden="true" />
+                  </Button>
+                </div>
+                {date !== applied && !isTravelDate(date) ? (
+                  <p id="travel-date-error">Choose a valid date between year 1 and 9999.</p>
+                ) : null}
+              </form>
+            </div>
+          </section>
+        ) : null}
 
         {past.isPending ? (
           <div
@@ -269,7 +285,11 @@ function TimeTravelPage() {
             aria-label="Reconstructing the selected day"
           >
             <Waves aria-hidden="true" />
-            <p>Reconstructing the sky for {travelDate(applied)}…</p>
+            <p>
+              {applied
+                ? "Reconstructing the sky for " + travelDate(applied) + "…"
+                : "Finding today’s sky…"}
+            </p>
           </div>
         ) : past.error ? (
           <div className="travel-error" role="alert">
@@ -329,6 +349,8 @@ function TimeTravelPage() {
                       <TimingWindow
                         cycle={cycle}
                         day={pastData.day}
+                        timezone={pastData.timezone}
+                        referenceAt={pastData.referenceAt}
                         open={openKey === cycle.cycle_key}
                         visited={
                           visited.has(applied + "/" + cycle.cycle_key) ||
@@ -408,7 +430,11 @@ function TimeTravelPage() {
             </div>
           ) : (
             <div className="travel-saved-empty">
-              <p>No saved context found for {travelDate(applied)}.</p>
+              <p>
+                {applied
+                  ? "No saved context found for " + travelDate(applied) + "."
+                  : "Choose a day after today’s sky loads."}
+              </p>
               {recentJournalLimit ? (
                 <p>
                   Recent journal entries are shown here. Older records may be outside this view.
@@ -429,6 +455,8 @@ function TimeTravelPage() {
             <div>
               <Rail title="Calculation status">
                 <Field label="Selected day" value={pastData.day} />
+                <Field label="Calendar zone" value={pastData.timezone} />
+                <Field label="Reference instant" value={pastData.referenceAt} />
                 <Field label="Today" value={nowData?.day ?? "—"} />
                 <Field label="Windows on selected day" value={pastData.cycles.length} />
                 <Field label="Windows today" value={canCompare ? nowData.cycles.length : "—"} />

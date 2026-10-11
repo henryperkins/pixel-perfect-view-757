@@ -3,6 +3,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import {
@@ -14,12 +16,7 @@ import {
   savePrefs,
   updateConsent,
 } from "@/lib/pattern.functions";
-import {
-  PROHIBITED_SOURCES,
-  TIERS,
-  sourcesForTier,
-  type Tier,
-} from "@/lib/registry";
+import { PROHIBITED_SOURCES, TIERS, sourcesForTier, type Tier } from "@/lib/registry";
 
 export const Route = createFileRoute("/_authenticated/privacy")({
   head: () => ({
@@ -33,8 +30,7 @@ export const Route = createFileRoute("/_authenticated/privacy")({
       { property: "og:title", content: "Context & privacy — Pattern" },
       {
         property: "og:description",
-        content:
-          "Tier 0 is required for calculation; everything else is opt-in and revocable.",
+        content: "Tier 0 is required for calculation; everything else is opt-in and revocable.",
       },
     ],
   }),
@@ -42,6 +38,7 @@ export const Route = createFileRoute("/_authenticated/privacy")({
 });
 
 function PrivacyPage() {
+  const { session } = useAuth();
   const bootstrapFn = useServerFn(fetchBootstrap);
   const consentFn = useServerFn(updateConsent);
   const prefsFn = useServerFn(savePrefs);
@@ -51,8 +48,16 @@ function PrivacyPage() {
   const journalFn = useServerFn(fetchJournal);
   const qc = useQueryClient();
 
-  const boot = useQuery({ queryKey: ["bootstrap"], queryFn: () => bootstrapFn({}) });
-  const journal = useQuery({ queryKey: ["journal"], queryFn: () => journalFn({}) });
+  const boot = useQuery({
+    queryKey: ["bootstrap", session?.userId],
+    queryFn: () => bootstrapFn({}),
+    enabled: Boolean(session),
+  });
+  const journal = useQuery({
+    queryKey: ["journal", session?.userId],
+    queryFn: () => journalFn({}),
+    enabled: Boolean(session),
+  });
 
   const [eventDate, setEventDate] = useState("");
   const [eventDomain, setEventDomain] = useState("identity");
@@ -61,16 +66,18 @@ function PrivacyPage() {
   const granted = new Set(
     (boot.data?.consents ?? []).filter((c) => c.granted).map((c) => c.source_id),
   );
+  const consentUnknown = !boot.data || boot.isError;
 
   const toggle = useMutation({
-    mutationFn: (vars: { sourceId: string; granted: boolean }) =>
-      consentFn({ data: vars }),
+    mutationFn: (vars: { sourceId: string; granted: boolean }) => consentFn({ data: vars }),
     onSuccess: () => {
       void qc.invalidateQueries({ queryKey: ["bootstrap"] });
       void qc.invalidateQueries({ queryKey: ["today"] });
+      void qc.invalidateQueries({ queryKey: ["cycles"] });
     },
     onError: (e: Error) => toast.error(e.message),
   });
+  const consentControlsDisabled = consentUnknown || boot.isFetching || toggle.isPending;
 
   const prefs = useMutation({
     mutationFn: (vars: { displayName: string | null; tone: string; depth: string }) =>
@@ -135,9 +142,51 @@ function PrivacyPage() {
         <div>
           <h1 className="text-3xl">Context &amp; privacy</h1>
           <p className="mt-3 max-w-2xl text-sm text-muted-foreground">
-            This is the registry the reading engine actually enforces. A source can only be
-            used for the uses listed beside it; anything else fails at the policy boundary.
+            This is the registry the reading engine actually enforces. A source can only be used for
+            the uses listed beside it; anything else fails at the policy boundary.
           </p>
+
+          {boot.isPending || boot.isFetching ? (
+            <p role="status" className="mt-4 text-sm text-muted-foreground">
+              Loading privacy settings…
+            </p>
+          ) : boot.error ? (
+            <div role="alert" className="mt-4 border border-destructive/40 p-4 text-sm">
+              <p>
+                Privacy settings couldn’t load. Source controls are unavailable until they refresh.
+              </p>
+              <Button
+                variant="outline"
+                type="button"
+                onClick={() => boot.refetch()}
+                className="mt-3"
+              >
+                Retry privacy settings
+              </Button>
+            </div>
+          ) : null}
+
+          <section className="mt-8 max-w-2xl" aria-labelledby="reading-language-privacy">
+            <h2 id="reading-language-privacy" className="font-serif text-xl">
+              How reading language is written
+            </h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Google Gemini, through the Lovable AI gateway, can write from calculated chart facts
+              and curated interpretation text. Tone and depth preferences are included only when
+              their source switches are on. With those switches off, readings use plain tone and
+              standard depth.
+            </p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Raw birth details, journal notes, check-in bands, sleep and stress bands, device
+              timezone and local time-of-day context are never sent to the language provider.
+              Context switches allow only the local uses listed below; turning them on does not
+              authorize sending that context to a model.
+            </p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              The Daily check-in switch controls whether mood and energy frame your reading. You can
+              still save a private check-in with that switch off. Saving never turns the switch on.
+            </p>
+          </section>
 
           {TIERS.filter((t) => t.tier !== 3 || sourcesForTier(3).length > 0).map((tier) => (
             <section key={tier.tier} className="mt-10">
@@ -154,38 +203,54 @@ function PrivacyPage() {
                       className="flex flex-wrap items-start justify-between gap-4 border border-rule bg-card px-4 py-3"
                     >
                       <div className="min-w-0">
-                        <p className="font-mono text-xs text-muted-foreground">
+                        <p
+                          id={`source-${s.id}-meta`}
+                          className="font-mono text-xs text-muted-foreground"
+                        >
                           {s.id} · {s.sensitivity} ·{" "}
                           {s.retention_days === null
                             ? "retained until deletion"
                             : `${s.retention_days}d retention`}
                         </p>
-                        <p className="mt-1 text-sm font-medium">{s.label}</p>
-                        <p className="mt-1 max-w-xl text-sm text-muted-foreground">
+                        <p id={`source-${s.id}-label`} className="mt-1 text-sm font-medium">
+                          {s.label}
+                        </p>
+                        <p
+                          id={`source-${s.id}-description`}
+                          className="mt-1 max-w-xl text-sm text-muted-foreground"
+                        >
                           {s.description}
                         </p>
-                        <p className="mt-1.5 font-mono text-xs text-muted-foreground">
-                          uses: {s.allowed_uses.join(", ")}
+                        <p
+                          id={`source-${s.id}-uses`}
+                          className="mt-1.5 font-mono text-xs text-muted-foreground"
+                        >
+                          uses: {s.allowed_uses.map((use) => use.replaceAll("_", " ")).join(", ")}
                         </p>
                       </div>
                       {tier.required ? (
-                        <span className="technical shrink-0 text-muted-foreground">
-                          required
-                        </span>
+                        <span className="technical shrink-0 text-muted-foreground">required</span>
                       ) : (
                         <button
                           type="button"
-                          disabled={toggle.isPending}
-                          onClick={() =>
-                            toggle.mutate({ sourceId: s.id, granted: !on })
-                          }
+                          aria-label={`Use ${s.label}`}
+                          aria-pressed={consentUnknown ? undefined : on}
+                          aria-describedby={`source-${s.id}-meta source-${s.id}-description source-${s.id}-uses`}
+                          disabled={consentControlsDisabled}
+                          onClick={() => toggle.mutate({ sourceId: s.id, granted: !on })}
                           className={`shrink-0 rounded-sm border px-3 py-1.5 text-xs transition-colors ${
-                            on
+                            !consentUnknown && on
                               ? "border-primary bg-accent text-accent-foreground"
                               : "border-input bg-card hover:bg-secondary"
                           }`}
                         >
-                          {on ? "on" : "off"}
+                          {consentUnknown
+                            ? boot.isPending || boot.isFetching
+                              ? "loading…"
+                              : "unavailable"
+                            : on
+                              ? "on"
+                              : "off"}
                         </button>
                       )}
                     </div>
@@ -211,6 +276,10 @@ function PrivacyPage() {
 
           <section className="mt-12">
             <h2 className="font-serif text-xl">Reading preferences</h2>
+            <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
+              Saved tone and depth apply when their source switches above are on. Saving a
+              preference does not turn a source on.
+            </p>
             <div className="mt-4 grid gap-4 sm:grid-cols-3">
               <label className="block">
                 <span className="technical text-muted-foreground">Display name</span>
@@ -248,8 +317,7 @@ function PrivacyPage() {
               type="button"
               disabled={prefs.isPending}
               onClick={() => {
-                const name = (document.getElementById("display-name") as HTMLInputElement)
-                  .value;
+                const name = (document.getElementById("display-name") as HTMLInputElement).value;
                 const tone = (document.getElementById("tone") as HTMLSelectElement).value;
                 const depth = (document.getElementById("depth") as HTMLSelectElement).value;
                 prefs.mutate({ displayName: name || null, tone, depth });
@@ -263,8 +331,8 @@ function PrivacyPage() {
           <section className="mt-12">
             <h2 className="font-serif text-xl">Marked moments</h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              A dated moment you choose to record. Used to rank relevance — never to make a
-              claim about you.
+              A dated moment you choose to record. Used to rank relevance — never to make a claim
+              about you.
             </p>
             <div className="mt-4 flex flex-wrap items-end gap-3">
               <label className="block">
@@ -283,13 +351,11 @@ function PrivacyPage() {
                   onChange={(e) => setEventDomain(e.target.value)}
                   className="mt-1.5 rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
                 >
-                  {["identity", "relationships", "work", "inner-life", "structure"].map(
-                    (d) => (
-                      <option key={d} value={d}>
-                        {d}
-                      </option>
-                    ),
-                  )}
+                  {["identity", "relationships", "work", "inner-life", "structure"].map((d) => (
+                    <option key={d} value={d}>
+                      {d}
+                    </option>
+                  ))}
                 </select>
               </label>
               <label className="block flex-1">
@@ -350,14 +416,17 @@ function PrivacyPage() {
         </div>
 
         <Rail title="Status">
-          <Field label="Chart" value={boot.data?.hasChart ? "calculated" : "missing"} />
-          <Field label="Tier 1 on" value={granted.size} />
-          <Field label="Check-ins" value={journal.data?.checkIns.length ?? 0} />
-          <Field label="Moments" value={journal.data?.events.length ?? 0} />
-          <Field label="Feedback" value={journal.data?.feedback.length ?? 0} />
+          <Field
+            label="Chart"
+            value={boot.data ? (boot.data.hasChart ? "calculated" : "missing") : "—"}
+          />
+          <Field label="Tier 1 on" value={consentUnknown ? "—" : granted.size} />
+          <Field label="Check-ins" value={journal.data?.checkIns.length ?? "—"} />
+          <Field label="Moments" value={journal.data?.events.length ?? "—"} />
+          <Field label="Feedback" value={journal.data?.feedback.length ?? "—"} />
           <p className="pt-2 text-xs">
-            Editorial content is published into the app by a signed release; it never
-            receives your chart, notes or readings.
+            Editorial content is published into the app by a signed release; it never receives your
+            chart, notes or readings.
           </p>
         </Rail>
       </div>

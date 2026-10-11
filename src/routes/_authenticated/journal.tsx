@@ -5,6 +5,8 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { NotebookPen, Save, Trash2 } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { useCalendarQueryRefresh, useCalendarRefresh } from "@/hooks/useCalendarRefresh";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import {
@@ -36,21 +38,11 @@ export const Route = createFileRoute("/_authenticated/journal")({
   component: JournalPage,
 });
 
-function localTz() {
-  try {
-    return Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
-  } catch {
-    return "UTC";
-  }
-}
-
-function today() {
-  return new Date().toISOString().slice(0, 10);
-}
-
 const DOMAINS = ["general", "work", "relationships", "health", "money"] as const;
 
 function JournalPage() {
+  const { session } = useAuth();
+  const calendar = useCalendarRefresh();
   const journalFn = useServerFn(fetchJournal);
   const todayFn = useServerFn(fetchToday);
   const patternFn = useServerFn(fetchPattern);
@@ -58,16 +50,24 @@ function JournalPage() {
   const removeFn = useServerFn(removeEvent);
   const qc = useQueryClient();
 
-  const journal = useQuery({ queryKey: ["journal"], queryFn: () => journalFn({}) });
-  const day = useQuery({
-    queryKey: ["today", localTz()],
-    queryFn: () => todayFn({ data: { timezone: localTz() } }),
+  const journal = useQuery({
+    queryKey: ["journal", session?.userId],
+    queryFn: () => journalFn({}),
+    enabled: Boolean(session),
   });
+  const day = useQuery({
+    queryKey: ["today", session?.userId],
+    queryFn: () => todayFn({ data: { timezone: calendar.timezone } }),
+    enabled: Boolean(session),
+    refetchOnWindowFocus: "always",
+  });
+  useCalendarQueryRefresh(calendar, ["today", session?.userId]);
   const pattern = useQuery({ queryKey: ["pattern"], queryFn: () => patternFn({}) });
 
   const prettyKey = (key: string) => key.replace(/[_-]+/g, " ");
 
-  const [occurredOn, setOccurredOn] = useState(today());
+  const [dateOverride, setOccurredOn] = useState<string | null>(null);
+  const occurredOn = dateOverride ?? (day.data && !day.data.needsOnboarding ? day.data.day : "");
   const [domain, setDomain] = useState<string>("general");
   const [label, setLabel] = useState("");
   const [body, setBody] = useState("");
@@ -142,6 +142,7 @@ function JournalPage() {
                   <input
                     type="date"
                     value={occurredOn}
+                    required
                     onChange={(e) => setOccurredOn(e.target.value)}
                     className="mt-1 w-full rounded-sm border border-input bg-background px-3 py-2 font-mono text-xs"
                   />
@@ -225,7 +226,7 @@ function JournalPage() {
 
               <Button
                 type="submit"
-                disabled={save.isPending}
+                disabled={save.isPending || !occurredOn}
                 className="rounded-sm bg-primary px-4 py-2 text-sm text-primary-foreground disabled:opacity-60"
               >
                 <Save aria-hidden="true" />

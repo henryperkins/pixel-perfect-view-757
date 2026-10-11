@@ -91,3 +91,24 @@ export async function fingerprint(parts: (string | number)[]): Promise<string> {
   const digest = await crypto.subtle.digest("SHA-256", enc.encode(parts.join("|")));
   return b64(new Uint8Array(digest)).replace(/[^a-zA-Z0-9]/g, "").slice(0, 32);
 }
+
+/** Cache context includes low-entropy private bands, so use a keyed digest. */
+export async function keyedFingerprint(userId: string, context: unknown): Promise<string> {
+  const secret = process.env["PATTERN_ROOT_KEY"];
+  if (!secret) throw new Error("PATTERN_ROOT_KEY is not configured");
+  const key = await crypto.subtle.importKey(
+    "raw",
+    enc.encode(secret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"],
+  );
+  const signature = await crypto.subtle.sign(
+    "HMAC",
+    key,
+    enc.encode(JSON.stringify(["pattern-daily-context-v2", userId, context])),
+  );
+  return Array.from(new Uint8Array(signature), (byte) => byte.toString(16).padStart(2, "0")).join(
+    "",
+  );
+}

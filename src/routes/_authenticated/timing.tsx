@@ -10,6 +10,8 @@ import { EphemerisNotice } from "@/components/pattern/EphemerisNotice";
 import { TimingWindow } from "@/components/pattern/TimingWindow";
 import { MotionSelection } from "@/components/pattern/MotionSelection";
 import { useResultMotion } from "@/components/pattern/useBrowsingMotion";
+import { useAuth } from "@/hooks/useAuth";
+import { useCalendarQueryRefresh, useCalendarRefresh } from "@/hooks/useCalendarRefresh";
 import {
   PHASE_LABEL,
   timingDate,
@@ -56,6 +58,8 @@ const PHASES = [
 ] as const;
 
 function TimingPage() {
+  const { session } = useAuth();
+  const calendar = useCalendarRefresh();
   const load = useServerFn(fetchCycles);
   const [domain, setDomain] = useState<Domain>("all");
   const [slowOnly, setSlowOnly] = useState(false);
@@ -70,13 +74,15 @@ function TimingPage() {
     scope: string;
   } | null>(null);
   const filtersRef = useRef<HTMLDivElement>(null);
-  const day = new Date().toISOString().slice(0, 10);
   const query = useQuery({
-    queryKey: ["cycles", day],
-    queryFn: () => load({ data: { day } }),
+    queryKey: ["cycles", session?.userId, "current"],
+    queryFn: () => load({ data: { timezone: calendar.timezone } }),
+    enabled: Boolean(session),
+    refetchOnWindowFocus: "always",
   });
+  useCalendarQueryRefresh(calendar, ["cycles", session?.userId, "current"]);
   const data = query.data && !query.data.needsOnboarding ? query.data : null;
-  const referenceDay = data?.day ?? day;
+  const referenceDay = data?.day ?? "";
   // computeCycles already returns only windows within their active orb.
   // A past closest pass means "fading", not that the window has ended.
   const areaRows = (data?.cycles ?? []).filter(
@@ -85,7 +91,8 @@ function TimingPage() {
       (!slowOnly || !["moon", "sun", "mercury", "venus"].includes(cycle.transit_body)),
   );
   const rows = areaRows.filter(
-    (cycle) => phase === "all" || windowPhase(cycle, referenceDay) === phase,
+    (cycle) =>
+      phase === "all" || windowPhase(cycle, referenceDay, data?.timezone ?? "UTC") === phase,
   );
   const scope = domain + "-" + phase + "-" + slowOnly;
   const resultsRef = useResultMotion<HTMLUListElement>(
@@ -308,6 +315,8 @@ function TimingPage() {
                     <TimingWindow
                       cycle={cycle}
                       day={referenceDay}
+                      timezone={data.timezone}
+                      referenceAt={data.referenceAt}
                       open={openKey === cycle.cycle_key}
                       visited={visited.has(cycle.cycle_key) || openKey === cycle.cycle_key}
                       previous={index >= 0 ? rows[index - 1] : undefined}
@@ -344,6 +353,8 @@ function TimingPage() {
               <div>
                 <Rail title="Calculation status">
                   <Field label="Reference day" value={data.day} />
+                  <Field label="Calendar zone" value={data.timezone} />
+                  <Field label="Reference instant" value={data.referenceAt} />
                   <Field label="Engine" value={data.engine} />
                   <Field label="Precision" value={data.ephemeris.precision} />
                   <Field label="Contract" value={data.contractVersion} />
