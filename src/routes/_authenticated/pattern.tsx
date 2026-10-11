@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
-import { ArrowRight, ChevronDown, BookOpen } from "lucide-react";
+import { ArrowRight, ArrowLeft, ChevronDown, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
@@ -100,6 +100,8 @@ function PatternView({ data }: { data: PatternData }) {
   const [open, setOpen] = useState<string | null>(
     data.features[0]?.feature_key ?? null,
   );
+  const [visited, setVisited] = useState(() => new Set([data.features[0]?.feature_key].filter((key): key is string => Boolean(key))));
+  const selectChapter = (key: string) => { setVisited((previous) => new Set([...previous, key])); setOpen(key); };
   const ranked = [...data.features]
     .sort((a, b) => Number(b.strength) - Number(a.strength))
     .map((f) => f.feature_key);
@@ -213,12 +215,10 @@ function PatternView({ data }: { data: PatternData }) {
               {data.features.slice(0, 3).map((f, i) => (
                 <Button variant="ghost"
                   key={f.feature_key}
+                  aria-pressed={open === f.feature_key}
                   type="button"
                   onClick={() => {
-                    setOpen(f.feature_key);
-                    document
-                      .getElementById(`chapter-${f.feature_key}`)
-                      ?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+                    selectChapter(f.feature_key);
                   }}
                   className="chapter-tile h-auto flex-col items-start justify-start gap-0 whitespace-normal rounded-md border border-rule bg-secondary/60 p-5 text-left hover:bg-accent/40"
                 >
@@ -271,7 +271,7 @@ function PatternView({ data }: { data: PatternData }) {
                     type="button"
                     aria-expanded={isOpen}
                     aria-controls={`chapter-content-${f.feature_key}`}
-                    onClick={() => setOpen(isOpen ? null : f.feature_key)}
+                    onClick={() => isOpen ? setOpen(null) : selectChapter(f.feature_key)}
                     className="grid h-auto w-full grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-3 gap-y-2 whitespace-normal rounded-none px-5 py-5 text-left hover:bg-secondary/50"
                   >
                     <span className="min-w-0">
@@ -287,8 +287,9 @@ function PatternView({ data }: { data: PatternData }) {
                       {strengthLabel(f, rankOf(f), data.features.length)}
                     </span>
                   </Button>
-                  {isOpen ? (
-                    <div id={`chapter-content-${f.feature_key}`} className="chapter-content border-t border-rule px-5 py-6 sm:px-7">
+                  <div id={`chapter-content-${f.feature_key}`} className={`chapter-panel ${isOpen ? "is-open" : ""}`} inert={!isOpen} aria-hidden={!isOpen}>
+                    <div><div className="chapter-content border-t border-rule px-5 py-6 sm:px-7">
+                      {visited.has(f.feature_key) ? <>
                       <FeatureNarrative featureKey={f.feature_key} />
                       <details className="mt-4">
                         <summary className="technical cursor-pointer text-muted-foreground">
@@ -298,8 +299,13 @@ function PatternView({ data }: { data: PatternData }) {
                           {JSON.stringify(f.payload, null, 2)}
                         </pre>
                       </details>
-                    </div>
-                  ) : null}
+                      <nav aria-label="Nearby chapters" className="chapter-next">
+                        <Button variant="outline" disabled={rankOf(f) === 0} onClick={() => { const key = ranked[rankOf(f) - 1]; if (key) selectChapter(key); }}><ArrowLeft aria-hidden="true" />Previous chapter</Button>
+                        <Button variant="outline" disabled={rankOf(f) === ranked.length - 1} onClick={() => { const key = ranked[rankOf(f) + 1]; if (key) selectChapter(key); }}>Next chapter<ArrowRight aria-hidden="true" /></Button>
+                      </nav>
+                      </> : null}
+                    </div></div>
+                  </div>
                 </article>
               );
             })}

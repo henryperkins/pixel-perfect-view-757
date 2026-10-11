@@ -5,6 +5,8 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { ArrowDown, ArrowRight } from "lucide-react";
+import celestialScene from "@/assets/celestial-browsing.jpg";
+import { OrbitMark } from "@/components/pattern/OrbitMark";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import { useAuth } from "@/hooks/useAuth";
@@ -73,27 +75,26 @@ function TodayPage() {
 
 function Landing() {
   return (
-    <div className="mx-auto max-w-2xl animate-rise">
-      <h1 className="text-4xl leading-tight">
-        Astrology that shows its work.
-      </h1>
-      <p className="prose-reading mt-6 text-foreground">
-        Pattern calculates your chart from birth date, time and place, finds the cycles
-        actually active today, and writes one theme at a time. Every paragraph opens to the
-        bodies, aspect, orb and exact date it came from. Nothing is predicted; nothing is
-        generated from a sun sign.
-      </p>
-      <ul className="mt-8 space-y-2 text-sm text-muted-foreground">
+    <div>
+      <section className="landing-scene">
+        <img src={celestialScene} width={1600} height={900} alt="" />
+        <div className="landing-copy">
+          <div className="mb-4 flex items-center gap-3 text-primary"><OrbitMark /><span className="font-serif text-2xl">Pattern</span></div>
+          <h1 className="leading-tight">Astrology that shows its work.</h1>
+          <p className="prose-reading mt-6 text-foreground">
+            Pattern calculates your chart from birth date, time and place, finds the cycles
+            actually active today, and writes one theme at a time. Every paragraph opens to the
+            bodies, aspect, orb and exact date it came from. Nothing is predicted; nothing is
+            generated from a sun sign.
+          </p>
+          <Button asChild size="lg" className="mt-8"><Link to="/auth">Start with your chart<ArrowRight aria-hidden="true" /></Link></Button>
+        </div>
+      </section>
+      <ul className="landing-foundations grid gap-4 text-sm text-muted-foreground sm:grid-cols-3">
         <li>· Unknown birth time is first class — angle claims get suppressed, not faked.</li>
         <li>· Context you opt into can rank a theme, never invent a chart fact.</li>
         <li>· Birth details, notes and readings are stored encrypted.</li>
       </ul>
-      <Link
-        to="/auth"
-        className="mt-10 inline-flex rounded-sm bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground"
-      >
-        Start with your chart
-      </Link>
     </div>
   );
 }
@@ -372,9 +373,9 @@ function TodayReading() {
   const timing = data.cycles.slice(0, 5);
 
   return (
-    <div className="grid animate-rise gap-8 lg:grid-cols-[10rem_minmax(0,1fr)_14rem] lg:gap-10">
-      <div className="order-2 border-t border-rule pt-6 lg:order-1 lg:border-t-0 lg:pt-0">
-        <Rail title="Reading details">
+    <div className="today-flow">
+      <div className="today-details order-2 border-t border-rule pt-6 lg:border-t-0 lg:pt-0">
+        <details><summary className="technical text-primary">Reading details</summary><Rail title="Reading details">
           <Field label="Date" value={data.day} />
           <Field label="Zone" value={data.timezone} />
           <Field label="Confidence" value={data.reading.confidence} />
@@ -383,14 +384,14 @@ function TodayReading() {
             label="Language"
             value={data.language?.mode === "model" ? "model" : "template"}
           />
-        </Rail>
+        </Rail></details>
       </div>
 
 
-      <article className="order-1 lg:order-2">
+      <article className="today-reading order-1">
         <p className="technical mb-3 text-muted-foreground">Today · {data.day}</p>
         <h1 className="text-3xl leading-snug sm:text-4xl">{data.reading.headline}</h1>
-        <nav aria-label="Today sections" className="mt-5 flex flex-wrap items-center gap-5 text-sm text-primary">
+        <nav aria-label="Today sections" className="today-section-nav mt-5 flex flex-wrap items-center text-sm text-primary">
           <a href="#today-timing" className="inline-flex items-center gap-1.5">Timing <ArrowDown className="h-3 w-3" aria-hidden="true" /></a>
           <a href="#today-journal">Journal</a>
           <a href="#today-reflection">Reflection</a>
@@ -457,7 +458,7 @@ function TodayReading() {
               {timing.map((c) => {
                 const phase = phaseLabel(c.phase);
                 return (
-                  <li key={c.cycle_key} className="rounded-md border-l-2 border-primary/40 bg-secondary/40 p-5 transition-colors hover:bg-secondary">
+                  <li key={c.cycle_key} className="window-card border-l-2 border-primary/40 bg-secondary/40 p-5 transition-colors hover:bg-secondary">
                     <div className="flex flex-wrap items-baseline justify-between gap-2">
                       <p className="text-sm font-medium text-foreground">
                         {niceName(c.transit_body)}{" "}
@@ -542,6 +543,7 @@ function TodayReading() {
           </div>
 
           <textarea
+            aria-label="Reflection note"
             value={note}
             onChange={(e) => setNote(e.target.value)}
             rows={4}
@@ -573,6 +575,8 @@ function TodayReading() {
         <section className="mt-8 border-t border-rule pt-6">
           <Button variant="ghost"
             type="button"
+            aria-expanded={openEvidence}
+            aria-controls="today-evidence"
             onClick={() => setOpenEvidence((v) => !v)}
             className="technical h-auto justify-start px-0 text-primary"
           >
@@ -580,7 +584,7 @@ function TodayReading() {
           </Button>
 
           {openEvidence ? (
-            <div className="mt-4 space-y-6 bg-evidence p-4">
+            <div id="today-evidence" className="mt-4 space-y-6 overflow-x-auto bg-evidence p-4">
               <div>
                 <h3 className="technical text-evidence-foreground">Celestial fact</h3>
                 <table className="mt-2 w-full text-left font-mono text-xs">
@@ -663,7 +667,7 @@ function TodayReading() {
         </section>
       </article>
 
-      <div className="order-3 border-t border-rule pt-6 lg:border-t-0 lg:pt-0">
+      <div className="today-details order-3 border-t border-rule pt-6 lg:border-t-0 lg:pt-0">
         <Rail title="Does this land?">
           <div>
           <div className="flex gap-2">

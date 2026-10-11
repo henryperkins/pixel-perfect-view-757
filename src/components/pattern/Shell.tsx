@@ -3,6 +3,8 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import { signOut } from "@/lib/auth.shared";
 import { Button } from "@/components/ui/button";
+import { OrbitMark } from "@/components/pattern/OrbitMark";
+import { Sun, Orbit, Waves, NotebookPen, ChevronDown, Menu, X } from "lucide-react";
 
 const NAV = [
   { to: "/", label: "Today" },
@@ -14,14 +16,13 @@ const NAV = [
   { to: "/privacy", label: "Context & privacy" },
   { to: "/content", label: "Content" },
 ] as const;
+const NAV_ICONS = [Sun, Orbit, Waves, NotebookPen];
 
 function navLinkClass(active: boolean) {
   return [
-    "relative py-2 text-sm font-medium transition-colors",
+    "journey-link relative inline-flex min-h-11 items-center gap-2 px-3 py-2 text-sm font-medium transition-colors",
     active ? "text-foreground" : "text-muted-foreground hover:text-foreground",
-    // Active underline indicator
-    "after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:origin-left after:transition-all after:duration-300",
-    active ? "after:bg-primary after:opacity-100" : "after:bg-primary after:opacity-0",
+    active ? "is-selected" : "",
   ].join(" ");
 }
 
@@ -37,6 +38,8 @@ export function Shell({
   const [progress, setProgress] = useState(0);
   const mainRef = useRef<HTMLElement>(null);
   const moreRef = useRef<HTMLDivElement>(null);
+  const desktopNavRef = useRef<HTMLElement>(null);
+  const mobileNavRef = useRef<HTMLElement>(null);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   // Close the mobile menu whenever the route changes.
@@ -45,6 +48,23 @@ export function Shell({
     setMoreOpen(false);
     setProgress(0);
   }, [pathname]);
+
+  useEffect(() => {
+    const update = () => {
+      [desktopNavRef.current, mobileNavRef.current].forEach((nav) => {
+        const active = nav?.querySelector<HTMLElement>('[aria-current="page"]');
+        if (!nav || !active) { nav?.style.setProperty("--indicator-opacity", "0"); return; }
+        nav.style.setProperty("--indicator-x", `${active.offsetLeft}px`);
+        nav.style.setProperty("--indicator-width", `${active.offsetWidth}px`);
+        nav.style.setProperty("--indicator-opacity", "1");
+      });
+    };
+    update();
+    const resize = new ResizeObserver(update);
+    if (desktopNavRef.current) resize.observe(desktopNavRef.current);
+    if (mobileNavRef.current) resize.observe(mobileNavRef.current);
+    return () => resize.disconnect();
+  }, [pathname, signedIn]);
 
   useEffect(() => {
     const close = (event: MouseEvent) => {
@@ -63,18 +83,22 @@ export function Shell({
     if (!main) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
     const seen = new WeakSet<Element>();
-    const reveal = new IntersectionObserver((entries) => {
+    // Content is visible by default. Animation never gates access to a reading.
+    const reveal = typeof IntersectionObserver === "undefined" ? null : new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) { entry.target.classList.add("is-visible"); reveal.unobserve(entry.target); }
+        if (!entry.isIntersecting) return;
+        if (!reduced.matches && entry.target.getBoundingClientRect().top > 100) {
+          entry.target.animate([{ opacity: .65, transform: "translateY(10px)" }, { opacity: 1, transform: "none" }], { duration: 320, easing: "cubic-bezier(.22,.8,.25,1)" });
+        }
+        reveal?.unobserve(entry.target);
       });
     }, { threshold: 0.05 });
     const scan = () => {
-      main.querySelectorAll("section, .prose-reading > p, .chapter-tile").forEach((element) => {
+      main.querySelectorAll("section").forEach((element) => {
         if (seen.has(element)) return;
         seen.add(element);
-        if (reduced.matches) return;
-        element.classList.add("flow-reveal");
-        reveal.observe(element);
+        if (reduced.matches || element.closest(".chapter-content") || element.parentElement?.closest("section")) return;
+        reveal?.observe(element);
       });
     };
     scan();
@@ -87,21 +111,23 @@ export function Shell({
     const resize = new ResizeObserver(update);
     resize.observe(main);
     window.addEventListener("scroll", update, { passive: true });
-    const motionChange = () => { if (reduced.matches) main.querySelectorAll(".flow-reveal").forEach((el) => el.classList.add("is-visible")); };
+    const motionChange = () => { if (reduced.matches) main.getAnimations({ subtree: true }).forEach((animation) => animation.cancel()); };
     reduced.addEventListener("change", motionChange);
-    return () => { reveal.disconnect(); mutations.disconnect(); resize.disconnect(); window.removeEventListener("scroll", update); reduced.removeEventListener("change", motionChange); };
+    return () => { reveal?.disconnect(); mutations.disconnect(); resize.disconnect(); window.removeEventListener("scroll", update); reduced.removeEventListener("change", motionChange); };
   }, [pathname]);
 
   const isActive = (to: string) => (to === "/" ? pathname === "/" : pathname.startsWith(to));
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className={`pattern-shell min-h-screen bg-background text-foreground ${signedIn ? "has-journey" : ""}`}>
+      <a href="#main-content" className="skip-link">Skip to content</a>
       <header className="sticky top-0 z-40 border-b border-rule bg-background/85 backdrop-blur-md">
-        <div className="mx-auto flex h-20 max-w-6xl items-center gap-6 px-5 sm:px-8">
+        <div className="mx-auto grid h-20 max-w-6xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-5 sm:flex sm:gap-4 sm:px-8">
           <Link
             to="/"
-            className="flex shrink-0 items-baseline gap-3 font-serif text-2xl text-primary"
+            className="brand-link flex min-w-0 shrink-0 items-center gap-2 font-serif text-2xl text-primary"
           >
+            <OrbitMark />
             Pattern
             <span className="hidden font-sans text-xs text-muted-foreground xl:inline">
               personal ephemeris
@@ -109,20 +135,22 @@ export function Shell({
           </Link>
 
           {signedIn ? (
-            <nav aria-label="Primary" className="hidden items-center gap-6 md:flex">
-              {NAV.slice(0, 4).map((item) => (
+            <nav ref={desktopNavRef} aria-label="Primary" className="journey-nav hidden items-center gap-1 md:flex">
+              {NAV.slice(0, 4).map((item, index) => {
+                const Icon = NAV_ICONS[index];
+                return (
                 <Link
                   key={item.to}
                   to={item.to}
                   aria-current={isActive(item.to) ? "page" : undefined}
                   className={navLinkClass(isActive(item.to))}
                 >
-                  {item.label}
+                  {Icon ? <Icon aria-hidden="true" className="h-4 w-4 shrink-0" /> : null}{item.label}
                 </Link>
-              ))}
+              ); })}
               <div ref={moreRef} className="relative">
                 <Button variant="ghost" size="sm" aria-expanded={moreOpen} aria-controls="more-navigation" onClick={() => setMoreOpen((v) => !v)} className="gap-2 text-muted-foreground">
-                  More <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" className={`transition-transform ${moreOpen ? "rotate-180" : ""}`}><path d="m4 6 4 4 4-4" stroke="currentColor" strokeWidth="1.5" /></svg>
+                  More <ChevronDown aria-hidden="true" className={moreOpen ? "rotate-180" : ""} />
                 </Button>
                 {moreOpen ? <nav id="more-navigation" aria-label="More pages" className="absolute right-0 top-full mt-3 w-52 animate-rise rounded-md border border-rule bg-popover p-2 text-popover-foreground">
                   {NAV.slice(4).map((item) => <Link key={item.to} to={item.to} aria-current={isActive(item.to) ? "page" : undefined} className={`block rounded-sm px-3 py-2.5 text-sm transition-colors hover:bg-accent ${isActive(item.to) ? "bg-secondary text-primary" : "text-muted-foreground"}`}>{item.label}</Link>)}
@@ -150,15 +178,10 @@ export function Shell({
                   aria-expanded={menuOpen}
                   aria-label={menuOpen ? "Close menu" : "Open menu"}
                   onClick={() => setMenuOpen((v) => !v)}
-                  className="flex h-9 w-9 items-center justify-center rounded-sm border border-input text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground md:hidden"
+                  aria-controls="mobile-navigation"
+                  className="flex h-11 w-11 items-center justify-center rounded-md border border-input text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground md:hidden"
                 >
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
-                    {menuOpen ? (
-                      <path d="M2 2l10 10M12 2L2 12" stroke="currentColor" strokeWidth="1.2" />
-                    ) : (
-                      <path d="M1 3.5h12M1 7h12M1 10.5h12" stroke="currentColor" strokeWidth="1.2" />
-                    )}
-                  </svg>
+                  {menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
                 </Button>
               </>
             ) : (
@@ -172,8 +195,9 @@ export function Shell({
         {/* Mobile menu */}
         {signedIn && menuOpen ? (
           <nav
+            id="mobile-navigation"
             aria-label="Primary mobile"
-              className="animate-rise border-t border-rule bg-background md:hidden"
+              className="mobile-menu border-t border-rule bg-background md:hidden"
           >
             <ul className="mx-auto max-w-6xl px-6 py-3">
               {NAV.map((item) => (
@@ -213,7 +237,15 @@ export function Shell({
         <progress className="reading-progress" value={progress} max={100} aria-label="Page reading progress" />
       </header>
 
-      <main key={pathname} ref={mainRef} className="flow-page mx-auto max-w-6xl px-5 py-10 sm:px-8 sm:py-14">{children}</main>
+       <main id="main-content" tabIndex={-1} key={pathname} ref={mainRef} className="flow-page mx-auto max-w-6xl px-5 py-10 sm:px-8 sm:py-14">{children}</main>
+       {signedIn ? <nav ref={mobileNavRef} aria-label="Quick navigation" className="journey-nav mobile-journey md:hidden">
+         {NAV.slice(0, 4).map((item, index) => {
+           const Icon = NAV_ICONS[index];
+           return <Link key={item.to} to={item.to} aria-current={isActive(item.to) ? "page" : undefined} className={navLinkClass(isActive(item.to))}>
+             {Icon ? <Icon aria-hidden="true" className="h-5 w-5" /> : null}<span>{item.label}</span>
+           </Link>;
+         })}
+       </nav> : null}
       <footer className="mt-16 border-t border-rule">
         <div className="mx-auto max-w-6xl px-6 py-6 technical text-muted-foreground">
           Deterministic assembly · no prediction · evidence on every claim
