@@ -41,6 +41,15 @@ SHA-256, and keeps the assignment outside reviewer reach until every review is i
 Because a prompt cannot contain its own hash, the prompt ends with a trailer line
 giving the SHA-256 of all text above it; that text is what the operator archives.
 
+A context's environment may attach material the operator cannot withhold, such as
+the repository's agent notes, a memory index or a git status with recent commit
+subjects. This **environment context** is named in the blindness declaration and
+does not by itself make `sawImplementationContext` true. That flag is true when a
+context saw source code, diffs, plans, specifications, ledgers, earlier reviews or
+reports about this work, or anything identifying which run, case or version
+produced an item. A context without a clock copies the dispatch time its prompt
+gives as `reviewedAt` (or `adjudicatedAt`).
+
 Reviewers never see before/after labels, case or run names, generator identity,
 versions, acceptance or rejection outcomes, advisory findings, existing scores, each
 other's answers or the implementation conversation. Fact statements may reveal the

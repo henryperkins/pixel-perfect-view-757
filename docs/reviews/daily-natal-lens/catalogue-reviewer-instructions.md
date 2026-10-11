@@ -62,7 +62,14 @@ fails. Your verdicts must agree with your own checks and findings.
 
 Write one JSON object and nothing else to the output path your prompt names. Read no
 file other than the packet your prompt names, and run nothing. Copy your context
-ID, `packetSha256` and `promptSha256` exactly as your prompt gives them.
+ID, `packetSha256`, `promptSha256` and the dispatch time (as `reviewedAt`) exactly
+as your prompt gives them.
+
+Set `sawImplementationContext` to `true` only if you saw source code, diffs, plans,
+specifications, ledgers, earlier reviews or reports about this work. Your
+environment may attach repository notes, a memory index or a git status with recent
+commit subjects: name anything like that in your declaration, but it does not by
+itself make that flag `true`.
 
 ```json
 {
@@ -77,7 +84,7 @@ ID, `packetSha256` and `promptSha256` exactly as your prompt gives them.
     "configuration": "unknown",
     "promptSha256": "<promptSha256 from your prompt>"
   },
-  "reviewedAt": "<current UTC time, ISO 8601>",
+  "reviewedAt": "<the dispatch time your prompt gives>",
   "blindness": {
     "declaration": "<one sentence on what you saw>",
     "inputs": ["packet"],
