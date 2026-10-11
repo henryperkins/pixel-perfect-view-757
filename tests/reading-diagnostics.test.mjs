@@ -62,7 +62,7 @@ function diagnostics(output, expected) {
   const d = output.meta.diagnostics;
   assert.ok(d, "Daily diagnostics are attached");
   assert.equal(d.version, 1);
-  assert.equal(d.promptVersion, "daily-astro-body-6");
+  assert.equal(d.promptVersion, "daily-astro-body-8");
   assert.equal(d.validatorVersion, "daily-reference-5");
   assert.equal(d.gatewayTimeoutMs, 20_000);
   assert.equal(d.model, language.LANGUAGE_MODEL);
@@ -403,7 +403,7 @@ test("diagnostic exports and reader validate the exact closed contract", async (
   const module = await vite.ssrLoadModule("/src/lib/ai/diagnostics.ts");
   const result = await language.generateReadingProse(input());
   assert.equal(module.DAILY_DIAGNOSTICS_VERSION, 1);
-  assert.equal(module.DAILY_PROMPT_VERSION, "daily-astro-body-6");
+  assert.equal(module.DAILY_PROMPT_VERSION, "daily-astro-body-8");
   assert.equal(module.DAILY_GATEWAY_TIMEOUT_MS, 20_000);
   assert.equal(module.DAILY_VALIDATOR_VERSION, "daily-reference-5");
   assert.ok(module.DAILY_DIAGNOSTIC_CODES.includes("accepted"));

@@ -78,7 +78,7 @@ test("daily uses one 20-second call and exports its budget without changing prov
   assert.equal(calls, 1);
   assert.equal(result.metadata.gatewayTimeoutMs, 20_000);
   assert.equal(result.case.diagnostics.gatewayTimeoutMs, 20_000);
-  assert.equal(result.metadata.promptVersion, "daily-astro-body-6");
+  assert.equal(result.metadata.promptVersion, "daily-astro-body-8");
   assert.deepEqual(Object.keys(requests[0]).sort(), ["messages", "model", "response_format"]);
 });
 
@@ -184,6 +184,88 @@ test("comparison exposes changed or unrecorded budgets instead of inferring prio
     () => compareReports({ ...current, gatewayTimeoutMs: "20000" }, current),
     /invalid gateway/i,
   );
+});
+
+test("claim-strength guidance is sent with unchanged source statements, parents, suppression and body-only schema", async () => {
+  // This proves what is dispatched, not that the model follows it: semantic
+  // results come only from fresh review of actual model prose.
+  for (const caseId of ["synthesis-reinforcement", "synthesis-independent", "unknown-birth-time"]) {
+    responder = async () => envelope(BASELINE_RESPONSES[caseId]);
+    const result = await runCase(caseId, bundle);
+    const request = requests.at(-1);
+    const [system, user] = request.messages;
+    assert.match(system.content, /a possibility stays a possibility/i);
+    assert.match(user.content, /Preserve the modality of each supplied statement/);
+    assert.match(user.content, /often, usually, always, must, needs to or relies on/);
+    assert.match(user.content, /do not rule out an alternative that no fact mentions/);
+    assert.match(user.content, /do not turn them into the reader's history/);
+    for (const fact of result.case.facts)
+      assert.ok(user.content.includes(`${fact.id}: ${fact.statement}`), `${caseId} ${fact.id}`);
+    const schema = request.response_format.json_schema.schema;
+    assert.deepEqual(Object.keys(schema.properties), ["paragraphs"]);
+    assert.deepEqual(schema.required, ["paragraphs"]);
+    assert.equal(schema.additionalProperties, false);
+    assert.equal(result.case.diagnostics.outcome, "accepted", caseId);
+  }
+  const [reinforcement, independent, suppressed] = requests.map((r) => r.messages[1].content);
+  assert.ok(reinforcement.includes('"facts": ["S1", "C1", "I1", "C2", "I2"]'));
+  assert.match(reinforcement, /"can increase" stays "can increase"/);
+  assert.match(
+    reinforcement,
+    /one develops the sustained commitment and the other the targeted action that S1 joins/,
+  );
+  assert.match(reinforcement, /Do not restate the same progress or persistence idea/);
+  for (const prompt of [independent, suppressed]) {
+    assert.match(prompt, /No S1 is supplied: do not invent a joint relationship or premise/);
+    assert.doesNotMatch(prompt, /sustained commitment|targeted action/);
+  }
+  assert.match(suppressed, /Angle claims are suppressed/);
+  assert.match(suppressed, /House claims are suppressed: do not mention houses or cusps\./);
+  assert.equal(calls, 3, "One dispatch per eligible case, no retries");
+});
+
+test("observed strengthening and exclusions still pass the lexical validator", async () => {
+  // Paragraphs from the hosted pre-correction report (docs/reviews/daily-reading-writing/2026-10-11).
+  // Each adds an exclusion, a reader event, a frequency or a firmer joint claim
+  // that the facts do not supply, yet is structurally valid. Review must catch these.
+  const observed = {
+    "natal-moon-fallback": [
+      {
+        text: "Expectations can outpace available capacity when an established role begins to demand more deliberate effort than usual. Rather than indicating a sudden change in purpose, Saturn's square to the Sun highlights where daily obligations have expanded, showing where an ongoing routine or responsibility needs clearer boundaries.",
+        facts: ["C1", "I1"],
+      },
+      {
+        text: "A title rarely describes everything that holds your attention across a normal week. An interest you seldom mention, or an unwritten responsibility that occupies more time than your position suggests, can make that division concrete.",
+        facts: ["D1"],
+      },
+    ],
+    "natal-freedom-reflex": [
+      {
+        text: "An unclaimed hour can remain crowded if an obligation follows you into what was meant to be rest. Saturn's square to the Moon frames this friction between what you feel responsible for and the amount of uninterrupted space you prefer. A small duty often takes up more room than its calendar footprint suggests.",
+        facts: ["C1", "D1", "I1"],
+      },
+      {
+        text: "This contact is in its approaching phase within the calculated window. The current orb is 0.42 degrees. The calculated exact date is 2026-10-14, falling in 3 days during the middle part of the window.",
+        facts: ["C1", "P1", "T1"],
+      },
+    ],
+    "natal-synthesis-integration": [
+      {
+        text: "Expectations can easily outpace available capacity when an established role requires more deliberate effort than usual. Saturn's square to the Sun marks moments where an everyday routine or responsibility asks for firmer boundaries.",
+        facts: ["C1", "I1"],
+      },
+      {
+        text: "At the same time, practical initiative and enthusiasm reinforce each other when an aim is well chosen, making it natural to pursue an emerging opening. Jupiter's trine to Mars frames this low-friction effort, though giving a plan more scope also increases the structure needed to support it. A task whose ambitions extend beyond its initial boundaries shows how that expansion interacts with existing limits.",
+        facts: ["S1", "C1", "I1", "C2", "I2"],
+      },
+    ],
+  };
+  for (const [caseId, paragraphs] of Object.entries(observed)) {
+    responder = async () => envelope({ paragraphs });
+    const result = await runCase(caseId, bundle);
+    assert.equal(result.case.diagnostics.outcome, "accepted", caseId);
+    assert.equal(result.case.output.mode, "model", caseId);
+  }
 });
 
 test("daily has a distinct editorial system brief while natal keeps the original brief", async () => {
