@@ -28,7 +28,7 @@ reads the admin role and, only for current active copy, the active release
 notes, or daily readings, and writes no application records. Evaluation outcomes
 do not enter the production Reading quality counts.
 
-Cases run one at a time with the production daily timeout of 20 seconds per
+Cases run one at a time with the production daily timeout of 60 seconds per
 request, including response-body reads. The JSON report records this budget as
 `gatewayTimeoutMs`; it is separate from the model request payload. **Stop after current
 case** preserves completed results. Requests are never retried automatically.
@@ -60,7 +60,7 @@ npm run eval:reading -- --compare /tmp/pattern-before.json /tmp/pattern-after.js
 - **Gemini Enterprise** calls `gemini-3.8-flash` directly on Gemini Enterprise
   Agent Platform (formerly Vertex AI) with the `GEMINI_ENTERPRISE_API_KEY` secret,
   sent as `x-goog-api-key` to the global `generateContent` endpoint. It receives the
-  same system text, user text and JSON schema as the gateway; the 20-second budget,
+  same system text, user text and JSON schema as the gateway; the 60-second budget,
   validator and template fallback are unchanged.
 
 Only `/content` admin work can select Gemini Enterprise: synthetic evaluation and

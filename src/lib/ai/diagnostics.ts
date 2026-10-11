@@ -4,7 +4,7 @@ export const DAILY_READING_PLAN_VERSION = "daily-synthesis-1";
 export const DAILY_PROMPT_VERSION = "daily-astro-body-8";
 export const DAILY_VALIDATOR_VERSION = "daily-reference-5";
 export const MAX_DAILY_DURATION_MS = 120_000;
-export const DAILY_GATEWAY_TIMEOUT_MS = 20_000;
+export const DAILY_GATEWAY_TIMEOUT_MS = 60_000;
 export const LANGUAGE_MODEL = "google/gemini-3.8-flash";
 
 /**

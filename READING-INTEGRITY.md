@@ -88,7 +88,8 @@ therefore makes it active again.
 The separate skip reasons are `no_cycle` and `no_interpretation`. Both avoid model
 traffic and are excluded from attempt-based fallback rates. The model is
 `google/gemini-3.8-flash` (moved from the deprecated `google/gemini-3.7-flash` on
-2026-10-11), with one strict-schema call and a 20,000 ms daily deadline.
+2026-10-11), with one strict-schema call and a 60,000 ms daily deadline (raised from
+20,000 ms the same day, when 3.8 Flash drafts took 15–55 s).
 Wellbeing bands, local-time framing, private notes, and authoring notes remain local.
 
 ## Natal lens source contract

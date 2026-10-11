@@ -162,7 +162,7 @@ chart/reading rows, chapter essays and the account key, and keeps no birth
 fingerprint in the retained audit trail. Admin quality sees only IDs and bounded
 codes. Prompt `daily-astro-body-8`, validator `daily-reference-5`, plan
 `daily-natal-lens-2` and reliability `natal-reliability-1` preserve the one-call,
-20-second daily budget and the separate natal essay/question contract.
+60-second daily budget and the separate natal essay/question contract.
 
 The [catalogue review](docs/reviews/daily-natal-lens/catalogue-review.md) and
 [local validation record](docs/superpowers/releases/2026-10-11-daily-natal-validation.md)

@@ -72,12 +72,12 @@ test("timing instructions explicitly require the cycle even when T1 repeats its 
   assert.equal(accepted.case.diagnostics.validatorVersion, "daily-reference-5");
 });
 
-test("daily uses one 20-second call and exports its budget without changing provider settings", async () => {
+test("daily uses one 60-second call and exports its budget without changing provider settings", async () => {
   const result = await runCase("saturn-square-sun", bundle);
-  assert.deepEqual(budgets, [20_000]);
+  assert.deepEqual(budgets, [60_000]);
   assert.equal(calls, 1);
-  assert.equal(result.metadata.gatewayTimeoutMs, 20_000);
-  assert.equal(result.case.diagnostics.gatewayTimeoutMs, 20_000);
+  assert.equal(result.metadata.gatewayTimeoutMs, 60_000);
+  assert.equal(result.case.diagnostics.gatewayTimeoutMs, 60_000);
   assert.equal(result.metadata.promptVersion, "daily-astro-body-8");
   assert.deepEqual(Object.keys(requests[0]).sort(), ["messages", "model", "response_format"]);
 });
@@ -132,7 +132,7 @@ for (const boundary of ["fetch", "response body"]) {
       assert.equal(result.case.output.body, result.case.template.body);
       assert.equal(result.case.candidate, null);
       assert.equal(calls, 1);
-      assert.deepEqual(budgets, [20_000]);
+      assert.deepEqual(budgets, [60_000]);
       assert.ok(!JSON.stringify(result).includes("private-fixture-error"));
     } finally {
       AbortSignal.timeout = saved;
@@ -170,15 +170,15 @@ test("comparison exposes changed or unrecorded budgets instead of inferring prio
   earlier.gatewayTimeoutMs = 12_000;
   const changed = compareReports(earlier, current);
   assert.deepEqual(changed.configurationChanges, [
-    { field: "gatewayTimeoutMs", before: 12_000, after: 20_000 },
+    { field: "gatewayTimeoutMs", before: 12_000, after: 60_000 },
   ]);
   assert.equal(changed.before.gatewayTimeoutMs, 12_000);
-  assert.equal(changed.after.gatewayTimeoutMs, 20_000);
+  assert.equal(changed.after.gatewayTimeoutMs, 60_000);
   delete earlier.gatewayTimeoutMs;
   const unrecorded = compareReports(earlier, current);
   assert.equal(unrecorded.before.gatewayTimeoutMs, null);
   assert.deepEqual(unrecorded.configurationChanges, [
-    { field: "gatewayTimeoutMs", before: null, after: 20_000 },
+    { field: "gatewayTimeoutMs", before: null, after: 60_000 },
   ]);
   assert.throws(
     () => compareReports({ ...current, gatewayTimeoutMs: "20000" }, current),
@@ -289,5 +289,5 @@ test("daily has a distinct editorial system brief while natal keeps the original
   });
   assert.match(requests[1].messages[0].content, /already-calculated facts/);
   assert.notEqual(requests[1].messages[0].content, DAILY_SYSTEM_VOICE);
-  assert.deepEqual(budgets, [20_000, 90_000]);
+  assert.deepEqual(budgets, [60_000, 90_000]);
 });
