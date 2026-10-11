@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { ArrowDown, ArrowRight } from "lucide-react";
@@ -63,7 +63,7 @@ function TodayPage() {
 
   return (
     <Shell>
-      <TodayReading />
+      <TodayReading key={session.userId} accountId={session.userId} />
     </Shell>
   );
 }
@@ -132,6 +132,262 @@ function BandPicker({
       </div>
       <span className="technical text-muted-foreground">{hint}</span>
     </div>
+  );
+}
+
+type CheckInValues = {
+  mood: number | null;
+  energy: number | null;
+  sleep: number | null;
+  stress: number | null;
+  note: string | null;
+};
+type CheckInDraft = Omit<CheckInValues, "note"> & { note: string };
+type TodayWellness = CheckInValues & {
+  savedAt: string | null;
+  sleepEnabled: boolean;
+  stressEnabled: boolean;
+  retentionDays: number;
+};
+
+function checkInDraft(values: CheckInValues): CheckInDraft {
+  return {
+    mood: values.mood,
+    energy: values.energy,
+    sleep: values.sleep,
+    stress: values.stress,
+    note: values.note ?? "",
+  };
+}
+
+function sameCheckIn(a: CheckInDraft, b: CheckInDraft) {
+  return (
+    a.mood === b.mood &&
+    a.energy === b.energy &&
+    a.sleep === b.sleep &&
+    a.stress === b.stress &&
+    a.note === b.note
+  );
+}
+
+/** Update unchanged fields from storage, preserving every field edited since submission. */
+function reconcileCheckIn(draft: CheckInDraft, previous: CheckInDraft, saved: CheckInDraft) {
+  return {
+    mood: draft.mood === previous.mood ? saved.mood : draft.mood,
+    energy: draft.energy === previous.energy ? saved.energy : draft.energy,
+    sleep: draft.sleep === previous.sleep ? saved.sleep : draft.sleep,
+    stress: draft.stress === previous.stress ? saved.stress : draft.stress,
+    note: draft.note === previous.note ? saved.note : draft.note,
+  };
+}
+
+function permittedCheckIn(values: CheckInDraft, wellness: TodayWellness): CheckInDraft {
+  return {
+    ...values,
+    sleep: wellness.sleepEnabled ? values.sleep : null,
+    stress: wellness.stressEnabled ? values.stress : null,
+  };
+}
+
+/** This form is scoped to an account and the server's current day. */
+function TodayCheckIn({
+  day,
+  accountId,
+  wellness,
+}: {
+  day: string;
+  accountId: string;
+  wellness: TodayWellness;
+}) {
+  const checkIn = useServerFn(saveDailyCheckIn);
+  const qc = useQueryClient();
+  const mounted = useRef(false);
+  const pendingSave = useRef<CheckInDraft | null>(null);
+  const [state, setState] = useState(() => {
+    const values = permittedCheckIn(checkInDraft(wellness), wellness);
+    return {
+      draft: values,
+      saved: values,
+      savedAt: wellness.savedAt,
+      error: null as string | null,
+    };
+  });
+
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    const saving = pendingSave.current !== null;
+    setState((previous) => {
+      // An older background response cannot undo a confirmed save.
+      const newer =
+        !previous.savedAt ||
+        Boolean(wellness.savedAt && Date.parse(wellness.savedAt) >= Date.parse(previous.savedAt));
+      const saved = permittedCheckIn(newer ? checkInDraft(wellness) : previous.saved, wellness);
+      const draft = permittedCheckIn(
+        saving ? previous.draft : reconcileCheckIn(previous.draft, previous.saved, saved),
+        wellness,
+      );
+      const savedAt = newer ? wellness.savedAt : previous.savedAt;
+      const error =
+        newer && wellness.savedAt && wellness.savedAt !== previous.savedAt ? null : previous.error;
+      if (
+        sameCheckIn(draft, previous.draft) &&
+        sameCheckIn(saved, previous.saved) &&
+        savedAt === previous.savedAt &&
+        error === previous.error
+      )
+        return previous;
+      return { ...previous, draft, saved, savedAt, error };
+    });
+  }, [wellness]);
+
+  const draft = permittedCheckIn(state.draft, wellness);
+  const dirty = !sameCheckIn(draft, permittedCheckIn(state.saved, wellness));
+  const edit = <K extends keyof CheckInDraft>(field: K, value: CheckInDraft[K]) => {
+    setState((previous) => ({
+      ...previous,
+      draft: { ...previous.draft, [field]: value },
+    }));
+  };
+
+  const saveNote = useMutation({
+    mutationFn: (submitted: CheckInDraft) =>
+      checkIn({
+        data: { day, ...submitted, note: submitted.note.trim() || null },
+      }),
+    onMutate: (submitted) => {
+      pendingSave.current = submitted;
+      setState((previous) => ({ ...previous, error: null }));
+    },
+    onSuccess: (res, submitted) => {
+      void qc.invalidateQueries({ queryKey: ["today", accountId] });
+      void qc.invalidateQueries({ queryKey: ["journal"] });
+      if (!mounted.current) return;
+      const saved = checkInDraft(res.checkIn);
+      setState((previous) => {
+        const next = reconcileCheckIn(previous.draft, submitted, saved);
+        // Consent may have changed on the server while this request was in flight.
+        if (submitted.sleep !== null && saved.sleep === null) next.sleep = null;
+        if (submitted.stress !== null && saved.stress === null) next.stress = null;
+        return {
+          draft: permittedCheckIn(next, wellness),
+          saved,
+          savedAt: res.checkIn.savedAt,
+          error: null,
+        };
+      });
+      toast.success(
+        saved.note ? "Check-in saved. Reflection note stored encrypted." : "Check-in saved.",
+      );
+    },
+    onError: () => {
+      if (!mounted.current) return;
+      setState((previous) => ({ ...previous, error: "Save could not be confirmed." }));
+    },
+    onSettled: () => {
+      pendingSave.current = null;
+    },
+  });
+  const editedWhileSaving =
+    saveNote.isPending && saveNote.variables && !sameCheckIn(draft, saveNote.variables);
+  const savedTime = state.savedAt
+    ? new Date(state.savedAt).toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      })
+    : null;
+  const status = saveNote.isPending
+    ? editedWhileSaving
+      ? "Saving earlier changes; newer edits are unsaved."
+      : "Saving…"
+    : state.error
+      ? "Couldn’t confirm this save. Your edits are still here. Try again."
+      : dirty
+        ? savedTime
+          ? `Unsaved changes · last saved ${savedTime}`
+          : "Unsaved changes"
+        : savedTime
+          ? `Saved ${savedTime}`
+          : "Not saved yet today";
+
+  return (
+    <>
+      <div className="mt-5 rounded-sm border border-rule bg-secondary/30 p-4">
+        <p className="technical text-muted-foreground">Today's check-in</p>
+        <div className="mt-3 space-y-3">
+          <BandPicker
+            label="Mood"
+            hint="1 low · 5 bright"
+            value={draft.mood}
+            onChange={(value) => edit("mood", value)}
+          />
+          <BandPicker
+            label="Energy"
+            hint="1 flat · 5 charged"
+            value={draft.energy}
+            onChange={(value) => edit("energy", value)}
+          />
+          {wellness.sleepEnabled && (
+            <BandPicker
+              label="Sleep"
+              hint="1 poor · 5 rested"
+              value={draft.sleep}
+              onChange={(value) => edit("sleep", value)}
+            />
+          )}
+          {wellness.stressEnabled && (
+            <BandPicker
+              label="Stress"
+              hint="1 calm · 5 pressed"
+              value={draft.stress}
+              onChange={(value) => edit("stress", value)}
+            />
+          )}
+        </div>
+        {(wellness.sleepEnabled || wellness.stressEnabled) && (
+          <p className="mt-3 text-xs text-muted-foreground">
+            Sleep and stress are self-reported (tier 3), kept {wellness.retentionDays} days. Framing
+            and prompts only — they never enter the calculation or the ranking, and never leave your
+            account.
+          </p>
+        )}
+      </div>
+      <textarea
+        aria-label="Reflection note"
+        aria-describedby="today-check-in-status"
+        value={draft.note}
+        onChange={(event) => edit("note", event.target.value)}
+        rows={4}
+        maxLength={2000}
+        placeholder="Optional. Stored encrypted; only used to weigh what to surface."
+        className="mt-3 w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
+      />
+      <div className="mt-3 flex flex-wrap items-center gap-3">
+        <Button
+          variant="outline"
+          type="button"
+          disabled={saveNote.isPending || (!dirty && !state.error)}
+          onClick={() => saveNote.mutate({ ...draft })}
+          className="rounded-sm border border-input bg-card px-4 py-2 text-sm transition-colors hover:bg-secondary disabled:opacity-50"
+        >
+          {saveNote.isPending ? "Saving…" : state.error ? "Try saving again" : "Save check-in"}
+        </Button>
+        <span
+          id="today-check-in-status"
+          className={`font-mono text-[0.7rem] ${state.error ? "text-destructive" : "text-muted-foreground"}`}
+          role={state.error ? "alert" : "status"}
+          aria-live={state.error ? "assertive" : "polite"}
+          aria-atomic="true"
+        >
+          {status}
+        </span>
+      </div>
+    </>
   );
 }
 
@@ -206,9 +462,17 @@ const ASPECT_MEANING: Record<string, string> = {
  * that is live today. Attachments were captured at write time, so this block
  * never re-derives them.
  */
-function JournalToday({ day, cycleKeys }: { day: string; cycleKeys: string[] }) {
+function JournalToday({
+  day,
+  cycleKeys,
+  accountId,
+}: {
+  day: string;
+  cycleKeys: string[];
+  accountId: string;
+}) {
   const load = useServerFn(fetchJournal);
-  const query = useQuery({ queryKey: ["journal"], queryFn: () => load({}) });
+  const query = useQuery({ queryKey: ["journal", accountId], queryFn: () => load({}) });
 
   const keys = new Set(cycleKeys);
   const entries = (query.data?.events ?? []).filter(
@@ -266,63 +530,21 @@ function JournalToday({ day, cycleKeys }: { day: string; cycleKeys: string[] }) 
   );
 }
 
-function TodayReading() {
+function TodayReading({ accountId }: { accountId: string }) {
   const today = useServerFn(fetchToday);
   const feedback = useServerFn(sendFeedback);
-  const checkIn = useServerFn(saveDailyCheckIn);
-  const qc = useQueryClient();
   const [openEvidence, setOpenEvidence] = useState(false);
-  const [note, setNote] = useState("");
-  const [mood, setMood] = useState<number | null>(null);
-  const [energy, setEnergy] = useState<number | null>(null);
-  const [sleep, setSleep] = useState<number | null>(null);
-  const [stress, setStress] = useState<number | null>(null);
 
   const tz = localTz();
   const query = useQuery({
-    queryKey: ["today", tz],
+    queryKey: ["today", accountId, tz],
     queryFn: () => today({ data: { timezone: tz } }),
   });
-
-  const wellness = query.data?.needsOnboarding ? null : (query.data?.wellness ?? null);
-  const moodValue = mood ?? wellness?.mood ?? null;
-  const energyValue = energy ?? wellness?.energy ?? null;
-  const sleepValue = sleep ?? wellness?.sleep ?? null;
-  const stressValue = stress ?? wellness?.stress ?? null;
-  const savedAt = wellness?.savedAt ?? null;
 
   const rate = useMutation({
     mutationFn: (vars: { readingId: string; resonance: number }) =>
       feedback({ data: { readingId: vars.readingId, resonance: vars.resonance, labels: [] } }),
     onSuccess: () => toast.success("Noted. Feedback tunes ranking only."),
-    onError: (e: Error) => toast.error(e.message),
-  });
-
-  const saveNote = useMutation({
-    mutationFn: (vars: { day: string }) =>
-      checkIn({
-        data: {
-          day: vars.day,
-          mood: moodValue,
-          energy: energyValue,
-          note: note.trim() || null,
-          sleep: wellness?.sleepEnabled ? sleepValue : null,
-          stress: wellness?.stressEnabled ? stressValue : null,
-        },
-      }),
-    onSuccess: (res) => {
-      const bands = [
-        res.stored.mood ? "mood" : null,
-        res.stored.energy ? "energy" : null,
-        res.stored.sleep ? "sleep" : null,
-        res.stored.stress ? "stress" : null,
-      ].filter(Boolean);
-      toast.success(
-        bands.length ? `Saved (encrypted): ${bands.join(", ")}.` : "Reflection saved (encrypted).",
-      );
-      void qc.invalidateQueries({ queryKey: ["journal"] });
-      void qc.invalidateQueries({ queryKey: ["today"] });
-    },
     onError: (e: Error) => toast.error(e.message),
   });
 
@@ -339,9 +561,9 @@ function TodayReading() {
       </div>
     );
   }
-  if (query.error) {
+  if (query.error && !query.data) {
     return (
-      <p className="text-sm text-destructive">
+      <p role="alert" className="text-sm text-destructive">
         Today's reading could not be calculated: {query.error.message}
       </p>
     );
@@ -516,82 +738,22 @@ function TodayReading() {
           )}
         </section>
 
-        <JournalToday day={data.day} cycleKeys={timing.map((c) => c.cycle_key)} />
+        <JournalToday
+          day={data.day}
+          cycleKeys={timing.map((c) => c.cycle_key)}
+          accountId={accountId}
+        />
 
         <section id="today-reflection" className="mt-14 border-t border-rule pt-8">
           <h2 className="flow-section-title">Reflection</h2>
           <p className="prose-reading mt-2 text-foreground">{data.reading.prompt}</p>
 
-          <div className="mt-5 rounded-sm border border-rule bg-secondary/30 p-4">
-            <p className="technical text-muted-foreground">Today's check-in</p>
-            <div className="mt-3 space-y-3">
-              <BandPicker
-                label="Mood"
-                hint="1 low · 5 bright"
-                value={moodValue}
-                onChange={setMood}
-              />
-              <BandPicker
-                label="Energy"
-                hint="1 flat · 5 charged"
-                value={energyValue}
-                onChange={setEnergy}
-              />
-              {wellness?.sleepEnabled && (
-                <BandPicker
-                  label="Sleep"
-                  hint="1 poor · 5 rested"
-                  value={sleepValue}
-                  onChange={setSleep}
-                />
-              )}
-              {wellness?.stressEnabled && (
-                <BandPicker
-                  label="Stress"
-                  hint="1 calm · 5 pressed"
-                  value={stressValue}
-                  onChange={setStress}
-                />
-              )}
-            </div>
-            {(wellness?.sleepEnabled || wellness?.stressEnabled) && (
-              <p className="mt-3 text-xs text-muted-foreground">
-                Sleep and stress are self-reported (tier 3), kept {wellness.retentionDays} days.
-                Framing and prompts only — they never enter the calculation or the ranking, and
-                never leave your account.
-              </p>
-            )}
-          </div>
-
-          <textarea
-            aria-label="Reflection note"
-            value={note}
-            onChange={(e) => setNote(e.target.value)}
-            rows={4}
-            placeholder="Optional. Stored encrypted; only used to weigh what to surface."
-            className="mt-3 w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
+          <TodayCheckIn
+            key={`${accountId}:${data.day}`}
+            day={data.day}
+            accountId={accountId}
+            wellness={data.wellness}
           />
-          <div className="mt-3 flex flex-wrap items-center gap-3">
-            <Button
-              variant="outline"
-              type="button"
-              disabled={saveNote.isPending}
-              onClick={() => saveNote.mutate({ day: data.day })}
-              className="rounded-sm border border-input bg-card px-4 py-2 text-sm transition-colors hover:bg-secondary disabled:opacity-50"
-            >
-              {saveNote.isPending ? "Saving…" : "Save check-in"}
-            </Button>
-            <span className="font-mono text-[0.7rem] text-muted-foreground" role="status">
-              {saveNote.isPending
-                ? "saving…"
-                : savedAt
-                  ? `saved ${new Date(savedAt).toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}`
-                  : "not saved yet today"}
-            </span>
-          </div>
         </section>
 
         <section className="mt-8 border-t border-rule pt-6">

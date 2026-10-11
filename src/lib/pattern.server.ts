@@ -29,6 +29,7 @@ import {
 import { DEFAULT_BUNDLE, type ContentBundle } from "./content/default-bundle";
 import { assembleReading, type ReadingContext } from "./reading.server";
 import { LAUNCH_SOURCES, PROHIBITED_SOURCES, SOURCE_MAP } from "./registry";
+import { checkInInputSchema } from "./check-in";
 
 export type DB = DBClient;
 
@@ -228,11 +229,17 @@ export async function getDek(db: DB, userId: string) {
   if (error) throw new Error(error.message);
   let wrapped = data?.wrapped_dek ?? null;
   if (!wrapped) {
-    wrapped = await createWrappedDek();
-    const { error: upErr } = await db
-      .from("profiles")
-      .upsert({ id: userId, wrapped_dek: wrapped }, { onConflict: "id" });
-    if (upErr) throw new Error(upErr.message);
+    // Concurrent first reads must use the same key. Never replace a key that
+    // another request has already installed and used to encrypt a note.
+    const [profile] = await db.exec<{ wrapped_dek: string }>(
+      `insert into profiles (id, wrapped_dek) values (?, ?)
+       on conflict(id) do update set
+         wrapped_dek = coalesce(profiles.wrapped_dek, excluded.wrapped_dek)
+       returning wrapped_dek`,
+      [userId, await createWrappedDek()],
+    );
+    if (!profile?.wrapped_dek) throw new Error("Could not initialize the account encryption key.");
+    wrapped = profile.wrapped_dek;
   }
   return unwrapDek(wrapped);
 }
@@ -255,10 +262,11 @@ export async function loadProfile(db: DB, userId: string) {
 }
 
 export async function loadConsents(db: DB, userId: string) {
-  const { data } = await db
+  const { data, error } = await db
     .from<ConsentRow>("source_consents")
     .select("source_id, granted, tier, granted_at, revoked_at")
     .eq("user_id", userId);
+  if (error) throw new Error(error.message);
   return data ?? [];
 }
 
@@ -373,7 +381,7 @@ export async function saveBirth(
         fingerprint: fp,
         engine: `${chart.engine}@${chart.engineVersion}`,
         contract_version: chart.contractVersion,
-        positions: chart.points as never,
+        positions: chart.points,
         houses: {
           system: chart.houseSystem,
           cusps: chart.houses,
@@ -383,10 +391,10 @@ export async function saveBirth(
             degraded: chart.degraded,
             degradedReason: chart.degradedReason,
           },
-        } as never,
+        },
 
-        aspects: chart.aspects as never,
-        uncertainty: chart.uncertainty as never,
+        aspects: chart.aspects,
+        uncertainty: chart.uncertainty,
       },
       { onConflict: "user_id,fingerprint" },
     )
@@ -405,7 +413,7 @@ export async function saveBirth(
         family: f.family,
         title: f.title,
         strength: f.strength,
-        payload: f.payload as never,
+        payload: f.payload,
       })),
     );
   }
@@ -435,14 +443,15 @@ interface SnapshotRow {
 }
 
 export async function loadSnapshot(db: DB, userId: string) {
-  const { data } = await db
+  const { data, error } = await db
     .from<SnapshotRow>("chart_snapshots")
     .select("id, fingerprint, engine, contract_version, positions, houses, aspects, uncertainty")
     .eq("user_id", userId)
     .order("created_at", { ascending: false })
     .limit(1)
     .maybeSingle();
-  return (data as SnapshotRow | null) ?? null;
+  if (error) throw new Error(error.message);
+  return data;
 }
 
 /** Calculation provenance surfaced to the reader (AST-20). */
@@ -515,21 +524,38 @@ export async function activeBundle(db: DB): Promise<ContentBundle> {
 // today's reading
 // ---------------------------------------------------------------------------
 
-/** check_ins row shape including the tier 3 wellbeing bands. */
-interface CheckInBands {
-  mood: number | null;
-  energy: number | null;
-  sleep: number | null;
-  stress: number | null;
-}
-
 /** The same shape plus the instant the row was last written. */
 interface CheckInRow extends CheckInBands {
+  note_ct: string | null;
   updated_at: string | null;
 }
 
 /** Days a tier 3 band may live before it is nulled out (registry WEL retention). */
 export const WELLNESS_RETENTION_DAYS = 180;
+
+function wellnessCutoff() {
+  return new Date(Date.now() - WELLNESS_RETENTION_DAYS * 86400000).toISOString().slice(0, 10);
+}
+
+/** Hydrate exactly the stored check-in; database errors must not look like an empty day. */
+export async function loadCheckIn(db: DB, userId: string, day: string) {
+  const { data, error } = await db
+    .from<CheckInRow>("check_ins")
+    .select("mood, energy, sleep, stress, note_ct, updated_at")
+    .eq("user_id", userId)
+    .eq("day", day)
+    .maybeSingle();
+  if (error) throw new Error(error.message);
+  if (!data) return null;
+  return {
+    mood: data.mood,
+    energy: data.energy,
+    sleep: data.sleep,
+    stress: data.stress,
+    note: data.note_ct ? await decryptField(await getDek(db, userId), data.note_ct) : null,
+    savedAt: data.updated_at,
+  };
+}
 
 export interface ReadingLanguage {
   mode: "model" | "template";
@@ -577,13 +603,7 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
 
   await purgeExpiredWellness(db, userId);
 
-  const { data: checkInRaw } = await db
-    .from<CheckInRow>("check_ins")
-    .select("mood, energy, sleep, stress, updated_at")
-    .eq("user_id", userId)
-    .eq("day", day)
-    .maybeSingle();
-  const checkInRow = checkInRaw as unknown as CheckInRow | null;
+  const checkInRow = await loadCheckIn(db, userId, day);
 
   const sleepEnabled = granted.has("WEL-01");
   const stressEnabled = granted.has("WEL-03");
@@ -596,7 +616,8 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
     stress: stressEnabled ? (checkInRow?.stress ?? null) : null,
     mood: checkInRow?.mood ?? null,
     energy: checkInRow?.energy ?? null,
-    savedAt: checkInRow?.updated_at ?? null,
+    note: checkInRow?.note ?? null,
+    savedAt: checkInRow?.savedAt ?? null,
   };
 
   const { data: existing } = await db
@@ -737,7 +758,7 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       idempotency_key: idem,
       language_mode: prose.meta.mode,
       language_model: prose.meta.model,
-      language_meta: prose.meta as never,
+      language_meta: prose.meta,
     })
     .select("id")
     .single();
@@ -751,7 +772,7 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
         lane: p.lane,
         source_id: p.source_id,
         label: p.label,
-        detail: p.detail as never,
+        detail: p.detail,
       })),
     );
   }
@@ -995,15 +1016,13 @@ export async function getPattern(db: DB, userId: string) {
  * note survive while the sensitive wellbeing signal does not.
  */
 export async function purgeExpiredWellness(db: DB, userId: string) {
-  const cutoff = new Date(Date.now() - WELLNESS_RETENTION_DAYS * 86400000)
-    .toISOString()
-    .slice(0, 10);
-  await db
+  const { error } = await db
     .from("check_ins")
-    .update({ sleep: null, stress: null } as never)
+    .update({ sleep: null, stress: null })
     .eq("user_id", userId)
-    .lt("day", cutoff)
+    .lt("day", wellnessCutoff())
     .raw("(sleep is not null or stress is not null)");
+  if (error) throw new Error(error.message);
 }
 
 export async function saveCheckIn(
@@ -1016,40 +1035,56 @@ export async function saveCheckIn(
   sleep: number | null = null,
   stress: number | null = null,
 ) {
+  checkInInputSchema.parse({ day, mood, energy, note, sleep, stress });
   const dek = await getDek(db, userId);
   const granted = await grantedSet(db, userId);
+  await purgeExpiredWellness(db, userId);
 
   // Tier 3 bands are only ever written when the person has consented to that
   // exact source; an unconsented band is dropped, not stored and hidden.
-  const sleepValue = granted.has("WEL-01") ? sleep : null;
-  const stressValue = granted.has("WEL-03") ? stress : null;
+  const withinRetention = day >= wellnessCutoff();
+  const sleepValue = withinRetention && granted.has("WEL-01") ? sleep : null;
+  const stressValue = withinRetention && granted.has("WEL-03") ? stress : null;
 
   const savedAt = new Date().toISOString();
-  const { error } = await db.from("check_ins").upsert(
-    {
-      user_id: userId,
-      day,
-      mood,
-      energy,
-      sleep: sleepValue,
-      stress: stressValue,
-      note_ct: note ? await encryptField(dek, note) : null,
-      updated_at: savedAt,
-    } as never,
-    { onConflict: "user_id,day" },
-  );
+  const { data: row, error } = await db
+    .from<CheckInRow>("check_ins")
+    .upsert(
+      {
+        user_id: userId,
+        day,
+        mood,
+        energy,
+        sleep: sleepValue,
+        stress: stressValue,
+        note_ct: note ? await encryptField(dek, note) : null,
+        updated_at: savedAt,
+      },
+      { onConflict: "user_id,day" },
+    )
+    .select("mood, energy, sleep, stress, note_ct, updated_at")
+    .single();
   if (error) throw new Error(error.message);
-
-  await purgeExpiredWellness(db, userId);
+  if (!row?.updated_at) throw new Error("Could not confirm the saved check-in.");
+  const checkIn = {
+    mood: row.mood,
+    energy: row.energy,
+    sleep: row.sleep,
+    stress: row.stress,
+    note: row.note_ct ? await decryptField(dek, row.note_ct) : null,
+    savedAt: row.updated_at,
+  };
   return {
     ok: true,
-    savedAt,
+    day,
+    savedAt: checkIn.savedAt,
     stored: {
-      mood: mood !== null,
-      energy: energy !== null,
-      sleep: sleepValue !== null,
-      stress: stressValue !== null,
+      mood: checkIn.mood !== null,
+      energy: checkIn.energy !== null,
+      sleep: checkIn.sleep !== null,
+      stress: checkIn.stress !== null,
     },
+    checkIn,
   };
 }
 
@@ -1057,27 +1092,27 @@ export async function saveCheckIn(
 export async function listJournal(db: DB, userId: string) {
   const dek = await getDek(db, userId);
   await purgeExpiredWellness(db, userId);
-  const { data: checkInsRaw } = await db
+  const { data: checkIns, error: checkInsError } = await db
     .from<CheckInBands & { id: string; day: string; note_ct: string | null }>("check_ins")
     .select("id, day, mood, energy, sleep, stress, note_ct")
     .eq("user_id", userId)
     .order("day", { ascending: false })
     .limit(60);
-  const checkIns = checkInsRaw as unknown as
-    | (CheckInBands & { id: string; day: string; note_ct: string | null })[]
-    | null;
-  const { data: events } = await db
+  if (checkInsError) throw new Error(checkInsError.message);
+  const { data: events, error: eventsError } = await db
     .from<LifeEventRow>("life_events")
     .select("id, occurred_on, domain, label_ct, body_ct, cycle_key, feature_key, created_at")
     .eq("user_id", userId)
     .order("occurred_on", { ascending: false })
     .limit(60);
-  const { data: feedback } = await db
+  if (eventsError) throw new Error(eventsError.message);
+  const { data: feedback, error: feedbackError } = await db
     .from<FeedbackRow>("reading_feedback")
     .select("reading_id, resonance, labels, created_at")
     .eq("user_id", userId)
     .order("created_at", { ascending: false })
     .limit(60);
+  if (feedbackError) throw new Error(feedbackError.message);
 
   return {
     checkIns: await Promise.all(
@@ -1498,7 +1533,7 @@ export async function getFeatureNarrative(
     mode: written.meta.mode,
     model: written.meta.model,
     narrative_ct: await encryptField(dek, written.narrative),
-    citations: written.meta.citations as never,
+    citations: written.meta.citations,
     essay_version: essayKey,
   });
 
@@ -1595,13 +1630,13 @@ export async function draftRelease(db: DB, userId: string) {
       user_id: userId,
       base_version: base.version,
       model: drafted.model,
-      bundle: bundle as never,
+      bundle: bundle,
       notes: {
         requested: DRAFT_SLOTS.length,
         returned: drafted.entries.length,
         dropped: drafted.dropped,
         flagged: drafted.flagged.length,
-      } as never,
+      },
       status: "draft",
     })
     .select("id")
@@ -1611,7 +1646,7 @@ export async function draftRelease(db: DB, userId: string) {
   await db.from("audit_events").insert({
     user_id: userId,
     kind: "content_draft_generated",
-    detail: { model: drafted.model, entries: drafted.entries.length } as never,
+    detail: { model: drafted.model, entries: drafted.entries.length },
   });
 
   return {
@@ -1654,7 +1689,7 @@ export async function publishDraft(db: DB, userId: string, draftId: string) {
   const { error: insertErr } = await db.from("content_releases").insert({
     version,
     checksum,
-    bundle: bundle as never,
+    bundle: bundle,
     is_active: false,
   });
   if (insertErr) throw new Error(insertErr.message);
@@ -1668,7 +1703,7 @@ export async function publishDraft(db: DB, userId: string, draftId: string) {
   await db.from("audit_events").insert({
     user_id: userId,
     kind: "content_draft_published",
-    detail: { version, checksum, model: draft.model } as never,
+    detail: { version, checksum, model: draft.model },
   });
 
   return { version, checksum };

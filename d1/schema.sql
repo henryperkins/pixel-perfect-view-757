@@ -146,6 +146,9 @@ CREATE TABLE IF NOT EXISTS daily_readings (
   prompt TEXT,
   confidence TEXT NOT NULL DEFAULT 'medium',
   primary_cycle_key TEXT,
+  language_mode TEXT,
+  language_model TEXT,
+  language_meta TEXT,
   idempotency_key TEXT NOT NULL,
   created_at TEXT NOT NULL DEFAULT (datetime('now')),
   UNIQUE (user_id, idempotency_key)
@@ -194,6 +197,9 @@ CREATE TABLE IF NOT EXISTS life_events (
   occurred_on TEXT NOT NULL,
   domain TEXT NOT NULL DEFAULT 'general',
   label_ct TEXT NOT NULL,
+  body_ct TEXT,
+  cycle_key TEXT,
+  feature_key TEXT,
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
@@ -210,7 +216,7 @@ CREATE INDEX IF NOT EXISTS audit_events_user_idx ON audit_events (user_id, creat
 -- language layer (AI-generated prose over deterministic facts)
 -- ---------------------------------------------------------------------------
 
--- daily_readings gains: language_mode ('model' | 'template'), language_model,
+-- daily_readings declares above: language_mode ('model' | 'template'), language_model,
 -- language_meta (citations, dropped paragraphs, safety flags, fallback reason).
 
 CREATE TABLE IF NOT EXISTS feature_narratives (

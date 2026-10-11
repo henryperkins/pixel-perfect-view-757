@@ -31,6 +31,15 @@ were live when they wrote them.
 Done when: a fresh account can set all four bands, reload, see them, and see them
 disappear after retention.
 
+Implementation status (2026-10-11): Today restores all saved bands and the encrypted
+reflection note, distinguishes unsaved edits from confirmed saves, and preserves
+edits made during a request. Check-in reads/writes use typed rows and propagate
+database failures. Save receipts return the persisted consent-gated values, and
+concurrent first use cannot replace an account's encryption key. The local SQLite
+regression suite exercises persistence, reload, consent, retention, isolation and
+failure paths with the actual server code and encryption. Live-account acceptance
+remains open; no authorized test account was available for this pass.
+
 ## R1.2 — Journal
 
 - New `/journal` route: write an entry, list entries newest first, edit and delete.
