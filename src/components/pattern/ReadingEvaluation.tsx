@@ -1,27 +1,29 @@
 import { useServerFn } from "@tanstack/react-start";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import {
   LanguageProviderChoice,
   type LanguageProviderStatus,
 } from "@/components/pattern/LanguageProviderChoice";
 import { Button } from "@/components/ui/button";
-import {
-  diagnosticLabel,
-  languageModel,
-  readDailyDiagnostics,
-  type LanguageProvider,
-} from "@/lib/ai/diagnostics";
+import { diagnosticLabel, type LanguageProvider } from "@/lib/ai/diagnostics";
 import {
   combineReadingEvaluationResults,
   READING_EVALUATION_CATALOG,
+  READING_EVALUATION_STALL_MS,
+  readingEvaluationRunActive,
   serializeReadingEvaluationReport,
   summarizeReadingEvaluation,
   type ReadingEvaluationBundleSource,
   type ReadingEvaluationCaseResult,
   type ReadingEvaluationCaseRow,
+  type ReadingEvaluationRun,
 } from "@/lib/ai/reading-evaluation.shared";
-import { runReadingEvaluationCase } from "@/lib/pattern.functions";
+import {
+  fetchReadingEvaluationRun,
+  startReadingEvaluationRun,
+  stopReadingEvaluationRun,
+} from "@/lib/pattern.functions";
 
 /** Evaluation-only copy; choosing one never publishes or activates a release. */
 const COPY_CHOICES: { value: ReadingEvaluationBundleSource; label: string; note: string }[] = [
@@ -42,15 +44,7 @@ const COPY_CHOICES: { value: ReadingEvaluationBundleSource; label: string; note:
   },
 ];
 
-type RunStatus = "idle" | "running" | "stopping" | "complete" | "stopped" | "halted" | "error";
-type RunState = {
-  status: RunStatus;
-  results: ReadingEvaluationCaseResult[];
-  currentId: string | null;
-  message: string | null;
-};
-const INITIAL_STATE: RunState = { status: "idle", results: [], currentId: null, message: null };
-const HALT_CODES = new Set(["not_configured", "auth", "credit", "rate_limit"]);
+const POLL_MS = 4_000;
 
 function outcomeLabel(row: ReadingEvaluationCaseRow): string {
   const { outcome, code } = row.diagnostics;
@@ -229,130 +223,120 @@ function EvaluationCase({ result }: { result: ReadingEvaluationCaseResult }) {
   );
 }
 
-/** A manual, page-memory run: one case request at a time, with no retries. */
+/**
+ * A server-side run: the edge plane requests one case at a time with no retries and
+ * keeps going after this page closes. The page starts, stops and watches the run.
+ */
 export function ReadingEvaluation({
   providerStatus,
 }: {
   providerStatus?: LanguageProviderStatus | undefined;
 }) {
-  const runCase = useServerFn(runReadingEvaluationCase);
+  const startRun = useServerFn(startReadingEvaluationRun);
+  const fetchRun = useServerFn(fetchReadingEvaluationRun);
+  const stopRun = useServerFn(stopReadingEvaluationRun);
+  const fetchRef = useRef(fetchRun);
+  fetchRef.current = fetchRun;
   const [provider, setProvider] = useState<LanguageProvider>("lovable");
-  const [state, setState] = useState<RunState>(INITIAL_STATE);
   const [bundleSource, setBundleSource] = useState<ReadingEvaluationBundleSource>("active");
+  const [run, setRun] = useState<ReadingEvaluationRun | null>(null);
+  const [results, setResults] = useState<ReadingEvaluationCaseResult[]>([]);
+  const [loaded, setLoaded] = useState(false);
+  const [pending, setPending] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
   const [downloadError, setDownloadError] = useState<string | null>(null);
-  const mounted = useRef(true);
-  const activeRun = useRef<{ stop: boolean } | null>(null);
-  useEffect(() => {
-    mounted.current = true;
-    return () => {
-      mounted.current = false;
-      if (activeRun.current) activeRun.current.stop = true;
-      activeRun.current = null;
-    };
+  const [now, setNow] = useState(() => Date.now());
+  // The stored results this page holds, so each poll asks only for newer cases.
+  const held = useRef<{ runId: string | null; results: ReadingEvaluationCaseResult[] }>({
+    runId: null,
+    results: [],
+  });
+  const polling = useRef(false);
+
+  const refresh = useCallback(async (runId?: string) => {
+    if (polling.current) return;
+    polling.current = true;
+    try {
+      const append = Boolean(runId && held.current.runId === runId);
+      const data = await fetchRef.current({
+        data: runId ? { runId, after: append ? held.current.results.length : 0 } : {},
+      });
+      const next = data.run
+        ? append && data.run.id === held.current.runId
+          ? [...held.current.results, ...data.results]
+          : data.results
+        : [];
+      held.current = { runId: data.run?.id ?? null, results: next };
+      setRun(data.run);
+      setResults(next);
+      setNow(Date.now());
+    } finally {
+      polling.current = false;
+    }
   }, []);
 
-  const busy = state.status === "running" || state.status === "stopping";
-  const rows = state.results.map((result) => result.case);
+  // Return to the latest run, whether it is still going or finished while away.
+  useEffect(() => {
+    refresh()
+      .catch(() => setMessage("The latest evaluation run could not be loaded."))
+      .finally(() => setLoaded(true));
+  }, [refresh]);
+
+  const busy = Boolean(run && readingEvaluationRunActive(run.status));
+  const runId = run?.id;
+  useEffect(() => {
+    if (!busy || !runId) return;
+    const timer = setInterval(() => {
+      refresh(runId).catch(() => setNow(Date.now()));
+    }, POLL_MS);
+    return () => clearInterval(timer);
+  }, [busy, runId, refresh]);
+
+  const rows = results.map((result) => result.case);
   const summary = summarizeReadingEvaluation(rows);
-  const current = READING_EVALUATION_CATALOG.find((fixed) => fixed.id === state.currentId);
-  const complete = state.status === "complete";
+  const total = run?.total ?? READING_EVALUATION_CATALOG.length;
+  const current = READING_EVALUATION_CATALOG[results.length];
+  const complete = run?.status === "complete";
+  const idleMinutes = run ? Math.max(1, Math.round((now - Date.parse(run.updatedAt)) / 60_000)) : 0;
+  const stalled = Boolean(
+    busy && run && now - Date.parse(run.updatedAt) > READING_EVALUATION_STALL_MS,
+  );
 
   async function start() {
-    if (activeRun.current) return;
-    const control = { stop: false };
-    activeRun.current = control;
+    setPending(true);
+    setMessage(null);
     setDownloadError(null);
-    // Freeze the case sequence, copy choice and provider before the first request.
-    const cases = READING_EVALUATION_CATALOG.map((fixed) => ({ ...fixed }));
-    const frozenSource = bundleSource;
-    const runProvider = provider;
-    let results: ReadingEvaluationCaseResult[] = [];
-    const publish = (
-      status: RunStatus,
-      currentId: string | null,
-      message: string | null = null,
-    ) => {
-      if (mounted.current && activeRun.current === control)
-        setState({ status, results, currentId, message });
-    };
-    publish("running", cases[0]?.id ?? null);
     try {
-      for (const fixed of cases) {
-        if (control.stop) break;
-        publish("running", fixed.id);
-        let result: ReadingEvaluationCaseResult;
-        try {
-          result = await runCase({
-            data: { caseId: fixed.id, bundleSource: frozenSource, provider: runProvider },
-          });
-        } catch {
-          publish(
-            "error",
-            null,
-            "This case could not be completed. Completed results are still available; no automatic retry was made.",
-          );
-          return;
-        }
-        if (!mounted.current || activeRun.current !== control) return;
-        const diagnostics = readDailyDiagnostics(result?.case?.diagnostics);
-        if (
-          result?.case?.id !== fixed.id ||
-          result.metadata?.bundleSource !== frozenSource ||
-          result.metadata?.model !== languageModel(runProvider) ||
-          !diagnostics ||
-          (diagnostics.outcome === "accepted") !== (result.case.output?.mode === "model")
-        ) {
-          publish(
-            "error",
-            null,
-            "This case returned an incomplete result. Completed results are still available.",
-          );
-          return;
-        }
-        const next = [...results, result];
-        try {
-          combineReadingEvaluationResults(next, { partial: true });
-        } catch {
-          publish(
-            "error",
-            null,
-            "Evaluation settings changed during this run. Completed results are still available; start a new run to compare one configuration.",
-          );
-          return;
-        }
-        results = next;
-        if (HALT_CODES.has(diagnostics.code)) {
-          publish(
-            "halted",
-            null,
-            `Run stopped: ${diagnosticLabel(diagnostics.code)}. Remaining cases were not requested.`,
-          );
-          return;
-        }
-        if (control.stop) break;
-      }
-      publish(results.length === cases.length ? "complete" : "stopped", null);
-    } catch {
-      publish(
-        "error",
-        null,
-        "This run could not be completed. Completed results are still available; no automatic retry was made.",
+      const started = await startRun({ data: { bundleSource, provider } });
+      held.current = { runId: started.id, results: [] };
+      setRun(started);
+      setResults([]);
+      setNow(Date.now());
+    } catch (error) {
+      setMessage(
+        error instanceof Error && error.message ? error.message : "The run could not be started.",
       );
     } finally {
-      if (activeRun.current === control) activeRun.current = null;
+      setPending(false);
     }
   }
 
-  function stop() {
-    if (!activeRun.current) return;
-    activeRun.current.stop = true;
-    setState((previous) => ({ ...previous, status: "stopping" }));
+  async function stop() {
+    if (!run) return;
+    setPending(true);
+    try {
+      setRun(await stopRun({ data: { runId: run.id } }));
+    } catch {
+      setMessage("The stop request was not received. The run continues; try again.");
+    } finally {
+      setPending(false);
+    }
   }
 
   function download() {
     setDownloadError(null);
     try {
-      const report = combineReadingEvaluationResults(state.results, { partial: !complete });
+      const report = combineReadingEvaluationResults(results, { partial: !complete });
       const blob = new Blob([serializeReadingEvaluationReport(report)], {
         type: "application/json",
       });
@@ -369,15 +353,24 @@ export function ReadingEvaluation({
     }
   }
 
-  const progress = busy
-    ? `${state.results.length}/${READING_EVALUATION_CATALOG.length} cases complete · ${state.status === "stopping" ? "stopping after" : "running"} ${current?.label ?? "the current case"}`
-    : complete
-      ? `${state.results.length}/${READING_EVALUATION_CATALOG.length} cases complete`
-      : state.status === "stopped"
-        ? `Stopped · ${state.results.length}/${READING_EVALUATION_CATALOG.length} cases complete. This report is partial.`
-        : state.status === "idle"
-          ? "No synthetic evaluation has run on this page."
-          : `Partial run · ${state.results.length}/${READING_EVALUATION_CATALOG.length} cases complete`;
+  const progress = !loaded
+    ? "Loading the latest evaluation run…"
+    : !run
+      ? "No synthetic evaluation has run yet."
+      : stalled
+        ? `${results.length}/${total} cases complete · no progress for ${idleMinutes} minutes. The edge workflow may have stopped; you can start a new run.`
+        : busy
+          ? `${results.length}/${total} cases complete · ${
+              run.status === "queued"
+                ? "starting the run"
+                : `${run.status === "stopping" ? "stopping after" : "running"} ${current?.label ?? "the current case"}`
+            }`
+          : complete
+            ? `${results.length}/${total} cases complete`
+            : run.status === "stopped"
+              ? `Stopped · ${results.length}/${total} cases complete. This report is partial.`
+              : `Partial run · ${results.length}/${total} cases complete`;
+  const alert = message ?? (run && !busy ? run.message : null);
 
   return (
     <section
@@ -392,8 +385,8 @@ export function ReadingEvaluation({
         provider's model and the evaluation copy chosen below, one at a time: up to{" "}
         {READING_EVALUATION_CATALOG.filter((row) => row.expectsModel).length} model calls. Quiet
         days and cases without a published primary interpretation skip the model. This uses
-        synthetic chart inputs and no account readings or notes. Results stay in this page until you
-        leave or start again.
+        synthetic chart inputs and no account readings or notes. The run continues on the server if
+        you leave or close this page; your latest run and its results load when you return.
       </p>
       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
         Acceptance measures the current validator on this case set. Review specificity, voice,
@@ -411,7 +404,7 @@ export function ReadingEvaluation({
         <select
           id="synthetic-evaluation-copy"
           value={bundleSource}
-          disabled={busy}
+          disabled={busy && !stalled}
           aria-describedby="synthetic-evaluation-copy-note"
           onChange={(event) => setBundleSource(event.target.value as ReadingEvaluationBundleSource)}
           className="mt-1.5 min-h-11 w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring disabled:cursor-not-allowed disabled:opacity-60"
@@ -434,28 +427,33 @@ export function ReadingEvaluation({
         <LanguageProviderChoice
           value={provider}
           onChange={setProvider}
-          disabled={busy}
+          disabled={busy && !stalled}
           configured={providerStatus}
         />
       </div>
       <div className="mt-4 flex flex-wrap gap-3">
-        <Button type="button" onClick={() => void start()} disabled={busy} className="min-h-11">
+        <Button
+          type="button"
+          onClick={() => void start()}
+          disabled={!loaded || pending || (busy && !stalled)}
+          className="min-h-11"
+        >
           Run synthetic evaluation
         </Button>
-        {busy ? (
+        {busy && !stalled ? (
           <Button
             type="button"
             variant="outline"
-            onClick={stop}
-            disabled={state.status === "stopping"}
+            onClick={() => void stop()}
+            disabled={pending || run?.status === "stopping"}
             className="min-h-11 whitespace-normal"
           >
-            {state.status === "stopping"
+            {run?.status === "stopping"
               ? "Stopping after current case…"
               : "Stop after current case"}
           </Button>
         ) : null}
-        {state.results.length ? (
+        {results.length ? (
           <Button
             type="button"
             variant="outline"
@@ -474,15 +472,15 @@ export function ReadingEvaluation({
       >
         {progress}
       </p>
-      {busy ? (
+      {busy && !stalled ? (
         <p className="mt-2 text-xs text-muted-foreground">
-          Stopping lets the current request finish and keeps its result. It prevents the next case
-          from starting.
+          You can leave this page while the run continues. Stopping lets the current request finish
+          and keeps its result. It prevents the next case from starting.
         </p>
       ) : null}
-      {state.message ? (
+      {alert ? (
         <p role="alert" className="mt-3 text-sm leading-relaxed text-destructive">
-          {state.message}
+          {alert}
         </p>
       ) : null}
       {downloadError ? (
@@ -525,18 +523,18 @@ export function ReadingEvaluation({
               : "This run is partial; downloaded reports include completed cases only and cannot be used as a complete comparison."}
           </p>
           <p className="mt-2 font-mono text-xs leading-relaxed text-muted-foreground [overflow-wrap:anywhere]">
-            {state.results[0]?.metadata.model} · {state.results[0]?.metadata.promptVersion} ·{" "}
-            {state.results[0]?.metadata.validatorVersion} ·{" "}
-            {COPY_CHOICES.find((choice) => choice.value === state.results[0]?.metadata.bundleSource)
+            {results[0]?.metadata.model} · {results[0]?.metadata.promptVersion} ·{" "}
+            {results[0]?.metadata.validatorVersion} ·{" "}
+            {COPY_CHOICES.find((choice) => choice.value === results[0]?.metadata.bundleSource)
               ?.label ?? "Unrecorded copy choice"}{" "}
-            · {state.results[0]?.metadata.bundleVersion} · bundle{" "}
-            {state.results[0]?.metadata.bundleHash.slice(0, 12)} ·{" "}
-            {state.results[0]?.metadata.gatewayTimeoutMs == null
+            · {results[0]?.metadata.bundleVersion} · bundle{" "}
+            {results[0]?.metadata.bundleHash.slice(0, 12)} ·{" "}
+            {results[0]?.metadata.gatewayTimeoutMs == null
               ? "Unrecorded gateway budget"
-              : `${state.results[0].metadata.gatewayTimeoutMs / 1000}s gateway budget`}
+              : `${results[0].metadata.gatewayTimeoutMs / 1000}s gateway budget`}
           </p>
           <div className="mt-5 space-y-3">
-            {state.results.map((result) => (
+            {results.map((result) => (
               <EvaluationCase key={result.case.id} result={result} />
             ))}
           </div>

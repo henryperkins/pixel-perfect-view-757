@@ -5,7 +5,7 @@ import {
   READING_EVAL_FIXTURE_VERSION,
 } from "./reading-evaluation.fixtures.mjs";
 import type { FactAtom } from "./facts";
-import { LANGUAGE_PROVIDERS, type DailyDiagnostics } from "./diagnostics";
+import { LANGUAGE_PROVIDERS, type DailyDiagnostics, type LanguageProvider } from "./diagnostics";
 import type { DailyPlanIdentity } from "../content/synthesis";
 import type { DailyNatalLensPlan } from "../content/natal-lens";
 import type { NatalReliabilityManifest } from "../astro/natal-reliability";
@@ -29,6 +29,41 @@ export const LIVE_EVALUATION_CASES = READING_EVALUATION_CATALOG;
  */
 export const READING_EVALUATION_BUNDLE_SOURCES = ["active", "builtin", "natal-candidate"] as const;
 export type ReadingEvaluationBundleSource = (typeof READING_EVALUATION_BUNDLE_SOURCES)[number];
+
+/** A server-side run fixes its copy and provider when it starts. */
+export const readingEvaluationRunInputSchema = z
+  .object({
+    bundleSource: z.enum(READING_EVALUATION_BUNDLE_SOURCES),
+    provider: z.enum(LANGUAGE_PROVIDERS),
+  })
+  .strict();
+
+export const READING_EVALUATION_RUN_STATUSES = [
+  "queued",
+  "running",
+  "stopping",
+  "complete",
+  "stopped",
+  "halted",
+  "error",
+] as const;
+export type ReadingEvaluationRunStatus = (typeof READING_EVALUATION_RUN_STATUSES)[number];
+/** An active run with no stored progress for this long is shown as stalled and can be replaced. */
+export const READING_EVALUATION_STALL_MS = 5 * 60_000;
+export function readingEvaluationRunActive(status: ReadingEvaluationRunStatus): boolean {
+  return status === "queued" || status === "running" || status === "stopping";
+}
+export interface ReadingEvaluationRun {
+  id: string;
+  status: ReadingEvaluationRunStatus;
+  provider: LanguageProvider;
+  bundleSource: ReadingEvaluationBundleSource;
+  total: number;
+  completed: number;
+  message: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
 
 /** The only accepted request: a fixed case ID plus optional closed copy and provider selectors. */
 export const readingEvaluationInputSchema = z

@@ -3,7 +3,10 @@ import { z } from "zod";
 import { LANGUAGE_PROVIDERS } from "./ai/diagnostics";
 import { requireAuth } from "./auth-middleware";
 import { checkInInputSchema } from "./check-in";
-import { readingEvaluationInputSchema } from "./ai/reading-evaluation.shared";
+import {
+  readingEvaluationInputSchema,
+  readingEvaluationRunInputSchema,
+} from "./ai/reading-evaluation.shared";
 
 export const fetchToday = createServerFn({ method: "POST" })
   .middleware([requireAuth])
@@ -296,6 +299,45 @@ export const runReadingEvaluationCase = createServerFn({ method: "POST" })
       data.bundleSource ?? "active",
       data.provider ?? "lovable",
     );
+  });
+
+/** Starts a server-side run; it continues on the edge plane after the admin leaves. */
+export const startReadingEvaluationRun = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
+  .inputValidator((d: unknown) => readingEvaluationRunInputSchema.parse(d))
+  .handler(async ({ data, context }) => {
+    const { getRequest } = await import("@tanstack/react-start/server");
+    const m = await import("./evaluation-runs.server");
+    return m.startEvaluationRun(context.db, context.userId, data, new URL(getRequest().url).origin);
+  });
+
+export const fetchReadingEvaluationRun = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
+  .inputValidator((d: unknown) =>
+    z
+      .object({
+        runId: z.string().min(1).max(80).optional(),
+        after: z.number().int().min(0).max(1000).optional(),
+      })
+      .strict()
+      .parse(d ?? {}),
+  )
+  .handler(async ({ data, context }) => {
+    const m = await import("./evaluation-runs.server");
+    return m.readEvaluationRun(context.db, context.userId, data);
+  });
+
+export const stopReadingEvaluationRun = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
+  .inputValidator((d: unknown) =>
+    z
+      .object({ runId: z.string().min(1).max(80) })
+      .strict()
+      .parse(d),
+  )
+  .handler(async ({ data, context }) => {
+    const m = await import("./evaluation-runs.server");
+    return m.stopEvaluationRun(context.db, context.userId, data.runId);
   });
 
 export const draftContentRelease = createServerFn({ method: "POST" })

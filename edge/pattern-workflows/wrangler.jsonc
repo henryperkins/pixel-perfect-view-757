@@ -1,0 +1,26 @@
+// Mirrors the deployed pattern-workflows bindings; PATTERN_WORKFLOW_SECRET stays a
+// Worker secret and is never stored here.
+{
+  "name": "pattern-workflows",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-01-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "preview_urls": false,
+  "d1_databases": [
+    {
+      "binding": "RECORDS",
+      "database_name": "pattern-records",
+      "database_id": "9054f856-4e28-48c0-8f6f-d02f479466fb",
+    },
+  ],
+  "r2_buckets": [{ "binding": "ARTIFACTS", "bucket_name": "pattern-artifacts" }],
+  "workflows": [
+    { "name": "nightly-reading", "binding": "NIGHTLY", "class_name": "NightlyReadingWorkflow" },
+    {
+      "name": "synthetic-evaluation",
+      "binding": "EVALUATIONS",
+      "class_name": "SyntheticEvaluationWorkflow",
+    },
+  ],
+}

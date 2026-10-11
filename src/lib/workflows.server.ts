@@ -25,11 +25,7 @@ function config() {
   return { url: url.replace(/\/$/, ""), secret };
 }
 
-async function call<T>(
-  method: "GET" | "POST",
-  path: string,
-  body?: unknown,
-): Promise<T | null> {
+async function call<T>(method: "GET" | "POST", path: string, body?: unknown): Promise<T | null> {
   const cfg = config();
   if (!cfg) return null;
 
@@ -81,11 +77,17 @@ export async function triggerReadingWorkflow(params: {
   );
 }
 
+/** Starts the durable synthetic evaluation; the edge plane calls `callback` once per case. */
+export async function startEvaluationWorkflow(params: {
+  runId: string;
+  total: number;
+  callback: string;
+}) {
+  return call<{ ok: boolean; instanceId: string }>("POST", "/evaluations", params);
+}
+
 /** Reads the durable run ledger plus the mirrored pointer state. */
 export async function listWorkflowRuns() {
-  const data = await call<{ runs: WorkflowRun[]; activeVersion: string | null }>(
-    "GET",
-    "/runs",
-  );
+  const data = await call<{ runs: WorkflowRun[]; activeVersion: string | null }>("GET", "/runs");
   return data ?? { runs: [], activeVersion: null, unavailable: true as const };
 }

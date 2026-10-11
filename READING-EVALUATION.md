@@ -4,10 +4,20 @@
 
 Sign in as an admin, open `/content`, choose the **Evaluation copy** and
 **Language provider**, and choose **Run synthetic evaluation** in Reading quality.
-This runs the 28 fixed cases below immediately: at most 27 eligible model requests
+This runs the 28 fixed cases below on the server: at most 27 eligible model requests
 and one quiet-day check that makes no model call. Each case uses the production
 prompt and validator with the chosen copy and the selected provider's model.
 Provider keys stay on the server.
+
+The run continues if you leave, reload or close the page. The `pattern-workflows`
+edge plane (source in `edge/pattern-workflows/`) runs one Cloudflare Workflow per
+run and calls the signed `/api/public/evaluation-step` endpoint once per case; the
+app runs that case and stores its result. `/content` loads your latest run when you
+return and refreshes it every few seconds while it is running. Each admin has one
+active run at a time. A run with no stored progress for five minutes is shown as
+stalled and may be replaced by a new run. The edge plane must reach a public
+origin: start runs from the published site, or set `PATTERN_APP_URL` to it, because
+the auth-gated editor preview cannot answer the Workflow.
 
 | Evaluation copy              | `bundleSource`    | Copy used                                                                     |
 | ---------------------------- | ----------------- | ----------------------------------------------------------------------------- |
@@ -20,18 +30,22 @@ report as `bundleSource`. Choosing a bundle never publishes, activates or caches
 and a run cannot mix choices. Reports made before this selector existed have no
 `bundleSource`; none is inferred.
 
-The inputs are checked-in synthetic contacts. The endpoint accepts only a fixed
-case ID, that closed copy choice and one of the two server-defined providers; it
-does not accept a bundle, chart, prompt, model override, or account context. It
-reads the admin role and, only for current active copy, the active release
-(failing closed when that read fails), without reading birth records, check-ins,
-notes, or daily readings, and writes no application records. Evaluation outcomes
-do not enter the production Reading quality counts.
+The inputs are checked-in synthetic contacts. Starting a run accepts only that
+closed copy choice and one of the two server-defined providers; each step names
+only a run and a case position. Nothing accepts a bundle, chart, prompt, model
+override, or account context. A case reads the admin role and, only for current
+active copy, the active release (failing closed when that read fails), without
+reading birth records, check-ins, notes, or daily readings. Runs write only their
+own `evaluation_runs` and `evaluation_results` rows: fixed settings, status and the
+synthetic case results. Evaluation outcomes do not enter the production Reading
+quality counts.
 
 Cases run one at a time with the production daily timeout of 60 seconds per
 request, including response-body reads. The JSON report records this budget as
 `gatewayTimeoutMs`; it is separate from the model request payload. **Stop after current
-case** preserves completed results. Requests are never retried automatically.
+case** preserves completed results. Requests are never retried automatically: a
+Workflow step that fails ends the run, and a replayed step returns its stored case
+instead of calling the model again.
 Missing configuration, authentication, credit, or rate-limit failures stop the
 run. A change to the plan, prompt, validator, model or copy during a run also stops it
 rather than combining unlike configurations.
@@ -45,8 +59,8 @@ mistaken for a clean capture. Provider error bodies, exception text and
 credentials are excluded. Production reading diagnostics continue excluding
 generated draft text.
 
-Download the JSON report before leaving the page. Results are held only in page
-memory. Partial runs are marked as partial; a before/after comparison needs all
+Download the JSON report from `/content` at any time; stored results stay with the
+run. Partial runs are marked as partial; a before/after comparison needs all
 28 fixed cases. A completed report is compatible with the comparison command:
 
 ```sh

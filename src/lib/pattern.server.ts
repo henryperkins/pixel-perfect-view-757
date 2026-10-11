@@ -1912,6 +1912,16 @@ export async function runReadingEvaluationCase(
   if (!(await isAdmin(db, userId))) {
     throw new Error("Only admins can run a synthetic reading evaluation.");
   }
+  return evaluateFixedCase(db, caseId, bundleSource, provider);
+}
+
+/** One fixed synthetic case; callers have already established admin authority. */
+export async function evaluateFixedCase(
+  db: DB,
+  caseId: string,
+  bundleSource: ReadingEvaluationBundleSource,
+  provider: LanguageProvider,
+) {
   if (!(READING_EVALUATION_BUNDLE_SOURCES as readonly unknown[]).includes(bundleSource))
     throw new Error("Unknown synthetic evaluation bundle.");
   if (!(LANGUAGE_PROVIDERS as readonly unknown[]).includes(provider))

@@ -22,6 +22,7 @@ import { Route as AuthenticatedSourcesRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedTimeTravelRouteImport } from './routes/_authenticated/time-travel'
 import { Route as AuthenticatedTimingRouteImport } from './routes/_authenticated/timing'
 import { Route as ApiPublicContentReleasesRouteImport } from './routes/api/public/content-releases'
+import { Route as ApiPublicEvaluationStepRouteImport } from './routes/api/public/evaluation-step'
 import { Route as ApiPublicContentReleasesRollbackRouteImport } from './routes/api/public/content-releases.rollback'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 
@@ -90,6 +91,11 @@ const ApiPublicContentReleasesRoute =
     path: '/api/public/content-releases',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicEvaluationStepRoute = ApiPublicEvaluationStepRouteImport.update({
+  id: '/api/public/evaluation-step',
+  path: '/api/public/evaluation-step',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicContentReleasesRollbackRoute =
   ApiPublicContentReleasesRollbackRouteImport.update({
     id: '/rollback',
@@ -116,6 +122,7 @@ export interface FileRoutesByFullPath {
   '/time-travel': typeof AuthenticatedTimeTravelRoute
   '/timing': typeof AuthenticatedTimingRoute
   '/api/public/content-releases': typeof ApiPublicContentReleasesRouteWithChildren
+  '/api/public/evaluation-step': typeof ApiPublicEvaluationStepRoute
   '/api/public/content-releases/rollback': typeof ApiPublicContentReleasesRollbackRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
@@ -132,6 +139,7 @@ export interface FileRoutesByTo {
   '/time-travel': typeof AuthenticatedTimeTravelRoute
   '/timing': typeof AuthenticatedTimingRoute
   '/api/public/content-releases': typeof ApiPublicContentReleasesRouteWithChildren
+  '/api/public/evaluation-step': typeof ApiPublicEvaluationStepRoute
   '/api/public/content-releases/rollback': typeof ApiPublicContentReleasesRollbackRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
@@ -150,6 +158,7 @@ export interface FileRoutesById {
   '/_authenticated/time-travel': typeof AuthenticatedTimeTravelRoute
   '/_authenticated/timing': typeof AuthenticatedTimingRoute
   '/api/public/content-releases': typeof ApiPublicContentReleasesRouteWithChildren
+  '/api/public/evaluation-step': typeof ApiPublicEvaluationStepRoute
   '/api/public/content-releases/rollback': typeof ApiPublicContentReleasesRollbackRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
@@ -168,6 +177,7 @@ export interface FileRouteTypes {
     | '/time-travel'
     | '/timing'
     | '/api/public/content-releases'
+    | '/api/public/evaluation-step'
     | '/api/public/content-releases/rollback'
     | '/lovable/email/transactional/preview'
   fileRoutesByTo: FileRoutesByTo
@@ -184,6 +194,7 @@ export interface FileRouteTypes {
     | '/time-travel'
     | '/timing'
     | '/api/public/content-releases'
+    | '/api/public/evaluation-step'
     | '/api/public/content-releases/rollback'
     | '/lovable/email/transactional/preview'
   id:
@@ -201,6 +212,7 @@ export interface FileRouteTypes {
     | '/_authenticated/time-travel'
     | '/_authenticated/timing'
     | '/api/public/content-releases'
+    | '/api/public/evaluation-step'
     | '/api/public/content-releases/rollback'
     | '/lovable/email/transactional/preview'
   fileRoutesById: FileRoutesById
@@ -210,6 +222,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   ApiPublicContentReleasesRoute: typeof ApiPublicContentReleasesRouteWithChildren
+  ApiPublicEvaluationStepRoute: typeof ApiPublicEvaluationStepRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
 }
 
@@ -306,6 +319,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicContentReleasesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/evaluation-step': {
+      id: '/api/public/evaluation-step'
+      path: '/api/public/evaluation-step'
+      fullPath: '/api/public/evaluation-step'
+      preLoaderRoute: typeof ApiPublicEvaluationStepRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/content-releases/rollback': {
       id: '/api/public/content-releases/rollback'
       path: '/rollback'
@@ -370,6 +390,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   ApiPublicContentReleasesRoute: ApiPublicContentReleasesRouteWithChildren,
+  ApiPublicEvaluationStepRoute: ApiPublicEvaluationStepRoute,
   LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,
 }
 export const routeTree = rootRouteImport

@@ -244,3 +244,34 @@ CREATE TABLE IF NOT EXISTS content_drafts (
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 CREATE INDEX IF NOT EXISTS content_drafts_status_idx ON content_drafts (status, created_at DESC);
+
+-- ---------------------------------------------------------------------------
+-- synthetic evaluation runs (admin only; fixed synthetic inputs, no member data)
+-- ---------------------------------------------------------------------------
+
+-- The pattern-workflows edge plane drives one Workflow per run and calls the app
+-- once per case, so a run continues after the admin leaves /content.
+CREATE TABLE IF NOT EXISTS evaluation_runs (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  status TEXT NOT NULL DEFAULT 'queued',
+  provider TEXT NOT NULL,
+  bundle_source TEXT NOT NULL,
+  case_ids TEXT NOT NULL,
+  completed INTEGER NOT NULL DEFAULT 0,
+  message TEXT,
+  workflow_instance_id TEXT,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS evaluation_runs_user_idx ON evaluation_runs (user_id, created_at DESC);
+
+CREATE TABLE IF NOT EXISTS evaluation_results (
+  id TEXT PRIMARY KEY,
+  run_id TEXT NOT NULL REFERENCES evaluation_runs(id) ON DELETE CASCADE,
+  position INTEGER NOT NULL,
+  case_id TEXT NOT NULL,
+  result TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  UNIQUE (run_id, position)
+);

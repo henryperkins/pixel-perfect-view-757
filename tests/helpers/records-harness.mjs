@@ -18,6 +18,7 @@ const envNames = [
   "PATTERN_ROOT_KEY",
   "PATTERN_WORKFLOW_URL",
   "PATTERN_WORKFLOW_SECRET",
+  "PATTERN_APP_URL",
   "LOVABLE_API_KEY",
   "GEMINI_ENTERPRISE_API_KEY",
   "SWISS_EPHEMERIS_URL",
@@ -38,11 +39,13 @@ export async function createRecordsHarness() {
   const requests = [];
   const gatewayRequests = [];
   const geminiEnterpriseRequests = [];
+  const evaluationStarts = [];
   const swissRequests = [];
   let sqlite;
   let vite;
   let gatewayHandler = null;
   let geminiEnterpriseHandler = null;
+  let evaluationPlane = null;
   let swissHandler = null;
   let fault = null;
   let closed = false;
@@ -51,6 +54,7 @@ export async function createRecordsHarness() {
   process.env.PATTERN_WORKFLOW_URL = testURL.replace(/\/d1\/query$/, "");
   process.env.PATTERN_WORKFLOW_SECRET = secret;
   for (const name of [
+    "PATTERN_APP_URL",
     "LOVABLE_API_KEY",
     "GEMINI_ENTERPRISE_API_KEY",
     "SWISS_EPHEMERIS_URL",
@@ -76,6 +80,13 @@ export async function createRecordsHarness() {
       return geminiEnterpriseHandler(body, init);
     }
     const workflowBase = process.env.PATTERN_WORKFLOW_URL;
+    if (workflowBase && url === `${workflowBase}/evaluations`) {
+      const body = JSON.parse(String(init.body));
+      evaluationStarts.push(body);
+      return evaluationPlane
+        ? evaluationPlane(body)
+        : Response.json({ ok: true, instanceId: body.runId });
+    }
     if (workflowBase && (url === `${workflowBase}/pointer` || url === `${workflowBase}/trigger`)) {
       return Response.json({ ok: true, instanceId: "mock-workflow-" + randomUUID() });
     }
@@ -151,14 +162,17 @@ export async function createRecordsHarness() {
       requests.length = 0;
       gatewayRequests.length = 0;
       geminiEnterpriseRequests.length = 0;
+      evaluationStarts.length = 0;
       swissRequests.length = 0;
       fault = null;
       gatewayHandler = null;
       geminiEnterpriseHandler = null;
+      evaluationPlane = null;
       swissHandler = null;
       delete process.env.SWISS_EPHEMERIS_URL;
       delete process.env.LOVABLE_API_KEY;
       delete process.env.GEMINI_ENTERPRISE_API_KEY;
+      delete process.env.PATTERN_APP_URL;
       await seedUser(userA);
       await seedUser(userB);
     }
@@ -251,6 +265,7 @@ export async function createRecordsHarness() {
       requests,
       gatewayRequests,
       geminiEnterpriseRequests,
+      evaluationStarts,
       swissRequests,
       get sqlite() {
         return sqlite;
@@ -268,6 +283,9 @@ export async function createRecordsHarness() {
         gatewayHandler = handler;
         if (handler) process.env.LOVABLE_API_KEY = "local-test-key-never-a-real-secret";
         else delete process.env.LOVABLE_API_KEY;
+      },
+      setEvaluationPlane(handler) {
+        evaluationPlane = handler;
       },
       setGeminiEnterprise(handler) {
         geminiEnterpriseHandler = handler;

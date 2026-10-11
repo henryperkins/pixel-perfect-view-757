@@ -35,6 +35,8 @@ const JSON_COLUMNS: Record<string, readonly string[]> = {
   context_signals: ["value"],
   daily_readings: ["language_meta"],
   feature_narratives: ["citations"],
+  evaluation_runs: ["case_ids"],
+  evaluation_results: ["result"],
 };
 
 /** Columns stored as 0/1 that the app treats as booleans. */
@@ -56,6 +58,8 @@ const GENERATED_ID_TABLES = new Set([
   "content_releases",
   "content_drafts",
   "feature_narratives",
+  "evaluation_runs",
+  "evaluation_results",
 
   "daily_readings",
   "reading_sources",
@@ -72,7 +76,12 @@ const CREATED_AT_TABLES = new Set([
   ...[...GENERATED_ID_TABLES].filter((table) => table !== "reading_sources"),
   "profiles",
 ]);
-const UPDATED_AT_TABLES = new Set(["profiles", "source_consents", "birth_profiles"]);
+const UPDATED_AT_TABLES = new Set([
+  "profiles",
+  "source_consents",
+  "birth_profiles",
+  "evaluation_runs",
+]);
 
 function config() {
   const url = process.env["PATTERN_WORKFLOW_URL"];
