@@ -162,3 +162,36 @@ verification remain open.
 The prior `builtin-0.5.0` graph is now both the built-in fallback and the validated
 rollback target. No model spend, real Swiss request, production pointer change,
 deployment, commit or history rewrite occurred.
+
+## Addendum — 2026-10-11, writing qualification round
+
+Recorded by the
+[writing qualification checklist](../plans/2026-10-11-daily-reading-writing-qualification-checklist.md).
+The sections above describe the earlier local phase and stay as written.
+
+- **Code.** The inactive candidate code was committed and reached `main` in merge
+  `4c96fd5` (pushed 2026-10-11T18:30:19Z). The public app was observed serving
+  `4c96fd5` at 19:55Z; that publication was not performed by the qualification
+  session. Lenses remain inactive: the fallback is still `builtin-0.5.0` and no
+  release row carries the catalogue.
+- **Commands.** Offline runs now require `--bundle builtin` or
+  `--bundle natal-candidate`. The commands under "Fixed evaluation" predate that
+  flag and are historical; current commands are in
+  [Reading evaluation](../../../READING-EVALUATION.md).
+- **Catalogue.** `builtin-0.6.0` failed the AI catalogue review: both fresh
+  reviewers found `nl-sun-03` (scene belongs to expression) and `nl-venus-08` (no
+  ordinary scene). It is superseded by `builtin-0.6.1` (copy checksum
+  `b073d625c23b5bede66eba25e37bd3f3397263710dd63ab67d8af06b6e216500`, transit copy
+  unchanged), which changes only `nl-sun-03`, `nl-moon-09` and `nl-venus-08`; see
+  its [manifest](2026-10-11-daily-natal-candidate-0.6.1.json). Its offline replay
+  accepts all 27 attempts with the same selections. `builtin-0.6.1` passed the AI
+  catalogue review (two fresh reviewers and one adjudication); human approval stays
+  deferred. Evidence:
+  [catalogue review](../../reviews/daily-natal-lens/catalogue-review.md).
+- **Actual-model experiment.** A hosted `natal-candidate` run of `builtin-0.6.0`
+  stopped on its first case with gateway code `credit`; nothing was retried. Both
+  hosted runs (the `builtin` baseline and the `natal-candidate` candidate) must be
+  repeated on the revision that serves `builtin-0.6.1`, which has not been pushed.
+- **Still open.** The matched actual-model experiment and its blind writing review,
+  live Swiss and owner-path checks, human approval, and any requested publication
+  or activation.
