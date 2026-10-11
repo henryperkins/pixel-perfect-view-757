@@ -23,6 +23,7 @@ import { Route as AuthenticatedTimeTravelRouteImport } from './routes/_authentic
 import { Route as AuthenticatedTimingRouteImport } from './routes/_authenticated/timing'
 import { Route as ApiPublicContentReleasesRouteImport } from './routes/api/public/content-releases'
 import { Route as ApiPublicContentReleasesRollbackRouteImport } from './routes/api/public/content-releases.rollback'
+import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -95,6 +96,12 @@ const ApiPublicContentReleasesRollbackRoute =
     path: '/rollback',
     getParentRoute: () => ApiPublicContentReleasesRoute,
   } as any)
+const LovableEmailTransactionalPreviewRoute =
+  LovableEmailTransactionalPreviewRouteImport.update({
+    id: '/lovable/email/transactional/preview',
+    path: '/lovable/email/transactional/preview',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -110,6 +117,7 @@ export interface FileRoutesByFullPath {
   '/timing': typeof AuthenticatedTimingRoute
   '/api/public/content-releases': typeof ApiPublicContentReleasesRouteWithChildren
   '/api/public/content-releases/rollback': typeof ApiPublicContentReleasesRollbackRoute
+  '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -125,6 +133,7 @@ export interface FileRoutesByTo {
   '/timing': typeof AuthenticatedTimingRoute
   '/api/public/content-releases': typeof ApiPublicContentReleasesRouteWithChildren
   '/api/public/content-releases/rollback': typeof ApiPublicContentReleasesRollbackRoute
+  '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -142,6 +151,7 @@ export interface FileRoutesById {
   '/_authenticated/timing': typeof AuthenticatedTimingRoute
   '/api/public/content-releases': typeof ApiPublicContentReleasesRouteWithChildren
   '/api/public/content-releases/rollback': typeof ApiPublicContentReleasesRollbackRoute
+  '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -159,6 +169,7 @@ export interface FileRouteTypes {
     | '/timing'
     | '/api/public/content-releases'
     | '/api/public/content-releases/rollback'
+    | '/lovable/email/transactional/preview'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -174,6 +185,7 @@ export interface FileRouteTypes {
     | '/timing'
     | '/api/public/content-releases'
     | '/api/public/content-releases/rollback'
+    | '/lovable/email/transactional/preview'
   id:
     | '__root__'
     | '/'
@@ -190,6 +202,7 @@ export interface FileRouteTypes {
     | '/_authenticated/timing'
     | '/api/public/content-releases'
     | '/api/public/content-releases/rollback'
+    | '/lovable/email/transactional/preview'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -197,6 +210,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   ApiPublicContentReleasesRoute: typeof ApiPublicContentReleasesRouteWithChildren
+  LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -299,6 +313,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicContentReleasesRollbackRouteImport
       parentRoute: typeof ApiPublicContentReleasesRoute
     }
+    '/lovable/email/transactional/preview': {
+      id: '/lovable/email/transactional/preview'
+      path: '/lovable/email/transactional/preview'
+      fullPath: '/lovable/email/transactional/preview'
+      preLoaderRoute: typeof LovableEmailTransactionalPreviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -349,6 +370,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   ApiPublicContentReleasesRoute: ApiPublicContentReleasesRouteWithChildren,
+  LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
