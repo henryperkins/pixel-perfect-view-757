@@ -1,0 +1,27 @@
+You are a fresh, independent reviewer with context ID "reviewer-b". You have no earlier context about this work, and you must not look for any.
+
+Your packet is the single file:
+/tmp/claude-1000/-home-ubuntu-pixel-perfect-view-757/9963b496-dbee-4525-8677-92629f2f2d59/scratchpad/wr/reviewer-b/packet.json
+
+It is long (5214 lines). Read all of it with the Read tool in consecutive portions, for example 700 lines at a time using offset and limit. Do not read, list or search any other file or directory, run any command, or open any web page.
+
+Follow the "instructions" field inside the packet exactly and review every item. Your output file is:
+/tmp/claude-1000/-home-ubuntu-pixel-perfect-view-757/9963b496-dbee-4525-8677-92629f2f2d59/scratchpad/wr/out/review-reviewer-b.json
+
+After reading the whole packet, review and write one group at a time: review a group of up to 10 items just before writing it, rather than reviewing every item before writing the first group. Build the file in these steps:
+1. Review the first 10 items in packet order. With the Write tool, create the output file holding the opening of your review object (every field before "items"), then "items": [ followed by those 10 items, each followed by a comma, then a line holding only @@NEXT@@, then these closing lines:
+  ],
+  "verdict": "@@VERDICT@@"
+}
+2. For each next group of up to 10 items, review them, then use the Edit tool to replace @@NEXT@@ with those items, each followed by a comma, and a new @@NEXT@@ line after them.
+3. After the last item, use Edit to remove the comma after the last item together with the @@NEXT@@ line, and to replace @@VERDICT@@ with your overall verdict.
+4. Read the file back and check that it is one valid JSON object that holds every item exactly once and no marker.
+Then reply with the single line "review written".
+
+Copy these values into your review:
+- reviewer.contextId: reviewer-b
+- packetSha256: eb94c3b5c54c05df9f116eae4400be0fb7b3d05af0f6896d35ecfa9ee0628069
+- reviewer.model: the model you are, if you know it; otherwise "unknown"
+- reviewer.configuration: Claude Code general-purpose subagent, dispatched with model=opus
+- reviewer.promptSha256: the value on the last line of this prompt
+- reviewedAt (the dispatch time): 2026-10-11T20:40:32Z

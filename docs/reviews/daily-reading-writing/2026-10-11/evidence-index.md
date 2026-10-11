@@ -93,8 +93,19 @@ prompt change's effect.
 
 ## Blinded AI writing review (Task 7)
 
+**Round 1 result: AI writing-review failed** (17 corrected-run items fail: 9 model
+drafts and 8 template fallbacks). See [`writing-review.md`](writing-review.md) for
+the per-item reasons, the baseline comparison and what the next round must address.
 Packets were prepared from the two live reports above: item-set hash
 `443911fc…72c6`, 74 items (54 model drafts and 20 template or displayed bodies),
-nothing uncovered. The assignment stays outside reviewer reach until both reviews
-are in. Reviews, any adjudication and the qualification summary are added here when
-they complete; each keeps `humanReviewCompleted: false`.
+nothing uncovered.
+
+| Artifact                                                                         | SHA-256                                                            |
+| -------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| [`reviewer-a.json`](reviewer-a.json)                                             | `13ce28f554d18dcc116eb7ec34226303074ca2f78b8ade5230d07c0a42c29e78` |
+| [`reviewer-b.json`](reviewer-b.json)                                             | `52f2bab8dabee58b8d84bd507e81d064367c4598655d25c3b9607ad830356153` |
+| [`qualification.json`](qualification.json)                                       | `2ac6c71808bb8b25474c858959dbcd4346bfbf86f5831a4a6e20adf6b16501a2` |
+| [`writing-review-inputs/assignment.json`](writing-review-inputs/assignment.json) | `52a047e66e6faf7a08bc08870050ea99c8181686e91ad7ff8297debd9cf023be` |
+
+Packets and prompts are beside the assignment. No adjudication was run. Every
+artifact keeps `humanReviewCompleted: false`.

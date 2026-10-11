@@ -1,0 +1,2230 @@
+{
+  "protocolVersion": "daily-writing-ai-review-1",
+  "kind": "review",
+  "packetSha256": "eb94c3b5c54c05df9f116eae4400be0fb7b3d05af0f6896d35ecfa9ee0628069",
+  "itemSetHash": "443911fca879fc5a8fc92b7a82d221dfe3cbe7c076a037aac2500881b94b72c6",
+  "reviewer": {
+    "contextId": "reviewer-b",
+    "model": "claude-opus-5-5",
+    "configuration": "Claude Code general-purpose subagent, dispatched with model=opus",
+    "promptSha256": "8627b2eb0993917b55670d6bba329c18c4cb22479a8a8468ca3ea1fe945169d9"
+  },
+  "reviewedAt": "2026-10-11T20:40:32Z",
+  "blindness": {
+    "declaration": "I read only the packet named in my prompt; my environment also attached project notes (AGENTS.md), a user memory index, tool and skill listings, and a git status whose branch name and recent commit subjects mention a writing qualification, natal checklists, a hosted run and a natal catalogue review, none of which identified the run, case or version behind any item in this packet.",
+    "inputs": ["packet"],
+    "sawOriginLabels": false,
+    "sawPriorVerdicts": false,
+    "sawOtherReviews": false,
+    "sawImplementationContext": false
+  },
+  "reassessmentOf": null,
+  "items": [
+    {
+      "itemId": "item-16",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Keeps I1's distinction (expectations outpacing capacity, a routine needing clearer boundaries) and both of D1's concrete scenes (an interest you seldom mention, a responsibility that fills more of the week than the title suggests)." },
+        "grounding": { "score": 5, "reason": "P1 is I1 verbatim; P2 reproduces D1 and restates P1, T1 and C1 accurately (approaching, exact in 3 days, orb 0.42 degrees). No modality changes." },
+        "coherence": { "score": 4, "reason": "Clear move from meaning to scene to timing; the jump from the D1 scene to phase and orb inside one paragraph is slightly abrupt." },
+        "voice": { "score": 4, "reason": "Plain, natural and consistent." },
+        "repetition": { "score": 3, "reason": "Reproduces the published I1 and D1 wording almost verbatim, the same stock sentences that recur across many items in this packet; supported, but with little variation." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-25",
+      "scores": {
+        "specificity": { "score": 3, "reason": "Keeps the company-or-quiet-hour and unclaimed-hour scenes but loses I1's central comparison, an ordinary moment set against your familiar rhythm." },
+        "grounding": { "score": 2, "reason": "Two substantive problems. P1 invents a link between I1's two alternative example scenes and misstates what is being compared. P2 turns D1's 'can offer a scene for tension' into the hour 'creating tension'. The timing values (separating, exact yesterday, 2026-10-31, orb 0.42, middle part) match C1, P1 and T1 as supplied." },
+        "coherence": { "score": 3, "reason": "Understandable, but P1's opening relationship is muddled, so 'this comparison' points at the wrong comparison." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 4, "reason": "Paraphrased rather than copied; little stock reuse." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-25-1",
+          "paragraph": 1,
+          "passage": "Choosing between company and a quiet hour can highlight the difference between a set plan and a wish for unplanned space.",
+          "supportingFactIds": [],
+          "missingFactIds": ["I1"],
+          "category": "unsupported_claim",
+          "severity": "substantive",
+          "explanation": "I1 offers two alternative example scenes: choosing company or a quiet hour, or a familiar plan against the wish for some unplanned space. It never says one choice highlights the other difference. The sentence invents that relationship and changes 'familiar plan' to 'set plan'. The next sentence then calls this the comparison the contact frames, but I1's comparison is between an ordinary moment and your familiar rhythm.",
+          "proposedCorrection": "A brief Moon contact with natal Moon offers a frame for comparing an ordinary moment with your familiar rhythm: the scene might be choosing company or a quiet hour, or a familiar plan set against the wish for some unplanned space."
+        },
+        {
+          "findingId": "rb-25-2",
+          "paragraph": 2,
+          "passage": "creating tension around how much private space you prefer",
+          "supportingFactIds": [],
+          "missingFactIds": ["D1"],
+          "category": "strengthened_modality",
+          "severity": "substantive",
+          "explanation": "D1 says a full calendar or an obligation that follows you into a quiet moment 'can offer a scene for tension'. The text says the mentally full hour creates that tension, which turns a possible scene into a stated effect.",
+          "proposedCorrection": "An unclaimed hour can still be mentally full of unfinished tasks, which can offer a scene for tension around the amount of private space you prefer."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-30",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Published I1 and D1 copy with its concrete scenes: a calendar left too full, a quiet moment spent tracking the next task, an unclaimed hour." },
+        "grounding": { "score": 5, "reason": "Each paragraph is I1, D1, P1 or T1 verbatim, after a tone prefix; nothing added." },
+        "coherence": { "score": 3, "reason": "Understandable but repetitive. P2 restates P1's full calendar, quiet moment and tension over preferred space, and P3 and P4 are bare label lines." },
+        "voice": { "score": 2, "reason": "The warm tone is reduced to a stock 'Taking this gently:' prefix on otherwise neutral template copy, followed later by a 'Timing:' label; stiff." },
+        "repetition": { "score": 2, "reason": "Entirely stock published wording, with heavy duplication between P1 and P2." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-30-1",
+          "paragraph": 2,
+          "passage": "A full calendar or an obligation that follows you into a quiet moment can offer a scene for tension around the amount of private space you prefer.",
+          "supportingFactIds": ["D1", "I1"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "This repeats P1's scenes (a calendar left too full, a quiet moment) and its tension between responsibility and preferred space, so P2 adds little beyond the 'unclaimed hour' image.",
+          "proposedCorrection": "Merge P1 and P2: keep D1's unclaimed hour as the scene and drop the repeated calendar and tension clause."
+        },
+        {
+          "findingId": "rb-30-2",
+          "paragraph": 1,
+          "passage": "Taking this gently:",
+          "supportingFactIds": ["I1"],
+          "missingFactIds": [],
+          "category": "voice",
+          "severity": "minor",
+          "explanation": "A fixed label stands in for warmth. The rest of the reading, including the 'Timing:' label in P4, keeps the neutral template register.",
+          "proposedCorrection": "Let the warmth come through the wording itself while keeping each statement conditional, instead of a label."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-57",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Keeps I1's capacity and boundaries distinction, D1's scene of a responsibility outgrowing the title, and I2's contrast in taste and social ease." },
+        "grounding": { "score": 5, "reason": "Claims trace to I1, D1 and I2 with modality intact. No house or Ascendant claim and no caveat, as U2 requires." },
+        "coherence": { "score": 4, "reason": "One paragraph per contact, kept separate as required without S1; clear, though a juxtaposition rather than a progression." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 3, "reason": "Close to the published wording; P2 is I2 almost verbatim." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-07",
+      "scores": {
+        "specificity": { "score": 4, "reason": "Gives each contact its published practical distinction (clearer boundaries, room to explore one more option, taste and social ease) but no concrete everyday scene from D1." },
+        "grounding": { "score": 5, "reason": "Each paragraph traces to I1, I2 or I3 with modality kept. 'At the same time' and 'also' mark the calculated co-occurrence of the contacts without joining their meanings, which is acceptable without S1." },
+        "coherence": { "score": 4, "reason": "Three clearly ordered paragraphs, one per contact; a list rather than a progression, which is correct without S1." },
+        "voice": { "score": 3, "reason": "Clear and consistent, but the requested warm tone is not audible; the register stays the neutral published copy." },
+        "repetition": { "score": 3, "reason": "P2 and P3 are near-verbatim I2 and I3." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-07-1",
+          "paragraph": 1,
+          "passage": "When expectations outpace available capacity, a routine or responsibility can show where it needs clearer boundaries.",
+          "supportingFactIds": ["I1"],
+          "missingFactIds": [],
+          "category": "voice",
+          "severity": "minor",
+          "explanation": "The item asks for a warm tone, but this paragraph, like the rest of the reading, keeps the neutral published register.",
+          "proposedCorrection": "Let warmth come through the wording (for example 'you might notice...') while keeping each statement conditional."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-19",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Keeps I1's distinction (a plan looking roomier, permission to explore one more option or describe an ambition) and D1's concrete scene (a familiar project or an interest you can name plainly)." },
+        "grounding": { "score": 4, "reason": "All claims trace to I1, D1, C1, P1 and T1, and the calculated details are accurate: trine, close to exact, exact today, arc 30%, orb 0.42, 2026-10-11. D1's 'can offer' becomes 'offers', inside a when-clause that keeps it conditional." },
+        "coherence": { "score": 4, "reason": "Leads with the everyday meaning, then the scene, the named contact and the calculated detail, as technical depth asks. The timing sentences are list-like, and 'exact today' repeats the exact date." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 3, "reason": "Close to the published wording; 'calculated window' repeated." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-19-1",
+          "paragraph": 2,
+          "passage": "where a familiar project or an interest you can name plainly offers a scene for that fit",
+          "supportingFactIds": ["D1"],
+          "missingFactIds": [],
+          "category": "style",
+          "severity": "minor",
+          "explanation": "D1 says such a project 'can offer a scene'. The governing 'can feel useful when' clause keeps the sentence conditional, so I record this as wording drift rather than a strengthened claim.",
+          "proposedCorrection": "...where a familiar project or an interest you can name plainly can offer a scene for that fit."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-31",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Published I1 and D1 copy with its concrete scenes: a calendar left too full, a quiet moment spent tracking the next task, an unclaimed hour." },
+        "grounding": { "score": 5, "reason": "Each paragraph is I1, D1, P1 or T1 verbatim; nothing added." },
+        "coherence": { "score": 3, "reason": "Understandable but repetitive. P2 restates P1's full calendar, quiet moment and tension over preferred space, and P3 and P4 are bare label lines." },
+        "voice": { "score": 3, "reason": "Clear, but the bare phase line and the 'Timing:' label read as stiff template output." },
+        "repetition": { "score": 2, "reason": "Entirely stock published wording, with heavy duplication between P1 and P2." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-31-1",
+          "paragraph": 2,
+          "passage": "A full calendar or an obligation that follows you into a quiet moment can offer a scene for tension around the amount of private space you prefer.",
+          "supportingFactIds": ["D1", "I1"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "This repeats P1's scenes (a calendar left too full, a quiet moment) and its tension between responsibility and preferred space, so P2 adds little beyond the 'unclaimed hour' image.",
+          "proposedCorrection": "Merge P1 and P2: keep D1's unclaimed hour as the scene and drop the repeated calendar and tension clause."
+        },
+        {
+          "findingId": "rb-31-2",
+          "paragraph": 4,
+          "passage": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window.",
+          "supportingFactIds": ["T1"],
+          "missingFactIds": [],
+          "category": "voice",
+          "severity": "minor",
+          "explanation": "A field label and a one-line paragraph read as data output rather than prose.",
+          "proposedCorrection": "Fold the phase and timing into one sentence, e.g. 'The contact is approaching and becomes exact in 3 days; this reading falls in the middle part of the calculated window.'"
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-71",
+      "scores": {
+        "specificity": { "score": 4, "reason": "S1's concrete scene (a task whose ambitions are growing beyond its agreed limits) and I1's boundaries distinction are present; D1's scenes are not used." },
+        "grounding": { "score": 3, "reason": "One substantive problem: P2 presents I2's conditional framing as a fact that holds alongside the scene. P1 also moves I1's 'highlights' from the contact to 'That contrast', a minor reattribution." },
+        "coherence": { "score": 4, "reason": "Clear progression from the Saturn-Sun meaning to the tension synthesis." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 3, "reason": "P2 opens with S1 verbatim; I1 and I2 phrasing reused." },
+        "synthesisCoherence": { "score": 4, "reason": "Develops the published tension: more scope needs more structure, with I1's capacity and boundaries on one side and I2's pull toward a larger piece of work on the other." },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-71-1",
+          "paragraph": 2,
+          "passage": "even while enthusiasm and practical initiative make it natural to take on a larger piece of work or pursue an emerging opening",
+          "supportingFactIds": [],
+          "missingFactIds": ["I2"],
+          "category": "strengthened_modality",
+          "severity": "substantive",
+          "explanation": "I2 says enthusiasm and initiative reinforce one another 'when an aim is well chosen' and that the trine 'frames moments when' effort meets little friction, 'making it natural'. The text drops both conditions and presents the ease as a fact that holds alongside the scene. The generic scene does not clearly restore the condition, so this is recorded as substantive.",
+          "proposedCorrection": "...offers one place to notice that tension, while Jupiter's trine to Mars frames moments when, with a well-chosen aim, it can feel natural to take on a larger piece of work or pursue an emerging opening."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-20",
+      "scores": {
+        "specificity": { "score": 4, "reason": "Concrete distinctions from I1 and S1 (an emerging opening, a larger piece of work, wider reach testing the framework); D1 unused." },
+        "grounding": { "score": 2, "reason": "Two substantive problems: the frequency claim 'tends to' and the invented 'without forcing momentum'. I2's 'clearer boundaries' also drifts to 'firmer boundaries'." },
+        "coherence": { "score": 4, "reason": "The Jupiter-Mars meaning comes first, then the synthesis and Saturn-Sun; clear." },
+        "voice": { "score": 4, "reason": "Plain and natural, though 'an established role still requires steady obligations' is awkward." },
+        "repetition": { "score": 4, "reason": "Mostly paraphrased." },
+        "synthesisCoherence": { "score": 4, "reason": "Develops S1's tension (wider reach testing the framework, capacity catching up with ambition) and ties it to both parents." },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-20-1",
+          "paragraph": 1,
+          "passage": "Effort tends to encounter little friction",
+          "supportingFactIds": [],
+          "missingFactIds": ["I1"],
+          "category": "unsupported_frequency",
+          "severity": "substantive",
+          "explanation": "I1 says the trine 'frames moments when effort encounters little friction'. 'Tends to' asserts a general tendency that no supplied statement gives.",
+          "proposedCorrection": "Jupiter's trine to Mars frames moments when effort encounters little friction, when enthusiasm and practical initiative reinforce one another around a well-chosen aim."
+        },
+        {
+          "findingId": "rb-20-2",
+          "paragraph": 1,
+          "passage": "without forcing momentum",
+          "supportingFactIds": [],
+          "missingFactIds": ["I1"],
+          "category": "unsupported_exclusion",
+          "severity": "substantive",
+          "explanation": "I1 says the trine makes it natural to take on a larger piece of work. Nothing supplied addresses forcing momentum, so the 'without' clause denies an alternative the facts do not cover.",
+          "proposedCorrection": "...making it natural to take on a larger piece of work or pursue an emerging opening."
+        },
+        {
+          "findingId": "rb-20-3",
+          "paragraph": 2,
+          "passage": "indicating where a routine benefits from firmer boundaries",
+          "supportingFactIds": ["I2"],
+          "missingFactIds": [],
+          "category": "specificity",
+          "severity": "minor",
+          "explanation": "I2 says a routine or responsibility 'needs clearer boundaries'. 'Firmer' shifts the published distinction from clarity to strictness.",
+          "proposedCorrection": "...showing where a routine or responsibility needs clearer boundaries."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-09",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Concrete published scenes (a quiet moment spent tracking the next task, an unclaimed hour, a full calendar) tied to Saturn's hard contact with the Moon." },
+        "grounding": { "score": 3, "reason": "P1 and P2 trace to I1 and D1 with modality intact, but P3 places the exact date, rather than this reading, in the middle part of the window." },
+        "coherence": { "score": 3, "reason": "Understandable but repetitive: P2 restates P1's quiet moment and the tension over preferred space." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 2, "reason": "P2 is D1 verbatim and largely duplicates P1." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-09-1",
+          "paragraph": 3,
+          "passage": "The calculated exact date is 2026-10-14, which is exact in 3 days in the middle part of the calculated window.",
+          "supportingFactIds": ["C1"],
+          "missingFactIds": ["T1"],
+          "category": "factual_mismatch",
+          "severity": "substantive",
+          "explanation": "T1 places this reading in the middle part of the calculated window. The sentence places the exact date there instead, which no supplied fact states.",
+          "proposedCorrection": "The calculated exact date is 2026-10-14, exact in 3 days; this reading falls in the middle part of the calculated window."
+        },
+        {
+          "findingId": "rb-09-2",
+          "paragraph": 2,
+          "passage": "A full calendar or an obligation that follows you into a quiet moment can offer a scene for tension around the amount of private space you prefer.",
+          "supportingFactIds": ["D1", "I1"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "This repeats P1's quiet moment and its tension between responsibility and preferred space.",
+          "proposedCorrection": "Keep D1's unclaimed hour as the new scene and drop the repeated tension clause."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-59",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Keeps I1's distinction (expectations outpacing capacity, clearer boundaries) and works in D1's scene of a responsibility taking more of the schedule than the role suggests." },
+        "grounding": { "score": 4, "reason": "Claims trace to I1, D1, C1, P1 and T1 with modality intact. Small liberties ('formal title', 'points of friction', 'that role' for 'your title') add no substantive claim." },
+        "coherence": { "score": 4, "reason": "P1 joins the meaning and the scene; P2 gives the timing. Clear." },
+        "voice": { "score": 4, "reason": "Plain and natural, though 'holds attention' without 'your' reads slightly impersonal." },
+        "repetition": { "score": 4, "reason": "Paraphrased, with variation that stays supported." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-50",
+      "scores": {
+        "specificity": { "score": 4, "reason": "Keeps I1's boundaries distinction and I2's direct engagement with an immediate task, but merges D1's two scenes into one altered scene." },
+        "grounding": { "score": 3, "reason": "One substantive problem: D1's 'interest you seldom mention' and 'responsibility that occupies more of your week than your title suggests' become a single 'unmentioned responsibility'. The rest is traceable, and P2 is explicitly separate, as required without S1." },
+        "coherence": { "score": 4, "reason": "Two clearly separate paragraphs, the second marked as a separate calculation." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 3, "reason": "P2 closely follows I2's wording." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-50-1",
+          "paragraph": 1,
+          "passage": "an unmentioned responsibility that occupies more of your week can make that gap concrete",
+          "supportingFactIds": [],
+          "missingFactIds": ["D1"],
+          "category": "unsupported_claim",
+          "severity": "substantive",
+          "explanation": "D1 gives two separate scenes: an interest you seldom mention, or a responsibility that occupies more of your week than your title suggests. The text fuses them into a responsibility that is never mentioned, hardening 'seldom' into 'unmentioned', and drops the comparison with the title that makes it a gap. That scene is not supplied.",
+          "proposedCorrection": "...and an interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-02",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Keeps I1's comparison with your familiar rhythm and both its example scenes, plus D1's unclaimed hour and quiet-moment scene." },
+        "grounding": { "score": 5, "reason": "P1 is I1 reordered, P2 is D1, and P3 matches C1, P1 and T1 (separating, exact yesterday, orb 0.42)." },
+        "coherence": { "score": 4, "reason": "Clear overall, but P1 opens with 'The scene' before any frame or scene has been introduced." },
+        "voice": { "score": 4, "reason": "Plain; natural once past the abrupt opening." },
+        "repetition": { "score": 3, "reason": "Near-verbatim published wording." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-02-1",
+          "paragraph": 1,
+          "passage": "The scene might be the difference between choosing company and choosing a quiet hour, or between a familiar plan and the wish for some unplanned space.",
+          "supportingFactIds": ["I1"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "Moving I1's second sentence to the front leaves 'The scene' with no antecedent; the frame it belongs to arrives only in the next sentence.",
+          "proposedCorrection": "Lead with 'A brief Moon conjunction with natal Moon offers a frame for comparing an ordinary moment with your familiar rhythm.' and follow with the scene."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-29",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Keeps I1's distinction and D1's scene of a responsibility outgrowing the title." },
+        "grounding": { "score": 5, "reason": "Traceable to I1, D1, C1, P1 and T1 with modality intact." },
+        "coherence": { "score": 4, "reason": "Meaning and scene, then timing; clear." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 3, "reason": "P1 matches the opening paragraph of another Saturn-Sun item in this packet word for word and stays close to the published copy." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-41",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Published I1 and D1 copy: new phrasing, questions or ideas; an unfinished list or a draft with competing aims." },
+        "grounding": { "score": 5, "reason": "Each paragraph is I1, D1, P1 or T1 verbatim after a tone label." },
+        "coherence": { "score": 4, "reason": "Meaning, then work scene, then phase and timing. The communication reset and the work scene sit side by side without a link, and the last two paragraphs are bare lines." },
+        "voice": { "score": 3, "reason": "The clinical register comes mostly from the 'Observation:' and 'Timing:' labels; the copy itself is neutral." },
+        "repetition": { "score": 2, "reason": "Entirely stock published wording." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-06",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Published I1 and D1 copy: permission to explore one more option or describe an ambition; a familiar project or an interest you can name plainly." },
+        "grounding": { "score": 5, "reason": "Each paragraph is I1, D1, P1 or T1 verbatim; nothing added." },
+        "coherence": { "score": 4, "reason": "Leads with the everyday meaning as technical depth asks, but the trine is never named and the calculated detail sits in a detached label line instead of being connected to the meaning." },
+        "voice": { "score": 3, "reason": "Clear, but the 'Timing:' label and stacked calculation clauses read as template output." },
+        "repetition": { "score": 2, "reason": "Entirely stock published wording." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-06-1",
+          "paragraph": 4,
+          "passage": "Timing: exact today. This reading falls in the middle part of the calculated window. The calculated arc position is 30%. Current orb at the reading's calculation time: 0.42°.",
+          "supportingFactIds": ["C1", "T1"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "Technical depth asks the reading to connect the everyday meaning to the named contact and its calculated detail. Here the detail is appended as a label line, and the aspect (trine, from C1) is never named.",
+          "proposedCorrection": "Transiting Jupiter trine natal Sun is exact today, with an orb of 0.42 degrees and an arc position of 30%; this reading falls in the middle part of the calculated window."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-51",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Keeps I1's distinction and both of D1's concrete scenes." },
+        "grounding": { "score": 5, "reason": "P1 and P2 are I1 and D1; P3 matches C1, P1 and T1. No house or Ascendant claim and no caveat, consistent with U2." },
+        "coherence": { "score": 4, "reason": "Meaning, scene, timing; clear." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 3, "reason": "P1 and P2 are the published copy verbatim." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-43",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Published I1, S1 and D1 copy with concrete scenes (a task whose ambitions are growing beyond its agreed limits, an interest you seldom mention)." },
+        "grounding": { "score": 5, "reason": "Verbatim I1, S1, D1, P1 and T1. The 'Also in range' line's 'exact in 3 days' is supported: C2 shares C1's 2026-10-14 date, which T1 puts 3 days away." },
+        "coherence": { "score": 3, "reason": "Understandable, but S1 is wedged between the Saturn-Sun meaning and its D1 scene, and the Jupiter-Mars contact appears only in a trailing list line, so the order does not progress clearly." },
+        "voice": { "score": 3, "reason": "Clear but label-driven ('Timing:', 'Also in range:')." },
+        "repetition": { "score": 2, "reason": "Entirely stock published wording." },
+        "synthesisCoherence": { "score": 3, "reason": "Both sources appear, but only as S1 pasted verbatim plus a trailing 'Also in range' line. I2's meaning is never given and the relationship is not tied to the Jupiter-Mars contact, so it needs editing." },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-43-1",
+          "paragraph": 2,
+          "passage": "Giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.",
+          "supportingFactIds": ["S1"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "The synthesis arrives before the second contact is introduced and without I2's meaning, so a reader cannot tell which two contacts 'that tension' joins; the second contact is named only in P6.",
+          "proposedCorrection": "Introduce Jupiter's trine to Mars with I2's meaning, then give S1 as the published link between it and Saturn's square to the Sun, and drop the trailing 'Also in range' line."
+        },
+        {
+          "findingId": "rb-43-2",
+          "paragraph": 6,
+          "passage": "Also in range: jupiter trine natal mars (exact in 3 days).",
+          "supportingFactIds": ["C2"],
+          "missingFactIds": [],
+          "category": "voice",
+          "severity": "minor",
+          "explanation": "A lower-case list label rather than prose, at odds with the rest of the reading.",
+          "proposedCorrection": "Name the contact in a sentence where its meaning is introduced: 'Jupiter's trine to Mars, also exact in 3 days, ...'."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-66",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Keeps I1's distinction and both of D1's concrete scenes." },
+        "grounding": { "score": 5, "reason": "Traceable to I1, D1, P1 and T1 with modality intact." },
+        "coherence": { "score": 4, "reason": "Meaning in P1; scene plus phase and timing in P2. The move from scene to timing within P2 is a little abrupt." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 3, "reason": "P2 reproduces D1 verbatim." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-55",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Keeps I1's contrast in taste and social ease and both of D1's scenes (an uncertain plan, an unfinished reply)." },
+        "grounding": { "score": 5, "reason": "Traceable to I1, D1, C1, P1 and T1 with modality intact ('can clarify', 'can serve as a scene')." },
+        "coherence": { "score": 4, "reason": "Meaning, relationship scene, then timing; clear." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 4, "reason": "P1 is freshly phrased; P2 stays close to D1." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-05",
+      "scores": {
+        "specificity": { "score": 5, "reason": "The primary contact carries its published I1 and D1 distinctions and scenes; the other two contacts are only listed as in range, which is not a defect." },
+        "grounding": { "score": 5, "reason": "Verbatim I1, D1, P1 and T1. The 'Also in range' timings are supported: C2 and C3 share C1's 2026-10-14 date, which T1 puts 3 days away. No joint claim between contacts." },
+        "coherence": { "score": 4, "reason": "Meaning, scene, phase, timing, then the other contacts in range; clear, though the last three paragraphs are bare lines." },
+        "voice": { "score": 2, "reason": "The warm tone is reduced to a stock 'Taking this gently:' prefix on neutral template copy, followed by 'Timing:' and 'Also in range:' labels; stiff." },
+        "repetition": { "score": 2, "reason": "Entirely stock published wording." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-05-1",
+          "paragraph": 1,
+          "passage": "Taking this gently:",
+          "supportingFactIds": ["I1"],
+          "missingFactIds": [],
+          "category": "voice",
+          "severity": "minor",
+          "explanation": "A fixed label stands in for warmth; the rest of the reading keeps the neutral template register, with further labels in P4 and P5.",
+          "proposedCorrection": "Let the warmth come through the wording itself while keeping each statement conditional, instead of a label."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-67",
+      "scores": {
+        "specificity": { "score": 4, "reason": "Gives each contact its published distinction but no D1 scene, and 'entirely' blurs I2's point that the plan stays the same plan." },
+        "grounding": { "score": 3, "reason": "One substantive problem: P1 inflates I1's 'more deliberate effort than usual' to 'far more'. P2 and P3 drift slightly ('entirely different', 'simply helps')." },
+        "coherence": { "score": 4, "reason": "Three separate paragraphs, one per contact; the transitions mark co-occurrence without joining meanings, as required without S1." },
+        "voice": { "score": 4, "reason": "Warmer than the published copy ('offers a way to read', 'what's already underway'); natural and consistent with the warm tone." },
+        "repetition": { "score": 4, "reason": "Paraphrased, with little stock reuse." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-67-1",
+          "paragraph": 1,
+          "passage": "an established role can start to require far more deliberate effort than usual",
+          "supportingFactIds": [],
+          "missingFactIds": ["I1"],
+          "category": "unsupported_claim",
+          "severity": "substantive",
+          "explanation": "I1 speaks of obligations that 'require more deliberate effort than usual'. 'Far more' inflates the published degree of difficulty with no supplied support.",
+          "proposedCorrection": "...an established role can feel demanding when its obligations require more deliberate effort than usual."
+        },
+        {
+          "findingId": "rb-67-2",
+          "paragraph": 2,
+          "passage": "without becoming an entirely different plan",
+          "supportingFactIds": ["I2"],
+          "missingFactIds": [],
+          "category": "specificity",
+          "severity": "minor",
+          "explanation": "I2 says the plan looks roomier 'without becoming a different plan'. Adding 'entirely' leaves room for partial change and blurs the published distinction.",
+          "proposedCorrection": "...an existing plan can look roomier without becoming a different plan."
+        },
+        {
+          "findingId": "rb-67-3",
+          "paragraph": 3,
+          "passage": "simply helps clarify what you value in company and quiet",
+          "supportingFactIds": ["I3"],
+          "missingFactIds": [],
+          "category": "style",
+          "severity": "minor",
+          "explanation": "I3 attributes the clarifying to the opposition bringing differences into view. 'Simply helps' adds an unsupported note of ease and drops 'genuinely'.",
+          "proposedCorrection": "...noticing a contrast with what others want or expect can be part of clarifying what you genuinely value in company and quiet."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-54",
+      "scores": {
+        "specificity": { "score": 4, "reason": "Keeps I1's tension and the quiet-moment scene, but blurs D1's unclaimed hour by dropping 'mentally'." },
+        "grounding": { "score": 3, "reason": "One substantive problem ('often'). Timing and orb match C1, P1 and T1." },
+        "coherence": { "score": 4, "reason": "Meaning, then a brief scene and the timing; clear." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 4, "reason": "Paraphrased, with little stock reuse." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-54-1",
+          "paragraph": 1,
+          "passage": "A small obligation often takes up more room than its size suggests.",
+          "supportingFactIds": [],
+          "missingFactIds": ["I1"],
+          "category": "unsupported_frequency",
+          "severity": "substantive",
+          "explanation": "I1 says a small obligation 'can take up more room than its size suggests'. 'Often' asserts a frequency that no supplied statement gives.",
+          "proposedCorrection": "A small obligation can take up more room than its size suggests."
+        },
+        {
+          "findingId": "rb-54-2",
+          "paragraph": 2,
+          "passage": "An unclaimed hour can still stay full of unfinished tasks.",
+          "supportingFactIds": ["D1"],
+          "missingFactIds": [],
+          "category": "specificity",
+          "severity": "minor",
+          "explanation": "D1 says the hour can be 'mentally full' of unfinished tasks. Dropping 'mentally' turns an inner-life scene into a literally busy hour.",
+          "proposedCorrection": "An unclaimed hour can still be mentally full of unfinished tasks."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-08",
+      "scores": {
+        "specificity": { "score": 4, "reason": "I1's boundaries distinction and S1's concrete scene (a task's ambitions growing beyond its agreed limits) are present; D1's scenes are unused." },
+        "grounding": { "score": 3, "reason": "One substantive problem: P1's opening adds a frequency claim and states as an effect what I1 gives as a condition. P2 is traceable to I2 and S1." },
+        "coherence": { "score": 4, "reason": "Saturn-Sun meaning, then the Jupiter-Mars pull and the synthesis; clear." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 4, "reason": "Paraphrased, with little stock reuse." },
+        "synthesisCoherence": { "score": 4, "reason": "Develops the published tension: initiative and enthusiasm make a larger piece of work appealing, but more scope needs more structure, which ties back to P1's boundaries." },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-08-1",
+          "paragraph": 1,
+          "passage": "Everyday expectations sometimes outpace available capacity, making an established role require more deliberate effort than usual.",
+          "supportingFactIds": [],
+          "missingFactIds": ["I1"],
+          "category": "unsupported_frequency",
+          "severity": "substantive",
+          "explanation": "I1 says the square 'highlights where expectations outpace available capacity' and that a role 'can feel demanding when its obligations require more deliberate effort than usual'. 'Sometimes' adds a frequency claim that no supplied statement gives, and 'making ... require' states as an unhedged effect what I1 gives as a condition. 'Sometimes' is the mildest frequency word, but the protocol requires supplied support for frequency, so I record this as substantive.",
+          "proposedCorrection": "An established role can feel demanding when its obligations require more deliberate effort than usual; Saturn's square to the Sun highlights where expectations outpace available capacity."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-03",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Keeps I1's contrast in taste and social ease and both of D1's scenes (an unfinished reply, an uncertain plan)." },
+        "grounding": { "score": 5, "reason": "P1 recombines I1 with modality intact ('can bring', 'can involve'); P2 is D1." },
+        "coherence": { "score": 4, "reason": "Meaning, then relationship scene; clear." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 3, "reason": "P2 is D1 verbatim." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-60",
+      "scores": {
+        "specificity": { "score": 4, "reason": "Small dependable actions, an immediate task and incremental steps come from I1, I2 and S1, but D1's concrete scene is unused." },
+        "grounding": { "score": 3, "reason": "One substantive doubt: P2 turns I2's 'allowing effort to produce tangible results' into 'effort produces tangible results'. P1's first sentence also scrambles I1." },
+        "coherence": { "score": 4, "reason": "Saturn trine first, then the reinforcement and Mars trine; clear, though P1's opening sentence is garbled." },
+        "voice": { "score": 3, "reason": "Clear, but 'frames' appears three times and the opening sentence is stiff." },
+        "repetition": { "score": 3, "reason": "S1 and parts of I1 verbatim; 'frames' repeated." },
+        "synthesisCoherence": { "score": 4, "reason": "Develops the published reinforcement: steady persistence (Saturn trine) paired with targeted action (Mars trine), with both parents present." },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-60-1",
+          "paragraph": 1,
+          "passage": "Upholding a commitment at an even pace frames the quiet satisfaction of patience stabilizing long-term direction.",
+          "supportingFactIds": ["I1"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "In I1 the trine frames the satisfaction of upholding a commitment, and patience stabilizes direction. Here upholding a commitment 'frames' a satisfaction 'of patience stabilizing long-term direction'. The parts are supplied, but the sentence is garbled.",
+          "proposedCorrection": "Saturn's trine to the Sun frames the quiet satisfaction of upholding a commitment at an even pace, where patience stabilizes long-term direction."
+        },
+        {
+          "findingId": "rb-60-2",
+          "paragraph": 2,
+          "passage": "and effort produces tangible results",
+          "supportingFactIds": [],
+          "missingFactIds": ["I2"],
+          "category": "strengthened_modality",
+          "severity": "substantive",
+          "explanation": "I2 says the trine frames direct engagement 'allowing effort to produce tangible results', an enabling possibility. The clause most naturally reads as a flat statement that effort produces results. It could also be parsed as part of the 'when' condition, but either reading departs from I2, so the doubt is recorded as substantive.",
+          "proposedCorrection": "...where energy flows easily when action lines up with what matters to you, reducing hesitation and allowing effort to produce tangible results."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-46",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Keeps I1's distinction and both of D1's scenes." },
+        "grounding": { "score": 3, "reason": "P1 and P2 trace to I1 and D1, and there is no house or Ascendant claim and no caveat, consistent with U2. But P3 places the exact date, rather than this reading, in the middle part of the window." },
+        "coherence": { "score": 4, "reason": "Meaning, scene, timing; clear." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 3, "reason": "P2 is D1 with its examples swapped; close to stock wording." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-46-1",
+          "paragraph": 3,
+          "passage": "The calculated exact date is 2026-10-14, falling exact in 3 days in the middle part of the window.",
+          "supportingFactIds": ["C1"],
+          "missingFactIds": ["T1"],
+          "category": "factual_mismatch",
+          "severity": "substantive",
+          "explanation": "T1 places this reading in the middle part of the calculated window. The sentence places the exact date there instead, which no supplied fact states.",
+          "proposedCorrection": "The calculated exact date is 2026-10-14, exact in 3 days; this reading falls in the middle part of the window."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-74",
+      "scores": {
+        "specificity": { "score": 4, "reason": "D1's scenes are kept and elaborated, but P1's distinction rests partly on unsupported content." },
+        "grounding": { "score": 2, "reason": "Two substantive problems in P1: an unsupported exclusion, and a claim that the reader's daily obligations have expanded." },
+        "coherence": { "score": 4, "reason": "Meaning, then identity scene; clear." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 4, "reason": "Paraphrased, with little stock reuse." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-74-1",
+          "paragraph": 1,
+          "passage": "Rather than indicating a sudden change in purpose",
+          "supportingFactIds": [],
+          "missingFactIds": ["I1"],
+          "category": "unsupported_exclusion",
+          "severity": "substantive",
+          "explanation": "No supplied statement addresses a change in purpose, so the 'rather than' clause denies an alternative the facts do not cover.",
+          "proposedCorrection": "Delete the clause: 'Saturn's square to the Sun highlights where expectations outpace available capacity...'."
+        },
+        {
+          "findingId": "rb-74-2",
+          "paragraph": 1,
+          "passage": "where daily obligations have expanded",
+          "supportingFactIds": [],
+          "missingFactIds": ["I1"],
+          "category": "unsupported_personal_claim",
+          "severity": "substantive",
+          "explanation": "I1 says the square 'highlights where expectations outpace available capacity'. Saying the reader's daily obligations 'have expanded' asserts a change in the reader's situation that nothing supplied states.",
+          "proposedCorrection": "...highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-58",
+      "scores": {
+        "specificity": { "score": 4, "reason": "Keeps I1's focus on phrasing, questions and ideas and D1's list and draft scenes, but turns D1's 'part of a task that feels like yours' into 'which part of the task is yours', losing a published distinction." },
+        "grounding": { "score": 4, "reason": "Claims trace to I1, D1, C1, P1 and T1 with modality intact (exact yesterday on 2026-10-10, separating, orb 0.42); one small wording drift." },
+        "coherence": { "score": 4, "reason": "Meaning, work scene, timing; clear." },
+        "voice": { "score": 4, "reason": "Measured and precise, fitting the clinical tone." },
+        "repetition": { "score": 4, "reason": "P1 is freshly phrased; P2 stays close to D1." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-58-1",
+          "paragraph": 2,
+          "passage": "which part of the task is yours",
+          "supportingFactIds": ["D1"],
+          "missingFactIds": [],
+          "category": "specificity",
+          "severity": "minor",
+          "explanation": "D1 speaks of 'the part of a task that feels like yours', a felt sense of ownership. 'Is yours' turns it into a matter of fact.",
+          "proposedCorrection": "Pace, scope, and the part of a task that feels like yours are separate pieces of working on something."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-35",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Keeps I1's tension and both scenes (a quiet moment, a calendar left too full) plus D1's unclaimed hour." },
+        "grounding": { "score": 5, "reason": "Traceable to I1, D1, C1, P1 and T1 with modality intact ('might be', 'can', 'offering a scene')." },
+        "coherence": { "score": 4, "reason": "Meaning, scene, timing; P2 repeats P1's tension clause, which minor editing would fix." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 3, "reason": "Close to the published wording, with the tension over preferred space stated twice." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-35-1",
+          "paragraph": 2,
+          "passage": "offering a scene for tension around the amount of private space you prefer",
+          "supportingFactIds": ["D1", "I1"],
+          "missingFactIds": [],
+          "category": "repetition",
+          "severity": "minor",
+          "explanation": "This restates P1's tension between responsibility and the uninterrupted space you would prefer.",
+          "proposedCorrection": "End P2's first sentence after 'unfinished tasks' or vary the point it makes."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-65",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Concrete scenes from D1 and I1 (an unclaimed hour crowded by an obligation that follows you into rest, a small duty's calendar footprint) tied to the square." },
+        "grounding": { "score": 2, "reason": "Two substantive problems: 'often' adds an unsupported frequency, and P2 places the exact date, rather than this reading, in the middle part of the window." },
+        "coherence": { "score": 4, "reason": "Scene and meaning in P1, timing in P2; clear." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 4, "reason": "Paraphrased, with supported variation." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-65-1",
+          "paragraph": 1,
+          "passage": "A small duty often takes up more room than its calendar footprint suggests.",
+          "supportingFactIds": [],
+          "missingFactIds": ["I1"],
+          "category": "unsupported_frequency",
+          "severity": "substantive",
+          "explanation": "I1 says a small obligation 'can take up more room than its size suggests'. 'Often' asserts a frequency that no supplied statement gives.",
+          "proposedCorrection": "A small duty can take up more room than its calendar footprint suggests."
+        },
+        {
+          "findingId": "rb-65-2",
+          "paragraph": 2,
+          "passage": "The calculated exact date is 2026-10-14, falling in 3 days during the middle part of the window.",
+          "supportingFactIds": ["C1"],
+          "missingFactIds": ["T1"],
+          "category": "factual_mismatch",
+          "severity": "substantive",
+          "explanation": "T1 places this reading in the middle part of the calculated window. The sentence places the exact date there instead, which no supplied fact states.",
+          "proposedCorrection": "The calculated exact date is 2026-10-14, in 3 days; this reading falls in the middle part of the window."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-48",
+      "scores": {
+        "specificity": { "score": null, "reason": "Quiet item: no model writing to score." },
+        "grounding": { "score": null, "reason": "Quiet item: no model writing to score." },
+        "coherence": { "score": null, "reason": "Quiet item: no model writing to score." },
+        "voice": { "score": null, "reason": "Quiet item: no model writing to score." },
+        "repetition": { "score": null, "reason": "Quiet item: no model writing to score." },
+        "synthesisCoherence": { "score": null, "reason": "Quiet item; no S1 supplied." },
+        "lensIntegration": { "score": null, "reason": "Quiet item; no N1 supplied." }
+      },
+      "quietCheck": {
+        "safe": true,
+        "reason": "The message says no cycle is strong enough to name and no chart signal is singled out, which matches an item that supplies no calculation facts (only E1 and U1). It invents no signal, makes no claim about the reader, and gives no instruction or prediction."
+      },
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-15",
+      "scores": {
+        "specificity": { "score": 5, "reason": "The primary contact carries its published I1 and D1 distinctions and scenes; Mercury is only listed as in range, which is not a defect." },
+        "grounding": { "score": 5, "reason": "Verbatim I1, D1, P1 and T1. 'Exact in 3 days' for Mercury is supported because C2 shares C1's 2026-10-14 date. No joint claim between contacts." },
+        "coherence": { "score": 4, "reason": "Meaning, scene, phase, timing, then the other contact in range; clear, though the last three paragraphs are bare lines." },
+        "voice": { "score": 3, "reason": "Clear, but the 'Timing:' and 'Also in range:' labels read as template output." },
+        "repetition": { "score": 2, "reason": "Entirely stock published wording." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-15-1",
+          "paragraph": 4,
+          "passage": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window.",
+          "supportingFactIds": ["T1"],
+          "missingFactIds": [],
+          "category": "voice",
+          "severity": "minor",
+          "explanation": "A field label and one-line paragraphs, as in P5's lower-case 'Also in range:' list, read as data output rather than prose.",
+          "proposedCorrection": "Fold phase and timing into one sentence and name the Mercury contact in prose."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-68",
+      "scores": {
+        "specificity": { "score": 5, "reason": "The primary contact carries its published I1 and D1 distinctions and scenes; Mars is only listed as in range, which is not a defect." },
+        "grounding": { "score": 5, "reason": "Verbatim I1, D1, P1 and T1. 'Exact in 3 days' for Mars is supported because C2 shares C1's 2026-10-14 date. No joint claim between contacts." },
+        "coherence": { "score": 4, "reason": "Meaning, scene, phase, timing, then the other contact in range; clear, though the last three paragraphs are bare lines." },
+        "voice": { "score": 3, "reason": "Clear, but the 'Timing:' and 'Also in range:' labels read as template output." },
+        "repetition": { "score": 2, "reason": "Entirely stock published wording." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-68-1",
+          "paragraph": 4,
+          "passage": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window.",
+          "supportingFactIds": ["T1"],
+          "missingFactIds": [],
+          "category": "voice",
+          "severity": "minor",
+          "explanation": "A field label and one-line paragraphs, as in P5's lower-case 'Also in range:' list, read as data output rather than prose.",
+          "proposedCorrection": "Fold phase and timing into one sentence and name the Mars contact in prose."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-72",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Published I1 and D1 copy with both concrete scenes." },
+        "grounding": { "score": 5, "reason": "Verbatim I1, D1, P1 and T1. No house or Ascendant claim and no caveat, consistent with U2." },
+        "coherence": { "score": 4, "reason": "Meaning, scene, phase, timing; clear, though the last two paragraphs are bare lines." },
+        "voice": { "score": 3, "reason": "Clear, but the 'Timing:' label reads as template output." },
+        "repetition": { "score": 2, "reason": "Entirely stock published wording, the same text as several other items in this packet." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-72-1",
+          "paragraph": 4,
+          "passage": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window.",
+          "supportingFactIds": ["T1"],
+          "missingFactIds": [],
+          "category": "voice",
+          "severity": "minor",
+          "explanation": "A field label and a one-line paragraph read as data output rather than prose.",
+          "proposedCorrection": "Fold the phase and timing into one sentence, e.g. 'The contact is approaching and becomes exact in 3 days; this reading falls in the middle part of the calculated window.'"
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-11",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Published I1 and D1 copy with both concrete scenes." },
+        "grounding": { "score": 5, "reason": "Verbatim I1, D1, P1 and T1; nothing added." },
+        "coherence": { "score": 4, "reason": "Meaning, scene, phase, timing; clear, though the last two paragraphs are bare lines." },
+        "voice": { "score": 3, "reason": "Clear, but the 'Timing:' label reads as template output." },
+        "repetition": { "score": 2, "reason": "Entirely stock published wording, the same text as several other items in this packet." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-11-1",
+          "paragraph": 4,
+          "passage": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window.",
+          "supportingFactIds": ["T1"],
+          "missingFactIds": [],
+          "category": "voice",
+          "severity": "minor",
+          "explanation": "A field label and a one-line paragraph read as data output rather than prose.",
+          "proposedCorrection": "Fold the phase and timing into one sentence, e.g. 'The contact is approaching and becomes exact in 3 days; this reading falls in the middle part of the calculated window.'"
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-33",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Keeps I1's distinction and both of D1's concrete scenes." },
+        "grounding": { "score": 5, "reason": "Traceable to I1, D1, C1, P1 and T1 with modality intact." },
+        "coherence": { "score": 4, "reason": "Meaning, scene, timing; clear." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 3, "reason": "P2 is D1 verbatim; P1 close to stock." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-56",
+      "scores": {
+        "specificity": { "score": 4, "reason": "S1's concrete scene and I1's boundaries distinction are present, but I2's 'when an aim is well chosen' condition is dropped and D1 is unused." },
+        "grounding": { "score": 4, "reason": "Claims trace to I1, I2 and S1. I2's ease stays inside 'frames moments when', so the modality holds; I1's halves are recombined without adding claims." },
+        "coherence": { "score": 4, "reason": "Saturn-Sun meaning, then the Jupiter-Mars pull and the synthesis; clear." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 3, "reason": "S1 verbatim; I1 and I2 close to stock." },
+        "synthesisCoherence": { "score": 4, "reason": "Develops the published tension: a pull toward a larger piece of work, set against the structure more scope needs, with both parents present." },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-56-1",
+          "paragraph": 2,
+          "passage": "frames moments when enthusiasm and practical initiative reinforce one another",
+          "supportingFactIds": ["I2"],
+          "missingFactIds": [],
+          "category": "specificity",
+          "severity": "minor",
+          "explanation": "I2's reinforcement holds 'when an aim is well chosen'. The condition is dropped; the 'frames moments when' wording keeps the sentence conditional, so this is a loss of distinction rather than a strengthened claim.",
+          "proposedCorrection": "...frames moments when, with a well-chosen aim, enthusiasm and practical initiative reinforce one another..."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-40",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Published I1 and D1 copy with its concrete scenes: a calendar left too full, a quiet moment spent tracking the next task, an unclaimed hour." },
+        "grounding": { "score": 5, "reason": "Each paragraph is I1, D1, P1 or T1 verbatim; nothing added." },
+        "coherence": { "score": 3, "reason": "Understandable but repetitive. P2 restates P1's full calendar, quiet moment and tension over preferred space, and P3 and P4 are bare label lines." },
+        "voice": { "score": 3, "reason": "Clear, but the bare phase line and the 'Timing:' label read as stiff template output." },
+        "repetition": { "score": 2, "reason": "Entirely stock published wording, with heavy duplication between P1 and P2." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-40-1",
+          "paragraph": 2,
+          "passage": "A full calendar or an obligation that follows you into a quiet moment can offer a scene for tension around the amount of private space you prefer.",
+          "supportingFactIds": ["D1", "I1"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "This repeats P1's scenes (a calendar left too full, a quiet moment) and its tension between responsibility and preferred space, so P2 adds little beyond the 'unclaimed hour' image.",
+          "proposedCorrection": "Merge P1 and P2: keep D1's unclaimed hour as the scene and drop the repeated calendar and tension clause."
+        },
+        {
+          "findingId": "rb-40-2",
+          "paragraph": 4,
+          "passage": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window.",
+          "supportingFactIds": ["T1"],
+          "missingFactIds": [],
+          "category": "voice",
+          "severity": "minor",
+          "explanation": "A field label and a one-line paragraph read as data output rather than prose.",
+          "proposedCorrection": "Fold the phase and timing into one sentence, e.g. 'The contact is approaching and becomes exact in 3 days; this reading falls in the middle part of the calculated window.'"
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-27",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Concrete scenes from I1 and D1 (a quiet moment spent tracking the next task, an unclaimed hour) tied to the square." },
+        "grounding": { "score": 2, "reason": "Two substantive problems: 'can easily be' strengthens I1's 'might be', and P2 places the exact date, rather than this reading, in the middle part of the window." },
+        "coherence": { "score": 4, "reason": "Meaning, then scene and timing; clear, though P2 ties D1's scene to the phase with 'while', which reads awkwardly." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 4, "reason": "Paraphrased, with supported variation." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-27-1",
+          "paragraph": 1,
+          "passage": "A quiet moment can easily be spent mentally keeping track of the next task.",
+          "supportingFactIds": [],
+          "missingFactIds": ["I1"],
+          "category": "strengthened_modality",
+          "severity": "substantive",
+          "explanation": "I1 says the everyday scene 'might be' a quiet moment spent tracking the next task. 'Can easily be' raises a tentative possibility to a likely occurrence.",
+          "proposedCorrection": "A quiet moment might be spent mentally keeping track of the next task."
+        },
+        {
+          "findingId": "rb-27-2",
+          "paragraph": 2,
+          "passage": "The calculated exact date is 2026-10-14, arriving in 3 days during the middle part of the window.",
+          "supportingFactIds": ["C1"],
+          "missingFactIds": ["T1"],
+          "category": "factual_mismatch",
+          "severity": "substantive",
+          "explanation": "T1 places this reading in the middle part of the calculated window. The sentence places the exact date there instead, which no supplied fact states.",
+          "proposedCorrection": "The calculated exact date is 2026-10-14, in 3 days; this reading falls in the middle part of the window."
+        },
+        {
+          "findingId": "rb-27-3",
+          "paragraph": 2,
+          "passage": "An unclaimed hour can still be mentally full of unfinished tasks while the contact is in its approaching phase within the calculated window.",
+          "supportingFactIds": ["D1", "P1"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "D1's scene is not tied to any phase; the 'while' clause joins the scene and the phase awkwardly.",
+          "proposedCorrection": "Keep the scene and the phase in separate sentences."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-53",
+      "scores": {
+        "specificity": { "score": 4, "reason": "Concrete elements from I1, I2 and S1 are present, but 'firmer boundaries' and 'initial boundaries' blur the published 'clearer boundaries' and 'agreed limits'." },
+        "grounding": { "score": 2, "reason": "Two substantive problems: 'can easily outpace' strengthens I1, and 'also increases' drops S1's 'can'. P2's last sentence also hardens S1's 'offers one place to notice' into 'shows how'." },
+        "coherence": { "score": 4, "reason": "Saturn-Sun meaning, then the Jupiter-Mars pull and the synthesis; clear." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 4, "reason": "Paraphrased, with little stock reuse." },
+        "synthesisCoherence": { "score": 4, "reason": "Develops the published tension: low-friction expansion set against the structure more scope needs, with both parents present." },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-53-1",
+          "paragraph": 1,
+          "passage": "Expectations can easily outpace available capacity",
+          "supportingFactIds": [],
+          "missingFactIds": ["I1"],
+          "category": "strengthened_modality",
+          "severity": "substantive",
+          "explanation": "I1 says the square 'highlights where expectations outpace available capacity'. 'Can easily' adds a likelihood that no supplied statement gives.",
+          "proposedCorrection": "Expectations can outpace available capacity when an established role requires more deliberate effort than usual."
+        },
+        {
+          "findingId": "rb-53-2",
+          "paragraph": 2,
+          "passage": "though giving a plan more scope also increases the structure needed to support it",
+          "supportingFactIds": [],
+          "missingFactIds": ["S1"],
+          "category": "strengthened_modality",
+          "severity": "substantive",
+          "explanation": "S1 says giving a plan more scope 'can increase the structure needed to carry it'. Dropping 'can' states the increase as a certainty.",
+          "proposedCorrection": "...though giving a plan more scope can increase the structure needed to carry it."
+        },
+        {
+          "findingId": "rb-53-3",
+          "paragraph": 2,
+          "passage": "A task whose ambitions extend beyond its initial boundaries shows how that expansion interacts with existing limits.",
+          "supportingFactIds": ["S1"],
+          "missingFactIds": [],
+          "category": "specificity",
+          "severity": "minor",
+          "explanation": "S1's task growing 'beyond its agreed limits' 'offers one place to notice that tension'. The rewrite drops 'agreed', and the tentative 'one place to notice' becomes the assertive 'shows how'.",
+          "proposedCorrection": "A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension."
+        },
+        {
+          "findingId": "rb-53-4",
+          "paragraph": 1,
+          "passage": "asks for firmer boundaries",
+          "supportingFactIds": ["I1"],
+          "missingFactIds": [],
+          "category": "specificity",
+          "severity": "minor",
+          "explanation": "I1 says a routine or responsibility 'needs clearer boundaries'. 'Firmer' shifts the published distinction from clarity to strictness.",
+          "proposedCorrection": "...needs clearer boundaries."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-62",
+      "scores": {
+        "specificity": { "score": 4, "reason": "Keeps the taste and social-ease contrast and D1's uncertain-plan scene, but narrows 'company' to 'conversation' and names neither contact, so the two meanings are harder to place." },
+        "grounding": { "score": 3, "reason": "One substantive problem ('often'). P2 is explicitly separate, as required without S1, and stays within I2." },
+        "coherence": { "score": 4, "reason": "Two clearly separated paragraphs; clear." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 4, "reason": "Paraphrased, with little stock reuse." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-62-1",
+          "paragraph": 1,
+          "passage": "Differences in social ease and taste often become distinct against the backdrop of what others expect.",
+          "supportingFactIds": [],
+          "missingFactIds": ["I1"],
+          "category": "unsupported_frequency",
+          "severity": "substantive",
+          "explanation": "I1 says the opposition 'brings differences in taste and social ease into view' and that recognizing preferences 'can involve noticing a contrast'. 'Often' asserts a frequency that no supplied statement gives.",
+          "proposedCorrection": "Venus's opposition to natal Venus brings differences in taste and social ease into view against what others want or expect."
+        },
+        {
+          "findingId": "rb-62-2",
+          "paragraph": 1,
+          "passage": "what you genuinely value in conversation and in quiet",
+          "supportingFactIds": ["I1"],
+          "missingFactIds": [],
+          "category": "specificity",
+          "severity": "minor",
+          "explanation": "I1 speaks of what you value 'in company and quiet'; 'conversation' narrows the published distinction.",
+          "proposedCorrection": "...what you genuinely value in company and quiet."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-61",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Concrete scenes from I1 and D1 (time set aside taken over by tracking the next task, an unclaimed hour with an obligation following into private time)." },
+        "grounding": { "score": 3, "reason": "One substantive problem: 'can easily turn into' strengthens I1's 'might be'. Timing and orb match C1, P1 and T1." },
+        "coherence": { "score": 4, "reason": "Meaning, then scene and timing; clear, though 'the middle part of that timing' is clumsy." },
+        "voice": { "score": 4, "reason": "Warm and natural ('you'd prefer', 'even when you have set time aside')." },
+        "repetition": { "score": 4, "reason": "Paraphrased, with supported variation." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-61-1",
+          "paragraph": 1,
+          "passage": "A quiet moment can easily turn into keeping mental track of the next task",
+          "supportingFactIds": [],
+          "missingFactIds": ["I1"],
+          "category": "strengthened_modality",
+          "severity": "substantive",
+          "explanation": "I1 says the everyday scene 'might be' a quiet moment spent tracking the next task. 'Can easily turn into' raises a tentative possibility to a likely occurrence.",
+          "proposedCorrection": "A quiet moment might be spent keeping mental track of the next task, even when you have set time aside."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-39",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Concrete I1 and D1 scenes (a quiet moment turned to tracking the next task, an unclaimed hour) tied to the square." },
+        "grounding": { "score": 4, "reason": "Claims trace to I1, D1, C1, P1 and T1 with modality intact. Turning I1's quiet-moment scene into the 'can' consequence of a small obligation is a liberty within I1, not a new claim." },
+        "coherence": { "score": 4, "reason": "Meaning, then scene and timing; clear without repeating the tension." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 4, "reason": "Paraphrased, with supported variation." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-14",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Published I1 and D1 copy with its concrete scenes (company or a quiet hour, a familiar plan or unplanned space, an unclaimed hour)." },
+        "grounding": { "score": 5, "reason": "Each paragraph is I1, D1, P1 or T1 verbatim; nothing added." },
+        "coherence": { "score": 4, "reason": "Meaning, scene, phase, timing; clear, though the last two paragraphs are bare lines." },
+        "voice": { "score": 3, "reason": "Clear, but the 'Timing:' label reads as template output." },
+        "repetition": { "score": 2, "reason": "Entirely stock published wording." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-14-1",
+          "paragraph": 4,
+          "passage": "Timing: exact yesterday. This reading falls in the middle part of the calculated window.",
+          "supportingFactIds": ["T1"],
+          "missingFactIds": [],
+          "category": "voice",
+          "severity": "minor",
+          "explanation": "A field label and a one-line paragraph read as data output rather than prose.",
+          "proposedCorrection": "Fold the phase and timing into one sentence, e.g. 'The contact is separating after being exact yesterday; this reading falls in the middle part of the calculated window.'"
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-04",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Concrete I1 and D1 scenes (a quiet moment, a calendar left too full, an unclaimed hour) tied to Saturn's hard contact with the Moon." },
+        "grounding": { "score": 5, "reason": "Traceable to I1, D1, C1, P1 and T1 with modality intact." },
+        "coherence": { "score": 3, "reason": "Understandable but repetitive: P2 restates P1's quiet moment, mental tracking and tension over preferred space." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 2, "reason": "Near-verbatim published wording, with heavy duplication between P1 and P2." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-04-1",
+          "paragraph": 2,
+          "passage": "An obligation that follows you into a quiet moment can offer a scene for tension around the amount of private space you prefer.",
+          "supportingFactIds": ["D1", "I1"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "This repeats P1's quiet moment and its tension between responsibility and preferred space, so P2 adds little beyond the 'unclaimed hour' image.",
+          "proposedCorrection": "Keep D1's unclaimed hour as the new scene and drop the repeated tension sentence."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-47",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Published I1 and D1 copy with both concrete scenes." },
+        "grounding": { "score": 5, "reason": "Verbatim I1, D1, P1 and T1; nothing added." },
+        "coherence": { "score": 4, "reason": "Meaning, scene, phase, timing; clear, though the last two paragraphs are bare lines." },
+        "voice": { "score": 3, "reason": "Clear, but the 'Timing:' label reads as template output." },
+        "repetition": { "score": 2, "reason": "Entirely stock published wording, the same text as several other items in this packet." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-47-1",
+          "paragraph": 4,
+          "passage": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window.",
+          "supportingFactIds": ["T1"],
+          "missingFactIds": [],
+          "category": "voice",
+          "severity": "minor",
+          "explanation": "A field label and a one-line paragraph read as data output rather than prose.",
+          "proposedCorrection": "Fold the phase and timing into one sentence, e.g. 'The contact is approaching and becomes exact in 3 days; this reading falls in the middle part of the calculated window.'"
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-23",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Concrete I1 and D1 scenes (a draft revised before it has settled, a reply composed too early, an unfinished list) tied to the hard Mars-Sun contact." },
+        "grounding": { "score": 5, "reason": "Traceable to I1, D1, C1, P1 and T1 with modality intact. No house or angle claim and no caveat, consistent with U2." },
+        "coherence": { "score": 3, "reason": "Understandable but repetitive: P2 restates P1's friction around pace and ownership, again with a draft as the scene." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 2, "reason": "P2 is D1 verbatim and largely duplicates P1." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-23-1",
+          "paragraph": 2,
+          "passage": "Pace, scope, and the part of a task that feels like yours are separate pieces of working on something. An unfinished list or a draft with competing aims can be a place to notice friction between those pieces.",
+          "supportingFactIds": ["D1", "I1"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "P1 already gives friction around pace and ownership with a draft revised too early; P2 restates the same friction, adding only scope and the unfinished list.",
+          "proposedCorrection": "Fold D1's scope and unfinished-list scene into P1 rather than restating the pace and ownership friction."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-69",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Keeps I1's boundaries distinction and both of D1's concrete scenes." },
+        "grounding": { "score": 4, "reason": "Claims trace to I1, D1, C1, P1 and T1. 'Where daily routines feel strained' is a loose paraphrase of I1's framing, and P3's 'placing' implies a causal link between timing facts that T1 states independently." },
+        "coherence": { "score": 4, "reason": "Meaning, scene, timing; clear." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 3, "reason": "P2 is D1 verbatim." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-69-1",
+          "paragraph": 3,
+          "passage": "placing this reading in the middle part of the calculated window",
+          "supportingFactIds": ["T1"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "T1 states 'exact in 3 days' and 'this reading falls in the middle part' as separate facts. 'Placing' implies one determines the other.",
+          "proposedCorrection": "The aspect is exact in 3 days on 2026-10-14, and this reading falls in the middle part of the calculated window."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-24",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Keeps I1's distinction, D1's responsibility scene and I2's direct engagement with an immediate task." },
+        "grounding": { "score": 5, "reason": "Traceable to I1, D1 and I2 with modality intact; P2 is explicitly separate, as required without S1." },
+        "coherence": { "score": 4, "reason": "Clear overall, but P1 shuffles I1's halves around the D1 scene and names the contact only at the end." },
+        "voice": { "score": 3, "reason": "Clear but stiff in places ('highlights these boundaries', 'provides a separate context')." },
+        "repetition": { "score": 3, "reason": "Close to the published wording throughout." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-24-1",
+          "paragraph": 1,
+          "passage": "Saturn's square to the Sun highlights these boundaries.",
+          "supportingFactIds": ["I1"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "The contact is named only after the meaning and the scene. In I1 it highlights where boundaries are needed, not 'these boundaries'.",
+          "proposedCorrection": "Name the contact first: 'Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.'"
+        },
+        {
+          "findingId": "rb-24-2",
+          "paragraph": 2,
+          "passage": "Direct engagement with an immediate task provides a separate context.",
+          "supportingFactIds": ["I2"],
+          "missingFactIds": [],
+          "category": "voice",
+          "severity": "minor",
+          "explanation": "A stiff meta-sentence used as a transition.",
+          "proposedCorrection": "Separately, Mars's trine to the Sun frames direct engagement with an immediate task..."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-26",
+      "scores": {
+        "specificity": { "score": 4, "reason": "Concrete elements from I1 and S1 (an emerging opening, a larger piece of work, a promising new direction), but I1's 'when an aim is well chosen' becomes 'support the same aim' and D1 is unused." },
+        "grounding": { "score": 4, "reason": "Claims trace to I1, I2 and S1 with modality intact; I2's demanding role stays inside a 'when' condition. One minor drift in I1's condition." },
+        "coherence": { "score": 4, "reason": "Jupiter-Mars meaning first, then the synthesis carrying the Saturn-Sun side; clear." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 3, "reason": "S1 verbatim; I1 close to stock." },
+        "synthesisCoherence": { "score": 4, "reason": "Develops S1's tension and ties it explicitly to I2's demanding role and boundaries, with I1's low-friction expansion in P1." },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-26-1",
+          "paragraph": 1,
+          "passage": "when practical initiative and enthusiasm support the same aim",
+          "supportingFactIds": ["I1"],
+          "missingFactIds": [],
+          "category": "specificity",
+          "severity": "minor",
+          "explanation": "I1's condition is 'when an aim is well chosen'; 'support the same aim' drops the published point about choosing the aim well. The sentence stays modal ('can'), so this is a loss of distinction rather than a strengthened claim.",
+          "proposedCorrection": "Effort can encounter little friction when enthusiasm and practical initiative reinforce one another around a well-chosen aim."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-36",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Keeps I1's distinction and both of D1's concrete scenes." },
+        "grounding": { "score": 5, "reason": "Traceable to I1 and D1 with modality intact." },
+        "coherence": { "score": 4, "reason": "Meaning, then scene; clear." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 3, "reason": "P2 is D1 verbatim; P1 matches wording used in several other items in this packet." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-49",
+      "scores": {
+        "specificity": { "score": 5, "reason": "The primary contact carries its published I1 and D1 distinctions and scenes; Venus is only listed as in range, which is not a defect." },
+        "grounding": { "score": 5, "reason": "Verbatim I1, D1, P1 and T1. 'Exact in 3 days' for Venus is supported because C2 shares C1's 2026-10-14 date. No house or Ascendant claim and no caveat, consistent with U2." },
+        "coherence": { "score": 4, "reason": "Meaning, scene, phase, timing, then the other contact in range; clear, though the last three paragraphs are bare lines." },
+        "voice": { "score": 3, "reason": "Clear, but the 'Timing:' and 'Also in range:' labels read as template output." },
+        "repetition": { "score": 2, "reason": "Entirely stock published wording." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-49-1",
+          "paragraph": 4,
+          "passage": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window.",
+          "supportingFactIds": ["T1"],
+          "missingFactIds": [],
+          "category": "voice",
+          "severity": "minor",
+          "explanation": "A field label and one-line paragraphs, as in P5's lower-case 'Also in range:' list, read as data output rather than prose.",
+          "proposedCorrection": "Fold phase and timing into one sentence and name the Venus contact in prose."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-18",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Concrete I1 and D1 scenes (a quiet moment spent tracking the next task, an unclaimed hour) tied to Saturn's hard contact with the Moon." },
+        "grounding": { "score": 5, "reason": "Traceable to I1, D1, C1, P1 and T1. 'Can be' for I1's 'might be' keeps a possibility, and 'offering a scene' keeps D1's framing." },
+        "coherence": { "score": 4, "reason": "Meaning, scene, timing; P2 repeats P1's tension clause, which minor editing would fix." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 3, "reason": "Close to the published wording, with the tension over preferred space stated twice." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-18-1",
+          "paragraph": 2,
+          "passage": "offering a scene for tension around the amount of private space you prefer",
+          "supportingFactIds": ["D1", "I1"],
+          "missingFactIds": [],
+          "category": "repetition",
+          "severity": "minor",
+          "explanation": "This restates P1's tension between responsibility and the uninterrupted space you would prefer.",
+          "proposedCorrection": "End P2's first sentence after 'unfinished tasks' or vary the point it makes."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-63",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Keeps I1's distinction and D1's responsibility scene." },
+        "grounding": { "score": 4, "reason": "Claims trace to I1, D1, C1, P1 and T1, but P3's 'placing' implies the approaching phase determines where this reading falls." },
+        "coherence": { "score": 4, "reason": "Meaning, scene, timing; clear." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 3, "reason": "Close to the published wording." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-63-1",
+          "paragraph": 3,
+          "passage": "placing this reading in the middle part of that span",
+          "supportingFactIds": ["P1", "T1"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "P1 gives the approaching phase and T1 the reading's place in the window as separate facts. 'Placing' implies one determines the other.",
+          "proposedCorrection": "The contact is in its approaching phase within the calculated window, and this reading falls in the middle part of that window."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-13",
+      "scores": {
+        "specificity": { "score": 4, "reason": "Small dependable actions, a familiar project and an immediate task are present, but I1's 'patience stabilizes long-term direction' is reworked and D1's two scenes are merged." },
+        "grounding": { "score": 3, "reason": "One substantive doubt: P1's first sentence makes satisfaction the condition for a stable direction, where I1 says patience stabilizes it. The rest traces to I1, D1, S1 and I2." },
+        "coherence": { "score": 4, "reason": "Saturn trine meaning with the identity scene, then the reinforcement and the Mars trine; clear." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 3, "reason": "S1 verbatim; parts of I1 and I2 close to stock." },
+        "synthesisCoherence": { "score": 4, "reason": "Develops the published reinforcement: steady persistence from the Saturn trine paired with targeted action from the Mars trine, with both parents' meanings present." },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-13-1",
+          "paragraph": 1,
+          "passage": "A long-term direction gains stability when satisfaction comes from upholding a commitment at an even pace.",
+          "supportingFactIds": [],
+          "missingFactIds": ["I1"],
+          "category": "unsupported_claim",
+          "severity": "substantive",
+          "explanation": "I1 says the trine 'frames the quiet satisfaction of upholding a commitment at an even pace, where patience stabilizes long-term direction'. The sentence makes satisfaction a condition for stability, a causal claim I1 does not make, and states it without the contact's framing. The gist is close, but the doubt is unresolved, so it is recorded as substantive.",
+          "proposedCorrection": "Saturn's trine to the Sun frames the quiet satisfaction of upholding a commitment at an even pace, where patience stabilizes long-term direction."
+        },
+        {
+          "findingId": "rb-13-2",
+          "paragraph": 1,
+          "passage": "such as a familiar project you can name plainly",
+          "supportingFactIds": ["D1"],
+          "missingFactIds": [],
+          "category": "specificity",
+          "severity": "minor",
+          "explanation": "D1 offers 'a familiar project or an interest you can name plainly' as two scenes. The merge moves 'you can name plainly' onto the project and drops the interest.",
+          "proposedCorrection": "...such as a familiar project or an interest you can name plainly."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-42",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Published I1, S1 and D1 copy with concrete elements (a larger piece of work, a promising new direction, a familiar project)." },
+        "grounding": { "score": 5, "reason": "Verbatim I1, S1, D1, P1 and T1. The 'Also in range' line's 'exact in 3 days' is supported: C2 shares C1's 2026-10-14 date." },
+        "coherence": { "score": 3, "reason": "Understandable, but S1 sits between the Jupiter-Mars meaning and its D1 scene, and the Saturn-Sun contact appears only in a trailing list line, so the order does not progress clearly." },
+        "voice": { "score": 3, "reason": "Clear but label-driven ('Timing:', 'Also in range:')." },
+        "repetition": { "score": 2, "reason": "Entirely stock published wording." },
+        "synthesisCoherence": { "score": 3, "reason": "Both sources appear, but only as S1 pasted verbatim plus a trailing 'Also in range' line. I2's meaning is never given, so S1's 'existing commitments' are not tied to the Saturn-Sun contact, and the relationship needs editing." },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-42-1",
+          "paragraph": 2,
+          "passage": "Expanding the reach of a project tests the framework supporting it. Taking on a promising new direction while existing commitments are still demanding attention can highlight where capacity needs to catch up with ambition.",
+          "supportingFactIds": ["S1"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "The synthesis arrives before the Saturn-Sun contact is introduced and without I2's meaning, so the 'existing commitments' side is unexplained; the contact is named only in P6.",
+          "proposedCorrection": "Introduce Saturn's square to the Sun with I2's meaning, then give S1 as the published link between it and Jupiter's trine to Mars, and drop the trailing 'Also in range' line."
+        },
+        {
+          "findingId": "rb-42-2",
+          "paragraph": 6,
+          "passage": "Also in range: saturn square natal sun (exact in 3 days).",
+          "supportingFactIds": ["C2"],
+          "missingFactIds": [],
+          "category": "voice",
+          "severity": "minor",
+          "explanation": "A lower-case list label rather than prose, at odds with the rest of the reading.",
+          "proposedCorrection": "Name the contact in a sentence where its meaning is introduced: 'Saturn's square to the Sun, also exact in 3 days, ...'."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-44",
+      "scores": {
+        "specificity": { "score": 4, "reason": "Keeps the communication reset and D1's list and draft scenes, but 'precise phrasing' and 'which part of the task is yours' drift from the published distinctions." },
+        "grounding": { "score": 2, "reason": "Two substantive problems in P1: an unsupported frequency ('often shifts') and an unsupported exclusion ('rather than routine assumptions'). Timing matches C1, P1 and T1." },
+        "coherence": { "score": 4, "reason": "Meaning, work scene, timing; clear." },
+        "voice": { "score": 4, "reason": "Measured and precise, fitting the clinical tone." },
+        "repetition": { "score": 4, "reason": "Paraphrased, with little stock reuse." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-44-1",
+          "paragraph": 1,
+          "passage": "How you articulate what you mean often shifts",
+          "supportingFactIds": [],
+          "missingFactIds": ["I1"],
+          "category": "unsupported_frequency",
+          "severity": "substantive",
+          "explanation": "I1 says the conjunction brings 'mental focus back to how you articulate what you mean'. 'Often shifts' asserts both a frequency and a change in the reader's articulation that no supplied statement gives.",
+          "proposedCorrection": "As a cycle of thought and communication resets with fresh curiosity, Mercury's conjunction with natal Mercury brings mental focus back to how you articulate what you mean."
+        },
+        {
+          "findingId": "rb-44-2",
+          "paragraph": 1,
+          "passage": "rather than routine assumptions",
+          "supportingFactIds": [],
+          "missingFactIds": ["I1"],
+          "category": "unsupported_exclusion",
+          "severity": "substantive",
+          "explanation": "No supplied statement mentions routine assumptions, so the 'rather than' clause denies an alternative the facts do not address.",
+          "proposedCorrection": "...sharpens interest in new phrasing, questions, or ideas."
+        },
+        {
+          "findingId": "rb-44-3",
+          "paragraph": 1,
+          "passage": "directs mental focus back to precise phrasing and new questions",
+          "supportingFactIds": ["I1"],
+          "missingFactIds": [],
+          "category": "specificity",
+          "severity": "minor",
+          "explanation": "I1 speaks of interest in 'new phrasing, questions, or ideas'. 'Precise phrasing' replaces 'new phrasing', and 'ideas' is dropped.",
+          "proposedCorrection": "...sharpens interest in new phrasing, questions, or ideas, bringing mental focus back to how you articulate what you mean."
+        },
+        {
+          "findingId": "rb-44-4",
+          "paragraph": 2,
+          "passage": "which part of the task is yours",
+          "supportingFactIds": ["D1"],
+          "missingFactIds": [],
+          "category": "specificity",
+          "severity": "minor",
+          "explanation": "D1 speaks of 'the part of a task that feels like yours', a felt sense of ownership. 'Is yours' turns it into a matter of fact.",
+          "proposedCorrection": "Pace, scope, and the part of a task that feels like yours are separate pieces of working on something."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-12",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Published I1, S1 and D1 copy with concrete scenes (a task whose ambitions are growing beyond its agreed limits, an interest you seldom mention)." },
+        "grounding": { "score": 5, "reason": "Verbatim I1, S1, D1, P1 and T1. The 'Also in range' line's 'exact in 3 days' is supported: C2 shares C1's 2026-10-14 date, which T1 puts 3 days away." },
+        "coherence": { "score": 3, "reason": "Understandable, but S1 is wedged between the Saturn-Sun meaning and its D1 scene, and the Jupiter-Mars contact appears only in a trailing list line, so the order does not progress clearly." },
+        "voice": { "score": 3, "reason": "Clear but label-driven ('Timing:', 'Also in range:')." },
+        "repetition": { "score": 2, "reason": "Entirely stock published wording, identical to another template item in this packet." },
+        "synthesisCoherence": { "score": 3, "reason": "Both sources appear, but only as S1 pasted verbatim plus a trailing 'Also in range' line. I2's meaning is never given and the relationship is not tied to the Jupiter-Mars contact, so it needs editing." },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-12-1",
+          "paragraph": 2,
+          "passage": "Giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.",
+          "supportingFactIds": ["S1"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "The synthesis arrives before the second contact is introduced and without I2's meaning, so a reader cannot tell which two contacts 'that tension' joins; the second contact is named only in P6.",
+          "proposedCorrection": "Introduce Jupiter's trine to Mars with I2's meaning, then give S1 as the published link between it and Saturn's square to the Sun, and drop the trailing 'Also in range' line."
+        },
+        {
+          "findingId": "rb-12-2",
+          "paragraph": 6,
+          "passage": "Also in range: jupiter trine natal mars (exact in 3 days).",
+          "supportingFactIds": ["C2"],
+          "missingFactIds": [],
+          "category": "voice",
+          "severity": "minor",
+          "explanation": "A lower-case list label rather than prose, at odds with the rest of the reading.",
+          "proposedCorrection": "Name the contact in a sentence where its meaning is introduced: 'Jupiter's trine to Mars, also exact in 3 days, ...'."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-45",
+      "scores": {
+        "specificity": { "score": 4, "reason": "Each contact keeps its published distinction, but D1's scene is reduced to a reworked frequency sentence and 'company versus quiet' turns I2's pairing into a contrast." },
+        "grounding": { "score": 2, "reason": "Two substantive problems: 'can easily outpace' strengthens I1, and 'often begins' adds an unsupported frequency to I2. No house or Ascendant claim and no caveat, consistent with U2." },
+        "coherence": { "score": 4, "reason": "Two clearly separated paragraphs ('Separately'), as required without S1." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 4, "reason": "Paraphrased, with little stock reuse." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-45-1",
+          "paragraph": 1,
+          "passage": "expectations can easily outpace available capacity",
+          "supportingFactIds": [],
+          "missingFactIds": ["I1"],
+          "category": "strengthened_modality",
+          "severity": "substantive",
+          "explanation": "I1 says the square 'highlights where expectations outpace available capacity'. 'Can easily' adds a likelihood that no supplied statement gives.",
+          "proposedCorrection": "When obligations require more deliberate effort than usual, expectations can outpace available capacity."
+        },
+        {
+          "findingId": "rb-45-2",
+          "paragraph": 2,
+          "passage": "recognizing personal preferences often begins by noticing a contrast with what others want or expect",
+          "supportingFactIds": [],
+          "missingFactIds": ["I2"],
+          "category": "unsupported_frequency",
+          "severity": "substantive",
+          "explanation": "I2 says recognizing personal preferences 'can involve noticing a contrast'. 'Often begins by' adds a frequency and a sequence that no supplied statement gives.",
+          "proposedCorrection": "Separately, recognizing personal preferences can involve noticing a contrast with what others want or expect."
+        },
+        {
+          "findingId": "rb-45-3",
+          "paragraph": 1,
+          "passage": "A title or established role rarely accounts for everything that demands attention across a week.",
+          "supportingFactIds": ["D1"],
+          "missingFactIds": [],
+          "category": "specificity",
+          "severity": "minor",
+          "explanation": "D1's 'rarely' is about a title describing everything that 'holds your attention'. The sentence extends it to an established role and changes 'holds' to 'demands', shifting the gap from interests to obligations.",
+          "proposedCorrection": "A title rarely describes everything that holds your attention."
+        },
+        {
+          "findingId": "rb-45-4",
+          "paragraph": 2,
+          "passage": "company versus quiet",
+          "supportingFactIds": ["I2"],
+          "missingFactIds": [],
+          "category": "specificity",
+          "severity": "minor",
+          "explanation": "I2 speaks of what you value 'in company and quiet'; 'versus' turns the pairing into a choice between them.",
+          "proposedCorrection": "...clarifying what you genuinely value in company and quiet."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-21",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Published I1 and D1 copy: taste and social ease, an unfinished reply, an uncertain plan." },
+        "grounding": { "score": 5, "reason": "Each paragraph is I1, D1, P1 or T1 verbatim; nothing added." },
+        "coherence": { "score": 4, "reason": "Meaning, scene, phase, timing; clear, though the last two paragraphs are bare lines." },
+        "voice": { "score": 3, "reason": "Clear, but the 'Timing:' label reads as template output." },
+        "repetition": { "score": 2, "reason": "Entirely stock published wording." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-21-1",
+          "paragraph": 4,
+          "passage": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window.",
+          "supportingFactIds": ["T1"],
+          "missingFactIds": [],
+          "category": "voice",
+          "severity": "minor",
+          "explanation": "A field label and a one-line paragraph read as data output rather than prose.",
+          "proposedCorrection": "Fold the phase and timing into one sentence, e.g. 'The contact is approaching and becomes exact in 3 days; this reading falls in the middle part of the calculated window.'"
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-22",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Keeps I1's distinction and works in D1's scene of a responsibility outgrowing the title." },
+        "grounding": { "score": 3, "reason": "P1 traces to I1 and D1, and there is no house or Ascendant claim and no caveat, consistent with U2. But P2 attaches the middle part of the window to the exact alignment, not to this reading." },
+        "coherence": { "score": 4, "reason": "Meaning and scene, then timing; clear." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 4, "reason": "Paraphrased, with supported variation." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-22-1",
+          "paragraph": 2,
+          "passage": "It reaches exact alignment in 3 days on 2026-10-14, falling in the middle part of the calculated window.",
+          "supportingFactIds": ["C1"],
+          "missingFactIds": ["T1"],
+          "category": "factual_mismatch",
+          "severity": "substantive",
+          "explanation": "T1 places this reading in the middle part of the calculated window. Here 'falling' follows the exact alignment on 2026-10-14, so the sentence reads as placing the alignment there, which no supplied fact states. The participle could be stretched to mean the contact's current position, but the natural reading misattributes T1.",
+          "proposedCorrection": "It reaches exact alignment in 3 days, on 2026-10-14; this reading falls in the middle part of the calculated window."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-64",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Published I1, S1 and D1 copy with concrete elements (small dependable actions, concrete incremental steps, a familiar project)." },
+        "grounding": { "score": 5, "reason": "Verbatim I1, S1, D1, P1 and T1. The 'Also in range' line's 'exact in 3 days' is supported: C2 shares C1's 2026-10-14 date." },
+        "coherence": { "score": 3, "reason": "Understandable, but S1 sits between the Saturn-trine meaning and its D1 scene, and the Mars contact appears only in a trailing list line, so the order does not progress clearly." },
+        "voice": { "score": 3, "reason": "Clear but label-driven ('Timing:', 'Also in range:')." },
+        "repetition": { "score": 2, "reason": "Entirely stock published wording." },
+        "synthesisCoherence": { "score": 3, "reason": "Both sources appear, but only as S1 pasted verbatim plus a trailing 'Also in range' line. I2's targeted action is never described or tied to the Mars trine, so the relationship needs editing." },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-64-1",
+          "paragraph": 2,
+          "passage": "Steady persistence pairs naturally with targeted action. Focusing on a durable priority makes it easier to direct effort toward concrete, incremental steps without wasting momentum.",
+          "supportingFactIds": ["S1"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "The synthesis arrives before the Mars trine is introduced and without I2's meaning, so 'targeted action' has no visible source; the contact is named only in P6.",
+          "proposedCorrection": "Introduce Mars's trine to the Sun with I2's meaning, then give S1 as the published link between it and Saturn's trine to the Sun, and drop the trailing 'Also in range' line."
+        },
+        {
+          "findingId": "rb-64-2",
+          "paragraph": 6,
+          "passage": "Also in range: mars trine natal sun (exact in 3 days).",
+          "supportingFactIds": ["C2"],
+          "missingFactIds": [],
+          "category": "voice",
+          "severity": "minor",
+          "explanation": "A lower-case list label rather than prose, at odds with the rest of the reading.",
+          "proposedCorrection": "Name the contact in a sentence where its meaning is introduced: 'Mars's trine to the Sun, also exact in 3 days, ...'."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-73",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Concrete I1 and D1 scenes (a quiet moment, a full calendar, a small duty following you into an unclaimed hour) tied to the hard contact." },
+        "grounding": { "score": 2, "reason": "Two substantive problems: 'can easily be spent' strengthens I1's 'might be', and P2 places the exact date, rather than this reading, in the middle part of the window." },
+        "coherence": { "score": 4, "reason": "Merges I1 and D1 without repeating them, then timing; clear apart from the calendar sentence." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 4, "reason": "Paraphrased, with supported variation." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-73-1",
+          "paragraph": 1,
+          "passage": "A quiet moment can easily be spent mentally keeping track of the next task.",
+          "supportingFactIds": [],
+          "missingFactIds": ["I1"],
+          "category": "strengthened_modality",
+          "severity": "substantive",
+          "explanation": "I1 says the everyday scene 'might be' a quiet moment spent tracking the next task. 'Can easily be' raises a tentative possibility to a likely occurrence.",
+          "proposedCorrection": "A quiet moment might be spent mentally keeping track of the next task."
+        },
+        {
+          "findingId": "rb-73-2",
+          "paragraph": 2,
+          "passage": "The aspect is exact in 3 days, with a calculated exact date of 2026-10-14, falling in the middle part of the calculated window.",
+          "supportingFactIds": ["C1"],
+          "missingFactIds": ["T1"],
+          "category": "factual_mismatch",
+          "severity": "substantive",
+          "explanation": "T1 places this reading in the middle part of the calculated window. 'Falling' follows the exact date and places it there instead, which no supplied fact states.",
+          "proposedCorrection": "The aspect is exact in 3 days, on 2026-10-14; this reading falls in the middle part of the calculated window."
+        },
+        {
+          "findingId": "rb-73-3",
+          "paragraph": 1,
+          "passage": "A full calendar or a small duty that follows you into an unclaimed hour can take up more room than its size suggests.",
+          "supportingFactIds": ["I1", "D1"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "The merge gives I1's 'more room than its size suggests' to a full calendar as well as to the small duty, which does not quite make sense for a calendar.",
+          "proposedCorrection": "A small duty that follows you into an unclaimed hour can take up more room than its size suggests, as can a full calendar."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-70",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Keeps I1's distinction and both of D1's concrete scenes." },
+        "grounding": { "score": 4, "reason": "Claims trace to I1, D1, C1, P1 and T1, but P3's 'placing' implies the timing determines where this reading falls." },
+        "coherence": { "score": 4, "reason": "Meaning, scene, timing; clear." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 3, "reason": "P2 is D1 verbatim; P1 matches wording used in several other items in this packet." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-70-1",
+          "paragraph": 3,
+          "passage": "placing this reading in the middle part of the calculated window",
+          "supportingFactIds": ["T1"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "T1 states 'exact in 3 days' and 'this reading falls in the middle part' as separate facts. 'Placing' implies one determines the other.",
+          "proposedCorrection": "It is exact in 3 days, on 2026-10-14, and this reading falls in the middle part of the calculated window."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-38",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Keeps I1's distinction (room to explore one more option or describe an ambition) and D1's familiar-project scene, and names the contact as technical depth asks." },
+        "grounding": { "score": 4, "reason": "Claims trace to I1, D1, C1, P1 and T1 (close to exact, arc 30%, orb 0.42, 2026-10-11). 'Altogether' loosens I1's exclusion, and 'placing' implies a link between timing facts that T1 gives separately." },
+        "coherence": { "score": 4, "reason": "Everyday meaning, then scene, then named contact and calculated detail; clear." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 4, "reason": "Paraphrased, with supported variation." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-38-1",
+          "paragraph": 1,
+          "passage": "without becoming a different plan altogether",
+          "supportingFactIds": ["I1"],
+          "missingFactIds": [],
+          "category": "specificity",
+          "severity": "minor",
+          "explanation": "I1 says the plan looks roomier 'without becoming a different plan'. 'Altogether' can be read as 'not entirely different', which loosens the published distinction.",
+          "proposedCorrection": "An existing plan can look roomier without becoming a different plan."
+        },
+        {
+          "findingId": "rb-38-2",
+          "paragraph": 3,
+          "passage": "placing this reading in the middle part of the span at an arc position of 30%",
+          "supportingFactIds": ["P1", "T1"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "P1 gives 'close to exact' and T1 gives the reading's place in the window as separate facts. 'Placing' implies one determines the other.",
+          "proposedCorrection": "The contact is close to exact within the calculated window; this reading falls in the middle part of the window, at an arc position of 30%."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-34",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Keeps I1's distinction and both of D1's concrete scenes." },
+        "grounding": { "score": 5, "reason": "P1 and P2 are I1 and D1; P3 matches C1, P1 and T1." },
+        "coherence": { "score": 4, "reason": "Meaning, scene, timing; clear." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 3, "reason": "P1 and P2 are the published copy verbatim." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-10",
+      "scores": {
+        "specificity": { "score": 4, "reason": "Keeps I1's boundaries distinction, but D1's two scenes are fused into one altered scene." },
+        "grounding": { "score": 3, "reason": "One substantive problem: D1's 'interest you seldom mention' and its responsibility scene become an 'unmentioned responsibility'. There is no house or Ascendant claim and no caveat, consistent with U2." },
+        "coherence": { "score": 4, "reason": "Meaning, then scene and timing; clear." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 4, "reason": "Paraphrased, with little stock reuse." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-10-1",
+          "paragraph": 2,
+          "passage": "particularly when an unmentioned responsibility occupies more of your week than that title suggests",
+          "supportingFactIds": [],
+          "missingFactIds": ["D1"],
+          "category": "unsupported_claim",
+          "severity": "substantive",
+          "explanation": "D1 gives two separate scenes: an interest you seldom mention, or a responsibility that occupies more of your week than your title suggests. The text gives the responsibility the interest's 'seldom mention' and hardens it to 'unmentioned', creating a scene that is not supplied.",
+          "proposedCorrection": "...particularly when an interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, makes that gap concrete."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-01",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Keeps I1's distinction and both of D1's concrete scenes." },
+        "grounding": { "score": 5, "reason": "P1 and P2 are I1 and D1; P3 matches C1, P1 and T1." },
+        "coherence": { "score": 4, "reason": "Meaning, scene, timing; clear." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 3, "reason": "P1 and P2 are the published copy verbatim." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-32",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Concrete I1 and D1 scenes (a quiet moment crowded by tracking the next task, an unclaimed hour with duties following into private space) tied to the hard contact." },
+        "grounding": { "score": 4, "reason": "Claims trace to I1, D1, P1 and T1 with possibilities kept ('can end up', 'can still be'). The 'when you're mentally keeping track' clause keeps the opening scene conditional, though 'easily' adds emphasis." },
+        "coherence": { "score": 4, "reason": "Meaning, then scene and timing, without repeating the tension; clear." },
+        "voice": { "score": 4, "reason": "Warm and natural ('you're', 'you'd prefer', 'In an ordinary day')." },
+        "repetition": { "score": 4, "reason": "Paraphrased, with supported variation." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-32-1",
+          "paragraph": 1,
+          "passage": "A quiet moment can easily get crowded when you're mentally keeping track of the next task.",
+          "supportingFactIds": ["I1"],
+          "missingFactIds": [],
+          "category": "style",
+          "severity": "minor",
+          "explanation": "'Easily' is emphasis the published copy does not use. The tracking scene stays conditional ('when you're...'), so this is wording drift rather than a strengthened claim.",
+          "proposedCorrection": "A quiet moment can get crowded when you're mentally keeping track of the next task."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-52",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Published I1 and D1 copy with concrete scenes (a draft revised before it has settled, a reply composed too early, an unfinished list)." },
+        "grounding": { "score": 5, "reason": "Each paragraph is I1, D1, P1 or T1 verbatim. No house or angle claim and no caveat, consistent with U2." },
+        "coherence": { "score": 3, "reason": "Understandable but repetitive: P2 restates P1's friction around pace and ownership, again with a draft as the scene, and P3 and P4 are bare label lines." },
+        "voice": { "score": 3, "reason": "Clear, but the bare phase line and the 'Timing:' label read as stiff template output." },
+        "repetition": { "score": 2, "reason": "Entirely stock published wording, with heavy duplication between P1 and P2." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-52-1",
+          "paragraph": 2,
+          "passage": "Pace, scope, and the part of a task that feels like yours are separate pieces of working on something. An unfinished list or a draft with competing aims can be a place to notice friction between those pieces.",
+          "supportingFactIds": ["D1", "I1"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "P1 already gives friction around pace and ownership with a draft revised too early; P2 restates the same friction, adding only scope and the unfinished list.",
+          "proposedCorrection": "Fold D1's scope and unfinished-list scene into P1 rather than restating the pace and ownership friction."
+        },
+        {
+          "findingId": "rb-52-2",
+          "paragraph": 4,
+          "passage": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window.",
+          "supportingFactIds": ["T1"],
+          "missingFactIds": [],
+          "category": "voice",
+          "severity": "minor",
+          "explanation": "A field label and a one-line paragraph read as data output rather than prose.",
+          "proposedCorrection": "Fold the phase and timing into one sentence, e.g. 'The contact is approaching and becomes exact in 3 days; this reading falls in the middle part of the calculated window.'"
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-17",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Concrete I1 and D1 scenes (a quiet moment spent tracking the next task, an unclaimed hour) tied to Saturn's hard contact with the Moon." },
+        "grounding": { "score": 5, "reason": "Traceable to I1, D1, C1, P1 and T1. 'Can be' for I1's 'might be' keeps a possibility, and 'offering a scene' keeps D1's framing." },
+        "coherence": { "score": 4, "reason": "Meaning, scene, timing; P2 repeats P1's tension clause, which minor editing would fix." },
+        "voice": { "score": 4, "reason": "Plain and natural, though the timing sentences are clipped." },
+        "repetition": { "score": 3, "reason": "Close to the published wording, with the tension over preferred space stated twice." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-17-1",
+          "paragraph": 2,
+          "passage": "offering a scene for tension around the amount of private space you prefer",
+          "supportingFactIds": ["D1", "I1"],
+          "missingFactIds": [],
+          "category": "repetition",
+          "severity": "minor",
+          "explanation": "This restates P1's tension between responsibility and the uninterrupted space you would prefer.",
+          "proposedCorrection": "End P2's first sentence after 'unfinished tasks' or vary the point it makes."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-28",
+      "scores": {
+        "specificity": { "score": 4, "reason": "Keeps I1's scenes (a reply composed too early, a draft revised before it has settled) and D1's unfinished list, but 'separate pieces of work' blurs D1's distinction about the pieces of working on something." },
+        "grounding": { "score": 4, "reason": "Claims trace to I1, D1, C1, P1 and T1. I1's 'can run ahead' sits inside a 'when' clause, and there is no house or angle claim and no caveat, consistent with U2. Minor wording drift only." },
+        "coherence": { "score": 4, "reason": "Meaning, then work scene and timing; P2 partly restates P1's friction around pace and ownership but varies the scene." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 4, "reason": "Paraphrased; P2 avoids repeating P1's draft image." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "rb-28-1",
+          "paragraph": 2,
+          "passage": "Pace, scope, and the part of a task that feels like yours are separate pieces of work.",
+          "supportingFactIds": ["D1"],
+          "missingFactIds": [],
+          "category": "specificity",
+          "severity": "minor",
+          "explanation": "D1 calls them 'separate pieces of working on something', aspects of one process. 'Separate pieces of work' reads as separate work items.",
+          "proposedCorrection": "Pace, scope, and the part of a task that feels like yours are separate pieces of working on something."
+        },
+        {
+          "findingId": "rb-28-2",
+          "paragraph": 2,
+          "passage": "An unfinished list with competing aims can be a place to notice friction between those elements.",
+          "supportingFactIds": ["D1", "I1"],
+          "missingFactIds": [],
+          "category": "repetition",
+          "severity": "minor",
+          "explanation": "This partly restates P1's friction around pace and ownership. It also moves D1's 'competing aims' from the draft to the list.",
+          "proposedCorrection": "An unfinished list, or a draft with competing aims, can be a place to notice friction between pace, scope and ownership."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-37",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Keeps I1's contrast in taste and social ease, both of D1's relationship scenes, and I2's focus on phrasing, questions and ideas." },
+        "grounding": { "score": 5, "reason": "Traceable to I1, D1 and I2 with modality intact; P2 is explicitly separate, as required without S1." },
+        "coherence": { "score": 4, "reason": "Two clearly separated paragraphs; P1's closing 'where' clause is slightly awkward." },
+        "voice": { "score": 4, "reason": "Plain and natural." },
+        "repetition": { "score": 3, "reason": "P2 is I2 almost verbatim; P1 close to stock." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied" },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied" }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "verdict": "pass"
+    }
+  ],
+  "verdict": "fail"
+}
