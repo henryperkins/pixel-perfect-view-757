@@ -2,17 +2,30 @@
 
 ## Run an on-demand model evaluation
 
-Sign in as an admin, open `/content`, and choose **Run synthetic evaluation** in
-Reading quality. This runs the 26 fixed cases below immediately: at most 25 eligible
-model requests and one quiet-day check that makes no model call. Each case uses
-the production model, prompt, validator, and the effective active interpretation
-bundle. The model key stays on the server.
+Sign in as an admin, open `/content`, choose the **Evaluation copy**, and choose
+**Run synthetic evaluation** in Reading quality. This runs the 28 fixed cases below
+immediately: at most 27 eligible model requests and one quiet-day check that makes no
+model call. Each case uses the production model, prompt and validator with the chosen
+copy. The model key stays on the server.
+
+| Evaluation copy              | `bundleSource`    | Copy used                                                                     |
+| ---------------------------- | ----------------- | ----------------------------------------------------------------------------- |
+| Current active copy          | `active`          | The effective published release, or the built-in fallback when none is active |
+| Natal-free built-in baseline | `builtin`         | `builtin-0.5.0`, without the natal catalogue                                  |
+| Inactive natal candidate     | `natal-candidate` | `builtin-0.6.0`, for this run only                                            |
+
+The choice is fixed when the run starts, sent with every case and recorded in the
+report as `bundleSource`. Choosing a bundle never publishes, activates or caches it,
+and a run cannot mix choices. Reports made before this selector existed have no
+`bundleSource`; none is inferred.
 
 The inputs are checked-in synthetic contacts. The endpoint accepts only a fixed
-case ID; it does not accept a chart, prompt, model override, or account context.
-It reads the admin role and active copy, without reading birth records, check-ins,
-notes, or daily readings, and writes no application records. Evaluation outcomes
-do not enter the production Reading quality counts.
+case ID and that closed copy choice; it does not accept a bundle, chart, prompt,
+model override, or account context. It reads the admin role and, only for current
+active copy, the active release (failing closed when that read fails), without
+reading birth records, check-ins, notes, or daily readings, and writes no
+application records. Evaluation outcomes do not enter the production Reading
+quality counts.
 
 Cases run one at a time with the production daily timeout of 20 seconds per
 request, including response-body reads. The JSON report records this budget as
@@ -24,13 +37,16 @@ rather than combining unlike configurations.
 
 Review the supplied facts, actual synthetic candidate paragraphs, displayed
 result, and template fallback for each completed case. Rejected drafts remain
-visible for manual review; generated paragraphs are bounded and marked when
-truncated. Provider error bodies, exception text and credentials are excluded.
-Production reading diagnostics continue excluding generated draft text.
+visible for review; generated paragraphs are bounded and marked when truncated.
+New captures also record `captureLossless`, decided on the raw draft before any
+bounding or filtering, so a dropped or cut paragraph, text or fact ID is never
+mistaken for a clean capture. Provider error bodies, exception text and
+credentials are excluded. Production reading diagnostics continue excluding
+generated draft text.
 
 Download the JSON report before leaving the page. Results are held only in page
 memory. Partial runs are marked as partial; a before/after comparison needs all
-26 fixed cases. A completed report is compatible with the comparison command:
+28 fixed cases. A completed report is compatible with the comparison command:
 
 ```sh
 npm run eval:reading -- --compare /tmp/pattern-before.json /tmp/pattern-after.json --output /tmp/pattern-comparison.json
@@ -39,19 +55,23 @@ npm run eval:reading -- --compare /tmp/pattern-before.json /tmp/pattern-after.js
 The displayed acceptance rate describes model attempts in this synthetic run,
 including gateway failures and excluding quiet skips, missing primary interpretations, and missing configuration.
 It does not estimate acceptance for production users or score writing quality.
-Use the manual rubric below to review specificity, voice, repetition and grounding
-before and after a prompt or copy change.
+Writing quality is judged separately under the
+[AI review lane](#current-writing-gate-ai-review-lane), before and after a prompt or
+copy change.
 
 ## Offline replay
 
-Run the fixed suite before changing the daily prompt or published copy:
+Every offline run names its copy explicitly with `--bundle builtin` (natal-free
+`builtin-0.5.0`) or `--bundle natal-candidate` (inactive `builtin-0.6.0`). Active
+copy exists only in the hosted app. Run the fixed suite before changing the daily
+prompt or published copy:
 
 ```sh
-npm run eval:reading -- --output /tmp/pattern-before.json
+npm run eval:reading -- --bundle natal-candidate --output /tmp/pattern-before.json
 npm run eval:reading -- --write-responses /tmp/pattern-candidates.json
 ```
 
-The default run replays handwritten JSON through the actual `assembleReading`, `readingFacts`, and `generateReadingProse` modules. All application fetch, HTTP(S), TCP, TLS, UDP, and DNS calls are blocked; the language gateway receives an in-memory response. The CLI loads no project configuration or `.env` files, substitutes a fake gateway key, and restores the environment on exit. No account, birth record, provider request, or private notes are needed.
+The fixture run replays handwritten JSON through the actual `assembleReading`, `readingFacts`, and `generateReadingProse` modules. All application fetch, HTTP(S), TCP, TLS, UDP, and DNS calls are blocked; the language gateway receives an in-memory response. The CLI loads no project configuration or `.env` files, substitutes a fake gateway key, and restores the environment on exit. No account, birth record, provider request, or private notes are needed.
 
 The baseline answers are validator fixtures, not model outputs or recommended prose. Its acceptance rate only describes those fixtures. It cannot measure the live fallback rate, provider performance, tone quality, or semantic truth. The chart plans are synthetic contacts, not an ephemeris accuracy test. Local dates and daylight-saving conversions use the app's date helpers.
 
@@ -61,8 +81,9 @@ moves the Moon-lens cases onto a Moon contact and adds own-target and Moon-fallb
 cases for the `daily-natal-lens-2` order. Saved v1–v4 reports remain historical
 evidence; they cannot be compared against changed v5 inputs.
 
-The offline runner evaluates the inactive natal candidate bundle (`builtin-0.6.0`).
-The natal-free baseline is the built-in fallback (`builtin-0.5.0`). Version-5
+The offline runner evaluates the bundle named by `--bundle`. The natal-free
+baseline is the built-in fallback (`builtin-0.5.0`); the natal candidate is
+`builtin-0.6.0`. Version-5
 comparisons require an identical normalized transit-copy hash (`transitCopyHash`)
 and model, so the two bundles may differ only by release identity and natal
 catalogue; that difference is listed among the configuration changes.
@@ -100,7 +121,7 @@ catalogue; that difference is listed among the configuration changes.
 
 The JSON report records the effective facts, production prompt and response schema, selected cycle keys, enriched fact dependencies, bounded interpretation-plan identity, template body, displayed body, citations, bounded rejection code, plan/prompt/validator/bundle versions, and configured gateway timeout budget. Request headers and credentials are excluded. Attempt durations are local replay timings, not live service latency. Skipped cases are separate from attempts, and `liveAcceptanceRate` is always `null`.
 
-Daily prompt `daily-astro-body-6` defines plain, warm and clinical voices, each
+Daily prompt `daily-astro-body-8` defines plain, warm and clinical voices, each
 with a short style-only example. The selected synthesis comes first, then primary and supporting meanings, optional
 framing, and calculation references. The opening develops that meaning before technical
 detail; domain, phase and timing receive space only when they add a distinct idea.
@@ -109,6 +130,15 @@ brief distinguishes conversational warmth from extra emotional claims, uses
 familiar clinical wording, and discourages automatic repetition of the first
 interpretation sentence. Everyday scenes remain conditional; a planet does not
 establish what the reader feels or cause a decision, recovery or moment of clarity.
+Each claim keeps the strength its source gives it: a supplied possibility stays a
+possibility, and frequency, necessity or an exclusion needs its own supplied
+support (and is kept when supplied). A contrast may set two supported options side by
+side but does not rule out an alternative no fact mentions, and role or capacity
+scenes do not become the reader's history. A selected reinforcement gives sustained
+commitment and targeted action distinct paragraphs, then stops. Prompt
+`daily-astro-body-7` is reserved by separate transit-story work, so this correction
+uses `daily-astro-body-8`; whether its prose improves is decided only by fresh review
+of actual model output.
 
 Validator `daily-reference-5` accepts two to four paragraphs of one to four
 complete sentences. The first paragraph still requires C1 and I1; every paragraph
@@ -151,16 +181,48 @@ than acquiring the new value. Historical diagnostics keep their saved versions. 
 starts a new reading rather than reusing a pre-synthesis cache row. Natal chapters and
 editorial drafting retain their separate 90-second budget.
 
-To score candidate responses, replace the paragraph objects in the exported file with saved responses for these same synthetic cases. Keep all 26 case IDs; the quiet case remains `null` because generation is skipped. Only the fixed JSON format is accepted, and candidate files never execute code or enable network access.
+To score candidate responses, replace the paragraph objects in the exported file with saved responses for these same synthetic cases. Keep all 28 case IDs; the quiet case remains `null` because generation is skipped. Only the fixed JSON format is accepted, and candidate files never execute code or enable network access. A replay without source evidence is a fixture run (`candidate-replay`).
 
 ```sh
-npm run eval:reading -- --responses /tmp/pattern-candidates.json --output /tmp/pattern-after.json
+npm run eval:reading -- --bundle natal-candidate --responses /tmp/pattern-candidates.json --output /tmp/pattern-after.json
 npm run eval:reading -- --compare /tmp/pattern-before.json /tmp/pattern-after.json --output /tmp/pattern-comparison.json
 ```
 
-Output files must be new paths, so the CLI does not replace a saved baseline. Comparisons require the same fixture version, exact case IDs, and input configuration hashes. Version-4 comparisons also require identical frozen bundle version/hash and model; the natal policy can differ to isolate using the lens. Historical reports do not acquire inferred versions. Plan, natal plan, reliability, prompt, validator and gateway budget changes remain explicit; a change during an in-page run stops it. Replaying saved text against a new prompt cannot assess that prompt's effect: obtain new candidate responses separately. This CLI deliberately makes no live model calls.
+To replay a downloaded hosted report, extract its captured candidates into that same
+case-keyed dictionary, then bind the replay to the report:
 
-Every case has blank `manualReview` fields. Read the actual candidate body against its facts and fill these fields in a copy of the report. For a rejected candidate, review its draft in the candidate file as well as the displayed template body. Use the same reviewer and rubric before and after. Do not turn validation acceptance into a quality score.
+```sh
+npm run eval:reading -- --bundle builtin --extract-responses complete-report.json --output responses.json
+npm run eval:reading -- --bundle builtin --responses responses.json --source-report complete-report.json --output replay.json
+```
+
+Extraction accepts only a complete report with all 28 unique cases whose fixtures,
+input hashes, model and copy match the selected shipped bundle, and whose every
+capture is lossless. Accepted, untruncated historical drafts remain usable; a
+historical rejected draft has no proof of lossless capture and is refused. A report
+made with custom active copy matches neither shipped bundle and is refused rather
+than replayed against built-in copy. `--source-report` checks the report's SHA-256,
+identities and exact candidates, then records the report's own identity
+(`sourceReport`) apart from the replay's current metadata: replaying old text never
+gives the source report a new prompt identity or a deployed revision.
+
+A natal experiment uses the strict comparison, which permits only bundle and
+evaluation-selector differences and checks source revisions through identity
+records (`reading-evaluation-identity-1`). A record without a source revision is
+reported as a qualification gap:
+
+```sh
+npm run eval:reading -- --compare-natal baseline.json candidate.json --before-identity baseline-identity.json --after-identity candidate-identity.json --output natal-comparison.json
+```
+
+Output files must be new paths, so the CLI does not replace a saved baseline. Comparisons require the same fixture version, exact case IDs, and input configuration hashes. Version-4 comparisons also require identical frozen bundle version/hash and model; the natal policy can differ to isolate using the lens. Historical reports do not acquire inferred versions. Plan, natal plan, reliability, prompt, validator, copy-selector and gateway budget changes remain explicit; a change during an in-page run stops it. Replaying saved text against a new prompt cannot assess that prompt's effect: obtain new candidate responses separately. This CLI deliberately makes no live model calls.
+
+Every case keeps blank `manualReview` fields for a future human review; AI review
+never fills them. Under the current AI review lane, reviews are separate artifacts
+produced from blinded packets by `scripts/reading-writing-review.mjs` (see the
+[protocol](docs/reviews/daily-reading-writing/review-protocol.md)). The fields below
+remain the historical human rubric, which AI scoring reuses. Do not turn validation
+acceptance into a quality score.
 
 | Field                      | Manual rubric                                                                                                                                        |
 | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -188,6 +250,19 @@ approval. Every qualification summary records `humanReviewCompleted: false`.
 AI review artifacts are separate files with their own provenance. Exported
 `manualReview` fields stay untouched. The blinded human review required in the two
 gates below is historical and remains unsatisfied; it is deferred, not replaced.
+
+The bookkeeping runs locally, with no model or network calls:
+
+```sh
+node scripts/reading-writing-review.mjs prepare --before baseline-report.json --after corrected-report.json --output-dir NEW_DIR
+node scripts/reading-writing-review.mjs qualify --assignment NEW_DIR/assignment.json --review reviewer-a.json --review reviewer-b.json --output qualification.json
+```
+
+`prepare` writes one independently shuffled packet per reviewer under
+`NEW_DIR/packets/` and a private `assignment.json` that maps neutral item IDs back
+to runs and cases; reviewers never receive the assignment. `qualify` adds
+`--adjudication` when a dispute needs one, and refuses incomplete, mismatched or
+non-blind review files.
 
 ## Synthesis qualification gate
 

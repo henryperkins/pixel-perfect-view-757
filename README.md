@@ -81,7 +81,9 @@ configuration and rows without valid diagnostics; historical outcomes are not
 guessed or regenerated. Gateway response bodies and exception text are excluded.
 
 Admins can also choose **Run synthetic evaluation** in that panel to run the 28
-fixed cases on demand using the production language pipeline and active copy.
+fixed cases on demand using the production language pipeline and a chosen
+evaluation copy: current active copy, the natal-free built-in baseline, or the
+inactive natal candidate. Choosing a copy never publishes or activates it.
 It makes up to 27 model calls and one quiet-day check, shows actual drafts and
 fallback reasons, and downloads a report for before/after comparison. These
 synthetic results stay separate from saved readings and live generation counts;
@@ -95,11 +97,13 @@ and labels are not read. Cohort counts and coverage describe selected feedback,
 not proof of writing quality.
 
 ```sh
-npm run eval:reading -- --output /tmp/pattern-baseline.json
+npm run eval:reading -- --bundle natal-candidate --output /tmp/pattern-baseline.json
 ```
 
 The [fixed evaluation guide](READING-EVALUATION.md) explains 28 synthetic cases,
-offline candidate replay, before/after comparisons, and the manual writing rubric.
+explicit `--bundle builtin|natal-candidate` selection, offline candidate replay,
+extraction and source-bound replay of downloaded reports, before/after comparisons,
+and the AI writing-review lane that currently stands in for deferred human review.
 Handwritten validator fixtures do not establish a live model fallback rate or a
 quality score. No production schema change or model call is needed for this work.
 
@@ -149,13 +153,13 @@ and never for an unknown time. Failed attempts change nothing but the attempt ti
 
 Only the selected conditional meaning goes to the daily model as `N1`; selectors
 and natal geometry stay local. Derived wording remains personal information. A
-reading without a lens sends the same request as before lenses existed. Assessments,
+reading without a lens carries no lens instructions. Assessments,
 selected copy and exact saved origins are DEK-encrypted. Cached and archived owner
 reads, evidence links and exports restore the saved evidence; an export marks one
 unreadable saved row in place instead of failing. Erasure removes the evidence with
 chart/reading rows, chapter essays and the account key, and keeps no birth
 fingerprint in the retained audit trail. Admin quality sees only IDs and bounded
-codes. Prompt `daily-astro-body-6`, validator `daily-reference-5`, plan
+codes. Prompt `daily-astro-body-8`, validator `daily-reference-5`, plan
 `daily-natal-lens-2` and reliability `natal-reliability-1` preserve the one-call,
 20-second daily budget and the separate natal essay/question contract.
 
