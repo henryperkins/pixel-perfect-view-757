@@ -46,3 +46,7 @@ Verification: production build, TypeScript, changed-component lint, formatting, 
 - [x] Verify responsive layouts, dark surfaces, keyboard controls, and reduced motion; sync to the connected Lovable branch.
 
 Verification: production build, TypeScript, changed-component lint, formatting, and whitespace checks passed. Playwright exercised the actual Your Pattern route and components with synthetic chart/narrative fixtures at 320, 390, 768, 1024, 1440, and 1920px. Chapter filters, retained readings and evidence, previous/next focus and sticky-header offsets, complete connection filtering and numeric orbs, journal/source/birth navigation, loading and late responses, independent retries, missing/empty/single/uncertain/degraded data, unfamiliar categories, 42-chapter long-content browsing, keyboard controls, and reduced motion passed without browser errors or warnings. Light and dark screenshots were compared with the approved Timing design and the previous Your Pattern page. Live authenticated charts and database persistence were not exercised.
+
+## Agent integrations (MCP)
+- [ ] Revise MCP plan per the uploaded review (opt-in account link, delegated-token isolation, grants/revocation, saved-only readers, private-data exclusion)
+- [ ] Implement approved revised plan
