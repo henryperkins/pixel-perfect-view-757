@@ -77,6 +77,8 @@ export interface AssembledReading {
   astroBody: string;
   /** Deterministic caveats and consented context are never sent to the gateway. */
   contextBody: string;
+  contextParts: { sourceIds: string[]; text: string }[];
+  astroPrompt: string;
   editorial: {
     interpretation: { key: string; mechanism: string };
     domain: { key: string; label: string; text: string } | null;
@@ -197,6 +199,11 @@ export function assembleReading(
 
   const paragraphs: string[] = [];
   const contextParagraphs: string[] = [];
+  const contextParts: { sourceIds: string[]; text: string }[] = [];
+  const addContext = (sourceIds: string[], text: string) => {
+    contextParagraphs.push(text);
+    contextParts.push({ sourceIds, text: safetyPass(text).text });
+  };
   const tone = isPermitted("USR-01", "framing", ctx.granted) ? normalizeTone(ctx.tone) : "plain";
   const technical =
     isPermitted("USR-02", "framing", ctx.granted) && normalizeDepth(ctx.depth) === "technical";
@@ -341,17 +348,20 @@ export function assembleReading(
   }
 
   if (chart.uncertainty.angleClaimsSuppressed) {
-    contextParagraphs.push(
+    addContext(
+      ["AST-20"],
       "Your birth time is recorded as uncertain, so anything that depends on the Ascendant or house placements has been left out of this reading rather than guessed at.",
     );
   } else if (!chart.uncertainty.housesReliable) {
-    contextParagraphs.push(
+    addContext(
+      ["AST-20"],
       `Your birth time carries about \u00b1${chart.uncertainty.minutes} minutes of uncertainty, which is roughly ${chart.uncertainty.ascendantSpreadDeg}\u00b0 of Ascendant spread. Angle-based claims below are weighted down accordingly.`,
     );
   }
 
   if (ctx.localBucket && isPermitted("AMB-02", "framing", ctx.granted)) {
-    contextParagraphs.push(
+    addContext(
+      ["AMB-02"],
       `Your local time of day is ${ctx.localBucket}. This is framing for when you read, and does not change the calculation.`,
     );
     record(provenance, ctx, "context", "AMB-02", "framing", "Local time of day", {
@@ -361,7 +371,8 @@ export function assembleReading(
 
   if (ctx.checkIn && isPermitted("USR-04", "framing", ctx.granted)) {
     const { mood, energy } = ctx.checkIn;
-    contextParagraphs.push(
+    addContext(
+      ["USR-04"],
       `You logged mood ${mood ?? "\u2013"}/5 and energy ${energy ?? "\u2013"}/5 today. That is placed next to the reading, not folded into it \u2014 the calculation does not change based on how you feel.`,
     );
     record(provenance, ctx, "reflection", "USR-04", "framing", "Your daily check-in", {
@@ -370,6 +381,7 @@ export function assembleReading(
     });
   }
 
+  const astroPrompt = safetyPass(prompt).text;
   // Tier 3 — sensitive wellness. Framing and prompt only, per WEL-01/WEL-03
   // allowed_uses. Never diagnostic, never fed into the calculation or ranking.
   if (ctx.wellness) {
@@ -392,7 +404,8 @@ export function assembleReading(
     }
 
     if (bands.length) {
-      contextParagraphs.push(
+      addContext(
+        [...(sleepOk ? ["WEL-01"] : []), ...(stressOk ? ["WEL-03"] : [])],
         `You reported ${bands.join(" and ")} today. This is context you chose to record for reflection; it leaves the chart calculation unchanged and is deleted after 180 days.`,
       );
     }
@@ -462,6 +475,8 @@ export function assembleReading(
     storyCalculation: selectedCalculation,
     astroBody: astro.text,
     contextBody: context.text,
+    contextParts,
+    astroPrompt,
     editorial,
   };
 }

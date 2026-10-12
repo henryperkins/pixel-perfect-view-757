@@ -256,10 +256,12 @@ test("exact cited paragraph boundaries survive fresh and cached reads without ch
   assert.equal(typeof meta.paragraphs_ct, "string");
   assert.ok(!JSON.stringify(meta).includes("mood 2/5 and energy 4/5"));
   assert.ok(!meta.paragraphs_ct.includes(fresh.reading.paragraphs[0]));
-  assert.deepEqual(
-    await h.cryptoModule.decryptJson(fixture.dek, meta.paragraphs_ct),
-    fresh.reading.paragraphs,
-  );
+  const astroParagraphs = await h.cryptoModule.decryptJson(fixture.dek, meta.paragraphs_ct);
+  assert.deepEqual(astroParagraphs, fresh.reading.paragraphs.slice(0, 3));
+  const saved = h.sqlite.prepare("SELECT * FROM daily_readings WHERE id=?").get(fresh.reading.id);
+  const context = await h.cryptoModule.decryptJson(fixture.dek, saved.local_context_ct);
+  assert.deepEqual([...astroParagraphs, ...context.body.split("\n\n")], fresh.reading.paragraphs);
+  assert.equal(saved.context_version, "local-context-storage-1");
   await h.reopen();
   const cached = await today();
   assert.equal(cached.reading.id, fresh.reading.id);

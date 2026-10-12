@@ -100,7 +100,107 @@ export class SyntheticEvaluationWorkflow extends WorkflowEntrypoint {
   }
 }
 
+export class RetentionWorkflow extends WorkflowEntrypoint {
+  async run(event, step) {
+    const { now, callback } = event.payload || {};
+    const runId = event.instanceId;
+    if (!/^retention-\d{4}-\d{2}-\d{2}$/.test(runId) || !Number.isFinite(Date.parse(now)))
+      throw new Error("Invalid retention run");
+    const target = new URL(callback);
+    if (
+      target.protocol !== "https:" ||
+      target.pathname !== "/api/public/retention-step" ||
+      target.username ||
+      target.password ||
+      target.search ||
+      target.hash
+    )
+      throw new Error("Invalid retention callback");
+    const counts = {};
+    let cursor = null,
+      pages = 0;
+    try {
+      for (;;) {
+        if (pages >= 1000) throw new Error("Retention continuation limit reached");
+        const outcome = await step.do(
+          "retention page " + pages,
+          { retries: { limit: 0, delay: "1 second" }, timeout: "5 minutes" },
+          async () => {
+            const raw = JSON.stringify({ now, cursor, limit: 100 });
+            const timestamp = String(Math.floor(Date.now() / 1000));
+            const response = await fetch(target, {
+              method: "POST",
+              redirect: "manual",
+              headers: {
+                "content-type": "application/json",
+                "x-pattern-timestamp": timestamp,
+                "x-pattern-signature": await hmacHex(
+                  timestamp + "\n" + raw,
+                  this.env.PATTERN_WORKFLOW_SECRET,
+                ),
+              },
+              body: raw,
+              signal: AbortSignal.timeout(240_000),
+            });
+            if (!response.ok) throw new Error("Retention step answered " + response.status);
+            const value = await response.json();
+            if (
+              !(value.nextCursor === null || typeof value.nextCursor === "string") ||
+              !value.counts ||
+              Object.values(value.counts).some((n) => !Number.isSafeInteger(n) || n < 0)
+            )
+              throw new Error("Invalid retention response");
+            if (value.nextCursor !== null && value.nextCursor === cursor)
+              throw new Error("Retention cursor did not advance");
+            return value;
+          },
+        );
+        for (const [name, count] of Object.entries(outcome.counts))
+          counts[name] = (counts[name] || 0) + count;
+        pages++;
+        cursor = outcome.nextCursor;
+        if (cursor === null) break;
+      }
+      await step.do("retention receipt", async () => {
+        await this.env.ARTIFACTS.put(
+          "operations/retention/" + runId + ".json",
+          JSON.stringify({ runId, status: "complete", now, pages, counts }),
+          { httpMetadata: { contentType: "application/json" } },
+        );
+        return true;
+      });
+      return { runId, pages, counts };
+    } catch (error) {
+      console.error(JSON.stringify({ event: "retention-failed", runId, pages }));
+      await step.do("retention failure receipt", async () => {
+        await this.env.ARTIFACTS.put(
+          "operations/retention/" + runId + ".failed.json",
+          JSON.stringify({ runId, status: "failed", now, pages, counts }),
+          { httpMetadata: { contentType: "application/json" } },
+        );
+        return true;
+      });
+      throw error;
+    }
+  }
+}
+
 export default {
+  async scheduled(controller, env) {
+    const now = new Date(controller.scheduledTime).toISOString();
+    const id = "retention-" + now.slice(0, 10);
+    const callback = new URL("/api/public/retention-step", env.PATTERN_APP_URL).toString();
+    try {
+      await env.RETENTION.create({ id, params: { now, callback } });
+    } catch (error) {
+      try {
+        await env.RETENTION.get(id);
+      } catch {
+        console.error(JSON.stringify({ event: "retention-start-failed", runId: id }));
+        throw error;
+      }
+    }
+  },
   async fetch(request, env) {
     const url = new URL(request.url);
     const raw = request.method === "GET" ? "" : await request.text();

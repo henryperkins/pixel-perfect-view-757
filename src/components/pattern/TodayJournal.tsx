@@ -4,39 +4,55 @@ import { useServerFn } from "@tanstack/react-start";
 import { ArrowRight, RotateCcw } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { fetchJournal } from "@/lib/pattern.functions";
+import { fetchReadingJournal } from "@/lib/pattern.functions";
+import { useAuth } from "@/hooks/useAuth";
 import { DOMAIN_LABEL, timingDate } from "./timing";
 
 export function TodayJournal({
   day,
   cycleKeys,
   accountId,
+  featureKeys = [],
+  permission,
+  surfaceId = "today-journal",
 }: {
-  day: string;
+  day?: string;
   cycleKeys: string[];
   accountId: string;
+  featureKeys?: string[];
+  permission?: boolean;
+  surfaceId?: string;
 }) {
-  const load = useServerFn(fetchJournal);
+  const load = useServerFn(fetchReadingJournal);
   const query = useQuery({
-    queryKey: ["journal", accountId],
-    queryFn: () => load({}),
+    queryKey: ["journal", accountId, "reading-context", day, cycleKeys, featureKeys],
+    queryFn: () => load({ data: { day, cycleKeys, featureKeys } }),
+    enabled: Boolean(accountId) && permission !== false,
     retry: false,
   });
-  const keys = new Set(cycleKeys);
-  const entries = (query.data?.events ?? []).filter(
-    (entry) => entry.occurred_on === day || Boolean(entry.cycle_key && keys.has(entry.cycle_key)),
-  );
+  const permitted = permission !== false && query.data?.enabled === true && !query.isError;
+  const entries = permitted ? (query.data?.entries ?? []) : [];
   const previews = entries.slice(0, 3);
 
   return (
-    <section id="today-journal" className="today-section">
+    <section id={surfaceId} className="today-section">
       <div className="today-section-heading">
-        <h2 className="flow-section-title">Your entries for today</h2>
+        <h2 className="flow-section-title">Your context</h2>
         <Link to="/journal" className="today-text-link">
           Open journal <ArrowRight aria-hidden="true" className="h-4 w-4" />
         </Link>
       </div>
-      {query.isPending ? (
+      {permission === false || query.data?.enabled === false ? (
+        <p className="mt-3 text-sm text-muted-foreground">
+          Marked moments reuse is off. Your entries remain in your Journal. You can allow matching
+          entries here in{" "}
+          <Link to="/privacy" className="underline">
+            Context &amp; privacy
+          </Link>
+          .
+        </p>
+      ) : null}
+      {query.isPending && permission !== false ? (
         <div className="mt-4" aria-busy="true">
           <p role="status" className="text-sm text-muted-foreground">
             Loading your entries…
@@ -46,11 +62,7 @@ export function TodayJournal({
       ) : null}
       {query.error ? (
         <div className="today-recovery mt-4">
-          <p role="alert">
-            {query.data
-              ? "Your entries couldn’t refresh. These are the last entries loaded."
-              : "Your entries couldn’t load. You can try again."}
-          </p>
+          <p role="alert">Your context couldn’t load. You can try again.</p>
           <Button
             variant="outline"
             disabled={query.isFetching}
@@ -61,9 +73,9 @@ export function TodayJournal({
           </Button>
         </div>
       ) : null}
-      {query.data && entries.length === 0 ? (
+      {permitted && entries.length === 0 ? (
         <p className="mt-3 text-sm text-muted-foreground">
-          Nothing written for today or today’s windows yet.{" "}
+          No saved entries match this reading yet.{" "}
           <Link to="/journal" className="underline underline-offset-4 text-primary">
             Write an entry
           </Link>
@@ -109,5 +121,24 @@ export function TodayJournal({
         </>
       ) : null}
     </section>
+  );
+}
+
+export function AttachedJournalContext({
+  cycleKey,
+  featureKey,
+}: {
+  cycleKey?: string;
+  featureKey?: string;
+}) {
+  const { session } = useAuth();
+  if (!session) return null;
+  return (
+    <TodayJournal
+      accountId={session.userId}
+      cycleKeys={cycleKey ? [cycleKey] : []}
+      featureKeys={featureKey ? [featureKey] : []}
+      surfaceId={`context-${featureKey ?? cycleKey}`}
+    />
   );
 }

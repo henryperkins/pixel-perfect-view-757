@@ -29,6 +29,7 @@ import { Route as AuthenticatedTimingRouteImport } from './routes/_authenticated
 import { Route as OauthConsentRouteImport } from './routes/oauth/consent'
 import { Route as ApiPublicContentReleasesRouteImport } from './routes/api/public/content-releases'
 import { Route as ApiPublicEvaluationStepRouteImport } from './routes/api/public/evaluation-step'
+import { Route as ApiPublicRetentionStepRouteImport } from './routes/api/public/retention-step'
 import { Route as ApiPublicContentReleasesRollbackRouteImport } from './routes/api/public/content-releases.rollback'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 
@@ -133,6 +134,11 @@ const ApiPublicEvaluationStepRoute = ApiPublicEvaluationStepRouteImport.update({
   path: '/api/public/evaluation-step',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicRetentionStepRoute = ApiPublicRetentionStepRouteImport.update({
+  id: '/api/public/retention-step',
+  path: '/api/public/retention-step',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicContentReleasesRollbackRoute =
   ApiPublicContentReleasesRollbackRouteImport.update({
     id: '/rollback',
@@ -166,6 +172,7 @@ export interface FileRoutesByFullPath {
   '/oauth/consent': typeof OauthConsentRoute
   '/api/public/content-releases': typeof ApiPublicContentReleasesRouteWithChildren
   '/api/public/evaluation-step': typeof ApiPublicEvaluationStepRoute
+  '/api/public/retention-step': typeof ApiPublicRetentionStepRoute
   '/api/public/content-releases/rollback': typeof ApiPublicContentReleasesRollbackRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
@@ -189,6 +196,7 @@ export interface FileRoutesByTo {
   '/oauth/consent': typeof OauthConsentRoute
   '/api/public/content-releases': typeof ApiPublicContentReleasesRouteWithChildren
   '/api/public/evaluation-step': typeof ApiPublicEvaluationStepRoute
+  '/api/public/retention-step': typeof ApiPublicRetentionStepRoute
   '/api/public/content-releases/rollback': typeof ApiPublicContentReleasesRollbackRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
@@ -214,6 +222,7 @@ export interface FileRoutesById {
   '/oauth/consent': typeof OauthConsentRoute
   '/api/public/content-releases': typeof ApiPublicContentReleasesRouteWithChildren
   '/api/public/evaluation-step': typeof ApiPublicEvaluationStepRoute
+  '/api/public/retention-step': typeof ApiPublicRetentionStepRoute
   '/api/public/content-releases/rollback': typeof ApiPublicContentReleasesRollbackRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
@@ -239,6 +248,7 @@ export interface FileRouteTypes {
     | '/oauth/consent'
     | '/api/public/content-releases'
     | '/api/public/evaluation-step'
+    | '/api/public/retention-step'
     | '/api/public/content-releases/rollback'
     | '/lovable/email/transactional/preview'
   fileRoutesByTo: FileRoutesByTo
@@ -262,6 +272,7 @@ export interface FileRouteTypes {
     | '/oauth/consent'
     | '/api/public/content-releases'
     | '/api/public/evaluation-step'
+    | '/api/public/retention-step'
     | '/api/public/content-releases/rollback'
     | '/lovable/email/transactional/preview'
   id:
@@ -286,6 +297,7 @@ export interface FileRouteTypes {
     | '/oauth/consent'
     | '/api/public/content-releases'
     | '/api/public/evaluation-step'
+    | '/api/public/retention-step'
     | '/api/public/content-releases/rollback'
     | '/lovable/email/transactional/preview'
   fileRoutesById: FileRoutesById
@@ -301,6 +313,7 @@ export interface RootRouteChildren {
   OauthConsentRoute: typeof OauthConsentRoute
   ApiPublicContentReleasesRoute: typeof ApiPublicContentReleasesRouteWithChildren
   ApiPublicEvaluationStepRoute: typeof ApiPublicEvaluationStepRoute
+  ApiPublicRetentionStepRoute: typeof ApiPublicRetentionStepRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
 }
 
@@ -446,6 +459,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicEvaluationStepRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/retention-step': {
+      id: '/api/public/retention-step'
+      path: '/api/public/retention-step'
+      fullPath: '/api/public/retention-step'
+      preLoaderRoute: typeof ApiPublicRetentionStepRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/content-releases/rollback': {
       id: '/api/public/content-releases/rollback'
       path: '/rollback'
@@ -519,6 +539,7 @@ const rootRouteChildren: RootRouteChildren = {
   OauthConsentRoute: OauthConsentRoute,
   ApiPublicContentReleasesRoute: ApiPublicContentReleasesRouteWithChildren,
   ApiPublicEvaluationStepRoute: ApiPublicEvaluationStepRoute,
+  ApiPublicRetentionStepRoute: ApiPublicRetentionStepRoute,
   LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,
 }
 export const routeTree = rootRouteImport

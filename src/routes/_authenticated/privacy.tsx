@@ -1,16 +1,19 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
-import { clearPatternQueries } from "@/lib/pattern-query-cache";
+import { clearPatternQueries, clearReadingContextQueries } from "@/lib/pattern-query-cache";
+import { LIFE_DOMAINS, type LifeDomain } from "@/lib/context-policy";
+import { DOMAIN_LABEL } from "@/components/pattern/timing";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import {
   addEvent,
-  eraseData,
+  resetPersonalization,
+  deleteAccount,
   exportData,
   fetchBootstrap,
   fetchJournal,
@@ -44,7 +47,8 @@ function PrivacyPage() {
   const consentFn = useServerFn(updateConsent);
   const prefsFn = useServerFn(savePrefs);
   const exportFn = useServerFn(exportData);
-  const eraseFn = useServerFn(eraseData);
+  const resetFn = useServerFn(resetPersonalization);
+  const deleteFn = useServerFn(deleteAccount);
   const eventFn = useServerFn(addEvent);
   const journalFn = useServerFn(fetchJournal);
   const qc = useQueryClient();
@@ -63,6 +67,10 @@ function PrivacyPage() {
   const [eventDate, setEventDate] = useState("");
   const [eventDomain, setEventDomain] = useState("identity");
   const [eventLabel, setEventLabel] = useState("");
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [password, setPassword] = useState("");
+  const [prefsReset, setPrefsReset] = useState(0);
+  const deleteTrigger = useRef<HTMLButtonElement>(null);
 
   const granted = new Set(
     (boot.data?.consents ?? []).filter((c) => c.granted).map((c) => c.source_id),
@@ -73,25 +81,37 @@ function PrivacyPage() {
     mutationFn: (vars: { sourceId: string; granted: boolean }) => consentFn({ data: vars }),
     onSuccess: async () => {
       await clearPatternQueries(qc);
+      await clearReadingContextQueries(qc);
       void qc.invalidateQueries({ queryKey: ["bootstrap"] });
       void qc.invalidateQueries({ queryKey: ["today"] });
       void qc.invalidateQueries({ queryKey: ["cycles"] });
     },
-    onError: (e: Error) => toast.error(e.message),
+    onError: async (e: Error) => {
+      await clearReadingContextQueries(qc);
+      void qc.invalidateQueries({ queryKey: ["bootstrap"] });
+      toast.error(e.message);
+    },
   });
   const consentControlsDisabled = consentUnknown || boot.isFetching || toggle.isPending;
 
   const prefs = useMutation({
-    mutationFn: (vars: { displayName: string | null; tone: string; depth: string }) =>
+    mutationFn: (vars: {
+      displayName: string | null;
+      tone: string;
+      depth: string;
+      domainPref: LifeDomain | null;
+    }) =>
       prefsFn({
         data: {
           displayName: vars.displayName,
           tone: vars.tone as "plain" | "warm" | "clinical",
           depth: vars.depth as "standard" | "technical",
+          domainPref: vars.domainPref,
         },
       }),
     onSuccess: async () => {
       await clearPatternQueries(qc);
+      await clearReadingContextQueries(qc);
       toast.success("Preferences saved.");
       void qc.invalidateQueries({ queryKey: ["bootstrap"] });
       void qc.invalidateQueries({ queryKey: ["today"] });
@@ -128,13 +148,25 @@ function PrivacyPage() {
     onError: (e: Error) => toast.error(e.message),
   });
 
-  const doErase = useMutation({
-    mutationFn: () => eraseFn({}),
-    onSuccess: () => {
-      toast.success("Personal data destroyed, including the encryption key.");
-      void qc.invalidateQueries();
+  const doReset = useMutation({
+    mutationFn: () => resetFn({}),
+    onSuccess: async () => {
+      await clearPatternQueries(qc);
+      await clearReadingContextQueries(qc);
+      await qc.invalidateQueries({ queryKey: ["bootstrap"] });
+      setPrefsReset((value) => value + 1);
+      toast.success("Personalization reset. Your account, chart and journal are kept.");
     },
     onError: (e: Error) => toast.error(e.message),
+  });
+  const doDelete = useMutation({
+    mutationFn: () => deleteFn({ data: { password } }),
+    onSuccess: async () => {
+      await qc.cancelQueries();
+      qc.clear();
+      setPassword("");
+      window.location.assign("/auth");
+    },
   });
 
   const profile = boot.data?.profile;
@@ -301,6 +333,7 @@ function PrivacyPage() {
                           className="mt-1 max-w-xl text-sm text-muted-foreground"
                         >
                           {s.description}
+                          {s.available === false ? " This context is not available yet." : ""}
                         </p>
                         <p
                           id={`source-${s.id}-uses`}
@@ -312,27 +345,26 @@ function PrivacyPage() {
                       {tier.required ? (
                         <span className="technical shrink-0 text-muted-foreground">required</span>
                       ) : (
-                        <button
+                        <Button
+                          variant={on ? "secondary" : "outline"}
                           type="button"
                           aria-label={`Use ${s.label}`}
                           aria-pressed={consentUnknown ? undefined : on}
                           aria-describedby={`source-${s.id}-meta source-${s.id}-description source-${s.id}-uses`}
-                          disabled={consentControlsDisabled}
+                          disabled={consentControlsDisabled || (s.available === false && !on)}
                           onClick={() => toggle.mutate({ sourceId: s.id, granted: !on })}
-                          className={`shrink-0 rounded-sm border px-3 py-1.5 text-xs transition-colors ${
-                            !consentUnknown && on
-                              ? "border-primary bg-accent text-accent-foreground"
-                              : "border-input bg-card hover:bg-secondary"
-                          }`}
+                          className="shrink-0"
                         >
                           {consentUnknown
                             ? boot.isPending || boot.isFetching
                               ? "loading…"
                               : "unavailable"
-                            : on
-                              ? "on"
-                              : "off"}
-                        </button>
+                            : s.available === false && !on
+                              ? "unavailable"
+                              : on
+                                ? "on"
+                                : "off"}
+                        </Button>
                       )}
                     </div>
                   );
@@ -358,62 +390,88 @@ function PrivacyPage() {
           <section className="mt-12">
             <h2 className="font-serif text-xl">Reading preferences</h2>
             <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
-              Saved tone and depth apply when their source switches above are on. Saving a
-              preference does not turn a source on.
+              Saved tone, depth and life-area focus apply when their source switches above are on.
+              Focus sets the initial Timing filter. Saving does not turn a source on.
             </p>
-            <div className="mt-4 grid gap-4 sm:grid-cols-3">
-              <label className="block">
-                <span className="technical text-muted-foreground">Display name</span>
-                <input
-                  defaultValue={profile?.display_name ?? ""}
-                  id="display-name"
-                  className="mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
-                />
-              </label>
-              <label className="block">
-                <span className="technical text-muted-foreground">Tone</span>
-                <select
-                  id="tone"
-                  defaultValue={profile?.tone_pref ?? "plain"}
-                  className="mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
-                >
-                  <option value="plain">plain</option>
-                  <option value="warm">warm</option>
-                  <option value="clinical">clinical</option>
-                </select>
-              </label>
-              <label className="block">
-                <span className="technical text-muted-foreground">Depth</span>
-                <select
-                  id="depth"
-                  defaultValue={profile?.depth_pref ?? "standard"}
-                  className="mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
-                >
-                  <option value="standard">standard</option>
-                  <option value="technical">technical</option>
-                </select>
-              </label>
-            </div>
-            <button
-              type="button"
-              disabled={prefs.isPending}
-              onClick={() => {
-                const name = (document.getElementById("display-name") as HTMLInputElement).value;
-                const tone = (document.getElementById("tone") as HTMLSelectElement).value;
-                const depth = (document.getElementById("depth") as HTMLSelectElement).value;
-                prefs.mutate({ displayName: name || null, tone, depth });
-              }}
-              className="mt-4 rounded-sm border border-input bg-card px-4 py-2 text-sm transition-colors hover:bg-secondary disabled:opacity-50"
-            >
-              Save preferences
-            </button>
+            {profile ? (
+              <form
+                key={prefsReset}
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  const data = new FormData(event.currentTarget);
+                  prefs.mutate({
+                    displayName: String(data.get("displayName") ?? "") || null,
+                    tone: String(data.get("tone")),
+                    depth: String(data.get("depth")),
+                    domainPref: (String(data.get("domainPref") ?? "") || null) as LifeDomain | null,
+                  });
+                }}
+              >
+                <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                  <label className="block">
+                    <span className="technical text-muted-foreground">Display name</span>
+                    <input
+                      defaultValue={profile?.display_name ?? ""}
+                      id="display-name"
+                      name="displayName"
+                      maxLength={80}
+                      className="mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
+                    />
+                  </label>
+                  <label className="block">
+                    <span className="technical text-muted-foreground">Tone</span>
+                    <select
+                      id="tone"
+                      name="tone"
+                      defaultValue={profile?.tone_pref ?? "plain"}
+                      className="mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
+                    >
+                      <option value="plain">plain</option>
+                      <option value="warm">warm</option>
+                      <option value="clinical">clinical</option>
+                    </select>
+                  </label>
+                  <label className="block">
+                    <span className="technical text-muted-foreground">Depth</span>
+                    <select
+                      id="depth"
+                      name="depth"
+                      defaultValue={profile?.depth_pref ?? "standard"}
+                      className="mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
+                    >
+                      <option value="standard">standard</option>
+                      <option value="technical">technical</option>
+                    </select>
+                  </label>
+                  <label className="block">
+                    <span className="technical text-muted-foreground">Life-area focus</span>
+                    <select
+                      name="domainPref"
+                      defaultValue={profile.domain_pref ?? ""}
+                      className="mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
+                    >
+                      <option value="">Every area</option>
+                      {LIFE_DOMAINS.map((domain) => (
+                        <option key={domain} value={domain}>
+                          {DOMAIN_LABEL[domain]}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
+                <Button variant="outline" type="submit" disabled={prefs.isPending} className="mt-4">
+                  {prefs.isPending ? "Saving…" : "Save preferences"}
+                </Button>
+              </form>
+            ) : null}
           </section>
 
           <section className="mt-12">
             <h2 className="font-serif text-xl">Marked moments</h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              A dated moment you choose to record. Used to rank relevance — never to make a claim
-              about you.
+              A dated moment you choose to record. With Marked moments reuse on, matching entries
+              appear as Your context beside a reading, timing window or chart chapter. Saving an
+              entry keeps it in your Journal even when reuse is off.
             </p>
             <div className="mt-4 flex flex-wrap items-end gap-3">
               <label className="block">
@@ -447,14 +505,14 @@ function PrivacyPage() {
                   className="mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
                 />
               </label>
-              <button
+              <Button
+                variant="outline"
                 type="button"
                 disabled={!eventDate || !eventLabel || addMoment.isPending}
                 onClick={() => addMoment.mutate()}
-                className="rounded-sm border border-input bg-card px-4 py-2 text-sm transition-colors hover:bg-secondary disabled:opacity-50"
               >
                 Add
-              </button>
+              </Button>
             </div>
             <ul className="mt-4 space-y-1 font-mono text-xs text-muted-foreground">
               {(journal.data?.events ?? []).map((e) => (
@@ -467,32 +525,101 @@ function PrivacyPage() {
 
           <section className="mt-12 border-t border-rule pt-6">
             <h2 className="font-serif text-xl">Your data</h2>
+            <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
+              Export reads your retained saved data. Reset clears optional permissions and
+              preferences while keeping your login, chart, readings and Journal.
+            </p>
             <div className="mt-4 flex flex-wrap gap-3">
-              <button
+              <Button
+                variant="outline"
                 type="button"
                 disabled={doExport.isPending}
                 onClick={() => doExport.mutate()}
-                className="rounded-sm border border-input bg-card px-4 py-2 text-sm transition-colors hover:bg-secondary disabled:opacity-50"
               >
-                Export everything (JSON)
-              </button>
-              <button
+                {doExport.isPending ? "Preparing export…" : "Export saved data (JSON)"}
+              </Button>
+              <Button
+                variant="outline"
                 type="button"
-                disabled={doErase.isPending}
+                disabled={doReset.isPending}
                 onClick={() => {
                   if (
                     window.confirm(
-                      "Destroy birth details, chart, readings, notes and the encryption key? This cannot be undone.",
+                      "Reset optional permissions and reading preferences? Your account, chart, readings and journal will remain.",
                     )
                   ) {
-                    doErase.mutate();
+                    doReset.mutate();
                   }
                 }}
-                className="rounded-sm border border-destructive px-4 py-2 text-sm text-destructive transition-colors hover:bg-destructive/10 disabled:opacity-50"
               >
-                Delete my data
-              </button>
+                {doReset.isPending ? "Resetting…" : "Reset personalization"}
+              </Button>
+              <Button
+                ref={deleteTrigger}
+                type="button"
+                variant="destructive"
+                onClick={() => setDeleteOpen(true)}
+              >
+                Delete account
+              </Button>
             </div>
+            {deleteOpen ? (
+              <form
+                className="mt-6 max-w-lg space-y-4 border border-destructive/40 p-4"
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  doDelete.mutate();
+                }}
+              >
+                <p className="text-sm">
+                  Delete your Pattern login, all sessions, saved chart, readings, journal and
+                  encryption key, and stop all connected assistant access. This cannot be undone.
+                  Your separate Google or assistant sign-in account is kept. Provider backups follow
+                  their own retention policy.
+                </p>
+                <label className="block text-sm">
+                  Current password
+                  <input
+                    type="password"
+                    autoFocus
+                    autoComplete="current-password"
+                    required
+                    maxLength={200}
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
+                    disabled={doDelete.isPending}
+                    className="mt-2 w-full rounded-sm border border-input bg-card px-3 py-2"
+                  />
+                </label>
+                {doDelete.error ? (
+                  <p role="alert" className="text-sm text-destructive">
+                    {doDelete.error.message}
+                  </p>
+                ) : null}
+                <div className="flex flex-wrap gap-3">
+                  <Button
+                    variant="destructive"
+                    disabled={!password || doDelete.isPending}
+                    type="submit"
+                  >
+                    {doDelete.isPending ? "Deleting account…" : "Permanently delete account"}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    type="button"
+                    disabled={doDelete.isPending}
+                    onClick={() => {
+                      setPassword("");
+                      setDeleteOpen(false);
+                      doDelete.reset();
+                      requestAnimationFrame(() => deleteTrigger.current?.focus());
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </form>
+            ) : null}
           </section>
         </div>
 

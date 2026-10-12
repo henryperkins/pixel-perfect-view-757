@@ -14,7 +14,7 @@
 
 The implementation baseline advanced to current main `6d55d56`, preserving the landing/transit-calculator updates. Tasks 1 and 5 are implemented in application commit `a267d07`, pushed to main and published as deployment `c12cdc82-e831-4d55-94d3-a73d7bc713a8`. The additive production migration is applied. Live create/edit/reload/cancel and 390px checks passed on the canonical app, `https://patterns.lakefrontdigital.io`; cycle/chapter attachment acceptance with a recalculated chart remains open. Publication details are in the release receipt. [Verification record](../../reviews/release-completion/2026-10-12-data-journal/README.md).
 
-The first slice pairs journal editing with its database foundation to verify the upgrade with its real consumer; Tasks 2–4 remain the next privacy workstream. All other unchecked requirements stay open.
+The first slice pairs journal editing with its database foundation to verify the upgrade with its real consumer. Tasks 2–4 now have reviewed implementation and local verification: 629 tests, 627 passed, two existing skips; typecheck, scoped lint, build and nine fixture browser checks passed. Production migrations, publication, Worker deployment and controlled reset/deletion/expiry acceptance are still pending. All other unchecked requirements stay open. [Privacy verification record](../../reviews/release-completion/2026-10-12-privacy-retention/README.md).
 
 ## Baseline and evidence boundaries
 
@@ -124,13 +124,14 @@ Use Task 14 for **every** code slice; do not wait for P3 to publish P0/P1. Assis
 | `USR-14` life-domain focus | Persist an explicit domain preference and use it to select a permitted local domain modifier/filter default. Do not change the selected celestial cycles or send the preference to the provider.                                                                                                                             |
 | `AMB-05` season/daylight   | Until Task 17 supplies the consumer, display an unavailable explanation and disable the control. Task 17 enables consented local framing with source/precision labels. This temporary correction does not mark the feature implemented.                                                                                      |
 
-- [ ] Add on/off, revoked, expired, absent, and prohibited-source cases for each consumer. Assert `NO-*` and unknown IDs are rejected and false consent never triggers a private-context load.
-- [ ] Wire the three local consumers above and fix Privacy descriptions to name their actual effect. Retain existing tone, depth, check-in, timezone, time-bucket, wellness, and aggregate-quality controls with regression coverage.
-- [ ] Make revocation stop future use immediately, invalidate affected member caches, and exclude revoked inputs from exports of derived context and assistant sharing where applicable. Explain that saving an owner journal entry/rating is distinct from permitting its reuse; do not silently delete the owner's journal on a personalization toggle.
-- [ ] Prove byte-identical outbound provider requests across journal, wellness, ambient, domain, and resonance changes. Assert local context can change without changing selected celestial facts.
-- [ ] Run `node --test tests/context-policy.test.mjs tests/reading-writing-privacy.test.mjs tests/reading-request-policy.test.mjs tests/assistant-readers.test.mjs`.
+- [x] Add on/off, revoked, expired, absent, and prohibited-source cases for each consumer. Assert `NO-*` and unknown IDs are rejected and false consent never triggers a private-context load.
+- [x] Wire the three local consumers above and fix Privacy descriptions to name their actual effect. Retain existing tone, depth, check-in, timezone, time-bucket, wellness, and aggregate-quality controls with regression coverage.
+- [x] Make revocation stop future use immediately, invalidate affected member caches, and exclude revoked inputs from exports of derived context and assistant sharing where applicable. Explain that saving an owner journal entry/rating is distinct from permitting its reuse; do not silently delete the owner's journal on a personalization toggle.
+- [x] Prove byte-identical outbound provider requests across journal, wellness, ambient, domain, and resonance changes. Assert local context can change without changing selected celestial facts.
+- [x] Run `node --test tests/context-policy.test.mjs tests/reading-writing-privacy.test.mjs tests/reading-request-policy.test.mjs tests/assistant-readers.test.mjs`.
 
 **Done when:** Every enabled control has a named consumer, truthful copy, permission enforcement, and a passing revocation test.
+
 
 ## Task 3 — Complete account deletion, personalization reset, and export
 
@@ -138,15 +139,16 @@ Use Task 14 for **every** code slice; do not wait for P3 to publish P0/P1. Assis
 
 **Interfaces:** `resetPersonalization(userId): Promise<void>` clears optional consents/preferences and derived personalization caches without deleting the login or journal. `deleteAccount(userId, password): Promise<void>` verifies the current owner and password, revokes assistant access, removes owned data and all sessions, then clears the cookie. `exportAccountData(userId): Promise<AccountExport>` reads all saved owner data through paginated queries and reports an explicit export schema version and row counts.
 
-- [ ] Add two-owner fixtures, more than 60 journal/feedback records and more than 500 audit records. Assert a complete export has no artificial list-page truncation and cannot export another owner's rows; do not reuse `listJournal`'s limited UI result as the complete export.
-- [ ] Make export saved-data-only: it must not calculate a chart, create a reading, call a model, or refresh a chapter. Include all retained account-owned categories and distinguish withheld secret/authentication material from missing data.
-- [ ] Keep a clearly labelled personal-data reset if useful, and add explicit **Delete account** with accurate scope and recent password verification. Replace the ambiguous implication that the current `eraseEverything` deletes the login.
-- [ ] Revoke assistant grants/link access first; fail visibly if revocation cannot be established. Use Task 1's atomic batch for owner deletion, sessions, roles, profile, wrapped DEK, and dependent D1 rows; verify foreign-key cascades for every owned table. Prevent in-flight jobs from recreating rows after deletion. Clear private caches and the current cookie after commit.
-- [ ] Remove the app's separate assistant link/grants without deleting the person's Google account. Inventory any app-owned identity-provider record and remove only that owned record where appropriate. Verify retained operational records contain no personal payload or usable key; document the actual scope rather than promise deletion of unrelated provider accounts or backups.
-- [ ] Test wrong password, wrong owner, failed batch, repeated request, two active sessions, cached reads, in-flight job completion, and an unexpired assistant token after deletion. Assert no partial success toast and no remaining account access. Test reset preserves journal/history while removing optional reuse.
+- [x] Add two-owner fixtures, more than 60 journal/feedback records and more than 500 audit records. Assert a complete export has no artificial list-page truncation and cannot export another owner's rows; do not reuse `listJournal`'s limited UI result as the complete export.
+- [x] Make export saved-data-only: it must not calculate a chart, create a reading, call a model, or refresh a chapter. Include all retained account-owned categories and distinguish withheld secret/authentication material from missing data.
+- [x] Keep a clearly labelled personal-data reset if useful, and add explicit **Delete account** with accurate scope and recent password verification. Replace the ambiguous implication that the current `eraseEverything` deletes the login.
+- [x] Revoke assistant grants/link access first; fail visibly if revocation cannot be established. Use Task 1's atomic batch for owner deletion, sessions, roles, profile, wrapped DEK, and dependent D1 rows; verify foreign-key cascades for every owned table. Prevent in-flight jobs from recreating rows after deletion. Clear private caches and the current cookie after commit.
+- [x] Remove the app's separate assistant link/grants without deleting the person's Google account. Inventory any app-owned identity-provider record and remove only that owned record where appropriate. Verify retained operational records contain no personal payload or usable key; document the actual scope rather than promise deletion of unrelated provider accounts or backups.
+- [x] Test wrong password, wrong owner, failed batch, repeated request, two active sessions, cached reads, in-flight job completion, and an unexpired assistant token after deletion. Assert no partial success toast and no remaining account access. Test reset preserves journal/history while removing optional reuse.
 - [ ] Run `node --test tests/account-data.test.mjs tests/assistant-access.test.mjs tests/assistant-readers.test.mjs`. Perform live destructive acceptance only on a purpose-created test account.
 
 **Done when:** Reset, data erasure, and account deletion have distinct truthful behavior; a deleted test account cannot log in or read through an existing session/token; export contains all retained owner records.
+
 
 ## Task 4 — Enforce retention without relying on a member visiting the app
 
@@ -163,13 +165,14 @@ Use Task 14 for **every** code slice; do not wait for P3 to publish P0/P1. Assis
 | `DEV-01`: 90 days; `AMB-02`, `AMB-05`: 30 days | Purge any persisted source signals/copies; document transient request-only values as not stored. Do not invent rows solely to purge them. |
 | Lifetime/null policies                         | Retain until the appropriate owner deletion/reset; do not apply a blanket short expiry to chart facts.                                    |
 
-- [ ] Inventory base columns, `context_signals`, caches, encrypted reading/context evidence, export, assistant copies, and logs for every expiring source. Define expiry from the check-in civil day for daily check-ins and `created_at` for saved events/feedback; test exact boundary instants and timezone changes.
-- [ ] Separate expiring local-context text/reflection evidence from the enduring astronomical body in new saved readings. Persist source IDs and expiry metadata sufficient to remove the expiring envelope without decrypting unrelated owners in the Worker. If a legacy encrypted mixed body cannot be safely separated, remove that affected derived body at its earliest applicable expiry and retain a visible unavailable record; never quietly retain the private text in an old cache.
-- [ ] Add the `0 3 * * *` UTC scheduled Worker handler, creating one `RetentionWorkflow` instance named `retention-YYYY-MM-DD`. Fix its cutoff instant for the run, page owners in stable ID order, and persist the cursor through Workflow steps until exhausted. Store a final counts-only receipt under R2 `operations/retention/<run-id>.json`; do not use evaluation tables or member reading rows as a job ledger. The signed endpoint uses the existing signature/timestamp validation pattern, rejects invalid requests, and returns no private text.
-- [ ] Test no-visit users, repeated batches, a crash/resume, concurrent readers, revoked consent, retained encrypted journal data before its cutoff, and removal of derived copies. Verify failures alert the operator without declaring the purge complete.
+- [x] Inventory base columns, `context_signals`, caches, encrypted reading/context evidence, export, assistant copies, and logs for every expiring source. Define expiry from the check-in civil day for daily check-ins and `created_at` for saved events/feedback; test exact boundary instants and timezone changes.
+- [x] Separate expiring local-context text/reflection evidence from the enduring astronomical body in new saved readings. Persist source IDs and expiry metadata sufficient to remove the expiring envelope without decrypting unrelated owners in the Worker. If a legacy encrypted mixed body cannot be safely separated, remove that affected derived body at its earliest applicable expiry and retain a visible unavailable record; never quietly retain the private text in an old cache.
+- [x] Add the `0 3 * * *` UTC scheduled Worker handler, creating one `RetentionWorkflow` instance named `retention-YYYY-MM-DD`. Fix its cutoff instant for the run, page owners in stable ID order, and persist the cursor through Workflow steps until exhausted. Store a final counts-only receipt under R2 `operations/retention/<run-id>.json`; do not use evaluation tables or member reading rows as a job ledger. The signed endpoint uses the existing signature/timestamp validation pattern, rejects invalid requests, and returns no private text.
+- [x] Test no-visit users, repeated batches, a crash/resume, concurrent readers, revoked consent, retained encrypted journal data before its cutoff, and removal of derived copies. Verify failures alert the operator without declaring the purge complete.
 - [ ] Run `node --test tests/retention.test.mjs tests/edge-pattern-workflows.test.mjs tests/reading-privacy.test.mjs tests/assistant-readers.test.mjs`; deploy the Worker separately and record one controlled expiry cycle.
 
 **Done when:** Each finite retention policy has a storage owner, read guard, scheduled deletion path, boundary test, and observed production test result.
+
 
 ## Task 5 — Add safe journal editing
 

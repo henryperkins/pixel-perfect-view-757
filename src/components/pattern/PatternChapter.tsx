@@ -7,6 +7,7 @@ import { fetchFeatureNarrative } from "@/lib/pattern.functions";
 import { chapterParagraphId, type PatternFeature } from "./pattern-view";
 import { useReadingArrival } from "./useBrowsingMotion";
 import { PatternChapterEvidence } from "./PatternChapterEvidence";
+import { AttachedJournalContext } from "./TodayJournal";
 
 /** Keep the verified essay verbatim and its calculated support independently accessible. */
 export function PatternChapter({
@@ -115,6 +116,7 @@ export function PatternChapter({
         model={narrative?.model ?? null}
         paragraphCount={paragraphs.length}
       />
+      <AttachedJournalContext featureKey={feature.feature_key} />
     </div>
   );
 }

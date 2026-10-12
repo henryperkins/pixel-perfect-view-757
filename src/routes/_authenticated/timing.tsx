@@ -62,7 +62,7 @@ function TimingPage() {
   const { session } = useAuth();
   const calendar = useCalendarRefresh();
   const load = useServerFn(fetchCycles);
-  const [domain, setDomain] = useState<Domain>("all");
+  const [chosenDomain, setDomain] = useState<Domain | null>(null);
   const [slowOnly, setSlowOnly] = useState(false);
   const [phase, setPhase] = useState<PhaseFilter>("all");
   const [expanded, setExpanded] = useState<{
@@ -83,6 +83,7 @@ function TimingPage() {
   });
   useCalendarQueryRefresh(calendar, ["cycles", session?.userId, "current"]);
   const data = query.data && !query.data.needsOnboarding ? query.data : null;
+  const domain: Domain = chosenDomain ?? data?.preferredDomain ?? "all";
   const referenceDay = data?.day ?? "";
   // computeCycles already returns only windows within their active orb.
   // A past closest pass means "fading", not that the window has ended.

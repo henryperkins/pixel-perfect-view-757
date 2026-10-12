@@ -7,6 +7,9 @@
   "compatibility_flags": ["nodejs_compat"],
   "workers_dev": true,
   "preview_urls": false,
+  "vars": { "PATTERN_APP_URL": "https://patterns.lakefrontdigital.io" },
+  "triggers": { "crons": ["0 3 * * *"] },
+  "observability": { "enabled": true, "head_sampling_rate": 1 },
   "d1_databases": [
     {
       "binding": "RECORDS",
@@ -16,6 +19,7 @@
   ],
   "r2_buckets": [{ "binding": "ARTIFACTS", "bucket_name": "pattern-artifacts" }],
   "workflows": [
+    { "name": "context-retention", "binding": "RETENTION", "class_name": "RetentionWorkflow" },
     { "name": "nightly-reading", "binding": "NIGHTLY", "class_name": "NightlyReadingWorkflow" },
     {
       "name": "synthetic-evaluation",

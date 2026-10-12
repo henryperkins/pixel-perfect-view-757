@@ -5,6 +5,7 @@ import { decryptField, decryptJson, unwrapDek } from "../crypto.server";
 import { snapshotToChart, unpackNarrative } from "../pattern.server";
 import { chapterReflection, FEATURE_ESSAY_VERSION } from "../ai/chapter-policy";
 import { localDayString, validTimeZone } from "../local-day";
+import { legacyClockExpiry, legacyContextUnavailable } from "../retention.server";
 import { SIGNS } from "../astro/ephemeris";
 import {
   todayOutput,
@@ -27,6 +28,21 @@ async function savedKey(userId: string) {
     [userId],
   );
   return profile?.wrapped_dek ? unwrapDek(profile.wrapped_dek) : null;
+}
+
+/** Source revocation and key erasure are independent of the assistant's sharing grant. */
+async function savedPrivacyPolicy(userId: string, sourceIds: string[]) {
+  const read = () =>
+    exec<Record<string, unknown>>(
+      `SELECT p.wrapped_dek,p.tone_pref,p.depth_pref,
+      (SELECT group_concat(source_id||':'||granted,',') FROM
+        (SELECT source_id,granted FROM source_consents WHERE user_id=? AND source_id IN (${sourceIds.map(() => "?").join(",")}) ORDER BY source_id)) AS consents
+      FROM profiles p JOIN users u ON u.id=p.id WHERE p.id=?`,
+      [userId, ...sourceIds, userId],
+    );
+  const initial = await read();
+  return async () =>
+    initial.length === 1 && JSON.stringify(await read()) === JSON.stringify(initial);
 }
 async function snapshot(userId: string) {
   const { data, error } = await records()
@@ -84,11 +100,14 @@ async function savedWindows(userId: string, snapshotId: string, day: string) {
   }));
 }
 export async function readTiming(userId: string, timezone: string) {
+  const currentPolicy = await savedPrivacyPolicy(userId, ["DEV-01"]);
   const snap = await snapshot(userId);
   if (!snap) return unavailable("No saved chart.");
   const clock = await clockFor(userId, timezone);
   const windows = await savedWindows(userId, snap.id, clock.day);
   if (!windows.length) return unavailable("No timing windows have been saved for this day.");
+  if (!(await currentPolicy()))
+    return unavailable("Your privacy settings changed during this read. Open Pattern to refresh.");
   return timingOutput.parse({
     status: "available",
     ...clock,
@@ -100,20 +119,45 @@ export async function readTiming(userId: string, timezone: string) {
   });
 }
 export async function readToday(userId: string, timezone: string) {
+  const currentPolicy = await savedPrivacyPolicy(userId, ["DEV-01", "USR-01", "USR-02"]);
   const clock = await clockFor(userId, timezone);
   const snap = await snapshot(userId);
   if (!snap) return unavailable("No saved chart.");
-  const [row] = await exec<{ language_meta: string | null; confidence: string }>(
-    `select language_meta, confidence from daily_readings where user_id = ? and snapshot_id = ? and reading_date = ?
+  const [row] = await exec<{
+    language_meta: string | null;
+    confidence: string;
+    reading_date: string;
+    created_at: string;
+    context_version: string | null;
+    mixed_context_expires_at: string | null;
+    retention_state: string | null;
+  }>(
+    `select language_meta, confidence,reading_date,created_at,context_version,mixed_context_expires_at,retention_state from daily_readings where user_id = ? and snapshot_id = ? and reading_date = ?
      order by created_at desc, rowid desc limit 1`,
     [userId, snap.id, clock.day],
   );
   if (!row) return unavailable("No reading has been saved for today.");
   const key = await savedKey(userId);
   if (!key) return unavailable("The saved reading key is unavailable.");
+  const [clockConsent] = await exec<{ granted: number }>(
+    "SELECT granted FROM source_consents WHERE user_id=? AND source_id='DEV-01'",
+    [userId],
+  );
+  const mixedExpiry = row.mixed_context_expires_at ?? (await legacyClockExpiry(row, key));
+  if (
+    legacyContextUnavailable(
+      { ...row, mixed_context_expires_at: mixedExpiry },
+      [],
+      new Set(clockConsent?.granted ? ["DEV-01"] : []),
+      new Date(),
+    )
+  )
+    return unavailable("This saved reading has expired or revoked private clock context.");
   let reading;
   try {
     const meta = JSON.parse(row.language_meta ?? "{}");
+    if (meta.retentionState === "expired")
+      return unavailable("This saved reading has expired private context.");
     if (meta.assistantShare?.version !== 2 || typeof meta.assistantShare.reading_ct !== "string")
       return unavailable("This reading is not eligible for assistant sharing.");
     reading = savedReading.parse(await decryptJson(key, meta.assistantShare.reading_ct));
@@ -122,11 +166,14 @@ export async function readToday(userId: string, timezone: string) {
   } catch {
     return unavailable("This reading could not be safely loaded.");
   }
+  const windows = await savedWindows(userId, snap.id, clock.day);
+  if (!(await currentPolicy()))
+    return unavailable("Your privacy settings changed during this read. Open Pattern to refresh.");
   return todayOutput.parse({
     status: "available",
     ...clock,
     reading: { ...reading, confidence: row.confidence },
-    windows: await savedWindows(userId, snap.id, clock.day),
+    windows,
     notices: chartNotices(snapshotToChart(snap)),
   });
 }
@@ -180,6 +227,7 @@ export async function readPattern(userId: string) {
 }
 export async function readChapter(userId: string, featureKey: string) {
   z.string().min(1).max(200).parse(featureKey);
+  const currentPolicy = await savedPrivacyPolicy(userId, ["USR-01"]);
   const snap = await snapshot(userId);
   if (!snap) return unavailable("No saved chart.");
   const [row] = await exec<{ narrative_ct: string; essay_version: string; title: string }>(
@@ -214,6 +262,10 @@ export async function readChapter(userId: string, featureKey: string) {
     const question = last.startsWith(prefix) ? last.slice(prefix.length) : "";
     if (!essay.evidenceAvailable || !question || chapterReflection(question) !== question)
       return unavailable("This saved chapter needs a valid reflection question.");
+    if (!(await currentPolicy()))
+      return unavailable(
+        "Your privacy settings changed during this read. Open Pattern to refresh.",
+      );
     return chapterOutput.parse({
       status: "available",
       key: featureKey,
@@ -236,8 +288,8 @@ export async function readJournal(userId: string, limit: number) {
     label_ct: string;
     body_ct: string | null;
   }>(
-    "select occurred_on, domain, label_ct, body_ct from life_events where user_id = ? order by occurred_on desc, created_at desc, id desc limit ?",
-    [userId, limit],
+    "select occurred_on, domain, label_ct, body_ct from life_events where user_id = ? and julianday(created_at)+1825>julianday(?) order by occurred_on desc, created_at desc, id desc limit ?",
+    [userId, new Date().toISOString(), limit],
   );
   try {
     const entries = await Promise.all(

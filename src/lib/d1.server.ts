@@ -33,7 +33,7 @@ const JSON_COLUMNS: Record<string, readonly string[]> = {
   content_releases: ["bundle"],
   content_drafts: ["bundle", "notes"],
   context_signals: ["value"],
-  daily_readings: ["language_meta"],
+  daily_readings: ["language_meta", "local_context_sources"],
   feature_narratives: ["citations"],
   evaluation_runs: ["case_ids"],
   evaluation_results: ["result"],
@@ -155,7 +155,14 @@ export async function execBatch(
     body: raw,
   });
   if (!response.ok) {
-    throw new Error(`records batch failed (${response.status})`);
+    let detail = "";
+    try {
+      const payload = (await response.json()) as { error?: unknown };
+      if (typeof payload.error === "string") detail = ": " + payload.error.slice(0, 400);
+    } catch {
+      /* HTTP status still identifies a failed operation. */
+    }
+    throw new Error(`records batch failed (${response.status})${detail}`);
   }
   const payload = (await response.json()) as {
     ok?: boolean;
@@ -220,7 +227,10 @@ class Query<Row = Record<string, unknown>> implements PromiseLike<D1Result<Row[]
   private returning: string | null = null;
   private rowMode: "many" | "maybeSingle" | "single" = "many";
 
-  constructor(private table: string) {}
+  constructor(
+    private table: string,
+    private execute: typeof exec = exec,
+  ) {}
 
   select(columns = "*") {
     if (this.op === "select") this.columns = columns;
@@ -408,7 +418,7 @@ class Query<Row = Record<string, unknown>> implements PromiseLike<D1Result<Row[]
   async run(): Promise<D1Result<Row[]>> {
     try {
       const { sql, params } = this.build();
-      const rows = (await exec<Record<string, unknown>>(sql, params)).map((r) =>
+      const rows = (await this.execute<Record<string, unknown>>(sql, params)).map((r) =>
         decodeRow(this.table, r),
       );
       if (this.rowMode === "many") return { data: rows as unknown as Row[], error: null };
@@ -435,12 +445,56 @@ class Query<Row = Record<string, unknown>> implements PromiseLike<D1Result<Row[]
 
 /** Records client. `db.from("table")` mirrors the small builder above. */
 export function records() {
+  let keyFence: { sql: string; params: Primitive[] } | null = null;
+  let policyFence: { sql: string; params: Primitive[] } | null = null;
+  const readingWrite = (sql: string) =>
+    /^\s*(insert\s+into|update|replace\s+into)\s+"?(daily_readings|reading_sources|cycle_instances)"?\b/i.test(
+      sql,
+    );
+  async function batch(statements: { sql: string; params?: Primitive[] }[]) {
+    const guards = [];
+    if (
+      keyFence &&
+      statements.some((statement) => /^\s*(insert|update|delete|replace)\b/i.test(statement.sql))
+    )
+      guards.push(keyFence);
+    // Removing this request's incomplete row remains allowed after consent revocation.
+    if (policyFence && statements.some((statement) => readingWrite(statement.sql)))
+      guards.push(policyFence);
+    const results = await execBatch([...guards, ...statements]);
+    return results.slice(guards.length);
+  }
+  async function guardedExec<T = Record<string, unknown>>(
+    sql: string,
+    params: Primitive[] = [],
+  ): Promise<T[]> {
+    if ((!keyFence && !policyFence) || !/^\s*(insert|update|delete|replace)\b/i.test(sql))
+      return exec<T>(sql, params);
+    const [result] = await batch([{ sql, params }]);
+    return result!.results as T[];
+  }
   return {
     from<Row = Record<string, unknown>>(table: string) {
-      return new Query<Row>(table);
+      return new Query<Row>(table, guardedExec);
     },
-
-    exec,
+    exec: guardedExec,
+    batch,
+    bindWritePolicy(statement: { sql: string; params: Primitive[] }) {
+      policyFence = statement;
+    },
+    async assertBoundPolicy() {
+      const guards = [keyFence, policyFence].filter(
+        (value): value is { sql: string; params: Primitive[] } => value !== null,
+      );
+      if (guards.length) await execBatch(guards);
+    },
+    /** A request holding an erased key must not save its delayed encrypted result. */
+    bindOwnerKey(userId: string, wrappedKey: string) {
+      keyFence = {
+        sql: "SELECT CASE WHEN EXISTS(SELECT 1 FROM profiles WHERE id=? AND wrapped_dek=?) THEN 1 ELSE json('account-key-changed') END",
+        params: [userId, wrappedKey],
+      };
+    },
   };
 }
 

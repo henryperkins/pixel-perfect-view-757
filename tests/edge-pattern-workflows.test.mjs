@@ -113,3 +113,104 @@ test("the evaluation Workflow signs one step per case and stops when the app say
     globalThis.fetch = originalFetch;
   }
 });
+
+test("the UTC cron creates one retention instance per day and surfaces startup failure", async () => {
+  assert.equal(typeof worker.default.scheduled, "function", "retention cron is missing");
+  const created = [],
+    instances = new Map();
+  const env = {
+    PATTERN_APP_URL: "https://patterns.lakefrontdigital.io",
+    RETENTION: {
+      async create(options) {
+        if (instances.has(options.id)) throw new Error("existing");
+        created.push(options);
+        instances.set(options.id, {});
+        return { id: options.id };
+      },
+      async get(id) {
+        if (!instances.has(id)) throw new Error("missing");
+        return { id };
+      },
+    },
+  };
+  const scheduledTime = Date.parse("2026-10-12T03:00:00Z");
+  await worker.default.scheduled({ scheduledTime }, env);
+  await worker.default.scheduled({ scheduledTime }, env);
+  assert.equal(created.length, 1);
+  assert.equal(created[0].id, "retention-2026-10-12");
+  assert.equal(created[0].params.now, "2026-10-12T03:00:00.000Z");
+  assert.equal(
+    created[0].params.callback,
+    "https://patterns.lakefrontdigital.io/api/public/retention-step",
+  );
+  env.RETENTION.create = async () => {
+    throw new Error("offline");
+  };
+  await assert.rejects(worker.default.scheduled({ scheduledTime: scheduledTime + 86400000 }, env));
+});
+
+test("retention resumes cached pages with a fixed cutoff and publishes only count receipts", async () => {
+  assert.equal(typeof worker.RetentionWorkflow, "function", "retention Workflow is missing");
+  const originalFetch = globalThis.fetch,
+    requests = [],
+    artifacts = [],
+    cache = new Map();
+  let fail = true;
+  globalThis.fetch = async (url, init) => {
+    const body = JSON.parse(init.body);
+    requests.push({ body, headers: init.headers });
+    assert.equal(
+      init.headers["x-pattern-signature"],
+      sign(init.headers["x-pattern-timestamp"] + "\n" + init.body),
+    );
+    if (body.cursor === null)
+      return Response.json({ nextCursor: "owner-cursor", counts: { owners: 100, journal: 2 } });
+    if (fail) return new Response("unavailable", { status: 503 });
+    return Response.json({ nextCursor: null, counts: { owners: 4, feedback: 3 } });
+  };
+  const step = {
+    async do(name, config, fn) {
+      if (cache.has(name)) return cache.get(name);
+      const result = await (fn ?? config)();
+      cache.set(name, result);
+      return result;
+    },
+  };
+  const flow = new worker.RetentionWorkflow(
+    {},
+    {
+      PATTERN_WORKFLOW_SECRET: SECRET,
+      ARTIFACTS: {
+        async put(key, value) {
+          artifacts.push({ key, body: JSON.parse(value) });
+        },
+      },
+    },
+  );
+  const event = {
+    instanceId: "retention-2026-10-12",
+    payload: {
+      now: "2026-10-12T03:00:00Z",
+      callback: "https://app.example.test/api/public/retention-step",
+    },
+  };
+  try {
+    await assert.rejects(flow.run(event, step), /answered 503/);
+    assert.equal(artifacts.at(-1).body.status, "failed");
+    fail = false;
+    const result = await flow.run(event, step);
+    assert.deepEqual(result.counts, { owners: 104, journal: 2, feedback: 3 });
+    assert.equal(requests.filter((request) => request.body.cursor === null).length, 1);
+    assert.equal(
+      requests.every(
+        (request) => request.body.now === event.payload.now && request.body.limit === 100,
+      ),
+      true,
+    );
+    assert.equal(artifacts.at(-1).key, "operations/retention/retention-2026-10-12.json");
+    assert.equal(artifacts.at(-1).body.status, "complete");
+    assert.equal(JSON.stringify(artifacts).includes("owner-cursor"), false);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});

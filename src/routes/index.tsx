@@ -281,6 +281,23 @@ function TodayContent({
         <section id="today-reflection" className="today-section">
           <h2 className="flow-section-title">Reflection &amp; check-in</h2>
           <p className="prose-reading mt-2 text-foreground">{data.reading.prompt}</p>
+          {data.localContext?.preferredDomain ? (
+            <p className="mt-3 text-sm text-muted-foreground">
+              Your chosen focus: {DOMAIN_LABEL[data.localContext.preferredDomain]}. This sets the
+              initial area filter in Timing.
+            </p>
+          ) : null}
+          {data.localContext?.previousResonance ? (
+            <p className="mt-3 text-sm text-muted-foreground">
+              You rated this interpretation{" "}
+              {data.localContext.previousResonance.score === 1
+                ? "resonant"
+                : data.localContext.previousResonance.score === -1
+                  ? "not resonant"
+                  : "mixed"}{" "}
+              on {timingDate(data.localContext.previousResonance.day)}.
+            </p>
+          ) : null}
           <TodayCheckIn
             key={`${accountId}:${data.day}`}
             day={data.day}
@@ -299,6 +316,7 @@ function TodayContent({
           day={data.day}
           cycleKeys={data.cycles.map((cycle) => cycle.cycle_key)}
           accountId={accountId}
+          permission={data.localContext?.markedMoments ?? false}
         />
         <section id="today-evidence-section" className="today-section">
           <Button

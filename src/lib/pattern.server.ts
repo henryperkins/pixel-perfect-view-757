@@ -16,6 +16,22 @@ import {
 } from "./content/transit-story-storage.server";
 import { consumedNatalTemplate } from "./content/natal-template";
 import type { DBClient } from "./d1.server";
+import { execBatch } from "./d1.server";
+import {
+  contextUseAllowed,
+  isLifeDomain,
+  type LifeDomain,
+  type LocalReadingContext,
+} from "./context-policy";
+import {
+  CONTEXT_STORAGE_VERSION,
+  civilContextFresh,
+  recordContextFresh,
+  finiteContextExpiry,
+  legacyContextUnavailable,
+  savedLocalContext,
+  savedSourceAllowed,
+} from "./retention.server";
 
 import {
   computeChart,
@@ -108,6 +124,7 @@ interface ProfileRow {
   display_name: string | null;
   tone_pref: string | null;
   depth_pref: string | null;
+  domain_pref: LifeDomain | null;
   onboarded_at: string | null;
 }
 interface CheckInBands {
@@ -128,6 +145,13 @@ interface ExistingReadingRow {
   language_mode: string | null;
   language_model: string | null;
   language_meta: JsonValue;
+  context_version?: string | null;
+  local_context_ct?: string | null;
+  local_context_sources?: JsonValue;
+  local_context_expires_at?: string | null;
+  mixed_context_expires_at?: string | null;
+  retention_state?: string | null;
+  created_at?: string;
 }
 
 interface ConsentRow {
@@ -198,7 +222,9 @@ async function loadReadingFeedback(db: DB, userId: string, readingId: string) {
     .eq("reading_id", readingId)
     .maybeSingle();
   if (error) throw new Error("Your saved rating could not be loaded. Please retry.");
-  return data ? savedReadingFeedback(data) : null;
+  if (!data) return null;
+  const feedback = savedReadingFeedback(data);
+  return recordContextFresh(data.created_at, 730, new Date()) ? feedback : null;
 }
 interface ReadingRow extends ExistingReadingRow {
   reading_date: string;
@@ -292,22 +318,27 @@ export async function getDek(db: DB, userId: string) {
     if (!profile?.wrapped_dek) throw new Error("Could not initialize the account encryption key.");
     wrapped = profile.wrapped_dek;
   }
-  return unwrapDek(wrapped);
+  const key = await unwrapDek(wrapped);
+  db.bindOwnerKey(userId, wrapped);
+  return key;
 }
 
 export async function loadProfile(db: DB, userId: string) {
-  const { data } = await db
+  const { data, error } = await db
     .from<ProfileRow>("profiles")
-    .select("id, display_name, tone_pref, depth_pref, onboarded_at")
+    .select("id, display_name, tone_pref, depth_pref, domain_pref, onboarded_at")
     .eq("id", userId)
     .maybeSingle();
+  if (error) throw new Error("Your preferences could not be loaded. Please retry.");
   if (data) return data;
-  await db.from("profiles").upsert({ id: userId }, { onConflict: "id" });
+  const created = await db.from("profiles").upsert({ id: userId }, { onConflict: "id" });
+  if (created.error) throw new Error("Your preferences could not be initialized. Please retry.");
   return {
     id: userId,
     display_name: null,
     tone_pref: "plain",
     depth_pref: "standard",
+    domain_pref: null,
     onboarded_at: null,
   };
 }
@@ -336,30 +367,45 @@ export async function setConsent(db: DB, userId: string, sourceId: string, grant
   const def = SOURCE_MAP[sourceId];
   if (!def) throw new Error(`Unknown source ${sourceId}.`);
   if (def.tier === 0) throw new Error("Tier 0 sources cannot be switched off.");
+  if (granted && (def.available === false || def.phase !== "launch")) {
+    throw new Error("This context source is not available yet.");
+  }
 
   const now = new Date().toISOString();
-  const { error } = await db.from("source_consents").upsert(
+  await execBatch([
     {
-      user_id: userId,
-      source_id: sourceId,
-      tier: def.tier,
-      granted,
-      granted_at: granted ? now : null,
-      revoked_at: granted ? null : now,
+      sql: "INSERT INTO source_consents(id,user_id,source_id,tier,granted,granted_at,revoked_at,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?) ON CONFLICT(user_id,source_id) DO UPDATE SET tier=excluded.tier,granted=excluded.granted,granted_at=excluded.granted_at,revoked_at=excluded.revoked_at,updated_at=excluded.updated_at",
+      params: [
+        crypto.randomUUID(),
+        userId,
+        sourceId,
+        def.tier,
+        granted ? 1 : 0,
+        granted ? now : null,
+        granted ? null : now,
+        now,
+        now,
+      ],
     },
-    { onConflict: "user_id,source_id" },
-  );
-  if (error) throw new Error(error.message);
-
-  await db.from("audit_events").insert({
-    user_id: userId,
-    kind: granted ? "consent.granted" : "consent.revoked",
-    detail: { source_id: sourceId, tier: def.tier },
-  });
-
-  if (!granted) {
-    await db.from("context_signals").delete().eq("user_id", userId).eq("source_id", sourceId);
-  }
+    {
+      sql: "INSERT INTO audit_events(id,user_id,kind,detail,created_at) VALUES (?,?,?,?,?)",
+      params: [
+        crypto.randomUUID(),
+        userId,
+        granted ? "consent.granted" : "consent.revoked",
+        JSON.stringify({ source_id: sourceId, tier: def.tier }),
+        now,
+      ],
+    },
+    ...(!granted
+      ? [
+          {
+            sql: "DELETE FROM context_signals WHERE user_id=? AND source_id=?",
+            params: [userId, sourceId],
+          },
+        ]
+      : []),
+  ]);
   return { source_id: sourceId, granted };
 }
 
@@ -794,11 +840,14 @@ export async function loadCheckIn(db: DB, userId: string, day: string) {
   if (error) throw new Error(error.message);
   if (!data) return null;
   return {
-    mood: data.mood,
-    energy: data.energy,
-    sleep: data.sleep,
-    stress: data.stress,
-    note: data.note_ct ? await decryptField(await getDek(db, userId), data.note_ct) : null,
+    mood: civilContextFresh(day, 730, new Date()) ? data.mood : null,
+    energy: civilContextFresh(day, 730, new Date()) ? data.energy : null,
+    sleep: civilContextFresh(day, 180, new Date()) ? data.sleep : null,
+    stress: civilContextFresh(day, 180, new Date()) ? data.stress : null,
+    note:
+      civilContextFresh(day, 730, new Date()) && data.note_ct
+        ? await decryptField(await getDek(db, userId), data.note_ct)
+        : null,
     savedAt: data.updated_at,
   };
 }
@@ -978,7 +1027,11 @@ export async function readingLanguage(
   };
 }
 
-async function savedReadingParagraphs(dek: CryptoKey, row: ExistingReadingRow, body: string) {
+export async function savedReadingParagraphs(
+  dek: CryptoKey,
+  row: ExistingReadingRow,
+  body: string,
+) {
   const meta = row.language_meta;
   const encrypted =
     meta && typeof meta === "object" && !Array.isArray(meta) ? meta["paragraphs_ct"] : undefined;
@@ -1012,7 +1065,12 @@ function cyclesForLocalDay(chart: Chart, day: string, timeZone: string) {
   }));
 }
 
-export async function getToday(db: DB, userId: string, timeZone: string) {
+async function getTodayReading(
+  db: DB,
+  userId: string,
+  timeZone: string,
+  capturePolicy: (check: () => Promise<void>) => void,
+) {
   let loaded = await loadSnapshot(db, userId);
   if (!loaded) return { needsOnboarding: true as const };
 
@@ -1088,6 +1146,29 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
         : null,
     wellness: wellnessAllowed ? { sleep: wellnessState.sleep, stress: wellnessState.stress } : null,
   };
+  const optionalSources = LAUNCH_SOURCES.filter((source) => source.tier > 0).map(
+    (source) => source.id,
+  );
+  const consentChecks = optionalSources.map(
+    () => "EXISTS(SELECT 1 FROM source_consents WHERE user_id=? AND source_id=? AND granted=1)=?",
+  );
+  const params = optionalSources.flatMap((id) => [userId, id, granted.has(id) ? 1 : 0]);
+  db.bindWritePolicy({
+    sql: `SELECT CASE WHEN ${consentChecks.join(" AND ")} AND EXISTS(SELECT 1 FROM profiles WHERE id=? AND
+      (CASE WHEN EXISTS(SELECT 1 FROM source_consents WHERE user_id=? AND source_id='USR-01' AND granted=1) AND tone_pref IN ('plain','warm','clinical') THEN tone_pref ELSE 'plain' END)=? AND
+      (CASE WHEN EXISTS(SELECT 1 FROM source_consents WHERE user_id=? AND source_id='USR-02' AND granted=1) AND depth_pref='technical' THEN depth_pref ELSE 'standard' END)=?) THEN 1 ELSE json('privacy-settings-changed') END`,
+    params: [...params, userId, userId, ctx.tone, userId, ctx.depth],
+  });
+  const assertPolicy = async () => {
+    try {
+      await db.assertBoundPolicy();
+    } catch {
+      throw new Error(
+        "Your privacy settings changed while preparing this reading. Reload to use the current settings.",
+      );
+    }
+  };
+  capturePolicy(assertPolicy);
   // Never reuse pre-fix model prose. Context changes get a new immutable row,
   // while old reading IDs and their feedback remain intact. The keyed digest
   // prevents enumerating low-entropy wellbeing bands from a database dump.
@@ -1096,7 +1177,8 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
   delete snapshotHouses["natalReliabilityCheckedAt"];
   delete snapshotHouses["transitAnchors_ct"];
   const contextKey = await keyedFingerprint(userId, {
-    version: "daily-privacy-2",
+    version: "daily-privacy-3",
+    contextStorageVersion: CONTEXT_STORAGE_VERSION,
     planVersion: DAILY_READING_PLAN_VERSION,
     natalPlanVersion: NATAL_LENS_PLAN_VERSION,
     storyPlanVersion: DAILY_TRANSIT_STORY_VERSION,
@@ -1122,12 +1204,12 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       granted.has(id),
     ),
   });
-  const idem = `daily-privacy-2:${snapRow.fingerprint}:${day}:${bundle.version}:${contextKey}`;
+  const idem = `daily-privacy-3:${snapRow.fingerprint}:${day}:${bundle.version}:${contextKey}`;
 
   const { data: existing, error: cacheError } = await db
     .from<ExistingReadingRow>("daily_readings")
     .select(
-      "id, reading_date, headline, body_ct, prompt, confidence, primary_cycle_key, release_version, language_mode, language_model, language_meta",
+      "id, reading_date, headline, body_ct, prompt, confidence, primary_cycle_key, release_version, language_mode, language_model, language_meta, context_version, local_context_ct, local_context_sources, local_context_expires_at, mixed_context_expires_at, retention_state, created_at",
     )
     .eq("user_id", userId)
     .eq("idempotency_key", idem)
@@ -1149,8 +1231,26 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
     // result is a quiet day; do not resurrect cycles stored for an older chart.
     const cachedChart = snapshotToChart(snapRow);
     const liveCycles = cyclesForLocalDay(cachedChart, day, tz).slice(0, 12);
-    const body = await decryptField(dek, existing.body_ct);
-    const paragraphState = await savedReadingParagraphs(dek, existing, body);
+    if (
+      legacyContextUnavailable(
+        existing,
+        (srcs ?? []).map((source) => source.source_id),
+        granted,
+        now,
+      )
+    ) {
+      throw new Error(
+        "This saved reading is unavailable because its private context expired or was revoked.",
+      );
+    }
+    const astroBody = await decryptField(dek, existing.body_ct);
+    const astroParagraphs = await savedReadingParagraphs(dek, existing, astroBody);
+    const local = await savedLocalContext(existing, dek, granted, now);
+    const body = [astroBody, local?.body].filter(Boolean).join("\n\n");
+    const paragraphState = {
+      ...astroParagraphs,
+      paragraphs: [...astroParagraphs.paragraphs, ...(local?.body ? local.body.split("\n\n") : [])],
+    };
     const language = await readingLanguage(existing, dek);
     const storyCalculation = language.transitStory
       ? calculationFromStory(language.transitStory)
@@ -1165,7 +1265,7 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
         headline: existing.headline,
         body,
         ...paragraphState,
-        prompt: existing.prompt,
+        prompt: local?.prompt ?? existing.prompt,
         confidence: existing.confidence,
         primary_cycle_key: existing.primary_cycle_key,
         release_version: existing.release_version,
@@ -1173,7 +1273,9 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       language,
       storyCalculation,
       feedback: await loadReadingFeedback(db, userId, existing.id),
-      provenance: srcs ?? [],
+      provenance: (srcs ?? []).filter((source) =>
+        savedSourceAllowed(existing, source.source_id, granted, now),
+      ),
       cycles: liveCycles,
       uncertainty: snapRow.uncertainty as Chart["uncertainty"],
       ephemeris: ephemerisState(snapshotToChart(snapRow), storyCalculation),
@@ -1229,7 +1331,20 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       prompt: assembled.prompt,
     },
   });
+  await assertPolicy();
   const body = [prose.body, assembled.contextBody].filter(Boolean).join("\n\n");
+  const durableContext = assembled.contextParts.filter((part) =>
+    part.sourceIds.every((id) => SOURCE_MAP[id]?.retention_days === null),
+  );
+  const expiringContext = assembled.contextParts.filter((part) =>
+    part.sourceIds.some((id) => SOURCE_MAP[id]?.retention_days !== null),
+  );
+  const durableBody = [prose.body, ...durableContext.map((part) => part.text)]
+    .filter(Boolean)
+    .join("\n\n");
+  const localSources = [...new Set(expiringContext.flatMap((part) => part.sourceIds))];
+  const localBody = expiringContext.map((part) => part.text).join("\n\n");
+  const localExpiry = finiteContextExpiry(localSources, day, now);
   const paragraphs = [
     ...(prose.body ? prose.paragraphs : []),
     ...(assembled.contextBody ? assembled.contextBody.split("\n\n") : []),
@@ -1414,8 +1529,19 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       snapshot_id: snapRow.id,
       release_version: assembled.release_version,
       headline: prose.headline,
-      body_ct: await encryptField(dek, body),
-      prompt: prose.prompt,
+      body_ct: await encryptField(dek, durableBody),
+      prompt: assembled.astroPrompt,
+      context_version: CONTEXT_STORAGE_VERSION,
+      local_context_ct: localSources.length
+        ? await encryptJson(dek, { body: localBody, prompt: prose.prompt })
+        : null,
+      local_context_sources: localSources,
+      local_context_expires_at: localExpiry,
+      // A non-UTC device clock is embedded in qualified archived timing evidence.
+      // Keep its affected archived body unavailable after that clock's policy expires.
+      mixed_context_expires_at:
+        granted.has("DEV-01") && tz !== "UTC" ? finiteContextExpiry(["DEV-01"], day, now) : null,
+      retention_state: "available",
       confidence: assembled.confidence,
       primary_cycle_key: assembled.primary_cycle_key,
       idempotency_key: idem,
@@ -1470,7 +1596,10 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
                   prompt: prose.prompt ?? null,
                 }),
         },
-        paragraphs_ct: await encryptJson(dek, paragraphs),
+        paragraphs_ct: await encryptJson(dek, [
+          ...prose.paragraphs,
+          ...durableContext.map((part) => part.text),
+        ]),
       },
     })
     .select("id")
@@ -1575,6 +1704,119 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
 // ---------------------------------------------------------------------------
 // pattern view, journal, export
 // ---------------------------------------------------------------------------
+
+/** Optional reuse is loaded after the immutable astronomical reading, never into its provider inputs. */
+export async function getToday(db: DB, userId: string, timeZone: string) {
+  let assertPolicy: () => Promise<void> = async () => {};
+  const reading = await getTodayReading(db, userId, timeZone, (check) => {
+    assertPolicy = check;
+  });
+  if (reading.needsOnboarding) return reading;
+  const granted = await grantedSet(db, userId);
+  const profile = await loadProfile(db, userId);
+  const now = new Date();
+  const markedMoments = contextUseAllowed("USR-07", "framing", granted, now, now);
+  const preferredDomain =
+    contextUseAllowed("USR-14", "framing", granted, null, now) && isLifeDomain(profile.domain_pref)
+      ? profile.domain_pref
+      : null;
+  let previousResonance: LocalReadingContext["previousResonance"] = null;
+  const sourceKey = reading.language.facts.find((fact) => fact.id === "I1")?.sourceKey ?? null;
+  if (sourceKey && contextUseAllowed("USR-11", "personalisation", granted, now, now)) {
+    const cutoff = new Date(now.getTime() - 730 * 86_400_000).toISOString();
+    const [prior] = await db.exec<{ resonance: number; reading_date: string; created_at: string }>(
+      "SELECT f.resonance,d.reading_date,f.created_at FROM reading_feedback f JOIN daily_readings d ON d.id=f.reading_id AND d.user_id=f.user_id JOIN reading_sources s ON s.reading_id=d.id AND s.user_id=f.user_id WHERE f.user_id=? AND d.id<>? AND julianday(f.created_at)>julianday(?) AND json_extract(s.detail,'$.factId')='I1' AND json_extract(s.detail,'$.sourceKey')=? ORDER BY julianday(f.created_at) DESC LIMIT 1",
+      [userId, reading.reading.id, cutoff, sourceKey],
+    );
+    if (
+      prior &&
+      (prior.resonance === -1 || prior.resonance === 0 || prior.resonance === 1) &&
+      contextUseAllowed("USR-11", "personalisation", granted, prior.created_at, now)
+    ) {
+      previousResonance = { score: prior.resonance, day: prior.reading_date };
+    }
+  }
+  const localContext: LocalReadingContext = {
+    version: "local-context-1",
+    identity: await keyedFingerprint(userId, {
+      version: "local-context-1",
+      markedMoments,
+      preferredDomain,
+      previousResonance,
+    }),
+    markedMoments,
+    preferredDomain,
+    previousResonance,
+  };
+  await assertPolicy();
+  return { ...reading, localContext };
+}
+
+/** An optional reading surface, distinct from the owner's always-available Journal. */
+export async function listReadingJournal(
+  db: DB,
+  userId: string,
+  day: string | undefined,
+  cycleKeys: string[],
+  featureKeys: string[] = [],
+) {
+  const now = new Date(),
+    granted = await grantedSet(db, userId);
+  if (!contextUseAllowed("USR-07", "framing", granted, now, now))
+    return { enabled: false, entries: [] };
+  if (
+    (day !== undefined && !/^\d{4}-\d{2}-\d{2}$/.test(day)) ||
+    cycleKeys.length > 20 ||
+    featureKeys.length > 20 ||
+    [...cycleKeys, ...featureKeys].some(
+      (key) => typeof key !== "string" || !key || key.length > 120,
+    )
+  ) {
+    throw new Error("Invalid journal context request.");
+  }
+  const cutoff = new Date(now.getTime() - 1825 * 86_400_000).toISOString();
+  const clauses: string[] = [],
+    params: string[] = [];
+  if (day) {
+    clauses.push("occurred_on=?");
+    params.push(day);
+  }
+  if (cycleKeys.length) {
+    clauses.push("cycle_key IN (" + cycleKeys.map(() => "?").join(",") + ")");
+    params.push(...cycleKeys);
+  }
+  if (featureKeys.length) {
+    clauses.push("feature_key IN (" + featureKeys.map(() => "?").join(",") + ")");
+    params.push(...featureKeys);
+  }
+  if (!clauses.length) return { enabled: true, entries: [] };
+  const { data, error } = await db
+    .from<LifeEventRow>("life_events")
+    .select("id,occurred_on,domain,label_ct,body_ct,cycle_key,feature_key,created_at")
+    .eq("user_id", userId)
+    .raw("(" + clauses.join(" OR ") + ")", params)
+    .raw("julianday(created_at)>julianday(?)", [cutoff])
+    .order("created_at", { ascending: false })
+    .limit(60);
+  if (error) throw new Error("Your entries could not be loaded. Please retry.");
+  if (!data?.length) return { enabled: true, entries: [] };
+  const dek = await getDek(db, userId);
+  const entries = await Promise.all(
+    data.map(async (entry) => ({
+      id: entry.id,
+      occurred_on: entry.occurred_on,
+      domain: entry.domain,
+      label: await decryptField(dek, entry.label_ct),
+      body: entry.body_ct ? await decryptField(dek, entry.body_ct) : null,
+      cycle_key: entry.cycle_key ?? null,
+      feature_key: entry.feature_key ?? null,
+    })),
+  );
+  const current = await grantedSet(db, userId);
+  if (!contextUseAllowed("USR-07", "framing", current, new Date(), new Date()))
+    return { enabled: false, entries: [] };
+  return { enabled: true, entries };
+}
 
 /**
  * The reader's own birth record, decrypted. Used by the editable birth page and
@@ -1782,28 +2024,35 @@ export async function saveCheckIn(
   // Tier 3 bands are only ever written when the person has consented to that
   // exact source; an unconsented band is dropped, not stored and hidden.
   const withinRetention = day >= wellnessCutoff();
+  const ordinaryRetained = civilContextFresh(day, 730, new Date());
   const sleepValue = withinRetention && granted.has("WEL-01") ? sleep : null;
   const stressValue = withinRetention && granted.has("WEL-03") ? stress : null;
 
   const savedAt = new Date().toISOString();
-  const { data: row, error } = await db
-    .from<CheckInRow>("check_ins")
-    .upsert(
-      {
-        user_id: userId,
-        day,
-        mood,
-        energy,
-        sleep: sleepValue,
-        stress: stressValue,
-        note_ct: note ? await encryptField(dek, note) : null,
-        updated_at: savedAt,
-      },
-      { onConflict: "user_id,day" },
-    )
-    .select("mood, energy, sleep, stress, note_ct, updated_at")
-    .single();
-  if (error) throw new Error(error.message);
+  const [row] = await db.exec<CheckInRow>(
+    `insert into "check_ins" (id,user_id,day,mood,energy,sleep,stress,note_ct,updated_at,created_at)
+     values (?,?,?,?,?,
+       CASE WHEN EXISTS(SELECT 1 FROM source_consents WHERE user_id=? AND source_id='WEL-01' AND granted=1) THEN ? ELSE NULL END,
+       CASE WHEN EXISTS(SELECT 1 FROM source_consents WHERE user_id=? AND source_id='WEL-03' AND granted=1) THEN ? ELSE NULL END,
+       ?,?,?)
+     on conflict("user_id", "day") do update set mood=excluded.mood,energy=excluded.energy,
+       sleep=excluded.sleep,stress=excluded.stress,note_ct=excluded.note_ct,updated_at=excluded.updated_at
+     RETURNING mood,energy,sleep,stress,note_ct,updated_at`,
+    [
+      crypto.randomUUID(),
+      userId,
+      day,
+      ordinaryRetained ? mood : null,
+      ordinaryRetained ? energy : null,
+      userId,
+      sleepValue,
+      userId,
+      stressValue,
+      ordinaryRetained && note ? await encryptField(dek, note) : null,
+      savedAt,
+      savedAt,
+    ],
+  );
   if (!row?.updated_at) throw new Error("Could not confirm the saved check-in.");
   const checkIn = {
     mood: row.mood,
@@ -1834,6 +2083,7 @@ export async function listJournal(db: DB, userId: string) {
     .from<CheckInBands & { id: string; day: string; note_ct: string | null }>("check_ins")
     .select("id, day, mood, energy, sleep, stress, note_ct")
     .eq("user_id", userId)
+    .raw("julianday(day)+731>julianday(?)", [new Date().toISOString()])
     .order("day", { ascending: false })
     .limit(60);
   if (checkInsError) throw new Error(checkInsError.message);
@@ -1843,6 +2093,7 @@ export async function listJournal(db: DB, userId: string) {
       "id, occurred_on, domain, label_ct, body_ct, cycle_key, feature_key, created_at, updated_at, revision",
     )
     .eq("user_id", userId)
+    .raw("julianday(created_at)+1825>julianday(?)", [new Date().toISOString()])
     .order("occurred_on", { ascending: false })
     .limit(60);
   if (eventsError) throw new Error(eventsError.message);
@@ -1850,6 +2101,9 @@ export async function listJournal(db: DB, userId: string) {
     .from<FeedbackRow>("reading_feedback")
     .select("reading_id, resonance, labels, created_at")
     .eq("user_id", userId)
+    .raw("julianday(created_at)>julianday(?)", [
+      new Date(Date.now() - 730 * 86400000).toISOString(),
+    ])
     .order("created_at", { ascending: false })
     .limit(60);
   if (feedbackError) throw new Error(feedbackError.message);
@@ -1861,8 +2115,8 @@ export async function listJournal(db: DB, userId: string) {
         day: c.day,
         mood: c.mood,
         energy: c.energy,
-        sleep: c.sleep,
-        stress: c.stress,
+        sleep: civilContextFresh(c.day, 180, new Date()) ? c.sleep : null,
+        stress: civilContextFresh(c.day, 180, new Date()) ? c.stress : null,
         note: c.note_ct ? await decryptField(dek, c.note_ct) : null,
       })),
     ),
@@ -2003,115 +2257,19 @@ export async function submitFeedback(
 }
 
 export async function exportEverything(db: DB, userId: string) {
-  const dek = await getDek(db, userId);
-  const [profile, consents, journal, pattern] = await Promise.all([
-    loadProfile(db, userId),
-    loadConsents(db, userId),
-    listJournal(db, userId),
-    getPattern(db, userId),
-  ]);
-  const { data: birth } = await db
-    .from<{ payload_ct: string; time_accuracy: string; timezone: string; created_at: string }>(
-      "birth_profiles",
-    )
-    .select("payload_ct, time_accuracy, timezone, created_at")
-    .eq("user_id", userId)
-    .maybeSingle();
-  const { data: readings, error: readingsError } = await db
-    .from<ReadingRow>("daily_readings")
-    .select(
-      "id, reading_date, headline, body_ct, prompt, confidence, release_version, primary_cycle_key, language_mode, language_model, language_meta",
-    )
-    .eq("user_id", userId)
-    .order("reading_date", { ascending: false });
-  if (readingsError) throw new Error("Saved readings could not be exported. Please retry.");
-  const { data: audit } = await db
-    .from<AuditRow>("audit_events")
-    .select("kind, detail, created_at")
-    .eq("user_id", userId)
-    .order("created_at", { ascending: false })
-    .limit(500);
-
-  // A row whose saved text or evidence cannot be read is exported with an explicit
-  // marker instead of blocking every other row; nothing is reconstructed for it.
-  const exportedReadings = await Promise.all(
-    (readings ?? []).map(async (r) => {
-      const unreadable: ("body" | "paragraphs" | "language")[] = [];
-      const body = await decryptField(dek, r.body_ct).catch(() => {
-        unreadable.push("body");
-        return null;
-      });
-      const paragraphState =
-        body === null
-          ? null
-          : await savedReadingParagraphs(dek, r, body).catch(() => {
-              unreadable.push("paragraphs");
-              return null;
-            });
-      const language = await readingLanguage(r, dek).catch(() => {
-        unreadable.push("language");
-        return null;
-      });
-      return {
-        reading_date: r.reading_date,
-        headline: r.headline,
-        body,
-        prompt: r.prompt,
-        confidence: r.confidence,
-        release_version: r.release_version,
-        id: r.id,
-        primary_cycle_key: r.primary_cycle_key,
-        language,
-        ...(paragraphState ?? {}),
-        ...(unreadable.length ? { unreadable } : {}),
-      };
-    }),
-  );
-
-  return {
-    exported_at: new Date().toISOString(),
-    profile,
-    consents,
-    birth: birth
-      ? {
-          ...(await decryptJson<Record<string, unknown>>(dek, birth.payload_ct)),
-          time_accuracy: birth.time_accuracy,
-          timezone: birth.timezone,
-        }
-      : null,
-    pattern,
-    transitAnchors: await (async () => {
-      const { data, error } = await db
-        .from<SnapshotRow>("chart_snapshots")
-        .select("id,fingerprint,houses,uncertainty")
-        .eq("user_id", userId);
-      if (error) throw new Error("Chart evidence could not be exported. Please retry.");
-      return Promise.all(
-        (data ?? []).map(async (snapshot) => ({
-          snapshotId: snapshot.id,
-          manifest: await loadTransitAnchors(snapshot, dek),
-        })),
-      );
-    })(),
-    readings: exportedReadings,
-    unreadableReadings: exportedReadings.filter((r) => "unreadable" in r).length,
-    journal,
-    audit: audit ?? [],
-  };
+  const { exportAccountData } = await import("./account-data.server");
+  return exportAccountData(userId, db);
 }
 
+/** Legacy personal-data erasure retains the login; the UI uses explicit reset/delete actions. */
 export async function eraseEverything(db: DB, userId: string) {
-  const { unlinkIdentity } = await import("./assistant.server");
-  await unlinkIdentity(userId);
-  clearTimingCalculations(userId);
-  for (const table of [
+  const tables = [
+    "identity_links",
     "reading_feedback",
     "reading_sources",
     "daily_readings",
     "cycle_instances",
     "natal_features",
-    // Chapter essays keep plaintext feature keys (for example a natal aspect or a
-    // stellium sign) that would outlive the encryption key.
     "feature_narratives",
     "chart_snapshots",
     "context_signals",
@@ -2119,29 +2277,28 @@ export async function eraseEverything(db: DB, userId: string) {
     "life_events",
     "source_consents",
     "birth_profiles",
-  ] as const) {
-    const { error } = await db.from(table).delete().eq("user_id", userId);
-    if (error) throw new Error("Personal data could not be fully deleted. Please retry.");
+  ];
+  try {
+    await execBatch([
+      ...tables.map((table) => ({
+        sql: `delete from "${table}" where user_id=?`,
+        params: [userId],
+      })),
+      { sql: "UPDATE audit_events SET detail='{}' WHERE user_id=?", params: [userId] },
+      {
+        sql: "UPDATE profiles SET wrapped_dek=NULL,onboarded_at=NULL,tone_pref='plain',depth_pref='standard',domain_pref=NULL WHERE id=?",
+        params: [userId],
+      },
+      {
+        sql: "INSERT INTO audit_events(id,user_id,kind,detail) VALUES (?,?,'account.erased','{}')",
+        params: [crypto.randomUUID(), userId],
+      },
+    ]);
+  } catch {
+    throw new Error("Personal data could not be fully deleted. Please retry.");
   }
-  // The audit trail keeps that a birth profile was saved, but not its birth-derived
-  // fingerprint, which an unkeyed hash of the birth time and place would otherwise keep.
-  const { error: auditError } = await db
-    .from("audit_events")
-    .update({ detail: {} })
-    .eq("user_id", userId)
-    .eq("kind", "birth_profile.saved");
-  if (auditError) throw new Error("Personal data could not be fully deleted. Please retry.");
-  const { error } = await db
-    .from("profiles")
-    .update({ wrapped_dek: null, onboarded_at: null })
-    .eq("id", userId);
-  if (error) throw new Error("The account encryption key could not be deleted. Please retry.");
-  await db.from("audit_events").insert({
-    user_id: userId,
-    kind: "account.erased",
-    detail: {},
-  });
-  return { ok: true };
+  clearTimingCalculations(userId);
+  return { ok: true as const };
 }
 
 export async function updatePrefs(
@@ -2150,13 +2307,21 @@ export async function updatePrefs(
   displayName: string | null,
   tone: string,
   depth: string,
+  domainPref?: LifeDomain | null,
 ) {
-  const { error } = await db
-    .from("profiles")
-    .upsert(
-      { id: userId, display_name: displayName, tone_pref: tone, depth_pref: depth },
-      { onConflict: "id" },
-    );
+  if (domainPref !== undefined && domainPref !== null && !isLifeDomain(domainPref)) {
+    throw new Error("Choose a supported life area.");
+  }
+  const { error } = await db.from("profiles").upsert(
+    {
+      id: userId,
+      display_name: displayName,
+      tone_pref: tone,
+      depth_pref: depth,
+      ...(domainPref !== undefined ? { domain_pref: domainPref } : {}),
+    },
+    { onConflict: "id" },
+  );
   if (error) throw new Error(error.message);
   return { ok: true };
 }
@@ -2224,6 +2389,9 @@ export async function getCyclesFor(db: DB, userId: string, day?: string, timeZon
     ephemeris: ephemerisState(chart, storyCalculation),
     storyCalculation,
     cycles: cycles.slice(0, 40),
+    preferredDomain: contextUseAllowed("USR-14", "framing", granted, null, new Date())
+      ? (await loadProfile(db, userId)).domain_pref
+      : null,
   };
 }
 
@@ -3001,6 +3169,7 @@ export async function readingQuality(db: DB, userId: string) {
     const result = await db
       .from<QualityFeedback>("reading_feedback")
       .select("reading_id, user_id, resonance")
+      .raw("julianday(created_at)+730>julianday(?)", [new Date().toISOString()])
       .in(
         "reading_id",
         rows.filter((row) => optedInUsers.has(row.user_id)).map((row) => row.id),

@@ -31,6 +31,8 @@ export interface SourceDef {
   /** launch-phase sources are the only ones the MVP may enable */
   phase: "launch" | "later";
   retention_days: number | null;
+  /** A listed source may remain unavailable until its qualified producer exists. */
+  available?: boolean;
 }
 
 export interface TierDef {
@@ -199,7 +201,8 @@ export const SOURCES: SourceDef[] = [
   {
     id: "USR-07",
     label: "Marked moments",
-    description: "Events you deliberately record against a date.",
+    description:
+      "Show your saved entries beside the matching day or timing window. Your Journal remains available with this reuse switched off; entries never change calculated cycles.",
     tier: 1,
     sensitivity: "personal",
     allowed_uses: ["framing", "reflection_prompt", "provenance"],
@@ -209,7 +212,8 @@ export const SOURCES: SourceDef[] = [
   {
     id: "USR-11",
     label: "Resonance feedback",
-    description: "Whether a reading landed, and why.",
+    description:
+      "Show your previous resonance on the same published interpretation in a local context panel. Your ratings are never sent to a model or used to infer personality.",
     tier: 1,
     sensitivity: "ordinary",
     allowed_uses: ["personalisation", "provenance"],
@@ -219,7 +223,8 @@ export const SOURCES: SourceDef[] = [
   {
     id: "USR-14",
     label: "Life domain focus",
-    description: "Which areas of life you want emphasised.",
+    description:
+      "Apply your chosen life area to local context labels and the default Timing filter. This never changes chart facts, cycle ranking, or model requests.",
     tier: 1,
     sensitivity: "personal",
     allowed_uses: ["framing", "personalisation"],
@@ -268,6 +273,7 @@ export const SOURCES: SourceDef[] = [
     allowed_uses: ["framing"],
     phase: "launch",
     retention_days: 30,
+    available: false,
   },
 
   // ---- Tier 3 — sensitive wellness
@@ -357,7 +363,7 @@ export function assertUse(sourceId: string, use: AllowedUse): SourceDef {
 
 export function isPermitted(sourceId: string, use: AllowedUse, granted: Set<string>): boolean {
   const def = SOURCE_MAP[sourceId];
-  if (!def) return false;
+  if (!def || def.available === false || def.phase !== "launch") return false;
   if (!def.allowed_uses.includes(use)) return false;
   if (def.tier === 0) return true;
   return granted.has(sourceId);

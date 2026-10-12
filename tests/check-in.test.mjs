@@ -53,9 +53,10 @@ before(async () => {
     delete process.env[name];
   globalThis.fetch = async (input, init = {}) => {
     const url = typeof input === "string" ? input : input instanceof URL ? input.href : input.url;
-    assert.equal(
-      url,
-      `${process.env.PATTERN_WORKFLOW_URL}/d1/query`,
+    assert.ok(
+      ["/d1/query", "/d1/batch"].some(
+        (path) => url === `${process.env.PATTERN_WORKFLOW_URL}${path}`,
+      ),
       "The harness forbids non-local application network calls",
     );
     assert.equal(init.method, "POST");
@@ -69,6 +70,28 @@ before(async () => {
       !timingSafeEqual(Buffer.from(signature), Buffer.from(expected))
     ) {
       return Response.json({ error: "Invalid local test signature" }, { status: 401 });
+    }
+    if (url.endsWith("/batch")) {
+      sqlite.exec("BEGIN");
+      try {
+        const batch = JSON.parse(raw).statements.map(({ sql, params = [] }) => {
+          requests.push({ sql, params });
+          if (fault?.matches(sql) && !fault.empty)
+            throw Object.assign(new Error(fault.message ?? "Injected local records failure"), {
+              status: fault.status ?? 503,
+            });
+          const results = sqlite.prepare(sql).all(...params);
+          return {
+            results: fault?.matches(sql) && fault.empty ? [] : results,
+            meta: { changes: sqlite.prepare("SELECT changes() n").get().n },
+          };
+        });
+        sqlite.exec("COMMIT");
+        return Response.json({ ok: true, batch });
+      } catch (error) {
+        sqlite.exec("ROLLBACK");
+        return Response.json({ error: error.message }, { status: error.status ?? 400 });
+      }
     }
     const { sql, params } = JSON.parse(raw);
     requests.push({ sql, params });

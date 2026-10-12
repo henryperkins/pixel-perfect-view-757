@@ -9,3 +9,11 @@ export async function clearPatternQueries(client: QueryClient) {
   client.removeQueries({ queryKey: ["pattern"] });
   client.removeQueries({ queryKey: ["feature-narrative"] });
 }
+
+/** Cancel old responses before removing consent-dependent local context. */
+export async function clearReadingContextQueries(client: QueryClient) {
+  for (const key of ["today", "cycles", "journal"]) {
+    await client.cancelQueries({ queryKey: [key] });
+    client.removeQueries({ queryKey: [key] });
+  }
+}

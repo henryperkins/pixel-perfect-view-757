@@ -3,6 +3,7 @@ import { z } from "zod";
 import { LANGUAGE_PROVIDERS } from "./ai/diagnostics";
 import { requireAuth } from "./auth-middleware";
 import { checkInInputSchema } from "./check-in";
+import { LIFE_DOMAINS } from "./context-policy";
 import {
   readingEvaluationInputSchema,
   readingEvaluationRunInputSchema,
@@ -112,12 +113,20 @@ export const savePrefs = createServerFn({ method: "POST" })
         displayName: z.string().max(80).nullable(),
         tone: z.enum(["plain", "warm", "clinical"]),
         depth: z.enum(["standard", "technical"]),
+        domainPref: z.enum(LIFE_DOMAINS).nullable().optional(),
       })
       .parse(d),
   )
   .handler(async ({ data, context }) => {
     const m = await import("./pattern.server");
-    return m.updatePrefs(context.db, context.userId, data.displayName, data.tone, data.depth);
+    return m.updatePrefs(
+      context.db,
+      context.userId,
+      data.displayName,
+      data.tone,
+      data.depth,
+      data.domainPref,
+    );
   });
 
 export const exportData = createServerFn({ method: "POST" })
@@ -127,11 +136,22 @@ export const exportData = createServerFn({ method: "POST" })
     return m.exportEverything(context.db, context.userId);
   });
 
-export const eraseData = createServerFn({ method: "POST" })
+export const resetPersonalization = createServerFn({ method: "POST" })
   .middleware([requireAuth])
   .handler(async ({ context }) => {
-    const m = await import("./pattern.server");
-    return m.eraseEverything(context.db, context.userId);
+    const m = await import("./account-data.server");
+    return m.resetPersonalization(context.userId, context.db);
+  });
+
+export const deleteAccount = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
+  .inputValidator((d: unknown) => z.object({ password: z.string().min(1).max(200) }).parse(d))
+  .handler(async ({ context, data }) => {
+    const m = await import("./account-data.server");
+    const result = await m.deleteAccount(context.userId, data.password, context.db);
+    const auth = await import("./auth.server");
+    auth.clearCurrentSessionCookie();
+    return result;
   });
 
 export const fetchCycles = createServerFn({ method: "POST" })
@@ -157,6 +177,31 @@ export const fetchJournal = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     const m = await import("./pattern.server");
     return m.listJournal(context.db, context.userId);
+  });
+
+export const fetchReadingJournal = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
+  .inputValidator((d: unknown) =>
+    z
+      .object({
+        day: z
+          .string()
+          .regex(/^\d{4}-\d{2}-\d{2}$/)
+          .optional(),
+        cycleKeys: z.array(z.string().min(1).max(120)).max(20),
+        featureKeys: z.array(z.string().min(1).max(120)).max(20).optional(),
+      })
+      .parse(d),
+  )
+  .handler(async ({ data, context }) => {
+    const m = await import("./pattern.server");
+    return m.listReadingJournal(
+      context.db,
+      context.userId,
+      data.day,
+      data.cycleKeys,
+      data.featureKeys,
+    );
   });
 
 export const fetchBirthRecord = createServerFn({ method: "GET" })

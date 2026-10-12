@@ -1,14 +1,14 @@
 /**
  * Account and session handling.
  *
- * Passwords are stored as PBKDF2-SHA256 (210k iterations, per-user salt) and
+ * Passwords are stored as PBKDF2-SHA256 (100k iterations, per-user salt) and
  * sessions are opaque 256-bit tokens held in an HttpOnly cookie. Only the
  * SHA-256 of the token is persisted, so a database read cannot resurrect a
  * live session.
  */
 import { getRequest, setResponseHeader } from "@tanstack/react-start/server";
 
-import { records, exec } from "./d1.server";
+import { records, exec, type DBClient } from "./d1.server";
 
 const COOKIE = "pattern_session";
 const SESSION_DAYS = 30;
@@ -48,7 +48,7 @@ async function derive(
   return toHex(bits);
 }
 
-async function hashPassword(password: string): Promise<string> {
+export async function hashPassword(password: string): Promise<string> {
   const salt = toHex(crypto.getRandomValues(new Uint8Array(16)).buffer);
   return `pbkdf2$${PBKDF2_ITERATIONS}$${salt}$${await derive(password, salt)}`;
 }
@@ -80,6 +80,31 @@ function setSessionCookie(token: string | null) {
     "set-cookie",
     token ? `${base}; Max-Age=${SESSION_DAYS * 86400}` : `${base}; Max-Age=0`,
   );
+}
+
+export function clearCurrentSessionCookie() {
+  setSessionCookie(null);
+}
+
+/** A fresh password check, scoped to the authenticated account. */
+export async function requireCurrentPassword(
+  userId: string,
+  password: string,
+  db: DBClient = records(),
+) {
+  if (typeof password !== "string" || password.length < 1 || password.length > 200) {
+    throw new Error("Enter your current password to delete this account.");
+  }
+  const { data, error } = await db
+    .from<{ password_hash: string }>("users")
+    .select("password_hash")
+    .eq("id", userId)
+    .maybeSingle();
+  if (error) throw new Error("Your password could not be checked. Please retry.");
+  if (!data || !(await verifyPassword(password, data.password_hash))) {
+    throw new Error("Your current password does not match this account.");
+  }
+  return data.password_hash;
 }
 
 async function issueSession(userId: string) {
@@ -138,6 +163,10 @@ export async function signInWithPassword(email: string, password: string): Promi
 export async function getSessionUser(): Promise<SessionUser | null> {
   const token = readCookie(COOKIE);
   if (!token) return null;
+  return resolveSessionToken(token);
+}
+
+export async function resolveSessionToken(token: string): Promise<SessionUser | null> {
   const rows = await exec<{ user_id: string; email: string; expires_at: string }>(
     `select s.user_id, s.expires_at, u.email from sessions s
        join users u on u.id = s.user_id
@@ -148,7 +177,6 @@ export async function getSessionUser(): Promise<SessionUser | null> {
   if (!row) return null;
   if (new Date(row.expires_at).getTime() < Date.now()) {
     await exec("delete from sessions where id = ?", [await sha256Hex(token)]);
-    setSessionCookie(null);
     return null;
   }
   const admin = await hasRole(row.user_id, "admin");

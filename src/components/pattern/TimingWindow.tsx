@@ -1,4 +1,5 @@
 import { TransitSequence } from "./TransitSequence";
+import { AttachedJournalContext } from "./TodayJournal";
 import { primaryStoryOverlay } from "@/lib/astro/transit-presentation";
 import type { DailyTransitCalculation } from "@/lib/astro/transit-episodes";
 import {
@@ -258,6 +259,7 @@ export function TimingWindow({
                   ) : null}
                 </dl>
               </details>
+              <AttachedJournalContext cycleKey={cycle.cycle_key} />
               <div className="timing-window-footer">
                 {previous || next ? (
                   <nav aria-label="Nearby timing windows">
