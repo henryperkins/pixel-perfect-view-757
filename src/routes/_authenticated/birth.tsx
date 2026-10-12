@@ -159,6 +159,7 @@ function BirthPage() {
         },
       }),
     onSuccess: async (result) => {
+      setHydrated(true);
       setRevision(result.revision);
       setChangeSummary(result.changeSummary);
       await clearPatternQueries(qc);
