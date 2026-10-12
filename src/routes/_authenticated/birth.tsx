@@ -2,8 +2,10 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
-import { clearPatternQueries } from "@/lib/pattern-query-cache";
+import { clearPatternQueries, clearReadingContextQueries } from "@/lib/pattern-query-cache";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import type { BirthChangeSummary } from "@/lib/pattern.server";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import { fetchBirthRecord, saveBirthProfile } from "@/lib/pattern.functions";
@@ -48,6 +50,65 @@ function localTz() {
 const inputClass =
   "mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring";
 
+function BirthSaveFeedback({ summary }: { summary: BirthChangeSummary }) {
+  const labels = {
+    date: "date",
+    time: "time",
+    accuracy: "time accuracy",
+    place: "place or timezone",
+  };
+  const changed = summary.changedFields.map((field) => labels[field]).join(", ");
+  const source = summary.current.engine.startsWith("swiss-ephemeris")
+    ? "Swiss Ephemeris"
+    : "Approximate fallback";
+  const support =
+    summary.current.housesSupported && summary.current.anglesSupported
+      ? "Your birth time supports house and angle descriptions."
+      : !summary.current.housesSupported && !summary.current.anglesSupported
+        ? "House and angle descriptions are suppressed for an unknown birth time."
+        : "House descriptions are suppressed at this time accuracy; angle descriptions remain available.";
+  return (
+    <section
+      role="status"
+      aria-live="polite"
+      className="mt-6 border-l-2 border-primary bg-evidence p-4 text-sm text-evidence-foreground"
+    >
+      <h2 className="font-medium">
+        {summary.previous === null
+          ? "Birth chart saved"
+          : summary.unchanged
+            ? "Birth details are unchanged"
+            : "Birth details updated"}
+      </h2>
+      {!summary.unchanged ? (
+        <p className="mt-2">
+          {summary.previous === null ? "Recorded" : "Changed"}: {changed}.
+        </p>
+      ) : null}
+      <p className="mt-2">
+        {source} ·{" "}
+        {summary.current.precision === "high"
+          ? "high-precision positions"
+          : "approximate positions"}{" "}
+        ·{" "}
+        {summary.current.houseSystem === "Placidus" ||
+        summary.current.houseSystem.toLowerCase() === "placidus"
+          ? "Placidus"
+          : summary.current.houseSystem}{" "}
+        houses.
+      </p>
+      <p className="mt-2">{support}</p>
+      {summary.previous && summary.previous.precision !== summary.current.precision ? (
+        <p className="mt-2">
+          Position precision changed from{" "}
+          {summary.previous.precision === "high" ? "high" : "approximate"} to{" "}
+          {summary.current.precision === "high" ? "high" : "approximate"}.
+        </p>
+      ) : null}
+    </section>
+  );
+}
+
 function BirthPage() {
   const load = useServerFn(fetchBirthRecord);
   const save = useServerFn(saveBirthProfile);
@@ -64,6 +125,8 @@ function BirthPage() {
   const [timezone, setTimezone] = useState(localTz());
   const [lookingUp, setLookingUp] = useState(false);
   const [hydrated, setHydrated] = useState(false);
+  const [revision, setRevision] = useState<string | null>(null);
+  const [changeSummary, setChangeSummary] = useState<BirthChangeSummary | null>(null);
 
   const record = query.data ?? null;
 
@@ -76,10 +139,12 @@ function BirthPage() {
     setLatitude(String(record.latitude ?? ""));
     setLongitude(String(record.longitude ?? ""));
     setTimezone(record.timezone ?? localTz());
+    setRevision(record.revision);
     setHydrated(true);
   }, [record, hydrated]);
 
   const submit = useMutation({
+    onMutate: () => setChangeSummary(null),
     mutationFn: () =>
       save({
         data: {
@@ -90,17 +155,37 @@ function BirthPage() {
           longitude: Number(longitude),
           timezone,
           accuracy,
+          expectedRevision: revision,
         },
       }),
-    onSuccess: async () => {
+    onSuccess: async (result) => {
+      setRevision(result.revision);
+      setChangeSummary(result.changeSummary);
       await clearPatternQueries(qc);
-      toast.success("Chart recalculated from the corrected details.");
+      await clearReadingContextQueries(qc);
       void qc.invalidateQueries({ queryKey: ["birth-record"] });
       void qc.invalidateQueries({ queryKey: ["today"] });
       void qc.invalidateQueries({ queryKey: ["cycles"] });
+      void qc.invalidateQueries({ queryKey: ["bootstrap"] });
     },
-    onError: (e: Error) => toast.error(e.message),
   });
+
+  async function reloadSavedDetails() {
+    const result = await query.refetch();
+    if (!result.data) return;
+    const saved = result.data;
+    setBirthDate(saved.birthDate);
+    setBirthTime(saved.birthTime);
+    setAccuracy(saved.accuracy as Accuracy);
+    setPlaceLabel(saved.placeLabel);
+    setLatitude(String(saved.latitude));
+    setLongitude(String(saved.longitude));
+    setTimezone(saved.timezone);
+    setRevision(saved.revision);
+    setHydrated(true);
+    setChangeSummary(null);
+    submit.reset();
+  }
 
   async function lookupPlace() {
     if (!placeLabel.trim()) return;
@@ -152,8 +237,8 @@ function BirthPage() {
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
             Everything on your pattern and timing pages is calculated from these four things: the
             date, the time, how sure you are of the time, and the place. Correct any of them and the
-            chart is recalculated straight away — nothing is kept from the old version except your
-            written entries.
+            new chart is saved together with the corrected details. Your journal and saved readings
+            stay available under their retention settings.
           </p>
 
           {query.isPending ? (
@@ -175,6 +260,26 @@ function BirthPage() {
             </div>
           ) : (
             <>
+              {changeSummary ? <BirthSaveFeedback summary={changeSummary} /> : null}
+              {submit.error ? (
+                <div
+                  role="alert"
+                  className="mt-6 border-l-2 border-destructive bg-card p-4 text-sm"
+                >
+                  <p>{submit.error.message}</p>
+                  {submit.error.message.includes("changed in another tab") ? (
+                    <Button
+                      variant="outline"
+                      type="button"
+                      className="mt-3"
+                      onClick={() => void reloadSavedDetails()}
+                      disabled={query.isFetching}
+                    >
+                      Reload saved details
+                    </Button>
+                  ) : null}
+                </div>
+              ) : null}
               {!record ? (
                 <p className="mt-6 border-l-2 border-primary bg-evidence px-3 py-2 text-sm text-evidence-foreground">
                   You have no birth record yet. Fill this in and your chart will be calculated for

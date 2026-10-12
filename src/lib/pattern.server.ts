@@ -45,7 +45,7 @@ import { computeCycles } from "./astro/cycles";
 import { ENGINE_ID, ENGINE_VERSION, signOf, toJulianDay } from "./astro/ephemeris";
 import { resolvePositions } from "./astro/swiss.server";
 import { assessTransitAnchors, type TransitAnchorManifest } from "./astro/transit-anchors";
-import { loadTransitAnchors } from "./astro/transit-anchors.server";
+import { loadTransitAnchors, ensureTransitAnchors } from "./astro/transit-anchors.server";
 export { loadTransitAnchors };
 import { resolveNatalWindowSamples } from "./astro/natal-reliability.server";
 import {
@@ -414,7 +414,11 @@ export async function setConsent(db: DB, userId: string, sourceId: string, grant
 // ---------------------------------------------------------------------------
 
 /** Birth instant, chart fingerprint and calculation input for saved birth details. */
-async function birthCalculation(details: BirthDetails, accuracy: TimeAccuracy, timezone: string) {
+export async function birthCalculation(
+  details: BirthDetails,
+  accuracy: TimeAccuracy,
+  timezone: string,
+) {
   const effectiveTime = accuracy === "unknown" ? "12:00" : details.birthTime;
   const utc = zonedToUtc(details.birthDate, effectiveTime, timezone);
   const fp = await fingerprint([
@@ -434,7 +438,7 @@ async function birthCalculation(details: BirthDetails, accuracy: TimeAccuracy, t
 }
 
 /** One central Swiss request plus the birth-window screen; nothing is persisted. */
-async function calculateChart(input: BirthInput, fp: string) {
+export async function calculateChart(input: BirthInput, fp: string) {
   const ephem = await resolvePositions({
     jd: toJulianDay(new Date(input.utcISO)),
     utcISO: input.utcISO,
@@ -455,8 +459,51 @@ async function calculateChart(input: BirthInput, fp: string) {
   return { chart, natalReliability, transitAnchors };
 }
 
-/** Upserts the snapshot for one fingerprint and replaces its derived natal features. */
-async function storeChartSnapshot(
+export interface ChartPrecisionSummary {
+  engine: string;
+  precision: Chart["precision"];
+  houseSystem: string;
+  timeAccuracy: TimeAccuracy;
+  housesSupported: boolean;
+  anglesSupported: boolean;
+}
+export interface BirthChangeSummary {
+  changedFields: ("date" | "time" | "accuracy" | "place")[];
+  previous: ChartPrecisionSummary | null;
+  current: ChartPrecisionSummary;
+  unchanged: boolean;
+}
+function chartPrecisionSummary(chart: Chart): ChartPrecisionSummary {
+  return {
+    engine: `${chart.engine}@${chart.engineVersion}`,
+    precision: chart.precision,
+    houseSystem: chart.houseSystem,
+    timeAccuracy: chart.uncertainty.accuracy,
+    housesSupported: chart.uncertainty.housesReliable,
+    anglesSupported: !chart.uncertainty.angleClaimsSuppressed,
+  };
+}
+interface SavedBirthRow {
+  id: string;
+  payload_ct: string;
+  time_accuracy: string;
+  timezone: string;
+  fingerprint: string;
+}
+async function birthRevision(
+  userId: string,
+  row: Pick<SavedBirthRow, "payload_ct" | "time_accuracy" | "timezone">,
+) {
+  return keyedFingerprint(userId, {
+    scope: "birth-edit-1",
+    ciphertext: row.payload_ct,
+    accuracy: row.time_accuracy,
+    timezone: row.timezone,
+  });
+}
+
+/** Prepare encrypted chart and features before any birth pointer is changed. */
+async function chartSnapshotWrites(
   db: DB,
   userId: string,
   dek: CryptoKey,
@@ -466,56 +513,98 @@ async function storeChartSnapshot(
   natalReliability: NatalReliabilityManifest,
   transitAnchors: TransitAnchorManifest,
 ) {
-  const { data: snap, error: snapErr } = await db
+  const { data: existing, error } = await db
     .from<{ id: string }>("chart_snapshots")
-    .upsert(
-      {
-        user_id: userId,
-        birth_profile_id: birthProfileId,
-        fingerprint: fp,
-        engine: `${chart.engine}@${chart.engineVersion}`,
-        contract_version: chart.contractVersion,
-        positions: chart.points,
-        houses: {
-          transitAnchors_ct: await encryptJson(dek, transitAnchors),
-          natalReliability_ct: await encryptJson(dek, natalReliability),
-          // Attempt time for re-screen backoff; never part of a reading's identity.
-          natalReliabilityCheckedAt: new Date().toISOString(),
-          system: chart.houseSystem,
-          cusps: chart.houses,
-          sources: chart.sources,
-          ephemeris: {
-            precision: chart.precision,
-            degraded: chart.degraded,
-            degradedReason: chart.degradedReason,
-          },
-        },
-
-        aspects: chart.aspects,
-        uncertainty: chart.uncertainty,
-      },
-      { onConflict: "user_id,fingerprint" },
-    )
     .select("id")
-    .single();
-  if (snapErr) throw new Error(snapErr.message);
+    .eq("user_id", userId)
+    .eq("fingerprint", fp)
+    .maybeSingle();
+  if (error) throw new Error("The chart snapshot could not be read. Please retry.");
+  const snapshotId = existing?.id ?? crypto.randomUUID();
+  const now = new Date().toISOString();
+  const houses = {
+    transitAnchors_ct: await encryptJson(dek, transitAnchors),
+    natalReliability_ct: await encryptJson(dek, natalReliability),
+    natalReliabilityCheckedAt: now,
+    system: chart.houseSystem,
+    cusps: chart.houses,
+    sources: chart.sources,
+    ephemeris: {
+      precision: chart.precision,
+      degraded: chart.degraded,
+      degradedReason: chart.degradedReason,
+    },
+  };
+  const statements: { sql: string; params: (string | number | null)[] }[] = [
+    {
+      sql: "INSERT INTO chart_snapshots(id,user_id,birth_profile_id,fingerprint,engine,contract_version,positions,houses,aspects,uncertainty,created_at) VALUES(?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(user_id,fingerprint) DO UPDATE SET birth_profile_id=excluded.birth_profile_id,engine=excluded.engine,contract_version=excluded.contract_version,positions=excluded.positions,houses=excluded.houses,aspects=excluded.aspects,uncertainty=excluded.uncertainty",
+      params: [
+        snapshotId,
+        userId,
+        birthProfileId,
+        fp,
+        `${chart.engine}@${chart.engineVersion}`,
+        chart.contractVersion,
+        JSON.stringify(chart.points),
+        JSON.stringify(houses),
+        JSON.stringify(chart.aspects),
+        JSON.stringify(chart.uncertainty),
+        now,
+      ],
+    },
+    {
+      sql: "DELETE FROM natal_features WHERE snapshot_id=? AND user_id=?",
+      params: [snapshotId, userId],
+    },
+  ];
+  for (const feature of extractFeatures(chart))
+    statements.push({
+      sql: "INSERT INTO natal_features(id,user_id,snapshot_id,feature_key,family,title,strength,payload,created_at) VALUES(?,?,?,?,?,?,?,?,?)",
+      params: [
+        crypto.randomUUID(),
+        userId,
+        snapshotId,
+        feature.feature_key,
+        feature.family,
+        feature.title,
+        feature.strength,
+        JSON.stringify(feature.payload),
+        now,
+      ],
+    });
+  return { snapshotId, statements };
+}
 
-  await db.from("natal_features").delete().eq("snapshot_id", snap.id);
-  const features = extractFeatures(chart);
-  if (features.length) {
-    await db.from("natal_features").insert(
-      features.map((f) => ({
-        user_id: userId,
-        snapshot_id: snap.id,
-        feature_key: f.feature_key,
-        family: f.family,
-        title: f.title,
-        strength: f.strength,
-        payload: f.payload,
-      })),
-    );
-  }
-  return snap.id;
+/** Re-screen writes are fenced against a birth edit and commit with their features. */
+async function storeChartSnapshot(
+  db: DB,
+  userId: string,
+  dek: CryptoKey,
+  birthProfileId: string,
+  fp: string,
+  chart: Chart,
+  natalReliability: NatalReliabilityManifest,
+  transitAnchors: TransitAnchorManifest,
+  expectedBirthCiphertext: string,
+) {
+  const prepared = await chartSnapshotWrites(
+    db,
+    userId,
+    dek,
+    birthProfileId,
+    fp,
+    chart,
+    natalReliability,
+    transitAnchors,
+  );
+  await db.batch([
+    {
+      sql: "SELECT CASE WHEN EXISTS(SELECT 1 FROM birth_profiles WHERE id=? AND user_id=? AND fingerprint=? AND payload_ct=?) THEN 1 ELSE json('birth-record-changed') END",
+      params: [birthProfileId, userId, fp, expectedBirthCiphertext],
+    },
+    ...prepared.statements,
+  ]);
+  return prepared.snapshotId;
 }
 
 export async function saveBirth(
@@ -524,48 +613,132 @@ export async function saveBirth(
   details: BirthDetails,
   accuracy: TimeAccuracy,
   timezone: string,
+  expectedRevision?: string | null,
 ) {
   const dek = await getDek(db, userId);
+  const { data: previous, error } = await db
+    .from<SavedBirthRow>("birth_profiles")
+    .select("id,payload_ct,time_accuracy,timezone,fingerprint")
+    .eq("user_id", userId)
+    .maybeSingle();
+  if (error) throw new Error("Your birth record could not be loaded. Please retry.");
+  const conflict = "Your birth record changed in another tab. Reload it before saving.";
+  if (
+    expectedRevision !== undefined &&
+    expectedRevision !== (previous ? await birthRevision(userId, previous) : null)
+  )
+    throw new Error(conflict);
+  const priorDetails = previous ? await decryptJson<BirthDetails>(dek, previous.payload_ct) : null;
+  const priorSnapshot = previous
+    ? await db
+        .from<SnapshotRow>("chart_snapshots")
+        .select("*")
+        .eq("user_id", userId)
+        .eq("fingerprint", previous.fingerprint)
+        .maybeSingle()
+    : null;
+  if (priorSnapshot?.error)
+    throw new Error("Your previous chart could not be loaded. Please retry.");
+  const changedFields: BirthChangeSummary["changedFields"] = [];
+  if (!priorDetails || priorDetails.birthDate !== details.birthDate) changedFields.push("date");
+  if (!priorDetails || priorDetails.birthTime !== details.birthTime) changedFields.push("time");
+  if (!previous || previous.time_accuracy !== accuracy) changedFields.push("accuracy");
+  if (
+    !priorDetails ||
+    priorDetails.placeLabel !== details.placeLabel ||
+    priorDetails.latitude !== details.latitude ||
+    priorDetails.longitude !== details.longitude ||
+    previous?.timezone !== timezone
+  )
+    changedFields.push("place");
   const { utc, fp, input: birthInput } = await birthCalculation(details, accuracy, timezone);
-
-  const payload_ct = await encryptJson(dek, { ...details, utcISO: utc.toISOString() });
-
-  const { data: bp, error } = await db
-    .from<{ id: string }>("birth_profiles")
-    .upsert(
-      {
-        user_id: userId,
-        payload_ct,
-        time_accuracy: accuracy,
-        timezone,
-        fingerprint: fp,
-      },
-      { onConflict: "user_id" },
-    )
-    .select("id")
-    .single();
-  if (error) throw new Error(error.message);
-
   const { chart, natalReliability, transitAnchors } = await calculateChart(birthInput, fp);
-  const snapshotId = await storeChartSnapshot(
+  const payload_ct = await encryptJson(dek, { ...details, utcISO: utc.toISOString() });
+  const profileId = previous?.id ?? crypto.randomUUID();
+  const prepared = await chartSnapshotWrites(
     db,
     userId,
     dek,
-    bp.id,
+    profileId,
     fp,
     chart,
     natalReliability,
     transitAnchors,
   );
-
-  await db.from("profiles").update({ onboarded_at: new Date().toISOString() }).eq("id", userId);
-  await db.from("audit_events").insert({
-    user_id: userId,
-    kind: "birth_profile.saved",
-    detail: { fingerprint: fp, accuracy },
-  });
-
-  return { snapshotId, fingerprint: fp };
+  const now = new Date().toISOString();
+  const guard = previous
+    ? {
+        sql: "SELECT CASE WHEN EXISTS(SELECT 1 FROM birth_profiles WHERE id=? AND user_id=? AND payload_ct=? AND fingerprint=? AND time_accuracy=? AND timezone=?) THEN 1 ELSE json('birth-record-changed') END",
+        params: [
+          previous.id,
+          userId,
+          previous.payload_ct,
+          previous.fingerprint,
+          previous.time_accuracy,
+          previous.timezone,
+        ],
+      }
+    : {
+        sql: "SELECT CASE WHEN NOT EXISTS(SELECT 1 FROM birth_profiles WHERE user_id=?) THEN 1 ELSE json('birth-record-changed') END",
+        params: [userId],
+      };
+  try {
+    await db.batch([
+      guard,
+      {
+        sql: "INSERT INTO birth_profiles(id,user_id,payload_ct,time_accuracy,timezone,fingerprint,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?) ON CONFLICT(user_id) DO UPDATE SET payload_ct=excluded.payload_ct,time_accuracy=excluded.time_accuracy,timezone=excluded.timezone,fingerprint=excluded.fingerprint,updated_at=excluded.updated_at",
+        params: [profileId, userId, payload_ct, accuracy, timezone, fp, now, now],
+      },
+      ...prepared.statements,
+      {
+        sql: "UPDATE profiles SET onboarded_at=?,updated_at=? WHERE id=?",
+        params: [now, now, userId],
+      },
+      {
+        sql: "INSERT INTO audit_events(id,user_id,kind,detail,created_at) VALUES(?,?,?,?,?)",
+        params: [
+          crypto.randomUUID(),
+          userId,
+          "birth_profile.saved",
+          JSON.stringify({ fingerprint: fp, accuracy, changedFields }),
+          now,
+        ],
+      },
+    ]);
+  } catch (cause) {
+    if (cause instanceof Error && cause.message.includes("birth-record-changed"))
+      throw new Error(conflict);
+    const { data: current, error: readError } = await db
+      .from<SavedBirthRow>("birth_profiles")
+      .select("id,payload_ct,time_accuracy,timezone,fingerprint")
+      .eq("user_id", userId)
+      .maybeSingle();
+    if (
+      !readError &&
+      (previous
+        ? !current ||
+          current.payload_ct !== previous.payload_ct ||
+          current.time_accuracy !== previous.time_accuracy ||
+          current.timezone !== previous.timezone
+        : current !== null)
+    )
+      throw new Error(conflict);
+    throw new Error("Birth details could not be saved. Your previous chart is kept. Please retry.");
+  }
+  clearTimingCalculations(userId);
+  return {
+    snapshotId: prepared.snapshotId,
+    fingerprint: fp,
+    revision: await birthRevision(userId, { payload_ct, time_accuracy: accuracy, timezone }),
+    changeSummary: {
+      changedFields,
+      previous: priorSnapshot?.data
+        ? chartPrecisionSummary(snapshotToChart(priorSnapshot.data))
+        : null,
+      current: chartPrecisionSummary(chart),
+      unchanged: changedFields.length === 0,
+    } satisfies BirthChangeSummary,
+  };
 }
 
 interface SnapshotRow {
@@ -674,6 +847,7 @@ export async function rescreenNatalSnapshot(
     profile.timezone,
   );
   const houses = snapshot.houses as Record<string, unknown> | null;
+  let failedAnchors: TransitAnchorManifest | null = null;
   if (fp === snapshot.fingerprint) {
     const { chart, natalReliability, transitAnchors } = await calculateChart(input, fp);
     if (
@@ -689,6 +863,7 @@ export async function rescreenNatalSnapshot(
         chart,
         natalReliability,
         transitAnchors,
+        profile.payload_ct,
       );
       await db.from("audit_events").insert({
         user_id: userId,
@@ -697,13 +872,52 @@ export async function rescreenNatalSnapshot(
       });
       return true;
     }
+    failedAnchors = transitAnchors;
   }
-  const { error: markError } = await db
-    .from("chart_snapshots")
-    .update({ houses: { ...houses, natalReliabilityCheckedAt: new Date().toISOString() } })
-    .eq("id", snapshot.id)
-    .eq("user_id", userId);
-  if (markError) throw new Error(markError.message);
+  const attemptedAt = new Date().toISOString();
+  const guard =
+    "id=? AND user_id=? AND fingerprint=? AND EXISTS(SELECT 1 FROM birth_profiles WHERE id=? AND user_id=? AND fingerprint=? AND payload_ct=?)";
+  const guardParams = [
+    snapshot.id,
+    userId,
+    snapshot.fingerprint,
+    profile.id,
+    userId,
+    profile.fingerprint,
+    profile.payload_ct,
+  ];
+  const statements: { sql: string; params: (string | number | null)[] }[] = [
+    {
+      sql: `UPDATE chart_snapshots SET houses=json_set(houses,'$.natalReliabilityCheckedAt',?) WHERE ${guard}`,
+      params: [attemptedAt, ...guardParams],
+    },
+  ];
+  const previousAnchors = failedAnchors ? await loadTransitAnchors(snapshot, dek) : null;
+  if (
+    failedAnchors &&
+    (!previousAnchors ||
+      (previousAnchors.status === "unavailable" && houses?.["transitAnchorRecovery"]))
+  ) {
+    statements.push({
+      sql: `UPDATE chart_snapshots SET houses=json_set(houses,'$.transitAnchors_ct',?,'$.transitAnchorRecovery',json(?)) WHERE ${guard} AND json_extract(houses,'$.transitAnchors_ct') IS ? AND json_extract(houses,'$.transitAnchorRecovery.token') IS ?`,
+      params: [
+        await encryptJson(dek, failedAnchors),
+        JSON.stringify({
+          token: crypto.randomUUID(),
+          attemptedAt,
+          leaseUntil: attemptedAt,
+          status: failedAnchors.status === "screened" ? "complete" : "unavailable",
+        }),
+        ...guardParams,
+        typeof houses?.["transitAnchors_ct"] === "string" ? houses["transitAnchors_ct"] : null,
+        typeof (houses?.["transitAnchorRecovery"] as { token?: unknown } | undefined)?.token ===
+        "string"
+          ? (houses!["transitAnchorRecovery"] as { token: string }).token
+          : null,
+      ],
+    });
+  }
+  await db.batch(statements);
   return false;
 }
 
@@ -1065,6 +1279,34 @@ function cyclesForLocalDay(chart: Chart, day: string, timeZone: string) {
   }));
 }
 
+/** Hold the birth revision through async calculation/model work; never serve the prior chart after an edit. */
+async function captureBirthForRead(db: DB, userId: string, snapshot: SnapshotRow) {
+  const rows = await db.exec<{ payload_ct: string; time_accuracy: string; timezone: string }>(
+    "SELECT b.payload_ct,b.time_accuracy,b.timezone FROM birth_profiles b JOIN chart_snapshots s ON s.user_id=b.user_id AND s.fingerprint=b.fingerprint WHERE b.user_id=? AND b.fingerprint=? AND s.id=? AND s.engine=?",
+    [userId, snapshot.fingerprint, snapshot.id, snapshot.engine],
+  );
+  const row = rows[0];
+  const changed = () =>
+    new Error(
+      "Your birth record changed while preparing this chart. Reload to use the saved details.",
+    );
+  if (!row) throw changed();
+  const predicate =
+    "EXISTS(SELECT 1 FROM birth_profiles WHERE user_id=? AND fingerprint=? AND payload_ct=? AND time_accuracy=? AND timezone=?)";
+  const params = [userId, snapshot.fingerprint, row.payload_ct, row.time_accuracy, row.timezone];
+  return {
+    predicate,
+    params,
+    assertCurrent: async () => {
+      const result = await db.exec<{ current: number }>(
+        `SELECT CASE WHEN ${predicate} THEN 1 ELSE 0 END AS current`,
+        params,
+      );
+      if (result[0]?.current !== 1) throw changed();
+    },
+  };
+}
+
 async function getTodayReading(
   db: DB,
   userId: string,
@@ -1073,6 +1315,7 @@ async function getTodayReading(
 ) {
   let loaded = await loadSnapshot(db, userId);
   if (!loaded) return { needsOnboarding: true as const };
+  const birthState = await captureBirthForRead(db, userId, loaded);
 
   const dek = await getDek(db, userId);
   const profile = await loadProfile(db, userId);
@@ -1084,19 +1327,19 @@ async function getTodayReading(
   // the day's first reading already uses the upgraded assessment.
   if (bundle.natalLenses?.length && natalRescreenDue(loaded, natalReliability, now)) {
     try {
-      if (await rescreenNatalSnapshot(db, userId, loaded, dek)) {
-        const refreshed = (await loadSnapshot(db, userId)) ?? loaded;
-        const refreshedReliability = await loadNatalReliability(refreshed, dek);
-        loaded = refreshed;
-        natalReliability = refreshedReliability;
-      }
+      await rescreenNatalSnapshot(db, userId, loaded, dek);
+      const refreshed = (await loadSnapshot(db, userId)) ?? loaded;
+      const refreshedReliability = await loadNatalReliability(refreshed, dek);
+      loaded = refreshed;
+      natalReliability = refreshedReliability;
     } catch (error) {
       // The saved assessment stays authoritative; today's reading still loads.
       console.error("[today] natal re-screen failed", error);
     }
   }
+  await birthState.assertCurrent();
   const snapRow = loaded;
-  const transitAnchors = await loadTransitAnchors(snapRow, dek);
+  const transitAnchors = (await ensureTransitAnchors(db, userId, snapRow, dek, now)).manifest;
   const episodePolicy = transitEpisodePolicy();
   const storyPolicy: StoryPolicyBinding = {
     enabled: episodePolicy.enabled,
@@ -1156,10 +1399,11 @@ async function getTodayReading(
   db.bindWritePolicy({
     sql: `SELECT CASE WHEN ${consentChecks.join(" AND ")} AND EXISTS(SELECT 1 FROM profiles WHERE id=? AND
       (CASE WHEN EXISTS(SELECT 1 FROM source_consents WHERE user_id=? AND source_id='USR-01' AND granted=1) AND tone_pref IN ('plain','warm','clinical') THEN tone_pref ELSE 'plain' END)=? AND
-      (CASE WHEN EXISTS(SELECT 1 FROM source_consents WHERE user_id=? AND source_id='USR-02' AND granted=1) AND depth_pref='technical' THEN depth_pref ELSE 'standard' END)=?) THEN 1 ELSE json('privacy-settings-changed') END`,
-    params: [...params, userId, userId, ctx.tone, userId, ctx.depth],
+      (CASE WHEN EXISTS(SELECT 1 FROM source_consents WHERE user_id=? AND source_id='USR-02' AND granted=1) AND depth_pref='technical' THEN depth_pref ELSE 'standard' END)=?) AND ${birthState.predicate} THEN 1 ELSE json('privacy-settings-changed') END`,
+    params: [...params, userId, userId, ctx.tone, userId, ctx.depth, ...birthState.params],
   });
   const assertPolicy = async () => {
+    await birthState.assertCurrent();
     try {
       await db.assertBoundPolicy();
     } catch {
@@ -1176,6 +1420,7 @@ async function getTodayReading(
   delete snapshotHouses["natalReliability_ct"];
   delete snapshotHouses["natalReliabilityCheckedAt"];
   delete snapshotHouses["transitAnchors_ct"];
+  delete snapshotHouses["transitAnchorRecovery"];
   const contextKey = await keyedFingerprint(userId, {
     version: "daily-privacy-3",
     contextStorageVersion: CONTEXT_STORAGE_VERSION,
@@ -1849,6 +2094,7 @@ export async function loadBirthRecord(db: DB, userId: string) {
     accuracy: data.time_accuracy,
     timezone: data.timezone,
     fingerprint: data.fingerprint,
+    revision: await birthRevision(userId, data),
     created_at: data.created_at,
     updated_at: data.updated_at,
   };
@@ -2333,6 +2579,7 @@ export async function updatePrefs(
 export async function getCyclesFor(db: DB, userId: string, day?: string, timeZone = "UTC") {
   const snapRow = await loadSnapshot(db, userId);
   if (!snapRow) return { needsOnboarding: true as const };
+  const birthState = await captureBirthForRead(db, userId, snapRow);
   const granted = await grantedSet(db, userId);
   const timezone = isPermitted("DEV-01", "timing", granted) ? validTimeZone(timeZone) : "UTC";
   const referenceDay = day ?? localDayString(new Date(), timezone);
@@ -2341,7 +2588,7 @@ export async function getCyclesFor(db: DB, userId: string, day?: string, timeZon
   const cycles = cyclesForLocalDay(chart, referenceDay, timezone);
   const bundle = await activeBundle(db),
     dek = await getDek(db, userId),
-    anchor = await loadTransitAnchors(snapRow, dek);
+    anchor = (await ensureTransitAnchors(db, userId, snapRow, dek, new Date())).manifest;
   const initial = assembleReading(
     chart,
     cycles,
@@ -2368,6 +2615,7 @@ export async function getCyclesFor(db: DB, userId: string, day?: string, timeZon
   const episodeCalculation = await cachedTimingCalculation(userId, selectionKey, () =>
     resolveTransitForReading(initial, anchor, referenceDay, timezone),
   );
+  await birthState.assertCurrent();
   const selected = assembleReading(
     chart,
     cycles,
@@ -2377,6 +2625,10 @@ export async function getCyclesFor(db: DB, userId: string, day?: string, timeZon
     episodeCalculation,
   );
   const storyCalculation = selected.storyCalculation;
+  const preferredDomain = contextUseAllowed("USR-14", "framing", granted, null, new Date())
+    ? (await loadProfile(db, userId)).domain_pref
+    : null;
+  await birthState.assertCurrent();
   return {
     needsOnboarding: false as const,
     day: referenceDay,
@@ -2389,9 +2641,7 @@ export async function getCyclesFor(db: DB, userId: string, day?: string, timeZon
     ephemeris: ephemerisState(chart, storyCalculation),
     storyCalculation,
     cycles: cycles.slice(0, 40),
-    preferredDomain: contextUseAllowed("USR-14", "framing", granted, null, new Date())
-      ? (await loadProfile(db, userId)).domain_pref
-      : null,
+    preferredDomain,
   };
 }
 

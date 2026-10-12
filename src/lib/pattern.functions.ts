@@ -42,13 +42,14 @@ export const saveBirthProfile = createServerFn({ method: "POST" })
         longitude: z.number().min(-180).max(180),
         timezone: z.string().min(1),
         accuracy: z.enum(["exact", "near", "hour", "unknown"]),
+        expectedRevision: z.string().max(160).nullable().optional(),
       })
       .parse(d),
   )
   .handler(async ({ data, context }) => {
     const m = await import("./pattern.server");
-    const { accuracy, timezone, ...details } = data;
-    return m.saveBirth(context.db, context.userId, details, accuracy, timezone);
+    const { accuracy, timezone, expectedRevision, ...details } = data;
+    return m.saveBirth(context.db, context.userId, details, accuracy, timezone, expectedRevision);
   });
 
 export const updateConsent = createServerFn({ method: "POST" })

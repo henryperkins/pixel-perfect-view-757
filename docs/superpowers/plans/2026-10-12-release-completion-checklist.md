@@ -194,13 +194,14 @@ Use Task 14 for **every** code slice; do not wait for P3 to publish P0/P1. Assis
 
 **Interface:** Extend the save result with `changeSummary: { changedFields: ('date' | 'time' | 'accuracy' | 'place')[]; previous: ChartPrecisionSummary | null; current: ChartPrecisionSummary; unchanged: boolean }`, retaining `snapshotId` and `fingerprint`. `ChartPrecisionSummary` contains engine, precision, house system, time accuracy, and whether houses/angles are supported; no raw birth values enter logs.
 
-- [ ] Test exact→unknown, unknown→exact, changed place/timezone, unchanged save, degraded service, and two overlapping saves. Assert precision/suppression changes come from the stored calculation result.
-- [ ] Calculate the candidate before committing the new birth/snapshot pointer together. On failure preserve the previous usable profile/chart; guard against a slower old request replacing a newer successful save.
-- [ ] Replace the generic success toast with a concise inline change summary: fields changed, new precision, and whether house/angle claims became available or suppressed. Give an accurate no-change message.
-- [ ] Refresh Today, Timing, Pattern summary, and birth form from the committed snapshot. Unknown time continues to suppress unsupported claims everywhere.
+- [x] Test exact→unknown, unknown→exact, changed place/timezone, unchanged save, degraded service, and two overlapping saves. Assert precision/suppression changes come from the stored calculation result.
+- [x] Calculate the candidate before committing the new birth/snapshot pointer together. On failure preserve the previous usable profile/chart; guard against a slower old request replacing a newer successful save.
+- [x] Replace the generic success toast with a concise inline change summary: fields changed, new precision, and whether house/angle claims became available or suppressed. Give an accurate no-change message.
+- [x] Refresh Today, Timing, Pattern summary, and birth form from the committed snapshot. Unknown time continues to suppress unsupported claims everywhere.
 - [ ] Run `node --test tests/birth-change-summary.test.mjs tests/reading-natal-snapshot.test.mjs tests/reading-transit-snapshot.test.mjs tests/pattern-chapters.test.mjs`; verify the signed-in flow under Task 14.
 
 **Done when:** A birth edit atomically produces a consistent chart and an understandable account of what changed, without relying on a hard reload.
+
 
 ## Task 7 — Repair missing transit anchors for existing charts
 
@@ -208,14 +209,15 @@ Use Task 14 for **every** code slice; do not wait for P3 to publish P0/P1. Assis
 
 **Interface:** `ensureTransitAnchors(db, userId, snapshot, dek, now): Promise<TransitAnchorAvailability>` returns existing valid anchors, newly calculated anchors, or an explicit unavailable reason. Keep present-but-corrupt evidence as an integrity error, separate from genuinely absent legacy data.
 
-- [ ] Add the missed regression: a saved chart has current natal reliability, valid birth input, and no `transitAnchors_ct`; opening Today/Timing can recover anchors without a birth resave.
-- [ ] Reuse the existing Swiss birth-calculation pipeline and anchor eligibility rules. Run recovery independently of natal rescreening, with a persisted six-hour failure backoff and an owner/snapshot lease so concurrent requests do not duplicate work.
-- [ ] Before writing, compare the birth fingerprint and current snapshot; merge anchor metadata without replacing newer natal/house evidence. A concurrent birth edit invalidates the old result. Do not trigger calculation from saved-only assistant readers.
-- [ ] Test unknown time, degraded Swiss response, missing birth input, corrupt ciphertext, fingerprint mismatch, two simultaneous requests, and backoff expiry. Unsupported anchors stay unavailable; never infer them from prose or a different chart.
-- [ ] Include the recovered anchor identity in future reading cache selection while preserving historical reading IDs/evidence. Use bounded on-demand recovery first; any later bulk backfill must use the same function and produce an owner-count receipt.
+- [x] Add the missed regression: a saved chart has current natal reliability, valid birth input, and no `transitAnchors_ct`; opening Today/Timing can recover anchors without a birth resave.
+- [x] Reuse the existing Swiss birth-calculation pipeline and anchor eligibility rules. Run recovery independently of natal rescreening, with a persisted six-hour failure backoff and an owner/snapshot lease so concurrent requests do not duplicate work.
+- [x] Before writing, compare the birth fingerprint and current snapshot; merge anchor metadata without replacing newer natal/house evidence. A concurrent birth edit invalidates the old result. Do not trigger calculation from saved-only assistant readers.
+- [x] Test unknown time, degraded Swiss response, missing birth input, corrupt ciphertext, fingerprint mismatch, two simultaneous requests, and backoff expiry. Unsupported anchors stay unavailable; never infer them from prose or a different chart.
+- [x] Include the recovered anchor identity in future reading cache selection while preserving historical reading IDs/evidence. Use bounded on-demand recovery first; any later bulk backfill must use the same function and produce an owner-count receipt.
 - [ ] Run `node --test tests/transit-anchors.test.mjs tests/reading-transit-storage.test.mjs tests/reading-transit-integration.test.mjs tests/assistant-readers.test.mjs` and test one controlled legacy production chart.
 
 **Done when:** Eligible existing members receive a story without re-entering unchanged birth details, with no unsupported story for ineligible charts.
+
 
 ## Task 8 — Activate and prove assistant connections
 

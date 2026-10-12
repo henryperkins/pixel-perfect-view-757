@@ -1,0 +1,50 @@
+{
+  "release": "2026-10-12-birth-story",
+  "baseCommit": "449f4f0d713683f07ca99f8eaa601d8e6f9e0f25",
+  "applicationCommit": null,
+  "ownedPaths": [
+    "src/lib/astro/transit-anchors.server.ts",
+    "src/lib/pattern.functions.ts",
+    "src/lib/pattern.server.ts",
+    "src/routes/_authenticated/birth.tsx",
+    "tests/birth-change-summary.test.mjs",
+    "tests/chart-request-races.test.mjs",
+    "tests/transit-anchor-recovery.test.mjs"
+  ],
+  "fileHashes": {
+    "src/lib/astro/transit-anchors.server.ts": "9c7c3fa0bcfc3054520c27929d103cf48e6cafc9b0ed7473303be740442fb425",
+    "src/lib/pattern.functions.ts": "a018e09b9aff0c2cfee1ff597a959d589bdc40ca3784b5ee8e21f59120a7fb76",
+    "src/lib/pattern.server.ts": "2aa5c412a4b499ca821873862c178995e648c120375b95226fa4a1c1100f33db",
+    "src/routes/_authenticated/birth.tsx": "13301c08c6d0de983fdfbb957fc9bf243ebd902cb3a056b07db00d3fbf355dca",
+    "tests/birth-change-summary.test.mjs": "ced4063d86a0454f70f4543c92db25a1232c86283517758af93d05d08c62c69f",
+    "tests/chart-request-races.test.mjs": "49bc8ac081930af60bc1d3888d7320df10ee55eef2c8cd90ff2cc468537c0d35",
+    "tests/transit-anchor-recovery.test.mjs": "2ab85ec2831c8472be40c9f6ebab4cae76fc7f9b4728d4a4c0888bc850795514"
+  },
+  "dependencyLockHash": "0cb585843c6a80029b97d024401a01ff530c8fb9bbbaceb59ae837332d7a3804",
+  "migrations": [],
+  "content": {
+    "version": "0.7.1",
+    "checksum": "20b793acda524da945b07ec32b2ed795f31e273c533ff6b4e9c4f96ef821eeac",
+    "changed": false
+  },
+  "verification": {
+    "command": "node --test --test-concurrency=1 tests/*.test.mjs",
+    "tests": 653,
+    "passed": 651,
+    "existingSkips": 2,
+    "failed": 0,
+    "typecheck": true,
+    "scopedLint": true,
+    "build": true,
+    "browserFixtureChecks": 10,
+    "freshReview": "no remaining code blocker; six race regressions independently passed"
+  },
+  "publication": {
+    "status": "pending"
+  },
+  "rollback": {
+    "applicationCommit": "5bc7e4b6cab2995a8af8558bcbf5d18f60340683",
+    "deploymentId": "d1471321-9293-4240-88b0-fa3752f24d77",
+    "database": "no schema upgrade; retain existing snapshots, readings and chart evidence"
+  }
+}
