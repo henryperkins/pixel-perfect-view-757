@@ -63,7 +63,7 @@ function diagnostics(output, expected) {
   assert.ok(d, "Daily diagnostics are attached");
   assert.equal(d.version, 1);
   assert.equal(d.promptVersion, "daily-astro-body-12");
-  assert.equal(d.validatorVersion, "daily-reference-8");
+  assert.equal(d.validatorVersion, "daily-reference-9");
   assert.equal(d.gatewayTimeoutMs, 60_000);
   assert.equal(d.model, language.LANGUAGE_MODEL);
   for (const [key, value] of Object.entries(expected)) assert.equal(d[key], value, key);
@@ -405,7 +405,7 @@ test("diagnostic exports and reader validate the exact closed contract", async (
   assert.equal(module.DAILY_DIAGNOSTICS_VERSION, 1);
   assert.equal(module.DAILY_PROMPT_VERSION, "daily-astro-body-12");
   assert.equal(module.DAILY_GATEWAY_TIMEOUT_MS, 60_000);
-  assert.equal(module.DAILY_VALIDATOR_VERSION, "daily-reference-8");
+  assert.equal(module.DAILY_VALIDATOR_VERSION, "daily-reference-9");
   assert.ok(module.DAILY_DIAGNOSTIC_CODES.includes("accepted"));
   assert.deepEqual(module.readDailyDiagnostics(result.meta.diagnostics), result.meta.diagnostics);
   for (const invalid of [

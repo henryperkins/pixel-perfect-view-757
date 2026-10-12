@@ -268,7 +268,9 @@ test("synthesis and P2 keep their conditions and distinct claims, with one exact
     assert.ok(paragraphs(result)[0].endsWith(chronologySentence));
     assert.ok(paragraphs(result)[1].includes(result.interpretationPlan.synthesis.mechanism));
     assert.ok(paragraphs(result)[1].includes(copy.mechanism));
-    // The story keeps its bounded paragraph, so S1 follows only its second parent here.
+    // Both published parent meanings precede S1 even when N1 and P2 share the body.
+    assert.ok(paragraphs(result)[0].includes(SATURN_SUN));
+    assert.ok(result.astroBody.indexOf(SATURN_SUN) < result.astroBody.indexOf(JUPITER_MARS));
     assert.ok(
       paragraphs(result)[1].startsWith(
         `${JUPITER_MARS} ${result.interpretationPlan.synthesis.mechanism}`,
@@ -278,6 +280,31 @@ test("synthesis and P2 keep their conditions and distinct claims, with one exact
     for (const paragraph of paragraphs(result))
       assert.ok((paragraph.match(/[.!?](?:\s|$)/g) ?? []).length <= 4, paragraph);
     assert.doesNotMatch(result.astroBody, /Timing:|first exact pass|Also in range:/);
+  }
+});
+
+test("combined synthesis openings retain the saved natal readback contract", async () => {
+  const { consumedNatalTemplate } = await h.vite.ssrLoadModule(
+    "/src/lib/content/natal-template.ts",
+  );
+  const result = reading("arc-synthesis-natal-integration", transitBundle);
+  const interpretation = result.interpretationPlan.interpretations.find(
+    (i) => i.index === 1,
+  ).mechanism;
+  const lens = result.natalLensPlan.lens.mechanism;
+  const chronology = result.transitStoryPlan.chronologySentence;
+  const historical =
+    "An established role can feel demanding when its obligations require more deliberate effort than usual. If several possible projects within that role compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages. Following more than one line of curiosity can help a direction take shape.";
+  for (const opening of [paragraphs(result)[0], `${historical} ${chronology}`]) {
+    assert.equal(consumedNatalTemplate(opening, interpretation, lens, chronology), true);
+    assert.equal(
+      consumedNatalTemplate(opening + " A new claim is certain.", interpretation, lens, chronology),
+      false,
+    );
+    assert.equal(
+      consumedNatalTemplate(opening, interpretation + " A changed source.", lens, chronology),
+      false,
+    );
   }
 });
 

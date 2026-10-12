@@ -29,7 +29,7 @@ function presentForms(verb: string): string[] {
 export function dropsSourceModality(sentences: string[], cited: FactAtom[]): boolean {
   const segmenter = new Intl.Segmenter("en", { granularity: "sentence" });
   const sources = cited
-    .filter((fact) => /^(?:I[1-3]|[SND]1|P2)$/.test(fact.id))
+    .filter((fact) => /^(?:I[1-3]|[SND]1|P[12])$/.test(fact.id))
     .flatMap((fact) =>
       [...segmenter.segment(fact.statement.replace(/^Published.*?: /, ""))].map((s) =>
         sentenceKey(s.segment),

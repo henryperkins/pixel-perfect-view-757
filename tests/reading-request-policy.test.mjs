@@ -70,7 +70,7 @@ test("timing instructions explicitly require the cycle even when T1 repeats its 
   const prompt = accepted.case.request.messages[1].content;
   assert.match(prompt, /even (?:when|if).*T1/i);
   assert.match(prompt, /\["C1", "P1", "T1"\]/);
-  assert.equal(accepted.case.diagnostics.validatorVersion, "daily-reference-8");
+  assert.equal(accepted.case.diagnostics.validatorVersion, "daily-reference-9");
 });
 
 test("daily uses one 60-second call and exports its budget without changing provider settings", async () => {

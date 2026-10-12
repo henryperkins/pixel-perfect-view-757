@@ -12,6 +12,8 @@ const OBLIGATION_SOURCE =
   "A small obligation can take up more room than its size suggests. Saturn's hard contact with the Moon frames the tension between something you feel responsible for and the amount of uninterrupted space you would prefer. The everyday scene might be a calendar left too full, or a quiet moment spent mentally keeping track of the next task.";
 const ROLE_SOURCE =
   "An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.";
+const ROLE_CONTACT =
+  "Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.";
 const PREPARATION_SOURCE =
   "A self-contained response to pressure can start with sorting what is manageable before sharing it. An unfinished reply can offer a place to notice the difference between useful preparation and waiting to have everything settled.";
 
@@ -19,6 +21,8 @@ interface Composition {
   interpretation: string;
   lens: string;
   opening: string;
+  /** Keeps I1's contact before I2/S1 while leaving room for a selected chapter. */
+  storySynthesisOpening?: string;
 }
 
 const COMPOSITIONS: readonly Composition[] = [
@@ -51,12 +55,14 @@ const COMPOSITIONS: readonly Composition[] = [
     lens: "Following more than one line of curiosity can help a direction take shape. If several possible projects compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages.",
     opening:
       "An established role can feel demanding when its obligations require more deliberate effort than usual. If several possible projects within that role compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages. Following more than one line of curiosity can help a direction take shape.",
+    storySynthesisOpening: `${ROLE_CONTACT} If several possible projects within an established role compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages. Following more than one line of curiosity can help a direction take shape.`,
   },
   {
     interpretation: ROLE_SOURCE,
     lens: PREPARATION_SOURCE,
     opening:
       "An established role can feel demanding when its obligations require more deliberate effort than usual. If an unfinished reply is one of those obligations, useful preparation may be different from waiting to have everything settled. A self-contained response to that pressure can start with sorting what is manageable before sharing it.",
+    storySynthesisOpening: `${ROLE_CONTACT} If an unfinished reply is part of an established role, useful preparation may be different from waiting to have everything settled. A self-contained response to that pressure can start with sorting what is manageable before sharing it.`,
   },
 ];
 
@@ -106,7 +112,9 @@ export function consumedNatalTemplate(
     (item) =>
       item.interpretation === interpretation &&
       item.lens === lens &&
-      paragraph === `${item.opening}${chronology ? ` ${chronology}` : ""}`,
+      [item.opening, item.storySynthesisOpening].some(
+        (opening) => opening && paragraph === `${opening}${chronology ? ` ${chronology}` : ""}`,
+      ),
   );
 }
 
@@ -144,14 +152,17 @@ export function composeNatalTemplate(input: {
   // An unfamiliar/edited pair retains current source wording conservatively.
   // This is not a claim that arbitrary catalogue combinations are integrated or
   // writing-qualified. In particular, never apply an old recipe to new meaning.
-  const opening = composed?.opening ?? [primarySentences[0], lens].filter(Boolean).join(" ");
+  const storyOpening =
+    story.status === "selected" && synthesis ? composed?.storySynthesisOpening : undefined;
+  const opening =
+    storyOpening ?? composed?.opening ?? [primarySentences[0], lens].filter(Boolean).join(" ");
   const paragraphs = [opening];
   const joint = synthesis ? relationship(secondary, synthesis) : null;
-  // The primary contact sentence precedes the relationship when there is room.
-  // A selected story keeps its bounded paragraph, so S1 then follows only I2.
+  // Both parent contacts precede S1. The bound story opening already carries I1;
+  // every other opening keeps the primary support here rather than dropping it.
   const support = composed
-    ? story.status === "selected"
-      ? (joint ?? primarySentences[1])
+    ? storyOpening
+      ? joint
       : [primarySentences[1], joint].filter(Boolean).join(" ")
     : [primarySentences.slice(1).join(" "), joint].filter(Boolean).join(" ");
 

@@ -46,11 +46,11 @@ after(async () => {
 
 const source =
   "An unfinished reply can offer a place to notice the difference between useful preparation and waiting to have everything settled.";
-async function generate(text, statement = source) {
+async function generate(text, statement = source, sourceId = "N1") {
   calls = 0;
   responseDraft = {
     paragraphs: [
-      { text, facts: ["C1", "I1", "N1"] },
+      { text, facts: ["C1", "I1", "N1", ...(sourceId === "P1" ? ["P1"] : [])] },
       {
         text: "A title rarely describes everything that holds your attention.",
         facts: ["C1", "D1"],
@@ -59,8 +59,14 @@ async function generate(text, statement = source) {
   };
   const result = await language.generateReadingProse({
     facts: captured.facts.map((f) =>
-      f.id === "N1"
-        ? { ...f, statement: `Published natal lens, an interpretive possibility: ${statement}` }
+      f.id === sourceId
+        ? {
+            ...f,
+            statement:
+              sourceId === "N1"
+                ? `Published natal lens, an interpretive possibility: ${statement}`
+                : `Published phase wording: ${statement}`,
+          }
         : f,
     ),
     hasEligibleCycles: true,
@@ -106,6 +112,14 @@ test("another qualified claim cannot conceal a dropped qualifier in the same sen
     "A responsibility can feel demanding, and an unfinished reply offers a place to notice the difference between useful preparation and waiting to have everything settled.",
   );
   assert.equal(result.meta.diagnostics.code, "editorial_claim");
+});
+test("published phase copy keeps its own can qualifier", async () => {
+  const phase =
+    "If a demand catches your attention, you can notice your response before deciding how to act.";
+  assert.equal((await generate(phase, phase, "P1")).meta.diagnostics.outcome, "accepted");
+  const dropped = await generate(phase.replace("can notice", "notice"), phase, "P1");
+  assert.equal(dropped.meta.diagnostics.code, "editorial_claim");
+  assert.equal(dropped.meta.mode, "template");
 });
 test("near-verbatim may be cannot become are", async () => {
   const statement = "Sampling a few and choosing one to pursue may be different stages.";
