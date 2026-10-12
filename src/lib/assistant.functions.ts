@@ -16,9 +16,12 @@ export const linkAssistantIdentity = createServerFn({ method: "POST" })
 
 export const unlinkAssistantIdentity = createServerFn({ method: "POST" })
   .middleware([requireAuth])
-  .handler(async ({ context }) => {
+  .inputValidator((d: unknown) =>
+    z.object({ accessToken: z.string().min(20).max(8000).optional() }).parse(d),
+  )
+  .handler(async ({ context, data }) => {
     const m = await import("./assistant.server");
-    return m.unlinkIdentity(context.userId);
+    return m.unlinkIdentity(context.userId, data.accessToken);
   });
 
 export const fetchAssistantAccess = createServerFn({ method: "GET" })
@@ -30,31 +33,56 @@ export const fetchAssistantAccess = createServerFn({ method: "GET" })
 
 export const revokeAssistantGrant = createServerFn({ method: "POST" })
   .middleware([requireAuth])
-  .inputValidator((d: unknown) => z.object({ clientId: z.string().min(1).max(200) }).parse(d))
+  .inputValidator((d: unknown) =>
+    z
+      .object({
+        clientId: z.string().min(1).max(200),
+        accessToken: z.string().min(20).max(8000).optional(),
+      })
+      .parse(d),
+  )
   .handler(async ({ data, context }) => {
     const m = await import("./assistant.server");
-    return m.revokeGrant(context.userId, data.clientId);
+    return m.revokeGrant(context.userId, data.clientId, data.accessToken);
   });
 
-/** Consent page: identity verified from its own token, never from input claims. */
-export const assistantConsentStatus = createServerFn({ method: "POST" })
+export const fetchRememberedAssistantGrants = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
   .inputValidator((d: unknown) => token.parse(d))
+  .handler(async ({ data, context }) => {
+    const m = await import("./assistant.server");
+    return m.listRememberedGrants(context.userId, data.accessToken);
+  });
+
+export const resetRememberedAssistantGrant = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
+  .inputValidator((d: unknown) => token.extend({ clientId: z.string().min(1).max(200) }).parse(d))
+  .handler(async ({ data, context }) => {
+    const m = await import("./assistant.server");
+    return m.resetRememberedGrant(context.userId, data.clientId, data.accessToken);
+  });
+
+/** The server resolves the client from an auth-server authorization request. */
+export const fetchAssistantAuthorization = createServerFn({ method: "POST" })
+  .inputValidator((d: unknown) =>
+    token.extend({ authorizationId: z.string().min(1).max(200) }).parse(d),
+  )
   .handler(async ({ data }) => {
     const m = await import("./assistant.server");
-    return m.consentStatus(data.accessToken);
+    return m.getAuthorization(data.accessToken, data.authorizationId);
   });
 
-export const recordAssistantGrant = createServerFn({ method: "POST" })
+export const decideAssistantAuthorization = createServerFn({ method: "POST" })
   .inputValidator((d: unknown) =>
     token
       .extend({
-        clientId: z.string().min(1).max(200),
-        clientName: z.string().max(200).nullable(),
+        authorizationId: z.string().min(1).max(200),
         scopes: z.array(z.enum(["today", "pattern", "journal"])).max(3),
+        action: z.enum(["approve", "deny"]),
       })
       .parse(d),
   )
   .handler(async ({ data }) => {
     const m = await import("./assistant.server");
-    return m.recordGrant(data.accessToken, data.clientId, data.clientName, data.scopes);
+    return m.decideAuthorization(data.accessToken, data.authorizationId, data.scopes, data.action);
   });
