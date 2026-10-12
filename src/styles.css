@@ -2423,8 +2423,35 @@ body {
 .landing-copy p {
   max-width: 29rem;
 }
+/* Principles under the hero: a hairline per entry, aligned to the hero's text column. */
 .landing-foundations {
-  padding-top: 28px;
+  display: grid;
+  gap: 20px 32px;
+  /* .landing-copy padding minus the .landing-scene bleed: 28px − 20px here, 60px − 32px from 640px. */
+  padding: 32px 8px 0;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+}
+.landing-foundations li {
+  max-width: 32rem;
+  padding-top: 14px;
+  border-top: 1px solid var(--rule);
+  text-wrap: pretty;
+}
+.landing-foundations b {
+  font-weight: 600;
+  color: var(--foreground);
+}
+@media (min-width: 640px) {
+  .landing-foundations {
+    padding-inline: 28px;
+  }
+}
+@media (min-width: 1024px) {
+  .landing-foundations {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 .dark .landing-art > img {
   opacity: 0.15;
