@@ -1,4 +1,4 @@
-# Handoff prompt — natal remediation and closed partial round 3
+# Handoff prompt — lightweight writing readiness and closed partial round 3
 
 Copy the following prompt into the next Codex session:
 
@@ -8,13 +8,19 @@ Continue the natal writing qualification work in
 `/home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011`
 on branch `fix/natal-prose-remediation-20261012`. The operator requested a stopping
 point and handoff. Finish read-only review and documentation work against the
-available evidence; keep natal and transit candidates inactive. Do not start new
+available evidence under the [lightweight writing-readiness policy](../lightweight-readiness.md);
+keep natal and transit candidates inactive. The next review uses seven existing
+candidate raw/template pairs, with one primary reviewer and a second reviewer only
+for a disputed finding. No grading is being started at this stopping point.
+Focus the next operator's work on the usefulness and clarity of these readings
+before expanding the evidence programme. Do not start new
 paid model calls unless the operator explicitly requests a new evidence round.
 The interrupted run is closed, cannot resume, and must never be retried or
 backfilled. Preserve all local-only evidence and main's provider implementation.
 
 Read `AGENTS.md`,
 `docs/reviews/daily-natal-lens/writing-qualification.md`,
+`docs/reviews/daily-natal-lens/lightweight-readiness.md`,
 `docs/reviews/daily-natal-lens/2026-10-12-remediation-round-3.md`,
 and the round-3 `README.md`, `interrupted-evidence-index.json`,
 `interrupted-run-audit.json` and `run-finished.json` before acting. Inspect Git
@@ -47,7 +53,7 @@ publication, activation or history rewriting is authorized by this handoff.
   serving deadlines remain unchanged. Gemini Enterprise is synthetic/admin-only.
   Source and main serving deadline remain 60,000 ms.
 
-## Closed actual run — partial, never qualification
+## Closed actual run — partial, never a complete benchmark
 
 The runner was stopped with SIGINT at the current case boundary, finished that
 case, checkpointed and exited intentionally with code 1. `run-finished.json`
@@ -115,35 +121,55 @@ rubric or historical qualification copies.
   local work/evidence; do not reset, clean or stage there. Local `main` and
   `origin/main` remain `da4be89`; those refs were not fetched this turn.
 
-## Remaining work
+## Remaining work under the smaller readiness gate
 
-1. Verify the closed partial evidence and preservation receipts. Source comparison
-   may prove the 37 settled configurations/non-natal facts match and only eight
-   supplied N1 requests differ; it cannot turn this into a complete 38-case run.
-2. If reviewing available pairs, create a **separately labeled, nonqualifying
-   partial-evidence review collection**. Existing `verify-evidence.mjs` and
-   `prepare-blinded-review.mjs` require complete reports and reject these partials
-   by design. Do not remove those guards, flip flags, fabricate full sidecars,
-   fill missing drafts from templates/old runs, or discard the five missing raw
-   occurrences (three timeouts plus two unattempted cases).
-3. Use two fresh reviewer contexts with no inherited implementation/history,
-   uniform citation masking, complete visible fact/tone/depth/quiet context,
-   exact-context deduplication and preserved occurrence counts. Keep the fixed
-   rubric: both specificity/grounding/coherence scores at least 4/5, lens/synthesis
-   scores when applicable, no unresolved substantive finding, and supported
-   duty/freedom contrast. Freeze original judgments before unblinding; never
-   average, edit scores or let a template rescue a raw failure. Human approval
-   and model diversity remain unestablished.
-4. Update qualification with honest partial results, exact findings and remaining
-   gaps. A partial-review pass cannot promote the candidate. Round 2 remains the
-   latest completed blinded assessment until a full replacement exists.
-5. A new complete paired actual-model round requires a new operator request,
-   isolated output directory and source/runtime identity. The old runner binds
-   `948aa00`; a later documentation HEAD will fail its revision preflight. Do not
-   execute it casually, change the old runner or reuse its closed directory.
-6. Complete separate member Lovable, hosted Workflow/admin, native Swiss/owner,
-   chronology/week/account/browser, cost and human-review lanes. Transit source
-   gaps remain in `docs/reviews/daily-transit-story/2026-10-12-source-discovery.md`.
-   Keep both candidates inactive; no production/release action is authorized.
+1. Preserve the closed partial run and use its existing candidate raw drafts and
+   deterministic templates. Create a **separately labeled lightweight subset
+   review collection** for these seven cases, with 14 prose samples in total:
+   `natal-duty-reflex`, `natal-freedom-reflex`, `natal-exact-house`,
+   `natal-moon-fallback`, `natal-synthesis-integration`,
+   `saturn-square-moon-warm`, and `natal-legacy-snapshot`. Add one small safety
+   check of the existing candidate `quiet-threshold` template; it needs no
+   numerical grades. Bind exact source/report/template hashes and retain each
+   sample's supplied facts, tone, depth, limits and raw/template identity. This
+   collection establishes only subset writing readiness, never a full benchmark
+   pass. No new model calls or baseline review are required for this gate.
+2. Use one fresh primary reviewer to assess all 14 samples for source support, readable
+   prose and a useful practical distinction. Keep specificity, grounding and
+   coherence at least 4/5, lens integration at least 4/5 when N1 applies, and
+   synthesis coherence at least 4/5 when S1 applies. Use opaque sample IDs and
+   uniformly masked citation arrays, retaining originals separately. Every sample
+   must pass, with no unresolved
+   substantive finding; the quiet template must be safe. Preserve conditional
+   source wording and transit-to-natal roles. Invented geometry, biological claims
+   and unsafe fallback remain failures. A template cannot rescue failed raw prose.
+   Preserve the original judgments; involve a second reviewer only to resolve a
+   disputed finding. No reviewer or grading is started by this handoff.
+3. Record the small gate's result separately from the immutable round-2 full
+   assessment and this partial round-3 capture. Provider success need not be
+   100% when a failure produces a safe fallback, but retain every timeout as a
+   reliability observation; it has no passing raw-writing score. Do not alter
+   report `partial` flags, create full identities, backfill missing drafts or
+   discard the five missing raw occurrences (three timeouts and two unattempted
+   cases). The full-run verifier and packet builder correctly refuse partial
+   reports; leave those helpers unchanged.
+4. Prioritise reading usefulness and UX after the subset review. Full baseline
+   comparisons, the other synthetic contexts, the 62-item catalogue, week and
+   chronology coverage, and member Lovable, hosted Workflow/admin, native
+   Swiss/owner, account/browser, cost and human-review lanes are follow-up work,
+   not prerequisites for this writing-readiness decision. Keep their existing
+   evidence gaps explicit. Transit source gaps remain in
+   `docs/reviews/daily-transit-story/2026-10-12-source-discovery.md`.
+5. Any additional paid model calls require a new explicit operator request, a
+   separate output directory and truthful source/runtime identity. The old
+   runner binds `948aa00`; a later documentation HEAD fails its revision
+   preflight. Its interrupted directory remains closed. A complete paired round
+   is optional evidence expansion, not a required replacement for the small gate.
+6. Keep both candidates inactive. This gate covers natal writing; it does not
+   assess transit candidate chapters or P2. Those need their own small review of
+   the relevant risks later. A passing lightweight review supports only its
+   stated natal writing-readiness result; release, publication and activation need a
+   separate operator request after that gate passes. No production/release action
+   is authorized now.
 
 ---
