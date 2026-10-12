@@ -18,6 +18,7 @@ import { normalizeDepth, normalizeTone } from "../reading.server";
 import { assertDailyFactGraph, dailyFactBlock, factBlock, factIds, type FactAtom } from "./facts";
 import { storyParagraphProblem, storyCoverageProblem } from "./transit-story-facts";
 import { dailySystemVoice, dailyVoice } from "./daily-voice";
+import { dropsSourceModality } from "./daily-modality";
 import { natalLensWordingProblem } from "../content/natal-lens-policy";
 import type {
   EvaluationJsonValue,
@@ -413,6 +414,11 @@ function dailyTimingProblem(sentences: string[]): DailyProblem | null {
 /** Observed source-specific contradictions only; this is not a semantic verifier. */
 function dailyEditorialProblem(sentences: string[], cited: FactAtom[]): DailyProblem | null {
   const text = sentences.join(" ");
+  if (dropsSourceModality(sentences, cited))
+    return rejection(
+      "editorial_claim",
+      "draft drops a possibility qualifier from a supplied claim",
+    );
   if (
     cited.some((fact) => fact.cycle) &&
     sentences.some(
@@ -714,11 +720,11 @@ async function generateDailyProse(
     "Keep each paragraph under 200 words and the whole body under 700 words.",
     "The first paragraph must concern the strongest eligible cycle and cite C1 and I1. D1, P1 and T1 are optional: cite them in any paragraph that uses their domain, phase or timing claims, and leave them out when unused.",
     input.facts.some((f) => f.id === "S1")
-      ? 'Develop the supplied published relationship in paragraph 1 or 2. Every paragraph using S1 must explicitly cite all five IDs: "facts": ["S1", "C1", "I1", "C2", "I2"]. The relationship is editorial interpretation, not an established personal state. Keep its qualifications: "can increase" stays "can increase", not "increases". For a reinforcement relationship, give the two joined meanings distinct paragraph functions, as S1 relates them, instead of restating one idea in both paragraphs; then add only supported useful detail and stop. Clear published wording may be kept, and no new scene is needed for variety.'
+      ? 'Develop the supplied published relationship in paragraph 1 or 2. Present I1 and its contact first, then I2 and its contact, before stating the S1 relationship they support. These parent meanings may span the first two paragraphs; avoid repeating them merely to put them beside S1. Mark the move into the supplied relationship clearly, so a phrase such as "that tension" has a clear antecedent. Every paragraph using S1 must explicitly cite all five IDs: "facts": ["S1", "C1", "I1", "C2", "I2"]. The relationship is editorial interpretation, not an established personal state. Keep its qualifications: "can increase" stays "can increase", not "increases". For a reinforcement relationship, give the two joined meanings distinct paragraph functions, as S1 relates them, instead of restating one idea in both paragraphs; then add only supported useful detail and stop. Clear published wording may be kept, and no new scene is needed for variety.'
       : "Keep C1 as the primary focus. No S1 is supplied: do not invent a joint relationship or premise. I2 and I3 may offer separately supported context without connecting the contacts into a new story.",
     ...(hasNatalLens
       ? [
-          'Apply the supplied N1 possibility to a specific I1 scene with one practical distinction in paragraph 1 or 2. Identify what changes in considering that same obligation, task or choice; do not simply append N1 verbatim or connect two summaries with a generic bridge. Keep every scene and source condition intact. Every paragraph using it must cite ["N1", "C1", "I1"]. Keep it conditional and recognizable or rejectable, never a confirmed identity, biological explanation or lived event. N1 and S1 may share a paragraph with all parents, but S1 supplies its own relationship: the N1 distinction must not be made to cause or establish it. Do not add a personality section. N1 does not authorize a natal body, sign, house, aspect or other geometry.',
+          'Apply the supplied N1 possibility to a specific I1 scene with one practical distinction in paragraph 1 or 2. Choose one supported task, obligation or choice and keep it as the subject of both meanings. If N1 introduces a concrete example, explicitly place that same example inside I1\'s scene as a possibility; do not jump from a quiet moment or demanding role to an unrelated reply or project. Develop N1\'s distinction on that shared example, keeping its sentences in their published order where practical. Identify what changes in considering that same obligation, task or choice; do not simply append N1 verbatim or connect two summaries with a generic bridge. Keep every scene and source condition intact. Every paragraph using it must cite ["N1", "C1", "I1"]. Keep it conditional and recognizable or rejectable, never a confirmed identity, biological explanation or lived event. N1 and S1 may share a paragraph with all parents, but S1 supplies its own relationship: the N1 distinction must not be made to cause or establish it. Do not add a personality section. N1 does not authorize a natal body, sign, house, aspect or other geometry.',
         ]
       : []),
     ...(input.facts.some((f) => f.id === "A1")

@@ -51,11 +51,12 @@ async function evaluate(id, paragraphs) {
   assert.deepEqual(result.case.candidate.paragraphs, draft.paragraphs);
   return result.case;
 }
-const captured = (id) => report.cases.find((row) => row.id === id).candidate.paragraphs;
+const captured = (id) =>
+  structuredClone(report.cases.find((row) => row.id === id).candidate.paragraphs);
 
 for (const [id, code] of [
   ["natal-freedom-reflex", "editorial_claim"],
-  ["natal-exact-house", "timing"],
+  ["natal-exact-house", "editorial_claim"],
   ["approximate-birth-time", "timing"],
   ["unknown-birth-time", "relation"],
 ]) {
@@ -97,6 +98,13 @@ test("supported freedom condition can accompany the scene without making the sce
 
 test("current window position and exact timing stay separate while all supplied detail survives", async () => {
   const paragraphs = captured("natal-exact-house");
+  // This historical draft also drops I1's "can take". Repair that independent
+  // defect in this local input so the test isolates its original timing concern.
+  paragraphs[0].text = paragraphs[0].text.replace(
+    "a small obligation takes",
+    "a small obligation can take",
+  );
+  assert.equal((await evaluate("natal-exact-house", paragraphs)).diagnostics.code, "timing");
   paragraphs[1].text =
     "The contact is in its approaching phase within the calculated window. This reading falls in the middle part of the calculated window. The current orb is 0.42 degrees. Calculated exact alignment occurs on 2026-10-14, which is in 3 days.";
   assert.equal((await evaluate("natal-exact-house", paragraphs)).diagnostics.outcome, "accepted");
