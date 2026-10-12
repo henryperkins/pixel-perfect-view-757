@@ -48,6 +48,7 @@ const identityPermissions: Record<string, string> = {
   email: "Your email address and its verification status",
   profile: "Profile information, such as your name and picture",
   phone: "Your phone number and its verification status, if present",
+  offline_access: "Keep the connection active by renewing access tokens until you revoke access",
 };
 export function ConsentPage() {
   const { authorization_id: authorizationId } = Route.useSearch();

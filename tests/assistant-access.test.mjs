@@ -550,6 +550,23 @@ test("consent discloses provider identity scopes and refuses undisclosed permiss
   );
 });
 
+test("the live provider's offline_access scope is disclosed and can be approved", async () => {
+  await api.linkIdentity(h.userA, direct);
+  const id = request("refresh-access");
+  authorizations.get(id).scope = "openid email offline_access";
+  const details = await api.getAuthorization(direct, id);
+  assert.deepEqual(details.identityScopes, ["openid", "email", "offline_access"]);
+  assert.deepEqual(details.unsupportedScopes, []);
+  await api.decideAuthorization(direct, id, ["today"], "approve");
+  assert.deepEqual(
+    await api.resolveAssistantCaller(
+      { iss: issuer, sub: "identity-a", client_id: "client-a" },
+      "today",
+    ),
+    { userId: h.userA },
+  );
+});
+
 test("remembered provider approvals can be reset after unlinking without the assistant login", async () => {
   await api.linkIdentity(h.userA, direct);
   await api.decideAuthorization(direct, request(), ["today"], "approve");

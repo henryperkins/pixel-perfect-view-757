@@ -36,15 +36,19 @@ async function authRequest(
       },
       ...(action && action !== "revoke" ? { body: JSON.stringify({ action }) } : {}),
       signal: AbortSignal.timeout(10_000),
-      redirect: "error",
+      // workerd does not implement redirect:"error". Inspect every response ourselves
+      // so a provider redirect can never forward the bearer or publishable key.
+      redirect: "manual",
     });
   } catch {
     throw new Error("Assistant sign-in is temporarily unavailable. Try again.");
   }
-  if (!res.ok)
+  if (!res.ok) {
+    await res.body?.cancel();
     throw new Error(
       "This sign-in or authorization request has expired. Start the connection again.",
     );
+  }
   return res.status === 204 ? null : res.json();
 }
 
@@ -257,7 +261,7 @@ const authorizationSchema = z.object({
   user: z.object({ id: z.string() }),
   scope: z.string().max(2000),
 });
-const identityScopeNames = new Set(["openid", "email", "profile", "phone"]);
+const identityScopeNames = new Set(["openid", "email", "profile", "phone", "offline_access"]);
 function identityPermissions(scope: string) {
   const identityScopes = [...new Set(scope.split(/\s+/).filter(Boolean))];
   return {
