@@ -1,0 +1,71 @@
+{
+  "checkedAt": "2026-10-12T19:17:40.775Z",
+  "applicationCommit": "a267d073a58af38c31bbd41cabef42d51924ed54",
+  "deploymentId": "c12cdc82-e831-4d55-94d3-a73d7bc713a8",
+  "liveUrl": "https://patterns.lakefrontdigital.io",
+  "mainPushed": true,
+  "lovableSourceMatched": true,
+  "assets": {
+    "checkedAt": "2026-10-12T19:07:24.428Z",
+    "checks": [
+      {
+        "name": "journal-BktN-ZC1.js",
+        "status": 200,
+        "matches": true,
+        "sha256": "241cf5c365c13e5f80545c6af5cbaebedc0ef133bbf62affa38f140db0100352"
+      },
+      {
+        "name": "Shell-DUOWE5ah.js",
+        "status": 200,
+        "matches": true,
+        "sha256": "360c4edf9cf05e364bb04a1eb6bcb4677cf58113455d29bd940d15ebbd14ae45"
+      },
+      {
+        "name": "styles-1jq0-8Pk.css",
+        "status": 200,
+        "matches": true,
+        "sha256": "d8e557d326e88a57b01806569d5afc6a16c1fef1e77db797f3628d47d40e4803"
+      },
+      {
+        "name": "index-DxvbsDiY.js",
+        "status": 200,
+        "matches": true,
+        "sha256": "059c4fb5f0339d19c2e8ec33f96208b76048c771cad3af489adf4679857909b2"
+      }
+    ],
+    "rootStatus": 200,
+    "rootReferencesLocalIndex": true,
+    "deploymentHeader": "psr2.c12cdc82-e831-4d55-94d3-a73d7bc713a8.1792436843.61-DZdHYIodmGG-m-Qg72OYDq7vftEsnOWqXmPFr5dw"
+  },
+  "migration": {
+    "id": "20261012_journal_upgrade",
+    "hash": "f65207101a9e0fdafcbdff4c65561afab6458254daf67b381dc65882fe7583e0",
+    "pending": [],
+    "payloadsUnchanged": true
+  },
+  "verification": {
+    "tests": 593,
+    "passed": 591,
+    "existingSkips": 2,
+    "failed": 0,
+    "typecheck": true,
+    "scopedLint": true,
+    "build": true,
+    "fixtureBrowserChecks": 16,
+    "liveJournal": {
+      "checks": [
+        "production entry creation",
+        "encrypted edit persists after production reload",
+        "production cancellation preserves saved text",
+        "production 390px editor has no horizontal overflow"
+      ],
+      "count": 4,
+      "origin": "https://patterns.lakefrontdigital.io"
+    }
+  },
+  "limitations": [
+    "Live cycle/chapter attachment and recomputation acceptance awaits the controlled chart tests.",
+    "Controlled test account retained for the next privacy/deletion release; cleanup pending.",
+    "Assistant connections remain disabled; writing qualification unchanged."
+  ]
+}

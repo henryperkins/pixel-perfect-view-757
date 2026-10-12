@@ -12,7 +12,7 @@
 
 ## Execution status — 2026-10-12
 
-The implementation baseline advanced to current main `6d55d56`, preserving the landing/transit-calculator updates. Tasks 1 and 5 are implemented and locally verified in the first release slice; the production additive migration is applied. App publication and signed-in acceptance remain separate Task 14 gates until their receipts are recorded. [Verification record](../../reviews/release-completion/2026-10-12-data-journal/README.md).
+The implementation baseline advanced to current main `6d55d56`, preserving the landing/transit-calculator updates. Tasks 1 and 5 are implemented in application commit `a267d07`, pushed to main and published as deployment `c12cdc82-e831-4d55-94d3-a73d7bc713a8`. The additive production migration is applied. Live create/edit/reload/cancel and 390px checks passed on the canonical app, `https://patterns.lakefrontdigital.io`; cycle/chapter attachment acceptance with a recalculated chart remains open. Publication details are in the release receipt. [Verification record](../../reviews/release-completion/2026-10-12-data-journal/README.md).
 
 The first slice pairs journal editing with its database foundation to verify the upgrade with its real consumer; Tasks 2–4 remain the next privacy workstream. All other unchecked requirements stay open.
 
@@ -90,10 +90,10 @@ Use Task 14 for **every** code slice; do not wait for P3 to publish P0/P1. Assis
 
 **Files:** Read `AGENTS.md`, `package.json`, `bun.lock`, the plan links above, `docs/reviews/content-administration/2026-10-12-main-release.md`; create `docs/reviews/release-completion/<release-id>/manifest.json` for each implemented release.
 
-- [ ] Record `git status --short`, `git rev-parse HEAD`, `git worktree list`, and `git ls-remote origin refs/heads/main`; inspect branch diffs before deciding there is unmerged work. Preserve hashes/backups of unrelated dirty files and use an isolated worktree when needed.
-- [ ] Match installed dependencies to `package.json` and `bun.lock`; use `bun install --frozen-lockfile` in the implementation checkout. The primary checkout's previous dependency installation was stale; another worktree's passing tests are not a substitute for this check.
-- [ ] Record actual deployed commit/build, active content version/hash, Worker version/bindings, assistant flag, and migration status using read-only inspection. Store identifiers and outcomes, never credentials or member plaintext.
-- [ ] Give each release manifest an explicit owned-path list, source SHA, dependency-lock hash, migration IDs, content checksum, test receipts, publication receipt, live acceptance result, and rollback target.
+- [x] Record `git status --short`, `git rev-parse HEAD`, `git worktree list`, and `git ls-remote origin refs/heads/main`; inspect branch diffs before deciding there is unmerged work. Preserve hashes/backups of unrelated dirty files and use an isolated worktree when needed.
+- [x] Match installed dependencies to `package.json` and `bun.lock`; use `bun install --frozen-lockfile` in the implementation checkout. The primary checkout's previous dependency installation was stale; another worktree's passing tests are not a substitute for this check.
+- [x] Record actual deployed commit/build, active content version/hash, Worker version/bindings, assistant flag, and migration status using read-only inspection. Store identifiers and outcomes, never credentials or member plaintext.
+- [x] Give each release manifest an explicit owned-path list, source SHA, dependency-lock hash, migration IDs, content checksum, test receipts, publication receipt, live acceptance result, and rollback target.
 
 **Done when:** The next engineer can identify exactly what is in main, what is running, what remains local, and which configuration is being tested.
 
