@@ -1,6 +1,6 @@
 # Fly deployment and application connection
 
-Current status: the [application connection check](application-connection.md) verifies the published chart path. Production transit calls still fail; both attempted activations were rolled back. The initial deployment and publication evidence below remains historical.
+Current status: chart and transit paths are verified through the published app, and combined `0.7.1` is active. The [runtime correction and activation receipt](../2026-10-12-transit-runtime-fix/README.md) supersedes the initial application's failed transit checks. The original Fly deployment and publication evidence below remains historical.
 
 `pattern-transit-calc` is deployed in **Imladris**, region `iad`, on one shared-CPU 512 MiB machine. The deployed service revision is `4d217d9db60f393e55a891de53d632e9626c4321`; the image digest, machine identity, source ID and timings are in [deployment.json](deployment.json).
 
@@ -29,7 +29,7 @@ SWISS_TRANSIT_EPISODE_URL=https://pattern-transit-calc.fly.dev/v1/transit-episod
 SWISS_TRANSIT_EPISODE_SOURCE_ID=pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a
 ```
 
-The operator subsequently confirmed applying the settings. Publication and the synthetic exact-time chart/anchor check passed. Transit calculation through the app failed on two uncached dates, so the attempted joint activations were rolled back. There is again no active `content_releases` row and the mirror remains `editorial-1.0.0`. The latest receipt above records the exact pending check; Fly health and a Git push do not establish application configuration.
+The operator subsequently confirmed applying the settings. Publication and the synthetic exact-time chart/anchor check passed. Initial transit checks failed and the attempted activations were rolled back. The failure was traced to the app's unsupported `redirect: "error"` option in Cloudflare. After the client correction was published, two production timing checks passed and `0.7.1` was activated in both pointers. The latest receipt above records this completion separately from Fly health and Git synchronization.
 
 Existing owners explicitly save/recalculate their birth details. No existing AstroWay source is relabelled. Historical readings retain their original evidence. The separate `patternlike-calc` service is unchanged.
 

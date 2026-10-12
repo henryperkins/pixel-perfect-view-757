@@ -1,0 +1,439 @@
+{
+  "checkedAt": "2026-10-12T09:16:37.171Z",
+  "status": "active",
+  "sourceCommit": "00ddd78a778693d22d000b3b6e6126a6d6f541d2",
+  "deployment": {
+    "id": "32f6f31c-95b8-40f7-8564-2e2e8f725d49",
+    "requestedAt": "2026-10-12T09:12:47.429Z",
+    "url": "https://pixel-perfect-view-757.lovable.app",
+    "toolInitialStatus": "pending",
+    "productionBehaviorVerified": true,
+    "serverRuntimeCommitIndependentlyExposed": false,
+    "assets": [
+      {
+        "asset": "/assets/index-BWI3nirh.js",
+        "status": 200,
+        "sha256": "7a0836897e153c1deaea71f5813cfbc6b0ee346137dfa3a3e5b0b34597847728",
+        "matchesLocalBuild": true
+      },
+      {
+        "asset": "/assets/privacy-CE9XwhTg.js",
+        "status": 200,
+        "sha256": "3d11827c113c9d99031685909ed1c560c7b46b164b29d0c945034b22fdd8dd4b",
+        "matchesLocalBuild": true
+      },
+      {
+        "asset": "/assets/birth-BDOzol2s.js",
+        "status": 200,
+        "sha256": "3c3ab3097fa0a289510e685fc145daf0c2d9834d7c7defe0165471ff3294afd4",
+        "matchesLocalBuild": true
+      }
+    ]
+  },
+  "service": {
+    "url": "https://pattern-transit-calc.fly.dev",
+    "organization": "imladris",
+    "release": "4d217d9db60f393e55a891de53d632e9626c4321",
+    "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+  },
+  "release": {
+    "activatedAt": "2026-10-12T09:14:08.863Z",
+    "before": [
+      [
+        {
+          "id": "edcc53cf-d19a-415b-a8a2-a66040846b1d",
+          "version": "0.7.1",
+          "checksum": "20b793acda524da945b07ec32b2ed795f31e273c533ff6b4e9c4f96ef821eeac",
+          "is_active": 0
+        }
+      ],
+      [
+        {
+          "version": "editorial-1.0.0",
+          "checksum": null,
+          "is_active": 1
+        }
+      ]
+    ],
+    "after": [
+      [
+        {
+          "id": "edcc53cf-d19a-415b-a8a2-a66040846b1d",
+          "version": "0.7.1",
+          "checksum": "20b793acda524da945b07ec32b2ed795f31e273c533ff6b4e9c4f96ef821eeac",
+          "is_active": 1
+        }
+      ],
+      [
+        {
+          "version": "0.7.1",
+          "checksum": "20b793acda524da945b07ec32b2ed795f31e273c533ff6b4e9c4f96ef821eeac",
+          "is_active": 1
+        }
+      ]
+    ],
+    "graphValidation": "pass",
+    "natalLensRules": 62,
+    "transitChapterRules": 5,
+    "reviewedBundleUnchanged": true
+  },
+  "chart": {
+    "saveMs": 1197.3107279999997,
+    "exportMs": 1097.558713,
+    "engine": "swiss-ephemeris@2.10.03",
+    "houseSystem": "placidus",
+    "ephemeris": {
+      "engine": "swiss-ephemeris@2.10.03",
+      "precision": "high",
+      "degraded": false,
+      "degradedReason": null,
+      "transitEngine": "kepler-approx@1.0.0",
+      "eventTiming": null
+    },
+    "anchors": {
+      "version": "transit-anchor-1",
+      "chartFingerprint": "OBEFd6ME2TPaXQFRd0oLCM5UrmaBF7Y0",
+      "accuracy": "exact",
+      "status": "screened",
+      "sampleOffsetsMinutes": [
+        -2,
+        0,
+        2
+      ],
+      "sources": [
+        {
+          "engine": "swiss-ephemeris",
+          "engineVersion": "2.10.03",
+          "dataId": "sha256:975743cf9ca4c15e9e86d22f8d03fd973a1341f6b0bd971cabd21a4a02022797",
+          "frame": "tropical-apparent-geocentric-true-equinox-of-date",
+          "timeScale": "UT",
+          "returnedFlags": 258
+        },
+        {
+          "engine": "swiss-ephemeris",
+          "engineVersion": "2.10.03",
+          "dataId": "sha256:975743cf9ca4c15e9e86d22f8d03fd973a1341f6b0bd971cabd21a4a02022797",
+          "frame": "tropical-apparent-geocentric-true-equinox-of-date",
+          "timeScale": "UT",
+          "returnedFlags": 258
+        },
+        {
+          "engine": "swiss-ephemeris",
+          "engineVersion": "2.10.03",
+          "dataId": "sha256:975743cf9ca4c15e9e86d22f8d03fd973a1341f6b0bd971cabd21a4a02022797",
+          "frame": "tropical-apparent-geocentric-true-equinox-of-date",
+          "timeScale": "UT",
+          "returnedFlags": 258
+        }
+      ],
+      "anchors": [
+        {
+          "target": "sun",
+          "longitudes": [
+            54.698748410333906,
+            54.70008744806984,
+            54.70142648558493
+          ]
+        },
+        {
+          "target": "moon",
+          "longitudes": [
+            301.0516676143877,
+            301.06893233297455,
+            301.0861974739678
+          ]
+        },
+        {
+          "target": "mercury",
+          "longitudes": [
+            37.978402439582396,
+            37.97826823017675,
+            37.97813416637018
+          ]
+        },
+        {
+          "target": "venus",
+          "longitudes": [
+            13.17642879743994,
+            13.178013726792074,
+            13.17959865958079
+          ]
+        },
+        {
+          "target": "mars",
+          "longitudes": [
+            348.5669618427737,
+            348.5679932159269,
+            348.56902458886407
+          ]
+        },
+        {
+          "target": "jupiter",
+          "longitudes": [
+            99.6011929582927,
+            99.60145626692372,
+            99.60171957802487
+          ]
+        },
+        {
+          "target": "saturn",
+          "longitudes": [
+            295.2440267391378,
+            295.24400257119214,
+            295.2439784001608
+          ]
+        },
+        {
+          "target": "ascendant",
+          "longitudes": [
+            144.87849362525833,
+            145.2930314177181,
+            145.7076917671232
+          ]
+        },
+        {
+          "target": "midheaven",
+          "longitudes": [
+            50.46226636629751,
+            50.95693518161329,
+            51.450874111781616
+          ]
+        }
+      ]
+    }
+  },
+  "productionTransit": [
+    {
+      "day": "2026-10-13",
+      "durationMs": 1515.5511,
+      "computedAt": "2026-10-12T09:14:10.326Z",
+      "cycle": "jupiter_square_midheaven",
+      "status": "qualified",
+      "eventTiming": {
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "engine": "swiss-ephemeris@2.10.03",
+        "solverVersion": "transit-episode-1"
+      },
+      "timingOverlay": {
+        "cycleKey": "jupiter_square_midheaven",
+        "phase": "separating",
+        "centralExactAt": "2026-10-08T21:08:37.612Z",
+        "qualifiedExactDay": null,
+        "daysToExact": null,
+        "centralIngressAt": "2026-09-22T03:51:08.684Z",
+        "centralEgressAt": "2026-10-29T01:38:05.133Z",
+        "windowPosition": 0.5781867177015431
+      }
+    },
+    {
+      "day": "2026-11-02",
+      "durationMs": 1559.398593,
+      "computedAt": "2026-10-12T09:14:34.217Z",
+      "cycle": "jupiter_square_sun",
+      "status": "qualified",
+      "eventTiming": {
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "engine": "swiss-ephemeris@2.10.03",
+        "solverVersion": "transit-episode-1"
+      },
+      "timingOverlay": {
+        "cycleKey": "jupiter_square_sun",
+        "phase": "approaching",
+        "centralExactAt": "2026-11-04T04:48:02.516Z",
+        "qualifiedExactDay": "2026-11-04",
+        "daysToExact": 2,
+        "centralIngressAt": "2026-10-13T10:22:24.475Z",
+        "centralEgressAt": "2027-02-13T13:59:57.140Z",
+        "windowPosition": 0.16295247674929156
+      }
+    }
+  ],
+  "natalReadiness": {
+    "scope": "Local assembly from the same synthetic native chart inputs; no language provider",
+    "checkedAt": "2026-10-12T09:13:43.147Z",
+    "reliabilityStatus": "screened",
+    "evidenceCount": 23,
+    "examples": [
+      {
+        "day": "2026-10-26",
+        "primary": "neptune_sextile_moon",
+        "natal": {
+          "version": "daily-natal-lens-2",
+          "reliabilityVersion": "natal-reliability-1",
+          "releaseVersion": "0.7.1",
+          "status": "selected",
+          "lens": {
+            "ruleKey": "nl-moon-11",
+            "role": "emotional_reflex",
+            "mechanism": "Taking a little distance can offer room to consider a response. If an exchange feels crowded, the distinction may be between gaining perspective and making the response so abstract that its immediate point disappears.",
+            "anchorCycleKey": "neptune_sextile_moon",
+            "dependsOn": [
+              "C1",
+              "I1"
+            ],
+            "evidenceId": "NL1",
+            "evidence": [
+              {
+                "kind": "sign",
+                "body": "moon",
+                "sign": "Aquarius",
+                "source": "service",
+                "longitudes": [
+                  301.0516676143877,
+                  301.06893233297455,
+                  301.0861974739678
+                ],
+                "marginsDeg": [
+                  1.0516676143877248,
+                  1.0689323329745548,
+                  1.0861974739677862
+                ]
+              }
+            ],
+            "screen": {
+              "accuracy": "exact",
+              "sampleOffsetsMinutes": [
+                -2,
+                0,
+                2
+              ],
+              "sampleEngines": [
+                "swiss-ephemeris@2.10.03",
+                "swiss-ephemeris@2.10.03",
+                "swiss-ephemeris@2.10.03"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "day": "2026-11-02",
+        "primary": "jupiter_square_sun",
+        "natal": {
+          "version": "daily-natal-lens-2",
+          "reliabilityVersion": "natal-reliability-1",
+          "releaseVersion": "0.7.1",
+          "status": "selected",
+          "lens": {
+            "ruleKey": "nl-sun-02",
+            "role": "self_direction",
+            "mechanism": "A direction can feel worthwhile when it has something tangible to sustain. An ordinary project may distinguish preserving what works from keeping it simply because it is familiar.",
+            "anchorCycleKey": "jupiter_square_sun",
+            "dependsOn": [
+              "C1",
+              "I1"
+            ],
+            "evidenceId": "NL1",
+            "evidence": [
+              {
+                "kind": "sign",
+                "body": "sun",
+                "sign": "Taurus",
+                "source": "service",
+                "longitudes": [
+                  54.698748410333906,
+                  54.70008744806984,
+                  54.70142648558493
+                ],
+                "marginsDeg": [
+                  5.301251589666094,
+                  5.299912551930163,
+                  5.298573514415068
+                ]
+              }
+            ],
+            "screen": {
+              "accuracy": "exact",
+              "sampleOffsetsMinutes": [
+                -2,
+                0,
+                2
+              ],
+              "sampleEngines": [
+                "swiss-ephemeris@2.10.03",
+                "swiss-ephemeris@2.10.03",
+                "swiss-ephemeris@2.10.03"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "day": "2026-11-09",
+        "primary": "jupiter_square_sun",
+        "natal": {
+          "version": "daily-natal-lens-2",
+          "reliabilityVersion": "natal-reliability-1",
+          "releaseVersion": "0.7.1",
+          "status": "selected",
+          "lens": {
+            "ruleKey": "nl-sun-02",
+            "role": "self_direction",
+            "mechanism": "A direction can feel worthwhile when it has something tangible to sustain. An ordinary project may distinguish preserving what works from keeping it simply because it is familiar.",
+            "anchorCycleKey": "jupiter_square_sun",
+            "dependsOn": [
+              "C1",
+              "I1"
+            ],
+            "evidenceId": "NL1",
+            "evidence": [
+              {
+                "kind": "sign",
+                "body": "sun",
+                "sign": "Taurus",
+                "source": "service",
+                "longitudes": [
+                  54.698748410333906,
+                  54.70008744806984,
+                  54.70142648558493
+                ],
+                "marginsDeg": [
+                  5.301251589666094,
+                  5.299912551930163,
+                  5.298573514415068
+                ]
+              }
+            ],
+            "screen": {
+              "accuracy": "exact",
+              "sampleOffsetsMinutes": [
+                -2,
+                0,
+                2
+              ],
+              "sampleEngines": [
+                "swiss-ephemeris@2.10.03",
+                "swiss-ephemeris@2.10.03",
+                "swiss-ephemeris@2.10.03"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "cleanup": {
+    "checkedAt": "2026-10-12T09:15:05.823Z",
+    "scope": "Only this recheck synthetic account",
+    "normalEraseSucceeded": true,
+    "signOutSucceeded": true,
+    "accountDeleted": true,
+    "remaining": {
+      "users": 0,
+      "profiles": 0,
+      "chart_snapshots": 0,
+      "birth_profiles": 0,
+      "daily_readings": 0,
+      "natal_features": 0,
+      "source_consents": 0,
+      "audit_events": 0
+    }
+  },
+  "modelCalls": 0,
+  "limits": [
+    "Native event timing is qualified; ordinary cycle ranking and geometry retain the separately labelled kepler-approx engine.",
+    "Production chart/anchor and transit HTTP paths are verified. Natal lens selection is also checked by local assembly with the same native synthetic chart input; no new member-language generation was requested.",
+    "The published frontend assets are unchanged by this server-only correction, so live qualified timing is the production behavior evidence.",
+    "Archived readings are not rewritten and existing owners use explicit birth recalculation to acquire new source evidence."
+  ]
+}

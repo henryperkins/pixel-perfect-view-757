@@ -1,6 +1,8 @@
 {
-  "README.md": "722cef1b30675456663c99ac1a260a61a0b54f67ebea7e457c746f55965d1835",
+  "README.md": "e4c2f6f30aa18cb35256b51fcc2b3cfd446940008bc729c03fe16beb0b0fc600",
+  "activation.json": "72d91cbec903f01d6ba37da1aba6fd105be801216c874088a4b17e08ce09894c",
   "before-fix-app.json": "1beab369182cac8aaf35a3c69c2495bab142c055ac2745626ec9fe727461e609",
+  "production-probes.json": "b38941f0586c7c2bfc80f64c3b22ea70db540b15b8d0119c79c63e982b2d5990",
   "run-workerd.mjs": "02e93a74ec1b037ef86f0b403f5c6a6908a02a1661a5d29043944b6648435fb4",
   "validation.json": "c0c65dbaa6fab3f31c036d2cf3eed12209ba5e4fb25ef077fcd54c3d806726db",
   "workerd-fixture.mjs": "2f27308f487568a6e9a61a4841c98092c4466a70d2587acf25219051de323df3",

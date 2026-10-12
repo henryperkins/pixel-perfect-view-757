@@ -123,18 +123,19 @@ synthesis. Saved `S1` evidence includes its exact text, rule, content version, a
 feedback are preserved. Missing primary copy records `skipped/no_interpretation`
 and returns the deterministic body without a provider request.
 
-This implementation is a local release candidate. Actual-model baseline/candidate
-runs on the v3 fixtures and blinded writing review remain pending. See the
-[synthesis checklist](docs/superpowers/plans/2026-10-11-daily-reading-synthesis-checklist.md)
-and [candidate manifest](docs/superpowers/releases/2026-10-11-daily-synthesis-candidate.json).
+The reviewed combined production release `0.7.1` includes synthesis, natal lenses and
+transit chapters. Targeted model-draft and template writing reviews passed; these
+are not a full paired benchmark over every v3 fixture. See the
+[writing recheck](docs/reviews/daily-transit-story/2026-10-12-prompt-recheck/README.md)
+and [activation receipt](docs/reviews/daily-transit-story/2026-10-12-transit-runtime-fix/README.md).
 
 ## Daily natal lens
 
-The inactive local candidate `builtin-0.6.1` (schema 3) adds 60 individually authored
-personal-body/sign possibilities and two compound Moon entries to the unchanged transit
-copy. It is not the built-in fallback: without an active release, readings use
-`builtin-0.5.0`, which has no catalogue, so deploying code never switches lenses on.
-Publishing and activating the candidate as a release is the only switch.
+Active release `0.7.1` includes 60 individually authored personal-body/sign
+possibilities and two compound Moon entries. The original `builtin-0.6.1` remains
+available as an admin evaluation copy. Without an active release, readings use
+`builtin-0.5.0`, which has no catalogue: publication and activation of a content
+release is the switch, independently of code deployment.
 
 One deterministic lens can qualify the primary cycle's practical distinction, and it
 follows the day's contact. The transited personal body's own rules lead (service
@@ -160,26 +161,29 @@ reads, evidence links and exports restore the saved evidence; an export marks on
 unreadable saved row in place instead of failing. Erasure removes the evidence with
 chart/reading rows, chapter essays and the account key, and keeps no birth
 fingerprint in the retained audit trail. Admin quality sees only IDs and bounded
-codes. Prompt `daily-astro-body-8`, validator `daily-reference-5`, plan
+codes. Prompt `daily-astro-body-13`, validator `daily-reference-10`, plan
 `daily-natal-lens-2` and reliability `natal-reliability-1` preserve the one-call,
 60-second daily budget and the separate natal essay/question contract.
 
-The [catalogue review](docs/reviews/daily-natal-lens/catalogue-review.md) and
-[local validation record](docs/superpowers/releases/2026-10-11-daily-natal-validation.md)
-record implementation evidence. Independent editorial approval, actual-model paired
-writing qualification, publication and deployment remain open.
+The [catalogue review](docs/reviews/daily-natal-lens/catalogue-review.md),
+[natal writing continuation](docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/README.md)
+and [combined writing recheck](docs/reviews/daily-transit-story/2026-10-12-prompt-recheck/README.md)
+record the editorial evidence. Natal lenses and transit chapters were activated
+together after the separate source and production checks passed.
 
-## Inactive transit-story candidate
+## Daily transit stories
 
 The reconciled transit-story app layer supports screened Swiss anchors, bounded
 episode proofs, encrypted saved chronology, and shared timing/evidence presentation.
-The built-in fallback remains `builtin-0.5.0`; `builtin-0.6.1` natal and
-`builtin-0.7.0` transit catalogues are separate inactive candidates. The admin
-evaluation copy selector can use either candidate with fixed synthetic facts
-without publishing or activating it.
+The active combined release is `0.7.1`; the built-in fallback remains
+`builtin-0.5.0`. The admin evaluation copy selector can still use natal and transit
+candidate copies with fixed synthetic facts without changing the active release.
 
 Production episode calls require an active chapter catalogue plus explicitly
-configured, qualified source identity and endpoint. Native episode-service
-implementation/numerical qualification, actual-model transit writing, and live
-account/source verification remain open. See the [integration record](docs/reviews/reconciliation/2026-10-11-main-integration.md)
-and [source qualification](docs/reviews/daily-transit-story/source-qualification.md).
+configured, qualified source identity and endpoint. The owned Swiss service is
+deployed as `pattern-transit-calc` in Fly organization `imladris`. Numerical
+qualification, the targeted transit writing review, and synthetic production
+chart/episode checks have passed. Existing owners explicitly save/recalculate their
+birth details to obtain the new source evidence; archived readings retain their
+original provenance. See [source qualification](docs/reviews/daily-transit-story/source-qualification.md)
+and the [activation receipt](docs/reviews/daily-transit-story/2026-10-12-transit-runtime-fix/README.md).

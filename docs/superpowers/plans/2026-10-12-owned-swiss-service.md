@@ -87,12 +87,12 @@
 
 - [x] Read current Fly access/configuration; deploy a separate `pattern-transit-calc` app using an independent generated secret, preserving the existing app.
 - [x] Verify remote source/build identity, unauthenticated 401, public source archive, synthetic chart + 15-track qualification and measured service deadlines on the deployed version.
-- [ ] Configure this app's chart URL/key and transit URL/source ID through an authorized server secret channel. If credentials/tooling are absent, finish everything independent and report the exact missing operation without exposing a secret.
+- [x] Configure this app's chart URL/key and transit URL/source ID through an authorized server secret channel. If credentials/tooling are absent, finish everything independent and report the exact missing operation without exposing a secret.
 - [x] Publish current source normally; verify remote commit and Lovable synchronization separately from production deployment.
-- [ ] Activate the staged combined content only when source settings and production checks establish both features can work. Existing owners use explicit recalculation; historical records keep their original source.
+- [x] Activate the staged combined content only when source settings and production checks establish both features can work. Existing owners use explicit recalculation; historical records keep their original source.
 - [x] Record final configuration, release pointers, live evidence and rollback instructions; keep any unfulfilled gate explicitly open.
 
-Application check: the operator confirmed applying the settings; after publication, the synthetic chart returns all nine qualified anchors. Transit calculations through production fail on two uncached dates, while the identical local adapter request qualifies against Fly. Both activation probes were rolled back. URL/source-ID confirmation and successful production transit calculation remain open; see `docs/reviews/daily-transit-story/2026-10-12-owned-swiss/application-connection.md`. Synthetic account cleanup is complete.
+Application check complete: after the operator applied the settings, the published chart returned all nine qualified anchors. The initial transit failures came from Cloudflare rejecting `redirect: "error"`; native workerd reproduced the failure, and the manual-redirect correction passed 534 app tests, typecheck, scoped lint, build and live timing checks for two contacts. Combined `0.7.1` is active in both pointers. Local assembly also selects natal lenses for the same native synthetic chart. Synthetic-account cleanup is complete. See `docs/reviews/daily-transit-story/2026-10-12-transit-runtime-fix/README.md`; earlier failed attempts and rollback remain preserved.
 
 ## Execution notes
 

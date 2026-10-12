@@ -1,5 +1,7 @@
 # Application connection check
 
+Historical receipt: the failure below is now resolved. The [Cloudflare runtime correction](../2026-10-12-transit-runtime-fix/README.md) passed native-runtime and production checks, and combined `0.7.1` is active. The initial JSON and failed-probe details remain unchanged.
+
 **Chart connection passed; production transit connection remains unresolved. Combined content `0.7.1` is inactive.** The [machine-readable receipt](application-connection.json) records the synthetic inputs, source evidence, two production failures, pointer rollback and account cleanup.
 
 The operator confirmed applying the four Lovable secrets. The initial synthetic chart still returned unqualified anchors. After publishing source `f62ef72ecd366ec5b8fa4be3aa3d7328f0ddab17` through Lovable (deployment request `8130f1f0-c20b-470f-b7bd-e20b3035e959`), the same account's explicit birth save returned a high-precision Swiss `2.10.03` Placidus chart and nine screened transit anchors. All three birth-window samples identify the qualified engine, data hash, frame, time scale and flags. The published entry, privacy and birth-page assets match that source's local build byte-for-byte. This frontend comparison does not independently expose the server runtime commit.
@@ -12,7 +14,7 @@ The identical synthetic transit request returns HTTP 200 directly from Fly, incl
 
 The synthetic account was erased through the normal application operation and signed out, then deleted with an exact ID/email guard. Scoped database counts confirm zero remaining account, profile, chart, birth, reading, natal-feature, consent and audit rows. No real member records were read or altered by these probes.
 
-## Current pointers and next operation
+## Pointers and next operation at this initial check
 
 - `content_releases`: no active row; the reviewed `0.7.1` row remains staged.
 - `release_pointer`: `editorial-1.0.0` active, checksum null.
