@@ -1,6 +1,6 @@
 import { analyticEpisode } from "../fixtures/transit-episodes/analytic.mjs";
 import { syntheticNatalSamples } from "./natal-fixtures.mjs";
-export async function seedTransitReading(h) {
+export async function seedTransitReading(h, { natal = false } = {}) {
   const { TRANSIT_CANDIDATE_BUNDLE } = await h.vite.ssrLoadModule(
     "/src/lib/content/transit-candidate-bundle.ts",
   );
@@ -19,10 +19,14 @@ export async function seedTransitReading(h) {
   const fixture = analyticEpisode({ longitude: sun }),
     samples = syntheticNatalSamples(chart, ep, { sun: [sun, sun, sun] });
   const fingerprint = fixture.anchor.chartFingerprint;
+  const { assessNatalReliability } = await h.vite.ssrLoadModule(
+    "/src/lib/astro/natal-reliability.ts",
+  );
   const seeded = await h.seedChart(h.records(), h.userA, {
     fingerprint,
     chart: { ...samples[1].chart, points: { sun: samples[1].chart.points.sun } },
     transitAnchors: fixture.anchor,
+    ...(natal ? { natalReliability: assessNatalReliability(samples, fingerprint, "exact") } : {}),
   });
   h.setEpisode((request) => {
     const x = analyticEpisode({ longitude: request.targets[1].longitude, aspect: request.aspect });

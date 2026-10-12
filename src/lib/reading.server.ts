@@ -13,6 +13,7 @@ import {
 import { exactPhrase } from "./astro/cycles";
 import { resolveInterpretationPlan, type DailyInterpretationPlan } from "./content/synthesis";
 import { resolveDailyNatalLens, type DailyNatalLensPlan } from "./content/natal-lens";
+import { composeNatalTemplate } from "./content/natal-template";
 import type { NatalReliabilityManifest } from "./astro/natal-reliability";
 
 /**
@@ -405,7 +406,18 @@ export function assembleReading(
     });
   }
 
-  const astro = safetyPass(paragraphs.filter(Boolean).join("\n\n"));
+  const astroParagraphs =
+    natalLensPlan.lens && primary && editorial
+      ? composeNatalTemplate({
+          interpretation: editorial.interpretation.mechanism,
+          lens: natalLensPlan.lens.mechanism,
+          synthesis: interpretationPlan.synthesis?.mechanism ?? null,
+          primary,
+          story: transitStoryPlan,
+          technical,
+        })
+      : paragraphs;
+  const astro = safetyPass(astroParagraphs.filter(Boolean).join("\n\n"));
   const context = safetyPass(contextParagraphs.filter(Boolean).join("\n\n"));
   const safePrompt = safetyPass(prompt);
 

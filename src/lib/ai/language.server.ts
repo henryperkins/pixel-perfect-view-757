@@ -668,7 +668,7 @@ async function generateDailyProse(
       : "Keep C1 as the primary focus. No S1 is supplied: do not invent a joint relationship or premise. I2 and I3 may offer separately supported context without connecting the contacts into a new story.",
     ...(hasNatalLens
       ? [
-          'Apply the supplied N1 possibility to the primary meaning with one practical distinction in paragraph 1 or 2. Every paragraph using it must cite ["N1", "C1", "I1"]. Keep it conditional and recognizable or rejectable, never a confirmed identity, biological explanation or lived event. N1 and S1 may share a paragraph with all parents; do not add a personality section. N1 does not authorize a natal body, sign, house, aspect or other geometry.',
+          'Apply the supplied N1 possibility to a specific I1 scene with one practical distinction in paragraph 1 or 2. Identify what changes in considering that same obligation, task or choice; do not simply append N1 verbatim or connect two summaries with a generic bridge. Keep every scene and source condition intact. Every paragraph using it must cite ["N1", "C1", "I1"]. Keep it conditional and recognizable or rejectable, never a confirmed identity, biological explanation or lived event. N1 and S1 may share a paragraph with all parents, but S1 supplies its own relationship: the N1 distinction must not be made to cause or establish it. Do not add a personality section. N1 does not authorize a natal body, sign, house, aspect or other geometry.',
         ]
       : []),
     ...(input.facts.some((f) => f.id === "A1")

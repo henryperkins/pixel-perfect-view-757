@@ -1,0 +1,222 @@
+{
+  "artifactVersion": "natal-template-comparison-1",
+  "kind": "offline-template-comparison",
+  "baseRevision": "da4be89fb521b4b06c689b13f44dc42c9d877838",
+  "beforeSha256": "0435d80e0e6e932df3c7801b7b062ed4cde46487b723db86dd5b510c33ea8787",
+  "afterSha256": "8a28b7c65eb38d8f1e2ca4e3b93f31275b9cfc21fc11b201da7ff5e5a156cc61",
+  "actualModelCalls": 0,
+  "nativeCalculationCalls": 0,
+  "qualificationPassed": null,
+  "qualificationNote": "No new actual-model evidence or blinded scoring; previous failed review remains unchanged.",
+  "unchangedInputs": "All 114 rows retain identical supplied facts, config hashes, tone/depth, headline, question, selected lens key and story status. All three bundle hashes remain identical.",
+  "snapshots": [
+    {
+      "bundleSource": "builtin",
+      "bundleVersion": "builtin-0.5.0",
+      "bundleHash": "f68cc97e749d78d6a2332b9d87fb9fc4ce367d61d437ffa19f8485a2778330c1",
+      "caseCount": 38,
+      "changedTemplates": [],
+      "unchangedTemplates": 38
+    },
+    {
+      "bundleSource": "natal-candidate",
+      "bundleVersion": "builtin-0.6.1",
+      "bundleHash": "b073d625c23b5bede66eba25e37bd3f3397263710dd63ab67d8af06b6e216500",
+      "caseCount": 38,
+      "changedTemplates": [
+        "natal-duty-reflex",
+        "natal-freedom-reflex",
+        "natal-service-aspect",
+        "natal-exact-house",
+        "natal-own-target",
+        "natal-moon-fallback",
+        "natal-mixed-source",
+        "natal-synthesis-integration",
+        "arc-synthesis-natal-integration"
+      ],
+      "unchangedTemplates": 29
+    },
+    {
+      "bundleSource": "transit-candidate",
+      "bundleVersion": "builtin-0.7.0",
+      "bundleHash": "0e52a1dafb069a0b625a593ddaea183b27fb8e07a8231e659f9fd11dcadbadc6",
+      "caseCount": 38,
+      "changedTemplates": [
+        "natal-duty-reflex",
+        "natal-freedom-reflex",
+        "natal-service-aspect",
+        "natal-exact-house",
+        "natal-own-target",
+        "natal-moon-fallback",
+        "natal-mixed-source",
+        "natal-synthesis-integration",
+        "arc-synthesis-natal-integration"
+      ],
+      "unchangedTemplates": 29
+    }
+  ],
+  "changes": [
+    {
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-duty-reflex",
+      "lensRuleKey": "nl-moon-10",
+      "beforeWords": 158,
+      "afterWords": 80,
+      "beforeParagraphs": 4,
+      "afterParagraphs": 2
+    },
+    {
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-freedom-reflex",
+      "lensRuleKey": "nl-moon-09",
+      "beforeWords": 160,
+      "afterWords": 82,
+      "beforeParagraphs": 4,
+      "afterParagraphs": 2
+    },
+    {
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-service-aspect",
+      "lensRuleKey": "nl-moon-10-aspect-01",
+      "beforeWords": 154,
+      "afterWords": 80,
+      "beforeParagraphs": 4,
+      "afterParagraphs": 2
+    },
+    {
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-exact-house",
+      "lensRuleKey": "nl-moon-10-house-01",
+      "beforeWords": 157,
+      "afterWords": 82,
+      "beforeParagraphs": 4,
+      "afterParagraphs": 2
+    },
+    {
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-own-target",
+      "lensRuleKey": "nl-sun-03",
+      "beforeWords": 129,
+      "afterWords": 73,
+      "beforeParagraphs": 4,
+      "afterParagraphs": 2
+    },
+    {
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-moon-fallback",
+      "lensRuleKey": "nl-moon-10",
+      "beforeWords": 129,
+      "afterWords": 71,
+      "beforeParagraphs": 4,
+      "afterParagraphs": 2
+    },
+    {
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-mixed-source",
+      "lensRuleKey": "nl-moon-10",
+      "beforeWords": 158,
+      "afterWords": 80,
+      "beforeParagraphs": 4,
+      "afterParagraphs": 2
+    },
+    {
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-synthesis-integration",
+      "lensRuleKey": "nl-sun-03",
+      "beforeWords": 170,
+      "afterWords": 83,
+      "beforeParagraphs": 6,
+      "afterParagraphs": 2
+    },
+    {
+      "bundleSource": "natal-candidate",
+      "caseId": "arc-synthesis-natal-integration",
+      "lensRuleKey": "nl-sun-03",
+      "beforeWords": 167,
+      "afterWords": 83,
+      "beforeParagraphs": 6,
+      "afterParagraphs": 2
+    },
+    {
+      "bundleSource": "transit-candidate",
+      "caseId": "natal-duty-reflex",
+      "lensRuleKey": "nl-moon-10",
+      "beforeWords": 163,
+      "afterWords": 80,
+      "beforeParagraphs": 4,
+      "afterParagraphs": 2
+    },
+    {
+      "bundleSource": "transit-candidate",
+      "caseId": "natal-freedom-reflex",
+      "lensRuleKey": "nl-moon-09",
+      "beforeWords": 165,
+      "afterWords": 82,
+      "beforeParagraphs": 4,
+      "afterParagraphs": 2
+    },
+    {
+      "bundleSource": "transit-candidate",
+      "caseId": "natal-service-aspect",
+      "lensRuleKey": "nl-moon-10-aspect-01",
+      "beforeWords": 159,
+      "afterWords": 80,
+      "beforeParagraphs": 4,
+      "afterParagraphs": 2
+    },
+    {
+      "bundleSource": "transit-candidate",
+      "caseId": "natal-exact-house",
+      "lensRuleKey": "nl-moon-10-house-01",
+      "beforeWords": 162,
+      "afterWords": 82,
+      "beforeParagraphs": 4,
+      "afterParagraphs": 2
+    },
+    {
+      "bundleSource": "transit-candidate",
+      "caseId": "natal-own-target",
+      "lensRuleKey": "nl-sun-03",
+      "beforeWords": 134,
+      "afterWords": 73,
+      "beforeParagraphs": 4,
+      "afterParagraphs": 2
+    },
+    {
+      "bundleSource": "transit-candidate",
+      "caseId": "natal-moon-fallback",
+      "lensRuleKey": "nl-moon-10",
+      "beforeWords": 134,
+      "afterWords": 71,
+      "beforeParagraphs": 4,
+      "afterParagraphs": 2
+    },
+    {
+      "bundleSource": "transit-candidate",
+      "caseId": "natal-mixed-source",
+      "lensRuleKey": "nl-moon-10",
+      "beforeWords": 163,
+      "afterWords": 80,
+      "beforeParagraphs": 4,
+      "afterParagraphs": 2
+    },
+    {
+      "bundleSource": "transit-candidate",
+      "caseId": "natal-synthesis-integration",
+      "lensRuleKey": "nl-sun-03",
+      "beforeWords": 175,
+      "afterWords": 83,
+      "beforeParagraphs": 6,
+      "afterParagraphs": 2
+    },
+    {
+      "bundleSource": "transit-candidate",
+      "caseId": "arc-synthesis-natal-integration",
+      "lensRuleKey": "nl-sun-03",
+      "beforeWords": 211,
+      "afterWords": 124,
+      "beforeParagraphs": 6,
+      "afterParagraphs": 2
+    }
+  ]
+}

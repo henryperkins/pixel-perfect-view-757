@@ -79,7 +79,7 @@ test("daily uses one 60-second call and exports its budget without changing prov
   assert.equal(calls, 1);
   assert.equal(result.metadata.gatewayTimeoutMs, 60_000);
   assert.equal(result.case.diagnostics.gatewayTimeoutMs, 60_000);
-  assert.equal(result.metadata.promptVersion, "daily-astro-body-9");
+  assert.equal(result.metadata.promptVersion, "daily-astro-body-10");
   assert.deepEqual(Object.keys(requests[0]).sort(), ["messages", "model", "response_format"]);
 });
 

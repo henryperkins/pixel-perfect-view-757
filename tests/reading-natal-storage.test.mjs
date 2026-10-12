@@ -133,6 +133,67 @@ test("template_consumption_is_private", async (context) => {
   h.reopen();
   assert.deepEqual((await h.app.getToday(h.records(), h.userA, "UTC")).language, template.language);
 });
+test("authored source-bound template reopens and exports while changed wording or saved I1 fails", async (context) => {
+  const { dek } = await prepare(context, { accuracy: "hour", aspects: false });
+  h.setGateway(() => new Response(null, { status: 503 }));
+  const first = await h.app.getToday(h.records(), h.userA, "UTC");
+  assert.equal(first.language.mode, "template");
+  assert.equal(first.language.natalLens.plan.lens.ruleKey, "nl-moon-10");
+  const saved = row(first.reading.id);
+  const meta = JSON.parse(saved.language_meta);
+  const paragraphs = await h.cryptoModule.decryptJson(dek, meta.paragraphs_ct);
+  assert.match(paragraphs[0], /If an unfinished reply is one of those obligations/);
+  assert.ok(!paragraphs[0].includes(first.language.natalLens.plan.lens.mechanism));
+  h.reopen();
+  const reopened = await h.app.getToday(h.records(), h.userA, "UTC");
+  assert.equal(reopened.reading.id, first.reading.id);
+  assert.deepEqual(reopened.language, first.language);
+  // Archive readback uses the saved facts even after the active release changes.
+  await h.records().from("content_releases").delete();
+  const exported = await h.app.exportEverything(h.records(), h.userA);
+  assert.deepEqual(
+    exported.readings.find((r) => r.id === first.reading.id).language,
+    first.language,
+  );
+  for (const change of [
+    async (m) => {
+      const edited = [...paragraphs];
+      edited[0] = edited[0].replace("may be different", "is always different");
+      m.paragraphs_ct = await h.cryptoModule.encryptJson(dek, edited);
+    },
+    async (m) => {
+      const edited = [...paragraphs];
+      edited[0] += " This unrelated conclusion is certain.";
+      m.paragraphs_ct = await h.cryptoModule.encryptJson(dek, edited);
+    },
+    async (m) => {
+      m.facts.find((f) => f.id === "I1").statement += " A changed condition applies.";
+    },
+  ]) {
+    const altered = structuredClone(meta);
+    await change(altered);
+    await assert.rejects(
+      h.app.readingLanguage({ ...saved, language_meta: altered }, dek),
+      /could not be loaded/,
+    );
+  }
+  // Historical templates for the same known pair still contain the complete lens.
+  const primary = meta.facts.find((f) => f.id === "I1");
+  const mechanism = primary.statement.slice(
+    `Published interpretation ${primary.sourceKey}: `.length,
+  );
+  const legacy = [...paragraphs];
+  legacy[0] = `${mechanism} ${first.language.natalLens.plan.lens.mechanism}`;
+  assert.ok(
+    await h.app.readingLanguage(
+      {
+        ...saved,
+        language_meta: { ...meta, paragraphs_ct: await h.cryptoModule.encryptJson(dek, legacy) },
+      },
+      dek,
+    ),
+  );
+});
 test("admin_quality_has_only_natal_ids_and_closed_codes", async (context) => {
   await prepare(context);
   await h.records().from("user_roles").insert({ user_id: h.userA, role: "admin" });

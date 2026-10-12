@@ -43,6 +43,67 @@ test("arc_scan_and_dates_are_encrypted_and_cache_makes_no_requests", async () =>
   const saved = await h.cryptoModule.decryptJson(dek, meta.transit_story_ct);
   assert.equal(saved.facts.length, 2);
   assert.equal(saved.plan.passTotal, 3);
+  assert.deepEqual(saved.usedParagraphs, { A1: [1], P2: [1] });
+});
+test("natal template saves exact chapter copy in paragraph two and rejects false or duplicate linkage", async () => {
+  const { dek } = await seedTransitReading(h, { natal: true });
+  const first = await h.app.getToday(h.records(), h.userA, "UTC");
+  assert.equal(first.language.mode, "template");
+  assert.ok(first.language.natalLens);
+  assert.deepEqual(first.language.transitStory.usedParagraphs, { A1: [1], P2: [2] });
+  const row = h.sqlite.prepare("SELECT * FROM daily_readings WHERE id=?").get(first.reading.id);
+  const meta = JSON.parse(row.language_meta);
+  const paragraphs = await h.cryptoModule.decryptJson(dek, meta.paragraphs_ct);
+  const story = await h.cryptoModule.decryptJson(dek, meta.transit_story_ct);
+  assert.ok(paragraphs[1].includes(story.plan.copy.mechanism));
+  h.reopen();
+  const reopened = await h.app.getToday(h.records(), h.userA, "UTC");
+  assert.equal(reopened.reading.id, first.reading.id);
+  assert.deepEqual(reopened.language, first.language);
+  const exported = await h.app.exportEverything(h.records(), h.userA);
+  assert.deepEqual(
+    exported.readings.find((r) => r.id === first.reading.id).language,
+    first.language,
+  );
+  for (const corruption of [
+    "wrong-index",
+    "missing",
+    "duplicate",
+    "moved",
+    "duplicate-chronology",
+  ]) {
+    const badStory = structuredClone(story);
+    const badParagraphs = [...paragraphs];
+    if (corruption === "wrong-index") badStory.usedParagraphs.P2 = [1];
+    if (corruption === "missing")
+      badParagraphs[1] = badParagraphs[1].replace(story.plan.copy.mechanism, "");
+    if (corruption === "duplicate") badParagraphs[1] += ` ${story.plan.copy.mechanism}`;
+    if (corruption === "moved") {
+      badParagraphs[1] = badParagraphs[1].replace(story.plan.copy.mechanism, "");
+      badParagraphs.push(story.plan.copy.mechanism);
+      badStory.usedParagraphs.P2 = [badParagraphs.length];
+    }
+    if (corruption === "duplicate-chronology")
+      badParagraphs[0] += ` ${story.plan.chronologySentence}`;
+    await assert.rejects(
+      h.app.readingLanguage(
+        {
+          ...row,
+          language_meta: {
+            ...meta,
+            astroParagraphCount: badParagraphs.length,
+            paragraphs_ct: await h.cryptoModule.encryptJson(dek, badParagraphs),
+            transit_story_ct: await h.cryptoModule.encryptJson(dek, badStory),
+          },
+        },
+        dek,
+      ),
+      /could not be loaded/,
+      corruption,
+    );
+  }
+  assert.equal(h.gatewayRequests.length, 0);
+  assert.equal(h.episodeRequests.length, 1);
 });
 test("source_unavailable_is_immutable_but_policy_change_creates_new_identity", async () => {
   await seedTransitReading(h);

@@ -48,6 +48,15 @@ export const calculationFromStory = (saved: SavedTransitStory): DailyTransitCalc
     : { status: "omitted", reason: saved.plan.reason };
 const equal = (a: unknown, b: unknown) =>
   JSON.stringify(canonicalStoryValue(a)) === JSON.stringify(canonicalStoryValue(b));
+/** Full saved copy is the template's evidence binding, including historical paragraph 1. */
+export function templateStoryParagraphs(plan: DailyTransitStoryPlan, paragraphs: string[]) {
+  if (plan.status !== "selected") return { A1: [], P2: [] };
+  const occurrences = (copy: string) =>
+    paragraphs.flatMap((paragraph, index) =>
+      Array.from({ length: paragraph.split(copy).length - 1 }, () => index + 1),
+    );
+  return { A1: occurrences(plan.chronologySentence), P2: occurrences(plan.copy.mechanism) };
+}
 export async function validateSavedTransitStory(
   value: unknown,
   publicFacts: FactAtom[],
@@ -154,14 +163,16 @@ export async function validateSavedTransitStory(
   if (!equal(s.facts, transitStoryFacts(s.plan))) throw new Error("Invalid saved atoms");
   const all = [...publicFacts, ...s.facts];
   assertDailyFactGraph(all);
+  const templateUsed = templateStoryParagraphs(s.plan, expected.paragraphs);
   for (const id of ["A1", "P2"] as const) {
     const used =
       expected.mode === "model"
         ? expected.citations.filter((c) => c.facts.includes(id)).map((c) => c.paragraph)
-        : [1];
+        : templateUsed[id];
     if (
       !equal(s.usedParagraphs[id], used) ||
       !used.length ||
+      (expected.mode !== "model" && (used.length !== 1 || used[0]! > 2)) ||
       used.some((n) => !Number.isInteger(n) || n < 1 || n > expected.paragraphs.length)
     )
       throw new Error("Invalid story paragraph linkage");
@@ -178,10 +189,6 @@ export async function validateSavedTransitStory(
       )
     )
       throw new Error("Invalid saved chronology");
-  } else if (
-    !expected.paragraphs[0]?.includes(s.plan.chronologySentence) ||
-    !expected.paragraphs[0]?.includes(s.plan.copy.mechanism)
-  )
-    throw new Error("Missing template chapter");
+  }
   return s;
 }

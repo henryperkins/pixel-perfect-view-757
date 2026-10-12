@@ -8,11 +8,13 @@ import { DAILY_TRANSIT_STORY_VERSION } from "./content/transit-story";
 import {
   canonicalStoryValue,
   storyDigest,
+  templateStoryParagraphs,
   validateSavedTransitStory,
   calculationFromStory,
   type SavedTransitStory,
   type StoryPolicyBinding,
 } from "./content/transit-story-storage.server";
+import { consumedNatalTemplate } from "./content/natal-template";
 import type { DBClient } from "./d1.server";
 
 import {
@@ -837,6 +839,7 @@ export async function readingLanguage(
     ? (meta["citations"] as ReadingLanguage["citations"])
     : [];
   let natalLens: SavedNatalLens | null = null;
+  let natalTemplateParagraph: string | null = null;
   const hasEnvelope = Object.hasOwn(meta, "natal_lens_ct");
   const natalIdentity = meta["natalLensPlan"] as Record<string, unknown> | undefined;
   if (
@@ -879,8 +882,7 @@ export async function readingLanguage(
         natalIdentity?.["status"] !== "selected"
       )
         throw new Error("Invalid saved natal status");
-      if (row.language_mode !== "model" && !paragraphs[0]!.includes(natalLens.plan.lens!.mechanism))
-        throw new Error("Missing consumed template copy");
+      if (row.language_mode !== "model") natalTemplateParagraph = paragraphs[0]!;
       facts = [...facts, natalLens.fact];
     } catch {
       throw new Error("Saved natal reading evidence could not be loaded. Please retry.");
@@ -933,6 +935,22 @@ export async function readingLanguage(
     } catch {
       throw new Error("Saved transit story evidence could not be loaded. Please retry.");
     }
+  }
+  if (natalLens && row.language_mode !== "model") {
+    const primary = facts.find((fact) => fact.id === "I1");
+    const prefix = `Published interpretation ${primary?.sourceKey}: `;
+    const interpretation = primary?.statement.startsWith(prefix)
+      ? primary.statement.slice(prefix.length)
+      : null;
+    if (
+      !consumedNatalTemplate(
+        natalTemplateParagraph ?? "",
+        interpretation,
+        natalLens.plan.lens!.mechanism,
+        transitStory?.plan.status === "selected" ? transitStory.plan.chronologySentence : null,
+      )
+    )
+      throw new Error("Saved natal reading evidence could not be loaded. Please retry.");
   }
   if (natalLens || transitStory?.plan.status === "selected") {
     const order = meta["factOrder"];
@@ -1232,6 +1250,7 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
     : null;
 
   const storyFacts = suppliedFacts.filter((f) => f.id === "A1" || f.id === "P2");
+  const templateStoryUsage = templateStoryParagraphs(assembled.transitStoryPlan, prose.paragraphs);
   const transitStory: SavedTransitStory = {
     version: 1,
     plan: assembled.transitStoryPlan,
@@ -1240,12 +1259,12 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       A1: storyFacts.length
         ? prose.meta.mode === "model"
           ? prose.meta.citations.filter((c) => c.facts.includes("A1")).map((c) => c.paragraph)
-          : [1]
+          : templateStoryUsage.A1
         : [],
       P2: storyFacts.length
         ? prose.meta.mode === "model"
           ? prose.meta.citations.filter((c) => c.facts.includes("P2")).map((c) => c.paragraph)
-          : [1]
+          : templateStoryUsage.P2
         : [],
     },
     timingOverlay:

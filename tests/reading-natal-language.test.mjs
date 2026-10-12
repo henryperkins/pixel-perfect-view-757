@@ -135,6 +135,26 @@ test("rejection_uses_same_lens_aware_template_once", async () => {
   assert.equal(result.prompt, assembled.prompt);
   assert.equal(h.gatewayRequests.length, before + 1);
 });
+test("captured prompt requires scene application and preserves directional conditions", async () => {
+  await generate(draft());
+  const [system, user] = h.gatewayRequests.at(-1).messages;
+  assert.match(
+    system.content,
+    /same task, obligation, exchange or choice must carry both meanings/,
+  );
+  assert.match(system.content, /does not prove that a boundary is needed/);
+  assert.match(user.content, /do not simply append N1 verbatim/);
+  assert.match(user.content, /N1 distinction must not be made to cause or establish it/);
+  assert.match(user.content, /retain that condition on reinforcement/);
+  assert.match(user.content, /do not say the aim causes low friction/);
+  assert.match(user.content, /conditional on action lining up with what matters/);
+  assert.match(user.content, /returned attention does not therefore sharpen curiosity/);
+  assert.match(user.content, /direction and qualification are explicit in the source/);
+  // This is evidence of the delivered brief, not a semantic acceptance test.
+  const diagnostics = (await generate(draft())).meta.diagnostics;
+  assert.equal(diagnostics.promptVersion, "daily-astro-body-10");
+  assert.equal(diagnostics.validatorVersion, "daily-reference-6");
+});
 test("request_without_a_lens_keeps_the_pre_lens_brief", async () => {
   const voice = await h.vite.ssrLoadModule("/src/lib/ai/daily-voice.ts");
   const plain = facts.filter((f) => f.id !== "N1");
