@@ -1,0 +1,196 @@
+{
+  "applicationCommit": "2f85195c3e37ca41f324afb94980fd98aa92b301",
+  "deploymentId": "2c9b810d-2e95-43bb-8bee-7a2cef5a63df",
+  "workerVersion": "61de7326-4bf2-40bc-a1c7-a197461fe6a2",
+  "workerBindings": [
+    "RETENTION",
+    "NIGHTLY",
+    "EVALUATIONS",
+    "RECORDS",
+    "ARTIFACTS",
+    "PATTERN_APP_URL",
+    "PATTERN_WORKFLOW_SECRET"
+  ],
+  "workerCron": "0 3 * * *",
+  "assets": {
+    "checkedAt": "2026-10-12T22:55:40.403Z",
+    "applicationCommit": "2f85195c3e37ca41f324afb94980fd98aa92b301",
+    "deploymentId": "psr2.2c9b810d-2e95-43bb-8bee-7a2cef5a63df.1792450535.wjFqRfngceptwAdkhovs3YIslSz5nPem-IQEXgvSC_c",
+    "status": 200,
+    "assets": [
+      {
+        "name": "Shell-DUOWE5ah.js",
+        "status": 200,
+        "bytes": 94521,
+        "sha256": "360c4edf9cf05e364bb04a1eb6bcb4677cf58113455d29bd940d15ebbd14ae45",
+        "matches": true
+      },
+      {
+        "name": "content-D81zVmeB.js",
+        "status": 200,
+        "bytes": 204215,
+        "sha256": "1adcbb9359d3509dfe5ca9400c12ffe194e706ad9dd3844d4e6889d00fffe413",
+        "matches": true
+      },
+      {
+        "name": "index-BLoif67Q.js",
+        "status": 200,
+        "bytes": 569511,
+        "sha256": "6ee91b906ce2d2018e957c08e8d14aa272726ee3be1196eb04428bc23490d6b8",
+        "matches": true
+      }
+    ]
+  },
+  "migrations": {
+    "migrations": [
+      {
+        "id": "20261012_content_draft_review",
+        "sourceHash": "71670297982d557a896e153f43a11fb705bc1df046427632cca72638810762f9",
+        "applied": true,
+        "pendingColumns": []
+      },
+      {
+        "id": "20261012_content_release_checksum",
+        "sourceHash": "94114807e5bd40c716d4f157d22e2e68dc82952cd6a88bf4259ae0f2e480582a",
+        "applied": true,
+        "pendingColumns": []
+      }
+    ],
+    "allPriorOwnerAndContentRowsUnchanged": true,
+    "tables": {
+      "users": true,
+      "profiles": true,
+      "birth_profiles": true,
+      "chart_snapshots": true,
+      "life_events": true,
+      "daily_readings": true,
+      "content_releases": true,
+      "content_drafts": true
+    },
+    "foreignKeyViolations": 0
+  },
+  "liveBrowserChecks": {
+    "passed": 8,
+    "scope": [
+      "non-admin Content denied",
+      "admin frozen comparison",
+      "staging blocked before approval",
+      "exact review approved",
+      "inactive stage with confirmed delivery",
+      "390px/reduced motion",
+      "activation confirmed",
+      "rollback confirmed"
+    ]
+  },
+  "stage": {
+    "candidateVersion": "0.7.2",
+    "checksum": "5b20a9ad8451308e46346813c8cf7f7be8e5a7c41302f5ed7384b2bb64499cb3",
+    "checksumAlgorithm": "sha256-canonical-json-v1",
+    "inactive": true,
+    "publication": {
+      "operationId": "b4530a93-76c2-4f90-a796-9637de3a2e04",
+      "operation": "stage",
+      "status": "complete",
+      "active": false,
+      "previousVersion": null,
+      "artifactKey": "content-releases/0.7.2/bundle.json",
+      "error": null
+    },
+    "draftConsumed": true,
+    "hashReviewPresent": true,
+    "activeVersion": "0.7.1"
+  },
+  "activation": {
+    "activeVersion": "0.7.2",
+    "activeCount": 1,
+    "mirrorVersion": "0.7.2",
+    "mirrorCount": 1,
+    "pointersAgree": true,
+    "publication": {
+      "operationId": "5015b323-5dcd-44f7-9e88-dcbb49a31105",
+      "operation": "activate",
+      "status": "complete",
+      "active": true,
+      "previousVersion": "0.7.1",
+      "artifactKey": "content-releases/0.7.2/bundle.json",
+      "error": null
+    },
+    "artifactSha256": "5b20a9ad8451308e46346813c8cf7f7be8e5a7c41302f5ed7384b2bb64499cb3",
+    "artifactMatches": true
+  },
+  "rollback": {
+    "activeVersion": "0.7.1",
+    "activeCount": 1,
+    "mirrorVersion": "0.7.1",
+    "mirrorCount": 1,
+    "pointersAgree": true,
+    "checksumAlgorithmStillUnlabelled": true,
+    "publication": {
+      "operationId": "a8073627-7958-45f2-b06c-9ad0b7b60fd9",
+      "operation": "rollback",
+      "status": "complete",
+      "active": true,
+      "previousVersion": "0.7.2",
+      "artifactKey": "content-releases/0.7.1/bundle.json",
+      "error": null
+    },
+    "baselineBundleAndChecksumUnchanged": true,
+    "historicalReadingsUnchanged": true,
+    "purposeAccountMemberReadings": 0
+  },
+  "downloadedOperation": {
+    "operationId": "5015b323-5dcd-44f7-9e88-dcbb49a31105",
+    "version": "0.7.2",
+    "activeVersion": "0.7.2",
+    "artifactKey": "content-releases/0.7.2/bundle.json",
+    "checksum": "5b20a9ad8451308e46346813c8cf7f7be8e5a7c41302f5ed7384b2bb64499cb3",
+    "canonicalSha256": "5b20a9ad8451308e46346813c8cf7f7be8e5a7c41302f5ed7384b2bb64499cb3",
+    "receiptExcludesAccountIdentity": true
+  },
+  "cleanup": {
+    "purposeAccountDeleted": true,
+    "ownedTableCount": 21,
+    "remainingOwnedRows": {
+      "users": 0,
+      "profiles": 0,
+      "sessions": 0,
+      "source_consents": 0,
+      "birth_profiles": 0,
+      "chart_snapshots": 0,
+      "natal_features": 0,
+      "cycle_instances": 0,
+      "context_signals": 0,
+      "daily_readings": 0,
+      "reading_sources": 0,
+      "reading_feedback": 0,
+      "check_ins": 0,
+      "life_events": 0,
+      "audit_events": 0,
+      "feature_narratives": 0,
+      "content_drafts": 0,
+      "evaluation_runs": 0,
+      "identity_links": 0,
+      "assistant_grants": 0,
+      "user_roles": 0
+    },
+    "otherOwnerCountsUnchanged": true,
+    "foreignKeyViolations": 0
+  },
+  "publicSignature": {
+    "liveInvalidRequestStatus": 401,
+    "validSignedStagingActivationAndReplay": "local integration coverage; production signing secret not exposed locally"
+  },
+  "controlledCandidate": {
+    "version": "0.7.2",
+    "copy": "existing 0.7.1 with release identity changed",
+    "active": false,
+    "retained": "immutable release/artifact/operation history"
+  },
+  "finalActiveContent": {
+    "version": "0.7.1",
+    "checksum": "20b793acda524da945b07ec32b2ed795f31e273c533ff6b4e9c4f96ef821eeac",
+    "checksumAlgorithm": "legacy-unlabelled"
+  },
+  "modelCalls": 0,
+  "calculationCalls": 0
+}

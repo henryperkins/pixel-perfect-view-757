@@ -1,7 +1,7 @@
 {
   "release": "2026-10-12-content-lifecycle",
   "baseCommit": "bce0545",
-  "applicationCommit": null,
+  "applicationCommit": "2f85195c3e37ca41f324afb94980fd98aa92b301",
   "ownedPaths": [
     "d1/schema.sql",
     "d1/migrations/20261012_content_draft_review.sql",
@@ -69,10 +69,15 @@
     "scopedLint": true,
     "build": true,
     "browserFixtureChecks": 13,
-    "freshReview": "Approved; 40 focused tests and original held legacy-ingest reproduction independently passed"
+    "freshReview": "Approved; 40 focused tests and original held legacy-ingest reproduction independently passed",
+    "liveBrowserChecks": 8
   },
   "publication": {
-    "status": "pending"
+    "status": "published-and-accepted",
+    "deploymentId": "2c9b810d-2e95-43bb-8bee-7a2cef5a63df",
+    "canonicalURL": "https://patterns.lakefrontdigital.io",
+    "workerVersion": "61de7326-4bf2-40bc-a1c7-a197461fe6a2",
+    "receipt": "publication.json"
   },
   "rollback": {
     "applicationCommit": "65641612feb1beb5bcd27bdf641a2fdbd4c85e79",
