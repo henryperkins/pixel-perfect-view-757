@@ -286,10 +286,11 @@ export function assembleReading(
       overlay && (overlay.phase === "between" || overlay.phase === "uncertain")
         ? storyTimingLine(overlay)
         : (bundle.phases[presentationPhase] ?? "");
-    paragraphs.push(phaseText);
-
     // Where in the arc we are, in days rather than jargon.
     const timing = overlay ? storyTimingLine(overlay) : arcParagraph(primary, technical);
+    // Between contacts the phase and timing share one factual sentence.
+    // Keep both editorial references, but render that sentence only once.
+    if (phaseText !== timing) paragraphs.push(phaseText);
     paragraphs.push(timing);
     editorial = {
       interpretation: { key: interp.key, mechanism: interp.mechanism },

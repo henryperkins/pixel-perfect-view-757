@@ -28,7 +28,7 @@ test("inactive_transit_candidate_preserves_the_shipped_fallback_and_natal_candid
   assert.equal(DEFAULT_BUNDLE.transitChapters, undefined);
   assert.equal(NATAL_CANDIDATE_BUNDLE.transitChapters, undefined);
   assert.deepEqual(b.natalLenses, NATAL_CANDIDATE_BUNDLE.natalLenses);
-  assert.equal(b.version, "builtin-0.7.0");
+  assert.equal(b.version, "builtin-0.7.1");
   assert.equal(b.schemaVersion, 4);
   s.validateContentGraph(b);
 });

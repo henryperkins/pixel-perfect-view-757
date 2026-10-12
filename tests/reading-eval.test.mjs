@@ -345,7 +345,7 @@ test("the explicit transit candidate CLI writes current coverage with blank huma
     const report = JSON.parse(await readFile(output, "utf8"));
     assert.equal(report.fixtureVersion, "synthetic-daily-6");
     assert.equal(report.bundleSource, "transit-candidate");
-    assert.equal(report.bundleVersion, "builtin-0.7.0");
+    assert.equal(report.bundleVersion, "builtin-0.7.1");
     assert.equal(report.cases.length, 38);
     assert.equal(report.summary.gatewayReplays, 37);
     assert.equal(report.summary.outcomes.accepted, 37);

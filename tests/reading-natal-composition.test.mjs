@@ -283,6 +283,13 @@ test("synthesis and P2 keep their conditions and distinct claims, with one exact
   }
 });
 
+test("between-contact fallback states its shared phase and timing once", () => {
+  const result = reading("arc-between-passes", transitBundle);
+  assert.equal(result.transitStoryPlan.status, "selected");
+  assert.equal(result.editorial.phase.text, result.editorial.timing);
+  assert.equal(paragraphs(result).filter((text) => text === result.editorial.timing).length, 1);
+});
+
 test("combined synthesis openings retain the saved natal readback contract", async () => {
   const { consumedNatalTemplate } = await h.vite.ssrLoadModule(
     "/src/lib/content/natal-template.ts",
