@@ -1,0 +1,21 @@
+Pattern Swiss Ephemeris Service
+Copyright (c) 2026 Henry Perkins. AGPL-3.0-or-later.
+
+Engine setup and pinned-data manifest adapted from the owned Patternlike
+calculation service, https://github.com/henryperkins/patternlike-app,
+apps/calc-stub (AGPL-3.0-or-later). This standalone service does not import
+Patternlike's packages/shared or either application's proprietary code.
+
+Swiss Ephemeris copyright Astrodienst AG, Switzerland; authors Dieter Koch
+and Alois Treindl. Swiss Ephemeris is available under AGPL or the Swiss
+Ephemeris Professional License. This service uses the AGPL path.
+https://github.com/aloistr/swisseph/blob/master/LICENSE
+
+sweph Node binding: Timotej Roiko and contributors, AGPL-3.0-or-later
+when used with the public Swiss Ephemeris library.
+https://github.com/timotejroiko/sweph
+
+The full AGPL text accompanies this service in LICENSE. The service's /source
+endpoint offers Corresponding Source, pinned inputs and build instructions.
+This notice describes this standalone service; it does not assert a legal
+determination about the licensing boundary of applications using its API.

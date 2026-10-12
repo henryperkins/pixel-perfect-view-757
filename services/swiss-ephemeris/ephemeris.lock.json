@@ -1,0 +1,20 @@
+{
+  "source": "https://github.com/aloistr/swisseph",
+  "commit": "85e65da01dce506bd0ec044ad3e39ab6d144d82b",
+  "path": "ephe",
+  "note": "Swiss Ephemeris data pinned by commit and SHA-256. Update deliberately: change the commit, delete the affected files, re-run npm run ephe:download, and commit the digests it reports. Every reproducibility claim in calculation-contract.launch.json rests on this pin.",
+  "files": [
+    {
+      "name": "sepl_18.se1",
+      "bytes": 484061,
+      "sha256": "ca1393ceab3a44fbc895887cf789c68819ae6a1cbc9b22225872dbe4ccd99a66",
+      "required": true
+    },
+    {
+      "name": "semo_18.se1",
+      "bytes": 1304771,
+      "sha256": "1ca07bd67c24374d77226180c20a4f9996cba013697894810518e7eb582ca4f7",
+      "required": true
+    }
+  ]
+}
