@@ -1,0 +1,52 @@
+[
+  {
+    "requestSha256": "cffe474238d0d2f217fe4913b7010db927025794bc10fe897c534f34b849dd50",
+    "cases": [
+      {
+        "caseId": "unknown-birth-time",
+        "outcome": "unavailable",
+        "durationMs": 60000
+      },
+      {
+        "caseId": "natal-unknown-time",
+        "outcome": "accepted",
+        "durationMs": 38790
+      }
+    ]
+  },
+  {
+    "requestSha256": "898111bb78087d7020b2754ae331bcc1793a3eaf71313b29cf157e722dcf85ac",
+    "cases": [
+      {
+        "caseId": "natal-sign-boundary",
+        "outcome": "accepted",
+        "durationMs": 56490
+      },
+      {
+        "caseId": "natal-degraded-positions",
+        "outcome": "accepted",
+        "durationMs": 46696
+      },
+      {
+        "caseId": "natal-legacy-snapshot",
+        "outcome": "accepted",
+        "durationMs": 35569
+      }
+    ]
+  },
+  {
+    "requestSha256": "e4728e647ca9b1a68c48a73a991a117d3ee38a7d74b3204239b250c197013eb0",
+    "cases": [
+      {
+        "caseId": "arc-truncated-scan",
+        "outcome": "accepted",
+        "durationMs": 23293
+      },
+      {
+        "caseId": "arc-station-tangent",
+        "outcome": "accepted",
+        "durationMs": 56521
+      }
+    ]
+  }
+]

@@ -428,6 +428,7 @@ test("ordinary member and admin access still requires the original cookie, inclu
   const signedUp = await signup(request());
   const member = await signedUp.json();
   const cookie = signedUp.headers.get("set-cookie").split(";")[0];
+  assert.equal((await (await current(request({ cookie }))).json()).isAdmin, false);
   await h.records().from("user_roles").insert({ user_id: member.userId, role: "admin" });
   await api.linkIdentity(member.userId, direct);
   const admin = requestHandler(async () => {
@@ -445,7 +446,10 @@ test("ordinary member and admin access still requires the original cookie, inclu
     await admin(request({ cookie, authorization: `Bearer ${delegated}` }))
   ).json();
   assert.equal(withCookie.session.userId, member.userId);
+  assert.equal(withCookie.session.isAdmin, true);
   assert.equal(withCookie.admin, true);
+  await h.records().from("user_roles").delete().eq("user_id", member.userId);
+  assert.equal((await (await current(request({ cookie }))).json()).isAdmin, false);
   const signin = requestHandler(async () =>
     Response.json(
       await auth.signInWithPassword("cookie-fixture@example.invalid", "test-password-fixture"),

@@ -1,0 +1,113 @@
+{
+  "itemSetHash": "dc5d5abdd15a7b28ac51e7224ec7f1bd6782c433efe1359d4577149fc4efc9a2",
+  "items": [
+    {
+      "itemId": "item-903722b4",
+      "caseId": "venus-opposition-venus",
+      "origin": "served-template",
+      "quiet": false,
+      "outcome": "unavailable",
+      "storyStatus": "omitted",
+      "chapter": null
+    },
+    {
+      "itemId": "item-5c0163a4",
+      "caseId": "unknown-birth-time",
+      "origin": "served-template",
+      "quiet": false,
+      "outcome": "unavailable",
+      "storyStatus": "omitted",
+      "chapter": null
+    },
+    {
+      "itemId": "item-88319428",
+      "caseId": "approximate-birth-time",
+      "origin": "served-template",
+      "quiet": false,
+      "outcome": "unavailable",
+      "storyStatus": "omitted",
+      "chapter": null
+    },
+    {
+      "itemId": "item-e18344ae",
+      "caseId": "quiet-threshold",
+      "origin": "served-template",
+      "quiet": true,
+      "outcome": "skipped",
+      "storyStatus": "omitted",
+      "chapter": null
+    },
+    {
+      "itemId": "item-fa407a30",
+      "caseId": "synthesis-tension",
+      "origin": "served-template",
+      "quiet": false,
+      "outcome": "unavailable",
+      "storyStatus": "omitted",
+      "chapter": null
+    },
+    {
+      "itemId": "item-86106ed6",
+      "caseId": "natal-duty-reflex",
+      "origin": "served-template",
+      "quiet": false,
+      "outcome": "unavailable",
+      "storyStatus": "omitted",
+      "chapter": null
+    },
+    {
+      "itemId": "item-55e06688",
+      "caseId": "natal-freedom-reflex",
+      "origin": "served-template",
+      "quiet": false,
+      "outcome": "unavailable",
+      "storyStatus": "omitted",
+      "chapter": null
+    },
+    {
+      "itemId": "item-5938adcc",
+      "caseId": "natal-service-aspect",
+      "origin": "served-template",
+      "quiet": false,
+      "outcome": "unavailable",
+      "storyStatus": "omitted",
+      "chapter": null
+    },
+    {
+      "itemId": "item-6a9206f5",
+      "caseId": "natal-own-target",
+      "origin": "served-template",
+      "quiet": false,
+      "outcome": "unavailable",
+      "storyStatus": "omitted",
+      "chapter": null
+    },
+    {
+      "itemId": "item-9b3c27d3",
+      "caseId": "natal-synthesis-integration",
+      "origin": "served-template",
+      "quiet": false,
+      "outcome": "unavailable",
+      "storyStatus": "omitted",
+      "chapter": null
+    }
+  ],
+  "packets": {
+    "c": {
+      "path": "/tmp/reading-review-23be3730da6d/c/packet.json",
+      "sha256": "cffdeb17d7e18d15557de556aff5ee03ef6a2aa5a123308fea37dce35ef26253",
+      "promptSha256": "932866df1e64808e384adb3e34288e08117cd6b75e5b095486df71cd19a78f43",
+      "output": "/tmp/reading-review-23be3730da6d/c/review.json",
+      "archive": "/home/ubuntu/pixel-perfect-view-757/docs/reviews/daily-transit-story/2026-10-12-enterprise-investigation/reviewer-c.json",
+      "dispatchPrompt": "You are a fresh blinded writing reviewer, contextId reviewer-c. Read ONLY this packet file: /tmp/reading-review-23be3730da6d/c/packet.json. It contains the complete instructions, rubric, facts and output schema. Read no memory files, repository files, other packets, prior reviews or external material; do not use searches, tests, or network tools. Allowed file operations: read that single packet and write/read back your JSON review at /tmp/reading-review-23be3730da6d/c/review.json. Score all 10 items, including the quiet safety check where applicable. Do not infer origins or alter prose. No subagents.\n\nMetadata to copy: contextId reviewer-c; packetSha256 cffdeb17d7e18d15557de556aff5ee03ef6a2aa5a123308fea37dce35ef26253; reviewedAt 2026-10-12T09:56:28.049363+00:00. Requested reviewer model gpt-6.1-sol, reasoning effort high; record observed model/configuration only if exposed, otherwise unknown, with requested configuration separately. Set humanReviewCompleted false. Follow the full embedded rubric and transit extension. Write JSON to the output path and report the item count.\n\npromptSha256 (SHA-256 of text above the blank line): 932866df1e64808e384adb3e34288e08117cd6b75e5b095486df71cd19a78f43"
+    },
+    "d": {
+      "path": "/tmp/reading-review-23be3730da6d/d/packet.json",
+      "sha256": "b45fbb4922de711082a9b2dae61ae8007fc7876a98004e066d642611c6cf8f42",
+      "promptSha256": "3ec1d46f71861191994e0540a98748c6a6de5133851ea9d056f4d4c97023e9ac",
+      "output": "/tmp/reading-review-23be3730da6d/d/review.json",
+      "archive": "/home/ubuntu/pixel-perfect-view-757/docs/reviews/daily-transit-story/2026-10-12-enterprise-investigation/reviewer-d.json",
+      "dispatchPrompt": "You are a fresh blinded writing reviewer, contextId reviewer-d. Read ONLY this packet file: /tmp/reading-review-23be3730da6d/d/packet.json. It contains the complete instructions, rubric, facts and output schema. Read no memory files, repository files, other packets, prior reviews or external material; do not use searches, tests, or network tools. Allowed file operations: read that single packet and write/read back your JSON review at /tmp/reading-review-23be3730da6d/d/review.json. Score all 10 items, including the quiet safety check where applicable. Do not infer origins or alter prose. No subagents.\n\nMetadata to copy: contextId reviewer-d; packetSha256 b45fbb4922de711082a9b2dae61ae8007fc7876a98004e066d642611c6cf8f42; reviewedAt 2026-10-12T09:56:28.049363+00:00. Requested reviewer model gpt-6.1-sol, reasoning effort high; record observed model/configuration only if exposed, otherwise unknown, with requested configuration separately. Set humanReviewCompleted false. Follow the full embedded rubric and transit extension. Write JSON to the output path and report the item count.\n\npromptSha256 (SHA-256 of text above the blank line): 3ec1d46f71861191994e0540a98748c6a6de5133851ea9d056f4d4c97023e9ac"
+    }
+  }
+}

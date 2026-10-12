@@ -2,6 +2,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import { signOut } from "@/lib/auth.shared";
+import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { OrbitMark } from "@/components/pattern/OrbitMark";
 import { Sun, Orbit, Waves, NotebookPen, ChevronDown, Menu, X } from "lucide-react";
@@ -32,6 +33,7 @@ function navLinkClass(active: boolean) {
 }
 
 export function Shell({ children, signedIn = true }: { children: ReactNode; signedIn?: boolean }) {
+  const { isAdmin } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -41,6 +43,9 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
   const desktopNavRef = useRef<HTMLElement>(null);
   const mobileNavRef = useRef<HTMLElement>(null);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+
+  const navItems = isAdmin ? NAV : NAV.filter((item) => item.to !== "/content");
+  const secondaryNav = navItems.slice(4);
 
   // Close the mobile menu whenever the route changes.
   useEffect(() => {
@@ -218,7 +223,7 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
   }, [pathname]);
 
   const isActive = (to: string) => (to === "/" ? pathname === "/" : pathname.startsWith(to));
-  const secondaryPage = NAV.slice(4).find((item) => isActive(item.to));
+  const secondaryPage = secondaryNav.find((item) => isActive(item.to));
 
   return (
     <div
@@ -291,7 +296,7 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
                     aria-label="More pages"
                     className="absolute right-0 top-full mt-3 w-52 animate-rise rounded-md border border-rule bg-popover p-2 text-popover-foreground"
                   >
-                    {NAV.slice(4).map((item) => (
+                    {secondaryNav.map((item) => (
                       <Link
                         key={item.to}
                         to={item.to}
@@ -353,7 +358,7 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
             className="mobile-menu border-t border-rule bg-background lg:hidden"
           >
             <ul className="mx-auto max-w-6xl px-6 py-3">
-              {NAV.map((item) => (
+              {navItems.map((item) => (
                 <li key={item.to}>
                   <Link
                     to={item.to}

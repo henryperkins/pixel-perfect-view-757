@@ -1,0 +1,337 @@
+{
+  "sourceSha256": "d7bf2cc09012a4a366edbc53b30a49cb504da6a3492029ba3d82756a096f6a54",
+  "itemSetHash": "94d13a9961858b466d0812b00bbc92376e6b2b4b9d330e6610bdd797b91c5e91",
+  "items": [
+    {
+      "itemId": "item-8448e0b7",
+      "caseId": "saturn-square-sun",
+      "origin": "model",
+      "outcome": "accepted",
+      "storyStatus": "omitted",
+      "chapter": null,
+      "sourceTextSha256": "98514b563c5598718429b4c51db05ccdf61a0efc9bd372255566237bba9163b4"
+    },
+    {
+      "itemId": "item-6a2e7a38",
+      "caseId": "saturn-square-moon-warm",
+      "origin": "model",
+      "outcome": "accepted",
+      "storyStatus": "omitted",
+      "chapter": null,
+      "sourceTextSha256": "77d6fe28ef701cec7175c1dbe1b83ede08605fe62010f651a0af711c6790a0a7"
+    },
+    {
+      "itemId": "item-ef52533f",
+      "caseId": "jupiter-trine-sun-technical",
+      "origin": "model",
+      "outcome": "accepted",
+      "storyStatus": "omitted",
+      "chapter": null,
+      "sourceTextSha256": "6a702e02d749baeb6c524a484d45947daebdd055702841e1dcb28986a2ebbeae"
+    },
+    {
+      "itemId": "item-f62a5dff",
+      "caseId": "mercury-conjunction-clinical",
+      "origin": "model",
+      "outcome": "accepted",
+      "storyStatus": "omitted",
+      "chapter": null,
+      "sourceTextSha256": "5bde8b0ee2384178613a251a3dccad21b7c7653473599d8becd32c87a8b8eb82"
+    },
+    {
+      "itemId": "item-f0aae7d1",
+      "caseId": "moon-dst-boundary",
+      "origin": "model",
+      "outcome": "accepted",
+      "storyStatus": "omitted",
+      "chapter": null,
+      "sourceTextSha256": "880e0c7abb745ebdfd894e82b574df04907b821991794aa26635965c076dde26"
+    },
+    {
+      "itemId": "item-82f7d9de",
+      "caseId": "multiple-cycles",
+      "origin": "model",
+      "outcome": "accepted",
+      "storyStatus": "omitted",
+      "chapter": null,
+      "sourceTextSha256": "5ecc8cda3aa63a52c4ffc95909613279d2160f1e9f0ddc75ffc5cee7211a34ce"
+    },
+    {
+      "itemId": "item-dd66a34c",
+      "caseId": "synthesis-reinforcement",
+      "origin": "model",
+      "outcome": "accepted",
+      "storyStatus": "omitted",
+      "chapter": null,
+      "sourceTextSha256": "7790d0b736c403a1a5aba4fb8a2840597efd2b334b9721cceba2afedc2b94292"
+    },
+    {
+      "itemId": "item-85556475",
+      "caseId": "synthesis-independent",
+      "origin": "model",
+      "outcome": "accepted",
+      "storyStatus": "omitted",
+      "chapter": null,
+      "sourceTextSha256": "d1cf86d68b456c53a1fea405fb676948b716a7bc5c72baac043590ea1bcb09da"
+    },
+    {
+      "itemId": "item-2d667c46",
+      "caseId": "synthesis-reversed",
+      "origin": "model",
+      "outcome": "accepted",
+      "storyStatus": "omitted",
+      "chapter": null,
+      "sourceTextSha256": "cf01b42684b97d1b45ee6f0453a607b28a69dc2ef3a2fbbf9d0914ba29462f72"
+    },
+    {
+      "itemId": "item-8054f639",
+      "caseId": "synthesis-suppressed-support",
+      "origin": "model",
+      "outcome": "accepted",
+      "storyStatus": "omitted",
+      "chapter": null,
+      "sourceTextSha256": "559263d7c06b5c3d3d0c34dc6631fb6097f24dccaf8c8bc7386e8b70b91e10b0"
+    },
+    {
+      "itemId": "item-fac18ed5",
+      "caseId": "synthesis-unmatched",
+      "origin": "model",
+      "outcome": "accepted",
+      "storyStatus": "omitted",
+      "chapter": null,
+      "sourceTextSha256": "306622774ff419bb07df99d65d3a55ceb8e0383c900af1f6aac72fb566e1e3bf"
+    },
+    {
+      "itemId": "item-b050c9b0",
+      "caseId": "natal-exact-house",
+      "origin": "model",
+      "outcome": "accepted",
+      "storyStatus": "omitted",
+      "chapter": null,
+      "sourceTextSha256": "9a0587fecaa5a3b34fae65c00f54398b3993bb1a62e54b2198ca01700e8b6460"
+    },
+    {
+      "itemId": "item-2dacba7a",
+      "caseId": "natal-moon-fallback",
+      "origin": "model",
+      "outcome": "accepted",
+      "storyStatus": "omitted",
+      "chapter": null,
+      "sourceTextSha256": "f2523ed529baa50703d9ab74a5cfce640d173d0bad6ccafcee46e74be4f05595"
+    },
+    {
+      "itemId": "item-9ce2d5b5",
+      "caseId": "natal-sign-boundary",
+      "origin": "model",
+      "outcome": "accepted",
+      "storyStatus": "omitted",
+      "chapter": null,
+      "sourceTextSha256": "2cfbf3929c6ea24f328b4da1a7349831b6634f794e3142afb3b025e7118ec357"
+    },
+    {
+      "itemId": "item-588d6d98",
+      "caseId": "natal-unknown-time",
+      "origin": "model",
+      "outcome": "accepted",
+      "storyStatus": "omitted",
+      "chapter": null,
+      "sourceTextSha256": "c7e49485ee7619f2c16625162034da1ec46ce28f1cf48edbb8808bc3d4d2d829"
+    },
+    {
+      "itemId": "item-cebcf67d",
+      "caseId": "natal-mixed-source",
+      "origin": "model",
+      "outcome": "accepted",
+      "storyStatus": "omitted",
+      "chapter": null,
+      "sourceTextSha256": "08699ba158a729a6989667c0f616ffcae1bebae1fbf0716a56dcadfb5709da03"
+    },
+    {
+      "itemId": "item-4aeafa66",
+      "caseId": "natal-degraded-positions",
+      "origin": "model",
+      "outcome": "accepted",
+      "storyStatus": "omitted",
+      "chapter": null,
+      "sourceTextSha256": "47f4651e68a2777e6ca3d743decd6b2d75e857eee4aee2b067c18f966e1f207d"
+    },
+    {
+      "itemId": "item-73195b85",
+      "caseId": "natal-legacy-snapshot",
+      "origin": "model",
+      "outcome": "accepted",
+      "storyStatus": "omitted",
+      "chapter": null,
+      "sourceTextSha256": "a70f561a21d08b9ec6db6df5177b5b404c0623fc3a05f891e37f6d758b85d3fb"
+    },
+    {
+      "itemId": "item-1796b10f",
+      "caseId": "arc-single-pass",
+      "origin": "model",
+      "outcome": "accepted",
+      "storyStatus": "selected",
+      "chapter": "single",
+      "sourceTextSha256": "fcacece03ddbc011c42357657fe86b1e11d86b8353ed3750f2c7fa989729d725"
+    },
+    {
+      "itemId": "item-8cc451c5",
+      "caseId": "arc-single-pass",
+      "origin": "template",
+      "outcome": "accepted",
+      "storyStatus": "selected",
+      "chapter": "single",
+      "sourceTextSha256": "8118cb503ae7de5116977c4ee518cd1f7a08d2e4d229f943ac7f2dbe57d8315c"
+    },
+    {
+      "itemId": "item-3b97d8e7",
+      "caseId": "arc-opening-three",
+      "origin": "template",
+      "outcome": "unavailable",
+      "storyStatus": "selected",
+      "chapter": "opening",
+      "sourceTextSha256": "976d993adc60e1cc09529925312e6ecb7e306b668f32418dc656cc9da3d0060c"
+    },
+    {
+      "itemId": "item-ba36a55b",
+      "caseId": "arc-return-three",
+      "origin": "template",
+      "outcome": "unavailable",
+      "storyStatus": "selected",
+      "chapter": "return",
+      "sourceTextSha256": "a09a149d7dd4a3ee8a58467589766b6657ff9defadf5efa8556bf2c8435b1c29"
+    },
+    {
+      "itemId": "item-4133f211",
+      "caseId": "arc-closing-three",
+      "origin": "template",
+      "outcome": "unavailable",
+      "storyStatus": "selected",
+      "chapter": "closing",
+      "sourceTextSha256": "2ddc2017a2c8075498787bb7a00c8b913eede981059143355b9539f1167c2850"
+    },
+    {
+      "itemId": "item-49dc5f60",
+      "caseId": "arc-return-five",
+      "origin": "template",
+      "outcome": "unavailable",
+      "storyStatus": "selected",
+      "chapter": "return",
+      "sourceTextSha256": "9906ae9870f384fdf37401d67beaf86ce18b9c1914ff6300c4d07a94b0794f00"
+    },
+    {
+      "itemId": "item-b236f2d1",
+      "caseId": "arc-between-passes",
+      "origin": "template",
+      "outcome": "unavailable",
+      "storyStatus": "selected",
+      "chapter": "between",
+      "sourceTextSha256": "573b79971d05b2f1682107634a09c23a4b686fa74d77ba0ca46d378f4d325eea"
+    },
+    {
+      "itemId": "item-ff5e5aa8",
+      "caseId": "arc-truncated-scan",
+      "origin": "model",
+      "outcome": "accepted",
+      "storyStatus": "omitted",
+      "chapter": null,
+      "sourceTextSha256": "ad7f2a6e71c9b3f1a5b1ef62d62db925853e143fe9c0c9f23f865e4f423e4cdb"
+    },
+    {
+      "itemId": "item-725e9dbf",
+      "caseId": "arc-truncated-scan",
+      "origin": "template",
+      "outcome": "accepted",
+      "storyStatus": "omitted",
+      "chapter": null,
+      "sourceTextSha256": "71392dbd5c1a5d741e12e653939fb4a351fe111fe039abd36c773d7f163a47e9"
+    },
+    {
+      "itemId": "item-a82b57f3",
+      "caseId": "arc-station-tangent",
+      "origin": "model",
+      "outcome": "accepted",
+      "storyStatus": "omitted",
+      "chapter": null,
+      "sourceTextSha256": "925adde9406016b3faa271fd1a04701b1d2d7c4dd76ee6974ef4b0feffd40d87"
+    },
+    {
+      "itemId": "item-82f05211",
+      "caseId": "arc-station-tangent",
+      "origin": "template",
+      "outcome": "accepted",
+      "storyStatus": "omitted",
+      "chapter": null,
+      "sourceTextSha256": "71392dbd5c1a5d741e12e653939fb4a351fe111fe039abd36c773d7f163a47e9"
+    },
+    {
+      "itemId": "item-ec08dfce",
+      "caseId": "arc-birth-window-disagreement",
+      "origin": "model",
+      "outcome": "accepted",
+      "storyStatus": "omitted",
+      "chapter": null,
+      "sourceTextSha256": "1e2b8263532e434756cfa1e031b7056dc58527ef3230256df26c9c983f0537f7"
+    },
+    {
+      "itemId": "item-20e5e005",
+      "caseId": "arc-birth-window-disagreement",
+      "origin": "template",
+      "outcome": "accepted",
+      "storyStatus": "omitted",
+      "chapter": null,
+      "sourceTextSha256": "71392dbd5c1a5d741e12e653939fb4a351fe111fe039abd36c773d7f163a47e9"
+    },
+    {
+      "itemId": "item-bd0f6d57",
+      "caseId": "arc-synthesis-natal-integration",
+      "origin": "model",
+      "outcome": "accepted",
+      "storyStatus": "selected",
+      "chapter": "return",
+      "sourceTextSha256": "944117ce82e0e4d2661729787efcdbc95b0fa45c8141caef97251b1bb387a048"
+    },
+    {
+      "itemId": "item-84c8a27e",
+      "caseId": "arc-synthesis-natal-integration",
+      "origin": "template",
+      "outcome": "accepted",
+      "storyStatus": "selected",
+      "chapter": "return",
+      "sourceTextSha256": "999724e181d3ef833056d048315ec690e928de0c42e8b5e94d2edf968f494773"
+    }
+  ],
+  "uncoveredDrafts": [
+    "venus-opposition-venus",
+    "unknown-birth-time",
+    "approximate-birth-time",
+    "synthesis-tension",
+    "natal-duty-reflex",
+    "natal-freedom-reflex",
+    "natal-service-aspect",
+    "natal-own-target",
+    "natal-synthesis-integration",
+    "arc-opening-three",
+    "arc-return-three",
+    "arc-closing-three",
+    "arc-return-five",
+    "arc-between-passes"
+  ],
+  "packets": {
+    "a": {
+      "path": "/tmp/reading-review-c691021e2665/a/packet.json",
+      "archive": "packet-a.json",
+      "sha256": "3d7e699df709b5780919b776e2c30f6fa35e5848292e4807f5e462aa1cfc9cf6",
+      "promptSha256": "1648d910dae8386d5e0f9b5f58f9027939a12e3be4d3177227deaa0a6955bcc7",
+      "output": "/home/ubuntu/pixel-perfect-view-757/docs/reviews/daily-transit-story/2026-10-12-enterprise-investigation/reviewer-a.json",
+      "dispatchPrompt": "You are a fresh blinded writing reviewer, contextId reviewer-a. Read ONLY this packet file: /tmp/reading-review-c691021e2665/a/packet.json. It contains all instructions, rubric, facts, paragraphs and output schema. Do not read memory files, repository files, other packets, prior conversation, source reports, or any other external material; do not run tests, searches or network tools. Your allowed filesystem operations are reading that single packet and writing/reading back your review at /home/ubuntu/pixel-perfect-view-757/docs/reviews/daily-transit-story/2026-10-12-enterprise-investigation/reviewer-a.json. Review all 33 items. This task is scoring only: do not edit wording. Use tools only for those allowed file reads/writes. Preserve the packet's unknown origin and do not infer labels.\n\nMetadata to copy: contextId reviewer-a; packetSha256 3d7e699df709b5780919b776e2c30f6fa35e5848292e4807f5e462aa1cfc9cf6; reviewedAt 2026-10-12T09:45:46.268557+00:00; requested model gpt-6.1-sol with reasoning effort high (these are requested configuration, not evidence of backend identity). Record your observed model/configuration if exposed; otherwise unknown, and include requested configuration separately. Set humanReviewCompleted false. Read and comply with the full embedded instructions, including the transit review extension. Write the final review JSON to the output path, then return a short completion message with item count. No subagents.\n\npromptSha256 (SHA-256 of text above the blank line): 1648d910dae8386d5e0f9b5f58f9027939a12e3be4d3177227deaa0a6955bcc7"
+    },
+    "b": {
+      "path": "/tmp/reading-review-c691021e2665/b/packet.json",
+      "archive": "packet-b.json",
+      "sha256": "df3e252d7bf569c83173a27174ae2ce50170bbdc6f47aa31c17b207dc84592a5",
+      "promptSha256": "d1ba322a66dc158ddfdd719b293e843d3151ffa2751379291aa1e6cd8b41fe6a",
+      "output": "/home/ubuntu/pixel-perfect-view-757/docs/reviews/daily-transit-story/2026-10-12-enterprise-investigation/reviewer-b.json",
+      "dispatchPrompt": "You are a fresh blinded writing reviewer, contextId reviewer-b. Read ONLY this packet file: /tmp/reading-review-c691021e2665/b/packet.json. It contains all instructions, rubric, facts, paragraphs and output schema. Do not read memory files, repository files, other packets, prior conversation, source reports, or any other external material; do not run tests, searches or network tools. Your allowed filesystem operations are reading that single packet and writing/reading back your review at /home/ubuntu/pixel-perfect-view-757/docs/reviews/daily-transit-story/2026-10-12-enterprise-investigation/reviewer-b.json. Review all 33 items. This task is scoring only: do not edit wording. Use tools only for those allowed file reads/writes. Preserve the packet's unknown origin and do not infer labels.\n\nMetadata to copy: contextId reviewer-b; packetSha256 df3e252d7bf569c83173a27174ae2ce50170bbdc6f47aa31c17b207dc84592a5; reviewedAt 2026-10-12T09:45:46.268557+00:00; requested model gpt-6.1-sol with reasoning effort high (these are requested configuration, not evidence of backend identity). Record your observed model/configuration if exposed; otherwise unknown, and include requested configuration separately. Set humanReviewCompleted false. Read and comply with the full embedded instructions, including the transit review extension. Write the final review JSON to the output path, then return a short completion message with item count. No subagents.\n\npromptSha256 (SHA-256 of text above the blank line): d1ba322a66dc158ddfdd719b293e843d3151ffa2751379291aa1e6cd8b41fe6a"
+    }
+  }
+}

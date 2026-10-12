@@ -1,0 +1,391 @@
+{
+  "status": "success",
+  "projectId": "river-bruin-511100-g8",
+  "metricDescriptors": [
+    {
+      "type": "aiplatform.googleapis.com/publisher/online_serving/character_count",
+      "unit": "1",
+      "description": "Accumulated input/output character count.",
+      "labels": [
+        {
+          "key": "type",
+          "description": "Type of character (input/output)."
+        },
+        {
+          "key": "request_type",
+          "description": "Type of request (dedicated/shared)."
+        },
+        {
+          "key": "shared_request_type",
+          "description": "The breakdown of shared requests, such as priority/flex/standard."
+        },
+        {
+          "key": "accounting_resource",
+          "description": "The identifier of the GCP project/folder/org to which quota is accounted to. Available for Provisioned Throughput only."
+        },
+        {
+          "key": "modality",
+          "description": "Modality of the characters."
+        }
+      ],
+      "monitoredResourceTypes": [
+        "aiplatform.googleapis.com/PublisherModel"
+      ]
+    },
+    {
+      "type": "aiplatform.googleapis.com/publisher/online_serving/characters",
+      "unit": "1",
+      "description": "Input/output character count distribution.",
+      "labels": [
+        {
+          "key": "type",
+          "description": "Type of character (input/output)."
+        },
+        {
+          "key": "request_type",
+          "description": "Type of request (dedicated/shared)."
+        },
+        {
+          "key": "shared_request_type",
+          "description": "The breakdown of shared requests, such as priority/flex/standard."
+        },
+        {
+          "key": "accounting_resource",
+          "description": "The identifier of the GCP project/folder/org to which quota is accounted to. Available for Provisioned Throughput only."
+        },
+        {
+          "key": "modality",
+          "description": "Modality of the input/output characters."
+        }
+      ],
+      "monitoredResourceTypes": [
+        "aiplatform.googleapis.com/PublisherModel"
+      ]
+    },
+    {
+      "type": "aiplatform.googleapis.com/publisher/online_serving/consumed_throughput",
+      "unit": "1",
+      "description": "Overall throughput used (accounting for burndown rate) in terms of characters.",
+      "labels": [
+        {
+          "key": "request_type",
+          "description": "Type of request (dedicated/shared)."
+        },
+        {
+          "key": "shared_request_type",
+          "description": "The breakdown of shared requests, such as priority/flex/standard."
+        },
+        {
+          "key": "accounting_resource",
+          "description": "The identifier of the GCP project/folder/org to which quota is accounted to. Available for Provisioned Throughput only."
+        },
+        {
+          "key": "modality",
+          "description": "Modality of the consumed characters."
+        }
+      ],
+      "monitoredResourceTypes": [
+        "aiplatform.googleapis.com/PublisherModel"
+      ]
+    },
+    {
+      "type": "aiplatform.googleapis.com/publisher/online_serving/consumed_token_throughput",
+      "unit": "1",
+      "description": "Overall throughput used (accounting for burndown rate) in terms of tokens.",
+      "labels": [
+        {
+          "key": "request_type",
+          "description": "Type of request (dedicated/shared)."
+        },
+        {
+          "key": "shared_request_type",
+          "description": "The breakdown of shared requests, such as priority/flex/standard."
+        },
+        {
+          "key": "accounting_resource",
+          "description": "The identifier of the GCP project/folder/org to which quota is accounted to. Available for Provisioned Throughput only."
+        },
+        {
+          "key": "modality",
+          "description": "Modality of the consumed tokens."
+        }
+      ],
+      "monitoredResourceTypes": [
+        "aiplatform.googleapis.com/PublisherModel"
+      ]
+    },
+    {
+      "type": "aiplatform.googleapis.com/publisher/online_serving/dedicated_character_limit",
+      "unit": "1/s",
+      "description": "Dedicated limit in characters per second.",
+      "monitoredResourceTypes": [
+        "aiplatform.googleapis.com/PublisherModel"
+      ]
+    },
+    {
+      "type": "aiplatform.googleapis.com/publisher/online_serving/dedicated_character_project_max_limit",
+      "unit": "1/s",
+      "description": "Project max limit in characters per second that can be consumed.",
+      "labels": [
+        {
+          "key": "accounting_resource",
+          "description": "The identifier of the GCP project/folder/org to which quota is accounted to. Available for Provisioned Throughput only."
+        }
+      ],
+      "monitoredResourceTypes": [
+        "aiplatform.googleapis.com/PublisherModel"
+      ]
+    },
+    {
+      "type": "aiplatform.googleapis.com/publisher/online_serving/dedicated_gsu_limit",
+      "unit": "1",
+      "description": "Dedicated limit in GSU.",
+      "monitoredResourceTypes": [
+        "aiplatform.googleapis.com/PublisherModel"
+      ]
+    },
+    {
+      "type": "aiplatform.googleapis.com/publisher/online_serving/dedicated_gsu_project_max_limit",
+      "unit": "1",
+      "description": "Project max limit in GSU that can be consumed.",
+      "labels": [
+        {
+          "key": "accounting_resource",
+          "description": "The identifier of the GCP project/folder/org to which quota is accounted to. Available for Provisioned Throughput only."
+        }
+      ],
+      "monitoredResourceTypes": [
+        "aiplatform.googleapis.com/PublisherModel"
+      ]
+    },
+    {
+      "type": "aiplatform.googleapis.com/publisher/online_serving/dedicated_token_limit",
+      "unit": "1/s",
+      "description": "Dedicated limit in tokens per second.",
+      "monitoredResourceTypes": [
+        "aiplatform.googleapis.com/PublisherModel"
+      ]
+    },
+    {
+      "type": "aiplatform.googleapis.com/publisher/online_serving/dedicated_token_project_max_limit",
+      "unit": "1/s",
+      "description": "Project max limit in tokens per second that can be consumed.",
+      "labels": [
+        {
+          "key": "accounting_resource",
+          "description": "The identifier of the GCP project/folder/org to which quota is accounted to. Available for Provisioned Throughput only."
+        }
+      ],
+      "monitoredResourceTypes": [
+        "aiplatform.googleapis.com/PublisherModel"
+      ]
+    },
+    {
+      "type": "aiplatform.googleapis.com/publisher/online_serving/first_token_latencies",
+      "unit": "ms",
+      "description": "Duration from request received to first token sent back to the client.",
+      "labels": [
+        {
+          "key": "input_token_size",
+          "description": "The bucketized size of number of tokens in the prediction request."
+        },
+        {
+          "key": "output_token_size",
+          "description": "The bucketized size of number of tokens in the prediction response."
+        },
+        {
+          "key": "max_token_size",
+          "description": "The bucketized max size of number of tokens in the prediction request/response."
+        },
+        {
+          "key": "request_type",
+          "description": "The type of traffic of the request (dedicated/shared)."
+        },
+        {
+          "key": "shared_request_type",
+          "description": "The breakdown of shared requests, such as priority/flex/standard."
+        },
+        {
+          "key": "explicit_caching",
+          "description": "Whether the request uses explicit caching feature."
+        }
+      ],
+      "monitoredResourceTypes": [
+        "aiplatform.googleapis.com/PublisherModel"
+      ]
+    },
+    {
+      "type": "aiplatform.googleapis.com/publisher/online_serving/model_invocation_count",
+      "unit": "1",
+      "description": "Number of model invocations (prediction requests).",
+      "labels": [
+        {
+          "key": "input_token_size",
+          "description": "The bucketized size of number of tokens in the prediction request."
+        },
+        {
+          "key": "output_token_size",
+          "description": "The bucketized size of number of tokens in the prediction response."
+        },
+        {
+          "key": "max_token_size",
+          "description": "The bucketized max size of number of tokens in the prediction request/response."
+        },
+        {
+          "key": "response_code",
+          "description": "Responce code of prediction request."
+        },
+        {
+          "key": "request_type",
+          "description": "The type of traffic of the request (dedicated/shared)."
+        },
+        {
+          "key": "shared_request_type",
+          "description": "The breakdown of shared requests, such as priority/flex/standard."
+        },
+        {
+          "key": "method",
+          "description": "The type of method of the request (RawPredict/StreamRawPredict/ChatCompletions/etc)."
+        },
+        {
+          "key": "error_category",
+          "description": "Response error category of the request (user/system/capacity)."
+        },
+        {
+          "key": "explicit_caching",
+          "description": "Whether the request uses explicit caching feature."
+        },
+        {
+          "key": "accounting_resource",
+          "description": "The identifier of the GCP project/folder/org to which quota is accounted to. Available for Provisioned Throughput only."
+        },
+        {
+          "key": "source",
+          "description": "The source/surface that the request is originated from. For global endpoint, this is 'global'; for us/eu multi-regional endpoint, this is 'us' or 'eu'; otherwise, this is the region where a request is served. The label can also have prefix, such as 'batch_', to indicate product breakdown."
+        }
+      ],
+      "monitoredResourceTypes": [
+        "aiplatform.googleapis.com/PublisherModel"
+      ]
+    },
+    {
+      "type": "aiplatform.googleapis.com/publisher/online_serving/model_invocation_latencies",
+      "unit": "ms",
+      "description": "Model invocation latencies (prediction latencies).",
+      "labels": [
+        {
+          "key": "input_token_size",
+          "description": "The bucketized size of number of tokens in the prediction request."
+        },
+        {
+          "key": "output_token_size",
+          "description": "The bucketized size of number of tokens in the prediction response."
+        },
+        {
+          "key": "max_token_size",
+          "description": "The bucketized max size of number of tokens in the prediction request/response."
+        },
+        {
+          "key": "latency_type",
+          "description": "The type of latency for the prediction request (either model or overhead)."
+        },
+        {
+          "key": "request_type",
+          "description": "The type of traffic of the request (dedicated/shared)."
+        },
+        {
+          "key": "shared_request_type",
+          "description": "The breakdown of shared requests, such as priority/flex/standard."
+        },
+        {
+          "key": "explicit_caching",
+          "description": "Whether the request uses explicit caching feature."
+        },
+        {
+          "key": "source",
+          "description": "The source/surface that the request is originated from. For global endpoint, this is 'global'; for us/eu multi-regional endpoint, this is 'us' or 'eu'; otherwise, this is the region where a request is served. The label can also have prefix, such as 'batch_', to indicate product breakdown."
+        }
+      ],
+      "monitoredResourceTypes": [
+        "aiplatform.googleapis.com/PublisherModel"
+      ]
+    },
+    {
+      "type": "aiplatform.googleapis.com/publisher/online_serving/token_count",
+      "unit": "1",
+      "description": "Accumulated input/output token count.",
+      "labels": [
+        {
+          "key": "max_token_size",
+          "description": "The bucketized max size of number of tokens in the prediction request/response."
+        },
+        {
+          "key": "type",
+          "description": "Type of token (input/output)."
+        },
+        {
+          "key": "request_type",
+          "description": "The type of traffic of the request (dedicated/shared)."
+        },
+        {
+          "key": "shared_request_type",
+          "description": "The breakdown of shared requests, such as priority/flex/standard."
+        },
+        {
+          "key": "explicit_caching",
+          "description": "Whether the request uses explicit caching feature."
+        },
+        {
+          "key": "accounting_resource",
+          "description": "The identifier of the GCP project/folder/org to which quota is accounted to. Available for Provisioned Throughput only."
+        },
+        {
+          "key": "modality",
+          "description": "Modality of the input/output tokens."
+        },
+        {
+          "key": "source",
+          "description": "The source/surface that the token consumption is originated from. For global endpoint, this is 'global'; for us/eu multi-regional endpoint, this is 'us' or 'eu'; otherwise, this is the region where a request is served. The label can also have prefix, such as 'batch_', to indicate product breakdown."
+        }
+      ],
+      "monitoredResourceTypes": [
+        "aiplatform.googleapis.com/PublisherModel"
+      ]
+    },
+    {
+      "type": "aiplatform.googleapis.com/publisher/online_serving/tokens",
+      "unit": "1",
+      "description": "Input/output token count distribution.",
+      "labels": [
+        {
+          "key": "max_token_size",
+          "description": "The bucketized max size of number of tokens in the prediction request/response."
+        },
+        {
+          "key": "type",
+          "description": "Type of token (input/output)."
+        },
+        {
+          "key": "request_type",
+          "description": "The type of traffic of the request (dedicated/shared)."
+        },
+        {
+          "key": "shared_request_type",
+          "description": "The breakdown of shared requests, such as priority/flex/standard."
+        },
+        {
+          "key": "accounting_resource",
+          "description": "The identifier of the GCP project/folder/org to which quota is accounted to. Available for Provisioned Throughput only."
+        },
+        {
+          "key": "modality",
+          "description": "Modality of the input/output tokens."
+        }
+      ],
+      "monitoredResourceTypes": [
+        "aiplatform.googleapis.com/PublisherModel"
+      ]
+    }
+  ],
+  "hasNextPage": false
+}

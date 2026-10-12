@@ -1,0 +1,1628 @@
+{
+  "protocolVersion": "daily-writing-ai-review-1",
+  "extensionVersion": "transit-single-report-review-1",
+  "kind": "review",
+  "packetSha256": "df3e252d7bf569c83173a27174ae2ce50170bbdc6f47aa31c17b207dc84592a5",
+  "itemSetHash": "94d13a9961858b466d0812b00bbc92376e6b2b4b9d330e6610bdd797b91c5e91",
+  "reviewer": {
+    "contextId": "reviewer-b",
+    "model": "unknown",
+    "configuration": "unknown",
+    "requestedConfiguration": {
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "high"
+    },
+    "promptSha256": "d1ba322a66dc158ddfdd719b293e843d3151ffa2751379291aa1e6cd8b41fe6a"
+  },
+  "reviewedAt": "2026-10-12T09:45:46.268557+00:00",
+  "blindness": {
+    "declaration": "I used only this packet as review evidence; automatically attached repository instructions and a memory index were visible, but no origin labels, implementation materials, prior verdicts or other reviews were consulted.",
+    "inputs": [
+      "packet"
+    ],
+    "sawOriginLabels": false,
+    "sawPriorVerdicts": false,
+    "sawOtherReviews": false,
+    "sawImplementationContext": false
+  },
+  "humanReviewCompleted": false,
+  "reassessmentOf": null,
+  "items": [
+    {
+      "itemId": "item-a82b57f3",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "Distinguishes capacity from expectations and connects the role/title gap to a responsibility."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1 supports the boundary distinction and conditional role demand; D1 supports the title scene; P1, C1 and T1 support the closing detail."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "Moves from the primary distinction to a concrete title gap and then supported timing."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Direct plain wording; the short contact sentence is slightly mechanical."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "Reorders shared source wording without inventing an extra scene."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 4,
+          "reason": "The exact-today statement, zero orb and middle-window position follow C1 and T1 and refer to the named Saturn contact."
+        },
+        "chapterIntegration": {
+          "score": null,
+          "reason": "No A1/P2 supplied."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-4133f211",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "Connects role demands to a provisional, repeatable response in an ordinary commitment."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1, A1 and P2 are preserved in the opening; D1, P1 and T1 account for the remaining paragraphs."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The opening links boundary pressure and a response whose usefulness stays reviewable; later paragraphs each add context."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Plain and readable, though the standalone Timing label feels formal."
+        },
+        "repetition": {
+          "score": 3,
+          "reason": "Substantial wording recurs elsewhere because the supplied I1 and D1 are shared."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "A1 is copied unchanged exactly once in paragraph 1; the third contact and first-contact month agree with the explicit T1 date."
+        },
+        "chapterIntegration": {
+          "score": 4,
+          "reason": "P2 immediately follows primary role boundaries and A1 in paragraph 1; repeating a workable response remains a possibility open to review."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-6a2e7a38",
+      "scores": {
+        "specificity": {
+          "score": 5,
+          "reason": "Uses the supplied full-calendar and mentally occupied quiet-moment scenes to distinguish obligation size from private space."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "The scenes remain possibilities under I1, and C1, T1 and P1 support all closing statements."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The concrete scene leads into the contact meaning and then timing; no unnecessary domain paragraph."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Warm second-person phrasing is natural, with one awkward aspect construction."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "The Moon scenes provide relevant variation within the source."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 4,
+          "reason": "Approaching square, 0.42-degree orb, three-day timing and middle-window position all follow C1 and T1."
+        },
+        "chapterIntegration": {
+          "score": null,
+          "reason": "No A1/P2 supplied."
+        }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "reviewer-b-03-1",
+          "paragraph": 2,
+          "passage": "Transiting Saturn is approaching square your natal Moon with a current orb of 0.42 degrees.",
+          "supportingFactIds": [
+            "C1"
+          ],
+          "missingFactIds": [],
+          "category": "style",
+          "severity": "minor",
+          "explanation": "Approaching square your natal Moon is an awkward grammatical construction; the supplied calculation itself is represented correctly.",
+          "proposedCorrection": "Smooth the aspect construction while preserving the approaching phase and calculated orb."
+        }
+      ],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-4aeafa66",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "Keeps the capacity/boundary distinction concrete through the responsibility that exceeds its title."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "The opening restates I1 without increasing its modality; D1, P1, C1 and T1 support the rest."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "Clear primary meaning, title scene and closing phase detail; the opening wording has minor redundancy."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Plain and consistent, although shows where it needs is slightly cumbersome."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "Shared source text is retained with a modest change in ordering."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 4,
+          "reason": "The named square provides a clear referent for the supported three-day timing, orb and middle-window statement."
+        },
+        "chapterIntegration": {
+          "score": null,
+          "reason": "No A1/P2 supplied."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-ff5e5aa8",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "Explains when a role can demand more effort and how the title can underdescribe responsibility."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "All body claims map to I1, D1, P1 and T1; optional orb detail is not required."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The conditional opening develops cleanly into the title scene and an immediate-demand possibility."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Compact and natural plain prose."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "The opening condenses the shared meaning without adding unsupported variation."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 4,
+          "reason": "The exact-today and middle-window statements follow T1 and refer back to the named Saturn square."
+        },
+        "chapterIntegration": {
+          "score": null,
+          "reason": "No A1/P2 supplied."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-b236f2d1",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "Combines clearer role boundaries with keeping an unsettled decision provisional."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1, A1 and P2 are preserved; the title scene follows D1 and the final timing follows T1."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "Provisional consideration follows the boundary problem directly, with the pause kept distinct from personal experience."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Plain and measured; the final timing label is functional."
+        },
+        "repetition": {
+          "score": 3,
+          "reason": "Large passages repeat shared published wording, with a distinct provisional-decision chapter."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "A1 is unchanged exactly once in paragraph 1; the closing between-contact window follows T1 without inventing an exact date."
+        },
+        "chapterIntegration": {
+          "score": 4,
+          "reason": "P2 follows the boundary issue and pause chronology in paragraph 1; the decision remains conditional and provisional."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-bd0f6d57",
+      "scores": {
+        "specificity": {
+          "score": 5,
+          "reason": "Connects curiosity competing for an afternoon with role capacity, and growing scope with its structural demands."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1 and N1 support the conditional opening lens, A1 and P2 the chapter, and I2 and S1 the second paragraph."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The first paragraph is dense but links lens and chapter to role responsibility; the second develops the supported scope tension."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Consistent plain voice, though the lengthy opening carries several ideas."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "The curiosity lens and scope tension add relevant distinctions rather than cosmetic variation."
+        },
+        "synthesisCoherence": {
+          "score": 5,
+          "reason": "S1 develops I1 capacity/boundary pressure and I2 expanding initiative through the concrete growing-scope/agreed-limits distinction."
+        },
+        "lensIntegration": {
+          "score": 4,
+          "reason": "N1 remains conditional and is applied within the primary responsibility through projects competing for one afternoon."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "The second-of-three chronology and September first-contact month copy A1 once in paragraph 1 immediately after the primary Saturn meaning."
+        },
+        "chapterIntegration": {
+          "score": 4,
+          "reason": "P2 appears in paragraph 1 and ties the calculated return to adjusting the method or boundary of the role responsibility."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-ba36a55b",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "Relates clearer boundaries to a smaller conditional adjustment of an earlier method."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1, A1 and P2 are retained without inventing lived history; D1, P1 and T1 support the later paragraphs."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The return chapter follows the role demand clearly; the title example and timing add distinct context."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Natural plain wording with a formal final timing label."
+        },
+        "repetition": {
+          "score": 3,
+          "reason": "The primary and domain wording recur across items with the same facts."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "A1 appears unchanged exactly once in paragraph 1; the later current-contact date follows C1 and T1."
+        },
+        "chapterIntegration": {
+          "score": 4,
+          "reason": "P2 is in paragraph 1 directly after A1 and connects conditional adjustment to the role boundary distinction."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-82f05211",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "The role/capacity distinction is made concrete through responsibility exceeding a title."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "Each substantive clause reproduces or directly follows I1, D1, P1 or T1."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The four paragraphs separate meaning, everyday scene, conditional response and timing."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Plain and consistent; short template-like closing paragraphs are readable."
+        },
+        "repetition": {
+          "score": 3,
+          "reason": "The supplied role and title paragraphs recur extensively across the packet."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 4,
+          "reason": "The exact-today and middle-window statements follow T1 and refer to the only named contact."
+        },
+        "chapterIntegration": {
+          "score": null,
+          "reason": "No A1/P2 supplied."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-8448e0b7",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "Makes the expectations/capacity contrast useful through role effort and the title gap."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1 and D1 support the interpretation; P1, C1 and T1 support the conditional response and calculated details."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The opening distinction is followed by a concrete scene and a coherent timing close."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Straightforward plain voice with some technical density in the close."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "The opening phrasing varies within the shared source meaning."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "C1 and T1 support the orb, exact date and relative three-day timing, with the Saturn square clearly identified."
+        },
+        "chapterIntegration": {
+          "score": null,
+          "reason": "No A1/P2 supplied."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-f62a5dff",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "Identifies phrasing, questions and ideas as the focus, then separates task pace, scope and ownership."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1 supports the communication reset, D1 the task distinctions, and P1, C1 and T1 the close."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "Communication meaning leads into work context and then clearly identified contact timing."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Detached, precise wording fits the requested clinical tone without making a clinical claim."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "The communication and work distinctions provide relevant variation."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "The separating contact, yesterday wording, exact date and orb are directly supplied by C1 and T1 and have a clear Mercury referent."
+        },
+        "chapterIntegration": {
+          "score": null,
+          "reason": "No A1/P2 supplied."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-84c8a27e",
+      "scores": {
+        "specificity": {
+          "score": 5,
+          "reason": "Applies competing projects to limited role capacity and links larger scope to an adjustment of method or boundary."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "The role lens stays conditional under N1; I1, I2, S1, A1 and P2 support both paragraphs."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "Lens and chronology occupy the opening; the second develops scope tension before tying the chapter back to method and boundaries."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Plain and readable, though both paragraphs contain several source concepts."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "The lens is integrated through a specific project scene and the chapter sits within the scope discussion."
+        },
+        "synthesisCoherence": {
+          "score": 5,
+          "reason": "The secondary opening opportunity leads directly to S1 growing scope and agreed limits, developing both primary capacity and secondary expansion."
+        },
+        "lensIntegration": {
+          "score": 5,
+          "reason": "N1 applies curiosity within an established role and a shared afternoon, making limited capacity a practical selection distinction."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "A1 appears unchanged exactly once within paragraph 1, following the primary Saturn interpretation and before the secondary contact."
+        },
+        "chapterIntegration": {
+          "score": 5,
+          "reason": "P2 in paragraph 2 develops the scope/structure tension through a conditional adjustment to method or boundary, anchored to the primary chronology in paragraph 1."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-f0aae7d1",
+      "scores": {
+        "specificity": {
+          "score": 5,
+          "reason": "Distinguishes company from a quiet hour and familiar plans from unplanned space without turning one moment into a whole-day story."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1 directly supplies both comparisons and their limit; D1, P1, C1 and T1 support the later material."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The bounded comparison leads to a private-space scene, followed by contact timing."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Natural plain interpretation; the closing technical sentence is somewhat long."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "The Moon comparison contributes a distinct source-supported scene."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "The conjunction, separating phase, exact date, yesterday wording and orb follow C1 and T1 with the Moon contact explicitly named."
+        },
+        "chapterIntegration": {
+          "score": null,
+          "reason": "No A1/P2 supplied."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-ec08dfce",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "Connects role effort and capacity to the title/responsibility gap."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1, D1, P1 and T1 support all clauses, including the exact-today statement."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "Primary meaning, concrete title framing and phase possibility form a clear progression."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Direct plain phrasing with a mildly mechanical contact sentence."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "Rearranges shared source content while keeping its meaning."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 4,
+          "reason": "T1 supports the exact-today and middle-window statements and the named Saturn contact remains the referent."
+        },
+        "chapterIntegration": {
+          "score": null,
+          "reason": "No A1/P2 supplied."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-49dc5f60",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "Connects boundary pressure with a conditional smaller adjustment while preserving a third-of-five passage."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "A1 explicitly supplies five contacts; P2 supplies the adjustment chapter; I1, D1, P1 and T1 support the remaining content."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The return chapter follows the role demand, and the later paragraphs add scene, possibility and date."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Plain and measured; the final timing label is formal."
+        },
+        "repetition": {
+          "score": 3,
+          "reason": "The role and title wording recur, appropriately preserving the different supplied chronology."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "A1 is copied unchanged once in paragraph 1, preserves third of five, and the later exact date follows C1 and T1."
+        },
+        "chapterIntegration": {
+          "score": 4,
+          "reason": "P2 stays in paragraph 1 and connects a smaller method or boundary adjustment to the primary demand; third of five is preserved."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-ef52533f",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "Explains curiosity alongside an existing plan and connects that meaning to named contact, orb and arc position."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1 supports roomier plans and curiosity; C1 and T1 support the exact date, orb and 30 percent arc; D1 and P1 support the remaining statements."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "Everyday meaning leads, calculation detail follows, and the familiar-project scene adds context."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Plain technical voice with clear calculation qualifiers; the opening interesting-detail sentence is slightly abstract."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "The plan/curiosity distinction and supplied technical detail vary appropriately."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "C1 and T1 supply the exact-today date, orb, middle-window position and 30 percent arc; calculation qualifiers and contact referents are clear."
+        },
+        "chapterIntegration": {
+          "score": null,
+          "reason": "No A1/P2 supplied."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-2d667c46",
+      "scores": {
+        "specificity": {
+          "score": 5,
+          "reason": "Shows how a promising expansion can test a framework while demanding commitments expose capacity limits."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1 and I2 support the separate meanings; S1 explicitly supports their framework/capacity relationship."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The primary expansion meaning precedes the boundary contrast and a clearly developed synthesis."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Natural plain explanation, with a somewhat long second paragraph."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "A distinct S1-supported framework tension gives useful variation."
+        },
+        "synthesisCoherence": {
+          "score": 5,
+          "reason": "S1 explicitly combines the promising new direction under I1 with demanding existing commitments under I2 through framework and capacity."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": null,
+          "reason": "The body makes no timing, phase or calculated chronology claims."
+        },
+        "chapterIntegration": {
+          "score": null,
+          "reason": "No A1/P2 supplied."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-82f7d9de",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "Keeps role capacity, room for curiosity and differences in preference as three concrete separate meanings."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1, I2 and I3 support their respective paragraphs; P1 remains conditional; no joint premise is added."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "Each paragraph develops a different supplied contact with no unsupported causal bridge."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Warm second-person wording is steady and readable."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "Contact-specific distinctions vary without inventing a synthesis."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": null,
+          "reason": "The body makes no timing, phase or calculated chronology claims."
+        },
+        "chapterIntegration": {
+          "score": null,
+          "reason": "No A1/P2 supplied."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-8054f639",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "Distinguishes responsibility/capacity from differences in taste and social ease."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1, P1 and I2 support the two separate meanings, and neither U2-suppressed house nor Ascendant claims appears."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The role paragraph and preference paragraph remain clearly separate."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Plain and natural, with a slightly cumbersome opening."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "Uses two different supplied meanings without forcing their relationship."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": null,
+          "reason": "The body makes no timing, phase or calculated chronology claims."
+        },
+        "chapterIntegration": {
+          "score": null,
+          "reason": "No A1/P2 supplied."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-1796b10f",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "Uses commitment scope to make the familiar-demand chapter practical within the boundary distinction."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1 supports the demand and boundary meaning; P2 supplies conditional familiarity and commitment scope; A1, D1 and P1 cover the rest."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The scope example is connected directly to boundary pressure, and the title scene adds everyday context."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Compact plain prose; complete passage is a formal chronology phrase."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "The chapter is placed before chronology and the close combines the title scene with the supplied possibility."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 4,
+          "reason": "A1 is unchanged exactly once in paragraph 1; the sole primary reading gives the calculated-contact statement a usable referent, without personal history."
+        },
+        "chapterIntegration": {
+          "score": 5,
+          "reason": "P2 is woven into paragraph 1 through commitment scope, giving the boundary distinction a concrete conditional example before A1."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-2dacba7a",
+      "scores": {
+        "specificity": {
+          "score": 5,
+          "reason": "Uses an unfinished reply to distinguish manageable preparation from waiting for everything to be settled within a role responsibility."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1 and N1 support the conditional reply scene and pressure distinction; C1, T1 and P1 support the closing statements."
+        },
+        "coherence": {
+          "score": 5,
+          "reason": "The lens advances the primary role/capacity distinction through a concrete reply, then the close adds phase and calculation."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Natural plain voice with dense but clear sentences."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "The reply scene applies N1 instead of appending generic temperament text."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": 5,
+          "reason": "N1 is woven into the primary obligation as an unfinished reply, preserving preparation versus complete-settlement as a conditional distinction."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "The orb, explicit exact date and three-day timing are supplied by C1 and T1 and refer explicitly to the Saturn square."
+        },
+        "chapterIntegration": {
+          "score": null,
+          "reason": "No A1/P2 supplied."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-fac18ed5",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "Keeps role boundaries, the title gap and direct task engagement separate without inventing a joint premise."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1 and D1 support the first two paragraphs, P1 stays conditional, and I2 supports the independent Mars paragraph."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The three meanings remain understandable; the first paragraph repeats its capacity clause before advancing."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Plain and consistent, with some unnecessary restatement."
+        },
+        "repetition": {
+          "score": 3,
+          "reason": "The opening repeats expectations outpacing capacity within the same paragraph, beyond shared-source reuse."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": null,
+          "reason": "The body makes no timing, phase or calculated chronology claims."
+        },
+        "chapterIntegration": {
+          "score": null,
+          "reason": "No A1/P2 supplied."
+        }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "reviewer-b-22-1",
+          "paragraph": 1,
+          "passage": "A routine or responsibility needs clearer boundaries where expectations outpace available capacity. Transiting Saturn square the natal Sun highlights where those expectations outpace capacity.",
+          "supportingFactIds": [
+            "I1",
+            "C1"
+          ],
+          "missingFactIds": [],
+          "category": "repetition",
+          "severity": "minor",
+          "explanation": "The two adjacent sentences repeat the expectations/capacity clause without adding a new distinction.",
+          "proposedCorrection": "Combine the contact attribution and capacity distinction, retaining the supported boundary meaning."
+        }
+      ],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-b050c9b0",
+      "scores": {
+        "specificity": {
+          "score": 5,
+          "reason": "Relates a mentally occupied quiet moment to distinguishing one useful task from making the whole routine a prerequisite for a pause."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1 supplies the quiet-task scene and private-space tension; N1 supplies the manageable routine distinction; P1, C1 and T1 support the close."
+        },
+        "coherence": {
+          "score": 5,
+          "reason": "The routine lens directly develops the obligation/private-space meaning before calculation details."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Clear, calm plain voice, with a long but purposeful opening paragraph."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "The routine lens is concretely integrated through the existing task scene."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": 5,
+          "reason": "N1 develops the existing quiet-task/private-space tension through a manageable routine and the distinction between one useful task and completing everything."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "The orb, exact date, three-day timing and middle-window position all follow C1 and T1 and refer to the preceding Saturn/Moon contact."
+        },
+        "chapterIntegration": {
+          "score": null,
+          "reason": "No A1/P2 supplied."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-588d6d98",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "Role effort and capacity gain practical context from responsibilities a title does not fully describe."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1, D1 and P1 account for the interpretation, C1 and T1 for timing, and U2 suppression is respected."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "Meaning, title scene and phase detail progress clearly."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Plain and readable, with the contact named after the meaning."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "The meaning-first order varies within the shared facts."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 4,
+          "reason": "The middle-window and three-day timing follow T1 and refer to the only named square."
+        },
+        "chapterIntegration": {
+          "score": null,
+          "reason": "No A1/P2 supplied."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-85556475",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "Makes differences in preference concrete through an unfinished reply or uncertain plan, then presents communication focus separately."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1 and D1 support the preference paragraph and I2 the Mercury paragraph; no unsupported relationship between contacts is asserted."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "Preference and expression context stay in the opening; the second paragraph supplies a distinct communication meaning."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Plain and consistent; the opening is long but readable."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "The reply and uncertain-plan scene provide relevant variation from D1."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": null,
+          "reason": "The body makes no timing, phase or calculated chronology claims."
+        },
+        "chapterIntegration": {
+          "score": null,
+          "reason": "No A1/P2 supplied."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-cebcf67d",
+      "scores": {
+        "specificity": {
+          "score": 5,
+          "reason": "Uses an unfinished reply as a possible small obligation and distinguishes preparation from waiting for complete settlement."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1 permits the quiet-task scene and N1 supplies the reply and preparation distinction; C1, T1 and P1 support all closing detail."
+        },
+        "coherence": {
+          "score": 5,
+          "reason": "The hypothetical reply anchors the private-space tension and develops the lens within the same task."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Plain and coherent, with conditional wording preserved throughout."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "The unfinished reply supplies a distinct supported application of the shared Moon meaning."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": 5,
+          "reason": "N1 contributes the unfinished-reply scene conditionally and develops how preparation can occupy private space without asserting a temperament."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "C1 and T1 support the exact date, three-day timing, orb and window, with one primary contact providing a clear referent."
+        },
+        "chapterIntegration": {
+          "score": null,
+          "reason": "No A1/P2 supplied."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-8cc451c5",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "Connects clearer role boundaries with describing a familiar demand through commitment scope."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1, A1 and P2 are preserved; D1, P1 and T1 directly supply later paragraphs."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The chapter follows the boundary issue directly, and scene and timing add distinct context."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Natural plain wording with a formal timing close."
+        },
+        "repetition": {
+          "score": 3,
+          "reason": "Shared primary and domain wording recur, with a distinct scope chapter."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "A1 is copied unchanged exactly once in paragraph 1; the later date follows C1 and T1 and stays calculated."
+        },
+        "chapterIntegration": {
+          "score": 4,
+          "reason": "P2 in paragraph 1 clearly connects familiar demand and commitment scope to the primary clearer-boundary meaning."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-dd66a34c",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "Distinguishes dependable progress from immediate engagement and combines them through incremental steps toward a durable priority."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1 supplies commitment satisfaction and dependable action, I2 supplies direct engagement, and S1 supplies their reinforcement."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The steady commitment paragraph leads into immediate action and the supported incremental-step relationship."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Plain and consistent, though the opening is declarative and somewhat general."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "A distinct reinforcement meaning gives useful variation within the shared contact language."
+        },
+        "synthesisCoherence": {
+          "score": 5,
+          "reason": "S1 combines dependable Saturn commitment and direct Mars engagement through concrete incremental steps toward a durable priority."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": null,
+          "reason": "The body makes no timing, phase or calculated chronology claims."
+        },
+        "chapterIntegration": {
+          "score": null,
+          "reason": "No A1/P2 supplied."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-73195b85",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "Makes the capacity/boundary distinction practical through responsibilities that exceed a title."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1 and D1 support the meaning and scene; P1, C1 and T1 support the closing possibility and calculated detail."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "Meaning leads to everyday framing and then clearly referred timing."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Plain and consistent, with a short mechanical aspect sentence."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "Supported reordering gives modest variation without introducing new claims."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 4,
+          "reason": "The three-day timing, orb and middle-window position follow C1 and T1 with a clear square referent."
+        },
+        "chapterIntegration": {
+          "score": null,
+          "reason": "No A1/P2 supplied."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-3b97d8e7",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "Connects a new demand and clearer boundaries with a small decision that stays open to learning."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1, A1 and P2 are reproduced with their modality; D1, P1 and T1 support the remaining paragraphs."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The initial-contact chapter develops the role demand directly, and later paragraphs add context and timing."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Plain, measured prose; the last timing label is formal."
+        },
+        "repetition": {
+          "score": 3,
+          "reason": "Shared role and title passages recur, with a distinct first-contact chapter."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "A1 is copied unchanged once in paragraph 1; first of three and the September month agree with the supplied current exact date."
+        },
+        "chapterIntegration": {
+          "score": 4,
+          "reason": "P2 in paragraph 1 links initial-contact chronology and role demands to considering a small decision while leaving learning open."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-20e5e005",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "Distinguishes capacity from expectations and illustrates how a title can understate responsibility."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1, D1, P1 and T1 support every body statement; no biography or extra chronology is introduced."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "Separate paragraphs provide meaning, scene, conditional response and timing."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Plain and consistently readable, though the short closing paragraphs feel template-like."
+        },
+        "repetition": {
+          "score": 3,
+          "reason": "The same published role and title wording appears repeatedly across the packet."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 4,
+          "reason": "T1 supports exact today and the middle-window statement; the named Saturn square is the clear referent."
+        },
+        "chapterIntegration": {
+          "score": null,
+          "reason": "No A1/P2 supplied."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-725e9dbf",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "Makes role/capacity pressure concrete through the responsibility/title gap."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1, D1, P1 and T1 directly account for all substantive claims."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "Meaning, everyday scene, conditional possibility and timing each occupy a clear paragraph."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Plain and readable with formal timing-label phrasing."
+        },
+        "repetition": {
+          "score": 3,
+          "reason": "Primary and domain paragraphs recur because their published source statements are shared."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 4,
+          "reason": "T1 supports exact today and the middle-window statement; no additional contact history is invented."
+        },
+        "chapterIntegration": {
+          "score": null,
+          "reason": "No A1/P2 supplied."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-9ce2d5b5",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "Connects role effort and boundaries to the title gap, with calculated orb and date clearly identified."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1, D1 and P1 support the editorial content; C1 and T1 support orb, exact date and relative timing."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "Primary meaning and orb lead into a concrete title scene, then phase and date; minor timing wording needs smoothing."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Plain and consistent, with one clumsy date construction."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "The meaning and calculation order vary modestly within shared source content."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 4,
+          "reason": "C1 and T1 support orb, exact date and three-day timing; the date referent is clear despite clumsy which is exact wording."
+        },
+        "chapterIntegration": {
+          "score": null,
+          "reason": "No A1/P2 supplied."
+        }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "reviewer-b-33-1",
+          "paragraph": 3,
+          "passage": "The contact is calculated to be exact on 2026-10-14, which is exact in 3 days.",
+          "supportingFactIds": [
+            "C1",
+            "T1"
+          ],
+          "missingFactIds": [],
+          "category": "style",
+          "severity": "minor",
+          "explanation": "Which is exact in 3 days has an awkward date referent and unnecessarily repeats exact; the date and interval are supplied.",
+          "proposedCorrection": "State the supplied date and interval once in a fluent calculation-qualified sentence."
+        }
+      ],
+      "unsupportedPersonalClaim": false,
+      "unsupportedHistory": false,
+      "promisedResolution": false,
+      "verdict": "pass"
+    }
+  ],
+  "verdict": "pass"
+}

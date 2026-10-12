@@ -1,10 +1,20 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import {
@@ -62,232 +72,377 @@ type Release = {
   natalLensCoverage?: { base: number; compound: number; bodySigns: number };
 };
 
+function formatDate(isoString: string): string {
+  try {
+    const d = new Date(isoString);
+    return isNaN(d.getTime()) ? isoString.slice(0, 10) : d.toISOString().slice(0, 10);
+  } catch {
+    return isoString.slice(0, 10);
+  }
+}
+
 function ContentPage() {
-  const { session } = useAuth();
+  const { session, isAdmin: authIsAdmin, loading: authLoading } = useAuth();
   const releasesFn = useServerFn(fetchReleases);
   const activateFn = useServerFn(activateContentRelease);
   const queryClient = useQueryClient();
   const query = useQuery({
     queryKey: ["releases", session?.userId],
     queryFn: () => releasesFn({}),
-    enabled: Boolean(session),
+    enabled: Boolean(session) && authIsAdmin,
   });
-  const [pending, setPending] = useState<Release | null>(null);
+
+  const [pendingRelease, setPendingRelease] = useState<{
+    release: Release;
+    isRollback: boolean;
+  } | null>(null);
+
   const [result, setResult] = useState<{
     kind: "success" | "error";
     version: string;
     message: string;
+    action: "rollback" | "activate";
   } | null>(null);
 
   const releases: Release[] = query.data?.releases ?? [];
-  const isAdmin = query.data?.isAdmin ?? false;
+  const isAdmin = authIsAdmin;
+  const providerStatus = useLanguageProviderStatus(isAdmin);
+  const activeRelease = releases.find((r) => r.is_active);
 
   const rollback = useMutation({
-    mutationFn: (release: Release) => activateFn({ data: { releaseId: release.id } }),
-    onSuccess: (data, release) => {
-      setPending(null);
+    mutationFn: (item: { release: Release; isRollback: boolean }) =>
+      activateFn({ data: { releaseId: item.release.id } }),
+    onSuccess: (data, item) => {
+      setPendingRelease(null);
+      const isRollback = data.isRollback;
       setResult({
         kind: "success",
-        version: release.version,
+        version: item.release.version,
+        action: isRollback ? "rollback" : "activate",
         message: `Active release is now ${data.version} · checksum ${data.checksum.slice(0, 16)}…. Readings already published keep the version they were assembled from.`,
       });
-      toast.success(`Rolled back to ${data.version}`);
+      toast.success(
+        isRollback ? `Rolled back to ${data.version}` : `Activated ${data.version} — now live`,
+      );
       void queryClient.invalidateQueries({ queryKey: ["releases"] });
       void queryClient.invalidateQueries({ queryKey: ["today"] });
       void queryClient.invalidateQueries({ queryKey: ["cycles"] });
       void queryClient.invalidateQueries({ queryKey: ["edge-plane"] });
     },
-    onError: (error: Error, release) => {
-      setPending(null);
+    onError: (error: Error, item) => {
+      setPendingRelease(null);
       setResult({
         kind: "error",
-        version: release.version,
+        version: item.release.version,
+        action: item.isRollback ? "rollback" : "activate",
         message: error.message || "The release pointer could not be moved.",
       });
-      toast.error("Rollback failed");
+      toast.error(item.isRollback ? "Rollback failed" : "Activation failed");
     },
   });
 
+  if (authLoading) {
+    return (
+      <Shell>
+        <div className="mx-auto max-w-2xl py-16 animate-pulse" aria-busy="true">
+          <div className="h-8 w-48 bg-muted rounded" />
+          <div className="mt-4 h-4 w-full max-w-96 bg-muted rounded" />
+        </div>
+      </Shell>
+    );
+  }
+
+  if (!isAdmin) {
+    return (
+      <Shell>
+        <div className="mx-auto max-w-xl py-16">
+          <h1 className="text-2xl font-serif">Administrator access required</h1>
+          <p className="mt-4 text-muted-foreground leading-relaxed">
+            Content releases, draft reviews, and evaluation pipelines are reserved for
+            administrators. Your personal reading provenance and content checksums remain accessible
+            directly on each reading.
+          </p>
+          <div className="mt-8">
+            <Button variant="outline" asChild>
+              <Link to="/">Return to Today</Link>
+            </Button>
+          </div>
+        </div>
+      </Shell>
+    );
+  }
+
   return (
     <Shell>
-      <div className="grid animate-rise gap-10 lg:grid-cols-[minmax(0,1fr)_14rem]">
-        <div className="min-w-0">
-          <h1 className="text-3xl leading-snug">Content releases</h1>
-          <p className="prose-reading mt-4 text-foreground">
-            Interpretation copy is published as immutable, checksummed releases through the signed
-            editorial endpoint. Readings record the release they were assembled from, so any
-            paragraph can be traced back to the exact text version that produced it.
-          </p>
+      <div className="grid animate-rise gap-10 lg:grid-cols-[minmax(0,1fr)_15rem]">
+        <div className="min-w-0 space-y-12">
+          <div>
+            <h1 className="text-3xl font-serif leading-snug">Content releases</h1>
+            <p className="prose-reading mt-4 max-w-prose text-foreground">
+              Interpretation copy is published as immutable, checksummed releases. Admins can draft
+              candidate releases directly from the language model or ingest reviewed bundles via the
+              signed endpoint. Moving the live pointer activates that version for today’s and future
+              readings; previously published readings permanently retain the version they were
+              assembled from.
+            </p>
+          </div>
 
           {result ? (
             <div
               role="status"
-              className={`mt-6 border p-4 ${
+              className={`border p-4 ${
                 result.kind === "success"
                   ? "border-rule bg-evidence"
                   : "border-destructive/40 bg-evidence"
               }`}
             >
               <p
-                className={`technical ${
+                className={`text-xs font-medium uppercase tracking-wider ${
                   result.kind === "success" ? "text-primary" : "text-destructive"
                 }`}
               >
                 {result.kind === "success"
-                  ? `Rollback applied · ${result.version}`
-                  : `Rollback failed · ${result.version}`}
+                  ? result.action === "rollback"
+                    ? `Rollback applied · ${result.version}`
+                    : `Release activated · ${result.version}`
+                  : result.action === "rollback"
+                    ? `Rollback failed · ${result.version}`
+                    : `Activation failed · ${result.version}`}
               </p>
-              <p className="prose-reading mt-2 text-foreground">{result.message}</p>
-              <button
+              <p className="prose-reading mt-2 max-w-prose text-foreground">{result.message}</p>
+              <Button
+                variant="outline"
+                size="sm"
                 type="button"
                 onClick={() => setResult(null)}
-                className="technical mt-3 border border-rule px-3 py-1.5 text-foreground transition-colors hover:bg-card"
+                className="mt-3"
               >
                 Dismiss
-              </button>
+              </Button>
             </div>
           ) : null}
 
-          {query.isPending ? (
-            <div className="mt-8 space-y-4" aria-busy="true" aria-live="polite">
-              <p className="technical text-muted-foreground">Loading releases…</p>
-              {[0, 1, 2].map((i) => (
-                <div key={i} className="border border-rule bg-card p-4">
-                  <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2">
-                    <div className="h-4 w-40 animate-pulse bg-muted" />
-                    <div className="h-3 w-20 animate-pulse bg-muted" />
-                    <div className="ml-auto h-3 w-16 animate-pulse bg-muted" />
-                  </div>
-                  <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2 border-t border-rule pt-3">
-                    <div className="h-3 w-24 animate-pulse bg-muted" />
-                    <div className="h-3 w-20 animate-pulse bg-muted" />
-                    <div className="h-3 w-36 animate-pulse bg-muted" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : query.error ? (
-            <div role="alert" className="mt-8 border border-destructive/40 bg-evidence p-4">
-              <p className="technical text-destructive">Release inventory unreachable</p>
-              <p className="prose-reading mt-2 text-foreground">
-                The editorial plane could not be read, so this list is unknown rather than empty.
-                Published readings are unaffected — they record the release they were assembled
-                from.
-              </p>
-              <p className="mt-3 font-mono text-xs break-words text-muted-foreground">
-                {query.error.message}
-              </p>
-              <button
-                type="button"
-                onClick={() => void query.refetch()}
-                disabled={query.isFetching}
-                className="technical mt-4 border border-rule px-3 py-1.5 text-foreground transition-colors hover:bg-evidence disabled:opacity-50"
-              >
-                {query.isFetching ? "Retrying…" : "Retry"}
-              </button>
-            </div>
-          ) : releases.length === 0 ? (
-            <div className="mt-8 border border-rule bg-evidence p-4">
-              <p className="technical text-evidence-foreground">No published release</p>
-              <p className="prose-reading mt-2 text-foreground">
-                Nothing has been ingested through the signed editorial endpoint yet, so readings are
-                assembled from built-in fallback copy. This is a real result, not a loading state —
-                the list stays empty until a release is published.
-              </p>
-              <button
-                type="button"
-                onClick={() => void query.refetch()}
-                disabled={query.isFetching}
-                className="technical mt-4 border border-rule px-3 py-1.5 text-foreground transition-colors hover:bg-card disabled:opacity-50"
-              >
-                {query.isFetching ? "Checking…" : "Check again"}
-              </button>
-            </div>
-          ) : (
-            <div className="mt-8 space-y-4">
-              {releases.map((r) => (
-                <article key={r.id} className="border border-rule bg-card p-4">
-                  <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                    <h2 className="font-mono text-sm text-foreground">{r.version}</h2>
-                    <span className="technical text-muted-foreground">
-                      {r.is_active ? <span className="text-primary">active</span> : "superseded"}
-                    </span>
-                    <span className="technical ml-auto text-muted-foreground">
-                      {r.created_at.slice(0, 10)}
-                    </span>
-                  </div>
-
-                  <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2 border-t border-rule pt-3">
-                    <span className="technical text-muted-foreground">
-                      Cycles · <span className="text-foreground">{r.cycles ?? 0}</span>
-                    </span>
-                    <span className="technical text-muted-foreground">
-                      Rules · <span className="text-foreground">{r.synthesisRules ?? 0}</span>
-                    </span>
-                    <span className="technical text-muted-foreground">
-                      Schema · <span className="text-foreground">{r.schemaVersion ?? 1}</span> ·{" "}
-                      {r.transitChapters ?? 0}/5 transit chapters
-                    </span>
-                    <span className="technical text-muted-foreground">
-                      Natal lenses ·{" "}
-                      <span className="text-foreground">
-                        {r.natalLensCoverage?.base ?? 0} base, {r.natalLensCoverage?.compound ?? 0}{" "}
-                        compound · {r.natalLensCoverage?.bodySigns ?? 0}/60 body/sign pairs
-                      </span>
-                    </span>
-                    <span className="technical text-muted-foreground">
-                      Checksum · <span className="text-foreground">{r.checksum.slice(0, 16)}…</span>
-                    </span>
-                  </div>
-
-                  {r.familyKeys.length > 0 ? (
-                    <ul className="mt-3 flex flex-wrap gap-x-3 gap-y-1 font-mono text-xs text-muted-foreground">
-                      {r.familyKeys.map((k) => (
-                        <li key={k}>{k}</li>
-                      ))}
-                    </ul>
-                  ) : null}
-
-                  {isAdmin ? (
-                    <div className="mt-4 border-t border-rule pt-3">
-                      {r.is_active ? (
-                        <span className="technical text-muted-foreground">
-                          Current pointer — nothing to roll back
-                        </span>
-                      ) : (
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setResult(null);
-                            setPending(r);
-                          }}
-                          disabled={rollback.isPending}
-                          className="technical border border-rule px-3 py-1.5 text-foreground transition-colors hover:bg-evidence disabled:opacity-50"
-                        >
-                          {rollback.isPending && rollback.variables?.id === r.id
-                            ? "Rolling back…"
-                            : "Roll back to this release"}
-                        </button>
-                      )}
-                    </div>
-                  ) : null}
-                </article>
-              ))}
-            </div>
-          )}
-
-          <EdgePlane />
-          <QualityPlane isAdmin={isAdmin} />
+          {/* Section 1: Candidate drafts */}
           <DraftPlane isAdmin={isAdmin} />
+
+          {/* Section 2: Published releases inventory */}
+          <section aria-labelledby="releases-heading" className="border-t border-rule pt-8">
+            <div className="flex flex-wrap items-baseline justify-between gap-3">
+              <h2 id="releases-heading" className="text-2xl font-serif leading-snug">
+                2 · Published releases
+              </h2>
+              <span className="text-xs text-muted-foreground">
+                {releases.length} total {releases.length === 1 ? "release" : "releases"}
+              </span>
+            </div>
+            <p className="prose-reading mt-3 max-w-prose text-foreground">
+              Every published interpretation release, its checksum, and the active release for new
+              readings. Only one release is live at a time; activating another release flips the
+              pointer without modifying history.
+            </p>
+
+            {query.isPending ? (
+              <div className="mt-6 space-y-4" aria-busy="true" aria-live="polite">
+                <p className="text-xs text-muted-foreground">Loading releases…</p>
+                {[0, 1, 2].map((i) => (
+                  <div key={i} className="border border-rule bg-card p-4">
+                    <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2">
+                      <div className="h-4 w-40 animate-pulse bg-muted" />
+                      <div className="h-3 w-20 animate-pulse bg-muted" />
+                      <div className="ml-auto h-3 w-16 animate-pulse bg-muted" />
+                    </div>
+                    <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2 border-t border-rule pt-3">
+                      <div className="h-3 w-24 animate-pulse bg-muted" />
+                      <div className="h-3 w-20 animate-pulse bg-muted" />
+                      <div className="h-3 w-36 animate-pulse bg-muted" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : query.error ? (
+              <div role="alert" className="mt-6 border border-destructive/40 bg-evidence p-4">
+                <p className="text-xs font-semibold uppercase tracking-wider text-destructive">
+                  Release inventory unreachable
+                </p>
+                <p className="prose-reading mt-2 max-w-prose text-foreground">
+                  The editorial plane could not be read, so this list is unknown rather than empty.
+                  Published readings are unaffected — they record the release they were assembled
+                  from.
+                </p>
+                <p className="mt-3 font-mono text-xs break-words text-muted-foreground">
+                  {query.error.message}
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  type="button"
+                  onClick={() => void query.refetch()}
+                  disabled={query.isFetching}
+                  className="mt-4"
+                >
+                  {query.isFetching ? "Retrying…" : "Retry"}
+                </Button>
+              </div>
+            ) : releases.length === 0 ? (
+              <div className="mt-6 border border-rule bg-evidence p-4">
+                <p className="text-xs font-semibold uppercase tracking-wider text-evidence-foreground">
+                  No published release
+                </p>
+                <p className="prose-reading mt-2 max-w-prose text-foreground">
+                  Nothing has been published or ingested yet, so readings are assembled from
+                  built-in fallback copy. Publish a draft from Section 1 or ingest via the signed
+                  endpoint.
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  type="button"
+                  onClick={() => void query.refetch()}
+                  disabled={query.isFetching}
+                  className="mt-4"
+                >
+                  {query.isFetching ? "Checking…" : "Check again"}
+                </Button>
+              </div>
+            ) : (
+              <div className="mt-6 space-y-4">
+                {releases.map((r) => {
+                  const isLive = r.is_active;
+                  const isRollback = Boolean(
+                    activeRelease &&
+                    r.created_at &&
+                    activeRelease.created_at &&
+                    new Date(r.created_at).getTime() < new Date(activeRelease.created_at).getTime(),
+                  );
+                  return (
+                    <article
+                      key={r.id}
+                      className={`border p-4 transition-colors ${
+                        isLive ? "border-primary/50 bg-card shadow-xs" : "border-rule bg-card"
+                      }`}
+                    >
+                      <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                        <h3 className="font-mono text-sm font-semibold text-foreground">
+                          {r.version}
+                        </h3>
+                        {isLive ? (
+                          <span className="inline-flex items-center gap-1.5 rounded-sm bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
+                            <span
+                              className="h-1.5 w-1.5 rounded-full bg-primary"
+                              aria-hidden="true"
+                            />
+                            Live release
+                          </span>
+                        ) : (
+                          <span className="rounded-sm bg-muted px-2 py-0.5 text-xs text-muted-foreground">
+                            {isRollback ? "Prior version" : "Inactive release"}
+                          </span>
+                        )}
+                        <span className="ml-auto font-mono text-xs text-muted-foreground">
+                          {formatDate(r.created_at)}
+                        </span>
+                      </div>
+
+                      <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2 border-t border-rule pt-3 text-xs text-muted-foreground">
+                        <span>
+                          Cycles ·{" "}
+                          <span className="font-mono text-foreground">{r.cycles ?? 0}</span>
+                        </span>
+                        <span>
+                          Rules ·{" "}
+                          <span className="font-mono text-foreground">{r.synthesisRules ?? 0}</span>
+                        </span>
+                        <span>
+                          Schema ·{" "}
+                          <span className="font-mono text-foreground">{r.schemaVersion ?? 1}</span>
+                        </span>
+                        <span>
+                          Transit chapters ·{" "}
+                          <span className="font-mono text-foreground">
+                            {r.transitChapters ?? 0}/5
+                          </span>
+                        </span>
+                        <span>
+                          Natal lenses ·{" "}
+                          <span className="font-mono text-foreground">
+                            {r.natalLensCoverage?.base ?? 0} base,{" "}
+                            {r.natalLensCoverage?.compound ?? 0} compound ·{" "}
+                            {r.natalLensCoverage?.bodySigns ?? 0}/60 pairs
+                          </span>
+                        </span>
+                        <span>
+                          Checksum ·{" "}
+                          <span className="font-mono text-foreground" title={r.checksum}>
+                            {r.checksum.slice(0, 16)}…
+                          </span>
+                        </span>
+                      </div>
+
+                      <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-rule pt-3">
+                        {isLive ? (
+                          <span className="text-xs text-muted-foreground">
+                            Currently active pointer — powers today's and upcoming readings
+                          </span>
+                        ) : (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            type="button"
+                            onClick={() => {
+                              setResult(null);
+                              setPendingRelease({ release: r, isRollback });
+                            }}
+                            disabled={rollback.isPending}
+                          >
+                            {rollback.isPending && rollback.variables?.release.id === r.id
+                              ? isRollback
+                                ? "Rolling back…"
+                                : "Activating…"
+                              : isRollback
+                                ? "Roll back to this release"
+                                : "Make live"}
+                          </Button>
+                        )}
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+            )}
+          </section>
+
+          {/* Section 3: Durable run ledger */}
+          <EdgePlane isAdmin={isAdmin} />
+
+          {/* Section 4: Reading quality telemetry */}
+          <QualityPlane isAdmin={isAdmin} />
+
+          {/* Section 5: Synthetic evaluation */}
+          <section className="border-t border-rule pt-8" aria-labelledby="eval-heading">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <h2 id="eval-heading" className="text-2xl font-serif leading-snug">
+                  5 · Synthetic evaluation
+                </h2>
+                <p className="prose-reading mt-2 max-w-prose text-sm text-muted-foreground">
+                  Run live language-provider requests against fixed synthetic facts to check reading
+                  assembly and validation. Runs continue on the server when you leave this page;
+                  selecting evaluation copy does not publish or activate it.
+                </p>
+              </div>
+            </div>
+            <div className="mt-6">
+              <ReadingEvaluation
+                key={session?.userId ?? "anonymous"}
+                providerStatus={providerStatus}
+              />
+            </div>
+          </section>
         </div>
 
         <Rail title="Editorial plane">
           <Field
-            label="Releases"
-            value={query.isPending ? "—" : query.error ? "unknown" : releases.length}
-          />
-          <Field
-            label="Active"
+            label="Active release"
             value={
               query.isPending
                 ? "—"
@@ -296,74 +451,102 @@ function ContentPage() {
                   : (releases.find((r) => r.is_active)?.version ?? "built-in")
             }
           />
-
-          <Field label="Publishing" value="signed endpoint only" />
           <Field
-            label="Rollback"
-            value={query.isPending ? "—" : isAdmin ? "pointer flip · admin" : "admin only"}
+            label="Checksum"
+            value={
+              query.isPending
+                ? "—"
+                : query.error
+                  ? "unknown"
+                  : activeRelease
+                    ? `${activeRelease.checksum.slice(0, 8)}…`
+                    : "built-in"
+            }
           />
-          <p className="prose-reading pt-2 text-xs text-muted-foreground">
-            {isAdmin
-              ? "Publishing new copy stays signed-endpoint-only. Admins may move the active pointer to an already-published release; existing readings keep the version they were assembled from."
-              : "Releases are read-only here. Publishing and rollback happen over HMAC-signed requests from the editorial plane; nothing on this screen can change copy."}
+          <Field
+            label="Releases"
+            value={query.isPending ? "—" : query.error ? "unknown" : releases.length}
+          />
+          <Field label="Publishing" value="Draft or signed ingest" />
+          <Field label="Action" value="Pointer activation" />
+          <p className="prose-reading pt-3 text-xs text-muted-foreground leading-relaxed">
+            Admins may draft candidate releases or activate an existing release. Moving the active
+            pointer directs today's and upcoming readings to that release; previously assembled
+            readings permanently preserve the release they were generated with.
           </p>
         </Rail>
       </div>
 
-      {pending ? (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="rollback-title"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 p-4"
-        >
-          <div className="w-full max-w-md border border-rule bg-card p-5">
-            <h2 id="rollback-title" className="text-xl leading-snug">
-              Roll back the active release?
-            </h2>
-            <p className="prose-reading mt-3 text-foreground">
-              Today’s and future readings will be assembled from{" "}
-              <span className="font-mono text-sm">{pending.version}</span> instead of the current
-              release. Already-published readings are not rewritten — each one records the version
-              it came from.
-            </p>
-            <dl className="mt-4 space-y-1 border-t border-rule pt-3">
+      {/* Confirmation modal for pointer activation/rollback */}
+      <AlertDialog
+        open={Boolean(pendingRelease)}
+        onOpenChange={(open) => {
+          if (!open) setPendingRelease(null);
+        }}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              {pendingRelease?.isRollback
+                ? `Roll back to ${pendingRelease.release.version}?`
+                : `Make ${pendingRelease?.release.version} live?`}
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {pendingRelease?.isRollback
+                ? "Today’s and future readings will be assembled from this earlier release. Existing readings will permanently retain the release version they were originally assembled from."
+                : "Today’s and future readings will be assembled from this release. Existing readings will permanently retain the release version they were originally assembled from."}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+
+          {pendingRelease ? (
+            <dl className="my-2 space-y-2 border-y border-rule py-3 text-sm">
               <div className="flex justify-between gap-4">
-                <dt className="technical text-muted-foreground">Target</dt>
-                <dd className="font-mono text-xs text-foreground">{pending.version}</dd>
-              </div>
-              <div className="flex justify-between gap-4">
-                <dt className="technical text-muted-foreground">Checksum</dt>
-                <dd className="font-mono text-xs break-all text-foreground">
-                  {pending.checksum.slice(0, 24)}…
+                <dt className="text-muted-foreground">Target release</dt>
+                <dd className="font-mono text-xs font-semibold text-foreground">
+                  {pendingRelease.release.version}
                 </dd>
               </div>
               <div className="flex justify-between gap-4">
-                <dt className="technical text-muted-foreground">Entries</dt>
-                <dd className="font-mono text-xs text-foreground">{pending.entries}</dd>
+                <dt className="text-muted-foreground">Action</dt>
+                <dd className="text-xs font-medium text-foreground">
+                  {pendingRelease.isRollback ? "Rollback" : "Pointer activation"}
+                </dd>
+              </div>
+              <div className="flex justify-between gap-4">
+                <dt className="text-muted-foreground">Checksum</dt>
+                <dd className="font-mono text-xs break-all text-foreground">
+                  {pendingRelease.release.checksum.slice(0, 24)}…
+                </dd>
+              </div>
+              <div className="flex justify-between gap-4">
+                <dt className="text-muted-foreground">Cycles & rules</dt>
+                <dd className="font-mono text-xs text-foreground">
+                  {pendingRelease.release.cycles ?? 0} cycles ·{" "}
+                  {pendingRelease.release.synthesisRules ?? 0} rules
+                </dd>
               </div>
             </dl>
-            <div className="mt-5 flex flex-wrap gap-3">
-              <button
-                type="button"
-                onClick={() => rollback.mutate(pending)}
-                disabled={rollback.isPending}
-                className="technical border border-primary bg-primary px-3 py-1.5 text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-50"
-              >
-                {rollback.isPending ? "Rolling back…" : "Confirm rollback"}
-              </button>
-              <button
-                type="button"
-                onClick={() => setPending(null)}
-                disabled={rollback.isPending}
-                className="technical border border-rule px-3 py-1.5 text-foreground transition-colors hover:bg-evidence disabled:opacity-50"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      ) : null}
+          ) : null}
+
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={rollback.isPending}>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                if (pendingRelease) {
+                  rollback.mutate(pendingRelease);
+                }
+              }}
+              disabled={rollback.isPending}
+            >
+              {rollback.isPending
+                ? "Applying…"
+                : pendingRelease?.isRollback
+                  ? "Confirm rollback"
+                  : "Confirm activation"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Shell>
   );
 }
@@ -377,17 +560,16 @@ type Run = {
 };
 
 /**
- * The durable edge plane: each release publish or rollback mirrors the pointer
+ * The durable edge plane: each release publish or activation mirrors the pointer
  * into D1 and starts a Workflow instance that writes an immutable R2 artifact.
  */
-function EdgePlane() {
+function EdgePlane({ isAdmin }: { isAdmin: boolean }) {
   const planeFn = useServerFn(fetchEdgePlane);
   const triggerFn = useServerFn(triggerEdgeRun);
   const queryClient = useQueryClient();
   const query = useQuery({ queryKey: ["edge-plane"], queryFn: () => planeFn({}) });
 
   const runs: Run[] = query.data?.runs ?? [];
-  const isAdmin = query.data?.isAdmin ?? false;
   const unavailable = Boolean((query.data as { unavailable?: boolean } | undefined)?.unavailable);
 
   const start = useMutation({
@@ -400,17 +582,22 @@ function EdgePlane() {
   });
 
   return (
-    <section className="mt-12 border-t border-rule pt-8">
-      <h2 className="text-2xl leading-snug">Durable run ledger</h2>
-      <p className="prose-reading mt-3 text-foreground">
-        Publishing or rolling back a release mirrors the active pointer into the edge records store
+    <section className="border-t border-rule pt-8" aria-labelledby="edge-plane-heading">
+      <div className="flex flex-wrap items-baseline justify-between gap-3">
+        <h2 id="edge-plane-heading" className="text-2xl font-serif leading-snug">
+          3 · Durable run ledger
+        </h2>
+        <span className="text-xs text-muted-foreground">{runs.length} recorded runs</span>
+      </div>
+      <p className="prose-reading mt-3 max-w-prose text-foreground">
+        Publishing or activating a release mirrors the active pointer into the edge records store
         and starts a durable workflow that writes an immutable reading artifact. Each row below is
         one completed instance, with the artifact it produced.
       </p>
 
       {query.isPending ? (
         <div className="mt-6 space-y-3" aria-busy="true" aria-live="polite">
-          <p className="technical text-muted-foreground">Loading runs…</p>
+          <p className="text-xs text-muted-foreground">Loading runs…</p>
           {[0, 1].map((i) => (
             <div key={i} className="border border-rule bg-card p-4">
               <div className="h-3 w-48 animate-pulse bg-muted" />
@@ -420,62 +607,81 @@ function EdgePlane() {
         </div>
       ) : query.error ? (
         <div role="alert" className="mt-6 border border-destructive/40 bg-evidence p-4">
-          <p className="technical text-destructive">Run ledger unreachable</p>
-          <p className="prose-reading mt-2 text-foreground">
+          <p className="text-xs font-semibold uppercase tracking-wider text-destructive">
+            Run ledger unreachable
+          </p>
+          <p className="prose-reading mt-2 max-w-prose text-foreground">
             The durable plane could not be read. Readings are unaffected — they are assembled from
             the release recorded on each one.
           </p>
-          <button
+          <Button
+            variant="outline"
+            size="sm"
             type="button"
             onClick={() => void query.refetch()}
             disabled={query.isFetching}
-            className="technical mt-4 border border-rule px-3 py-1.5 text-foreground transition-colors hover:bg-evidence disabled:opacity-50"
+            className="mt-4"
           >
             {query.isFetching ? "Retrying…" : "Retry"}
-          </button>
+          </Button>
         </div>
       ) : unavailable ? (
         <div className="mt-6 border border-rule bg-evidence p-4">
-          <p className="technical text-evidence-foreground">Edge plane not configured</p>
-          <p className="prose-reading mt-2 text-foreground">
+          <p className="text-xs font-semibold uppercase tracking-wider text-evidence-foreground">
+            Edge plane not configured
+          </p>
+          <p className="prose-reading mt-2 max-w-prose text-foreground">
             No durable workflow endpoint is wired to this environment, so releases stay app-local
             and no artifacts are written.
           </p>
         </div>
       ) : runs.length === 0 ? (
         <div className="mt-6 border border-rule bg-evidence p-4">
-          <p className="technical text-evidence-foreground">No runs yet</p>
-          <p className="prose-reading mt-2 text-foreground">
-            The ledger fills the first time a release is published, rolled back, or a run is started
+          <p className="text-xs font-semibold uppercase tracking-wider text-evidence-foreground">
+            No runs yet
+          </p>
+          <p className="prose-reading mt-2 max-w-prose text-foreground">
+            The ledger fills the first time a release is published, activated, or a run is started
             by hand.
           </p>
         </div>
       ) : (
-        <div className="mt-6 overflow-x-auto">
-          <table className="w-full min-w-[36rem] border-collapse text-left">
-            <thead>
-              <tr className="border-b border-rule">
-                <th className="technical pb-2 text-muted-foreground">Instance</th>
-                <th className="technical pb-2 text-muted-foreground">Kind</th>
-                <th className="technical pb-2 text-muted-foreground">Release</th>
-                <th className="technical pb-2 text-muted-foreground">Artifact</th>
-                <th className="technical pb-2 text-muted-foreground">When</th>
+        <div className="mt-6 overflow-x-auto rounded-sm border border-rule">
+          <table className="w-full min-w-[36rem] border-collapse text-left text-sm">
+            <caption className="sr-only">Edge plane workflow runs and artifact ledger</caption>
+            <thead className="bg-muted/40">
+              <tr className="border-b border-rule text-xs text-muted-foreground">
+                <th scope="col" className="px-3 py-2.5 font-medium">
+                  Instance
+                </th>
+                <th scope="col" className="px-3 py-2.5 font-medium">
+                  Kind
+                </th>
+                <th scope="col" className="px-3 py-2.5 font-medium">
+                  Release
+                </th>
+                <th scope="col" className="px-3 py-2.5 font-medium">
+                  Artifact
+                </th>
+                <th scope="col" className="px-3 py-2.5 font-medium">
+                  When
+                </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-rule/60">
               {runs.map((r) => (
-                <tr key={r.instance_id} className="border-b border-rule/60">
-                  <td className="py-2 font-mono text-xs text-foreground">
+                <tr key={r.instance_id} className="hover:bg-muted/20 transition-colors">
+                  <td className="px-3 py-2.5 font-mono text-xs text-foreground">
                     {r.instance_id.slice(0, 8)}…
                   </td>
-                  <td className="py-2 font-mono text-xs text-muted-foreground">{r.kind}</td>
-                  <td className="py-2 font-mono text-xs text-muted-foreground">
+                  <td className="px-3 py-2.5 font-mono text-xs text-muted-foreground">{r.kind}</td>
+                  <td className="px-3 py-2.5 font-mono text-xs text-muted-foreground">
                     {r.release_version ?? "—"}
                   </td>
-                  <td className="py-2 font-mono text-xs break-all text-muted-foreground">
+                  <td className="px-3 py-2.5 font-mono text-xs break-all text-muted-foreground">
                     {r.artifact_key ?? "—"}
                   </td>
-                  <td className="py-2 font-mono text-xs text-muted-foreground">
+                  <td className="px-3 py-2.5 font-mono text-xs text-muted-foreground">
                     {r.created_at.slice(0, 16).replace("T", " ")}
                   </td>
                 </tr>
@@ -486,14 +692,17 @@ function EdgePlane() {
       )}
 
       {isAdmin && !unavailable ? (
-        <button
-          type="button"
-          onClick={() => start.mutate()}
-          disabled={start.isPending}
-          className="technical mt-5 border border-rule px-3 py-1.5 text-foreground transition-colors hover:bg-evidence disabled:opacity-50"
-        >
-          {start.isPending ? "Starting…" : "Start a durable run for today"}
-        </button>
+        <div className="mt-5">
+          <Button
+            variant="outline"
+            size="sm"
+            type="button"
+            onClick={() => start.mutate()}
+            disabled={start.isPending}
+          >
+            {start.isPending ? "Starting…" : "Start a durable run for today"}
+          </Button>
+        </div>
       ) : null}
     </section>
   );
@@ -522,14 +731,15 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
     queryFn: () => qualityFn({}),
     enabled: Boolean(isAdmin && session),
   });
-  const providerStatus = useLanguageProviderStatus(isAdmin);
 
   if (!isAdmin || (query.data && !query.data.isAdmin)) return null;
   const data = query.data && query.data.isAdmin ? query.data : null;
+
   const percent = (value: number | null, missing: string) =>
     value === null
       ? missing
       : new Intl.NumberFormat("en-US", { maximumFractionDigits: 1 }).format(value) + "%";
+
   const outcomeLabel = (outcome: string, code: string) =>
     code === "not_configured"
       ? "Not configured"
@@ -543,13 +753,24 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
 
   return (
     <section
-      className="mt-12 min-w-0 border-t border-rule pt-8"
+      className="border-t border-rule pt-8 min-w-0"
       aria-labelledby="reading-quality-heading"
     >
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 id="reading-quality-heading" className="text-2xl leading-snug">
-          Reading quality
-        </h2>
+        <div>
+          <h2 id="reading-quality-heading" className="text-2xl font-serif leading-snug">
+            4 · Reading quality
+          </h2>
+          {data ? (
+            <p className="mt-1 text-xs text-muted-foreground font-mono">
+              Window: {data.total} persisted generations ·{" "}
+              {data.measurement.attempts
+                ? percent((data.measurement.accepted / data.measurement.attempts) * 100, "—") +
+                  " acceptance rate"
+                : "No measured attempts"}
+            </p>
+          ) : null}
+        </div>
         <Button
           variant="outline"
           size="sm"
@@ -560,22 +781,52 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
           {query.isFetching ? "Refreshing…" : "Refresh measurements"}
         </Button>
       </div>
-      <p className="prose-reading mt-3 text-foreground">
-        This report covers up to 300 recent persisted reading generations, ordered by creation time.
-        It counts generations, not page views or all gateway traffic. Opening a cached reading adds
-        no observation. Only instrumented generations have measured outcomes; missing, invalid or
-        incompatible structured diagnostics remain separate as legacy.
-      </p>
-      <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-        When a daily draft fails validation, the whole draft falls back to template wording.
-        Citation checks verify supplied IDs and coverage, with bounded wording checks. They do not
-        establish that every claim is semantically supported by a cited fact. This report contains
-        counts, codes and versions, never reading text or private context.
-      </p>
+
+      <details className="mt-4 rounded-sm border border-rule bg-card/50 p-3 text-sm">
+        <summary className="cursor-pointer text-xs font-medium text-foreground hover:underline">
+          Measurement methodology and validation caveats
+        </summary>
+        <div className="mt-2 space-y-2 text-xs leading-relaxed text-muted-foreground max-w-prose">
+          <p>
+            This report covers up to 300 recent persisted reading generations, ordered by creation
+            time. It counts generations, not page views or all gateway traffic. Opening a cached
+            reading adds no observation. Only instrumented generations have measured outcomes;
+            missing, invalid or incompatible diagnostics remain separate as legacy. This is a recent
+            retained sample, not a lifetime total or a random sample of readers.
+          </p>
+          {data?.window ? (
+            <p>
+              {data.window.truncated
+                ? `The most recent ${data.window.limit} generations are included; older retained generations are excluded.`
+                : `All retained generations within the cap of ${data.window.limit} are included.`}
+              {data.window.oldest && data.window.newest ? (
+                <span className="mt-1 block font-mono [overflow-wrap:anywhere]">
+                  Created from <time dateTime={data.window.oldest}>{data.window.oldest}</time> to{" "}
+                  <time dateTime={data.window.newest}>{data.window.newest}</time>.
+                </span>
+              ) : null}
+            </p>
+          ) : null}
+          <p>
+            When a daily draft fails validation, the whole draft falls back to template wording.
+            Citation checks verify supplied IDs and coverage with bounded wording checks; they do
+            not establish that every claim is supported by a cited fact or assess writing quality.
+            This report contains counts, codes and versions, never reading text or private user
+            context.
+          </p>
+          <p>
+            Attempted fallbacks are validation rejections plus attempted gateway failures, divided
+            by measured model attempts. Quiet days, missing configuration and legacy generations are
+            excluded from that denominator. Configuration counts do not establish which model or
+            prompt writes better readings. Opt-in feedback is self-selected and does not establish
+            that model wording caused a better reading.
+          </p>
+        </div>
+      </details>
 
       {query.isPending ? (
         <div className="mt-6 space-y-3" aria-busy="true" aria-live="polite">
-          <p className="technical text-muted-foreground">Loading generation measurements…</p>
+          <p className="text-xs text-muted-foreground">Loading generation measurements…</p>
           {[0, 1].map((i) => (
             <div key={i} className="border border-rule bg-card p-4">
               <div className="h-3 w-48 animate-pulse bg-muted" />
@@ -585,8 +836,10 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
         </div>
       ) : query.error ? (
         <div role="alert" className="mt-6 border border-destructive/40 bg-evidence p-4">
-          <p className="technical text-destructive">Generation measurements unreachable</p>
-          <p className="prose-reading mt-2 text-foreground">
+          <p className="text-xs font-semibold uppercase tracking-wider text-destructive">
+            Generation measurements unreachable
+          </p>
+          <p className="prose-reading mt-2 max-w-prose text-foreground">
             Stored metadata could not be read. These measurements are unavailable; readings
             themselves are unaffected.
           </p>
@@ -603,37 +856,16 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
         </div>
       ) : !data || data.total === 0 ? (
         <div className="mt-6 border border-rule bg-evidence p-4">
-          <p className="technical text-evidence-foreground">
+          <p className="text-xs font-semibold uppercase tracking-wider text-evidence-foreground">
             No persisted generations recorded yet
           </p>
-          <p className="prose-reading mt-2 text-foreground">
+          <p className="prose-reading mt-2 max-w-prose text-foreground">
             There are no measured attempts or feedback rates to report. The first newly generated
             reading starts this record; reopening cached readings does not.
           </p>
         </div>
       ) : (
         <>
-          <div className="mt-6 border-y border-rule py-4 text-sm leading-relaxed text-muted-foreground">
-            <p>
-              <span className="font-medium text-foreground">
-                Window: {data.total} persisted generations
-              </span>
-              {data.window.truncated
-                ? " · most recent " + data.window.limit + "; older retained generations excluded"
-                : " · all retained generations within the cap of " + data.window.limit}
-              .
-            </p>
-            {data.window.oldest && data.window.newest ? (
-              <p className="mt-1 font-mono text-xs [overflow-wrap:anywhere]">
-                Created from <time dateTime={data.window.oldest}>{data.window.oldest}</time> to{" "}
-                <time dateTime={data.window.newest}>{data.window.newest}</time>.
-              </p>
-            ) : null}
-            <p className="mt-2">
-              This is a recent retained sample, not a lifetime total or a random sample of readers.
-            </p>
-          </div>
-
           <dl className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {[
               { label: "Instrumented generations", value: String(data.measurement.instrumented) },
@@ -653,18 +885,14 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
               { label: "Legacy generations", value: String(data.measurement.legacy) },
             ].map(({ label, value }) => (
               <div key={label} className="min-w-0 border border-rule bg-card p-3">
-                <dt className="technical text-muted-foreground">{label}</dt>
-                <dd className="mt-2 font-mono text-sm [overflow-wrap:anywhere] text-foreground">
+                <dt className="text-xs text-muted-foreground">{label}</dt>
+                <dd className="mt-2 font-mono text-sm [overflow-wrap:anywhere] text-foreground font-semibold">
                   {value}
                 </dd>
               </div>
             ))}
           </dl>
-          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-            Attempted fallbacks are validation rejections plus attempted gateway failures, divided
-            by measured model attempts. Quiet days, missing configuration and legacy generations are
-            excluded from that denominator.
-          </p>
+
           <dl className="mt-4 grid gap-x-6 gap-y-3 sm:grid-cols-2">
             {[
               { label: "Validation rejected", value: data.measurement.rejected },
@@ -684,19 +912,19 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
                 className="flex items-baseline justify-between gap-4 border-b border-rule pb-2"
               >
                 <dt className="text-sm text-muted-foreground">{label}</dt>
-                <dd className="font-mono text-sm text-foreground">{value}</dd>
+                <dd className="font-mono text-sm font-semibold text-foreground">{value}</dd>
               </div>
             ))}
           </dl>
 
-          <h3 className="mt-8 text-xl">Recorded outcome causes</h3>
-          <p className="mt-2 text-sm text-muted-foreground">
+          <h3 className="mt-8 text-xl font-serif">Recorded outcome causes</h3>
+          <p className="mt-2 text-sm max-w-prose text-muted-foreground">
             Closed codes from instrumented generations. A rejected draft records its first failing
-            check, rather than every possible failure. Legacy free-text reasons are not displayed.
+            check, rather than every possible failure.
           </p>
           {data.outcomes.length ? (
             <div
-              className="mt-3 max-w-full overflow-x-auto"
+              className="mt-3 max-w-full overflow-x-auto rounded-sm border border-rule"
               tabIndex={0}
               role="region"
               aria-label="Recorded outcome causes table"
@@ -705,31 +933,35 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
                 <caption className="sr-only">
                   Recorded generation outcomes and bounded cause codes
                 </caption>
-                <thead>
-                  <tr className="border-b border-rule">
-                    <th scope="col" className="technical py-2 pr-4 text-muted-foreground">
+                <thead className="bg-muted/40">
+                  <tr className="border-b border-rule text-muted-foreground">
+                    <th scope="col" className="px-3 py-2 pr-4 font-medium">
                       Outcome
                     </th>
-                    <th scope="col" className="technical py-2 pr-4 text-muted-foreground">
+                    <th scope="col" className="px-3 py-2 pr-4 font-medium">
                       Cause code
                     </th>
-                    <th scope="col" className="technical py-2 pr-4 text-muted-foreground">
+                    <th scope="col" className="px-3 py-2 pr-4 font-medium">
                       Meaning
                     </th>
-                    <th scope="col" className="technical py-2 text-muted-foreground">
+                    <th scope="col" className="px-3 py-2 font-medium">
                       Generations
                     </th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="divide-y divide-rule/60">
                   {data.outcomes.map((row) => (
-                    <tr key={row.outcome + "/" + row.code} className="border-b border-rule/60">
-                      <td className="py-3 pr-4 text-foreground">
+                    <tr key={row.outcome + "/" + row.code}>
+                      <td className="px-3 py-2.5 pr-4 text-foreground">
                         {outcomeLabel(row.outcome, row.code)}
                       </td>
-                      <td className="py-3 pr-4 font-mono text-muted-foreground">{row.code}</td>
-                      <td className="py-3 pr-4 text-muted-foreground">{row.label}</td>
-                      <td className="py-3 font-mono text-foreground">{row.count}</td>
+                      <td className="px-3 py-2.5 pr-4 font-mono text-muted-foreground">
+                        {row.code}
+                      </td>
+                      <td className="px-3 py-2.5 pr-4 text-muted-foreground">{row.label}</td>
+                      <td className="px-3 py-2.5 font-mono font-semibold text-foreground">
+                        {row.count}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -742,16 +974,14 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
             </p>
           )}
 
-          <h3 className="mt-8 text-xl">Recorded configurations</h3>
-          <p className="mt-2 text-sm text-muted-foreground">
+          <h3 className="mt-8 text-xl font-serif">Recorded configurations</h3>
+          <p className="mt-2 text-sm max-w-prose text-muted-foreground">
             Prompt, validator, model, release and gateway timeout budget group instrumented
-            generations. Earlier measurements with no recorded timeout budget show Unrecorded.
-            Counts describe the retained window; they do not establish which configuration writes
-            better readings.
+            generations.
           </p>
           {data.configurations.length ? (
             <div
-              className="mt-3 max-w-full overflow-x-auto"
+              className="mt-3 max-w-full overflow-x-auto rounded-sm border border-rule"
               tabIndex={0}
               role="region"
               aria-label="Recorded configurations table"
@@ -760,8 +990,8 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
                 <caption className="sr-only">
                   Generation measurements grouped by recorded versions and gateway timeout budget
                 </caption>
-                <thead>
-                  <tr className="border-b border-rule">
+                <thead className="bg-muted/40">
+                  <tr className="border-b border-rule text-muted-foreground">
                     {[
                       "Prompt / validator",
                       "Model / release",
@@ -773,17 +1003,13 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
                       "Gateway unavailable",
                       "Attempt fallback rate",
                     ].map((label) => (
-                      <th
-                        key={label}
-                        scope="col"
-                        className="technical py-2 pr-4 text-muted-foreground"
-                      >
+                      <th key={label} scope="col" className="px-3 py-2 pr-4 font-medium">
                         {label}
                       </th>
                     ))}
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="divide-y divide-rule/60">
                   {data.configurations.map((row) => (
                     <tr
                       key={JSON.stringify([
@@ -793,21 +1019,20 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
                         row.releaseVersion,
                         row.gatewayTimeoutMs,
                       ])}
-                      className="border-b border-rule/60"
                     >
-                      <td className="max-w-[12rem] py-3 pr-4 font-mono text-foreground [overflow-wrap:anywhere]">
+                      <td className="max-w-[12rem] px-3 py-2.5 pr-4 font-mono text-foreground [overflow-wrap:anywhere]">
                         {row.promptVersion}
-                        <span className="mt-1 block text-muted-foreground">
+                        <span className="mt-0.5 block text-muted-foreground">
                           {row.validatorVersion}
                         </span>
                       </td>
-                      <td className="max-w-[13rem] py-3 pr-4 font-mono text-foreground [overflow-wrap:anywhere]">
+                      <td className="max-w-[13rem] px-3 py-2.5 pr-4 font-mono text-foreground [overflow-wrap:anywhere]">
                         {row.model}
-                        <span className="mt-1 block text-muted-foreground">
+                        <span className="mt-0.5 block text-muted-foreground">
                           {row.releaseVersion}
                         </span>
                       </td>
-                      <td className="py-3 pr-4 font-mono text-foreground">
+                      <td className="px-3 py-2.5 pr-4 font-mono text-foreground">
                         {row.gatewayTimeoutMs === null
                           ? "Unrecorded"
                           : `${new Intl.NumberFormat("en-US").format(row.gatewayTimeoutMs)} ms`}
@@ -819,11 +1044,11 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
                         row.rejected,
                         row.unavailable,
                       ].map((value, i) => (
-                        <td key={i} className="py-3 pr-4 font-mono text-muted-foreground">
+                        <td key={i} className="px-3 py-2.5 pr-4 font-mono text-muted-foreground">
                           {value}
                         </td>
                       ))}
-                      <td className="py-3 pr-4 font-mono text-foreground">
+                      <td className="px-3 py-2.5 pr-4 font-mono font-semibold text-foreground">
                         {percent(row.fallbackRate, "No attempts")}
                       </td>
                     </tr>
@@ -837,16 +1062,14 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
             </p>
           )}
 
-          <h3 className="mt-8 text-xl">Selected resonance feedback</h3>
-          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-            Only accounts currently opted into Reading quality feedback (USR-15) contribute valid
-            saved scores. Coverage is rated readings divided by eligible readings. Unrated readings
-            are missing data; they do not count as an Unsure (0) response. These are small,
-            self-selected samples; differences do not show that model wording caused better
-            readings.
+          <h3 className="mt-8 text-xl font-serif">Selected resonance feedback</h3>
+          <p className="mt-2 text-sm leading-relaxed max-w-prose text-muted-foreground">
+            Only accounts currently opted into quality feedback contribute valid saved scores.
+            Coverage is rated readings divided by eligible readings. Unrated readings are missing
+            data; they do not count as an Unsure (0) response.
           </p>
           <div
-            className="mt-3 max-w-full overflow-x-auto"
+            className="mt-3 max-w-full overflow-x-auto rounded-sm border border-rule"
             tabIndex={0}
             role="region"
             aria-label="Selected resonance feedback table"
@@ -855,8 +1078,8 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
               <caption className="sr-only">
                 Opt-in resonance feedback by model, template and legacy cohorts
               </caption>
-              <thead>
-                <tr className="border-b border-rule">
+              <thead className="bg-muted/40">
+                <tr className="border-b border-rule text-muted-foreground">
                   {[
                     "Cohort",
                     "Generations",
@@ -868,20 +1091,16 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
                     "No (−1)",
                     "Mean (−1 to +1)",
                   ].map((label) => (
-                    <th
-                      key={label}
-                      scope="col"
-                      className="technical py-2 pr-4 text-muted-foreground"
-                    >
+                    <th key={label} scope="col" className="px-3 py-2 pr-4 font-medium">
                       {label}
                     </th>
                   ))}
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="divide-y divide-rule/60">
                 {data.feedback.map((row) => (
-                  <tr key={row.cohort} className="border-b border-rule/60">
-                    <th scope="row" className="py-3 pr-4 font-normal text-foreground">
+                  <tr key={row.cohort}>
+                    <th scope="row" className="px-3 py-2.5 pr-4 font-normal text-foreground">
                       {row.cohort === "model"
                         ? "Model wording"
                         : row.cohort === "template"
@@ -889,19 +1108,19 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
                           : "Legacy metadata"}
                     </th>
                     {[row.readings, row.eligibleReadings, row.ratedReadings].map((value, i) => (
-                      <td key={i} className="py-3 pr-4 font-mono text-muted-foreground">
+                      <td key={i} className="px-3 py-2.5 pr-4 font-mono text-muted-foreground">
                         {value}
                       </td>
                     ))}
-                    <td className="py-3 pr-4 font-mono text-foreground">
+                    <td className="px-3 py-2.5 pr-4 font-mono text-foreground font-semibold">
                       {percent(row.coverage, "No eligible readings")}
                     </td>
                     {[row.positive, row.neutral, row.negative].map((value, i) => (
-                      <td key={i} className="py-3 pr-4 font-mono text-muted-foreground">
+                      <td key={i} className="px-3 py-2.5 pr-4 font-mono text-muted-foreground">
                         {value}
                       </td>
                     ))}
-                    <td className="py-3 pr-4 font-mono text-foreground">
+                    <td className="px-3 py-2.5 pr-4 font-mono font-semibold text-foreground">
                       {row.average === null
                         ? "No ratings"
                         : new Intl.NumberFormat("en-US", {
@@ -916,16 +1135,15 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
             </table>
           </div>
 
-          <h3 className="mt-8 text-xl">Citation ID usage</h3>
-          <p className="mt-2 text-sm text-muted-foreground">
+          <h3 className="mt-8 text-xl font-serif">Citation ID usage</h3>
+          <p className="mt-2 text-sm max-w-prose text-muted-foreground">
             {data.model} model-mode generations and {data.template} template-mode generations appear
-            in this window, including legacy. Citation shares below use the {data.model} model-mode
-            generations as their denominator. Counts show reported references, not semantic support
-            or reading quality.
+            in this window. Citation shares below use the model-mode generations as their
+            denominator.
           </p>
           {data.facts.length ? (
             <div
-              className="mt-3 max-w-full overflow-x-auto"
+              className="mt-3 max-w-full overflow-x-auto rounded-sm border border-rule"
               tabIndex={0}
               role="region"
               aria-label="Citation ID usage table"
@@ -934,31 +1152,31 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
                 <caption className="sr-only">
                   Supplied fact IDs referenced in stored model-mode citation metadata
                 </caption>
-                <thead>
-                  <tr className="border-b border-rule">
+                <thead className="bg-muted/40">
+                  <tr className="border-b border-rule text-muted-foreground">
                     {["ID", "Kind", "Generations", "Paragraphs", "Share of model mode"].map(
                       (label) => (
-                        <th
-                          key={label}
-                          scope="col"
-                          className="technical py-2 pr-4 text-muted-foreground"
-                        >
+                        <th key={label} scope="col" className="px-3 py-2 pr-4 font-medium">
                           {label}
                         </th>
                       ),
                     )}
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="divide-y divide-rule/60">
                   {data.facts.map((row) => (
-                    <tr key={row.id} className="border-b border-rule/60">
-                      <td className="py-3 pr-4 font-mono text-foreground">{row.id}</td>
-                      <td className="py-3 pr-4 text-muted-foreground">{row.kind}</td>
-                      <td className="py-3 pr-4 font-mono text-muted-foreground">{row.readings}</td>
-                      <td className="py-3 pr-4 font-mono text-muted-foreground">
+                    <tr key={row.id}>
+                      <td className="px-3 py-2.5 pr-4 font-mono text-foreground">{row.id}</td>
+                      <td className="px-3 py-2.5 pr-4 text-muted-foreground">{row.kind}</td>
+                      <td className="px-3 py-2.5 pr-4 font-mono text-muted-foreground">
+                        {row.readings}
+                      </td>
+                      <td className="px-3 py-2.5 pr-4 font-mono text-muted-foreground">
                         {row.paragraphs}
                       </td>
-                      <td className="py-3 pr-4 font-mono text-foreground">{row.share}%</td>
+                      <td className="px-3 py-2.5 pr-4 font-mono font-semibold text-foreground">
+                        {row.share}%
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -972,20 +1190,21 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
 
           {data.samples.length ? (
             <>
-              <h3 className="mt-8 text-xl">Your recent generation metadata</h3>
+              <h3 className="mt-8 text-xl font-serif">Your recent generation metadata</h3>
               <p className="mt-2 text-sm text-muted-foreground">
-                Up to 12 of your persisted generations within this window. Dates are reading days;
-                repeated days can have separate generation records.
+                Up to 12 of your persisted generations within this window. Dates are reading days.
               </p>
               <div className="mt-3 space-y-3">
                 {data.samples.map((row) => (
                   <article key={row.id} className="min-w-0 border border-rule bg-card p-3">
                     <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                      <span className="font-mono text-xs text-foreground">{row.reading_date}</span>
-                      <span className="technical text-muted-foreground [overflow-wrap:anywhere]">
+                      <span className="font-mono text-xs font-semibold text-foreground">
+                        {row.reading_date}
+                      </span>
+                      <span className="text-xs text-muted-foreground [overflow-wrap:anywhere]">
                         {row.mode === "model" ? (row.model ?? "model") : "template"}
                       </span>
-                      <span className="technical text-muted-foreground">
+                      <span className="text-xs text-muted-foreground">
                         {row.paragraphs} reported citation paragraphs
                       </span>
                     </div>
@@ -1010,15 +1229,14 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
           ) : null}
         </>
       )}
-      <ReadingEvaluation key={session?.userId ?? "anonymous"} providerStatus={providerStatus} />
     </section>
   );
 }
 
 /**
  * Language-layer drafting: the model writes candidate interpretation copy for
- * every slot the engine looks up, but nothing it writes becomes live copy
- * until an admin publishes it as a release and flips the pointer above.
+ * every slot the engine looks up. A draft is inert until an admin publishes it
+ * as a release and activates it.
  */
 function DraftPlane({ isAdmin }: { isAdmin: boolean }) {
   const listFn = useServerFn(fetchContentDrafts);
@@ -1028,6 +1246,9 @@ function DraftPlane({ isAdmin }: { isAdmin: boolean }) {
   const queryClient = useQueryClient();
   const [provider, setProvider] = useState<LanguageProvider>("lovable");
   const providerStatus = useLanguageProviderStatus(isAdmin);
+  const [discardTarget, setDiscardTarget] = useState<string | null>(null);
+  const [expandedRules, setExpandedRules] = useState<Record<string, boolean>>({});
+  const [expandedEntries, setExpandedEntries] = useState<Record<string, boolean>>({});
 
   const query = useQuery({ queryKey: ["content-drafts"], queryFn: () => listFn({}) });
   const drafts = query.data?.drafts ?? [];
@@ -1049,7 +1270,7 @@ function DraftPlane({ isAdmin }: { isAdmin: boolean }) {
   const publish = useMutation({
     mutationFn: (draftId: string) => publishFn({ data: { draftId } }),
     onSuccess: (d) => {
-      toast.success(`Published ${d.version}. Roll the pointer to it when ready.`);
+      toast.success(`Published ${d.version}. You can now make it live in Published Releases.`);
       refresh();
     },
     onError: (e: Error) => toast.error(e.message),
@@ -1067,9 +1288,19 @@ function DraftPlane({ isAdmin }: { isAdmin: boolean }) {
   if (!isAdmin) return null;
 
   return (
-    <section className="mt-12 border-t border-rule pt-6">
-      <div className="flex flex-wrap items-start justify-between gap-3">
-        <h2 className="technical text-muted-foreground">Drafted copy · language layer</h2>
+    <section aria-labelledby="drafts-heading">
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <h2 id="drafts-heading" className="text-2xl font-serif leading-snug">
+            1 · Candidate drafts
+          </h2>
+          <p className="prose-reading mt-2 max-w-prose text-foreground text-sm">
+            Generate and review candidate interpretation copy before publication. The model drafts
+            mechanism and reflection question copy for each cycle slot. Candidates that fail safety,
+            phrase or schema checks are filtered before storage. A draft is inert until published as
+            an inactive release and activated in Section 2.
+          </p>
+        </div>
         <div className="flex min-w-0 flex-wrap items-center gap-3">
           <LanguageProviderChoice
             value={provider}
@@ -1077,137 +1308,263 @@ function DraftPlane({ isAdmin }: { isAdmin: boolean }) {
             disabled={draft.isPending}
             configured={providerStatus}
           />
-          <button
+          <Button
             type="button"
             onClick={() => draft.mutate()}
             disabled={draft.isPending}
-            className="technical border border-rule px-3 py-1.5 text-foreground transition-colors hover:bg-evidence disabled:opacity-50"
+            className="min-h-11"
           >
             {draft.isPending ? "Drafting…" : "Draft a release"}
-          </button>
+          </Button>
         </div>
       </div>
-      <p className="prose-reading mt-3 text-xs text-muted-foreground">
-        The model writes mechanism and question copy for each cycle slot; anything that predicts,
-        diagnoses or asserts an outcome is dropped before storage. A draft is inert until published
-        as a release and pointed to.
-      </p>
 
       {query.isPending ? (
-        <p className="mt-4 technical text-muted-foreground" aria-busy="true">
+        <p className="mt-4 text-xs text-muted-foreground" aria-busy="true">
           Loading drafts…
         </p>
       ) : query.error ? (
-        <p role="alert" className="mt-4 technical text-destructive">
+        <p role="alert" className="mt-4 text-xs text-destructive">
           Drafts unavailable: {query.error.message}
         </p>
       ) : drafts.length === 0 ? (
-        <p className="mt-4 technical text-muted-foreground">
-          No open drafts. Live copy is whichever release the pointer names.
-        </p>
+        <div className="mt-6 border border-rule bg-card p-4">
+          <p className="text-xs text-muted-foreground">
+            No open drafts. Choose a language provider above and select "Draft a release" to
+            generate a candidate release for editorial review.
+          </p>
+        </div>
       ) : (
-        <div className="mt-4 space-y-3">
-          {drafts.map((d) => (
-            <article key={d.id} className="border border-rule bg-card p-4">
-              <div className="flex flex-wrap items-baseline justify-between gap-3">
-                <span className="font-mono text-xs text-foreground">
-                  {d.entries.length} entries ({d.themeCount ?? 0} themes, {d.ruleCount ?? 0} rules)
-                  {" · "}Schema {d.schemaVersion} · {d.transitChapters}/5 transit chapters ·{" "}
-                  {d.natalLensCoverage.base} base natal lenses, {d.natalLensCoverage.compound}{" "}
-                  compound · {d.natalLensCoverage.bodySigns}/60 body/sign pairs · from{" "}
-                  {d.base_version ?? "built-in"}
-                </span>
-                <span className="technical text-muted-foreground">{d.model ?? "—"}</span>
-              </div>
-              {d.affectedKeys && d.affectedKeys.length > 0 ? (
-                <div className="mt-2 text-xs border border-primary/30 bg-evidence p-2 text-muted-foreground">
-                  <span className="technical text-primary font-medium">
-                    Drafted / affected interpretation keys ({d.affectedKeys.length}):
-                  </span>{" "}
-                  <span className="font-mono">{d.affectedKeys.join(", ")}</span>
+        <div className="mt-6 space-y-6">
+          {drafts.map((d) => {
+            const notes = (d.notes ?? {}) as Record<string, unknown>;
+            const droppedCount = typeof notes["dropped"] === "number" ? notes["dropped"] : 0;
+            const isRulesExpanded = expandedRules[d.id] ?? false;
+            const isEntriesExpanded = expandedEntries[d.id] ?? false;
+
+            const relevantEntries =
+              d.affectedKeys && d.affectedKeys.length > 0
+                ? [
+                    ...d.entries.filter((e) => d.affectedKeys.includes(e.key)),
+                    ...d.entries.filter((e) => !d.affectedKeys.includes(e.key)),
+                  ]
+                : d.entries;
+
+            const displayedEntries = isEntriesExpanded
+              ? relevantEntries
+              : relevantEntries.slice(0, 4);
+
+            return (
+              <article key={d.id} className="border border-rule bg-card p-5 space-y-4">
+                <div className="flex flex-wrap items-baseline justify-between gap-3 border-b border-rule pb-3">
+                  <div>
+                    <h3 className="font-mono text-sm font-semibold text-foreground">
+                      Draft candidate · from {d.base_version ?? "built-in"}
+                    </h3>
+                    <p className="mt-1 text-xs text-muted-foreground font-mono">
+                      {d.entries.length} entries ({d.themeCount ?? 0} themes, {d.ruleCount ?? 0}{" "}
+                      pair rules) · Schema {d.schemaVersion} · {d.transitChapters}/5 transit
+                      chapters · {d.natalLensCoverage.base} base natal lenses,{" "}
+                      {d.natalLensCoverage.compound} compound · {d.natalLensCoverage.bodySigns}/60
+                      body/sign pairs
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <span className="font-mono text-xs rounded bg-muted px-2 py-0.5 text-muted-foreground">
+                      {d.model ?? "—"}
+                    </span>
+                    <p className="mt-1 font-mono text-xs text-muted-foreground">
+                      {formatDate(d.created_at)}
+                    </p>
+                  </div>
                 </div>
-              ) : null}
-              {d.removedRules && d.removedRules.length > 0 ? (
-                <div className="mt-2 text-xs border border-destructive/30 bg-evidence p-2 text-muted-foreground">
-                  <span className="technical text-destructive">
-                    Synthesis rules removed for review:
-                  </span>{" "}
-                  <span className="font-mono">{d.removedRules.join(", ")}</span>
-                </div>
-              ) : null}
-              {d.synthesisRules && d.synthesisRules.length > 0 ? (
-                <div className="mt-3 border-t border-rule/50 pt-2">
-                  <span className="technical text-xs text-muted-foreground">
-                    Pair rules ({d.synthesisRules.length}):
-                  </span>
-                  <ul className="mt-1.5 space-y-1 font-mono text-xs text-muted-foreground">
-                    {d.synthesisRules.slice(0, 4).map((r) => (
-                      <li key={r.key} className="break-words">
-                        <span className="text-foreground capitalize">{r.relationship}</span>:{" "}
-                        <span>
-                          {r.primary.interpretationKey} ({r.primary.theme})
-                        </span>
-                        {" → "}
-                        <span>
-                          {r.supporting.interpretationKey} ({r.supporting.theme})
-                        </span>
-                      </li>
-                    ))}
-                    {d.synthesisRules.length > 4 ? (
-                      <li className="text-xs text-muted-foreground italic">
-                        + {d.synthesisRules.length - 4} more rules
-                      </li>
+
+                {droppedCount > 0 ? (
+                  <div className="border border-primary/20 bg-evidence p-2.5 text-xs text-muted-foreground">
+                    <span className="font-medium text-foreground">
+                      {droppedCount} candidate entries filtered
+                    </span>{" "}
+                    by safety, phrase validation, and schema bounds before reaching this review.
+                  </div>
+                ) : null}
+
+                {d.affectedKeys && d.affectedKeys.length > 0 ? (
+                  <div className="border border-rule bg-card/60 p-3 text-xs">
+                    <span className="font-medium text-foreground">
+                      Drafted / affected interpretation keys ({d.affectedKeys.length}):
+                    </span>{" "}
+                    <span className="font-mono text-muted-foreground">
+                      {d.affectedKeys.join(", ")}
+                    </span>
+                  </div>
+                ) : null}
+
+                {d.removedRules && d.removedRules.length > 0 ? (
+                  <div className="border border-destructive/30 bg-destructive/10 p-3 text-xs text-destructive">
+                    <span className="font-medium">Synthesis rules flagged for review:</span>{" "}
+                    <span className="font-mono">{d.removedRules.join(", ")}</span>
+                  </div>
+                ) : null}
+
+                {/* Synthesis rules inspection */}
+                {d.synthesisRules && d.synthesisRules.length > 0 ? (
+                  <div className="border-t border-rule/60 pt-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-medium text-foreground">
+                        Pair rules ({d.synthesisRules.length}):
+                      </span>
+                      {d.synthesisRules.length > 4 ? (
+                        <Button
+                          variant="link"
+                          size="sm"
+                          type="button"
+                          onClick={() =>
+                            setExpandedRules((prev) => ({ ...prev, [d.id]: !isRulesExpanded }))
+                          }
+                          className="h-auto whitespace-normal px-0 text-xs"
+                        >
+                          {isRulesExpanded
+                            ? "Show fewer rules"
+                            : `View all ${d.synthesisRules.length} rules`}
+                        </Button>
+                      ) : null}
+                    </div>
+                    <ul className="mt-2 space-y-1.5 font-mono text-xs text-muted-foreground">
+                      {(isRulesExpanded ? d.synthesisRules : d.synthesisRules.slice(0, 4)).map(
+                        (r) => (
+                          <li key={r.key} className="break-words">
+                            <span className="text-foreground font-semibold capitalize">
+                              {r.relationship}
+                            </span>
+                            {": "}
+                            <span>
+                              {r.primary.interpretationKey} ({r.primary.theme})
+                            </span>
+                            {" → "}
+                            <span>
+                              {r.supporting.interpretationKey} ({r.supporting.theme})
+                            </span>
+                          </li>
+                        ),
+                      )}
+                    </ul>
+                  </div>
+                ) : null}
+
+                {/* Full interpretation entries review */}
+                <div className="border-t border-rule/60 pt-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-medium text-foreground">
+                      Interpretation entries ({d.entries.length}):
+                    </span>
+                    {relevantEntries.length > 4 ? (
+                      <Button
+                        variant="link"
+                        size="sm"
+                        type="button"
+                        onClick={() =>
+                          setExpandedEntries((prev) => ({
+                            ...prev,
+                            [d.id]: !isEntriesExpanded,
+                          }))
+                        }
+                        className="h-auto whitespace-normal px-0 text-xs"
+                      >
+                        {isEntriesExpanded
+                          ? "Show summary (4 entries)"
+                          : `View all ${relevantEntries.length} entries with questions`}
+                      </Button>
                     ) : null}
-                  </ul>
-                </div>
-              ) : null}
-              <div className="mt-3 border-t border-rule/50 pt-2">
-                <span className="technical text-xs text-muted-foreground">Sample entries:</span>
-                <ul className="mt-1.5 space-y-2 font-mono text-xs text-muted-foreground">
-                  {(d.affectedKeys && d.affectedKeys.length > 0
-                    ? [
-                        ...d.entries.filter((e) => d.affectedKeys.includes(e.key)),
-                        ...d.entries.filter((e) => !d.affectedKeys.includes(e.key)),
-                      ]
-                    : d.entries
-                  )
-                    .slice(0, 4)
-                    .map((e) => (
-                      <li key={e.key}>
-                        <span className="text-foreground">{e.key}</span>
-                        {e.themes && e.themes.length > 0 ? (
-                          <span className="ml-1 text-xs text-primary font-mono">
-                            [{e.themes.join(", ")}]
+                  </div>
+
+                  <div className="mt-3 space-y-3">
+                    {displayedEntries.map((e) => (
+                      <div
+                        key={e.key}
+                        className="rounded-sm border border-rule/80 bg-background/50 p-3"
+                      >
+                        <div className="flex flex-wrap items-baseline gap-2">
+                          <span className="font-mono text-xs font-semibold text-foreground">
+                            {e.key}
                           </span>
+                          {e.themes && e.themes.length > 0 ? (
+                            <span className="text-xs font-mono text-primary">
+                              [{e.themes.join(", ")}]
+                            </span>
+                          ) : null}
+                        </div>
+                        <p className="prose-reading font-serif text-sm leading-relaxed text-foreground mt-2">
+                          {e.mechanism}
+                        </p>
+                        {e.question ? (
+                          <p className="mt-1.5 text-xs text-muted-foreground italic leading-relaxed">
+                            Reflection question: {e.question}
+                          </p>
                         ) : null}
-                        {" · "}
-                        {e.mechanism}
-                      </li>
+                      </div>
                     ))}
-                </ul>
-              </div>
-              <div className="mt-4 flex flex-wrap gap-3">
-                <button
-                  type="button"
-                  onClick={() => publish.mutate(d.id)}
-                  disabled={publish.isPending || discard.isPending}
-                  className="technical border border-primary bg-primary px-3 py-1.5 text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-50"
-                >
-                  {publish.isPending ? "Publishing…" : "Publish as release"}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => discard.mutate(d.id)}
-                  disabled={publish.isPending || discard.isPending}
-                  className="technical border border-rule px-3 py-1.5 text-foreground transition-colors hover:bg-evidence disabled:opacity-50"
-                >
-                  Discard
-                </button>
-              </div>
-            </article>
-          ))}
+                  </div>
+                </div>
+
+                {/* Draft action controls */}
+                <div className="flex flex-wrap gap-3 border-t border-rule pt-4">
+                  <Button
+                    type="button"
+                    onClick={() => publish.mutate(d.id)}
+                    disabled={publish.isPending || discard.isPending}
+                    size="sm"
+                  >
+                    {publish.isPending ? "Publishing…" : "Publish as release"}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setDiscardTarget(d.id)}
+                    disabled={publish.isPending || discard.isPending}
+                    className="text-destructive hover:bg-destructive/10"
+                  >
+                    Discard draft
+                  </Button>
+                </div>
+              </article>
+            );
+          })}
         </div>
       )}
+
+      {/* Confirmation dialog for draft discard */}
+      <AlertDialog
+        open={Boolean(discardTarget)}
+        onOpenChange={(open) => {
+          if (!open) setDiscardTarget(null);
+        }}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Discard this draft?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This draft will be marked as discarded and removed from the open drafts list. It can
+              no longer be published, and this page has no restore action.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={discard.isPending}>Keep draft</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                if (discardTarget) {
+                  discard.mutate(discardTarget);
+                  setDiscardTarget(null);
+                }
+              }}
+              disabled={discard.isPending}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {discard.isPending ? "Discarding…" : "Discard draft"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </section>
   );
 }

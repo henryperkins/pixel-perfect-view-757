@@ -1,0 +1,135 @@
+{
+  "kind": "offline-provider-boundary-probe",
+  "warning": "Simulated 25 ms waits test diagnostic classification, not Gemini latency. Provider calls are intercepted by the local harness.",
+  "scenariosPassed": 4,
+  "observations": [
+    {
+      "scenario": "immediate_valid",
+      "simulatedDeadlineMs": 25,
+      "requestedDeadlines": [
+        60000
+      ],
+      "headersObserved": true,
+      "bodyReadStarted": false,
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-13",
+        "validatorVersion": "daily-reference-10",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 9,
+        "paragraph": null
+      },
+      "candidateCaptured": true,
+      "providerCalls": 1,
+      "generationConfigKeys": [
+        "responseMimeType",
+        "responseJsonSchema"
+      ],
+      "exportedUsageMetadata": false,
+      "exportedResponseId": false,
+      "exportedObservedModelVersion": false,
+      "requestMatchesUploaded": true,
+      "templateMatchesUploaded": true
+    },
+    {
+      "scenario": "waiting_for_headers",
+      "simulatedDeadlineMs": 25,
+      "requestedDeadlines": [
+        60000
+      ],
+      "headersObserved": false,
+      "bodyReadStarted": false,
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-13",
+        "validatorVersion": "daily-reference-10",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "unavailable",
+        "attempted": true,
+        "code": "timeout",
+        "durationMs": 25,
+        "paragraph": null
+      },
+      "candidateCaptured": false,
+      "providerCalls": 1,
+      "generationConfigKeys": [
+        "responseMimeType",
+        "responseJsonSchema"
+      ],
+      "exportedUsageMetadata": false,
+      "exportedResponseId": false,
+      "exportedObservedModelVersion": false,
+      "requestMatchesUploaded": true,
+      "templateMatchesUploaded": true
+    },
+    {
+      "scenario": "waiting_for_body",
+      "simulatedDeadlineMs": 25,
+      "requestedDeadlines": [
+        60000
+      ],
+      "headersObserved": true,
+      "bodyReadStarted": true,
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-13",
+        "validatorVersion": "daily-reference-10",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "unavailable",
+        "attempted": true,
+        "code": "timeout",
+        "durationMs": 25,
+        "paragraph": null
+      },
+      "candidateCaptured": false,
+      "providerCalls": 1,
+      "generationConfigKeys": [
+        "responseMimeType",
+        "responseJsonSchema"
+      ],
+      "exportedUsageMetadata": false,
+      "exportedResponseId": false,
+      "exportedObservedModelVersion": false,
+      "requestMatchesUploaded": true,
+      "templateMatchesUploaded": true
+    },
+    {
+      "scenario": "http_504",
+      "simulatedDeadlineMs": 25,
+      "requestedDeadlines": [
+        60000
+      ],
+      "headersObserved": true,
+      "bodyReadStarted": false,
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-13",
+        "validatorVersion": "daily-reference-10",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "unavailable",
+        "attempted": true,
+        "code": "timeout",
+        "durationMs": 0,
+        "paragraph": null
+      },
+      "candidateCaptured": false,
+      "providerCalls": 1,
+      "generationConfigKeys": [
+        "responseMimeType",
+        "responseJsonSchema"
+      ],
+      "exportedUsageMetadata": false,
+      "exportedResponseId": false,
+      "exportedObservedModelVersion": false,
+      "requestMatchesUploaded": true,
+      "templateMatchesUploaded": true
+    }
+  ]
+}

@@ -23,22 +23,22 @@ via `@theme inline`. Components use semantic utilities only — never raw hex or
 - Surfaces: `--background` warm off-white paper, `--card` a shade lighter,
   `--secondary`/`--muted` for quiet fills.
 - Ink: `--foreground` warm near-black, `--muted-foreground` for secondary text.
-- Accent: `--primary` desaturated ink blue; `--accent` pale blue for state chips.
+- Accent: `--primary` botanical sage-green (oklch hue 155); `--accent` pale sage (oklch hue 138) for state chips and quiet highlights.
 - Structure: `--rule` hairline for every divider and card border.
 - Evidence: `--evidence` / `--evidence-foreground` — the dedicated surface for
   provenance, calculated facts and technical disclosure blocks.
 - `--destructive` for failure states only.
 - `--radius` 0.25rem. Corners stay nearly square; `rounded-sm` is the default.
-- Dark theme is defined for every token under `.dark`.
+- Dark theme tokens are fully specified under `.dark` in `src/styles.css`, though the live app currently renders in warm light paper.
 
 ## Typography
 
 - `--font-serif` Lora — headings and reading prose (`.prose-reading`).
-- `--font-sans` Inter — UI text, labels, controls.
-- `--font-mono` JetBrains Mono — all numbers, keys, orbs, dates, engine values, and
-  the `.technical` label style (uppercase, letter-spaced, small).
+- `--font-sans` Nunito Sans — UI text, labels, controls, navigation.
+- `--font-mono` JetBrains Mono — calculated values, hashes/checksums, engine metrics, timestamps.
+- Technical labels: base `.technical` uses uppercase letter-spaced mono for instrument/telemetry readouts; `.flow-page .technical` softens this to Nunito Sans normal-case for narrative editorial contexts.
 
-Rule: if a value came out of a calculation, it is set in mono.
+Rule: if a value came out of a calculation, measurement, or engine checksum, it is set in mono; explanatory labels and descriptive copy remain in sans.
 
 ## Layout
 

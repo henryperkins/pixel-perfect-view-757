@@ -39,6 +39,82 @@ function signedRequest(url, body) {
   });
 }
 
+test("lifecycle: admin activation and rollback record the actual pointer direction", async () => {
+  const releases = [];
+  for (const [version, created_at] of [
+    ["1.0.0", "2026-10-01T12:00:00.000Z"],
+    ["2.0.0", "2026-10-12T12:00:00.000Z"],
+  ]) {
+    const { data, error } = await h
+      .records()
+      .from("content_releases")
+      .insert({
+        version,
+        checksum: `checksum-${version}`,
+        bundle: { cycles: [], natal: { sun_placement: `Copy ${version}` } },
+        is_active: false,
+        created_at,
+      })
+      .select("id")
+      .single();
+    assert.equal(error, null);
+    releases.push(data);
+  }
+  const [older, newer] = releases;
+  await assert.rejects(() => h.app.activateRelease(h.records(), h.userB, newer.id), /admin/i);
+  const first = await h.app.activateRelease(h.records(), h.userA, older.id);
+  const forward = await h.app.activateRelease(h.records(), h.userA, newer.id);
+  const back = await h.app.activateRelease(h.records(), h.userA, older.id);
+  assert.deepEqual([first.isRollback, forward.isRollback, back.isRollback], [false, false, true]);
+  const events = h.sqlite.prepare("select kind, detail from audit_events order by rowid").all();
+  assert.deepEqual(
+    events.map((row) => [
+      row.kind,
+      JSON.parse(row.detail).previousVersion,
+      JSON.parse(row.detail).action,
+    ]),
+    [
+      ["content_release_activated", null, "activate"],
+      ["content_release_activated", "1.0.0", "activate"],
+      ["content_release_rollback", "2.0.0", "rollback"],
+    ],
+  );
+  assert.deepEqual(
+    h.sqlite
+      .prepare("select id from content_releases where is_active = 1")
+      .all()
+      .map((row) => row.id),
+    [older.id],
+  );
+});
+
+test("lifecycle: an unreadable active pointer prevents activation and leaves its audit untouched", async () => {
+  const { data: target } = await h
+    .records()
+    .from("content_releases")
+    .insert({
+      version: "1.0.0",
+      checksum: "pointer-read-fixture",
+      bundle: { cycles: [], natal: { sun_placement: "Published copy" } },
+      is_active: true,
+    })
+    .select("id")
+    .single();
+  h.setFault({
+    matches: (sql) => /^select .* from "content_releases" where "is_active"/i.test(sql),
+  });
+  await assert.rejects(
+    () => h.app.activateRelease(h.records(), h.userA, target.id),
+    /Injected local records failure/,
+  );
+  assert.equal(
+    h.sqlite.prepare("select is_active from content_releases where id = ?").get(target.id)
+      .is_active,
+    1,
+  );
+  assert.equal(h.sqlite.prepare("select count(*) as n from audit_events").get().n, 0);
+});
+
 test("lifecycle: activeBundle validates stored bundle and isolates legacy releases", async () => {
   const legacyBundle = {
     version: "1.0.0",

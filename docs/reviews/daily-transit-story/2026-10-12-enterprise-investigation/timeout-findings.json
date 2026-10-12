@@ -1,0 +1,35 @@
+{
+  "sourceSha256": "d7bf2cc09012a4a366edbc53b30a49cb504da6a3492029ba3d82756a096f6a54",
+  "model": "gemini-enterprise/gemini-3.8-flash",
+  "deadlineMs": 60000,
+  "attempts": 37,
+  "accepted": 23,
+  "timeout": 14,
+  "skipped": 1,
+  "timeoutRate": 0.3783783783783784,
+  "validatorRejected": 0,
+  "providerMetricResponseCounts": {
+    "499": 14,
+    "200": 23
+  },
+  "providerLatencySamples": 23,
+  "providerMeanLatencyMs": 40715.838910565224,
+  "applicationMeanSuccessfulLatencyMs": 40811.52173913043,
+  "meanDifferenceMs": 95.68282856520818,
+  "applicationMedianSuccessfulLatencyMs": 35985,
+  "providerProjectId": "river-bruin-511100-g8",
+  "projectResolution": "Read-only API-key lookup of locally configured GEMINI_ENTERPRISE_API_KEY; secret not persisted.",
+  "metricInterval": {
+    "startTime": "2026-10-12T08:45:00Z",
+    "endTime": "2026-10-12T09:40:00Z"
+  },
+  "correlation": "Aggregate counts align exactly; report lacks response IDs and deployed revision, so individual request correlation is not established.",
+  "conclusion": "Strong evidence that the client aborts pending provider calls at the 60-second deadline. Successful time is overwhelmingly accounted for by provider latency.",
+  "thinkingAttribution": "Plausible contributor, not measured. Native request has no thinkingConfig, and the adapter discards usageMetadata. Official Gemini 3.8 Flash documentation gives MEDIUM as the default and LOW as an available latency control.",
+  "newGeminiGenerationCalls": 0,
+  "costUsd": null,
+  "applicationSourceChanged": false,
+  "offlineProbeScenariosPassed": 4,
+  "providerTestsPassed": 11,
+  "providerTestsFailed": 0
+}

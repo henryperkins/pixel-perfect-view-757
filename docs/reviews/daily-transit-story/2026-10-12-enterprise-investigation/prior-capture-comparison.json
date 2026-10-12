@@ -1,0 +1,149 @@
+{
+  "note": "Previously captured local model calls with an explicit 180-second runtime override; they do not replace or qualify the uploaded 60-second run. Wall time includes provider response and local processing; diagnostic durations clamp at 120 seconds.",
+  "rows": [
+    {
+      "caseId": "arc-single-pass",
+      "priorResultPath": "/home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/docs/reviews/daily-transit-story/2026-10-12-prompt-recheck/capture/sample-1-result.json",
+      "priorResultSha256": "693c9f9e3d9a6aee153e76725c73ab0774028fb80c562f180f9715f6c2c38cab",
+      "priorOutcome": "accepted",
+      "priorDiagnosticDurationMs": 73281,
+      "priorTransportToSettledWallMs": 73245,
+      "priorDeadlineMs": 180000,
+      "currentOutcome": "accepted",
+      "currentDurationMs": 56582,
+      "requestIdentical": true,
+      "factsIdentical": true,
+      "configHashIdentical": true,
+      "metadataDifferences": {
+        "caseSetHash": [
+          "5bae1e78705b97024d6ca6c8d7b242e32f316a52c54c7b9e9cb3c5af8154d9e8",
+          "8523d0ae1558c7247a1cef4b9efcbc608708c29125cd3fb36482174d901c52cc"
+        ],
+        "transitFixtureHash": [
+          "2025ee9077bb7c0053af5c601e076d7d0858754644901f680862090f01d665f7",
+          "a5c9d21927a4100b387063f48d0e58864d3e03b71039046166bc0f7e84769941"
+        ]
+      }
+    },
+    {
+      "caseId": "arc-opening-three",
+      "priorResultPath": "/home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/docs/reviews/daily-transit-story/2026-10-12-prompt-recheck/capture/sample-2-result.json",
+      "priorResultSha256": "ecf04d6c64dbe78d8236445e5f84d6697da52960bdd5107b8c0da8e949942fe4",
+      "priorOutcome": "accepted",
+      "priorDiagnosticDurationMs": 64021,
+      "priorTransportToSettledWallMs": 63970,
+      "priorDeadlineMs": 180000,
+      "currentOutcome": "unavailable",
+      "currentDurationMs": 60000,
+      "requestIdentical": true,
+      "factsIdentical": true,
+      "configHashIdentical": true,
+      "metadataDifferences": {
+        "caseSetHash": [
+          "5bae1e78705b97024d6ca6c8d7b242e32f316a52c54c7b9e9cb3c5af8154d9e8",
+          "8523d0ae1558c7247a1cef4b9efcbc608708c29125cd3fb36482174d901c52cc"
+        ],
+        "transitFixtureHash": [
+          "2025ee9077bb7c0053af5c601e076d7d0858754644901f680862090f01d665f7",
+          "a5c9d21927a4100b387063f48d0e58864d3e03b71039046166bc0f7e84769941"
+        ]
+      }
+    },
+    {
+      "caseId": "arc-return-three",
+      "priorResultPath": "/home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/docs/reviews/daily-transit-story/2026-10-12-prompt-recheck/capture/sample-3-result.json",
+      "priorResultSha256": "89543ebf0accc8ab1195bc3f6380a323ff69855f0d7a7a76c48f1526bf851833",
+      "priorOutcome": "accepted",
+      "priorDiagnosticDurationMs": 59403,
+      "priorTransportToSettledWallMs": 59364,
+      "priorDeadlineMs": 180000,
+      "currentOutcome": "unavailable",
+      "currentDurationMs": 60000,
+      "requestIdentical": true,
+      "factsIdentical": true,
+      "configHashIdentical": true,
+      "metadataDifferences": {
+        "caseSetHash": [
+          "5bae1e78705b97024d6ca6c8d7b242e32f316a52c54c7b9e9cb3c5af8154d9e8",
+          "8523d0ae1558c7247a1cef4b9efcbc608708c29125cd3fb36482174d901c52cc"
+        ],
+        "transitFixtureHash": [
+          "2025ee9077bb7c0053af5c601e076d7d0858754644901f680862090f01d665f7",
+          "a5c9d21927a4100b387063f48d0e58864d3e03b71039046166bc0f7e84769941"
+        ]
+      }
+    },
+    {
+      "caseId": "arc-closing-three",
+      "priorResultPath": "/home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/docs/reviews/daily-transit-story/2026-10-12-prompt-recheck/capture/sample-4-result.json",
+      "priorResultSha256": "7a1f67cfdf8fc73352d9435cbd467ebd172c65dd3426e3eb3c2fc3d450f73270",
+      "priorOutcome": "accepted",
+      "priorDiagnosticDurationMs": 75824,
+      "priorTransportToSettledWallMs": 75787,
+      "priorDeadlineMs": 180000,
+      "currentOutcome": "unavailable",
+      "currentDurationMs": 60000,
+      "requestIdentical": true,
+      "factsIdentical": true,
+      "configHashIdentical": true,
+      "metadataDifferences": {
+        "caseSetHash": [
+          "5bae1e78705b97024d6ca6c8d7b242e32f316a52c54c7b9e9cb3c5af8154d9e8",
+          "8523d0ae1558c7247a1cef4b9efcbc608708c29125cd3fb36482174d901c52cc"
+        ],
+        "transitFixtureHash": [
+          "2025ee9077bb7c0053af5c601e076d7d0858754644901f680862090f01d665f7",
+          "a5c9d21927a4100b387063f48d0e58864d3e03b71039046166bc0f7e84769941"
+        ]
+      }
+    },
+    {
+      "caseId": "arc-between-passes",
+      "priorResultPath": "/home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/docs/reviews/daily-transit-story/2026-10-12-prompt-recheck/capture/sample-5-result.json",
+      "priorResultSha256": "85494d8443e5f54dd6dbfcc23fd488c9a95b65453d4c96374ae71708da311560",
+      "priorOutcome": "accepted",
+      "priorDiagnosticDurationMs": 120000,
+      "priorTransportToSettledWallMs": 152841,
+      "priorDeadlineMs": 180000,
+      "currentOutcome": "unavailable",
+      "currentDurationMs": 60000,
+      "requestIdentical": true,
+      "factsIdentical": true,
+      "configHashIdentical": true,
+      "metadataDifferences": {
+        "caseSetHash": [
+          "5bae1e78705b97024d6ca6c8d7b242e32f316a52c54c7b9e9cb3c5af8154d9e8",
+          "8523d0ae1558c7247a1cef4b9efcbc608708c29125cd3fb36482174d901c52cc"
+        ],
+        "transitFixtureHash": [
+          "2025ee9077bb7c0053af5c601e076d7d0858754644901f680862090f01d665f7",
+          "a5c9d21927a4100b387063f48d0e58864d3e03b71039046166bc0f7e84769941"
+        ]
+      }
+    },
+    {
+      "caseId": "arc-truncated-scan",
+      "priorResultPath": "/home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/docs/reviews/daily-transit-story/2026-10-12-prompt-recheck/capture/sample-6-result.json",
+      "priorResultSha256": "3add009d6e64b516aa35dc427b551696711742e0797226acc12e1d8a5ecda85f",
+      "priorOutcome": "accepted",
+      "priorDiagnosticDurationMs": 44244,
+      "priorTransportToSettledWallMs": 44191,
+      "priorDeadlineMs": 180000,
+      "currentOutcome": "accepted",
+      "currentDurationMs": 23293,
+      "requestIdentical": true,
+      "factsIdentical": true,
+      "configHashIdentical": true,
+      "metadataDifferences": {
+        "caseSetHash": [
+          "5bae1e78705b97024d6ca6c8d7b242e32f316a52c54c7b9e9cb3c5af8154d9e8",
+          "8523d0ae1558c7247a1cef4b9efcbc608708c29125cd3fb36482174d901c52cc"
+        ],
+        "transitFixtureHash": [
+          "2025ee9077bb7c0053af5c601e076d7d0858754644901f680862090f01d665f7",
+          "a5c9d21927a4100b387063f48d0e58864d3e03b71039046166bc0f7e84769941"
+        ]
+      }
+    }
+  ]
+}

@@ -2304,15 +2304,30 @@ export async function activateRelease(db: DB, userId: string, releaseId: string)
       id: string;
       version: string;
       checksum: string;
+      created_at: string;
       bundle: Record<string, unknown> | null;
     }>("content_releases")
-    .select("id, version, checksum, bundle")
+    .select("id, version, checksum, created_at, bundle")
     .eq("id", releaseId)
     .maybeSingle();
   if (findErr) throw new Error(findErr.message);
   if (!target) throw new Error("That release no longer exists.");
 
   validateContentGraph(target.bundle);
+
+  const { data: currentActive, error: activeError } = await db
+    .from<{ id: string; version: string; created_at: string }>("content_releases")
+    .select("id, version, created_at")
+    .eq("is_active", true)
+    .maybeSingle();
+  if (activeError) throw new Error(activeError.message);
+
+  const isRollback = Boolean(
+    currentActive &&
+    target.created_at &&
+    currentActive.created_at &&
+    new Date(target.created_at).getTime() < new Date(currentActive.created_at).getTime(),
+  );
 
   const { error: deactivateErr } = await db
     .from("content_releases")
@@ -2328,8 +2343,13 @@ export async function activateRelease(db: DB, userId: string, releaseId: string)
 
   await db.from("audit_events").insert({
     user_id: userId,
-    kind: "content_release_rollback",
-    detail: { version: target.version, checksum: target.checksum },
+    kind: isRollback ? "content_release_rollback" : "content_release_activated",
+    detail: {
+      version: target.version,
+      checksum: target.checksum,
+      previousVersion: currentActive?.version ?? null,
+      action: isRollback ? "rollback" : "activate",
+    },
   });
 
   // Mirror the pointer into the edge plane (D1) so artifacts and durable runs
@@ -2337,7 +2357,7 @@ export async function activateRelease(db: DB, userId: string, releaseId: string)
   const { syncReleasePointer } = await import("./workflows.server");
   await syncReleasePointer(target.version, target.checksum);
 
-  return { version: target.version, checksum: target.checksum };
+  return { version: target.version, checksum: target.checksum, isRollback };
 }
 
 // ---------------------------------------------------------------------------

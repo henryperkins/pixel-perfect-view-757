@@ -1,0 +1,117 @@
+{
+  "sourcePath": "/tmp/codex-remote-attachments/01a12f76-c20e-7712-9839-f8126c87c441/82B60758-2A3E-4539-AD6D-43FD29D7615A/1-reading-evaluation-complete-transit-candidate-2026-10-12T09-33-43.json",
+  "sourceSha256": "d7bf2cc09012a4a366edbc53b30a49cb504da6a3492029ba3d82756a096f6a54",
+  "createdAt": "2026-10-12T09:45:46.268557+00:00",
+  "reportMetadata": {
+    "reportVersion": 1,
+    "storyPlanVersion": "daily-transit-story-1",
+    "anchorVersion": "transit-anchor-1",
+    "solverVersion": "transit-episode-1",
+    "sourceContract": "swiss-transit-episode/1",
+    "transitFixtureHash": "a5c9d21927a4100b387063f48d0e58864d3e03b71039046166bc0f7e84769941",
+    "storyUse": true,
+    "fixtureVersion": "synthetic-daily-6",
+    "caseSetHash": "8523d0ae1558c7247a1cef4b9efcbc608708c29125cd3fb36482174d901c52cc",
+    "bundleVersion": "builtin-0.7.1",
+    "bundleHash": "fd39c9ac8abe1b6c1ad3071ec0d4a80b54d89881ea48a1de7e696a5b44316ea1",
+    "transitCopyHash": "c2b68b767f48bbd54befaa0c6290f76e62ab2e0d7f0450321b13be56db7f6588",
+    "planVersion": "daily-synthesis-1",
+    "natalPlanVersion": "daily-natal-lens-2",
+    "reliabilityVersion": "natal-reliability-1",
+    "promptVersion": "daily-astro-body-13",
+    "validatorVersion": "daily-reference-10",
+    "model": "gemini-enterprise/gemini-3.8-flash",
+    "gatewayTimeoutMs": 60000,
+    "source": "live-synthetic",
+    "network": "Live Gemini Enterprise Agent Platform; fixed synthetic facts only",
+    "warning": "Actual model outputs for synthetic plans. This run does not establish production-user acceptance, semantic grounding, or writing quality. Manual scores remain blank.",
+    "bundleSource": "transit-candidate",
+    "partial": false,
+    "expectedCases": 38
+  },
+  "sourceSummary": {
+    "cases": 38,
+    "gatewayReplays": 0,
+    "modelAttempts": 37,
+    "outcomes": {
+      "accepted": 23,
+      "rejected": 0,
+      "unavailable": 14,
+      "skipped": 1
+    },
+    "reasons": {
+      "accepted": 23,
+      "timeout": 14,
+      "no_cycle": 1
+    },
+    "replayAcceptanceRate": null,
+    "syntheticModelAcceptanceRate": 0.6216216216216216,
+    "liveAcceptanceRate": null
+  },
+  "inspectedSourceWorktree": "/home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011",
+  "inspectedSourceCommit": "6de843c110b62dd4fb5f785524de0b40959f230b",
+  "inspectedSourceDirty": false,
+  "deployedSourceCommit": null,
+  "deployedSourceCommitNote": "The uploaded report carries no build or deployed revision identity. Matching local versions are not deployment proof.",
+  "humanReviewCompleted": false,
+  "scope": "Single-report investigation: all 38 served outputs plus 5 additional arc-template counterparts, comprising 23 model bodies, 19 nonquiet templates and 1 quiet-day message. No matched baseline or new Gemini generation.",
+  "reviewCoverage": {
+    "items": 43,
+    "servedOutputs": 38,
+    "arcTemplates": 10,
+    "modelBodies": 23,
+    "nonquietTemplates": 19,
+    "quietMessages": 1,
+    "reviewsPerItem": 2,
+    "freshReviewerContexts": 4
+  },
+  "finalSourceWorktreeObservation": {
+    "observedAt": "2026-10-12T10:06:31.418716+00:00",
+    "head": "7d8e2f512c2057127e06b5f32b14fcb356151905",
+    "status": [],
+    "initialHead": "6de843c110b62dd4fb5f785524de0b40959f230b",
+    "initiallyClean": true,
+    "concurrentChangesObserved": true,
+    "providerAndDailyProsePrefixUnchanged": true,
+    "providerAndDailyProsePrefixSha256": "35f9724fab5ba8218930bacbdf49109dff4161bfde894ce43c92c70449e3d92f",
+    "note": "Another session advanced this worktree. This investigation changed no files there. The Gemini adapter and daily generation path are byte-identical to the initially inspected revision; the language-module diff extracts a natal reflection helper. Test-harness changes pass SQL params to a fault-injection callback.",
+    "files": [
+      {
+        "path": "src/lib/ai/language.server.ts",
+        "initialSha256": "724f20fd2cdc5efcefd051c5b88868f14338a5d0fdf8c26219c3fd4427f12095",
+        "currentSha256": "52ca70bc74a8bc3228e7ad407836001d2325c02d76e28a426162f3181f0581c1",
+        "identical": false
+      },
+      {
+        "path": "src/lib/ai/diagnostics.ts",
+        "initialSha256": "03ed2c77f4a524fa04628c316177758f58c3a25a6201c7554fdc41b9dd7e7fe2",
+        "currentSha256": "03ed2c77f4a524fa04628c316177758f58c3a25a6201c7554fdc41b9dd7e7fe2",
+        "identical": true
+      },
+      {
+        "path": "src/lib/evaluation-runs.server.ts",
+        "initialSha256": "d454953a0778acde933c4bd82ec73f78e183f20a3662d82ca1cac6f5ae07f679",
+        "currentSha256": "d454953a0778acde933c4bd82ec73f78e183f20a3662d82ca1cac6f5ae07f679",
+        "identical": true
+      },
+      {
+        "path": "src/lib/ai/reading-evaluation.server.ts",
+        "initialSha256": "6ca6aae6188f4e021ccb410531d1f2c682f3125e840ad675de6435edcebc5532",
+        "currentSha256": "6ca6aae6188f4e021ccb410531d1f2c682f3125e840ad675de6435edcebc5532",
+        "identical": true
+      },
+      {
+        "path": "tests/reading-provider.test.mjs",
+        "initialSha256": "e25fea2fa08735b3a6ed011f7d46efc64726d247f7ba3b704c07f2869fc51a73",
+        "currentSha256": "e25fea2fa08735b3a6ed011f7d46efc64726d247f7ba3b704c07f2869fc51a73",
+        "identical": true
+      },
+      {
+        "path": "tests/helpers/records-harness.mjs",
+        "initialSha256": "bd07b974325022db5f1d8a5b64cf4d86b95471cc0c567279e650128df4896134",
+        "currentSha256": "b72b5a62a239bfeaa5615225595884b3d355c49bd0de0f099eb5d493b72e6bb1",
+        "identical": false
+      }
+    ]
+  }
+}

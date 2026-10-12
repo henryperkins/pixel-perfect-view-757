@@ -1,0 +1,16 @@
+{
+  "lookup": "success",
+  "keyProjectNumber": "399898395543",
+  "lookupReturnsResource": true,
+  "loggingQuery": {
+    "filter": "protoPayload.serviceName=\"aiplatform.googleapis.com\" AND timestamp>=\"2026-10-12T08:45:00Z\" AND timestamp<=\"2026-10-12T09:40:00Z\"",
+    "limit": 200,
+    "exitCode": 0,
+    "queriedAt": "2026-10-12T09:50:55.619501+00:00",
+    "apiDisabled": false,
+    "projectIdResolved": true,
+    "entriesReturned": 0
+  },
+  "keyProjectId": "river-bruin-511100-g8",
+  "entries": []
+}

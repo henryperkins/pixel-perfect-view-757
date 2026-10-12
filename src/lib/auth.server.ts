@@ -18,6 +18,7 @@ const PBKDF2_ITERATIONS = 100_000;
 export interface SessionUser {
   userId: string;
   email: string;
+  isAdmin?: boolean;
 }
 
 const enc = new TextEncoder();
@@ -150,7 +151,8 @@ export async function getSessionUser(): Promise<SessionUser | null> {
     setSessionCookie(null);
     return null;
   }
-  return { userId: row.user_id, email: row.email };
+  const admin = await hasRole(row.user_id, "admin");
+  return { userId: row.user_id, email: row.email, isAdmin: admin };
 }
 
 /** Drops the current session on both sides. */

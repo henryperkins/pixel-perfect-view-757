@@ -1,0 +1,2785 @@
+{
+  "projectId": "river-bruin-511100-g8",
+  "interval": {
+    "startTime": "2026-10-12T08:45:00Z",
+    "endTime": "2026-10-12T09:40:00Z"
+  },
+  "note": "Project-level aggregate metrics; the report contains no request IDs to correlate individual cases.",
+  "results": [
+    {
+      "metric": "aiplatform.googleapis.com/publisher/online_serving/model_invocation_count",
+      "status": "success",
+      "timeSeries": [
+        {
+          "metric": {
+            "labels": {
+              "method": "GenerateContent",
+              "output_token_size": "OUTPUT_TOKEN_BUCKETIZED_SIZE_0_TO_25",
+              "source": "global",
+              "shared_request_type": "standard",
+              "input_token_size": "INPUT_TOKEN_BUCKETIZED_SIZE_0_TO_100",
+              "request_type": "shared",
+              "response_code": "499"
+            },
+            "type": "aiplatform.googleapis.com/publisher/online_serving/model_invocation_count"
+          },
+          "resource": {
+            "type": "aiplatform.googleapis.com/PublisherModel",
+            "labels": {
+              "model_version_id": "",
+              "publisher": "google",
+              "model_user_id": "gemini-3.8-flash",
+              "project_id": "river-bruin-511100-g8",
+              "location": "global"
+            }
+          },
+          "metricKind": "DELTA",
+          "valueType": "INT64",
+          "points": [
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:17:57.001Z",
+                "endTime": "2026-10-12T09:18:57Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:16:57.001Z",
+                "endTime": "2026-10-12T09:17:57Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:15:57.001Z",
+                "endTime": "2026-10-12T09:16:57Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:14:57.001Z",
+                "endTime": "2026-10-12T09:15:57Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:13:57.001Z",
+                "endTime": "2026-10-12T09:14:57Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:11:57.001Z",
+                "endTime": "2026-10-12T09:12:57Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:05:57.001Z",
+                "endTime": "2026-10-12T09:06:57Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:04:57.001Z",
+                "endTime": "2026-10-12T09:05:57Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:03:57.001Z",
+                "endTime": "2026-10-12T09:04:57Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:02:57.001Z",
+                "endTime": "2026-10-12T09:03:57Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:58:57.001Z",
+                "endTime": "2026-10-12T08:59:57Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:56:57.001Z",
+                "endTime": "2026-10-12T08:57:57Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:54:57.001Z",
+                "endTime": "2026-10-12T08:55:57Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:53:57.001Z",
+                "endTime": "2026-10-12T08:54:57Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            }
+          ]
+        },
+        {
+          "metric": {
+            "labels": {
+              "source": "global",
+              "response_code": "200",
+              "method": "GenerateContent",
+              "output_token_size": "OUTPUT_TOKEN_BUCKETIZED_SIZE_2K_TO_5K",
+              "request_type": "shared",
+              "shared_request_type": "standard",
+              "input_token_size": "INPUT_TOKEN_BUCKETIZED_SIZE_2K_TO_5K"
+            },
+            "type": "aiplatform.googleapis.com/publisher/online_serving/model_invocation_count"
+          },
+          "resource": {
+            "type": "aiplatform.googleapis.com/PublisherModel",
+            "labels": {
+              "model_version_id": "",
+              "project_id": "river-bruin-511100-g8",
+              "model_user_id": "gemini-3.8-flash",
+              "location": "global",
+              "publisher": "google"
+            }
+          },
+          "metricKind": "DELTA",
+          "valueType": "INT64",
+          "points": [
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:19:58.001Z",
+                "endTime": "2026-10-12T09:20:58Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:17:58.001Z",
+                "endTime": "2026-10-12T09:18:58Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:04:58.001Z",
+                "endTime": "2026-10-12T09:05:58Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:59:58.001Z",
+                "endTime": "2026-10-12T09:00:58Z"
+              },
+              "value": {
+                "int64Value": "2"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:58:58.001Z",
+                "endTime": "2026-10-12T08:59:58Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:56:58.001Z",
+                "endTime": "2026-10-12T08:57:58Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:52:58.001Z",
+                "endTime": "2026-10-12T08:53:58Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            }
+          ]
+        },
+        {
+          "metric": {
+            "labels": {
+              "response_code": "200",
+              "input_token_size": "INPUT_TOKEN_BUCKETIZED_SIZE_2K_TO_5K",
+              "source": "global",
+              "method": "GenerateContent",
+              "shared_request_type": "standard",
+              "output_token_size": "OUTPUT_TOKEN_BUCKETIZED_SIZE_5K_TO_10K",
+              "request_type": "shared"
+            },
+            "type": "aiplatform.googleapis.com/publisher/online_serving/model_invocation_count"
+          },
+          "resource": {
+            "type": "aiplatform.googleapis.com/PublisherModel",
+            "labels": {
+              "model_version_id": "",
+              "publisher": "google",
+              "location": "global",
+              "model_user_id": "gemini-3.8-flash",
+              "project_id": "river-bruin-511100-g8"
+            }
+          },
+          "metricKind": "DELTA",
+          "valueType": "INT64",
+          "points": [
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:21:05.001Z",
+                "endTime": "2026-10-12T09:22:05Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:19:05.001Z",
+                "endTime": "2026-10-12T09:20:05Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:13:05.001Z",
+                "endTime": "2026-10-12T09:14:05Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:11:05.001Z",
+                "endTime": "2026-10-12T09:12:05Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:10:05.001Z",
+                "endTime": "2026-10-12T09:11:05Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:09:05.001Z",
+                "endTime": "2026-10-12T09:10:05Z"
+              },
+              "value": {
+                "int64Value": "2"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:08:05.001Z",
+                "endTime": "2026-10-12T09:09:05Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:07:05.001Z",
+                "endTime": "2026-10-12T09:08:05Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:02:05.001Z",
+                "endTime": "2026-10-12T09:03:05Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:01:05.001Z",
+                "endTime": "2026-10-12T09:02:05Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:58:05.001Z",
+                "endTime": "2026-10-12T08:59:05Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:53:05.001Z",
+                "endTime": "2026-10-12T08:54:05Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:52:05.001Z",
+                "endTime": "2026-10-12T08:53:05Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:51:05.001Z",
+                "endTime": "2026-10-12T08:52:05Z"
+              },
+              "value": {
+                "int64Value": "1"
+              }
+            }
+          ]
+        }
+      ],
+      "hasNextPage": false
+    },
+    {
+      "metric": "aiplatform.googleapis.com/publisher/online_serving/model_invocation_latencies",
+      "status": "success",
+      "timeSeries": [
+        {
+          "metric": {
+            "labels": {
+              "output_token_size": "OUTPUT_TOKEN_BUCKETIZED_SIZE_2K_TO_5K",
+              "shared_request_type": "standard",
+              "input_token_size": "INPUT_TOKEN_BUCKETIZED_SIZE_2K_TO_5K",
+              "source": "global",
+              "latency_type": "total",
+              "request_type": "shared"
+            },
+            "type": "aiplatform.googleapis.com/publisher/online_serving/model_invocation_latencies"
+          },
+          "resource": {
+            "type": "aiplatform.googleapis.com/PublisherModel",
+            "labels": {
+              "model_version_id": "",
+              "publisher": "google",
+              "model_user_id": "gemini-3.8-flash",
+              "project_id": "river-bruin-511100-g8",
+              "location": "global"
+            }
+          },
+          "metricKind": "DELTA",
+          "valueType": "DISTRIBUTION",
+          "points": [
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:20:07.001Z",
+                "endTime": "2026-10-12T09:21:07Z"
+              },
+              "value": {
+                "distributionValue": {
+                  "count": "1",
+                  "mean": 30548.616354,
+                  "bucketOptions": {
+                    "exponentialBuckets": {
+                      "numFiniteBuckets": 75,
+                      "growthFactor": 1.2,
+                      "scale": 1
+                    }
+                  },
+                  "bucketCounts": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "1"
+                  ]
+                }
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:18:07.001Z",
+                "endTime": "2026-10-12T09:19:07Z"
+              },
+              "value": {
+                "distributionValue": {
+                  "count": "1",
+                  "mean": 23205.923527,
+                  "bucketOptions": {
+                    "exponentialBuckets": {
+                      "numFiniteBuckets": 75,
+                      "growthFactor": 1.2,
+                      "scale": 1
+                    }
+                  },
+                  "bucketCounts": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "1"
+                  ]
+                }
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:05:07.001Z",
+                "endTime": "2026-10-12T09:06:07Z"
+              },
+              "value": {
+                "distributionValue": {
+                  "count": "1",
+                  "mean": 31947.424936,
+                  "bucketOptions": {
+                    "exponentialBuckets": {
+                      "numFiniteBuckets": 75,
+                      "growthFactor": 1.2,
+                      "scale": 1
+                    }
+                  },
+                  "bucketCounts": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "1"
+                  ]
+                }
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:00:07.001Z",
+                "endTime": "2026-10-12T09:01:07Z"
+              },
+              "value": {
+                "distributionValue": {
+                  "count": "2",
+                  "mean": 25896.873369499997,
+                  "sumOfSquaredDeviation": 140.33932826002166,
+                  "bucketOptions": {
+                    "exponentialBuckets": {
+                      "numFiniteBuckets": 75,
+                      "growthFactor": 1.2,
+                      "scale": 1
+                    }
+                  },
+                  "bucketCounts": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "2"
+                  ]
+                }
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:59:07.001Z",
+                "endTime": "2026-10-12T09:00:07Z"
+              },
+              "value": {
+                "distributionValue": {
+                  "count": "1",
+                  "mean": 31172.341383,
+                  "bucketOptions": {
+                    "exponentialBuckets": {
+                      "numFiniteBuckets": 75,
+                      "growthFactor": 1.2,
+                      "scale": 1
+                    }
+                  },
+                  "bucketCounts": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "1"
+                  ]
+                }
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:57:07.001Z",
+                "endTime": "2026-10-12T08:58:07Z"
+              },
+              "value": {
+                "distributionValue": {
+                  "count": "1",
+                  "mean": 34696.145103,
+                  "bucketOptions": {
+                    "exponentialBuckets": {
+                      "numFiniteBuckets": 75,
+                      "growthFactor": 1.2,
+                      "scale": 1
+                    }
+                  },
+                  "bucketCounts": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "1"
+                  ]
+                }
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:53:07.001Z",
+                "endTime": "2026-10-12T08:54:07Z"
+              },
+              "value": {
+                "distributionValue": {
+                  "count": "1",
+                  "mean": 27204.408723,
+                  "bucketOptions": {
+                    "exponentialBuckets": {
+                      "numFiniteBuckets": 75,
+                      "growthFactor": 1.2,
+                      "scale": 1
+                    }
+                  },
+                  "bucketCounts": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "1"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "metric": {
+            "labels": {
+              "source": "global",
+              "output_token_size": "OUTPUT_TOKEN_BUCKETIZED_SIZE_5K_TO_10K",
+              "shared_request_type": "standard",
+              "latency_type": "total",
+              "request_type": "shared",
+              "input_token_size": "INPUT_TOKEN_BUCKETIZED_SIZE_2K_TO_5K"
+            },
+            "type": "aiplatform.googleapis.com/publisher/online_serving/model_invocation_latencies"
+          },
+          "resource": {
+            "type": "aiplatform.googleapis.com/PublisherModel",
+            "labels": {
+              "project_id": "river-bruin-511100-g8",
+              "publisher": "google",
+              "location": "global",
+              "model_user_id": "gemini-3.8-flash",
+              "model_version_id": ""
+            }
+          },
+          "metricKind": "DELTA",
+          "valueType": "DISTRIBUTION",
+          "points": [
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:20:17.001Z",
+                "endTime": "2026-10-12T09:21:17Z"
+              },
+              "value": {
+                "distributionValue": {
+                  "count": "1",
+                  "mean": 54754.460412,
+                  "bucketOptions": {
+                    "exponentialBuckets": {
+                      "numFiniteBuckets": 75,
+                      "growthFactor": 1.2,
+                      "scale": 1
+                    }
+                  },
+                  "bucketCounts": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "1"
+                  ]
+                }
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:19:17.001Z",
+                "endTime": "2026-10-12T09:20:17Z"
+              },
+              "value": {
+                "distributionValue": {
+                  "count": "1",
+                  "mean": 56432.497436,
+                  "bucketOptions": {
+                    "exponentialBuckets": {
+                      "numFiniteBuckets": 75,
+                      "growthFactor": 1.2,
+                      "scale": 1
+                    }
+                  },
+                  "bucketCounts": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "1"
+                  ]
+                }
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:13:17.001Z",
+                "endTime": "2026-10-12T09:14:17Z"
+              },
+              "value": {
+                "distributionValue": {
+                  "count": "1",
+                  "mean": 56445.028056,
+                  "bucketOptions": {
+                    "exponentialBuckets": {
+                      "numFiniteBuckets": 75,
+                      "growthFactor": 1.2,
+                      "scale": 1
+                    }
+                  },
+                  "bucketCounts": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "1"
+                  ]
+                }
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:11:17.001Z",
+                "endTime": "2026-10-12T09:12:17Z"
+              },
+              "value": {
+                "distributionValue": {
+                  "count": "1",
+                  "mean": 35488.639539,
+                  "bucketOptions": {
+                    "exponentialBuckets": {
+                      "numFiniteBuckets": 75,
+                      "growthFactor": 1.2,
+                      "scale": 1
+                    }
+                  },
+                  "bucketCounts": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "1"
+                  ]
+                }
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:10:17.001Z",
+                "endTime": "2026-10-12T09:11:17Z"
+              },
+              "value": {
+                "distributionValue": {
+                  "count": "1",
+                  "mean": 46618.599614,
+                  "bucketOptions": {
+                    "exponentialBuckets": {
+                      "numFiniteBuckets": 75,
+                      "growthFactor": 1.2,
+                      "scale": 1
+                    }
+                  },
+                  "bucketCounts": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "1"
+                  ]
+                }
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:09:17.001Z",
+                "endTime": "2026-10-12T09:10:17Z"
+              },
+              "value": {
+                "distributionValue": {
+                  "count": "2",
+                  "mean": 35195.815612,
+                  "sumOfSquaredDeviation": 24399154.30015823,
+                  "bucketOptions": {
+                    "exponentialBuckets": {
+                      "numFiniteBuckets": 75,
+                      "growthFactor": 1.2,
+                      "scale": 1
+                    }
+                  },
+                  "bucketCounts": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "1",
+                    "1"
+                  ]
+                }
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:08:17.001Z",
+                "endTime": "2026-10-12T09:09:17Z"
+              },
+              "value": {
+                "distributionValue": {
+                  "count": "1",
+                  "mean": 56396.508895,
+                  "bucketOptions": {
+                    "exponentialBuckets": {
+                      "numFiniteBuckets": 75,
+                      "growthFactor": 1.2,
+                      "scale": 1
+                    }
+                  },
+                  "bucketCounts": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "1"
+                  ]
+                }
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:07:17.001Z",
+                "endTime": "2026-10-12T09:08:17Z"
+              },
+              "value": {
+                "distributionValue": {
+                  "count": "1",
+                  "mean": 55466.351733,
+                  "bucketOptions": {
+                    "exponentialBuckets": {
+                      "numFiniteBuckets": 75,
+                      "growthFactor": 1.2,
+                      "scale": 1
+                    }
+                  },
+                  "bucketCounts": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "1"
+                  ]
+                }
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:01:17.001Z",
+                "endTime": "2026-10-12T09:02:17Z"
+              },
+              "value": {
+                "distributionValue": {
+                  "count": "1",
+                  "mean": 57394.802264,
+                  "bucketOptions": {
+                    "exponentialBuckets": {
+                      "numFiniteBuckets": 75,
+                      "growthFactor": 1.2,
+                      "scale": 1
+                    }
+                  },
+                  "bucketCounts": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "1"
+                  ]
+                }
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:00:17.001Z",
+                "endTime": "2026-10-12T09:01:17Z"
+              },
+              "value": {
+                "distributionValue": {
+                  "count": "1",
+                  "mean": 35888.648404,
+                  "bucketOptions": {
+                    "exponentialBuckets": {
+                      "numFiniteBuckets": 75,
+                      "growthFactor": 1.2,
+                      "scale": 1
+                    }
+                  },
+                  "bucketCounts": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "1"
+                  ]
+                }
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:57:17.001Z",
+                "endTime": "2026-10-12T08:58:17Z"
+              },
+              "value": {
+                "distributionValue": {
+                  "count": "1",
+                  "mean": 32913.039602,
+                  "bucketOptions": {
+                    "exponentialBuckets": {
+                      "numFiniteBuckets": 75,
+                      "growthFactor": 1.2,
+                      "scale": 1
+                    }
+                  },
+                  "bucketCounts": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "1"
+                  ]
+                }
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:53:17.001Z",
+                "endTime": "2026-10-12T08:54:17Z"
+              },
+              "value": {
+                "distributionValue": {
+                  "count": "1",
+                  "mean": 47878.73196,
+                  "bucketOptions": {
+                    "exponentialBuckets": {
+                      "numFiniteBuckets": 75,
+                      "growthFactor": 1.2,
+                      "scale": 1
+                    }
+                  },
+                  "bucketCounts": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "1"
+                  ]
+                }
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:52:17.001Z",
+                "endTime": "2026-10-12T08:53:17Z"
+              },
+              "value": {
+                "distributionValue": {
+                  "count": "1",
+                  "mean": 54551.767775,
+                  "bucketOptions": {
+                    "exponentialBuckets": {
+                      "numFiniteBuckets": 75,
+                      "growthFactor": 1.2,
+                      "scale": 1
+                    }
+                  },
+                  "bucketCounts": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "1"
+                  ]
+                }
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:51:17.001Z",
+                "endTime": "2026-10-12T08:52:17Z"
+              },
+              "value": {
+                "distributionValue": {
+                  "count": "1",
+                  "mean": 45274.981264,
+                  "bucketOptions": {
+                    "exponentialBuckets": {
+                      "numFiniteBuckets": 75,
+                      "growthFactor": 1.2,
+                      "scale": 1
+                    }
+                  },
+                  "bucketCounts": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "1"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "hasNextPage": false
+    },
+    {
+      "metric": "aiplatform.googleapis.com/publisher/online_serving/first_token_latencies",
+      "status": "success",
+      "timeSeries": [],
+      "hasNextPage": false
+    },
+    {
+      "metric": "aiplatform.googleapis.com/publisher/online_serving/token_count",
+      "status": "success",
+      "timeSeries": [
+        {
+          "metric": {
+            "labels": {
+              "shared_request_type": "standard",
+              "request_type": "shared",
+              "type": "input",
+              "source": "global"
+            },
+            "type": "aiplatform.googleapis.com/publisher/online_serving/token_count"
+          },
+          "resource": {
+            "type": "aiplatform.googleapis.com/PublisherModel",
+            "labels": {
+              "location": "global",
+              "model_user_id": "gemini-3.8-flash",
+              "model_version_id": "",
+              "project_id": "river-bruin-511100-g8",
+              "publisher": "google"
+            }
+          },
+          "metricKind": "DELTA",
+          "valueType": "INT64",
+          "points": [
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:20:25.001Z",
+                "endTime": "2026-10-12T09:21:25Z"
+              },
+              "value": {
+                "int64Value": "3087"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:19:25.001Z",
+                "endTime": "2026-10-12T09:20:25Z"
+              },
+              "value": {
+                "int64Value": "4074"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:18:25.001Z",
+                "endTime": "2026-10-12T09:19:25Z"
+              },
+              "value": {
+                "int64Value": "2037"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:17:25.001Z",
+                "endTime": "2026-10-12T09:18:25Z"
+              },
+              "value": {
+                "int64Value": "0"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:16:25.001Z",
+                "endTime": "2026-10-12T09:17:25Z"
+              },
+              "value": {
+                "int64Value": "0"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:15:25.001Z",
+                "endTime": "2026-10-12T09:16:25Z"
+              },
+              "value": {
+                "int64Value": "0"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:14:25.001Z",
+                "endTime": "2026-10-12T09:15:25Z"
+              },
+              "value": {
+                "int64Value": "0"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:13:25.001Z",
+                "endTime": "2026-10-12T09:14:25Z"
+              },
+              "value": {
+                "int64Value": "0"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:12:25.001Z",
+                "endTime": "2026-10-12T09:13:25Z"
+              },
+              "value": {
+                "int64Value": "2212"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:11:25.001Z",
+                "endTime": "2026-10-12T09:12:25Z"
+              },
+              "value": {
+                "int64Value": "0"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:10:25.001Z",
+                "endTime": "2026-10-12T09:11:25Z"
+              },
+              "value": {
+                "int64Value": "4084"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:09:25.001Z",
+                "endTime": "2026-10-12T09:10:25Z"
+              },
+              "value": {
+                "int64Value": "2577"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:08:25.001Z",
+                "endTime": "2026-10-12T09:09:25Z"
+              },
+              "value": {
+                "int64Value": "4155"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:07:25.001Z",
+                "endTime": "2026-10-12T09:08:25Z"
+              },
+              "value": {
+                "int64Value": "2548"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:06:25.001Z",
+                "endTime": "2026-10-12T09:07:25Z"
+              },
+              "value": {
+                "int64Value": "0"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:05:25.001Z",
+                "endTime": "2026-10-12T09:06:25Z"
+              },
+              "value": {
+                "int64Value": "2574"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:04:25.001Z",
+                "endTime": "2026-10-12T09:05:25Z"
+              },
+              "value": {
+                "int64Value": "0"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:03:25.001Z",
+                "endTime": "2026-10-12T09:04:25Z"
+              },
+              "value": {
+                "int64Value": "0"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:02:25.001Z",
+                "endTime": "2026-10-12T09:03:25Z"
+              },
+              "value": {
+                "int64Value": "0"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:01:25.001Z",
+                "endTime": "2026-10-12T09:02:25Z"
+              },
+              "value": {
+                "int64Value": "2151"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:00:25.001Z",
+                "endTime": "2026-10-12T09:01:25Z"
+              },
+              "value": {
+                "int64Value": "4620"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:59:25.001Z",
+                "endTime": "2026-10-12T09:00:25Z"
+              },
+              "value": {
+                "int64Value": "4541"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:58:25.001Z",
+                "endTime": "2026-10-12T08:59:25Z"
+              },
+              "value": {
+                "int64Value": "0"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:57:25.001Z",
+                "endTime": "2026-10-12T08:58:25Z"
+              },
+              "value": {
+                "int64Value": "4350"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:56:25.001Z",
+                "endTime": "2026-10-12T08:57:25Z"
+              },
+              "value": {
+                "int64Value": "0"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:55:25.001Z",
+                "endTime": "2026-10-12T08:56:25Z"
+              },
+              "value": {
+                "int64Value": "0"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:54:25.001Z",
+                "endTime": "2026-10-12T08:55:25Z"
+              },
+              "value": {
+                "int64Value": "0"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:53:25.001Z",
+                "endTime": "2026-10-12T08:54:25Z"
+              },
+              "value": {
+                "int64Value": "4151"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:52:25.001Z",
+                "endTime": "2026-10-12T08:53:25Z"
+              },
+              "value": {
+                "int64Value": "2089"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:51:25.001Z",
+                "endTime": "2026-10-12T08:52:25Z"
+              },
+              "value": {
+                "int64Value": "2041"
+              }
+            }
+          ]
+        },
+        {
+          "metric": {
+            "labels": {
+              "request_type": "shared",
+              "source": "global",
+              "type": "output",
+              "shared_request_type": "standard"
+            },
+            "type": "aiplatform.googleapis.com/publisher/online_serving/token_count"
+          },
+          "resource": {
+            "type": "aiplatform.googleapis.com/PublisherModel",
+            "labels": {
+              "project_id": "river-bruin-511100-g8",
+              "model_version_id": "",
+              "model_user_id": "gemini-3.8-flash",
+              "publisher": "google",
+              "location": "global"
+            }
+          },
+          "metricKind": "DELTA",
+          "valueType": "INT64",
+          "points": [
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:20:43.001Z",
+                "endTime": "2026-10-12T09:21:43Z"
+              },
+              "value": {
+                "int64Value": "9187"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:19:43.001Z",
+                "endTime": "2026-10-12T09:20:43Z"
+              },
+              "value": {
+                "int64Value": "11958"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:18:43.001Z",
+                "endTime": "2026-10-12T09:19:43Z"
+              },
+              "value": {
+                "int64Value": "3259"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:17:43.001Z",
+                "endTime": "2026-10-12T09:18:43Z"
+              },
+              "value": {
+                "int64Value": "0"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:16:43.001Z",
+                "endTime": "2026-10-12T09:17:43Z"
+              },
+              "value": {
+                "int64Value": "0"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:15:43.001Z",
+                "endTime": "2026-10-12T09:16:43Z"
+              },
+              "value": {
+                "int64Value": "0"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:14:43.001Z",
+                "endTime": "2026-10-12T09:15:43Z"
+              },
+              "value": {
+                "int64Value": "0"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:13:43.001Z",
+                "endTime": "2026-10-12T09:14:43Z"
+              },
+              "value": {
+                "int64Value": "0"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:12:43.001Z",
+                "endTime": "2026-10-12T09:13:43Z"
+              },
+              "value": {
+                "int64Value": "8589"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:11:43.001Z",
+                "endTime": "2026-10-12T09:12:43Z"
+              },
+              "value": {
+                "int64Value": "0"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:10:43.001Z",
+                "endTime": "2026-10-12T09:11:43Z"
+              },
+              "value": {
+                "int64Value": "11521"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:09:43.001Z",
+                "endTime": "2026-10-12T09:10:43Z"
+              },
+              "value": {
+                "int64Value": "5126"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:08:43.001Z",
+                "endTime": "2026-10-12T09:09:43Z"
+              },
+              "value": {
+                "int64Value": "5682"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:07:43.001Z",
+                "endTime": "2026-10-12T09:08:43Z"
+              },
+              "value": {
+                "int64Value": "14484"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:06:43.001Z",
+                "endTime": "2026-10-12T09:07:43Z"
+              },
+              "value": {
+                "int64Value": "0"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:05:43.001Z",
+                "endTime": "2026-10-12T09:06:43Z"
+              },
+              "value": {
+                "int64Value": "4273"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:04:43.001Z",
+                "endTime": "2026-10-12T09:05:43Z"
+              },
+              "value": {
+                "int64Value": "0"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:03:43.001Z",
+                "endTime": "2026-10-12T09:04:43Z"
+              },
+              "value": {
+                "int64Value": "0"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:02:43.001Z",
+                "endTime": "2026-10-12T09:03:43Z"
+              },
+              "value": {
+                "int64Value": "0"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:01:43.001Z",
+                "endTime": "2026-10-12T09:02:43Z"
+              },
+              "value": {
+                "int64Value": "8381"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T09:00:43.001Z",
+                "endTime": "2026-10-12T09:01:43Z"
+              },
+              "value": {
+                "int64Value": "5049"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:59:43.001Z",
+                "endTime": "2026-10-12T09:00:43Z"
+              },
+              "value": {
+                "int64Value": "7083"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:58:43.001Z",
+                "endTime": "2026-10-12T08:59:43Z"
+              },
+              "value": {
+                "int64Value": "4205"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:57:43.001Z",
+                "endTime": "2026-10-12T08:58:43Z"
+              },
+              "value": {
+                "int64Value": "5426"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:56:43.001Z",
+                "endTime": "2026-10-12T08:57:43Z"
+              },
+              "value": {
+                "int64Value": "3375"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:55:43.001Z",
+                "endTime": "2026-10-12T08:56:43Z"
+              },
+              "value": {
+                "int64Value": "0"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:54:43.001Z",
+                "endTime": "2026-10-12T08:55:43Z"
+              },
+              "value": {
+                "int64Value": "0"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:53:43.001Z",
+                "endTime": "2026-10-12T08:54:43Z"
+              },
+              "value": {
+                "int64Value": "3838"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:52:43.001Z",
+                "endTime": "2026-10-12T08:53:43Z"
+              },
+              "value": {
+                "int64Value": "7014"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:51:43.001Z",
+                "endTime": "2026-10-12T08:52:43Z"
+              },
+              "value": {
+                "int64Value": "7249"
+              }
+            },
+            {
+              "interval": {
+                "startTime": "2026-10-12T08:50:43.001Z",
+                "endTime": "2026-10-12T08:51:43Z"
+              },
+              "value": {
+                "int64Value": "6572"
+              }
+            }
+          ]
+        }
+      ],
+      "hasNextPage": false
+    }
+  ]
+}

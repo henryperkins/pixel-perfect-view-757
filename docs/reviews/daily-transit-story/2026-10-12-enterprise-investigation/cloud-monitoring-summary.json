@@ -1,0 +1,183 @@
+[
+  {
+    "metric": "aiplatform.googleapis.com/publisher/online_serving/model_invocation_count",
+    "series": [
+      {
+        "labels": {
+          "method": "GenerateContent",
+          "output_token_size": "OUTPUT_TOKEN_BUCKETIZED_SIZE_0_TO_25",
+          "source": "global",
+          "shared_request_type": "standard",
+          "input_token_size": "INPUT_TOKEN_BUCKETIZED_SIZE_0_TO_100",
+          "request_type": "shared",
+          "response_code": "499"
+        },
+        "resourceLabels": {
+          "model_version_id": "",
+          "publisher": "google",
+          "model_user_id": "gemini-3.8-flash",
+          "project_id": "river-bruin-511100-g8",
+          "location": "global"
+        },
+        "points": 14,
+        "earliest": "2026-10-12T08:54:57Z",
+        "latest": "2026-10-12T09:18:57Z",
+        "sum": 14,
+        "minBucket": 1,
+        "maxBucket": 1
+      },
+      {
+        "labels": {
+          "source": "global",
+          "response_code": "200",
+          "method": "GenerateContent",
+          "output_token_size": "OUTPUT_TOKEN_BUCKETIZED_SIZE_2K_TO_5K",
+          "request_type": "shared",
+          "shared_request_type": "standard",
+          "input_token_size": "INPUT_TOKEN_BUCKETIZED_SIZE_2K_TO_5K"
+        },
+        "resourceLabels": {
+          "model_version_id": "",
+          "project_id": "river-bruin-511100-g8",
+          "model_user_id": "gemini-3.8-flash",
+          "location": "global",
+          "publisher": "google"
+        },
+        "points": 7,
+        "earliest": "2026-10-12T08:53:58Z",
+        "latest": "2026-10-12T09:20:58Z",
+        "sum": 8,
+        "minBucket": 1,
+        "maxBucket": 2
+      },
+      {
+        "labels": {
+          "response_code": "200",
+          "input_token_size": "INPUT_TOKEN_BUCKETIZED_SIZE_2K_TO_5K",
+          "source": "global",
+          "method": "GenerateContent",
+          "shared_request_type": "standard",
+          "output_token_size": "OUTPUT_TOKEN_BUCKETIZED_SIZE_5K_TO_10K",
+          "request_type": "shared"
+        },
+        "resourceLabels": {
+          "model_version_id": "",
+          "publisher": "google",
+          "location": "global",
+          "model_user_id": "gemini-3.8-flash",
+          "project_id": "river-bruin-511100-g8"
+        },
+        "points": 14,
+        "earliest": "2026-10-12T08:52:05Z",
+        "latest": "2026-10-12T09:22:05Z",
+        "sum": 15,
+        "minBucket": 1,
+        "maxBucket": 2
+      }
+    ]
+  },
+  {
+    "metric": "aiplatform.googleapis.com/publisher/online_serving/model_invocation_latencies",
+    "series": [
+      {
+        "labels": {
+          "output_token_size": "OUTPUT_TOKEN_BUCKETIZED_SIZE_2K_TO_5K",
+          "shared_request_type": "standard",
+          "input_token_size": "INPUT_TOKEN_BUCKETIZED_SIZE_2K_TO_5K",
+          "source": "global",
+          "latency_type": "total",
+          "request_type": "shared"
+        },
+        "resourceLabels": {
+          "model_version_id": "",
+          "publisher": "google",
+          "model_user_id": "gemini-3.8-flash",
+          "project_id": "river-bruin-511100-g8",
+          "location": "global"
+        },
+        "points": 7,
+        "earliest": "2026-10-12T08:54:07Z",
+        "latest": "2026-10-12T09:21:07Z",
+        "count": 8,
+        "weightedMeanMs": 28821.075845625,
+        "minBucketMeanMs": 23205.923527,
+        "maxBucketMeanMs": 34696.145103
+      },
+      {
+        "labels": {
+          "source": "global",
+          "output_token_size": "OUTPUT_TOKEN_BUCKETIZED_SIZE_5K_TO_10K",
+          "shared_request_type": "standard",
+          "latency_type": "total",
+          "request_type": "shared",
+          "input_token_size": "INPUT_TOKEN_BUCKETIZED_SIZE_2K_TO_5K"
+        },
+        "resourceLabels": {
+          "project_id": "river-bruin-511100-g8",
+          "publisher": "google",
+          "location": "global",
+          "model_user_id": "gemini-3.8-flash",
+          "model_version_id": ""
+        },
+        "points": 14,
+        "earliest": "2026-10-12T08:52:17Z",
+        "latest": "2026-10-12T09:21:17Z",
+        "count": 15,
+        "weightedMeanMs": 47059.712545200004,
+        "minBucketMeanMs": 32913.039602,
+        "maxBucketMeanMs": 57394.802264
+      }
+    ]
+  },
+  {
+    "metric": "aiplatform.googleapis.com/publisher/online_serving/first_token_latencies",
+    "series": []
+  },
+  {
+    "metric": "aiplatform.googleapis.com/publisher/online_serving/token_count",
+    "series": [
+      {
+        "labels": {
+          "shared_request_type": "standard",
+          "request_type": "shared",
+          "type": "input",
+          "source": "global"
+        },
+        "resourceLabels": {
+          "location": "global",
+          "model_user_id": "gemini-3.8-flash",
+          "model_version_id": "",
+          "project_id": "river-bruin-511100-g8",
+          "publisher": "google"
+        },
+        "points": 30,
+        "earliest": "2026-10-12T08:52:25Z",
+        "latest": "2026-10-12T09:21:25Z",
+        "sum": 51291,
+        "minBucket": 0,
+        "maxBucket": 4620
+      },
+      {
+        "labels": {
+          "request_type": "shared",
+          "source": "global",
+          "type": "output",
+          "shared_request_type": "standard"
+        },
+        "resourceLabels": {
+          "project_id": "river-bruin-511100-g8",
+          "model_version_id": "",
+          "model_user_id": "gemini-3.8-flash",
+          "publisher": "google",
+          "location": "global"
+        },
+        "points": 31,
+        "earliest": "2026-10-12T08:51:43Z",
+        "latest": "2026-10-12T09:21:43Z",
+        "sum": 132271,
+        "minBucket": 0,
+        "maxBucket": 14484
+      }
+    ]
+  }
+]

@@ -1,0 +1,19 @@
+✔ Gemini Enterprise receives the gateway prompt and schema with only its own key (530.204147ms)
+✔ thought parts never become draft text and split text parts are joined (7.747875ms)
+✔ Gemini Enterprise failures become closed codes without provider text (25.796001ms)
+✔ blocked, empty and non-JSON responses fall back to template copy (14.383335ms)
+✔ a missing Gemini Enterprise key makes no request even when Lovable is configured (6.822688ms)
+✔ member readings and natal chapters stay on the Lovable gateway (8.372877ms)
+✔ one report cannot mix providers; Gemini Enterprise results combine together (13.411669ms)
+✔ complete Gemini Enterprise reports compare with each other but not with gateway reports (428.436402ms)
+✔ provider status and Gemini Enterprise runs are admin-only and expose no key (12.49411ms)
+✔ a Gemini Enterprise release draft records its provider in the draft and audit trail (8.402517ms)
+✔ the evaluation panel offers a labeled provider choice that defaults to the gateway (167.544516ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1555.958697

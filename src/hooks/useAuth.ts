@@ -21,5 +21,5 @@ export function useAuth() {
     void refresh();
   }, [refresh]);
 
-  return { session, user: session, loading, refresh };
+  return { session, user: session, isAdmin: session?.isAdmin ?? false, loading, refresh };
 }
