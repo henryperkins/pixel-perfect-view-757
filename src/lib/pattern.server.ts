@@ -1476,16 +1476,26 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
   if (error) throw new Error(error.message);
 
   if (provenance.length) {
-    const { error: sourceError } = await db.from("reading_sources").insert(
-      provenance.map((p) => ({
-        user_id: userId,
-        reading_id: inserted.id,
-        lane: p.lane,
-        source_id: p.source_id,
-        label: p.label,
-        detail: p.detail,
-      })),
-    );
+    // Six supplied columns plus the generated ID: 14 rows use 98 of D1's
+    // 100 bound parameters. Keep the full evidence trail, including natal origins.
+    const rowsPerInsert = 14;
+    let sourceError: { message: string } | null = null;
+    for (let start = 0; start < provenance.length; start += rowsPerInsert) {
+      const result = await db.from("reading_sources").insert(
+        provenance.slice(start, start + rowsPerInsert).map((p) => ({
+          user_id: userId,
+          reading_id: inserted.id,
+          lane: p.lane,
+          source_id: p.source_id,
+          label: p.label,
+          detail: p.detail,
+        })),
+      );
+      if (result.error) {
+        sourceError = result.error;
+        break;
+      }
+    }
     if (sourceError) {
       // Do not cache a newly generated reading whose source trail was not saved.
       // Only this attempt's row is removed; older readings and feedback survive.

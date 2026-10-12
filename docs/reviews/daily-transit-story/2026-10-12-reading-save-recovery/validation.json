@@ -1,0 +1,48 @@
+{
+  "checkedAt": "2026-10-12T09:54:35.122Z",
+  "baseCommit": "6de843c110b62dd4fb5f785524de0b40959f230b",
+  "sourceHashes": {
+    "src/lib/pattern.server.ts": "92d2893b5af44466585bb956bddc5d86dde0adfb846b18275d8ed9a219078243",
+    "tests/reading-provenance-limit.test.mjs": "f21a70a75fe04b0ecd78b2984cc0be1a22629c4268023692398b72af88cf1b7b",
+    "tests/helpers/records-harness.mjs": "b72b5a62a239bfeaa5615225595884b3d355c49bd0de0f099eb5d493b72e6bb1"
+  },
+  "regressions": {
+    "before": {
+      "pass": 0,
+      "fail": 2,
+      "originalLogSha256": "2fe5959275bee220114aaab3f83f9facee7bdbc7d414099c7b4a35e8117205e7",
+      "displayLogNormalization": "Trailing spaces removed"
+    },
+    "after": {
+      "pass": 2,
+      "fail": 0
+    }
+  },
+  "tests": {
+    "command": "npm test",
+    "pass": 536,
+    "fail": 0,
+    "skipped": 0,
+    "logSha256": "955a2dfb84a615b5d2003c26c47e325fa384f048500a32b1edbad11b854b3ffc"
+  },
+  "typecheck": {
+    "command": "npx tsc --noEmit",
+    "exitCode": 0
+  },
+  "lint": {
+    "command": "npx eslint src/lib/pattern.server.ts tests/reading-provenance-limit.test.mjs tests/helpers/records-harness.mjs",
+    "exitCode": 0
+  },
+  "build": {
+    "command": "npm run build",
+    "exitCode": 0,
+    "logSha256": "2f7b6221882f1185bd7df4fd9ea55545cd4d648ced70345646cfcc8233b98907"
+  },
+  "databaseLimit": {
+    "boundParameters": 100,
+    "columnsPerEvidenceRow": 7,
+    "rowsPerInsert": 14,
+    "maxBoundParametersPerInsert": 98,
+    "readOnlyLive101ParameterProbe": "rejected with too many SQL variables"
+  }
+}
