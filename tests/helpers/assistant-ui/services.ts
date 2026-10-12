@@ -8,6 +8,9 @@ const initial = {
   error: "",
   scopes: ["today", "pattern"],
   member: true,
+  remembered: false,
+  resetError: false,
+  identityScopes: ["email"],
 };
 const state = () => ({ ...initial, ...JSON.parse(localStorage.getItem(key) ?? "{}") });
 function save(patch: object) {
@@ -111,6 +114,19 @@ export const revokeAssistantGrant = async () => {
   check();
   save({ granted: false });
 };
+export const fetchRememberedAssistantGrants = async () => {
+  check();
+  return state().remembered ? [{ clientId: "client-test", clientName: "Example assistant" }] : [];
+};
+export const resetRememberedAssistantGrant = async () => {
+  check();
+  save({ granted: false });
+  if (state().resetError)
+    throw new Error(
+      "Pattern access has stopped, but the remembered sign-in approval could not be cleared. Try again.",
+    );
+  save({ remembered: false });
+};
 export const fetchAssistantAuthorization = async ({
   data,
 }: {
@@ -118,9 +134,20 @@ export const fetchAssistantAuthorization = async ({
 }) => {
   check();
   if (data.authorizationId === "expired") throw new Error("Expired request");
+  if (state().remembered)
+    return {
+      kind: "redirect",
+      redirectOrigin: window.location.origin,
+      redirectUrl: `${window.location.origin}/fixture-callback?decision=remembered`,
+    };
   return {
     kind: "consent",
     linked: state().linked,
+    memberMatches: state().member && state().linked,
+    identityScopes: state().identityScopes,
+    unsupportedScopes: state().identityScopes.filter(
+      (scope: string) => !["openid", "email", "profile", "phone"].includes(scope),
+    ),
     email: "assistant@example.invalid",
     clientName: "Example assistant",
     clientId: "client-test",
@@ -133,7 +160,11 @@ export const decideAssistantAuthorization = async ({
   data: { action: string; scopes: string[] };
 }) => {
   check();
-  save({ granted: data.action === "approve", scopes: data.scopes });
+  save({
+    granted: data.action === "approve",
+    remembered: data.action === "approve",
+    scopes: data.scopes,
+  });
   localStorage.setItem("assistant-decision", JSON.stringify(data));
   return { redirectUrl: `${window.location.origin}/fixture-callback?decision=${data.action}` };
 };

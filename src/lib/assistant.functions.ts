@@ -46,6 +46,22 @@ export const revokeAssistantGrant = createServerFn({ method: "POST" })
     return m.revokeGrant(context.userId, data.clientId, data.accessToken);
   });
 
+export const fetchRememberedAssistantGrants = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
+  .inputValidator((d: unknown) => token.parse(d))
+  .handler(async ({ data, context }) => {
+    const m = await import("./assistant.server");
+    return m.listRememberedGrants(context.userId, data.accessToken);
+  });
+
+export const resetRememberedAssistantGrant = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
+  .inputValidator((d: unknown) => token.extend({ clientId: z.string().min(1).max(200) }).parse(d))
+  .handler(async ({ data, context }) => {
+    const m = await import("./assistant.server");
+    return m.resetRememberedGrant(context.userId, data.clientId, data.accessToken);
+  });
+
 /** The server resolves the client from an auth-server authorization request. */
 export const fetchAssistantAuthorization = createServerFn({ method: "POST" })
   .inputValidator((d: unknown) =>

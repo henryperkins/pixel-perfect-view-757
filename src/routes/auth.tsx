@@ -4,10 +4,11 @@ import { toast } from "sonner";
 
 import { Shell } from "@/components/pattern/Shell";
 import { signIn, signUp } from "@/lib/auth.shared";
+import { assistantReturnTo } from "@/lib/assistant-navigation";
 
 export const Route = createFileRoute("/auth")({
-  validateSearch: (search: Record<string, unknown>): { next?: "/assistants" } =>
-    search["next"] === "/assistants" ? { next: "/assistants" } : {},
+  validateSearch: (search: Record<string, unknown>): { next?: string } =>
+    typeof search["next"] === "string" ? { next: assistantReturnTo(search["next"]) } : {},
   head: () => ({
     meta: [
       { title: "Sign in — Pattern" },
@@ -43,7 +44,8 @@ function AuthPage() {
       } else {
         await signIn({ data: { email, password } });
       }
-      void navigate({ to: next ?? "/" });
+      if (next) window.location.assign(next);
+      else void navigate({ to: "/" });
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Sign-in failed");
     } finally {

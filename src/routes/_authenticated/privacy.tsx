@@ -240,6 +240,12 @@ function PrivacyPage() {
               data or generate new readings.
             </p>
             <p className="mt-2 text-sm text-muted-foreground">
+              The connection also shares information from your separate assistant sign-in, including
+              its account ID, email and any profile or phone information saved with it. The consent
+              page shows the requested identity permissions alongside your Pattern sharing choices.
+              Approving access requires both your Pattern and assistant sign-ins.
+            </p>
+            <p className="mt-2 text-sm text-muted-foreground">
               Structured birth details, coordinates and check-ins are excluded. Readings influenced
               by check-ins and older readings without a separate chart-only copy are withheld.
               Journal sharing includes your own written titles and entry text, which may contain

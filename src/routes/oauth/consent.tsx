@@ -43,6 +43,12 @@ const areas: { id: AssistantScope; title: string; description: string }[] = [
       "Your written titles and entry text. This can include sensitive details you wrote yourself. Only turn this on if you want this assistant to receive them.",
   },
 ];
+const identityPermissions: Record<string, string> = {
+  openid: "An identity token confirming your assistant account",
+  email: "Your email address and its verification status",
+  profile: "Profile information, such as your name and picture",
+  phone: "Your phone number and its verification status, if present",
+};
 export function ConsentPage() {
   const { authorization_id: authorizationId } = Route.useSearch();
   const { session, loading, error: sessionError } = useAssistantSession();
@@ -135,8 +141,12 @@ export function ConsentPage() {
               <a href={details.data.redirectUrl}>Return to assistant</a>
             </Button>
             <p className="text-sm text-muted-foreground">
-              To change access, start a fresh consent request from your assistant.
+              To change or restore access, clear this assistant’s remembered approval in Connected
+              assistants, then start a new connection from your assistant.
             </p>
+            <Button asChild variant="outline" className="min-h-11">
+              <Link to="/assistants">Manage remembered approvals</Link>
+            </Button>
           </div>
         ) : (
           <>
@@ -149,6 +159,48 @@ export function ConsentPage() {
             <p className="mt-2 break-words text-xs text-muted-foreground">
               Assistant sign-in: {details.data.email}
             </p>
+            <section
+              className="mt-6 border border-rule p-4 text-sm"
+              aria-labelledby="identity-permissions"
+            >
+              <h2 id="identity-permissions" className="font-medium">
+                Assistant sign-in information
+              </h2>
+              <p className="mt-2 text-muted-foreground">
+                This connection also shares information from your separate assistant sign-in,
+                including its account ID, email and any profile or phone information saved with it.
+                The assistant requests these identity permissions:
+              </p>
+              <ul className="mt-3 list-disc space-y-2 pl-5">
+                {details.data.identityScopes.map((scope) => (
+                  <li key={scope} className="break-words">
+                    {identityPermissions[scope] ?? `Unsupported permission: ${scope}`}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-3 text-muted-foreground">
+                These sign-in permissions are approved together. Deny the request if you do not want
+                to share them. Choose your Pattern content separately below.
+              </p>
+              {details.data.unsupportedScopes.length > 0 && (
+                <p role="alert" className="mt-3">
+                  This request includes unsupported permissions and cannot be approved.
+                </p>
+              )}
+            </section>
+            {details.data.linked && !details.data.memberMatches && (
+              <div className="mt-6 border border-rule p-4 text-sm">
+                <p>
+                  Sign in to the Pattern account linked to this assistant sign-in. Both sign-ins are
+                  needed to approve access.
+                </p>
+                <Button asChild variant="outline" className="mt-4 min-h-11">
+                  <Link to="/auth" search={{ next }}>
+                    Sign in to Pattern to approve
+                  </Link>
+                </Button>
+              </div>
+            )}
             {!details.data.linked ? (
               <div className="mt-6 border border-rule p-4 text-sm">
                 <p>
@@ -204,7 +256,13 @@ export function ConsentPage() {
             <div className="mt-6 flex flex-wrap gap-3">
               <Button
                 className="min-h-11"
-                disabled={busy || !details.data.linked || !scopes.length}
+                disabled={
+                  busy ||
+                  !details.data.linked ||
+                  !details.data.memberMatches ||
+                  !scopes.length ||
+                  details.data.unsupportedScopes.length > 0
+                }
                 onClick={() => decide("approve")}
               >
                 {busy ? "Saving decision…" : "Approve selected access"}

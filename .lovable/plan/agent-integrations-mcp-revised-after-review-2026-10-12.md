@@ -19,6 +19,8 @@ The code is implemented on `feat/assistant-mcp`; production migration, publicati
 ## Step 2: Consent, grants and revocation
 
 - Consent page at the standard path. If the visitor isn't signed in to the assistant identity, they're sent to sign in and brought back. If the identity isn't linked to a Pattern account yet, the page explains how to link it and denies the request.
+- Approval requires the existing Pattern cookie to match the linked member as well as the verified direct assistant login. The consent page discloses the provider identity permissions separately and refuses unsupported permissions.
+- Remembered approvals can be cleared from Connected assistants after signing in to both linked accounts, including after unlinking has removed local records. Clearing stops local access first and reports provider cleanup failures for retry. Reconnect to choose new areas.
 - Grant scopes chosen per assistant: Today and timing (default on), Pattern chapters (default on), Journal (off by default, with its own explanation).
 - Every tool call checks for a current, unrevoked grant for that member and assistant. Revoking marks the grant revoked and advances the link revision, so the next call fails even if the assistant's token hasn't expired yet.
 - The Privacy page gains a short section on what assistants can see, and states that journal text is shared only when the member turns it on.
@@ -35,7 +37,7 @@ The code is implemented on `feat/assistant-mcp`; production migration, publicati
 ## Technical details
 
 - Identity: new D1 table `identity_links(user_id UNIQUE, issuer, subject, linked_at, UNIQUE(issuer, subject))`, written by a server function that requires the existing D1 cookie session plus a verified Supabase access token (`email_confirmed_at` set or Google provider). Insert-only with uniqueness constraints; a conflict returns a clear error.
-- Grants use pending/active/revoked state, bind to the current link ID, and activate only after auth-server consent and a link-revision check. The browser cannot supply the authoritative member or client identity.
+- Grants use pending/active/revoked state, bind to the current link ID, and activate only after a matching Pattern cookie, auth-server consent and a link-revision check. The browser cannot supply the authoritative member or client identity.
 - Grants: D1 table `assistant_grants(user_id, client_id, scopes, created_at, revoked_at, UNIQUE(user_id, client_id))`, written on consent approval. Revocation also attempts Supabase OAuth grant cleanup when a matching direct login is available; handlers re-check the D1 grant on every call.
 - Isolation: `requireAuth` and every existing server function stay cookie-only. MCP handlers resolve the user only through `ctx` claims (`iss`, `sub`, `client_id`) and then `identity_links`. A guard test asserts that a bearer token is ignored by app server functions.
 - MCP: `@lovable.dev/mcp-js`, `mcpPlugin()` at `/mcp`, `auth.oauth.issuer({ issuer: https://<ref>.supabase.co/auth/v1, acceptedAudiences: "authenticated" })`, `requireOAuthClientClaim: true`, no `requiredScopes`, metrics disabled. The OAuth server is activated with dynamic client registration. Read-only preflight found an ES256 public signing key. No live signing settings were changed.
@@ -51,8 +53,12 @@ The code is implemented on `feat/assistant-mcp`; production migration, publicati
 - Private values are absent from nested fields and from prose (sleep/stress, birth data).
 - No generation or database writes during tool calls (write counter on the harness).
 - Revocation with an unexpired token stops access.
+- Missing/wrong Pattern cookies cannot approve or expand grants; identity scopes are disclosed and unknown scopes refused.
+- Remembered provider approvals can be reset after unlinking without the assistant login; provider cleanup failures keep access stopped and permit retry.
 - End to end: link, then consent, then a tool call, plus the deny path and missing or expired authorization IDs.
 
 ## Rollback
 
 - Assistant access can be turned off without touching member sign-in: set `PATTERN_ASSISTANTS_ENABLED=false`; preserve the link and grant tables. Member data and encryption are untouched throughout.
+
+Local verification: 555 passed, 2 existing skips, 0 failed; TypeScript, production build, manifest extraction and changed-file lint passed. One whole-branch review and Firefox desktop/WebKit mobile fixture checks are complete. The live provider/client flow remains a publication gate; see the runbook for evidence boundaries.

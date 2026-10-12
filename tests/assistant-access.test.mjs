@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { before, beforeEach, after, test } from "node:test";
+import { createHash } from "node:crypto";
 import { generateKeyPair, exportJWK, SignJWT, jwtVerify } from "jose";
 import { createRecordsHarness } from "./helpers/records-harness.mjs";
 
@@ -14,6 +15,9 @@ const oldEnv = Object.fromEntries(Object.keys(env).map((k) => [k, process.env[k]
 let h, api, keys, jwk, originalFetch, direct, delegated;
 let confirmed = true;
 let onConsent = null;
+let cookieUser;
+let failProviderReset = false;
+const rememberedGrants = new Map();
 let authRequests = [];
 const authorizations = new Map();
 async function token(sub = "identity-a", claims = {}, signingKey = keys.privateKey) {
@@ -62,22 +66,76 @@ before(async () => {
         email_confirmed_at: confirmed ? "2026-01-01T00:00:00Z" : null,
         app_metadata: { provider: "email" },
       });
-    if (url.includes("/user/oauth/grants")) return new Response(null, { status: 204 });
+    if (url.includes("/user/oauth/grants")) {
+      const clientId = new URL(url).searchParams.get("client_id");
+      if (init.method === "DELETE") {
+        if (failProviderReset) return new Response(null, { status: 503 });
+        rememberedGrants.delete(`${claims.sub}:${clientId}`);
+        return new Response(null, { status: 204 });
+      }
+      return Response.json([...rememberedGrants.values()].filter((g) => g.subject === claims.sub));
+    }
     const match = new URL(url).pathname.match(/\/oauth\/authorizations\/([^/]+)(\/consent)?$/);
     const details = match && authorizations.get(match[1]);
     if (details?.redirect_url && !match[2])
       return Response.json({ redirect_url: details.redirect_url });
     if (!details || details.user.id !== claims.sub)
       return Response.json({ error: "invalid_request" }, { status: 400 });
-    if (!match[2]) return Response.json(details);
+    if (!match[2]) {
+      if (rememberedGrants.has(`${claims.sub}:${details.client.id}`))
+        return Response.json({ redirect_url: `${details.redirect_uri}?code=remembered` });
+      return Response.json(details);
+    }
     const action = JSON.parse(init.body).action;
+    if (action === "approve")
+      rememberedGrants.set(`${claims.sub}:${details.client.id}`, {
+        subject: claims.sub,
+        client: details.client,
+        scopes: details.scope.split(" "),
+        granted_at: new Date().toISOString(),
+      });
     if (onConsent) await onConsent(action);
     authorizations.delete(match[1]);
     return Response.json({
       redirect_url: `${details.redirect_uri}?${action === "approve" ? "code=fixture-code" : "error=access_denied"}&state=fixture-state`,
     });
   };
-  api = await h.vite.ssrLoadModule("/src/lib/assistant.server.ts");
+  const raw = await h.vite.ssrLoadModule("/src/lib/assistant.server.ts");
+  const { requestHandler } = await import("@tanstack/react-start/server");
+  const inMemberRequest = async (fn) => {
+    if (cookieUser) {
+      h.sqlite
+        .prepare(
+          "insert or replace into sessions (id, user_id, expires_at, created_at) values (?, ?, ?, datetime('now'))",
+        )
+        .run(
+          createHash("sha256").update(cookieUser).digest("hex"),
+          cookieUser,
+          new Date(Date.now() + 60_000).toISOString(),
+        );
+    }
+    let value, failure;
+    const handler = requestHandler(async () => {
+      try {
+        value = await fn();
+      } catch (error) {
+        failure = error;
+      }
+      return Response.json({ ok: !failure });
+    });
+    await handler(
+      new Request("https://pattern.example/oauth/consent", {
+        headers: cookieUser ? { cookie: `pattern_session=${cookieUser}` } : {},
+      }),
+    );
+    if (failure) throw failure;
+    return value;
+  };
+  api = {
+    ...raw,
+    getAuthorization: (...args) => inMemberRequest(() => raw.getAuthorization(...args)),
+    decideAuthorization: (...args) => inMemberRequest(() => raw.decideAuthorization(...args)),
+  };
   direct = await token();
   delegated = await token("identity-a", { client_id: "client-a" });
 });
@@ -87,6 +145,9 @@ beforeEach(async () => {
   onConsent = null;
   authRequests = [];
   authorizations.clear();
+  rememberedGrants.clear();
+  failProviderReset = false;
+  cookieUser = h.userA;
 });
 after(async () => {
   await h?.close();
@@ -201,6 +262,7 @@ test("unlink and relink never resurrect old client grants", async () => {
 test("unlink or revocation racing an approval wins over the in-flight approval", async () => {
   for (const action of ["unlink", "revoke"]) {
     await h.reset();
+    rememberedGrants.clear();
     await api.linkIdentity(h.userA, direct);
     onConsent = () =>
       action === "unlink" ? api.unlinkIdentity(h.userA) : api.revokeGrant(h.userA, "client-a");
@@ -435,4 +497,97 @@ test("deleting member data removes assistant access as well as private records",
       )
     ).error,
   );
+});
+
+test("approval and expansion require the matching Pattern cookie as well as the direct identity", async () => {
+  await api.linkIdentity(h.userA, direct);
+  for (const member of [null, h.userB]) {
+    cookieUser = member;
+    const id = request(`no-matching-cookie-${member}`);
+    const details = await api.getAuthorization(direct, id);
+    await assert.rejects(
+      api.decideAuthorization(direct, id, ["journal"], "approve"),
+      /Pattern|sign.in/i,
+    );
+    assert.equal(details.memberMatches, false);
+    assert.equal(h.sqlite.prepare("select count(*) as n from assistant_grants").get().n, 0);
+  }
+  cookieUser = null;
+  assert.match(
+    (await api.decideAuthorization(direct, request("denied-without-cookie"), [], "deny"))
+      .redirectUrl,
+    /access_denied/,
+  );
+  cookieUser = h.userA;
+  assert.equal(
+    (await api.getAuthorization(direct, request("matching-cookie"))).memberMatches,
+    true,
+  );
+  await api.decideAuthorization(direct, "matching-cookie", ["today"], "approve");
+});
+
+test("consent discloses provider identity scopes and refuses undisclosed permissions", async () => {
+  await api.linkIdentity(h.userA, direct);
+  const id = request("identity-scopes");
+  authorizations.get(id).scope = "openid email profile phone";
+  assert.deepEqual((await api.getAuthorization(direct, id)).identityScopes, [
+    "openid",
+    "email",
+    "profile",
+    "phone",
+  ]);
+  authorizations.get(id).scope = "email future_permission";
+  const details = await api.getAuthorization(direct, id);
+  assert.deepEqual(details.unsupportedScopes, ["future_permission"]);
+  await assert.rejects(
+    api.decideAuthorization(direct, id, ["today"], "approve"),
+    /unsupported|permission/i,
+  );
+  assert.equal(h.sqlite.prepare("select count(*) as n from assistant_grants").get().n, 0);
+  assert.match(
+    (await api.decideAuthorization(direct, id, [], "deny")).redirectUrl,
+    /access_denied/,
+  );
+});
+
+test("remembered provider approvals can be reset after unlinking without the assistant login", async () => {
+  await api.linkIdentity(h.userA, direct);
+  await api.decideAuthorization(direct, request(), ["today"], "approve");
+  await api.unlinkIdentity(h.userA);
+  await api.linkIdentity(h.userA, direct);
+  assert.equal((await api.getAuthorization(direct, request("stranded"))).kind, "redirect");
+  const grants = await api.listRememberedGrants(h.userA, direct);
+  assert.deepEqual(grants, [{ clientId: "client-a", clientName: "Test assistant" }]);
+  await api.resetRememberedGrant(h.userA, "client-a", direct);
+  assert.deepEqual(await api.listRememberedGrants(h.userA, direct), []);
+  assert.equal((await api.getAuthorization(direct, request("reconnected"))).kind, "consent");
+  await api.decideAuthorization(direct, "reconnected", ["pattern"], "approve");
+  const claims = { iss: issuer, sub: "identity-a", client_id: "client-a" };
+  assert.deepEqual(await api.resolveAssistantCaller(claims, "pattern"), { userId: h.userA });
+  assert.ok((await api.resolveAssistantCaller(claims, "today")).error);
+});
+
+test("remembered approval reset requires both accounts and provider failures leave access stopped and retryable", async () => {
+  await api.linkIdentity(h.userA, direct);
+  await api.decideAuthorization(direct, request(), ["today"], "approve");
+  await assert.rejects(api.listRememberedGrants(h.userB, direct), /linked|match/i);
+  await assert.rejects(api.listRememberedGrants(h.userA, delegated), /direct|delegated/i);
+  await assert.rejects(
+    api.resetRememberedGrant(h.userA, "client-a", await token("identity-b")),
+    /linked|match/i,
+  );
+  failProviderReset = true;
+  await assert.rejects(api.resetRememberedGrant(h.userA, "client-a", direct), /try|again|expired/i);
+  assert.ok(
+    (
+      await api.resolveAssistantCaller(
+        { iss: issuer, sub: "identity-a", client_id: "client-a" },
+        "today",
+      )
+    ).error,
+  );
+  assert.equal((await api.listRememberedGrants(h.userA, direct)).length, 1);
+  failProviderReset = false;
+  await api.resetRememberedGrant(h.userA, "client-a", direct);
+  assert.deepEqual(await api.listRememberedGrants(h.userA, direct), []);
 });

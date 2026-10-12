@@ -197,6 +197,44 @@ export async function userForSubject(issuer: string, subject: string) {
   );
   return link?.user_id ?? null;
 }
+const providerGrantSchema = z.array(
+  z.object({
+    client: z.object({ id: z.string().min(1).max(200), name: z.string().max(500).nullish() }),
+  }),
+);
+/** Also finds remembered approvals whose local grants were removed by unlinking. */
+export async function listRememberedGrants(userId: string, accessToken: string) {
+  const identity = await verifyAssistantIdentity(accessToken);
+  if ((await userForSubject(assistantIssuer(), identity.subject)) !== userId)
+    throw new Error("Sign in to the assistant account linked to this Pattern account.");
+  const result = providerGrantSchema.safeParse(
+    await authRequest(accessToken, "/user/oauth/grants"),
+  );
+  if (!result.success) throw new Error("Remembered approvals could not load. Try again.");
+  return result.data.map((grant) => ({
+    clientId: grant.client.id,
+    clientName: grant.client.name || "Unnamed assistant",
+  }));
+}
+export async function resetRememberedGrant(userId: string, clientId: string, accessToken: string) {
+  const grants = await listRememberedGrants(userId, accessToken);
+  if (!grants.some((grant) => grant.clientId === clientId))
+    throw new Error("That remembered approval is no longer present. Refresh connections.");
+  // Stop local access first. A provider failure remains visible and can be retried.
+  await revokeGrant(userId, clientId);
+  try {
+    await authRequest(
+      accessToken,
+      `/user/oauth/grants?client_id=${encodeURIComponent(clientId)}`,
+      "revoke",
+    );
+  } catch {
+    throw new Error(
+      "Pattern access has stopped, but the remembered sign-in approval could not be cleared. Try again.",
+    );
+  }
+  return { ok: true };
+}
 function safeRedirect(value: unknown) {
   if (typeof value !== "string") throw new Error("Invalid authorization response.");
   const redirect = new URL(value);
@@ -217,7 +255,16 @@ const authorizationSchema = z.object({
   redirect_uri: z.string().url(),
   client: z.object({ id: z.string().min(1).max(200), name: z.string().max(500).nullish() }),
   user: z.object({ id: z.string() }),
+  scope: z.string().max(2000),
 });
+const identityScopeNames = new Set(["openid", "email", "profile", "phone"]);
+function identityPermissions(scope: string) {
+  const identityScopes = [...new Set(scope.split(/\s+/).filter(Boolean))];
+  return {
+    identityScopes,
+    unsupportedScopes: identityScopes.filter((s) => !identityScopeNames.has(s)),
+  };
+}
 function authorizationPath(id: string) {
   if (!/^[a-zA-Z0-9_-]{1,200}$/.test(id)) throw new Error("Invalid authorization request.");
   return `/oauth/authorizations/${id}`;
@@ -254,9 +301,13 @@ export async function getAuthorization(accessToken: string, authorizationId: str
       redirectOrigin: new URL(request.redirectUrl).origin,
     };
   const { details, identity, link } = request;
+  const { getSessionUser } = await import("./auth.server");
+  const member = await getSessionUser();
   return {
     kind: "consent" as const,
     linked: Boolean(link),
+    memberMatches: Boolean(member && member.userId === link?.user_id),
+    ...identityPermissions(details.scope),
     email: identity.email,
     clientName: details.client.name || "Unnamed assistant",
     clientId: details.client.id,
@@ -271,7 +322,9 @@ export async function decideAuthorization(
 ) {
   const request = await authorization(accessToken, authorizationId);
   if (request.kind !== "consent")
-    throw new Error("Request fresh consent in your assistant to change permissions.");
+    throw new Error(
+      "Clear the remembered approval in Connected assistants, then reconnect for fresh consent.",
+    );
   const { details, link } = request;
   const selected = z.array(z.enum(ASSISTANT_SCOPES)).max(3).parse(scopes);
   if (action !== "approve" && action !== "deny") throw new Error("Invalid consent action.");
@@ -279,6 +332,16 @@ export async function decideAuthorization(
     throw new Error("Assistant connections are currently unavailable.");
   if (action === "approve" && (!link || !selected.length))
     throw new Error("Link this sign-in and choose at least one area to share.");
+  if (action === "approve") {
+    const { getSessionUser } = await import("./auth.server");
+    const member = await getSessionUser();
+    if (!member || member.userId !== link?.user_id)
+      throw new Error("Sign in to the matching Pattern account before approving assistant access.");
+    if (identityPermissions(details.scope).unsupportedScopes.length)
+      throw new Error(
+        "This assistant requested unsupported sign-in permissions. Deny this request.",
+      );
+  }
   const operation = crypto.randomUUID();
   if (action === "approve" && link) {
     const pending = await exec<{ id: string }>(
