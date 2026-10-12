@@ -347,13 +347,18 @@ export function findInterpretation(
 }
 
 /**
- * DER-22 safety pass. Strips anything that reads as a prediction, a directive,
- * or a claim in a regulated domain. Runs on every assembled reading, including
- * editorially ingested copy.
+ * DER-22 bounded language checks for predictions, directives and regulated claims.
+ * Runs on assembled readings and editorial copy; independent writing review is
+ * still needed for wording and grammatical forms these patterns do not cover.
  */
 const BANNED = [
   /\bwill (?:definitely|certainly|surely)\b/i,
   /\byou (?:must|have to|need to) \b/i,
+  // Observed bare commands after a sentence/clause boundary or a simple leading
+  // condition. A comma alone is not a boundary: "you can pause, notice your
+  // response" shares the modal. Declarative verbs and the noun "notice of a
+  // change" remain valid. This bounded check is not a grammar parser.
+  /(?:^|[.!?;:]\s+)\s*(?:(?:if|when|while|once|unless)\b[^.!?;:,\n]*,\s*)?(?:(?:please|then)\s+){0,2}(?:notice\s+(?:a|an|your|the|this|that|it|which|what|how)\b|start\s+with\b|consider\s+(?:how|whether|a|an|the|your|this|which|what)\b|let\s+(?:it|this|that|them)\s+(?:stay|remain|be)\b)/im,
   /\bguarantee[ds]?\b/i,
   // Medical claims only — everyday "how you treat people" is fine.
   /\bdiagnos(?:e|es|ed|ing|is)\b/i,

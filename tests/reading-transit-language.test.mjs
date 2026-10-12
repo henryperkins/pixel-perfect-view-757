@@ -3,6 +3,7 @@ import { before, after, test } from "node:test";
 import { createRecordsHarness } from "./helpers/records-harness.mjs";
 import { analyticEpisode } from "./fixtures/transit-episodes/analytic.mjs";
 import { syntheticNatalSamples, natalContext } from "./helpers/natal-fixtures.mjs";
+import { transitImperatives } from "./fixtures/transit-imperatives.mjs";
 let h, m, a, f, l, b, chart;
 before(async () => {
   h = await createRecordsHarness();
@@ -76,6 +77,18 @@ test("chronology_is_copied_once_in_first_two_paragraphs", async () => {
     const p = candidate(s);
     mutate(p);
     assert.equal((await generate(s, p)).meta.mode, "template");
+  }
+});
+test("historical transit imperatives reject the entire draft and use the safe template", async () => {
+  const s = setup();
+  for (const text of transitImperatives) {
+    const paragraphs = candidate(s);
+    paragraphs[1].text = text;
+    const output = await generate(s, paragraphs);
+    assert.equal(output.meta.diagnostics.code, "safety", text);
+    assert.equal(output.meta.mode, "template", text);
+    assert.equal(output.body, s.assembled.astroBody);
+    assert.ok(!output.body.includes("[removed:"));
   }
 });
 test("extra_counts_dates_biography_and_promised_resolution_fall_back_as_a_whole", async () => {

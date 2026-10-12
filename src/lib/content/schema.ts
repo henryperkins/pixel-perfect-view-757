@@ -199,6 +199,14 @@ export function validateContentGraph(raw: unknown): void {
 
   validateNatalCatalogue(bundle.natalLenses, bundle.schemaVersion);
   validateTransitCatalogue(bundle.transitChapters, bundle.schemaVersion);
+  if (bundle.phases !== undefined) {
+    if (!bundle.phases || typeof bundle.phases !== "object" || Array.isArray(bundle.phases))
+      throw new Error("Phase copy must be an object");
+    for (const [phase, text] of Object.entries(bundle.phases)) {
+      if (typeof text !== "string" || safetyPass(text).flagged.length)
+        throw new Error(`Phase ${phase} copy failed safety pass`);
+    }
+  }
   if (cycles.length > 2000) {
     throw new Error("Exceeded maximum of 2,000 interpretations");
   }

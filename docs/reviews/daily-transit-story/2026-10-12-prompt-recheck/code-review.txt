@@ -1,0 +1,7 @@
+Independent code reviewer: /root/combined_release_code_review. Read-only review of application and test diff against 26cd0c9. No prose grading.
+
+No Critical or Important findings. Ready to merge, subject to the final test run. A1 guidance no longer requests absent S1/N1; their conditional instructions and chronology/citation/body limits remain. Phase safety validation closes the publication gap; positive-control substitutions match corrected P2. Prompt 13 / validator 10 distinguish this change and invalidate daily cache identity. Provider routing, content activation and episode qualification unchanged.
+
+Final refinement independently checked: 17 command cases reject, 11 declaratives accept, no newly flagged shipped-default fields, diff check clean. A comma alone no longer makes a coordinated declarative into a command. Complex introductory clauses and other imperative forms remain outside the bounded check.
+
+Current-rule validation also applies to saved selected transit stories: old imperative P2 would fail read/export. Confirmed 0.7.0 was staged inactive only, and no production selected-story writes occurred in this work; this is a future compatibility concern, not a release blocker. No full-suite result was independently claimed by the reviewer. Coordinator runs are recorded separately.

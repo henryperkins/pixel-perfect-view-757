@@ -1,0 +1,15 @@
+✔ inactive_transit_candidate_preserves_the_shipped_fallback_and_natal_candidate (416.919401ms)
+✔ legacy_content_does_not_inherit_chapters_and_empty_is_authoritative (0.736849ms)
+✔ chapter_copy_is_not_a_personal_history (4.3449ms)
+✔ phase_copy_is_conditional_and_release_owned (0.585781ms)
+✔ historical transit commands cannot be published as chapter or phase copy (7.20699ms)
+✔ the bounded imperative check preserves declarative notice and conditional capability (0.445704ms)
+✔ cycle_draft_preserves_chapter_catalogue (43.28532ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 685.232092

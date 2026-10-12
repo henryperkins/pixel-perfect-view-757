@@ -1,0 +1,31 @@
+✔ inactive_transit_candidate_preserves_the_shipped_fallback_and_natal_candidate (438.64281ms)
+✔ legacy_content_does_not_inherit_chapters_and_empty_is_authoritative (0.692481ms)
+✔ chapter_copy_is_not_a_personal_history (3.184637ms)
+✔ phase_copy_is_conditional_and_release_owned (0.533672ms)
+✔ historical transit commands cannot be published as chapter or phase copy (5.372846ms)
+✖ the bounded imperative check preserves declarative notice and conditional capability (0.74727ms)
+✔ cycle_draft_preserves_chapter_catalogue (34.347753ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 693.535387
+
+✖ failing tests:
+
+test at tests/reading-transit-content.test.mjs:84:1
+✖ the bounded imperative check preserves declarative notice and conditional capability (0.74727ms)
+  AssertionError [ERR_ASSERTION]: If a demand feels immediate, then notice your response.
+      at TestContext.<anonymous> (file:///home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/tests/reading-transit-content.test.mjs:94:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

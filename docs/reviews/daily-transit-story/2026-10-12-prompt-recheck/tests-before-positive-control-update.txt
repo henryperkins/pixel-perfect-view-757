@@ -1,0 +1,697 @@
+✔ all four consented bands and encrypted note round-trip through signed SQL and a reopened database (501.873553ms)
+✔ same-day saves upsert one row, preserve its identity, and persist cleared values (15.786108ms)
+✔ per-source consent gates Sleep and Stress before they reach storage (12.244607ms)
+✔ same-day records, notes, and returned check-ins remain scoped to their account (16.189732ms)
+✔ 180-day retention clears only expired wellness bands and only the current account (14.08868ms)
+✔ cached Today and Journal load the persisted check-in from the checked-in schema (83.596199ms)
+✔ concurrent first use establishes one encryption key for an account (5.399894ms)
+✔ failed writes and missing RETURNING rows cannot report a successful save (8.854655ms)
+✔ check-in reads, consent reads, and retention failures propagate instead of looking empty (14.020892ms)
+✔ malformed encrypted notes surface an error without returning a false empty note (6.130324ms)
+✔ the shared input schema accepts unset bands and rejects invalid bands, dates, and oversized notes (4.726413ms)
+✔ server save validates its input before executing any records statement (3.947664ms)
+✔ /evaluations starts one Workflow per run, only for the signed app step callback (27.933536ms)
+✔ the evaluation Workflow signs one step per case and stops when the app says so (2.570784ms)
+✔ chapter cache identity follows the effective consented tone, not private unused preferences (551.147306ms)
+✔ chart replacement changes identity for the same feature, and accounts stay separate (19.214719ms)
+✔ generated and reopened chapters expose the exact original facts alongside their citations (14.671093ms)
+✔ legacy encrypted essays remain readable without manufactured citation evidence (11.565816ms)
+✔ embedded blank lines never shift chapter citation boundaries, including after reopening (14.423077ms)
+✔ cached evidence cannot be presented against malformed or mismatched paragraph boundaries (15.880426ms)
+✔ temporary gateway failures are safely retryable and are not saved as chapters (31.512275ms)
+✔ missing structures, unavailable configuration and unsupported drafts do not offer generation retries (11.170003ms)
+✔ a failed chapter insert is reported safely instead of claiming the result was saved (10.929315ms)
+✔ failed cache and fact reads never masquerade as absent structures or generate partial evidence (9.649214ms)
+✔ unchanged daily context reuses the reading after an actual database reopen (575.895698ms)
+✔ pre-fix cache prose is not reused and its reading and feedback remain intact (19.216809ms)
+✔ an empty recomputed day does not revive stored cycles from another snapshot (19.027592ms)
+✔ saving, updating, and clearing check-in bands changes same-day prose and provenance (39.427603ms)
+✔ note-only saves reuse prose without leaking the note into the cache key (18.3561ms)
+✔ wellness consent revocation refreshes cached body, prompt, and provenance independently (26.844241ms)
+✔ revoking check-in framing does not serve previously consented prose (21.162131ms)
+✔ tone and depth changes get fresh cache entries; display-name-only changes reuse them (31.768361ms)
+✔ stored tone and depth are ignored when their framing sources are off (17.204617ms)
+✔ only consented timezone and ambient bucket participate in same-day context (38.818792ms)
+✔ same-day chart engine or contract changes invalidate the reading (22.273405ms)
+✔ birth A→B→A uses the current birth fingerprint even when snapshot timestamps tie (81.612757ms)
+✔ cache reuse stays scoped to the requesting account (16.900192ms)
+✔ Today and current Timing share the effective day across UTC boundaries (20.059507ms)
+✔ a local midnight creates a new Today reading without changing its timezone (12.362146ms)
+✔ Timing calculates at local noon and classifies exact timestamps by that calendar (21.461267ms)
+✔ calendar days and local noon work across UTC+14, UTC−10, and DST (5.228466ms)
+✔ an exact timestamp is classified by its local civil date, not its UTC date (4.180691ms)
+✔ timezone fallback is deterministic and civil dates are never silently normalized (4.592975ms)
+✔ the pre-synthesis privacy cache key is replaced while its sources and feedback remain intact (12.904067ms)
+✔ observed natal-freedom-reflex unsupported claim rejects the whole draft and retains raw evidence (446.85198ms)
+✔ observed natal-exact-house unsupported claim rejects the whole draft and retains raw evidence (6.317341ms)
+✔ observed approximate-birth-time unsupported claim rejects the whole draft and retains raw evidence (4.535356ms)
+✔ observed unknown-birth-time unsupported claim rejects the whole draft and retains raw evidence (3.668529ms)
+✔ subjective ownership cannot become an objective allocation (6.025235ms)
+✔ supported freedom condition can accompany the scene without making the scene its cause (3.925304ms)
+✔ current window position and exact timing stay separate while all supplied detail survives (8.846835ms)
+✔ a sky location for the transiting body preserves an explicitly natal target (3.597948ms)
+✔ lifecycle: activeBundle validates stored bundle and isolates legacy releases (604.140548ms)
+✔ lifecycle: invalid active release in storage fails closed instead of generating partial graph (6.4447ms)
+✔ lifecycle: empty releases cannot be ingested, activated, rolled back to, or read as active (9.904379ms)
+✔ lifecycle: overlapping identical signed ingests reuse the single winning release (13.666518ms)
+✔ lifecycle: overlapping differing signed ingests return 409 and retain the winning content (7.69543ms)
+✔ lifecycle: activation and rollback leave previous active row unchanged on invalid input (6.818765ms)
+✔ lifecycle: signed ingestion enforces validation, idempotent replay, and 409 conflict on version reuse (8.42427ms)
+✔ lifecycle: an identical ingest retry after a failed activation completes that activation (11.833033ms)
+✔ lifecycle: a complete draft reply rewrites family slots only, keeps reviewed entries and rules, and drops unusable entries (51.802698ms)
+✔ common supportive contacts select their own source copy through the real assembly and facts (359.8208ms)
+✔ common hard and soft sources provide distinct safe passages instead of one-line wildcard copy (0.644782ms)
+✔ common-domain framing avoids regulated claims when it joins safe source passages (0.961297ms)
+✔ built-in daily copy gets a new release identity without changing the natal catalog shape (0.304666ms)
+✔ phase and arc copy describe calculated timing without assuming a reader's experience (0.450983ms)
+✔ a tight exact-phase contact without a scanned pass does not acquire an exact date (0.339455ms)
+✔ same-day timing and a nonzero calculation-time orb remain separate facts (0.463314ms)
+✔ accepted daily generation measures one attempt without changing output (406.823285ms)
+✔ quiet day is skipped before configuration and is never attempted (0.616581ms)
+✔ missing configuration is unavailable without a gateway attempt (0.450863ms)
+✔ gateway HTTP 429 has a safe closed rate_limit code (0.459593ms)
+✔ gateway HTTP 402 has a safe closed credit code (0.347655ms)
+✔ gateway HTTP 401 has a safe closed auth code (0.233777ms)
+✔ gateway HTTP 403 has a safe closed auth code (0.208847ms)
+✔ gateway HTTP 408 has a safe closed timeout code (0.237397ms)
+✔ gateway HTTP 504 has a safe closed timeout code (0.251827ms)
+✔ gateway HTTP 503 has a safe closed http code (0.273096ms)
+✔ gateway TimeoutError never returns an exception message (0.357255ms)
+✔ gateway AbortError never returns an exception message (0.205497ms)
+✔ gateway TypeError never returns an exception message (0.174008ms)
+✔ gateway Error never returns an exception message (0.175917ms)
+✔ malformed envelope JSON does not leak its parse error (0.565902ms)
+✔ malformed model JSON does not leak its parse error (0.394505ms)
+✔ empty gateway content is unavailable (0.395874ms)
+✔ body stream failures are sanitized and classified (0.245476ms)
+✔ validator shape records a closed rejection without changing fallback (0.423624ms)
+✔ validator count records a closed rejection without changing fallback (0.304386ms)
+✔ validator sentence records a closed rejection without changing fallback (0.412935ms)
+✔ validator length records a closed rejection without changing fallback (0.419264ms)
+✔ validator id records a closed rejection without changing fallback (0.422363ms)
+✔ validator coverage records a closed rejection without changing fallback (0.68234ms)
+✔ validator safety records a closed rejection without changing fallback (0.393795ms)
+✔ validator suppression records a closed rejection without changing fallback (0.487594ms)
+✔ validator placement records a closed rejection without changing fallback (0.339496ms)
+✔ validator body records a closed rejection without changing fallback (0.391684ms)
+✔ validator relation records a closed rejection without changing fallback (0.396294ms)
+✔ validator worded_degree records a closed rejection without changing fallback (0.563522ms)
+✔ validator orb records a closed rejection without changing fallback (0.510573ms)
+✔ validator date records a closed rejection without changing fallback (0.412314ms)
+✔ validator timing records a closed rejection without changing fallback (0.682109ms)
+✔ located rejection paragraph is one-based (0.548302ms)
+✔ natal gateway failures also exclude raw status bodies and exception text (0.334235ms)
+✔ diagnostic exports and reader validate the exact closed contract (1.38129ms)
+✔ diagnostics duration includes a delayed gateway attempt (21.214131ms)
+✔ diagnostics reader permits safe future labels and removes unknown fields (0.885518ms)
+✔ older structured diagnostics keep their measurements with an unrecorded gateway budget (0.622691ms)
+✔ gateway timeout provenance accepts only bounded integer budgets or unrecorded null (0.596442ms)
+✔ response-body timeouts preserve the timeout classification (0.309245ms)
+✔ missing-interpretation skip is bounded and historical quiet skips remain readable (0.316516ms)
+✔ every synthetic contact's phase agrees with its fixed local-noon reference (362.884545ms)
+✔ corrected Mercury fixture produces past timing and separating facts through the production plan (4.847991ms)
+✔ corrected fixtures have a new identity shared by offline and server evaluation (0.215677ms)
+✔ fixed synthesis-tension pins the published pair and parent set (1.292943ms)
+✔ fixed synthesis-reinforcement pins the published pair and parent set (0.595481ms)
+✔ fixed synthesis-independent pins the published pair and parent set (0.461114ms)
+✔ fixed synthesis-reversed pins the published pair and parent set (0.447924ms)
+✔ fixed synthesis-suppressed-support pins the published pair and parent set (0.492263ms)
+✔ fixed synthesis-unmatched pins the published pair and parent set (0.474353ms)
+✔ before/after comparison rejects a partial flag even when every case is present (677.364035ms)
+✖ fixed synthetic baseline exercises the real daily validators without quality scores (457.39534ms)
+✖ candidate replay records a real validator rejection and deterministic fallback (424.941019ms)
+✔ replay requires exactly the fixed case IDs before evaluating responses (0.689081ms)
+✔ comparison refuses changed fixtures, case sets, or input configs (393.398124ms)
+✔ network guard blocks fetch, HTTP(S), TCP, TLS, and DNS and restores globals (1.082634ms)
+✔ network and temporary key restore even when evaluation fails (363.623086ms)
+✔ handwritten synthesis rejection examples distinguish validator coverage from human support (1078.222474ms)
+✔ offline runs use the explicitly selected shipped bundle (674.360917ms)
+✔ historical natal reports retain their identity and cannot count as current replay coverage (167.88811ms)
+✖ a current captured report extracts and replays only against its selected frozen bundle (1046.121618ms)
+✔ extraction refuses incomplete, mismatched or lossy reports (2773.655171ms)
+✔ the CLI requires an explicit bundle and bounded mode combinations (0.76307ms)
+✖ the explicit transit candidate CLI writes current coverage with blank human scores (360.846214ms)
+✔ only admins start, read and stop runs; a start asks the edge plane to call the step endpoint (535.516528ms)
+✔ a configured public app URL replaces the request origin for callbacks (5.767068ms)
+✔ the step endpoint refuses unsigned or malformed calls without running a case (12.109609ms)
+✖ a run keeps going without any browser and completes with a combinable report (433.235273ms)
+✔ a replayed step never repeats a stored case, and steps out of order end the run (17.235137ms)
+✔ stop after the current case and halting failures end the run without further requests (20.932235ms)
+✔ an active run blocks a second start until it stalls, then a new run replaces it (8.372001ms)
+[workflows] POST /evaluations -> 503
+✔ an unreachable edge plane marks the run as an error and requests no case (7.983727ms)
+✔ a case runs only while the admin who started the run is still an admin (11.742724ms)
+✔ runs write only evaluation tables and never read member records (265.735277ms)
+✔ quiet-day fallback has a readable body and never calls the model (365.40069ms)
+✔ one shared plan sorts, filters at >0.02, caps at three, and removes suppressed angle contacts (6.403659ms)
+✔ facts include the selected curated mechanism, domain, phase and timing (0.505994ms)
+✔ wellbeing and local-time context never enter facts or the gateway (11.228031ms)
+✔ model body preserves the deterministic headline and adapted reflection (1.351891ms)
+✔ daily model accepts a complete three-paragraph draft with supplied-ID coverage (1.018446ms)
+✔ daily draft rejects one paragraph (0.73864ms)
+✔ daily draft rejects five paragraphs (0.760378ms)
+✔ daily draft rejects unfinished sentence (0.761379ms)
+✔ daily draft rejects five sentences (0.673951ms)
+✔ known IDs alone cannot satisfy cycle/editorial coverage (0.736419ms)
+✔ two concise paragraphs can focus on the primary meaning without unused editorial citations (1.091535ms)
+✔ unknown citation IDs fail closed (0.71787ms)
+✔ suppressed draft rejects Your Ascendant is Aries. (0.67645ms)
+✔ suppressed draft rejects Your Moon occupies the tenth house. (0.617052ms)
+✔ suppressed draft rejects Your Midheaven defines your career. (0.525023ms)
+✔ suppressed draft rejects Your rising shapes first impressions. (0.477583ms)
+✔ suppressed draft rejects The rising is emphasized. (0.498302ms)
+✔ suppressed draft rejects Your rising, rather than your Sun, sets the tone. (0.490133ms)
+✔ suppressed draft rejects Your natal rising placement sets the tone. (0.522313ms)
+✔ suppressed draft rejects There is pressure on your rising. (0.530403ms)
+✔ suppressed draft rejects Your rising's influence shapes first impressions. (0.580431ms)
+✔ suppressed draft rejects Your rising’s influence shapes first impressions. (1.197904ms)
+✔ suppressed draft rejects Your rising and Sun describe how you present yourself. (0.517332ms)
+✔ suppressed draft rejects Your rising adds another layer to first impressions. (0.478142ms)
+✔ angle suppression permits ordinary wording: Your rising workload takes effort. (0.807429ms)
+✔ angle suppression permits ordinary wording: Rising expectations take effort. (0.756369ms)
+✔ angle suppression permits ordinary wording: Pressure keeps rising. (0.70952ms)
+✔ angle suppression permits ordinary wording: The rising cost of effort is apparent. (0.684739ms)
+✔ angle suppression permits ordinary wording: Your rising and falling workload takes effort. (0.72991ms)
+✔ an unsuppressed bare rising claim still needs an Ascendant cycle citation (0.615121ms)
+✔ daily safety flags reject the whole draft instead of retaining redacted prose (0.546151ms)
+✔ unsupported numerical orb fails closed while the actual decimal orb is accepted (2.040262ms)
+✔ malformed gateway paragraph data falls back without throwing (0.488542ms)
+✔ plain normalization and technical depth behave consistently in the template (0.291826ms)
+✔ daily tone and depth guidance is defined, normalized and separate from facts (4.875942ms)
+✔ local exact-date facts use the consented calendar zone (0.408665ms)
+✔ daily references reject an absent or contradictory claim: Mars square natal Sun is approaching. This describes the calculated contact. (0.543163ms)
+✔ daily references reject an absent or contradictory claim: Saturn trine natal Sun is approaching. This describes the calculated contact. (0.509533ms)
+✔ daily references reject an absent or contradictory claim: Transiting Sun square natal Saturn is approaching. This describes the calculated contact. (0.538003ms)
+✔ daily references reject an absent or contradictory claim: The contact is exact on 2026-10-22. This describes the calculated contact. (0.558623ms)
+✔ daily references reject an absent or contradictory claim: Your Sun is in Aries. This describes the calculated contact. (0.469994ms)
+✔ valid exact date and qualified rounded orb are accepted (0.934756ms)
+✔ current measurement is kept separate from exact timing: This transit is currently building toward exact alignment on 2026-10-15 at an orb of 1.25 degrees. (0.673391ms)
+✔ current measurement is kept separate from exact timing: The orb is currently 1.25 degrees and the contact reaches exact tomorrow. (0.557162ms)
+✔ current measurement is kept separate from exact timing: The current orb is 1.25°; the exact pass was yesterday. (0.541342ms)
+✔ current measurement is kept separate from exact timing: The current orb is 1.25 degrees (the calculated exact date is 2026-10-15). (0.595161ms)
+✔ current measurement is kept separate from exact timing: The contact becomes exact in 4 days with an orb of 1.25 degrees. (0.547522ms)
+✔ current measurement is kept separate from exact timing: Current orb is 1.25 degrees, exact 4 days ago. (0.600172ms)
+✔ current measurement is kept separate from exact timing: The calculated exact date is 2026-10-15, with a current orb of about 1.3 degrees. (0.540023ms)
+✔ current measurement is kept separate from exact timing: Saturn makes an exact square to the Sun tomorrow at an orb of 1.25 degrees. (0.521712ms)
+✔ current measurement is kept separate from exact timing: The contact's exact moment tomorrow has an orb of 1.25 degrees. (0.565682ms)
+✔ current measurement is kept separate from exact timing: Current orb is 1.25 degrees at the exact point tomorrow. (0.519113ms)
+✔ clear current measurement remains valid: Today's calculated orb is 1.25 degrees. The calculated exact date is 2026-10-15. (0.689181ms)
+✔ clear current measurement remains valid: The exact current orb is 1.25°. The contact is approaching. (1.031634ms)
+✔ clear current measurement remains valid: The orb is exactly 1.25 degrees. The contact is approaching. (0.71009ms)
+✔ clear current measurement remains valid: The current orb is about 1.3 degrees. The calculated exact date is 2026-10-15. (0.612092ms)
+✔ clear current measurement remains valid: The exact wording can require a degree of effort. A familiar role offers a useful comparison. (0.68428ms)
+✔ clear current measurement remains valid: The calculated arc position is 30% and the exact date is 2026-10-15. (0.73077ms)
+✔ daily facts and prompt distinguish the calculation's orb from its exact date (0.940467ms)
+✔ everyday counts, household routines and ordinary opposition are not astronomy claims (0.830818ms)
+✔ house-dependent contacts are suppressed even in stale supplied cycles (0.199397ms)
+✔ unconsented local context and wellness do not enter deterministic appended copy (0.185958ms)
+✔ an oversized draft fails closed (0.534253ms)
+✔ the daily rewrite does not change existing natal paragraph validation behavior (1.024845ms)
+✔ daily references reject common unsupported wording: Saturn is trine your Sun. This describes the calculated contact. (0.593702ms)
+✔ daily references reject common unsupported wording: Saturn forms a trine to the Sun. This describes the calculated contact. (3.812056ms)
+✔ daily references reject common unsupported wording: Saturn and Sun form a trine. This describes the calculated contact. (0.608931ms)
+✔ daily references reject common unsupported wording: Your Sun occupies house ten. This describes the calculated contact. (0.500284ms)
+✔ worded and hyphenated degree values cannot bypass numeric reference checks (1.000986ms)
+✔ supporting meanings and synthesis retain their exact parents and published identity (0.739399ms)
+✔ invalid daily graph rejects duplicate IDs before provider traffic (0.790639ms)
+✔ invalid daily graph rejects missing parents before provider traffic (0.463074ms)
+✔ invalid daily graph rejects self edges before provider traffic (0.493453ms)
+✔ invalid daily graph rejects cyclic edges before provider traffic (3.758426ms)
+✔ invalid daily graph rejects same-index substitution before provider traffic (0.497913ms)
+✔ invalid daily graph rejects wrong interpretation key before provider traffic (0.460234ms)
+✔ invalid daily graph rejects cross-release parents before provider traffic (0.417633ms)
+✔ invalid daily graph rejects third-contact synthesis before provider traffic (0.427264ms)
+✔ invalid daily graph rejects incomplete synthesis before provider traffic (0.526933ms)
+✔ invalid daily graph rejects synthesis geometry before provider traffic (1.836684ms)
+✔ synthesis in paragraph 1 is accepted with all parents (1.47596ms)
+✔ synthesis in paragraph 2 is accepted with all parents (0.983836ms)
+✔ daily rejects missing synthesis and retains the synthesis-aware fallback (1.212424ms)
+✔ daily rejects late synthesis and retains the synthesis-aware fallback (1.021715ms)
+✔ daily rejects missing parent and retains the synthesis-aware fallback (0.72112ms)
+✔ daily rejects later missing parents and retains the synthesis-aware fallback (0.903546ms)
+✔ supporting interpretation supports ordinary prose but cannot stand in for geometry (1.208513ms)
+✔ missing primary interpretation skips the gateway and keeps deterministic copy (0.409024ms)
+✔ without published synthesis the prompt prohibits an invented joint premise (0.755589ms)
+✔ bounded published rule keys remain usable without requiring an invented identifier format (1.044436ms)
+✔ non-admin and role-query failures cannot read copy or call the model (452.123885ms)
+✔ unknown fixed IDs never become model prompts or writes (50.793953ms)
+✔ active release read errors stop before model spending (5.753649ms)
+✔ synthetic evaluation reads only roles and active copy, leaving every database table unchanged (250.923316ms)
+✔ evaluation uses and identifies the effective published copy (12.903318ms)
+✔ every bundle selector is denied before copy reads or model calls for non-admins (5.997265ms)
+✔ unknown bundle selectors fail after the role check without copy reads, writes or dispatch (6.495919ms)
+✔ built-in selectors read only roles, ignore the active release and change no records (45.595706ms)
+✔ the active selector keeps failing closed when copy cannot be read (13.204363ms)
+✔ provider failures never expose raw bodies or exception messages in synthetic reports (13.166044ms)
+✔ one synthetic case captures actual production prompt and accepted draft without account data (402.548005ms)
+✔ rejected synthetic draft remains inspectable while displayed text uses the template (3.416461ms)
+✔ candidate capture is bounded and reports truncation without changing validator decisions (3.404642ms)
+✔ lossless capture is proven before truncation or sanitization (15.838916ms)
+✔ evaluation input accepts only a fixed case ID and a closed bundle selector (2.207068ms)
+✔ a bundle selector change cannot combine with completed cases; absent history stays absent (6.855613ms)
+✔ the admin panel offers a labeled, closed evaluation-copy selector defaulting to active copy (180.407283ms)
+✔ quiet and unknown cases never call the gateway (3.219085ms)
+✔ production reading output keeps synthetic observation out of normal metadata (4.112202ms)
+✖ complete model run retains the offline fixture hashes and comparison compatibility (233.816328ms)
+✔ mixed copy or model configurations cannot combine; partial runs stay explicit (5.63364ms)
+✔ synthesis report retains bounded plan identity and graph metadata (2.659542ms)
+✔ mid-run and version-6 comparisons reject changes to prerequisite plan policy (444.495863ms)
+✔ completed historical natal runs retain their 28-case download inventory (9.692073ms)
+✔ captured dropped qualifier rejects the entire draft but preserves lossless evidence (409.480697ms)
+✔ near-verbatim can offer cannot become offers (2.398806ms)
+✔ can remains a valid qualification of the same claim (1.4022ms)
+✔ near-verbatim may offer cannot become offers (0.635841ms)
+✔ may remains a valid qualification of the same claim (0.637161ms)
+✔ near-verbatim might offer cannot become offers (0.502354ms)
+✔ might remains a valid qualification of the same claim (0.629851ms)
+✔ another qualified claim cannot conceal a dropped qualifier in the same sentence (0.546782ms)
+✔ published phase copy keeps its own can qualifier (1.38012ms)
+✔ near-verbatim may be cannot become are (0.578362ms)
+✔ supported categorical wording remains categorical (0.512033ms)
+✔ an unchanged categorical sentence alongside a modal sentence stays valid (0.472213ms)
+✔ changed subject or meaning is outside this bounded near-verbatim guard (0.75462ms)
+✔ negation and a modal immediately attached to the claim do not look like a dropped modal (0.777359ms)
+✔ eight positive fallback bodies are compact, deterministic and keep the lens in paragraph one (499.176361ms)
+✔ technical depth adds a bounded calculation passage without repeating standard filler (13.669317ms)
+✔ every natal-negative control and natal-free bundle retain the old non-natal assembly (112.846247ms)
+✔ same-key edits to either full source invalidate authored prose; unfamiliar pairs retain current copy (3.752697ms)
+✔ unfamiliar decimal punctuation and later primary conditions survive alongside synthesis (1.347951ms)
+✔ a synthesis fallback names both parent contacts before their published relationship (7.000241ms)
+✔ edited second-parent or synthesis copy keeps every published sentence before S1 (1.564447ms)
+✔ synthesis and P2 keep their conditions and distinct claims, with one exact A1 chronology (27.406713ms)
+✔ between-contact fallback states its shared phase and timing once (8.228863ms)
+✔ combined synthesis openings retain the saved natal readback contract (11.32576ms)
+✔ consented context and reflection stay separate from composed astronomical prose (1.858593ms)
+✔ legacy_release_never_inherits_natal_lenses (443.012473ms)
+✔ empty_active_natal_catalogue_is_authoritative (0.316775ms)
+✔ schema3_rejects_invalid_natal_rules (3.877255ms)
+✔ seed_catalogue_has_individual_copy_and_complete_coverage (1.073105ms)
+✔ candidate_code_matches_its_frozen_manifest (2.163119ms)
+✔ deployed_fallback_never_carries_the_natal_catalogue (6.960122ms)
+✔ natal_wording_policy_is_bounded (0.259296ms)
+✔ cycle_draft_preserves_reviewed_natal_catalogue (38.422968ms)
+✔ invalid_natal_ingest_activation_and_rollback_leave_active_pointer_intact (60.1776ms)
+✔ active_catalogue_read_failure_never_inherits_builtin_natal_lenses (4.908461ms)
+✔ one_transient_release_read_failure_is_retried_once (6.191282ms)
+✔ owner_export_contains_saved_natal_evidence_and_accounts_stay_isolated (520.331353ms)
+✔ failed_export_or_erasure_is_reported_and_retry_retains_the_owner_key (35.681817ms)
+✔ account_erasure_removes_all_natal_evidence (22.025358ms)
+✔ one_unreadable_saved_reading_is_marked_without_blocking_export (40.40623ms)
+✔ natal_fixed_cases_use_production_screen_and_planner (557.467147ms)
+✔ natal_fixture_runner_reads_no_birth_records_and_requests_no_swiss (3.874446ms)
+✔ natal_policy_change_stops_mixed_run (4.504236ms)
+✔ version5_comparison_requires_identical_transit_copy_and_inputs (10.731818ms)
+✔ strict natal comparison permits only bundle and selector differences (17.050849ms)
+✔ current natal comparison isolates the declared catalogue while generic comparisons freeze its bundle (796.900677ms)
+✔ daily_natal_evidence_labels_interpretation_not_measurement (569.873793ms)
+✔ archived_origin_is_not_recomputed_and_legacy_absence_adds_no_origin (9.366078ms)
+✔ natal_chapter_n1_label_is_unchanged (12.625411ms)
+✔ natal_fact_has_published_copy_and_private_origin (484.904193ms)
+✔ natal_requires_first_two_paragraph_coverage (9.930199ms)
+✔ natal_does_not_expand_geometry_permission_and_claim_checks_are_bounded (3.57903ms)
+✔ natal_dependencies_and_release_fail_closed_before_provider_traffic (0.615511ms)
+✔ complete_provider_request_contains_only_curated_natal_statement (1.060276ms)
+✔ rejection_uses_same_lens_aware_template_once (0.511073ms)
+✔ captured prompt requires scene application and preserves directional conditions (1.267422ms)
+✔ request_without_a_lens_keeps_the_pre_lens_brief (1.43665ms)
+✔ joint_synthesis_and_natal_lenses_can_share_paragraph_two (4.609475ms)
+✔ transited_body_sign_leads_over_every_moon_rule (457.094246ms)
+✔ moon_contact_uses_the_most_specific_moon_rule (6.33988ms)
+✔ unscreened_target_sign_falls_back_to_the_specific_moon_rule (4.650304ms)
+✔ unscreened_moon_never_blocks_the_target_sign (1.124514ms)
+✔ target_compound_rule_is_eligible_and_leads_its_own_sign (9.404087ms)
+✔ missing_copy_never_infers_a_lens (2.567494ms)
+✔ quiet_or_unsupported_target_has_no_lens (1.962273ms)
+✔ raw_orb_bound_and_fixed_codepoint_ties_are_deterministic (2.635492ms)
+✔ joint_synthesis_natal_plan_preserves_primary_question_and_no_lens_output (6.481698ms)
+✔ sign_screen_uses_all_three_samples (431.913401ms)
+✔ house_requires_exact_service_placidus (3.698978ms)
+✔ raw_aspect_orb_not_display_rounding (1.042795ms)
+✔ mixed_source_preserves_only_qualified_items (0.818999ms)
+✔ manifest_readback_validates_geometry_identity_and_closed_shape (3.153545ms)
+✔ stored_offsets_engines_nonfinite_values_cusps_and_sources_fail_closed (6.420979ms)
+✔ reversed_service_pairs_match_but_missing_lists_and_fill_ins_do_not (3.304914ms)
+✔ proofs_for_one_body_must_retain_the_same_sample_positions (1.882644ms)
+✔ boundary_requests_are_bounded_and_concurrent_and_dst_offsets_are_elapsed_utc (5.01248ms)
+✔ unknown_time_requests_no_boundaries (1.455789ms)
+✔ birth_save_encrypts_reliability_manifest_and_today_never_resamples_birth (524.899578ms)
+✔ legacy_snapshot_has_no_lens_manifest (7.678191ms)
+✔ manifest_mismatch_or_corruption_fails_read (13.642708ms)
+✔ service_failure_preserves_central_chart_and_repeated_save_upgrades_same_snapshot (20.232164ms)
+✔ today_rescreens_a_legacy_snapshot_once_when_a_catalogue_is_active (70.662782ms)
+✔ inactive_catalogue_keeps_today_free_of_swiss_traffic (23.516657ms)
+✔ retryable_screen_failure_waits_for_backoff_then_upgrades (53.12772ms)
+✔ unknown_time_is_never_rescreened (25.716866ms)
+✔ stale_reliability_version_supplies_no_lens_and_is_rescreened (28.362609ms)
+✔ failed_rescreen_records_the_attempt_without_changing_reading_identity (33.091512ms)
+✔ natal_copy_and_origin_are_not_clear_metadata (516.571045ms)
+✔ cached_natal_evidence_is_exact_saved_evidence (37.896675ms)
+✔ manifest_upgrade_changes_reading_identity_but_reencryption_does_not (41.634992ms)
+✔ broken_saved_natal_envelope_fails_read_including_cross_account_keys (25.655069ms)
+✔ template_consumption_is_private (29.371605ms)
+✔ authored source-bound template reopens and exports while changed wording or saved I1 fails (39.64004ms)
+✔ admin_quality_has_only_natal_ids_and_closed_codes (21.453187ms)
+✔ failed_natal_source_insert_removes_only_the_new_reading (30.731825ms)
+✔ local_context_edits_leave_the_natal_provider_request_identical (31.037632ms)
+✔ new_catalogue_and_legacy_rollback_preserve_the_exact_archived_lens (47.122174ms)
+✔ screened_transited_sign_is_the_saved_lens_and_reopens_exactly (28.895632ms)
+✔ an unconsented private check-in cannot enter the external reading request (482.437337ms)
+✔ opted-in check-in and wellness remain local while model prose stays available (22.202237ms)
+✔ unconsented tone and depth are replaced by ordinary defaults before model use (15.005348ms)
+✔ opted-in ordinary tone and depth preferences may reach the language provider (15.017358ms)
+✔ raw birth details and opted-in ambient context cannot reach the model (22.154277ms)
+✔ a reopened cached model reading reports the exact original provider inputs (21.580946ms)
+✔ natal language requests also keep unconsented ordinary preferences at defaults (10.404094ms)
+✔ revoking natal tone use invalidates cached warm prose before a plain rewrite (15.5146ms)
+✔ external language policy permits chart-derived sources and only opted-in ordinary preferences (4.489466ms)
+✔ Gemini Enterprise receives the gateway prompt and schema with only its own key (505.820517ms)
+✔ thought parts never become draft text and split text parts are joined (8.208183ms)
+✔ Gemini Enterprise failures become closed codes without provider text (27.857737ms)
+✔ blocked, empty and non-JSON responses fall back to template copy (14.037721ms)
+✔ a missing Gemini Enterprise key makes no request even when Lovable is configured (6.853023ms)
+✔ member readings and natal chapters stay on the Lovable gateway (8.594679ms)
+✔ one report cannot mix providers; Gemini Enterprise results combine together (13.525649ms)
+✔ complete Gemini Enterprise reports compare with each other but not with gateway reports (474.704927ms)
+✔ provider status and Gemini Enterprise runs are admin-only and expose no key (11.881192ms)
+✔ a Gemini Enterprise release draft records its provider in the draft and audit trail (8.986623ms)
+✔ the evaluation panel offers a labeled provider choice that defaults to the gateway (162.8333ms)
+✔ quality feedback has separate default-off permission and never crosses the language boundary (443.938321ms)
+✔ non-admin cannot query aggregate metadata or feedback (7.761421ms)
+✔ attempt rate separates accepted, rejected, unavailable, quiet, unconfigured and legacy rows (10.527221ms)
+✔ feedback is paired by owned reading and separate current consent, with neutral distinct from unrated (12.899048ms)
+✔ feedback cannot be written for another reader's reading (8.218154ms)
+✔ empty and skipped-only reports have no attempt rate rather than a measured zero (5.795958ms)
+✔ window is bounded by generation time with deterministic same-day row identities (86.317801ms)
+✔ generation ordering normalizes SQLite, ISO and offset timestamps to the same clock (7.04156ms)
+✔ malformed or mode-inconsistent diagnostics are legacy and do not fabricate attempts (5.787879ms)
+✔ future prompt versions stay separate and fact-kind readings count distinct rows (5.733228ms)
+✔ timeout budgets split configurations without turning prior diagnostics into legacy (6.337432ms)
+✔ malformed recorded timeout budgets cannot fabricate a configuration or leak raw values (7.015761ms)
+✔ forged foreign feedback and invalid scores are excluded from owned opt-in cohorts (6.817314ms)
+✔ real cached readings keep one persisted observation through reload and database reopen (66.131706ms)
+✔ records and consent lookup failures are reported instead of presenting partial metrics (4.99759ms)
+✔ quality separates synthesis references, quiet skips and missing-interpretation skips (5.240036ms)
+✔ timing instructions explicitly require the cycle even when T1 repeats its number (363.9758ms)
+✔ daily uses one 60-second call and exports its budget without changing provider settings (4.157921ms)
+✔ a response taking 15 simulated seconds can pass the new daily deadline (154.670296ms)
+✔ deadline abort during fetch returns a safe fallback without retry (3.083907ms)
+✔ deadline abort during response body returns a safe fallback without retry (2.420036ms)
+✔ natal narrative keeps its independent 90-second request budget (0.897677ms)
+✔ a mid-run timeout-policy change cannot combine with completed cases (6.152974ms)
+✔ historical version-5 comparison records changed or unrecorded gateway budgets (4.620385ms)
+✔ current transit comparison refuses changed or unrecorded gateway budgets (378.378566ms)
+✔ claim-strength guidance is sent with unchanged source statements, parents, suppression and body-only schema (8.824445ms)
+✔ arc guidance does not require absent sources and retains actual synthesis and lens requirements (48.569394ms)
+✔ historical strengthening needs review while combined window/exact timing is rejected (9.531886ms)
+✔ daily has a distinct editorial system brief while natal keeps the original brief (2.972598ms)
+✔ exact-aspect precedence over family copy and active-array authority (258.393542ms)
+✔ normalizeContentBundle preserves active authority, normalizes themes, and isolates legacy bundles from defaults rules (0.814379ms)
+✔ legacy partial bundles with omitted cycles never inherit new editorial annotations (0.774369ms)
+✔ empty graphs are rejected while explicit empty catalogues and partial legacy copy remain valid (0.505483ms)
+✔ validateContentGraph rejects new annotations and rules without schemaVersion 2 (0.254566ms)
+✔ validateContentGraph rejects duplicate keys, duplicate pairs, missing parents, wrong parent themes, and wildcard selectors (2.544074ms)
+✔ validateContentGraph enforces graph bounds and safety (0.412975ms)
+✔ samePublishedBundle compares bundles order-insensitively for object keys and order-sensitively for arrays (0.300736ms)
+✔ built-in DEFAULT_BUNDLE passes validateContentGraph (0.376155ms)
+✔ resolveInterpretationPlan handles selected tension, reinforcement, and explicit independence (0.532202ms)
+✔ resolveInterpretationPlan handles unmatched, unavailable copy, and insufficient contacts (0.226605ms)
+✔ assembleReading deterministic body, tie-breaking, suppression, and 4th contact bounds (2.221699ms)
+✔ family entries cannot become synthesis selectors even with reviewed tags (0.461774ms)
+✔ explicit malformed catalogue containers are rejected rather than inheriting defaults (0.214247ms)
+✔ findInterpretation safely handles unnormalized bundles with missing cycles array (0.093949ms)
+✔ resolveInterpretationPlan maintains strict positional cycle index with sparse arrays (0.098589ms)
+✔ warm Moon fallback develops its scene once before naming the contact's tension (433.482438ms)
+✔ warm Moon fallback invites a possible scene without an instruction-like tone preface (0.998247ms)
+✔ an edited source condition is retained instead of applying the old warm composition (0.768778ms)
+✔ warm Moon composition keeps technical timing and respects tone consent (0.988016ms)
+✔ inactive_transit_candidate_preserves_the_shipped_fallback_and_natal_candidate (430.209135ms)
+✔ legacy_content_does_not_inherit_chapters_and_empty_is_authoritative (0.672321ms)
+✔ chapter_copy_is_not_a_personal_history (4.705264ms)
+✔ phase_copy_is_conditional_and_release_owned (0.590271ms)
+✔ historical transit commands cannot be published as chapter or phase copy (5.526903ms)
+✔ the bounded imperative check preserves declarative notice and conditional capability (0.394595ms)
+✔ cycle_draft_preserves_chapter_catalogue (43.95838ms)
+✖ arc_fixed_cases_use_production_validation_and_planner (500.181037ms)
+✔ arc_policy_change_stops_mixed_run (26.088472ms)
+✖ version6_comparison_requires_identical_inputs (408.809817ms)
+✔ current transit comparison permits a declared story-use ablation with all other identities fixed (352.163547ms)
+✔ archived_version5_transit_reports_compare_as_36_cases_and_cannot_replay_as_current (358.488957ms)
+✔ story_does_not_rerank_primary_and_template_uses_selected_chapter (497.929568ms)
+✔ uncertain_root_has_no_exact_today_in_shared_primary_timing (19.272098ms)
+✔ arc_payload_contains_no_scan_or_birth_data_and_requires_exact_parents (487.427487ms)
+✔ chronology_is_copied_once_in_first_two_paragraphs (29.520853ms)
+✔ historical transit imperatives reject the entire draft and use the safe template (15.769827ms)
+✔ extra_counts_dates_biography_and_promised_resolution_fall_back_as_a_whole (20.004727ms)
+✔ omitted_arc_cannot_invent_passes (12.031121ms)
+✔ return_and_passage_counts_fail_with_selected_or_omitted_story (31.524845ms)
+✔ birth_window_calls_are_shared_and_anchors_encrypted (565.204318ms)
+✔ unknown_or_legacy_birth_has_no_qualified_anchors (13.737196ms)
+✔ legacy_defaulted_house_system_does_not_qualify_angle_anchors (21.764153ms)
+✔ fallback_with_qualified_anchors_never_activates_candidate_or_scans (531.81836ms)
+✔ arc_scan_and_dates_are_encrypted_and_cache_makes_no_requests (72.138141ms)
+✔ natal template saves exact chapter copy in paragraph two and rejects false or duplicate linkage (137.321421ms)
+✔ source_unavailable_is_immutable_but_policy_change_creates_new_identity (41.06318ms)
+✔ corrupt_story_envelope_fails_read_and_cross_account_key_cannot_open (48.17861ms)
+✔ owner_export_restores_archived_story_without_rescanning_and_erasure_removes_it (71.835346ms)
+✔ bound_story_digest_and_proof_reject_reencrypted_semantic_corruption (75.837989ms)
+✔ timing_selection_reuses_one_scan_and_invalidates_on_day_or_source_change (67.26861ms)
+✔ chapter_selection_uses_complete_count_and_reviewed_copy (535.272751ms)
+✔ active_miss_never_falls_back_to_builtin_story (5.68037ms)
+✔ a concise two-paragraph daily reading needs only its cited cycle and interpretation (515.286783ms)
+✔ consented check-in, wellness and reflection are added locally without changing provider inputs (31.889799ms)
+✔ active published interpretations override changed fallback copy throughout generation and provenance (18.699107ms)
+✔ failed provenance storage rejects the incomplete reading and permits a clean explicit retry (29.915787ms)
+✔ failure to remove an incomplete reading is surfaced rather than reporting a successful save (15.542441ms)
+✔ saved synthesis and supporting meanings survive database reopen without recasting content (27.57964ms)
+✔ revived facts allowlist valid fields and discard unsafe or forged editorial metadata (21.25072ms)
+✔ template synthesis records the same rule identity and only meanings it consumes (16.882242ms)
+✔ packets are blinded, independently ordered and bound to one canonical item set (31.228719ms)
+✔ deduplication requires identical text and the full fact, tone and depth context (13.029007ms)
+✔ a complete passing review pair qualifies the corrected run without human review (15.817246ms)
+✔ a quiet check gives its reason the way scores do (13.666197ms)
+✔ coverage, identity bindings, scores and blindness are validated before any gate (14.586974ms)
+✔ a supported-claim failure fails despite high scores until adjudication resolves it (15.031858ms)
+✔ invalid adjudications are rejected (13.954593ms)
+✔ fewer than two reviewer contexts can neither prepare nor qualify (13.828934ms)
+✔ only distinct, matched hosted reports can be prepared for review (20.231285ms)
+✔ adjudication cannot raise a low score; only a fresh blinded reassessment replaces it (14.314457ms)
+✔ baseline defects stay comparison evidence while the corrected run decides (10.846537ms)
+✔ unavailable or partial corrected drafts are uncovered failures, never dropped (11.464998ms)
+✔ catalogue packets carry every frozen entry, bound to its hash and a per-context order (12.514974ms)
+✔ a complete passing catalogue pair is AI approval only (9.592294ms)
+✔ catalogue coverage, bindings, checks and verdicts are validated (48.064451ms)
+✔ a catalogue defect fails until a fresh adjudication finds it acceptable; shared defects stand (17.799709ms)
+✔ closest-pass dates use the effective calendar instead of slicing UTC (160.402646ms)
+✔ date-only selections keep their original civil day in every zone (0.595232ms)
+✔ a timeline uses local noon and an explicit server reference when supplied (0.893238ms)
+✔ calendar phase fallback stays whole-day accurate across a DST boundary (0.609811ms)
+✔ synthesis has a distinct published category and saved text is presented without its instruction prefix (180.230345ms)
+✔ synthesis descriptions support published rule keys containing spaces (9.27316ms)
+✔ saved synthesis renders its relationship, version and four local parent links (2.664112ms)
+✔ historical metadata and missing parents never fabricate synthesis links or new editorial identity (5.7139ms)
+✔ archived paragraphs without saved boundaries keep fact links but no invented paragraph target (2.472936ms)
+✔ Today returns the latest saved choice after an actual database reopen (534.148857ms)
+✔ ratings stay bound to the current reading and account (37.709997ms)
+✔ failed rating reads never masquerade as an unrated reading and use safe messages (27.481423ms)
+✔ failed ownership checks and writes preserve the saved choice with actionable errors (22.295855ms)
+✔ a write without a returned row cannot claim that the rating was saved (14.241199ms)
+✔ invalid rating input fails before records queries and malformed stored ratings are explicit (12.893369ms)
+✔ restoring a personal saved rating does not opt it into aggregate quality measurement (17.904346ms)
+✔ exact cited paragraph boundaries survive fresh and cached reads without changing body exports (56.570372ms)
+✔ legacy model readings remain readable but cannot imply recovered citation boundaries (21.098002ms)
+✔ template and legacy-template paragraph display preserves the existing complete body (22.58582ms)
+✔ corrupt, malformed and mismatched paragraph envelopes fail closed with safe errors (48.520565ms)
+✔ anchors_require_explicit_service_frame (426.780993ms)
+✔ birth_bands_and_cusp_crossing_are_independent_of_sign_lenses (2.534634ms)
+✔ unknown_or_legacy_birth_omits_story (0.376215ms)
+✔ invalid_and_mixed_origin_points_do_not_qualify (1.285211ms)
+✔ episode_endpoint_is_optional (446.391396ms)
+✔ episode_client_rejects_wrong_source_or_contract (3.060377ms)
+✔ episode_client_has_no_retry_and_sends_only_contract_fields (0.67967ms)
+✔ episode_body_read_shares_deadline (1.501758ms)
+✔ oversized_body_is_cancelled (0.625672ms)
+✔ missing_episode_speed_is_not_zero (4.674854ms)
+✔ all_roots_and_gaps_are_preserved_and_five_passes_are_not_forced_to_three (462.780966ms)
+✔ scan_edges_do_not_prove_total_and_missing_crossings_are_invalid (20.400473ms)
+✔ incomplete_tangent_and_source_disagreement_have_no_counts (11.674185ms)
+✔ same_window_and_between_have_no_fake_nearest_ordinal (4.742523ms)
+✔ cycle_key_is_not_episode_identity_and_reversed_motion_works (23.659106ms)
+✔ sampled_date_disagreement_retains_count_but_no_exact_today (5.576462ms)
+✔ sampled_ordinal_disagreement_omits_story (4.413938ms)
+✔ birth_samples_share_the_same_planet_track_and_reference_speed (11.770654ms)
+✔ contradictory_root_reference_and_window_points_cannot_share_a_monotonic_leg (8.44568ms)
+✔ episode_timeline_preserves_out_of_orb_gaps (542.667627ms)
+✔ uncertain_contacts_render_ranges_without_exact_today (8.119614ms)
+✔ between_has_no_fake_ordinal (6.090914ms)
+✔ qualified_primary_timing_leaves_other_windows_on_their_saved_calendar (6.34508ms)
+✔ closing_a_visited_window_retains_its_saved_transit_sequence (18.708735ms)
+✔ source_notice_distinguishes_natal_and_transit_and_story_atoms_are_distinct (0.591222ms)
+✔ timing_memory_is_bounded_by_retention_and_owner_erasure (400.353796ms)
+ℹ tests 528
+ℹ suites 0
+ℹ pass 520
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12500.349885
+
+✖ failing tests:
+
+test at tests/reading-eval.test.mjs:32:1
+✖ fixed synthetic baseline exercises the real daily validators without quality scores (457.39534ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+  +   accepted: 33,
+  +   rejected: 4,
+  -   accepted: 37,
+  -   rejected: 0,
+      skipped: 1,
+      unavailable: 0
+    }
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/tests/reading-eval.test.mjs:38:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { accepted: 33, rejected: 4, unavailable: 0, skipped: 1 },
+    expected: { accepted: 37, rejected: 0, unavailable: 0, skipped: 1 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/reading-eval.test.mjs:65:1
+✖ candidate replay records a real validator rejection and deterministic fallback (424.941019ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  5 !== 1
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/tests/reading-eval.test.mjs:70:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 5,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/reading-eval.test.mjs:221:1
+✖ a current captured report extracts and replays only against its selected frozen bundle (1046.121618ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+  +   accepted: 33,
+  +   rejected: 4,
+  -   accepted: 37,
+  -   rejected: 0,
+      skipped: 1,
+      unavailable: 0
+    }
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/tests/reading-eval.test.mjs:238:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { accepted: 33, rejected: 4, unavailable: 0, skipped: 1 },
+    expected: { accepted: 37, rejected: 0, unavailable: 0, skipped: 1 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/reading-eval.test.mjs:340:1
+✖ the explicit transit candidate CLI writes current coverage with blank human scores (360.846214ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  33 !== 37
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/tests/reading-eval.test.mjs:351:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 33,
+    expected: 37,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/reading-evaluation-runs.test.mjs:134:1
+✖ a run keeps going without any browser and completes with a combinable report (433.235273ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 0.8918918918918919
+  - 1
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/tests/reading-evaluation-runs.test.mjs:158:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0.8918918918918919,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/reading-live-eval.test.mjs:283:1
+✖ complete model run retains the offline fixture hashes and comparison compatibility (233.816328ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 0.8918918918918919
+  - 1
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/tests/reading-live-eval.test.mjs:293:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0.8918918918918919,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/reading-transit-evaluation.test.mjs:25:1
+✖ arc_fixed_cases_use_production_validation_and_planner (500.181037ms)
+  AssertionError [ERR_ASSERTION]: arc-single-pass: safety
+  + actual - expected
+  
+  + 'rejected'
+  - 'accepted'
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/tests/reading-transit-evaluation.test.mjs:49:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'rejected',
+    expected: 'accepted',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/reading-transit-evaluation.test.mjs:87:1
+✖ version6_comparison_requires_identical_inputs (408.809817ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  33 !== 37
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/tests/reading-transit-evaluation.test.mjs:90:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 33,
+    expected: 37,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

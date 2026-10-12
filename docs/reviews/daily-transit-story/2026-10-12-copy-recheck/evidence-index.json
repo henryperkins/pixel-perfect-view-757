@@ -2,11 +2,103 @@
   "files": [
     {
       "file": "README.md",
-      "sha256": "093126e03a2cb4127b75ec40cc541f483c2c7aaf1a3761403dd11782df578649"
+      "sha256": "d863f856ca0853e57ed452080524a02babdaa456ce60e42327e0bcd30db564af"
     },
     {
       "file": "build-copy-fix.txt",
       "sha256": "c2c59a2430ddd376797702ca8d5e5c2de9971f22a76e243fdf709980a7e04e8a"
+    },
+    {
+      "file": "capture/capture.json",
+      "sha256": "e305a63e8abd7deadfc11dfcda85f4be417d1596d65e9faa65a3c2ee46910910"
+    },
+    {
+      "file": "capture/run-finished.json",
+      "sha256": "27cb127f6c5156bff87d4a15905fc6950080d99a437b1c0096b8164e76aa8c4a"
+    },
+    {
+      "file": "capture/run-plan.json",
+      "sha256": "c672c03e438045eefb7411615f8475406c34c0a6992b750d029b1a50593c6834"
+    },
+    {
+      "file": "capture/sample-1-result.json",
+      "sha256": "87b2f1ed522683d29a1c240c14532436f8f862c3b94f9bac0cfe1c9464f6e2eb"
+    },
+    {
+      "file": "capture/sample-1-start.json",
+      "sha256": "9fe82a1e3810a5e19f7114ed6e117fd8088763c225f4e7971ae52aff6cde982a"
+    },
+    {
+      "file": "capture/sample-1-transport-start.json",
+      "sha256": "b0518304f1611cb08564d9441196f5faec7dfce0aa5fed270a409150eba170e5"
+    },
+    {
+      "file": "capture/sample-2-result.json",
+      "sha256": "65c9cf7f8f4e1dca3d09a05927281890df033a6184337e4cfb11880937fd2e73"
+    },
+    {
+      "file": "capture/sample-2-start.json",
+      "sha256": "6f0ed1df88d2dd583da1154a72ffae55bcfc6f494572014cad34296dd034a6d0"
+    },
+    {
+      "file": "capture/sample-2-transport-start.json",
+      "sha256": "415d8bb539a5914a085b34990b4d4f98596d0abe4b7142ae68ebb7e088ab04f6"
+    },
+    {
+      "file": "capture/sample-3-result.json",
+      "sha256": "b1d743cc3d81815303b1775626ea811120e141906fd67e5ceb1308aca2f83762"
+    },
+    {
+      "file": "capture/sample-3-start.json",
+      "sha256": "c45fa18b2ca133232cfc33c1ef1f0bf1be60d7dc7cf52e15a5727b9d810176b6"
+    },
+    {
+      "file": "capture/sample-3-transport-start.json",
+      "sha256": "9f7307c657fd3b3255d933bf8554f51ac54356b337ebc02d7759e027c1f4d5dc"
+    },
+    {
+      "file": "capture/sample-4-result.json",
+      "sha256": "c1ef00d371a4c4d85d942e4e8666e12fc283144e0b1139bb00f21264fb1827be"
+    },
+    {
+      "file": "capture/sample-4-start.json",
+      "sha256": "dacb728ecb0cbe33865f976fe5d088a3797aaad8c514fd3b8ae86a673e02c31f"
+    },
+    {
+      "file": "capture/sample-4-transport-start.json",
+      "sha256": "0c2cc0e55f9b787387de4ebb965472291df06cf37580d61fa53eea8e0ccc4d6f"
+    },
+    {
+      "file": "capture/sample-5-result.json",
+      "sha256": "7e224c89039dab65eec28ed1f38353b7701e659674cc81c9213897024c04b9f4"
+    },
+    {
+      "file": "capture/sample-5-start.json",
+      "sha256": "d800129c972a7f14ff2b3bcc31d329deec66ca228a7896a858221b2b7d19c89e"
+    },
+    {
+      "file": "capture/sample-5-transport-start.json",
+      "sha256": "c668392c9e83181808a20655c9aed37a5d6d174d6b6359c825f5b232ad7abeb3"
+    },
+    {
+      "file": "capture/sample-6-result.json",
+      "sha256": "de1aacf898066020e230dcd83296d55388ab45a2b6c1873712c363cc5ba463bc"
+    },
+    {
+      "file": "capture/sample-6-start.json",
+      "sha256": "ce4aa4f0a064fcbb678d4cf25e6dccf969c435c4bd787af32b20198c16a28997"
+    },
+    {
+      "file": "capture/sample-6-transport-start.json",
+      "sha256": "38e623e305f817d4b326f277df7dd5434ada97cc55edd902646337a91ab16487"
+    },
+    {
+      "file": "capture/source-manifest.json",
+      "sha256": "fe940a38b45c00eb8d84bcb1908368e554617378d576bc7947bc0a3356a6d020"
+    },
+    {
+      "file": "capture-console.txt",
+      "sha256": "abf58bbef11ed8dba074a3280a4148e66166f70706615f0557f96c687816b1fa"
     },
     {
       "file": "capture-offline.mjs",
@@ -47,6 +139,10 @@
     {
       "file": "typecheck-copy-fix.txt",
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "verify-retained-combined.mjs",
+      "sha256": "b60957c7496fd5ad7d88f6a49afcd174d88497c5a0684b854f687f4f14c7016a"
     }
   ]
 }

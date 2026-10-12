@@ -1,4 +1,4 @@
-# Transit source-copy recheck: prepared
+# Transit source-copy recheck: completed, superseded for prompt qualification
 
 Revision `ded276a` corrects the failed review's shared source/prompt conflict. Four chapter mechanisms and the exact/separating phase wording now describe conditional possibilities without commands. The between-contact fallback renders a shared phase/timing sentence once and retains both evidence atoms. The combined candidate becomes `builtin-0.7.1`; staged `0.7.0` remains immutable and inactive.
 
@@ -9,3 +9,9 @@ Code review found no Critical/Important application issue. All 524 tests pass in
 Six replacement model calls are prepared for the failed single/opening/return/closing/between/truncated cases, with no automatic retries. The original combined synthesis draft/template and quiet check retain their prior passing review; their exact generation identity stays in the original record. Current used-source/body compatibility still needs verification before carrying those passes forward. The replacement review will use a fresh context and only its packet.
 
 Paid replacement capture and writing review have not yet run at this preparation point. Source qualification remains open. No activation is authorized by this evidence alone; the user requested joint activation after readiness.
+
+## Execution after the preparation commit
+
+All six requests completed at `26cd0c95bde40c65359fbf87ee2f34da68e5863e`, with HTTP 200, lossless raw drafts and application acceptance under prompt 12 / validator 9. No retries; source remained unchanged. Capture and receipts are preserved in `capture/`. Provider cost is unknown.
+
+Before a writing reviewer was dispatched, the user identified the remaining A1 guidance that requested absent S1/N1 and the missed historical imperatives. The sixth request had already settled when a graceful stop was attempted; no later call was dispatched by this runner. This capture has no independent writing verdict and does not qualify prompt 13 / validator 10. The subsequent folder `../2026-10-12-prompt-recheck/` records that correction and its new execution separately.

@@ -1,6 +1,6 @@
 # Transit-story writing qualification
 
-Status: **failed targeted writing review; correction awaiting paid recheck**.
+Status: **failed original review; revised-prompt recheck pending**.
 The [2026-10-12 small review](2026-10-12-lightweight-review/README.md) passed
 3/15 samples. Twelve samples reproduced commands from published P1/P2 copy,
 contradicting the no-instructions system rule; the between-contact template also
@@ -11,9 +11,12 @@ calls and one fresh blind reviewer, not a full benchmark.
 Correction `ded276a` makes four chapter mechanisms and two phase sentences
 descriptive and renders shared phase/timing once. The current inactive candidate
 is schema 4 / `builtin-0.7.1`, story `daily-transit-story-1`, prompt
-`daily-astro-body-12`, validator `daily-reference-9`, fixtures `synthetic-daily-6`.
-Generating guidance is unchanged; published facts changed. Old drafts retain their
-original identity. The failed `0.7.0` bundle was staged inactive and must remain so.
+`daily-astro-body-13`, validator `daily-reference-10`, fixtures `synthetic-daily-6`.
+The [prompt correction](2026-10-12-prompt-recheck/README.md) removes absent-source
+integration requirements and rejects the observed bare imperatives in phase/chapter
+publication and generated prose. Six corrected-copy calls completed under prompt 12,
+but have no independent writing verdict and do not qualify prompt 13. Old drafts
+retain their original identity. The failed `0.7.0` bundle was staged inactive and must remain so.
 The operator requested joint activation; native source qualification is still open.
 The fallback remains `builtin-0.5.0`; candidate selection does not activate it.
 

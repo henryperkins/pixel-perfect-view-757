@@ -6,7 +6,10 @@
 substantive findings. Together with the retained passing templates, other raw
 cases, quiet safety check and duty/freedom distinctions, this clears the
 [lightweight writing gate](lightweight-readiness.md). Both candidates remain
-inactive; nothing was pushed, deployed or activated.
+inactive. Joint release work was requested afterward; code and evidence were pushed to
+`main` at `26cd0c9`, and Lovable accepted publication. The transit writing check
+[failed on conflicting directive copy](../daily-transit-story/2026-10-12-lightweight-review/README.md)
+and its corrected-copy recheck is in progress. No candidate was activated.
 
 The [first partial run](2026-10-12-raw-draft-recheck/README.md) captured two passing
 drafts before HTTP 429. An authenticated Gemini health probe then returned HTTP 200;

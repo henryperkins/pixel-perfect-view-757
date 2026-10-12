@@ -13,7 +13,9 @@ requested raw drafts: two each for duty, Moon fallback and synthesis. The fresh
 review of the final four drafts found no substantive defects. Together with the
 retained passing templates, other raw cases, quiet safety check and supported
 duty/freedom distinctions, this satisfies the targeted natal writing gate. Both
-candidates remain inactive; publication and activation remain separate requests.
+candidates remain inactive. The operator subsequently requested joint activation;
+code was pushed to `main` at `26cd0c9`, while the transit writing and native-source
+gates remain open. See the [transit writing status](../daily-transit-story/writing-qualification.md).
 
 **First result (2026-10-12):** the [targeted subset review](2026-10-12-lightweight-subset-review/README.md)
 failed. It passed 10/14 prose samples (4/7 raw drafts, 6/7 templates); the quiet template

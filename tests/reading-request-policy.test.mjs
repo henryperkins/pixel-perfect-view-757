@@ -70,7 +70,7 @@ test("timing instructions explicitly require the cycle even when T1 repeats its 
   const prompt = accepted.case.request.messages[1].content;
   assert.match(prompt, /even (?:when|if).*T1/i);
   assert.match(prompt, /\["C1", "P1", "T1"\]/);
-  assert.equal(accepted.case.diagnostics.validatorVersion, "daily-reference-9");
+  assert.equal(accepted.case.diagnostics.validatorVersion, "daily-reference-10");
 });
 
 test("daily uses one 60-second call and exports its budget without changing provider settings", async () => {
@@ -79,7 +79,7 @@ test("daily uses one 60-second call and exports its budget without changing prov
   assert.equal(calls, 1);
   assert.equal(result.metadata.gatewayTimeoutMs, 60_000);
   assert.equal(result.case.diagnostics.gatewayTimeoutMs, 60_000);
-  assert.equal(result.metadata.promptVersion, "daily-astro-body-12");
+  assert.equal(result.metadata.promptVersion, "daily-astro-body-13");
   assert.deepEqual(Object.keys(requests[0]).sort(), ["messages", "model", "response_format"]);
 });
 
@@ -244,6 +244,31 @@ test("claim-strength guidance is sent with unchanged source statements, parents,
   assert.match(suppressed, /Angle claims are suppressed/);
   assert.match(suppressed, /House claims are suppressed: do not mention houses or cusps\./);
   assert.equal(calls, 3, "One dispatch per eligible case, no retries");
+});
+test("arc guidance does not require absent sources and retains actual synthesis and lens requirements", async () => {
+  const { TRANSIT_CANDIDATE_BUNDLE } = await vite.ssrLoadModule(
+    "/src/lib/content/transit-candidate-bundle.ts",
+  );
+  for (const caseId of ["arc-opening-three", "arc-synthesis-natal-integration"]) {
+    const result = await runCase(caseId, TRANSIT_CANDIDATE_BUNDLE);
+    const prompt = result.case.request.messages[1].content;
+    const arc = prompt.split("\n").find((line) => line.startsWith("Copy A1's chronology"));
+    assert.ok(arc);
+    assert.doesNotMatch(arc, /S1|N1/);
+    assert.match(arc, /unchanged exactly once in paragraph 1 or 2/);
+    assert.match(arc, /P2.*I1.*paragraph 1 or 2/);
+    assert.match(arc, /four-sentence paragraph limit/);
+    if (caseId === "arc-opening-three") {
+      assert.ok(!result.case.facts.some((f) => ["S1", "N1"].includes(f.id)));
+      assert.doesNotMatch(
+        prompt,
+        /Apply the supplied N1|Develop the supplied published relationship/,
+      );
+    } else {
+      assert.match(prompt, /Apply the supplied N1 possibility/);
+      assert.match(prompt, /Develop the supplied published relationship/);
+    }
+  }
 });
 
 test("historical strengthening needs review while combined window/exact timing is rejected", async () => {

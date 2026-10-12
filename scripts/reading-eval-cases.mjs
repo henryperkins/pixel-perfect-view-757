@@ -247,11 +247,11 @@ function arcDraft(chronology, mechanism) {
 Object.assign(BASELINE_RESPONSES, {
   "arc-single-pass": arcDraft(
     "This is one calculated contact in a complete passage.",
-    "If a demand feels familiar, notice it in a concrete choice you can describe, such as the scope of a commitment.",
+    "If a demand feels familiar, a concrete choice such as the scope of a commitment can offer a way to describe it.",
   ),
   "arc-opening-three": arcDraft(
     "This is the first of three calculated contacts; the first exact contact falls in September 2026.",
-    "If a new demand catches your attention, notice your response before treating it as settled. A small decision can leave room to learn.",
+    "If a new demand catches your attention, your response can remain open to consideration. A small decision can leave room to learn.",
   ),
   "arc-return-three": arcDraft(
     "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
@@ -259,7 +259,7 @@ Object.assign(BASELINE_RESPONSES, {
   ),
   "arc-closing-three": arcDraft(
     "This is the third of three calculated contacts; the first exact contact falls in September 2026.",
-    "If a response seems workable, consider how you could repeat it in an ordinary commitment. Its usefulness can remain open to review.",
+    "If a response seems workable, repeating it in an ordinary commitment is one possibility. Its usefulness can remain open to review.",
   ),
   "arc-return-five": arcDraft(
     "This is the third of five calculated contacts; the first exact contact falls in September 2026.",
@@ -267,7 +267,7 @@ Object.assign(BASELINE_RESPONSES, {
   ),
   "arc-between-passes": arcDraft(
     "This calculated episode has three contacts, with a pause between passes.",
-    "If a decision remains unsettled, let it stay provisional while you notice what information would help. A pause can leave room to reconsider.",
+    "If a decision remains unsettled, keeping it provisional can leave room to reconsider what information would help.",
   ),
   "arc-truncated-scan": sunDraft(),
   "arc-station-tangent": sunDraft(),

@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { before, after, test } from "node:test";
 import { createRecordsHarness } from "./helpers/records-harness.mjs";
+import { transitImperatives } from "./fixtures/transit-imperatives.mjs";
 let h, b, s;
 before(async () => {
   h = await createRecordsHarness();
@@ -61,6 +62,50 @@ test("phase_copy_is_conditional_and_release_owned", () => {
     s.normalizeContentBundle(active, "active", b).phases.exact,
     "Existing reviewed phase.",
   );
+});
+test("historical transit commands cannot be published as chapter or phase copy", () => {
+  for (const mechanism of transitImperatives) {
+    assert.throws(
+      () => s.validateContentGraph({ ...b, phases: { exact: mechanism } }),
+      /phase.*safety/i,
+      mechanism,
+    );
+    assert.throws(
+      () =>
+        s.validateContentGraph({
+          ...b,
+          transitChapters: [{ key: "historical", chapter: "opening", mechanism }],
+        }),
+      /unsafe transit/i,
+      mechanism,
+    );
+  }
+});
+test("the bounded imperative check preserves declarative notice and conditional capability", async () => {
+  const { safetyPass } = await h.vite.ssrLoadModule("/src/lib/content/default-bundle.ts");
+  for (const text of [
+    ...transitImperatives,
+    "Notice your response before treating it as settled.",
+    "A response can be provisional; consider how it might change.",
+    "If a demand feels immediate, please start with a clear choice.",
+    "If a demand feels immediate, then notice your response.",
+    "Notice a response before treating it as settled.",
+  ])
+    assert.ok(safetyPass(text).flagged.length, text);
+  for (const text of [
+    ...Object.values(b.phases),
+    ...b.transitChapters.map((c) => c.mechanism),
+    "You notice which response may still be useful.",
+    "What you notice can remain open to consideration.",
+    "If you notice a demand, your response can remain provisional.",
+    "A notice can describe a commitment.",
+    "With more time, notice of a change may arrive.",
+    "A choice can start with a clearly described scope.",
+    "You may consider how a response could fit an ordinary commitment.",
+    "You can pause, notice your response, and describe it.",
+    "If a demand catches your attention, you can pause, notice your response, and describe it.",
+  ])
+    assert.deepEqual(safetyPass(text).flagged, [], text);
 });
 test("cycle_draft_preserves_chapter_catalogue", async () => {
   await h.records().from("user_roles").insert({ user_id: h.userA, role: "admin" });

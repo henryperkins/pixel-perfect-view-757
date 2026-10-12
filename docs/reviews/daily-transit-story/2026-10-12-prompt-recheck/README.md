@@ -1,0 +1,11 @@
+# Transit prompt and instruction-check recheck
+
+The user identified two remaining defects after the published-copy correction: arc guidance required S1/N1 even when absent, and the automated safety check accepted the historical commands. This change removes the unconditional combination instruction while keeping the separate actual-source requirements. It adds bounded command patterns at sentence/clause boundaries and applies the existing safety pass to phase publication as well as chapter publication.
+
+Prompt identity becomes `daily-astro-body-13`; validator becomes `daily-reference-10`. Published candidate copy remains `builtin-0.7.1`. The check recognizes the observed notice/start-with/consider/let forms; it is not a complete grammar parser or a substitute for writing review. Declarative uses and conditional capability remain allowed.
+
+Four regression tests fail before the change and pass afterward. All 528 tests pass, typecheck and build pass, and lint passes on the changed application/tests and positive-control script. The first full run correctly rejected four old handwritten positive controls containing the prohibited commands. Those controls now use corrected published copy; historical sentences remain verbatim in the new negative fixtures and all captured provider artifacts.
+
+The six corrected-copy calls at `26cd0c9` finished before dispatch could be stopped. They are preserved in `../2026-10-12-copy-recheck/capture/`, without an independent writing verdict, and do not qualify this changed prompt. The next capture uses a new folder, six cases, no automatic retries, frozen source identity and the established local capture deadline. No model call is made by `preflight.mjs`; it checks the eight selected templates and source facts, intercepts seven assembled requests with handwritten validator controls, and saves the exact opening system/user/schema and native body. Independent review remains necessary.
+
+At this preparation point the prompt-13 paid run and its writing review are pending. The original combined raw/template and quiet passes can be retained only with explicit source/output compatibility checks and their original generation identities. The native transit-source gate remains open. Neither candidate is active.

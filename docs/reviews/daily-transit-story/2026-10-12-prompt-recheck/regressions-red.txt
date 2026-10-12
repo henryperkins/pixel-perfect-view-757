@@ -1,0 +1,101 @@
+✔ timing instructions explicitly require the cycle even when T1 repeats its number (411.708266ms)
+✔ daily uses one 60-second call and exports its budget without changing provider settings (4.022853ms)
+✔ a response taking 15 simulated seconds can pass the new daily deadline (155.259997ms)
+✔ deadline abort during fetch returns a safe fallback without retry (3.140726ms)
+✔ deadline abort during response body returns a safe fallback without retry (2.398956ms)
+✔ natal narrative keeps its independent 90-second request budget (0.901968ms)
+✔ a mid-run timeout-policy change cannot combine with completed cases (6.055914ms)
+✔ historical version-5 comparison records changed or unrecorded gateway budgets (4.441788ms)
+✔ current transit comparison refuses changed or unrecorded gateway budgets (356.729743ms)
+✔ claim-strength guidance is sent with unchanged source statements, parents, suppression and body-only schema (8.924044ms)
+✖ arc guidance does not require absent sources and retains actual synthesis and lens requirements (32.982024ms)
+✔ historical strengthening needs review while combined window/exact timing is rejected (10.946745ms)
+✔ daily has a distinct editorial system brief while natal keeps the original brief (2.85749ms)
+✔ inactive_transit_candidate_preserves_the_shipped_fallback_and_natal_candidate (430.55175ms)
+✔ legacy_content_does_not_inherit_chapters_and_empty_is_authoritative (0.67207ms)
+✔ chapter_copy_is_not_a_personal_history (3.674479ms)
+✔ phase_copy_is_conditional_and_release_owned (0.546832ms)
+✖ historical transit commands cannot be published as chapter or phase copy (1.34371ms)
+✖ the bounded imperative check preserves declarative notice and conditional capability (0.308386ms)
+✔ cycle_draft_preserves_chapter_catalogue (45.865133ms)
+✔ arc_payload_contains_no_scan_or_birth_data_and_requires_exact_parents (487.999358ms)
+✔ chronology_is_copied_once_in_first_two_paragraphs (23.218152ms)
+✖ historical transit imperatives reject the entire draft and use the safe template (14.780951ms)
+✔ extra_counts_dates_biography_and_promised_resolution_fall_back_as_a_whole (25.877554ms)
+✔ omitted_arc_cannot_invent_passes (12.04396ms)
+✔ return_and_passage_counts_fail_with_selected_or_omitted_story (28.422988ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 22
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1208.628652
+
+✖ failing tests:
+
+test at tests/reading-request-policy.test.mjs:248:1
+✖ arc guidance does not require absent sources and retains actual synthesis and lens requirements (32.982024ms)
+  AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /S1|N1/. Input:
+  
+  "Copy A1's chronology sentence unchanged exactly once in paragraph 1 or 2, citing C1/A1. Connect P2's conditional practical meaning to I1 in paragraph 1 or 2, citing C1/I1/A1/P2. Combine S1/N1/P2 naturally within the existing four-sentence paragraph limit; do not add a separate essay. Only the unchanged chronology sentence may use A1 dates. Do not add counts, pass ordinals, station dates, life history or promises of closure."
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/tests/reading-request-policy.test.mjs:257:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "Copy A1's chronology sentence unchanged exactly once in paragraph 1 or 2, citing C1/A1. Connect P2's conditional practical meaning to I1 in paragraph 1 or 2, citing C1/I1/A1/P2. Combine S1/N1/P2 naturally within the existing four-sentence paragraph limit; do not add a separate essay. Only the unchanged chronology sentence may use A1 dates. Do not add counts, pass ordinals, station dates, life history or promises of closure.",
+    expected: /S1|N1/,
+    operator: 'doesNotMatch',
+    diff: 'simple'
+  }
+
+test at tests/reading-transit-content.test.mjs:66:1
+✖ historical transit commands cannot be published as chapter or phase copy (1.34371ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception: If a demand feels familiar, notice it in a concrete choice you can describe, such as the scope of a commitment.
+      at TestContext.<anonymous> (file:///home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/tests/reading-transit-content.test.mjs:68:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /phase.*safety/i,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at tests/reading-transit-content.test.mjs:83:1
+✖ the bounded imperative check preserves declarative notice and conditional capability (0.308386ms)
+  AssertionError [ERR_ASSERTION]: If a demand feels familiar, notice it in a concrete choice you can describe, such as the scope of a commitment.
+      at TestContext.<anonymous> (file:///home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/tests/reading-transit-content.test.mjs:90:13)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/reading-transit-language.test.mjs:82:1
+✖ historical transit imperatives reject the entire draft and use the safe template (14.780951ms)
+  AssertionError [ERR_ASSERTION]: If a demand feels familiar, notice it in a concrete choice you can describe, such as the scope of a commitment.
+  + actual - expected
+  
+  + 'accepted'
+  - 'safety'
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/tests/reading-transit-language.test.mjs:88:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'accepted',
+    expected: 'safety',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
