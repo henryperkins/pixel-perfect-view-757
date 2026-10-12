@@ -279,10 +279,30 @@ export const fetchReleases = createServerFn({ method: "GET" })
 
 export const activateContentRelease = createServerFn({ method: "POST" })
   .middleware([requireAuth])
-  .inputValidator((d: unknown) => z.object({ releaseId: z.string().uuid() }).parse(d))
+  .inputValidator((d: unknown) =>
+    z
+      .object({
+        releaseId: z.string().uuid(),
+        expectedPreviousVersion: z.string().max(64).nullable(),
+      })
+      .parse(d),
+  )
   .handler(async ({ data, context }) => {
     const m = await import("./pattern.server");
-    return m.activateRelease(context.db, context.userId, data.releaseId);
+    return m.activateRelease(
+      context.db,
+      context.userId,
+      data.releaseId,
+      data.expectedPreviousVersion,
+    );
+  });
+
+export const reconcileContentPublication = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
+  .inputValidator((d: unknown) => z.object({ version: z.string().min(1).max(64) }).parse(d))
+  .handler(async ({ data, context }) => {
+    const m = await import("./pattern.server");
+    return m.reconcileReleasePublication(context.db, context.userId, data.version);
   });
 
 export const fetchEdgePlane = createServerFn({ method: "GET" })
@@ -418,10 +438,74 @@ export const draftContentRelease = createServerFn({ method: "POST" })
 
 export const publishContentDraft = createServerFn({ method: "POST" })
   .middleware([requireAuth])
+  .inputValidator((d: unknown) =>
+    z
+      .object({
+        draftId: z.string().min(1),
+        version: z.string().regex(/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/),
+        candidateHash: z.string().regex(/^[a-f0-9]{64}$/),
+        baseHash: z.string().regex(/^[a-f0-9]{64}$/),
+      })
+      .parse(d),
+  )
+  .handler(async ({ data, context }) => {
+    const m = await import("./pattern.server");
+    return m.publishDraft(context.db, context.userId, data);
+  });
+
+export const fetchDraftComparison = createServerFn({ method: "GET" })
+  .middleware([requireAuth])
   .inputValidator((d: unknown) => z.object({ draftId: z.string().min(1) }).parse(d))
   .handler(async ({ data, context }) => {
     const m = await import("./pattern.server");
-    return m.publishDraft(context.db, context.userId, data.draftId);
+    return m.getDraftComparison(context.db, context.userId, data.draftId);
+  });
+
+export const approveContentDraftReview = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
+  .inputValidator((d: unknown) =>
+    z
+      .object({
+        draftId: z.string().min(1),
+        candidateHash: z.string().regex(/^[a-f0-9]{64}$/),
+        baseHash: z.string().regex(/^[a-f0-9]{64}$/),
+      })
+      .parse(d),
+  )
+  .handler(async ({ data, context }) => {
+    const m = await import("./pattern.server");
+    return m.approveDraftReview(context.db, context.userId, data);
+  });
+
+export const editContentDraft = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
+  .inputValidator((d: unknown) =>
+    z
+      .object({
+        draftId: z.string().min(1),
+        expectedCandidateHash: z.string().regex(/^[a-f0-9]{64}$/),
+        bundle: z.record(z.string(), z.unknown()),
+      })
+      .parse(d),
+  )
+  .handler(async ({ data, context }) => {
+    const m = await import("./pattern.server");
+    return m.editContentDraft(context.db, context.userId, data);
+  });
+
+export const rebaseContentDraft = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
+  .inputValidator((d: unknown) =>
+    z
+      .object({
+        draftId: z.string().min(1),
+        expectedCandidateHash: z.string().regex(/^[a-f0-9]{64}$/),
+      })
+      .parse(d),
+  )
+  .handler(async ({ data, context }) => {
+    const m = await import("./pattern.server");
+    return m.rebaseContentDraft(context.db, context.userId, data);
   });
 
 export const discardContentDraft = createServerFn({ method: "POST" })

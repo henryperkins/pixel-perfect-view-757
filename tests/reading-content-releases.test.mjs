@@ -105,7 +105,7 @@ test("lifecycle: an unreadable active pointer prevents activation and leaves its
   });
   await assert.rejects(
     () => h.app.activateRelease(h.records(), h.userA, target.id),
-    /Injected local records failure/,
+    /active release pointer could not be read/,
   );
   assert.equal(
     h.sqlite.prepare("select is_active from content_releases where id = ?").get(target.id)
@@ -245,16 +245,11 @@ test("lifecycle: overlapping identical signed ingests reuse the single winning r
   assert.ok(bodies.every((body) => body.checksum === rows[0].checksum));
   assert.equal(rows[0].is_active, 1);
   assert.deepEqual(JSON.parse(rows[0].bundle), bundle);
-  assert.equal(
-    h.requests.filter(({ sql }) => /^insert into "content_releases"/i.test(sql)).length,
-    2,
-    "both requests passed the initial lookup",
+  const audit = JSON.parse(
+    h.sqlite.prepare("SELECT activation_audit FROM content_releases").get().activation_audit,
   );
-  assert.equal(
-    h.requests.filter(({ sql }) => /^update "content_releases"/i.test(sql)).length,
-    2,
-    "only the winning request changes the pointer",
-  );
+  assert.equal(audit.length, 1, "identical overlapping uploads produce one activation");
+  assert.ok(bodies.every((body) => body.publication.status === "complete"));
 });
 
 test("lifecycle: overlapping differing signed ingests return 409 and retain the winning content", async () => {
@@ -481,14 +476,12 @@ test("lifecycle: an identical ingest retry after a failed activation completes t
       .all()
       .map((row) => row.version);
 
-  // The pointer update is two writes: the previous release is already inactive
-  // when the new row's activation fails.
+  // Both pointer writes and the audit now roll back together on a middle failure.
   h.setFault({
-    matches: (sql) =>
-      /^update "content_releases" set "is_active" = \? where "id" is \?$/i.test(sql),
+    matches: (sql) => /^update content_releases set is_active=1/i.test(sql),
   });
-  assert.equal((await post()).status, 500);
-  assert.deepEqual(activeVersions(), []);
+  assert.equal((await post()).status, 409);
+  assert.deepEqual(activeVersions(), ["1.0.0"]);
 
   h.setFault(null);
   h.requests.length = 0;
@@ -500,9 +493,14 @@ test("lifecycle: an identical ingest retry after a failed activation completes t
     .prepare("SELECT checksum FROM content_releases WHERE version = ?")
     .get("2.0.0");
   assert.equal(body.checksum, stored.checksum);
-  assert.ok(body.workflowInstanceId, "the retry mirrors the pointer and starts the build");
   assert.equal(
-    h.requests.filter(({ sql }) => /^insert into "content_releases"/i.test(sql)).length,
+    body.publication.status,
+    "complete",
+    "the retry confirms immutable artifact and pointer delivery",
+  );
+  assert.ok(body.publication.artifactKey);
+  assert.equal(
+    h.requests.filter(({ sql }) => /^insert into "?content_releases"? /i.test(sql)).length,
     0,
     "the retry reuses the stored row and checksum",
   );
@@ -512,7 +510,10 @@ test("lifecycle: an identical ingest retry after a failed activation completes t
   const replay = await post();
   assert.equal(replay.status, 200);
   assert.equal((await replay.json()).workflowInstanceId, null);
-  assert.equal(h.requests.filter(({ sql }) => /^update "content_releases"/i.test(sql)).length, 0);
+  assert.equal(
+    h.requests.filter(({ sql }) => /^update "?content_releases"? /i.test(sql)).length,
+    0,
+  );
 });
 
 test("lifecycle: a complete draft reply rewrites family slots only, keeps reviewed entries and rules, and drops unusable entries", async () => {

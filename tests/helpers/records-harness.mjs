@@ -42,6 +42,7 @@ export async function createRecordsHarness() {
   const gatewayRequests = [];
   const geminiEnterpriseRequests = [];
   const evaluationStarts = [];
+  const releasePublications = [];
   const swissRequests = [];
   const episodeRequests = [];
   let episodeHandler = null;
@@ -50,6 +51,7 @@ export async function createRecordsHarness() {
   let gatewayHandler = null;
   let geminiEnterpriseHandler = null;
   let evaluationPlane = null;
+  let releasePublicationHandler = null;
   let swissHandler = null;
   let fault = null;
   let closed = false;
@@ -89,6 +91,18 @@ export async function createRecordsHarness() {
       return geminiEnterpriseHandler(body, init);
     }
     const workflowBase = process.env.PATTERN_WORKFLOW_URL;
+    if (workflowBase && url === `${workflowBase}/release-publication`) {
+      const body = JSON.parse(String(init.body));
+      releasePublications.push(body);
+      return releasePublicationHandler
+        ? releasePublicationHandler(body)
+        : Response.json({
+            ok: true,
+            ...body,
+            artifactKey: "content-releases/" + body.version + "/bundle.json",
+            activeVersion: body.active ? body.version : null,
+          });
+    }
     if (workflowBase && url === `${workflowBase}/evaluations`) {
       const body = JSON.parse(String(init.body));
       evaluationStarts.push(body);
@@ -192,6 +206,8 @@ export async function createRecordsHarness() {
       gatewayRequests.length = 0;
       geminiEnterpriseRequests.length = 0;
       evaluationStarts.length = 0;
+      releasePublications.length = 0;
+      releasePublicationHandler = null;
       swissRequests.length = 0;
       episodeRequests.length = 0;
       episodeHandler = null;
@@ -303,6 +319,7 @@ export async function createRecordsHarness() {
       gatewayRequests,
       geminiEnterpriseRequests,
       evaluationStarts,
+      releasePublications,
       swissRequests,
       episodeRequests,
       setEpisode(handler) {
@@ -330,6 +347,9 @@ export async function createRecordsHarness() {
       },
       setEvaluationPlane(handler) {
         evaluationPlane = handler;
+      },
+      setReleasePublicationHandler(handler) {
+        releasePublicationHandler = handler;
       },
       setGeminiEnterprise(handler) {
         geminiEnterpriseHandler = handler;

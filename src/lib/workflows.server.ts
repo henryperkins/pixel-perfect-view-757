@@ -64,6 +64,23 @@ export async function syncReleasePointer(version: string, checksum: string | nul
   });
 }
 
+/** Idempotent delivery of immutable editorial content; no member/model work. */
+export async function publishReleaseArtifact(params: {
+  operationId: string;
+  version: string;
+  checksum: string;
+  active: boolean;
+}) {
+  return call<{
+    ok: boolean;
+    operationId: string;
+    version: string;
+    checksum: string;
+    artifactKey: string;
+    activeVersion: string | null;
+  }>("POST", "/release-publication", params);
+}
+
 /** Starts a durable workflow instance that writes an R2 artifact and a D1 run row. */
 export async function triggerReadingWorkflow(params: {
   kind: string;

@@ -265,6 +265,8 @@ interface ReleaseRow {
   id: string;
   version: string;
   checksum: string;
+  checksum_algorithm: string | null;
+  publication_state: import("./content/release-lifecycle.server").PublicationState | null;
   created_at: string;
   is_active: boolean;
   bundle: Record<string, unknown> | null;
@@ -2652,7 +2654,9 @@ export async function getCyclesFor(db: DB, userId: string, day?: string, timeZon
 export async function listReleases(db: DB) {
   const { data, error } = await db
     .from<ReleaseRow>("content_releases")
-    .select("id, version, checksum, created_at, is_active, bundle")
+    .select(
+      "id, version, checksum, checksum_algorithm, publication_state, created_at, is_active, bundle",
+    )
     .order("created_at", { ascending: false })
     .limit(50);
   if (error) throw new Error(error.message);
@@ -2680,6 +2684,8 @@ export async function listReleases(db: DB) {
       id: r.id,
       version: r.version,
       checksum: r.checksum,
+      checksumAlgorithm: r.checksum_algorithm ?? "legacy-unlabelled",
+      publication: r.publication_state,
       created_at: r.created_at,
       is_active: r.is_active,
       families: keys.length,
@@ -2771,70 +2777,32 @@ export async function listLanguageProviders(db: DB, userId: string) {
  * for admins; published readings are never rewritten because each one already
  * records the release version it was assembled from.
  */
-export async function activateRelease(db: DB, userId: string, releaseId: string) {
-  if (!(await isAdmin(db, userId))) {
-    throw new Error("Only admins can change the active release.");
-  }
-
-  const { data: target, error: findErr } = await db
-    .from<{
-      id: string;
-      version: string;
-      checksum: string;
-      created_at: string;
-      bundle: Record<string, unknown> | null;
-    }>("content_releases")
-    .select("id, version, checksum, created_at, bundle")
+export async function activateRelease(
+  db: DB,
+  userId: string,
+  releaseId: string,
+  expectedPreviousVersion?: string | null,
+) {
+  if (!(await isAdmin(db, userId))) throw new Error("Only admins can change the active release.");
+  const { data: target, error } = await db
+    .from<{ version: string }>("content_releases")
+    .select("version")
     .eq("id", releaseId)
     .maybeSingle();
-  if (findErr) throw new Error(findErr.message);
+  if (error) throw new Error("That release could not be read. Please retry.");
   if (!target) throw new Error("That release no longer exists.");
-
-  validateContentGraph(target.bundle);
-
-  const { data: currentActive, error: activeError } = await db
-    .from<{ id: string; version: string; created_at: string }>("content_releases")
-    .select("id, version, created_at")
-    .eq("is_active", true)
-    .maybeSingle();
-  if (activeError) throw new Error(activeError.message);
-
-  const isRollback = Boolean(
-    currentActive &&
-    target.created_at &&
-    currentActive.created_at &&
-    new Date(target.created_at).getTime() < new Date(currentActive.created_at).getTime(),
-  );
-
-  const { error: deactivateErr } = await db
-    .from("content_releases")
-    .update({ is_active: false })
-    .neq("id", target.id);
-  if (deactivateErr) throw new Error(deactivateErr.message);
-
-  const { error: activateErr } = await db
-    .from("content_releases")
-    .update({ is_active: true })
-    .eq("id", target.id);
-  if (activateErr) throw new Error(activateErr.message);
-
-  await db.from("audit_events").insert({
-    user_id: userId,
-    kind: isRollback ? "content_release_rollback" : "content_release_activated",
-    detail: {
-      version: target.version,
-      checksum: target.checksum,
-      previousVersion: currentActive?.version ?? null,
-      action: isRollback ? "rollback" : "activate",
-    },
+  const { setActiveContentRelease } = await import("./content/release-lifecycle.server");
+  return setActiveContentRelease(db, {
+    version: target.version,
+    expectedPreviousVersion,
+    actor: { kind: "admin", userId },
+    source: "admin",
   });
+}
 
-  // Mirror the pointer into the edge plane (D1) so artifacts and durable runs
-  // resolve the same release the app just activated.
-  const { syncReleasePointer } = await import("./workflows.server");
-  await syncReleasePointer(target.version, target.checksum);
-
-  return { version: target.version, checksum: target.checksum, isRollback };
+export async function reconcileReleasePublication(db: DB, userId: string, version: string) {
+  const { reconcileContentReleasePublication } = await import("./content/release-lifecycle.server");
+  return reconcileContentReleasePublication(db, { version, actor: { kind: "admin", userId } });
 }
 
 // ---------------------------------------------------------------------------
@@ -3115,12 +3083,21 @@ export async function getFeatureNarrative(db: DB, userId: string, featureKey: st
 interface DraftRow {
   id: string;
   base_version: string | null;
+  base_bundle: Record<string, unknown> | null;
+  base_hash: string | null;
   model: string | null;
   bundle: Record<string, unknown> | null;
   notes: JsonValue;
   status: string;
   created_at: string;
 }
+
+export {
+  getDraftComparison,
+  approveDraftReview,
+  editContentDraft,
+  rebaseContentDraft,
+} from "./content/content-drafts.server";
 
 /** Slots a drafted release must cover: the ones the engine actually looks up. */
 const DRAFT_SLOTS: { key: string; family: string; transitBody: string; natalPoint: string }[] = [
@@ -3201,6 +3178,9 @@ export async function draftRelease(db: DB, userId: string, provider: LanguagePro
     throw new Error("Unknown language provider.");
 
   const base = await activeBundle(db);
+  const { contentChecksum } = await import("./content/draft-comparison");
+  const frozenBase = JSON.parse(JSON.stringify(base)) as Record<string, unknown>;
+  const baseHash = await contentChecksum(frozenBase);
   const { generateBundleEntries } = await import("./ai/language.server");
   // Only the reusable family slots are redrafted. Reviewed exact-aspect entries
   // and the synthesis rules that depend on them stay with editorial review.
@@ -3292,6 +3272,8 @@ export async function draftRelease(db: DB, userId: string, provider: LanguagePro
     .insert({
       user_id: userId,
       base_version: base.version,
+      base_bundle: frozenBase,
+      base_hash: baseHash,
       model: drafted.model,
       bundle: bundle,
       notes: {
@@ -3325,59 +3307,45 @@ export async function draftRelease(db: DB, userId: string, provider: LanguagePro
 }
 
 export async function discardDraft(db: DB, userId: string, draftId: string) {
-  if (!(await isAdmin(db, userId))) throw new Error("Only admins can discard a draft.");
-  const { error } = await db
-    .from("content_drafts")
-    .update({ status: "discarded" })
-    .eq("id", draftId);
-  if (error) throw new Error(error.message);
+  const { requireDraftAdmin, draftAdminGuard } = await import("./content/content-drafts.server");
+  await requireDraftAdmin(db, userId);
+  let result;
+  try {
+    result = await db.batch([
+      draftAdminGuard(userId),
+      {
+        sql: "UPDATE content_drafts SET status='discarded',review_candidate_hash=NULL,review_base_hash=NULL,reviewed_at=NULL WHERE id=? AND status='draft' RETURNING id",
+        params: [draftId],
+      },
+    ]);
+  } catch {
+    throw new Error("The draft could not be discarded or administrator authority changed.");
+  }
+  if (result[1]!.results.length !== 1)
+    throw new Error("That draft is already closed or published.");
   return { discarded: true };
 }
 
 /** Turns a reviewed draft into a real (inactive) content release. */
-export async function publishDraft(db: DB, userId: string, draftId: string) {
-  if (!(await isAdmin(db, userId))) throw new Error("Only admins can publish a draft.");
-
-  const { data: draft, error: findErr } = await db
-    .from<DraftRow>("content_drafts")
-    .select("id, base_version, model, bundle, notes, status, created_at")
-    .eq("id", draftId)
-    .maybeSingle();
-  if (findErr) throw new Error(findErr.message);
-  if (!draft || draft.status !== "draft") throw new Error("That draft is no longer open.");
-
-  const stamp = new Date()
-    .toISOString()
-    .replace(/[-:.TZ]/g, "")
-    .slice(0, 14);
-  const version = `ai-${stamp}`;
-  const bundle = { ...((draft.bundle ?? {}) as Record<string, unknown>), version };
-  validateContentGraph(bundle);
-  const serialized = JSON.stringify(bundle);
-  const { createHash } = await import("crypto");
-  const checksum = createHash("sha256").update(serialized).digest("hex");
-
-  const { error: insertErr } = await db.from("content_releases").insert({
-    version,
-    checksum,
-    bundle: bundle,
-    is_active: false,
+export async function publishDraft(
+  db: DB,
+  userId: string,
+  input: { draftId: string; version: string; candidateHash: string; baseHash: string },
+) {
+  const { loadReviewedDraft } = await import("./content/content-drafts.server");
+  const draft = await loadReviewedDraft(db, userId, input.draftId);
+  const { stageContentRelease } = await import("./content/release-lifecycle.server");
+  return stageContentRelease(db, {
+    version: input.version,
+    bundle: { ...draft.bundle, version: input.version },
+    actor: { kind: "admin", userId },
+    source: "admin",
+    draftReview: {
+      draftId: input.draftId,
+      candidateHash: input.candidateHash,
+      baseHash: input.baseHash,
+    },
   });
-  if (insertErr) throw new Error(insertErr.message);
-
-  const { error: markErr } = await db
-    .from("content_drafts")
-    .update({ status: "published" })
-    .eq("id", draft.id);
-  if (markErr) throw new Error(markErr.message);
-
-  await db.from("audit_events").insert({
-    user_id: userId,
-    kind: "content_draft_published",
-    detail: { version, checksum, model: draft.model },
-  });
-
-  return { version, checksum };
 }
 
 // ---------------------------------------------------------------------------

@@ -5,6 +5,8 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { after, before, test } from "node:test";
 import { pathToFileURL } from "node:url";
+import { DatabaseSync } from "node:sqlite";
+import { createHash } from "node:crypto";
 
 const SECRET = "edge-test-secret-never-a-real-secret";
 const sign = (raw) => createHmac("sha256", SECRET).update(raw).digest("hex");
@@ -26,6 +28,179 @@ before(async () => {
 });
 after(async () => {
   await rm(directory, { recursive: true, force: true });
+});
+
+function publicationFixture() {
+  const db = new DatabaseSync(":memory:");
+  db.exec(
+    "CREATE TABLE content_releases(version TEXT PRIMARY KEY,checksum TEXT,checksum_algorithm TEXT,bundle TEXT,is_active INTEGER);CREATE TABLE release_pointer(version TEXT PRIMARY KEY,checksum TEXT,is_active INTEGER,created_at TEXT);",
+  );
+  const bundle = { cycles: [], natal: { sun_placement: "Reviewed editorial copy." } };
+  const canonical = JSON.stringify(bundle),
+    checksum = createHash("sha256").update(canonical).digest("hex");
+  db.prepare("INSERT INTO content_releases VALUES (?,?,?,?,1)").run(
+    "1.0.0",
+    checksum,
+    "sha256-canonical-json-v1",
+    canonical,
+  );
+  db.prepare("INSERT INTO release_pointer VALUES (?,?,1,?)").run(
+    "old-version",
+    "old-checksum",
+    "2026-01-01",
+  );
+  const objects = new Map(),
+    puts = [];
+  let beforeBatch = null;
+  const env = {
+    PATTERN_WORKFLOW_SECRET: SECRET,
+    RECORDS: {
+      prepare(sql) {
+        let params = [];
+        return {
+          bind(...values) {
+            params = values;
+            return this;
+          },
+          async first() {
+            return db.prepare(sql).get(...params) ?? null;
+          },
+          async run() {
+            return db.prepare(sql).run(...params);
+          },
+          async all() {
+            return { results: db.prepare(sql).all(...params) };
+          },
+          sql,
+          get params() {
+            return params;
+          },
+        };
+      },
+      async batch(statements) {
+        if (beforeBatch) beforeBatch();
+        db.exec("BEGIN");
+        try {
+          const results = statements.map((s) => ({ results: db.prepare(s.sql).all(...s.params) }));
+          db.exec("COMMIT");
+          return results;
+        } catch (e) {
+          db.exec("ROLLBACK");
+          throw e;
+        }
+      },
+    },
+    ARTIFACTS: {
+      async get(key) {
+        const text = objects.get(key);
+        return text === undefined
+          ? null
+          : {
+              body: text,
+              async text() {
+                return text;
+              },
+            };
+      },
+      async put(key, text) {
+        objects.set(key, text);
+        puts.push(key);
+      },
+    },
+  };
+  const body = {
+    operationId: "36d7cf2c-3e38-4ef4-af28-3dc01e95ae91",
+    version: "1.0.0",
+    checksum,
+    active: true,
+  };
+  const request = (payload = body) =>
+    new Request("https://worker.example.test/release-publication", {
+      method: "POST",
+      headers: { "x-pattern-signature": sign(JSON.stringify(payload)) },
+      body: JSON.stringify(payload),
+    });
+  return {
+    db,
+    env,
+    objects,
+    puts,
+    body,
+    request,
+    setBeforeBatch(fn) {
+      beforeBatch = fn;
+    },
+  };
+}
+
+test("/release-publication writes immutable editorial artifacts and idempotent receipts with an atomic pointer mirror", async () => {
+  const f = publicationFixture();
+  try {
+    const first = await worker.default.fetch(f.request(), f.env);
+    assert.equal(first.status, 200);
+    const receipt = await first.json();
+    assert.equal(receipt.activeVersion, "1.0.0");
+    assert.equal(receipt.artifactKey, "content-releases/1.0.0/bundle.json");
+    assert.equal((await worker.default.fetch(f.request(), f.env)).status, 200);
+    assert.equal(f.puts.length, 2);
+    assert.equal(
+      f.db.prepare("SELECT version FROM release_pointer WHERE is_active=1").get().version,
+      "1.0.0",
+    );
+    const operation = f.objects.get("operations/content-release/" + f.body.operationId + ".json");
+    assert.ok(operation);
+    assert.ok(!/userId|user_id|password|email/.test(operation));
+  } finally {
+    f.db.close();
+  }
+});
+
+test("/release-publication rejects stale activation and differing artifacts without replacing the mirror", async () => {
+  const f = publicationFixture();
+  try {
+    f.setBeforeBatch(() => f.db.prepare("UPDATE content_releases SET is_active=0").run());
+    assert.equal((await worker.default.fetch(f.request(), f.env)).status, 409);
+    assert.equal(
+      f.db.prepare("SELECT version FROM release_pointer WHERE is_active=1").get().version,
+      "old-version",
+    );
+    f.setBeforeBatch(null);
+    f.db.prepare("UPDATE content_releases SET is_active=1").run();
+    f.objects.set("content-releases/1.0.0/bundle.json", "Different content");
+    assert.equal((await worker.default.fetch(f.request(), f.env)).status, 409);
+    assert.equal(f.objects.get("content-releases/1.0.0/bundle.json"), "Different content");
+  } finally {
+    f.db.close();
+  }
+});
+
+test("/release-publication staging does not change the active pointer and validates source checksum and operation identity", async () => {
+  const f = publicationFixture();
+  try {
+    const staged = { ...f.body, active: false };
+    assert.equal((await worker.default.fetch(f.request(staged), f.env)).status, 200);
+    assert.equal(
+      f.db.prepare("SELECT version FROM release_pointer WHERE is_active=1").get().version,
+      "old-version",
+    );
+    assert.equal(
+      (await worker.default.fetch(f.request({ ...f.body, operationId: "../unsafe" }), f.env))
+        .status,
+      400,
+    );
+    assert.equal(
+      (await worker.default.fetch(f.request({ ...f.body, checksum: "0".repeat(64) }), f.env))
+        .status,
+      409,
+    );
+    assert.equal(
+      (await worker.default.fetch(f.request(), f.env)).status,
+      409,
+      "an operation ID cannot change meaning",
+    );
+  } finally {
+    f.db.close();
+  }
 });
 
 function evaluationsRequest(body, signature = sign(JSON.stringify(body))) {

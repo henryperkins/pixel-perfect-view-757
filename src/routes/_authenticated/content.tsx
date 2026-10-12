@@ -21,6 +21,8 @@ import {
   LanguageProviderChoice,
   type LanguageProviderStatus,
 } from "@/components/pattern/LanguageProviderChoice";
+import { ContentDraftReview } from "@/components/pattern/ContentDraftReview";
+import { isEarlierRelease } from "@/lib/content/release-version";
 import { ReadingEvaluation } from "@/components/pattern/ReadingEvaluation";
 import type { LanguageProvider } from "@/lib/ai/diagnostics";
 import {
@@ -32,7 +34,7 @@ import {
   fetchLanguageProviders,
   fetchReadingQuality,
   fetchReleases,
-  publishContentDraft,
+  reconcileContentPublication,
   triggerEdgeRun,
 } from "@/lib/pattern.functions";
 
@@ -60,6 +62,8 @@ type Release = {
   id: string;
   version: string;
   checksum: string;
+  checksumAlgorithm?: string;
+  publication?: { status: string; artifactKey: string | null; error: string | null } | null;
   created_at: string;
   is_active: boolean;
   families: number;
@@ -85,6 +89,7 @@ function ContentPage() {
   const { session, isAdmin: authIsAdmin, loading: authLoading } = useAuth();
   const releasesFn = useServerFn(fetchReleases);
   const activateFn = useServerFn(activateContentRelease);
+  const reconcileFn = useServerFn(reconcileContentPublication);
   const queryClient = useQueryClient();
   const query = useQuery({
     queryKey: ["releases", session?.userId],
@@ -95,13 +100,14 @@ function ContentPage() {
   const [pendingRelease, setPendingRelease] = useState<{
     release: Release;
     isRollback: boolean;
+    expectedPreviousVersion: string | null;
   } | null>(null);
 
   const [result, setResult] = useState<{
-    kind: "success" | "error";
+    kind: "success" | "error" | "partial" | "superseded";
     version: string;
     message: string;
-    action: "rollback" | "activate";
+    action: "rollback" | "activate" | "reconcile";
   } | null>(null);
 
   const releases: Release[] = query.data?.releases ?? [];
@@ -110,20 +116,40 @@ function ContentPage() {
   const activeRelease = releases.find((r) => r.is_active);
 
   const rollback = useMutation({
-    mutationFn: (item: { release: Release; isRollback: boolean }) =>
-      activateFn({ data: { releaseId: item.release.id } }),
+    mutationFn: (item: {
+      release: Release;
+      isRollback: boolean;
+      expectedPreviousVersion: string | null;
+    }) =>
+      activateFn({
+        data: { releaseId: item.release.id, expectedPreviousVersion: item.expectedPreviousVersion },
+      }),
     onSuccess: (data, item) => {
       setPendingRelease(null);
       const isRollback = data.isRollback;
       setResult({
-        kind: "success",
+        kind:
+          data.publication.status === "complete"
+            ? "success"
+            : data.publication.status === "superseded"
+              ? "superseded"
+              : "partial",
         version: item.release.version,
         action: isRollback ? "rollback" : "activate",
-        message: `Active release is now ${data.version} · checksum ${data.checksum.slice(0, 16)}…. Readings already published keep the version they were assembled from.`,
+        message:
+          data.publication.status === "complete"
+            ? `Active release is now ${data.version} · checksum ${data.checksum.slice(0, 16)}…. Readings already published keep the version they were assembled from.`
+            : data.publication.status === "superseded"
+              ? `Another activation advanced the pointer. Active release is ${data.activeVersion ?? "built-in"}. Reload the inventory before making another decision.`
+              : `Active pointer is ${data.activeVersion ?? "built-in"}; edge artifact or pointer delivery is incomplete. Reconcile publication before sign-off.`,
       });
-      toast.success(
-        isRollback ? `Rolled back to ${data.version}` : `Activated ${data.version} — now live`,
-      );
+      if (data.publication.status === "complete")
+        toast.success(
+          isRollback ? `Rolled back to ${data.version}` : `Activated ${data.version} — now live`,
+        );
+      else if (data.publication.status === "superseded")
+        toast.warning(`Active release advanced to ${data.activeVersion ?? "built-in"}.`);
+      else toast.warning(`Pointer saved for ${data.version}; publication is incomplete.`);
       void queryClient.invalidateQueries({ queryKey: ["releases"] });
       void queryClient.invalidateQueries({ queryKey: ["today"] });
       void queryClient.invalidateQueries({ queryKey: ["cycles"] });
@@ -139,6 +165,32 @@ function ContentPage() {
       });
       toast.error(item.isRollback ? "Rollback failed" : "Activation failed");
     },
+  });
+
+  const reconcile = useMutation({
+    mutationFn: (version: string) => reconcileFn({ data: { version } }),
+    onSuccess: (data) => {
+      setResult({
+        kind:
+          data.publication.status === "complete"
+            ? "success"
+            : data.publication.status === "superseded"
+              ? "superseded"
+              : "partial",
+        version: data.version,
+        action: "reconcile",
+        message:
+          data.publication.status === "complete"
+            ? `Artifact delivery for ${data.version} is confirmed. Active release: ${data.activeVersion ?? "built-in"}.`
+            : data.publication.status === "superseded"
+              ? `Publication was superseded. Active release: ${data.activeVersion ?? "built-in"}. Activate this version explicitly to move the pointer again.`
+              : `Release ${data.version} is saved; delivery remains incomplete. Retry reconciliation.`,
+      });
+      void queryClient.invalidateQueries({ queryKey: ["releases"] });
+      void queryClient.invalidateQueries({ queryKey: ["edge-plane"] });
+    },
+    onError: (error: Error, version) =>
+      setResult({ kind: "error", version, action: "reconcile", message: error.message }),
   });
 
   if (authLoading) {
@@ -191,23 +243,31 @@ function ContentPage() {
             <div
               role="status"
               className={`border p-4 ${
-                result.kind === "success"
-                  ? "border-rule bg-evidence"
-                  : "border-destructive/40 bg-evidence"
+                result.kind === "error"
+                  ? "border-destructive/40 bg-evidence"
+                  : "border-rule bg-evidence"
               }`}
             >
               <p
                 className={`text-xs font-medium uppercase tracking-wider ${
-                  result.kind === "success" ? "text-primary" : "text-destructive"
+                  result.kind === "error" ? "text-destructive" : "text-primary"
                 }`}
               >
-                {result.kind === "success"
-                  ? result.action === "rollback"
-                    ? `Rollback applied · ${result.version}`
-                    : `Release activated · ${result.version}`
-                  : result.action === "rollback"
-                    ? `Rollback failed · ${result.version}`
-                    : `Activation failed · ${result.version}`}
+                {result.kind === "superseded"
+                  ? `Active release advanced · ${result.version}`
+                  : result.kind === "partial"
+                    ? `Publication incomplete · ${result.version}`
+                    : result.kind === "success"
+                      ? result.action === "rollback"
+                        ? `Rollback applied · ${result.version}`
+                        : result.action === "reconcile"
+                          ? `Publication reconciled · ${result.version}`
+                          : `Release activated · ${result.version}`
+                      : result.action === "rollback"
+                        ? `Rollback failed · ${result.version}`
+                        : result.action === "reconcile"
+                          ? `Publication reconciliation failed · ${result.version}`
+                          : `Activation failed · ${result.version}`}
               </p>
               <p className="prose-reading mt-2 max-w-prose text-foreground">{result.message}</p>
               <Button
@@ -308,12 +368,7 @@ function ContentPage() {
               <div className="mt-6 space-y-4">
                 {releases.map((r) => {
                   const isLive = r.is_active;
-                  const isRollback = Boolean(
-                    activeRelease &&
-                    r.created_at &&
-                    activeRelease.created_at &&
-                    new Date(r.created_at).getTime() < new Date(activeRelease.created_at).getTime(),
-                  );
+                  const isRollback = Boolean(activeRelease && isEarlierRelease(r, activeRelease));
                   return (
                     <article
                       key={r.id}
@@ -331,7 +386,9 @@ function ContentPage() {
                               className="h-1.5 w-1.5 rounded-full bg-primary"
                               aria-hidden="true"
                             />
-                            Live release
+                            {r.publication && r.publication.status !== "complete"
+                              ? "Active · delivery incomplete"
+                              : "Live release"}
                           </span>
                         ) : (
                           <span className="rounded-sm bg-muted px-2 py-0.5 text-xs text-muted-foreground">
@@ -376,6 +433,7 @@ function ContentPage() {
                             {r.checksum.slice(0, 16)}…
                           </span>
                         </span>
+                        <span>Algorithm · {r.checksumAlgorithm ?? "legacy-unlabelled"}</span>
                       </div>
 
                       <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-rule pt-3">
@@ -390,9 +448,13 @@ function ContentPage() {
                             type="button"
                             onClick={() => {
                               setResult(null);
-                              setPendingRelease({ release: r, isRollback });
+                              setPendingRelease({
+                                release: r,
+                                isRollback,
+                                expectedPreviousVersion: activeRelease?.version ?? null,
+                              });
                             }}
-                            disabled={rollback.isPending}
+                            disabled={rollback.isPending || reconcile.isPending}
                           >
                             {rollback.isPending && rollback.variables?.release.id === r.id
                               ? isRollback
@@ -403,6 +465,19 @@ function ContentPage() {
                                 : "Make live"}
                           </Button>
                         )}
+                        {r.publication && ["pending", "failed"].includes(r.publication.status) ? (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            type="button"
+                            disabled={rollback.isPending || reconcile.isPending}
+                            onClick={() => reconcile.mutate(r.version)}
+                          >
+                            {reconcile.isPending && reconcile.variables === r.version
+                              ? "Reconciling…"
+                              : "Reconcile publication"}
+                          </Button>
+                        ) : null}
                       </div>
                     </article>
                   );
@@ -560,8 +635,8 @@ type Run = {
 };
 
 /**
- * The durable edge plane: each release publish or activation mirrors the pointer
- * into D1 and starts a Workflow instance that writes an immutable R2 artifact.
+ * Release delivery writes immutable editorial artifacts; this ledger records
+ * separate nightly and manually started reading Workflows.
  */
 function EdgePlane({ isAdmin }: { isAdmin: boolean }) {
   const planeFn = useServerFn(fetchEdgePlane);
@@ -590,9 +665,9 @@ function EdgePlane({ isAdmin }: { isAdmin: boolean }) {
         <span className="text-xs text-muted-foreground">{runs.length} recorded runs</span>
       </div>
       <p className="prose-reading mt-3 max-w-prose text-foreground">
-        Publishing or activating a release mirrors the active pointer into the edge records store
-        and starts a durable workflow that writes an immutable reading artifact. Each row below is
-        one completed instance, with the artifact it produced.
+        Release publication writes an immutable editorial bundle and delivery receipt. The release
+        inventory shows that delivery state. This ledger records nightly and manually started
+        reading workflows, with the artifact each completed instance produced.
       </p>
 
       {query.isPending ? (
@@ -1241,7 +1316,6 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
 function DraftPlane({ isAdmin }: { isAdmin: boolean }) {
   const listFn = useServerFn(fetchContentDrafts);
   const draftFn = useServerFn(draftContentRelease);
-  const publishFn = useServerFn(publishContentDraft);
   const discardFn = useServerFn(discardContentDraft);
   const queryClient = useQueryClient();
   const [provider, setProvider] = useState<LanguageProvider>("lovable");
@@ -1249,6 +1323,7 @@ function DraftPlane({ isAdmin }: { isAdmin: boolean }) {
   const [discardTarget, setDiscardTarget] = useState<string | null>(null);
   const [expandedRules, setExpandedRules] = useState<Record<string, boolean>>({});
   const [expandedEntries, setExpandedEntries] = useState<Record<string, boolean>>({});
+  const [reviewBusy, setReviewBusy] = useState<Record<string, boolean>>({});
 
   const query = useQuery({ queryKey: ["content-drafts"], queryFn: () => listFn({}) });
   const drafts = query.data?.drafts ?? [];
@@ -1262,15 +1337,6 @@ function DraftPlane({ isAdmin }: { isAdmin: boolean }) {
     mutationFn: () => draftFn({ data: { provider } }),
     onSuccess: (d) => {
       toast.success(`Drafted ${d.entries} entries with ${d.model}`);
-      refresh();
-    },
-    onError: (e: Error) => toast.error(e.message),
-  });
-
-  const publish = useMutation({
-    mutationFn: (draftId: string) => publishFn({ data: { draftId } }),
-    onSuccess: (d) => {
-      toast.success(`Published ${d.version}. You can now make it live in Published Releases.`);
       refresh();
     },
     onError: (e: Error) => toast.error(e.message),
@@ -1508,20 +1574,32 @@ function DraftPlane({ isAdmin }: { isAdmin: boolean }) {
 
                 {/* Draft action controls */}
                 <div className="flex flex-wrap gap-3 border-t border-rule pt-4">
-                  <Button
-                    type="button"
-                    onClick={() => publish.mutate(d.id)}
-                    disabled={publish.isPending || discard.isPending}
-                    size="sm"
-                  >
-                    {publish.isPending ? "Publishing…" : "Publish as release"}
-                  </Button>
+                  <ContentDraftReview
+                    draftId={d.id}
+                    disabled={discard.isPending}
+                    onBusyChange={(busy) =>
+                      setReviewBusy((previous) =>
+                        previous[d.id] === busy ? previous : { ...previous, [d.id]: busy },
+                      )
+                    }
+                    onPublished={(version, complete) => {
+                      if (complete)
+                        toast.success(
+                          `Staged ${version}. Activate it separately after qualification.`,
+                        );
+                      else
+                        toast.warning(
+                          `Staged ${version}; artifact delivery is incomplete. Reconcile publication before sign-off.`,
+                        );
+                      refresh();
+                    }}
+                  />
                   <Button
                     type="button"
                     variant="outline"
                     size="sm"
                     onClick={() => setDiscardTarget(d.id)}
-                    disabled={publish.isPending || discard.isPending}
+                    disabled={discard.isPending || reviewBusy[d.id]}
                     className="text-destructive hover:bg-destructive/10"
                   >
                     Discard draft
@@ -1557,7 +1635,7 @@ function DraftPlane({ isAdmin }: { isAdmin: boolean }) {
                   setDiscardTarget(null);
                 }
               }}
-              disabled={discard.isPending}
+              disabled={discard.isPending || Boolean(discardTarget && reviewBusy[discardTarget])}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             >
               {discard.isPending ? "Discarding…" : "Discard draft"}

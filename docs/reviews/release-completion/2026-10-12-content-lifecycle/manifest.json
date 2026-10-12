@@ -1,0 +1,84 @@
+{
+  "release": "2026-10-12-content-lifecycle",
+  "baseCommit": "bce0545",
+  "applicationCommit": null,
+  "ownedPaths": [
+    "d1/schema.sql",
+    "d1/migrations/20261012_content_draft_review.sql",
+    "d1/migrations/20261012_content_release_checksum.sql",
+    "edge/pattern-workflows/worker.mjs",
+    "src/components/pattern/ContentDraftReview.tsx",
+    "src/lib/content/content-drafts.server.ts",
+    "src/lib/content/draft-comparison.ts",
+    "src/lib/content/release-lifecycle.server.ts",
+    "src/lib/content/release-version.ts",
+    "src/lib/d1.server.ts",
+    "src/lib/pattern.functions.ts",
+    "src/lib/pattern.server.ts",
+    "src/lib/workflows.server.ts",
+    "src/routes/_authenticated/content.tsx",
+    "src/routes/api/public/content-releases.ts",
+    "src/routes/api/public/content-releases.rollback.ts",
+    "tests/content-draft-comparison.test.mjs",
+    "tests/content-release-lifecycle.test.mjs",
+    "tests/edge-pattern-workflows.test.mjs",
+    "tests/helpers/records-harness.mjs",
+    "tests/reading-content-releases.test.mjs"
+  ],
+  "fileHashes": {
+    "d1/schema.sql": "a21baf24e86fc0c1ccb273791d6afc60aa57a87bd7f98a1a90775f6b8b06894f",
+    "d1/migrations/20261012_content_draft_review.sql": "71670297982d557a896e153f43a11fb705bc1df046427632cca72638810762f9",
+    "d1/migrations/20261012_content_release_checksum.sql": "94114807e5bd40c716d4f157d22e2e68dc82952cd6a88bf4259ae0f2e480582a",
+    "edge/pattern-workflows/worker.mjs": "d63259aef2e43f13df5cfc7ed52b17623194e7f3a7be9bbce4594852f250705e",
+    "src/components/pattern/ContentDraftReview.tsx": "1d6f43a7f328ab1e4c6292e3dd3022b73ee73b995c120044b67cd6af9b66ffd7",
+    "src/lib/content/content-drafts.server.ts": "822697c1fbbd01b7f8ae364fa18f51a016f453893a130e8d128f857f000baa4e",
+    "src/lib/content/draft-comparison.ts": "0862589d2b85db5aa6a34addf33d92d35d2d229d1ff5711b99916cbd2d5a0102",
+    "src/lib/content/release-lifecycle.server.ts": "297b598f5435b07bc8dfc20551934f3082ddd8a3713a1cc3e2fd6271a49adcc1",
+    "src/lib/content/release-version.ts": "b4dcca4d8cd531081a02fa8f813eac91ca07ed21ee8745c03ed1b3750ffcd8d6",
+    "src/lib/d1.server.ts": "86d2734362dbe14e9f1778cf66bc99375f7998bf0f16ac4efa0da4d531bc6450",
+    "src/lib/pattern.functions.ts": "491a210bef9233b48db4c638ad0bb21ab2a0dfb798cc4d0428a50f21683b506e",
+    "src/lib/pattern.server.ts": "8ff695e9febb10267c2c717f0cb938631a86e0d5af7b618948407360602da866",
+    "src/lib/workflows.server.ts": "15f9a7ee583e408fdc6f8c691c2b34d04a994b335018ac64967ba20ed43cf72d",
+    "src/routes/_authenticated/content.tsx": "a7c1f273a2940114f71abbc423ae83628a6f20832c6a826b0fc60a6a4f7005ec",
+    "src/routes/api/public/content-releases.ts": "330d8d06666b1f32b6eed12f908c0807616f957c2591403c5a6307a53d3b5e60",
+    "src/routes/api/public/content-releases.rollback.ts": "39710b735dee19f1b9c06f5c4c8fc385ae35dca4e8282a9686eabae09bd35ce8",
+    "tests/content-draft-comparison.test.mjs": "0d295afccf80ede182a166c5b07150945448dbf330e6faec6d2b1486a1b89683",
+    "tests/content-release-lifecycle.test.mjs": "b5bacfc623020ad20085677fd1ee52a7fdbb57fb2cc7ae8ba739ced3b32c349e",
+    "tests/edge-pattern-workflows.test.mjs": "3b1bdfdc146a60504e95be9109d708aa5efbf4b4df60e394babcef2eb40ca6f3",
+    "tests/helpers/records-harness.mjs": "9fe1ce559c3b9c090288b2ad0c4dc08ca771fd3ff7691580eccb3bcbfbd9c626",
+    "tests/reading-content-releases.test.mjs": "1405ef2e62118119642a348642bc3a0bef1f2351671b44cfd02bf24732fed33a"
+  },
+  "dependencyLockHash": "0cb585843c6a80029b97d024401a01ff530c8fb9bbbaceb59ae837332d7a3804",
+  "migrations": [
+    {
+      "id": "20261012_content_draft_review",
+      "sourceHash": "71670297982d557a896e153f43a11fb705bc1df046427632cca72638810762f9"
+    },
+    {
+      "id": "20261012_content_release_checksum",
+      "sourceHash": "94114807e5bd40c716d4f157d22e2e68dc82952cd6a88bf4259ae0f2e480582a"
+    }
+  ],
+  "verification": {
+    "command": "node --test --test-concurrency=1 tests/*.test.mjs",
+    "tests": 678,
+    "passed": 676,
+    "existingSkips": 2,
+    "failed": 0,
+    "typecheck": true,
+    "scopedLint": true,
+    "build": true,
+    "browserFixtureChecks": 13,
+    "freshReview": "Approved; 40 focused tests and original held legacy-ingest reproduction independently passed"
+  },
+  "publication": {
+    "status": "pending"
+  },
+  "rollback": {
+    "applicationCommit": "65641612feb1beb5bcd27bdf641a2fdbd4c85e79",
+    "deploymentId": "9549e516-f3e4-4e7b-8f50-08c54c7aa854",
+    "workerVersion": "cc8d53f5-59c6-40f2-aa2a-8952cac8c045",
+    "contentVersion": "0.7.1",
+    "database": "retain additive columns, immutable releases, historical readings and operation receipts"
+  }
+}

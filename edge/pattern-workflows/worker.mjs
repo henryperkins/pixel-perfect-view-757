@@ -26,6 +26,127 @@ async function verify(raw, sig, secret) {
   return diff === 0;
 }
 
+export function canonicalReleaseJson(value) {
+  if (value === null || typeof value !== "object") return JSON.stringify(value);
+  if (Array.isArray(value)) return "[" + value.map(canonicalReleaseJson).join(",") + "]";
+  return (
+    "{" +
+    Object.keys(value)
+      .sort()
+      .map((key) => JSON.stringify(key) + ":" + canonicalReleaseJson(value[key]))
+      .join(",") +
+    "}"
+  );
+}
+
+/** Immutable editorial artifact delivery. The authoritative records pointer fences its mirror. */
+async function publishEditorialRelease(raw, env) {
+  let input;
+  try {
+    input = JSON.parse(raw);
+  } catch {
+    return new Response("Invalid publication request", { status: 400 });
+  }
+  const { operationId, version, checksum, active } = input;
+  if (
+    typeof operationId !== "string" ||
+    !/^[0-9a-f-]{36}$/.test(operationId) ||
+    typeof version !== "string" ||
+    !/^[A-Za-z0-9._-]{1,64}$/.test(version) ||
+    typeof checksum !== "string" ||
+    checksum.length < 1 ||
+    checksum.length > 256 ||
+    typeof active !== "boolean"
+  )
+    return new Response("Invalid publication identity", { status: 400 });
+  const row = await env.RECORDS.prepare(
+    "SELECT version,checksum,checksum_algorithm,bundle,is_active FROM content_releases WHERE version=?",
+  )
+    .bind(version)
+    .first();
+  if (!row || row.checksum !== checksum || (active && !row.is_active))
+    return new Response("Publication source changed", { status: 409 });
+  let canonical;
+  try {
+    canonical = canonicalReleaseJson(JSON.parse(row.bundle));
+  } catch {
+    return new Response("Invalid stored content", { status: 409 });
+  }
+  const hash = [...new Uint8Array(await crypto.subtle.digest("SHA-256", enc.encode(canonical)))]
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+  if (row.checksum_algorithm === "sha256-canonical-json-v1" && hash !== checksum)
+    return new Response("Stored content checksum mismatch", { status: 409 });
+  const operationKey = "operations/content-release/" + operationId + ".json";
+  const oldOperation = await env.ARTIFACTS.get(operationKey);
+  let oldReceipt = null;
+  if (oldOperation) {
+    try {
+      oldReceipt = JSON.parse(await oldOperation.text());
+    } catch {
+      return new Response("Invalid publication receipt", { status: 409 });
+    }
+    if (
+      oldReceipt.version !== version ||
+      oldReceipt.checksum !== checksum ||
+      oldReceipt.active !== active
+    )
+      return new Response("Publication operation conflict", { status: 409 });
+  }
+  const artifactKey = "content-releases/" + version + "/bundle.json";
+  const artifact = await env.ARTIFACTS.get(artifactKey);
+  if (artifact && (await artifact.text()) !== canonical)
+    return new Response("Immutable editorial artifact conflict", { status: 409 });
+  if (!artifact)
+    await env.ARTIFACTS.put(artifactKey, canonical, {
+      httpMetadata: { contentType: "application/json" },
+      customMetadata: {
+        checksum,
+        checksumAlgorithm: row.checksum_algorithm || "legacy-unlabelled",
+        canonicalSha256: hash,
+      },
+    });
+  if (active) {
+    try {
+      await env.RECORDS.batch([
+        env.RECORDS.prepare(
+          "SELECT CASE WHEN (SELECT COUNT(*) FROM content_releases WHERE is_active=1)=1 AND EXISTS(SELECT 1 FROM content_releases WHERE version=? AND checksum=? AND is_active=1) THEN 1 ELSE json('release-pointer-changed') END",
+        ).bind(version, checksum),
+        env.RECORDS.prepare("UPDATE release_pointer SET is_active=0"),
+        env.RECORDS.prepare(
+          "INSERT INTO release_pointer (version,checksum,is_active,created_at) VALUES (?,?,1,?) ON CONFLICT(version) DO UPDATE SET is_active=1,checksum=excluded.checksum",
+        ).bind(version, checksum, new Date().toISOString()),
+      ]);
+    } catch {
+      const current = await env.RECORDS.prepare(
+        "SELECT version FROM content_releases WHERE version=? AND checksum=? AND is_active=1",
+      )
+        .bind(version, checksum)
+        .first();
+      return new Response(
+        current ? "Publication mirror unavailable" : "Publication source changed",
+        { status: current ? 503 : 409 },
+      );
+    }
+  }
+  const receipt = oldReceipt ?? {
+    ok: true,
+    operationId,
+    version,
+    checksum,
+    active,
+    canonicalSha256: hash,
+    artifactKey,
+    activeVersion: active ? version : null,
+    at: new Date().toISOString(),
+  };
+  if (!oldReceipt)
+    await env.ARTIFACTS.put(operationKey, JSON.stringify(receipt), {
+      httpMetadata: { contentType: "application/json" },
+    });
+  return Response.json(receipt);
+}
+
 export class NightlyReadingWorkflow extends WorkflowEntrypoint {
   async run(event, step) {
     const p = event.payload || {};
@@ -241,6 +362,15 @@ export default {
         });
       } catch (e) {
         return Response.json({ ok: false, error: String((e && e.message) || e) }, { status: 400 });
+      }
+    }
+
+    if (request.method === "POST" && url.pathname === "/release-publication") {
+      if (raw.length > 4096) return new Response("Publication request too large", { status: 413 });
+      try {
+        return await publishEditorialRelease(raw, env);
+      } catch {
+        return new Response("Editorial artifact delivery unavailable", { status: 503 });
       }
     }
 
