@@ -434,6 +434,8 @@ export function assembleReading(
           interpretation: editorial.interpretation.mechanism,
           lens: natalLensPlan.lens.mechanism,
           synthesis: interpretationPlan.synthesis?.mechanism ?? null,
+          secondary:
+            interpretationPlan.interpretations.find((item) => item.index === 2)?.mechanism ?? null,
           primary,
           story: transitStoryPlan,
           technical,

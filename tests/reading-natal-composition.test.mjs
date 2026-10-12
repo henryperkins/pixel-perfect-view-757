@@ -207,9 +207,55 @@ test("unfamiliar decimal punctuation and later primary conditions survive alongs
   assert.doesNotMatch(result.astroBody, /projects within that role/);
 });
 
+const SATURN_SUN =
+  "Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.";
+const JUPITER_MARS =
+  "Jupiter's trine to Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening.";
+
+test("a synthesis fallback names both parent contacts before their published relationship", () => {
+  for (const [id, selected] of [
+    ["natal-synthesis-integration", natalBundle],
+    ["arc-synthesis-natal-integration", natalBundle],
+    ["natal-synthesis-integration", transitBundle],
+  ]) {
+    const result = reading(id, selected);
+    assert.notEqual(result.transitStoryPlan.status, "selected", id);
+    const synthesis = result.interpretationPlan.synthesis.mechanism;
+    const secondary = result.interpretationPlan.interpretations.find((i) => i.index === 2);
+    // The second parent is introduced by its own published contact sentence.
+    assert.ok(secondary.mechanism.split(/(?<=[.!?])\s+/).includes(JUPITER_MARS), id);
+    assert.equal(paragraphs(result).length, 2, id);
+    assert.match(paragraphs(result)[0], /projects within that role compete for the same free/, id);
+    assert.equal(paragraphs(result)[1], `${SATURN_SUN} ${JUPITER_MARS} ${synthesis}`, id);
+    assert.ok(words(result.astroBody) <= 170, id);
+  }
+});
+
+test("edited second-parent or synthesis copy keeps every published sentence before S1", () => {
+  for (const field of ["secondary", "synthesis"]) {
+    const changed = structuredClone(natalBundle);
+    const rule =
+      field === "secondary"
+        ? changed.cycles.find((item) => item.key === "trine:jupiter:mars")
+        : changed.synthesisRules.find(
+            (item) => item.key === "square:saturn:sun_tension_trine:jupiter:mars",
+          );
+    rule.mechanism += " This possibility applies only while the original scope still holds.";
+    const result = reading("natal-synthesis-integration", changed);
+    const plan = result.interpretationPlan;
+    const secondary = plan.interpretations.find((i) => i.index === 2).mechanism;
+    assert.equal(
+      paragraphs(result)[1],
+      `${SATURN_SUN} ${secondary} ${plan.synthesis.mechanism}`,
+      field,
+    );
+    assert.match(paragraphs(result)[1], /only while the original scope still holds\./, field);
+  }
+});
+
 test("synthesis and P2 keep their conditions and distinct claims, with one exact A1 chronology", () => {
   const pair = reading("natal-synthesis-integration");
-  assert.equal(paragraphs(pair)[1], pair.interpretationPlan.synthesis.mechanism);
+  assert.ok(paragraphs(pair)[1].endsWith(pair.interpretationPlan.synthesis.mechanism));
   assert.match(paragraphs(pair)[1], /Giving a plan more scope can increase/);
   assert.doesNotMatch(pair.astroBody, /That distinction shows|sampling.*(?:causes|establishes)/);
   for (const depth of ["standard", "technical"]) {
@@ -222,6 +268,12 @@ test("synthesis and P2 keep their conditions and distinct claims, with one exact
     assert.ok(paragraphs(result)[0].endsWith(chronologySentence));
     assert.ok(paragraphs(result)[1].includes(result.interpretationPlan.synthesis.mechanism));
     assert.ok(paragraphs(result)[1].includes(copy.mechanism));
+    // The story keeps its bounded paragraph, so S1 follows only its second parent here.
+    assert.ok(
+      paragraphs(result)[1].startsWith(
+        `${JUPITER_MARS} ${result.interpretationPlan.synthesis.mechanism}`,
+      ),
+    );
     assert.ok(words(result.astroBody) <= (depth === "technical" ? 240 : 170));
     for (const paragraph of paragraphs(result))
       assert.ok((paragraph.match(/[.!?](?:\s|$)/g) ?? []).length <= 4, paragraph);

@@ -60,6 +60,35 @@ const COMPOSITIONS: readonly Composition[] = [
   },
 ];
 
+interface Relationship {
+  secondary: string;
+  synthesis: string;
+  /** The second parent's own published sentence naming its contact. */
+  lead: string;
+}
+
+/**
+ * S1 relates two published interpretations, so it follows both parents rather
+ * than standing alone. A bound I2/S1 pair may introduce the second parent with its
+ * contact sentence; unfamiliar or edited copy keeps every I2 sentence.
+ */
+const RELATIONSHIPS: readonly Relationship[] = [
+  {
+    secondary:
+      "Enthusiasm and practical initiative reinforce one another when an aim is well chosen. Jupiter's trine to Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening.",
+    synthesis:
+      "Giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.",
+    lead: "Jupiter's trine to Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening.",
+  },
+];
+
+function relationship(secondary: string | null, synthesis: string): string {
+  const bound = RELATIONSHIPS.find(
+    (item) => item.secondary === secondary && item.synthesis === synthesis,
+  );
+  return [bound?.lead ?? secondary, synthesis].filter(Boolean).join(" ");
+}
+
 /**
  * Archived reads use saved I1/N1, never today's bundle. These openings are an
  * immutable consumption contract: future revisions must retain old variants for
@@ -101,11 +130,13 @@ export function composeNatalTemplate(input: {
   interpretation: string;
   lens: string;
   synthesis: string | null;
+  /** I2's published copy, which S1 relates to I1. */
+  secondary: string | null;
   primary: CycleInstance;
   story: DailyTransitStoryPlan;
   technical: boolean;
 }): string[] {
-  const { interpretation, lens, synthesis, primary, story, technical } = input;
+  const { interpretation, lens, synthesis, secondary, primary, story, technical } = input;
   const composed = COMPOSITIONS.find(
     (item) => item.interpretation === interpretation && item.lens === lens,
   );
@@ -115,9 +146,14 @@ export function composeNatalTemplate(input: {
   // writing-qualified. In particular, never apply an old recipe to new meaning.
   const opening = composed?.opening ?? [primarySentences[0], lens].filter(Boolean).join(" ");
   const paragraphs = [opening];
+  const joint = synthesis ? relationship(secondary, synthesis) : null;
+  // The primary contact sentence precedes the relationship when there is room.
+  // A selected story keeps its bounded paragraph, so S1 then follows only I2.
   const support = composed
-    ? (synthesis ?? primarySentences[1])
-    : [primarySentences.slice(1).join(" "), synthesis].filter(Boolean).join(" ");
+    ? story.status === "selected"
+      ? (joint ?? primarySentences[1])
+      : [primarySentences[1], joint].filter(Boolean).join(" ")
+    : [primarySentences.slice(1).join(" "), joint].filter(Boolean).join(" ");
 
   if (story.status === "selected") {
     // N1 stays wholly in paragraph 1 for the saved natal evidence contract.
