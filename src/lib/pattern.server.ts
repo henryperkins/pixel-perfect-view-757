@@ -1449,12 +1449,24 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
         ...(natalLens ? { natal_lens_ct: await encryptJson(dek, natalLens) } : {}),
         interpretationPlan,
         sourceCount: provenance.length,
-        // Assistants (MCP) may only receive reading text that used no Tier 3 wellness bands.
+        // Only a versioned, chart-only copy is eligible for assistant sharing.
+        // Never copy assembled.contextBody or a reading framed by check-in bands.
         assistantShare: {
-          version: 1,
-          wellnessUsed:
-            provenance.some((p) => p.source_id.startsWith("WEL-")) ||
-            /\b(sleep|stress)\b/i.test(`${body}\n${prose.prompt ?? ""}`),
+          version: 2,
+          reading_ct:
+            ctx.checkIn ||
+            ctx.wellness?.sleep != null ||
+            ctx.wellness?.stress != null ||
+            provenance.some((p) => p.source_id.startsWith("WEL-") || p.source_id === "USR-04") ||
+            /\b(sleep|stress|mood|energy)\b/i.test(
+              `${prose.headline}\n${prose.body}\n${prose.prompt ?? ""}`,
+            )
+              ? null
+              : await encryptJson(dek, {
+                  headline: prose.headline,
+                  body: prose.body,
+                  prompt: prose.prompt ?? null,
+                }),
         },
         paragraphs_ct: await encryptJson(dek, paragraphs),
       },
@@ -2020,6 +2032,8 @@ export async function exportEverything(db: DB, userId: string) {
 }
 
 export async function eraseEverything(db: DB, userId: string) {
+  const { unlinkIdentity } = await import("./assistant.server");
+  await unlinkIdentity(userId);
   clearTimingCalculations(userId);
   for (const table of [
     "reading_feedback",
@@ -2335,7 +2349,12 @@ interface NarrativeFact {
 }
 
 /** Share the exact effective tone and essay policy between page and chapter caches. */
-export async function featureNarrativeContext(db: DB, userId: string, snap: SnapshotRow, chart: Chart) {
+export async function featureNarrativeContext(
+  db: DB,
+  userId: string,
+  snap: SnapshotRow,
+  chart: Chart,
+) {
   const [profile, granted, { FEATURE_ESSAY_VERSION }] = await Promise.all([
     loadProfile(db, userId),
     grantedSet(db, userId),

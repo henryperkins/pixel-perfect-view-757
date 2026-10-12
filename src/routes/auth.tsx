@@ -5,15 +5,15 @@ import { toast } from "sonner";
 import { Shell } from "@/components/pattern/Shell";
 import { signIn, signUp } from "@/lib/auth.shared";
 
-
 export const Route = createFileRoute("/auth")({
+  validateSearch: (search: Record<string, unknown>): { next?: "/assistants" } =>
+    search["next"] === "/assistants" ? { next: "/assistants" } : {},
   head: () => ({
     meta: [
       { title: "Sign in — Pattern" },
       {
         name: "description",
-        content:
-          "Sign in to Pattern to see today's calculated reading and the evidence behind it.",
+        content: "Sign in to Pattern to see today's calculated reading and the evidence behind it.",
       },
       { property: "og:title", content: "Sign in — Pattern" },
       {
@@ -27,6 +27,7 @@ export const Route = createFileRoute("/auth")({
 
 function AuthPage() {
   const navigate = useNavigate();
+  const { next } = Route.useSearch();
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -42,7 +43,7 @@ function AuthPage() {
       } else {
         await signIn({ data: { email, password } });
       }
-      void navigate({ to: "/" });
+      void navigate({ to: next ?? "/" });
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Sign-in failed");
     } finally {
@@ -50,16 +51,12 @@ function AuthPage() {
     }
   }
 
-
   return (
     <Shell signedIn={false}>
       <div className="mx-auto max-w-md animate-rise">
-        <h1 className="text-3xl">
-          {mode === "signin" ? "Sign in" : "Create an account"}
-        </h1>
+        <h1 className="text-3xl">{mode === "signin" ? "Sign in" : "Create an account"}</h1>
         <p className="mt-3 text-sm text-muted-foreground">
-          Your birth details are encrypted per account and never leave the calculation
-          layer.
+          Your birth details are encrypted per account and never leave the calculation layer.
         </p>
 
         <form onSubmit={submit} className="mt-8 space-y-4">
