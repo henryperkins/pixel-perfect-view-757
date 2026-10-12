@@ -246,6 +246,12 @@ function PrivacyPage() {
               Approving access requires both your Pattern and assistant sign-ins.
             </p>
             <p className="mt-2 text-sm text-muted-foreground">
+              The sign-in provider also lets connected assistants edit profile information on that
+              separate assistant account. Pattern content remains read-only through these tools;
+              changes to your Pattern account or sharing permissions require your normal Pattern
+              sign-in.
+            </p>
+            <p className="mt-2 text-sm text-muted-foreground">
               Structured birth details, coordinates and check-ins are excluded. Readings influenced
               by check-ins and older readings without a separate chart-only copy are withheld.
               Journal sharing includes your own written titles and entry text, which may contain

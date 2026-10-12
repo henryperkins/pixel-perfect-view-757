@@ -180,6 +180,11 @@ export function ConsentPage() {
                 ))}
               </ul>
               <p className="mt-3 text-muted-foreground">
+                The sign-in provider also lets a connected assistant edit profile information on
+                this separate assistant account. Pattern content access remains read-only and
+                limited to the areas you choose below.
+              </p>
+              <p className="mt-3 text-muted-foreground">
                 These sign-in permissions are approved together. Deny the request if you do not want
                 to share them. Choose your Pattern content separately below.
               </p>
@@ -245,10 +250,10 @@ export function ConsentPage() {
               </fieldset>
             )}
             <p className="mt-5 text-sm text-muted-foreground">
-              This assistant cannot change your data or generate readings. Structured birth details,
-              coordinates and check-ins are excluded. Shared chart interpretations and journal text
-              remain personal information. The assistant’s own privacy policy governs copies it
-              receives.
+              These tools cannot change your Pattern data or generate readings. Structured birth
+              details, coordinates and check-ins are excluded. Shared chart interpretations and
+              journal text remain personal information. The assistant’s own privacy policy governs
+              copies it receives.
             </p>
             <p className="mt-3 text-sm text-muted-foreground">
               Revoke access from Connected assistants at any time. Revoking stops future reads; it
