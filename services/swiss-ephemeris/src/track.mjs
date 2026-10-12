@@ -138,16 +138,14 @@ export function makeTrack(
     }
     if (stations.length > 40) throw new Error("output_limit");
     const ends = [grid[0], ...stations, grid.at(-1)];
-    const legs = ends
-      .slice(0, -1)
-      .map((start, i) => ({
-        id: `l${i}`,
-        start: plain(start),
-        end: plain(ends[i + 1]),
-        direction: direction(ends[i + 1].unwrappedLongitude - start.unwrappedLongitude),
-        startStationId: i ? stations[i - 1].id : null,
-        endStationId: i < stations.length ? stations[i].id : null,
-      }));
+    const legs = ends.slice(0, -1).map((start, i) => ({
+      id: `l${i}`,
+      start: plain(start),
+      end: plain(ends[i + 1]),
+      direction: direction(ends[i + 1].unwrappedLongitude - start.unwrappedLongitude),
+      startStationId: i ? stations[i - 1].id : null,
+      endStationId: i < stations.length ? stations[i].id : null,
+    }));
     for (const leg of legs) {
       const s = leg.direction === "direct" ? 1 : -1;
       const points = grid.filter((p) => time(p) >= time(leg.start) && time(p) <= time(leg.end));

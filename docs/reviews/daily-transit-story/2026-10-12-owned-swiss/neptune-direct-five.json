@@ -1,0 +1,2263 @@
+{
+  "request": {
+    "contract": "swiss-transit-episode/1",
+    "solverVersion": "transit-episode-1",
+    "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+    "transitBody": "neptune",
+    "aspect": "conjunction",
+    "targets": [
+      {
+        "offsetMinutes": -2,
+        "longitude": 1.920810616868323
+      },
+      {
+        "offsetMinutes": 0,
+        "longitude": 1.9208206168683546
+      },
+      {
+        "offsetMinutes": 2,
+        "longitude": 1.9208306168683293
+      }
+    ],
+    "referenceAt": "2026-03-24T12:00:00.000Z",
+    "maxOrbDegrees": 2
+  },
+  "scan": {
+    "contract": "swiss-transit-episode/1",
+    "solverVersion": "transit-episode-1",
+    "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+    "source": {
+      "engine": "swiss-ephemeris",
+      "engineVersion": "2.10.03",
+      "dataId": "sha256:975743cf9ca4c15e9e86d22f8d03fd973a1341f6b0bd971cabd21a4a02022797",
+      "frame": "tropical-apparent-geocentric-true-equinox-of-date",
+      "timeScale": "UT",
+      "returnedFlags": 258
+    },
+    "request": {
+      "contract": "swiss-transit-episode/1",
+      "solverVersion": "transit-episode-1",
+      "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+      "transitBody": "neptune",
+      "aspect": "conjunction",
+      "targets": [
+        {
+          "offsetMinutes": -2,
+          "longitude": 1.920810616868323
+        },
+        {
+          "offsetMinutes": 0,
+          "longitude": 1.9208206168683546
+        },
+        {
+          "offsetMinutes": 2,
+          "longitude": 1.9208306168683293
+        }
+      ],
+      "referenceAt": "2026-03-24T12:00:00.000Z",
+      "maxOrbDegrees": 2
+    },
+    "coverage": {
+      "from": "2024-01-14T12:00:00.000Z",
+      "to": "2028-06-01T12:00:00.000Z"
+    },
+    "tolerance": {
+      "bracketSeconds": 60,
+      "rootResidualDeg": 0.000001
+    },
+    "reference": {
+      "at": "2026-03-24T12:00:00.000Z",
+      "unwrappedLongitude": 361.92082061686835,
+      "speed": 0.03796339995030306
+    },
+    "samples": [
+      {
+        "offsetMinutes": -2,
+        "natalLongitude": 1.920810616868323,
+        "limit": null,
+        "contacts": [
+          {
+            "at": "2025-06-04T05:17:22.159Z",
+            "unwrappedLongitude": 361.9208107116932,
+            "speed": 0.016326033097004956,
+            "bracket": [
+              {
+                "at": "2025-06-04T05:17:20.007Z",
+                "unwrappedLongitude": 361.9208103050541,
+                "speed": 0.01632604448776518
+              },
+              {
+                "at": "2025-06-04T05:17:24.311Z",
+                "unwrappedLongitude": 361.9208111183321,
+                "speed": 0.016326019509193546
+              }
+            ],
+            "id": "c0",
+            "residualDeg": 9.482488394496613e-8,
+            "direction": "direct",
+            "branch": "plus",
+            "targetTurn": 1,
+            "legId": "l2",
+            "windowId": "w0"
+          },
+          {
+            "at": "2025-08-05T04:27:17.178Z",
+            "unwrappedLongitude": 361.9208105990087,
+            "speed": -0.015745792342541417,
+            "bracket": [
+              {
+                "at": "2025-08-05T04:27:04.109Z",
+                "unwrappedLongitude": 361.9208129807582,
+                "speed": -0.01574572725055541
+              },
+              {
+                "at": "2025-08-05T04:27:30.248Z",
+                "unwrappedLongitude": 361.920808217066,
+                "speed": -0.01574585828468114
+              }
+            ],
+            "id": "c1",
+            "residualDeg": 1.785963377187727e-8,
+            "direction": "retrograde",
+            "branch": "plus",
+            "targetTurn": 1,
+            "legId": "l3",
+            "windowId": "w0"
+          },
+          {
+            "at": "2026-03-24T11:59:37.285Z",
+            "unwrappedLongitude": 361.92081063600887,
+            "speed": 0.03796340261558648,
+            "bracket": [
+              {
+                "at": "2026-03-24T11:59:36.747Z",
+                "unwrappedLongitude": 361.92081039961533,
+                "speed": 0.03796340341662771
+              },
+              {
+                "at": "2026-03-24T11:59:37.823Z",
+                "unwrappedLongitude": 361.92081087240507,
+                "speed": 0.037963401671835914
+              }
+            ],
+            "id": "c2",
+            "residualDeg": 1.9140543372486718e-8,
+            "direction": "direct",
+            "branch": "plus",
+            "targetTurn": 1,
+            "legId": "l4",
+            "windowId": "w1"
+          },
+          {
+            "at": "2026-11-09T10:33:16.579Z",
+            "unwrappedLongitude": 361.9208105655054,
+            "speed": -0.017575446612587666,
+            "bracket": [
+              {
+                "at": "2026-11-09T10:33:15.763Z",
+                "unwrappedLongitude": 361.9208107314926,
+                "speed": -0.017575449249220863
+              },
+              {
+                "at": "2026-11-09T10:33:17.395Z",
+                "unwrappedLongitude": 361.9208103995235,
+                "speed": -0.01757544079110795
+              }
+            ],
+            "id": "c3",
+            "residualDeg": 5.136291747476207e-8,
+            "direction": "retrograde",
+            "branch": "plus",
+            "targetTurn": 1,
+            "legId": "l5",
+            "windowId": "w2"
+          },
+          {
+            "at": "2027-01-14T16:52:57.179Z",
+            "unwrappedLongitude": 361.9208106311365,
+            "speed": 0.01843975026314157,
+            "bracket": [
+              {
+                "at": "2027-01-14T16:52:56.641Z",
+                "unwrappedLongitude": 361.92081051631374,
+                "speed": 0.01843974683990144
+              },
+              {
+                "at": "2027-01-14T16:52:57.718Z",
+                "unwrappedLongitude": 361.92081074617107,
+                "speed": 0.018439753528605444
+              }
+            ],
+            "id": "c4",
+            "residualDeg": 1.4268152881413698e-8,
+            "direction": "direct",
+            "branch": "plus",
+            "targetTurn": 1,
+            "legId": "l6",
+            "windowId": "w2"
+          }
+        ],
+        "stations": [
+          {
+            "at": "2024-07-02T10:40:32.812Z",
+            "unwrappedLongitude": 359.9318931180105,
+            "speed": 4.611086707284705e-9,
+            "bracket": [
+              {
+                "at": "2024-07-02T10:40:32.812Z",
+                "unwrappedLongitude": 359.9318931180105,
+                "speed": 4.611086707284705e-9
+              },
+              {
+                "at": "2024-07-02T10:40:53.906Z",
+                "unwrappedLongitude": 359.9318931180602,
+                "speed": -1.2485350836832066e-7
+              }
+            ],
+            "id": "s0",
+            "directionBefore": "direct",
+            "directionAfter": "retrograde"
+          },
+          {
+            "at": "2024-12-07T23:42:56.953Z",
+            "unwrappedLongitude": 357.13103261654715,
+            "speed": 1.7166041725988653e-8,
+            "bracket": [
+              {
+                "at": "2024-12-07T23:42:46.406Z",
+                "unwrappedLongitude": 357.1310326165774,
+                "speed": -5.201605565074252e-8
+              },
+              {
+                "at": "2024-12-07T23:43:07.500Z",
+                "unwrappedLongitude": 357.1310326165253,
+                "speed": 8.476449650292946e-8
+              }
+            ],
+            "id": "s1",
+            "directionBefore": "retrograde",
+            "directionAfter": "direct"
+          },
+          {
+            "at": "2025-07-04T21:33:02.812Z",
+            "unwrappedLongitude": 362.1755368757325,
+            "speed": 8.720171333147959e-9,
+            "bracket": [
+              {
+                "at": "2025-07-04T21:33:02.812Z",
+                "unwrappedLongitude": 362.1755368757325,
+                "speed": 8.720171333147959e-9
+              },
+              {
+                "at": "2025-07-04T21:33:23.906Z",
+                "unwrappedLongitude": 362.1755368757702,
+                "speed": -1.2157070923680926e-7
+              }
+            ],
+            "id": "s2",
+            "directionBefore": "direct",
+            "directionAfter": "retrograde"
+          },
+          {
+            "at": "2025-12-10T12:23:22.734Z",
+            "unwrappedLongitude": 359.37265438126906,
+            "speed": 2.8067192595233485e-8,
+            "bracket": [
+              {
+                "at": "2025-12-10T12:23:12.187Z",
+                "unwrappedLongitude": 359.3726543813009,
+                "speed": -4.129558531841475e-8
+              },
+              {
+                "at": "2025-12-10T12:23:33.281Z",
+                "unwrappedLongitude": 359.37265438124564,
+                "speed": 9.654724140860282e-8
+              }
+            ],
+            "id": "s3",
+            "directionBefore": "retrograde",
+            "directionAfter": "direct"
+          },
+          {
+            "at": "2026-07-07T10:54:36.562Z",
+            "unwrappedLongitude": 364.41806551017777,
+            "speed": -5.816955249600308e-9,
+            "bracket": [
+              {
+                "at": "2026-07-07T10:54:15.468Z",
+                "unwrappedLongitude": 364.41806551013406,
+                "speed": 1.2685083241554256e-7
+              },
+              {
+                "at": "2026-07-07T10:54:36.562Z",
+                "unwrappedLongitude": 364.41806551017777,
+                "speed": -5.816955249600308e-9
+              }
+            ],
+            "id": "s4",
+            "directionBefore": "direct",
+            "directionAfter": "retrograde"
+          },
+          {
+            "at": "2026-12-12T22:17:31.171Z",
+            "unwrappedLongitude": 361.6129239134125,
+            "speed": 3.335094082329957e-8,
+            "bracket": [
+              {
+                "at": "2026-12-12T22:17:20.625Z",
+                "unwrappedLongitude": 361.61292391343954,
+                "speed": -3.614706729517662e-8
+              },
+              {
+                "at": "2026-12-12T22:17:41.718Z",
+                "unwrappedLongitude": 361.6129239133911,
+                "speed": 1.0315011482690497e-7
+              }
+            ],
+            "id": "s5",
+            "directionBefore": "retrograde",
+            "directionAfter": "direct"
+          },
+          {
+            "at": "2027-07-09T22:41:15.000Z",
+            "unwrappedLongitude": 366.65955104421715,
+            "speed": -4.62700153139657e-9,
+            "bracket": [
+              {
+                "at": "2027-07-09T22:40:53.906Z",
+                "unwrappedLongitude": 366.65955104418197,
+                "speed": 1.2519193810950848e-7
+              },
+              {
+                "at": "2027-07-09T22:41:15.000Z",
+                "unwrappedLongitude": 366.65955104421715,
+                "speed": -4.62700153139657e-9
+              }
+            ],
+            "id": "s6",
+            "directionBefore": "direct",
+            "directionAfter": "retrograde"
+          },
+          {
+            "at": "2027-12-15T09:06:19.687Z",
+            "unwrappedLongitude": 363.8526102706258,
+            "speed": -6.0061226356108495e-9,
+            "bracket": [
+              {
+                "at": "2027-12-15T09:06:19.687Z",
+                "unwrappedLongitude": 363.8526102706258,
+                "speed": -6.0061226356108495e-9
+              },
+              {
+                "at": "2027-12-15T09:06:40.781Z",
+                "unwrappedLongitude": 363.8526102705886,
+                "speed": 1.3331596973655308e-7
+              }
+            ],
+            "id": "s7",
+            "directionBefore": "retrograde",
+            "directionAfter": "direct"
+          }
+        ],
+        "legs": [
+          {
+            "id": "l0",
+            "start": {
+              "at": "2024-01-14T12:00:00.000Z",
+              "unwrappedLongitude": 355.32121798641685,
+              "speed": 0.021579911370665124
+            },
+            "end": {
+              "at": "2024-07-02T10:40:32.812Z",
+              "unwrappedLongitude": 359.9318931180105,
+              "speed": 4.611086707284705e-9
+            },
+            "direction": "direct",
+            "startStationId": null,
+            "endStationId": "s0"
+          },
+          {
+            "id": "l1",
+            "start": {
+              "at": "2024-07-02T10:40:32.812Z",
+              "unwrappedLongitude": 359.9318931180105,
+              "speed": 4.611086707284705e-9
+            },
+            "end": {
+              "at": "2024-12-07T23:42:56.953Z",
+              "unwrappedLongitude": 357.13103261654715,
+              "speed": 1.7166041725988653e-8
+            },
+            "direction": "retrograde",
+            "startStationId": "s0",
+            "endStationId": "s1"
+          },
+          {
+            "id": "l2",
+            "start": {
+              "at": "2024-12-07T23:42:56.953Z",
+              "unwrappedLongitude": 357.13103261654715,
+              "speed": 1.7166041725988653e-8
+            },
+            "end": {
+              "at": "2025-07-04T21:33:02.812Z",
+              "unwrappedLongitude": 362.1755368757325,
+              "speed": 8.720171333147959e-9
+            },
+            "direction": "direct",
+            "startStationId": "s1",
+            "endStationId": "s2"
+          },
+          {
+            "id": "l3",
+            "start": {
+              "at": "2025-07-04T21:33:02.812Z",
+              "unwrappedLongitude": 362.1755368757325,
+              "speed": 8.720171333147959e-9
+            },
+            "end": {
+              "at": "2025-12-10T12:23:22.734Z",
+              "unwrappedLongitude": 359.37265438126906,
+              "speed": 2.8067192595233485e-8
+            },
+            "direction": "retrograde",
+            "startStationId": "s2",
+            "endStationId": "s3"
+          },
+          {
+            "id": "l4",
+            "start": {
+              "at": "2025-12-10T12:23:22.734Z",
+              "unwrappedLongitude": 359.37265438126906,
+              "speed": 2.8067192595233485e-8
+            },
+            "end": {
+              "at": "2026-07-07T10:54:36.562Z",
+              "unwrappedLongitude": 364.41806551017777,
+              "speed": -5.816955249600308e-9
+            },
+            "direction": "direct",
+            "startStationId": "s3",
+            "endStationId": "s4"
+          },
+          {
+            "id": "l5",
+            "start": {
+              "at": "2026-07-07T10:54:36.562Z",
+              "unwrappedLongitude": 364.41806551017777,
+              "speed": -5.816955249600308e-9
+            },
+            "end": {
+              "at": "2026-12-12T22:17:31.171Z",
+              "unwrappedLongitude": 361.6129239134125,
+              "speed": 3.335094082329957e-8
+            },
+            "direction": "retrograde",
+            "startStationId": "s4",
+            "endStationId": "s5"
+          },
+          {
+            "id": "l6",
+            "start": {
+              "at": "2026-12-12T22:17:31.171Z",
+              "unwrappedLongitude": 361.6129239134125,
+              "speed": 3.335094082329957e-8
+            },
+            "end": {
+              "at": "2027-07-09T22:41:15.000Z",
+              "unwrappedLongitude": 366.65955104421715,
+              "speed": -4.62700153139657e-9
+            },
+            "direction": "direct",
+            "startStationId": "s5",
+            "endStationId": "s6"
+          },
+          {
+            "id": "l7",
+            "start": {
+              "at": "2027-07-09T22:41:15.000Z",
+              "unwrappedLongitude": 366.65955104421715,
+              "speed": -4.62700153139657e-9
+            },
+            "end": {
+              "at": "2027-12-15T09:06:19.687Z",
+              "unwrappedLongitude": 363.8526102706258,
+              "speed": -6.0061226356108495e-9
+            },
+            "direction": "retrograde",
+            "startStationId": "s6",
+            "endStationId": "s7"
+          },
+          {
+            "id": "l8",
+            "start": {
+              "at": "2027-12-15T09:06:19.687Z",
+              "unwrappedLongitude": 363.8526102706258,
+              "speed": -6.0061226356108495e-9
+            },
+            "end": {
+              "at": "2028-06-01T12:00:00.000Z",
+              "unwrappedLongitude": 368.47084684404547,
+              "speed": 0.020840390035254754
+            },
+            "direction": "direct",
+            "startStationId": "s7",
+            "endStationId": null
+          }
+        ],
+        "windows": [
+          {
+            "id": "w0",
+            "ingress": {
+              "at": "2025-03-28T09:21:21.907Z",
+              "unwrappedLongitude": 359.9208106231083,
+              "speed": 0.03763049866133588,
+              "bracket": [
+                {
+                  "at": "2025-03-28T09:21:21.638Z",
+                  "unwrappedLongitude": 359.920810505949,
+                  "speed": 0.03763049889491551
+                },
+                {
+                  "at": "2025-03-28T09:21:22.176Z",
+                  "unwrappedLongitude": 359.9208107402676,
+                  "speed": 0.03763049816654125
+                }
+              ]
+            },
+            "egress": {
+              "at": "2025-10-25T21:23:48.247Z",
+              "unwrappedLongitude": 359.9208105955146,
+              "speed": -0.02216661510688333,
+              "bracket": [
+                {
+                  "at": "2025-10-25T21:23:47.430Z",
+                  "unwrappedLongitude": 359.92081080512503,
+                  "speed": -0.022166618218581888
+                },
+                {
+                  "at": "2025-10-25T21:23:49.064Z",
+                  "unwrappedLongitude": 359.9208103859146,
+                  "speed": -0.022166611998232146
+                }
+              ]
+            },
+            "contactIds": [
+              "c0",
+              "c1"
+            ]
+          },
+          {
+            "id": "w1",
+            "ingress": {
+              "at": "2026-01-23T12:35:34.869Z",
+              "unwrappedLongitude": 359.9208106299013,
+              "speed": 0.02395265991992697,
+              "bracket": [
+                {
+                  "at": "2026-01-23T12:35:26.261Z",
+                  "unwrappedLongitude": 359.9208082435048,
+                  "speed": 0.02395261419565837
+                },
+                {
+                  "at": "2026-01-23T12:35:43.477Z",
+                  "unwrappedLongitude": 359.9208130162997,
+                  "speed": 0.023952705467413647
+                }
+              ]
+            },
+            "egress": {
+              "at": "2026-05-25T06:25:56.076Z",
+              "unwrappedLongitude": 363.920810654824,
+              "speed": 0.022282433189457912,
+              "bracket": [
+                {
+                  "at": "2026-05-25T06:25:51.772Z",
+                  "unwrappedLongitude": 363.92080954481526,
+                  "speed": 0.022282457246185012
+                },
+                {
+                  "at": "2026-05-25T06:26:00.380Z",
+                  "unwrappedLongitude": 363.9208117648212,
+                  "speed": 0.02228241073837081
+                }
+              ]
+            },
+            "contactIds": [
+              "c2"
+            ]
+          },
+          {
+            "id": "w2",
+            "ingress": {
+              "at": "2026-08-20T19:51:48.726Z",
+              "unwrappedLongitude": 363.92081059692697,
+              "speed": -0.020998254160591003,
+              "bracket": [
+                {
+                  "at": "2026-08-20T19:51:47.910Z",
+                  "unwrappedLongitude": 363.9208107952461,
+                  "speed": -0.02099825001261889
+                },
+                {
+                  "at": "2026-08-20T19:51:49.542Z",
+                  "unwrappedLongitude": 363.92081039860784,
+                  "speed": -0.02099825812349698
+                }
+              ]
+            },
+            "egress": {
+              "at": "2027-03-20T15:29:15.160Z",
+              "unwrappedLongitude": 363.92081056352873,
+              "speed": 0.03780025753461785,
+              "bracket": [
+                {
+                  "at": "2027-03-20T15:29:14.084Z",
+                  "unwrappedLongitude": 363.92081009278087,
+                  "speed": 0.037800255759282975
+                },
+                {
+                  "at": "2027-03-20T15:29:16.237Z",
+                  "unwrappedLongitude": 363.9208110347194,
+                  "speed": 0.03780025464610745
+                }
+              ]
+            },
+            "contactIds": [
+              "c3",
+              "c4"
+            ]
+          }
+        ],
+        "components": [
+          {
+            "id": "e0",
+            "contactIds": [
+              "c0",
+              "c1",
+              "c2",
+              "c3",
+              "c4"
+            ],
+            "leftClosureLegId": "l1",
+            "rightClosureLegId": "l7",
+            "complete": true,
+            "reason": null
+          }
+        ]
+      },
+      {
+        "offsetMinutes": 0,
+        "natalLongitude": 1.9208206168683546,
+        "limit": null,
+        "contacts": [
+          {
+            "at": "2025-06-04T05:18:14.877Z",
+            "unwrappedLongitude": 361.92082067316363,
+            "speed": 0.01632572504669229,
+            "bracket": [
+              {
+                "at": "2025-06-04T05:18:13.801Z",
+                "unwrappedLongitude": 361.92082046984933,
+                "speed": 0.016325731305672025
+              },
+              {
+                "at": "2025-06-04T05:18:15.953Z",
+                "unwrappedLongitude": 361.9208208764807,
+                "speed": 0.01632571877706361
+              }
+            ],
+            "id": "c0",
+            "residualDeg": 5.629527777273324e-8,
+            "direction": "direct",
+            "branch": "plus",
+            "targetTurn": 1,
+            "legId": "l2",
+            "windowId": "w0"
+          },
+          {
+            "at": "2025-08-05T04:26:22.448Z",
+            "unwrappedLongitude": 361.9208205731609,
+            "speed": -0.015745517755945806,
+            "bracket": [
+              {
+                "at": "2025-08-05T04:26:21.631Z",
+                "unwrappedLongitude": 361.9208207220531,
+                "speed": -0.015745513196889042
+              },
+              {
+                "at": "2025-08-05T04:26:23.265Z",
+                "unwrappedLongitude": 361.920820424273,
+                "speed": -0.01574552193035765
+              }
+            ],
+            "id": "c1",
+            "residualDeg": 4.370747319626389e-8,
+            "direction": "retrograde",
+            "branch": "plus",
+            "targetTurn": 1,
+            "legId": "l3",
+            "windowId": "w0"
+          },
+          {
+            "at": "2026-03-24T11:59:59.881Z",
+            "unwrappedLongitude": 361.9208205645761,
+            "speed": 0.03796340139822708,
+            "bracket": [
+              {
+                "at": "2026-03-24T11:59:59.343Z",
+                "unwrappedLongitude": 361.92082032818263,
+                "speed": 0.03796340086597736
+              },
+              {
+                "at": "2026-03-24T12:00:00.419Z",
+                "unwrappedLongitude": 361.9208208009696,
+                "speed": 0.03796340028173226
+              }
+            ],
+            "id": "c2",
+            "residualDeg": 5.229225052971742e-8,
+            "direction": "direct",
+            "branch": "plus",
+            "targetTurn": 1,
+            "legId": "l4",
+            "windowId": "w1"
+          },
+          {
+            "at": "2026-11-09T10:32:26.795Z",
+            "unwrappedLongitude": 361.92082069240075,
+            "speed": -0.017575703097951766,
+            "bracket": [
+              {
+                "at": "2026-11-09T10:32:23.531Z",
+                "unwrappedLongitude": 361.92082135636554,
+                "speed": -0.017575721699023827
+              },
+              {
+                "at": "2026-11-09T10:32:30.060Z",
+                "unwrappedLongitude": 361.92082002824026,
+                "speed": -0.01757568697718013
+              }
+            ],
+            "id": "c3",
+            "residualDeg": 7.553239811386447e-8,
+            "direction": "retrograde",
+            "branch": "plus",
+            "targetTurn": 1,
+            "legId": "l5",
+            "windowId": "w2"
+          },
+          {
+            "at": "2027-01-14T16:53:44.003Z",
+            "unwrappedLongitude": 361.92082062462237,
+            "speed": 0.01844003335992708,
+            "bracket": [
+              {
+                "at": "2027-01-14T16:53:42.927Z",
+                "unwrappedLongitude": 361.9208203949648,
+                "speed": 0.018440027299617807
+              },
+              {
+                "at": "2027-01-14T16:53:45.080Z",
+                "unwrappedLongitude": 361.9208208544833,
+                "speed": 0.01844004051842995
+              }
+            ],
+            "id": "c4",
+            "residualDeg": 7.754010766802821e-9,
+            "direction": "direct",
+            "branch": "plus",
+            "targetTurn": 1,
+            "legId": "l6",
+            "windowId": "w2"
+          }
+        ],
+        "stations": [
+          {
+            "at": "2024-07-02T10:40:32.812Z",
+            "unwrappedLongitude": 359.9318931180105,
+            "speed": 4.611086707284705e-9,
+            "bracket": [
+              {
+                "at": "2024-07-02T10:40:32.812Z",
+                "unwrappedLongitude": 359.9318931180105,
+                "speed": 4.611086707284705e-9
+              },
+              {
+                "at": "2024-07-02T10:40:53.906Z",
+                "unwrappedLongitude": 359.9318931180602,
+                "speed": -1.2485350836832066e-7
+              }
+            ],
+            "id": "s0",
+            "directionBefore": "direct",
+            "directionAfter": "retrograde"
+          },
+          {
+            "at": "2024-12-07T23:42:56.953Z",
+            "unwrappedLongitude": 357.13103261654715,
+            "speed": 1.7166041725988653e-8,
+            "bracket": [
+              {
+                "at": "2024-12-07T23:42:46.406Z",
+                "unwrappedLongitude": 357.1310326165774,
+                "speed": -5.201605565074252e-8
+              },
+              {
+                "at": "2024-12-07T23:43:07.500Z",
+                "unwrappedLongitude": 357.1310326165253,
+                "speed": 8.476449650292946e-8
+              }
+            ],
+            "id": "s1",
+            "directionBefore": "retrograde",
+            "directionAfter": "direct"
+          },
+          {
+            "at": "2025-07-04T21:33:02.812Z",
+            "unwrappedLongitude": 362.1755368757325,
+            "speed": 8.720171333147959e-9,
+            "bracket": [
+              {
+                "at": "2025-07-04T21:33:02.812Z",
+                "unwrappedLongitude": 362.1755368757325,
+                "speed": 8.720171333147959e-9
+              },
+              {
+                "at": "2025-07-04T21:33:23.906Z",
+                "unwrappedLongitude": 362.1755368757702,
+                "speed": -1.2157070923680926e-7
+              }
+            ],
+            "id": "s2",
+            "directionBefore": "direct",
+            "directionAfter": "retrograde"
+          },
+          {
+            "at": "2025-12-10T12:23:22.734Z",
+            "unwrappedLongitude": 359.37265438126906,
+            "speed": 2.8067192595233485e-8,
+            "bracket": [
+              {
+                "at": "2025-12-10T12:23:12.187Z",
+                "unwrappedLongitude": 359.3726543813009,
+                "speed": -4.129558531841475e-8
+              },
+              {
+                "at": "2025-12-10T12:23:33.281Z",
+                "unwrappedLongitude": 359.37265438124564,
+                "speed": 9.654724140860282e-8
+              }
+            ],
+            "id": "s3",
+            "directionBefore": "retrograde",
+            "directionAfter": "direct"
+          },
+          {
+            "at": "2026-07-07T10:54:36.562Z",
+            "unwrappedLongitude": 364.41806551017777,
+            "speed": -5.816955249600308e-9,
+            "bracket": [
+              {
+                "at": "2026-07-07T10:54:15.468Z",
+                "unwrappedLongitude": 364.41806551013406,
+                "speed": 1.2685083241554256e-7
+              },
+              {
+                "at": "2026-07-07T10:54:36.562Z",
+                "unwrappedLongitude": 364.41806551017777,
+                "speed": -5.816955249600308e-9
+              }
+            ],
+            "id": "s4",
+            "directionBefore": "direct",
+            "directionAfter": "retrograde"
+          },
+          {
+            "at": "2026-12-12T22:17:31.171Z",
+            "unwrappedLongitude": 361.6129239134125,
+            "speed": 3.335094082329957e-8,
+            "bracket": [
+              {
+                "at": "2026-12-12T22:17:20.625Z",
+                "unwrappedLongitude": 361.61292391343954,
+                "speed": -3.614706729517662e-8
+              },
+              {
+                "at": "2026-12-12T22:17:41.718Z",
+                "unwrappedLongitude": 361.6129239133911,
+                "speed": 1.0315011482690497e-7
+              }
+            ],
+            "id": "s5",
+            "directionBefore": "retrograde",
+            "directionAfter": "direct"
+          },
+          {
+            "at": "2027-07-09T22:41:15.000Z",
+            "unwrappedLongitude": 366.65955104421715,
+            "speed": -4.62700153139657e-9,
+            "bracket": [
+              {
+                "at": "2027-07-09T22:40:53.906Z",
+                "unwrappedLongitude": 366.65955104418197,
+                "speed": 1.2519193810950848e-7
+              },
+              {
+                "at": "2027-07-09T22:41:15.000Z",
+                "unwrappedLongitude": 366.65955104421715,
+                "speed": -4.62700153139657e-9
+              }
+            ],
+            "id": "s6",
+            "directionBefore": "direct",
+            "directionAfter": "retrograde"
+          },
+          {
+            "at": "2027-12-15T09:06:19.687Z",
+            "unwrappedLongitude": 363.8526102706258,
+            "speed": -6.0061226356108495e-9,
+            "bracket": [
+              {
+                "at": "2027-12-15T09:06:19.687Z",
+                "unwrappedLongitude": 363.8526102706258,
+                "speed": -6.0061226356108495e-9
+              },
+              {
+                "at": "2027-12-15T09:06:40.781Z",
+                "unwrappedLongitude": 363.8526102705886,
+                "speed": 1.3331596973655308e-7
+              }
+            ],
+            "id": "s7",
+            "directionBefore": "retrograde",
+            "directionAfter": "direct"
+          }
+        ],
+        "legs": [
+          {
+            "id": "l0",
+            "start": {
+              "at": "2024-01-14T12:00:00.000Z",
+              "unwrappedLongitude": 355.32121798641685,
+              "speed": 0.021579911370665124
+            },
+            "end": {
+              "at": "2024-07-02T10:40:32.812Z",
+              "unwrappedLongitude": 359.9318931180105,
+              "speed": 4.611086707284705e-9
+            },
+            "direction": "direct",
+            "startStationId": null,
+            "endStationId": "s0"
+          },
+          {
+            "id": "l1",
+            "start": {
+              "at": "2024-07-02T10:40:32.812Z",
+              "unwrappedLongitude": 359.9318931180105,
+              "speed": 4.611086707284705e-9
+            },
+            "end": {
+              "at": "2024-12-07T23:42:56.953Z",
+              "unwrappedLongitude": 357.13103261654715,
+              "speed": 1.7166041725988653e-8
+            },
+            "direction": "retrograde",
+            "startStationId": "s0",
+            "endStationId": "s1"
+          },
+          {
+            "id": "l2",
+            "start": {
+              "at": "2024-12-07T23:42:56.953Z",
+              "unwrappedLongitude": 357.13103261654715,
+              "speed": 1.7166041725988653e-8
+            },
+            "end": {
+              "at": "2025-07-04T21:33:02.812Z",
+              "unwrappedLongitude": 362.1755368757325,
+              "speed": 8.720171333147959e-9
+            },
+            "direction": "direct",
+            "startStationId": "s1",
+            "endStationId": "s2"
+          },
+          {
+            "id": "l3",
+            "start": {
+              "at": "2025-07-04T21:33:02.812Z",
+              "unwrappedLongitude": 362.1755368757325,
+              "speed": 8.720171333147959e-9
+            },
+            "end": {
+              "at": "2025-12-10T12:23:22.734Z",
+              "unwrappedLongitude": 359.37265438126906,
+              "speed": 2.8067192595233485e-8
+            },
+            "direction": "retrograde",
+            "startStationId": "s2",
+            "endStationId": "s3"
+          },
+          {
+            "id": "l4",
+            "start": {
+              "at": "2025-12-10T12:23:22.734Z",
+              "unwrappedLongitude": 359.37265438126906,
+              "speed": 2.8067192595233485e-8
+            },
+            "end": {
+              "at": "2026-07-07T10:54:36.562Z",
+              "unwrappedLongitude": 364.41806551017777,
+              "speed": -5.816955249600308e-9
+            },
+            "direction": "direct",
+            "startStationId": "s3",
+            "endStationId": "s4"
+          },
+          {
+            "id": "l5",
+            "start": {
+              "at": "2026-07-07T10:54:36.562Z",
+              "unwrappedLongitude": 364.41806551017777,
+              "speed": -5.816955249600308e-9
+            },
+            "end": {
+              "at": "2026-12-12T22:17:31.171Z",
+              "unwrappedLongitude": 361.6129239134125,
+              "speed": 3.335094082329957e-8
+            },
+            "direction": "retrograde",
+            "startStationId": "s4",
+            "endStationId": "s5"
+          },
+          {
+            "id": "l6",
+            "start": {
+              "at": "2026-12-12T22:17:31.171Z",
+              "unwrappedLongitude": 361.6129239134125,
+              "speed": 3.335094082329957e-8
+            },
+            "end": {
+              "at": "2027-07-09T22:41:15.000Z",
+              "unwrappedLongitude": 366.65955104421715,
+              "speed": -4.62700153139657e-9
+            },
+            "direction": "direct",
+            "startStationId": "s5",
+            "endStationId": "s6"
+          },
+          {
+            "id": "l7",
+            "start": {
+              "at": "2027-07-09T22:41:15.000Z",
+              "unwrappedLongitude": 366.65955104421715,
+              "speed": -4.62700153139657e-9
+            },
+            "end": {
+              "at": "2027-12-15T09:06:19.687Z",
+              "unwrappedLongitude": 363.8526102706258,
+              "speed": -6.0061226356108495e-9
+            },
+            "direction": "retrograde",
+            "startStationId": "s6",
+            "endStationId": "s7"
+          },
+          {
+            "id": "l8",
+            "start": {
+              "at": "2027-12-15T09:06:19.687Z",
+              "unwrappedLongitude": 363.8526102706258,
+              "speed": -6.0061226356108495e-9
+            },
+            "end": {
+              "at": "2028-06-01T12:00:00.000Z",
+              "unwrappedLongitude": 368.47084684404547,
+              "speed": 0.020840390035254754
+            },
+            "direction": "direct",
+            "startStationId": "s7",
+            "endStationId": null
+          }
+        ],
+        "windows": [
+          {
+            "id": "w0",
+            "ingress": {
+              "at": "2025-03-28T09:21:44.770Z",
+              "unwrappedLongitude": 359.9208205808445,
+              "speed": 0.03763047868090577,
+              "bracket": [
+                {
+                  "at": "2025-03-28T09:21:42.618Z",
+                  "unwrappedLongitude": 359.9208196435675,
+                  "speed": 0.037630480526832946
+                },
+                {
+                  "at": "2025-03-28T09:21:46.922Z",
+                  "unwrappedLongitude": 359.9208215181361,
+                  "speed": 0.03763047658741615
+                }
+              ]
+            },
+            "egress": {
+              "at": "2025-10-25T21:23:09.038Z",
+              "unwrappedLongitude": 359.92082065488944,
+              "speed": -0.022166769901825558,
+              "bracket": [
+                {
+                  "at": "2025-10-25T21:23:08.221Z",
+                  "unwrappedLongitude": 359.92082086450114,
+                  "speed": -0.022166773058422712
+                },
+                {
+                  "at": "2025-10-25T21:23:09.855Z",
+                  "unwrappedLongitude": 359.920820445288,
+                  "speed": -0.022166766453325566
+                }
+              ]
+            },
+            "contactIds": [
+              "c0",
+              "c1"
+            ]
+          },
+          {
+            "id": "w1",
+            "ingress": {
+              "at": "2026-01-23T12:36:10.915Z",
+              "unwrappedLongitude": 359.9208206229737,
+              "speed": 0.02395285075366649,
+              "bracket": [
+                {
+                  "at": "2026-01-23T12:36:10.377Z",
+                  "unwrappedLongitude": 359.92082047382314,
+                  "speed": 0.02395284762403068
+                },
+                {
+                  "at": "2026-01-23T12:36:11.453Z",
+                  "unwrappedLongitude": 359.9208207721215,
+                  "speed": 0.02395285326739754
+                }
+              ]
+            },
+            "egress": {
+              "at": "2026-05-25T06:26:34.812Z",
+              "unwrappedLongitude": 363.9208206448,
+              "speed": 0.022282231493339674,
+              "bracket": [
+                {
+                  "at": "2026-05-25T06:26:26.204Z",
+                  "unwrappedLongitude": 363.92081842481207,
+                  "speed": 0.022282273347240936
+                },
+                {
+                  "at": "2026-05-25T06:26:43.420Z",
+                  "unwrappedLongitude": 363.92082286478353,
+                  "speed": 0.02228218649306283
+                }
+              ]
+            },
+            "contactIds": [
+              "c2"
+            ]
+          },
+          {
+            "id": "w2",
+            "ingress": {
+              "at": "2026-08-20T19:51:07.104Z",
+              "unwrappedLongitude": 363.92082071249024,
+              "speed": -0.02099808806637841,
+              "bracket": [
+                {
+                  "at": "2026-08-20T19:51:05.472Z",
+                  "unwrappedLongitude": 363.92082110912537,
+                  "speed": -0.020998083329609313
+                },
+                {
+                  "at": "2026-08-20T19:51:08.737Z",
+                  "unwrappedLongitude": 363.9208203156203,
+                  "speed": -0.02099809617205372
+                }
+              ]
+            },
+            "egress": {
+              "at": "2027-03-20T15:29:38.303Z",
+              "unwrappedLongitude": 363.92082068864994,
+              "speed": 0.037800260306752834,
+              "bracket": [
+                {
+                  "at": "2027-03-20T15:29:37.765Z",
+                  "unwrappedLongitude": 363.9208204532774,
+                  "speed": 0.03780026181146071
+                },
+                {
+                  "at": "2027-03-20T15:29:38.841Z",
+                  "unwrappedLongitude": 363.9208209240253,
+                  "speed": 0.037800263589865046
+                }
+              ]
+            },
+            "contactIds": [
+              "c3",
+              "c4"
+            ]
+          }
+        ],
+        "components": [
+          {
+            "id": "e0",
+            "contactIds": [
+              "c0",
+              "c1",
+              "c2",
+              "c3",
+              "c4"
+            ],
+            "leftClosureLegId": "l1",
+            "rightClosureLegId": "l7",
+            "complete": true,
+            "reason": null
+          }
+        ]
+      },
+      {
+        "offsetMinutes": 2,
+        "natalLongitude": 1.9208306168683293,
+        "limit": null,
+        "contacts": [
+          {
+            "at": "2025-06-04T05:19:07.593Z",
+            "unwrappedLongitude": 361.92083063406665,
+            "speed": 0.0163254185898152,
+            "bracket": [
+              {
+                "at": "2025-06-04T05:18:50.380Z",
+                "unwrappedLongitude": 361.9208273816248,
+                "speed": 0.016325518166225513
+              },
+              {
+                "at": "2025-06-04T05:19:07.593Z",
+                "unwrappedLongitude": 361.92083063406665,
+                "speed": 0.0163254185898152
+              }
+            ],
+            "id": "c0",
+            "residualDeg": 1.719831743685063e-8,
+            "direction": "direct",
+            "branch": "plus",
+            "targetTurn": 1,
+            "legId": "l2",
+            "windowId": "w0"
+          },
+          {
+            "at": "2025-08-05T04:25:27.718Z",
+            "unwrappedLongitude": 361.92083054714664,
+            "speed": -0.015745244304469014,
+            "bracket": [
+              {
+                "at": "2025-08-05T04:25:26.085Z",
+                "unwrappedLongitude": 361.9208308447382,
+                "speed": -0.01574523621500536
+              },
+              {
+                "at": "2025-08-05T04:25:29.352Z",
+                "unwrappedLongitude": 361.92083024937165,
+                "speed": -0.015745251866213634
+              }
+            ],
+            "id": "c1",
+            "residualDeg": 6.97216933076561e-8,
+            "direction": "retrograde",
+            "branch": "plus",
+            "targetTurn": 1,
+            "legId": "l3",
+            "windowId": "w0"
+          },
+          {
+            "at": "2026-03-24T12:00:22.746Z",
+            "unwrappedLongitude": 361.92083061135446,
+            "speed": 0.03796339821694982,
+            "bracket": [
+              {
+                "at": "2026-03-24T12:00:22.477Z",
+                "unwrappedLongitude": 361.9208304931577,
+                "speed": 0.037963397979332986
+              },
+              {
+                "at": "2026-03-24T12:00:23.015Z",
+                "unwrappedLongitude": 361.9208307295512,
+                "speed": 0.0379633981711809
+              }
+            ],
+            "id": "c2",
+            "residualDeg": 5.513868472917238e-9,
+            "direction": "direct",
+            "branch": "plus",
+            "targetTurn": 1,
+            "legId": "l4",
+            "windowId": "w1"
+          },
+          {
+            "at": "2026-11-09T10:31:37.829Z",
+            "unwrappedLongitude": 361.9208306530518,
+            "speed": -0.01757595853372148,
+            "bracket": [
+              {
+                "at": "2026-11-09T10:31:31.300Z",
+                "unwrappedLongitude": 361.92083198118934,
+                "speed": -0.017575991668010785
+              },
+              {
+                "at": "2026-11-09T10:31:44.358Z",
+                "unwrappedLongitude": 361.9208293249196,
+                "speed": -0.017575923888174135
+              }
+            ],
+            "id": "c3",
+            "residualDeg": 3.61834509021719e-8,
+            "direction": "retrograde",
+            "branch": "plus",
+            "targetTurn": 1,
+            "legId": "l5",
+            "windowId": "w2"
+          },
+          {
+            "at": "2027-01-14T16:54:30.826Z",
+            "unwrappedLongitude": 361.92083061804703,
+            "speed": 0.018440316859144656,
+            "bracket": [
+              {
+                "at": "2027-01-14T16:54:30.288Z",
+                "unwrappedLongitude": 361.9208305032122,
+                "speed": 0.018440313443099054
+              },
+              {
+                "at": "2027-01-14T16:54:31.364Z",
+                "unwrappedLongitude": 361.9208307328705,
+                "speed": 0.018440319427498734
+              }
+            ],
+            "id": "c4",
+            "residualDeg": 1.178705133497715e-9,
+            "direction": "direct",
+            "branch": "plus",
+            "targetTurn": 1,
+            "legId": "l6",
+            "windowId": "w2"
+          }
+        ],
+        "stations": [
+          {
+            "at": "2024-07-02T10:40:32.812Z",
+            "unwrappedLongitude": 359.9318931180105,
+            "speed": 4.611086707284705e-9,
+            "bracket": [
+              {
+                "at": "2024-07-02T10:40:32.812Z",
+                "unwrappedLongitude": 359.9318931180105,
+                "speed": 4.611086707284705e-9
+              },
+              {
+                "at": "2024-07-02T10:40:53.906Z",
+                "unwrappedLongitude": 359.9318931180602,
+                "speed": -1.2485350836832066e-7
+              }
+            ],
+            "id": "s0",
+            "directionBefore": "direct",
+            "directionAfter": "retrograde"
+          },
+          {
+            "at": "2024-12-07T23:42:56.953Z",
+            "unwrappedLongitude": 357.13103261654715,
+            "speed": 1.7166041725988653e-8,
+            "bracket": [
+              {
+                "at": "2024-12-07T23:42:46.406Z",
+                "unwrappedLongitude": 357.1310326165774,
+                "speed": -5.201605565074252e-8
+              },
+              {
+                "at": "2024-12-07T23:43:07.500Z",
+                "unwrappedLongitude": 357.1310326165253,
+                "speed": 8.476449650292946e-8
+              }
+            ],
+            "id": "s1",
+            "directionBefore": "retrograde",
+            "directionAfter": "direct"
+          },
+          {
+            "at": "2025-07-04T21:33:02.812Z",
+            "unwrappedLongitude": 362.1755368757325,
+            "speed": 8.720171333147959e-9,
+            "bracket": [
+              {
+                "at": "2025-07-04T21:33:02.812Z",
+                "unwrappedLongitude": 362.1755368757325,
+                "speed": 8.720171333147959e-9
+              },
+              {
+                "at": "2025-07-04T21:33:23.906Z",
+                "unwrappedLongitude": 362.1755368757702,
+                "speed": -1.2157070923680926e-7
+              }
+            ],
+            "id": "s2",
+            "directionBefore": "direct",
+            "directionAfter": "retrograde"
+          },
+          {
+            "at": "2025-12-10T12:23:22.734Z",
+            "unwrappedLongitude": 359.37265438126906,
+            "speed": 2.8067192595233485e-8,
+            "bracket": [
+              {
+                "at": "2025-12-10T12:23:12.187Z",
+                "unwrappedLongitude": 359.3726543813009,
+                "speed": -4.129558531841475e-8
+              },
+              {
+                "at": "2025-12-10T12:23:33.281Z",
+                "unwrappedLongitude": 359.37265438124564,
+                "speed": 9.654724140860282e-8
+              }
+            ],
+            "id": "s3",
+            "directionBefore": "retrograde",
+            "directionAfter": "direct"
+          },
+          {
+            "at": "2026-07-07T10:54:36.562Z",
+            "unwrappedLongitude": 364.41806551017777,
+            "speed": -5.816955249600308e-9,
+            "bracket": [
+              {
+                "at": "2026-07-07T10:54:15.468Z",
+                "unwrappedLongitude": 364.41806551013406,
+                "speed": 1.2685083241554256e-7
+              },
+              {
+                "at": "2026-07-07T10:54:36.562Z",
+                "unwrappedLongitude": 364.41806551017777,
+                "speed": -5.816955249600308e-9
+              }
+            ],
+            "id": "s4",
+            "directionBefore": "direct",
+            "directionAfter": "retrograde"
+          },
+          {
+            "at": "2026-12-12T22:17:31.171Z",
+            "unwrappedLongitude": 361.6129239134125,
+            "speed": 3.335094082329957e-8,
+            "bracket": [
+              {
+                "at": "2026-12-12T22:17:20.625Z",
+                "unwrappedLongitude": 361.61292391343954,
+                "speed": -3.614706729517662e-8
+              },
+              {
+                "at": "2026-12-12T22:17:41.718Z",
+                "unwrappedLongitude": 361.6129239133911,
+                "speed": 1.0315011482690497e-7
+              }
+            ],
+            "id": "s5",
+            "directionBefore": "retrograde",
+            "directionAfter": "direct"
+          },
+          {
+            "at": "2027-07-09T22:41:15.000Z",
+            "unwrappedLongitude": 366.65955104421715,
+            "speed": -4.62700153139657e-9,
+            "bracket": [
+              {
+                "at": "2027-07-09T22:40:53.906Z",
+                "unwrappedLongitude": 366.65955104418197,
+                "speed": 1.2519193810950848e-7
+              },
+              {
+                "at": "2027-07-09T22:41:15.000Z",
+                "unwrappedLongitude": 366.65955104421715,
+                "speed": -4.62700153139657e-9
+              }
+            ],
+            "id": "s6",
+            "directionBefore": "direct",
+            "directionAfter": "retrograde"
+          },
+          {
+            "at": "2027-12-15T09:06:19.687Z",
+            "unwrappedLongitude": 363.8526102706258,
+            "speed": -6.0061226356108495e-9,
+            "bracket": [
+              {
+                "at": "2027-12-15T09:06:19.687Z",
+                "unwrappedLongitude": 363.8526102706258,
+                "speed": -6.0061226356108495e-9
+              },
+              {
+                "at": "2027-12-15T09:06:40.781Z",
+                "unwrappedLongitude": 363.8526102705886,
+                "speed": 1.3331596973655308e-7
+              }
+            ],
+            "id": "s7",
+            "directionBefore": "retrograde",
+            "directionAfter": "direct"
+          }
+        ],
+        "legs": [
+          {
+            "id": "l0",
+            "start": {
+              "at": "2024-01-14T12:00:00.000Z",
+              "unwrappedLongitude": 355.32121798641685,
+              "speed": 0.021579911370665124
+            },
+            "end": {
+              "at": "2024-07-02T10:40:32.812Z",
+              "unwrappedLongitude": 359.9318931180105,
+              "speed": 4.611086707284705e-9
+            },
+            "direction": "direct",
+            "startStationId": null,
+            "endStationId": "s0"
+          },
+          {
+            "id": "l1",
+            "start": {
+              "at": "2024-07-02T10:40:32.812Z",
+              "unwrappedLongitude": 359.9318931180105,
+              "speed": 4.611086707284705e-9
+            },
+            "end": {
+              "at": "2024-12-07T23:42:56.953Z",
+              "unwrappedLongitude": 357.13103261654715,
+              "speed": 1.7166041725988653e-8
+            },
+            "direction": "retrograde",
+            "startStationId": "s0",
+            "endStationId": "s1"
+          },
+          {
+            "id": "l2",
+            "start": {
+              "at": "2024-12-07T23:42:56.953Z",
+              "unwrappedLongitude": 357.13103261654715,
+              "speed": 1.7166041725988653e-8
+            },
+            "end": {
+              "at": "2025-07-04T21:33:02.812Z",
+              "unwrappedLongitude": 362.1755368757325,
+              "speed": 8.720171333147959e-9
+            },
+            "direction": "direct",
+            "startStationId": "s1",
+            "endStationId": "s2"
+          },
+          {
+            "id": "l3",
+            "start": {
+              "at": "2025-07-04T21:33:02.812Z",
+              "unwrappedLongitude": 362.1755368757325,
+              "speed": 8.720171333147959e-9
+            },
+            "end": {
+              "at": "2025-12-10T12:23:22.734Z",
+              "unwrappedLongitude": 359.37265438126906,
+              "speed": 2.8067192595233485e-8
+            },
+            "direction": "retrograde",
+            "startStationId": "s2",
+            "endStationId": "s3"
+          },
+          {
+            "id": "l4",
+            "start": {
+              "at": "2025-12-10T12:23:22.734Z",
+              "unwrappedLongitude": 359.37265438126906,
+              "speed": 2.8067192595233485e-8
+            },
+            "end": {
+              "at": "2026-07-07T10:54:36.562Z",
+              "unwrappedLongitude": 364.41806551017777,
+              "speed": -5.816955249600308e-9
+            },
+            "direction": "direct",
+            "startStationId": "s3",
+            "endStationId": "s4"
+          },
+          {
+            "id": "l5",
+            "start": {
+              "at": "2026-07-07T10:54:36.562Z",
+              "unwrappedLongitude": 364.41806551017777,
+              "speed": -5.816955249600308e-9
+            },
+            "end": {
+              "at": "2026-12-12T22:17:31.171Z",
+              "unwrappedLongitude": 361.6129239134125,
+              "speed": 3.335094082329957e-8
+            },
+            "direction": "retrograde",
+            "startStationId": "s4",
+            "endStationId": "s5"
+          },
+          {
+            "id": "l6",
+            "start": {
+              "at": "2026-12-12T22:17:31.171Z",
+              "unwrappedLongitude": 361.6129239134125,
+              "speed": 3.335094082329957e-8
+            },
+            "end": {
+              "at": "2027-07-09T22:41:15.000Z",
+              "unwrappedLongitude": 366.65955104421715,
+              "speed": -4.62700153139657e-9
+            },
+            "direction": "direct",
+            "startStationId": "s5",
+            "endStationId": "s6"
+          },
+          {
+            "id": "l7",
+            "start": {
+              "at": "2027-07-09T22:41:15.000Z",
+              "unwrappedLongitude": 366.65955104421715,
+              "speed": -4.62700153139657e-9
+            },
+            "end": {
+              "at": "2027-12-15T09:06:19.687Z",
+              "unwrappedLongitude": 363.8526102706258,
+              "speed": -6.0061226356108495e-9
+            },
+            "direction": "retrograde",
+            "startStationId": "s6",
+            "endStationId": "s7"
+          },
+          {
+            "id": "l8",
+            "start": {
+              "at": "2027-12-15T09:06:19.687Z",
+              "unwrappedLongitude": 363.8526102706258,
+              "speed": -6.0061226356108495e-9
+            },
+            "end": {
+              "at": "2028-06-01T12:00:00.000Z",
+              "unwrappedLongitude": 368.47084684404547,
+              "speed": 0.020840390035254754
+            },
+            "direction": "direct",
+            "startStationId": "s7",
+            "endStationId": null
+          }
+        ],
+        "windows": [
+          {
+            "id": "w0",
+            "ingress": {
+              "at": "2025-03-28T09:22:07.900Z",
+              "unwrappedLongitude": 359.920830654876,
+              "speed": 0.037630458451553855,
+              "bracket": [
+                {
+                  "at": "2025-03-28T09:22:07.362Z",
+                  "unwrappedLongitude": 359.9208304205399,
+                  "speed": 0.03763045892321748
+                },
+                {
+                  "at": "2025-03-28T09:22:08.438Z",
+                  "unwrappedLongitude": 359.92083088919435,
+                  "speed": 0.03763045798449944
+                }
+              ]
+            },
+            "egress": {
+              "at": "2025-10-25T21:22:29.829Z",
+              "unwrappedLongitude": 359.9208307143315,
+              "speed": -0.022166924177433385,
+              "bracket": [
+                {
+                  "at": "2025-10-25T21:22:29.012Z",
+                  "unwrappedLongitude": 359.92083092394466,
+                  "speed": -0.022166927876238807
+                },
+                {
+                  "at": "2025-10-25T21:22:30.646Z",
+                  "unwrappedLongitude": 359.92083050472854,
+                  "speed": -0.02216692111845658
+                }
+              ]
+            },
+            "contactIds": [
+              "c0",
+              "c1"
+            ]
+          },
+          {
+            "id": "w1",
+            "ingress": {
+              "at": "2026-01-23T12:36:46.961Z",
+              "unwrappedLongitude": 359.9208306161256,
+              "speed": 0.023953041467470508,
+              "bracket": [
+                {
+                  "at": "2026-01-23T12:36:45.885Z",
+                  "unwrappedLongitude": 359.92083031782204,
+                  "speed": 0.02395303571474832
+                },
+                {
+                  "at": "2026-01-23T12:36:48.037Z",
+                  "unwrappedLongitude": 359.92083091442646,
+                  "speed": 0.02395304725658376
+                }
+              ]
+            },
+            "egress": {
+              "at": "2026-05-25T06:27:13.548Z",
+              "unwrappedLongitude": 363.92083063469573,
+              "speed": 0.022282028135110994,
+              "bracket": [
+                {
+                  "at": "2026-05-25T06:27:09.244Z",
+                  "unwrappedLongitude": 363.9208295247072,
+                  "speed": 0.022282052216064396
+                },
+                {
+                  "at": "2026-05-25T06:27:17.852Z",
+                  "unwrappedLongitude": 363.92083174467274,
+                  "speed": 0.0222820064527457
+                }
+              ]
+            },
+            "contactIds": [
+              "c2"
+            ]
+          },
+          {
+            "id": "w2",
+            "ingress": {
+              "at": "2026-08-20T19:50:26.298Z",
+              "unwrappedLongitude": 363.9208306296709,
+              "speed": -0.02099792932372448,
+              "bracket": [
+                {
+                  "at": "2026-08-20T19:50:23.034Z",
+                  "unwrappedLongitude": 363.9208314229223,
+                  "speed": -0.02099791729759387
+                },
+                {
+                  "at": "2026-08-20T19:50:29.563Z",
+                  "unwrappedLongitude": 363.92082983617166,
+                  "speed": -0.02099794220843774
+                }
+              ]
+            },
+            "egress": {
+              "at": "2027-03-20T15:30:00.907Z",
+              "unwrappedLongitude": 363.92083057794264,
+              "speed": 0.037800266113586965,
+              "bracket": [
+                {
+                  "at": "2027-03-20T15:30:00.369Z",
+                  "unwrappedLongitude": 363.9208303425672,
+                  "speed": 0.03780026985209023
+                },
+                {
+                  "at": "2027-03-20T15:30:01.446Z",
+                  "unwrappedLongitude": 363.9208308137581,
+                  "speed": 0.03780027089990259
+                }
+              ]
+            },
+            "contactIds": [
+              "c3",
+              "c4"
+            ]
+          }
+        ],
+        "components": [
+          {
+            "id": "e0",
+            "contactIds": [
+              "c0",
+              "c1",
+              "c2",
+              "c3",
+              "c4"
+            ],
+            "leftClosureLegId": "l1",
+            "rightClosureLegId": "l7",
+            "complete": true,
+            "reason": null
+          }
+        ]
+      }
+    ]
+  },
+  "reference": {
+    "tool": "independent-dense-swiss-et-1",
+    "swissVersion": "2.10.03",
+    "stepMs": 3600000,
+    "coverage": {
+      "from": 1705233600000,
+      "to": 1843473600000
+    },
+    "stations": [
+      {
+        "at": 1719916833603,
+        "longitude": 359.93189311801325,
+        "directionBefore": "direct",
+        "directionAfter": "retrograde"
+      },
+      {
+        "at": 1733614974403,
+        "longitude": 357.13103261655283,
+        "directionBefore": "retrograde",
+        "directionAfter": "direct"
+      },
+      {
+        "at": 1751664784212,
+        "longitude": 362.1755368757351,
+        "directionBefore": "direct",
+        "directionAfter": "retrograde"
+      },
+      {
+        "at": 1765369398447,
+        "longitude": 359.37265438127935,
+        "directionBefore": "retrograde",
+        "directionAfter": "direct"
+      },
+      {
+        "at": 1783421675949,
+        "longitude": 364.4180655101783,
+        "directionBefore": "direct",
+        "directionAfter": "retrograde"
+      },
+      {
+        "at": 1797113846155,
+        "longitude": 361.6129239134246,
+        "directionBefore": "retrograde",
+        "directionAfter": "direct"
+      },
+      {
+        "at": 1815172873795,
+        "longitude": 366.65955104421556,
+        "directionBefore": "direct",
+        "directionAfter": "retrograde"
+      },
+      {
+        "at": 1828861580470,
+        "longitude": 363.85261027062364,
+        "directionBefore": "retrograde",
+        "directionAfter": "direct"
+      }
+    ],
+    "samples": [
+      {
+        "offsetMinutes": -2,
+        "contacts": [
+          {
+            "at": 1749014241657,
+            "level": 361.9208106168683,
+            "branch": "plus",
+            "turn": 1,
+            "direction": "direct"
+          },
+          {
+            "at": 1754368037080,
+            "level": 361.9208106168683,
+            "branch": "plus",
+            "turn": 1,
+            "direction": "retrograde"
+          },
+          {
+            "at": 1774353577241,
+            "level": 361.9208106168683,
+            "branch": "plus",
+            "turn": 1,
+            "direction": "direct"
+          },
+          {
+            "at": 1794220396326,
+            "level": 361.9208106168683,
+            "branch": "plus",
+            "turn": 1,
+            "direction": "retrograde"
+          },
+          {
+            "at": 1799945577112,
+            "level": 361.9208106168683,
+            "branch": "plus",
+            "turn": 1,
+            "direction": "direct"
+          }
+        ],
+        "windows": [
+          {
+            "ingress": 1743153681927,
+            "egress": 1761427428164,
+            "contacts": [
+              1749014241657,
+              1754368037080
+            ]
+          },
+          {
+            "ingress": 1769171734822,
+            "egress": 1779690355929,
+            "contacts": [
+              1774353577241
+            ]
+          },
+          {
+            "ingress": 1787255508644,
+            "egress": 1805556555270,
+            "contacts": [
+              1794220396326,
+              1799945577112
+            ]
+          }
+        ],
+        "components": [
+          {
+            "contacts": [
+              1749014241657,
+              1754368037080,
+              1774353577241,
+              1794220396326,
+              1799945577112
+            ],
+            "complete": true
+          }
+        ],
+        "ambiguous": false
+      },
+      {
+        "offsetMinutes": 0,
+        "contacts": [
+          {
+            "at": 1749014294579,
+            "level": 361.92082061686835,
+            "branch": "plus",
+            "turn": 1,
+            "direction": "direct"
+          },
+          {
+            "at": 1754367982208,
+            "level": 361.92082061686835,
+            "branch": "plus",
+            "turn": 1,
+            "direction": "retrograde"
+          },
+          {
+            "at": 1774353600000,
+            "level": 361.92082061686835,
+            "branch": "plus",
+            "turn": 1,
+            "direction": "direct"
+          },
+          {
+            "at": 1794220347166,
+            "level": 361.92082061686835,
+            "branch": "plus",
+            "turn": 1,
+            "direction": "retrograde"
+          },
+          {
+            "at": 1799945623967,
+            "level": 361.92082061686835,
+            "branch": "plus",
+            "turn": 1,
+            "direction": "direct"
+          }
+        ],
+        "windows": [
+          {
+            "ingress": 1743153704887,
+            "egress": 1761427389186,
+            "contacts": [
+              1749014294579,
+              1754367982208
+            ]
+          },
+          {
+            "ingress": 1769171770893,
+            "egress": 1779690394704,
+            "contacts": [
+              1774353600000
+            ]
+          },
+          {
+            "ingress": 1787255467497,
+            "egress": 1805556578127,
+            "contacts": [
+              1794220347166,
+              1799945623967
+            ]
+          }
+        ],
+        "components": [
+          {
+            "contacts": [
+              1749014294579,
+              1754367982208,
+              1774353600000,
+              1794220347166,
+              1799945623967
+            ],
+            "complete": true
+          }
+        ],
+        "ambiguous": false
+      },
+      {
+        "offsetMinutes": 2,
+        "contacts": [
+          {
+            "at": 1749014347502,
+            "level": 361.92083061686833,
+            "branch": "plus",
+            "turn": 1,
+            "direction": "direct"
+          },
+          {
+            "at": 1754367927335,
+            "level": 361.92083061686833,
+            "branch": "plus",
+            "turn": 1,
+            "direction": "retrograde"
+          },
+          {
+            "at": 1774353622759,
+            "level": 361.92083061686833,
+            "branch": "plus",
+            "turn": 1,
+            "direction": "direct"
+          },
+          {
+            "at": 1794220298007,
+            "level": 361.92083061686833,
+            "branch": "plus",
+            "turn": 1,
+            "direction": "retrograde"
+          },
+          {
+            "at": 1799945670820,
+            "level": 361.92083061686833,
+            "branch": "plus",
+            "turn": 1,
+            "direction": "direct"
+          }
+        ],
+        "windows": [
+          {
+            "ingress": 1743153727848,
+            "egress": 1761427350209,
+            "contacts": [
+              1749014347502,
+              1754367927335
+            ]
+          },
+          {
+            "ingress": 1769171806964,
+            "egress": 1779690433479,
+            "contacts": [
+              1774353622759
+            ]
+          },
+          {
+            "ingress": 1787255426351,
+            "egress": 1805556600984,
+            "contacts": [
+              1794220298007,
+              1799945670820
+            ]
+          }
+        ],
+        "components": [
+          {
+            "contacts": [
+              1749014347502,
+              1754367927335,
+              1774353622759,
+              1794220298007,
+              1799945670820
+            ],
+            "complete": true
+          }
+        ],
+        "ambiguous": false
+      }
+    ]
+  },
+  "deltas": [
+    {
+      "label": "station 0",
+      "seconds": 0.791
+    },
+    {
+      "label": "station 1",
+      "seconds": 2.55
+    },
+    {
+      "label": "station 2",
+      "seconds": 1.4
+    },
+    {
+      "label": "station 3",
+      "seconds": 4.287
+    },
+    {
+      "label": "station 4",
+      "seconds": 0.613
+    },
+    {
+      "label": "station 5",
+      "seconds": 5.016
+    },
+    {
+      "label": "station 6",
+      "seconds": 1.205
+    },
+    {
+      "label": "station 7",
+      "seconds": 0.783
+    },
+    {
+      "label": "0/contact 0",
+      "seconds": 0.502
+    },
+    {
+      "label": "0/contact 1",
+      "seconds": 0.098
+    },
+    {
+      "label": "0/contact 2",
+      "seconds": 0.044
+    },
+    {
+      "label": "0/contact 3",
+      "seconds": 0.253
+    },
+    {
+      "label": "0/contact 4",
+      "seconds": 0.067
+    },
+    {
+      "label": "0/ingress 0",
+      "seconds": 0.02
+    },
+    {
+      "label": "0/egress 0",
+      "seconds": 0.083
+    },
+    {
+      "label": "0/ingress 1",
+      "seconds": 0.047
+    },
+    {
+      "label": "0/egress 1",
+      "seconds": 0.147
+    },
+    {
+      "label": "0/ingress 2",
+      "seconds": 0.082
+    },
+    {
+      "label": "0/egress 2",
+      "seconds": 0.11
+    },
+    {
+      "label": "1/contact 0",
+      "seconds": 0.298
+    },
+    {
+      "label": "1/contact 1",
+      "seconds": 0.24
+    },
+    {
+      "label": "1/contact 2",
+      "seconds": 0.119
+    },
+    {
+      "label": "1/contact 3",
+      "seconds": 0.371
+    },
+    {
+      "label": "1/contact 4",
+      "seconds": 0.036
+    },
+    {
+      "label": "1/ingress 0",
+      "seconds": 0.117
+    },
+    {
+      "label": "1/egress 0",
+      "seconds": 0.148
+    },
+    {
+      "label": "1/ingress 1",
+      "seconds": 0.022
+    },
+    {
+      "label": "1/egress 1",
+      "seconds": 0.108
+    },
+    {
+      "label": "1/ingress 2",
+      "seconds": 0.393
+    },
+    {
+      "label": "1/egress 2",
+      "seconds": 0.176
+    },
+    {
+      "label": "2/contact 0",
+      "seconds": 0.091
+    },
+    {
+      "label": "2/contact 1",
+      "seconds": 0.383
+    },
+    {
+      "label": "2/contact 2",
+      "seconds": 0.013
+    },
+    {
+      "label": "2/contact 3",
+      "seconds": 0.178
+    },
+    {
+      "label": "2/contact 4",
+      "seconds": 0.006
+    },
+    {
+      "label": "2/ingress 0",
+      "seconds": 0.052
+    },
+    {
+      "label": "2/egress 0",
+      "seconds": 0.38
+    },
+    {
+      "label": "2/ingress 1",
+      "seconds": 0.003
+    },
+    {
+      "label": "2/egress 1",
+      "seconds": 0.069
+    },
+    {
+      "label": "2/ingress 2",
+      "seconds": 0.053
+    },
+    {
+      "label": "2/egress 2",
+      "seconds": 0.077
+    }
+  ],
+  "issues": []
+}

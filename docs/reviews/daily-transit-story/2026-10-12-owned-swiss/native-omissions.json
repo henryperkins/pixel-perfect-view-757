@@ -1,0 +1,181 @@
+{
+  "source": {
+    "engine": "swiss-ephemeris",
+    "engineVersion": "2.10.03",
+    "dataId": "sha256:975743cf9ca4c15e9e86d22f8d03fd973a1341f6b0bd971cabd21a4a02022797",
+    "frame": "tropical-apparent-geocentric-true-equinox-of-date",
+    "timeScale": "UT",
+    "returnedFlags": 258
+  },
+  "results": [
+    {
+      "id": "jupiter-station-near-tangent",
+      "pass": true,
+      "reason": "ambiguous_station_contact",
+      "request": {
+        "contract": "swiss-transit-episode/1",
+        "solverVersion": "transit-episode-1",
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "transitBody": "jupiter",
+        "aspect": "conjunction",
+        "targets": [
+          {
+            "offsetMinutes": -2,
+            "longitude": 147.02460985706367
+          },
+          {
+            "offsetMinutes": 0,
+            "longitude": 147.02460985706367
+          },
+          {
+            "offsetMinutes": 2,
+            "longitude": 147.02460985706367
+          }
+        ],
+        "referenceAt": "2026-12-13T00:56:39.841Z",
+        "maxOrbDegrees": 3
+      }
+    },
+    {
+      "id": "saturn-station-near-tangent",
+      "pass": true,
+      "reason": "ambiguous_station_contact",
+      "request": {
+        "contract": "swiss-transit-episode/1",
+        "solverVersion": "transit-episode-1",
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "transitBody": "saturn",
+        "aspect": "conjunction",
+        "targets": [
+          {
+            "offsetMinutes": -2,
+            "longitude": 14.74995875097251
+          },
+          {
+            "offsetMinutes": 0,
+            "longitude": 14.74995875097251
+          },
+          {
+            "offsetMinutes": 2,
+            "longitude": 14.74995875097251
+          }
+        ],
+        "referenceAt": "2026-07-26T19:56:29.652Z",
+        "maxOrbDegrees": 3
+      }
+    },
+    {
+      "id": "uranus-station-near-tangent",
+      "pass": true,
+      "reason": "ambiguous_station_contact",
+      "request": {
+        "contract": "swiss-transit-episode/1",
+        "solverVersion": "transit-episode-1",
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "transitBody": "uranus",
+        "aspect": "conjunction",
+        "targets": [
+          {
+            "offsetMinutes": -2,
+            "longitude": 65.69697743849324
+          },
+          {
+            "offsetMinutes": 0,
+            "longitude": 65.69697743849324
+          },
+          {
+            "offsetMinutes": 2,
+            "longitude": 65.69697743849324
+          }
+        ],
+        "referenceAt": "2026-09-10T18:27:14.064Z",
+        "maxOrbDegrees": 2
+      }
+    },
+    {
+      "id": "neptune-station-near-tangent",
+      "pass": true,
+      "reason": "ambiguous_station_contact",
+      "request": {
+        "contract": "swiss-transit-episode/1",
+        "solverVersion": "transit-episode-1",
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "transitBody": "neptune",
+        "aspect": "conjunction",
+        "targets": [
+          {
+            "offsetMinutes": -2,
+            "longitude": 4.41806551017678
+          },
+          {
+            "offsetMinutes": 0,
+            "longitude": 4.41806551017678
+          },
+          {
+            "offsetMinutes": 2,
+            "longitude": 4.41806551017678
+          }
+        ],
+        "referenceAt": "2026-07-07T10:54:35.696Z",
+        "maxOrbDegrees": 2
+      }
+    },
+    {
+      "id": "pluto-station-near-tangent",
+      "pass": true,
+      "reason": "ambiguous_station_contact",
+      "request": {
+        "contract": "swiss-transit-episode/1",
+        "solverVersion": "transit-episode-1",
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "transitBody": "pluto",
+        "aspect": "conjunction",
+        "targets": [
+          {
+            "offsetMinutes": -2,
+            "longitude": 305.50952413204504
+          },
+          {
+            "offsetMinutes": 0,
+            "longitude": 305.50952413204504
+          },
+          {
+            "offsetMinutes": 2,
+            "longitude": 305.50952413204504
+          }
+        ],
+        "referenceAt": "2026-05-06T15:34:25.909Z",
+        "maxOrbDegrees": 2
+      }
+    },
+    {
+      "id": "source-range",
+      "pass": true,
+      "reason": "source_range",
+      "request": {
+        "contract": "swiss-transit-episode/1",
+        "solverVersion": "transit-episode-1",
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "transitBody": "jupiter",
+        "aspect": "conjunction",
+        "targets": [
+          {
+            "offsetMinutes": -2,
+            "longitude": 126.18677493929857
+          },
+          {
+            "offsetMinutes": 0,
+            "longitude": 126.1867849392986
+          },
+          {
+            "offsetMinutes": 2,
+            "longitude": 126.18679493929858
+          }
+        ],
+        "referenceAt": "1790-01-01T12:00:00.000Z",
+        "maxOrbDegrees": 3
+      }
+    }
+  ],
+  "passed": true
+}

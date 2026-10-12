@@ -1,0 +1,407 @@
+[
+  {
+    "id": "jupiter-single-direct",
+    "kind": "single-direct",
+    "request": {
+      "contract": "swiss-transit-episode/1",
+      "solverVersion": "transit-episode-1",
+      "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+      "transitBody": "jupiter",
+      "aspect": "conjunction",
+      "targets": [
+        {
+          "offsetMinutes": -2,
+          "longitude": 126.18677493929857
+        },
+        {
+          "offsetMinutes": 0,
+          "longitude": 126.1867849392986
+        },
+        {
+          "offsetMinutes": 2,
+          "longitude": 126.18679493929858
+        }
+      ],
+      "referenceAt": "2026-07-28T12:00:00.000Z",
+      "maxOrbDegrees": 3
+    }
+  },
+  {
+    "id": "jupiter-repeat-minus-branch",
+    "kind": "repeat-minus-branch",
+    "request": {
+      "contract": "swiss-transit-episode/1",
+      "solverVersion": "transit-episode-1",
+      "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+      "transitBody": "jupiter",
+      "aspect": "quincunx",
+      "targets": [
+        {
+          "offsetMinutes": -2,
+          "longitude": 260.08926876601686
+        },
+        {
+          "offsetMinutes": 0,
+          "longitude": 260.08927876601683
+        },
+        {
+          "offsetMinutes": 2,
+          "longitude": 260.0892887660168
+        }
+      ],
+      "referenceAt": "2026-01-10T12:00:00.000Z",
+      "maxOrbDegrees": 3
+    }
+  },
+  {
+    "id": "jupiter-station-near",
+    "kind": "station-near",
+    "request": {
+      "contract": "swiss-transit-episode/1",
+      "solverVersion": "transit-episode-1",
+      "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+      "transitBody": "jupiter",
+      "aspect": "conjunction",
+      "targets": [
+        {
+          "offsetMinutes": -2,
+          "longitude": 147.0225998570637
+        },
+        {
+          "offsetMinutes": 0,
+          "longitude": 147.02260985706369
+        },
+        {
+          "offsetMinutes": 2,
+          "longitude": 147.02261985706366
+        }
+      ],
+      "referenceAt": "2026-12-13T00:56:39.841Z",
+      "maxOrbDegrees": 3
+    }
+  },
+  {
+    "id": "saturn-single-direct",
+    "kind": "single-direct",
+    "request": {
+      "contract": "swiss-transit-episode/1",
+      "solverVersion": "transit-episode-1",
+      "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+      "transitBody": "saturn",
+      "aspect": "conjunction",
+      "targets": [
+        {
+          "offsetMinutes": -2,
+          "longitude": 4.6122180327454885
+        },
+        {
+          "offsetMinutes": 0,
+          "longitude": 4.61222803274552
+        },
+        {
+          "offsetMinutes": 2,
+          "longitude": 4.612238032745495
+        }
+      ],
+      "referenceAt": "2026-03-24T12:00:00.000Z",
+      "maxOrbDegrees": 3
+    }
+  },
+  {
+    "id": "saturn-repeat-minus-branch",
+    "kind": "repeat-minus-branch",
+    "request": {
+      "contract": "swiss-transit-episode/1",
+      "solverVersion": "transit-episode-1",
+      "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+      "transitBody": "saturn",
+      "aspect": "quincunx",
+      "targets": [
+        {
+          "offsetMinutes": -2,
+          "longitude": 161.22498426948346
+        },
+        {
+          "offsetMinutes": 0,
+          "longitude": 161.22499426948343
+        },
+        {
+          "offsetMinutes": 2,
+          "longitude": 161.2250042694834
+        }
+      ],
+      "referenceAt": "2026-10-05T12:00:00.000Z",
+      "maxOrbDegrees": 3
+    }
+  },
+  {
+    "id": "saturn-station-near",
+    "kind": "station-near",
+    "request": {
+      "contract": "swiss-transit-episode/1",
+      "solverVersion": "transit-episode-1",
+      "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+      "transitBody": "saturn",
+      "aspect": "conjunction",
+      "targets": [
+        {
+          "offsetMinutes": -2,
+          "longitude": 14.747948750972512
+        },
+        {
+          "offsetMinutes": 0,
+          "longitude": 14.747958750972487
+        },
+        {
+          "offsetMinutes": 2,
+          "longitude": 14.747968750972461
+        }
+      ],
+      "referenceAt": "2026-07-26T19:56:29.652Z",
+      "maxOrbDegrees": 3
+    }
+  },
+  {
+    "id": "uranus-single-direct",
+    "kind": "single-direct",
+    "request": {
+      "contract": "swiss-transit-episode/1",
+      "solverVersion": "transit-episode-1",
+      "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+      "transitBody": "uranus",
+      "aspect": "conjunction",
+      "targets": [
+        {
+          "offsetMinutes": -2,
+          "longitude": 61.568824832409064
+        },
+        {
+          "offsetMinutes": 0,
+          "longitude": 61.568834832409095
+        },
+        {
+          "offsetMinutes": 2,
+          "longitude": 61.56884483240907
+        }
+      ],
+      "referenceAt": "2026-05-23T12:00:00.000Z",
+      "maxOrbDegrees": 2
+    }
+  },
+  {
+    "id": "uranus-repeat-minus-branch",
+    "kind": "repeat-minus-branch",
+    "request": {
+      "contract": "swiss-transit-episode/1",
+      "solverVersion": "transit-episode-1",
+      "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+      "transitBody": "uranus",
+      "aspect": "quincunx",
+      "targets": [
+        {
+          "offsetMinutes": -2,
+          "longitude": 213.69408480263075
+        },
+        {
+          "offsetMinutes": 0,
+          "longitude": 213.69409480263073
+        },
+        {
+          "offsetMinutes": 2,
+          "longitude": 213.6941048026307
+        }
+      ],
+      "referenceAt": "2026-11-25T12:00:00.000Z",
+      "maxOrbDegrees": 2
+    }
+  },
+  {
+    "id": "uranus-station-near",
+    "kind": "station-near",
+    "request": {
+      "contract": "swiss-transit-episode/1",
+      "solverVersion": "transit-episode-1",
+      "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+      "transitBody": "uranus",
+      "aspect": "conjunction",
+      "targets": [
+        {
+          "offsetMinutes": -2,
+          "longitude": 65.69496743849322
+        },
+        {
+          "offsetMinutes": 0,
+          "longitude": 65.69497743849325
+        },
+        {
+          "offsetMinutes": 2,
+          "longitude": 65.69498743849329
+        }
+      ],
+      "referenceAt": "2026-09-10T18:27:14.064Z",
+      "maxOrbDegrees": 2
+    }
+  },
+  {
+    "id": "neptune-direct-five",
+    "kind": "direct-five",
+    "request": {
+      "contract": "swiss-transit-episode/1",
+      "solverVersion": "transit-episode-1",
+      "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+      "transitBody": "neptune",
+      "aspect": "conjunction",
+      "targets": [
+        {
+          "offsetMinutes": -2,
+          "longitude": 1.920810616868323
+        },
+        {
+          "offsetMinutes": 0,
+          "longitude": 1.9208206168683546
+        },
+        {
+          "offsetMinutes": 2,
+          "longitude": 1.9208306168683293
+        }
+      ],
+      "referenceAt": "2026-03-24T12:00:00.000Z",
+      "maxOrbDegrees": 2
+    }
+  },
+  {
+    "id": "neptune-repeat-minus-branch",
+    "kind": "repeat-minus-branch",
+    "request": {
+      "contract": "swiss-transit-episode/1",
+      "solverVersion": "transit-episode-1",
+      "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+      "transitBody": "neptune",
+      "aspect": "quincunx",
+      "targets": [
+        {
+          "offsetMinutes": -2,
+          "longitude": 152.986684783001
+        },
+        {
+          "offsetMinutes": 0,
+          "longitude": 152.98669478300098
+        },
+        {
+          "offsetMinutes": 2,
+          "longitude": 152.98670478300096
+        }
+      ],
+      "referenceAt": "2026-09-26T12:00:00.000Z",
+      "maxOrbDegrees": 2
+    }
+  },
+  {
+    "id": "neptune-station-near",
+    "kind": "station-near",
+    "request": {
+      "contract": "swiss-transit-episode/1",
+      "solverVersion": "transit-episode-1",
+      "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+      "transitBody": "neptune",
+      "aspect": "conjunction",
+      "targets": [
+        {
+          "offsetMinutes": -2,
+          "longitude": 4.416055510176818
+        },
+        {
+          "offsetMinutes": 0,
+          "longitude": 4.416065510176793
+        },
+        {
+          "offsetMinutes": 2,
+          "longitude": 4.416075510176768
+        }
+      ],
+      "referenceAt": "2026-07-07T10:54:35.696Z",
+      "maxOrbDegrees": 2
+    }
+  },
+  {
+    "id": "pluto-direct-five",
+    "kind": "direct-five",
+    "request": {
+      "contract": "swiss-transit-episode/1",
+      "solverVersion": "transit-episode-1",
+      "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+      "transitBody": "pluto",
+      "aspect": "conjunction",
+      "targets": [
+        {
+          "offsetMinutes": -2,
+          "longitude": 303.36123460082797
+        },
+        {
+          "offsetMinutes": 0,
+          "longitude": 303.36124460082794
+        },
+        {
+          "offsetMinutes": 2,
+          "longitude": 303.3612546008279
+        }
+      ],
+      "referenceAt": "2026-01-21T12:00:00.000Z",
+      "maxOrbDegrees": 2
+    }
+  },
+  {
+    "id": "pluto-repeat-minus-branch",
+    "kind": "repeat-minus-branch",
+    "request": {
+      "contract": "swiss-transit-episode/1",
+      "solverVersion": "transit-episode-1",
+      "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+      "transitBody": "pluto",
+      "aspect": "quincunx",
+      "targets": [
+        {
+          "offsetMinutes": -2,
+          "longitude": 94.25729761727553
+        },
+        {
+          "offsetMinutes": 0,
+          "longitude": 94.25730761727556
+        },
+        {
+          "offsetMinutes": 2,
+          "longitude": 94.25731761727559
+        }
+      ],
+      "referenceAt": "2026-07-28T12:00:00.000Z",
+      "maxOrbDegrees": 2
+    }
+  },
+  {
+    "id": "pluto-station-near",
+    "kind": "station-near",
+    "request": {
+      "contract": "swiss-transit-episode/1",
+      "solverVersion": "transit-episode-1",
+      "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+      "transitBody": "pluto",
+      "aspect": "conjunction",
+      "targets": [
+        {
+          "offsetMinutes": -2,
+          "longitude": 305.5075141320451
+        },
+        {
+          "offsetMinutes": 0,
+          "longitude": 305.5075241320451
+        },
+        {
+          "offsetMinutes": 2,
+          "longitude": 305.50753413204507
+        }
+      ],
+      "referenceAt": "2026-05-06T15:34:25.909Z",
+      "maxOrbDegrees": 2
+    }
+  }
+]

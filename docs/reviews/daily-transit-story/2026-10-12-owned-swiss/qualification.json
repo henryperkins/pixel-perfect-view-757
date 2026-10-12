@@ -1,0 +1,232 @@
+{
+  "version": 1,
+  "syntheticAnchors": true,
+  "source": {
+    "source": {
+      "engine": "swiss-ephemeris",
+      "engineVersion": "2.10.03",
+      "dataId": "sha256:975743cf9ca4c15e9e86d22f8d03fd973a1341f6b0bd971cabd21a4a02022797",
+      "frame": "tropical-apparent-geocentric-true-equinox-of-date",
+      "timeScale": "UT",
+      "returnedFlags": 258
+    },
+    "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+    "wrapper": "sweph@2.10.3-7",
+    "files": [
+      {
+        "name": "sepl_18.se1",
+        "bytes": 484061,
+        "sha256": "ca1393ceab3a44fbc895887cf789c68819ae6a1cbc9b22225872dbe4ccd99a66",
+        "required": true
+      },
+      {
+        "name": "semo_18.se1",
+        "bytes": 1304771,
+        "sha256": "1ca07bd67c24374d77226180c20a4f9996cba013697894810518e7eb582ca4f7",
+        "required": true
+      }
+    ],
+    "upstreamCommit": "85e65da01dce506bd0ec044ad3e39ab6d144d82b",
+    "utcConversion": "swe_utc_to_jd: UT1 result -> swe_calc_ut; pre-1972 input follows Swiss UT convention",
+    "coverage": {
+      "from": "1800-01-02T00:00:00.000Z",
+      "to": "2399-12-30T00:00:00.000Z"
+    },
+    "houseSystem": "placidus",
+    "houseFallback": "porphyry-explicit",
+    "license": "AGPL-3.0-or-later"
+  },
+  "tool": "independent-dense-swiss-et-1",
+  "referenceStepSeconds": 3600,
+  "allowedDeltaSeconds": 300,
+  "passed": true,
+  "results": [
+    {
+      "id": "jupiter-single-direct",
+      "pass": true,
+      "durationMs": 65.364386,
+      "evaluations": 3362,
+      "trackPoints": 19201,
+      "contacts": 1,
+      "stations": 4,
+      "windows": 1,
+      "maxDeltaSeconds": 1.04,
+      "issues": []
+    },
+    {
+      "id": "jupiter-repeat-minus-branch",
+      "pass": true,
+      "durationMs": 118.14280600000006,
+      "evaluations": 5207,
+      "trackPoints": 28801,
+      "contacts": 3,
+      "stations": 6,
+      "windows": 3,
+      "maxDeltaSeconds": 1.107,
+      "issues": []
+    },
+    {
+      "id": "jupiter-station-near",
+      "pass": true,
+      "durationMs": 100.32863900000007,
+      "evaluations": 4340,
+      "trackPoints": 24001,
+      "contacts": 3,
+      "stations": 6,
+      "windows": 2,
+      "maxDeltaSeconds": 2.291,
+      "issues": []
+    },
+    {
+      "id": "saturn-single-direct",
+      "pass": true,
+      "durationMs": 60.739749000000074,
+      "evaluations": 3423,
+      "trackPoints": 19201,
+      "contacts": 1,
+      "stations": 4,
+      "windows": 1,
+      "maxDeltaSeconds": 1.784,
+      "issues": []
+    },
+    {
+      "id": "saturn-repeat-minus-branch",
+      "pass": true,
+      "durationMs": 107.937455,
+      "evaluations": 5193,
+      "trackPoints": 28801,
+      "contacts": 3,
+      "stations": 6,
+      "windows": 3,
+      "maxDeltaSeconds": 1.784,
+      "issues": []
+    },
+    {
+      "id": "saturn-station-near",
+      "pass": true,
+      "durationMs": 98.7027909999997,
+      "evaluations": 4328,
+      "trackPoints": 24001,
+      "contacts": 3,
+      "stations": 6,
+      "windows": 2,
+      "maxDeltaSeconds": 2.943,
+      "issues": []
+    },
+    {
+      "id": "uranus-single-direct",
+      "pass": true,
+      "durationMs": 57.990208000000166,
+      "evaluations": 3515,
+      "trackPoints": 19201,
+      "contacts": 1,
+      "stations": 4,
+      "windows": 1,
+      "maxDeltaSeconds": 5.564,
+      "issues": []
+    },
+    {
+      "id": "uranus-repeat-minus-branch",
+      "pass": true,
+      "durationMs": 116.14065200000005,
+      "evaluations": 5206,
+      "trackPoints": 28801,
+      "contacts": 3,
+      "stations": 6,
+      "windows": 3,
+      "maxDeltaSeconds": 5.564,
+      "issues": []
+    },
+    {
+      "id": "uranus-station-near",
+      "pass": true,
+      "durationMs": 97.09988299999941,
+      "evaluations": 4404,
+      "trackPoints": 24001,
+      "contacts": 3,
+      "stations": 6,
+      "windows": 2,
+      "maxDeltaSeconds": 4.667,
+      "issues": []
+    },
+    {
+      "id": "neptune-direct-five",
+      "pass": true,
+      "durationMs": 178.8542470000002,
+      "evaluations": 7137,
+      "trackPoints": 38401,
+      "contacts": 5,
+      "stations": 8,
+      "windows": 3,
+      "maxDeltaSeconds": 5.016,
+      "issues": []
+    },
+    {
+      "id": "neptune-repeat-minus-branch",
+      "pass": true,
+      "durationMs": 107.36775399999988,
+      "evaluations": 5238,
+      "trackPoints": 28801,
+      "contacts": 3,
+      "stations": 6,
+      "windows": 1,
+      "maxDeltaSeconds": 5.016,
+      "issues": []
+    },
+    {
+      "id": "neptune-station-near",
+      "pass": true,
+      "durationMs": 187.0489459999999,
+      "evaluations": 6195,
+      "trackPoints": 33601,
+      "contacts": 5,
+      "stations": 8,
+      "windows": 3,
+      "maxDeltaSeconds": 5.59,
+      "issues": []
+    },
+    {
+      "id": "pluto-direct-five",
+      "pass": true,
+      "durationMs": 176.7943949999999,
+      "evaluations": 7138,
+      "trackPoints": 38401,
+      "contacts": 5,
+      "stations": 8,
+      "windows": 2,
+      "maxDeltaSeconds": 5.089,
+      "issues": []
+    },
+    {
+      "id": "pluto-repeat-minus-branch",
+      "pass": true,
+      "durationMs": 113.02038600000014,
+      "evaluations": 5259,
+      "trackPoints": 28801,
+      "contacts": 3,
+      "stations": 6,
+      "windows": 1,
+      "maxDeltaSeconds": 5.089,
+      "issues": []
+    },
+    {
+      "id": "pluto-station-near",
+      "pass": true,
+      "durationMs": 185.89026099999955,
+      "evaluations": 6155,
+      "trackPoints": 33601,
+      "contacts": 5,
+      "stations": 8,
+      "windows": 2,
+      "maxDeltaSeconds": 5.625,
+      "issues": []
+    }
+  ],
+  "sourceHashes": {
+    "../src/engine.mjs": "b85d73a45660a3609722583ddc73d7ba2349c8bc87680782324305c458a95436",
+    "../src/track.mjs": "24b424ef02bc980ae032b1ce3cc015c2b3a9c1d79f7f762f8d7769a7244c9a95",
+    "../src/episodes.mjs": "3073465e1a3d6f86ada6cd75f8cfb110f468439d812b8d0abb4e471c68aa6ddb",
+    "./reference.mjs": "11b7579ce98671ca5fcf28b07724097bca17322e240fdcdac8fe58366044f0bc",
+    "./qualify.mjs": "85fa25b3afca7ca6e1d07c53de4e392adf90839b5731f7aafac21e708b449569"
+  }
+}
