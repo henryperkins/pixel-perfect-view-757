@@ -194,6 +194,23 @@ export const addEvent = createServerFn({ method: "POST" })
     );
   });
 
+export const editEvent = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
+  .inputValidator((d: unknown) =>
+    z
+      .object({
+        id: z.string().min(1),
+        label: z.string().trim().min(1).max(400),
+        body: z.string().max(4000).nullable(),
+        expectedRevision: z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),
+      })
+      .parse(d),
+  )
+  .handler(async ({ data, context }) => {
+    const m = await import("./pattern.server");
+    return m.updateLifeEvent(context.db, context.userId, data);
+  });
+
 export const removeEvent = createServerFn({ method: "POST" })
   .middleware([requireAuth])
   .inputValidator((d: unknown) => z.object({ id: z.string().min(1) }).parse(d))

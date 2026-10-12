@@ -99,7 +99,8 @@ export async function createRecordsHarness() {
     if (workflowBase && (url === `${workflowBase}/pointer` || url === `${workflowBase}/trigger`)) {
       return Response.json({ ok: true, instanceId: "mock-workflow-" + randomUUID() });
     }
-    assert.equal(url, testURL, "The harness forbids external network calls");
+    const batchURL = testURL.replace(/\/query$/, "/batch");
+    assert.ok(url === testURL || url === batchURL, "The harness forbids external network calls");
     assert.equal(init.method, "POST");
     const raw = String(init.body);
     const expected = createHmac("sha256", secret).update(raw).digest("hex");
@@ -109,6 +110,25 @@ export async function createRecordsHarness() {
       !timingSafeEqual(Buffer.from(signature), Buffer.from(expected))
     )
       return Response.json({ error: "Invalid local test signature" }, { status: 401 });
+    if (url === batchURL) {
+      const { statements } = JSON.parse(raw);
+      sqlite.exec("BEGIN");
+      try {
+        const batch = statements.map(({ sql, params = [] }) => {
+          requests.push({ sql, params });
+          if (fault?.matches(sql, params)) {
+            throw Object.assign(new Error("Injected local records failure"), { status: 503 });
+          }
+          const results = sqlite.prepare(sql).all(...params);
+          return { results, meta: { changes: sqlite.prepare("SELECT changes() AS n").get().n } };
+        });
+        sqlite.exec("COMMIT");
+        return Response.json({ ok: true, batch });
+      } catch (error) {
+        sqlite.exec("ROLLBACK");
+        return Response.json({ error: error.message }, { status: error.status ?? 400 });
+      }
+    }
     const { sql, params } = JSON.parse(raw);
     requests.push({ sql, params });
     if (fault?.matches(sql, params))

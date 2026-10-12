@@ -1,9 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import {
+  JournalEntryEditor,
+  type EditableJournalEntry,
+  type JournalEditInput,
+} from "@/components/pattern/JournalEntryEditor";
 import { NotebookPen, Save, Trash2 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useCalendarQueryRefresh, useCalendarRefresh } from "@/hooks/useCalendarRefresh";
@@ -11,6 +16,7 @@ import { useCalendarQueryRefresh, useCalendarRefresh } from "@/hooks/useCalendar
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import {
   addEvent,
+  editEvent,
   fetchJournal,
   fetchPattern,
   fetchToday,
@@ -55,6 +61,7 @@ function JournalPage() {
   const patternFn = useServerFn(fetchPattern);
   const addFn = useServerFn(addEvent);
   const removeFn = useServerFn(removeEvent);
+  const editFn = useServerFn(editEvent);
   const qc = useQueryClient();
 
   const journal = useQuery({
@@ -84,6 +91,18 @@ function JournalPage() {
   const [body, setBody] = useState("");
   const [cycleKey, setCycleKey] = useState("");
   const [featureKey, setFeatureKey] = useState(chapter ?? "");
+  const [editing, setEditing] = useState<EditableJournalEntry | null>(null);
+  const editTrigger = useRef<HTMLButtonElement | null>(null);
+  const entriesHeading = useRef<HTMLHeadingElement | null>(null);
+  const closeEditor = () => {
+    setEditing(null);
+    requestAnimationFrame(() => {
+      const target = editTrigger.current?.isConnected
+        ? editTrigger.current
+        : entriesHeading.current;
+      target?.focus();
+    });
+  };
 
   // A new chapter link updates only the attachment. Subsequent query refreshes
   // must not overwrite the reader's manual selection or their entry draft.
@@ -117,6 +136,7 @@ function JournalPage() {
       setBody("");
       toast.success("Entry saved");
       await qc.invalidateQueries({ queryKey: ["journal"] });
+      await qc.invalidateQueries({ queryKey: ["today"] });
     },
     onError: (e: Error) => toast.error(e.message),
   });
@@ -126,10 +146,25 @@ function JournalPage() {
     onSuccess: async () => {
       toast.success("Entry deleted");
       await qc.invalidateQueries({ queryKey: ["journal"] });
+      await qc.invalidateQueries({ queryKey: ["today"] });
     },
     onError: (e: Error) => toast.error(e.message),
   });
 
+  const edit = useMutation({
+    mutationFn: (input: JournalEditInput) => editFn({ data: input }),
+    onSuccess: async () => {
+      closeEditor();
+      toast.success("Entry updated");
+      await Promise.all([
+        qc.invalidateQueries({ queryKey: ["journal"] }),
+        qc.invalidateQueries({ queryKey: ["today"] }),
+      ]);
+    },
+    onError: () => {
+      void qc.invalidateQueries({ queryKey: ["journal"] });
+    },
+  });
   const entries = journal.data?.events ?? [];
 
   return (
@@ -278,9 +313,24 @@ function JournalPage() {
           </section>
 
           <section className="mt-10">
-            <h2 className="technical border-b border-rule pb-2 text-muted-foreground">
+            <h2
+              ref={entriesHeading}
+              tabIndex={-1}
+              className="technical border-b border-rule pb-2 text-muted-foreground"
+            >
               2 · Entries ({entries.length})
             </h2>
+
+            {editing ? (
+              <JournalEntryEditor
+                key={editing.id}
+                initialEntry={editing}
+                latestEntry={entries.find((entry) => entry.id === editing.id)}
+                pending={edit.isPending}
+                onSave={(input) => edit.mutateAsync(input)}
+                onCancel={closeEditor}
+              />
+            ) : null}
 
             {journal.isPending ? (
               <div aria-busy className="mt-4 space-y-3">
@@ -332,10 +382,22 @@ function JournalPage() {
                         : ""}
                     </p>
                     <Button
+                      variant="outline"
+                      type="button"
+                      onClick={(event) => {
+                        editTrigger.current = event.currentTarget;
+                        setEditing(e);
+                      }}
+                      disabled={Boolean(editing) || remove.isPending}
+                      className="mt-3 mr-3 technical"
+                    >
+                      Edit
+                    </Button>
+                    <Button
                       variant="ghost"
                       type="button"
                       onClick={() => remove.mutate(e.id)}
-                      disabled={remove.isPending}
+                      disabled={remove.isPending || editing?.id === e.id}
                       className="mt-3 technical text-muted-foreground transition-colors hover:text-destructive"
                     >
                       <Trash2 aria-hidden="true" />

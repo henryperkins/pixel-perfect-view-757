@@ -200,7 +200,9 @@ CREATE TABLE IF NOT EXISTS life_events (
   body_ct TEXT,
   cycle_key TEXT,
   feature_key TEXT,
-  created_at TEXT NOT NULL DEFAULT (datetime('now'))
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  updated_at TEXT,
+  revision INTEGER NOT NULL DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS audit_events (

@@ -153,6 +153,8 @@ interface LifeEventRow {
   cycle_key?: string | null;
   feature_key?: string | null;
   created_at?: string;
+  updated_at?: string | null;
+  revision: number;
 }
 
 interface FeedbackRow {
@@ -1837,7 +1839,9 @@ export async function listJournal(db: DB, userId: string) {
   if (checkInsError) throw new Error(checkInsError.message);
   const { data: events, error: eventsError } = await db
     .from<LifeEventRow>("life_events")
-    .select("id, occurred_on, domain, label_ct, body_ct, cycle_key, feature_key, created_at")
+    .select(
+      "id, occurred_on, domain, label_ct, body_ct, cycle_key, feature_key, created_at, updated_at, revision",
+    )
     .eq("user_id", userId)
     .order("occurred_on", { ascending: false })
     .limit(60);
@@ -1873,6 +1877,8 @@ export async function listJournal(db: DB, userId: string) {
         cycle_key: e.cycle_key ?? null,
         feature_key: e.feature_key ?? null,
         created_at: e.created_at ?? null,
+        updated_at: e.updated_at ?? null,
+        revision: e.revision,
       })),
     ),
     feedback: feedback ?? [],
@@ -1901,6 +1907,59 @@ export async function addLifeEvent(
   });
   if (error) throw new Error(error.message);
   return { ok: true };
+}
+
+export async function updateLifeEvent(
+  db: DB,
+  userId: string,
+  input: { id: string; label: string; body: string | null; expectedRevision: number },
+) {
+  if (typeof input.label !== "string" || !input.label.trim() || input.label.trim().length > 400) {
+    throw new Error("Use a title of 1–400 characters.");
+  }
+  if (input.body !== null && (typeof input.body !== "string" || input.body.length > 4000)) {
+    throw new Error("The entry must be at most 4,000 characters.");
+  }
+  if (!Number.isSafeInteger(input.expectedRevision) || input.expectedRevision < 0) {
+    throw new Error("Invalid entry revision.");
+  }
+  if (typeof input.id !== "string" || !input.id) throw new Error("Entry not found.");
+  const { data: owned, error: readError } = await db
+    .from<LifeEventRow>("life_events")
+    .select("id, revision")
+    .eq("user_id", userId)
+    .eq("id", input.id)
+    .maybeSingle();
+  if (readError) throw new Error("Your entry could not be checked. Please retry.");
+  if (!owned) throw new Error("Entry not found for your account.");
+  if (owned.revision !== input.expectedRevision) {
+    throw new Error(
+      "This entry changed in another tab. Compare the latest entry before saving your draft.",
+    );
+  }
+  const dek = await getDek(db, userId);
+  const updatedAt = new Date().toISOString();
+  const { data: updated, error: writeError } = await db
+    .from<LifeEventRow>("life_events")
+    .update({
+      label_ct: await encryptField(dek, input.label.trim()),
+      body_ct: input.body?.trim() ? await encryptField(dek, input.body.trim()) : null,
+      updated_at: updatedAt,
+      revision: input.expectedRevision + 1,
+    })
+    .eq("user_id", userId)
+    .eq("id", input.id)
+    .eq("revision", input.expectedRevision)
+    .select("id, revision, updated_at")
+    .maybeSingle();
+  if (writeError)
+    throw new Error("Your entry could not be saved. Your draft is kept; please retry.");
+  if (!updated) {
+    throw new Error(
+      "This entry changed in another tab. Compare the latest entry before saving your draft.",
+    );
+  }
+  return { id: updated.id, revision: updated.revision, updatedAt: updated.updated_at! };
 }
 
 export async function deleteLifeEvent(db: DB, userId: string, id: string) {

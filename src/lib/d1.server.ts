@@ -122,6 +122,56 @@ export async function exec<T = Record<string, unknown>>(
   return payload.results ?? [];
 }
 
+/** Signed atomic writes; failures are surfaced once and never replayed. */
+export async function execBatch(
+  statements: { sql: string; params?: Primitive[] }[],
+): Promise<{ results: Record<string, unknown>[]; meta: Record<string, unknown> | null }[]> {
+  if (!Array.isArray(statements) || !statements.length) {
+    throw new Error("A records batch requires at least one statement.");
+  }
+  for (const statement of statements) {
+    if (
+      !statement ||
+      typeof statement.sql !== "string" ||
+      !statement.sql.trim() ||
+      (statement.params !== undefined &&
+        (!Array.isArray(statement.params) ||
+          statement.params.some(
+            (value) =>
+              value !== null &&
+              typeof value !== "string" &&
+              !(typeof value === "number" && Number.isFinite(value)),
+          )))
+    ) {
+      throw new Error("Invalid records batch statement.");
+    }
+  }
+  const cfg = config();
+  const raw = JSON.stringify({ statements });
+  const signature = createHmac("sha256", cfg.secret).update(raw).digest("hex");
+  const response = await fetch(`${cfg.url}/d1/batch`, {
+    method: "POST",
+    headers: { "content-type": "application/json", "x-pattern-signature": signature },
+    body: raw,
+  });
+  if (!response.ok) {
+    throw new Error(`records batch failed (${response.status})`);
+  }
+  const payload = (await response.json()) as {
+    ok?: boolean;
+    batch?: { results: Record<string, unknown>[]; meta: Record<string, unknown> | null }[];
+  };
+  if (
+    payload.ok !== true ||
+    !Array.isArray(payload.batch) ||
+    payload.batch.length !== statements.length ||
+    payload.batch.some((result) => !result || !Array.isArray(result.results))
+  ) {
+    throw new Error("Malformed records batch response.");
+  }
+  return payload.batch;
+}
+
 function encode(table: string, column: string, value: unknown): Primitive {
   if (value === null || value === undefined) return null;
   if (typeof value === "boolean") return value ? 1 : 0;
