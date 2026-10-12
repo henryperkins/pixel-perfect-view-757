@@ -1,7 +1,7 @@
 {
   "release": "2026-10-12-birth-story",
   "baseCommit": "449f4f0d713683f07ca99f8eaa601d8e6f9e0f25",
-  "applicationCommit": null,
+  "applicationCommit": "65641612feb1beb5bcd27bdf641a2fdbd4c85e79",
   "ownedPaths": [
     "src/lib/astro/transit-anchors.server.ts",
     "src/lib/pattern.functions.ts",
@@ -15,7 +15,7 @@
     "src/lib/astro/transit-anchors.server.ts": "9c7c3fa0bcfc3054520c27929d103cf48e6cafc9b0ed7473303be740442fb425",
     "src/lib/pattern.functions.ts": "a018e09b9aff0c2cfee1ff597a959d589bdc40ca3784b5ee8e21f59120a7fb76",
     "src/lib/pattern.server.ts": "2aa5c412a4b499ca821873862c178995e648c120375b95226fa4a1c1100f33db",
-    "src/routes/_authenticated/birth.tsx": "13301c08c6d0de983fdfbb957fc9bf243ebd902cb3a056b07db00d3fbf355dca",
+    "src/routes/_authenticated/birth.tsx": "da4f0c49a94fe934bc6f9b47f00cb30fdc74f3dda3f96405f64438d43909dbd4",
     "tests/birth-change-summary.test.mjs": "ced4063d86a0454f70f4543c92db25a1232c86283517758af93d05d08c62c69f",
     "tests/chart-request-races.test.mjs": "49bc8ac081930af60bc1d3888d7320df10ee55eef2c8cd90ff2cc468537c0d35",
     "tests/transit-anchor-recovery.test.mjs": "2ab85ec2831c8472be40c9f6ebab4cae76fc7f9b4728d4a4c0888bc850795514"
@@ -36,11 +36,17 @@
     "typecheck": true,
     "scopedLint": true,
     "build": true,
-    "browserFixtureChecks": 10,
-    "freshReview": "no remaining code blocker; six race regressions independently passed"
+    "browserFixtureChecks": 12,
+    "freshReview": "no remaining code blocker; six race regressions independently passed",
+    "fullSuiteCommit": "aaa42633da59633b2d905a72f33e50e5fd14ea72",
+    "finalFrontendCorrection": "first-save refresh cannot overwrite the immediately edited draft",
+    "liveBrowserChecks": 10
   },
   "publication": {
-    "status": "pending"
+    "status": "published-and-accepted",
+    "deploymentId": "9549e516-f3e4-4e7b-8f50-08c54c7aa854",
+    "canonicalURL": "https://patterns.lakefrontdigital.io",
+    "receipt": "publication.json"
   },
   "rollback": {
     "applicationCommit": "5bc7e4b6cab2995a8af8558bcbf5d18f60340683",

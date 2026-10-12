@@ -16,6 +16,8 @@ The implementation baseline advanced to current main `6d55d56`, preserving the l
 
 The first slice pairs journal editing with its database foundation to verify the upgrade with its real consumer. Tasks 2–4 are implemented in `e8d4127`, corrected for the production non-null language mode in `5bc7e4b`, and published as deployment `d1471321-9293-4240-88b0-fa3752f24d77`. Both production migrations and Worker `cc8d53f5-59c6-40f2-aa2a-8952cac8c045` are applied. All 630 tests passed or retained the two existing skips (628 passed); typecheck, scoped lint, build, nine fixture and fourteen live browser checks passed. Live expiry/resume/repeat checks passed, and the test account was deleted with its second session denied. Real Google/assistant-token acceptance remains Task 8. All other unchecked requirements stay open. [Privacy verification record](../../reviews/release-completion/2026-10-12-privacy-retention/README.md).
 
+Tasks 6–7 are implemented in `aaa4263`, corrected for delayed first-save hydration in `6564161`, pushed to main and published as deployment `9549e516-f3e4-4e7b-8f50-08c54c7aa854`. The backend suite passed 651 tests with two existing skips; final typecheck, scoped lint, build, twelve fixture and ten live browser checks passed. A controlled legacy chart recovered a screened transit manifest without re-saving birth details, preserved natal/chart evidence and reused the completed assessment. Cleanup passed. Chart-linked journal and final writing acceptance remain Task 14. [Birth and story verification record](../../reviews/release-completion/2026-10-12-birth-story/README.md).
+
 ## Baseline and evidence boundaries
 
 Source inspected on 2026-10-12: `f3e7088f6a2a071f3878e0b89a62417bcfede905` on local `main`. The earlier release in this session integrated the pending Content administration work in `22102116b1a4bba28fa8f2f9a1ad31c8bd21d4b8`, pushed it, and published deployment `1aae3295-93f6-49e6-84cc-e64b2d463263`. The later `f3e7088` commit recovered Lovable synchronization without changing application code. That release's checks reported 564 tests: 562 passed, two existing skips, zero failures; typecheck, scoped lint, build, and live asset comparison passed. See the [source verification record](../../reviews/content-administration/2026-10-12-main-release.md); the final publication receipt is local at `/home/ubuntu/.local/state/pattern-main-release/20261012/final-publication.json`.
@@ -198,7 +200,7 @@ Use Task 14 for **every** code slice; do not wait for P3 to publish P0/P1. Assis
 - [x] Calculate the candidate before committing the new birth/snapshot pointer together. On failure preserve the previous usable profile/chart; guard against a slower old request replacing a newer successful save.
 - [x] Replace the generic success toast with a concise inline change summary: fields changed, new precision, and whether house/angle claims became available or suppressed. Give an accurate no-change message.
 - [x] Refresh Today, Timing, Pattern summary, and birth form from the committed snapshot. Unknown time continues to suppress unsupported claims everywhere.
-- [ ] Run `node --test tests/birth-change-summary.test.mjs tests/reading-natal-snapshot.test.mjs tests/reading-transit-snapshot.test.mjs tests/pattern-chapters.test.mjs`; verify the signed-in flow under Task 14.
+- [x] Run `node --test tests/birth-change-summary.test.mjs tests/reading-natal-snapshot.test.mjs tests/reading-transit-snapshot.test.mjs tests/pattern-chapters.test.mjs`; verify the signed-in flow under Task 14.
 
 **Done when:** A birth edit atomically produces a consistent chart and an understandable account of what changed, without relying on a hard reload.
 
@@ -214,7 +216,7 @@ Use Task 14 for **every** code slice; do not wait for P3 to publish P0/P1. Assis
 - [x] Before writing, compare the birth fingerprint and current snapshot; merge anchor metadata without replacing newer natal/house evidence. A concurrent birth edit invalidates the old result. Do not trigger calculation from saved-only assistant readers.
 - [x] Test unknown time, degraded Swiss response, missing birth input, corrupt ciphertext, fingerprint mismatch, two simultaneous requests, and backoff expiry. Unsupported anchors stay unavailable; never infer them from prose or a different chart.
 - [x] Include the recovered anchor identity in future reading cache selection while preserving historical reading IDs/evidence. Use bounded on-demand recovery first; any later bulk backfill must use the same function and produce an owner-count receipt.
-- [ ] Run `node --test tests/transit-anchors.test.mjs tests/reading-transit-storage.test.mjs tests/reading-transit-integration.test.mjs tests/assistant-readers.test.mjs` and test one controlled legacy production chart.
+- [x] Run `node --test tests/transit-anchors.test.mjs tests/reading-transit-storage.test.mjs tests/reading-transit-integration.test.mjs tests/assistant-readers.test.mjs` and test one controlled legacy production chart.
 
 **Done when:** Eligible existing members receive a story without re-entering unchanged birth details, with no unsupported story for ineligible charts.
 

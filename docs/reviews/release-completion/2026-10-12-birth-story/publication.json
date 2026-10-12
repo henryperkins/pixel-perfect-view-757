@@ -1,0 +1,128 @@
+{
+  "applicationCommit": "65641612feb1beb5bcd27bdf641a2fdbd4c85e79",
+  "initialApplicationCommit": "aaa42633da59633b2d905a72f33e50e5fd14ea72",
+  "initialDeploymentId": "0107852b-e2c4-4cf3-9df0-6bde0be71a55",
+  "correctiveDeploymentId": "9549e516-f3e4-4e7b-8f50-08c54c7aa854",
+  "reasonForCorrection": "first-save refresh cannot overwrite the immediately edited draft",
+  "assets": {
+    "applicationCommit": "65641612feb1beb5bcd27bdf641a2fdbd4c85e79",
+    "deploymentId": "psr2.9549e516-f3e4-4e7b-8f50-08c54c7aa854.1792448325.PsB2QkazZ8HoGcbjo40Mbo2W3FRodqQ_U8K7Sok6W-I",
+    "checkedAt": "2026-10-12T22:18:48.570Z",
+    "httpStatus": 200,
+    "assets": [
+      {
+        "name": "Shell-DUOWE5ah.js",
+        "status": 200,
+        "bytes": 94521,
+        "sha256": "360c4edf9cf05e364bb04a1eb6bcb4677cf58113455d29bd940d15ebbd14ae45",
+        "matches": true
+      },
+      {
+        "name": "birth-DfphErrX.js",
+        "status": 200,
+        "bytes": 11254,
+        "sha256": "02fbf167000bbce55aa188dbd965c757d08c5634c5f10e365132c60a613f033c",
+        "matches": true
+      },
+      {
+        "name": "index-DndAUzqV.js",
+        "status": 200,
+        "bytes": 569511,
+        "sha256": "ca71336ae4a75b586a65cbda2877e05d8bea9fe7c9088c74e1c2f536d51d0fec",
+        "matches": true
+      },
+      {
+        "name": "timing-B5STZXdE.js",
+        "status": 200,
+        "bytes": 8853,
+        "sha256": "5275549b0153cf71fe6a234f38a680d92054abad32e23f531b3501b52b55fef4",
+        "matches": true
+      },
+      {
+        "name": "timing-CxBzES0H.js",
+        "status": 200,
+        "bytes": 3567,
+        "sha256": "117e440e57c8481a26482938f91481249fbfd6089b8a82596f1306b39771acb7",
+        "matches": true
+      }
+    ]
+  },
+  "liveBirthChecks": {
+    "passed": 8,
+    "scope": [
+      "exact-to-unknown suppression",
+      "unchanged save",
+      "unknown-to-exact support",
+      "Swiss source label",
+      "date change",
+      "two-tab conflict preserves draft",
+      "explicit reload",
+      "390px and reduced motion"
+    ]
+  },
+  "legacyTimingBrowserChecks": {
+    "passed": 2,
+    "repeatPassed": 2
+  },
+  "legacyRecovery": {
+    "recovered": true,
+    "status": "complete",
+    "birthCipherUnchanged": true,
+    "natalCipherUnchanged": true,
+    "engineUnchanged": true,
+    "positionsUnchanged": true,
+    "aspectsUnchanged": true,
+    "uncertaintyUnchanged": true,
+    "fingerprintUnchanged": true,
+    "memberReadingRows": 0
+  },
+  "legacyExport": {
+    "exportSchema": "pattern-account-export-1",
+    "currentManifestStatus": "screened",
+    "sourceQualified": true,
+    "historyRows": 0
+  },
+  "repeatPreservesCompletedAssessment": true,
+  "cleanup": {
+    "purposeCreatedAccountDeleted": true,
+    "ownedTableCount": 20,
+    "remainingOwnedRows": {
+      "users": 0,
+      "profiles": 0,
+      "source_consents": 0,
+      "birth_profiles": 0,
+      "chart_snapshots": 0,
+      "natal_features": 0,
+      "cycle_instances": 0,
+      "context_signals": 0,
+      "daily_readings": 0,
+      "reading_sources": 0,
+      "reading_feedback": 0,
+      "check_ins": 0,
+      "life_events": 0,
+      "audit_events": 0,
+      "feature_narratives": 0,
+      "content_drafts": 0,
+      "evaluation_runs": 0,
+      "identity_links": 0,
+      "assistant_grants": 0,
+      "user_roles": 0
+    },
+    "otherOwnerCountsUnchanged": true,
+    "foreignKeyViolations": 0
+  },
+  "modelCalls": 0,
+  "content": {
+    "version": "0.7.1",
+    "checksum": "20b793acda524da945b07ec32b2ed795f31e273c533ff6b4e9c4f96ef821eeac",
+    "changed": false
+  },
+  "migrations": [],
+  "workerDeploymentRequired": false,
+  "remainingGates": [
+    "chart-linked journal and final writing acceptance under Task 14",
+    "paid final writing qualification and Enterprise pilot budget",
+    "real Google/assistant authorization",
+    "normative source registry"
+  ]
+}
