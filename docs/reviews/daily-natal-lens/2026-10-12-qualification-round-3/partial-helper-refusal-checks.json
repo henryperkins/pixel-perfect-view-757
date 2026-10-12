@@ -1,0 +1,22 @@
+{
+  "kind": "interrupted-partial-helper-refusal-checks",
+  "networkCalls": 0,
+  "credentialFilesLoaded": 0,
+  "checks": [
+    {
+      "check": "complete verifier requires full reports",
+      "exitCode": 1,
+      "expectedRefusal": "ENOENT",
+      "noOutputCreated": true
+    },
+    {
+      "check": "blinded preparation rejects partial checkpoints",
+      "exitCode": 1,
+      "expectedRefusal": "report is partial",
+      "noOutputCreated": true
+    }
+  ],
+  "freshPacketsGenerated": false,
+  "partialFlagsChanged": false,
+  "passed": true
+}

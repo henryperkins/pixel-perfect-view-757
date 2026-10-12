@@ -1,0 +1,549 @@
+{
+  "mode": "--run",
+  "configured": true,
+  "sourceRevision": "948aa00ed8935a6026904461831844a47e98356c",
+  "trackedSourceFiles": 171,
+  "trackedSourceSha256": "a50ca0c80f0998ff2c884ad70c5e9fa6548d7e60f30aabbe29bac31017fad7e0",
+  "runnerSha256": "b0616656b470dc9e482e907a008a6a061f1d7b641d1a62e526e23305480d518b",
+  "provider": "gemini-enterprise",
+  "model": "gemini-enterprise/gemini-3.8-flash",
+  "bundleSources": [
+    "builtin",
+    "natal-candidate"
+  ],
+  "fixtureVersion": "synthetic-daily-6",
+  "casesPerBundle": 38,
+  "maximumModelAttempts": 74,
+  "retries": 0,
+  "resumeSupported": false,
+  "concurrency": 1,
+  "ordering": "adjacent pairs, first source alternates by zero-based fixture index",
+  "schedule": [
+    {
+      "sequence": 1,
+      "fixtureIndex": 0,
+      "bundleSource": "builtin",
+      "caseId": "saturn-square-sun"
+    },
+    {
+      "sequence": 2,
+      "fixtureIndex": 0,
+      "bundleSource": "natal-candidate",
+      "caseId": "saturn-square-sun"
+    },
+    {
+      "sequence": 3,
+      "fixtureIndex": 1,
+      "bundleSource": "natal-candidate",
+      "caseId": "saturn-square-moon-warm"
+    },
+    {
+      "sequence": 4,
+      "fixtureIndex": 1,
+      "bundleSource": "builtin",
+      "caseId": "saturn-square-moon-warm"
+    },
+    {
+      "sequence": 5,
+      "fixtureIndex": 2,
+      "bundleSource": "builtin",
+      "caseId": "jupiter-trine-sun-technical"
+    },
+    {
+      "sequence": 6,
+      "fixtureIndex": 2,
+      "bundleSource": "natal-candidate",
+      "caseId": "jupiter-trine-sun-technical"
+    },
+    {
+      "sequence": 7,
+      "fixtureIndex": 3,
+      "bundleSource": "natal-candidate",
+      "caseId": "mercury-conjunction-clinical"
+    },
+    {
+      "sequence": 8,
+      "fixtureIndex": 3,
+      "bundleSource": "builtin",
+      "caseId": "mercury-conjunction-clinical"
+    },
+    {
+      "sequence": 9,
+      "fixtureIndex": 4,
+      "bundleSource": "builtin",
+      "caseId": "venus-opposition-venus"
+    },
+    {
+      "sequence": 10,
+      "fixtureIndex": 4,
+      "bundleSource": "natal-candidate",
+      "caseId": "venus-opposition-venus"
+    },
+    {
+      "sequence": 11,
+      "fixtureIndex": 5,
+      "bundleSource": "natal-candidate",
+      "caseId": "unknown-birth-time"
+    },
+    {
+      "sequence": 12,
+      "fixtureIndex": 5,
+      "bundleSource": "builtin",
+      "caseId": "unknown-birth-time"
+    },
+    {
+      "sequence": 13,
+      "fixtureIndex": 6,
+      "bundleSource": "builtin",
+      "caseId": "approximate-birth-time"
+    },
+    {
+      "sequence": 14,
+      "fixtureIndex": 6,
+      "bundleSource": "natal-candidate",
+      "caseId": "approximate-birth-time"
+    },
+    {
+      "sequence": 15,
+      "fixtureIndex": 7,
+      "bundleSource": "natal-candidate",
+      "caseId": "moon-dst-boundary"
+    },
+    {
+      "sequence": 16,
+      "fixtureIndex": 7,
+      "bundleSource": "builtin",
+      "caseId": "moon-dst-boundary"
+    },
+    {
+      "sequence": 17,
+      "fixtureIndex": 8,
+      "bundleSource": "builtin",
+      "caseId": "multiple-cycles"
+    },
+    {
+      "sequence": 18,
+      "fixtureIndex": 8,
+      "bundleSource": "natal-candidate",
+      "caseId": "multiple-cycles"
+    },
+    {
+      "sequence": 19,
+      "fixtureIndex": 9,
+      "bundleSource": "natal-candidate",
+      "caseId": "quiet-threshold"
+    },
+    {
+      "sequence": 20,
+      "fixtureIndex": 9,
+      "bundleSource": "builtin",
+      "caseId": "quiet-threshold"
+    },
+    {
+      "sequence": 21,
+      "fixtureIndex": 10,
+      "bundleSource": "builtin",
+      "caseId": "synthesis-tension"
+    },
+    {
+      "sequence": 22,
+      "fixtureIndex": 10,
+      "bundleSource": "natal-candidate",
+      "caseId": "synthesis-tension"
+    },
+    {
+      "sequence": 23,
+      "fixtureIndex": 11,
+      "bundleSource": "natal-candidate",
+      "caseId": "synthesis-reinforcement"
+    },
+    {
+      "sequence": 24,
+      "fixtureIndex": 11,
+      "bundleSource": "builtin",
+      "caseId": "synthesis-reinforcement"
+    },
+    {
+      "sequence": 25,
+      "fixtureIndex": 12,
+      "bundleSource": "builtin",
+      "caseId": "synthesis-independent"
+    },
+    {
+      "sequence": 26,
+      "fixtureIndex": 12,
+      "bundleSource": "natal-candidate",
+      "caseId": "synthesis-independent"
+    },
+    {
+      "sequence": 27,
+      "fixtureIndex": 13,
+      "bundleSource": "natal-candidate",
+      "caseId": "synthesis-reversed"
+    },
+    {
+      "sequence": 28,
+      "fixtureIndex": 13,
+      "bundleSource": "builtin",
+      "caseId": "synthesis-reversed"
+    },
+    {
+      "sequence": 29,
+      "fixtureIndex": 14,
+      "bundleSource": "builtin",
+      "caseId": "synthesis-suppressed-support"
+    },
+    {
+      "sequence": 30,
+      "fixtureIndex": 14,
+      "bundleSource": "natal-candidate",
+      "caseId": "synthesis-suppressed-support"
+    },
+    {
+      "sequence": 31,
+      "fixtureIndex": 15,
+      "bundleSource": "natal-candidate",
+      "caseId": "synthesis-unmatched"
+    },
+    {
+      "sequence": 32,
+      "fixtureIndex": 15,
+      "bundleSource": "builtin",
+      "caseId": "synthesis-unmatched"
+    },
+    {
+      "sequence": 33,
+      "fixtureIndex": 16,
+      "bundleSource": "builtin",
+      "caseId": "natal-duty-reflex"
+    },
+    {
+      "sequence": 34,
+      "fixtureIndex": 16,
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-duty-reflex"
+    },
+    {
+      "sequence": 35,
+      "fixtureIndex": 17,
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-freedom-reflex"
+    },
+    {
+      "sequence": 36,
+      "fixtureIndex": 17,
+      "bundleSource": "builtin",
+      "caseId": "natal-freedom-reflex"
+    },
+    {
+      "sequence": 37,
+      "fixtureIndex": 18,
+      "bundleSource": "builtin",
+      "caseId": "natal-service-aspect"
+    },
+    {
+      "sequence": 38,
+      "fixtureIndex": 18,
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-service-aspect"
+    },
+    {
+      "sequence": 39,
+      "fixtureIndex": 19,
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-exact-house"
+    },
+    {
+      "sequence": 40,
+      "fixtureIndex": 19,
+      "bundleSource": "builtin",
+      "caseId": "natal-exact-house"
+    },
+    {
+      "sequence": 41,
+      "fixtureIndex": 20,
+      "bundleSource": "builtin",
+      "caseId": "natal-own-target"
+    },
+    {
+      "sequence": 42,
+      "fixtureIndex": 20,
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-own-target"
+    },
+    {
+      "sequence": 43,
+      "fixtureIndex": 21,
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-moon-fallback"
+    },
+    {
+      "sequence": 44,
+      "fixtureIndex": 21,
+      "bundleSource": "builtin",
+      "caseId": "natal-moon-fallback"
+    },
+    {
+      "sequence": 45,
+      "fixtureIndex": 22,
+      "bundleSource": "builtin",
+      "caseId": "natal-sign-boundary"
+    },
+    {
+      "sequence": 46,
+      "fixtureIndex": 22,
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-sign-boundary"
+    },
+    {
+      "sequence": 47,
+      "fixtureIndex": 23,
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-unknown-time"
+    },
+    {
+      "sequence": 48,
+      "fixtureIndex": 23,
+      "bundleSource": "builtin",
+      "caseId": "natal-unknown-time"
+    },
+    {
+      "sequence": 49,
+      "fixtureIndex": 24,
+      "bundleSource": "builtin",
+      "caseId": "natal-mixed-source"
+    },
+    {
+      "sequence": 50,
+      "fixtureIndex": 24,
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-mixed-source"
+    },
+    {
+      "sequence": 51,
+      "fixtureIndex": 25,
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-degraded-positions"
+    },
+    {
+      "sequence": 52,
+      "fixtureIndex": 25,
+      "bundleSource": "builtin",
+      "caseId": "natal-degraded-positions"
+    },
+    {
+      "sequence": 53,
+      "fixtureIndex": 26,
+      "bundleSource": "builtin",
+      "caseId": "natal-legacy-snapshot"
+    },
+    {
+      "sequence": 54,
+      "fixtureIndex": 26,
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-legacy-snapshot"
+    },
+    {
+      "sequence": 55,
+      "fixtureIndex": 27,
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-synthesis-integration"
+    },
+    {
+      "sequence": 56,
+      "fixtureIndex": 27,
+      "bundleSource": "builtin",
+      "caseId": "natal-synthesis-integration"
+    },
+    {
+      "sequence": 57,
+      "fixtureIndex": 28,
+      "bundleSource": "builtin",
+      "caseId": "arc-single-pass"
+    },
+    {
+      "sequence": 58,
+      "fixtureIndex": 28,
+      "bundleSource": "natal-candidate",
+      "caseId": "arc-single-pass"
+    },
+    {
+      "sequence": 59,
+      "fixtureIndex": 29,
+      "bundleSource": "natal-candidate",
+      "caseId": "arc-opening-three"
+    },
+    {
+      "sequence": 60,
+      "fixtureIndex": 29,
+      "bundleSource": "builtin",
+      "caseId": "arc-opening-three"
+    },
+    {
+      "sequence": 61,
+      "fixtureIndex": 30,
+      "bundleSource": "builtin",
+      "caseId": "arc-return-three"
+    },
+    {
+      "sequence": 62,
+      "fixtureIndex": 30,
+      "bundleSource": "natal-candidate",
+      "caseId": "arc-return-three"
+    },
+    {
+      "sequence": 63,
+      "fixtureIndex": 31,
+      "bundleSource": "natal-candidate",
+      "caseId": "arc-closing-three"
+    },
+    {
+      "sequence": 64,
+      "fixtureIndex": 31,
+      "bundleSource": "builtin",
+      "caseId": "arc-closing-three"
+    },
+    {
+      "sequence": 65,
+      "fixtureIndex": 32,
+      "bundleSource": "builtin",
+      "caseId": "arc-return-five"
+    },
+    {
+      "sequence": 66,
+      "fixtureIndex": 32,
+      "bundleSource": "natal-candidate",
+      "caseId": "arc-return-five"
+    },
+    {
+      "sequence": 67,
+      "fixtureIndex": 33,
+      "bundleSource": "natal-candidate",
+      "caseId": "arc-between-passes"
+    },
+    {
+      "sequence": 68,
+      "fixtureIndex": 33,
+      "bundleSource": "builtin",
+      "caseId": "arc-between-passes"
+    },
+    {
+      "sequence": 69,
+      "fixtureIndex": 34,
+      "bundleSource": "builtin",
+      "caseId": "arc-truncated-scan"
+    },
+    {
+      "sequence": 70,
+      "fixtureIndex": 34,
+      "bundleSource": "natal-candidate",
+      "caseId": "arc-truncated-scan"
+    },
+    {
+      "sequence": 71,
+      "fixtureIndex": 35,
+      "bundleSource": "natal-candidate",
+      "caseId": "arc-station-tangent"
+    },
+    {
+      "sequence": 72,
+      "fixtureIndex": 35,
+      "bundleSource": "builtin",
+      "caseId": "arc-station-tangent"
+    },
+    {
+      "sequence": 73,
+      "fixtureIndex": 36,
+      "bundleSource": "builtin",
+      "caseId": "arc-birth-window-disagreement"
+    },
+    {
+      "sequence": 74,
+      "fixtureIndex": 36,
+      "bundleSource": "natal-candidate",
+      "caseId": "arc-birth-window-disagreement"
+    },
+    {
+      "sequence": 75,
+      "fixtureIndex": 37,
+      "bundleSource": "natal-candidate",
+      "caseId": "arc-synthesis-natal-integration"
+    },
+    {
+      "sequence": 76,
+      "fixtureIndex": 37,
+      "bundleSource": "builtin",
+      "caseId": "arc-synthesis-natal-integration"
+    }
+  ],
+  "scheduleSha256": "d91839482a2ccdfc471e2530a53ade1098e8becb6a0313e517bdb54c7b121e0f",
+  "servingDeadlineMs": 60000,
+  "runtimeDeadlineMs": 120000,
+  "runtimePolicyOverride": {
+    "kind": "extended-synthetic-runtime-deadline",
+    "servingDeadlineMs": 60000,
+    "runtimeDeadlineMs": 120000,
+    "servingAvailabilityEstablished": false,
+    "transformedModule": "src/lib/ai/diagnostics.ts",
+    "originalModuleSha256": "e3b8dfcf4002c9f7389ee746bab2f853f9b51ad0a8052c7efa098b12301e1cd0",
+    "transformedModuleSha256": "9c0a3037c38479c4c9871daf3aa7c7ca7f41379937333dc300a4d45cbcb92732",
+    "transformSpecification": {
+      "kind": "exact-source-substitution",
+      "module": "src/lib/ai/diagnostics.ts",
+      "from": "export const DAILY_GATEWAY_TIMEOUT_MS = 60_000;",
+      "to": "export const DAILY_GATEWAY_TIMEOUT_MS = 120_000;",
+      "expectedMatches": 1,
+      "scope": "this runner's Vite SSR module loader only",
+      "servingDeadlineMs": 60000,
+      "runtimeDeadlineMs": 120000
+    },
+    "transformSpecificationSha256": "9bc1fb17efea722fd0621a386ae0156f33fd68bc6d56019ebbe94cde7cc59d38",
+    "nativeProviderFunctionOrPayloadTransformed": false
+  },
+  "executionContext": {
+    "kind": "local-extended-deadline-synthetic-capture",
+    "projectRoot": "/home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011",
+    "runtimePolicyOverride": {
+      "kind": "extended-synthetic-runtime-deadline",
+      "servingDeadlineMs": 60000,
+      "runtimeDeadlineMs": 120000,
+      "servingAvailabilityEstablished": false,
+      "transformedModule": "src/lib/ai/diagnostics.ts",
+      "originalModuleSha256": "e3b8dfcf4002c9f7389ee746bab2f853f9b51ad0a8052c7efa098b12301e1cd0",
+      "transformedModuleSha256": "9c0a3037c38479c4c9871daf3aa7c7ca7f41379937333dc300a4d45cbcb92732",
+      "transformSpecification": {
+        "kind": "exact-source-substitution",
+        "module": "src/lib/ai/diagnostics.ts",
+        "from": "export const DAILY_GATEWAY_TIMEOUT_MS = 60_000;",
+        "to": "export const DAILY_GATEWAY_TIMEOUT_MS = 120_000;",
+        "expectedMatches": 1,
+        "scope": "this runner's Vite SSR module loader only",
+        "servingDeadlineMs": 60000,
+        "runtimeDeadlineMs": 120000
+      },
+      "transformSpecificationSha256": "9bc1fb17efea722fd0621a386ae0156f33fd68bc6d56019ebbe94cde7cc59d38",
+      "nativeProviderFunctionOrPayloadTransformed": false
+    },
+    "servingAvailabilityEstablished": false,
+    "warning": "120-second runtime-only captures do not establish the serving path's 60-second availability.",
+    "processWorkingDirectory": "/home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011",
+    "nodeVersion": "v24.21.0",
+    "platform": "linux",
+    "architecture": "x64",
+    "moduleLoader": "Vite ssrLoadModule",
+    "viteConfigFile": false,
+    "viteEnvFile": false,
+    "middlewareMode": true,
+    "entrypoint": "src/lib/ai/reading-evaluation.server.ts#runSyntheticEvaluationCase",
+    "provider": "gemini-enterprise",
+    "declaredModel": "gemini-enterprise/gemini-3.8-flash",
+    "hostedWorkflowExecuted": false,
+    "adminAuthenticationVerified": false,
+    "productionVerified": false,
+    "appServerStarted": false,
+    "databaseOrReadingCacheAccessed": false,
+    "contentActivated": false,
+    "cost": "unknown; usage observations do not establish monetary cost"
+  },
+  "startedAt": "2026-10-12T02:35:11.083Z"
+}

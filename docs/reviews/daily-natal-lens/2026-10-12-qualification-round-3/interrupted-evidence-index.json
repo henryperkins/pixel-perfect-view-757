@@ -1,0 +1,80 @@
+{
+  "kind": "closed-interrupted-natal-model-pair",
+  "recordedAtUTC": "2026-10-12T03:37:11.491670+00:00",
+  "sourceRevision": "948aa00ed8935a6026904461831844a47e98356c",
+  "sourceUnchangedThroughout": true,
+  "closedAtOperatorRequest": true,
+  "resumable": false,
+  "qualified": false,
+  "blindedReviewPerformed": false,
+  "reviewScoresAssigned": false,
+  "expectedCasesPerBundle": 38,
+  "settledCasesPerBundle": {
+    "builtin": 37,
+    "natal-candidate": 37
+  },
+  "modelTransportAttempts": 72,
+  "retries": 0,
+  "unsettledCase": null,
+  "runtimeDeadlineMs": 120000,
+  "servingDeadlineMs": 60000,
+  "servingAvailabilityEstablished": false,
+  "successfulLosslessCaptures": 69,
+  "timeouts": [
+    {
+      "source": "builtin",
+      "caseId": "jupiter-trine-sun-technical",
+      "durationMs": 120000
+    },
+    {
+      "source": "natal-candidate",
+      "caseId": "natal-unknown-time",
+      "durationMs": 120000
+    },
+    {
+      "source": "natal-candidate",
+      "caseId": "natal-degraded-positions",
+      "durationMs": 120000
+    }
+  ],
+  "unattemptedCasesByBundle": {
+    "builtin": [
+      "arc-synthesis-natal-integration"
+    ],
+    "natal-candidate": [
+      "arc-synthesis-natal-integration"
+    ]
+  },
+  "completeReportInventoriesProduced": false,
+  "partialReportHashes": {
+    "builtin": "6f5c34c08fd2a4cbd4d9b8e247594eaa091707cb2c566c84c0760cb28f3f65f5",
+    "natal-candidate": "75a082fc149dc616b994b358978afa61d224d0af4c14beec9bdfdacfa9a19d60"
+  },
+  "journalFiles": 222,
+  "numberedPartialCheckpoints": 74,
+  "frozenFiles": {
+    "source-manifest.json": {
+      "sha256": "e078ef5bbbc4a93344b38499b3f75012fc3d3271cc57e83f8388bdb19c7692f2",
+      "copiedFrom": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-round-3/model-pair-run-1/source-manifest.json"
+    },
+    "run-plan.json": {
+      "sha256": "e83c37a74f2c9e68e29882ca12a74820aca5fb3d43f83a5aaf55f4d198569682",
+      "copiedFrom": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-round-3/model-pair-run-1/run-plan.json"
+    },
+    "run-finished.json": {
+      "sha256": "420e838af6895e8c04b9bc7a07bbcc6ebfcbc35929c903a574164ce56db5bc74",
+      "copiedFrom": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-round-3/model-pair-run-1/run-finished.json"
+    },
+    "builtin-partial-report.json": {
+      "sha256": "6f5c34c08fd2a4cbd4d9b8e247594eaa091707cb2c566c84c0760cb28f3f65f5",
+      "copiedFrom": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-round-3/model-pair-run-1/builtin-partial-37.json"
+    },
+    "natal-candidate-partial-report.json": {
+      "sha256": "75a082fc149dc616b994b358978afa61d224d0af4c14beec9bdfdacfa9a19d60",
+      "copiedFrom": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-round-3/model-pair-run-1/natal-candidate-partial-37.json"
+    }
+  },
+  "localEvidenceDirectory": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-round-3/model-pair-run-1",
+  "noPublicationActivationPushOrDeployment": true,
+  "warning": "Partial raw evidence and guard acceptance do not establish writing qualification. Do not resume, fill missing cases, relabel reports as complete, or combine later requests into this closed round."
+}

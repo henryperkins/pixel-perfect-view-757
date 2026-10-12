@@ -1,0 +1,50 @@
+{
+  "artifactVersion": "natal-template-capture-receipt-1",
+  "capturedAt": "2026-10-12T02:39:34.984Z",
+  "sourceIdentity": {
+    "sourceRevision": "948aa00ed8935a6026904461831844a47e98356c",
+    "trackedSourceSha256": "a50ca0c80f0998ff2c884ad70c5e9fa6548d7e60f30aabbe29bac31017fad7e0",
+    "trackedSourceFiles": 171,
+    "helperSha256": "ecaed551d98b0822605171d29f673db6551fdc0a2b3c99f305f1d38efe25b67e",
+    "manifestPath": "template-source-manifest.json"
+  },
+  "compared": 114,
+  "preservedNatalPositiveBodies": 9,
+  "changed": [
+    {
+      "bundleSource": "builtin",
+      "caseId": "saturn-square-moon-warm"
+    },
+    {
+      "bundleSource": "natal-candidate",
+      "caseId": "saturn-square-moon-warm"
+    },
+    {
+      "bundleSource": "transit-candidate",
+      "caseId": "saturn-square-moon-warm"
+    }
+  ],
+  "previousTemplates": {
+    "path": "docs/reviews/daily-natal-lens/2026-10-12-qualification-round-2/templates.json",
+    "sha256": "8a28b7c65eb38d8f1e2ca4e3b93f31275b9cfc21fc11b201da7ff5e5a156cc61"
+  },
+  "files": [
+    {
+      "path": "template-source-manifest.json",
+      "sha256": "84282660e25ca4b80e249b2e890ac11c6443d742a8d76c4c7a370e557d2c09b2"
+    },
+    {
+      "path": "templates.json",
+      "sha256": "f2434374eeccae29c27fc02d1827ab8ca8002340d85c12934ce82f56c49e1254"
+    },
+    {
+      "path": "case-contexts.json",
+      "sha256": "52a0e08caccb3015aaee0fd1a7934744253d91fe7256466fda6d0b97443a985e"
+    }
+  ],
+  "fixedContextsPreserved": 38,
+  "modelRequestsAttempted": 0,
+  "blockedFetchCalls": 0,
+  "handwrittenModelResponsesReplayed": 0,
+  "sourceUnchangedThroughoutCapture": true
+}

@@ -1,0 +1,2396 @@
+{
+  "kind": "interrupted-natal-extended-runtime-pair-audit",
+  "protocolVersion": "natal-interrupted-run-audit-1",
+  "checkedAtUTC": "2026-10-12T03:38:53.951416Z",
+  "provenanceIntegrityPassed": true,
+  "qualificationPassed": false,
+  "auditScope": "Read-only actual closed partial run, all immutable journal/checkpoint/source bytes and frozen Git source; no credential files, model/network calls, retry, resume or full-report fabrication.",
+  "run": {
+    "directory": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-round-3/model-pair-run-1",
+    "status": "halted",
+    "haltReason": "operator_stop_after_current_case",
+    "startedAt": "2026-10-12T02:35:11.083Z",
+    "finishedAt": "2026-10-12T03:34:22.858Z",
+    "plannedCases": 76,
+    "completedCases": 74,
+    "plannedModelAttempts": 74,
+    "startedModelCases": 72,
+    "transportAttempts": 72,
+    "retries": 0,
+    "resumeSupported": false,
+    "concurrency": 1,
+    "unsettledCase": null,
+    "completeReports": 0,
+    "completedCasesByBundle": {
+      "builtin": 37,
+      "natal-candidate": 37
+    },
+    "unattempted": [
+      {
+        "sequence": 75,
+        "fixtureIndex": 37,
+        "bundleSource": "natal-candidate",
+        "caseId": "arc-synthesis-natal-integration"
+      },
+      {
+        "sequence": 76,
+        "fixtureIndex": 37,
+        "bundleSource": "builtin",
+        "caseId": "arc-synthesis-natal-integration"
+      }
+    ]
+  },
+  "source": {
+    "sourceRevision": "948aa00ed8935a6026904461831844a47e98356c",
+    "trackedSourceFileCount": 171,
+    "trackedSourceSha256": "a50ca0c80f0998ff2c884ad70c5e9fa6548d7e60f30aabbe29bac31017fad7e0",
+    "runnerSha256": "b0616656b470dc9e482e907a008a6a061f1d7b641d1a62e526e23305480d518b",
+    "allTrackedFilesMatchFrozenGitAndCurrentWorkingTree": true,
+    "sourceUnchangedThroughout": true,
+    "runtimePolicyOverride": {
+      "kind": "extended-synthetic-runtime-deadline",
+      "servingDeadlineMs": 60000,
+      "runtimeDeadlineMs": 120000,
+      "servingAvailabilityEstablished": false,
+      "transformedModule": "src/lib/ai/diagnostics.ts",
+      "originalModuleSha256": "e3b8dfcf4002c9f7389ee746bab2f853f9b51ad0a8052c7efa098b12301e1cd0",
+      "transformedModuleSha256": "9c0a3037c38479c4c9871daf3aa7c7ca7f41379937333dc300a4d45cbcb92732",
+      "transformSpecification": {
+        "kind": "exact-source-substitution",
+        "module": "src/lib/ai/diagnostics.ts",
+        "from": "export const DAILY_GATEWAY_TIMEOUT_MS = 60_000;",
+        "to": "export const DAILY_GATEWAY_TIMEOUT_MS = 120_000;",
+        "expectedMatches": 1,
+        "scope": "this runner's Vite SSR module loader only",
+        "servingDeadlineMs": 60000,
+        "runtimeDeadlineMs": 120000
+      },
+      "transformSpecificationSha256": "9bc1fb17efea722fd0621a386ae0156f33fd68bc6d56019ebbe94cde7cc59d38",
+      "nativeProviderFunctionOrPayloadTransformed": false
+    },
+    "mainRevision": "da4be89fb521b4b06c689b13f44dc42c9d877838",
+    "mainDiagnosticsSha256": "10ccdfe70bcf1b537597fc1457a194cdee29ce2f4ec47c2a06e60355266eed57",
+    "mainServingDeadlineMs": 60000,
+    "providerAdaptersComparedWith": "afb4896ac963a67baf29bcb9687cf7ae25351671",
+    "providerAdapters": [
+      {
+        "function": "lovableContent",
+        "bodySha256": "7846d8e9919b8b0988bc2b85340fe0bc62b1b373f81b4004037699162e98316b",
+        "matchesPreviousSource": true
+      },
+      {
+        "function": "geminiEnterpriseContent",
+        "bodySha256": "5a7903616f93a1f3aafd7237102477f9d2985e905849a8a23daa61dfa8d47e80",
+        "matchesPreviousSource": true
+      }
+    ]
+  },
+  "references": {
+    "source-manifest.json": {
+      "sha256": "e078ef5bbbc4a93344b38499b3f75012fc3d3271cc57e83f8388bdb19c7692f2"
+    },
+    "run-plan.json": {
+      "sha256": "e83c37a74f2c9e68e29882ca12a74820aca5fb3d43f83a5aaf55f4d198569682"
+    },
+    "run-finished.json": {
+      "sha256": "420e838af6895e8c04b9bc7a07bbcc6ebfcbc35929c903a574164ce56db5bc74"
+    },
+    "builtin-partial-37.json": {
+      "sha256": "6f5c34c08fd2a4cbd4d9b8e247594eaa091707cb2c566c84c0760cb28f3f65f5"
+    },
+    "natal-candidate-partial-37.json": {
+      "sha256": "75a082fc149dc616b994b358978afa61d224d0af4c14beec9bdfdacfa9a19d60"
+    }
+  },
+  "bundles": {
+    "builtin": {
+      "completedCases": 37,
+      "expectedCases": 38,
+      "modelAttempts": 36,
+      "outcomes": {
+        "accepted": 35,
+        "unavailable": 1,
+        "skipped": 1
+      },
+      "codes": {
+        "accepted": 35,
+        "timeout": 1,
+        "no_cycle": 1
+      },
+      "rawCandidates": 35,
+      "losslessCandidates": 35,
+      "lastCheckpoint": "builtin-partial-37.json",
+      "lastCheckpointSha256": "6f5c34c08fd2a4cbd4d9b8e247594eaa091707cb2c566c84c0760cb28f3f65f5",
+      "unattemptedCaseIds": [
+        "arc-synthesis-natal-integration"
+      ],
+      "acceptedDurationMs": {
+        "median": 43257,
+        "p95NearestRank": 89130,
+        "max": 105909
+      },
+      "acceptedCapturesOverServingDeadline": 12
+    },
+    "natal-candidate": {
+      "completedCases": 37,
+      "expectedCases": 38,
+      "modelAttempts": 36,
+      "outcomes": {
+        "accepted": 34,
+        "skipped": 1,
+        "unavailable": 2
+      },
+      "codes": {
+        "accepted": 34,
+        "no_cycle": 1,
+        "timeout": 2
+      },
+      "rawCandidates": 34,
+      "losslessCandidates": 34,
+      "lastCheckpoint": "natal-candidate-partial-37.json",
+      "lastCheckpointSha256": "75a082fc149dc616b994b358978afa61d224d0af4c14beec9bdfdacfa9a19d60",
+      "unattemptedCaseIds": [
+        "arc-synthesis-natal-integration"
+      ],
+      "acceptedDurationMs": {
+        "median": 38701.5,
+        "p95NearestRank": 98795,
+        "max": 100635
+      },
+      "acceptedCapturesOverServingDeadline": 9
+    }
+  },
+  "journalIntegrity": {
+    "startMarkers": 74,
+    "resultRecords": 74,
+    "transportRecords": 74,
+    "journalFiles": 222,
+    "partialCheckpoints": 74,
+    "sequenceIsSettledSchedulePrefix": true,
+    "adjacentAlternatingPairs": true,
+    "everyCheckpointMatchesSettledSourcePrefix": true,
+    "allCaseAndCheckpointDeadlineMs": 120000,
+    "noUnsettledCase": true,
+    "noRepeatedTransport": true,
+    "quietControls": 2,
+    "completeReportOrIdentitySidecarsPresent": false
+  },
+  "captureIntegrity": {
+    "losslessRawCaptures": 69,
+    "sanitizedOrTruncatedCaptures": 0,
+    "blankManualReviewCases": 74,
+    "quietCases": 2,
+    "timeoutCases": [
+      {
+        "sequence": 5,
+        "bundleSource": "builtin",
+        "caseId": "jupiter-trine-sun-technical",
+        "durationMs": 120000,
+        "rawCandidateAvailable": false,
+        "usageKnown": false
+      },
+      {
+        "sequence": 47,
+        "bundleSource": "natal-candidate",
+        "caseId": "natal-unknown-time",
+        "durationMs": 120000,
+        "rawCandidateAvailable": false,
+        "usageKnown": false
+      },
+      {
+        "sequence": 51,
+        "bundleSource": "natal-candidate",
+        "caseId": "natal-degraded-positions",
+        "durationMs": 120000,
+        "rawCandidateAvailable": false,
+        "usageKnown": false
+      }
+    ],
+    "plannedNonquietSlotsWithoutRawCapture": 5,
+    "unattemptedNonquietSlots": 2,
+    "completeRawModelPairs": 33,
+    "completedInputPairs": 37,
+    "matchedNatalPositiveInputPairs": 8,
+    "plannedNatalPositivePairs": 9,
+    "observedChangedRequests": 8,
+    "unattemptedNatalRequestDifference": "arc-synthesis-natal-integration; planned ninth N1 pair remains unavailable"
+  },
+  "inputChecks": [
+    {
+      "id": "saturn-square-sun",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": false,
+      "requestChanged": false,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "saturn-square-moon-warm",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": false,
+      "requestChanged": false,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "jupiter-trine-sun-technical",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": false,
+      "requestChanged": false,
+      "bothRawCandidatesAvailable": false
+    },
+    {
+      "id": "mercury-conjunction-clinical",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": false,
+      "requestChanged": false,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "venus-opposition-venus",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": false,
+      "requestChanged": false,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "unknown-birth-time",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": false,
+      "requestChanged": false,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "approximate-birth-time",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": false,
+      "requestChanged": false,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "moon-dst-boundary",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": false,
+      "requestChanged": false,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "multiple-cycles",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": false,
+      "requestChanged": false,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "quiet-threshold",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": false,
+      "requestChanged": false,
+      "bothRawCandidatesAvailable": false
+    },
+    {
+      "id": "synthesis-tension",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": false,
+      "requestChanged": false,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "synthesis-reinforcement",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": false,
+      "requestChanged": false,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "synthesis-independent",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": false,
+      "requestChanged": false,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "synthesis-reversed",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": false,
+      "requestChanged": false,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "synthesis-suppressed-support",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": false,
+      "requestChanged": false,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "synthesis-unmatched",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": false,
+      "requestChanged": false,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "natal-duty-reflex",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": true,
+      "requestChanged": true,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "natal-freedom-reflex",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": true,
+      "requestChanged": true,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "natal-service-aspect",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": true,
+      "requestChanged": true,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "natal-exact-house",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": true,
+      "requestChanged": true,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "natal-own-target",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": true,
+      "requestChanged": true,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "natal-moon-fallback",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": true,
+      "requestChanged": true,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "natal-sign-boundary",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": false,
+      "requestChanged": false,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "natal-unknown-time",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": false,
+      "requestChanged": false,
+      "bothRawCandidatesAvailable": false
+    },
+    {
+      "id": "natal-mixed-source",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": true,
+      "requestChanged": true,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "natal-degraded-positions",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": false,
+      "requestChanged": false,
+      "bothRawCandidatesAvailable": false
+    },
+    {
+      "id": "natal-legacy-snapshot",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": false,
+      "requestChanged": false,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "natal-synthesis-integration",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": true,
+      "requestChanged": true,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "arc-single-pass",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": false,
+      "requestChanged": false,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "arc-opening-three",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": false,
+      "requestChanged": false,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "arc-return-three",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": false,
+      "requestChanged": false,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "arc-closing-three",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": false,
+      "requestChanged": false,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "arc-return-five",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": false,
+      "requestChanged": false,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "arc-between-passes",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": false,
+      "requestChanged": false,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "arc-truncated-scan",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": false,
+      "requestChanged": false,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "arc-station-tangent",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": false,
+      "requestChanged": false,
+      "bothRawCandidatesAvailable": true
+    },
+    {
+      "id": "arc-birth-window-disagreement",
+      "configurationMatches": true,
+      "reliabilityMatches": true,
+      "nonNatalFactsMatch": true,
+      "natalSupplied": false,
+      "requestChanged": false,
+      "bothRawCandidatesAvailable": true
+    }
+  ],
+  "usage": {
+    "observedModelVersions": [
+      "gemini-3.8-flash"
+    ],
+    "observedUsageCases": 69,
+    "unknownUsageCases": 3,
+    "reportedCounterTotals": {
+      "promptTokenCount": 142809,
+      "candidatesTokenCount": 12850,
+      "totalTokenCount": 692455,
+      "thoughtsTokenCount": 536796,
+      "cachedContentTokenCount": 0,
+      "toolUsePromptTokenCount": 0
+    },
+    "counterPresenceCounts": {
+      "promptTokenCount": 69,
+      "candidatesTokenCount": 69,
+      "totalTokenCount": 69,
+      "thoughtsTokenCount": 69,
+      "cachedContentTokenCount": 0,
+      "toolUsePromptTokenCount": 0
+    },
+    "missingFieldsAreNotZeroUsage": true,
+    "cost": "unknown",
+    "failedRequestUsage": "unknown; never backfilled"
+  },
+  "preservation": {
+    "allRunFilesUnchangedDuringAudit": true,
+    "retainedLocalFileCount": 299,
+    "retainedLocalInventorySha256": "8241ec6db4ae5b3ed1e86495c0769d89d7e1b398f30bc25e424d74ba97c6e2f4",
+    "files": [
+      {
+        "path": "builtin-partial-01.json",
+        "sha256": "22e871e63c09bb36e0eea29ced7a73edfb8accf24d8c6c38e72a33fec2f91471",
+        "bytes": 18784,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-02.json",
+        "sha256": "90c0c8f4f60ca46c530283c226254b64977ea62ea61c5ff647ff60f62c8b8c57",
+        "bytes": 36383,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-03.json",
+        "sha256": "955c7d80578a7c79107a96c496900ac69205a8645a2c50d191946c12572b6d43",
+        "bytes": 52922,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-04.json",
+        "sha256": "3ade909d2ac6acc2a8694680beedf75305c4d9a272685f85bbb09e7a7c49f58d",
+        "bytes": 71069,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-05.json",
+        "sha256": "9d2a8e8529e5dfda434656116012c940f8d8b84726995b3b4fe16fd8c16b7647",
+        "bytes": 88314,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-06.json",
+        "sha256": "6dbeaded548bda337e0f9c37fea5c05c14915591eadf51ce605b2d5d871c76a6",
+        "bytes": 106129,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-07.json",
+        "sha256": "56e3395a1ff184e8bdf46b36aa505244441b829b0830aa3b50be445a11bd7484",
+        "bytes": 123845,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-08.json",
+        "sha256": "8e5327ca95367d283eb7b9dd68a75ade131a1bb6e4b079462753c7e2b73d104a",
+        "bytes": 141564,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-09.json",
+        "sha256": "f314d80edfc7b4e20dce37f677520383d3770488e83eab98537d85d3c13f2cdf",
+        "bytes": 163346,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-10.json",
+        "sha256": "42bc6b4f84a644858de22abb484223ae86bc06255ca1b34d53addd97eba4275e",
+        "bytes": 166352,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-11.json",
+        "sha256": "84af2220be6ce931f27068ff4c13ff2e8cec60d6d786fcdc4a471743df048b41",
+        "bytes": 187487,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-12.json",
+        "sha256": "cf7e0556cc8fc9cb4e5df907978ef1e471b80b610a49285d665355be733673d1",
+        "bytes": 208483,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-13.json",
+        "sha256": "9054659b474574ffca8d2bc0e8321cf809ffa6ccc9d4bef887a120b93301c18f",
+        "bytes": 228166,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-14.json",
+        "sha256": "e275ce7ee9f94ecf552f845e3434d1a9d33b4af7f7ba30b2f37da8a8841c761a",
+        "bytes": 249899,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-15.json",
+        "sha256": "92df141754c69e790dc7a0f9c2d67c12ca8a781b5dc1d31fa8fed53e011ca71f",
+        "bytes": 269936,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-16.json",
+        "sha256": "09f6f39b907f1935e67a97827ea64acf69c633e6a54d1ead85dfdd7531cb0e00",
+        "bytes": 289166,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-17.json",
+        "sha256": "90ca5dd1ab05e19604eb491dcb0fca2b0b5224eca256cc29fea5a3a0fa1f752c",
+        "bytes": 309122,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-18.json",
+        "sha256": "e33d0c03443f58901130ea39b91aaa5e1fa1935604d6688fe1d2d4b76fc0c1b0",
+        "bytes": 329168,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-19.json",
+        "sha256": "8a9b05e146145ccb3b3459e56501e813ba27e06b18742a3ffbb2032e42c4e24a",
+        "bytes": 357892,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-20.json",
+        "sha256": "633308d3b06e1ccb39da5b50de07d7391fe2baa51e41f01e3b19ada70d61dede",
+        "bytes": 386026,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-21.json",
+        "sha256": "7986d8dc30a9bc405aa6d41f78ed2299499eeb4b01477a745745d82794077b20",
+        "bytes": 405300,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-22.json",
+        "sha256": "bb578fa6ece92107bff8ea50f41f3e49821241b1271388ee988f05f6d087c758",
+        "bytes": 424420,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-23.json",
+        "sha256": "60d5716674e6e39114d32f096df21878743c498ac2634dfcb98733d48b9cf1a6",
+        "bytes": 443907,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-24.json",
+        "sha256": "88bb904ed892c4571a6c9eb14f00dacc14d3f715d42d35f8c220c69ed31b3dd5",
+        "bytes": 461890,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-25.json",
+        "sha256": "d6a89befebb9ebdbb0f02298af323751d1a303d2dd3e3198ad8794581c337f47",
+        "bytes": 482316,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-26.json",
+        "sha256": "63033390bae509a098750a6f9cfc31c59e8c543dd43427350d5f82f85d346303",
+        "bytes": 499748,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-27.json",
+        "sha256": "1d6e1da2dff7e11b8b577e7d50a9f183e26d2fb3041164da666b2711ba8d52e7",
+        "bytes": 516886,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-28.json",
+        "sha256": "6a325ecccfbc66743040fff38740a03827edf37960cae0d55dc941b7c006363b",
+        "bytes": 540481,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-29.json",
+        "sha256": "71a48ba727bb9dfc07a1ba3c0a719eca51bdda9fd3eec38e1ca14ab54e5d3d6f",
+        "bytes": 557553,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-30.json",
+        "sha256": "61c3a9b6d26b707c2035452ccb987d08a8d7e6f85aaff57f63b90da113dfadad",
+        "bytes": 575267,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-31.json",
+        "sha256": "087bf0668ed4cfd3d7361c68f7b165e919f736e2113497362b42b684f6699cc0",
+        "bytes": 593162,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-32.json",
+        "sha256": "39708cd2ca5ce89ce3f6a5ef136f46204739f4d6a46e64a8f9133078d60459ff",
+        "bytes": 610275,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-33.json",
+        "sha256": "0853ee8dcfb70307a816a300015e919a557881840f7c2562a4b9a4e1fe953271",
+        "bytes": 627538,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-34.json",
+        "sha256": "f6ed5b8fd10993a7b319e766fc0402705cb6d1b5c9223eb151c2606ff9e43c93",
+        "bytes": 644588,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-35.json",
+        "sha256": "64f3f35309e93671a52f103fbb48f64d351e605b0beae2da9087f06eda3314ea",
+        "bytes": 662436,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-36.json",
+        "sha256": "5fbbafc4609949ed28b22a4bcab063ff2dfa20fbbe4844ff242aaca89ebd632f",
+        "bytes": 680270,
+        "mode": 384
+      },
+      {
+        "path": "builtin-partial-37.json",
+        "sha256": "6f5c34c08fd2a4cbd4d9b8e247594eaa091707cb2c566c84c0760cb28f3f65f5",
+        "bytes": 698041,
+        "mode": 384
+      },
+      {
+        "path": "journal/001-builtin-saturn-square-sun-result.json",
+        "sha256": "df3a3f620d008ea9a98da9e629f8f0d55564c9f6a3f7b173da9606ae520498ef",
+        "bytes": 18028,
+        "mode": 384
+      },
+      {
+        "path": "journal/001-builtin-saturn-square-sun-start.json",
+        "sha256": "42a2fe9702b79ebb5481a16991a077b81a9c075b5ea3eb14c1e982ffa36d918f",
+        "bytes": 617,
+        "mode": 384
+      },
+      {
+        "path": "journal/001-builtin-saturn-square-sun-transport.json",
+        "sha256": "73bee285c5a9437c9a1f7a9ad65af27b0abca25221462e8de01f193b55405a35",
+        "bytes": 837,
+        "mode": 384
+      },
+      {
+        "path": "journal/002-natal-candidate-saturn-square-sun-result.json",
+        "sha256": "efa4911f600c64bf455dc018e5ca3d0a8ed52004acf3da4a4d6bab5322a85fa1",
+        "bytes": 18010,
+        "mode": 384
+      },
+      {
+        "path": "journal/002-natal-candidate-saturn-square-sun-start.json",
+        "sha256": "925fa5fba510636bfd7451bfc425e47f921bd892c63d7ac021a047f4b4d6ae96",
+        "bytes": 625,
+        "mode": 384
+      },
+      {
+        "path": "journal/002-natal-candidate-saturn-square-sun-transport.json",
+        "sha256": "dad544cb215b2dd56ea09fe4671fc6ea7c6d6b5ac60cd044e393d728744723be",
+        "bytes": 845,
+        "mode": 384
+      },
+      {
+        "path": "journal/003-natal-candidate-saturn-square-moon-warm-result.json",
+        "sha256": "dd076a16f6cae80da458abf7723f88de6837f7a7b89ea3904a159151ff1735d4",
+        "bytes": 18722,
+        "mode": 384
+      },
+      {
+        "path": "journal/003-natal-candidate-saturn-square-moon-warm-start.json",
+        "sha256": "420f9f4b7da5e2fdb1c6b96b02c853ad012963d608af01c316fcdef99388bda0",
+        "bytes": 631,
+        "mode": 384
+      },
+      {
+        "path": "journal/003-natal-candidate-saturn-square-moon-warm-transport.json",
+        "sha256": "3839ec3008e69c33a77e71a2ac37bb41e38bfba7595bb6a09eaa3daa4d0b9795",
+        "bytes": 849,
+        "mode": 384
+      },
+      {
+        "path": "journal/004-builtin-saturn-square-moon-warm-result.json",
+        "sha256": "bf5f307c861295b86ad544261b453dd2c67d301584ea1dce9bb0f08cf7038a9a",
+        "bytes": 18502,
+        "mode": 384
+      },
+      {
+        "path": "journal/004-builtin-saturn-square-moon-warm-start.json",
+        "sha256": "890a92b10e99676415065a3fcb131f62500d14eaefc30484d07aedf96ec4250a",
+        "bytes": 623,
+        "mode": 384
+      },
+      {
+        "path": "journal/004-builtin-saturn-square-moon-warm-transport.json",
+        "sha256": "5a39852cf258092d4ef8122e01eaccacbb06499d10f7576eb5a7fe008fd84084",
+        "bytes": 843,
+        "mode": 384
+      },
+      {
+        "path": "journal/005-builtin-jupiter-trine-sun-technical-result.json",
+        "sha256": "34980e975d333cf47b26fe166edb429704d236e4af4ff4434168cf7c51e55a52",
+        "bytes": 17475,
+        "mode": 384
+      },
+      {
+        "path": "journal/005-builtin-jupiter-trine-sun-technical-start.json",
+        "sha256": "09a259fe0509d61f78b544325d8836e5fda6d01ecf8878580a63053519731ec1",
+        "bytes": 627,
+        "mode": 384
+      },
+      {
+        "path": "journal/005-builtin-jupiter-trine-sun-technical-transport.json",
+        "sha256": "e3d39c0235503b288de3f4dabfc9328b84fe851dbc8215a6a6437a506700738f",
+        "bytes": 709,
+        "mode": 384
+      },
+      {
+        "path": "journal/006-natal-candidate-jupiter-trine-sun-technical-result.json",
+        "sha256": "0f2b7a902171897fc43effb8bc8f3af98fce984eecdc344c0e10031b990cc67d",
+        "bytes": 19328,
+        "mode": 384
+      },
+      {
+        "path": "journal/006-natal-candidate-jupiter-trine-sun-technical-start.json",
+        "sha256": "51367a2a1463ae6acd40a5044224d4a517587c9db92b78ec078d0230e83fa8a1",
+        "bytes": 635,
+        "mode": 384
+      },
+      {
+        "path": "journal/006-natal-candidate-jupiter-trine-sun-technical-transport.json",
+        "sha256": "73abb8c6fcfb3491e88b2c37adb8ead2c4d53ba48e33fb8995df07242ce02274",
+        "bytes": 854,
+        "mode": 384
+      },
+      {
+        "path": "journal/007-natal-candidate-mercury-conjunction-clinical-result.json",
+        "sha256": "67168e62495ef75045ba9e17e4527f75ae3e30bc9575a3d2ad624245c0d7fed0",
+        "bytes": 18278,
+        "mode": 384
+      },
+      {
+        "path": "journal/007-natal-candidate-mercury-conjunction-clinical-start.json",
+        "sha256": "913509d6cfcb235fe110d79f1a8209d1c6ecf6e88212c7afd753b719cd8b9db8",
+        "bytes": 636,
+        "mode": 384
+      },
+      {
+        "path": "journal/007-natal-candidate-mercury-conjunction-clinical-transport.json",
+        "sha256": "f1bc8bdd7469034036e990f0b839f06e002812a4d1af5fe18f833810d05dfe54",
+        "bytes": 854,
+        "mode": 384
+      },
+      {
+        "path": "journal/008-builtin-mercury-conjunction-clinical-result.json",
+        "sha256": "95575cc6228ff4a7cb380137ad8bdb6d17c115aec8a25ed9181de83c6d94dbcd",
+        "bytes": 19036,
+        "mode": 384
+      },
+      {
+        "path": "journal/008-builtin-mercury-conjunction-clinical-start.json",
+        "sha256": "fde3243c42be17ebe709aef50db7302fd2995eb28603780b0dec334d4a157791",
+        "bytes": 628,
+        "mode": 384
+      },
+      {
+        "path": "journal/008-builtin-mercury-conjunction-clinical-transport.json",
+        "sha256": "d71525b0d25fda2f57d3355a25182eff2abf410207ba11c7366b91cd941743d4",
+        "bytes": 847,
+        "mode": 384
+      },
+      {
+        "path": "journal/009-builtin-venus-opposition-venus-result.json",
+        "sha256": "7f5bf52ff8d15b2158fbb6f842daa5a36cb92708ae5f2cad8dd30c860494f0cb",
+        "bytes": 18153,
+        "mode": 384
+      },
+      {
+        "path": "journal/009-builtin-venus-opposition-venus-start.json",
+        "sha256": "7eb45df21c4593722f77be6f054680e03bb04d24dd632cc9f86b0661e433886d",
+        "bytes": 622,
+        "mode": 384
+      },
+      {
+        "path": "journal/009-builtin-venus-opposition-venus-transport.json",
+        "sha256": "1dc56e10e983ed06a5cc3172ca47e35439840fbc170ba092d54c2ae3e7927d38",
+        "bytes": 842,
+        "mode": 384
+      },
+      {
+        "path": "journal/010-natal-candidate-venus-opposition-venus-result.json",
+        "sha256": "47524b766ec41488f3cbf2f1251f231664b0d39719b12683a28da5b4ab7f90e6",
+        "bytes": 18019,
+        "mode": 384
+      },
+      {
+        "path": "journal/010-natal-candidate-venus-opposition-venus-start.json",
+        "sha256": "34fd5ed5add687fbe21a27a6fe6e068aa845a83cb18e2d0c04d8a94bcc388548",
+        "bytes": 631,
+        "mode": 384
+      },
+      {
+        "path": "journal/010-natal-candidate-venus-opposition-venus-transport.json",
+        "sha256": "882230b23bbc8e4c56b5c0c7ea8b27a3e7894f96b0761973e9e86fbb4f8036f9",
+        "bytes": 851,
+        "mode": 384
+      },
+      {
+        "path": "journal/011-natal-candidate-unknown-birth-time-result.json",
+        "sha256": "747c5ee5410bc5af70c1de90a17ad66518dd3698e029bf9ea5ebf875e971e744",
+        "bytes": 18627,
+        "mode": 384
+      },
+      {
+        "path": "journal/011-natal-candidate-unknown-birth-time-start.json",
+        "sha256": "b4889363cc1059c56d9186e4078c9cf456a8d18a6a1cceee4982db9dcee27bfd",
+        "bytes": 627,
+        "mode": 384
+      },
+      {
+        "path": "journal/011-natal-candidate-unknown-birth-time-transport.json",
+        "sha256": "9f77ffc0507340dad60a40c7890e8a5e894b62236cf1d4ca49d8668203d65f84",
+        "bytes": 846,
+        "mode": 384
+      },
+      {
+        "path": "journal/012-builtin-unknown-birth-time-result.json",
+        "sha256": "be970107ef57ce8bf3881be944c24acb6525fa822f1d6d37f3f6f1bf924b44e3",
+        "bytes": 18699,
+        "mode": 384
+      },
+      {
+        "path": "journal/012-builtin-unknown-birth-time-start.json",
+        "sha256": "b86f5328a3547b1a7734f41b1c68dfa4f00975c0343f44847ca470fb382239f8",
+        "bytes": 619,
+        "mode": 384
+      },
+      {
+        "path": "journal/012-builtin-unknown-birth-time-transport.json",
+        "sha256": "f7ef8e8917d94692e3d2cf18b1d63d03b70026fe98af5cd2cf3960532f0a78e5",
+        "bytes": 837,
+        "mode": 384
+      },
+      {
+        "path": "journal/013-builtin-approximate-birth-time-result.json",
+        "sha256": "8529fcffa865da6b31592bd3ca9d5e3456a398972e956a0dcc2fe72cb65c0293",
+        "bytes": 18615,
+        "mode": 384
+      },
+      {
+        "path": "journal/013-builtin-approximate-birth-time-start.json",
+        "sha256": "1160bccc46649a17834ebe766fdb7d7e6d3db31c494faabee46ef958d9be74f9",
+        "bytes": 623,
+        "mode": 384
+      },
+      {
+        "path": "journal/013-builtin-approximate-birth-time-transport.json",
+        "sha256": "db7c945019132ed200f1a8938d5d3cf9af9a91d4788f37ad6084727303a642a7",
+        "bytes": 841,
+        "mode": 384
+      },
+      {
+        "path": "journal/014-natal-candidate-approximate-birth-time-result.json",
+        "sha256": "5e68387bf06729c4d931751dc4d52ef91fcff9b05d3e7e8689925e2361da2e4f",
+        "bytes": 18593,
+        "mode": 384
+      },
+      {
+        "path": "journal/014-natal-candidate-approximate-birth-time-start.json",
+        "sha256": "aa1002433264e0b9aec55bd0bfb025876b610e4c1c188a3f66df0b9568e7728f",
+        "bytes": 631,
+        "mode": 384
+      },
+      {
+        "path": "journal/014-natal-candidate-approximate-birth-time-transport.json",
+        "sha256": "4dba3e0c29b8a30af1755e33e2fca1bb562c2356f4be7ca2e4a6bbb18a69df94",
+        "bytes": 849,
+        "mode": 384
+      },
+      {
+        "path": "journal/015-natal-candidate-moon-dst-boundary-result.json",
+        "sha256": "34167f066ef47e800d835238cf36c48ae4c385953cedee2a4309cbca0dc39d70",
+        "bytes": 18603,
+        "mode": 384
+      },
+      {
+        "path": "journal/015-natal-candidate-moon-dst-boundary-start.json",
+        "sha256": "33aeca8beb37e29aaf1e09288b52a1c4f3ba7846960f416294edb90d1080c777",
+        "bytes": 626,
+        "mode": 384
+      },
+      {
+        "path": "journal/015-natal-candidate-moon-dst-boundary-transport.json",
+        "sha256": "1849d59e205909a37e41193f07889751373c9fa32965bb9351a98cb099af0533",
+        "bytes": 844,
+        "mode": 384
+      },
+      {
+        "path": "journal/016-builtin-moon-dst-boundary-result.json",
+        "sha256": "223b4eb5faa9007da6d4b5edd565dc4c3006a1b7c1c9be4c31658afdb003eac1",
+        "bytes": 18639,
+        "mode": 384
+      },
+      {
+        "path": "journal/016-builtin-moon-dst-boundary-start.json",
+        "sha256": "651693b08b5384c8038749c0fcffc6aa74de1d43308df49e345666a9dd7798f0",
+        "bytes": 618,
+        "mode": 384
+      },
+      {
+        "path": "journal/016-builtin-moon-dst-boundary-transport.json",
+        "sha256": "05d0789d37666cbde562cb52fcae13d3e941da3c575056b839c67b2b1a2d1084",
+        "bytes": 836,
+        "mode": 384
+      },
+      {
+        "path": "journal/017-builtin-multiple-cycles-result.json",
+        "sha256": "77cdb85b3cd83532f076140731143bab6098443390205b601818c1fc3ba90484",
+        "bytes": 22532,
+        "mode": 384
+      },
+      {
+        "path": "journal/017-builtin-multiple-cycles-start.json",
+        "sha256": "5e64901395a093853ab4a743c72616067429d79aa47ed64b8b4260885bed5729",
+        "bytes": 616,
+        "mode": 384
+      },
+      {
+        "path": "journal/017-builtin-multiple-cycles-transport.json",
+        "sha256": "0b9179593fd07fecf7909ccd1ad8e1fc0570ec31b2d072ff65d86057bb5b3462",
+        "bytes": 835,
+        "mode": 384
+      },
+      {
+        "path": "journal/018-natal-candidate-multiple-cycles-result.json",
+        "sha256": "fcd5d6bf01f3fe48839d68f6d5ff081e1d5b3a97f0b6a9973de6a9275f981543",
+        "bytes": 22688,
+        "mode": 384
+      },
+      {
+        "path": "journal/018-natal-candidate-multiple-cycles-start.json",
+        "sha256": "53716ceb3f1bb947a22226406eb570e8bd984e546dd101fe2db5a0cf581c1f0b",
+        "bytes": 624,
+        "mode": 384
+      },
+      {
+        "path": "journal/018-natal-candidate-multiple-cycles-transport.json",
+        "sha256": "e8a0759ad3444acf541c314c02c5ea8fad7b4387adc50cf31ef9cdf53f007474",
+        "bytes": 842,
+        "mode": 384
+      },
+      {
+        "path": "journal/019-natal-candidate-quiet-threshold-result.json",
+        "sha256": "f1c9fd5eba1cf65befdd49b40b827f78f441014f567898962291576b8bdca81a",
+        "bytes": 4153,
+        "mode": 384
+      },
+      {
+        "path": "journal/019-natal-candidate-quiet-threshold-start.json",
+        "sha256": "5ae1272a1fd1a467837a6b423b9080b6fae99d75b9ceea3e7fc5b4c64fda4238",
+        "bytes": 625,
+        "mode": 384
+      },
+      {
+        "path": "journal/019-natal-candidate-quiet-threshold-transport.json",
+        "sha256": "37632ded26b420aa6495144ace12d2c3ad4d29976332a8c6664a032a54aa2989",
+        "bytes": 507,
+        "mode": 384
+      },
+      {
+        "path": "journal/020-builtin-quiet-threshold-result.json",
+        "sha256": "26ddc20cba70aa691dbe4e16bbcefac1661bd4950e42a3e94b1252c14921adaa",
+        "bytes": 4145,
+        "mode": 384
+      },
+      {
+        "path": "journal/020-builtin-quiet-threshold-start.json",
+        "sha256": "3ec0e3aa0de7b84193f016b6f6cbc829adcddfa13c5367b26e2706cd9877462b",
+        "bytes": 617,
+        "mode": 384
+      },
+      {
+        "path": "journal/020-builtin-quiet-threshold-transport.json",
+        "sha256": "95d341f8fa11ce301bf3c02752c2735dc4ffe9c1f4a08ae754686b764beb9cec",
+        "bytes": 499,
+        "mode": 384
+      },
+      {
+        "path": "journal/021-builtin-synthesis-tension-result.json",
+        "sha256": "97f5de1d244ea2d1ba386df4e1b967e0eb82635bf3badaf24936206bb226eec1",
+        "bytes": 21938,
+        "mode": 384
+      },
+      {
+        "path": "journal/021-builtin-synthesis-tension-start.json",
+        "sha256": "2c6ae79d360b6e143633cfce936cd353aa0cf699747329462d657d27e72ed48a",
+        "bytes": 619,
+        "mode": 384
+      },
+      {
+        "path": "journal/021-builtin-synthesis-tension-transport.json",
+        "sha256": "375d341d16b9454c077b7e8bac81e150c2b69807a2c33d43e1704c33f11fb624",
+        "bytes": 837,
+        "mode": 384
+      },
+      {
+        "path": "journal/022-natal-candidate-synthesis-tension-result.json",
+        "sha256": "135ec13e6c65b28624d18c88673e429670548b46af01281a6a3a5555d03bfdf8",
+        "bytes": 22224,
+        "mode": 384
+      },
+      {
+        "path": "journal/022-natal-candidate-synthesis-tension-start.json",
+        "sha256": "8346e06b70f43d99cdff257a49078b195402f1bc3022d8dff8915d9145c29e06",
+        "bytes": 627,
+        "mode": 384
+      },
+      {
+        "path": "journal/022-natal-candidate-synthesis-tension-transport.json",
+        "sha256": "749ab74fd158ff5ca42919fc9cee161a5fa5d43a17802bdbacaf8b90d18780ee",
+        "bytes": 845,
+        "mode": 384
+      },
+      {
+        "path": "journal/023-natal-candidate-synthesis-reinforcement-result.json",
+        "sha256": "ec6a54dd5f738472b2eb78177dea97ec2269640b904c1c7ba7309744801d497a",
+        "bytes": 21720,
+        "mode": 384
+      },
+      {
+        "path": "journal/023-natal-candidate-synthesis-reinforcement-start.json",
+        "sha256": "3339187ef5ec6c704f0848a94d0379301d6bca0347cee0604df1e39514ab24f5",
+        "bytes": 633,
+        "mode": 384
+      },
+      {
+        "path": "journal/023-natal-candidate-synthesis-reinforcement-transport.json",
+        "sha256": "9b7bc5b027631b96cffde7facfaa10cb90ccef25704a91b65d4aa42efc56b792",
+        "bytes": 851,
+        "mode": 384
+      },
+      {
+        "path": "journal/024-builtin-synthesis-reinforcement-result.json",
+        "sha256": "808e7355ca8eade45f57d89a740ee814e3edecef5e4b9cd5420e560afe43330c",
+        "bytes": 21768,
+        "mode": 384
+      },
+      {
+        "path": "journal/024-builtin-synthesis-reinforcement-start.json",
+        "sha256": "0e577fd31acd9317ee34e6af08a88154db0191fe3961937ebab149f755c2aa6f",
+        "bytes": 625,
+        "mode": 384
+      },
+      {
+        "path": "journal/024-builtin-synthesis-reinforcement-transport.json",
+        "sha256": "6b8e7a8c714e02c5a0d598d83d2ed9e9bfe2ae25a903235917e86b655f7aa485",
+        "bytes": 843,
+        "mode": 384
+      },
+      {
+        "path": "journal/025-builtin-synthesis-independent-result.json",
+        "sha256": "8fe000ca719c01ac3332d9329e0cec86a3fd19a52b465faf54ad5fa398d81b21",
+        "bytes": 20502,
+        "mode": 384
+      },
+      {
+        "path": "journal/025-builtin-synthesis-independent-start.json",
+        "sha256": "0efbf10d8ac6a0965dc0377789eee68d13ac9d5626ed62fa3aea2d51b5e51f12",
+        "bytes": 623,
+        "mode": 384
+      },
+      {
+        "path": "journal/025-builtin-synthesis-independent-transport.json",
+        "sha256": "f0f203d9cd74260d4dbbb2e68dc938ae59cd7c34ee1dc9289c81f1fe17356392",
+        "bytes": 841,
+        "mode": 384
+      },
+      {
+        "path": "journal/026-natal-candidate-synthesis-independent-result.json",
+        "sha256": "7eb9de50c07ba180335a0a3dad6186d37e62581ee2379a477b4f30111f7ae431",
+        "bytes": 20342,
+        "mode": 384
+      },
+      {
+        "path": "journal/026-natal-candidate-synthesis-independent-start.json",
+        "sha256": "0ebef04bc1455b18ac635b2be7b6f36d88820a294ac12b070939d7613c2ca63e",
+        "bytes": 631,
+        "mode": 384
+      },
+      {
+        "path": "journal/026-natal-candidate-synthesis-independent-transport.json",
+        "sha256": "dc9bab6e16b243f8ef5c479b9d23282f25d7d578a02d64419d634e45ceaa9963",
+        "bytes": 849,
+        "mode": 384
+      },
+      {
+        "path": "journal/027-natal-candidate-synthesis-reversed-result.json",
+        "sha256": "33c22f302e31a64a7097b34db76ea91f71de433f5dedd09d4a2764e1fca975d4",
+        "bytes": 22378,
+        "mode": 384
+      },
+      {
+        "path": "journal/027-natal-candidate-synthesis-reversed-start.json",
+        "sha256": "3036f658dd063100ac3d57c161a35e785023f703556c1faab42ea97a47670924",
+        "bytes": 628,
+        "mode": 384
+      },
+      {
+        "path": "journal/027-natal-candidate-synthesis-reversed-transport.json",
+        "sha256": "9c22139950ccc740a40d63470365aa47f5997c517d7b6325b80e35819e942cb1",
+        "bytes": 846,
+        "mode": 384
+      },
+      {
+        "path": "journal/028-builtin-synthesis-reversed-result.json",
+        "sha256": "c32d4e984afda828f3709a8a49e99631a1edef1f13ea0a90bb7a8f684d452f86",
+        "bytes": 22494,
+        "mode": 384
+      },
+      {
+        "path": "journal/028-builtin-synthesis-reversed-start.json",
+        "sha256": "69758813dea27891da6e2b69a58f30971d34365b89f69ca752b9ec1ee683af53",
+        "bytes": 620,
+        "mode": 384
+      },
+      {
+        "path": "journal/028-builtin-synthesis-reversed-transport.json",
+        "sha256": "057748a3172994037af0128e41423099deb4c5ffe287beb3f2aee6150398e221",
+        "bytes": 838,
+        "mode": 384
+      },
+      {
+        "path": "journal/029-builtin-synthesis-suppressed-support-result.json",
+        "sha256": "7d889b13381539cc6b9829ce2c52626d348cbc86285587d80b6e275c8415d5ce",
+        "bytes": 20872,
+        "mode": 384
+      },
+      {
+        "path": "journal/029-builtin-synthesis-suppressed-support-start.json",
+        "sha256": "e3f006d66340403621e454c1ed11f29902d8d3b8cbb47f4a6898b67d6867c191",
+        "bytes": 630,
+        "mode": 384
+      },
+      {
+        "path": "journal/029-builtin-synthesis-suppressed-support-transport.json",
+        "sha256": "7b2e4c52f547cdabb15eb590e1673f61bc9d7948a1a17520dc956237e2c13492",
+        "bytes": 850,
+        "mode": 384
+      },
+      {
+        "path": "journal/030-natal-candidate-synthesis-suppressed-support-result.json",
+        "sha256": "7cbc635324a306169689bc378bacab10fc16bc91f1c9236823ff0678784197b3",
+        "bytes": 20906,
+        "mode": 384
+      },
+      {
+        "path": "journal/030-natal-candidate-synthesis-suppressed-support-start.json",
+        "sha256": "90c01695f76bbaa4e8db54654a8779ea18faec91a2f92f6eec72ed820b58475d",
+        "bytes": 638,
+        "mode": 384
+      },
+      {
+        "path": "journal/030-natal-candidate-synthesis-suppressed-support-transport.json",
+        "sha256": "08e0531897481aee54a86875c5c8c72444d5409e80234c2a4aba5388da321208",
+        "bytes": 856,
+        "mode": 384
+      },
+      {
+        "path": "journal/031-natal-candidate-synthesis-unmatched-result.json",
+        "sha256": "2b7452a7e0a25cffede6873927d620d26155dbb0077fc3af0078aaad9b29ccf9",
+        "bytes": 20217,
+        "mode": 384
+      },
+      {
+        "path": "journal/031-natal-candidate-synthesis-unmatched-start.json",
+        "sha256": "065d8bfd918ef084ff7dbe014fbd27da5c1b3d7014e6dfa70595921f69cd979f",
+        "bytes": 629,
+        "mode": 384
+      },
+      {
+        "path": "journal/031-natal-candidate-synthesis-unmatched-transport.json",
+        "sha256": "f9592bcd1223f2497629c697620cc41ebadc1be5a3cf70c671466180396a583a",
+        "bytes": 848,
+        "mode": 384
+      },
+      {
+        "path": "journal/032-builtin-synthesis-unmatched-result.json",
+        "sha256": "8ffc8c66c9a5c0bd51c131d87e495c7b82a2611f285b3fdc2319d3c8e8b3f748",
+        "bytes": 20073,
+        "mode": 384
+      },
+      {
+        "path": "journal/032-builtin-synthesis-unmatched-start.json",
+        "sha256": "7dacd7727354cf960d07fc0536403feb4f414e7aa28451e0ad77f319ab9290c3",
+        "bytes": 621,
+        "mode": 384
+      },
+      {
+        "path": "journal/032-builtin-synthesis-unmatched-transport.json",
+        "sha256": "5dd22f69986e6eb6efd5064995197b825345d70917c56cc45711858f71830aa9",
+        "bytes": 839,
+        "mode": 384
+      },
+      {
+        "path": "journal/033-builtin-natal-duty-reflex-result.json",
+        "sha256": "7d95cfee8d4cce1201a7c9d7f975b507c4821fdc34b71a039cac0658b601140c",
+        "bytes": 20671,
+        "mode": 384
+      },
+      {
+        "path": "journal/033-builtin-natal-duty-reflex-start.json",
+        "sha256": "421da008adce27de26d71cb6c22d7dfe63c5f3ef1be4f87f3037fa74328849e5",
+        "bytes": 619,
+        "mode": 384
+      },
+      {
+        "path": "journal/033-builtin-natal-duty-reflex-transport.json",
+        "sha256": "efed310d6a6fc56460f228355edc9b45d74d77e3fb3658ea41f6857c7d66837e",
+        "bytes": 837,
+        "mode": 384
+      },
+      {
+        "path": "journal/034-natal-candidate-natal-duty-reflex-result.json",
+        "sha256": "6b12d377c248d38247167a436390fe44713beca69b449401f91ba4a578a9124c",
+        "bytes": 24633,
+        "mode": 384
+      },
+      {
+        "path": "journal/034-natal-candidate-natal-duty-reflex-start.json",
+        "sha256": "71c9dba14f5702a7305d80713520d38d521d90b25a45b4ef297cd1838c8f85c8",
+        "bytes": 627,
+        "mode": 384
+      },
+      {
+        "path": "journal/034-natal-candidate-natal-duty-reflex-transport.json",
+        "sha256": "b9b9fbe1ec436ddbc3683bacd18653f76c69f2d78384334b3d43a4fb8bc73a3b",
+        "bytes": 845,
+        "mode": 384
+      },
+      {
+        "path": "journal/035-natal-candidate-natal-freedom-reflex-result.json",
+        "sha256": "235606521db4a117a822b84c8c0abc1b0a9343a8c6c182b87d725185879b2853",
+        "bytes": 24198,
+        "mode": 384
+      },
+      {
+        "path": "journal/035-natal-candidate-natal-freedom-reflex-start.json",
+        "sha256": "21dc5549f6242892f713af47312f01510565556640a35e77ab41ea90ee791b9e",
+        "bytes": 630,
+        "mode": 384
+      },
+      {
+        "path": "journal/035-natal-candidate-natal-freedom-reflex-transport.json",
+        "sha256": "7f647cfc9a31e7abecc05646ed7a467964284714fc957c1808899345a7e9db34",
+        "bytes": 848,
+        "mode": 384
+      },
+      {
+        "path": "journal/036-builtin-natal-freedom-reflex-result.json",
+        "sha256": "7081b1b49ff3cf000433ab26dfaeb1670a58ee6d57c350626f77e721c1becabf",
+        "bytes": 20737,
+        "mode": 384
+      },
+      {
+        "path": "journal/036-builtin-natal-freedom-reflex-start.json",
+        "sha256": "95965cb791992fe02b6dd9a94105e9aa8fbb26d82c9dfa79a9588560cc80b4e7",
+        "bytes": 622,
+        "mode": 384
+      },
+      {
+        "path": "journal/036-builtin-natal-freedom-reflex-transport.json",
+        "sha256": "d8f2af0549ceb80bec5574ddb1eb6764589d6ce211e07f5f303847f698c9d8cd",
+        "bytes": 840,
+        "mode": 384
+      },
+      {
+        "path": "journal/037-builtin-natal-service-aspect-result.json",
+        "sha256": "f5840a8179c0415ac0321387530f591c925c637ff589e1f310d91f1fb5bda1fc",
+        "bytes": 28611,
+        "mode": 384
+      },
+      {
+        "path": "journal/037-builtin-natal-service-aspect-start.json",
+        "sha256": "c07a23cbade14a2a548bb72793d63f909c23244518ac61385a9d49a35e3d1fe8",
+        "bytes": 622,
+        "mode": 384
+      },
+      {
+        "path": "journal/037-builtin-natal-service-aspect-transport.json",
+        "sha256": "50b012a43b6c4aa9731b8b5030349e99fc4a06f7d109acb702f33812be5863fd",
+        "bytes": 840,
+        "mode": 384
+      },
+      {
+        "path": "journal/038-natal-candidate-natal-service-aspect-result.json",
+        "sha256": "bf70b705c387d1185fdaf4c9c09a66ec0dad577fe54062b260d0192708ef019d",
+        "bytes": 32588,
+        "mode": 384
+      },
+      {
+        "path": "journal/038-natal-candidate-natal-service-aspect-start.json",
+        "sha256": "1d5ac97ea70913d6b6ca14f830fe5b7cf3a8bf8dc2b296773f767196ef475e09",
+        "bytes": 630,
+        "mode": 384
+      },
+      {
+        "path": "journal/038-natal-candidate-natal-service-aspect-transport.json",
+        "sha256": "35fd476f5a2e5c45c1a1eb09c0aea101de7c2b02d0ace3e94fb3ba5cdd0bccad",
+        "bytes": 848,
+        "mode": 384
+      },
+      {
+        "path": "journal/039-natal-candidate-natal-exact-house-result.json",
+        "sha256": "56fc95014e515fd6952fa520032c4dc9065cdd6be064f8679a213e632b402e3e",
+        "bytes": 33122,
+        "mode": 384
+      },
+      {
+        "path": "journal/039-natal-candidate-natal-exact-house-start.json",
+        "sha256": "d1e2ac808e5807214573ed57d84d11d977875c23f1d67f5d763c9817ab1d44d9",
+        "bytes": 627,
+        "mode": 384
+      },
+      {
+        "path": "journal/039-natal-candidate-natal-exact-house-transport.json",
+        "sha256": "01a2edc7aa352b0aa62be4dc4dbea6c65508af0bb3d0f97032c7949f5dab8054",
+        "bytes": 845,
+        "mode": 384
+      },
+      {
+        "path": "journal/040-builtin-natal-exact-house-result.json",
+        "sha256": "67379e6f6465ad4cd082f1ec99f41f0f7af8a5fa4adbba54f82878be36063010",
+        "bytes": 28073,
+        "mode": 384
+      },
+      {
+        "path": "journal/040-builtin-natal-exact-house-start.json",
+        "sha256": "844c1acc43f593d14d061a5937bfc3939aabd062fa7e3482515d818d58765786",
+        "bytes": 619,
+        "mode": 384
+      },
+      {
+        "path": "journal/040-builtin-natal-exact-house-transport.json",
+        "sha256": "ce201be931c8a49972cdb42b58baa8a9576447c0358aa2582cbc6b05dcdacb70",
+        "bytes": 839,
+        "mode": 384
+      },
+      {
+        "path": "journal/041-builtin-natal-own-target-result.json",
+        "sha256": "23dc8432cbf362e78e9f6f8e97960440039c3f6e4f395aeaa4947608cd208a2c",
+        "bytes": 19999,
+        "mode": 384
+      },
+      {
+        "path": "journal/041-builtin-natal-own-target-start.json",
+        "sha256": "3a6a6b1913c36540c68a46bc2d0de421db4a397c07501c5e301a9c6dd8649885",
+        "bytes": 618,
+        "mode": 384
+      },
+      {
+        "path": "journal/041-builtin-natal-own-target-transport.json",
+        "sha256": "e6cb944063cbc76114fd5dfa1b56691d825407e828c770cd33b43a5d89680819",
+        "bytes": 838,
+        "mode": 384
+      },
+      {
+        "path": "journal/042-natal-candidate-natal-own-target-result.json",
+        "sha256": "b57995e858c806bece971933eee3939d23bc27fcdd3c84cceaf3a1e9863e700e",
+        "bytes": 24008,
+        "mode": 384
+      },
+      {
+        "path": "journal/042-natal-candidate-natal-own-target-start.json",
+        "sha256": "bed1e192137933c6cd2c078fb95b70c093037b89ea7349e4911774d3900ada73",
+        "bytes": 626,
+        "mode": 384
+      },
+      {
+        "path": "journal/042-natal-candidate-natal-own-target-transport.json",
+        "sha256": "8eaaa2f001ec68d77f1a353e1acce6b207de507ea417b12119944aab3771f2cd",
+        "bytes": 846,
+        "mode": 384
+      },
+      {
+        "path": "journal/043-natal-candidate-natal-moon-fallback-result.json",
+        "sha256": "d1e01f696f91c2fd1f1bf1e4512a2899818bafaaa8ea7434a2e63db5bbb5a22d",
+        "bytes": 23936,
+        "mode": 384
+      },
+      {
+        "path": "journal/043-natal-candidate-natal-moon-fallback-start.json",
+        "sha256": "8f73ef1fddca3835fb34cf42dc45a4cc5b4fd34797dc6cb36354a636ea8ef843",
+        "bytes": 629,
+        "mode": 384
+      },
+      {
+        "path": "journal/043-natal-candidate-natal-moon-fallback-transport.json",
+        "sha256": "314731b9059583d7266feff76a4dcfc4f2e70f7eca4eab0ff5b7c13a774dea6e",
+        "bytes": 847,
+        "mode": 384
+      },
+      {
+        "path": "journal/044-builtin-natal-moon-fallback-result.json",
+        "sha256": "fcc7207bc3e54e8059b8d18f41c58d87ad16f1139706399e0cb00ce25a0380c3",
+        "bytes": 19849,
+        "mode": 384
+      },
+      {
+        "path": "journal/044-builtin-natal-moon-fallback-start.json",
+        "sha256": "cd5892a857c1a0f0fa8dcb1a6c71488e1bc17258c8b507040ebb0b7c3dc4ae44",
+        "bytes": 621,
+        "mode": 384
+      },
+      {
+        "path": "journal/044-builtin-natal-moon-fallback-transport.json",
+        "sha256": "7fc2a40e6331bbc70d1e262e7dd6da76e492ce60cb13ff337f4cc88e2f6b2abf",
+        "bytes": 839,
+        "mode": 384
+      },
+      {
+        "path": "journal/045-builtin-natal-sign-boundary-result.json",
+        "sha256": "0077dec84816fa430a80eeab304181b30b90edb802b7c0e5ed7f501f07d23fbf",
+        "bytes": 20230,
+        "mode": 384
+      },
+      {
+        "path": "journal/045-builtin-natal-sign-boundary-start.json",
+        "sha256": "bced5b8ac83b7c997adc61a90e548e7bdd16034ac947e6a03999459a54fe1260",
+        "bytes": 621,
+        "mode": 384
+      },
+      {
+        "path": "journal/045-builtin-natal-sign-boundary-transport.json",
+        "sha256": "61926f4542e0790e5303435507396f5e0fbd8134a75bebe93d5df823342909c9",
+        "bytes": 841,
+        "mode": 384
+      },
+      {
+        "path": "journal/046-natal-candidate-natal-sign-boundary-result.json",
+        "sha256": "8bf4289eb68c244438f48c0ee1e337067e0f1119f90e082842223b3c1f88f4a0",
+        "bytes": 19454,
+        "mode": 384
+      },
+      {
+        "path": "journal/046-natal-candidate-natal-sign-boundary-start.json",
+        "sha256": "2b7b3c44eda8951144eeaaa081e7f3f486ddb14473ef41954481596e8ae80794",
+        "bytes": 629,
+        "mode": 384
+      },
+      {
+        "path": "journal/046-natal-candidate-natal-sign-boundary-transport.json",
+        "sha256": "3a8ec8f0eccc375676cbda1fa317b53ca95e046a03857bb186b29ad3d98f1c00",
+        "bytes": 849,
+        "mode": 384
+      },
+      {
+        "path": "journal/047-natal-candidate-natal-unknown-time-result.json",
+        "sha256": "17c73d855f8645939f2b69924e8300a19fcf87e4a38c1fe4929c4dc867fe3269",
+        "bytes": 17990,
+        "mode": 384
+      },
+      {
+        "path": "journal/047-natal-candidate-natal-unknown-time-start.json",
+        "sha256": "b470ae56590e50113d0e023d3fab6f3a5ce5f82149a500c3e764b6df91a623c1",
+        "bytes": 628,
+        "mode": 384
+      },
+      {
+        "path": "journal/047-natal-candidate-natal-unknown-time-transport.json",
+        "sha256": "32e5d096ff39c6250910c5497789362a13fa0fa75d6800f1cafc5636ecabc26c",
+        "bytes": 710,
+        "mode": 384
+      },
+      {
+        "path": "journal/048-builtin-natal-unknown-time-result.json",
+        "sha256": "ebd34f113c063464e27053234e78ece49e04aaaf1cdad48595dcbafa128184a0",
+        "bytes": 18864,
+        "mode": 384
+      },
+      {
+        "path": "journal/048-builtin-natal-unknown-time-start.json",
+        "sha256": "411562da3611c0c5f279d54776cd8b366a7e2d2853ad8decb3d67b308dc3dfc1",
+        "bytes": 620,
+        "mode": 384
+      },
+      {
+        "path": "journal/048-builtin-natal-unknown-time-transport.json",
+        "sha256": "91a9002d43e2145d83586ddc3d5e2f2014157acdff3e2996f6b3cafb6ba4cf5a",
+        "bytes": 838,
+        "mode": 384
+      },
+      {
+        "path": "journal/049-builtin-natal-mixed-source-result.json",
+        "sha256": "3631ede7c723ba5868c45afcbdf7de2e04e4637dd6cd73fc31b2cbec80eec9bc",
+        "bytes": 21101,
+        "mode": 384
+      },
+      {
+        "path": "journal/049-builtin-natal-mixed-source-start.json",
+        "sha256": "96c8158a5f7634f69368be87a1518ad5495bd27cca15e34b2ca4a5d83dc27e8b",
+        "bytes": 620,
+        "mode": 384
+      },
+      {
+        "path": "journal/049-builtin-natal-mixed-source-transport.json",
+        "sha256": "619a23ad1d9405bf301fd8c53cdff85c43d0edaed95400a092eae0f335d4dde2",
+        "bytes": 838,
+        "mode": 384
+      },
+      {
+        "path": "journal/050-natal-candidate-natal-mixed-source-result.json",
+        "sha256": "33ac316b8d8b000c1ca5dc33192c50186a8b83667e283386db3979046e8e25d8",
+        "bytes": 24498,
+        "mode": 384
+      },
+      {
+        "path": "journal/050-natal-candidate-natal-mixed-source-start.json",
+        "sha256": "f0b32c2c76365205386b8a22fb216128720993673f54da75cb485a5849476b6b",
+        "bytes": 628,
+        "mode": 384
+      },
+      {
+        "path": "journal/050-natal-candidate-natal-mixed-source-transport.json",
+        "sha256": "236a75d225da190bb8533bd6621d9f53b95f2297bab4af78b0be8173a21caa9a",
+        "bytes": 846,
+        "mode": 384
+      },
+      {
+        "path": "journal/051-natal-candidate-natal-degraded-positions-result.json",
+        "sha256": "92fcff36744b61910315a665538000b7357d4783cec92b25ee832115cc597b20",
+        "bytes": 17471,
+        "mode": 384
+      },
+      {
+        "path": "journal/051-natal-candidate-natal-degraded-positions-start.json",
+        "sha256": "9016ca8300a6a9fc8e1016f827ebb5bf4352fa8df0653db17c870171f42faab8",
+        "bytes": 634,
+        "mode": 384
+      },
+      {
+        "path": "journal/051-natal-candidate-natal-degraded-positions-transport.json",
+        "sha256": "3166c838078add5733239790bf0fe5094a1fdb3117c7cb893abe3eefb987abbe",
+        "bytes": 716,
+        "mode": 384
+      },
+      {
+        "path": "journal/052-builtin-natal-degraded-positions-result.json",
+        "sha256": "71a46c84955b5860f3f7a57b0abff3376832dc1903bc98d2c1f1f3b0d1d0499e",
+        "bytes": 18335,
+        "mode": 384
+      },
+      {
+        "path": "journal/052-builtin-natal-degraded-positions-start.json",
+        "sha256": "6572f1cee3921b33131651959dba218c2d33eb907dd8e78df1c748b10d9d0635",
+        "bytes": 626,
+        "mode": 384
+      },
+      {
+        "path": "journal/052-builtin-natal-degraded-positions-transport.json",
+        "sha256": "60f977c7caaaed84da6a0030ea4677906bff83dc838a189f13788726fcfc8b01",
+        "bytes": 844,
+        "mode": 384
+      },
+      {
+        "path": "journal/053-builtin-natal-legacy-snapshot-result.json",
+        "sha256": "6822778c2c262f5d9e187a57e9bdc6a2ddc071ae92795db798022a788c552e4e",
+        "bytes": 18031,
+        "mode": 384
+      },
+      {
+        "path": "journal/053-builtin-natal-legacy-snapshot-start.json",
+        "sha256": "3dc34421c9d65cb371f31aabe86fbf618edb43828994b0e2bb66805d6606731e",
+        "bytes": 623,
+        "mode": 384
+      },
+      {
+        "path": "journal/053-builtin-natal-legacy-snapshot-transport.json",
+        "sha256": "57e59db5b571a3b4f20228e5c28dfc806dc724b56a0b23cdfa39d654dc88ef3c",
+        "bytes": 843,
+        "mode": 384
+      },
+      {
+        "path": "journal/054-natal-candidate-natal-legacy-snapshot-result.json",
+        "sha256": "f78cc90cc6dc2121ef61412203c360ed4b0ffacb2cecd88dbbe2574fb9379e2a",
+        "bytes": 18782,
+        "mode": 384
+      },
+      {
+        "path": "journal/054-natal-candidate-natal-legacy-snapshot-start.json",
+        "sha256": "ba5d457dd9bd25292057e393856770f561aaa455c25cdb689e2829d79f1dbb0c",
+        "bytes": 631,
+        "mode": 384
+      },
+      {
+        "path": "journal/054-natal-candidate-natal-legacy-snapshot-transport.json",
+        "sha256": "7772d6c06dcdc04fc30930d2e676305d5fd3cd632587945ef8535921c169ca55",
+        "bytes": 852,
+        "mode": 384
+      },
+      {
+        "path": "journal/055-natal-candidate-natal-synthesis-integration-result.json",
+        "sha256": "ae64fb382d1f872d3fa376587d0a6785fd7faa80542ab016a7eeecb69f8b9305",
+        "bytes": 28033,
+        "mode": 384
+      },
+      {
+        "path": "journal/055-natal-candidate-natal-synthesis-integration-start.json",
+        "sha256": "280b6762f07b7ff21dd6c42d3718356b369c4d9191fe4b020c41990cd53edacb",
+        "bytes": 637,
+        "mode": 384
+      },
+      {
+        "path": "journal/055-natal-candidate-natal-synthesis-integration-transport.json",
+        "sha256": "1f7b63ee6fda3f7c3d5a7f0e887d448450331f92024f58e2dc56c2de356d6626",
+        "bytes": 855,
+        "mode": 384
+      },
+      {
+        "path": "journal/056-builtin-natal-synthesis-integration-result.json",
+        "sha256": "e5dabda0de7f18ea52c8ba071ec4b2a1612cd803091f69f267080578b6040d7b",
+        "bytes": 24188,
+        "mode": 384
+      },
+      {
+        "path": "journal/056-builtin-natal-synthesis-integration-start.json",
+        "sha256": "faf70e7f06ebf7dfbc2812441fbdbb0e9f2bf300b3804162a72a90de063a7cd2",
+        "bytes": 629,
+        "mode": 384
+      },
+      {
+        "path": "journal/056-builtin-natal-synthesis-integration-transport.json",
+        "sha256": "58c52dd5f86f115ad1a4f089d0b8207aa2d23260ae8732e685f093e118b68c11",
+        "bytes": 847,
+        "mode": 384
+      },
+      {
+        "path": "journal/057-builtin-arc-single-pass-result.json",
+        "sha256": "18f360543347a2220b0ef3d7b4984bbd17f48f0868a9e67b936a48a03976b27f",
+        "bytes": 17979,
+        "mode": 384
+      },
+      {
+        "path": "journal/057-builtin-arc-single-pass-start.json",
+        "sha256": "60cd4aafb91e2001ec770707338bf1875bea81c172f4fa3e6c59c349d7e77a8d",
+        "bytes": 617,
+        "mode": 384
+      },
+      {
+        "path": "journal/057-builtin-arc-single-pass-transport.json",
+        "sha256": "b464516bbb7c412709b47d85dd0385a3b22bc6a9c7b7491d373a556f09275f60",
+        "bytes": 835,
+        "mode": 384
+      },
+      {
+        "path": "journal/058-natal-candidate-arc-single-pass-result.json",
+        "sha256": "d8a1c37eb32b19f9cd12aacdc032f2c57213cf4a1e51666e4e3a53c436371057",
+        "bytes": 18733,
+        "mode": 384
+      },
+      {
+        "path": "journal/058-natal-candidate-arc-single-pass-start.json",
+        "sha256": "97f25e19b2aaf45575dd24f56b82ed2769619fe7eb4f48d4044f0129fff902c3",
+        "bytes": 625,
+        "mode": 384
+      },
+      {
+        "path": "journal/058-natal-candidate-arc-single-pass-transport.json",
+        "sha256": "81bfb8175ec5c4e02cda762e5a7e4dd0c59fad7f28e24c7567c3d6ef85017b98",
+        "bytes": 845,
+        "mode": 384
+      },
+      {
+        "path": "journal/059-natal-candidate-arc-opening-three-result.json",
+        "sha256": "6b51db1d66e0c46eeffa04d63b7bc4fcb9435104c616919df24c14a8e332a18d",
+        "bytes": 18729,
+        "mode": 384
+      },
+      {
+        "path": "journal/059-natal-candidate-arc-opening-three-start.json",
+        "sha256": "7c43f38a7cff0c991c49583fc40a811af75dcb4b5deb87f28613538ec3e9256e",
+        "bytes": 627,
+        "mode": 384
+      },
+      {
+        "path": "journal/059-natal-candidate-arc-opening-three-transport.json",
+        "sha256": "27010cd9f91d130903f58e2c95f67bd534f9199a9aa6cdfb2a1501f4caee1957",
+        "bytes": 845,
+        "mode": 384
+      },
+      {
+        "path": "journal/060-builtin-arc-opening-three-result.json",
+        "sha256": "7c8ce6fe8e16fabdce8eab8605e9eb200a1710e711b6f0baf4b473130c54e2b0",
+        "bytes": 18589,
+        "mode": 384
+      },
+      {
+        "path": "journal/060-builtin-arc-opening-three-start.json",
+        "sha256": "cd0fed91df5dc6d460accfafc20193dd3c71491a06d6358343a1d24f7364a790",
+        "bytes": 619,
+        "mode": 384
+      },
+      {
+        "path": "journal/060-builtin-arc-opening-three-transport.json",
+        "sha256": "e035f4c3b537dc1b1ae0846b36f77dbfed4ef68925df93234b6dc0d81c59d975",
+        "bytes": 839,
+        "mode": 384
+      },
+      {
+        "path": "journal/061-builtin-arc-return-three-result.json",
+        "sha256": "9024e8af9d391806102b805390f28e912fbcd98a88053439aca589ff5cc16610",
+        "bytes": 18770,
+        "mode": 384
+      },
+      {
+        "path": "journal/061-builtin-arc-return-three-start.json",
+        "sha256": "dd15bcec6dc5b89776d353479d1abf0790cb2eeccf25a2ead494ea5ade09bb98",
+        "bytes": 618,
+        "mode": 384
+      },
+      {
+        "path": "journal/061-builtin-arc-return-three-transport.json",
+        "sha256": "e239a5c41c1e90a7186f5b1c49c9b867e9010e260e607db173a01c2a8cf569a9",
+        "bytes": 839,
+        "mode": 384
+      },
+      {
+        "path": "journal/062-natal-candidate-arc-return-three-result.json",
+        "sha256": "2c2af0ecd0661791103013e33d195364b7946c147267e051f7e655f278cdaf8c",
+        "bytes": 17945,
+        "mode": 384
+      },
+      {
+        "path": "journal/062-natal-candidate-arc-return-three-start.json",
+        "sha256": "baff324dfe923e568c125e7b1b2e9970c23bdeae32d9a7ffdff23065fa31a339",
+        "bytes": 626,
+        "mode": 384
+      },
+      {
+        "path": "journal/062-natal-candidate-arc-return-three-transport.json",
+        "sha256": "e269984572a206df133f8169dcdb14144209ff6e6130e51b7dde8bde8280bfdc",
+        "bytes": 846,
+        "mode": 384
+      },
+      {
+        "path": "journal/063-natal-candidate-arc-closing-three-result.json",
+        "sha256": "71422a4ea57c90b10e1814ed27892bbec2381a52c1f102c6891a2f81fc5fe3e2",
+        "bytes": 18777,
+        "mode": 384
+      },
+      {
+        "path": "journal/063-natal-candidate-arc-closing-three-start.json",
+        "sha256": "2b9254518e6178391b8205e735585048270f1c4de1b18cfe7de2124ec0685e70",
+        "bytes": 627,
+        "mode": 384
+      },
+      {
+        "path": "journal/063-natal-candidate-arc-closing-three-transport.json",
+        "sha256": "64794bd32481f448154368822bc23b2e88d50723f07c282e60e315e36ad45d67",
+        "bytes": 847,
+        "mode": 384
+      },
+      {
+        "path": "journal/064-builtin-arc-closing-three-result.json",
+        "sha256": "fad9452c1098bbd21ceec70f89915abfbcfb9c1b1c1bc1105e558caa34f19292",
+        "bytes": 18021,
+        "mode": 384
+      },
+      {
+        "path": "journal/064-builtin-arc-closing-three-start.json",
+        "sha256": "21ff5993325a6ab1c4aa09e0c7c6c8280151c1da6d21d1d10f7bd7372f37d3a6",
+        "bytes": 619,
+        "mode": 384
+      },
+      {
+        "path": "journal/064-builtin-arc-closing-three-transport.json",
+        "sha256": "2824fbc0b8c70cfd63b4e27829f876df06cf16dd682b210629f6adabffa1e390",
+        "bytes": 837,
+        "mode": 384
+      },
+      {
+        "path": "journal/065-builtin-arc-return-five-result.json",
+        "sha256": "ca95cc1e83d2ed2f4b8e52819f7d88a8ddbe1640b2e5c98ad73d95335ef90d47",
+        "bytes": 18176,
+        "mode": 384
+      },
+      {
+        "path": "journal/065-builtin-arc-return-five-start.json",
+        "sha256": "c8c055a2e5d60709d4507600cc5dbd76cf7f5fd39a0da56dc128d875199e22fd",
+        "bytes": 617,
+        "mode": 384
+      },
+      {
+        "path": "journal/065-builtin-arc-return-five-transport.json",
+        "sha256": "1918f22a06983a7fbd737478f0fb4c8f0c45b6a374be2959843f8dbb5aabc9ef",
+        "bytes": 837,
+        "mode": 384
+      },
+      {
+        "path": "journal/066-natal-candidate-arc-return-five-result.json",
+        "sha256": "077b7bdb49bc606db4a6abfcd7ab82a921666bcff351047c65d2ac1421e75dc9",
+        "bytes": 18684,
+        "mode": 384
+      },
+      {
+        "path": "journal/066-natal-candidate-arc-return-five-start.json",
+        "sha256": "f5cca4d21d0d7dc964bd17f9b1a86da89c6bf6d91a6cfeda7667b9fd1cd672c2",
+        "bytes": 625,
+        "mode": 384
+      },
+      {
+        "path": "journal/066-natal-candidate-arc-return-five-transport.json",
+        "sha256": "dabc65b40d7dadd2222bd896d5a178f1d1a02ecf64492823fe8d292f0a8d2ceb",
+        "bytes": 843,
+        "mode": 384
+      },
+      {
+        "path": "journal/067-natal-candidate-arc-between-passes-result.json",
+        "sha256": "2208a745ac865155adc66b8aa4c1c7557f67bef61d4fa6c737084c2dea8e3461",
+        "bytes": 17946,
+        "mode": 384
+      },
+      {
+        "path": "journal/067-natal-candidate-arc-between-passes-start.json",
+        "sha256": "03bfef603f023de8e2f1cd98de2af2052362d590b6b13dcfb000dc97534cc710",
+        "bytes": 628,
+        "mode": 384
+      },
+      {
+        "path": "journal/067-natal-candidate-arc-between-passes-transport.json",
+        "sha256": "d62fc7eb4aacbdfc58a6e379af0b74418b2405732b827b13580ab801955331ee",
+        "bytes": 846,
+        "mode": 384
+      },
+      {
+        "path": "journal/068-builtin-arc-between-passes-result.json",
+        "sha256": "5af857664e4e7713d814bb86ed5148097aa0a7de54bb504a4fcf9866235b010f",
+        "bytes": 17946,
+        "mode": 384
+      },
+      {
+        "path": "journal/068-builtin-arc-between-passes-start.json",
+        "sha256": "eea3cfe3b17bbb20491ba186794ad1855880d7f5a97dc1f7f1a0a9957386ba59",
+        "bytes": 620,
+        "mode": 384
+      },
+      {
+        "path": "journal/068-builtin-arc-between-passes-transport.json",
+        "sha256": "71bd0ef03624d9aef12a51aa1cc6a382b3077a077b969b824774f7616a67d531",
+        "bytes": 840,
+        "mode": 384
+      },
+      {
+        "path": "journal/069-builtin-arc-truncated-scan-result.json",
+        "sha256": "888c8a19228868b13d82213e1fd6fc513b3169c88db92a8fbcf366b591ff34d3",
+        "bytes": 18723,
+        "mode": 384
+      },
+      {
+        "path": "journal/069-builtin-arc-truncated-scan-start.json",
+        "sha256": "e47c3636f6dface44aed36985b983e56fe2f3733b5a7778931bc650488132037",
+        "bytes": 620,
+        "mode": 384
+      },
+      {
+        "path": "journal/069-builtin-arc-truncated-scan-transport.json",
+        "sha256": "917b1962f27a1c3ab7d8fbd7505bf78bd52e52186ef4552a9ffb73281e4493a9",
+        "bytes": 838,
+        "mode": 384
+      },
+      {
+        "path": "journal/070-natal-candidate-arc-truncated-scan-result.json",
+        "sha256": "a9b9285ca89c9a53eb410df432b6cd336e91ee45c88c09819281aea82185db08",
+        "bytes": 18177,
+        "mode": 384
+      },
+      {
+        "path": "journal/070-natal-candidate-arc-truncated-scan-start.json",
+        "sha256": "45f7b0b6339541db319ebb08e0aad3f6ca6f5ff706e594cbf9b5a32929b7e760",
+        "bytes": 628,
+        "mode": 384
+      },
+      {
+        "path": "journal/070-natal-candidate-arc-truncated-scan-transport.json",
+        "sha256": "30726e2622f13de3bd2fc5e1b403eb0339da3442f017573be2154148b848ffb9",
+        "bytes": 848,
+        "mode": 384
+      },
+      {
+        "path": "journal/071-natal-candidate-arc-station-tangent-result.json",
+        "sha256": "5365111f2794d03e747ed5a892f83f3d493ed0ebfde710d449a8c4bdf672f3e5",
+        "bytes": 17939,
+        "mode": 384
+      },
+      {
+        "path": "journal/071-natal-candidate-arc-station-tangent-start.json",
+        "sha256": "e25262232f53c4f61c54648a3cb07d2b346abf15d01aa302890bb8c161f37313",
+        "bytes": 629,
+        "mode": 384
+      },
+      {
+        "path": "journal/071-natal-candidate-arc-station-tangent-transport.json",
+        "sha256": "29683b731a683ff22b9bd60072b037eab5a84a0dc91d0b0b40ab2414b7b24eaf",
+        "bytes": 849,
+        "mode": 384
+      },
+      {
+        "path": "journal/072-builtin-arc-station-tangent-result.json",
+        "sha256": "14d78e112ae69bd311b806d66892c710dfc5eba0d6718b544d33558ebec88453",
+        "bytes": 18709,
+        "mode": 384
+      },
+      {
+        "path": "journal/072-builtin-arc-station-tangent-start.json",
+        "sha256": "73aed2bd758a750ec3509b17a29542a449caa688d1881962bf061ccb625ea998",
+        "bytes": 621,
+        "mode": 384
+      },
+      {
+        "path": "journal/072-builtin-arc-station-tangent-transport.json",
+        "sha256": "f325e9b3c35b52553ffcfbdca1379d24234a1719e912597c4e968b53a2ef47d6",
+        "bytes": 841,
+        "mode": 384
+      },
+      {
+        "path": "journal/073-builtin-arc-birth-window-disagreement-result.json",
+        "sha256": "7f9e8f36328a307dbe5aa2bf668e51849efec4bdedc97a4f6fc95567a7215f7b",
+        "bytes": 18646,
+        "mode": 384
+      },
+      {
+        "path": "journal/073-builtin-arc-birth-window-disagreement-start.json",
+        "sha256": "7f3b38c1740d1fa0c0fbec66b883c5138bd773ae0575efe08b3d3493e327cc65",
+        "bytes": 631,
+        "mode": 384
+      },
+      {
+        "path": "journal/073-builtin-arc-birth-window-disagreement-transport.json",
+        "sha256": "4422639edc569cd42b89b8b3f94217781440ae3f4a76f85cb8f1d516b6902857",
+        "bytes": 849,
+        "mode": 384
+      },
+      {
+        "path": "journal/074-natal-candidate-arc-birth-window-disagreement-result.json",
+        "sha256": "9abb90cc5f693ad85253f74fdf54596a68063da370d5999fcef5584ebd4a3979",
+        "bytes": 18742,
+        "mode": 384
+      },
+      {
+        "path": "journal/074-natal-candidate-arc-birth-window-disagreement-start.json",
+        "sha256": "4070501b15c84873d4e25482f775f0626225d703bb55800a112774955e1f0e34",
+        "bytes": 639,
+        "mode": 384
+      },
+      {
+        "path": "journal/074-natal-candidate-arc-birth-window-disagreement-transport.json",
+        "sha256": "dbc386c132630ae014198bdefd6d5cf96ec09bc2613b12588db966b61240075e",
+        "bytes": 859,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-01.json",
+        "sha256": "5b659793de66e35e0e6cbba0896466276b7f94a5adcfa92964336ec7a95e9e9e",
+        "bytes": 18766,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-02.json",
+        "sha256": "7354494bb0b93a93b665568c84ebd60284dc988bfddf2fa6461e31a2d93ef232",
+        "bytes": 36581,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-03.json",
+        "sha256": "c5e06767b429137dca82dea539311f18f6eb0945ff7a9e21d29ce4223c2160a4",
+        "bytes": 55030,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-04.json",
+        "sha256": "e0154bc0005d989ec4eaa3c607a5af9889a7f5058394d744115bef96b35d1e80",
+        "bytes": 72393,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-05.json",
+        "sha256": "19046201ab665dc6fd279a5ecc07ea33c316c4a9ee335c97dfb76e6fce124f5a",
+        "bytes": 89497,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-06.json",
+        "sha256": "129a8011b2e68878a6c9c7ce4a97b1823af1ec2771f2580e6934bbb071d6cf54",
+        "bytes": 107217,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-07.json",
+        "sha256": "b4d9dabafb561d01ed919a0ed5bb30b85d9c4618a18c28e6c4a58c39f9265f9f",
+        "bytes": 124903,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-08.json",
+        "sha256": "1dcee20ec39a2dbbde826d9be94582ce919ffaba16087e2bae3e26ad1fc7179d",
+        "bytes": 142591,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-09.json",
+        "sha256": "4ea78c0cb2b7c4200cf36b275b6f8baae04cbf6b3469f9ba631b44a6eb52b670",
+        "bytes": 164508,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-10.json",
+        "sha256": "2a76fc29501e0f58b0dfd42ddd0e92179abfa5cbea0dff56b41014179ed037b9",
+        "bytes": 167514,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-11.json",
+        "sha256": "52c1ca7aa068f0c0d0075df60cb9b621a93fc23aa19860379d0991997ce3e0be",
+        "bytes": 188944,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-12.json",
+        "sha256": "113013ac08d4d5e45e97e83422c10e4b4ae11d5abfd81f0eb98e4ffa88186411",
+        "bytes": 209867,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-13.json",
+        "sha256": "ab5fc9d50e253c173b3eed78abac539a487d4c669ada88a41e3dc67562890943",
+        "bytes": 229358,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-14.json",
+        "sha256": "963b33be4576502e30a93baa293737e89ff979a98d3ec51e20eb986c8936483b",
+        "bytes": 250967,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-15.json",
+        "sha256": "ef5e6a41610e333f0d07e0577c059a8ecc2f1b5c01ee9879c158a4ed04786a0d",
+        "bytes": 271030,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-16.json",
+        "sha256": "ce5ebe608ad5a55cfdcd5cf877fc459c99340338823dbad34660985c135841c4",
+        "bytes": 290396,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-17.json",
+        "sha256": "6fe377d7986fa0f9ebc978b43b92e5455528b341f4e4c8b18b87282ead483b0f",
+        "bytes": 314428,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-18.json",
+        "sha256": "b390803eedcfc9193c241cdb9893d6c72fa9e9ec10f26d7d3768da0058350ff3",
+        "bytes": 338021,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-19.json",
+        "sha256": "59b1d3afb3a51a128f4d45817a81120a83572569283c39a1986469a45b50fbaf",
+        "bytes": 370868,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-20.json",
+        "sha256": "b1de255a4d93fa8b4ee47cbb4da639f7cef03346fa6b3b0cf82c17db3e88ca00",
+        "bytes": 404297,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-21.json",
+        "sha256": "0d5cb5887aa6d8ddf2e055f5623e01dbe67cb15b8f2460f11143f7ce6b1106ad",
+        "bytes": 427696,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-22.json",
+        "sha256": "f031bce5d5052c299bf3b9c4c9b5cb2099d6fa5dbbc7b622eeff959b7f7acb41",
+        "bytes": 450995,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-23.json",
+        "sha256": "83263af6c21847fead7bb304af905fdf7d21727238431ebc4d4f9b9be7422cc6",
+        "bytes": 469666,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-24.json",
+        "sha256": "031487e6b7be932db575fa6a2a38146bb67021b39480d3da7c2e0997127a8646",
+        "bytes": 486738,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-25.json",
+        "sha256": "8c6b78494b90cb2a2c489f181fa8959f52c90f6c1e6607d620cb1a7b0f6045d0",
+        "bytes": 510631,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-26.json",
+        "sha256": "f504c8c7dc06ad9b9d93fb9b6b609e1411aa1f99ed2fd7de15a99e931c2406ce",
+        "bytes": 527125,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-27.json",
+        "sha256": "04a101f4c1eb42676c5b1bef342d4404fca696a2ba5a897cc48cb047cacfdabf",
+        "bytes": 545038,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-28.json",
+        "sha256": "3e3a3145d1fd762c4bc835ef98ffd57e469f0aee796e18971457d646e7b7a3b8",
+        "bytes": 572580,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-29.json",
+        "sha256": "48e8c64e07d6f9c4fcdd5559a99f1db503fbc93e79ce55795bed999a3fc6a14c",
+        "bytes": 590430,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-30.json",
+        "sha256": "97381ac3c2ec8107f383697282e5cdac5392824fb78b49b73400d9d8f23a0f3d",
+        "bytes": 608276,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-31.json",
+        "sha256": "0ca0e597cc3130299dde6f2a53995124dbc36e0efa701850c26e97ecf11a4b59",
+        "bytes": 625306,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-32.json",
+        "sha256": "b2fa1cba9a38cc3701a3c1c90bb172e51bb0b4f7a7b6ffeab247aae8cd3aa553",
+        "bytes": 643200,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-33.json",
+        "sha256": "005c4ffce3418f744927548c394a84abeede71eea370a344e21e578d02d0d5c3",
+        "bytes": 660989,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-34.json",
+        "sha256": "eb603ffc423a09af85dbbe3a3f8436b1e1dc0038889a6ef5c4f79ddecdf7de27",
+        "bytes": 678032,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-35.json",
+        "sha256": "13750524c5ed53125ccdc9706afc937964faf9c90205a27cc42f000acc2a7b93",
+        "bytes": 695298,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-36.json",
+        "sha256": "8733bf01996a6d18c92b5a9ff783f5055832c488e73958fd1e6af8ae936586e5",
+        "bytes": 712322,
+        "mode": 384
+      },
+      {
+        "path": "natal-candidate-partial-37.json",
+        "sha256": "75a082fc149dc616b994b358978afa61d224d0af4c14beec9bdfdacfa9a19d60",
+        "bytes": 730181,
+        "mode": 384
+      },
+      {
+        "path": "run-finished.json",
+        "sha256": "420e838af6895e8c04b9bc7a07bbcc6ebfcbc35929c903a574164ce56db5bc74",
+        "bytes": 3900,
+        "mode": 384
+      },
+      {
+        "path": "run-plan.json",
+        "sha256": "e83c37a74f2c9e68e29882ca12a74820aca5fb3d43f83a5aaf55f4d198569682",
+        "bytes": 14538,
+        "mode": 384
+      },
+      {
+        "path": "source-manifest.json",
+        "sha256": "e078ef5bbbc4a93344b38499b3f75012fc3d3271cc57e83f8388bdb19c7692f2",
+        "bytes": 26329,
+        "mode": 384
+      }
+    ]
+  },
+  "reviewState": {
+    "freshBlindedReviewsPerformed": false,
+    "scoresAssigned": false,
+    "completeRoundVerifierEligible": false,
+    "completeRoundPreparationEligible": false,
+    "partialFlagsChanged": false,
+    "fullReportManufactured": false
+  },
+  "limitations": [
+    "The run stopped at the user-requested current-case boundary and is permanently incomplete. The runner has no resume facility; do not retry or backfill this round.",
+    "Complete-round verification and blinded preparation require the complete fixed inventory and reject these partial checkpoints by design. A later review of available samples must be a separately labeled partial collection with all missing cases and timeouts preserved.",
+    "Raw validator acceptance is not semantic writing qualification. The retained captures have no fresh blinded grades.",
+    "120-second runtime-only captures do not establish 60-second serving availability; successful captures beyond 60 seconds remain a serving-availability gap.",
+    "Hosted Workflow/admin authentication, member Lovable gateway, human review, native-source chart reliability and cost remain unverified.",
+    "Both content candidates remain inactive; this partial evidence does not qualify either candidate."
+  ]
+}

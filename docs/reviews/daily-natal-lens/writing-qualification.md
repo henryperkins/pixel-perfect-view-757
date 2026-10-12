@@ -1,5 +1,15 @@
 # Natal writing qualification — fresh round 2 fails
 
+**Current stopping point (2026-10-12):** round-3 remediation is committed as
+`948aa00`; its actual-model run was stopped at the operator's request after
+37/38 cases per bundle. It preserved 69 raw drafts from 72 transports, three
+timeouts and two unattempted final-pair cases, with no retries or unsettled
+request. No round-3 blinded review or scores were produced. That partial run
+cannot establish qualification. See the
+[round-3 evidence](2026-10-12-qualification-round-3/README.md) and
+[handoff prompt](2026-10-12-qualification-round-3/HANDOFF.md). Both candidates remain
+inactive. The completed round-2 judgment below remains the latest writing result.
+
 The 2026-10-12 actual-model and blinded AI round **fails writing qualification**.
 For the nine natal-positive cases, **6/9 candidate model outputs pass, 9/9
 candidate templates pass, and 6/9 cases fully pass**. Freedom has an unresolved
