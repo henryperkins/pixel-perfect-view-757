@@ -293,7 +293,7 @@ export async function purgeExpiredContext(
       },
       {
         name: "mixed_bodies",
-        sql: `UPDATE daily_readings AS d SET body_ct='',headline='Saved reading unavailable',prompt=NULL,language_meta='{}',language_mode=NULL,language_model=NULL,local_context_ct=NULL,local_context_sources='[]',local_context_expires_at=NULL,retention_state='expired' WHERE d.user_id=? AND ${mixedDue} AND COALESCE(d.retention_state,'available')<>'expired'`,
+        sql: `UPDATE daily_readings AS d SET body_ct='',headline='Saved reading unavailable',prompt=NULL,language_meta='{}',language_model=NULL,local_context_ct=NULL,local_context_sources='[]',local_context_expires_at=NULL,retention_state='expired' WHERE d.user_id=? AND ${mixedDue} AND COALESCE(d.retention_state,'available')<>'expired'`,
         params: mixedParams,
       },
     ];

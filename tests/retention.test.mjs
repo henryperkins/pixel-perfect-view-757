@@ -211,6 +211,49 @@ test("legacy encrypted device clocks expire without regeneration even with no so
   assert.equal(h.gatewayRequests.length, 0);
 });
 
+test("expiry preserves the production non-null language mode while removing private evidence", async () => {
+  // The migrated production column is NOT NULL; the former bootstrap fixture was nullable.
+  h.sqlite.exec(
+    "CREATE TRIGGER production_mode_constraint BEFORE UPDATE ON daily_readings WHEN NEW.language_mode IS NULL BEGIN SELECT RAISE(ABORT,'NOT NULL constraint failed: daily_readings.language_mode'); END",
+  );
+  try {
+    h.sqlite
+      .prepare(
+        "INSERT INTO daily_readings(id,user_id,reading_date,headline,body_ct,idempotency_key,language_mode,language_model) VALUES(?,?,?,?,?,?,?,?)",
+      )
+      .run(
+        "production-mode",
+        h.userA,
+        dayAgo(181),
+        "Legacy",
+        "private-ciphertext",
+        "production-mode",
+        "model",
+        "historical-model",
+      );
+    h.sqlite
+      .prepare(
+        "INSERT INTO reading_sources(id,user_id,reading_id,lane,source_id,label) VALUES(?,?,?,?,?,?)",
+      )
+      .run("production-mode-source", h.userA, "production-mode", "context", "WEL-01", "Sleep");
+    const result = await api.purgeExpiredContext({ now, cursor: null, limit: 100 }, h.records());
+    const row = h.sqlite.prepare("SELECT * FROM daily_readings WHERE id='production-mode'").get();
+    assert.equal(result.counts.mixed_bodies, 1);
+    assert.equal(row.retention_state, "expired");
+    assert.equal(row.body_ct, "");
+    assert.equal(row.language_mode, "model");
+    assert.equal(row.language_model, null);
+    assert.equal(
+      h.sqlite
+        .prepare("SELECT COUNT(*) n FROM reading_sources WHERE reading_id='production-mode'")
+        .get().n,
+      0,
+    );
+  } finally {
+    h.sqlite.exec("DROP TRIGGER production_mode_constraint");
+  }
+});
+
 test("an inseparable legacy wellness body is removed at expiry and stays visibly unavailable", async () => {
   assert.equal(typeof api.purgeExpiredContext, "function");
   const { dek } = await h.seedChart(h.records());
