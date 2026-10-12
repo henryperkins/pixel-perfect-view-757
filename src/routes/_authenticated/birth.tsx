@@ -225,8 +225,10 @@ function BirthPage() {
                   <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                     This is your declared accuracy, not a verified birth time. Saving or
                     recalculating checks eligible natal origins at the recorded time and both
-                    uncertainty boundaries. Unknown time omits daily natal lenses; if the service or
-                    a sample is unavailable, the ordinary reading remains available.
+                    uncertainty boundaries. This also prepares transit-story timing from the same
+                    calculation source. Saving recalculates your chart; existing readings keep their
+                    original evidence. Unknown time omits daily natal lenses and transit stories; if
+                    the service or a sample is unavailable, the ordinary reading remains available.
                   </p>
                 </fieldset>
 

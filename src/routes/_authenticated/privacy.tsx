@@ -174,6 +174,19 @@ function PrivacyPage() {
               How reading language is written
             </h2>
             <p className="mt-2 text-sm text-muted-foreground">
+              Chart calculations use Swiss Ephemeris through AstroWay or Pattern’s own calculation
+              service hosted on Fly.io. The configured service receives birth date, time and
+              coordinates. Pattern’s service does not store calculation requests or log their
+              contents. Its{" "}
+              <a
+                href="https://pattern-transit-calc.fly.dev/source"
+                className="underline underline-offset-4"
+              >
+                calculation source code
+              </a>{" "}
+              is available under the GNU Affero General Public License.
+            </p>
+            <p className="mt-2 text-sm text-muted-foreground">
               Google Gemini, through the Lovable AI gateway, can write from calculated chart facts
               and curated interpretation text. Tone and depth preferences are included only when
               their source switches are on. With those switches off, readings use plain tone and
