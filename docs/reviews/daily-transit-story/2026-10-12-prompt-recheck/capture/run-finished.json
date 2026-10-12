@@ -1,0 +1,16 @@
+{
+  "status": "complete",
+  "haltReason": null,
+  "finishedAt": "2026-10-12T06:53:46.777Z",
+  "sourceRevision": "2f136409766af19bb5a629eb9841b8cdde4ae94b",
+  "trackedSourceSha256": "25065eb38f93af3de6b8aca2ba3f3ce51e220ca81f019a9d54abba0da1c80746",
+  "sourceUnchangedThroughout": true,
+  "modelAttempts": 6,
+  "settledSamples": 6,
+  "losslessRawDrafts": 6,
+  "unsettledSample": null,
+  "captureSha256": "a4c8c68e15aacdec5cde09c42cee241339082348097293237a1a59a8cccb198e",
+  "retries": 0,
+  "cost": "unknown",
+  "candidatesActivated": false
+}

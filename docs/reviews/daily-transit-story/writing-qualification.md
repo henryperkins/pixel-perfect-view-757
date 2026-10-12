@@ -1,6 +1,22 @@
 # Transit-story writing qualification
 
-Status: **failed original review; revised-prompt recheck pending**.
+Status: **small writing gate passed; joint activation pending native source integration**.
+The [prompt-13 recheck](2026-10-12-prompt-recheck/README.md) captured six new
+actual-model drafts with no retries. All six were application-accepted, and one
+fresh blind AI reviewer passed those drafts and their six templates with no
+substantive findings. The three earlier passing items remain compatible, bringing
+the targeted gate to **15/15**. The combined raw draft retains its original
+generation identity; it was revalidated, not regenerated. Both chapter contrasts
+remain supported. This is a small writing decision, not a full benchmark pass.
+
+The corrected combined release `0.7.1` is staged inactive as
+`edcc53cf-d19a-415b-a8a2-a66040846b1d`; round-trip content and unchanged active
+pointers were verified. Both candidates remain inactive because the requested
+joint launch still needs the [native service integration](source-qualification.md).
+Four of the six admin Gemini captures exceeded the member path's 60-second deadline;
+successful capture under the local 180-second deadline is not a member performance claim.
+
+Historical first result:
 The [2026-10-12 small review](2026-10-12-lightweight-review/README.md) passed
 3/15 samples. Twelve samples reproduced commands from published P1/P2 copy,
 contradicting the no-instructions system rule; the between-contact template also
@@ -28,7 +44,7 @@ snapshot and retain their original bytes and policy identities. Negative arc cas
 
 The isolated baseline changes only evaluation story use; fixed inputs, raw scan/anchor hashes, source/solver versions, content, model, tone/depth and prerequisite policies remain identical. Source qualification is recorded separately in [source-qualification.md](source-qualification.md). Historical replay artifact identities and results are recorded in [local-validation.md](local-validation.md); current checks are in [the integration record](../reconciliation/2026-10-11-main-integration.md).
 
-The six failed cases need a fresh actual-model recheck and review after the source correction. Run one fixed case at a time, preserve partial results and actual costs, and do not retry automatically. Blind-score specificity, voice, repetition, grounding, natal lens integration, temporal coherence and chapter integration. Every positive candidate and template needs at least 4 for grounding/coherence/integration, no invented history and no promised resolution. Compare opening/return/closing practical emphasis and read the combined S1/N1/P2 case within its body budget. No live quality score is inferred from replay acceptance.
+The six failed cases have now completed that fresh actual-model recheck and review. Each request ran once, with partial captures and usage preserved and monetary cost left unknown. Specificity, grounding, coherence and applicable temporal/chapter integration all meet the small gate's threshold of 4. No invented history, prohibited instruction or promised resolution remains in the reviewed set. No live quality score is inferred from replay acceptance.
 
 The candidate permits A1 dates only in the server-authored chronology sentence, copied unchanged once in the first two paragraphs. This intentionally narrower rule preserves ordinary per-cycle date checks everywhere else.
 

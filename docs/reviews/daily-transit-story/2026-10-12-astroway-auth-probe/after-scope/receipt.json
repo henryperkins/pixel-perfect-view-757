@@ -1,0 +1,19 @@
+{
+  "atUTC": "2026-10-12T07:03:16.589Z",
+  "requests": 1,
+  "retries": 0,
+  "realBirthDataUsed": false,
+  "receipts": [
+    {
+      "id": "transit-calendar",
+      "httpStatus": 402,
+      "elapsedMs": 374,
+      "topLevelKeys": [
+        "ok",
+        "error"
+      ],
+      "dataKeys": [],
+      "errorCode": "PLAN_UPGRADE_REQUIRED"
+    }
+  ]
+}

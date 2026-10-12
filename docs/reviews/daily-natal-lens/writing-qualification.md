@@ -6,17 +6,21 @@
 substantive findings. Together with the retained passing templates, other raw
 cases, quiet safety check and duty/freedom distinctions, this clears the
 [lightweight writing gate](lightweight-readiness.md). Both candidates remain
-inactive. Joint release work was requested afterward; code and evidence were pushed to
-`main` at `26cd0c9`, and Lovable accepted publication. The transit writing check
-[failed on conflicting directive copy](../daily-transit-story/2026-10-12-lightweight-review/README.md)
-and its corrected-copy recheck is in progress. No candidate was activated.
+inactive. Joint release work was requested afterward. The shared prompt/guard
+correction is pushed to `main` at `2f13640` and synced to Lovable. After the original
+transit review failed on conflicting directive copy, the
+[prompt-13 recheck](../daily-transit-story/2026-10-12-prompt-recheck/README.md)
+passed all twelve replacement samples; three compatible earlier passes bring the
+small transit gate to 15/15. Combined release `0.7.1` is staged inactive with
+unchanged active pointers. Native transit-source integration remains open, and no
+candidate was activated.
 
 The [first partial run](2026-10-12-raw-draft-recheck/README.md) captured two passing
 drafts before HTTP 429. An authenticated Gemini health probe then returned HTTP 200;
 the authorized continuation captured the remaining four drafts and a fresh blinded
 reviewer passed all four. One continuation call timed out; a separate recovery
 attempt succeeded. Both failures and every original run remain preserved. The
-application source matches `79ad050`, which implemented the qualifier guard and
+application source for that natal continuation matches `79ad050`, which implemented the qualifier guard and
 guidance and passed all 521 tests, typecheck, build and changed-file lint. Those
 checks were not rerun for this evidence-only continuation. Full repository lint
 retains documented pre-existing failures. Extended local capture deadlines do not

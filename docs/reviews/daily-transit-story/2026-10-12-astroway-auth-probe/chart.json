@@ -1,0 +1,2375 @@
+{
+  "id": "chart",
+  "url": "https://api.astroway.info/v1/chart",
+  "synthetic": true,
+  "input": {
+    "date": "1990-01-01",
+    "time": "12:00:00",
+    "timezoneOffset": 0,
+    "latitude": 0,
+    "longitude": 0,
+    "houseSystem": "P"
+  },
+  "startedAt": "2026-10-12T06:58:27.659Z",
+  "elapsedMs": 362,
+  "httpStatus": 200,
+  "payload": {
+    "ok": true,
+    "data": {
+      "input": {
+        "name": "",
+        "date": "1990-01-01",
+        "time": "12:00:00",
+        "timezoneOffset": 0,
+        "latitude": 0,
+        "longitude": 0,
+        "houseSystem": "P",
+        "city": "",
+        "cosmogram": true
+      },
+      "julianDay": 2447893,
+      "siderealTime": 18.725297899867446,
+      "planets": [
+        {
+          "id": 0,
+          "name": "Sun",
+          "longitude": 280.81426076715053,
+          "latitude": 0.000012767886388087717,
+          "distance": 0.9833279874202395,
+          "speedLong": 1.0194758015684466,
+          "speedLat": 0.00002723254958813856,
+          "speedDist": -0.000015097253011361656,
+          "isRetrograde": false,
+          "declination": -23.001860890297714,
+          "rightAscension": 281.7611364633276
+        },
+        {
+          "id": 1,
+          "name": "Moon",
+          "longitude": 333.2676545335762,
+          "latitude": 1.4706745196469022,
+          "distance": 0.002535120581042203,
+          "speedLong": 13.470137659903216,
+          "speedLat": 1.1744455091595343,
+          "speedDist": -0.00001978283255069068,
+          "isRetrograde": false,
+          "declination": -8.936847497942885,
+          "rightAscension": 334.66151786406425
+        },
+        {
+          "id": 2,
+          "name": "Mercury",
+          "longitude": 295.6728252350529,
+          "latitude": 0.6303017300532129,
+          "distance": 0.7711121837647311,
+          "speedLong": -0.2945777626503878,
+          "speedLat": 0.3134325641066192,
+          "speedDist": -0.02186105831172014,
+          "isRetrograde": true,
+          "declination": -20.39190841962386,
+          "rightAscension": 297.52715955536047
+        },
+        {
+          "id": 3,
+          "name": "Venus",
+          "longitude": 306.2219606159029,
+          "latitude": 1.9011604809689766,
+          "distance": 0.30548920615697417,
+          "speedLong": -0.13028461309247513,
+          "speedLat": 0.2459510545515435,
+          "speedDist": -0.004279304260786844,
+          "isRetrograde": true,
+          "declination": -16.877487524510837,
+          "rightAscension": 308.1099608633294
+        },
+        {
+          "id": 4,
+          "name": "Mars",
+          "longitude": 250.00008537633659,
+          "latitude": -0.03293717727915877,
+          "distance": 2.307592329378091,
+          "speedLong": 0.7037584026254832,
+          "speedLat": -0.010994434556042846,
+          "speedDist": -0.005722613927963712,
+          "isRetrograde": false,
+          "declination": -21.984891106253713,
+          "rightAscension": 248.35592042125478
+        },
+        {
+          "id": 5,
+          "name": "Jupiter",
+          "longitude": 95.14879412566786,
+          "latitude": -0.11699060396879789,
+          "distance": 4.171520386932618,
+          "speedLong": -0.13448044910147736,
+          "speedLat": 0.0024422424448876144,
+          "speedDist": 0.001953873097284973,
+          "isRetrograde": true,
+          "declination": 23.225254609185296,
+          "rightAscension": 95.60422153712919
+        },
+        {
+          "id": 6,
+          "name": "Saturn",
+          "longitude": 285.657498282323,
+          "latitude": 0.29330885527822104,
+          "distance": 11.006574777791803,
+          "speedLong": 0.11827131657231298,
+          "speedLat": -0.0012296621030146468,
+          "speedDist": 0.0013657217687410555,
+          "isRetrograde": false,
+          "declination": -22.232274647762054,
+          "rightAscension": 286.95124368485153
+        },
+        {
+          "id": 7,
+          "name": "Uranus",
+          "longitude": 275.7854413770082,
+          "latitude": -0.2701008611482554,
+          "distance": 20.35945025876159,
+          "speedLong": 0.060008096507044924,
+          "speedLat": -0.00016585384937264916,
+          "speedDist": -0.001316729288076394,
+          "isRetrograde": false,
+          "declination": -23.58572055681169,
+          "rightAscension": 276.3147813090747
+        },
+        {
+          "id": 8,
+          "name": "Neptune",
+          "longitude": 282.03810640013626,
+          "latitude": 0.8473411341205755,
+          "distance": 31.193431118223714,
+          "speedLong": 0.037910877582876895,
+          "speedLat": -0.00012220854564274201,
+          "speedDist": 0.000388060250613948,
+          "isRetrograde": false,
+          "declination": -22.053213614596803,
+          "rightAscension": 283.00296636761095
+        },
+        {
+          "id": 9,
+          "name": "Pluto",
+          "longitude": 227.09311405225776,
+          "latitude": 15.284426974396327,
+          "distance": 30.20643880543883,
+          "speedLong": 0.02732335376506468,
+          "speedLat": 0.006139193447453853,
+          "speedDist": -0.013477100397290071,
+          "isRetrograde": false,
+          "declination": -2.248458021268357,
+          "rightAscension": 228.91073154742267
+        },
+        {
+          "id": 11,
+          "name": "true Node",
+          "longitude": 316.8703609937939,
+          "latitude": 0,
+          "distance": 0.00255974991544109,
+          "speedLong": 0.023124656955132845,
+          "speedLat": 0,
+          "speedDist": -4.9804416822602e-7,
+          "isRetrograde": false,
+          "declination": -15.781799081251776,
+          "rightAscension": 319.3230769764716
+        },
+        {
+          "id": 12,
+          "name": "mean Apogee",
+          "longitude": 216.46398944309618,
+          "latitude": -5.034079396647561,
+          "distance": 0.002710625131722546,
+          "speedLong": 0.11200506058251772,
+          "speedLat": -0.003064195684877859,
+          "speedDist": 0,
+          "isRetrograde": false,
+          "declination": -18.42292922213207,
+          "rightAscension": 212.39181872321544
+        },
+        {
+          "id": 15,
+          "name": "Chiron",
+          "longitude": 103.81328095112634,
+          "latitude": -7.305609899472438,
+          "distance": 10.338061158386529,
+          "speedLong": -0.06847322110307706,
+          "speedLat": -0.0016719407144965737,
+          "speedDist": -0.0027925747049474966,
+          "isRetrograde": true,
+          "declination": 15.457219788505856,
+          "rightAscension": 104.22365616490906
+        }
+      ],
+      "houses": {
+        "system": "P",
+        "cusps": [
+          11.831741604799397,
+          43.334014065097165,
+          72.35582431353075,
+          100.00039853909266,
+          128.45499091080592,
+          159.29984183171007,
+          191.8317416047994,
+          223.33401406509716,
+          252.35582431353075,
+          280.00039853909266,
+          308.4549909108059,
+          339.29984183171007
+        ],
+        "ascendant": 11.831741604799397,
+        "mc": 280.00039853909266,
+        "armc": 280.8794684980117,
+        "vertex": 180,
+        "equatorialAsc": 11.831741604799397,
+        "coAscWK": 11.83174160479939,
+        "coAscMunkasey": 180,
+        "polarAsc": 191.8317416047994
+      },
+      "aspects": [
+        {
+          "planet1": "Sun",
+          "planet2": "Jupiter",
+          "planet1Id": 0,
+          "planet2Id": 5,
+          "type": {
+            "name": "Opposition",
+            "i18nKey": "aspect_opposition",
+            "angle": 180,
+            "orb": 12,
+            "symbol": "☍",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 174.33453335851732,
+          "orb": 5.665466641482681,
+          "isApplying": false
+        },
+        {
+          "planet1": "Sun",
+          "planet2": "Saturn",
+          "planet1Id": 0,
+          "planet2Id": 6,
+          "type": {
+            "name": "Conjunction",
+            "i18nKey": "aspect_conjunction",
+            "angle": 0,
+            "orb": 12,
+            "symbol": "☌",
+            "isMajor": true,
+            "color": "#660480"
+          },
+          "exactAngle": 4.843237515172461,
+          "orb": 4.843237515172461,
+          "isApplying": true
+        },
+        {
+          "planet1": "Sun",
+          "planet2": "Neptune",
+          "planet1Id": 0,
+          "planet2Id": 8,
+          "type": {
+            "name": "Conjunction",
+            "i18nKey": "aspect_conjunction",
+            "angle": 0,
+            "orb": 12,
+            "symbol": "☌",
+            "isMajor": true,
+            "color": "#660480"
+          },
+          "exactAngle": 1.2238456329857286,
+          "orb": 1.2238456329857286,
+          "isApplying": true
+        },
+        {
+          "planet1": "Sun",
+          "planet2": "mean Apogee",
+          "planet1Id": 0,
+          "planet2Id": 12,
+          "type": {
+            "name": "Sextile",
+            "i18nKey": "aspect_sextile",
+            "angle": 60,
+            "orb": 6.5,
+            "symbol": "⚹",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 64.35027132405435,
+          "orb": 4.350271324054347,
+          "isApplying": false
+        },
+        {
+          "planet1": "Sun",
+          "planet2": "Chiron",
+          "planet1Id": 0,
+          "planet2Id": 15,
+          "type": {
+            "name": "Opposition",
+            "i18nKey": "aspect_opposition",
+            "angle": 180,
+            "orb": 12,
+            "symbol": "☍",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 177.0009798160242,
+          "orb": 2.9990201839758015,
+          "isApplying": true
+        },
+        {
+          "planet1": "Moon",
+          "planet2": "Jupiter",
+          "planet1Id": 1,
+          "planet2Id": 5,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 121.88113959209164,
+          "orb": 1.8811395920916425,
+          "isApplying": false
+        },
+        {
+          "planet1": "Moon",
+          "planet2": "Uranus",
+          "planet1Id": 1,
+          "planet2Id": 7,
+          "type": {
+            "name": "Sextile",
+            "i18nKey": "aspect_sextile",
+            "angle": 60,
+            "orb": 6.5,
+            "symbol": "⚹",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 57.48221315656798,
+          "orb": 2.5177868434320203,
+          "isApplying": false
+        },
+        {
+          "planet1": "Moon",
+          "planet2": "mean Apogee",
+          "planet1Id": 1,
+          "planet2Id": 12,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 116.80366509048002,
+          "orb": 3.196334909519976,
+          "isApplying": true
+        },
+        {
+          "planet1": "Venus",
+          "planet2": "Mars",
+          "planet1Id": 3,
+          "planet2Id": 4,
+          "type": {
+            "name": "Sextile",
+            "i18nKey": "aspect_sextile",
+            "angle": 60,
+            "orb": 6.5,
+            "symbol": "⚹",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 56.221875239566316,
+          "orb": 3.778124760433684,
+          "isApplying": true
+        },
+        {
+          "planet1": "Venus",
+          "planet2": "mean Apogee",
+          "planet1Id": 3,
+          "planet2Id": 12,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 89.75797117280672,
+          "orb": 0.24202882719328045,
+          "isApplying": true
+        },
+        {
+          "planet1": "Jupiter",
+          "planet2": "Uranus",
+          "planet1Id": 5,
+          "planet2Id": 7,
+          "type": {
+            "name": "Opposition",
+            "i18nKey": "aspect_opposition",
+            "angle": 180,
+            "orb": 12,
+            "symbol": "☍",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 179.36335274865962,
+          "orb": 0.6366472513403778,
+          "isApplying": false
+        },
+        {
+          "planet1": "Jupiter",
+          "planet2": "mean Apogee",
+          "planet1Id": 5,
+          "planet2Id": 12,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 121.31519531742832,
+          "orb": 1.3151953174283193,
+          "isApplying": false
+        },
+        {
+          "planet1": "Saturn",
+          "planet2": "Neptune",
+          "planet1Id": 6,
+          "planet2Id": 8,
+          "type": {
+            "name": "Conjunction",
+            "i18nKey": "aspect_conjunction",
+            "angle": 0,
+            "orb": 12,
+            "symbol": "☌",
+            "isMajor": true,
+            "color": "#660480"
+          },
+          "exactAngle": 3.619391882186733,
+          "orb": 3.619391882186733,
+          "isApplying": false
+        },
+        {
+          "planet1": "Saturn",
+          "planet2": "Pluto",
+          "planet1Id": 6,
+          "planet2Id": 9,
+          "type": {
+            "name": "Sextile",
+            "i18nKey": "aspect_sextile",
+            "angle": 60,
+            "orb": 6.5,
+            "symbol": "⚹",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 58.56438423006523,
+          "orb": 1.4356157699347705,
+          "isApplying": false
+        },
+        {
+          "planet1": "Saturn",
+          "planet2": "Chiron",
+          "planet1Id": 6,
+          "planet2Id": 15,
+          "type": {
+            "name": "Opposition",
+            "i18nKey": "aspect_opposition",
+            "angle": 180,
+            "orb": 12,
+            "symbol": "☍",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 178.15578266880334,
+          "orb": 1.8442173311966599,
+          "isApplying": false
+        },
+        {
+          "planet1": "Uranus",
+          "planet2": "mean Apogee",
+          "planet1Id": 7,
+          "planet2Id": 12,
+          "type": {
+            "name": "Sextile",
+            "i18nKey": "aspect_sextile",
+            "angle": 60,
+            "orb": 6.5,
+            "symbol": "⚹",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 59.321451933912044,
+          "orb": 0.6785480660879557,
+          "isApplying": true
+        },
+        {
+          "planet1": "Neptune",
+          "planet2": "Chiron",
+          "planet1Id": 8,
+          "planet2Id": 15,
+          "type": {
+            "name": "Opposition",
+            "i18nKey": "aspect_opposition",
+            "angle": 180,
+            "orb": 12,
+            "symbol": "☍",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 178.22482544900993,
+          "orb": 1.775174550990073,
+          "isApplying": true
+        },
+        {
+          "planet1": "Pluto",
+          "planet2": "true Node",
+          "planet1Id": 9,
+          "planet2Id": 11,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 89.77724694153613,
+          "orb": 0.22275305846386573,
+          "isApplying": false
+        },
+        {
+          "planet1": "Pluto",
+          "planet2": "Chiron",
+          "planet1Id": 9,
+          "planet2Id": 15,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 123.27983310113142,
+          "orb": 3.279833101131416,
+          "isApplying": true
+        }
+      ],
+      "houseAspects": [
+        {
+          "planetName": "Sun",
+          "planetId": 0,
+          "houseIndex": 0,
+          "cuspLongitude": 11.831741604799397,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 91.01748083764886,
+          "orb": 1.0174808376488613,
+          "isApplying": true
+        },
+        {
+          "planetName": "Sun",
+          "planetId": 0,
+          "houseIndex": 1,
+          "cuspLongitude": 43.334014065097165,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 122.51975329794664,
+          "orb": 2.519753297946636,
+          "isApplying": true
+        },
+        {
+          "planetName": "Sun",
+          "planetId": 0,
+          "houseIndex": 3,
+          "cuspLongitude": 100.00039853909266,
+          "type": {
+            "name": "Opposition",
+            "i18nKey": "aspect_opposition",
+            "angle": 180,
+            "orb": 12,
+            "symbol": "☍",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 179.18613777194213,
+          "orb": 0.8138622280578716,
+          "isApplying": false
+        },
+        {
+          "planetName": "Sun",
+          "planetId": 0,
+          "houseIndex": 5,
+          "cuspLongitude": 159.29984183171007,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 121.51441893544046,
+          "orb": 1.5144189354404602,
+          "isApplying": true
+        },
+        {
+          "planetName": "Sun",
+          "planetId": 0,
+          "houseIndex": 6,
+          "cuspLongitude": 191.8317416047994,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 88.98251916235114,
+          "orb": 1.0174808376488613,
+          "isApplying": false
+        },
+        {
+          "planetName": "Sun",
+          "planetId": 0,
+          "houseIndex": 7,
+          "cuspLongitude": 223.33401406509716,
+          "type": {
+            "name": "Sextile",
+            "i18nKey": "aspect_sextile",
+            "angle": 60,
+            "orb": 6.5,
+            "symbol": "⚹",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 57.480246702053364,
+          "orb": 2.519753297946636,
+          "isApplying": false
+        },
+        {
+          "planetName": "Sun",
+          "planetId": 0,
+          "houseIndex": 9,
+          "cuspLongitude": 280.00039853909266,
+          "type": {
+            "name": "Conjunction",
+            "i18nKey": "aspect_conjunction",
+            "angle": 0,
+            "orb": 12,
+            "symbol": "☌",
+            "isMajor": true,
+            "color": "#660480"
+          },
+          "exactAngle": 0.8138622280578716,
+          "orb": 0.8138622280578716,
+          "isApplying": false
+        },
+        {
+          "planetName": "Sun",
+          "planetId": 0,
+          "houseIndex": 11,
+          "cuspLongitude": 339.29984183171007,
+          "type": {
+            "name": "Sextile",
+            "i18nKey": "aspect_sextile",
+            "angle": 60,
+            "orb": 6.5,
+            "symbol": "⚹",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 58.48558106455954,
+          "orb": 1.5144189354404602,
+          "isApplying": false
+        },
+        {
+          "planetName": "Moon",
+          "planetId": 1,
+          "houseIndex": 2,
+          "cuspLongitude": 72.35582431353075,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 99.08816977995457,
+          "orb": 9.088169779954569,
+          "isApplying": true
+        },
+        {
+          "planetName": "Moon",
+          "planetId": 1,
+          "houseIndex": 3,
+          "cuspLongitude": 100.00039853909266,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 126.73274400551645,
+          "orb": 6.732744005516452,
+          "isApplying": false
+        },
+        {
+          "planetName": "Moon",
+          "planetId": 1,
+          "houseIndex": 5,
+          "cuspLongitude": 159.29984183171007,
+          "type": {
+            "name": "Opposition",
+            "i18nKey": "aspect_opposition",
+            "angle": 180,
+            "orb": 12,
+            "symbol": "☍",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 173.96781270186614,
+          "orb": 6.032187298133863,
+          "isApplying": false
+        },
+        {
+          "planetName": "Moon",
+          "planetId": 1,
+          "houseIndex": 7,
+          "cuspLongitude": 223.33401406509716,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 109.93364046847904,
+          "orb": 10.066359531520959,
+          "isApplying": true
+        },
+        {
+          "planetName": "Moon",
+          "planetId": 1,
+          "houseIndex": 8,
+          "cuspLongitude": 252.35582431353075,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 80.91183022004546,
+          "orb": 9.08816977995454,
+          "isApplying": false
+        },
+        {
+          "planetName": "Moon",
+          "planetId": 1,
+          "houseIndex": 11,
+          "cuspLongitude": 339.29984183171007,
+          "type": {
+            "name": "Conjunction",
+            "i18nKey": "aspect_conjunction",
+            "angle": 0,
+            "orb": 12,
+            "symbol": "☌",
+            "isMajor": true,
+            "color": "#660480"
+          },
+          "exactAngle": 6.032187298133863,
+          "orb": 6.032187298133863,
+          "isApplying": false
+        },
+        {
+          "planetName": "Venus",
+          "planetId": 3,
+          "houseIndex": 0,
+          "cuspLongitude": 11.831741604799397,
+          "type": {
+            "name": "Sextile",
+            "i18nKey": "aspect_sextile",
+            "angle": 60,
+            "orb": 6.5,
+            "symbol": "⚹",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 65.60978098889649,
+          "orb": 5.609780988896489,
+          "isApplying": false
+        },
+        {
+          "planetName": "Venus",
+          "planetId": 3,
+          "houseIndex": 1,
+          "cuspLongitude": 43.334014065097165,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 97.11205344919426,
+          "orb": 7.1120534491942635,
+          "isApplying": false
+        },
+        {
+          "planetName": "Venus",
+          "planetId": 3,
+          "houseIndex": 2,
+          "cuspLongitude": 72.35582431353075,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 126.13386369762785,
+          "orb": 6.133863697627845,
+          "isApplying": false
+        },
+        {
+          "planetName": "Venus",
+          "planetId": 3,
+          "houseIndex": 4,
+          "cuspLongitude": 128.45499091080592,
+          "type": {
+            "name": "Opposition",
+            "i18nKey": "aspect_opposition",
+            "angle": 180,
+            "orb": 12,
+            "symbol": "☍",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 177.76696970509698,
+          "orb": 2.233030294903017,
+          "isApplying": false
+        },
+        {
+          "planetName": "Venus",
+          "planetId": 3,
+          "houseIndex": 6,
+          "cuspLongitude": 191.8317416047994,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 114.39021901110351,
+          "orb": 5.609780988896489,
+          "isApplying": false
+        },
+        {
+          "planetName": "Venus",
+          "planetId": 3,
+          "houseIndex": 7,
+          "cuspLongitude": 223.33401406509716,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 82.88794655080574,
+          "orb": 7.1120534491942635,
+          "isApplying": true
+        },
+        {
+          "planetName": "Venus",
+          "planetId": 3,
+          "houseIndex": 8,
+          "cuspLongitude": 252.35582431353075,
+          "type": {
+            "name": "Sextile",
+            "i18nKey": "aspect_sextile",
+            "angle": 60,
+            "orb": 6.5,
+            "symbol": "⚹",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 53.866136302372155,
+          "orb": 6.133863697627845,
+          "isApplying": true
+        },
+        {
+          "planetName": "Venus",
+          "planetId": 3,
+          "houseIndex": 10,
+          "cuspLongitude": 308.4549909108059,
+          "type": {
+            "name": "Conjunction",
+            "i18nKey": "aspect_conjunction",
+            "angle": 0,
+            "orb": 12,
+            "symbol": "☌",
+            "isMajor": true,
+            "color": "#660480"
+          },
+          "exactAngle": 2.233030294903017,
+          "orb": 2.233030294903017,
+          "isApplying": false
+        },
+        {
+          "planetName": "Mars",
+          "planetId": 4,
+          "houseIndex": 0,
+          "cuspLongitude": 11.831741604799397,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 121.8316562284628,
+          "orb": 1.8316562284628048,
+          "isApplying": true
+        },
+        {
+          "planetName": "Mars",
+          "planetId": 4,
+          "houseIndex": 2,
+          "cuspLongitude": 72.35582431353075,
+          "type": {
+            "name": "Opposition",
+            "i18nKey": "aspect_opposition",
+            "angle": 180,
+            "orb": 12,
+            "symbol": "☍",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 177.64426106280584,
+          "orb": 2.355738937194161,
+          "isApplying": true
+        },
+        {
+          "planetName": "Mars",
+          "planetId": 4,
+          "houseIndex": 4,
+          "cuspLongitude": 128.45499091080592,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 121.54509446553067,
+          "orb": 1.545094465530667,
+          "isApplying": true
+        },
+        {
+          "planetName": "Mars",
+          "planetId": 4,
+          "houseIndex": 5,
+          "cuspLongitude": 159.29984183171007,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 90.70024354462652,
+          "orb": 0.7002435446265167,
+          "isApplying": true
+        },
+        {
+          "planetName": "Mars",
+          "planetId": 4,
+          "houseIndex": 6,
+          "cuspLongitude": 191.8317416047994,
+          "type": {
+            "name": "Sextile",
+            "i18nKey": "aspect_sextile",
+            "angle": 60,
+            "orb": 6.5,
+            "symbol": "⚹",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 58.168343771537195,
+          "orb": 1.8316562284628048,
+          "isApplying": false
+        },
+        {
+          "planetName": "Mars",
+          "planetId": 4,
+          "houseIndex": 8,
+          "cuspLongitude": 252.35582431353075,
+          "type": {
+            "name": "Conjunction",
+            "i18nKey": "aspect_conjunction",
+            "angle": 0,
+            "orb": 12,
+            "symbol": "☌",
+            "isMajor": true,
+            "color": "#660480"
+          },
+          "exactAngle": 2.355738937194161,
+          "orb": 2.355738937194161,
+          "isApplying": true
+        },
+        {
+          "planetName": "Mars",
+          "planetId": 4,
+          "houseIndex": 10,
+          "cuspLongitude": 308.4549909108059,
+          "type": {
+            "name": "Sextile",
+            "i18nKey": "aspect_sextile",
+            "angle": 60,
+            "orb": 6.5,
+            "symbol": "⚹",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 58.45490553446933,
+          "orb": 1.545094465530667,
+          "isApplying": false
+        },
+        {
+          "planetName": "Mars",
+          "planetId": 4,
+          "houseIndex": 11,
+          "cuspLongitude": 339.29984183171007,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 89.29975645537348,
+          "orb": 0.7002435446265167,
+          "isApplying": false
+        },
+        {
+          "planetName": "Jupiter",
+          "planetId": 5,
+          "houseIndex": 0,
+          "cuspLongitude": 11.831741604799397,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 83.31705252086846,
+          "orb": 6.682947479131542,
+          "isApplying": true
+        },
+        {
+          "planetName": "Jupiter",
+          "planetId": 5,
+          "houseIndex": 3,
+          "cuspLongitude": 100.00039853909266,
+          "type": {
+            "name": "Conjunction",
+            "i18nKey": "aspect_conjunction",
+            "angle": 0,
+            "orb": 12,
+            "symbol": "☌",
+            "isMajor": true,
+            "color": "#660480"
+          },
+          "exactAngle": 4.851604413424795,
+          "orb": 4.851604413424795,
+          "isApplying": false
+        },
+        {
+          "planetName": "Jupiter",
+          "planetId": 5,
+          "houseIndex": 5,
+          "cuspLongitude": 159.29984183171007,
+          "type": {
+            "name": "Sextile",
+            "i18nKey": "aspect_sextile",
+            "angle": 60,
+            "orb": 6.5,
+            "symbol": "⚹",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 64.1510477060422,
+          "orb": 4.151047706042206,
+          "isApplying": false
+        },
+        {
+          "planetName": "Jupiter",
+          "planetId": 5,
+          "houseIndex": 6,
+          "cuspLongitude": 191.8317416047994,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 96.68294747913153,
+          "orb": 6.682947479131528,
+          "isApplying": false
+        },
+        {
+          "planetName": "Jupiter",
+          "planetId": 5,
+          "houseIndex": 7,
+          "cuspLongitude": 223.33401406509716,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 128.18521993942932,
+          "orb": 8.185219939429317,
+          "isApplying": false
+        },
+        {
+          "planetName": "Jupiter",
+          "planetId": 5,
+          "houseIndex": 9,
+          "cuspLongitude": 280.00039853909266,
+          "type": {
+            "name": "Opposition",
+            "i18nKey": "aspect_opposition",
+            "angle": 180,
+            "orb": 12,
+            "symbol": "☍",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 175.1483955865752,
+          "orb": 4.851604413424809,
+          "isApplying": false
+        },
+        {
+          "planetName": "Jupiter",
+          "planetId": 5,
+          "houseIndex": 11,
+          "cuspLongitude": 339.29984183171007,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 115.84895229395778,
+          "orb": 4.15104770604222,
+          "isApplying": false
+        },
+        {
+          "planetName": "Saturn",
+          "planetId": 6,
+          "houseIndex": 0,
+          "cuspLongitude": 11.831741604799397,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 86.1742433224764,
+          "orb": 3.8257566775236,
+          "isApplying": false
+        },
+        {
+          "planetName": "Saturn",
+          "planetId": 6,
+          "houseIndex": 1,
+          "cuspLongitude": 43.334014065097165,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 117.67651578277417,
+          "orb": 2.3234842172258254,
+          "isApplying": false
+        },
+        {
+          "planetName": "Saturn",
+          "planetId": 6,
+          "houseIndex": 3,
+          "cuspLongitude": 100.00039853909266,
+          "type": {
+            "name": "Opposition",
+            "i18nKey": "aspect_opposition",
+            "angle": 180,
+            "orb": 12,
+            "symbol": "☍",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 174.34290025676967,
+          "orb": 5.657099743230333,
+          "isApplying": false
+        },
+        {
+          "planetName": "Saturn",
+          "planetId": 6,
+          "houseIndex": 5,
+          "cuspLongitude": 159.29984183171007,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 126.35765645061292,
+          "orb": 6.357656450612922,
+          "isApplying": true
+        },
+        {
+          "planetName": "Saturn",
+          "planetId": 6,
+          "houseIndex": 6,
+          "cuspLongitude": 191.8317416047994,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 93.8257566775236,
+          "orb": 3.8257566775236,
+          "isApplying": true
+        },
+        {
+          "planetName": "Saturn",
+          "planetId": 6,
+          "houseIndex": 7,
+          "cuspLongitude": 223.33401406509716,
+          "type": {
+            "name": "Sextile",
+            "i18nKey": "aspect_sextile",
+            "angle": 60,
+            "orb": 6.5,
+            "symbol": "⚹",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 62.323484217225825,
+          "orb": 2.3234842172258254,
+          "isApplying": false
+        },
+        {
+          "planetName": "Saturn",
+          "planetId": 6,
+          "houseIndex": 9,
+          "cuspLongitude": 280.00039853909266,
+          "type": {
+            "name": "Conjunction",
+            "i18nKey": "aspect_conjunction",
+            "angle": 0,
+            "orb": 12,
+            "symbol": "☌",
+            "isMajor": true,
+            "color": "#660480"
+          },
+          "exactAngle": 5.657099743230333,
+          "orb": 5.657099743230333,
+          "isApplying": false
+        },
+        {
+          "planetName": "Saturn",
+          "planetId": 6,
+          "houseIndex": 11,
+          "cuspLongitude": 339.29984183171007,
+          "type": {
+            "name": "Sextile",
+            "i18nKey": "aspect_sextile",
+            "angle": 60,
+            "orb": 6.5,
+            "symbol": "⚹",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 53.64234354938708,
+          "orb": 6.357656450612922,
+          "isApplying": false
+        },
+        {
+          "planetName": "Uranus",
+          "planetId": 7,
+          "houseIndex": 0,
+          "cuspLongitude": 11.831741604799397,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 96.04630022779116,
+          "orb": 6.046300227791164,
+          "isApplying": true
+        },
+        {
+          "planetName": "Uranus",
+          "planetId": 7,
+          "houseIndex": 1,
+          "cuspLongitude": 43.334014065097165,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 127.54857268808894,
+          "orb": 7.548572688088939,
+          "isApplying": true
+        },
+        {
+          "planetName": "Uranus",
+          "planetId": 7,
+          "houseIndex": 3,
+          "cuspLongitude": 100.00039853909266,
+          "type": {
+            "name": "Opposition",
+            "i18nKey": "aspect_opposition",
+            "angle": 180,
+            "orb": 12,
+            "symbol": "☍",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 175.78504283791557,
+          "orb": 4.214957162084431,
+          "isApplying": true
+        },
+        {
+          "planetName": "Uranus",
+          "planetId": 7,
+          "houseIndex": 5,
+          "cuspLongitude": 159.29984183171007,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 116.48559954529816,
+          "orb": 3.5144004547018426,
+          "isApplying": true
+        },
+        {
+          "planetName": "Uranus",
+          "planetId": 7,
+          "houseIndex": 6,
+          "cuspLongitude": 191.8317416047994,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 83.95369977220884,
+          "orb": 6.046300227791164,
+          "isApplying": false
+        },
+        {
+          "planetName": "Uranus",
+          "planetId": 7,
+          "houseIndex": 9,
+          "cuspLongitude": 280.00039853909266,
+          "type": {
+            "name": "Conjunction",
+            "i18nKey": "aspect_conjunction",
+            "angle": 0,
+            "orb": 12,
+            "symbol": "☌",
+            "isMajor": true,
+            "color": "#660480"
+          },
+          "exactAngle": 4.214957162084431,
+          "orb": 4.214957162084431,
+          "isApplying": true
+        },
+        {
+          "planetName": "Uranus",
+          "planetId": 7,
+          "houseIndex": 11,
+          "cuspLongitude": 339.29984183171007,
+          "type": {
+            "name": "Sextile",
+            "i18nKey": "aspect_sextile",
+            "angle": 60,
+            "orb": 6.5,
+            "symbol": "⚹",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 63.51440045470184,
+          "orb": 3.5144004547018426,
+          "isApplying": true
+        },
+        {
+          "planetName": "Neptune",
+          "planetId": 8,
+          "houseIndex": 0,
+          "cuspLongitude": 11.831741604799397,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 89.79363520466313,
+          "orb": 0.20636479533686725,
+          "isApplying": false
+        },
+        {
+          "planetName": "Neptune",
+          "planetId": 8,
+          "houseIndex": 1,
+          "cuspLongitude": 43.334014065097165,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 121.29590766496091,
+          "orb": 1.2959076649609074,
+          "isApplying": true
+        },
+        {
+          "planetName": "Neptune",
+          "planetId": 8,
+          "houseIndex": 3,
+          "cuspLongitude": 100.00039853909266,
+          "type": {
+            "name": "Opposition",
+            "i18nKey": "aspect_opposition",
+            "angle": 180,
+            "orb": 12,
+            "symbol": "☍",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 177.9622921389564,
+          "orb": 2.0377078610436,
+          "isApplying": false
+        },
+        {
+          "planetName": "Neptune",
+          "planetId": 8,
+          "houseIndex": 5,
+          "cuspLongitude": 159.29984183171007,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 122.73826456842619,
+          "orb": 2.738264568426189,
+          "isApplying": true
+        },
+        {
+          "planetName": "Neptune",
+          "planetId": 8,
+          "houseIndex": 6,
+          "cuspLongitude": 191.8317416047994,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 90.20636479533687,
+          "orb": 0.20636479533686725,
+          "isApplying": true
+        },
+        {
+          "planetName": "Neptune",
+          "planetId": 8,
+          "houseIndex": 7,
+          "cuspLongitude": 223.33401406509716,
+          "type": {
+            "name": "Sextile",
+            "i18nKey": "aspect_sextile",
+            "angle": 60,
+            "orb": 6.5,
+            "symbol": "⚹",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 58.70409233503909,
+          "orb": 1.2959076649609074,
+          "isApplying": false
+        },
+        {
+          "planetName": "Neptune",
+          "planetId": 8,
+          "houseIndex": 9,
+          "cuspLongitude": 280.00039853909266,
+          "type": {
+            "name": "Conjunction",
+            "i18nKey": "aspect_conjunction",
+            "angle": 0,
+            "orb": 12,
+            "symbol": "☌",
+            "isMajor": true,
+            "color": "#660480"
+          },
+          "exactAngle": 2.0377078610436,
+          "orb": 2.0377078610436,
+          "isApplying": false
+        },
+        {
+          "planetName": "Neptune",
+          "planetId": 8,
+          "houseIndex": 11,
+          "cuspLongitude": 339.29984183171007,
+          "type": {
+            "name": "Sextile",
+            "i18nKey": "aspect_sextile",
+            "angle": 60,
+            "orb": 6.5,
+            "symbol": "⚹",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 57.26173543157381,
+          "orb": 2.738264568426189,
+          "isApplying": false
+        },
+        {
+          "planetName": "Pluto",
+          "planetId": 9,
+          "houseIndex": 1,
+          "cuspLongitude": 43.334014065097165,
+          "type": {
+            "name": "Opposition",
+            "i18nKey": "aspect_opposition",
+            "angle": 180,
+            "orb": 12,
+            "symbol": "☍",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 176.2409000128394,
+          "orb": 3.759099987160596,
+          "isApplying": false
+        },
+        {
+          "planetName": "Pluto",
+          "planetId": 9,
+          "houseIndex": 3,
+          "cuspLongitude": 100.00039853909266,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 127.0927155131651,
+          "orb": 7.092715513165103,
+          "isApplying": true
+        },
+        {
+          "planetName": "Pluto",
+          "planetId": 9,
+          "houseIndex": 4,
+          "cuspLongitude": 128.45499091080592,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 98.63812314145184,
+          "orb": 8.638123141451842,
+          "isApplying": true
+        },
+        {
+          "planetName": "Pluto",
+          "planetId": 9,
+          "houseIndex": 7,
+          "cuspLongitude": 223.33401406509716,
+          "type": {
+            "name": "Conjunction",
+            "i18nKey": "aspect_conjunction",
+            "angle": 0,
+            "orb": 12,
+            "symbol": "☌",
+            "isMajor": true,
+            "color": "#660480"
+          },
+          "exactAngle": 3.759099987160596,
+          "orb": 3.759099987160596,
+          "isApplying": false
+        },
+        {
+          "planetName": "Pluto",
+          "planetId": 9,
+          "houseIndex": 10,
+          "cuspLongitude": 308.4549909108059,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 81.36187685854816,
+          "orb": 8.638123141451842,
+          "isApplying": false
+        },
+        {
+          "planetName": "Pluto",
+          "planetId": 9,
+          "houseIndex": 11,
+          "cuspLongitude": 339.29984183171007,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 112.20672777945231,
+          "orb": 7.793272220547692,
+          "isApplying": false
+        },
+        {
+          "planetName": "true Node",
+          "planetId": 11,
+          "houseIndex": 0,
+          "cuspLongitude": 11.831741604799397,
+          "type": {
+            "name": "Sextile",
+            "i18nKey": "aspect_sextile",
+            "angle": 60,
+            "orb": 6.5,
+            "symbol": "⚹",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 54.961380611005495,
+          "orb": 5.038619388994505,
+          "isApplying": false
+        },
+        {
+          "planetName": "true Node",
+          "planetId": 11,
+          "houseIndex": 1,
+          "cuspLongitude": 43.334014065097165,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 86.46365307130327,
+          "orb": 3.53634692869673,
+          "isApplying": false
+        },
+        {
+          "planetName": "true Node",
+          "planetId": 11,
+          "houseIndex": 2,
+          "cuspLongitude": 72.35582431353075,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 115.48546331973685,
+          "orb": 4.514536680263149,
+          "isApplying": false
+        },
+        {
+          "planetName": "true Node",
+          "planetId": 11,
+          "houseIndex": 4,
+          "cuspLongitude": 128.45499091080592,
+          "type": {
+            "name": "Opposition",
+            "i18nKey": "aspect_opposition",
+            "angle": 180,
+            "orb": 12,
+            "symbol": "☍",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 171.58462991701202,
+          "orb": 8.415370082987977,
+          "isApplying": false
+        },
+        {
+          "planetName": "true Node",
+          "planetId": 11,
+          "houseIndex": 6,
+          "cuspLongitude": 191.8317416047994,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 125.0386193889945,
+          "orb": 5.038619388994505,
+          "isApplying": true
+        },
+        {
+          "planetName": "true Node",
+          "planetId": 11,
+          "houseIndex": 7,
+          "cuspLongitude": 223.33401406509716,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 93.53634692869673,
+          "orb": 3.53634692869673,
+          "isApplying": true
+        },
+        {
+          "planetName": "true Node",
+          "planetId": 11,
+          "houseIndex": 8,
+          "cuspLongitude": 252.35582431353075,
+          "type": {
+            "name": "Sextile",
+            "i18nKey": "aspect_sextile",
+            "angle": 60,
+            "orb": 6.5,
+            "symbol": "⚹",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 64.51453668026315,
+          "orb": 4.514536680263149,
+          "isApplying": false
+        },
+        {
+          "planetName": "true Node",
+          "planetId": 11,
+          "houseIndex": 10,
+          "cuspLongitude": 308.4549909108059,
+          "type": {
+            "name": "Conjunction",
+            "i18nKey": "aspect_conjunction",
+            "angle": 0,
+            "orb": 12,
+            "symbol": "☌",
+            "isMajor": true,
+            "color": "#660480"
+          },
+          "exactAngle": 8.415370082987977,
+          "orb": 8.415370082987977,
+          "isApplying": false
+        },
+        {
+          "planetName": "mean Apogee",
+          "planetId": 12,
+          "houseIndex": 1,
+          "cuspLongitude": 43.334014065097165,
+          "type": {
+            "name": "Opposition",
+            "i18nKey": "aspect_opposition",
+            "angle": 180,
+            "orb": 12,
+            "symbol": "☍",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 173.12997537799902,
+          "orb": 6.870024622000983,
+          "isApplying": true
+        },
+        {
+          "planetName": "mean Apogee",
+          "planetId": 12,
+          "houseIndex": 3,
+          "cuspLongitude": 100.00039853909266,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 116.46359090400352,
+          "orb": 3.5364090959964756,
+          "isApplying": true
+        },
+        {
+          "planetName": "mean Apogee",
+          "planetId": 12,
+          "houseIndex": 4,
+          "cuspLongitude": 128.45499091080592,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 88.00899853229026,
+          "orb": 1.9910014677097365,
+          "isApplying": false
+        },
+        {
+          "planetName": "mean Apogee",
+          "planetId": 12,
+          "houseIndex": 5,
+          "cuspLongitude": 159.29984183171007,
+          "type": {
+            "name": "Sextile",
+            "i18nKey": "aspect_sextile",
+            "angle": 60,
+            "orb": 6.5,
+            "symbol": "⚹",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 57.16414761138611,
+          "orb": 2.835852388613887,
+          "isApplying": false
+        },
+        {
+          "planetName": "mean Apogee",
+          "planetId": 12,
+          "houseIndex": 7,
+          "cuspLongitude": 223.33401406509716,
+          "type": {
+            "name": "Conjunction",
+            "i18nKey": "aspect_conjunction",
+            "angle": 0,
+            "orb": 12,
+            "symbol": "☌",
+            "isMajor": true,
+            "color": "#660480"
+          },
+          "exactAngle": 6.870024622000983,
+          "orb": 6.870024622000983,
+          "isApplying": true
+        },
+        {
+          "planetName": "mean Apogee",
+          "planetId": 12,
+          "houseIndex": 9,
+          "cuspLongitude": 280.00039853909266,
+          "type": {
+            "name": "Sextile",
+            "i18nKey": "aspect_sextile",
+            "angle": 60,
+            "orb": 6.5,
+            "symbol": "⚹",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 63.536409095996476,
+          "orb": 3.5364090959964756,
+          "isApplying": true
+        },
+        {
+          "planetName": "mean Apogee",
+          "planetId": 12,
+          "houseIndex": 10,
+          "cuspLongitude": 308.4549909108059,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 91.99100146770974,
+          "orb": 1.9910014677097365,
+          "isApplying": true
+        },
+        {
+          "planetName": "mean Apogee",
+          "planetId": 12,
+          "houseIndex": 11,
+          "cuspLongitude": 339.29984183171007,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 122.83585238861389,
+          "orb": 2.835852388613887,
+          "isApplying": true
+        },
+        {
+          "planetName": "Chiron",
+          "planetId": 15,
+          "houseIndex": 0,
+          "cuspLongitude": 11.831741604799397,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 91.98153934632694,
+          "orb": 1.9815393463269402,
+          "isApplying": false
+        },
+        {
+          "planetName": "Chiron",
+          "planetId": 15,
+          "houseIndex": 1,
+          "cuspLongitude": 43.334014065097165,
+          "type": {
+            "name": "Sextile",
+            "i18nKey": "aspect_sextile",
+            "angle": 60,
+            "orb": 6.5,
+            "symbol": "⚹",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 60.47926688602918,
+          "orb": 0.4792668860291798,
+          "isApplying": true
+        },
+        {
+          "planetName": "Chiron",
+          "planetId": 15,
+          "houseIndex": 3,
+          "cuspLongitude": 100.00039853909266,
+          "type": {
+            "name": "Conjunction",
+            "i18nKey": "aspect_conjunction",
+            "angle": 0,
+            "orb": 12,
+            "symbol": "☌",
+            "isMajor": true,
+            "color": "#660480"
+          },
+          "exactAngle": 3.8128824120336873,
+          "orb": 3.8128824120336873,
+          "isApplying": true
+        },
+        {
+          "planetName": "Chiron",
+          "planetId": 15,
+          "houseIndex": 5,
+          "cuspLongitude": 159.29984183171007,
+          "type": {
+            "name": "Sextile",
+            "i18nKey": "aspect_sextile",
+            "angle": 60,
+            "orb": 6.5,
+            "symbol": "⚹",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 55.486560880583724,
+          "orb": 4.513439119416276,
+          "isApplying": true
+        },
+        {
+          "planetName": "Chiron",
+          "planetId": 15,
+          "houseIndex": 6,
+          "cuspLongitude": 191.8317416047994,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 88.01846065367305,
+          "orb": 1.9815393463269544,
+          "isApplying": true
+        },
+        {
+          "planetName": "Chiron",
+          "planetId": 15,
+          "houseIndex": 7,
+          "cuspLongitude": 223.33401406509716,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 119.52073311397082,
+          "orb": 0.4792668860291798,
+          "isApplying": true
+        },
+        {
+          "planetName": "Chiron",
+          "planetId": 15,
+          "houseIndex": 9,
+          "cuspLongitude": 280.00039853909266,
+          "type": {
+            "name": "Opposition",
+            "i18nKey": "aspect_opposition",
+            "angle": 180,
+            "orb": 12,
+            "symbol": "☍",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 176.18711758796633,
+          "orb": 3.812882412033673,
+          "isApplying": true
+        },
+        {
+          "planetName": "Chiron",
+          "planetId": 15,
+          "houseIndex": 11,
+          "cuspLongitude": 339.29984183171007,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 124.51343911941626,
+          "orb": 4.513439119416262,
+          "isApplying": false
+        }
+      ],
+      "parallelAspects": [
+        {
+          "planet1": "Sun",
+          "planet2": "Jupiter",
+          "planet1Id": 0,
+          "planet2Id": 5,
+          "type": "contra-parallel",
+          "exactDiff": 0.22339371888758208,
+          "orb": 0.22339371888758208
+        },
+        {
+          "planet1": "Sun",
+          "planet2": "Saturn",
+          "planet1Id": 0,
+          "planet2Id": 6,
+          "type": "parallel",
+          "exactDiff": 0.7695862425356594,
+          "orb": 0.7695862425356594
+        },
+        {
+          "planet1": "Sun",
+          "planet2": "Uranus",
+          "planet1Id": 0,
+          "planet2Id": 7,
+          "type": "parallel",
+          "exactDiff": 0.5838596665139768,
+          "orb": 0.5838596665139768
+        },
+        {
+          "planet1": "Sun",
+          "planet2": "Neptune",
+          "planet1Id": 0,
+          "planet2Id": 8,
+          "type": "parallel",
+          "exactDiff": 0.9486472757009103,
+          "orb": 0.9486472757009103
+        },
+        {
+          "planet1": "Mars",
+          "planet2": "Saturn",
+          "planet1Id": 4,
+          "planet2Id": 6,
+          "type": "parallel",
+          "exactDiff": 0.2473835415083414,
+          "orb": 0.2473835415083414
+        },
+        {
+          "planet1": "Mars",
+          "planet2": "Neptune",
+          "planet1Id": 4,
+          "planet2Id": 8,
+          "type": "parallel",
+          "exactDiff": 0.0683225083430905,
+          "orb": 0.0683225083430905
+        },
+        {
+          "planet1": "Jupiter",
+          "planet2": "Saturn",
+          "planet1Id": 5,
+          "planet2Id": 6,
+          "type": "contra-parallel",
+          "exactDiff": 0.9929799614232415,
+          "orb": 0.9929799614232415
+        },
+        {
+          "planet1": "Jupiter",
+          "planet2": "Uranus",
+          "planet1Id": 5,
+          "planet2Id": 7,
+          "type": "contra-parallel",
+          "exactDiff": 0.3604659476263947,
+          "orb": 0.3604659476263947
+        },
+        {
+          "planet1": "Saturn",
+          "planet2": "Neptune",
+          "planet1Id": 6,
+          "planet2Id": 8,
+          "type": "parallel",
+          "exactDiff": 0.1790610331652509,
+          "orb": 0.1790610331652509
+        },
+        {
+          "planet1": "true Node",
+          "planet2": "Chiron",
+          "planet1Id": 11,
+          "planet2Id": 15,
+          "type": "contra-parallel",
+          "exactDiff": 0.3245792927459199,
+          "orb": 0.3245792927459199
+        }
+      ],
+      "antiscia": [
+        {
+          "planetId": 0,
+          "planetName": "Sun",
+          "antiscion": 259.18573923284947,
+          "contraAntiscion": 79.18573923284947
+        },
+        {
+          "planetId": 1,
+          "planetName": "Moon",
+          "antiscion": 206.7323454664238,
+          "contraAntiscion": 26.732345466423794
+        },
+        {
+          "planetId": 2,
+          "planetName": "Mercury",
+          "antiscion": 244.32717476494707,
+          "contraAntiscion": 64.32717476494707
+        },
+        {
+          "planetId": 3,
+          "planetName": "Venus",
+          "antiscion": 233.7780393840971,
+          "contraAntiscion": 53.7780393840971
+        },
+        {
+          "planetId": 4,
+          "planetName": "Mars",
+          "antiscion": 289.9999146236634,
+          "contraAntiscion": 109.99991462366341
+        },
+        {
+          "planetId": 5,
+          "planetName": "Jupiter",
+          "antiscion": 84.85120587433215,
+          "contraAntiscion": 264.85120587433215
+        },
+        {
+          "planetId": 6,
+          "planetName": "Saturn",
+          "antiscion": 254.342501717677,
+          "contraAntiscion": 74.34250171767701
+        },
+        {
+          "planetId": 7,
+          "planetName": "Uranus",
+          "antiscion": 264.2145586229918,
+          "contraAntiscion": 84.21455862299177
+        },
+        {
+          "planetId": 8,
+          "planetName": "Neptune",
+          "antiscion": 257.96189359986374,
+          "contraAntiscion": 77.96189359986374
+        },
+        {
+          "planetId": 9,
+          "planetName": "Pluto",
+          "antiscion": 312.90688594774224,
+          "contraAntiscion": 132.90688594774224
+        },
+        {
+          "planetId": 11,
+          "planetName": "true Node",
+          "antiscion": 223.1296390062061,
+          "contraAntiscion": 43.129639006206105
+        },
+        {
+          "planetId": 12,
+          "planetName": "mean Apogee",
+          "antiscion": 323.5360105569038,
+          "contraAntiscion": 143.53601055690382
+        },
+        {
+          "planetId": 15,
+          "planetName": "Chiron",
+          "antiscion": 76.18671904887367,
+          "contraAntiscion": 256.18671904887367
+        }
+      ],
+      "antisciaAspects": [],
+      "chartSect": "diurnal",
+      "meta": {
+        "engineVersion": "2.10.03",
+        "calculatedAt": "2026-10-12T06:58:27.870Z"
+      }
+    },
+    "_footer": "Powered by astroway.api - get your own key at https://api.astroway.info"
+  }
+}

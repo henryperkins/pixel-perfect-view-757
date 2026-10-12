@@ -1,0 +1,79 @@
+{
+  "kind": "offline-revalidation-of-lossless-paid-drafts",
+  "sourceRevision": "2f136409766af19bb5a629eb9841b8cdde4ae94b",
+  "modelGeneratingRevision": "2f136409766af19bb5a629eb9841b8cdde4ae94b",
+  "paidCaptureSha256": "a4c8c68e15aacdec5cde09c42cee241339082348097293237a1a59a8cccb198e",
+  "providerCallsMade": 0,
+  "interceptedRequests": 6,
+  "allRequestsUnchanged": true,
+  "allRawDraftsUnchanged": true,
+  "allAccepted": true,
+  "samples": [
+    {
+      "sampleId": "sample-1",
+      "caseId": "arc-single-pass",
+      "originalOutcome": "accepted",
+      "originalValidatorVersion": "daily-reference-10",
+      "outcome": "accepted",
+      "code": "accepted",
+      "validatorVersion": "daily-reference-10",
+      "requestUnchanged": true,
+      "rawDraftUnchanged": true
+    },
+    {
+      "sampleId": "sample-2",
+      "caseId": "arc-opening-three",
+      "originalOutcome": "accepted",
+      "originalValidatorVersion": "daily-reference-10",
+      "outcome": "accepted",
+      "code": "accepted",
+      "validatorVersion": "daily-reference-10",
+      "requestUnchanged": true,
+      "rawDraftUnchanged": true
+    },
+    {
+      "sampleId": "sample-3",
+      "caseId": "arc-return-three",
+      "originalOutcome": "accepted",
+      "originalValidatorVersion": "daily-reference-10",
+      "outcome": "accepted",
+      "code": "accepted",
+      "validatorVersion": "daily-reference-10",
+      "requestUnchanged": true,
+      "rawDraftUnchanged": true
+    },
+    {
+      "sampleId": "sample-4",
+      "caseId": "arc-closing-three",
+      "originalOutcome": "accepted",
+      "originalValidatorVersion": "daily-reference-10",
+      "outcome": "accepted",
+      "code": "accepted",
+      "validatorVersion": "daily-reference-10",
+      "requestUnchanged": true,
+      "rawDraftUnchanged": true
+    },
+    {
+      "sampleId": "sample-5",
+      "caseId": "arc-between-passes",
+      "originalOutcome": "accepted",
+      "originalValidatorVersion": "daily-reference-10",
+      "outcome": "accepted",
+      "code": "accepted",
+      "validatorVersion": "daily-reference-10",
+      "requestUnchanged": true,
+      "rawDraftUnchanged": true
+    },
+    {
+      "sampleId": "sample-6",
+      "caseId": "arc-truncated-scan",
+      "originalOutcome": "accepted",
+      "originalValidatorVersion": "daily-reference-10",
+      "outcome": "accepted",
+      "code": "accepted",
+      "validatorVersion": "daily-reference-10",
+      "requestUnchanged": true,
+      "rawDraftUnchanged": true
+    }
+  ]
+}

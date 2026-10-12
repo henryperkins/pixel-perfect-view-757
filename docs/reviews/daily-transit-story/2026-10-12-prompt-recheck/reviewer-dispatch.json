@@ -1,0 +1,15 @@
+{
+  "contextId": "writing-transit-prompt13",
+  "packetPath": "/home/ubuntu/.local/state/pixel-perfect-view-757/combined-release/20261012/prompt13-review-collection/blind/writing-transit-prompt13/packet.json",
+  "outputPath": "/home/ubuntu/.local/state/pixel-perfect-view-757/combined-release/20261012/prompt13-review-collection/blind/writing-transit-prompt13/review.json",
+  "packetSha256": "d9bfb9ca37974a616304c76596d4ca82b0dca7c451ace0b025bf5b627612758d",
+  "itemSetHash": "d05e0db32c921c7c5408c8141ec19c78a2dfe83ead60ef37196591408cd91e44",
+  "promptPath": "/home/ubuntu/.local/state/pixel-perfect-view-757/combined-release/20261012/prompt13-reviewer-prompt.txt",
+  "promptSha256": "c4418762062b0741ac9e227baa7ee65443d4ffbd19853dc4b69b4ddcdc23d942",
+  "dispatchAtUTC": "2026-10-12T06:54:09.521Z",
+  "fullDispatchMessageSha256": "6f3b963c10080c189a091291c257d1a3479589d9fd2ddb348ca86d8a723f260b",
+  "dispatchMechanism": "Codex collaboration.spawn_agent with fork_turns none",
+  "actualTaskName": "/root/writing_transit_prompt13",
+  "coordinatorHadUnblindedContext": true,
+  "reviewerToolAccessTechnicallySandboxed": false
+}

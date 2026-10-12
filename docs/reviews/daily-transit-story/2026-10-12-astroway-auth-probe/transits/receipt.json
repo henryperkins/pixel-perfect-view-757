@@ -1,0 +1,30 @@
+{
+  "atUTC": "2026-10-12T07:04:04.340Z",
+  "requests": 1,
+  "retries": 0,
+  "realBirthDataUsed": false,
+  "receipts": [
+    {
+      "id": "transits",
+      "httpStatus": 200,
+      "elapsedMs": 479,
+      "topLevelKeys": [
+        "ok",
+        "data",
+        "_footer"
+      ],
+      "dataKeys": [
+        "input",
+        "julianDay",
+        "siderealTime",
+        "planets",
+        "houses",
+        "aspects",
+        "parallelAspects",
+        "antiscia",
+        "antisciaAspects"
+      ],
+      "errorCode": null
+    }
+  ]
+}

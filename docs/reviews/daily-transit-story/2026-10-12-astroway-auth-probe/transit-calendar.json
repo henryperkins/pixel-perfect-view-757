@@ -1,0 +1,47 @@
+{
+  "id": "transit-calendar",
+  "url": "https://api.astroway.info/v1/transit-calendar",
+  "synthetic": true,
+  "input": {
+    "natal": {
+      "date": "1990-01-01",
+      "time": "12:00:00",
+      "timezoneOffset": 0,
+      "latitude": 0,
+      "longitude": 0,
+      "houseSystem": "P"
+    },
+    "startDate": "2026-10-01",
+    "endDate": "2026-10-31",
+    "maxOrb": 3,
+    "aspectAngles": [
+      0,
+      60,
+      90,
+      120,
+      150,
+      180
+    ],
+    "transitPlanetIds": [
+      6
+    ]
+  },
+  "startedAt": "2026-10-12T06:58:28.024Z",
+  "elapsedMs": 110,
+  "httpStatus": 403,
+  "payload": {
+    "ok": false,
+    "error": {
+      "code": "ENDPOINT_NOT_IN_SCOPE",
+      "message": "This key may only call horoscope/daily, transits, chart, and /transit-calendar is not in that list. Widen the key's endpoint scope, or use a key without one.",
+      "details": {
+        "endpoint": "transit-calendar",
+        "allowed_endpoints": [
+          "horoscope/daily",
+          "transits",
+          "chart"
+        ]
+      }
+    }
+  }
+}

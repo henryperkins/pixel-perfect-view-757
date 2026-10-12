@@ -1,0 +1,775 @@
+{
+  "protocolVersion": "daily-writing-ai-review-1",
+  "kind": "review",
+  "packetSha256": "d9bfb9ca37974a616304c76596d4ca82b0dca7c451ace0b025bf5b627612758d",
+  "itemSetHash": "d05e0db32c921c7c5408c8141ec19c78a2dfe83ead60ef37196591408cd91e44",
+  "reviewer": {
+    "contextId": "writing-transit-prompt13",
+    "model": "unknown",
+    "configuration": "unknown",
+    "promptSha256": "c4418762062b0741ac9e227baa7ee65443d4ffbd19853dc4b69b4ddcdc23d942"
+  },
+  "reviewedAt": "2026-10-12T06:54:09.521Z",
+  "blindness": {
+    "declaration": "I read only the assigned packet and review dispatch, with automatically attached repository AGENTS.md notes, workspace path, shell, date, timezone, permission details, tool and skill catalogs, general developer guidance, and a memory summary with memory-location guidance visible but no item origins, implementation files, prior verdicts, or other reviews consulted; shared model family and recognizable prose style remain limitations.",
+    "inputs": [
+      "packet"
+    ],
+    "sawOriginLabels": false,
+    "sawPriorVerdicts": false,
+    "sawOtherReviews": false,
+    "sawImplementationContext": false
+  },
+  "reassessmentOf": null,
+  "items": [
+    {
+      "itemId": "item-12",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "The role/capacity mismatch gains a useful return-specific option: a smaller adjustment to a method or boundary if the earlier approach no longer fits."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "The role, title, immediate-demand, and timing statements retain I1, D1, P1, and T1; the calculated sequence and conditional adjustment reproduce A1 and P2 without adding personal history."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The first paragraph connects the role problem to a possible adjustment, followed by a concrete title/responsibility example; the later general choice sentence adds little to that progression."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Plain and readable throughout, although the calculated-contact sentence makes the opening paragraph more formal."
+        },
+        "repetition": {
+          "score": 2,
+          "reason": "The opening interpretation, title paragraph, general choice, and timing formula recur almost unchanged across the packet; the conditional smaller adjustment supplies the meaningful variation."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "Second of three contacts, the September first contact, and the December exact date are supported calculations; an earlier personal approach is introduced only conditionally."
+        },
+        "chapterIntegration": {
+          "score": 4,
+          "reason": "The smaller adjustment to a method or boundary follows directly from the primary scene's boundary problem, with the earlier-approach condition intact."
+        }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "wtp13-12-1",
+          "paragraph": 2,
+          "passage": "A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.",
+          "supportingFactIds": [
+            "D1",
+            "I1"
+          ],
+          "missingFactIds": [],
+          "category": "repetition",
+          "severity": "minor",
+          "explanation": "This complete example paragraph is repeated across most of the supplied items, making the return reading sound more interchangeable than its supported chapter distinction.",
+          "proposedCorrection": "Shorten the optional title example or connect one of its supplied examples directly to the role and boundary discussion, without adding a new scene."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-02",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "An unsettled decision can remain provisional while useful information is reconsidered, giving the capacity and boundary scene a supported practical distinction."
+        },
+        "grounding": {
+          "score": 4,
+          "reason": "C1, I1, A1, P2, and D1 support the substantive content; the opening adds an unnecessary can to the supplied categorical relationship but does not strengthen it or invent a personal state."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The interpretation leads, followed by the calculated pause and a provisional decision; moving the established-role sentence into the opening would make the progression smoother."
+        },
+        "voice": {
+          "score": 3,
+          "reason": "Clear but somewhat segmented: the orb statement and calculation sentence interrupt an otherwise plain discussion of roles and decisions."
+        },
+        "repetition": {
+          "score": 3,
+          "reason": "The title paragraph and role wording recur elsewhere, while the organization and provisional-information emphasis provide some supported variation."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "The three-contact episode and pause stay explicitly calculated, with no invented date or claim that the reader previously made a decision."
+        },
+        "chapterIntegration": {
+          "score": 4,
+          "reason": "Paragraph 2 places the provisional-decision option beside the demanding-role scene and preserves the condition that a decision remains unsettled."
+        }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "wtp13-02-1",
+          "paragraph": 1,
+          "passage": "Expectations can outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+          "supportingFactIds": [
+            "I1"
+          ],
+          "missingFactIds": [],
+          "category": "style",
+          "severity": "minor",
+          "explanation": "The added can unnecessarily hedges the source's categorical relationship between expectations outpacing capacity and the need for clearer boundaries; the weaker statement remains supported, so this is a wording issue rather than an invented claim.",
+          "proposedCorrection": "Where expectations outpace available capacity, a routine or responsibility needs clearer boundaries."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-05",
+      "scores": {
+        "specificity": {
+          "score": 5,
+          "reason": "The ordinary commitment supplies a concrete setting for repeating a workable response, while keeping its usefulness open to review."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "The boundary and demanding-role statements follow I1, the conditional repetition and review follow P2, and the contact count follows A1 without claiming a personal resolution."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "Paragraph 2 develops a distinct practical possibility from paragraph 1, but repeats the demanding-role setup at length."
+        },
+        "voice": {
+          "score": 3,
+          "reason": "Generally plain, with an awkward contact-name construction and a long conditional opening in the second paragraph."
+        },
+        "repetition": {
+          "score": 3,
+          "reason": "This item avoids the packet's repeated title paragraph, but repeats its own demanding-role and deliberate-effort setup before reaching the chapter distinction."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "Third of three is confined to calculated contacts; a workable response remains an if, and its usefulness remains reviewable rather than settled."
+        },
+        "chapterIntegration": {
+          "score": 5,
+          "reason": "The workable response is explicitly applied when the established role feels demanding and its obligations require more effort, integrating P2 within I1's primary scene."
+        }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "wtp13-05-1",
+          "paragraph": 2,
+          "passage": "When an established role feels demanding and its obligations require more deliberate effort than usual,",
+          "supportingFactIds": [
+            "I1",
+            "P2"
+          ],
+          "missingFactIds": [],
+          "category": "repetition",
+          "severity": "minor",
+          "explanation": "The second paragraph repeats nearly the entire role setup from the end of paragraph 1 before introducing its useful new possibility.",
+          "proposedCorrection": "Use a shorter conditional bridge, such as If that role feels demanding, while preserving the separate condition that the response seems workable."
+        },
+        {
+          "findingId": "wtp13-05-2",
+          "paragraph": 1,
+          "passage": "Transiting Saturn square the natal Sun highlights that tension.",
+          "supportingFactIds": [
+            "C1",
+            "I1"
+          ],
+          "missingFactIds": [],
+          "category": "voice",
+          "severity": "minor",
+          "explanation": "The contact name reads like technical shorthand inside an otherwise plain sentence.",
+          "proposedCorrection": "Saturn's square to the natal Sun highlights that tension."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-07",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "The capacity/boundary distinction is made tangible through the gap between a title and the responsibilities occupying a week."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "The reordered primary interpretation preserves I1's supported categorical boundary statement and conditional role statement; D1, P1, C1, and T1 support the remaining claims."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The boundary problem progresses to the title example and an immediate-demand possibility; the final paragraph combines that possibility with several timing details."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "The opening uses direct plain language, and the calculation details remain clearly labeled even though they make the ending more formal."
+        },
+        "repetition": {
+          "score": 3,
+          "reason": "The D1 paragraph and P1 sentence recur, but the boundary-first opening and combined ending provide some structural variation without adding meaning."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": null,
+          "reason": "No A1 supplied."
+        },
+        "chapterIntegration": {
+          "score": null,
+          "reason": "No P2 supplied."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-10",
+      "scores": {
+        "specificity": {
+          "score": 5,
+          "reason": "The scope of a commitment is a concrete, supplied way to describe a familiar demand within the boundary and capacity scene."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1 supports the role and boundary framing, P2 supports the conditional familiar-demand example, A1 supports one calculated contact in a complete passage, and D1 supports the title example."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The first paragraph moves from capacity to a concrete commitment choice, and the second adds the title/responsibility gap; the final calculation sentence in paragraph 1 is a small shift in register."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Readable and consistent with plain tone, with only a slightly cumbersome repeated where construction in the opening."
+        },
+        "repetition": {
+          "score": 3,
+          "reason": "The title paragraph is shared with other items, while the commitment-scope example gives the primary paragraph its own supported emphasis."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "Complete passage describes the calculation only; the text does not turn it into a completed personal process or infer additional contacts."
+        },
+        "chapterIntegration": {
+          "score": 5,
+          "reason": "P2's scope-of-commitment example appears within the initial discussion of demanding obligations and clearer boundaries, and familiarity remains conditional."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-09",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "A new demand can be met with an open response and a small decision that leaves room to learn, giving the role/boundary interpretation an opening-specific emphasis."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "Every statement follows the supplied I1, A1, P2, D1, P1, or T1 wording, retaining the new-demand condition and both can statements."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The first paragraph links the role problem, calculated opening, and conditional response; the separate general-choice paragraph partly repeats the small-decision idea."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "The language is plain and consistent, although the opening paragraph carries both interpretive and calculation material."
+        },
+        "repetition": {
+          "score": 2,
+          "reason": "Several full blocks recur across the packet, and the general-choice paragraph also overlaps the small-decision distinction already expressed in this item."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "The first-of-three sequence and September exact date remain calculated facts; the text does not assert that a new personal demand has actually appeared."
+        },
+        "chapterIntegration": {
+          "score": 4,
+          "reason": "The conditional open response and small decision follow the established-role and boundary scene in paragraph 1, preserving P2's exploratory emphasis."
+        }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "wtp13-09-1",
+          "paragraph": 3,
+          "passage": "If a demand feels immediate, one clearly described choice can offer a place to begin.",
+          "supportingFactIds": [
+            "P1",
+            "P2"
+          ],
+          "missingFactIds": [],
+          "category": "repetition",
+          "severity": "minor",
+          "explanation": "After the supported small-decision possibility in paragraph 1, this separate generic choice paragraph offers limited additional practical development and repeats a sentence used elsewhere.",
+          "proposedCorrection": "Omit this optional paragraph or integrate its immediacy condition briefly into the primary discussion without repeating the choice idea."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-04",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "The reading distinguishes repeating a response that seems workable from treating its usefulness as settled, within the supplied ordinary-commitment scene."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "The primary interpretation, calculated third contact, conditional repetition, reviewability, title example, immediate-demand option, and date all reproduce the respective supplied statements."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The opening develops a clear conditional repetition-and-review thought; the later general starting-choice sentence makes the overall progression less focused."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Plain and consistent, with transparent calculation wording and no directive or falsely conclusive closing language."
+        },
+        "repetition": {
+          "score": 2,
+          "reason": "The repeated base interpretation, title block, and generic choice occupy much of the item; the ordinary-commitment and reviewability sentences provide its distinct emphasis."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "The third calculated contact and March date are supported, while possible usefulness remains open to review; no personal success or final resolution is inferred."
+        },
+        "chapterIntegration": {
+          "score": 4,
+          "reason": "Repeating a workable response in an ordinary commitment follows the routine/responsibility problem in the same paragraph, with the condition and reviewability retained."
+        }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "wtp13-04-1",
+          "paragraph": 3,
+          "passage": "If a demand feels immediate, one clearly described choice can offer a place to begin.",
+          "supportingFactIds": [
+            "P1",
+            "P2"
+          ],
+          "missingFactIds": [],
+          "category": "repetition",
+          "severity": "minor",
+          "explanation": "This optional general-choice sentence returns to wording repeated across the packet after the item has already established a more useful repeat-and-review distinction.",
+          "proposedCorrection": "Omit the optional general-choice paragraph to keep the practical emphasis on the conditional ordinary commitment and continued review."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-11",
+      "scores": {
+        "specificity": {
+          "score": 5,
+          "reason": "The smaller adjustment is explicitly located at a method or boundary where expectations outpace capacity, giving the return a concrete connection to the primary problem."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1 and D1 support paragraph 1, while A1 and P2 support paragraph 2; the added capacity phrase reuses I1 rather than adding a new reason or personal event."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The capacity and title discussion leads clearly to a conditional adjustment; the first sentence is somewhat circular in its repeated where construction."
+        },
+        "voice": {
+          "score": 3,
+          "reason": "The practical content is clear, but the contact-name shorthand and a routine showing where it needs boundaries make the opening less natural."
+        },
+        "repetition": {
+          "score": 3,
+          "reason": "The title paragraph's wording is reused, but its integration into the opening and the explicit capacity link in paragraph 2 produce some supported variation."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "Second of three and the September first contact stay calculated, and the earlier approach is only a possibility under the supplied if condition."
+        },
+        "chapterIntegration": {
+          "score": 5,
+          "reason": "The adjustment to a method or boundary explicitly addresses I1's capacity mismatch in paragraph 2, rather than standing as an unrelated chapter statement."
+        }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "wtp13-11-1",
+          "paragraph": 1,
+          "passage": "Transiting Saturn square natal Sun frames how an established role can feel demanding when its obligations require more deliberate effort than usual.",
+          "supportingFactIds": [
+            "C1",
+            "I1"
+          ],
+          "missingFactIds": [],
+          "category": "voice",
+          "severity": "minor",
+          "explanation": "The contact-name shorthand makes this plain-tone sentence read like an unedited label.",
+          "proposedCorrection": "Saturn's square to the natal Sun frames how an established role can feel demanding when its obligations require more deliberate effort than usual."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-08",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "The capacity and boundary problem is paired with a small, open-to-consideration response to a new demand, followed by the concrete title/responsibility example."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "The boundary statement retains I1's supported categorical meaning; the role possibility, calculated first contact, conditional new demand, small decision, and title example trace to I1, A1, P2, and D1."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The first paragraph develops the practical opening distinction and the second supplies the title example, with the calculation sentence causing only a minor interruption."
+        },
+        "voice": {
+          "score": 3,
+          "reason": "Mostly direct and plain, but the transiting-contact construction sounds like technical shorthand inside a prose sentence."
+        },
+        "repetition": {
+          "score": 3,
+          "reason": "The title wording and several source phrases recur, while the boundary-first opening and joined chapter sentences provide some restrained variation."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "First of three is explicitly calculated; the text retains if for the new demand and can for the possible response and learning."
+        },
+        "chapterIntegration": {
+          "score": 4,
+          "reason": "The open response and small decision are placed within paragraph 1's role and boundary discussion, with neither a new demand nor learning assumed to have occurred."
+        }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "wtp13-08-1",
+          "paragraph": 1,
+          "passage": "Transiting Saturn square the natal Sun frames how an established role can feel demanding when its obligations require more deliberate effort than usual.",
+          "supportingFactIds": [
+            "C1",
+            "I1"
+          ],
+          "missingFactIds": [],
+          "category": "voice",
+          "severity": "minor",
+          "explanation": "The contact-name construction is less natural than the surrounding plain prose.",
+          "proposedCorrection": "Saturn's square to the natal Sun frames how an established role can feel demanding when its obligations require more deliberate effort than usual."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-01",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "The role/capacity distinction is made practical through a responsibility taking more of the week than a title suggests and a conditional clearly described choice."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1, D1, P1, and T1 directly support all four paragraphs; exact today is supplied timing, and no additional sequence or personal event is asserted."
+        },
+        "coherence": {
+          "score": 5,
+          "reason": "The paragraphs have distinct purposes: primary meaning, a concrete title/responsibility example, an immediate-demand possibility, and labeled timing."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Plain, readable, and consistent; the brief timing label clearly separates calculation from interpretation."
+        },
+        "repetition": {
+          "score": 2,
+          "reason": "Nearly all of the prose reappears in other packet items, especially the title example and conditional starting-choice sentence; no unsupported variation is needed, but compression could reduce the shared-block feel."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": null,
+          "reason": "No A1 supplied."
+        },
+        "chapterIntegration": {
+          "score": null,
+          "reason": "No P2 supplied."
+        }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "wtp13-01-1",
+          "paragraph": 2,
+          "passage": "A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.",
+          "supportingFactIds": [
+            "D1"
+          ],
+          "missingFactIds": [],
+          "category": "repetition",
+          "severity": "minor",
+          "explanation": "The full title-example block is repeated throughout the packet, reducing verbal distinctiveness even though it is supported and useful.",
+          "proposedCorrection": "Retain one supplied example of the gap between a title and lived responsibilities, with shorter wording, without inventing additional circumstances."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-03",
+      "scores": {
+        "specificity": {
+          "score": 5,
+          "reason": "The scope of a commitment supplies a concrete way to describe a demand that feels familiar, directly within the role and clearer-boundary scene."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "The reading retains I1, A1, P2, D1, P1, and T1 without turning familiarity into biography or a complete calculated passage into personal completion."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The primary paragraph develops a concrete commitment example, followed by a title example and timing; the separate general-choice paragraph partly restates the commitment-choice idea."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Clear and plain, with an adequately marked calculation sentence and conditional practical wording."
+        },
+        "repetition": {
+          "score": 2,
+          "reason": "The shared interpretation and title blocks dominate the wording, and the general-choice paragraph overlaps the more concrete commitment-scope example."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "One contact in a complete passage and the September date remain calculation facts; no claim of a final personal lesson or a known earlier demand is added."
+        },
+        "chapterIntegration": {
+          "score": 5,
+          "reason": "The scope-of-commitment example concretely develops the responsibility and boundary issue in paragraph 1 while preserving the familiar-demand condition."
+        }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "wtp13-03-1",
+          "paragraph": 3,
+          "passage": "If a demand feels immediate, one clearly described choice can offer a place to begin.",
+          "supportingFactIds": [
+            "P1",
+            "P2"
+          ],
+          "missingFactIds": [],
+          "category": "repetition",
+          "severity": "minor",
+          "explanation": "The item already gives the more concrete choice of a commitment's scope; this separate generic choice sentence repeats the move with less specificity.",
+          "proposedCorrection": "Omit the optional general-choice paragraph or combine its immediacy condition with the concrete commitment example without asserting either condition as fact."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-06",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "Keeping an unsettled decision provisional while reconsidering useful information is a supported practical distinction within the role and boundary discussion."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "The primary interpretation, calculated pause, conditional provisional decision, title example, and between-contact timing directly follow I1, A1, P2, D1, and T1."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The first paragraph joins the role problem to the provisional decision, followed by a title example and a short timing statement; the calculation sentence slightly interrupts the interpretive thread."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "Plain and understandable, with the timing statement kept brief and the possibility of reconsideration expressed without a directive."
+        },
+        "repetition": {
+          "score": 3,
+          "reason": "The core interpretation and title paragraph are reused, but the provisional-information emphasis and short between-contact ending keep the item focused on its supplied distinction."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "The three-contact pause and between-contact window are retained without an invented exact day, prior personal decision, or claim that the situation will resolve."
+        },
+        "chapterIntegration": {
+          "score": 4,
+          "reason": "P2's unsettled-decision condition and provisional option follow the primary role/capacity scene in paragraph 1 and remain conditional."
+        }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "verdict": "pass"
+    }
+  ],
+  "contrastChecks": [
+    {
+      "setId": "contrast-1",
+      "supported": true,
+      "explanation": "The opening keeps a possible response open and allows a small decision to leave room to learn; the return offers a smaller method or boundary adjustment if an earlier approach no longer fits; the closing allows a workable response to be repeated in an ordinary commitment while its usefulness remains reviewable. These are distinct P2-supported practical emphases within I1's demanding-role scene, and each A1 statement labels a calculated contact rather than establishing the reader's history or resolution.",
+      "passages": [
+        {
+          "itemId": "item-11",
+          "paragraph": 2,
+          "passage": "This is the second of three calculated contacts; the first exact contact falls in September 2026. If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary where expectations outpace available capacity.",
+          "factIds": [
+            "A1",
+            "P2",
+            "I1"
+          ]
+        },
+        {
+          "itemId": "item-08",
+          "paragraph": 1,
+          "passage": "This is the first of three calculated contacts; the first exact contact falls in September 2026. If a new demand catches your attention, your response can remain open to consideration, and a small decision can leave room to learn.",
+          "factIds": [
+            "A1",
+            "P2"
+          ]
+        },
+        {
+          "itemId": "item-05",
+          "paragraph": 2,
+          "passage": "When an established role feels demanding and its obligations require more deliberate effort than usual, repeating a response in an ordinary commitment is one possibility if that response seems workable. Its usefulness can remain open to review. This is the third of three calculated contacts; the first exact contact falls in September 2026.",
+          "factIds": [
+            "I1",
+            "P2",
+            "A1"
+          ]
+        }
+      ]
+    },
+    {
+      "setId": "contrast-2",
+      "supported": true,
+      "explanation": "The supplied chapter sentences distinguish an open response to a possible new demand, a smaller adjustment if an earlier method no longer fits, and possible repetition of a workable response with continued review. Although the surrounding source wording is heavily repeated, these practical choices are distinct and conditional; first, second, and third refer only to calculated contacts.",
+      "passages": [
+        {
+          "itemId": "item-09",
+          "paragraph": 1,
+          "passage": "This is the first of three calculated contacts; the first exact contact falls in September 2026. If a new demand catches your attention, your response can remain open to consideration. A small decision can leave room to learn.",
+          "factIds": [
+            "A1",
+            "P2"
+          ]
+        },
+        {
+          "itemId": "item-12",
+          "paragraph": 1,
+          "passage": "This is the second of three calculated contacts; the first exact contact falls in September 2026. If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.",
+          "factIds": [
+            "A1",
+            "P2"
+          ]
+        },
+        {
+          "itemId": "item-04",
+          "paragraph": 1,
+          "passage": "This is the third of three calculated contacts; the first exact contact falls in September 2026. If a response seems workable, repeating it in an ordinary commitment is one possibility. Its usefulness can remain open to review.",
+          "factIds": [
+            "A1",
+            "P2"
+          ]
+        }
+      ]
+    }
+  ],
+  "repetitionChecks": [],
+  "verdict": "pass"
+}

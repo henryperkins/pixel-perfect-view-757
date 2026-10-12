@@ -1,0 +1,54 @@
+{
+  "kind": "prompt13-writing-execution-verification",
+  "sourceRevision": "2f136409766af19bb5a629eb9841b8cdde4ae94b",
+  "applicationChecks": {
+    "tests": {
+      "passed": 528,
+      "failed": 0,
+      "command": "node --test --test-concurrency=4 --test-timeout=120000 tests/*.test.mjs"
+    },
+    "typecheck": "pass",
+    "build": "pass",
+    "lint": "pass on 11 changed application/test/control files; full repository lint not rerun"
+  },
+  "independentCodeReview": {
+    "criticalFindings": 0,
+    "importantFindings": 0
+  },
+  "sourceAndTemplatePreflight": {
+    "cases": 8,
+    "providerCallsMade": 0,
+    "pass": true
+  },
+  "paidExecution": {
+    "attempts": 6,
+    "http200": 6,
+    "accepted": 6,
+    "losslessRawDrafts": 6,
+    "retries": 0,
+    "sourceUnchangedThroughout": true,
+    "captureSha256": "a4c8c68e15aacdec5cde09c42cee241339082348097293237a1a59a8cccb198e",
+    "cost": "unknown"
+  },
+  "writingReview": {
+    "verdict": "pass",
+    "reviewedDrafts": 12,
+    "passedDrafts": 12,
+    "substantiveFindings": 0,
+    "retainedCompatiblePasses": 3,
+    "targetedSetPasses": 15,
+    "targetedSetSize": 15,
+    "humanReviewCompleted": false,
+    "reviewSha256": "4605bb4ceac5ff6746deac952c755972e3bd305fd964b16603e68dff3d425448"
+  },
+  "fullBenchmarkClaim": false,
+  "nativeSourceQualified": false,
+  "candidatesActivated": false,
+  "staging": {
+    "version": "0.7.1",
+    "releaseId": "edcc53cf-d19a-415b-a8a2-a66040846b1d",
+    "active": false,
+    "verifiedRoundTrip": true,
+    "activePointersUnchanged": true
+  }
+}

@@ -4,8 +4,8 @@ The operator requested a smaller evidence requirement on 2026-10-12. This is the
 current writing-readiness gate. It replaces exhaustive paired model inventories,
 two full reviewer passes and catalogue-wide evidence as prerequisites for this
 writing decision. Existing full-benchmark results remain historical evidence;
-they are not relabeled as passes. Both candidates stay inactive pending the
-appropriate readiness check and a separate activation request.
+they are not relabeled as passes. The operator subsequently requested joint
+activation. Both candidates remain inactive until the transit service is ready.
 
 **Current result (2026-10-12): passed.** The
 [completed paid recheck](2026-10-12-raw-draft-continuation/README.md) passes all six
@@ -14,8 +14,10 @@ review of the final four drafts found no substantive defects. Together with the
 retained passing templates, other raw cases, quiet safety check and supported
 duty/freedom distinctions, this satisfies the targeted natal writing gate. Both
 candidates remain inactive. The operator subsequently requested joint activation;
-code was pushed to `main` at `26cd0c9`, while the transit writing and native-source
-gates remain open. See the [transit writing status](../daily-transit-story/writing-qualification.md).
+the shared prompt/guard correction was pushed to `main` at `2f13640`, and the
+transit small writing gate now passes 15/15 items. Combined release `0.7.1` is
+staged inactive with unchanged active pointers. Native-source integration remains
+open. See the [transit writing status](../daily-transit-story/writing-qualification.md).
 
 **First result (2026-10-12):** the [targeted subset review](2026-10-12-lightweight-subset-review/README.md)
 failed. It passed 10/14 prose samples (4/7 raw drafts, 6/7 templates); the quiet template
@@ -29,8 +31,8 @@ call hit HTTP 429; that run stopped without retries, leaving three second drafts
 unattempted at the time. The continuation above closes those writing gaps while
 preserving the partial run, its rate limit and a later timeout as historical evidence.
 
-This set covers natal writing only. It does not qualify transit-candidate chapter
-copy; that candidate needs its own small representative review before activation.
+This set covers natal writing only. Transit-candidate chapter copy passed its
+own [small representative review](../daily-transit-story/2026-10-12-prompt-recheck/README.md).
 
 The purpose is to establish that a few representative readings offer useful,
 readable distinctions, stay within their supplied facts, and fall back safely.

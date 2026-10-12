@@ -1,0 +1,44 @@
+{
+  "files": [
+    {
+      "file": "after-scope/probe.mjs",
+      "sha256": "bfc58d10c140e84f8a3984f33ab16da1545bc783877ee0e9754f1346e8b4b674"
+    },
+    {
+      "file": "after-scope/receipt.json",
+      "sha256": "36b4628154f1ba08e2abf54ccd27106b9d4b8373b122f14f03ce0de3dd04f2b0"
+    },
+    {
+      "file": "after-scope/transit-calendar.json",
+      "sha256": "1498e93ca855a2c1b5df04588c62065f99078d9c6add6a89a50135ba437789f6"
+    },
+    {
+      "file": "chart.json",
+      "sha256": "cb9a1c2005ddd8be7325fde2997c998338028f02782ec6a6ab990be1be021d8c"
+    },
+    {
+      "file": "probe.mjs",
+      "sha256": "516fa6bf52cb86e64c09bb39c15e948e5cb0439703a610799d3aa2108444faa0"
+    },
+    {
+      "file": "receipt.json",
+      "sha256": "409e1f22b07ff95187f401a7766bf703aeee6af8f1909dc982758a8741be7146"
+    },
+    {
+      "file": "transit-calendar.json",
+      "sha256": "c085e4039d7544f4c56a12bddcd91f7a96cef6bd66688a869bf43deff5bb9264"
+    },
+    {
+      "file": "transits/probe.mjs",
+      "sha256": "dd314409e1a2d3f89e149c6f1b0dc5f9b882a8cf0cb3da73cdb6abf69c625d6d"
+    },
+    {
+      "file": "transits/receipt.json",
+      "sha256": "27fb30fc8cbee28acfa8df33901339c24cee64033cf7d7b4b8d4a62a1eb33fbc"
+    },
+    {
+      "file": "transits/transits.json",
+      "sha256": "e3de26e8571244a16ce46b2680739c510cecd7fd86245711537576bfa766ac2b"
+    }
+  ]
+}

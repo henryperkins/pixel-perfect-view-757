@@ -1,0 +1,88 @@
+{
+  "kind": "targeted-transit-writing-capture",
+  "interCallPauseMs": 30000,
+  "sourceRevision": "2f136409766af19bb5a629eb9841b8cdde4ae94b",
+  "trackedSourceSha256": "25065eb38f93af3de6b8aca2ba3f3ce51e220ca81f019a9d54abba0da1c80746",
+  "runnerSha256": "fbb228c3c0cd5844dd15701468e6df9d3ab5fdd003f03f959e47eec839a1770d",
+  "configured": true,
+  "provider": "gemini-enterprise",
+  "model": "gemini-enterprise/gemini-3.8-flash",
+  "bundleSource": "transit-candidate",
+  "bundleVersion": "builtin-0.7.1",
+  "promptVersion": "daily-astro-body-13",
+  "validatorVersion": "daily-reference-10",
+  "schedule": [
+    {
+      "sampleId": "sample-1",
+      "caseId": "arc-single-pass",
+      "repetition": 1
+    },
+    {
+      "sampleId": "sample-2",
+      "caseId": "arc-opening-three",
+      "repetition": 1
+    },
+    {
+      "sampleId": "sample-3",
+      "caseId": "arc-return-three",
+      "repetition": 1
+    },
+    {
+      "sampleId": "sample-4",
+      "caseId": "arc-closing-three",
+      "repetition": 1
+    },
+    {
+      "sampleId": "sample-5",
+      "caseId": "arc-between-passes",
+      "repetition": 1
+    },
+    {
+      "sampleId": "sample-6",
+      "caseId": "arc-truncated-scan",
+      "repetition": 1
+    }
+  ],
+  "maximumModelAttempts": 6,
+  "retries": 0,
+  "concurrency": 1,
+  "resumeSupported": false,
+  "servingDeadlineMs": 60000,
+  "runtimeDeadlineMs": 180000,
+  "runtimePolicyOverride": {
+    "kind": "extended-synthetic-runtime-deadline",
+    "servingDeadlineMs": 60000,
+    "runtimeDeadlineMs": 180000,
+    "servingAvailabilityEstablished": false,
+    "transformedModule": "src/lib/ai/diagnostics.ts",
+    "originalModuleSha256": "03ed2c77f4a524fa04628c316177758f58c3a25a6201c7554fdc41b9dd7e7fe2",
+    "transformedModuleSha256": "1bc7375cc7bdcabdab08dc6e2a4fcdff9b76f2cb2f14afb9e7253f2b69bc6dea",
+    "transformSpecification": {
+      "kind": "exact-source-substitution",
+      "module": "src/lib/ai/diagnostics.ts",
+      "from": "export const DAILY_GATEWAY_TIMEOUT_MS = 60_000;",
+      "to": "export const DAILY_GATEWAY_TIMEOUT_MS = 180_000;",
+      "expectedMatches": 1,
+      "scope": "this runner's Vite SSR module loader only",
+      "servingDeadlineMs": 60000,
+      "runtimeDeadlineMs": 180000
+    },
+    "transformSpecificationSha256": "fa47d6c2bf3ff407357a30f404c71e2acf584613e211a97d2c2025bce1ed5db6",
+    "nativeProviderFunctionOrPayloadTransformed": false
+  },
+  "fullBenchmarkClaim": false,
+  "executionContext": {
+    "kind": "local-production-module-synthetic-capture",
+    "nodeVersion": "v24.21.0",
+    "moduleLoader": "Vite ssrLoadModule",
+    "configFile": false,
+    "envFile": false,
+    "hostedWorkflowExecuted": false,
+    "adminAuthenticationVerified": false,
+    "memberProviderVerified": false,
+    "servingAvailabilityEstablished": false,
+    "databaseOrReadingCacheAccessed": false,
+    "candidatesActivated": false
+  },
+  "startedAt": "2026-10-12T06:43:26.415Z"
+}

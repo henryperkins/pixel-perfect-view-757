@@ -1,0 +1,670 @@
+{
+  "id": "transits",
+  "url": "https://api.astroway.info/v1/transits",
+  "synthetic": true,
+  "input": {
+    "date": "1990-01-01",
+    "time": "12:00:00",
+    "timezoneOffset": 0,
+    "latitude": 0,
+    "longitude": 0,
+    "houseSystem": "P",
+    "transitDate": "2026-10-12",
+    "transitTime": "12:00:00",
+    "transitTzOffset": 0
+  },
+  "startedAt": "2026-10-12T07:04:03.859Z",
+  "elapsedMs": 479,
+  "httpStatus": 200,
+  "payload": {
+    "ok": true,
+    "data": {
+      "input": {
+        "name": "Transit 2026-10-12",
+        "date": "2026-10-12",
+        "time": "12:00:00",
+        "timezoneOffset": 0,
+        "latitude": 0,
+        "longitude": 0,
+        "houseSystem": "P",
+        "city": "",
+        "cosmogram": true
+      },
+      "julianDay": 2461326,
+      "siderealTime": 13.405303588747287,
+      "planets": [
+        {
+          "id": 0,
+          "name": "Sun",
+          "longitude": 199.18097739730766,
+          "latitude": -0.00012170775446290062,
+          "distance": 0.9980828060478903,
+          "speedLong": 0.9896934487102559,
+          "speedLat": -0.000006187751476074189,
+          "speedDist": -0.00028723959851166244,
+          "isRetrograde": false,
+          "declination": -7.509257312180311,
+          "rightAscension": 197.70108777243408
+        },
+        {
+          "id": 1,
+          "name": "Moon",
+          "longitude": 220.9036600646716,
+          "latitude": -4.859040182021699,
+          "distance": 0.0026383844960502973,
+          "speedLong": 12.570446352767219,
+          "speedLat": -0.3388800847514743,
+          "speedDist": 0.000024907168876057785,
+          "isRetrograde": false,
+          "declination": -19.708012035062755,
+          "rightAscension": 216.8742979749791
+        },
+        {
+          "id": 2,
+          "name": "Mercury",
+          "longitude": 224.1840234148782,
+          "latitude": -2.906153489440349,
+          "distance": 1.0013963768164336,
+          "speedLong": 0.9780049272826113,
+          "speedLat": -0.07281553338516938,
+          "speedDist": -0.017275466680216473,
+          "isRetrograde": false,
+          "declination": -18.867668343432292,
+          "rightAscension": 220.8127368041788
+        },
+        {
+          "id": 3,
+          "name": "Venus",
+          "longitude": 216.8253728836417,
+          "latitude": -7.571235507458336,
+          "distance": 0.2951650736675432,
+          "speedLong": -0.3593114659602641,
+          "speedLat": 0.01260666693929115,
+          "speedDist": -0.0034158113245512382,
+          "isRetrograde": true,
+          "declination": -20.92932164615166,
+          "rightAscension": 211.83849754703212
+        },
+        {
+          "id": 4,
+          "name": "Mars",
+          "longitude": 128.25075945801584,
+          "latitude": 1.219136424349987,
+          "distance": 1.5836687255176543,
+          "speedLong": 0.557562084932198,
+          "speedLat": 0.01831051424088464,
+          "speedDist": -0.007366771220012271,
+          "isRetrograde": false,
+          "declination": 19.378824281443904,
+          "rightAscension": 131.0059536309326
+        },
+        {
+          "id": 5,
+          "name": "Jupiter",
+          "longitude": 141.5507550917659,
+          "latitude": 0.6287165367355559,
+          "distance": 5.777602817913234,
+          "speedLong": 0.1610028046012174,
+          "speedLat": 0.0028800111124619664,
+          "speedDist": -0.013219162637696522,
+          "isRetrograde": false,
+          "declination": 14.915052051115076,
+          "rightAscension": 144.13662451451057
+        },
+        {
+          "id": 6,
+          "name": "Saturn",
+          "longitude": 10.677547845462117,
+          "latitude": -2.7128148414171465,
+          "distance": 8.443917226175776,
+          "speedLong": -0.07734794969578629,
+          "speedLat": 0.0005080102839888799,
+          "speedDist": 0.0024270688008551544,
+          "isRetrograde": true,
+          "declination": 1.7300119061636843,
+          "rightAscension": 10.87782577672029
+        },
+        {
+          "id": 7,
+          "name": "Uranus",
+          "longitude": 65.28397685983235,
+          "latitude": -0.15283041046002996,
+          "distance": 18.733753575014685,
+          "speedLong": -0.025220494556083755,
+          "speedLat": 0.00004137296095240553,
+          "speedDist": -0.012281567473843022,
+          "isRetrograde": true,
+          "declination": 21.030863197806315,
+          "rightAscension": 63.38716039046047
+        },
+        {
+          "id": 8,
+          "name": "Neptune",
+          "longitude": 2.550520895988424,
+          "latitude": -1.4196118360676546,
+          "distance": 28.92041366309887,
+          "speedLong": -0.026319036974031578,
+          "speedLat": 0.000129130563527759,
+          "speedDist": 0.005109064322085386,
+          "isRetrograde": true,
+          "declination": -0.2885061722995999,
+          "rightAscension": 2.9044721919786896
+        },
+        {
+          "id": 9,
+          "name": "Pluto",
+          "longitude": 303.0717431512856,
+          "latitude": -4.286273619819648,
+          "distance": 35.36609219618088,
+          "speedLong": -0.0017435792758738213,
+          "speedLat": 0.0006766011528786124,
+          "speedDist": 0.017361525916777785,
+          "isRetrograde": true,
+          "declination": -23.638003298929327,
+          "rightAscension": 306.44144634244697
+        },
+        {
+          "id": 11,
+          "name": "true Node",
+          "longitude": 328.61826112719575,
+          "latitude": 0,
+          "distance": 0.0026628272597533148,
+          "speedLong": -0.16012005711172853,
+          "speedLat": 0,
+          "speedDist": -0.000004217946242557783,
+          "isRetrograde": true,
+          "declination": -11.954053578779266,
+          "rightAscension": 330.76699307709345
+        },
+        {
+          "id": 12,
+          "name": "mean Apogee",
+          "longitude": 273.1025821550301,
+          "latitude": -4.1667642753921506,
+          "distance": 0.002710625131722546,
+          "speedLong": 0.1115990308301296,
+          "speedLat": 0.008681345361895281,
+          "speedDist": 0,
+          "isRetrograde": false,
+          "declination": -27.56723346135187,
+          "rightAscension": 273.49113860004604
+        },
+        {
+          "id": 15,
+          "name": "Chiron",
+          "longitude": 28.979702584918847,
+          "latitude": 0.1601973230296293,
+          "distance": 17.257879975283274,
+          "speedLong": -0.04586902619703816,
+          "speedLat": -0.001276588879878829,
+          "speedDist": -0.0032836246064470963,
+          "isRetrograde": true,
+          "declination": 11.260957730451448,
+          "rightAscension": 26.879412882978638
+        }
+      ],
+      "houses": {
+        "system": "P",
+        "cusps": [
+          289.47634742330536,
+          318.6488478201643,
+          350.2919969682236,
+          22.788345436240206,
+          53.466646313818444,
+          81.80513867778018,
+          109.47634742330536,
+          138.6488478201643,
+          170.29199696822366,
+          202.78834543624023,
+          233.46664631381844,
+          261.8051386777802
+        ],
+        "ascendant": 289.47634742330536,
+        "mc": 202.78834543624023,
+        "armc": 201.0795538312093,
+        "vertex": 180,
+        "equatorialAsc": 289.47634742330536,
+        "coAscWK": 289.47634742330536,
+        "coAscMunkasey": 180,
+        "polarAsc": 109.47634742330534
+      },
+      "aspects": [
+        {
+          "planet1": "Sun",
+          "planet2": "Jupiter",
+          "planet1Id": 0,
+          "planet2Id": 5,
+          "type": {
+            "name": "Sextile",
+            "i18nKey": "aspect_sextile",
+            "angle": 60,
+            "orb": 6.5,
+            "symbol": "⚹",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 57.630222305541764,
+          "orb": 2.369777694458236,
+          "isApplying": false
+        },
+        {
+          "planet1": "Moon",
+          "planet2": "Mercury",
+          "planet1Id": 1,
+          "planet2Id": 2,
+          "type": {
+            "name": "Conjunction",
+            "i18nKey": "aspect_conjunction",
+            "angle": 0,
+            "orb": 12,
+            "symbol": "☌",
+            "isMajor": true,
+            "color": "#660480"
+          },
+          "exactAngle": 3.280363350206585,
+          "orb": 3.280363350206585,
+          "isApplying": false
+        },
+        {
+          "planet1": "Moon",
+          "planet2": "Venus",
+          "planet1Id": 1,
+          "planet2Id": 3,
+          "type": {
+            "name": "Conjunction",
+            "i18nKey": "aspect_conjunction",
+            "angle": 0,
+            "orb": 12,
+            "symbol": "☌",
+            "isMajor": true,
+            "color": "#660480"
+          },
+          "exactAngle": 4.078287181029907,
+          "orb": 4.078287181029907,
+          "isApplying": false
+        },
+        {
+          "planet1": "Moon",
+          "planet2": "Mars",
+          "planet1Id": 1,
+          "planet2Id": 4,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 92.65290060665578,
+          "orb": 2.652900606655777,
+          "isApplying": true
+        },
+        {
+          "planet1": "Venus",
+          "planet2": "Mars",
+          "planet1Id": 3,
+          "planet2Id": 4,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 88.57461342562587,
+          "orb": 1.42538657437413,
+          "isApplying": true
+        },
+        {
+          "planet1": "Venus",
+          "planet2": "Pluto",
+          "planet1Id": 3,
+          "planet2Id": 9,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 86.2463702676439,
+          "orb": 3.753629732356103,
+          "isApplying": true
+        },
+        {
+          "planet1": "Venus",
+          "planet2": "mean Apogee",
+          "planet1Id": 3,
+          "planet2Id": 12,
+          "type": {
+            "name": "Sextile",
+            "i18nKey": "aspect_sextile",
+            "angle": 60,
+            "orb": 6.5,
+            "symbol": "⚹",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 56.277209271388415,
+          "orb": 3.722790728611585,
+          "isApplying": true
+        },
+        {
+          "planet1": "Mars",
+          "planet2": "Saturn",
+          "planet1Id": 4,
+          "planet2Id": 6,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 117.57321161255372,
+          "orb": 2.4267883874462797,
+          "isApplying": true
+        },
+        {
+          "planet1": "Mars",
+          "planet2": "Uranus",
+          "planet1Id": 4,
+          "planet2Id": 7,
+          "type": {
+            "name": "Sextile",
+            "i18nKey": "aspect_sextile",
+            "angle": 60,
+            "orb": 6.5,
+            "symbol": "⚹",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 62.966782598183485,
+          "orb": 2.966782598183485,
+          "isApplying": false
+        },
+        {
+          "planet1": "Uranus",
+          "planet2": "Neptune",
+          "planet1Id": 7,
+          "planet2Id": 8,
+          "type": {
+            "name": "Sextile",
+            "i18nKey": "aspect_sextile",
+            "angle": 60,
+            "orb": 6.5,
+            "symbol": "⚹",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 62.73345596384392,
+          "orb": 2.733455963843923,
+          "isApplying": false
+        },
+        {
+          "planet1": "Uranus",
+          "planet2": "Pluto",
+          "planet1Id": 7,
+          "planet2Id": 9,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 122.21223370854676,
+          "orb": 2.212233708546762,
+          "isApplying": false
+        },
+        {
+          "planet1": "Neptune",
+          "planet2": "Pluto",
+          "planet1Id": 8,
+          "planet2Id": 9,
+          "type": {
+            "name": "Sextile",
+            "i18nKey": "aspect_sextile",
+            "angle": 60,
+            "orb": 6.5,
+            "symbol": "⚹",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 59.478777744702825,
+          "orb": 0.5212222552971753,
+          "isApplying": true
+        },
+        {
+          "planet1": "Neptune",
+          "planet2": "mean Apogee",
+          "planet1Id": 8,
+          "planet2Id": 12,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 89.4479387409583,
+          "orb": 0.5520612590416931,
+          "isApplying": true
+        },
+        {
+          "planet1": "Pluto",
+          "planet2": "Chiron",
+          "planet1Id": 9,
+          "planet2Id": 15,
+          "type": {
+            "name": "Square",
+            "i18nKey": "aspect_square",
+            "angle": 90,
+            "orb": 10,
+            "symbol": "□",
+            "isMajor": true,
+            "color": "#cc3333"
+          },
+          "exactAngle": 85.90795943363327,
+          "orb": 4.092040566366734,
+          "isApplying": false
+        },
+        {
+          "planet1": "true Node",
+          "planet2": "mean Apogee",
+          "planet1Id": 11,
+          "planet2Id": 12,
+          "type": {
+            "name": "Sextile",
+            "i18nKey": "aspect_sextile",
+            "angle": 60,
+            "orb": 6.5,
+            "symbol": "⚹",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 55.51567897216563,
+          "orb": 4.484321027834369,
+          "isApplying": true
+        },
+        {
+          "planet1": "true Node",
+          "planet2": "Chiron",
+          "planet1Id": 11,
+          "planet2Id": 15,
+          "type": {
+            "name": "Sextile",
+            "i18nKey": "aspect_sextile",
+            "angle": 60,
+            "orb": 6.5,
+            "symbol": "⚹",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 60.36144145772312,
+          "orb": 0.3614414577231173,
+          "isApplying": false
+        },
+        {
+          "planet1": "mean Apogee",
+          "planet2": "Chiron",
+          "planet1Id": 12,
+          "planet2Id": 15,
+          "type": {
+            "name": "Trine",
+            "i18nKey": "aspect_trine",
+            "angle": 120,
+            "orb": 12,
+            "symbol": "△",
+            "isMajor": true,
+            "color": "#3366cc"
+          },
+          "exactAngle": 115.87712042988872,
+          "orb": 4.12287957011128,
+          "isApplying": false
+        }
+      ],
+      "parallelAspects": [
+        {
+          "planet1": "Moon",
+          "planet2": "Mercury",
+          "planet1Id": 1,
+          "planet2Id": 2,
+          "type": "parallel",
+          "exactDiff": 0.8403436916304621,
+          "orb": 0.8403436916304621
+        },
+        {
+          "planet1": "Moon",
+          "planet2": "Mars",
+          "planet1Id": 1,
+          "planet2Id": 4,
+          "type": "contra-parallel",
+          "exactDiff": 0.3291877536188501,
+          "orb": 0.3291877536188501
+        },
+        {
+          "planet1": "Mercury",
+          "planet2": "Mars",
+          "planet1Id": 2,
+          "planet2Id": 4,
+          "type": "contra-parallel",
+          "exactDiff": 0.511155938011612,
+          "orb": 0.511155938011612
+        },
+        {
+          "planet1": "Venus",
+          "planet2": "Uranus",
+          "planet1Id": 3,
+          "planet2Id": 7,
+          "type": "contra-parallel",
+          "exactDiff": 0.1015415516546554,
+          "orb": 0.1015415516546554
+        },
+        {
+          "planet1": "true Node",
+          "planet2": "Chiron",
+          "planet1Id": 11,
+          "planet2Id": 15,
+          "type": "contra-parallel",
+          "exactDiff": 0.6930958483278182,
+          "orb": 0.6930958483278182
+        }
+      ],
+      "antiscia": [
+        {
+          "planetId": 0,
+          "planetName": "Sun",
+          "antiscion": 340.81902260269237,
+          "contraAntiscion": 160.81902260269234
+        },
+        {
+          "planetId": 1,
+          "planetName": "Moon",
+          "antiscion": 319.0963399353284,
+          "contraAntiscion": 139.0963399353284
+        },
+        {
+          "planetId": 2,
+          "planetName": "Mercury",
+          "antiscion": 315.8159765851218,
+          "contraAntiscion": 135.8159765851218
+        },
+        {
+          "planetId": 3,
+          "planetName": "Venus",
+          "antiscion": 323.1746271163583,
+          "contraAntiscion": 143.1746271163583
+        },
+        {
+          "planetId": 4,
+          "planetName": "Mars",
+          "antiscion": 51.749240541984136,
+          "contraAntiscion": 231.74924054198416
+        },
+        {
+          "planetId": 5,
+          "planetName": "Jupiter",
+          "antiscion": 38.44924490823411,
+          "contraAntiscion": 218.4492449082341
+        },
+        {
+          "planetId": 6,
+          "planetName": "Saturn",
+          "antiscion": 169.3224521545378,
+          "contraAntiscion": 349.32245215453787
+        },
+        {
+          "planetId": 7,
+          "planetName": "Uranus",
+          "antiscion": 114.71602314016764,
+          "contraAntiscion": 294.71602314016764
+        },
+        {
+          "planetId": 8,
+          "planetName": "Neptune",
+          "antiscion": 177.44947910401152,
+          "contraAntiscion": 357.4494791040116
+        },
+        {
+          "planetId": 9,
+          "planetName": "Pluto",
+          "antiscion": 236.9282568487144,
+          "contraAntiscion": 56.9282568487144
+        },
+        {
+          "planetId": 11,
+          "planetName": "true Node",
+          "antiscion": 211.38173887280425,
+          "contraAntiscion": 31.38173887280425
+        },
+        {
+          "planetId": 12,
+          "planetName": "mean Apogee",
+          "antiscion": 266.8974178449699,
+          "contraAntiscion": 86.89741784496988
+        },
+        {
+          "planetId": 15,
+          "planetName": "Chiron",
+          "antiscion": 151.02029741508113,
+          "contraAntiscion": 331.02029741508113
+        }
+      ],
+      "antisciaAspects": []
+    },
+    "_footer": "Powered by astroway.api - get your own key at https://api.astroway.info"
+  }
+}

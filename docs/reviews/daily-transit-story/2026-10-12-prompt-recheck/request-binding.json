@@ -1,0 +1,8 @@
+{
+  "caseId": "arc-opening-three",
+  "sourceRevision": "2f136409766af19bb5a629eb9841b8cdde4ae94b",
+  "sampleSha256": "ecf04d6c64dbe78d8236445e5f84d6697da52960bdd5107b8c0da8e949942fe4",
+  "paidCapturedRequestMatchesPreflightNativeBody": true,
+  "nativeBodyRepresentation": "Reconstructed from captured messages/schema using the frozen application mapping; matches the intercepted offline native body",
+  "authenticationHeadersIncluded": false
+}

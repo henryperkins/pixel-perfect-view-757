@@ -1,0 +1,22 @@
+# AstroWay authenticated probes; integration still open
+
+On 2026-10-12 the operator confirmed `api.astroway.info` and supplied an API key for the requested integration work. The credential is kept in a restricted local file outside Git; it is not present in these captures. Hosted secret configuration was not changed. All requests used synthetic birth inputs and no automatic retries.
+
+| Request | Observed result | Evidence |
+| --- | --- | --- |
+| `POST /v1/chart` | HTTP 200, 362 ms; `data.meta.engineVersion` is `2.10.03`; `data.positionSource` is absent | [Sanitized capture](2026-10-12-astroway-auth-probe/chart.json) |
+| First `POST /v1/transit-calendar` | HTTP 403 `ENDPOINT_NOT_IN_SCOPE`; allowed paths were `horoscope/daily`, `transits`, `chart` | [Original denial](2026-10-12-astroway-auth-probe/transit-calendar.json) |
+| New calendar attempt after the operator confirmed the scope update | HTTP 402 `PLAN_UPGRADE_REQUIRED`; API reports current plan `free`, required plan `indie` | [Post-update response](2026-10-12-astroway-auth-probe/after-scope/transit-calendar.json) |
+| `POST /v1/transits` for one synthetic date | HTTP 200, 479 ms; response has chart positions/aspects, without the app's episode contract or source identity | [Sanitized transit capture](2026-10-12-astroway-auth-probe/transits/transits.json) |
+
+The scope change cleared the earlier scope rejection, exposing a plan restriction. No calendar event payload has been obtained. No subscription, key permissions or billing settings were changed by the agent. The operator's supplied `https://api.astroway.info/en/astrology-api/` URL was inaccessible to the web tool and returned HTTP 403 on a direct unauthenticated page fetch; the official documentation below was accessible.
+
+The [authentication documentation](https://api.astroway.info/en/authentication/) describes per-key `allowed_endpoints` and [dashboard key management](https://api.astroway.info/dashboard/keys). A scope change does not remove plan restrictions. The [calendar documentation](https://api.astroway.info/en/docs/api/operations/transit-calendar/) describes a natal input and date interval. The permitted [transits endpoint](https://api.astroway.info/en/docs/api/operations/transits/) computes aspects for one date; its documented scope and observed response do not supply a complete contact sequence. These are distinct from the app's custom episode service.
+
+The app's `src/lib/astro/transit-episodes.server.ts` sends its own `swiss-transit-episode/1` request and validates the corresponding proof response; it does not adapt AstroWay calendar events. Setting the base URL or its calendar URL as `SWISS_TRANSIT_EPISODE_URL` would not establish the required request/response contract or qualify source identity. The current source requires explicit native build/frame/data/flag identity plus complete, bounded contact/station/window evidence. Ordinary event counts cannot be substituted for proof of a complete episode.
+
+The remaining engineering work is to integrate a source that actually supplies those facts: either a documented compatible AstroWay service, or a designed and independently qualified adapter/service over its real API. Enabling a paid calendar plan alone would not finish that integration. The chart response confirms an engine version but does not identify the native data files, returned calculation flags, time scale or frame required by `positionSourceSchema`. None of those fields is inferred from a marketing claim or invented locally. The prior [source-discovery record](2026-10-12-source-discovery.md) details the field gaps and possible refinement inputs.
+
+Both small writing gates have passed. The combined `0.7.1` bundle is [staged inactive](2026-10-12-prompt-recheck/production-staging.json), with active pointers unchanged. Joint catalogue activation alone would enable natal lenses while transit chapters remain unavailable, so the requested joint launch remains open.
+
+The operator subsequently asked to use `/transits` positions and perform the sequence calculation in the app. That is the selected integration direction. `transit-calendar` is an investigated alternative, not a required dependency; no plan upgrade is requested. The implementation must calculate and verify crossings, stations, windows and bounded completeness from actual position samples, use caching to bound requests, and preserve the API's real provenance without fabricating native flags or file identities. This direction is not implemented or activated by the writing-evidence commit.

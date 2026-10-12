@@ -1,0 +1,137 @@
+{
+  "sourceRevision": "2f136409766af19bb5a629eb9841b8cdde4ae94b",
+  "modelAttempts": 6,
+  "retries": 0,
+  "captureDeadlineMs": 180000,
+  "memberDeadlineMs": 60000,
+  "exceededMemberDeadline": 4,
+  "cost": "unknown",
+  "rows": [
+    {
+      "caseId": "arc-single-pass",
+      "outcome": "accepted",
+      "httpStatuses": [
+        200
+      ],
+      "models": [
+        "gemini-3.8-flash"
+      ],
+      "usageMetadata": [
+        {
+          "promptTokenCount": 2212,
+          "candidatesTokenCount": 201,
+          "totalTokenCount": 14209,
+          "thoughtsTokenCount": 11796
+        }
+      ],
+      "reportedDurationMs": 73281,
+      "runnerElapsedMs": 73245,
+      "durationReportingNote": "Application duration is capped at 120000 ms; runner elapsed measures transport start through settled capture."
+    },
+    {
+      "caseId": "arc-opening-three",
+      "outcome": "accepted",
+      "httpStatuses": [
+        200
+      ],
+      "models": [
+        "gemini-3.8-flash"
+      ],
+      "usageMetadata": [
+        {
+          "promptTokenCount": 2225,
+          "candidatesTokenCount": 192,
+          "totalTokenCount": 14456,
+          "thoughtsTokenCount": 12039
+        }
+      ],
+      "reportedDurationMs": 64021,
+      "runnerElapsedMs": 63970,
+      "durationReportingNote": "Application duration is capped at 120000 ms; runner elapsed measures transport start through settled capture."
+    },
+    {
+      "caseId": "arc-return-three",
+      "outcome": "accepted",
+      "httpStatuses": [
+        200
+      ],
+      "models": [
+        "gemini-3.8-flash"
+      ],
+      "usageMetadata": [
+        {
+          "promptTokenCount": 2227,
+          "candidatesTokenCount": 207,
+          "totalTokenCount": 12919,
+          "thoughtsTokenCount": 10485
+        }
+      ],
+      "reportedDurationMs": 59403,
+      "runnerElapsedMs": 59364,
+      "durationReportingNote": "Application duration is capped at 120000 ms; runner elapsed measures transport start through settled capture."
+    },
+    {
+      "caseId": "arc-closing-three",
+      "outcome": "accepted",
+      "httpStatuses": [
+        200
+      ],
+      "models": [
+        "gemini-3.8-flash"
+      ],
+      "usageMetadata": [
+        {
+          "promptTokenCount": 2224,
+          "candidatesTokenCount": 177,
+          "totalTokenCount": 17748,
+          "thoughtsTokenCount": 15347
+        }
+      ],
+      "reportedDurationMs": 75824,
+      "runnerElapsedMs": 75787,
+      "durationReportingNote": "Application duration is capped at 120000 ms; runner elapsed measures transport start through settled capture."
+    },
+    {
+      "caseId": "arc-between-passes",
+      "outcome": "accepted",
+      "httpStatuses": [
+        200
+      ],
+      "models": [
+        "gemini-3.8-flash"
+      ],
+      "usageMetadata": [
+        {
+          "promptTokenCount": 2183,
+          "candidatesTokenCount": 221,
+          "totalTokenCount": 26786,
+          "thoughtsTokenCount": 24382
+        }
+      ],
+      "reportedDurationMs": 120000,
+      "runnerElapsedMs": 152841,
+      "durationReportingNote": "Application duration is capped at 120000 ms; runner elapsed measures transport start through settled capture."
+    },
+    {
+      "caseId": "arc-truncated-scan",
+      "outcome": "accepted",
+      "httpStatuses": [
+        200
+      ],
+      "models": [
+        "gemini-3.8-flash"
+      ],
+      "usageMetadata": [
+        {
+          "promptTokenCount": 2037,
+          "candidatesTokenCount": 173,
+          "totalTokenCount": 8805,
+          "thoughtsTokenCount": 6595
+        }
+      ],
+      "reportedDurationMs": 44244,
+      "runnerElapsedMs": 44191,
+      "durationReportingNote": "Application duration is capped at 120000 ms; runner elapsed measures transport start through settled capture."
+    }
+  ]
+}

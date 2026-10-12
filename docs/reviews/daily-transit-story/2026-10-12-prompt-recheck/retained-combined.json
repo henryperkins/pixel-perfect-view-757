@@ -1,0 +1,28 @@
+{
+  "kind": "retained-combined-editorial-pass-compatibility",
+  "sourceRevision": "2f136409766af19bb5a629eb9841b8cdde4ae94b",
+  "modelGeneratingRevision": "1f70941281a6deffc23481a2fda249f8292517da",
+  "currentRequestGenerationEstablished": false,
+  "paidCaptureSha256": "7262d5652315cf6b477f80f9bd355987f550dbdcb33973b723bb2b255b1789e7",
+  "reviewedTemplatesSha256": "8c9f61dbda0b48d14bc86a22409f0cedb2115af46393fd440c4f6f96d19b89ac",
+  "providerCallsMade": 0,
+  "interceptedRequests": 1,
+  "allRequestsUnchanged": false,
+  "allRawDraftsUnchanged": true,
+  "allAccepted": true,
+  "samples": [
+    {
+      "sampleId": "sample-6",
+      "caseId": "arc-synthesis-natal-integration",
+      "originalOutcome": "accepted",
+      "originalValidatorVersion": "daily-reference-8",
+      "outcome": "accepted",
+      "code": "accepted",
+      "validatorVersion": "daily-reference-10",
+      "requestUnchanged": false,
+      "requestChange": "Unused P1 editorial wording and the arc integration sentence; no new generation is claimed",
+      "allUsedEditorialStatementsUnchanged": true,
+      "rawDraftUnchanged": true
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "atUTC": "2026-10-12T06:58:28.134Z",
+  "requests": 2,
+  "retries": 0,
+  "realBirthDataUsed": false,
+  "receipts": [
+    {
+      "id": "chart",
+      "httpStatus": 200,
+      "elapsedMs": 362,
+      "topLevelKeys": [
+        "ok",
+        "data",
+        "_footer"
+      ],
+      "dataKeys": [
+        "input",
+        "julianDay",
+        "siderealTime",
+        "planets",
+        "houses",
+        "aspects",
+        "houseAspects",
+        "parallelAspects",
+        "antiscia",
+        "antisciaAspects",
+        "chartSect",
+        "meta"
+      ],
+      "errorCode": null
+    },
+    {
+      "id": "transit-calendar",
+      "httpStatus": 403,
+      "elapsedMs": 110,
+      "topLevelKeys": [
+        "ok",
+        "error"
+      ],
+      "dataKeys": [],
+      "errorCode": "ENDPOINT_NOT_IN_SCOPE"
+    }
+  ]
+}

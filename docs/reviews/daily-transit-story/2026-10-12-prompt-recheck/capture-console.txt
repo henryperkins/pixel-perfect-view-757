@@ -1,0 +1,61 @@
+{
+  "sampleId": "sample-1",
+  "caseId": "arc-single-pass",
+  "repetition": 1,
+  "outcome": "accepted",
+  "code": "accepted",
+  "attempts": 1
+}
+
+{
+  "sampleId": "sample-2",
+  "caseId": "arc-opening-three",
+  "repetition": 1,
+  "outcome": "accepted",
+  "code": "accepted",
+  "attempts": 2
+}
+
+{
+  "sampleId": "sample-3",
+  "caseId": "arc-return-three",
+  "repetition": 1,
+  "outcome": "accepted",
+  "code": "accepted",
+  "attempts": 3
+}
+
+{
+  "sampleId": "sample-4",
+  "caseId": "arc-closing-three",
+  "repetition": 1,
+  "outcome": "accepted",
+  "code": "accepted",
+  "attempts": 4
+}
+
+{
+  "sampleId": "sample-5",
+  "caseId": "arc-between-passes",
+  "repetition": 1,
+  "outcome": "accepted",
+  "code": "accepted",
+  "attempts": 5
+}
+
+{
+  "sampleId": "sample-6",
+  "caseId": "arc-truncated-scan",
+  "repetition": 1,
+  "outcome": "accepted",
+  "code": "accepted",
+  "attempts": 6
+}
+
+{
+  "status": "complete",
+  "haltReason": null,
+  "attempts": 6,
+  "settledSamples": 6
+}
+

@@ -1,0 +1,45 @@
+{
+  "id": "transit-calendar",
+  "url": "https://api.astroway.info/v1/transit-calendar",
+  "synthetic": true,
+  "input": {
+    "natal": {
+      "date": "1990-01-01",
+      "time": "12:00:00",
+      "timezoneOffset": 0,
+      "latitude": 0,
+      "longitude": 0,
+      "houseSystem": "P"
+    },
+    "startDate": "2026-10-01",
+    "endDate": "2026-10-31",
+    "maxOrb": 3,
+    "aspectAngles": [
+      0,
+      60,
+      90,
+      120,
+      150,
+      180
+    ],
+    "transitPlanetIds": [
+      6
+    ]
+  },
+  "startedAt": "2026-10-12T07:03:16.214Z",
+  "elapsedMs": 374,
+  "httpStatus": 402,
+  "payload": {
+    "ok": false,
+    "error": {
+      "code": "PLAN_UPGRADE_REQUIRED",
+      "message": "Endpoint /transit-calendar requires Indie plan or higher.",
+      "details": {
+        "endpoint": "transit-calendar",
+        "current_plan": "free",
+        "upgrade_to": "indie",
+        "upgrade_url": "https://api.astroway.info/pricing/"
+      }
+    }
+  }
+}

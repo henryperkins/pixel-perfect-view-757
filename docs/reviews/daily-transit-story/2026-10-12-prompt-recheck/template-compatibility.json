@@ -1,0 +1,49 @@
+{
+  "kind": "template-body-compatibility",
+  "sourceRevision": "2f136409766af19bb5a629eb9841b8cdde4ae94b",
+  "providerCallsMade": 0,
+  "templates": [
+    {
+      "caseId": "arc-single-pass",
+      "bodySha256": "8118cb503ae7de5116977c4ee518cd1f7a08d2e4d229f943ac7f2dbe57d8315c",
+      "unchangedFromCopyCorrected071": true
+    },
+    {
+      "caseId": "arc-opening-three",
+      "bodySha256": "976d993adc60e1cc09529925312e6ecb7e306b668f32418dc656cc9da3d0060c",
+      "unchangedFromCopyCorrected071": true
+    },
+    {
+      "caseId": "arc-return-three",
+      "bodySha256": "a09a149d7dd4a3ee8a58467589766b6657ff9defadf5efa8556bf2c8435b1c29",
+      "unchangedFromCopyCorrected071": true
+    },
+    {
+      "caseId": "arc-closing-three",
+      "bodySha256": "2ddc2017a2c8075498787bb7a00c8b913eede981059143355b9539f1167c2850",
+      "unchangedFromCopyCorrected071": true
+    },
+    {
+      "caseId": "arc-between-passes",
+      "bodySha256": "573b79971d05b2f1682107634a09c23a4b686fa74d77ba0ca46d378f4d325eea",
+      "unchangedFromCopyCorrected071": true
+    },
+    {
+      "caseId": "arc-synthesis-natal-integration",
+      "bodySha256": "999724e181d3ef833056d048315ec690e928de0c42e8b5e94d2edf968f494773",
+      "unchangedFromCopyCorrected071": true,
+      "unchangedFromPassingReviewedTemplate": true
+    },
+    {
+      "caseId": "arc-truncated-scan",
+      "bodySha256": "71392dbd5c1a5d741e12e653939fb4a351fe111fe039abd36c773d7f163a47e9",
+      "unchangedFromCopyCorrected071": true
+    },
+    {
+      "caseId": "quiet-threshold",
+      "bodySha256": "0f16089801634a658a88f975b7d79cd13def6abf4bd43d2ec4916741ac18fc3c",
+      "unchangedFromCopyCorrected071": true,
+      "unchangedFromPassingReviewedTemplate": true
+    }
+  ]
+}
