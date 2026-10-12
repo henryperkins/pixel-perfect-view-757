@@ -232,3 +232,56 @@ Object.assign(BASELINE_RESPONSES, {
     ],
   },
 });
+
+function arcDraft(chronology, mechanism) {
+  return {
+    paragraphs: [
+      {
+        text: `An established responsibility can call for clearer boundaries when its expectations outpace capacity. ${chronology}`,
+        facts: ["C1", "I1", "A1"],
+      },
+      { text: mechanism, facts: ["C1", "I1", "A1", "P2"] },
+    ],
+  };
+}
+Object.assign(BASELINE_RESPONSES, {
+  "arc-single-pass": arcDraft(
+    "This is one calculated contact in a complete passage.",
+    "If a demand feels familiar, notice it in a concrete choice you can describe, such as the scope of a commitment.",
+  ),
+  "arc-opening-three": arcDraft(
+    "This is the first of three calculated contacts; the first exact contact falls in September 2026.",
+    "If a new demand catches your attention, notice your response before treating it as settled. A small decision can leave room to learn.",
+  ),
+  "arc-return-three": arcDraft(
+    "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+    "If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.",
+  ),
+  "arc-closing-three": arcDraft(
+    "This is the third of three calculated contacts; the first exact contact falls in September 2026.",
+    "If a response seems workable, consider how you could repeat it in an ordinary commitment. Its usefulness can remain open to review.",
+  ),
+  "arc-return-five": arcDraft(
+    "This is the third of five calculated contacts; the first exact contact falls in September 2026.",
+    "If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.",
+  ),
+  "arc-between-passes": arcDraft(
+    "This calculated episode has three contacts, with a pause between passes.",
+    "If a decision remains unsettled, let it stay provisional while you notice what information would help. A pause can leave room to reconsider.",
+  ),
+  "arc-truncated-scan": sunDraft(),
+  "arc-station-tangent": sunDraft(),
+  "arc-birth-window-disagreement": sunDraft(),
+  "arc-synthesis-natal-integration": {
+    paragraphs: [
+      {
+        text: "An established responsibility can call for clearer boundaries when its expectations outpace capacity. This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+        facts: ["C1", "I1", "A1"],
+      },
+      {
+        text: "If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary. Giving a plan more scope can increase the structure needed to carry it. A manageable routine can offer a way to meet pressure without settling everything at once. An unfinished list may distinguish one useful task from making the entire routine a condition for taking a pause.",
+        facts: ["S1", "N1", "P2", "A1", "C1", "I1", "C2", "I2"],
+      },
+    ],
+  },
+});

@@ -1,3 +1,5 @@
+import { primaryStoryOverlay } from "@/lib/astro/transit-presentation";
+import type { DailyTransitCalculation } from "@/lib/astro/transit-episodes";
 import type { fetchCycles } from "@/lib/pattern.functions";
 import { daysToLocalDate, localNoon, validTimeZone } from "@/lib/local-day";
 
@@ -6,10 +8,18 @@ export type TimingData = Extract<
   { needsOnboarding: false }
 >;
 export type TimingCycle = TimingData["cycles"][number];
-export type TimingPhase = "building" | "exact" | "fading";
+export type TimingPhase = "building" | "exact" | "fading" | "between" | "uncertain";
 export type PhaseFilter = "all" | TimingPhase;
 
 export const PHASE_LABEL = {
+  between: {
+    label: "Between contacts",
+    help: "A calculated station connects these passes; no single contact is current.",
+  },
+  uncertain: {
+    label: "Timing varies",
+    help: "The sampled birth times do not support a single phase or exact day.",
+  },
   building: { label: "Building", help: "The aspect is tightening toward its closest pass." },
   exact: { label: "Exact", help: "The aspect is at its closest point today." },
   fading: { label: "Fading", help: "The closest pass has happened; the window is easing off." },
@@ -55,7 +65,14 @@ export function weightLabel(weight: number) {
   return weight >= 0.7 ? "Major" : weight >= 0.4 ? "Prominent" : "Background";
 }
 
-export function daysToExact(cycle: TimingCycle, day: string, timezone = "UTC"): number | null {
+export function daysToExact(
+  cycle: TimingCycle,
+  day: string,
+  timezone = "UTC",
+  calculation?: DailyTransitCalculation | null,
+): number | null {
+  const overlay = primaryStoryOverlay(calculation, cycle.cycle_key);
+  if (overlay) return overlay.daysToExact;
   if (
     cycle.days_to_exact !== null &&
     cycle.days_to_exact !== undefined &&
@@ -65,7 +82,19 @@ export function daysToExact(cycle: TimingCycle, day: string, timezone = "UTC"): 
   return daysToLocalDate(cycle.exact_at, day, validTimeZone(timezone));
 }
 
-export function windowPhase(cycle: TimingCycle, day: string, timezone = "UTC"): TimingPhase {
+export function windowPhase(
+  cycle: TimingCycle,
+  day: string,
+  timezone = "UTC",
+  calculation?: DailyTransitCalculation | null,
+): TimingPhase {
+  const overlay = primaryStoryOverlay(calculation, cycle.cycle_key);
+  if (overlay)
+    return overlay.phase === "approaching"
+      ? "building"
+      : overlay.phase === "separating"
+        ? "fading"
+        : overlay.phase;
   const days = daysToExact(cycle, day, timezone);
   if (days !== null) return days === 0 ? "exact" : days > 0 ? "building" : "fading";
   if (cycle.phase === "exact") return "exact";
@@ -130,3 +159,24 @@ export function timelinePositions(
   const reference = referenceAt ?? localNoon(day, validTimeZone(timezone)).toISOString();
   return { today: position(reference), exact: position(cycle.exact_at) };
 }
+
+export function cycleTimingPhrase(
+  cycle: TimingCycle,
+  day: string,
+  timezone = "UTC",
+  calculation?: DailyTransitCalculation | null,
+  selectedDay = false,
+) {
+  const o = primaryStoryOverlay(calculation, cycle.cycle_key);
+  if (o?.phase === "between") return "Between calculated contacts";
+  if (o && !o.qualifiedExactDay) return "Exact day varies across samples";
+  return exactPhrase(daysToExact(cycle, day, timezone, calculation), selectedDay);
+}
+
+// Calendar, birth-record and consent changes invalidate these queries explicitly.
+// An incidental focus or revisiting the same selection keeps its qualified result.
+export const CYCLE_QUERY_RETENTION = {
+  staleTime: Infinity,
+  gcTime: 24 * 60 * 60_000,
+  refetchOnWindowFocus: false,
+} as const;

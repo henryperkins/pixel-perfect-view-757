@@ -42,6 +42,11 @@ const COPY_CHOICES: { value: ReadingEvaluationBundleSource; label: string; note:
     label: "Inactive natal candidate",
     note: "Uses the unpublished natal candidate for this run only. Selecting it activates nothing.",
   },
+  {
+    value: "transit-candidate",
+    label: "Inactive transit candidate",
+    note: "Uses the unpublished transit chapters with synthetic tracks for this run only. Selecting it activates nothing.",
+  },
 ];
 
 const POLL_MS = 4_000;
@@ -191,6 +196,22 @@ function EvaluationCase({ result }: { result: ReadingEvaluationCaseResult }) {
             <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
               Synthetic source labels exercise screening and selection; they do not establish live
               Swiss accuracy.
+            </p>
+          </section>
+        ) : null}
+        {row.transitStoryPlan ? (
+          <section
+            className="mt-6 min-w-0 border-t border-rule pt-4"
+            aria-label={`${label} synthetic transit story`}
+          >
+            <h4 className="text-base">Synthetic transit story</h4>
+            <p className="mt-2 text-sm">
+              {row.transitStoryPlan.status === "selected"
+                ? `${row.transitStoryPlan.chapter} · ${row.transitStoryPlan.chronologySentence}`
+                : `Omitted: ${row.transitStoryPlan.reason}`}
+            </p>
+            <p className="mt-2 text-xs text-muted-foreground">
+              Synthetic tracks test proof validation; they do not qualify native Swiss accuracy.
             </p>
           </section>
         ) : null}
@@ -390,9 +411,10 @@ export function ReadingEvaluation({
       </p>
       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
         Acceptance measures the current validator on this case set. Review specificity, voice,
-        repetition, grounding and natal lens integration yourself, including unsupported personal
-        claims; these results do not assign writing-quality scores or establish a production
-        acceptance rate.
+        repetition, grounding, natal lens integration, temporal coherence and chapter integration
+        yourself, including invented history, promised resolution and unsupported personal claims;
+        these results do not assign writing-quality scores or establish a production acceptance
+        rate.
       </p>
       <div className="mt-4 max-w-md min-w-0">
         <label

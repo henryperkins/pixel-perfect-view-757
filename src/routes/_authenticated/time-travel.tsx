@@ -1,3 +1,4 @@
+import { CYCLE_QUERY_RETENTION } from "@/components/pattern/timing";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
@@ -66,7 +67,7 @@ function TimeTravelPage() {
     queryKey: ["cycles", session?.userId, "current"],
     queryFn: () => load({ data: { timezone } }),
     enabled: Boolean(session),
-    refetchOnWindowFocus: "always",
+    ...CYCLE_QUERY_RETENTION,
   });
   useCalendarQueryRefresh(calendar, ["cycles", session?.userId, "current"]);
   const nowData = now.data && !now.data.needsOnboarding ? now.data : null;
@@ -77,6 +78,7 @@ function TimeTravelPage() {
     queryKey: ["cycles", session?.userId, "selected", applied, timezone],
     queryFn: () => load({ data: { day: applied, timezone } }),
     enabled: Boolean(session && applied && applied !== today),
+    ...CYCLE_QUERY_RETENTION,
   });
   const past = !applied || applied === today ? now : selected;
   const journal = useQuery({
@@ -347,6 +349,7 @@ function TimeTravelPage() {
                   {rows.map((cycle, index) => (
                     <li key={cycle.cycle_key}>
                       <TimingWindow
+                        calculation={pastData.storyCalculation}
                         cycle={cycle}
                         day={pastData.day}
                         timezone={pastData.timezone}

@@ -1,4 +1,6 @@
 export interface SyntheticFixture {
+  transitEpisodeScan?: unknown;
+  transitAnchor?: unknown;
   natalWindowSamples?: Omit<import("../astro/natal-reliability").NatalWindowSample, "chart">[];
   id: string;
   description: string;

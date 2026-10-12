@@ -194,6 +194,17 @@ function PrivacyPage() {
               export.
             </p>
             <p className="mt-2 text-sm text-muted-foreground">
+              When qualified event timing is available, a daily reading may also send a calculated
+              contact count, chapter, approved dates and reviewed conditional interpretation to the
+              language provider. These derived dates remain personal information. Raw birth details,
+              anchor samples, numerical proofs and private episode identifiers stay out of the
+              prompt. The ephemeris service receives the selected transit, three natal longitudes
+              and the calculation time to determine contacts. Saved anchors and detailed story
+              evidence are encrypted, included in your export and removed with account erasure.
+              Reopening a saved reading restores its original evidence and does not recalculate its
+              history.
+            </p>
+            <p className="mt-2 text-sm text-muted-foreground">
               The Daily check-in switch controls whether mood and energy frame your reading. You can
               still save a private check-in with that switch off. Saving never turns the switch on.
             </p>

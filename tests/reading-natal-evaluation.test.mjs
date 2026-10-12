@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { after, before, test } from "node:test";
+import { readFile } from "node:fs/promises";
 import { createRecordsHarness } from "./helpers/records-harness.mjs";
 import {
   BASELINE_RESPONSES,
@@ -11,6 +12,16 @@ import {
   compareReports,
   evaluateReadings,
 } from "../scripts/evaluate-readings.mjs";
+const historicalReport = async (side) =>
+  JSON.parse(
+    await readFile(
+      new URL(
+        `../docs/reviews/daily-natal-lens/2026-10-11-blinded-review/${side}-report.json`,
+        import.meta.url,
+      ),
+      "utf8",
+    ),
+  );
 let h, run, combine, bundle;
 before(async () => {
   h = await createRecordsHarness();
@@ -26,8 +37,8 @@ before(async () => {
 });
 after(async () => h?.close());
 test("natal_fixed_cases_use_production_screen_and_planner", async () => {
-  assert.equal(READING_EVAL_FIXTURE_VERSION, "synthetic-daily-5");
-  assert.equal(READING_EVAL_CASES.length, 28);
+  assert.equal(READING_EVAL_FIXTURE_VERSION, "synthetic-daily-6");
+  assert.equal(READING_EVAL_CASES.length, 38);
   for (const [id, rule] of [
     ["natal-duty-reflex", "nl-moon-10"],
     ["natal-freedom-reflex", "nl-moon-09"],
@@ -73,9 +84,10 @@ test("natal_policy_change_stops_mixed_run", async () => {
   assert.throws(() => combine([one, two], { partial: true }), /configuration changed/);
 });
 test("version5_comparison_requires_identical_transit_copy_and_inputs", async () => {
-  const report = await evaluateReadings();
-  assert.equal(report.summary.gatewayReplays, 27);
-  assert.equal(report.summary.outcomes.accepted, 27);
+  const report = await historicalReport("candidate");
+  assert.equal(report.fixtureVersion, "synthetic-daily-5");
+  assert.equal(report.cases.length, 28);
+  assert.equal(report.cases.filter((row) => row.diagnostics.attempted).length, 27);
   assert.equal(report.bundleVersion, "builtin-0.6.1");
   assert.match(report.transitCopyHash, /^[0-9a-f]{64}$/);
   // A natal-free baseline (the built-in fallback) differs only by release identity
@@ -104,8 +116,8 @@ test("version5_comparison_requires_identical_transit_copy_and_inputs", async () 
 });
 
 test("strict natal comparison permits only bundle and selector differences", async () => {
-  const baseline = await evaluateReadings({ bundleSource: "builtin" });
-  const candidate = await evaluateReadings({ bundleSource: "natal-candidate" });
+  const baseline = await historicalReport("baseline");
+  const candidate = await historicalReport("candidate");
   const identity = (sha256, sourceRevision = "a".repeat(40)) => ({
     identityVersion: "reading-evaluation-identity-1",
     report: { sha256 },
@@ -170,5 +182,66 @@ test("strict natal comparison permits only bundle and selector differences", asy
   assert.deepEqual(
     compareReports(baseline, corrected).configurationChanges.map((change) => change.field),
     ["promptVersion"],
+  );
+});
+
+test("current natal comparison isolates the declared catalogue while generic comparisons freeze its bundle", async () => {
+  const baseline = await evaluateReadings({ bundleSource: "builtin" });
+  const candidate = await evaluateReadings({ bundleSource: "natal-candidate" });
+  assert.equal(baseline.fixtureVersion, "synthetic-daily-6");
+  assert.equal(candidate.cases.length, 38);
+  const identity = (sha256, sourceRevision = "a".repeat(40)) => ({
+    identityVersion: "reading-evaluation-identity-1",
+    report: { sha256 },
+    build: { sourceRevision },
+  });
+  const evidence = {
+    beforeSha256: "1".repeat(64),
+    afterSha256: "2".repeat(64),
+    beforeIdentity: identity("1".repeat(64)),
+    afterIdentity: identity("2".repeat(64)),
+  };
+  assert.throws(() => compareReports(baseline, candidate), /frozen source bundle/);
+  const compared = compareNatalReports(baseline, candidate, evidence);
+  assert.equal(compared.mode, "natal");
+  assert.equal(compared.cases.length, 38);
+  assert.deepEqual(
+    compared.configurationChanges.map((change) => change.field),
+    ["bundleVersion", "bundleHash", "bundleSource"],
+  );
+  assert.equal(compared.identity.sourceRevisionMatch, true);
+  for (const [field, value] of [
+    ["bundleSource", "transit-candidate"],
+    ["bundleHash", "missing-identity"],
+    ["transitCopyHash", "changed-copy"],
+    ["storyUse", false],
+    ["storyPlanVersion", "next-story"],
+    ["anchorVersion", "next-anchor"],
+    ["solverVersion", "next-solver"],
+    ["sourceContract", "next-source"],
+    ["transitFixtureHash", "next-fixtures"],
+    ["planVersion", "next-plan"],
+    ["natalPlanVersion", "next-natal"],
+    ["reliabilityVersion", "next-reliability"],
+    ["promptVersion", "next-prompt"],
+    ["validatorVersion", "next-validator"],
+    ["model", "next-model"],
+    ["source", "candidate-replay"],
+    ["gatewayTimeoutMs", 12_000],
+  ]) {
+    const changed = structuredClone(candidate);
+    changed[field] = value;
+    assert.throws(() => compareNatalReports(baseline, changed, evidence), Error, field);
+  }
+  const changedInput = structuredClone(candidate);
+  changedInput.cases[0].configHash = "changed-input";
+  assert.throws(() => compareNatalReports(baseline, changedInput, evidence), /input config/);
+  assert.throws(
+    () =>
+      compareNatalReports(baseline, candidate, {
+        ...evidence,
+        afterIdentity: identity("2".repeat(64), "b".repeat(40)),
+      }),
+    /source revision/,
   );
 });

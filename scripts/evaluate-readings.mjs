@@ -24,8 +24,24 @@ const WARNING =
   "Offline synthetic replay does not measure live model acceptance, semantic grounding, or writing quality. Manual rubric fields are intentionally unscored.";
 const hash = (value) => createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const caseIds = () => READING_EVAL_CASES.map((item) => item.id);
-/** The two shipped bundles an offline run can select; active copy lives only in the hosted app. */
-const OFFLINE_BUNDLES = ["builtin", "natal-candidate"];
+/** Shipped inactive candidates are explicit offline choices; active copy lives in the hosted app. */
+const OFFLINE_BUNDLES = ["builtin", "natal-candidate", "transit-candidate"];
+const HISTORICAL_NATAL_IDS = READING_EVAL_CASES.filter((item) => !item.id.startsWith("arc-")).map(
+  (item) => item.id,
+);
+// The archived transit snapshot predates two restored main natal cases. Its changed
+// input configurations remain in the original reports and cannot be replayed as v6.
+const HISTORICAL_TRANSIT_IDS = caseIds().filter(
+  (id) => !["natal-own-target", "natal-moon-fallback"].includes(id),
+);
+const STORY_POLICY_FIELDS = [
+  "storyPlanVersion",
+  "anchorVersion",
+  "solverVersion",
+  "sourceContract",
+  "transitFixtureHash",
+  "storyUse",
+];
 const IDENTITY_VERSION = "reading-evaluation-identity-1";
 const SHA256 = /^[0-9a-f]{64}$/;
 /** Recorded identity of a source report, copied as recorded and never inferred. */
@@ -38,6 +54,7 @@ const SOURCE_IDENTITY_FIELDS = [
   "planVersion",
   "natalPlanVersion",
   "reliabilityVersion",
+  ...STORY_POLICY_FIELDS,
   "promptVersion",
   "validatorVersion",
   "model",
@@ -50,7 +67,9 @@ const SOURCE_IDENTITY_FIELDS = [
 
 function assertOfflineBundle(bundleSource) {
   if (!OFFLINE_BUNDLES.includes(bundleSource))
-    throw new Error("Unknown offline evaluation bundle: choose builtin or natal-candidate");
+    throw new Error(
+      "Unknown offline evaluation bundle: choose builtin, natal-candidate or transit-candidate",
+    );
 }
 
 /** Blocks application HTTP(S), TCP, TLS, UDP and DNS; the only fetch response is an in-memory replay. */
@@ -129,13 +148,18 @@ async function shippedBundles(load) {
   const { NATAL_CANDIDATE_BUNDLE, transitCopyIdentity } = await load(
     "/src/lib/content/natal-candidate-bundle.ts",
   );
+  const { TRANSIT_CANDIDATE_BUNDLE } = await load("/src/lib/content/transit-candidate-bundle.ts");
   const identity = (bundle) => ({
     bundle,
     version: bundle.version,
     hash: hash(bundle),
     transitCopyHash: hash(transitCopyIdentity(bundle)),
   });
-  return { builtin: identity(DEFAULT_BUNDLE), "natal-candidate": identity(NATAL_CANDIDATE_BUNDLE) };
+  return {
+    builtin: identity(DEFAULT_BUNDLE),
+    "natal-candidate": identity(NATAL_CANDIDATE_BUNDLE),
+    "transit-candidate": identity(TRANSIT_CANDIDATE_BUNDLE),
+  };
 }
 
 export function validateResponses(responses) {
@@ -177,11 +201,13 @@ function summarize(cases, gatewayReplays) {
  * dictionary, after proving that the report matches the fixed inputs, the current
  * model and the selected shipped bundle, and that every capture is lossless.
  */
-function responsesFromReport(report, bundleSource, shipped, model) {
+function responsesFromReport(report, bundleSource, shipped, model, transitMetadata) {
   assertOfflineBundle(bundleSource);
   validateReport(report);
   if (report.fixtureVersion !== READING_EVAL_FIXTURE_VERSION)
-    throw new Error("Report fixture version does not match the fixed synthetic cases");
+    throw new Error(
+      "Historical report fixture version does not match the current fixed synthetic cases; replay requires its original frozen source snapshot",
+    );
   if (report.caseSetHash !== hash(READING_EVAL_CASES))
     throw new Error("Report case set does not match the fixed synthetic cases");
   const fixed = new Map(READING_EVAL_CASES.map((item) => [item.id, item]));
@@ -190,6 +216,8 @@ function responsesFromReport(report, bundleSource, shipped, model) {
       throw new Error(`Report input config for ${row.id} does not match the fixed case`);
   if (report.model !== model)
     throw new Error(`Report model ${report.model} does not match the current model ${model}`);
+  if (STORY_POLICY_FIELDS.some((field) => report[field] !== transitMetadata[field]))
+    throw new Error("Report transit policy does not match the current fixed synthetic cases");
   const selected = shipped[bundleSource];
   if (report.bundleVersion !== selected.version || report.bundleHash !== selected.hash) {
     const other = Object.entries(shipped).find(
@@ -198,7 +226,7 @@ function responsesFromReport(report, bundleSource, shipped, model) {
     throw new Error(
       other
         ? `Report bundle ${report.bundleVersion} does not match the selected ${bundleSource} bundle (${selected.version}); select --bundle ${other[0]}`
-        : `Report used custom copy ${report.bundleVersion} (${String(report.bundleHash).slice(0, 12)}) that matches neither shipped bundle; replaying it needs a frozen import of that copy`,
+        : `Report used custom copy ${report.bundleVersion} (${String(report.bundleHash).slice(0, 12)}) that matches no shipped bundle; replaying it needs a frozen import of that copy`,
     );
   }
   if (report.transitCopyHash != null && report.transitCopyHash !== selected.transitCopyHash)
@@ -255,7 +283,14 @@ export async function extractResponses(report, { bundleSource } = {}) {
   return withEvaluationModules(async (load) => {
     const shipped = await shippedBundles(load);
     const { LANGUAGE_MODEL } = await load("/src/lib/ai/diagnostics.ts");
-    return responsesFromReport(report, bundleSource, shipped, LANGUAGE_MODEL);
+    const { TRANSIT_EVALUATION_METADATA } = await load("/src/lib/ai/reading-evaluation.transit.ts");
+    return responsesFromReport(
+      report,
+      bundleSource,
+      shipped,
+      LANGUAGE_MODEL,
+      TRANSIT_EVALUATION_METADATA,
+    );
   });
 }
 
@@ -289,6 +324,9 @@ export async function evaluateReadings({
       const { NATAL_LENS_PLAN_VERSION } = await load("/src/lib/content/natal-lens.ts");
       const { NATAL_RELIABILITY_VERSION } = await load("/src/lib/astro/natal-reliability.ts");
       const { syntheticNatalReliability } = await load("/src/lib/ai/reading-evaluation.natal.ts");
+      const { syntheticTransitCalculation, TRANSIT_EVALUATION_METADATA } = await load(
+        "/src/lib/ai/reading-evaluation.transit.ts",
+      );
       const { generateSyntheticReadingProse, LANGUAGE_MODEL } = await load(
         "/src/lib/ai/language.server.ts",
       );
@@ -297,7 +335,13 @@ export async function evaluateReadings({
       if (
         sourceReport !== undefined &&
         !isDeepStrictEqual(
-          responsesFromReport(sourceReport.report, bundleSource, shipped, LANGUAGE_MODEL),
+          responsesFromReport(
+            sourceReport.report,
+            bundleSource,
+            shipped,
+            LANGUAGE_MODEL,
+            TRANSIT_EVALUATION_METADATA,
+          ),
           replayResponses,
         )
       )
@@ -323,7 +367,7 @@ export async function evaluateReadings({
             : null,
         }));
         const natalReliability = syntheticNatalReliability(fixed);
-        const assembled = assembleReading(
+        let assembled = assembleReading(
           fixed.chart,
           cycles,
           {
@@ -337,6 +381,23 @@ export async function evaluateReadings({
           bundle,
           natalReliability,
         );
+        const calculation = syntheticTransitCalculation(fixed, assembled.eligibleCycles[0]);
+        if (calculation)
+          assembled = assembleReading(
+            fixed.chart,
+            cycles,
+            {
+              granted: new Set(fixed.config.granted),
+              tone: fixed.config.tone,
+              depth: fixed.config.depth,
+              localBucket: null,
+              checkIn: null,
+              wellness: null,
+            },
+            bundle,
+            natalReliability,
+            calculation,
+          );
         const facts = readingFacts(fixed.chart, assembled, fixed.config.timeZone);
         const observed = await generateSyntheticReadingProse({
           facts,
@@ -369,6 +430,7 @@ export async function evaluateReadings({
           interpretationPlan: dailyPlanIdentity(assembled.interpretationPlan),
           natalLensPlan: assembled.natalLensPlan,
           natalReliability,
+          transitStoryPlan: assembled.transitStoryPlan,
           diagnostics: output.meta.diagnostics,
           output: {
             mode: output.meta.mode,
@@ -385,12 +447,17 @@ export async function evaluateReadings({
             grounding: null,
             lensIntegration: null,
             unsupportedPersonalClaim: null,
+            temporalCoherence: null,
+            chapterIntegration: null,
+            unsupportedHistory: null,
+            promisedResolution: null,
             notes: null,
           },
         });
       }
       const report = {
         reportVersion: REPORT_VERSION,
+        ...TRANSIT_EVALUATION_METADATA,
         fixtureVersion: READING_EVAL_FIXTURE_VERSION,
         caseSetHash: hash(READING_EVAL_CASES),
         bundleVersion: bundle.version,
@@ -468,13 +535,38 @@ function validateReport(report) {
     throw new Error("Report contains an invalid gateway timeout budget");
   const ids = report.cases.map((item) => item.id);
   if (new Set(ids).size !== ids.length) throw new Error("Report contains duplicate case IDs");
-  if (JSON.stringify([...ids].sort()) !== JSON.stringify(caseIds().sort()))
+  const historicalTransit =
+    report.fixtureVersion === "synthetic-daily-5" && ids.some((id) => id.startsWith("arc-"));
+  const expected =
+    report.fixtureVersion === READING_EVAL_FIXTURE_VERSION
+      ? caseIds()
+      : report.fixtureVersion === "synthetic-daily-5"
+        ? historicalTransit
+          ? HISTORICAL_TRANSIT_IDS
+          : HISTORICAL_NATAL_IDS
+        : report.fixtureVersion === "synthetic-daily-4"
+          ? HISTORICAL_NATAL_IDS.filter((id) => !id.startsWith("natal-"))
+          : null;
+  if (!expected) throw new Error("Unsupported evaluation fixture version");
+  if (JSON.stringify([...ids].sort()) !== JSON.stringify([...expected].sort()))
     throw new Error("Report must contain exactly the fixed case IDs");
+  if (
+    (report.fixtureVersion === "synthetic-daily-6" || historicalTransit) &&
+    STORY_POLICY_FIELDS.some((field) =>
+      field === "storyUse" ? typeof report[field] !== "boolean" : !report[field],
+    )
+  )
+    throw new Error("Transit reports require recorded source and fixture policy identities");
   if (report.cases.some((item) => !item.configHash || !item.diagnostics?.outcome))
     throw new Error("Report contains an incomplete case config or diagnostics");
 }
 
 export function compareReports(before, after) {
+  return compareReportPair(before, after);
+}
+
+/** The natal catalogue exception is private and is granted only by its strict comparison gate. */
+function compareReportPair(before, after, { natalBundleDifference = false } = {}) {
   validateReport(before);
   validateReport(after);
   if (before.fixtureVersion !== after.fixtureVersion)
@@ -484,15 +576,45 @@ export function compareReports(before, after) {
     ["bundleVersion", "bundleHash", "model"].some((field) => before[field] !== after[field])
   )
     throw new Error("Version-4 comparison requires identical frozen source bundle and model");
-  // From version 5 the bundles may differ only by release identity and natal catalogue,
-  // so a natal-free baseline and the natal candidate share every transit sentence.
+  const historicalTransit =
+    before.fixtureVersion === "synthetic-daily-5" &&
+    before.cases.some((row) => row.id.startsWith("arc-"));
+  // Historical natal v5 comparisons isolate the catalogue while keeping transit copy fixed.
   if (
-    /^synthetic-daily-([5-9]|\d{2,})$/.test(before.fixtureVersion) &&
+    before.fixtureVersion === "synthetic-daily-5" &&
+    !historicalTransit &&
     (!before.transitCopyHash ||
       before.transitCopyHash !== after.transitCopyHash ||
       before.model !== after.model)
   )
     throw new Error("Version-5 comparison requires identical transit copy and model");
+  if (
+    (before.fixtureVersion === "synthetic-daily-6" || historicalTransit) &&
+    (natalBundleDifference ? ["model"] : ["bundleVersion", "bundleHash", "model"]).some(
+      (field) => before[field] !== after[field],
+    )
+  )
+    throw new Error("Transit comparison requires identical frozen source bundle and model");
+  const fixedPolicy = [
+    "anchorVersion",
+    "solverVersion",
+    "sourceContract",
+    "transitFixtureHash",
+    "planVersion",
+    "natalPlanVersion",
+    "reliabilityVersion",
+    "gatewayTimeoutMs",
+    ...(before.fixtureVersion === "synthetic-daily-6"
+      ? ["storyPlanVersion", "transitCopyHash"]
+      : []),
+  ];
+  if (
+    (before.fixtureVersion === "synthetic-daily-6" || historicalTransit) &&
+    fixedPolicy.some((field) => before[field] !== after[field])
+  )
+    throw new Error(
+      "Transit comparison requires identical frozen source, fixture and prior policy inputs",
+    );
   const oldCases = new Map(before.cases.map((item) => [item.id, item]));
   if (
     before.caseSetHash !== after.caseSetHash ||
@@ -517,6 +639,7 @@ export function compareReports(before, after) {
     "planVersion",
     "natalPlanVersion",
     "reliabilityVersion",
+    ...STORY_POLICY_FIELDS,
     "promptVersion",
     "validatorVersion",
     "bundleVersion",
@@ -532,6 +655,7 @@ export function compareReports(before, after) {
     planVersion: report.planVersion ?? null,
     natalPlanVersion: report.natalPlanVersion ?? null,
     reliabilityVersion: report.reliabilityVersion ?? null,
+    ...Object.fromEntries(STORY_POLICY_FIELDS.map((field) => [field, report[field] ?? null])),
     promptVersion: report.promptVersion,
     validatorVersion: report.validatorVersion,
     bundleVersion: report.bundleVersion ?? null,
@@ -591,10 +715,31 @@ export function compareNatalReports(
   after,
   { beforeIdentity, afterIdentity, beforeSha256, afterSha256 } = {},
 ) {
-  const compared = compareReports(before, after);
-  for (const field of NATAL_FIXED_FIELDS)
+  const fixedFields = [
+    ...NATAL_FIXED_FIELDS,
+    ...(before.fixtureVersion === "synthetic-daily-6" ? STORY_POLICY_FIELDS : []),
+  ];
+  for (const field of fixedFields)
     if (before[field] == null || before[field] !== after[field])
       throw new Error(`Natal comparison requires an identical recorded ${field}`);
+  const natalBundleDifference =
+    before.fixtureVersion === "synthetic-daily-6" &&
+    (before.bundleVersion !== after.bundleVersion || before.bundleHash !== after.bundleHash);
+  if (natalBundleDifference) {
+    const sources = new Set([before.bundleSource, after.bundleSource]);
+    if (
+      sources.size !== 2 ||
+      !sources.has("builtin") ||
+      !sources.has("natal-candidate") ||
+      [before, after].some(
+        (report) => !report.bundleVersion || !SHA256.test(String(report.bundleHash)),
+      )
+    )
+      throw new Error(
+        "Current natal comparison permits only the declared builtin and natal candidate catalogue difference",
+      );
+  }
+  const compared = compareReportPair(before, after, { natalBundleDifference });
   const unexpected = compared.configurationChanges.filter(
     (change) => !NATAL_ALLOWED_CHANGES.has(change.field),
   );
@@ -634,10 +779,11 @@ async function readJsonFile(path) {
 const readJson = async (path) => (await readJsonFile(path)).value;
 
 const HELP = `Offline synthetic reading evaluator (no network; fake gateway key)
-  --bundle builtin|natal-candidate --output report.json
-  --bundle builtin|natal-candidate --responses candidate.json --output report.json
-  --bundle builtin|natal-candidate --responses responses.json --source-report complete-report.json --output replay.json
-  --bundle builtin|natal-candidate --extract-responses complete-report.json --output responses.json
+  --bundle-source builtin|natal-candidate|transit-candidate --output report.json
+  --bundle-source builtin|natal-candidate|transit-candidate --responses candidate.json --output report.json
+  --bundle-source builtin|natal-candidate|transit-candidate --responses responses.json --source-report complete-report.json --output replay.json
+  --bundle-source builtin|natal-candidate|transit-candidate --extract-responses complete-report.json --output responses.json
+  --bundle remains an alias for --bundle-source
   --write-responses candidate.json
   --compare before.json after.json --output comparison.json
   --compare-natal baseline.json candidate.json --before-identity identity.json --after-identity identity.json --output comparison.json
@@ -660,6 +806,7 @@ export async function main(args) {
         "--compare",
         "--compare-natal",
         "--bundle",
+        "--bundle-source",
         "--extract-responses",
         "--source-report",
         "--before-identity",
@@ -686,16 +833,20 @@ export async function main(args) {
       "Choose one mode: baseline, responses, write-responses, extract-responses, compare, or compare-natal",
     );
   const comparing = "--compare" in options || "--compare-natal" in options;
-  const bundleSource = options["--bundle"];
+  if ("--bundle" in options && "--bundle-source" in options)
+    throw new Error("Choose one bundle selector: --bundle-source or its --bundle alias");
+  const bundleSource = options["--bundle-source"] ?? options["--bundle"];
   if (comparing && bundleSource !== undefined)
     throw new Error("--bundle does not apply to comparisons; each report records its own bundle");
   if ("--write-responses" in options && bundleSource !== undefined)
     throw new Error("--bundle does not apply to --write-responses, which exports fixture drafts");
   if (!comparing && !("--write-responses" in options)) {
     if (bundleSource === undefined)
-      throw new Error("Choose the evaluation copy explicitly: --bundle builtin|natal-candidate");
+      throw new Error(
+        "Choose the evaluation copy explicitly: --bundle-source builtin|natal-candidate|transit-candidate",
+      );
     if (!OFFLINE_BUNDLES.includes(bundleSource))
-      throw new Error("--bundle must be builtin or natal-candidate");
+      throw new Error("--bundle-source must be builtin, natal-candidate or transit-candidate");
   }
   if ("--source-report" in options && !("--responses" in options))
     throw new Error("--source-report binds a replay: pass the extracted --responses file");

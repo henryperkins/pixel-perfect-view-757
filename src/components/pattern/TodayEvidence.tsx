@@ -1,3 +1,6 @@
+import { TransitSequence } from "./TransitSequence";
+import { primaryStoryOverlay } from "@/lib/astro/transit-presentation";
+import type { DailyTransitCalculation } from "@/lib/astro/transit-episodes";
 import type { ReactNode } from "react";
 import type { fetchToday } from "@/lib/pattern.functions";
 import { timingDate } from "./timing";
@@ -108,6 +111,15 @@ export function TodayEvidence({
   const byId = new Map(facts.map((fact) => [fact.id, fact]));
   const savedSynthesis = language?.interpretationPlan?.synthesis;
   const natal = language?.natalLens;
+  const story = language?.transitStory;
+  const calculation: DailyTransitCalculation | null =
+    story?.plan.status === "selected"
+      ? {
+          status: "qualified",
+          evidence: story.plan.evidence,
+          timingOverlay: story.plan.evidence.timingOverlay,
+        }
+      : null;
   const synthesisFact = byId.get("S1");
   const synthesis =
     savedSynthesis &&
@@ -149,12 +161,24 @@ export function TodayEvidence({
                 <LabelledValues
                   values={[
                     { label: "Current orb", value: `${cycle.orb.toFixed(2)}° from exact` },
-                    { label: "Phase", value: todayPhaseLabel(cycle.phase) },
+                    {
+                      label: "Phase",
+                      value: todayPhaseLabel(
+                        primaryStoryOverlay(calculation, cycle.cycle_key)?.phase ?? cycle.phase,
+                      ),
+                    },
                     {
                       label: "Calculated exact date",
-                      value: cycle.exact_at
-                        ? timingDate(cycle.exact_at, timezone)
-                        : "Not found in the scanned window",
+                      value: primaryStoryOverlay(calculation, cycle.cycle_key)
+                        ? primaryStoryOverlay(calculation, cycle.cycle_key)!.qualifiedExactDay
+                          ? timingDate(
+                              primaryStoryOverlay(calculation, cycle.cycle_key)!.qualifiedExactDay,
+                              timezone,
+                            )
+                          : "See the saved sampled dates"
+                        : cycle.exact_at
+                          ? timingDate(cycle.exact_at, timezone)
+                          : "Not found in the scanned window",
                     },
                   ]}
                 />
@@ -299,6 +323,26 @@ export function TodayEvidence({
                             <li key={id}>
                               <SourceLink id={todayFactId(readingId, id)}>
                                 {todayFactLabel(id)} <span className="ml-1 text-xs">({id})</span>
+                              </SourceLink>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ) : null}
+                    {fact.id === "A1" ? <TransitSequence calculation={calculation} /> : null}
+                    {fact.id === "P2" && story?.plan.status === "selected" ? (
+                      <div className="mt-3 space-y-2">
+                        <p className="text-sm">
+                          Published chapter {story.plan.copy.key} · {story.plan.releaseVersion}
+                        </p>
+                        <ul
+                          className="flex flex-wrap gap-x-4"
+                          aria-label="Published chapter parents"
+                        >
+                          {["C1", "I1", "A1"].map((id) => (
+                            <li key={id}>
+                              <SourceLink id={todayFactId(readingId, id)}>
+                                {todayFactLabel(id)} ({id})
                               </SourceLink>
                             </li>
                           ))}

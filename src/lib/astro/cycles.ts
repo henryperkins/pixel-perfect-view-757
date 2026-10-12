@@ -1,11 +1,4 @@
-import {
-  BODIES,
-  BODY_LABEL,
-  type Body,
-  positionOf,
-  signedDelta,
-  toJulianDay,
-} from "./ephemeris";
+import { BODIES, BODY_LABEL, type Body, positionOf, signedDelta, toJulianDay } from "./ephemeris";
 import { ASPECTS, type AspectKey, type Chart } from "./chart";
 
 /**
@@ -67,13 +60,7 @@ const TARGET_WEIGHT: Record<string, number> = {
   saturn: 0.6,
 };
 
-export const DOMAINS = [
-  "identity",
-  "relationships",
-  "work",
-  "inner-life",
-  "structure",
-] as const;
+export const DOMAINS = ["identity", "relationships", "work", "inner-life", "structure"] as const;
 export type Domain = (typeof DOMAINS)[number];
 
 const DOMAIN_BY_TARGET: Record<string, Domain> = {
@@ -88,7 +75,7 @@ const DOMAIN_BY_TARGET: Record<string, Domain> = {
   saturn: "structure",
 };
 
-function transitOrb(body: string, aspect: AspectKey): number {
+export function transitOrb(body: string, aspect: AspectKey): number {
   const tight = aspect === "quincunx" ? 1.2 : 2.5;
   if (body === "moon") return tight * 0.6;
   if (body === "sun" || body === "mercury" || body === "venus") return tight;
@@ -140,12 +127,7 @@ export function exactPhrase(days: number | null): string {
   return `exact ${Math.abs(days)} days ago`;
 }
 
-function orbAt(
-  jd: number,
-  body: Body,
-  natalLon: number,
-  aspectAngle: number,
-): number {
+function orbAt(jd: number, body: Body, natalLon: number, aspectAngle: number): number {
   const pos = positionOf(body, jd);
   const sep = Math.abs(signedDelta(pos.lon, natalLon));
   return Math.abs(sep - aspectAngle);
@@ -239,15 +221,11 @@ export function computeCycles(chart: Chart, when: Date): CycleInstance[] {
           exact_at: exactJd ? isoFromJd(exactJd) : null,
           egress_at: egressJd ? isoFromJd(egressJd) : null,
           label: `${BODY_LABEL[tb]} ${asp.key} natal ${np.label}`,
-          days_to_exact:
-            exactJd !== null ? Math.round(exactJd - jd) : null,
+          days_to_exact: exactJd !== null ? Math.round(exactJd - jd) : null,
           arc_position:
             ingressJd !== null && egressJd !== null && egressJd > ingressJd
               ? Number(
-                  Math.min(
-                    1,
-                    Math.max(0, (jd - ingressJd) / (egressJd - ingressJd)),
-                  ).toFixed(3),
+                  Math.min(1, Math.max(0, (jd - ingressJd) / (egressJd - ingressJd))).toFixed(3),
                 )
               : null,
         });

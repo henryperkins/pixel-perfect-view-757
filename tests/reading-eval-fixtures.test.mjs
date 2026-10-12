@@ -82,9 +82,17 @@ test("corrected Mercury fixture produces past timing and separating facts throug
 });
 
 test("corrected fixtures have a new identity shared by offline and server evaluation", () => {
-  assert.equal(READING_EVAL_FIXTURE_VERSION, "synthetic-daily-5");
+  assert.equal(READING_EVAL_FIXTURE_VERSION, "synthetic-daily-6");
   assert.equal(scriptVersion, READING_EVAL_FIXTURE_VERSION);
   assert.equal(scriptCases, READING_EVAL_CASES);
+  assert.equal(READING_EVAL_CASES.length, 38);
+  assert.equal(READING_EVAL_CASES.filter((item) => item.id.startsWith("arc-")).length, 10);
+  assert.equal(READING_EVAL_CASES.filter((item) => item.id.startsWith("natal-")).length, 12);
+  for (const id of ["natal-own-target", "natal-moon-fallback"])
+    assert.ok(
+      READING_EVAL_CASES.some((item) => item.id === id),
+      `${id} remains in the main catalogue`,
+    );
 });
 
 for (const [id, status, key] of [

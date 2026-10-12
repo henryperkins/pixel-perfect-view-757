@@ -20,6 +20,7 @@ import {
   ENGINE_ID,
   ENGINE_VERSION,
 } from "./ephemeris";
+import { positionSourceSchema } from "./transit-anchors";
 import type { AspectKey, EphemerisResult } from "./chart";
 
 const TIMEOUT_MS = 6000;
@@ -86,7 +87,6 @@ const ALIASES: Record<Body, string[]> = {
   ],
 };
 
-
 type Raw = Record<string, unknown>;
 
 function num(v: unknown): number | null {
@@ -141,11 +141,7 @@ function readBody(bucket: Raw, body: Body): BodyPosition | null {
     lon = num(e["lon"] ?? e["longitude"] ?? e["lambda"] ?? e["ecliptic_longitude"]);
     lat = num(e["lat"] ?? e["latitude"] ?? e["beta"]) ?? 0;
     speed = num(
-      e["speed"] ??
-        e["speedLong"] ??
-        e["lon_speed"] ??
-        e["longitude_speed"] ??
-        e["daily_motion"],
+      e["speed"] ?? e["speedLong"] ?? e["lon_speed"] ?? e["longitude_speed"] ?? e["daily_motion"],
     );
     if (typeof e["isRetrograde"] === "boolean") retroFlag = e["isRetrograde"];
     else if (typeof e["retrograde"] === "boolean") retroFlag = e["retrograde"];
@@ -164,7 +160,6 @@ function readBody(bucket: Raw, body: Body): BodyPosition | null {
     degree: degreeInSign(l),
   };
 }
-
 
 function fallback(jd: number, reason: string): EphemerisResult {
   return {
@@ -223,7 +218,6 @@ export async function resolvePositions(req: SwissRequest): Promise<EphemerisResu
       return fallback(req.jd, `Swiss Ephemeris service returned HTTP ${res.status}.`);
     }
 
-
     const payload = (await res.json()) as Raw;
     const bucket = pickBucket(payload);
     if (!bucket) {
@@ -238,10 +232,7 @@ export async function resolvePositions(req: SwissRequest): Promise<EphemerisResu
       else positions[b] = p;
     }
     if (missing.length) {
-      return fallback(
-        req.jd,
-        `Swiss Ephemeris response omitted ${missing.join(", ")}.`,
-      );
+      return fallback(req.jd, `Swiss Ephemeris response omitted ${missing.join(", ")}.`);
     }
 
     const meta =
@@ -254,11 +245,8 @@ export async function resolvePositions(req: SwissRequest): Promise<EphemerisResu
       (typeof payload["version"] === "string" && payload["version"]) ||
       "unknown";
 
-
     const data =
-      payload["data"] && typeof payload["data"] === "object"
-        ? (payload["data"] as Raw)
-        : payload;
+      payload["data"] && typeof payload["data"] === "object" ? (payload["data"] as Raw) : payload;
 
     // Houses and angles straight from the service (Placidus by default).
     let houses: EphemerisResult["houses"];
@@ -271,7 +259,10 @@ export async function resolvePositions(req: SwissRequest): Promise<EphemerisResu
       const asc = num(h["ascendant"]);
       const mc = num(h["mc"] ?? h["midheaven"]);
       if (cusps.length === 12) {
-        houses = { system: HOUSE_SYSTEM_NAME[String(h["system"] ?? "P")] ?? String(h["system"]), cusps: cusps.map(norm360) };
+        houses = {
+          system: HOUSE_SYSTEM_NAME[String(h["system"] ?? "P")] ?? String(h["system"]),
+          cusps: cusps.map(norm360),
+        };
       }
       if (asc !== null && mc !== null) angles = { ascendant: norm360(asc), midheaven: norm360(mc) };
     }
@@ -281,7 +272,9 @@ export async function resolvePositions(req: SwissRequest): Promise<EphemerisResu
       const pick = (...names: string[]) => {
         for (const n of names) {
           const e = bucket[n] ?? (data["angles"] as Raw | undefined)?.[n];
-          const v = num(e && typeof e === "object" ? ((e as Raw)["longitude"] ?? (e as Raw)["lon"]) : e);
+          const v = num(
+            e && typeof e === "object" ? ((e as Raw)["longitude"] ?? (e as Raw)["lon"]) : e,
+          );
           if (v !== null) return v;
         }
         return null;
@@ -314,12 +307,16 @@ export async function resolvePositions(req: SwissRequest): Promise<EphemerisResu
 
     return {
       positions,
+      ...(positionSourceSchema.safeParse(data["positionSource"]).success
+        ? { positionSource: positionSourceSchema.parse(data["positionSource"]) }
+        : {}),
       engine: "swiss-ephemeris",
       engineVersion: version,
       precision: "high",
       degraded: false,
       degradedReason: null,
       houses,
+      houseSystemExplicit: typeof h?.["system"] === "string",
       angles,
       aspects,
     };

@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { after, before, beforeEach, test } from "node:test";
 import { fileURLToPath } from "node:url";
@@ -15,7 +16,8 @@ let vite,
   generateReadingProse,
   combineReadingEvaluationResults,
   DEFAULT_BUNDLE,
-  NATAL_CANDIDATE_BUNDLE;
+  NATAL_CANDIDATE_BUNDLE,
+  TRANSIT_CANDIDATE_BUNDLE;
 let draft, requests;
 before(async () => {
   process.env.LOVABLE_API_KEY = "synthetic-live-eval-test-no-network";
@@ -41,6 +43,9 @@ before(async () => {
   ({ DEFAULT_BUNDLE } = await vite.ssrLoadModule("/src/lib/content/default-bundle.ts"));
   ({ NATAL_CANDIDATE_BUNDLE } = await vite.ssrLoadModule(
     "/src/lib/content/natal-candidate-bundle.ts",
+  ));
+  ({ TRANSIT_CANDIDATE_BUNDLE } = await vite.ssrLoadModule(
+    "/src/lib/content/transit-candidate-bundle.ts",
   ));
 });
 beforeEach(() => {
@@ -139,7 +144,7 @@ test("evaluation input accepts only a fixed case ID and a closed bundle selector
   assert.deepEqual(readingEvaluationInputSchema.parse({ caseId: "saturn-square-sun" }), {
     caseId: "saturn-square-sun",
   });
-  for (const bundleSource of ["active", "builtin", "natal-candidate"])
+  for (const bundleSource of ["active", "builtin", "natal-candidate", "transit-candidate"])
     assert.equal(
       readingEvaluationInputSchema.parse({ caseId: "saturn-square-sun", bundleSource })
         .bundleSource,
@@ -221,6 +226,7 @@ test("the admin panel offers a labeled, closed evaluation-copy selector defaulti
         ["active", true, "Current active copy"],
         ["builtin", false, "Natal-free built-in baseline"],
         ["natal-candidate", false, "Inactive natal candidate"],
+        ["transit-candidate", false, "Inactive transit candidate"],
       ],
     );
     assert.match(markup, /aria-describedby="synthetic-evaluation-copy-note"/);
@@ -275,24 +281,26 @@ test("production reading output keeps synthetic observation out of normal metada
 });
 
 test("complete model run retains the offline fixture hashes and comparison compatibility", async () => {
-  // The natal suite qualifies the candidate release, as an isolated environment would.
+  // The full suite explicitly evaluates the inactive transit candidate.
   const results = [];
   for (const fixed of READING_EVAL_CASES) {
     draft = structuredClone(BASELINE_RESPONSES[fixed.id]);
-    results.push(await runSyntheticEvaluationCase(fixed.id, NATAL_CANDIDATE_BUNDLE));
+    results.push(await runSyntheticEvaluationCase(fixed.id, TRANSIT_CANDIDATE_BUNDLE));
   }
   const report = combineReadingEvaluationResults(results);
   assert.equal(report.partial, false);
   assert.equal(report.summary.modelAttempts, READING_EVAL_CASES.length - 1);
   assert.equal(report.summary.syntheticModelAcceptanceRate, 1);
   assert.equal(report.summary.liveAcceptanceRate, null);
-  const offline = await evaluateReadings();
+  const offline = await evaluateReadings({ bundleSource: "transit-candidate" });
   assert.equal(report.transitCopyHash, offline.transitCopyHash);
   assert.equal(compareReports(offline, report).acceptedDelta, 0);
-  // A natal-free baseline run on the deployed fallback shares the same transit copy.
+  // The natal experiment keeps its original copy; the transit candidate adds chapters.
   draft = structuredClone(BASELINE_RESPONSES["saturn-square-sun"]);
   const fallback = await runSyntheticEvaluationCase("saturn-square-sun", DEFAULT_BUNDLE);
-  assert.equal(fallback.metadata.transitCopyHash, report.transitCopyHash);
+  const natal = await runSyntheticEvaluationCase("saturn-square-sun", NATAL_CANDIDATE_BUNDLE);
+  assert.equal(fallback.metadata.transitCopyHash, natal.metadata.transitCopyHash);
+  assert.notEqual(fallback.metadata.transitCopyHash, report.transitCopyHash);
   assert.notEqual(fallback.metadata.bundleHash, report.bundleHash);
   assert.equal(report.caseSetHash, offline.caseSetHash);
   assert.deepEqual(
@@ -340,7 +348,7 @@ test("synthesis report retains bounded plan identity and graph metadata", async 
   assert.equal(result.case.diagnostics.outcome, "accepted");
 });
 
-test("mid-run plan policy changes are rejected while deliberate cross-policy comparisons remain usable", async () => {
+test("mid-run and version-6 comparisons reject changes to prerequisite plan policy", async () => {
   const first = await runSyntheticEvaluationCase("saturn-square-sun", DEFAULT_BUNDLE);
   draft = structuredClone(BASELINE_RESPONSES["saturn-square-moon-warm"]);
   const second = await runSyntheticEvaluationCase("saturn-square-moon-warm", DEFAULT_BUNDLE);
@@ -349,11 +357,38 @@ test("mid-run plan policy changes are rejected while deliberate cross-policy com
     () => combineReadingEvaluationResults([first, second], { partial: true }),
     /configuration changed/,
   );
-  const before = await evaluateReadings();
+  const before = await evaluateReadings({ bundleSource: "transit-candidate" });
   const after = structuredClone(before);
   after.planVersion = "daily-synthesis-next";
-  const compared = compareReports(before, after);
-  assert.ok(compared.configurationChanges.some((c) => c.field === "planVersion"));
+  assert.throws(() => compareReports(before, after), /frozen.*policy/);
   delete before.planVersion;
-  assert.equal(compareReports(before, after).before.planVersion, null);
+  assert.throws(() => compareReports(before, after), /frozen.*policy/);
+});
+
+test("completed historical natal runs retain their 28-case download inventory", async () => {
+  const report = JSON.parse(
+    await readFile(
+      new URL(
+        "../docs/reviews/daily-natal-lens/2026-10-11-blinded-review/baseline-report.json",
+        import.meta.url,
+      ),
+      "utf8",
+    ),
+  );
+  const { cases, summary, partial, expectedCases, ...metadata } = report;
+  const results = cases.map((row) => ({ metadata, case: row }));
+  const complete = combineReadingEvaluationResults(results);
+  assert.equal(complete.fixtureVersion, "synthetic-daily-5");
+  assert.equal(complete.partial, false);
+  assert.equal(complete.expectedCases, 28);
+  assert.deepEqual(
+    complete.cases.map((row) => row.id),
+    cases.map((row) => row.id),
+  );
+  assert.deepEqual(complete.summary, summary);
+  const unfinished = combineReadingEvaluationResults(results.slice(0, 3), { partial: true });
+  assert.equal(unfinished.expectedCases, 28);
+  assert.equal(unfinished.partial, true);
+  assert.equal(unfinished.cases.length, 3);
+  assert.throws(() => combineReadingEvaluationResults(results.slice(0, 3)), /all fixed cases/);
 });

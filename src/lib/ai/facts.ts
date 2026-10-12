@@ -3,6 +3,15 @@
  * and coverage; it cannot prove semantic support for arbitrary generated prose.
  * Daily facts contain only the selected astronomical plan and curated copy.
  */
+import {
+  transitStoryFacts,
+  assertTransitStoryFacts,
+  storyFactSchema,
+  type StoryFact,
+} from "./transit-story-facts";
+import type { TransitChapter } from "../astro/transit-episodes";
+import { primaryStoryOverlay } from "../astro/transit-presentation";
+import { ENGINE_ID, ENGINE_VERSION } from "../astro/ephemeris";
 import type { AssembledReading } from "../reading.server";
 import { localDayString } from "../local-day";
 import { aspectFamily, safetyPass } from "../content/default-bundle";
@@ -19,6 +28,8 @@ export interface FactAtom {
   statement: string;
   kind?: "calculation" | "interpretation" | "synthesis" | "temperament";
   natalEvidenceId?: "NL1";
+  arc?: StoryFact;
+  storyChapter?: TransitChapter;
   dependsOn?: string[];
   sourceKey?: string;
   releaseVersion?: string;
@@ -62,20 +73,27 @@ export interface CycleFactInput {
 export function readingFacts(
   chart: ChartFactInput,
   plan: Pick<AssembledReading, "eligibleCycles" | "editorial" | "interpretationPlan"> &
-    Partial<Pick<AssembledReading, "natalLensPlan">>,
+    Partial<Pick<AssembledReading, "natalLensPlan" | "transitStoryPlan" | "storyCalculation">>,
   timeZone = "UTC",
 ): FactAtom[] {
   const facts: FactAtom[] = [];
   plan.eligibleCycles.forEach((c, i) => {
-    const exactDate = c.exact_at ? localDayString(new Date(c.exact_at), timeZone) : null;
+    const overlay = primaryStoryOverlay(plan.storyCalculation, c.cycle_key);
+    const exactDate = overlay
+      ? overlay.qualifiedExactDay
+      : c.exact_at
+        ? localDayString(new Date(c.exact_at), timeZone)
+        : null;
     const parts = [
       `transiting ${c.transit_body} ${c.aspect} natal ${c.natal_point}`,
       `Current orb at the reading's calculation time: ${c.orb.toFixed(2)} degrees`,
-      `phase ${c.phase}`,
+      `phase ${overlay?.phase ?? c.phase}`,
       `domain ${c.domain}`,
       exactDate
         ? `Calculated exact date: ${exactDate}`
-        : "No exact date was found inside the scanned window",
+        : overlay
+          ? "No single exact calendar day is qualified for this contact"
+          : "No exact date was found inside the scanned window",
     ];
     facts.push({
       id: `C${i + 1}`,
@@ -123,6 +141,7 @@ export function readingFacts(
       releaseVersion: plan.natalLensPlan!.releaseVersion,
       natalEvidenceId: lens.evidenceId,
     });
+  if (plan.transitStoryPlan) facts.push(...transitStoryFacts(plan.transitStoryPlan));
   if (plan.editorial) {
     if (plan.editorial.domain)
       facts.push({
@@ -135,7 +154,7 @@ export function readingFacts(
   }
   facts.push({
     id: "E1",
-    statement: `positions computed by ${chart.engine} ${chart.engineVersion} at ${chart.precision} precision${chart.uncertainty.housesReliable ? `, ${chart.houseSystem} houses` : ""}`,
+    statement: `Natal positions computed by ${chart.engine} ${chart.engineVersion} at ${chart.precision} precision${chart.uncertainty.housesReliable ? `, ${chart.houseSystem} houses` : ""}. Current transit geometry and orb use ${ENGINE_ID}@${ENGINE_VERSION}.${plan.storyCalculation?.status === "qualified" ? " Primary event timing uses source-qualified Swiss Ephemeris." : ""}`,
   });
   facts.push({
     id: "U1",
@@ -386,6 +405,11 @@ export function assertDailyFactGraph(facts: FactAtom[]): void {
     }
   }
   if (editorialVersions.size > 1) invalid();
+  try {
+    assertTransitStoryFacts(facts);
+  } catch {
+    invalid();
+  }
   const visited = new Set<string>(),
     pending = new Set<string>();
   const visit = (id: string): void => {
@@ -414,6 +438,12 @@ export function readSavedFactAtoms(value: unknown): FactAtom[] {
     const fact: FactAtom = { id: f["id"], statement: f["statement"] };
     if (["calculation", "interpretation", "synthesis", "temperament"].includes(String(f["kind"])))
       fact.kind = f["kind"] as NonNullable<FactAtom["kind"]>;
+    if (f["arc"] !== undefined) {
+      const parsed = storyFactSchema.safeParse(f["arc"]);
+      if (parsed.success) fact.arc = parsed.data;
+    }
+    if (["single", "opening", "return", "closing", "between"].includes(String(f["storyChapter"])))
+      fact.storyChapter = f["storyChapter"] as TransitChapter;
     if (f["natalEvidenceId"] === "NL1") fact.natalEvidenceId = "NL1";
     if (
       Array.isArray(f["dependsOn"]) &&
@@ -508,7 +538,7 @@ export function featureFacts(
 
   facts.push({
     id: "E1",
-    statement: `positions computed by ${chart.engine} ${chart.engineVersion} at ${chart.precision} precision, ${chart.houseSystem} houses`,
+    statement: `Natal positions computed by ${chart.engine} ${chart.engineVersion} at ${chart.precision} precision, ${chart.houseSystem} houses`,
   });
   if (chart.uncertainty.angleClaimsSuppressed) {
     facts.push({

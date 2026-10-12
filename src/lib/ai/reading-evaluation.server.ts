@@ -10,6 +10,10 @@ import { readingFacts } from "./facts";
 import { dailyPlanIdentity } from "../content/synthesis";
 import { NATAL_LENS_PLAN_VERSION } from "../content/natal-lens";
 import { NATAL_RELIABILITY_VERSION } from "../astro/natal-reliability";
+import {
+  syntheticTransitCalculation,
+  TRANSIT_EVALUATION_METADATA,
+} from "./reading-evaluation.transit";
 import { syntheticNatalReliability } from "./reading-evaluation.natal";
 import {
   DAILY_PROMPT_VERSION,
@@ -43,7 +47,7 @@ export async function runSyntheticEvaluationCase(
   // These minimal chart plans deliberately contain no birth coordinates, timestamp or identity.
   const chart = fixed.chart as unknown as Chart;
   const natalReliability = syntheticNatalReliability(fixed);
-  const assembled = assembleReading(
+  let assembled = assembleReading(
     chart,
     cycles,
     {
@@ -57,6 +61,23 @@ export async function runSyntheticEvaluationCase(
     bundle,
     natalReliability,
   );
+  const calculation = syntheticTransitCalculation(fixed, assembled.eligibleCycles[0]);
+  if (calculation)
+    assembled = assembleReading(
+      chart,
+      cycles,
+      {
+        granted: new Set(fixed.config.granted),
+        tone: fixed.config.tone,
+        depth: fixed.config.depth,
+        localBucket: null,
+        checkIn: null,
+        wellness: null,
+      },
+      bundle,
+      natalReliability,
+      calculation,
+    );
   const facts = readingFacts(chart, assembled, fixed.config.timeZone);
   const observed = await generateSyntheticReadingProse(
     {
@@ -81,6 +102,7 @@ export async function runSyntheticEvaluationCase(
   return {
     metadata: {
       reportVersion: 1,
+      ...TRANSIT_EVALUATION_METADATA,
       fixtureVersion: READING_EVAL_FIXTURE_VERSION,
       caseSetHash: hash(READING_EVAL_CASES),
       bundleVersion: bundle.version,
@@ -112,6 +134,7 @@ export async function runSyntheticEvaluationCase(
       interpretationPlan: dailyPlanIdentity(assembled.interpretationPlan),
       natalLensPlan: assembled.natalLensPlan,
       natalReliability,
+      transitStoryPlan: assembled.transitStoryPlan,
       request: observed.request,
       candidate: observed.candidate,
       diagnostics: prose.meta.diagnostics,
@@ -130,6 +153,10 @@ export async function runSyntheticEvaluationCase(
         grounding: null,
         lensIntegration: null,
         unsupportedPersonalClaim: null,
+        temporalCoherence: null,
+        chapterIntegration: null,
+        unsupportedHistory: null,
+        promisedResolution: null,
         notes: null,
       },
     },

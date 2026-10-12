@@ -1,0 +1,84 @@
+{
+  "results": [
+    {
+      "name": "single",
+      "width": 1280,
+      "passed": true
+    },
+    {
+      "name": "three",
+      "width": 1280,
+      "passed": true
+    },
+    {
+      "name": "five",
+      "width": 1280,
+      "passed": true
+    },
+    {
+      "name": "between",
+      "width": 1280,
+      "passed": true
+    },
+    {
+      "name": "range",
+      "width": 1280,
+      "passed": true
+    },
+    {
+      "name": "legacy",
+      "width": 1280,
+      "passed": true
+    },
+    {
+      "name": "quiet",
+      "width": 1280,
+      "passed": true
+    },
+    {
+      "name": "single",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "name": "three",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "name": "five",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "name": "between",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "name": "range",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "name": "legacy",
+      "width": 390,
+      "passed": true
+    },
+    {
+      "name": "quiet",
+      "width": 390,
+      "passed": true
+    }
+  ],
+  "reducedMotion": "0s",
+  "pageErrors": [],
+  "scope": "Actual timing components and global styles; isolated synthetic fixture; no authenticated production flow",
+  "browser": "Chromium (Playwright revision 1247)",
+  "date": "2026-10-11",
+  "screenshots": [
+    "five-1280.png",
+    "five-390.png",
+    "range-reduced-mobile.png"
+  ]
+}

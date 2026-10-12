@@ -1,3 +1,18 @@
+import {
+  cachedTimingCalculation,
+  clearTimingCalculations,
+} from "./astro/transit-timing-cache.server";
+import { resolveTransitForReading, transitEpisodePolicy } from "./astro/transit-episodes.server";
+import { type DailyTransitCalculation } from "./astro/transit-episodes";
+import { DAILY_TRANSIT_STORY_VERSION } from "./content/transit-story";
+import {
+  canonicalStoryValue,
+  storyDigest,
+  validateSavedTransitStory,
+  calculationFromStory,
+  type SavedTransitStory,
+  type StoryPolicyBinding,
+} from "./content/transit-story-storage.server";
 import type { DBClient } from "./d1.server";
 
 import {
@@ -11,10 +26,16 @@ import {
 import { computeCycles } from "./astro/cycles";
 import { ENGINE_ID, ENGINE_VERSION, signOf, toJulianDay } from "./astro/ephemeris";
 import { resolvePositions } from "./astro/swiss.server";
-import { resolveNatalReliability } from "./astro/natal-reliability.server";
+import { assessTransitAnchors, type TransitAnchorManifest } from "./astro/transit-anchors";
+import { loadTransitAnchors } from "./astro/transit-anchors.server";
+export { loadTransitAnchors };
+import { resolveNatalWindowSamples } from "./astro/natal-reliability.server";
 import {
   validateNatalReliability,
   NATAL_RELIABILITY_VERSION,
+  assessNatalReliability,
+  unavailableNatalReliability,
+  usableNatalService,
   type NatalReliabilityManifest,
 } from "./astro/natal-reliability";
 
@@ -371,8 +392,17 @@ async function calculateChart(input: BirthInput, fp: string) {
     longitude: input.longitude,
   });
   const chart = computeChart(input, ephem);
-  const natalReliability = await resolveNatalReliability(input, fp, ephem);
-  return { chart, natalReliability };
+  // The same bounded service samples support both assessments; never resample
+  // birth data separately for transit anchors.
+  const samples = await resolveNatalWindowSamples(input, ephem);
+  const natalReliability =
+    input.accuracy === "unknown"
+      ? unavailableNatalReliability(fp, input.accuracy, "unknown_time")
+      : !usableNatalService(ephem)
+        ? unavailableNatalReliability(fp, input.accuracy, "service_unavailable")
+        : assessNatalReliability(samples, fp, input.accuracy);
+  const transitAnchors = assessTransitAnchors(samples, fp, input.accuracy);
+  return { chart, natalReliability, transitAnchors };
 }
 
 /** Upserts the snapshot for one fingerprint and replaces its derived natal features. */
@@ -384,6 +414,7 @@ async function storeChartSnapshot(
   fp: string,
   chart: Chart,
   natalReliability: NatalReliabilityManifest,
+  transitAnchors: TransitAnchorManifest,
 ) {
   const { data: snap, error: snapErr } = await db
     .from<{ id: string }>("chart_snapshots")
@@ -396,6 +427,7 @@ async function storeChartSnapshot(
         contract_version: chart.contractVersion,
         positions: chart.points,
         houses: {
+          transitAnchors_ct: await encryptJson(dek, transitAnchors),
           natalReliability_ct: await encryptJson(dek, natalReliability),
           // Attempt time for re-screen backoff; never part of a reading's identity.
           natalReliabilityCheckedAt: new Date().toISOString(),
@@ -464,8 +496,17 @@ export async function saveBirth(
     .single();
   if (error) throw new Error(error.message);
 
-  const { chart, natalReliability } = await calculateChart(birthInput, fp);
-  const snapshotId = await storeChartSnapshot(db, userId, dek, bp.id, fp, chart, natalReliability);
+  const { chart, natalReliability, transitAnchors } = await calculateChart(birthInput, fp);
+  const snapshotId = await storeChartSnapshot(
+    db,
+    userId,
+    dek,
+    bp.id,
+    fp,
+    chart,
+    natalReliability,
+    transitAnchors,
+  );
 
   await db.from("profiles").update({ onboarded_at: new Date().toISOString() }).eq("id", userId);
   await db.from("audit_events").insert({
@@ -584,12 +625,21 @@ export async function rescreenNatalSnapshot(
   );
   const houses = snapshot.houses as Record<string, unknown> | null;
   if (fp === snapshot.fingerprint) {
-    const { chart, natalReliability } = await calculateChart(input, fp);
+    const { chart, natalReliability, transitAnchors } = await calculateChart(input, fp);
     if (
       natalReliability.status === "screened" ||
       (snapshotToChart(snapshot).degraded && !chart.degraded)
     ) {
-      await storeChartSnapshot(db, userId, dek, profile.id, fp, chart, natalReliability);
+      await storeChartSnapshot(
+        db,
+        userId,
+        dek,
+        profile.id,
+        fp,
+        chart,
+        natalReliability,
+        transitAnchors,
+      );
       await db.from("audit_events").insert({
         user_id: userId,
         kind: "chart.rescreened",
@@ -626,13 +676,21 @@ export async function loadSnapshot(db: DB, userId: string) {
 }
 
 /** Calculation provenance surfaced to the reader (AST-20). */
-export function ephemerisState(chart: Chart) {
+export function ephemerisState(chart: Chart, story: DailyTransitCalculation | null = null) {
   return {
     engine: `${chart.engine}@${chart.engineVersion}`,
     precision: chart.precision,
     degraded: chart.degraded,
     degradedReason: chart.degradedReason,
     transitEngine: `${ENGINE_ID}@${ENGINE_VERSION}`,
+    eventTiming:
+      story?.status === "qualified"
+        ? {
+            sourceId: story.evidence.scan.sourceId,
+            engine: `${story.evidence.scan.source.engine}@${story.evidence.scan.source.engineVersion}`,
+            solverVersion: story.evidence.scan.solverVersion,
+          }
+        : null,
   };
 }
 
@@ -750,6 +808,7 @@ export interface ReadingLanguage {
   facts: FactAtom[];
   interpretationPlan: DailyPlanIdentity | null;
   natalLens?: SavedNatalLens | null;
+  transitStory?: SavedTransitStory | null;
 }
 
 /** Revives the stored language-layer metadata for a cached reading. */
@@ -765,6 +824,15 @@ export async function readingLanguage(
 ): Promise<ReadingLanguage> {
   const meta = (row.language_meta ?? {}) as Record<string, unknown>;
   let facts = readSavedFactAtoms(meta["facts"]);
+  if (Object.hasOwn(meta, "facts_ct")) {
+    try {
+      if (typeof meta["facts_ct"] !== "string" || facts.length)
+        throw new Error("Invalid private fact boundary");
+      facts = readSavedFactAtoms(await decryptJson<unknown>(dek, meta["facts_ct"]));
+    } catch {
+      throw new Error("Saved reading evidence could not be loaded. Please retry.");
+    }
+  }
   const citations = Array.isArray(meta["citations"])
     ? (meta["citations"] as ReadingLanguage["citations"])
     : [];
@@ -813,19 +881,69 @@ export async function readingLanguage(
         throw new Error("Invalid saved natal status");
       if (row.language_mode !== "model" && !paragraphs[0]!.includes(natalLens.plan.lens!.mechanism))
         throw new Error("Missing consumed template copy");
-      const order = meta["factOrder"];
-      const restored = [...facts, natalLens.fact];
-      if (
-        !Array.isArray(order) ||
-        order.length !== restored.length ||
-        new Set(order).size !== order.length ||
-        order.some((id) => typeof id !== "string" || !restored.some((f) => f.id === id))
-      )
-        throw new Error("Invalid saved fact order");
-      facts = order.map((id) => restored.find((f) => f.id === id)!);
+      facts = [...facts, natalLens.fact];
     } catch {
       throw new Error("Saved natal reading evidence could not be loaded. Please retry.");
     }
+  }
+  let transitStory: SavedTransitStory | null = null;
+  if (
+    Object.hasOwn(meta, "transitStoryStatus") ||
+    Object.hasOwn(meta, "transit_story_ct") ||
+    facts.some((f) => f.id === "A1" || f.id === "P2") ||
+    citations.some((c) => c.facts?.some((id) => id === "A1" || id === "P2")) ||
+    (Array.isArray(meta["factOrder"]) && meta["factOrder"].some((id) => id === "A1" || id === "P2"))
+  ) {
+    try {
+      if (
+        typeof meta["transit_story_ct"] !== "string" ||
+        facts.some((f) => f.id === "A1" || f.id === "P2")
+      )
+        throw new Error("Missing private story envelope");
+      const savedStory = await decryptJson<SavedTransitStory>(dek, meta["transit_story_ct"]);
+      // An omission has no paragraph evidence. Preserve legacy paragraph recovery,
+      // while a selected story and any present corrupt envelope still fail closed.
+      const hasParagraphs = Object.hasOwn(meta, "paragraphs_ct");
+      if (
+        (hasParagraphs || savedStory?.plan?.status === "selected") &&
+        typeof meta["paragraphs_ct"] !== "string"
+      )
+        throw new Error("Missing saved paragraphs");
+      const paragraphs = hasParagraphs
+        ? await decryptJson<string[]>(dek, meta["paragraphs_ct"] as string)
+        : [];
+      if (
+        !Array.isArray(paragraphs) ||
+        !paragraphs.every((p) => typeof p === "string") ||
+        (savedStory?.plan?.status === "selected" && typeof meta["astroParagraphCount"] !== "number")
+      )
+        throw new Error("Invalid paragraphs");
+      transitStory = await validateSavedTransitStory(savedStory, facts, {
+        releaseVersion: row.release_version,
+        primaryCycleKey: row.primary_cycle_key,
+        mode: row.language_mode ?? "template",
+        paragraphs: paragraphs.slice(
+          0,
+          typeof meta["astroParagraphCount"] === "number" ? meta["astroParagraphCount"] : 0,
+        ),
+        citations,
+        binding: meta["transitStoryPolicy"] as StoryPolicyBinding,
+      });
+      facts = [...facts, ...transitStory.facts];
+    } catch {
+      throw new Error("Saved transit story evidence could not be loaded. Please retry.");
+    }
+  }
+  if (natalLens || transitStory?.plan.status === "selected") {
+    const order = meta["factOrder"];
+    if (
+      !Array.isArray(order) ||
+      order.length !== facts.length ||
+      new Set(order).size !== order.length ||
+      order.some((id) => typeof id !== "string" || !facts.some((f) => f.id === id))
+    )
+      throw new Error("Saved reading evidence could not be loaded. Please retry.");
+    facts = order.map((id) => facts.find((f) => f.id === id)!);
   }
   return {
     mode: row.language_mode === "model" ? "model" : "template",
@@ -836,6 +954,7 @@ export async function readingLanguage(
     facts,
     interpretationPlan: readDailyPlanIdentity(meta["interpretationPlan"], facts),
     natalLens,
+    transitStory,
   };
 }
 
@@ -899,6 +1018,17 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
     }
   }
   const snapRow = loaded;
+  const transitAnchors = await loadTransitAnchors(snapRow, dek);
+  const episodePolicy = transitEpisodePolicy();
+  const storyPolicy: StoryPolicyBinding = {
+    enabled: episodePolicy.enabled,
+    sourceId: episodePolicy.sourceId,
+    endpointIdentity: await keyedFingerprint("transit-endpoint", episodePolicy.endpoint),
+    anchorIdentity: await keyedFingerprint(
+      "transit-anchor-state",
+      canonicalStoryValue(transitAnchors),
+    ),
+  };
   const granted = await grantedSet(db, userId);
   const tz = isPermitted("DEV-01", "timing", granted) ? validTimeZone(timeZone) : "UTC";
   const day = localDayString(now, tz);
@@ -944,10 +1074,16 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
   const snapshotHouses = { ...(snapRow.houses as Record<string, unknown>) };
   delete snapshotHouses["natalReliability_ct"];
   delete snapshotHouses["natalReliabilityCheckedAt"];
+  delete snapshotHouses["transitAnchors_ct"];
   const contextKey = await keyedFingerprint(userId, {
     version: "daily-privacy-2",
     planVersion: DAILY_READING_PLAN_VERSION,
     natalPlanVersion: NATAL_LENS_PLAN_VERSION,
+    storyPlanVersion: DAILY_TRANSIT_STORY_VERSION,
+    storySolverVersion: "transit-episode-1",
+    storyAnchorVersion: "transit-anchor-1",
+    storyPolicy,
+    transitAnchors: canonicalStoryValue(transitAnchors),
     promptVersion: DAILY_PROMPT_VERSION,
     validatorVersion: DAILY_VALIDATOR_VERSION,
     model: LANGUAGE_MODEL,
@@ -995,6 +1131,10 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
     const liveCycles = cyclesForLocalDay(cachedChart, day, tz).slice(0, 12);
     const body = await decryptField(dek, existing.body_ct);
     const paragraphState = await savedReadingParagraphs(dek, existing, body);
+    const language = await readingLanguage(existing, dek);
+    const storyCalculation = language.transitStory
+      ? calculationFromStory(language.transitStory)
+      : null;
 
     return {
       needsOnboarding: false as const,
@@ -1010,12 +1150,13 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
         primary_cycle_key: existing.primary_cycle_key,
         release_version: existing.release_version,
       },
-      language: await readingLanguage(existing, dek),
+      language,
+      storyCalculation,
       feedback: await loadReadingFeedback(db, userId, existing.id),
       provenance: srcs ?? [],
       cycles: liveCycles,
       uncertainty: snapRow.uncertainty as Chart["uncertainty"],
-      ephemeris: ephemerisState(snapshotToChart(snapRow)),
+      ephemeris: ephemerisState(snapshotToChart(snapRow), storyCalculation),
       wellness: wellnessState,
     };
   }
@@ -1023,7 +1164,17 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
   const chart = snapshotToChart(snapRow);
   const cycles = cyclesForLocalDay(chart, day, tz);
 
-  const assembled = assembleReading(chart, cycles, ctx, bundle, natalReliability);
+  const initial = assembleReading(chart, cycles, ctx, bundle, natalReliability);
+  const episodeCalculation = await resolveTransitForReading(initial, transitAnchors, day, tz);
+  const assembled = assembleReading(
+    chart,
+    cycles,
+    ctx,
+    bundle,
+    natalReliability,
+    episodeCalculation,
+  );
+  const storyCalculation = assembled.storyCalculation;
   const topCycles = cycles.slice(0, 12);
 
   // Only chart facts and published editorial references cross the language
@@ -1080,6 +1231,41 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       }
     : null;
 
+  const storyFacts = suppliedFacts.filter((f) => f.id === "A1" || f.id === "P2");
+  const transitStory: SavedTransitStory = {
+    version: 1,
+    plan: assembled.transitStoryPlan,
+    facts: storyFacts,
+    usedParagraphs: {
+      A1: storyFacts.length
+        ? prose.meta.mode === "model"
+          ? prose.meta.citations.filter((c) => c.facts.includes("A1")).map((c) => c.paragraph)
+          : [1]
+        : [],
+      P2: storyFacts.length
+        ? prose.meta.mode === "model"
+          ? prose.meta.citations.filter((c) => c.facts.includes("P2")).map((c) => c.paragraph)
+          : [1]
+        : [],
+    },
+    timingOverlay:
+      assembled.transitStoryPlan.status === "selected"
+        ? assembled.transitStoryPlan.evidence.timingOverlay
+        : null,
+    resultDigest: await storyDigest(assembled.transitStoryPlan, storyPolicy),
+  };
+  await validateSavedTransitStory(
+    transitStory,
+    suppliedFacts.filter((f) => f.id !== "A1" && f.id !== "P2"),
+    {
+      releaseVersion: assembled.release_version,
+      primaryCycleKey: assembled.primary_cycle_key,
+      mode: prose.meta.mode,
+      paragraphs: prose.paragraphs,
+      citations: prose.meta.citations,
+      binding: storyPolicy,
+    },
+  );
   const provenance = assembled.provenance.filter(
     (entry) => prose.meta.mode !== "model" || entry.lane !== "content",
   );
@@ -1178,6 +1364,27 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
     }
   }
 
+  if (storyFacts.length) {
+    for (const entry of provenance) {
+      if (
+        entry.label === assembled.eligibleCycles[0]?.label ||
+        ["C1", "P1", "T1"].includes(String(entry.detail["factId"]))
+      )
+        entry.detail = {
+          factId:
+            entry.label === assembled.eligibleCycles[0]?.label
+              ? "C1"
+              : String(entry.detail["factId"]),
+        };
+    }
+    for (const factId of ["A1", "P2"])
+      provenance.push({
+        lane: "content",
+        source_id: factId === "A1" ? "AST-08" : "AST-05",
+        label: `Private calculated story reference · ${factId}`,
+        detail: { factId },
+      });
+  }
   const { data: inserted, error } = await db
     .from<{ id: string }>("daily_readings")
     .insert({
@@ -1195,7 +1402,24 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       language_model: prose.meta.model,
       language_meta: {
         ...prose.meta,
-        facts: suppliedFacts.filter((f) => f.id !== "N1"),
+        facts: storyFacts.length ? [] : suppliedFacts.filter((f) => f.id !== "N1"),
+        ...(storyFacts.length
+          ? {
+              facts_ct: await encryptJson(
+                dek,
+                suppliedFacts.filter((f) => !["N1", "A1", "P2"].includes(f.id)),
+              ),
+            }
+          : {}),
+        transit_story_ct: await encryptJson(dek, transitStory),
+        transitStoryPolicy: storyPolicy,
+        transitStoryStatus: {
+          version: DAILY_TRANSIT_STORY_VERSION,
+          status: assembled.transitStoryPlan.status,
+          ...(assembled.transitStoryPlan.status === "omitted"
+            ? { reason: assembled.transitStoryPlan.reason }
+            : {}),
+        },
         factOrder: suppliedFacts.map((f) => f.id),
         astroParagraphCount: prose.paragraphs.length,
         natalLensPlan: {
@@ -1286,12 +1510,14 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       facts: suppliedFacts,
       interpretationPlan,
       natalLens,
+      transitStory,
     },
+    storyCalculation,
     feedback: await loadReadingFeedback(db, userId, inserted.id),
     provenance,
     cycles: topCycles,
     uncertainty: chart.uncertainty,
-    ephemeris: ephemerisState(chart),
+    ephemeris: ephemerisState(chart, storyCalculation),
     wellness: wellnessState,
   };
 }
@@ -1747,6 +1973,19 @@ export async function exportEverything(db: DB, userId: string) {
         }
       : null,
     pattern,
+    transitAnchors: await (async () => {
+      const { data, error } = await db
+        .from<SnapshotRow>("chart_snapshots")
+        .select("id,fingerprint,houses,uncertainty")
+        .eq("user_id", userId);
+      if (error) throw new Error("Chart evidence could not be exported. Please retry.");
+      return Promise.all(
+        (data ?? []).map(async (snapshot) => ({
+          snapshotId: snapshot.id,
+          manifest: await loadTransitAnchors(snapshot, dek),
+        })),
+      );
+    })(),
     readings: exportedReadings,
     unreadableReadings: exportedReadings.filter((r) => "unreadable" in r).length,
     journal,
@@ -1755,6 +1994,7 @@ export async function exportEverything(db: DB, userId: string) {
 }
 
 export async function eraseEverything(db: DB, userId: string) {
+  clearTimingCalculations(userId);
   for (const table of [
     "reading_feedback",
     "reading_sources",
@@ -1825,6 +2065,44 @@ export async function getCyclesFor(db: DB, userId: string, day?: string, timeZon
   const referenceAt = localNoon(referenceDay, timezone).toISOString();
   const chart = snapshotToChart(snapRow);
   const cycles = cyclesForLocalDay(chart, referenceDay, timezone);
+  const bundle = await activeBundle(db),
+    dek = await getDek(db, userId),
+    anchor = await loadTransitAnchors(snapRow, dek);
+  const initial = assembleReading(
+    chart,
+    cycles,
+    { granted, tone: "plain", depth: "standard", localBucket: null, checkIn: null, wellness: null },
+    bundle,
+  );
+  const episodePolicy = transitEpisodePolicy();
+  const selectionKey = await keyedFingerprint(
+    "transit-timing-selection",
+    canonicalStoryValue({
+      userId,
+      snapshotId: snapRow.id,
+      fingerprint: snapRow.fingerprint,
+      referenceDay,
+      timezone,
+      anchor,
+      primary: initial.eligibleCycles[0] ?? null,
+      release: bundle.version,
+      chapters: bundle.transitChapters,
+      storyVersion: DAILY_TRANSIT_STORY_VERSION,
+      episodePolicy,
+    }),
+  );
+  const episodeCalculation = await cachedTimingCalculation(userId, selectionKey, () =>
+    resolveTransitForReading(initial, anchor, referenceDay, timezone),
+  );
+  const selected = assembleReading(
+    chart,
+    cycles,
+    { granted, tone: "plain", depth: "standard", localBucket: null, checkIn: null, wellness: null },
+    bundle,
+    null,
+    episodeCalculation,
+  );
+  const storyCalculation = selected.storyCalculation;
   return {
     needsOnboarding: false as const,
     day: referenceDay,
@@ -1834,7 +2112,8 @@ export async function getCyclesFor(db: DB, userId: string, day?: string, timeZon
     contractVersion: chart.contractVersion,
     computedAt: new Date().toISOString(),
     uncertainty: chart.uncertainty,
-    ephemeris: ephemerisState(chart),
+    ephemeris: ephemerisState(chart, storyCalculation),
+    storyCalculation,
     cycles: cycles.slice(0, 40),
   };
 }
@@ -1880,7 +2159,17 @@ export async function listReleases(db: DB) {
       entries,
       cycles: cyclesCount,
       synthesisRules: rulesCount,
-      schemaVersion: bundle["schemaVersion"] === 3 ? 3 : bundle["schemaVersion"] === 2 ? 2 : 1,
+      schemaVersion:
+        bundle["schemaVersion"] === 4
+          ? 4
+          : bundle["schemaVersion"] === 3
+            ? 3
+            : bundle["schemaVersion"] === 2
+              ? 2
+              : 1,
+      transitChapters: Array.isArray(bundle["transitChapters"])
+        ? bundle["transitChapters"].length
+        : 0,
       natalLensCoverage: natalCatalogueCoverage(
         Array.isArray(bundle["natalLenses"]) ? (bundle["natalLenses"] as NatalLensRule[]) : [],
       ),
@@ -1927,14 +2216,16 @@ export async function evaluateFixedCase(
   if (!(LANGUAGE_PROVIDERS as readonly unknown[]).includes(provider))
     throw new Error("Unknown language provider.");
   const evaluation = await import("./ai/reading-evaluation.server");
-  // Evaluation-only copy choice. The two shipped bundles need no records read; nothing
+  // Evaluation-only copy choice. Shipped baseline/candidates need no records read; nothing
   // here publishes, activates or caches content, so production copy is unaffected.
   const bundle =
     bundleSource === "builtin"
       ? DEFAULT_BUNDLE
       : bundleSource === "natal-candidate"
         ? (await import("./content/natal-candidate-bundle")).NATAL_CANDIDATE_BUNDLE
-        : await activeBundle(db, { requireSuccessfulRead: true });
+        : bundleSource === "transit-candidate"
+          ? (await import("./content/transit-candidate-bundle")).TRANSIT_CANDIDATE_BUNDLE
+          : await activeBundle(db, { requireSuccessfulRead: true });
   const result = await evaluation.runSyntheticEvaluationCase(caseId, bundle, provider);
   return { ...result, metadata: { ...result.metadata, bundleSource } };
 }
@@ -2332,6 +2623,9 @@ export async function listDrafts(db: DB, userId: string) {
       notes: d.notes,
       entries: cycles,
       synthesisRules,
+      transitChapters: Array.isArray(bundle["transitChapters"])
+        ? bundle["transitChapters"].length
+        : 0,
       natalLensCoverage: natalCatalogueCoverage(bundle.natalLenses),
       themeCount,
       ruleCount: synthesisRules.length,
@@ -2427,13 +2721,14 @@ export async function draftRelease(db: DB, userId: string, provider: LanguagePro
 
   const bundle: ContentBundle = {
     version: "pending",
-    schemaVersion: base.schemaVersion === 3 ? 3 : 2,
+    schemaVersion: base.schemaVersion === 4 ? 4 : base.schemaVersion === 3 ? 3 : 2,
     phases: base.phases,
     natal: base.natal,
     domains: base.domains,
     cycles: mergedCycles,
     synthesisRules: survivingRules,
     natalLenses: structuredClone(base.natalLenses ?? []),
+    transitChapters: structuredClone(base.transitChapters ?? []),
   };
 
   validateContentGraph(bundle);

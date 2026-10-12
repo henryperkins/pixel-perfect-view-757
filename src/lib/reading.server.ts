@@ -1,3 +1,6 @@
+import { resolveDailyTransitStory, type DailyTransitStoryPlan } from "./content/transit-story";
+import type { DailyTransitCalculation } from "./astro/transit-episodes";
+import { primaryStoryOverlay, storyTimingLine } from "./astro/transit-presentation";
 import type { Chart } from "./astro/chart";
 import type { CycleInstance } from "./astro/cycles";
 import {
@@ -68,6 +71,8 @@ export interface AssembledReading {
   eligibleCycles: CycleInstance[];
   interpretationPlan: DailyInterpretationPlan;
   natalLensPlan: DailyNatalLensPlan;
+  transitStoryPlan: DailyTransitStoryPlan;
+  storyCalculation: DailyTransitCalculation | null;
   astroBody: string;
   /** Deterministic caveats and consented context are never sent to the gateway. */
   contextBody: string;
@@ -136,6 +141,7 @@ export function assembleReading(
   ctx: ReadingContext,
   bundle: ContentBundle = DEFAULT_BUNDLE,
   reliability: NatalReliabilityManifest | null = null,
+  storyCalculation: DailyTransitCalculation | null = null,
 ): AssembledReading {
   const provenance: ProvenanceEntry[] = [];
 
@@ -160,6 +166,19 @@ export function assembleReading(
     interpretationPlan.interpretations.find((i) => i.index === 1) ?? null,
     reliability,
   );
+  const transitStoryPlan = resolveDailyTransitStory(
+    bundle,
+    primary,
+    interpretationPlan.interpretations.find((i) => i.index === 1) ?? null,
+    storyCalculation,
+  );
+  const selectedCalculation =
+    transitStoryPlan.status === "selected"
+      ? storyCalculation
+      : transitStoryPlan.status === "omitted"
+        ? { status: "omitted" as const, reason: transitStoryPlan.reason }
+        : null;
+  const overlay = primary ? primaryStoryOverlay(selectedCalculation, primary.cycle_key) : null;
   const supporting = ranked.slice(1, 3);
 
   const paragraphs: string[] = [];
@@ -183,7 +202,7 @@ export function assembleReading(
     headline = primary.label;
     prompt = interp.question;
     paragraphs.push(
-      `${TONE_OPENER[tone]}${interp.mechanism}${natalLensPlan.lens ? ` ${natalLensPlan.lens.mechanism}` : ""}`,
+      `${TONE_OPENER[tone]}${interp.mechanism}${natalLensPlan.lens ? ` ${natalLensPlan.lens.mechanism}` : ""}${transitStoryPlan.status === "selected" ? ` ${transitStoryPlan.chronologySentence} ${transitStoryPlan.copy.mechanism}` : ""}`,
     );
 
     if (interpretationPlan.synthesis) {
@@ -239,17 +258,21 @@ export function assembleReading(
       );
     }
 
-    const phaseText = bundle.phases[primary.phase] ?? "";
+    const presentationPhase = overlay?.phase ?? primary.phase;
+    const phaseText =
+      overlay && (overlay.phase === "between" || overlay.phase === "uncertain")
+        ? storyTimingLine(overlay)
+        : (bundle.phases[presentationPhase] ?? "");
     paragraphs.push(phaseText);
 
     // Where in the arc we are, in days rather than jargon.
-    const timing = arcParagraph(primary, technical);
+    const timing = overlay ? storyTimingLine(overlay) : arcParagraph(primary, technical);
     paragraphs.push(timing);
     editorial = {
       interpretation: { key: interp.key, mechanism: interp.mechanism },
       domain:
         dom && domainText ? { key: primary.domain, label: dom.label, text: domainText } : null,
-      phase: { key: primary.phase, text: phaseText },
+      phase: { key: presentationPhase, text: phaseText },
       timing,
     };
 
@@ -398,6 +421,8 @@ export function assembleReading(
     eligibleCycles: ranked,
     interpretationPlan,
     natalLensPlan,
+    transitStoryPlan,
+    storyCalculation: selectedCalculation,
     astroBody: astro.text,
     contextBody: context.text,
     editorial,

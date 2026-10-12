@@ -26,7 +26,8 @@ function validateNatalCatalogue(value: unknown, schemaVersion: number | undefine
   if (value === undefined) return;
   if (!Array.isArray(value) || value.length > 2000)
     throw new Error("Invalid natalLenses catalogue bounds");
-  if (value.length && schemaVersion !== 3) throw new Error("natalLenses require schemaVersion 3");
+  if (value.length && schemaVersion !== 3 && schemaVersion !== 4)
+    throw new Error("natalLenses require schemaVersion 3");
   const keys = new Set<string>(),
     selectors = new Set<string>();
   for (const rule of value as NatalLensRule[]) {
@@ -147,6 +148,7 @@ interface RawContentBundle {
   cycles?: unknown[];
   synthesisRules?: unknown[];
   natalLenses?: unknown[];
+  transitChapters?: unknown[];
   natal?: Record<string, string>;
   phases?: Record<string, string>;
   domains?: Record<string, unknown>;
@@ -165,7 +167,8 @@ export function validateContentGraph(raw: unknown): void {
   if (
     bundle.schemaVersion !== undefined &&
     bundle.schemaVersion !== 2 &&
-    bundle.schemaVersion !== 3
+    bundle.schemaVersion !== 3 &&
+    bundle.schemaVersion !== 4
   ) {
     throw new Error(`Unsupported schemaVersion: ${bundle.schemaVersion}`);
   }
@@ -188,12 +191,14 @@ export function validateContentGraph(raw: unknown): void {
   if (
     (hasRules || hasAnnotatedThemes) &&
     bundle.schemaVersion !== 2 &&
-    bundle.schemaVersion !== 3
+    bundle.schemaVersion !== 3 &&
+    bundle.schemaVersion !== 4
   ) {
     throw new Error("Theme annotations and synthesisRules require schemaVersion 2");
   }
 
   validateNatalCatalogue(bundle.natalLenses, bundle.schemaVersion);
+  validateTransitCatalogue(bundle.transitChapters, bundle.schemaVersion);
   if (cycles.length > 2000) {
     throw new Error("Exceeded maximum of 2,000 interpretations");
   }
@@ -391,12 +396,14 @@ export function normalizeContentBundle(
   const domains = { ...defaults.domains, ...((rawObj.domains as ContentBundle["domains"]) || {}) };
 
   const hasAnnotatedThemes = cycles.some((c) => c.themes && c.themes.length > 0);
-  const schemaVersion: 2 | 3 | undefined =
-    rawObj.schemaVersion === 3
-      ? 3
-      : rawObj.schemaVersion === 2 || synthesisRules.length > 0 || hasAnnotatedThemes
-        ? 2
-        : undefined;
+  const schemaVersion: 2 | 3 | 4 | undefined =
+    rawObj.schemaVersion === 4
+      ? 4
+      : rawObj.schemaVersion === 3
+        ? 3
+        : rawObj.schemaVersion === 2 || synthesisRules.length > 0 || hasAnnotatedThemes
+          ? 2
+          : undefined;
 
   const bundle: ContentBundle = {
     version,
@@ -405,6 +412,9 @@ export function normalizeContentBundle(
     phases,
     domains,
     synthesisRules,
+    transitChapters: Array.isArray(rawObj.transitChapters)
+      ? (structuredClone(rawObj.transitChapters) as NonNullable<ContentBundle["transitChapters"]>)
+      : [],
     natalLenses: Array.isArray(rawObj.natalLenses)
       ? (structuredClone(rawObj.natalLenses) as NatalLensRule[])
       : [],
@@ -449,4 +459,44 @@ export function samePublishedBundle(a: unknown, b: unknown): boolean {
     }
   }
   return true;
+}
+
+export function validateTransitCatalogue(value: unknown, schemaVersion: number | undefined) {
+  if (value === undefined) return;
+  if (!Array.isArray(value) || value.length > 5 || (value.length > 0 && schemaVersion !== 4))
+    throw new Error("Invalid transit chapter catalogue");
+  const keys = new Set<string>(),
+    chapters = new Set<string>();
+  for (const c of value) {
+    if (
+      !c ||
+      typeof c !== "object" ||
+      Object.keys(c).some((k) => !["key", "chapter", "mechanism"].includes(k)) ||
+      typeof c.key !== "string" ||
+      !c.key.trim() ||
+      c.key.length > 100 ||
+      keys.has(c.key) ||
+      !["single", "opening", "return", "closing", "between"].includes(c.chapter) ||
+      chapters.has(c.chapter)
+    )
+      throw new Error("Invalid transit chapter identity");
+    keys.add(c.key);
+    chapters.add(c.chapter);
+    const t = c.mechanism;
+    if (
+      typeof t !== "string" ||
+      !t.trim() ||
+      t.length > 240 ||
+      !/[.!?]$/.test(t) ||
+      (t.match(/[.!?](?:\s|$)/g)?.length ?? 0) > 2 ||
+      !/\b(?:if|can|may|could)\b/i.test(t) ||
+      safetyPass(t).flagged.length ||
+      natalLensWordingProblem(t) ||
+      natalMechanismHasTechnicalClaim(t) ||
+      /\b(?:first|second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth|eleventh|twelfth|thirteenth|fourteenth|fifteenth|sixteenth|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|january|february|march|april|june|july|august|september|october|november|december|yesterday|today|tomorrow|trauma|diagnosis|healed|guarantees?|destined|resolution)\b|\byou (?:experienced|suffered|lost|were betrayed)\b|\b(?:last|next) (?:May|month|year|week)\b/i.test(
+        t,
+      )
+    )
+      throw new Error("Unsafe transit chapter copy");
+  }
 }

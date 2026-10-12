@@ -1,0 +1,22 @@
+# Transit-story writing qualification
+
+Status: **open; no actual-model transit run**. The reconciled inactive candidate is
+schema 4 / `builtin-0.7.0`, story `daily-transit-story-1`, prompt
+`daily-astro-body-9`, validator `daily-reference-6`, fixtures `synthetic-daily-6`.
+The fallback remains `builtin-0.5.0`; candidate selection does not activate it.
+
+The current fixed set retains all 28 main daily/natal cases and adds exactly ten arc cases: single, opening/return/closing three-contact sequences, five contacts, between contacts, truncated scan, station ambiguity, birth-window disagreement and combined synthesis/natal/chapter prose. All arc decisions derive from bounded synthetic cosine tracks through the production proof validator and planner. They do not establish Swiss numerical accuracy.
+
+Current offline replay exercises 38 rows and at most 37 intercepted model attempts.
+The archived `synthetic-daily-5` artifacts cover the earlier 36-row/35-attempt
+snapshot and retain their original bytes and policy identities. Negative arc cases still produce ordinary primary prose. The quiet case skips the model. Literal handwritten responses are validator examples, not model results or quality scores. Manual fields stay null.
+
+The isolated baseline changes only evaluation story use; fixed inputs, raw scan/anchor hashes, source/solver versions, content, model, tone/depth and prerequisite policies remain identical. Source qualification is recorded separately in [source-qualification.md](source-qualification.md). Historical replay artifact identities and results are recorded in [local-validation.md](local-validation.md); current checks are in [the integration record](../reconciliation/2026-10-11-main-integration.md).
+
+An explicitly requested actual-model comparison is still required. Run one fixed case at a time, preserve partial results and actual costs, and do not retry automatically. Blind-score specificity, voice, repetition, grounding, natal lens integration, temporal coherence and chapter integration. Every positive candidate and template needs at least 4 for grounding/coherence/integration, no invented history and no promised resolution. Compare opening/return/closing practical emphasis and read the combined S1/N1/P2 case within its body budget. No live quality score is inferred from replay acceptance.
+
+The candidate permits A1 dates only in the server-authored chronology sentence, copied unchanged once in the first two paragraphs. This intentionally narrower rule preserves ordinary per-cycle date checks everywhere else.
+
+## Catalogue review
+
+The five conditional mechanisms keep interpretation separate from calculated history: single invites a concrete choice; opening invites observation before a decision settles; return invites a smaller adjustment; closing invites repeating a workable response while keeping it open to review; between invites a provisional decision. None asserts a personal event, diagnosis, fixed count, date or guaranteed result. The phase descriptions retain notice-before-action, one manageable choice and a useful response if pressure has eased. Lifecycle tests preserve release ownership and do not substitute built-in chapters for an active miss.

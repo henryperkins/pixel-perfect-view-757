@@ -23,6 +23,8 @@ const envNames = [
   "GEMINI_ENTERPRISE_API_KEY",
   "SWISS_EPHEMERIS_URL",
   "SWISS_EPHEMERIS_KEY",
+  "SWISS_TRANSIT_EPISODE_URL",
+  "SWISS_TRANSIT_EPISODE_SOURCE_ID",
 ];
 
 /** Real application SQL, crypto and server modules with no live network access. */
@@ -41,6 +43,8 @@ export async function createRecordsHarness() {
   const geminiEnterpriseRequests = [];
   const evaluationStarts = [];
   const swissRequests = [];
+  const episodeRequests = [];
+  let episodeHandler = null;
   let sqlite;
   let vite;
   let gatewayHandler = null;
@@ -64,6 +68,11 @@ export async function createRecordsHarness() {
 
   globalThis.fetch = async (input, init = {}) => {
     const url = typeof input === "string" ? input : input instanceof URL ? input.href : input.url;
+    if (url === "https://swiss-fixture.invalid/episodes" && episodeHandler) {
+      const body = JSON.parse(String(init.body));
+      episodeRequests.push(body);
+      return episodeHandler(body, init);
+    }
     if (url === "https://swiss-fixture.invalid/chart" && swissHandler) {
       const body = JSON.parse(String(init.body));
       swissRequests.push(body);
@@ -164,6 +173,11 @@ export async function createRecordsHarness() {
       geminiEnterpriseRequests.length = 0;
       evaluationStarts.length = 0;
       swissRequests.length = 0;
+      episodeRequests.length = 0;
+      episodeHandler = null;
+      delete process.env.SWISS_TRANSIT_EPISODE_URL;
+      delete process.env.SWISS_TRANSIT_EPISODE_SOURCE_ID;
+      delete process.env.SWISS_EPHEMERIS_KEY;
       fault = null;
       gatewayHandler = null;
       geminiEnterpriseHandler = null;
@@ -214,6 +228,9 @@ export async function createRecordsHarness() {
             contract_version: "local-fixture",
             positions: opts.positions ?? opts.chart?.points ?? {},
             houses: {
+              ...(opts.transitAnchors
+                ? { transitAnchors_ct: await cryptoModule.encryptJson(dek, opts.transitAnchors) }
+                : {}),
               ...(opts.natalReliability
                 ? {
                     natalReliability_ct: await cryptoModule.encryptJson(dek, opts.natalReliability),
@@ -267,6 +284,13 @@ export async function createRecordsHarness() {
       geminiEnterpriseRequests,
       evaluationStarts,
       swissRequests,
+      episodeRequests,
+      setEpisode(handler) {
+        episodeHandler = handler;
+        process.env.SWISS_TRANSIT_EPISODE_URL = "https://swiss-fixture.invalid/episodes";
+        process.env.SWISS_TRANSIT_EPISODE_SOURCE_ID = "analytic-test-only";
+        process.env.SWISS_EPHEMERIS_KEY = "local-fixture-key";
+      },
       get sqlite() {
         return sqlite;
       },

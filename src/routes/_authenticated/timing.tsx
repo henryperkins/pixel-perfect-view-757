@@ -1,3 +1,4 @@
+import { CYCLE_QUERY_RETENTION } from "@/components/pattern/timing";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
@@ -78,7 +79,7 @@ function TimingPage() {
     queryKey: ["cycles", session?.userId, "current"],
     queryFn: () => load({ data: { timezone: calendar.timezone } }),
     enabled: Boolean(session),
-    refetchOnWindowFocus: "always",
+    ...CYCLE_QUERY_RETENTION,
   });
   useCalendarQueryRefresh(calendar, ["cycles", session?.userId, "current"]);
   const data = query.data && !query.data.needsOnboarding ? query.data : null;
@@ -92,7 +93,8 @@ function TimingPage() {
   );
   const rows = areaRows.filter(
     (cycle) =>
-      phase === "all" || windowPhase(cycle, referenceDay, data?.timezone ?? "UTC") === phase,
+      phase === "all" ||
+      windowPhase(cycle, referenceDay, data?.timezone ?? "UTC", data?.storyCalculation) === phase,
   );
   const scope = domain + "-" + phase + "-" + slowOnly;
   const resultsRef = useResultMotion<HTMLUListElement>(
@@ -313,6 +315,7 @@ function TimingPage() {
                 return (
                   <li key={cycle.cycle_key} hidden={index === -1}>
                     <TimingWindow
+                      calculation={data.storyCalculation}
                       cycle={cycle}
                       day={referenceDay}
                       timezone={data.timezone}

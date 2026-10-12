@@ -1,7 +1,9 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { createHash } from "node:crypto";
-import { readFile } from "node:fs/promises";
+import { mkdtemp, readFile, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import http from "node:http";
 import net from "node:net";
 import https from "node:https";
@@ -22,24 +24,24 @@ import {
 } from "../scripts/reading-eval-cases.mjs";
 
 test("before/after comparison rejects a partial flag even when every case is present", async () => {
-  const complete = await evaluateReadings();
+  const complete = await evaluateReadings({ bundleSource: "transit-candidate" });
   assert.throws(() => compareReports({ ...complete, partial: true }, complete), /partial/);
   assert.throws(() => compareReports(complete, { ...complete, partial: true }), /partial/);
 });
 
 test("fixed synthetic baseline exercises the real daily validators without quality scores", async () => {
-  const report = await evaluateReadings();
-  assert.equal(READING_EVAL_CASES.length, 28);
+  const report = await evaluateReadings({ bundleSource: "transit-candidate" });
+  assert.equal(READING_EVAL_CASES.length, 38);
   assert.equal(report.fixtureVersion, READING_EVAL_FIXTURE_VERSION);
   assert.equal(report.source, "synthetic-baseline");
   assert.equal(report.network, "blocked; gateway replayed in memory");
   assert.deepEqual(report.summary.outcomes, {
-    accepted: 27,
+    accepted: 37,
     rejected: 0,
     unavailable: 0,
     skipped: 1,
   });
-  assert.equal(report.summary.gatewayReplays, 27);
+  assert.equal(report.summary.gatewayReplays, 37);
   assert.equal(report.summary.liveAcceptanceRate, null);
   assert.equal(report.summary.replayAcceptanceRate, 1);
   assert.match(report.warning, /not.*live|does not.*live/i);
@@ -63,10 +65,10 @@ test("fixed synthetic baseline exercises the real daily validators without quali
 test("candidate replay records a real validator rejection and deterministic fallback", async () => {
   const responses = structuredClone(BASELINE_RESPONSES);
   responses["saturn-square-sun"].paragraphs[0].facts.push("UNSUPPLIED");
-  const report = await evaluateReadings({ responses });
+  const report = await evaluateReadings({ responses, bundleSource: "transit-candidate" });
   assert.equal(report.source, "candidate-replay");
   assert.equal(report.summary.outcomes.rejected, 1);
-  assert.equal(report.summary.replayAcceptanceRate, 26 / 27);
+  assert.equal(report.summary.replayAcceptanceRate, 36 / 37);
   const item = report.cases.find((c) => c.id === "saturn-square-sun");
   assert.equal(item.diagnostics.outcome, "rejected");
   assert.equal(item.diagnostics.code, "id");
@@ -88,7 +90,7 @@ test("replay requires exactly the fixed case IDs before evaluating responses", (
 });
 
 test("comparison refuses changed fixtures, case sets, or input configs", async () => {
-  const before = await evaluateReadings();
+  const before = await evaluateReadings({ bundleSource: "transit-candidate" });
   const after = structuredClone(before);
   const compared = compareReports(before, after);
   assert.equal(compared.acceptedDelta, 0);
@@ -101,12 +103,9 @@ test("comparison refuses changed fixtures, case sets, or input configs", async (
   after.validatorVersion = "daily-new-guard";
   after.model = "synthetic-candidate-model";
   after.bundleHash = "new-copy-hash";
-  assert.throws(() => compareReports(before, after), /transit copy and model/);
-  after.model = before.model;
-  after.transitCopyHash = "new-transit-copy";
-  assert.throws(() => compareReports(before, after), /transit copy and model/);
-  after.transitCopyHash = before.transitCopyHash;
+  assert.throws(() => compareReports(before, after), /frozen source/);
   after.bundleHash = before.bundleHash;
+  after.model = before.model;
   const changed = compareReports(before, after);
   assert.deepEqual(
     changed.configurationChanges.map((change) => change.field),
@@ -160,7 +159,7 @@ test("network and temporary key restore even when evaluation fails", async () =>
   const originalKey = process.env.LOVABLE_API_KEY;
   const responses = structuredClone(BASELINE_RESPONSES);
   responses["saturn-square-sun"] = { paragraphs: [] };
-  await evaluateReadings({ responses });
+  await evaluateReadings({ responses, bundleSource: "transit-candidate" });
   assert.equal(process.env.LOVABLE_API_KEY, originalKey);
 });
 
@@ -169,7 +168,7 @@ test("handwritten synthesis rejection examples distinguish validator coverage fr
   for (const fixture of SYNTHESIS_VALIDATOR_EXAMPLES) {
     const responses = structuredClone(BASELINE_RESPONSES);
     responses[fixture.caseId] = fixture.draft;
-    const report = await evaluateReadings({ responses });
+    const report = await evaluateReadings({ responses, bundleSource: "transit-candidate" });
     assert.equal(
       report.cases.find((c) => c.id === fixture.caseId).diagnostics.code,
       fixture.validatorCode,
@@ -184,8 +183,6 @@ const SOURCE_REPORT = new URL(
   import.meta.url,
 );
 const SOURCE_SHA256 = "166124efbabfb7ad690bda2d178fa4fd8fbbc7f9e7b4df668cdb4db0c6dc588f";
-// The uploaded hosted run used 3.7 Flash. Mechanism checks relabel a copy to the current model.
-const CURRENT_MODEL = "google/gemini-3.8-flash";
 async function sourceReport() {
   const bytes = await readFile(SOURCE_REPORT);
   return {
@@ -208,47 +205,61 @@ test("offline runs use the explicitly selected shipped bundle", async () => {
     await assert.rejects(evaluateReadings({ bundleSource }), /bundle/i);
 });
 
-test("the uploaded natal-free report extracts and replays only against builtin-0.5.0", async () => {
-  const { report: uploaded, sha256 } = await sourceReport();
+test("historical natal reports retain their identity and cannot count as current replay coverage", async () => {
+  const { report, sha256 } = await sourceReport();
   assert.equal(sha256, SOURCE_SHA256);
-  assert.equal(uploaded.model, "google/gemini-3.7-flash");
+  assert.equal(report.fixtureVersion, "synthetic-daily-5");
+  assert.equal(report.cases.length, 28);
+  assert.equal(report.model, "google/gemini-3.7-flash");
+  assert.equal(compareReports(report, structuredClone(report)).cases.length, 28);
   await assert.rejects(
-    extractResponses(uploaded, { bundleSource: "builtin" }),
-    /does not match the current model google\/gemini-3\.8-flash/,
+    extractResponses(report, { bundleSource: "builtin" }),
+    /historical.*fixture.*frozen source snapshot/i,
   );
-  const report = { ...uploaded, model: CURRENT_MODEL };
-  const responses = await extractResponses(report, { bundleSource: "builtin" });
+});
+
+test("a current captured report extracts and replays only against its selected frozen bundle", async () => {
+  const report = await evaluateReadings({ bundleSource: "transit-candidate" });
+  const sha256 = createHash("sha256").update(JSON.stringify(report)).digest("hex");
+  const responses = await extractResponses(report, { bundleSource: "transit-candidate" });
   assert.deepEqual(Object.keys(responses).sort(), READING_EVAL_CASES.map((c) => c.id).sort());
   assert.equal(responses["quiet-threshold"], null);
   for (const row of report.cases.filter((c) => c.diagnostics.attempted))
     assert.deepEqual(responses[row.id], {
       paragraphs: row.candidate.paragraphs.map(({ text, facts }) => ({ text, facts })),
     });
-  await assert.rejects(extractResponses(report, { bundleSource: "natal-candidate" }), /bundle/i);
+  await assert.rejects(extractResponses(report, { bundleSource: "builtin" }), /bundle/i);
   const replay = await evaluateReadings({
     responses,
-    bundleSource: "builtin",
+    bundleSource: "transit-candidate",
     sourceReport: { report, sha256 },
   });
   assert.equal(replay.source, "source-report-replay");
   assert.deepEqual(replay.summary.outcomes, {
-    accepted: 27,
+    accepted: 37,
     rejected: 0,
     unavailable: 0,
     skipped: 1,
   });
-  assert.equal(replay.sourceReport.sha256, SOURCE_SHA256);
-  assert.equal(replay.sourceReport.promptVersion, "daily-astro-body-6");
-  assert.equal(replay.sourceReport.source, "live-synthetic");
-  assert.equal(replay.sourceReport.bundleSource, null);
+  assert.equal(replay.sourceReport.sha256, sha256);
+  for (const field of [
+    "fixtureVersion",
+    "promptVersion",
+    "source",
+    "bundleSource",
+    "storyPlanVersion",
+    "transitFixtureHash",
+    "storyUse",
+  ])
+    assert.equal(replay.sourceReport[field], report[field]);
   assert.ok(!Object.hasOwn(replay.sourceReport, "sourceRevision"));
-  assert.deepEqual(replay.sourceComparison, { cases: 28, matchingOutcomes: 28, differences: [] });
+  assert.deepEqual(replay.sourceComparison, { cases: 38, matchingOutcomes: 38, differences: [] });
   const edited = structuredClone(responses);
   edited["saturn-square-sun"].paragraphs[0].text += " Added later.";
   await assert.rejects(
     evaluateReadings({
       responses: edited,
-      bundleSource: "builtin",
+      bundleSource: "transit-candidate",
       sourceReport: { report, sha256 },
     }),
     /differ from the source report/i,
@@ -256,7 +267,7 @@ test("the uploaded natal-free report extracts and replays only against builtin-0
 });
 
 test("extraction refuses incomplete, mismatched or lossy reports", async () => {
-  const report = { ...(await sourceReport()).report, model: CURRENT_MODEL };
+  const report = await evaluateReadings({ bundleSource: "transit-candidate" });
   const variant = (change) => {
     const copy = structuredClone(report);
     change(copy);
@@ -265,6 +276,7 @@ test("extraction refuses incomplete, mismatched or lossy reports", async () => {
   const attempted = (copy) => copy.cases.find((c) => c.id === "saturn-square-sun");
   const rejected = (row) => {
     row.diagnostics = { ...row.diagnostics, outcome: "rejected", code: "id", paragraph: 1 };
+    delete row.candidate.captureLossless;
   };
   for (const [name, change, message] of [
     ["partial", (r) => (r.partial = true), /partial/i],
@@ -294,7 +306,7 @@ test("extraction refuses incomplete, mismatched or lossy reports", async () => {
     ],
   ])
     await assert.rejects(
-      extractResponses(variant(change), { bundleSource: "builtin" }),
+      extractResponses(variant(change), { bundleSource: "transit-candidate" }),
       message,
       name,
     );
@@ -302,7 +314,7 @@ test("extraction refuses incomplete, mismatched or lossy reports", async () => {
     rejected(attempted(r));
     attempted(r).candidate.captureLossless = true;
   });
-  const responses = await extractResponses(provenRejected, { bundleSource: "builtin" });
+  const responses = await extractResponses(provenRejected, { bundleSource: "transit-candidate" });
   assert.deepEqual(
     responses["saturn-square-sun"].paragraphs,
     attempted(report).candidate.paragraphs,
@@ -320,6 +332,27 @@ test("the CLI requires an explicit bundle and bounded mode combinations", async 
     [["--bundle", "builtin", "--source-report", "x.json", "--output", "y.json"], /--responses/],
     [["--compare-natal", "a.json", "b.json", "--output", "c.json"], /identity/],
     [["--compare", "a.json", "b.json", "--bundle", "builtin"], /--bundle/],
+    [["--bundle", "builtin", "--bundle-source", "transit-candidate"], /one bundle selector/],
   ])
     await assert.rejects(main(args), message, args.join(" "));
+});
+
+test("the explicit transit candidate CLI writes current coverage with blank human scores", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "pattern-closed-transit-eval-"));
+  const output = join(directory, "report.json");
+  try {
+    await main(["--bundle-source", "transit-candidate", "--output", output]);
+    const report = JSON.parse(await readFile(output, "utf8"));
+    assert.equal(report.fixtureVersion, "synthetic-daily-6");
+    assert.equal(report.bundleSource, "transit-candidate");
+    assert.equal(report.bundleVersion, "builtin-0.7.0");
+    assert.equal(report.cases.length, 38);
+    assert.equal(report.summary.gatewayReplays, 37);
+    assert.equal(report.summary.outcomes.accepted, 37);
+    assert.ok(
+      report.cases.every((row) => Object.values(row.manualReview).every((value) => value === null)),
+    );
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
 });

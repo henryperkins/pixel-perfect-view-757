@@ -12,6 +12,7 @@
  * published and activated release.
  */
 
+import type { TransitChapterCopy } from "./transit-story-catalogue";
 import type { SynthesisRule, ThemeTag } from "./schema";
 import type { NatalLensRule } from "./schema";
 
@@ -36,7 +37,8 @@ export interface DomainInterpretation {
 
 export interface ContentBundle {
   version: string;
-  schemaVersion?: 2 | 3;
+  schemaVersion?: 2 | 3 | 4;
+  transitChapters?: TransitChapterCopy[];
   cycles: Interpretation[];
   natal: Record<string, string>;
   phases: Record<string, string>;

@@ -149,7 +149,7 @@ const onlyRoles = () =>
   h.requests.every(({ sql }) => /select .* from user_roles/i.test(sql.replaceAll('"', "")));
 
 test("every bundle selector is denied before copy reads or model calls for non-admins", async () => {
-  for (const selector of ["active", "builtin", "natal-candidate"]) {
+  for (const selector of ["active", "builtin", "natal-candidate", "transit-candidate"]) {
     h.requests.length = 0;
     await assert.rejects(
       h.app.runReadingEvaluationCase(h.records(), h.userA, "saturn-square-sun", selector),
@@ -160,7 +160,7 @@ test("every bundle selector is denied before copy reads or model calls for non-a
   }
   await makeAdmin();
   h.setFault({ matches: (sql) => /from user_roles/i.test(sql.replaceAll('"', "")) });
-  for (const selector of ["active", "builtin", "natal-candidate"]) {
+  for (const selector of ["active", "builtin", "natal-candidate", "transit-candidate"]) {
     h.requests.length = 0;
     await assert.rejects(
       h.app.runReadingEvaluationCase(h.records(), h.userA, "saturn-square-sun", selector),
@@ -194,6 +194,9 @@ test("built-in selectors read only roles, ignore the active release and change n
   const { DEFAULT_BUNDLE } = await h.vite.ssrLoadModule("/src/lib/content/default-bundle.ts");
   const { NATAL_CANDIDATE_BUNDLE } = await h.vite.ssrLoadModule(
     "/src/lib/content/natal-candidate-bundle.ts",
+  );
+  const { TRANSIT_CANDIDATE_BUNDLE } = await h.vite.ssrLoadModule(
+    "/src/lib/content/transit-candidate-bundle.ts",
   );
   const active = structuredClone(DEFAULT_BUNDLE);
   active.version = "active-selector-test";
@@ -230,6 +233,14 @@ test("built-in selectors read only roles, ignore the active release and change n
   assert.equal(candidate.metadata.caseSetHash, builtin.metadata.caseSetHash);
   assert.equal(candidate.case.configHash, builtin.case.configHash);
   assert.equal(candidate.metadata.model, builtin.metadata.model);
+  const transit = await run("arc-return-three", "transit-candidate");
+  assert.equal(transit.metadata.bundleSource, "transit-candidate");
+  assert.equal(transit.metadata.bundleVersion, TRANSIT_CANDIDATE_BUNDLE.version);
+  assert.equal(transit.case.transitStoryPlan.chapter, "return");
+  assert.ok(transit.case.facts.some((fact) => fact.id === "P2"));
+  assert.equal(transit.case.diagnostics.outcome, "accepted");
+  assert.equal(h.swissRequests.length, 0);
+  assert.equal(h.episodeRequests.length, 0);
   assert.doesNotMatch(JSON.stringify(h.gatewayRequests), /ACTIVE_COPY_SENTINEL/);
   assert.deepEqual(snapshot(), previous, "The active pointer and every table stay unchanged");
   h.requests.length = 0;

@@ -58,6 +58,7 @@ type Release = {
   cycles?: number;
   synthesisRules?: number;
   schemaVersion?: number;
+  transitChapters?: number;
   natalLensCoverage?: { base: number; compound: number; bodySigns: number };
 };
 
@@ -93,6 +94,7 @@ function ContentPage() {
       toast.success(`Rolled back to ${data.version}`);
       void queryClient.invalidateQueries({ queryKey: ["releases"] });
       void queryClient.invalidateQueries({ queryKey: ["today"] });
+      void queryClient.invalidateQueries({ queryKey: ["cycles"] });
       void queryClient.invalidateQueries({ queryKey: ["edge-plane"] });
     },
     onError: (error: Error, release) => {
@@ -223,7 +225,8 @@ function ContentPage() {
                       Rules · <span className="text-foreground">{r.synthesisRules ?? 0}</span>
                     </span>
                     <span className="technical text-muted-foreground">
-                      Schema · <span className="text-foreground">{r.schemaVersion ?? 1}</span>
+                      Schema · <span className="text-foreground">{r.schemaVersion ?? 1}</span> ·{" "}
+                      {r.transitChapters ?? 0}/5 transit chapters
                     </span>
                     <span className="technical text-muted-foreground">
                       Natal lenses ·{" "}
@@ -1109,9 +1112,10 @@ function DraftPlane({ isAdmin }: { isAdmin: boolean }) {
               <div className="flex flex-wrap items-baseline justify-between gap-3">
                 <span className="font-mono text-xs text-foreground">
                   {d.entries.length} entries ({d.themeCount ?? 0} themes, {d.ruleCount ?? 0} rules)
-                  {" · "}Schema {d.schemaVersion} · {d.natalLensCoverage.base} base natal lenses,{" "}
-                  {d.natalLensCoverage.compound} compound · {d.natalLensCoverage.bodySigns}/60
-                  body/sign pairs · from {d.base_version ?? "built-in"}
+                  {" · "}Schema {d.schemaVersion} · {d.transitChapters}/5 transit chapters ·{" "}
+                  {d.natalLensCoverage.base} base natal lenses, {d.natalLensCoverage.compound}{" "}
+                  compound · {d.natalLensCoverage.bodySigns}/60 body/sign pairs · from{" "}
+                  {d.base_version ?? "built-in"}
                 </span>
                 <span className="technical text-muted-foreground">{d.model ?? "—"}</span>
               </div>

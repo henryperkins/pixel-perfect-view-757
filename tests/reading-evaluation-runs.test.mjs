@@ -134,11 +134,11 @@ test("the step endpoint refuses unsigned or malformed calls without running a ca
 test("a run keeps going without any browser and completes with a combinable report", async () => {
   await makeAdmin();
   gatewayAnswers();
-  // The natal candidate accepts every baseline draft, as the offline fixtures do.
+  // The explicit transit candidate accepts the natal and transit fixture drafts.
   const run = await runs.startEvaluationRun(
     h.records(),
     h.userA,
-    { bundleSource: "natal-candidate", provider: "lovable" },
+    { bundleSource: "transit-candidate", provider: "lovable" },
     ORIGIN,
   );
   const answers = await drive(run.id);
@@ -154,7 +154,7 @@ test("a run keeps going without any browser and completes with a combinable repo
   );
   const report = combine(results);
   assert.equal(report.partial, false);
-  assert.equal(report.bundleSource, "natal-candidate");
+  assert.equal(report.bundleSource, "transit-candidate");
   assert.equal(report.summary.syntheticModelAcceptanceRate, 1);
 
   const tail = await runs.readEvaluationRun(h.records(), h.userA, {

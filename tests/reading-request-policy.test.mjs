@@ -1,3 +1,4 @@
+import { readFile } from "node:fs/promises";
 import assert from "node:assert/strict";
 import { after, before, beforeEach, test } from "node:test";
 import { createServer } from "vite";
@@ -69,7 +70,7 @@ test("timing instructions explicitly require the cycle even when T1 repeats its 
   const prompt = accepted.case.request.messages[1].content;
   assert.match(prompt, /even (?:when|if).*T1/i);
   assert.match(prompt, /\["C1", "P1", "T1"\]/);
-  assert.equal(accepted.case.diagnostics.validatorVersion, "daily-reference-5");
+  assert.equal(accepted.case.diagnostics.validatorVersion, "daily-reference-6");
 });
 
 test("daily uses one 60-second call and exports its budget without changing provider settings", async () => {
@@ -78,7 +79,7 @@ test("daily uses one 60-second call and exports its budget without changing prov
   assert.equal(calls, 1);
   assert.equal(result.metadata.gatewayTimeoutMs, 60_000);
   assert.equal(result.case.diagnostics.gatewayTimeoutMs, 60_000);
-  assert.equal(result.metadata.promptVersion, "daily-astro-body-8");
+  assert.equal(result.metadata.promptVersion, "daily-astro-body-9");
   assert.deepEqual(Object.keys(requests[0]).sort(), ["messages", "model", "response_format"]);
 });
 
@@ -164,8 +165,16 @@ test("a mid-run timeout-policy change cannot combine with completed cases", asyn
   assert.throws(() => combine([first, mixed], { partial: true }), /configuration changed/i);
 });
 
-test("comparison exposes changed or unrecorded budgets instead of inferring prior policy", async () => {
-  const current = await evaluateReadings();
+test("historical version-5 comparison records changed or unrecorded gateway budgets", async () => {
+  const current = JSON.parse(
+    await readFile(
+      new URL(
+        "../docs/reviews/daily-natal-lens/2026-10-11-blinded-review/baseline-report.json",
+        import.meta.url,
+      ),
+      "utf8",
+    ),
+  );
   const earlier = structuredClone(current);
   earlier.gatewayTimeoutMs = 12_000;
   const changed = compareReports(earlier, current);
@@ -184,6 +193,15 @@ test("comparison exposes changed or unrecorded budgets instead of inferring prio
     () => compareReports({ ...current, gatewayTimeoutMs: "20000" }, current),
     /invalid gateway/i,
   );
+});
+
+test("current transit comparison refuses changed or unrecorded gateway budgets", async () => {
+  const current = await evaluateReadings();
+  const changed = structuredClone(current);
+  changed.gatewayTimeoutMs = 12_000;
+  assert.throws(() => compareReports(changed, current), /frozen|policy/i);
+  delete changed.gatewayTimeoutMs;
+  assert.throws(() => compareReports(changed, current), /frozen|policy/i);
 });
 
 test("claim-strength guidance is sent with unchanged source statements, parents, suppression and body-only schema", async () => {

@@ -1,11 +1,13 @@
+import type { DailyTransitCalculation } from "@/lib/astro/transit-episodes";
+import { primaryStoryOverlay } from "@/lib/astro/transit-presentation";
+import { TransitSequence } from "./TransitSequence";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, CircleDot, Sunrise, Sunset } from "lucide-react";
 
 import type { fetchToday } from "@/lib/pattern.functions";
 import {
-  daysToExact,
+  cycleTimingPhrase,
   DOMAIN_LABEL,
-  exactPhrase,
   PHASE_LABEL,
   timingDate,
   weightLabel,
@@ -15,10 +17,27 @@ import {
 
 type TodayData = Extract<Awaited<ReturnType<typeof fetchToday>>, { needsOnboarding: false }>;
 type Cycle = TodayData["cycles"][number];
-const PHASE_ICONS = { building: Sunrise, exact: CircleDot, fading: Sunset };
+const PHASE_ICONS = {
+  building: Sunrise,
+  exact: CircleDot,
+  fading: Sunset,
+  between: CircleDot,
+  uncertain: CircleDot,
+};
 
-function WindowRow({ cycle, day, timezone }: { cycle: Cycle; day: string; timezone: string }) {
-  const phase = windowPhase(cycle, day, timezone);
+function WindowRow({
+  cycle,
+  day,
+  timezone,
+  calculation,
+}: {
+  cycle: Cycle;
+  day: string;
+  timezone: string;
+  calculation?: DailyTransitCalculation | null | undefined;
+}) {
+  const overlay = primaryStoryOverlay(calculation, cycle.cycle_key);
+  const phase = windowPhase(cycle, day, timezone, calculation);
   const Icon = PHASE_ICONS[phase];
 
   return (
@@ -29,7 +48,7 @@ function WindowRow({ cycle, day, timezone }: { cycle: Cycle; day: string; timezo
           <span className="today-window-heading">
             <span className="today-window-title">{windowTitle(cycle)}</span>
             <span className="today-window-context">
-              {PHASE_LABEL[phase].label} · {exactPhrase(daysToExact(cycle, day, timezone))}
+              {PHASE_LABEL[phase].label} · {cycleTimingPhrase(cycle, day, timezone, calculation)}
             </span>
           </span>
         </summary>
@@ -50,9 +69,16 @@ function WindowRow({ cycle, day, timezone }: { cycle: Cycle; day: string; timezo
             </div>
             <div>
               <dt>Closest pass</dt>
-              <dd>{timingDate(cycle.exact_at, timezone)}</dd>
+              <dd>
+                {overlay
+                  ? overlay.qualifiedExactDay
+                    ? timingDate(overlay.qualifiedExactDay, timezone)
+                    : "See sampled dates below"
+                  : timingDate(cycle.exact_at, timezone)}
+              </dd>
             </div>
           </dl>
+          {overlay ? <TransitSequence calculation={calculation} /> : null}
         </div>
       </details>
     </li>
@@ -63,10 +89,12 @@ export function TodayTiming({
   cycles,
   day,
   timezone,
+  calculation,
 }: {
   cycles: Cycle[];
   day: string;
   timezone: string;
+  calculation?: DailyTransitCalculation | null | undefined;
 }) {
   const visible = cycles.slice(0, 2);
   const remaining = cycles.slice(2);
@@ -87,7 +115,13 @@ export function TodayTiming({
       {visible.length ? (
         <ul className="today-window-list mt-4">
           {visible.map((cycle) => (
-            <WindowRow key={cycle.cycle_key} cycle={cycle} day={day} timezone={timezone} />
+            <WindowRow
+              key={cycle.cycle_key}
+              cycle={cycle}
+              day={day}
+              timezone={timezone}
+              calculation={calculation}
+            />
           ))}
         </ul>
       ) : null}
@@ -98,7 +132,13 @@ export function TodayTiming({
           </summary>
           <ul className="today-window-list mt-3">
             {remaining.map((cycle) => (
-              <WindowRow key={cycle.cycle_key} cycle={cycle} day={day} timezone={timezone} />
+              <WindowRow
+                key={cycle.cycle_key}
+                cycle={cycle}
+                day={day}
+                timezone={timezone}
+                calculation={calculation}
+              />
             ))}
           </ul>
         </details>

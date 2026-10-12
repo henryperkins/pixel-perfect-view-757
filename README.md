@@ -168,3 +168,18 @@ The [catalogue review](docs/reviews/daily-natal-lens/catalogue-review.md) and
 [local validation record](docs/superpowers/releases/2026-10-11-daily-natal-validation.md)
 record implementation evidence. Independent editorial approval, actual-model paired
 writing qualification, publication and deployment remain open.
+
+## Inactive transit-story candidate
+
+The reconciled transit-story app layer supports screened Swiss anchors, bounded
+episode proofs, encrypted saved chronology, and shared timing/evidence presentation.
+The built-in fallback remains `builtin-0.5.0`; `builtin-0.6.1` natal and
+`builtin-0.7.0` transit catalogues are separate inactive candidates. The admin
+evaluation copy selector can use either candidate with fixed synthetic facts
+without publishing or activating it.
+
+Production episode calls require an active chapter catalogue plus explicitly
+configured, qualified source identity and endpoint. Native episode-service
+implementation/numerical qualification, actual-model transit writing, and live
+account/source verification remain open. See the [integration record](docs/reviews/reconciliation/2026-10-11-main-integration.md)
+and [source qualification](docs/reviews/daily-transit-story/source-qualification.md).

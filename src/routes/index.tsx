@@ -12,9 +12,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { useCalendarQueryRefresh, useCalendarRefresh } from "@/hooks/useCalendarRefresh";
 import { localDayString } from "@/lib/local-day";
 import {
-  daysToExact,
+  cycleTimingPhrase,
   DOMAIN_LABEL,
-  exactPhrase,
   PHASE_LABEL,
   timingDate,
   weightLabel,
@@ -200,7 +199,9 @@ function TodayContent({
 }) {
   const primary = data.cycles.find((cycle) => cycle.cycle_key === data.reading.primary_cycle_key);
   const staleDay = data.day !== localDayString(new Date(), data.timezone);
-  const phase = primary ? windowPhase(primary, data.day, data.timezone) : null;
+  const phase = primary
+    ? windowPhase(primary, data.day, data.timezone, data.storyCalculation)
+    : null;
 
   return (
     <div className="today-flow">
@@ -244,13 +245,11 @@ function TodayContent({
             </div>
             <div>
               <dt>Timing</dt>
-              <dd>{exactPhrase(daysToExact(primary, data.day, data.timezone))}</dd>
+              <dd>{cycleTimingPhrase(primary, data.day, data.timezone, data.storyCalculation)}</dd>
             </div>
           </dl>
         ) : null}
-        {data.ephemeris?.degraded ? (
-          <EphemerisNotice state={data.ephemeris} className="mt-5" />
-        ) : null}
+        {data.ephemeris ? <EphemerisNotice state={data.ephemeris} className="mt-5" /> : null}
         <div className="prose-reading mt-6 space-y-5 text-foreground">
           {data.reading.paragraphs.map((paragraph, index) => (
             <p
@@ -304,7 +303,12 @@ function TodayContent({
             disabled={staleDay}
           />
         </section>
-        <TodayTiming cycles={data.cycles} day={data.day} timezone={data.timezone} />
+        <TodayTiming
+          cycles={data.cycles}
+          day={data.day}
+          timezone={data.timezone}
+          calculation={data.storyCalculation}
+        />
         <TodayJournal
           day={data.day}
           cycleKeys={data.cycles.map((cycle) => cycle.cycle_key)}

@@ -16,6 +16,7 @@
 import { safetyPass } from "../content/default-bundle";
 import { normalizeDepth, normalizeTone } from "../reading.server";
 import { assertDailyFactGraph, dailyFactBlock, factBlock, factIds, type FactAtom } from "./facts";
+import { storyParagraphProblem, storyCoverageProblem } from "./transit-story-facts";
 import { dailySystemVoice, dailyVoice } from "./daily-voice";
 import { natalLensWordingProblem } from "../content/natal-lens-policy";
 import type {
@@ -572,6 +573,8 @@ function dailyDraft(
       return rejectParagraph("dependencies", "draft omitted published synthesis parent references");
     if (ids.includes("N1") && !["C1", "I1"].every((id) => ids.includes(id)))
       return rejectParagraph("dependencies", "draft omitted natal lens parent references");
+    const storyProblem = storyParagraphProblem(text, ids, input.facts);
+    if (storyProblem) return rejectParagraph(storyProblem, "draft failed calculated story checks");
     const problem =
       dailyReferenceProblem(
         text,
@@ -591,6 +594,9 @@ function dailyDraft(
     );
   if (byId.has("N1") && !citations.slice(0, 2).some((c) => c.facts.includes("N1")))
     return rejection("natal_coverage", "draft omitted natal lens from its first two paragraphs");
+  const storyCoverage = storyCoverageProblem(kept, citations, input.facts);
+  if (storyCoverage)
+    return rejection(storyCoverage, "draft omitted the supplied chronology or chapter");
   return { body: kept.join("\n\n"), paragraphs: kept, citations };
 }
 
@@ -648,9 +654,7 @@ async function generateDailyProse(
     "C1",
     ...["P1", "T1"].filter((id) => input.facts.some((fact) => fact.id === id)),
   ];
-  // Natal instructions appear only with N1, so a reading without a lens sends the
-  // same request as before natal lenses existed.
-  const hasNatalLens = input.facts.some((f) => f.id === "N1");
+  const hasNatalLens = input.facts.some((fact) => fact.id === "N1");
   const prompt = [
     dailyVoice(normalizeTone(input.tone), normalizeDepth(input.depth)),
     "Facts:",
@@ -662,9 +666,16 @@ async function generateDailyProse(
     input.facts.some((f) => f.id === "S1")
       ? 'Develop the supplied published relationship in paragraph 1 or 2. Every paragraph using S1 must explicitly cite all five IDs: "facts": ["S1", "C1", "I1", "C2", "I2"]. The relationship is editorial interpretation, not an established personal state. Keep its qualifications: "can increase" stays "can increase", not "increases". For a reinforcement relationship, give the two joined meanings distinct paragraph functions, as S1 relates them, instead of restating one idea in both paragraphs; then add only supported useful detail and stop. Clear published wording may be kept, and no new scene is needed for variety.'
       : "Keep C1 as the primary focus. No S1 is supplied: do not invent a joint relationship or premise. I2 and I3 may offer separately supported context without connecting the contacts into a new story.",
-    hasNatalLens
-      ? 'Apply the supplied N1 possibility to the primary meaning with one practical distinction in paragraph 1 or 2. Every paragraph using it must cite ["N1", "C1", "I1"]. Keep it conditional and recognizable or rejectable, never a confirmed identity, biological explanation or lived event. N1 and S1 may share a paragraph with all parents; do not add a personality section. N1 does not authorize a natal body, sign, house, aspect or other geometry.'
-      : "",
+    ...(hasNatalLens
+      ? [
+          'Apply the supplied N1 possibility to the primary meaning with one practical distinction in paragraph 1 or 2. Every paragraph using it must cite ["N1", "C1", "I1"]. Keep it conditional and recognizable or rejectable, never a confirmed identity, biological explanation or lived event. N1 and S1 may share a paragraph with all parents; do not add a personality section. N1 does not authorize a natal body, sign, house, aspect or other geometry.',
+        ]
+      : []),
+    ...(input.facts.some((f) => f.id === "A1")
+      ? [
+          "Copy A1's chronology sentence unchanged exactly once in paragraph 1 or 2, citing C1/A1. Connect P2's conditional practical meaning to I1 in paragraph 1 or 2, citing C1/I1/A1/P2. Combine S1/N1/P2 naturally within the existing four-sentence paragraph limit; do not add a separate essay. Only the unchanged chronology sentence may use A1 dates. Do not add counts, pass ordinals, station dates, life history or promises of closure.",
+        ]
+      : []),
     "Cite the supplied IDs each paragraph rests on. This is reference coverage, not permission to invent astronomical facts.",
     "Any paragraph naming a planet, aspect, orb or ISO exact date must cite the matching calculated cycle ID (C1, C2 or C3), even when it repeats a number from T1. Editorial IDs I1, I2, I3, S1, D1, P1 and T1 cannot replace that cycle citation.",
     `For a paragraph using the strongest cycle's supplied phase and timing wording, include its cycle alongside the relevant editorial references: "facts": [${timingCitationIds.map((id) => JSON.stringify(id)).join(", ")}]. Cite only IDs and values supplied above.`,

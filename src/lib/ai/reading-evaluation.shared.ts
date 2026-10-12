@@ -4,6 +4,7 @@ import {
   READING_EVAL_CASES,
   READING_EVAL_FIXTURE_VERSION,
 } from "./reading-evaluation.fixtures.mjs";
+import type { DailyTransitStoryPlan } from "../content/transit-story";
 import type { FactAtom } from "./facts";
 import { LANGUAGE_PROVIDERS, type DailyDiagnostics, type LanguageProvider } from "./diagnostics";
 import type { DailyPlanIdentity } from "../content/synthesis";
@@ -23,11 +24,16 @@ export const READING_EVALUATION_CATALOG = READING_EVAL_CASES.map((fixed) => ({
 export const LIVE_EVALUATION_CASES = READING_EVALUATION_CATALOG;
 
 /**
- * Evaluation-only copy choice. `active` is the effective production copy; the other two
- * are the shipped natal-free baseline and the inactive natal candidate. Choosing one never
+ * Evaluation-only copy choice. `active` is the effective production copy; the others
+ * are the shipped natal-free baseline and inactive natal and transit candidates. Choosing one never
  * publishes, activates or caches content.
  */
-export const READING_EVALUATION_BUNDLE_SOURCES = ["active", "builtin", "natal-candidate"] as const;
+export const READING_EVALUATION_BUNDLE_SOURCES = [
+  "active",
+  "builtin",
+  "natal-candidate",
+  "transit-candidate",
+] as const;
 export type ReadingEvaluationBundleSource = (typeof READING_EVALUATION_BUNDLE_SOURCES)[number];
 
 /** A server-side run fixes its copy and provider when it starts. */
@@ -101,12 +107,18 @@ export interface ReadingEvaluationMetadata {
   caseSetHash: string;
   bundleVersion: string;
   bundleHash: string;
-  /** Normalized transit copy without release identity or natal catalogue (version 5+). */
+  /** Normalized transit copy without release identity or candidate catalogues. */
   transitCopyHash?: string;
   /** Absent in historical reports; never infer their plan policy. */
   planVersion?: string;
   natalPlanVersion?: string;
   reliabilityVersion?: string;
+  storyPlanVersion?: string;
+  anchorVersion?: string;
+  solverVersion?: string;
+  sourceContract?: string;
+  transitFixtureHash?: string;
+  storyUse?: boolean;
   promptVersion: string;
   validatorVersion: string;
   model: string;
@@ -127,6 +139,7 @@ export interface ReadingEvaluationCaseRow {
   facts: FactAtom[];
   interpretationPlan?: DailyPlanIdentity;
   natalLensPlan?: DailyNatalLensPlan;
+  transitStoryPlan?: DailyTransitStoryPlan;
   natalReliability?: NatalReliabilityManifest | null;
   request: SyntheticReadingRequest | null;
   candidate: SyntheticReadingCandidate | null;
@@ -146,6 +159,10 @@ export interface ReadingEvaluationCaseRow {
     grounding: null;
     lensIntegration?: null;
     unsupportedPersonalClaim?: null;
+    temporalCoherence?: null;
+    chapterIntegration?: null;
+    unsupportedHistory?: null;
+    promisedResolution?: null;
     notes: null;
   };
 }
@@ -211,6 +228,12 @@ export function combineReadingEvaluationResults(
     "planVersion",
     "natalPlanVersion",
     "reliabilityVersion",
+    "storyPlanVersion",
+    "anchorVersion",
+    "solverVersion",
+    "sourceContract",
+    "transitFixtureHash",
+    "storyUse",
     "promptVersion",
     "validatorVersion",
     "model",
@@ -219,7 +242,37 @@ export function combineReadingEvaluationResults(
     "source",
     "network",
   ] as const;
-  const expected = new Set(READING_EVAL_CASES.map((fixed) => fixed.id));
+  if (
+    (first.metadata.fixtureVersion === "synthetic-daily-6" &&
+      (
+        [
+          "storyPlanVersion",
+          "anchorVersion",
+          "solverVersion",
+          "sourceContract",
+          "transitFixtureHash",
+        ] as const
+      ).some((key) => !first.metadata[key])) ||
+    (first.metadata.fixtureVersion === "synthetic-daily-6" &&
+      typeof first.metadata.storyUse !== "boolean")
+  )
+    throw new Error("Synthetic evaluation configuration requires transit policy identities");
+  // Persisted completed runs retain the fixture inventory that generated them.
+  // Adding current cases must not turn an old complete download into a partial run.
+  let catalog = READING_EVAL_CASES;
+  if (first.metadata.fixtureVersion === "synthetic-daily-5") {
+    const historicalTransit = Boolean(first.metadata.storyPlanVersion);
+    catalog = catalog.filter((fixed) => historicalTransit || !fixed.id.startsWith("arc-"));
+    if (historicalTransit || first.metadata.natalPlanVersion === "daily-natal-lens-1")
+      catalog = catalog.filter(
+        (fixed) => !["natal-own-target", "natal-moon-fallback"].includes(fixed.id),
+      );
+  } else if (first.metadata.fixtureVersion === "synthetic-daily-4") {
+    catalog = catalog.filter(
+      (fixed) => !fixed.id.startsWith("natal-") && !fixed.id.startsWith("arc-"),
+    );
+  }
+  const expected = new Set(catalog.map((fixed) => fixed.id));
   const seen = new Set<string>();
   for (const result of results) {
     if (metadataFields.some((field) => first.metadata[field] !== result.metadata[field]))
@@ -232,7 +285,7 @@ export function combineReadingEvaluationResults(
   }
   if (!partial && seen.size !== expected.size)
     throw new Error("A complete synthetic evaluation requires all fixed cases");
-  const cases = READING_EVAL_CASES.flatMap((fixed) =>
+  const cases = catalog.flatMap((fixed) =>
     results.filter((result) => result.case.id === fixed.id).map((result) => result.case),
   );
   return {

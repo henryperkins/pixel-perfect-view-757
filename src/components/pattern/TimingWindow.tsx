@@ -1,3 +1,6 @@
+import { TransitSequence } from "./TransitSequence";
+import { primaryStoryOverlay } from "@/lib/astro/transit-presentation";
+import type { DailyTransitCalculation } from "@/lib/astro/transit-episodes";
 import {
   ArrowLeft,
   ArrowRight,
@@ -11,9 +14,8 @@ import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import {
   arcSentence,
-  daysToExact,
+  cycleTimingPhrase,
   DOMAIN_LABEL,
-  exactPhrase,
   PHASE_LABEL,
   timelinePositions,
   timingDate,
@@ -23,7 +25,13 @@ import {
   type TimingCycle,
 } from "./timing";
 
-const PHASE_ICONS = { building: Sunrise, exact: CircleDot, fading: Sunset };
+const PHASE_ICONS = {
+  building: Sunrise,
+  exact: CircleDot,
+  fading: Sunset,
+  between: Waves,
+  uncertain: Waves,
+};
 
 function WindowTimeline({
   cycle,
@@ -126,6 +134,7 @@ export function TimingWindow({
   onBrowse,
   referenceLabel = "Today",
   comparisonLabel,
+  calculation,
 }: {
   cycle: TimingCycle;
   day: string;
@@ -139,12 +148,20 @@ export function TimingWindow({
   onBrowse: (key: string) => void;
   referenceLabel?: "Today" | "Selected day";
   comparisonLabel?: string | undefined;
+  calculation?: DailyTransitCalculation | null;
 }) {
-  const phase = windowPhase(cycle, day, timezone);
+  const phase = windowPhase(cycle, day, timezone, calculation);
   const copy = PHASE_LABEL[phase];
   const Icon = PHASE_ICONS[phase];
-  const timing = exactPhrase(daysToExact(cycle, day, timezone), referenceLabel === "Selected day");
-  const arc = arcSentence(cycle);
+  const timing = cycleTimingPhrase(
+    cycle,
+    day,
+    timezone,
+    calculation,
+    referenceLabel === "Selected day",
+  );
+  const overlay = primaryStoryOverlay(calculation, cycle.cycle_key);
+  const arc = overlay ? null : arcSentence(cycle);
   const toggleId = "timing-toggle-" + cycle.cycle_key;
   const panelId = "timing-panel-" + cycle.cycle_key;
 
@@ -196,13 +213,17 @@ export function TimingWindow({
               {comparisonLabel ? (
                 <p className="timing-comparison-label">{comparisonLabel}</p>
               ) : null}
-              <WindowTimeline
-                cycle={cycle}
-                day={day}
-                timezone={timezone}
-                referenceAt={referenceAt}
-                referenceLabel={referenceLabel}
-              />
+              {overlay ? (
+                <TransitSequence calculation={calculation} />
+              ) : (
+                <WindowTimeline
+                  cycle={cycle}
+                  day={day}
+                  timezone={timezone}
+                  referenceAt={referenceAt}
+                  referenceLabel={referenceLabel}
+                />
+              )}
               {arc ? <p className="timing-arc-copy">{arc}</p> : null}
               <details className="timing-calculated-values">
                 <summary>Calculated values</summary>
@@ -221,16 +242,18 @@ export function TimingWindow({
                   </div>
                   <div>
                     <dt>Calculated phase</dt>
-                    <dd>{cycle.phase}</dd>
+                    <dd>{overlay?.phase ?? cycle.phase}</dd>
                   </div>
                   <div>
                     <dt>Strength</dt>
                     <dd>{cycle.importance.toFixed(4)}</dd>
                   </div>
-                  {cycle.exact_at ? (
+                  {(overlay ? overlay.centralExactAt : cycle.exact_at) ? (
                     <div>
                       <dt>Closest pass (UTC)</dt>
-                      <dd className="break-all">{cycle.exact_at}</dd>
+                      <dd className="break-all">
+                        {overlay ? overlay.centralExactAt : cycle.exact_at}
+                      </dd>
                     </div>
                   ) : null}
                 </dl>

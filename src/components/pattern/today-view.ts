@@ -22,7 +22,9 @@ export function todayPointLabel(value: string) {
 }
 
 export function todayPhaseLabel(value: string) {
-  if (value === "applying") return "Building · moving toward exact";
+  if (value === "between") return "Between calculated contacts";
+  if (value === "uncertain") return "Timing varies across samples";
+  if (value === "applying" || value === "approaching") return "Building · moving toward exact";
   if (value === "separating") return "Fading · moving away from exact";
   if (value === "exact") return "Exact";
   return todayPointLabel(value);
@@ -34,6 +36,8 @@ export function todayFactLabel(id: string) {
   if (/^I\d+$/.test(id)) return "Interpretation reference";
   if (id === "S1") return "Published synthesis";
   if (id === "N1") return "Published natal lens";
+  if (id === "A1") return "Calculated contact sequence";
+  if (id === "P2") return "Published transit chapter";
   if (/^D\d+$/.test(id)) return "Area-of-life framing";
   if (/^P\d+$/.test(id)) return "Phase wording";
   if (/^T\d+$/.test(id)) return "Timing wording";
@@ -45,6 +49,7 @@ export function todayFactLabel(id: string) {
 
 export function todayFactCategory(id: string) {
   if (id === "N1") return "Interpretive reference";
+  if (id === "A1") return "Calculation";
   if (/^C\d+$/.test(id)) return "Calculated cycle";
   if (id === "S1") return "Published synthesis";
   if (/^[IDPT]\d+$/.test(id)) return "Published reference";
@@ -114,6 +119,8 @@ export function describeTodayFact(fact: { id: string; statement: string }): Toda
   if (/^D\d+$/.test(fact.id)) {
     return { label, text: fact.statement.replace(/^Published framing for /, "") };
   }
+  if (fact.id === "P2")
+    return { label, text: fact.statement.replace(/^Published transit chapter:\s*/, "") };
   if (/^P\d+$/.test(fact.id)) {
     return { label, text: fact.statement.replace(/^Published phase wording:\s*/, "") };
   }

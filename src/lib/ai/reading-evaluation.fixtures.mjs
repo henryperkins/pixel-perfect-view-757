@@ -1,5 +1,6 @@
+import { analyticEpisode } from "./reading-evaluation.transit.fixtures.mjs";
 /** Synthetic plans only: these are not birth records or an ephemeris quality test. */
-export const READING_EVAL_FIXTURE_VERSION = "synthetic-daily-5";
+export const READING_EVAL_FIXTURE_VERSION = "synthetic-daily-6";
 
 const CHART = {
   engine: "synthetic-evaluation-engine",
@@ -370,5 +371,76 @@ READING_EVAL_CASES.push(
       cycle("saturn", "sun", "square", { importance: 0.7 }),
       cycle("jupiter", "mars", "trine", { importance: 0.5 }),
     ],
+  ),
+);
+
+function arcCase(id, description, options = {}, mutate = () => {}, combined = false) {
+  const f = analyticEpisode(options);
+  mutate(f);
+  return fixedCase(
+    `arc-${id}`,
+    description,
+    [
+      f.primary,
+      ...(combined
+        ? [
+            cycle("jupiter", "mars", "trine", {
+              importance: 0.5,
+              exact_at: new Date(
+                Date.parse(f.scan.request.referenceAt) + 2 * 86400000,
+              ).toISOString(),
+              ingress_at: new Date(
+                Date.parse(f.scan.request.referenceAt) - 10 * 86400000,
+              ).toISOString(),
+              egress_at: new Date(
+                Date.parse(f.scan.request.referenceAt) + 10 * 86400000,
+              ).toISOString(),
+            }),
+          ]
+        : []),
+    ],
+    {
+      config: { day: f.day, timeZone: f.timezone },
+      transitEpisodeScan: f.scan,
+      transitAnchor: f.anchor,
+      ...(combined ? { natalWindowSamples: natalSamples({ accuracy: "exact" }) } : {}),
+    },
+  );
+}
+READING_EVAL_CASES.push(
+  arcCase("single-pass", "A single complete contact without invented repetition.", {
+    count: 1,
+    index: 1,
+  }),
+  arcCase("opening-three", "Opening contact: notice a response before settling it.", { index: 1 }),
+  arcCase("return-three", "Returning contact: adjust a method or boundary.", { index: 2 }),
+  arcCase(
+    "closing-three",
+    "Closing calculated contact: repeat a useful response without promising resolution.",
+    { index: 3 },
+  ),
+  arcCase("return-five", "Five proven contacts, never forced into a three-pass story.", {
+    count: 5,
+    index: 3,
+  }),
+  arcCase("between-passes", "A connecting station has no current ordinal.", {
+    station: true,
+    amplitude: 2,
+  }),
+  arcCase("truncated-scan", "Resource limits omit chronology and keep primary prose.", {}, (f) => {
+    f.scan.samples[0].limit = "time_limit";
+  }),
+  arcCase("station-tangent", "A station too close to the target cannot certify a crossing.", {
+    amplitude: 0.0005,
+  }),
+  arcCase("birth-window-disagreement", "Disagreeing sampled counts omit chronology.", {
+    birthDisagreement: true,
+  }),
+  arcCase(
+    "synthesis-natal-integration",
+    "S1, N1 and P2 remain readable in the same bounded body.",
+    {},
+    () => {},
+    true,
   ),
 );

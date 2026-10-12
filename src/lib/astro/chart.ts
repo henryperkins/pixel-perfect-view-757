@@ -99,6 +99,9 @@ export interface ChartPoint {
 
 /** Positions plus the provenance of whatever engine produced them. */
 export interface EphemerisResult {
+  /** False when a legacy service omitted its house-system identity. */
+  houseSystemExplicit?: boolean;
+  positionSource?: import("./transit-anchors").PositionSource;
   positions: Record<Body, BodyPosition>;
   engine: string;
   engineVersion: string;

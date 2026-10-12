@@ -371,3 +371,28 @@ personal claims. Reviewers must identify a supported practical distinction in th
 duty/freedom pair; adjective swaps do not pass. Negative cases must contain no natal
 claim. All scores remain null in replay; actual-model writing qualification and
 independent catalogue approval remain open.
+
+## Reconciled transit candidate and historical reports
+
+`synthetic-daily-6` preserves all 28 existing daily/natal fixtures and adds ten
+synthetic transit episode cases (38 rows, at most 37 attempts). The shipped
+fallback and natal candidate identities are unchanged. Select **Inactive transit
+candidate** in the admin evaluation panel, or use the closed offline runner:
+
+```sh
+npm run eval:reading -- --bundle-source transit-candidate --output /tmp/transit-candidate-replay.json
+```
+
+The candidate is evaluation-only; selection never activates content or alters
+member provider routing. The current prompt/validator identities are
+`daily-astro-body-9` / `daily-reference-6`, retaining main's Gemini 3.8 Flash
+provider identities, 60-second deadline, durable run jobs, and strict source
+comparison/replay binding. Native source accuracy and writing quality remain
+separate gates.
+
+The archived 28-case natal reports and original 36-case transit replays retain
+their own `synthetic-daily-5` identities. Historical comparisons use their
+recorded inventories; replay under a changed fixture or policy requires the
+original frozen snapshot. They do not count as current 38-case coverage. The
+[blinded review](docs/reviews/daily-natal-lens/writing-qualification.md) failed its
+writing gate; integrating its evidence does not qualify the changed prompt.

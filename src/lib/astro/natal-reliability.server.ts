@@ -12,17 +12,15 @@ import {
   unavailableNatalReliability,
   usableNatalService,
   type NatalReliabilityManifest,
+  type NatalWindowSample,
 } from "./natal-reliability";
 
-export async function resolveNatalReliability(
+export async function resolveNatalWindowSamples(
   input: BirthInput,
-  fingerprint: string,
   center: EphemerisResult,
-): Promise<NatalReliabilityManifest> {
-  if (input.accuracy === "unknown")
-    return unavailableNatalReliability(fingerprint, input.accuracy, "unknown_time");
-  if (!usableNatalService(center))
-    return unavailableNatalReliability(fingerprint, input.accuracy, "service_unavailable");
+): Promise<NatalWindowSample[]> {
+  if (input.accuracy === "unknown") return [];
+  if (!usableNatalService(center)) return [];
   for (const source of ["AST-01", "AST-02", "AST-03", "AST-04"]) assertUse(source, "calculation");
   try {
     const band = TIME_ACCURACY_MINUTES[input.accuracy];
@@ -39,16 +37,28 @@ export async function resolveNatalReliability(
         return { offsetMinutes, ephemeris, chart: computeChart({ ...input, utcISO }, ephemeris) };
       }),
     );
-    return assessNatalReliability(
-      [
-        boundaries[0]!,
-        { offsetMinutes: 0, ephemeris: center, chart: computeChart(input, center) },
-        boundaries[1]!,
-      ],
-      fingerprint,
-      input.accuracy,
-    );
+    return [
+      boundaries[0]!,
+      { offsetMinutes: 0, ephemeris: center, chart: computeChart(input, center) },
+      boundaries[1]!,
+    ];
   } catch {
-    return unavailableNatalReliability(fingerprint, input.accuracy, "invalid_sample");
+    return [];
   }
+}
+
+export async function resolveNatalReliability(
+  input: BirthInput,
+  fingerprint: string,
+  center: EphemerisResult,
+): Promise<NatalReliabilityManifest> {
+  if (input.accuracy === "unknown")
+    return unavailableNatalReliability(fingerprint, input.accuracy, "unknown_time");
+  if (!usableNatalService(center))
+    return unavailableNatalReliability(fingerprint, input.accuracy, "service_unavailable");
+  return assessNatalReliability(
+    await resolveNatalWindowSamples(input, center),
+    fingerprint,
+    input.accuracy,
+  );
 }
