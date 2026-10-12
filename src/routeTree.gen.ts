@@ -11,7 +11,11 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AssistantAuthRouteImport } from './routes/assistant-auth'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as McpRouteImport } from './routes/mcp'
+import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
+import { Route as AuthenticatedAssistantsRouteImport } from './routes/_authenticated/assistants'
 import { Route as AuthenticatedBirthRouteImport } from './routes/_authenticated/birth'
 import { Route as AuthenticatedContentRouteImport } from './routes/_authenticated/content'
 import { Route as AuthenticatedJournalRouteImport } from './routes/_authenticated/journal'
@@ -21,6 +25,7 @@ import { Route as AuthenticatedPrivacyRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedSourcesRouteImport } from './routes/_authenticated/sources'
 import { Route as AuthenticatedTimeTravelRouteImport } from './routes/_authenticated/time-travel'
 import { Route as AuthenticatedTimingRouteImport } from './routes/_authenticated/timing'
+import { Route as OauthConsentRouteImport } from './routes/oauth/consent'
 import { Route as ApiPublicContentReleasesRouteImport } from './routes/api/public/content-releases'
 import { Route as ApiPublicEvaluationStepRouteImport } from './routes/api/public/evaluation-step'
 import { Route as ApiPublicContentReleasesRollbackRouteImport } from './routes/api/public/content-releases.rollback'
@@ -35,10 +40,31 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AssistantAuthRoute = AssistantAuthRouteImport.update({
+  id: '/assistant-auth',
+  path: '/assistant-auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
   getParentRoute: () => rootRouteImport,
+} as any)
+const McpRoute = McpRouteImport.update({
+  id: '/mcp',
+  path: '/mcp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Char91DotwellKnownChar93OauthProtectedResourceRoute =
+  Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
+    id: '/.well-known/oauth-protected-resource',
+    path: '/.well-known/oauth-protected-resource',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const AuthenticatedAssistantsRoute = AuthenticatedAssistantsRouteImport.update({
+  id: '/assistants',
+  path: '/assistants',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedBirthRoute = AuthenticatedBirthRouteImport.update({
   id: '/birth',
@@ -85,6 +111,11 @@ const AuthenticatedTimingRoute = AuthenticatedTimingRouteImport.update({
   path: '/timing',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const OauthConsentRoute = OauthConsentRouteImport.update({
+  id: '/oauth/consent',
+  path: '/oauth/consent',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicContentReleasesRoute =
   ApiPublicContentReleasesRouteImport.update({
     id: '/api/public/content-releases',
@@ -111,7 +142,11 @@ const LovableEmailTransactionalPreviewRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/assistant-auth': typeof AssistantAuthRoute
   '/auth': typeof AuthRoute
+  '/mcp': typeof McpRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/assistants': typeof AuthenticatedAssistantsRoute
   '/birth': typeof AuthenticatedBirthRoute
   '/content': typeof AuthenticatedContentRoute
   '/journal': typeof AuthenticatedJournalRoute
@@ -121,6 +156,7 @@ export interface FileRoutesByFullPath {
   '/sources': typeof AuthenticatedSourcesRoute
   '/time-travel': typeof AuthenticatedTimeTravelRoute
   '/timing': typeof AuthenticatedTimingRoute
+  '/oauth/consent': typeof OauthConsentRoute
   '/api/public/content-releases': typeof ApiPublicContentReleasesRouteWithChildren
   '/api/public/evaluation-step': typeof ApiPublicEvaluationStepRoute
   '/api/public/content-releases/rollback': typeof ApiPublicContentReleasesRollbackRoute
@@ -128,7 +164,11 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/assistant-auth': typeof AssistantAuthRoute
   '/auth': typeof AuthRoute
+  '/mcp': typeof McpRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/assistants': typeof AuthenticatedAssistantsRoute
   '/birth': typeof AuthenticatedBirthRoute
   '/content': typeof AuthenticatedContentRoute
   '/journal': typeof AuthenticatedJournalRoute
@@ -138,6 +178,7 @@ export interface FileRoutesByTo {
   '/sources': typeof AuthenticatedSourcesRoute
   '/time-travel': typeof AuthenticatedTimeTravelRoute
   '/timing': typeof AuthenticatedTimingRoute
+  '/oauth/consent': typeof OauthConsentRoute
   '/api/public/content-releases': typeof ApiPublicContentReleasesRouteWithChildren
   '/api/public/evaluation-step': typeof ApiPublicEvaluationStepRoute
   '/api/public/content-releases/rollback': typeof ApiPublicContentReleasesRollbackRoute
@@ -147,7 +188,11 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/assistant-auth': typeof AssistantAuthRoute
   '/auth': typeof AuthRoute
+  '/mcp': typeof McpRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/_authenticated/assistants': typeof AuthenticatedAssistantsRoute
   '/_authenticated/birth': typeof AuthenticatedBirthRoute
   '/_authenticated/content': typeof AuthenticatedContentRoute
   '/_authenticated/journal': typeof AuthenticatedJournalRoute
@@ -157,6 +202,7 @@ export interface FileRoutesById {
   '/_authenticated/sources': typeof AuthenticatedSourcesRoute
   '/_authenticated/time-travel': typeof AuthenticatedTimeTravelRoute
   '/_authenticated/timing': typeof AuthenticatedTimingRoute
+  '/oauth/consent': typeof OauthConsentRoute
   '/api/public/content-releases': typeof ApiPublicContentReleasesRouteWithChildren
   '/api/public/evaluation-step': typeof ApiPublicEvaluationStepRoute
   '/api/public/content-releases/rollback': typeof ApiPublicContentReleasesRollbackRoute
@@ -166,7 +212,11 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/assistant-auth'
     | '/auth'
+    | '/mcp'
+    | '/.well-known/oauth-protected-resource'
+    | '/assistants'
     | '/birth'
     | '/content'
     | '/journal'
@@ -176,6 +226,7 @@ export interface FileRouteTypes {
     | '/sources'
     | '/time-travel'
     | '/timing'
+    | '/oauth/consent'
     | '/api/public/content-releases'
     | '/api/public/evaluation-step'
     | '/api/public/content-releases/rollback'
@@ -183,7 +234,11 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/assistant-auth'
     | '/auth'
+    | '/mcp'
+    | '/.well-known/oauth-protected-resource'
+    | '/assistants'
     | '/birth'
     | '/content'
     | '/journal'
@@ -193,6 +248,7 @@ export interface FileRouteTypes {
     | '/sources'
     | '/time-travel'
     | '/timing'
+    | '/oauth/consent'
     | '/api/public/content-releases'
     | '/api/public/evaluation-step'
     | '/api/public/content-releases/rollback'
@@ -201,7 +257,11 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/assistant-auth'
     | '/auth'
+    | '/mcp'
+    | '/.well-known/oauth-protected-resource'
+    | '/_authenticated/assistants'
     | '/_authenticated/birth'
     | '/_authenticated/content'
     | '/_authenticated/journal'
@@ -211,6 +271,7 @@ export interface FileRouteTypes {
     | '/_authenticated/sources'
     | '/_authenticated/time-travel'
     | '/_authenticated/timing'
+    | '/oauth/consent'
     | '/api/public/content-releases'
     | '/api/public/evaluation-step'
     | '/api/public/content-releases/rollback'
@@ -220,7 +281,11 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AssistantAuthRoute: typeof AssistantAuthRoute
   AuthRoute: typeof AuthRoute
+  McpRoute: typeof McpRoute
+  Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  OauthConsentRoute: typeof OauthConsentRoute
   ApiPublicContentReleasesRoute: typeof ApiPublicContentReleasesRouteWithChildren
   ApiPublicEvaluationStepRoute: typeof ApiPublicEvaluationStepRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
@@ -242,12 +307,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/assistant-auth': {
+      id: '/assistant-auth'
+      path: '/assistant-auth'
+      fullPath: '/assistant-auth'
+      preLoaderRoute: typeof AssistantAuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/mcp': {
+      id: '/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof McpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.well-known/oauth-protected-resource': {
+      id: '/.well-known/oauth-protected-resource'
+      path: '/.well-known/oauth-protected-resource'
+      fullPath: '/.well-known/oauth-protected-resource'
+      preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/assistants': {
+      id: '/_authenticated/assistants'
+      path: '/assistants'
+      fullPath: '/assistants'
+      preLoaderRoute: typeof AuthenticatedAssistantsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/birth': {
       id: '/_authenticated/birth'
@@ -312,6 +405,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedTimingRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/oauth/consent': {
+      id: '/oauth/consent'
+      path: '/oauth/consent'
+      fullPath: '/oauth/consent'
+      preLoaderRoute: typeof OauthConsentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/content-releases': {
       id: '/api/public/content-releases'
       path: '/api/public/content-releases'
@@ -344,6 +444,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAssistantsRoute: typeof AuthenticatedAssistantsRoute
   AuthenticatedBirthRoute: typeof AuthenticatedBirthRoute
   AuthenticatedContentRoute: typeof AuthenticatedContentRoute
   AuthenticatedJournalRoute: typeof AuthenticatedJournalRoute
@@ -356,6 +457,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAssistantsRoute: AuthenticatedAssistantsRoute,
   AuthenticatedBirthRoute: AuthenticatedBirthRoute,
   AuthenticatedContentRoute: AuthenticatedContentRoute,
   AuthenticatedJournalRoute: AuthenticatedJournalRoute,
@@ -388,7 +490,12 @@ const ApiPublicContentReleasesRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AssistantAuthRoute: AssistantAuthRoute,
   AuthRoute: AuthRoute,
+  McpRoute: McpRoute,
+  Char91DotwellKnownChar93OauthProtectedResourceRoute:
+    Char91DotwellKnownChar93OauthProtectedResourceRoute,
+  OauthConsentRoute: OauthConsentRoute,
   ApiPublicContentReleasesRoute: ApiPublicContentReleasesRouteWithChildren,
   ApiPublicEvaluationStepRoute: ApiPublicEvaluationStepRoute,
   LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,

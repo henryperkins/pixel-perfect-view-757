@@ -14,6 +14,7 @@ const NAV = [
   { to: "/birth", label: "Birth details" },
   { to: "/time-travel", label: "Time travel" },
   { to: "/privacy", label: "Context & privacy" },
+  { to: "/assistants", label: "Connected assistants" },
   { to: "/content", label: "Content" },
 ] as const;
 const NAV_ICONS = [Sun, Orbit, Waves, NotebookPen];

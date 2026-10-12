@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -227,6 +227,40 @@ function PrivacyPage() {
               Notes and labels are excluded. Turning this switch off excludes your saved scores from
               future reports; saving a rating never turns it on.
             </p>
+          </section>
+
+          <section className="mt-8 max-w-2xl" aria-labelledby="assistant-privacy">
+            <h2 id="assistant-privacy" className="font-serif text-xl">
+              Connected assistants
+            </h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Connecting an assistant is optional and uses a separate sign-in linked from your
+              Pattern account. You approve each assistant and choose Today and timing, Pattern and
+              chapters, and optionally Journal. Tools read saved results only; they cannot edit your
+              data or generate new readings.
+            </p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              The connection also shares information from your separate assistant sign-in, including
+              its account ID, email and any profile or phone information saved with it. The consent
+              page shows the requested identity permissions alongside your Pattern sharing choices.
+              Approving access requires both your Pattern and assistant sign-ins.
+            </p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Structured birth details, coordinates and check-ins are excluded. Readings influenced
+              by check-ins and older readings without a separate chart-only copy are withheld.
+              Journal sharing includes your own written titles and entry text, which may contain
+              sensitive details. Calculated chart information and interpretations are personal data
+              and can allow inferences about you.
+            </p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Your selected content is decrypted on the server for an authorized read and sent to
+              the assistant. The assistant’s own privacy and retention policies apply to copies it
+              receives. Revoking or unlinking stops future reads, but cannot delete copies already
+              received. Deleting your Pattern data also removes every assistant link and grant.
+            </p>
+            <Button asChild variant="link" className="mt-2 min-h-11 px-0">
+              <Link to="/assistants">Manage connected assistants</Link>
+            </Button>
           </section>
 
           {TIERS.filter((t) => t.tier !== 3 || sourcesForTier(3).length > 0).map((tier) => (

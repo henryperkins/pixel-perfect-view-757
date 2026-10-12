@@ -46,6 +46,16 @@ function isH3SwallowedErrorBody(body: string): boolean {
 
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
+    const path = new URL(request.url).pathname;
+    if (
+      (path === "/mcp" || path === "/.well-known/oauth-protected-resource") &&
+      process.env["PATTERN_ASSISTANTS_ENABLED"] !== "true"
+    ) {
+      return new Response("Assistant connections are currently unavailable.", {
+        status: 503,
+        headers: { "Cache-Control": "no-store", "Retry-After": "3600" },
+      });
+    }
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
