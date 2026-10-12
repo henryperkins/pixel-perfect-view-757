@@ -3,9 +3,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { createIsomorphicFn, useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowDown, ArrowRight, RotateCcw } from "lucide-react";
-import celestialScene from "@/assets/celestial-browsing.jpg";
-import { CelestialScene } from "@/components/pattern/CelestialScene";
+import { ArrowDown, RotateCcw } from "lucide-react";
+import { Landing } from "@/components/pattern/Landing";
 
 import { Field, Shell } from "@/components/pattern/Shell";
 import { useAuth } from "@/hooks/useAuth";
@@ -89,40 +88,6 @@ function TodayPage() {
     <Shell>
       <TodayReading key={session.userId} accountId={session.userId} />
     </Shell>
-  );
-}
-
-function Landing() {
-  return (
-    <div>
-      <CelestialScene src={celestialScene}>
-        <div className="landing-copy">
-          <h1 className="leading-tight">Astrology that shows its work.</h1>
-          <p className="prose-reading mt-6 text-foreground">
-            Pattern calculates your chart from birth date, time and place, finds the cycles actually
-            active today, and writes one theme at a time. Every paragraph opens to the bodies,
-            aspect, orb and exact date it came from. Nothing is predicted; nothing is generated from
-            a sun sign.
-          </p>
-          <Button asChild size="lg" className="landing-cta mt-8">
-            <Link to="/auth">
-              Start with your chart
-              <ArrowRight aria-hidden="true" />
-            </Link>
-          </Button>
-          <p className="mt-5 text-sm">
-            <Link to="/transit-chart-calculator" className="text-primary underline">
-              How the transit chart calculator works
-            </Link>
-          </p>
-        </div>
-      </CelestialScene>
-      <ul className="landing-foundations grid gap-4 text-sm text-muted-foreground sm:grid-cols-3">
-        <li>· Unknown birth time is first class — angle claims get suppressed, not faked.</li>
-        <li>· Context you opt into can rank a theme, never invent a chart fact.</li>
-        <li>· Birth details, notes and readings are stored encrypted.</li>
-      </ul>
-    </div>
   );
 }
 
