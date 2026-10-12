@@ -88,7 +88,7 @@
 - [x] Read current Fly access/configuration; deploy a separate `pattern-transit-calc` app using an independent generated secret, preserving the existing app.
 - [x] Verify remote source/build identity, unauthenticated 401, public source archive, synthetic chart + 15-track qualification and measured service deadlines on the deployed version.
 - [ ] Configure this app's chart URL/key and transit URL/source ID through an authorized server secret channel. If credentials/tooling are absent, finish everything independent and report the exact missing operation without exposing a secret.
-- [ ] Publish current source normally; verify remote commit and Lovable synchronization separately from production deployment.
+- [x] Publish current source normally; verify remote commit and Lovable synchronization separately from production deployment.
 - [ ] Activate the staged combined content only when source settings and production checks establish both features can work. Existing owners use explicit recalculation; historical records keep their original source.
 - [ ] Record final configuration, release pointers, live evidence and rollback instructions; keep any unfulfilled gate explicitly open.
 

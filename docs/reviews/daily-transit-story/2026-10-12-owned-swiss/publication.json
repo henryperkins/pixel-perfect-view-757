@@ -1,0 +1,32 @@
+{
+  "checkedAt": "2026-10-12T08:01:13.642Z",
+  "projectId": "16964b03-ff4a-4ee1-b4a5-76757e94bec3",
+  "sourceCommit": "3143a0f88d7dd3dd1babd18a048b56326b9069c2",
+  "deploymentRequestId": "01feb437-68c5-4736-852c-11e0b7fd3a0b",
+  "results": [
+    {
+      "asset": "/assets/index--1ABwhTu.js",
+      "status": 200,
+      "sha256": "1b9245f51e245fe9c87ff0860b422d7cca02d8943e6159183a62988b3e80c0da",
+      "matchesLocalBuild": true
+    },
+    {
+      "asset": "/assets/privacy-O3EO2pcS.js",
+      "status": 200,
+      "sha256": "03b824f474b4e72a52737a7f2b5b96f853e92318bc12580b72a1d0d16aec4123",
+      "matchesLocalBuild": true
+    },
+    {
+      "asset": "/assets/birth-BAUwXJKb.js",
+      "status": 200,
+      "sha256": "17ece8009f9a1849c422238aca096d2705f4dd81aa3b19bdba417945870c3c96",
+      "matchesLocalBuild": true
+    }
+  ],
+  "serverRuntimeCommitIndependentlyExposed": false,
+  "serverSecretConfigurationVerified": false,
+  "gitRemote": "https://github.com/henryperkins/pixel-perfect-view-757",
+  "remoteMainMatched": true,
+  "lovableLatestCommitMatched": true,
+  "contentActivated": false
+}

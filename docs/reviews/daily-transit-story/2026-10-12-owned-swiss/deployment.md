@@ -2,6 +2,8 @@
 
 `pattern-transit-calc` is deployed in **Imladris**, region `iad`, on one shared-CPU 512 MiB machine. The deployed service revision is `4d217d9db60f393e55a891de53d632e9626c4321`; the image digest, machine identity, source ID and timings are in [deployment.json](deployment.json).
 
+Source commit `3143a0f` was pushed normally to `main` and synchronized exactly into Lovable. A Lovable publish request was accepted; the live entry, privacy and birth-page JavaScript assets match the gated local build byte-for-byte. [publication.json](publication.json) records those checks. This proves the published frontend assets, while the app's server runtime commit and new secret configuration are not independently exposed by that check.
+
 - Public [health](https://pattern-transit-calc.fly.dev/health), engine metadata and [source offer](https://pattern-transit-calc.fly.dev/source) identify the expected revision and calculation source. Fly's health check is passing.
 - Both calculation routes return 401 without credentials. An independent generated key is stored in Fly secrets and a private operator file, never in Git or the source archive.
 - Two synthetic chart requests return Placidus and the expected source. All 15 remote episode scans exactly match their locally qualified scans and pass the application's existing proof validator. Six tangent/out-of-range requests return the expected closed errors. Full synthetic responses and timings are retained in [live-probes.json](live-probes.json).
