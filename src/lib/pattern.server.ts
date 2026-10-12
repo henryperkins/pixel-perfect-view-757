@@ -696,7 +696,7 @@ export function ephemerisState(chart: Chart, story: DailyTransitCalculation | nu
   };
 }
 
-function snapshotToChart(row: SnapshotRow): Chart {
+export function snapshotToChart(row: SnapshotRow): Chart {
   const houses = row.houses as {
     system: string;
     cusps: number[];
@@ -1449,6 +1449,13 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
         ...(natalLens ? { natal_lens_ct: await encryptJson(dek, natalLens) } : {}),
         interpretationPlan,
         sourceCount: provenance.length,
+        // Assistants (MCP) may only receive reading text that used no Tier 3 wellness bands.
+        assistantShare: {
+          version: 1,
+          wellnessUsed:
+            provenance.some((p) => p.source_id.startsWith("WEL-")) ||
+            /\b(sleep|stress)\b/i.test(`${body}\n${prose.prompt ?? ""}`),
+        },
         paragraphs_ct: await encryptJson(dek, paragraphs),
       },
     })
@@ -2328,7 +2335,7 @@ interface NarrativeFact {
 }
 
 /** Share the exact effective tone and essay policy between page and chapter caches. */
-async function featureNarrativeContext(db: DB, userId: string, snap: SnapshotRow, chart: Chart) {
+export async function featureNarrativeContext(db: DB, userId: string, snap: SnapshotRow, chart: Chart) {
   const [profile, granted, { FEATURE_ESSAY_VERSION }] = await Promise.all([
     loadProfile(db, userId),
     grantedSet(db, userId),
@@ -2345,7 +2352,7 @@ async function featureNarrativeContext(db: DB, userId: string, snap: SnapshotRow
 const NARRATIVE_ENVELOPE = "pattern-natal-evidence-1";
 
 /** Older encrypted essays remain readable, without inventing their original inputs. */
-function unpackNarrative(plaintext: string): {
+export function unpackNarrative(plaintext: string): {
   narrative: string;
   paragraphs: string[];
   facts: NarrativeFact[];
