@@ -40,6 +40,10 @@ via `@theme inline`. Components use semantic utilities only — never raw hex or
 
 Rule: if a value came out of a calculation, measurement, or engine checksum, it is set in mono; explanatory labels and descriptive copy remain in sans.
 
+Short notes that sit under a hero (the landing principles) open with a run-in lead:
+`<b>` at weight 600 in `--foreground`, the rest of the sentence in `--muted-foreground`,
+each note under a hairline rule rather than a typed bullet.
+
 ## Layout
 
 - Sticky blurred header with the Pattern wordmark, tagline, active-route underline

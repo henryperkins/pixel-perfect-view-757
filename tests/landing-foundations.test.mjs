@@ -46,11 +46,23 @@ test("the landing foundations list carries its three principles", async () => {
   const lists = [...html.matchAll(/<ul class="landing-foundations[^"]*">([\s\S]*?)<\/ul>/g)];
   assert.equal(lists.length, 1, "exactly one ul.landing-foundations");
   const items = [...lists[0][1].matchAll(/<li>([\s\S]*?)<\/li>/g)].map((m) => m[1]);
-  assert.deepEqual(items, [
-    "· Unknown birth time is first class — angle claims get suppressed, not faked.",
-    "· Context you opt into can rank a theme, never invent a chart fact.",
-    "· Birth details, notes and readings are stored encrypted.",
-  ]);
+  assert.deepEqual(
+    items.map((item) => item.replace(/<[^>]+>/g, "")),
+    [
+      "Unknown birth time is first class — angle claims get suppressed, not faked.",
+      "Context you opt into can rank a theme, never invent a chart fact.",
+      "Birth details, notes and readings are stored encrypted.",
+    ],
+  );
+  // Each principle opens with a run-in lead; hairline rules replace typed bullets.
+  assert.deepEqual(
+    items.map((item) => item.match(/^<b>([^<]+)<\/b>/)?.[1]),
+    [
+      "Unknown birth time is first class",
+      "Context you opt into can rank a theme,",
+      "Birth details, notes and readings",
+    ],
+  );
 });
 
 test("the foundations list follows the hero it sits beneath", async () => {

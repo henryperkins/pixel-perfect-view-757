@@ -31,10 +31,16 @@ export function Landing() {
           </p>
         </div>
       </CelestialScene>
-      <ul className="landing-foundations grid gap-4 text-sm text-muted-foreground sm:grid-cols-3">
-        <li>· Unknown birth time is first class — angle claims get suppressed, not faked.</li>
-        <li>· Context you opt into can rank a theme, never invent a chart fact.</li>
-        <li>· Birth details, notes and readings are stored encrypted.</li>
+      <ul className="landing-foundations">
+        <li>
+          <b>Unknown birth time is first class</b> — angle claims get suppressed, not faked.
+        </li>
+        <li>
+          <b>Context you opt into can rank a theme,</b> never invent a chart fact.
+        </li>
+        <li>
+          <b>Birth details, notes and readings</b> are stored encrypted.
+        </li>
       </ul>
     </div>
   );
