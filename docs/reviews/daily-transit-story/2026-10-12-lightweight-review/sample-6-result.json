@@ -1,0 +1,2467 @@
+{
+  "sampleId": "sample-6",
+  "caseId": "arc-synthesis-natal-integration",
+  "repetition": 1,
+  "result": {
+    "metadata": {
+      "reportVersion": 1,
+      "storyPlanVersion": "daily-transit-story-1",
+      "anchorVersion": "transit-anchor-1",
+      "solverVersion": "transit-episode-1",
+      "sourceContract": "swiss-transit-episode/1",
+      "transitFixtureHash": "2025ee9077bb7c0053af5c601e076d7d0858754644901f680862090f01d665f7",
+      "storyUse": true,
+      "fixtureVersion": "synthetic-daily-6",
+      "caseSetHash": "5bae1e78705b97024d6ca6c8d7b242e32f316a52c54c7b9e9cb3c5af8154d9e8",
+      "bundleVersion": "builtin-0.7.0",
+      "bundleHash": "0e52a1dafb069a0b625a593ddaea183b27fb8e07a8231e659f9fd11dcadbadc6",
+      "transitCopyHash": "dae78f7d0bb47988f0fbddaff066f5c58a6c746beab01d68720a9f47bce650b9",
+      "planVersion": "daily-synthesis-1",
+      "natalPlanVersion": "daily-natal-lens-2",
+      "reliabilityVersion": "natal-reliability-1",
+      "promptVersion": "daily-astro-body-12",
+      "validatorVersion": "daily-reference-8",
+      "model": "gemini-enterprise/gemini-3.8-flash",
+      "gatewayTimeoutMs": 180000,
+      "source": "live-synthetic",
+      "network": "Live Gemini Enterprise Agent Platform; fixed synthetic facts only",
+      "warning": "Actual model outputs for synthetic plans. This run does not establish production-user acceptance, semantic grounding, or writing quality. Manual scores remain blank.",
+      "bundleSource": "transit-candidate"
+    },
+    "case": {
+      "id": "arc-synthesis-natal-integration",
+      "description": "S1, N1 and P2 remain readable in the same bounded body.",
+      "config": {
+        "day": "2026-12-17",
+        "timeZone": "UTC",
+        "tone": "plain",
+        "depth": "standard",
+        "granted": [
+          "USR-01",
+          "USR-02"
+        ]
+      },
+      "configHash": "5f7c2b9abc280754a14b318d92141b1009fe2085b02f67ebe85bbb7208ac0710",
+      "localNoon": "2026-12-17T12:00:00.000Z",
+      "eligibleCycleKeys": [
+        "saturn_square_sun",
+        "jupiter_trine_mars"
+      ],
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.00 degrees. phase exact. domain identity. Calculated exact date: 2026-12-17.",
+          "cycle": {
+            "transitBody": "saturn",
+            "natalPoint": "sun",
+            "aspect": "square",
+            "orb": 0,
+            "exactDate": "2026-12-17"
+          }
+        },
+        {
+          "id": "C2",
+          "kind": "calculation",
+          "statement": "transiting jupiter trine natal mars. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain identity. Calculated exact date: 2026-12-19.",
+          "cycle": {
+            "transitBody": "jupiter",
+            "natalPoint": "mars",
+            "aspect": "trine",
+            "orb": 0.42,
+            "exactDate": "2026-12-19"
+          }
+        },
+        {
+          "id": "I1",
+          "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+          "kind": "interpretation",
+          "dependsOn": [
+            "C1"
+          ],
+          "sourceKey": "square:saturn:sun",
+          "releaseVersion": "builtin-0.7.0"
+        },
+        {
+          "id": "I2",
+          "statement": "Published interpretation trine:jupiter:mars: Enthusiasm and practical initiative reinforce one another when an aim is well chosen. Jupiter's trine to Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening.",
+          "kind": "interpretation",
+          "dependsOn": [
+            "C2"
+          ],
+          "sourceKey": "trine:jupiter:mars",
+          "releaseVersion": "builtin-0.7.0"
+        },
+        {
+          "id": "S1",
+          "statement": "Published tension synthesis square:saturn:sun_tension_trine:jupiter:mars (parents: C1, I1, C2, I2): Giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.",
+          "kind": "synthesis",
+          "dependsOn": [
+            "C1",
+            "I1",
+            "C2",
+            "I2"
+          ],
+          "sourceKey": "square:saturn:sun_tension_trine:jupiter:mars",
+          "releaseVersion": "builtin-0.7.0"
+        },
+        {
+          "id": "N1",
+          "kind": "temperament",
+          "statement": "Published natal lens, an interpretive possibility: Following more than one line of curiosity can help a direction take shape. If several possible projects compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages.",
+          "dependsOn": [
+            "C1",
+            "I1"
+          ],
+          "sourceKey": "nl-sun-03",
+          "releaseVersion": "builtin-0.7.0",
+          "natalEvidenceId": "NL1"
+        },
+        {
+          "id": "A1",
+          "kind": "calculation",
+          "dependsOn": [
+            "C1"
+          ],
+          "statement": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+          "arc": {
+            "cycleKey": "saturn_square_sun",
+            "chapter": "return",
+            "passIndex": 2,
+            "passTotal": 3,
+            "chronologySentence": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+            "dates": [
+              {
+                "eventId": "pass-1",
+                "kind": "exact-contact",
+                "civilDay": "2026-09-08",
+                "monthYear": "2026-09"
+              },
+              {
+                "eventId": "pass-2",
+                "kind": "exact-contact",
+                "civilDay": "2026-12-17",
+                "monthYear": "2026-12"
+              },
+              {
+                "eventId": "pass-3",
+                "kind": "exact-contact",
+                "civilDay": "2027-03-27",
+                "monthYear": "2027-03"
+              }
+            ]
+          }
+        },
+        {
+          "id": "P2",
+          "kind": "interpretation",
+          "dependsOn": [
+            "C1",
+            "I1",
+            "A1"
+          ],
+          "sourceKey": "chapter-return-1",
+          "releaseVersion": "builtin-0.7.0",
+          "statement": "Published transit chapter: If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.",
+          "storyChapter": "return"
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: If a demand feels immediate, start with the choice you can describe clearly."
+        },
+        {
+          "id": "T1",
+          "statement": "Timing: the calculated exact contact falls on 2026-12-17. This describes the current connected window."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0. Primary event timing uses source-qualified Swiss Ephemeris."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+        }
+      ],
+      "interpretationPlan": {
+        "version": "daily-synthesis-1",
+        "interpretations": [
+          {
+            "index": 1,
+            "cycleKey": "saturn_square_sun",
+            "interpretationKey": "square:saturn:sun"
+          },
+          {
+            "index": 2,
+            "cycleKey": "jupiter_trine_mars",
+            "interpretationKey": "trine:jupiter:mars"
+          }
+        ],
+        "pairStatus": "selected",
+        "pairRuleKey": "square:saturn:sun_tension_trine:jupiter:mars",
+        "releaseVersion": "builtin-0.7.0",
+        "synthesis": {
+          "ruleKey": "square:saturn:sun_tension_trine:jupiter:mars",
+          "relationship": "tension",
+          "dependsOn": [
+            "C1",
+            "I1",
+            "C2",
+            "I2"
+          ],
+          "releaseVersion": "builtin-0.7.0"
+        }
+      },
+      "natalLensPlan": {
+        "version": "daily-natal-lens-2",
+        "reliabilityVersion": "natal-reliability-1",
+        "releaseVersion": "builtin-0.7.0",
+        "status": "selected",
+        "lens": {
+          "ruleKey": "nl-sun-03",
+          "role": "self_direction",
+          "mechanism": "Following more than one line of curiosity can help a direction take shape. If several possible projects compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages.",
+          "anchorCycleKey": "saturn_square_sun",
+          "dependsOn": [
+            "C1",
+            "I1"
+          ],
+          "evidenceId": "NL1",
+          "evidence": [
+            {
+              "kind": "sign",
+              "body": "sun",
+              "sign": "Gemini",
+              "source": "service",
+              "longitudes": [
+                75,
+                75,
+                75
+              ],
+              "marginsDeg": [
+                15,
+                15,
+                15
+              ]
+            }
+          ],
+          "screen": {
+            "accuracy": "exact",
+            "sampleOffsetsMinutes": [
+              -2,
+              0,
+              2
+            ],
+            "sampleEngines": [
+              "swiss-ephemeris@synthetic-swiss-1",
+              "swiss-ephemeris@synthetic-swiss-1",
+              "swiss-ephemeris@synthetic-swiss-1"
+            ]
+          }
+        }
+      },
+      "natalReliability": {
+        "version": "natal-reliability-1",
+        "chartFingerprint": "synthetic:arc-synthesis-natal-integration",
+        "accuracy": "exact",
+        "status": "screened",
+        "reason": null,
+        "sampleOffsetsMinutes": [
+          -2,
+          0,
+          2
+        ],
+        "sampleEngines": [
+          "swiss-ephemeris@synthetic-swiss-1",
+          "swiss-ephemeris@synthetic-swiss-1",
+          "swiss-ephemeris@synthetic-swiss-1"
+        ],
+        "evidence": [
+          {
+            "kind": "house",
+            "body": "mars",
+            "house": 2,
+            "source": "service",
+            "anglesSource": "service",
+            "system": "placidus",
+            "longitudes": [
+              165,
+              165,
+              165
+            ],
+            "cusps": [
+              [
+                120,
+                150,
+                180,
+                210,
+                240,
+                270,
+                300,
+                330,
+                0,
+                30,
+                60,
+                90
+              ],
+              [
+                120,
+                150,
+                180,
+                210,
+                240,
+                270,
+                300,
+                330,
+                0,
+                30,
+                60,
+                90
+              ],
+              [
+                120,
+                150,
+                180,
+                210,
+                240,
+                270,
+                300,
+                330,
+                0,
+                30,
+                60,
+                90
+              ]
+            ],
+            "angles": [
+              {
+                "ascendant": 120,
+                "midheaven": 30
+              },
+              {
+                "ascendant": 120,
+                "midheaven": 30
+              },
+              {
+                "ascendant": 120,
+                "midheaven": 30
+              }
+            ],
+            "marginsDeg": [
+              15,
+              15,
+              15
+            ]
+          },
+          {
+            "kind": "house",
+            "body": "mercury",
+            "house": 12,
+            "source": "service",
+            "anglesSource": "service",
+            "system": "placidus",
+            "longitudes": [
+              105,
+              105,
+              105
+            ],
+            "cusps": [
+              [
+                120,
+                150,
+                180,
+                210,
+                240,
+                270,
+                300,
+                330,
+                0,
+                30,
+                60,
+                90
+              ],
+              [
+                120,
+                150,
+                180,
+                210,
+                240,
+                270,
+                300,
+                330,
+                0,
+                30,
+                60,
+                90
+              ],
+              [
+                120,
+                150,
+                180,
+                210,
+                240,
+                270,
+                300,
+                330,
+                0,
+                30,
+                60,
+                90
+              ]
+            ],
+            "angles": [
+              {
+                "ascendant": 120,
+                "midheaven": 30
+              },
+              {
+                "ascendant": 120,
+                "midheaven": 30
+              },
+              {
+                "ascendant": 120,
+                "midheaven": 30
+              }
+            ],
+            "marginsDeg": [
+              15,
+              15,
+              15
+            ]
+          },
+          {
+            "kind": "house",
+            "body": "moon",
+            "house": 6,
+            "source": "service",
+            "anglesSource": "service",
+            "system": "placidus",
+            "longitudes": [
+              285,
+              285,
+              285
+            ],
+            "cusps": [
+              [
+                120,
+                150,
+                180,
+                210,
+                240,
+                270,
+                300,
+                330,
+                0,
+                30,
+                60,
+                90
+              ],
+              [
+                120,
+                150,
+                180,
+                210,
+                240,
+                270,
+                300,
+                330,
+                0,
+                30,
+                60,
+                90
+              ],
+              [
+                120,
+                150,
+                180,
+                210,
+                240,
+                270,
+                300,
+                330,
+                0,
+                30,
+                60,
+                90
+              ]
+            ],
+            "angles": [
+              {
+                "ascendant": 120,
+                "midheaven": 30
+              },
+              {
+                "ascendant": 120,
+                "midheaven": 30
+              },
+              {
+                "ascendant": 120,
+                "midheaven": 30
+              }
+            ],
+            "marginsDeg": [
+              15,
+              15,
+              15
+            ]
+          },
+          {
+            "kind": "house",
+            "body": "sun",
+            "house": 11,
+            "source": "service",
+            "anglesSource": "service",
+            "system": "placidus",
+            "longitudes": [
+              75,
+              75,
+              75
+            ],
+            "cusps": [
+              [
+                120,
+                150,
+                180,
+                210,
+                240,
+                270,
+                300,
+                330,
+                0,
+                30,
+                60,
+                90
+              ],
+              [
+                120,
+                150,
+                180,
+                210,
+                240,
+                270,
+                300,
+                330,
+                0,
+                30,
+                60,
+                90
+              ],
+              [
+                120,
+                150,
+                180,
+                210,
+                240,
+                270,
+                300,
+                330,
+                0,
+                30,
+                60,
+                90
+              ]
+            ],
+            "angles": [
+              {
+                "ascendant": 120,
+                "midheaven": 30
+              },
+              {
+                "ascendant": 120,
+                "midheaven": 30
+              },
+              {
+                "ascendant": 120,
+                "midheaven": 30
+              }
+            ],
+            "marginsDeg": [
+              15,
+              15,
+              15
+            ]
+          },
+          {
+            "kind": "house",
+            "body": "venus",
+            "house": 1,
+            "source": "service",
+            "anglesSource": "service",
+            "system": "placidus",
+            "longitudes": [
+              135,
+              135,
+              135
+            ],
+            "cusps": [
+              [
+                120,
+                150,
+                180,
+                210,
+                240,
+                270,
+                300,
+                330,
+                0,
+                30,
+                60,
+                90
+              ],
+              [
+                120,
+                150,
+                180,
+                210,
+                240,
+                270,
+                300,
+                330,
+                0,
+                30,
+                60,
+                90
+              ],
+              [
+                120,
+                150,
+                180,
+                210,
+                240,
+                270,
+                300,
+                330,
+                0,
+                30,
+                60,
+                90
+              ]
+            ],
+            "angles": [
+              {
+                "ascendant": 120,
+                "midheaven": 30
+              },
+              {
+                "ascendant": 120,
+                "midheaven": 30
+              },
+              {
+                "ascendant": 120,
+                "midheaven": 30
+              }
+            ],
+            "marginsDeg": [
+              15,
+              15,
+              15
+            ]
+          },
+          {
+            "kind": "sign",
+            "body": "mars",
+            "sign": "Virgo",
+            "source": "service",
+            "longitudes": [
+              165,
+              165,
+              165
+            ],
+            "marginsDeg": [
+              15,
+              15,
+              15
+            ]
+          },
+          {
+            "kind": "sign",
+            "body": "mercury",
+            "sign": "Cancer",
+            "source": "service",
+            "longitudes": [
+              105,
+              105,
+              105
+            ],
+            "marginsDeg": [
+              15,
+              15,
+              15
+            ]
+          },
+          {
+            "kind": "sign",
+            "body": "moon",
+            "sign": "Capricorn",
+            "source": "service",
+            "longitudes": [
+              285,
+              285,
+              285
+            ],
+            "marginsDeg": [
+              15,
+              15,
+              15
+            ]
+          },
+          {
+            "kind": "sign",
+            "body": "sun",
+            "sign": "Gemini",
+            "source": "service",
+            "longitudes": [
+              75,
+              75,
+              75
+            ],
+            "marginsDeg": [
+              15,
+              15,
+              15
+            ]
+          },
+          {
+            "kind": "sign",
+            "body": "venus",
+            "sign": "Leo",
+            "source": "service",
+            "longitudes": [
+              135,
+              135,
+              135
+            ],
+            "marginsDeg": [
+              15,
+              15,
+              15
+            ]
+          }
+        ]
+      },
+      "transitStoryPlan": {
+        "version": "daily-transit-story-1",
+        "solverVersion": "transit-episode-1",
+        "anchorVersion": "transit-anchor-1",
+        "status": "selected",
+        "cycleKey": "saturn_square_sun",
+        "releaseVersion": "builtin-0.7.0",
+        "chapter": "return",
+        "passIndex": 2,
+        "passTotal": 3,
+        "chronologySentence": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+        "approvedDates": [
+          {
+            "eventId": "native-private-1",
+            "kind": "exact-contact",
+            "civilDay": "2026-09-08",
+            "monthYear": "2026-09"
+          },
+          {
+            "eventId": "native-private-2",
+            "kind": "exact-contact",
+            "civilDay": "2026-12-17",
+            "monthYear": "2026-12"
+          },
+          {
+            "eventId": "native-private-3",
+            "kind": "exact-contact",
+            "civilDay": "2027-03-27",
+            "monthYear": "2027-03"
+          }
+        ],
+        "copy": {
+          "key": "chapter-return-1",
+          "chapter": "return",
+          "mechanism": "If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary."
+        },
+        "evidence": {
+          "scan": {
+            "contract": "swiss-transit-episode/1",
+            "solverVersion": "transit-episode-1",
+            "sourceId": "analytic-test-only",
+            "source": {
+              "engine": "swiss-ephemeris",
+              "engineVersion": "synthetic-1",
+              "dataId": "analytic-cosine-not-swiss",
+              "frame": "tropical-apparent-geocentric-true-equinox-of-date",
+              "timeScale": "UT",
+              "returnedFlags": 258
+            },
+            "request": {
+              "contract": "swiss-transit-episode/1",
+              "solverVersion": "transit-episode-1",
+              "sourceId": "analytic-test-only",
+              "transitBody": "saturn",
+              "aspect": "square",
+              "targets": [
+                {
+                  "offsetMinutes": -2,
+                  "longitude": 15
+                },
+                {
+                  "offsetMinutes": 0,
+                  "longitude": 15
+                },
+                {
+                  "offsetMinutes": 2,
+                  "longitude": 15
+                }
+              ],
+              "referenceAt": "2026-12-17T12:00:00.000Z",
+              "maxOrbDegrees": 3
+            },
+            "coverage": {
+              "from": "2026-01-01T12:00:00.000Z",
+              "to": "2027-12-02T12:00:00.000Z"
+            },
+            "tolerance": {
+              "bracketSeconds": 60,
+              "rootResidualDeg": 0.000001
+            },
+            "reference": {
+              "at": "2026-12-17T12:00:00.000Z",
+              "unwrappedLongitude": 105,
+              "speed": -0.18849555921538758
+            },
+            "samples": [
+              {
+                "offsetMinutes": -2,
+                "natalLongitude": 15,
+                "limit": null,
+                "contacts": [
+                  {
+                    "at": "2026-09-08T12:00:00.000Z",
+                    "unwrappedLongitude": 105,
+                    "speed": 0.18849555921538758,
+                    "bracket": [
+                      {
+                        "at": "2026-09-08T11:59:45.000Z",
+                        "unwrappedLongitude": 104.99996727507653,
+                        "speed": 0.18849555921258393
+                      },
+                      {
+                        "at": "2026-09-08T12:00:15.000Z",
+                        "unwrappedLongitude": 105.00003272492347,
+                        "speed": 0.18849555921258393
+                      }
+                    ],
+                    "id": "native-private-1",
+                    "residualDeg": 0,
+                    "direction": "direct",
+                    "branch": "plus",
+                    "targetTurn": 0,
+                    "legId": "leg-2",
+                    "windowId": "window-native-private-1"
+                  },
+                  {
+                    "at": "2026-12-17T12:00:00.000Z",
+                    "unwrappedLongitude": 105,
+                    "speed": -0.18849555921538758,
+                    "bracket": [
+                      {
+                        "at": "2026-12-17T11:59:45.000Z",
+                        "unwrappedLongitude": 105.00003272492347,
+                        "speed": -0.18849555921258393
+                      },
+                      {
+                        "at": "2026-12-17T12:00:15.000Z",
+                        "unwrappedLongitude": 104.99996727507653,
+                        "speed": -0.18849555921258393
+                      }
+                    ],
+                    "id": "native-private-2",
+                    "residualDeg": 0,
+                    "direction": "retrograde",
+                    "branch": "plus",
+                    "targetTurn": 0,
+                    "legId": "leg-3",
+                    "windowId": "window-native-private-2"
+                  },
+                  {
+                    "at": "2027-03-27T12:00:00.000Z",
+                    "unwrappedLongitude": 105,
+                    "speed": 0.18849555921538758,
+                    "bracket": [
+                      {
+                        "at": "2027-03-27T11:59:45.000Z",
+                        "unwrappedLongitude": 104.99996727507653,
+                        "speed": 0.18849555921258393
+                      },
+                      {
+                        "at": "2027-03-27T12:00:15.000Z",
+                        "unwrappedLongitude": 105.00003272492347,
+                        "speed": 0.18849555921258393
+                      }
+                    ],
+                    "id": "native-private-3",
+                    "residualDeg": 0,
+                    "direction": "direct",
+                    "branch": "plus",
+                    "targetTurn": 0,
+                    "legId": "leg-4",
+                    "windowId": "window-native-private-3"
+                  }
+                ],
+                "stations": [
+                  {
+                    "at": "2026-04-11T12:00:00.000Z",
+                    "unwrappedLongitude": 102,
+                    "speed": 0,
+                    "bracket": [
+                      {
+                        "at": "2026-04-11T11:59:45.000Z",
+                        "unwrappedLongitude": 101.99999999996281,
+                        "speed": 4.2836824658470674e-7
+                      },
+                      {
+                        "at": "2026-04-11T12:00:15.000Z",
+                        "unwrappedLongitude": 101.99999999997769,
+                        "speed": -2.570209479400209e-7
+                      }
+                    ],
+                    "id": "station-1",
+                    "directionBefore": "direct",
+                    "directionAfter": "retrograde"
+                  },
+                  {
+                    "at": "2026-07-20T12:00:00.000Z",
+                    "unwrappedLongitude": 99,
+                    "speed": 0,
+                    "bracket": [
+                      {
+                        "at": "2026-07-20T11:59:45.000Z",
+                        "unwrappedLongitude": 99.00000000002231,
+                        "speed": -2.57020947950824e-7
+                      },
+                      {
+                        "at": "2026-07-20T12:00:15.000Z",
+                        "unwrappedLongitude": 99.00000000008924,
+                        "speed": 0.0000010280837917600837
+                      }
+                    ],
+                    "id": "station-2",
+                    "directionBefore": "retrograde",
+                    "directionAfter": "direct"
+                  },
+                  {
+                    "at": "2026-10-28T12:00:00.000Z",
+                    "unwrappedLongitude": 111,
+                    "speed": 0,
+                    "bracket": [
+                      {
+                        "at": "2026-10-28T11:59:45.000Z",
+                        "unwrappedLongitude": 110.99999999991076,
+                        "speed": 0.000001028083791803296
+                      },
+                      {
+                        "at": "2026-10-28T12:00:15.000Z",
+                        "unwrappedLongitude": 110.99999999991076,
+                        "speed": -0.0000010280837917600837
+                      }
+                    ],
+                    "id": "station-3",
+                    "directionBefore": "direct",
+                    "directionAfter": "retrograde"
+                  },
+                  {
+                    "at": "2027-02-05T12:00:00.000Z",
+                    "unwrappedLongitude": 99,
+                    "speed": 0,
+                    "bracket": [
+                      {
+                        "at": "2027-02-05T11:59:45.000Z",
+                        "unwrappedLongitude": 99.00000000008924,
+                        "speed": -0.000001028083791803296
+                      },
+                      {
+                        "at": "2027-02-05T12:00:15.000Z",
+                        "unwrappedLongitude": 99.00000000008924,
+                        "speed": 0.0000010280837917600837
+                      }
+                    ],
+                    "id": "station-4",
+                    "directionBefore": "retrograde",
+                    "directionAfter": "direct"
+                  },
+                  {
+                    "at": "2027-05-16T12:00:00.000Z",
+                    "unwrappedLongitude": 111,
+                    "speed": 0,
+                    "bracket": [
+                      {
+                        "at": "2027-05-16T11:59:45.000Z",
+                        "unwrappedLongitude": 110.99999999991076,
+                        "speed": 0.000001028083791803296
+                      },
+                      {
+                        "at": "2027-05-16T12:00:15.000Z",
+                        "unwrappedLongitude": 110.99999999997769,
+                        "speed": -2.570209479400209e-7
+                      }
+                    ],
+                    "id": "station-5",
+                    "directionBefore": "direct",
+                    "directionAfter": "retrograde"
+                  },
+                  {
+                    "at": "2027-08-24T12:00:00.000Z",
+                    "unwrappedLongitude": 108,
+                    "speed": 0,
+                    "bracket": [
+                      {
+                        "at": "2027-08-24T11:59:45.000Z",
+                        "unwrappedLongitude": 108.00000000002231,
+                        "speed": -2.57020947950824e-7
+                      },
+                      {
+                        "at": "2027-08-24T12:00:15.000Z",
+                        "unwrappedLongitude": 108.00000000003719,
+                        "speed": 4.283682465667015e-7
+                      }
+                    ],
+                    "id": "station-6",
+                    "directionBefore": "retrograde",
+                    "directionAfter": "direct"
+                  }
+                ],
+                "legs": [
+                  {
+                    "id": "leg-0",
+                    "start": {
+                      "at": "2026-01-01T12:00:00.000Z",
+                      "unwrappedLongitude": 97,
+                      "speed": 0
+                    },
+                    "end": {
+                      "at": "2026-04-11T12:00:00.000Z",
+                      "unwrappedLongitude": 102,
+                      "speed": 0
+                    },
+                    "direction": "direct",
+                    "startStationId": null,
+                    "endStationId": "station-1"
+                  },
+                  {
+                    "id": "leg-1",
+                    "start": {
+                      "at": "2026-04-11T12:00:00.000Z",
+                      "unwrappedLongitude": 102,
+                      "speed": 0
+                    },
+                    "end": {
+                      "at": "2026-07-20T12:00:00.000Z",
+                      "unwrappedLongitude": 99,
+                      "speed": 0
+                    },
+                    "direction": "retrograde",
+                    "startStationId": "station-1",
+                    "endStationId": "station-2"
+                  },
+                  {
+                    "id": "leg-2",
+                    "start": {
+                      "at": "2026-07-20T12:00:00.000Z",
+                      "unwrappedLongitude": 99,
+                      "speed": 0
+                    },
+                    "end": {
+                      "at": "2026-10-28T12:00:00.000Z",
+                      "unwrappedLongitude": 111,
+                      "speed": 0
+                    },
+                    "direction": "direct",
+                    "startStationId": "station-2",
+                    "endStationId": "station-3"
+                  },
+                  {
+                    "id": "leg-3",
+                    "start": {
+                      "at": "2026-10-28T12:00:00.000Z",
+                      "unwrappedLongitude": 111,
+                      "speed": 0
+                    },
+                    "end": {
+                      "at": "2027-02-05T12:00:00.000Z",
+                      "unwrappedLongitude": 99,
+                      "speed": 0
+                    },
+                    "direction": "retrograde",
+                    "startStationId": "station-3",
+                    "endStationId": "station-4"
+                  },
+                  {
+                    "id": "leg-4",
+                    "start": {
+                      "at": "2027-02-05T12:00:00.000Z",
+                      "unwrappedLongitude": 99,
+                      "speed": 0
+                    },
+                    "end": {
+                      "at": "2027-05-16T12:00:00.000Z",
+                      "unwrappedLongitude": 111,
+                      "speed": 0
+                    },
+                    "direction": "direct",
+                    "startStationId": "station-4",
+                    "endStationId": "station-5"
+                  },
+                  {
+                    "id": "leg-5",
+                    "start": {
+                      "at": "2027-05-16T12:00:00.000Z",
+                      "unwrappedLongitude": 111,
+                      "speed": 0
+                    },
+                    "end": {
+                      "at": "2027-08-24T12:00:00.000Z",
+                      "unwrappedLongitude": 108,
+                      "speed": 0
+                    },
+                    "direction": "retrograde",
+                    "startStationId": "station-5",
+                    "endStationId": "station-6"
+                  },
+                  {
+                    "id": "leg-6",
+                    "start": {
+                      "at": "2027-08-24T12:00:00.000Z",
+                      "unwrappedLongitude": 108,
+                      "speed": 0
+                    },
+                    "end": {
+                      "at": "2027-12-02T12:00:00.000Z",
+                      "unwrappedLongitude": 113,
+                      "speed": 9.61835346860895e-18
+                    },
+                    "direction": "direct",
+                    "startStationId": "station-6",
+                    "endStationId": null
+                  }
+                ],
+                "windows": [
+                  {
+                    "id": "window-native-private-1",
+                    "ingress": {
+                      "at": "2026-08-22T20:00:00.000Z",
+                      "unwrappedLongitude": 102,
+                      "speed": 0.16324194278107965,
+                      "bracket": [
+                        {
+                          "at": "2026-08-22T19:59:45.000Z",
+                          "unwrappedLongitude": 101.99997165942956,
+                          "speed": 0.1632414287367557
+                        },
+                        {
+                          "at": "2026-08-22T20:00:15.000Z",
+                          "unwrappedLongitude": 102.00002834065968,
+                          "speed": 0.16324245682054747
+                        }
+                      ]
+                    },
+                    "egress": {
+                      "at": "2026-09-25T04:00:00.000Z",
+                      "unwrappedLongitude": 108,
+                      "speed": 0.16324194278107954,
+                      "bracket": [
+                        {
+                          "at": "2026-09-25T03:59:45.000Z",
+                          "unwrappedLongitude": 107.99997165934032,
+                          "speed": 0.1632424568205474
+                        },
+                        {
+                          "at": "2026-09-25T04:00:15.000Z",
+                          "unwrappedLongitude": 108.00002834057045,
+                          "speed": 0.16324142873675562
+                        }
+                      ]
+                    },
+                    "contactIds": [
+                      "native-private-1"
+                    ]
+                  },
+                  {
+                    "id": "window-native-private-2",
+                    "ingress": {
+                      "at": "2026-11-30T20:00:00.000Z",
+                      "unwrappedLongitude": 108,
+                      "speed": -0.16324194278107956,
+                      "bracket": [
+                        {
+                          "at": "2026-11-30T19:59:45.000Z",
+                          "unwrappedLongitude": 108.00002834057045,
+                          "speed": -0.16324142873675562
+                        },
+                        {
+                          "at": "2026-11-30T20:00:15.000Z",
+                          "unwrappedLongitude": 107.99997165934032,
+                          "speed": -0.1632424568205474
+                        }
+                      ]
+                    },
+                    "egress": {
+                      "at": "2027-01-03T04:00:00.000Z",
+                      "unwrappedLongitude": 102,
+                      "speed": -0.16324194278107954,
+                      "bracket": [
+                        {
+                          "at": "2027-01-03T03:59:45.000Z",
+                          "unwrappedLongitude": 102.00002834065968,
+                          "speed": -0.1632424568205474
+                        },
+                        {
+                          "at": "2027-01-03T04:00:15.000Z",
+                          "unwrappedLongitude": 101.99997165942955,
+                          "speed": -0.16324142873675562
+                        }
+                      ]
+                    },
+                    "contactIds": [
+                      "native-private-2"
+                    ]
+                  },
+                  {
+                    "id": "window-native-private-3",
+                    "ingress": {
+                      "at": "2027-03-10T20:00:00.000Z",
+                      "unwrappedLongitude": 102,
+                      "speed": 0.16324194278107956,
+                      "bracket": [
+                        {
+                          "at": "2027-03-10T19:59:45.000Z",
+                          "unwrappedLongitude": 101.99997165942955,
+                          "speed": 0.16324142873675562
+                        },
+                        {
+                          "at": "2027-03-10T20:00:15.000Z",
+                          "unwrappedLongitude": 102.00002834065968,
+                          "speed": 0.1632424568205474
+                        }
+                      ]
+                    },
+                    "egress": {
+                      "at": "2027-04-13T04:00:00.000Z",
+                      "unwrappedLongitude": 108,
+                      "speed": 0.16324194278107954,
+                      "bracket": [
+                        {
+                          "at": "2027-04-13T03:59:45.000Z",
+                          "unwrappedLongitude": 107.99997165934032,
+                          "speed": 0.1632424568205474
+                        },
+                        {
+                          "at": "2027-04-13T04:00:15.000Z",
+                          "unwrappedLongitude": 108.00002834057045,
+                          "speed": 0.16324142873675562
+                        }
+                      ]
+                    },
+                    "contactIds": [
+                      "native-private-3"
+                    ]
+                  }
+                ],
+                "components": [
+                  {
+                    "id": "component-private-0",
+                    "contactIds": [
+                      "native-private-1",
+                      "native-private-2",
+                      "native-private-3"
+                    ],
+                    "leftClosureLegId": "leg-1",
+                    "rightClosureLegId": "leg-5",
+                    "complete": true,
+                    "reason": null
+                  }
+                ]
+              },
+              {
+                "offsetMinutes": 0,
+                "natalLongitude": 15,
+                "limit": null,
+                "contacts": [
+                  {
+                    "at": "2026-09-08T12:00:00.000Z",
+                    "unwrappedLongitude": 105,
+                    "speed": 0.18849555921538758,
+                    "bracket": [
+                      {
+                        "at": "2026-09-08T11:59:45.000Z",
+                        "unwrappedLongitude": 104.99996727507653,
+                        "speed": 0.18849555921258393
+                      },
+                      {
+                        "at": "2026-09-08T12:00:15.000Z",
+                        "unwrappedLongitude": 105.00003272492347,
+                        "speed": 0.18849555921258393
+                      }
+                    ],
+                    "id": "native-private-1",
+                    "residualDeg": 0,
+                    "direction": "direct",
+                    "branch": "plus",
+                    "targetTurn": 0,
+                    "legId": "leg-2",
+                    "windowId": "window-native-private-1"
+                  },
+                  {
+                    "at": "2026-12-17T12:00:00.000Z",
+                    "unwrappedLongitude": 105,
+                    "speed": -0.18849555921538758,
+                    "bracket": [
+                      {
+                        "at": "2026-12-17T11:59:45.000Z",
+                        "unwrappedLongitude": 105.00003272492347,
+                        "speed": -0.18849555921258393
+                      },
+                      {
+                        "at": "2026-12-17T12:00:15.000Z",
+                        "unwrappedLongitude": 104.99996727507653,
+                        "speed": -0.18849555921258393
+                      }
+                    ],
+                    "id": "native-private-2",
+                    "residualDeg": 0,
+                    "direction": "retrograde",
+                    "branch": "plus",
+                    "targetTurn": 0,
+                    "legId": "leg-3",
+                    "windowId": "window-native-private-2"
+                  },
+                  {
+                    "at": "2027-03-27T12:00:00.000Z",
+                    "unwrappedLongitude": 105,
+                    "speed": 0.18849555921538758,
+                    "bracket": [
+                      {
+                        "at": "2027-03-27T11:59:45.000Z",
+                        "unwrappedLongitude": 104.99996727507653,
+                        "speed": 0.18849555921258393
+                      },
+                      {
+                        "at": "2027-03-27T12:00:15.000Z",
+                        "unwrappedLongitude": 105.00003272492347,
+                        "speed": 0.18849555921258393
+                      }
+                    ],
+                    "id": "native-private-3",
+                    "residualDeg": 0,
+                    "direction": "direct",
+                    "branch": "plus",
+                    "targetTurn": 0,
+                    "legId": "leg-4",
+                    "windowId": "window-native-private-3"
+                  }
+                ],
+                "stations": [
+                  {
+                    "at": "2026-04-11T12:00:00.000Z",
+                    "unwrappedLongitude": 102,
+                    "speed": 0,
+                    "bracket": [
+                      {
+                        "at": "2026-04-11T11:59:45.000Z",
+                        "unwrappedLongitude": 101.99999999996281,
+                        "speed": 4.2836824658470674e-7
+                      },
+                      {
+                        "at": "2026-04-11T12:00:15.000Z",
+                        "unwrappedLongitude": 101.99999999997769,
+                        "speed": -2.570209479400209e-7
+                      }
+                    ],
+                    "id": "station-1",
+                    "directionBefore": "direct",
+                    "directionAfter": "retrograde"
+                  },
+                  {
+                    "at": "2026-07-20T12:00:00.000Z",
+                    "unwrappedLongitude": 99,
+                    "speed": 0,
+                    "bracket": [
+                      {
+                        "at": "2026-07-20T11:59:45.000Z",
+                        "unwrappedLongitude": 99.00000000002231,
+                        "speed": -2.57020947950824e-7
+                      },
+                      {
+                        "at": "2026-07-20T12:00:15.000Z",
+                        "unwrappedLongitude": 99.00000000008924,
+                        "speed": 0.0000010280837917600837
+                      }
+                    ],
+                    "id": "station-2",
+                    "directionBefore": "retrograde",
+                    "directionAfter": "direct"
+                  },
+                  {
+                    "at": "2026-10-28T12:00:00.000Z",
+                    "unwrappedLongitude": 111,
+                    "speed": 0,
+                    "bracket": [
+                      {
+                        "at": "2026-10-28T11:59:45.000Z",
+                        "unwrappedLongitude": 110.99999999991076,
+                        "speed": 0.000001028083791803296
+                      },
+                      {
+                        "at": "2026-10-28T12:00:15.000Z",
+                        "unwrappedLongitude": 110.99999999991076,
+                        "speed": -0.0000010280837917600837
+                      }
+                    ],
+                    "id": "station-3",
+                    "directionBefore": "direct",
+                    "directionAfter": "retrograde"
+                  },
+                  {
+                    "at": "2027-02-05T12:00:00.000Z",
+                    "unwrappedLongitude": 99,
+                    "speed": 0,
+                    "bracket": [
+                      {
+                        "at": "2027-02-05T11:59:45.000Z",
+                        "unwrappedLongitude": 99.00000000008924,
+                        "speed": -0.000001028083791803296
+                      },
+                      {
+                        "at": "2027-02-05T12:00:15.000Z",
+                        "unwrappedLongitude": 99.00000000008924,
+                        "speed": 0.0000010280837917600837
+                      }
+                    ],
+                    "id": "station-4",
+                    "directionBefore": "retrograde",
+                    "directionAfter": "direct"
+                  },
+                  {
+                    "at": "2027-05-16T12:00:00.000Z",
+                    "unwrappedLongitude": 111,
+                    "speed": 0,
+                    "bracket": [
+                      {
+                        "at": "2027-05-16T11:59:45.000Z",
+                        "unwrappedLongitude": 110.99999999991076,
+                        "speed": 0.000001028083791803296
+                      },
+                      {
+                        "at": "2027-05-16T12:00:15.000Z",
+                        "unwrappedLongitude": 110.99999999997769,
+                        "speed": -2.570209479400209e-7
+                      }
+                    ],
+                    "id": "station-5",
+                    "directionBefore": "direct",
+                    "directionAfter": "retrograde"
+                  },
+                  {
+                    "at": "2027-08-24T12:00:00.000Z",
+                    "unwrappedLongitude": 108,
+                    "speed": 0,
+                    "bracket": [
+                      {
+                        "at": "2027-08-24T11:59:45.000Z",
+                        "unwrappedLongitude": 108.00000000002231,
+                        "speed": -2.57020947950824e-7
+                      },
+                      {
+                        "at": "2027-08-24T12:00:15.000Z",
+                        "unwrappedLongitude": 108.00000000003719,
+                        "speed": 4.283682465667015e-7
+                      }
+                    ],
+                    "id": "station-6",
+                    "directionBefore": "retrograde",
+                    "directionAfter": "direct"
+                  }
+                ],
+                "legs": [
+                  {
+                    "id": "leg-0",
+                    "start": {
+                      "at": "2026-01-01T12:00:00.000Z",
+                      "unwrappedLongitude": 97,
+                      "speed": 0
+                    },
+                    "end": {
+                      "at": "2026-04-11T12:00:00.000Z",
+                      "unwrappedLongitude": 102,
+                      "speed": 0
+                    },
+                    "direction": "direct",
+                    "startStationId": null,
+                    "endStationId": "station-1"
+                  },
+                  {
+                    "id": "leg-1",
+                    "start": {
+                      "at": "2026-04-11T12:00:00.000Z",
+                      "unwrappedLongitude": 102,
+                      "speed": 0
+                    },
+                    "end": {
+                      "at": "2026-07-20T12:00:00.000Z",
+                      "unwrappedLongitude": 99,
+                      "speed": 0
+                    },
+                    "direction": "retrograde",
+                    "startStationId": "station-1",
+                    "endStationId": "station-2"
+                  },
+                  {
+                    "id": "leg-2",
+                    "start": {
+                      "at": "2026-07-20T12:00:00.000Z",
+                      "unwrappedLongitude": 99,
+                      "speed": 0
+                    },
+                    "end": {
+                      "at": "2026-10-28T12:00:00.000Z",
+                      "unwrappedLongitude": 111,
+                      "speed": 0
+                    },
+                    "direction": "direct",
+                    "startStationId": "station-2",
+                    "endStationId": "station-3"
+                  },
+                  {
+                    "id": "leg-3",
+                    "start": {
+                      "at": "2026-10-28T12:00:00.000Z",
+                      "unwrappedLongitude": 111,
+                      "speed": 0
+                    },
+                    "end": {
+                      "at": "2027-02-05T12:00:00.000Z",
+                      "unwrappedLongitude": 99,
+                      "speed": 0
+                    },
+                    "direction": "retrograde",
+                    "startStationId": "station-3",
+                    "endStationId": "station-4"
+                  },
+                  {
+                    "id": "leg-4",
+                    "start": {
+                      "at": "2027-02-05T12:00:00.000Z",
+                      "unwrappedLongitude": 99,
+                      "speed": 0
+                    },
+                    "end": {
+                      "at": "2027-05-16T12:00:00.000Z",
+                      "unwrappedLongitude": 111,
+                      "speed": 0
+                    },
+                    "direction": "direct",
+                    "startStationId": "station-4",
+                    "endStationId": "station-5"
+                  },
+                  {
+                    "id": "leg-5",
+                    "start": {
+                      "at": "2027-05-16T12:00:00.000Z",
+                      "unwrappedLongitude": 111,
+                      "speed": 0
+                    },
+                    "end": {
+                      "at": "2027-08-24T12:00:00.000Z",
+                      "unwrappedLongitude": 108,
+                      "speed": 0
+                    },
+                    "direction": "retrograde",
+                    "startStationId": "station-5",
+                    "endStationId": "station-6"
+                  },
+                  {
+                    "id": "leg-6",
+                    "start": {
+                      "at": "2027-08-24T12:00:00.000Z",
+                      "unwrappedLongitude": 108,
+                      "speed": 0
+                    },
+                    "end": {
+                      "at": "2027-12-02T12:00:00.000Z",
+                      "unwrappedLongitude": 113,
+                      "speed": 9.61835346860895e-18
+                    },
+                    "direction": "direct",
+                    "startStationId": "station-6",
+                    "endStationId": null
+                  }
+                ],
+                "windows": [
+                  {
+                    "id": "window-native-private-1",
+                    "ingress": {
+                      "at": "2026-08-22T20:00:00.000Z",
+                      "unwrappedLongitude": 102,
+                      "speed": 0.16324194278107965,
+                      "bracket": [
+                        {
+                          "at": "2026-08-22T19:59:45.000Z",
+                          "unwrappedLongitude": 101.99997165942956,
+                          "speed": 0.1632414287367557
+                        },
+                        {
+                          "at": "2026-08-22T20:00:15.000Z",
+                          "unwrappedLongitude": 102.00002834065968,
+                          "speed": 0.16324245682054747
+                        }
+                      ]
+                    },
+                    "egress": {
+                      "at": "2026-09-25T04:00:00.000Z",
+                      "unwrappedLongitude": 108,
+                      "speed": 0.16324194278107954,
+                      "bracket": [
+                        {
+                          "at": "2026-09-25T03:59:45.000Z",
+                          "unwrappedLongitude": 107.99997165934032,
+                          "speed": 0.1632424568205474
+                        },
+                        {
+                          "at": "2026-09-25T04:00:15.000Z",
+                          "unwrappedLongitude": 108.00002834057045,
+                          "speed": 0.16324142873675562
+                        }
+                      ]
+                    },
+                    "contactIds": [
+                      "native-private-1"
+                    ]
+                  },
+                  {
+                    "id": "window-native-private-2",
+                    "ingress": {
+                      "at": "2026-11-30T20:00:00.000Z",
+                      "unwrappedLongitude": 108,
+                      "speed": -0.16324194278107956,
+                      "bracket": [
+                        {
+                          "at": "2026-11-30T19:59:45.000Z",
+                          "unwrappedLongitude": 108.00002834057045,
+                          "speed": -0.16324142873675562
+                        },
+                        {
+                          "at": "2026-11-30T20:00:15.000Z",
+                          "unwrappedLongitude": 107.99997165934032,
+                          "speed": -0.1632424568205474
+                        }
+                      ]
+                    },
+                    "egress": {
+                      "at": "2027-01-03T04:00:00.000Z",
+                      "unwrappedLongitude": 102,
+                      "speed": -0.16324194278107954,
+                      "bracket": [
+                        {
+                          "at": "2027-01-03T03:59:45.000Z",
+                          "unwrappedLongitude": 102.00002834065968,
+                          "speed": -0.1632424568205474
+                        },
+                        {
+                          "at": "2027-01-03T04:00:15.000Z",
+                          "unwrappedLongitude": 101.99997165942955,
+                          "speed": -0.16324142873675562
+                        }
+                      ]
+                    },
+                    "contactIds": [
+                      "native-private-2"
+                    ]
+                  },
+                  {
+                    "id": "window-native-private-3",
+                    "ingress": {
+                      "at": "2027-03-10T20:00:00.000Z",
+                      "unwrappedLongitude": 102,
+                      "speed": 0.16324194278107956,
+                      "bracket": [
+                        {
+                          "at": "2027-03-10T19:59:45.000Z",
+                          "unwrappedLongitude": 101.99997165942955,
+                          "speed": 0.16324142873675562
+                        },
+                        {
+                          "at": "2027-03-10T20:00:15.000Z",
+                          "unwrappedLongitude": 102.00002834065968,
+                          "speed": 0.1632424568205474
+                        }
+                      ]
+                    },
+                    "egress": {
+                      "at": "2027-04-13T04:00:00.000Z",
+                      "unwrappedLongitude": 108,
+                      "speed": 0.16324194278107954,
+                      "bracket": [
+                        {
+                          "at": "2027-04-13T03:59:45.000Z",
+                          "unwrappedLongitude": 107.99997165934032,
+                          "speed": 0.1632424568205474
+                        },
+                        {
+                          "at": "2027-04-13T04:00:15.000Z",
+                          "unwrappedLongitude": 108.00002834057045,
+                          "speed": 0.16324142873675562
+                        }
+                      ]
+                    },
+                    "contactIds": [
+                      "native-private-3"
+                    ]
+                  }
+                ],
+                "components": [
+                  {
+                    "id": "component-private-0",
+                    "contactIds": [
+                      "native-private-1",
+                      "native-private-2",
+                      "native-private-3"
+                    ],
+                    "leftClosureLegId": "leg-1",
+                    "rightClosureLegId": "leg-5",
+                    "complete": true,
+                    "reason": null
+                  }
+                ]
+              },
+              {
+                "offsetMinutes": 2,
+                "natalLongitude": 15,
+                "limit": null,
+                "contacts": [
+                  {
+                    "at": "2026-09-08T12:00:00.000Z",
+                    "unwrappedLongitude": 105,
+                    "speed": 0.18849555921538758,
+                    "bracket": [
+                      {
+                        "at": "2026-09-08T11:59:45.000Z",
+                        "unwrappedLongitude": 104.99996727507653,
+                        "speed": 0.18849555921258393
+                      },
+                      {
+                        "at": "2026-09-08T12:00:15.000Z",
+                        "unwrappedLongitude": 105.00003272492347,
+                        "speed": 0.18849555921258393
+                      }
+                    ],
+                    "id": "native-private-1",
+                    "residualDeg": 0,
+                    "direction": "direct",
+                    "branch": "plus",
+                    "targetTurn": 0,
+                    "legId": "leg-2",
+                    "windowId": "window-native-private-1"
+                  },
+                  {
+                    "at": "2026-12-17T12:00:00.000Z",
+                    "unwrappedLongitude": 105,
+                    "speed": -0.18849555921538758,
+                    "bracket": [
+                      {
+                        "at": "2026-12-17T11:59:45.000Z",
+                        "unwrappedLongitude": 105.00003272492347,
+                        "speed": -0.18849555921258393
+                      },
+                      {
+                        "at": "2026-12-17T12:00:15.000Z",
+                        "unwrappedLongitude": 104.99996727507653,
+                        "speed": -0.18849555921258393
+                      }
+                    ],
+                    "id": "native-private-2",
+                    "residualDeg": 0,
+                    "direction": "retrograde",
+                    "branch": "plus",
+                    "targetTurn": 0,
+                    "legId": "leg-3",
+                    "windowId": "window-native-private-2"
+                  },
+                  {
+                    "at": "2027-03-27T12:00:00.000Z",
+                    "unwrappedLongitude": 105,
+                    "speed": 0.18849555921538758,
+                    "bracket": [
+                      {
+                        "at": "2027-03-27T11:59:45.000Z",
+                        "unwrappedLongitude": 104.99996727507653,
+                        "speed": 0.18849555921258393
+                      },
+                      {
+                        "at": "2027-03-27T12:00:15.000Z",
+                        "unwrappedLongitude": 105.00003272492347,
+                        "speed": 0.18849555921258393
+                      }
+                    ],
+                    "id": "native-private-3",
+                    "residualDeg": 0,
+                    "direction": "direct",
+                    "branch": "plus",
+                    "targetTurn": 0,
+                    "legId": "leg-4",
+                    "windowId": "window-native-private-3"
+                  }
+                ],
+                "stations": [
+                  {
+                    "at": "2026-04-11T12:00:00.000Z",
+                    "unwrappedLongitude": 102,
+                    "speed": 0,
+                    "bracket": [
+                      {
+                        "at": "2026-04-11T11:59:45.000Z",
+                        "unwrappedLongitude": 101.99999999996281,
+                        "speed": 4.2836824658470674e-7
+                      },
+                      {
+                        "at": "2026-04-11T12:00:15.000Z",
+                        "unwrappedLongitude": 101.99999999997769,
+                        "speed": -2.570209479400209e-7
+                      }
+                    ],
+                    "id": "station-1",
+                    "directionBefore": "direct",
+                    "directionAfter": "retrograde"
+                  },
+                  {
+                    "at": "2026-07-20T12:00:00.000Z",
+                    "unwrappedLongitude": 99,
+                    "speed": 0,
+                    "bracket": [
+                      {
+                        "at": "2026-07-20T11:59:45.000Z",
+                        "unwrappedLongitude": 99.00000000002231,
+                        "speed": -2.57020947950824e-7
+                      },
+                      {
+                        "at": "2026-07-20T12:00:15.000Z",
+                        "unwrappedLongitude": 99.00000000008924,
+                        "speed": 0.0000010280837917600837
+                      }
+                    ],
+                    "id": "station-2",
+                    "directionBefore": "retrograde",
+                    "directionAfter": "direct"
+                  },
+                  {
+                    "at": "2026-10-28T12:00:00.000Z",
+                    "unwrappedLongitude": 111,
+                    "speed": 0,
+                    "bracket": [
+                      {
+                        "at": "2026-10-28T11:59:45.000Z",
+                        "unwrappedLongitude": 110.99999999991076,
+                        "speed": 0.000001028083791803296
+                      },
+                      {
+                        "at": "2026-10-28T12:00:15.000Z",
+                        "unwrappedLongitude": 110.99999999991076,
+                        "speed": -0.0000010280837917600837
+                      }
+                    ],
+                    "id": "station-3",
+                    "directionBefore": "direct",
+                    "directionAfter": "retrograde"
+                  },
+                  {
+                    "at": "2027-02-05T12:00:00.000Z",
+                    "unwrappedLongitude": 99,
+                    "speed": 0,
+                    "bracket": [
+                      {
+                        "at": "2027-02-05T11:59:45.000Z",
+                        "unwrappedLongitude": 99.00000000008924,
+                        "speed": -0.000001028083791803296
+                      },
+                      {
+                        "at": "2027-02-05T12:00:15.000Z",
+                        "unwrappedLongitude": 99.00000000008924,
+                        "speed": 0.0000010280837917600837
+                      }
+                    ],
+                    "id": "station-4",
+                    "directionBefore": "retrograde",
+                    "directionAfter": "direct"
+                  },
+                  {
+                    "at": "2027-05-16T12:00:00.000Z",
+                    "unwrappedLongitude": 111,
+                    "speed": 0,
+                    "bracket": [
+                      {
+                        "at": "2027-05-16T11:59:45.000Z",
+                        "unwrappedLongitude": 110.99999999991076,
+                        "speed": 0.000001028083791803296
+                      },
+                      {
+                        "at": "2027-05-16T12:00:15.000Z",
+                        "unwrappedLongitude": 110.99999999997769,
+                        "speed": -2.570209479400209e-7
+                      }
+                    ],
+                    "id": "station-5",
+                    "directionBefore": "direct",
+                    "directionAfter": "retrograde"
+                  },
+                  {
+                    "at": "2027-08-24T12:00:00.000Z",
+                    "unwrappedLongitude": 108,
+                    "speed": 0,
+                    "bracket": [
+                      {
+                        "at": "2027-08-24T11:59:45.000Z",
+                        "unwrappedLongitude": 108.00000000002231,
+                        "speed": -2.57020947950824e-7
+                      },
+                      {
+                        "at": "2027-08-24T12:00:15.000Z",
+                        "unwrappedLongitude": 108.00000000003719,
+                        "speed": 4.283682465667015e-7
+                      }
+                    ],
+                    "id": "station-6",
+                    "directionBefore": "retrograde",
+                    "directionAfter": "direct"
+                  }
+                ],
+                "legs": [
+                  {
+                    "id": "leg-0",
+                    "start": {
+                      "at": "2026-01-01T12:00:00.000Z",
+                      "unwrappedLongitude": 97,
+                      "speed": 0
+                    },
+                    "end": {
+                      "at": "2026-04-11T12:00:00.000Z",
+                      "unwrappedLongitude": 102,
+                      "speed": 0
+                    },
+                    "direction": "direct",
+                    "startStationId": null,
+                    "endStationId": "station-1"
+                  },
+                  {
+                    "id": "leg-1",
+                    "start": {
+                      "at": "2026-04-11T12:00:00.000Z",
+                      "unwrappedLongitude": 102,
+                      "speed": 0
+                    },
+                    "end": {
+                      "at": "2026-07-20T12:00:00.000Z",
+                      "unwrappedLongitude": 99,
+                      "speed": 0
+                    },
+                    "direction": "retrograde",
+                    "startStationId": "station-1",
+                    "endStationId": "station-2"
+                  },
+                  {
+                    "id": "leg-2",
+                    "start": {
+                      "at": "2026-07-20T12:00:00.000Z",
+                      "unwrappedLongitude": 99,
+                      "speed": 0
+                    },
+                    "end": {
+                      "at": "2026-10-28T12:00:00.000Z",
+                      "unwrappedLongitude": 111,
+                      "speed": 0
+                    },
+                    "direction": "direct",
+                    "startStationId": "station-2",
+                    "endStationId": "station-3"
+                  },
+                  {
+                    "id": "leg-3",
+                    "start": {
+                      "at": "2026-10-28T12:00:00.000Z",
+                      "unwrappedLongitude": 111,
+                      "speed": 0
+                    },
+                    "end": {
+                      "at": "2027-02-05T12:00:00.000Z",
+                      "unwrappedLongitude": 99,
+                      "speed": 0
+                    },
+                    "direction": "retrograde",
+                    "startStationId": "station-3",
+                    "endStationId": "station-4"
+                  },
+                  {
+                    "id": "leg-4",
+                    "start": {
+                      "at": "2027-02-05T12:00:00.000Z",
+                      "unwrappedLongitude": 99,
+                      "speed": 0
+                    },
+                    "end": {
+                      "at": "2027-05-16T12:00:00.000Z",
+                      "unwrappedLongitude": 111,
+                      "speed": 0
+                    },
+                    "direction": "direct",
+                    "startStationId": "station-4",
+                    "endStationId": "station-5"
+                  },
+                  {
+                    "id": "leg-5",
+                    "start": {
+                      "at": "2027-05-16T12:00:00.000Z",
+                      "unwrappedLongitude": 111,
+                      "speed": 0
+                    },
+                    "end": {
+                      "at": "2027-08-24T12:00:00.000Z",
+                      "unwrappedLongitude": 108,
+                      "speed": 0
+                    },
+                    "direction": "retrograde",
+                    "startStationId": "station-5",
+                    "endStationId": "station-6"
+                  },
+                  {
+                    "id": "leg-6",
+                    "start": {
+                      "at": "2027-08-24T12:00:00.000Z",
+                      "unwrappedLongitude": 108,
+                      "speed": 0
+                    },
+                    "end": {
+                      "at": "2027-12-02T12:00:00.000Z",
+                      "unwrappedLongitude": 113,
+                      "speed": 9.61835346860895e-18
+                    },
+                    "direction": "direct",
+                    "startStationId": "station-6",
+                    "endStationId": null
+                  }
+                ],
+                "windows": [
+                  {
+                    "id": "window-native-private-1",
+                    "ingress": {
+                      "at": "2026-08-22T20:00:00.000Z",
+                      "unwrappedLongitude": 102,
+                      "speed": 0.16324194278107965,
+                      "bracket": [
+                        {
+                          "at": "2026-08-22T19:59:45.000Z",
+                          "unwrappedLongitude": 101.99997165942956,
+                          "speed": 0.1632414287367557
+                        },
+                        {
+                          "at": "2026-08-22T20:00:15.000Z",
+                          "unwrappedLongitude": 102.00002834065968,
+                          "speed": 0.16324245682054747
+                        }
+                      ]
+                    },
+                    "egress": {
+                      "at": "2026-09-25T04:00:00.000Z",
+                      "unwrappedLongitude": 108,
+                      "speed": 0.16324194278107954,
+                      "bracket": [
+                        {
+                          "at": "2026-09-25T03:59:45.000Z",
+                          "unwrappedLongitude": 107.99997165934032,
+                          "speed": 0.1632424568205474
+                        },
+                        {
+                          "at": "2026-09-25T04:00:15.000Z",
+                          "unwrappedLongitude": 108.00002834057045,
+                          "speed": 0.16324142873675562
+                        }
+                      ]
+                    },
+                    "contactIds": [
+                      "native-private-1"
+                    ]
+                  },
+                  {
+                    "id": "window-native-private-2",
+                    "ingress": {
+                      "at": "2026-11-30T20:00:00.000Z",
+                      "unwrappedLongitude": 108,
+                      "speed": -0.16324194278107956,
+                      "bracket": [
+                        {
+                          "at": "2026-11-30T19:59:45.000Z",
+                          "unwrappedLongitude": 108.00002834057045,
+                          "speed": -0.16324142873675562
+                        },
+                        {
+                          "at": "2026-11-30T20:00:15.000Z",
+                          "unwrappedLongitude": 107.99997165934032,
+                          "speed": -0.1632424568205474
+                        }
+                      ]
+                    },
+                    "egress": {
+                      "at": "2027-01-03T04:00:00.000Z",
+                      "unwrappedLongitude": 102,
+                      "speed": -0.16324194278107954,
+                      "bracket": [
+                        {
+                          "at": "2027-01-03T03:59:45.000Z",
+                          "unwrappedLongitude": 102.00002834065968,
+                          "speed": -0.1632424568205474
+                        },
+                        {
+                          "at": "2027-01-03T04:00:15.000Z",
+                          "unwrappedLongitude": 101.99997165942955,
+                          "speed": -0.16324142873675562
+                        }
+                      ]
+                    },
+                    "contactIds": [
+                      "native-private-2"
+                    ]
+                  },
+                  {
+                    "id": "window-native-private-3",
+                    "ingress": {
+                      "at": "2027-03-10T20:00:00.000Z",
+                      "unwrappedLongitude": 102,
+                      "speed": 0.16324194278107956,
+                      "bracket": [
+                        {
+                          "at": "2027-03-10T19:59:45.000Z",
+                          "unwrappedLongitude": 101.99997165942955,
+                          "speed": 0.16324142873675562
+                        },
+                        {
+                          "at": "2027-03-10T20:00:15.000Z",
+                          "unwrappedLongitude": 102.00002834065968,
+                          "speed": 0.1632424568205474
+                        }
+                      ]
+                    },
+                    "egress": {
+                      "at": "2027-04-13T04:00:00.000Z",
+                      "unwrappedLongitude": 108,
+                      "speed": 0.16324194278107954,
+                      "bracket": [
+                        {
+                          "at": "2027-04-13T03:59:45.000Z",
+                          "unwrappedLongitude": 107.99997165934032,
+                          "speed": 0.1632424568205474
+                        },
+                        {
+                          "at": "2027-04-13T04:00:15.000Z",
+                          "unwrappedLongitude": 108.00002834057045,
+                          "speed": 0.16324142873675562
+                        }
+                      ]
+                    },
+                    "contactIds": [
+                      "native-private-3"
+                    ]
+                  }
+                ],
+                "components": [
+                  {
+                    "id": "component-private-0",
+                    "contactIds": [
+                      "native-private-1",
+                      "native-private-2",
+                      "native-private-3"
+                    ],
+                    "leftClosureLegId": "leg-1",
+                    "rightClosureLegId": "leg-5",
+                    "complete": true,
+                    "reason": null
+                  }
+                ]
+              }
+            ]
+          },
+          "anchor": {
+            "version": "transit-anchor-1",
+            "chartFingerprint": "analytic-private-fingerprint",
+            "accuracy": "exact",
+            "status": "screened",
+            "sampleOffsetsMinutes": [
+              -2,
+              0,
+              2
+            ],
+            "sources": [
+              {
+                "engine": "swiss-ephemeris",
+                "engineVersion": "synthetic-1",
+                "dataId": "analytic-cosine-not-swiss",
+                "frame": "tropical-apparent-geocentric-true-equinox-of-date",
+                "timeScale": "UT",
+                "returnedFlags": 258
+              },
+              {
+                "engine": "swiss-ephemeris",
+                "engineVersion": "synthetic-1",
+                "dataId": "analytic-cosine-not-swiss",
+                "frame": "tropical-apparent-geocentric-true-equinox-of-date",
+                "timeScale": "UT",
+                "returnedFlags": 258
+              },
+              {
+                "engine": "swiss-ephemeris",
+                "engineVersion": "synthetic-1",
+                "dataId": "analytic-cosine-not-swiss",
+                "frame": "tropical-apparent-geocentric-true-equinox-of-date",
+                "timeScale": "UT",
+                "returnedFlags": 258
+              }
+            ],
+            "anchors": [
+              {
+                "target": "sun",
+                "longitudes": [
+                  15,
+                  15,
+                  15
+                ]
+              }
+            ]
+          },
+          "anchorFingerprint": "analytic-private-fingerprint",
+          "cycleKey": "saturn_square_sun",
+          "componentIds": [
+            "component-private-0",
+            "component-private-0",
+            "component-private-0"
+          ],
+          "episodeIdentity": "[\"analytic-test-only\",\"transit-episode-1\",\"analytic-private-fingerprint\",\"sun\",[15,15,15],\"plus\",0,\"component-private-0\",\"2026-09-08T12:00:00.000Z\",\"2027-03-27T12:00:00.000Z\"]",
+          "referenceAt": "2026-12-17T12:00:00.000Z",
+          "timezone": "UTC",
+          "day": "2026-12-17",
+          "passTotal": 3,
+          "passIndex": 2,
+          "chapter": "return",
+          "approvedDates": [
+            {
+              "eventId": "native-private-1",
+              "kind": "exact-contact",
+              "civilDay": "2026-09-08",
+              "monthYear": "2026-09"
+            },
+            {
+              "eventId": "native-private-2",
+              "kind": "exact-contact",
+              "civilDay": "2026-12-17",
+              "monthYear": "2026-12"
+            },
+            {
+              "eventId": "native-private-3",
+              "kind": "exact-contact",
+              "civilDay": "2027-03-27",
+              "monthYear": "2027-03"
+            }
+          ],
+          "contactRanges": [
+            {
+              "eventId": "native-private-1",
+              "centralAt": "2026-09-08T12:00:00.000Z",
+              "earliestAt": "2026-09-08T12:00:00.000Z",
+              "latestAt": "2026-09-08T12:00:00.000Z",
+              "civilDays": [
+                "2026-09-08",
+                "2026-09-08",
+                "2026-09-08"
+              ]
+            },
+            {
+              "eventId": "native-private-2",
+              "centralAt": "2026-12-17T12:00:00.000Z",
+              "earliestAt": "2026-12-17T12:00:00.000Z",
+              "latestAt": "2026-12-17T12:00:00.000Z",
+              "civilDays": [
+                "2026-12-17",
+                "2026-12-17",
+                "2026-12-17"
+              ]
+            },
+            {
+              "eventId": "native-private-3",
+              "centralAt": "2027-03-27T12:00:00.000Z",
+              "earliestAt": "2027-03-27T12:00:00.000Z",
+              "latestAt": "2027-03-27T12:00:00.000Z",
+              "civilDays": [
+                "2027-03-27",
+                "2027-03-27",
+                "2027-03-27"
+              ]
+            }
+          ],
+          "timingOverlay": {
+            "cycleKey": "saturn_square_sun",
+            "phase": "exact",
+            "centralExactAt": "2026-12-17T12:00:00.000Z",
+            "qualifiedExactDay": "2026-12-17",
+            "daysToExact": 0,
+            "centralIngressAt": "2026-11-30T20:00:00.000Z",
+            "centralEgressAt": "2027-01-03T04:00:00.000Z",
+            "windowPosition": 0.5
+          }
+        }
+      },
+      "request": {
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "messages": [
+          {
+            "role": "system",
+            "content": "You write for an astrology app that shows its work. Calculated references C1–C3 supply astronomical measurements. Published interpretations I1–I3 and synthesis S1 supply reviewed editorial possibilities, not measured psychological properties or confirmed personal states. Keep each claim at the strength its source gives it: a possibility stays a possibility, and added frequency, necessity or exclusion needs its own supplied support. Preserve the direction of every condition and causal claim. A condition for one statement does not become the cause of a neighboring statement, and two supported ideas do not authorize a causal bridge between them. Develop only the supplied published meaning and relationship. Every paragraph must cite the supplied IDs it rests on; synthesis citations must include all their parents. Editorial IDs cannot stand in for a directly cited calculation when giving technical details. Never add astronomical or biographical facts, invent a joint relationship, predict, instruct, promise an outcome, or mention health, medication, diagnosis, money, investing, pregnancy, divorce or death. Use calm, plain, specific prose and conditional everyday comparisons. No zodiac cliches, mysticism, exclamation marks or second-hand claims about other people. Respect all supplied suppression limits. N1 is one conditional symbolic interpretation, not known temperament, a nervous system, attachment style, diagnosis or biography. Apply its useful practical distinction inside a specific scene from the primary meaning in paragraph 1 or 2, citing N1, C1 and I1 together. The same task, obligation, exchange or choice must carry both meanings; do not place a complete N1 summary beside I1 and call that integration. Preserve N1's condition as its own possibility. A scene supplied by I1 does not cause that condition: mentally tracking a task does not make an obligation feel narrow merely because both ideas are supplied. Use the scene as the task being considered, then develop N1's conditional distinction without adding a mechanism. A transition such as 'in this context' supplies no missing relationship. Do not add a personality section or verbalize raw natal origins. N1 may offer a way to consider the scene; it does not prove that a boundary is needed, a preference has changed or a particular response will help."
+          },
+          {
+            "role": "user",
+            "content": "Tone: plain. Direct and observant. Use familiar verbs and one concrete distinction at a time. Sound matter-of-fact, with quiet confidence and no ceremonial lead-in or embellishment.\nStyle example only — not a factual source: \"A point can be clear before the words for it are. Another sentence may add useful detail, or simply say the same thing again.\"\nDo not copy the example or borrow its subject unless supported by the supplied interpretation. Its purpose is sentence rhythm and register; example content never supplies a reading fact.\nDepth: standard. Aim for about 90–170 words. Keep the everyday meaning in the foreground; the evidence panel already shows the calculation. Planet names, orb values and dates are optional, and should not lead the opening.\nOpen from a specific contrast or concrete detail in I1, in ordinary language. Do not use its first sentence as an automatic lead. A published sentence can be retained when it says the point most clearly; otherwise compose the opening from another supported detail rather than swapping adjectives for decorative variety.\nWrite two to four paragraphs of one to four complete sentences each; usually two or three paragraphs are enough. Each paragraph should add a distinct thought. Do not pad to meet the suggested word range.\nUse domain, phase or timing copy only when it adds a distinct, useful thought. Calendar phase describes the calculated contact, not the reader's feelings. Do not add a phase paragraph merely to say that something is building, settling or mostly anticipation. End when the meaningful contrast is complete, without a recap or stock bridge such as 'most legible'.\nKeep everyday scenes conditional and supported by the supplied copy. A scene offers a comparison; it does not establish that an event happened, a preference changed or a moment of hesitation made something clear. Use one natural qualification when needed, rather than stacking may, might and could.\nPreserve the modality of each supplied statement. If a source says something can happen or can feel a certain way, write that it can, not that it does, often does or tends to. Words that add frequency or necessity, such as often, usually, always, must, needs to or relies on, belong only where a supplied statement says so; keep them when it does.\nBefore returning the draft, check each reused claim for a dropped can, may or might. Keep the qualification attached to its own verb: 'can offer' must not become 'offers', even after a conditional opening or beside another qualified claim. This is a grammar example, not a reading fact. Preserve supported categorical sentences as supplied; do not add uncertainty merely because a neighboring sentence is conditional.\nKeep the complete condition attached to the exact claim it qualifies. If reinforcement depends on a well-chosen aim, retain that condition on reinforcement; do not say the aim causes low friction, or low friction enables reinforcement. If ease is conditional on action lining up with what matters, do not shorten it to unconditional flowing energy. These are logic examples, never additional reading facts.\nDo not turn co-occurrence into causation: returned attention does not therefore sharpen curiosity, and a practical distinction does not therefore show that a routine needs clearer boundaries. Avoid unsupported connectors such as 'allowing', 'giving you', 'so' or 'that shows' even when both adjacent ideas are separately supplied. Retain such a link only if its direction and qualification are explicit in the source.\nA contrast may set two supported options side by side, but do not rule out an alternative that no fact mentions, for example by opening with 'rather than' and an unsupplied change. Role, capacity and routine scenes stay possibilities: do not turn them into the reader's history, such as obligations that have grown or a relationship that has changed.\nTreat the interpretation as a frame for reflection, not a force that causes behavior or a confirmed personal state. Prefer 'offers a way to read' or 'frames' to claims that a planet makes the reader feel, act or recover. Do not invent a psychological interpretation for a supporting cycle that has no supplied curated meaning.\nFacts:\nPublished relationship of the strongest two contacts:\nS1: Published tension synthesis square:saturn:sun_tension_trine:jupiter:mars (parents: C1, I1, C2, I2): Giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.\nCurated meaning of the strongest cycle (C1):\nI1: Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.\nConditional interpretive lens for the primary meaning:\nN1: Published natal lens, an interpretive possibility: Following more than one line of curiosity can help a direction take shape. If several possible projects compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages.\nSeparately published supporting meanings:\nI2: Published interpretation trine:jupiter:mars: Enthusiasm and practical initiative reinforce one another when an aim is well chosen. Jupiter's trine to Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening.\nOptional framing for that same cycle; cite only what you use:\nD1: Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.\nP1: Published phase wording: If a demand feels immediate, start with the choice you can describe clearly.\nT1: Timing: the calculated exact contact falls on 2026-12-17. This describes the current connected window.\nCalculated references and limits; use these to check any technical claims:\nC1: transiting saturn square natal sun. Current orb at the reading's calculation time: 0.00 degrees. phase exact. domain identity. Calculated exact date: 2026-12-17.\nC2: transiting jupiter trine natal mars. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain identity. Calculated exact date: 2026-12-19.\nA1: This is the second of three calculated contacts; the first exact contact falls in September 2026.\nP2: Published transit chapter: If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.\nE1: Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0. Primary event timing uses source-qualified Swiss Ephemeris.\nU1: recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)\nRewrite only the astronomical body of today's reading, using the supplied published interpretation, domain and phase wording.\nKeep each paragraph under 200 words and the whole body under 700 words.\nThe first paragraph must concern the strongest eligible cycle and cite C1 and I1. D1, P1 and T1 are optional: cite them in any paragraph that uses their domain, phase or timing claims, and leave them out when unused.\nDevelop the supplied published relationship in paragraph 1 or 2. Present I1 and its contact first, then I2 and its contact, before stating the S1 relationship they support. These parent meanings may span the first two paragraphs; avoid repeating them merely to put them beside S1. Mark the move into the supplied relationship clearly, so a phrase such as \"that tension\" has a clear antecedent. Every paragraph using S1 must explicitly cite all five IDs: \"facts\": [\"S1\", \"C1\", \"I1\", \"C2\", \"I2\"]. The relationship is editorial interpretation, not an established personal state. Keep its qualifications: \"can increase\" stays \"can increase\", not \"increases\". For a reinforcement relationship, give the two joined meanings distinct paragraph functions, as S1 relates them, instead of restating one idea in both paragraphs; then add only supported useful detail and stop. Clear published wording may be kept, and no new scene is needed for variety.\nApply the supplied N1 possibility to a specific I1 scene with one practical distinction in paragraph 1 or 2. Choose one supported task, obligation or choice and keep it as the subject of both meanings. If N1 introduces a concrete example, explicitly place that same example inside I1's scene as a possibility; do not jump from a quiet moment or demanding role to an unrelated reply or project. Develop N1's distinction on that shared example, keeping its sentences in their published order where practical. Identify what changes in considering that same obligation, task or choice; do not simply append N1 verbatim or connect two summaries with a generic bridge. Keep every scene and source condition intact. Every paragraph using it must cite [\"N1\", \"C1\", \"I1\"]. Keep it conditional and recognizable or rejectable, never a confirmed identity, biological explanation or lived event. N1 and S1 may share a paragraph with all parents, but S1 supplies its own relationship: the N1 distinction must not be made to cause or establish it. Do not add a personality section. N1 does not authorize a natal body, sign, house, aspect or other geometry.\nCopy A1's chronology sentence unchanged exactly once in paragraph 1 or 2, citing C1/A1. Connect P2's conditional practical meaning to I1 in paragraph 1 or 2, citing C1/I1/A1/P2. Combine S1/N1/P2 naturally within the existing four-sentence paragraph limit; do not add a separate essay. Only the unchanged chronology sentence may use A1 dates. Do not add counts, pass ordinals, station dates, life history or promises of closure.\nCite the supplied IDs each paragraph rests on. This is reference coverage, not permission to invent astronomical facts.\nAny paragraph naming a planet, aspect, orb or ISO exact date must cite the matching calculated cycle ID (C1, C2 or C3), even when it repeats a number from T1. Editorial IDs I1, I2, I3, S1, D1, P1 and T1 cannot replace that cycle citation.\nFor a paragraph using the strongest cycle's supplied phase and timing wording, include its cycle alongside the relevant editorial references: \"facts\": [\"C1\", \"P1\", \"T1\"]. Cite only IDs and values supplied above.\nDo not write a headline, reflection question, local-time context or wellbeing framing; those are provided separately.\nDo not introduce sign or individual house placements. Quote orb degrees as digit literals and ISO dates only when present in a cycle cited by that paragraph.\nC1-C3 describe a transiting body contacting a natal point, not two bodies in the current sky. Preserve those roles whenever naming the geometry: explicitly name the target as natal if describing the contact as occurring in the sky. A source's subjective 'feels like yours' stays subjective; do not turn it into an objective task allocation.\nAn orb is the angular deviation from the named aspect measured at this reading's calculation time; the calculated exact date is a separate calendar estimate. Window position describes THIS READING, never the future or past exact date. Put the current orb, this reading's window position, and any exact date or relative exact timing in separate sentences. Never attach a current measurement or window position to the exact pass. Do not infer an exact date from the phase label when the facts say no exact date was found.\nDo not repeat calculation caveats; the app appends them separately."
+          }
+        ],
+        "response_format": {
+          "type": "json_schema",
+          "json_schema": {
+            "name": "daily_reading",
+            "strict": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "paragraphs": {
+                  "type": "array",
+                  "minItems": 2,
+                  "maxItems": 4,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "text": {
+                        "type": "string"
+                      },
+                      "facts": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "required": [
+                      "text",
+                      "facts"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "paragraphs"
+              ],
+              "additionalProperties": false
+            }
+          }
+        }
+      },
+      "candidate": {
+        "paragraphs": [
+          {
+            "text": "Where expectations outpace available capacity, a routine or responsibility shows a need for clearer boundaries, as transiting Saturn square natal Sun highlights. If several possible projects for that responsibility compete for the same free afternoon, following more than one line of curiosity can help a direction take shape; sampling a few and choosing one to pursue may be different stages. This is the second of three calculated contacts; the first exact contact falls in September 2026. If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.",
+            "facts": [
+              "A1",
+              "C1",
+              "I1",
+              "N1",
+              "P2"
+            ]
+          },
+          {
+            "text": "Enthusiasm and practical initiative reinforce one another when an aim is well chosen. Transiting Jupiter trine natal Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening. Giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.",
+            "facts": [
+              "S1",
+              "C1",
+              "I1",
+              "C2",
+              "I2"
+            ]
+          }
+        ],
+        "paragraphCount": 2,
+        "truncated": false,
+        "captureLossless": true
+      },
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-12",
+        "validatorVersion": "daily-reference-8",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 180000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 87057,
+        "paragraph": null
+      },
+      "output": {
+        "mode": "model",
+        "headline": "Saturn square Sun",
+        "body": "Where expectations outpace available capacity, a routine or responsibility shows a need for clearer boundaries, as transiting Saturn square natal Sun highlights. If several possible projects for that responsibility compete for the same free afternoon, following more than one line of curiosity can help a direction take shape; sampling a few and choosing one to pursue may be different stages. This is the second of three calculated contacts; the first exact contact falls in September 2026. If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.\n\nEnthusiasm and practical initiative reinforce one another when an aim is well chosen. Transiting Jupiter trine natal Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening. Giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.",
+        "prompt": "What responsibility is currently asking for clearer boundaries? Which description of yourself is out of date?",
+        "citations": [
+          {
+            "paragraph": 1,
+            "facts": [
+              "A1",
+              "C1",
+              "I1",
+              "N1",
+              "P2"
+            ]
+          },
+          {
+            "paragraph": 2,
+            "facts": [
+              "S1",
+              "C1",
+              "I1",
+              "C2",
+              "I2"
+            ]
+          }
+        ]
+      },
+      "template": {
+        "body": "An established role can feel demanding when its obligations require more deliberate effort than usual. If several possible projects within that role compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages. Following more than one line of curiosity can help a direction take shape. This is the second of three calculated contacts; the first exact contact falls in September 2026.\n\nJupiter's trine to Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening. Giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension. If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary."
+      },
+      "manualReview": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "temporalCoherence": null,
+        "chapterIntegration": null,
+        "unsupportedHistory": null,
+        "promisedResolution": null,
+        "notes": null
+      }
+    }
+  },
+  "transports": [
+    {
+      "startedAt": "2026-10-12T06:08:39.660Z",
+      "httpStatus": 200,
+      "modelVersion": "gemini-3.8-flash",
+      "usageMetadata": {
+        "promptTokenCount": 3092,
+        "candidatesTokenCount": 311,
+        "totalTokenCount": 17544,
+        "thoughtsTokenCount": 14141
+      },
+      "observation": "observed"
+    }
+  ],
+  "settledAt": "2026-10-12T06:10:06.676Z"
+}

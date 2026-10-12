@@ -1,0 +1,52 @@
+{
+  "files": [
+    {
+      "file": "README.md",
+      "sha256": "093126e03a2cb4127b75ec40cc541f483c2c7aaf1a3761403dd11782df578649"
+    },
+    {
+      "file": "build-copy-fix.txt",
+      "sha256": "c2c59a2430ddd376797702ca8d5e5c2de9971f22a76e243fdf709980a7e04e8a"
+    },
+    {
+      "file": "capture-offline.mjs",
+      "sha256": "7af4d9223620be6a0880e15d183a9718fe20f9fa403e9c1f745e6eec1309848e"
+    },
+    {
+      "file": "check-review.mjs",
+      "sha256": "f00b4f1b7911fc460ec80bce2181ad9944651eba4310cfb7f3f1f8c5edc1aab9"
+    },
+    {
+      "file": "lint-copy-fix.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "prepare-review.mjs",
+      "sha256": "cf6f015f917fed084df2ee230be9aeb23fb4c9842930a60f04ea6a55ddbe9499"
+    },
+    {
+      "file": "revalidate-paid.mjs",
+      "sha256": "d99687880a73f6d93bd1b7fe86d16df8e7693b6179025039c81c1073c3401ce6"
+    },
+    {
+      "file": "run-targeted.mjs",
+      "sha256": "03e398f748353e59b12fb4c485812632b82ead4efcf0465e70d66893aa902316"
+    },
+    {
+      "file": "tests-copy-fix.txt",
+      "sha256": "cf982670d13510556544153a64d638deaf9732b61d1bc8e4b529ddd72f646db6"
+    },
+    {
+      "file": "timing-copy-green.txt",
+      "sha256": "4142bd70804423c3952801ab2c51b4df0d95b843e39b99d72169b9c070b37b28"
+    },
+    {
+      "file": "timing-red.txt",
+      "sha256": "1f4a137610c66faab9ec75e54d553eca8c73a494a782da12b00a04aee9efe593"
+    },
+    {
+      "file": "typecheck-copy-fix.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

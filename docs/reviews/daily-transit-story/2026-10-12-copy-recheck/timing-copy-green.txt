@@ -1,0 +1,46 @@
+✔ before/after comparison rejects a partial flag even when every case is present (892.880792ms)
+✔ fixed synthetic baseline exercises the real daily validators without quality scores (491.39915ms)
+✔ candidate replay records a real validator rejection and deterministic fallback (412.733205ms)
+✔ replay requires exactly the fixed case IDs before evaluating responses (0.667ms)
+✔ comparison refuses changed fixtures, case sets, or input configs (375.249457ms)
+✔ network guard blocks fetch, HTTP(S), TCP, TLS, and DNS and restores globals (1.185773ms)
+✔ network and temporary key restore even when evaluation fails (378.680389ms)
+✔ handwritten synthesis rejection examples distinguish validator coverage from human support (1129.100284ms)
+✔ offline runs use the explicitly selected shipped bundle (666.070679ms)
+✔ historical natal reports retain their identity and cannot count as current replay coverage (182.757696ms)
+✔ a current captured report extracts and replays only against its selected frozen bundle (1311.489195ms)
+✔ extraction refuses incomplete, mismatched or lossy reports (2708.144193ms)
+✔ the CLI requires an explicit bundle and bounded mode combinations (1.016606ms)
+✔ the explicit transit candidate CLI writes current coverage with blank human scores (383.723768ms)
+✔ eight positive fallback bodies are compact, deterministic and keep the lens in paragraph one (796.03172ms)
+✔ technical depth adds a bounded calculation passage without repeating standard filler (18.69361ms)
+✔ every natal-negative control and natal-free bundle retain the old non-natal assembly (118.790977ms)
+✔ same-key edits to either full source invalidate authored prose; unfamiliar pairs retain current copy (2.790202ms)
+✔ unfamiliar decimal punctuation and later primary conditions survive alongside synthesis (0.902287ms)
+✔ a synthesis fallback names both parent contacts before their published relationship (7.103411ms)
+✔ edited second-parent or synthesis copy keeps every published sentence before S1 (1.535559ms)
+✔ synthesis and P2 keep their conditions and distinct claims, with one exact A1 chronology (23.344736ms)
+✔ between-contact fallback states its shared phase and timing once (14.941612ms)
+✔ combined synthesis openings retain the saved natal readback contract (11.328963ms)
+✔ consented context and reflection stay separate from composed astronomical prose (1.921513ms)
+✔ inactive_transit_candidate_preserves_the_shipped_fallback_and_natal_candidate (567.55611ms)
+✔ legacy_content_does_not_inherit_chapters_and_empty_is_authoritative (0.674031ms)
+✔ chapter_copy_is_not_a_personal_history (3.150067ms)
+✔ phase_copy_is_conditional_and_release_owned (0.545603ms)
+✔ cycle_draft_preserves_chapter_catalogue (52.792555ms)
+✔ fallback_with_qualified_anchors_never_activates_candidate_or_scans (715.221684ms)
+✔ arc_scan_and_dates_are_encrypted_and_cache_makes_no_requests (86.341698ms)
+✔ natal template saves exact chapter copy in paragraph two and rejects false or duplicate linkage (151.226945ms)
+✔ source_unavailable_is_immutable_but_policy_change_creates_new_identity (37.913222ms)
+✔ corrupt_story_envelope_fails_read_and_cross_account_key_cannot_open (60.260821ms)
+✔ owner_export_restores_archived_story_without_rescanning_and_erasure_removes_it (87.61525ms)
+✔ bound_story_digest_and_proof_reject_reencrypted_semantic_corruption (80.770666ms)
+✔ timing_selection_reuses_one_scan_and_invalidates_on_day_or_source_change (68.001224ms)
+ℹ tests 38
+ℹ suites 0
+ℹ pass 38
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9105.528526

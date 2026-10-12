@@ -1,0 +1,36 @@
+{
+  "atUTC": "2026-10-12T06:17:10.524Z",
+  "kind": "combined-content-release-staged-inactive",
+  "database": "pattern-records",
+  "version": "0.7.0",
+  "releaseId": "cbb7db71-99f9-40cf-a964-82e688cd879d",
+  "checksum": "8114f6f351d6bb1c4f9e05a73d9d2d9d3b889d1ff1529e2242c622fcb753abc9",
+  "checksumAlgorithm": "SHA-256 of JSON.stringify(bundle), matching admin draft publication",
+  "artifactSha256": "3c53868b31fca41b993dbb4415d06e2a15d4f58831d5ceef5d9b8ba92282aa3c",
+  "inserted": true,
+  "verifiedRoundTrip": true,
+  "activeBefore": {
+    "content": [],
+    "mirror": [
+      {
+        "version": "editorial-1.0.0",
+        "checksum": null,
+        "is_active": 1
+      }
+    ]
+  },
+  "activeAfter": {
+    "content": [],
+    "mirror": [
+      {
+        "version": "editorial-1.0.0",
+        "checksum": null,
+        "is_active": 1
+      }
+    ]
+  },
+  "activePointersUnchanged": true,
+  "candidatesActivated": false,
+  "nativeSourceQualified": false,
+  "writingReview": "pending at staging"
+}

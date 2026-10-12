@@ -1,0 +1,90 @@
+{
+  "kind": "offline-revalidation-of-lossless-paid-drafts",
+  "sourceRevision": "b7255c46c973e0bd484ef813afb833c9b6de4457",
+  "modelGeneratingRevision": "1f70941281a6deffc23481a2fda249f8292517da",
+  "paidCaptureSha256": "7262d5652315cf6b477f80f9bd355987f550dbdcb33973b723bb2b255b1789e7",
+  "providerCallsMade": 0,
+  "interceptedRequests": 7,
+  "allRequestsUnchanged": true,
+  "allRawDraftsUnchanged": true,
+  "allAccepted": true,
+  "samples": [
+    {
+      "sampleId": "sample-1",
+      "caseId": "arc-single-pass",
+      "originalOutcome": "accepted",
+      "originalValidatorVersion": "daily-reference-8",
+      "outcome": "accepted",
+      "code": "accepted",
+      "validatorVersion": "daily-reference-9",
+      "requestUnchanged": true,
+      "rawDraftUnchanged": true
+    },
+    {
+      "sampleId": "sample-2",
+      "caseId": "arc-opening-three",
+      "originalOutcome": "accepted",
+      "originalValidatorVersion": "daily-reference-8",
+      "outcome": "accepted",
+      "code": "accepted",
+      "validatorVersion": "daily-reference-9",
+      "requestUnchanged": true,
+      "rawDraftUnchanged": true
+    },
+    {
+      "sampleId": "sample-3",
+      "caseId": "arc-return-three",
+      "originalOutcome": "accepted",
+      "originalValidatorVersion": "daily-reference-8",
+      "outcome": "accepted",
+      "code": "accepted",
+      "validatorVersion": "daily-reference-9",
+      "requestUnchanged": true,
+      "rawDraftUnchanged": true
+    },
+    {
+      "sampleId": "sample-4",
+      "caseId": "arc-closing-three",
+      "originalOutcome": "accepted",
+      "originalValidatorVersion": "daily-reference-8",
+      "outcome": "accepted",
+      "code": "accepted",
+      "validatorVersion": "daily-reference-9",
+      "requestUnchanged": true,
+      "rawDraftUnchanged": true
+    },
+    {
+      "sampleId": "sample-5",
+      "caseId": "arc-between-passes",
+      "originalOutcome": "accepted",
+      "originalValidatorVersion": "daily-reference-8",
+      "outcome": "accepted",
+      "code": "accepted",
+      "validatorVersion": "daily-reference-9",
+      "requestUnchanged": true,
+      "rawDraftUnchanged": true
+    },
+    {
+      "sampleId": "sample-6",
+      "caseId": "arc-synthesis-natal-integration",
+      "originalOutcome": "accepted",
+      "originalValidatorVersion": "daily-reference-8",
+      "outcome": "accepted",
+      "code": "accepted",
+      "validatorVersion": "daily-reference-9",
+      "requestUnchanged": true,
+      "rawDraftUnchanged": true
+    },
+    {
+      "sampleId": "sample-7",
+      "caseId": "arc-truncated-scan",
+      "originalOutcome": "accepted",
+      "originalValidatorVersion": "daily-reference-8",
+      "outcome": "accepted",
+      "code": "accepted",
+      "validatorVersion": "daily-reference-9",
+      "requestUnchanged": true,
+      "rawDraftUnchanged": true
+    }
+  ]
+}

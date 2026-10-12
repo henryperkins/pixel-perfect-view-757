@@ -1,0 +1,162 @@
+{
+  "kind": "targeted-transit-writing-collection",
+  "sourceRevision": "b7255c46c973e0bd484ef813afb833c9b6de4457",
+  "modelGeneratingRevision": "1f70941281a6deffc23481a2fda249f8292517da",
+  "fullBenchmarkClaim": false,
+  "humanReviewCompleted": false,
+  "candidatesActivated": false,
+  "capturePath": "/home/ubuntu/.local/state/pixel-perfect-view-757/combined-release/20261012/transit-paid-run/capture.json",
+  "captureSha256": "7262d5652315cf6b477f80f9bd355987f550dbdcb33973b723bb2b255b1789e7",
+  "templatesPath": "/home/ubuntu/.local/state/pixel-perfect-view-757/combined-release/20261012/transit-templates-fixed.json",
+  "templatesSha256": "8c9f61dbda0b48d14bc86a22409f0cedb2115af46393fd440c4f6f96d19b89ac",
+  "revalidationPath": "/home/ubuntu/.local/state/pixel-perfect-view-757/combined-release/20261012/revalidation.json",
+  "revalidationSha256": "49b154f156458ef39c3d674fa6234aeaae266c8327a84b96e1883090c33b009c",
+  "runPlanSha256": "a5a9fe92aa11b0d1da196d3ccb967bf0b4c75545d35fcbd26308ce36da942875",
+  "runFinishedSha256": "666261409b154db3783ea554f303f6c4a467ab6a135757511b92a50bab375a41",
+  "modelAttempts": 7,
+  "expectedSamples": 15,
+  "packet": {
+    "contextId": "writing-transit",
+    "sha256": "3de9834177b6a4c5a90ba41ad06f0174b54cae1dace32f652bca9045444927a4",
+    "itemSetHash": "b9c17e094cae6597c54ca1c1e612526e225dc3845588e223db8cd28691c3aa42",
+    "uniqueItems": 15
+  },
+  "samples": [
+    {
+      "sampleId": "sample-1-template",
+      "caseId": "arc-single-pass",
+      "output": "template",
+      "sourceSha256": "8fadc086adcb416399b0b49f6352b6c604f81d30b07e02b9eab82d4427aaf531",
+      "structuralOutcome": "unavailable",
+      "structuralCode": "not_configured",
+      "itemId": "item-11"
+    },
+    {
+      "sampleId": "sample-1",
+      "caseId": "arc-single-pass",
+      "output": "raw-model",
+      "sourceSha256": "03f7fe784e1f1c45056782cabca0b75bc52ec64faf2e0fae8c4cf3b2f8213512",
+      "structuralOutcome": "accepted",
+      "structuralCode": "accepted",
+      "itemId": "item-01"
+    },
+    {
+      "sampleId": "sample-2-template",
+      "caseId": "arc-opening-three",
+      "output": "template",
+      "sourceSha256": "8639748999e0c2b3b9119ccce220e4c1d4a3925aeaa8704c572ade05ea1c07a8",
+      "structuralOutcome": "unavailable",
+      "structuralCode": "not_configured",
+      "itemId": "item-02"
+    },
+    {
+      "sampleId": "sample-2",
+      "caseId": "arc-opening-three",
+      "output": "raw-model",
+      "sourceSha256": "dd5543377e311a119cccae55c493662d33d08a42253b79168d7d6d534ef75691",
+      "structuralOutcome": "accepted",
+      "structuralCode": "accepted",
+      "itemId": "item-13"
+    },
+    {
+      "sampleId": "sample-3-template",
+      "caseId": "arc-return-three",
+      "output": "template",
+      "sourceSha256": "e2062c155be0c8da0e589f9f7df531f1bcf00ece5be3e6f790b21dae7923c9de",
+      "structuralOutcome": "unavailable",
+      "structuralCode": "not_configured",
+      "itemId": "item-05"
+    },
+    {
+      "sampleId": "sample-3",
+      "caseId": "arc-return-three",
+      "output": "raw-model",
+      "sourceSha256": "ada66a224dfbb2fa3a05aadb5edb3299ceeba97139f8ab6e4c197e48ca55c4f9",
+      "structuralOutcome": "accepted",
+      "structuralCode": "accepted",
+      "itemId": "item-08"
+    },
+    {
+      "sampleId": "sample-4-template",
+      "caseId": "arc-closing-three",
+      "output": "template",
+      "sourceSha256": "5e251342bb43f18bb92309330e86a15253c320cef0c928ba78a35e4ab0e3b1ce",
+      "structuralOutcome": "unavailable",
+      "structuralCode": "not_configured",
+      "itemId": "item-04"
+    },
+    {
+      "sampleId": "sample-4",
+      "caseId": "arc-closing-three",
+      "output": "raw-model",
+      "sourceSha256": "e14fc512c68c12c094dc7ed23d1bdb223216e67473d3df5a2a6e1fbe8d510a85",
+      "structuralOutcome": "accepted",
+      "structuralCode": "accepted",
+      "itemId": "item-09"
+    },
+    {
+      "sampleId": "sample-5-template",
+      "caseId": "arc-between-passes",
+      "output": "template",
+      "sourceSha256": "80f4c5c9edaf4f1ba8e9ceca82df18becbabb679e30f636fe522b462afc468f5",
+      "structuralOutcome": "unavailable",
+      "structuralCode": "not_configured",
+      "itemId": "item-03"
+    },
+    {
+      "sampleId": "sample-5",
+      "caseId": "arc-between-passes",
+      "output": "raw-model",
+      "sourceSha256": "8362da7469da551053ff18c7eeb14e53705f6cb16343c3ea1f95ac19523b74e7",
+      "structuralOutcome": "accepted",
+      "structuralCode": "accepted",
+      "itemId": "item-14"
+    },
+    {
+      "sampleId": "sample-6-template",
+      "caseId": "arc-synthesis-natal-integration",
+      "output": "template",
+      "sourceSha256": "490db52a7910857fc41434ea840db69fd3792c12a5b57413b00fdca4accab9c6",
+      "structuralOutcome": "unavailable",
+      "structuralCode": "not_configured",
+      "itemId": "item-06"
+    },
+    {
+      "sampleId": "sample-6",
+      "caseId": "arc-synthesis-natal-integration",
+      "output": "raw-model",
+      "sourceSha256": "4ac37d02b380832ac597b3a4d2c30267f604e7707f5fd646ac85980a0fc16d43",
+      "structuralOutcome": "accepted",
+      "structuralCode": "accepted",
+      "itemId": "item-12"
+    },
+    {
+      "sampleId": "sample-7-template",
+      "caseId": "arc-truncated-scan",
+      "output": "template",
+      "sourceSha256": "bcce551369cbfab839fa9bce8760aa5d38d356ba60e9551a7086030eba132c71",
+      "structuralOutcome": "unavailable",
+      "structuralCode": "not_configured",
+      "itemId": "item-15"
+    },
+    {
+      "sampleId": "sample-7",
+      "caseId": "arc-truncated-scan",
+      "output": "raw-model",
+      "sourceSha256": "5dee71bc5e1d57380c6d78158d78c9e0d9703319462cce88b574c100f513bf93",
+      "structuralOutcome": "accepted",
+      "structuralCode": "accepted",
+      "itemId": "item-07"
+    },
+    {
+      "sampleId": "quiet-template",
+      "caseId": "quiet-threshold",
+      "output": "template",
+      "sourceSha256": "d87966c585c52cff7148fd9d787817e2a81d905f8ea80514883d10b9993d5982",
+      "structuralOutcome": "skipped",
+      "structuralCode": "no_cycle",
+      "itemId": "item-10"
+    }
+  ],
+  "unavailable": []
+}

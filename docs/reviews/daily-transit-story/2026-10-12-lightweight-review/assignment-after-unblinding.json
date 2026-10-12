@@ -1,0 +1,1363 @@
+{
+  "kind": "targeted-transit-writing-assignment",
+  "itemSetHash": "b9c17e094cae6597c54ca1c1e612526e225dc3845588e223db8cd28691c3aa42",
+  "packets": {
+    "writing-transit": {
+      "sha256": "3de9834177b6a4c5a90ba41ad06f0174b54cae1dace32f652bca9045444927a4"
+    }
+  },
+  "items": {
+    "item-01": {
+      "content": {
+        "itemId": "item-01",
+        "tone": "plain",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.00 degrees. phase exact. domain identity. Calculated exact date: 2026-09-08."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "A1",
+            "kind": "calculation",
+            "statement": "This is one calculated contact in a complete passage.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "P2",
+            "kind": "interpretation",
+            "statement": "Published transit chapter: If a demand feels familiar, notice it in a concrete choice you can describe, such as the scope of a commitment.",
+            "dependsOn": [
+              "C1",
+              "I1",
+              "A1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand feels immediate, start with the choice you can describe clearly."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: the calculated exact contact falls on 2026-09-08. This describes the current connected window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0. Primary event timing uses source-qualified Swiss Ephemeris."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "A routine or responsibility shows where it needs clearer boundaries when expectations outpace available capacity. Transiting Saturn square the natal Sun highlights that tension.",
+            "facts": null
+          },
+          {
+            "number": 2,
+            "text": "An established role can feel demanding when its obligations require more deliberate effort than usual. If a demand feels familiar, notice it in a concrete choice you can describe, such as the scope of a commitment. This is one calculated contact in a complete passage.",
+            "facts": null
+          },
+          {
+            "number": 3,
+            "text": "A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.",
+            "facts": null
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "sampleId": "sample-1",
+          "caseId": "arc-single-pass",
+          "output": "raw-model"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": false,
+        "temporalCoherence": true,
+        "chapterIntegration": true
+      }
+    },
+    "item-02": {
+      "content": {
+        "itemId": "item-02",
+        "tone": "plain",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.00 degrees. phase exact. domain identity. Calculated exact date: 2026-09-08."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "A1",
+            "kind": "calculation",
+            "statement": "This is the first of three calculated contacts; the first exact contact falls in September 2026.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "P2",
+            "kind": "interpretation",
+            "statement": "Published transit chapter: If a new demand catches your attention, notice your response before treating it as settled. A small decision can leave room to learn.",
+            "dependsOn": [
+              "C1",
+              "I1",
+              "A1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand feels immediate, start with the choice you can describe clearly."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: the calculated exact contact falls on 2026-09-08. This describes the current connected window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0. Primary event timing uses source-qualified Swiss Ephemeris."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries. This is the first of three calculated contacts; the first exact contact falls in September 2026. If a new demand catches your attention, notice your response before treating it as settled. A small decision can leave room to learn.",
+            "facts": null
+          },
+          {
+            "number": 2,
+            "text": "A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.",
+            "facts": null
+          },
+          {
+            "number": 3,
+            "text": "If a demand feels immediate, start with the choice you can describe clearly.",
+            "facts": null
+          },
+          {
+            "number": 4,
+            "text": "Timing: the calculated exact contact falls on 2026-09-08. This describes the current connected window.",
+            "facts": null
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "sampleId": "sample-2-template",
+          "caseId": "arc-opening-three",
+          "output": "template"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": false,
+        "temporalCoherence": true,
+        "chapterIntegration": true
+      }
+    },
+    "item-03": {
+      "content": {
+        "itemId": "item-03",
+        "tone": "plain",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.00 degrees. phase between. domain identity. No single exact calendar day is qualified for this contact."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "A1",
+            "kind": "calculation",
+            "statement": "This calculated episode has three contacts, with a pause between passes.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "P2",
+            "kind": "interpretation",
+            "statement": "Published transit chapter: If a decision remains unsettled, let it stay provisional while you notice what information would help. A pause can leave room to reconsider.",
+            "dependsOn": [
+              "C1",
+              "I1",
+              "A1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: Timing: between calculated contacts in the connected current window."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: between calculated contacts in the connected current window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0. Primary event timing uses source-qualified Swiss Ephemeris."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries. This calculated episode has three contacts, with a pause between passes. If a decision remains unsettled, let it stay provisional while you notice what information would help. A pause can leave room to reconsider.",
+            "facts": null
+          },
+          {
+            "number": 2,
+            "text": "A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.",
+            "facts": null
+          },
+          {
+            "number": 3,
+            "text": "Timing: between calculated contacts in the connected current window.",
+            "facts": null
+          },
+          {
+            "number": 4,
+            "text": "Timing: between calculated contacts in the connected current window.",
+            "facts": null
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "sampleId": "sample-5-template",
+          "caseId": "arc-between-passes",
+          "output": "template"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": false,
+        "temporalCoherence": true,
+        "chapterIntegration": true
+      }
+    },
+    "item-04": {
+      "content": {
+        "itemId": "item-04",
+        "tone": "plain",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.00 degrees. phase exact. domain identity. Calculated exact date: 2027-03-27."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "A1",
+            "kind": "calculation",
+            "statement": "This is the third of three calculated contacts; the first exact contact falls in September 2026.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "P2",
+            "kind": "interpretation",
+            "statement": "Published transit chapter: If a response seems workable, consider how you could repeat it in an ordinary commitment. Its usefulness can remain open to review.",
+            "dependsOn": [
+              "C1",
+              "I1",
+              "A1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand feels immediate, start with the choice you can describe clearly."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: the calculated exact contact falls on 2027-03-27. This describes the current connected window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0. Primary event timing uses source-qualified Swiss Ephemeris."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries. This is the third of three calculated contacts; the first exact contact falls in September 2026. If a response seems workable, consider how you could repeat it in an ordinary commitment. Its usefulness can remain open to review.",
+            "facts": null
+          },
+          {
+            "number": 2,
+            "text": "A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.",
+            "facts": null
+          },
+          {
+            "number": 3,
+            "text": "If a demand feels immediate, start with the choice you can describe clearly.",
+            "facts": null
+          },
+          {
+            "number": 4,
+            "text": "Timing: the calculated exact contact falls on 2027-03-27. This describes the current connected window.",
+            "facts": null
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "sampleId": "sample-4-template",
+          "caseId": "arc-closing-three",
+          "output": "template"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": false,
+        "temporalCoherence": true,
+        "chapterIntegration": true
+      }
+    },
+    "item-05": {
+      "content": {
+        "itemId": "item-05",
+        "tone": "plain",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.00 degrees. phase exact. domain identity. Calculated exact date: 2026-12-17."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "A1",
+            "kind": "calculation",
+            "statement": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "P2",
+            "kind": "interpretation",
+            "statement": "Published transit chapter: If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.",
+            "dependsOn": [
+              "C1",
+              "I1",
+              "A1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand feels immediate, start with the choice you can describe clearly."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: the calculated exact contact falls on 2026-12-17. This describes the current connected window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0. Primary event timing uses source-qualified Swiss Ephemeris."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries. This is the second of three calculated contacts; the first exact contact falls in September 2026. If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.",
+            "facts": null
+          },
+          {
+            "number": 2,
+            "text": "A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.",
+            "facts": null
+          },
+          {
+            "number": 3,
+            "text": "If a demand feels immediate, start with the choice you can describe clearly.",
+            "facts": null
+          },
+          {
+            "number": 4,
+            "text": "Timing: the calculated exact contact falls on 2026-12-17. This describes the current connected window.",
+            "facts": null
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "sampleId": "sample-3-template",
+          "caseId": "arc-return-three",
+          "output": "template"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": false,
+        "temporalCoherence": true,
+        "chapterIntegration": true
+      }
+    },
+    "item-06": {
+      "content": {
+        "itemId": "item-06",
+        "tone": "plain",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.00 degrees. phase exact. domain identity. Calculated exact date: 2026-12-17."
+          },
+          {
+            "id": "C2",
+            "kind": "calculation",
+            "statement": "transiting jupiter trine natal mars. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain identity. Calculated exact date: 2026-12-19."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "I2",
+            "kind": "interpretation",
+            "statement": "Published interpretation trine:jupiter:mars: Enthusiasm and practical initiative reinforce one another when an aim is well chosen. Jupiter's trine to Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening.",
+            "dependsOn": [
+              "C2"
+            ]
+          },
+          {
+            "id": "S1",
+            "kind": "synthesis",
+            "statement": "Published tension synthesis square:saturn:sun_tension_trine:jupiter:mars (parents: C1, I1, C2, I2): Giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.",
+            "dependsOn": [
+              "C1",
+              "I1",
+              "C2",
+              "I2"
+            ]
+          },
+          {
+            "id": "N1",
+            "kind": "temperament",
+            "statement": "Published natal lens, an interpretive possibility: Following more than one line of curiosity can help a direction take shape. If several possible projects compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages.",
+            "dependsOn": [
+              "C1",
+              "I1"
+            ]
+          },
+          {
+            "id": "A1",
+            "kind": "calculation",
+            "statement": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "P2",
+            "kind": "interpretation",
+            "statement": "Published transit chapter: If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.",
+            "dependsOn": [
+              "C1",
+              "I1",
+              "A1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand feels immediate, start with the choice you can describe clearly."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: the calculated exact contact falls on 2026-12-17. This describes the current connected window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0. Primary event timing uses source-qualified Swiss Ephemeris."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries. If several possible projects within an established role compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages. Following more than one line of curiosity can help a direction take shape. This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+            "facts": null
+          },
+          {
+            "number": 2,
+            "text": "Jupiter's trine to Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening. Giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension. If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.",
+            "facts": null
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "sampleId": "sample-6-template",
+          "caseId": "arc-synthesis-natal-integration",
+          "output": "template"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": true,
+        "lensIntegration": true,
+        "temporalCoherence": true,
+        "chapterIntegration": true
+      }
+    },
+    "item-07": {
+      "content": {
+        "itemId": "item-07",
+        "tone": "plain",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.00 degrees. phase exact. domain identity. Calculated exact date: 2026-12-17."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand feels immediate, start with the choice you can describe clearly."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: exact today. This reading falls in the middle part of the calculated window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "A routine or responsibility can show where it needs clearer boundaries when expectations outpace available capacity. An established role can feel demanding when its obligations require more deliberate effort than usual. Transiting Saturn's square to the natal Sun highlights where expectations outpace available capacity.",
+            "facts": null
+          },
+          {
+            "number": 2,
+            "text": "A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.",
+            "facts": null
+          },
+          {
+            "number": 3,
+            "text": "If a demand feels immediate, start with the choice you can describe clearly. The contact is exact today. This reading falls in the middle part of the calculated window.",
+            "facts": null
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "sampleId": "sample-7",
+          "caseId": "arc-truncated-scan",
+          "output": "raw-model"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": false,
+        "temporalCoherence": false,
+        "chapterIntegration": false
+      }
+    },
+    "item-08": {
+      "content": {
+        "itemId": "item-08",
+        "tone": "plain",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.00 degrees. phase exact. domain identity. Calculated exact date: 2026-12-17."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "A1",
+            "kind": "calculation",
+            "statement": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "P2",
+            "kind": "interpretation",
+            "statement": "Published transit chapter: If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.",
+            "dependsOn": [
+              "C1",
+              "I1",
+              "A1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand feels immediate, start with the choice you can describe clearly."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: the calculated exact contact falls on 2026-12-17. This describes the current connected window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0. Primary event timing uses source-qualified Swiss Ephemeris."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "Expectations can outpace available capacity, showing where a routine or responsibility needs clearer boundaries. Transiting Saturn square the natal Sun frames how an established role can feel demanding when its obligations require more deliberate effort than usual.",
+            "facts": null
+          },
+          {
+            "number": 2,
+            "text": "Where a routine or responsibility needs clearer boundaries, this return offers a chance to try a smaller adjustment to a method or boundary if an earlier way of handling this no longer fits. This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+            "facts": null
+          },
+          {
+            "number": 3,
+            "text": "The calculated exact contact falls on 2026-12-17. This describes the current connected window. If a demand feels immediate, start with the choice you can describe clearly.",
+            "facts": null
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "sampleId": "sample-3",
+          "caseId": "arc-return-three",
+          "output": "raw-model"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": false,
+        "temporalCoherence": true,
+        "chapterIntegration": true
+      }
+    },
+    "item-09": {
+      "content": {
+        "itemId": "item-09",
+        "tone": "plain",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.00 degrees. phase exact. domain identity. Calculated exact date: 2027-03-27."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "A1",
+            "kind": "calculation",
+            "statement": "This is the third of three calculated contacts; the first exact contact falls in September 2026.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "P2",
+            "kind": "interpretation",
+            "statement": "Published transit chapter: If a response seems workable, consider how you could repeat it in an ordinary commitment. Its usefulness can remain open to review.",
+            "dependsOn": [
+              "C1",
+              "I1",
+              "A1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand feels immediate, start with the choice you can describe clearly."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: the calculated exact contact falls on 2027-03-27. This describes the current connected window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0. Primary event timing uses source-qualified Swiss Ephemeris."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "Where expectations outpace available capacity, a routine or responsibility needs clearer boundaries. Transiting Saturn square the natal Sun highlights this distinction, while an established role can feel demanding when its obligations require more deliberate effort than usual. A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.",
+            "facts": null
+          },
+          {
+            "number": 2,
+            "text": "This is the third of three calculated contacts; the first exact contact falls in September 2026. When a routine or responsibility needs clearer boundaries, if a response seems workable, consider how you could repeat it in an ordinary commitment. Its usefulness can remain open to review.",
+            "facts": null
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "sampleId": "sample-4",
+          "caseId": "arc-closing-three",
+          "output": "raw-model"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": false,
+        "temporalCoherence": true,
+        "chapterIntegration": true
+      }
+    },
+    "item-10": {
+      "content": {
+        "itemId": "item-10",
+        "tone": "plain",
+        "depth": "standard",
+        "quiet": true,
+        "facts": [
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "No cycle is strong enough to name in this reading today. This is a quiet day in the pattern, with no chart signal singled out.",
+            "facts": null
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "sampleId": "quiet-template",
+          "caseId": "quiet-threshold",
+          "output": "template"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": false,
+        "temporalCoherence": false,
+        "chapterIntegration": false
+      }
+    },
+    "item-11": {
+      "content": {
+        "itemId": "item-11",
+        "tone": "plain",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.00 degrees. phase exact. domain identity. Calculated exact date: 2026-09-08."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "A1",
+            "kind": "calculation",
+            "statement": "This is one calculated contact in a complete passage.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "P2",
+            "kind": "interpretation",
+            "statement": "Published transit chapter: If a demand feels familiar, notice it in a concrete choice you can describe, such as the scope of a commitment.",
+            "dependsOn": [
+              "C1",
+              "I1",
+              "A1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand feels immediate, start with the choice you can describe clearly."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: the calculated exact contact falls on 2026-09-08. This describes the current connected window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0. Primary event timing uses source-qualified Swiss Ephemeris."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries. This is one calculated contact in a complete passage. If a demand feels familiar, notice it in a concrete choice you can describe, such as the scope of a commitment.",
+            "facts": null
+          },
+          {
+            "number": 2,
+            "text": "A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.",
+            "facts": null
+          },
+          {
+            "number": 3,
+            "text": "If a demand feels immediate, start with the choice you can describe clearly.",
+            "facts": null
+          },
+          {
+            "number": 4,
+            "text": "Timing: the calculated exact contact falls on 2026-09-08. This describes the current connected window.",
+            "facts": null
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "sampleId": "sample-1-template",
+          "caseId": "arc-single-pass",
+          "output": "template"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": false,
+        "temporalCoherence": true,
+        "chapterIntegration": true
+      }
+    },
+    "item-12": {
+      "content": {
+        "itemId": "item-12",
+        "tone": "plain",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.00 degrees. phase exact. domain identity. Calculated exact date: 2026-12-17."
+          },
+          {
+            "id": "C2",
+            "kind": "calculation",
+            "statement": "transiting jupiter trine natal mars. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain identity. Calculated exact date: 2026-12-19."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "I2",
+            "kind": "interpretation",
+            "statement": "Published interpretation trine:jupiter:mars: Enthusiasm and practical initiative reinforce one another when an aim is well chosen. Jupiter's trine to Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening.",
+            "dependsOn": [
+              "C2"
+            ]
+          },
+          {
+            "id": "S1",
+            "kind": "synthesis",
+            "statement": "Published tension synthesis square:saturn:sun_tension_trine:jupiter:mars (parents: C1, I1, C2, I2): Giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.",
+            "dependsOn": [
+              "C1",
+              "I1",
+              "C2",
+              "I2"
+            ]
+          },
+          {
+            "id": "N1",
+            "kind": "temperament",
+            "statement": "Published natal lens, an interpretive possibility: Following more than one line of curiosity can help a direction take shape. If several possible projects compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages.",
+            "dependsOn": [
+              "C1",
+              "I1"
+            ]
+          },
+          {
+            "id": "A1",
+            "kind": "calculation",
+            "statement": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "P2",
+            "kind": "interpretation",
+            "statement": "Published transit chapter: If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.",
+            "dependsOn": [
+              "C1",
+              "I1",
+              "A1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand feels immediate, start with the choice you can describe clearly."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: the calculated exact contact falls on 2026-12-17. This describes the current connected window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0. Primary event timing uses source-qualified Swiss Ephemeris."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "Where expectations outpace available capacity, a routine or responsibility shows a need for clearer boundaries, as transiting Saturn square natal Sun highlights. If several possible projects for that responsibility compete for the same free afternoon, following more than one line of curiosity can help a direction take shape; sampling a few and choosing one to pursue may be different stages. This is the second of three calculated contacts; the first exact contact falls in September 2026. If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.",
+            "facts": null
+          },
+          {
+            "number": 2,
+            "text": "Enthusiasm and practical initiative reinforce one another when an aim is well chosen. Transiting Jupiter trine natal Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening. Giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.",
+            "facts": null
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "sampleId": "sample-6",
+          "caseId": "arc-synthesis-natal-integration",
+          "output": "raw-model"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": true,
+        "lensIntegration": true,
+        "temporalCoherence": true,
+        "chapterIntegration": true
+      }
+    },
+    "item-13": {
+      "content": {
+        "itemId": "item-13",
+        "tone": "plain",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.00 degrees. phase exact. domain identity. Calculated exact date: 2026-09-08."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "A1",
+            "kind": "calculation",
+            "statement": "This is the first of three calculated contacts; the first exact contact falls in September 2026.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "P2",
+            "kind": "interpretation",
+            "statement": "Published transit chapter: If a new demand catches your attention, notice your response before treating it as settled. A small decision can leave room to learn.",
+            "dependsOn": [
+              "C1",
+              "I1",
+              "A1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand feels immediate, start with the choice you can describe clearly."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: the calculated exact contact falls on 2026-09-08. This describes the current connected window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0. Primary event timing uses source-qualified Swiss Ephemeris."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "Where expectations outpace available capacity, a routine or responsibility needs clearer boundaries. An established role can feel demanding when its obligations require more deliberate effort than usual. If a new demand catches your attention, notice your response before treating it as settled; a small decision can leave room to learn. This is the first of three calculated contacts; the first exact contact falls in September 2026.",
+            "facts": null
+          },
+          {
+            "number": 2,
+            "text": "A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.",
+            "facts": null
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "sampleId": "sample-2",
+          "caseId": "arc-opening-three",
+          "output": "raw-model"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": false,
+        "temporalCoherence": true,
+        "chapterIntegration": true
+      }
+    },
+    "item-14": {
+      "content": {
+        "itemId": "item-14",
+        "tone": "plain",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.00 degrees. phase between. domain identity. No single exact calendar day is qualified for this contact."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "A1",
+            "kind": "calculation",
+            "statement": "This calculated episode has three contacts, with a pause between passes.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "P2",
+            "kind": "interpretation",
+            "statement": "Published transit chapter: If a decision remains unsettled, let it stay provisional while you notice what information would help. A pause can leave room to reconsider.",
+            "dependsOn": [
+              "C1",
+              "I1",
+              "A1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: Timing: between calculated contacts in the connected current window."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: between calculated contacts in the connected current window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0. Primary event timing uses source-qualified Swiss Ephemeris."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "Expectations can outpace available capacity, showing where a routine or responsibility needs clearer boundaries. Transiting Saturn square the natal Sun frames how an established role can feel demanding when its obligations require more deliberate effort than usual.",
+            "facts": null
+          },
+          {
+            "number": 2,
+            "text": "This calculated episode has three contacts, with a pause between passes. A pause can leave room to reconsider where a routine needs clearer boundaries. If a decision remains unsettled, let it stay provisional while you notice what information would help.",
+            "facts": null
+          },
+          {
+            "number": 3,
+            "text": "A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.",
+            "facts": null
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "sampleId": "sample-5",
+          "caseId": "arc-between-passes",
+          "output": "raw-model"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": false,
+        "temporalCoherence": true,
+        "chapterIntegration": true
+      }
+    },
+    "item-15": {
+      "content": {
+        "itemId": "item-15",
+        "tone": "plain",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.00 degrees. phase exact. domain identity. Calculated exact date: 2026-12-17."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand feels immediate, start with the choice you can describe clearly."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: exact today. This reading falls in the middle part of the calculated window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+            "facts": null
+          },
+          {
+            "number": 2,
+            "text": "A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.",
+            "facts": null
+          },
+          {
+            "number": 3,
+            "text": "If a demand feels immediate, start with the choice you can describe clearly.",
+            "facts": null
+          },
+          {
+            "number": 4,
+            "text": "Timing: exact today. This reading falls in the middle part of the calculated window.",
+            "facts": null
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "sampleId": "sample-7-template",
+          "caseId": "arc-truncated-scan",
+          "output": "template"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": false,
+        "temporalCoherence": false,
+        "chapterIntegration": false
+      }
+    }
+  }
+}

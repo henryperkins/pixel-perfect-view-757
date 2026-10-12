@@ -1,0 +1,258 @@
+
+> build
+> vite build
+
+The plugin "vite-tsconfig-paths" is detected. Vite now supports tsconfig paths resolution natively via the resolve.tsconfigPaths option. You can remove the plugin and set resolve.tsconfigPaths: true in your Vite config instead.
+vite v8.1.5 building client environment for production...
+[2Ktransforming...[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:11:27 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:32:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:53:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:68:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:90:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:107:26 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:137:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:169:25 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:197:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:217:39 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:238:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:260:38 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:290:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:305:42 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:314:42 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:330:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:343:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:356:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:364:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/auth.functions.ts:9:23 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/auth.functions.ts:16:23 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+✓ 1978 modules transformed.
+rendering chunks...
+computing gzip size...
+.output/public/assets/celestial-browsing-B1t9FraD.jpg  180.02 kB
+.output/public/assets/styles-Cazn7jY-.css              127.35 kB │ gzip: 21.88 kB
+.output/public/assets/root-DLTE-HSj.js                   0.03 kB │ gzip:  0.05 kB
+.output/public/assets/check-NpjUOICs.js                  0.11 kB │ gzip:  0.13 kB
+.output/public/assets/route-BrXyy2-l.js                  0.14 kB │ gzip:  0.13 kB
+.output/public/assets/arrow-left-CKRjXbxR.js             0.15 kB │ gzip:  0.15 kB
+.output/public/assets/useNavigate-DKUoU2jh.js            0.19 kB │ gzip:  0.16 kB
+.output/public/assets/pattern-query-cache-eSAbA5IF.js    0.23 kB │ gzip:  0.14 kB
+.output/public/assets/useAuth-CHDNrzg2.js                0.37 kB │ gzip:  0.27 kB
+.output/public/assets/sunrise-jD8-wXvW.js                0.65 kB │ gzip:  0.36 kB
+.output/public/assets/useMutation-DGjMCTkg.js            2.29 kB │ gzip:  0.95 kB
+.output/public/assets/auth-D5v3rK2o.js                   2.41 kB │ gzip:  1.01 kB
+.output/public/assets/useCalendarRefresh-ByjIBJ1Y.js     2.52 kB │ gzip:  1.15 kB
+.output/public/assets/MotionSelection-Dnn3ETWY.js        2.88 kB │ gzip:  1.20 kB
+.output/public/assets/pattern.functions-BhUXTGog.js      4.14 kB │ gzip:  1.78 kB
+.output/public/assets/TimingWindow-ukhHvKfP.js           5.43 kB │ gzip:  1.78 kB
+.output/public/assets/sources-MRtMIoxT.js                5.61 kB │ gzip:  2.14 kB
+.output/public/assets/onboarding-CtiuEw0O.js             5.67 kB │ gzip:  1.91 kB
+.output/public/assets/journal-CTQ067lE.js                6.00 kB │ gzip:  2.43 kB
+.output/public/assets/QueryClientProvider-Dz0PhVBu.js    8.11 kB │ gzip:  3.15 kB
+.output/public/assets/birth-0gU89JWj.js                  8.78 kB │ gzip:  2.98 kB
+.output/public/assets/timing-CtS3GW0Y.js                 8.78 kB │ gzip:  3.36 kB
+.output/public/assets/useQuery-Z68le6Lq.js               8.84 kB │ gzip:  3.22 kB
+.output/public/assets/TransitSequence-BfmpiDBM.js        8.88 kB │ gzip:  3.50 kB
+.output/public/assets/journal-CF6nebyL.js                9.43 kB │ gzip:  3.24 kB
+.output/public/assets/useSelector-DnJy_gso.js           10.62 kB │ gzip:  3.98 kB
+.output/public/assets/time-travel-V9_X13ly.js           12.97 kB │ gzip:  4.42 kB
+.output/public/assets/privacy-D7oAVuge.js               20.26 kB │ gzip:  6.02 kB
+.output/public/assets/pattern-HRusDDyt.js               27.31 kB │ gzip:  8.40 kB
+.output/public/assets/routes-Bb0xSwZD.js                41.97 kB │ gzip: 11.93 kB
+.output/public/assets/Shell-DBcAUOR9.js                 45.49 kB │ gzip: 15.02 kB
+.output/public/assets/auth.functions-Bo0KmPDq.js        48.25 kB │ gzip: 16.76 kB
+.output/public/assets/content-BaQDVIR2.js              127.51 kB │ gzip: 31.48 kB
+.output/public/assets/index-6lNPg__8.js                315.09 kB │ gzip: 98.55 kB
+
+✓ built in 2.13s
+vite v8.1.5 building ssr environment for production...
+[2Ktransforming...[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts?tss-serverfn-split:11:27 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts?tss-serverfn-split:32:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts?tss-serverfn-split:53:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts?tss-serverfn-split:68:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts?tss-serverfn-split:90:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts?tss-serverfn-split:107:26 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts?tss-serverfn-split:137:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts?tss-serverfn-split:169:25 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts?tss-serverfn-split:197:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts?tss-serverfn-split:217:39 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts?tss-serverfn-split:238:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts?tss-serverfn-split:260:38 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts?tss-serverfn-split:290:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts?tss-serverfn-split:305:42 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts?tss-serverfn-split:314:42 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts?tss-serverfn-split:330:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts?tss-serverfn-split:343:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts?tss-serverfn-split:356:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts?tss-serverfn-split:364:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/auth.functions.ts?tss-serverfn-split:9:23 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/auth.functions.ts?tss-serverfn-split:16:23 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:11:27 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:32:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:53:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:68:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:90:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:107:26 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:137:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:169:25 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:197:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:217:39 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:238:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:260:38 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:290:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:305:42 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:314:42 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:330:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:343:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:356:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.functions.ts:364:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/auth.functions.ts:9:23 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/auth.functions.ts:16:23 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+✓ 178 modules transformed.
+rendering chunks...
+computing gzip size...
+node_modules/.nitro/vite/services/ssr/assets/celestial-browsing-B1t9FraD.jpg                    180.02 kB
+node_modules/.nitro/vite/services/ssr/assets/styles-Cazn7jY-.css                                127.35 kB │ gzip: 21.88 kB
+node_modules/.nitro/vite/services/ssr/assets/empty-plugin-adapters-D9UWiqvJ.js                    0.22 kB │ gzip:  0.16 kB
+node_modules/.nitro/vite/services/ssr/assets/route-Di7iQBCH.js                                    0.26 kB │ gzip:  0.19 kB
+node_modules/.nitro/vite/services/ssr/assets/createServerRpc-B9Fjl2_y.js                          0.40 kB │ gzip:  0.27 kB
+node_modules/.nitro/vite/services/ssr/assets/pattern-query-cache-d1Qf3yL4.js                      0.46 kB │ gzip:  0.25 kB
+node_modules/.nitro/vite/services/ssr/assets/useAuth-C7rJZA5q.js                                  0.63 kB │ gzip:  0.34 kB
+node_modules/.nitro/vite/services/ssr/assets/transit-presentation-DUkYXqUZ.js                     0.67 kB │ gzip:  0.36 kB
+node_modules/.nitro/vite/services/ssr/assets/auth-middleware-B3InhFA0.js                          0.73 kB │ gzip:  0.43 kB
+node_modules/.nitro/vite/services/ssr/assets/createMiddleware-B_4t7rW1.js                         0.83 kB │ gzip:  0.32 kB
+node_modules/.nitro/vite/services/ssr/assets/journal-BNwAYGlR.js                                  1.06 kB │ gzip:  0.54 kB
+node_modules/.nitro/vite/services/ssr/assets/auth.functions-Cdz2wPM7.js                           1.52 kB │ gzip:  0.77 kB
+node_modules/.nitro/vite/services/ssr/assets/start-Uuvakxyg.js                                    1.70 kB │ gzip:  0.76 kB
+node_modules/.nitro/vite/services/ssr/assets/transit-candidate-bundle-zbWYjCcD.js                 1.79 kB │ gzip:  0.83 kB
+node_modules/.nitro/vite/services/ssr/assets/useCalendarRefresh-C-quWQl4.js                       2.04 kB │ gzip:  0.85 kB
+node_modules/.nitro/vite/services/ssr/assets/auth.functions-DIfdDAcj.js                           2.31 kB │ gzip:  0.76 kB
+node_modules/.nitro/vite/services/ssr/assets/workflows.server-bhf4gG9P.js                         2.38 kB │ gzip:  1.13 kB
+node_modules/.nitro/vite/services/ssr/assets/createCsrfMiddleware-jzif2P7h.js                     2.45 kB │ gzip:  0.86 kB
+node_modules/.nitro/vite/services/ssr/assets/local-day-C_385pwe.js                                3.13 kB │ gzip:  1.25 kB
+node_modules/.nitro/vite/services/ssr/assets/server-VRmnMege.js                                   3.33 kB │ gzip:  1.11 kB
+node_modules/.nitro/vite/services/ssr/assets/auth-DVZux99S.js                                     3.56 kB │ gzip:  1.23 kB
+node_modules/.nitro/vite/services/ssr/index.js                                                    4.61 kB │ gzip:  1.92 kB
+node_modules/.nitro/vite/services/ssr/assets/MotionSelection-DVpXDN2J.js                          5.11 kB │ gzip:  1.73 kB
+node_modules/.nitro/vite/services/ssr/assets/auth.server-CHkhbkcb.js                              5.12 kB │ gzip:  1.98 kB
+node_modules/.nitro/vite/services/ssr/assets/_tanstack-start-manifest_v-BTGNbRbN.js               6.41 kB │ gzip:  1.11 kB
+node_modules/.nitro/vite/services/ssr/assets/reading-evaluation.server-D3XKmutk.js                6.69 kB │ gzip:  2.47 kB
+node_modules/.nitro/vite/services/ssr/assets/__23tanstack-start-server-fn-resolver-t25M0u8Y.js    7.15 kB │ gzip:  2.08 kB
+node_modules/.nitro/vite/services/ssr/assets/sources-COXBEPnh.js                                  7.90 kB │ gzip:  2.55 kB
+node_modules/.nitro/vite/services/ssr/assets/onboarding-BIsNiGOU.js                               8.37 kB │ gzip:  2.36 kB
+node_modules/.nitro/vite/services/ssr/assets/TimingWindow-CuBVkcwd.js                             8.83 kB │ gzip:  2.28 kB
+node_modules/.nitro/vite/services/ssr/assets/evaluation-runs.server-CV8Ep1-t.js                   9.13 kB │ gzip:  2.66 kB
+node_modules/.nitro/vite/services/ssr/assets/registry-Dz65mFtj.js                                 9.33 kB │ gzip:  2.71 kB
+node_modules/.nitro/vite/services/ssr/assets/pattern.functions-CzfywxLz.js                        9.37 kB │ gzip:  2.99 kB
+node_modules/.nitro/vite/services/ssr/assets/createServerFn-DXkrivVP.js                           9.91 kB │ gzip:  3.00 kB
+node_modules/.nitro/vite/services/ssr/assets/d1.server-bbIjjnag.js                               10.14 kB │ gzip:  3.46 kB
+node_modules/.nitro/vite/services/ssr/assets/TransitSequence-BjqW1HHk.js                         12.73 kB │ gzip:  4.10 kB
+node_modules/.nitro/vite/services/ssr/assets/birth-C-9TedFQ.js                                   12.95 kB │ gzip:  3.59 kB
+node_modules/.nitro/vite/services/ssr/assets/journal-BaKxmbmn.js                                 14.14 kB │ gzip:  3.74 kB
+node_modules/.nitro/vite/services/ssr/assets/timing-BOhUgEcU.js                                  14.40 kB │ gzip:  4.23 kB
+node_modules/.nitro/vite/services/ssr/assets/natal-candidate-bundle-ftPk4YW4.js                  15.43 kB │ gzip:  5.29 kB
+node_modules/.nitro/vite/services/ssr/assets/Shell-DuH9yoFI.js                                   19.05 kB │ gzip:  5.36 kB
+node_modules/.nitro/vite/services/ssr/assets/privacy-CNTSAOwy.js                                 19.68 kB │ gzip:  4.92 kB
+node_modules/.nitro/vite/services/ssr/assets/pattern.functions-DzJrbFRR.js                       21.55 kB │ gzip:  4.24 kB
+node_modules/.nitro/vite/services/ssr/assets/time-travel-D3Iu2uNF.js                             21.65 kB │ gzip:  5.63 kB
+node_modules/.nitro/vite/services/ssr/assets/router-Cf35Jf57.js                                  28.38 kB │ gzip:  6.83 kB
+node_modules/.nitro/vite/services/ssr/assets/check-in-CT9Ts5gA.js                                31.03 kB │ gzip: 10.14 kB
+node_modules/.nitro/vite/services/ssr/assets/pattern-DpOBTYqA.js                                 40.73 kB │ gzip: 10.17 kB
+node_modules/.nitro/vite/services/ssr/assets/language.server-CUGjJbRh.js                         49.12 kB │ gzip: 17.26 kB
+node_modules/.nitro/vite/services/ssr/assets/schema-Dp71skiS.js                                  50.17 kB │ gzip: 16.54 kB
+node_modules/.nitro/vite/services/ssr/assets/server-HjdpwDm0.js                                  60.41 kB │ gzip: 15.54 kB
+node_modules/.nitro/vite/services/ssr/assets/routes-BKvPryEv.js                                  66.56 kB │ gzip: 15.61 kB
+node_modules/.nitro/vite/services/ssr/assets/facts-DWZcK-IB.js                                   69.57 kB │ gzip: 19.36 kB
+node_modules/.nitro/vite/services/ssr/assets/content-DDBbRtPC.js                                 78.90 kB │ gzip: 15.53 kB
+node_modules/.nitro/vite/services/ssr/assets/pattern.server-BfNJ7ere.js                         137.69 kB │ gzip: 36.92 kB
+
+✓ built in 1.76s
+
+[nitro] ◐ Building [Nitro] (preset: cloudflare-module, compatibility: 2026-10-12)
+[nitro] ✔ Generated public .output/public
+vite v8.1.5 building nitro environment for production...
+
+ WARN  inlineDynamicImports option is ignored because the codeSplitting option is specified.
+
+[2Ktransforming...✓ 2052 modules transformed.
+rendering chunks...
+computing gzip size...
+.output/server/_ssr/empty-plugin-adapters-D9UWiqvJ.mjs               0.23 kB │ gzip:   0.16 kB
+.output/server/_ssr/createServerRpc-B9Fjl2_y.mjs                     0.40 kB │ gzip:   0.27 kB
+.output/server/_ssr/route-Di7iQBCH.mjs                               0.41 kB │ gzip:   0.26 kB
+.output/server/_ssr/pattern-query-cache-d1Qf3yL4.mjs                 0.50 kB │ gzip:   0.28 kB
+.output/server/_chunks/ssr-renderer.mjs                              0.60 kB │ gzip:   0.36 kB
+.output/server/_ssr/transit-presentation-DUkYXqUZ.mjs                0.71 kB │ gzip:   0.39 kB
+.output/server/_ssr/auth-middleware-B3InhFA0.mjs                     0.78 kB │ gzip:   0.46 kB
+.output/server/_ssr/createMiddleware-B_4t7rW1.mjs                    0.83 kB │ gzip:   0.33 kB
+.output/server/_ssr/useAuth-C7rJZA5q.mjs                             0.88 kB │ gzip:   0.47 kB
+.output/server/_ssr/journal-BNwAYGlR.mjs                             1.12 kB │ gzip:   0.59 kB
+.output/server/_libs/hookable.mjs                                    1.16 kB │ gzip:   0.51 kB
+.output/server/_runtime.mjs                                          1.40 kB │ gzip:   0.66 kB
+.output/server/_ssr/auth.functions-Cdz2wPM7.mjs                      1.53 kB │ gzip:   0.79 kB
+.output/server/_ssr/start-Uuvakxyg.mjs                               1.67 kB │ gzip:   0.75 kB
+.output/server/_ssr/transit-candidate-bundle-zbWYjCcD.mjs            1.76 kB │ gzip:   0.84 kB
+.output/server/_ssr/useCalendarRefresh-C-quWQl4.mjs                  2.33 kB │ gzip:   0.97 kB
+.output/server/_ssr/auth.functions-DIfdDAcj.mjs                      2.39 kB │ gzip:   0.80 kB
+.output/server/_ssr/createCsrfMiddleware-jzif2P7h.mjs                2.45 kB │ gzip:   0.86 kB
+.output/server/_ssr/workflows.server-bhf4gG9P.mjs                    2.48 kB │ gzip:   1.17 kB
+.output/server/_libs/class-variance-authority+clsx.mjs               3.17 kB │ gzip:   1.24 kB
+.output/server/_ssr/local-day-C_385pwe.mjs                           3.17 kB │ gzip:   1.28 kB
+.output/server/_ssr/auth-DVZux99S.mjs                                4.31 kB │ gzip:   1.37 kB
+.output/server/_ssr/ssr.mjs                                          4.57 kB │ gzip:   1.93 kB
+.output/server/_ssr/auth.server-CHkhbkcb.mjs                         5.18 kB │ gzip:   2.02 kB
+.output/server/_ssr/MotionSelection-DVpXDN2J.mjs                     5.55 kB │ gzip:   1.84 kB
+.output/server/_libs/radix-ui__react-slot.mjs                        5.61 kB │ gzip:   1.73 kB
+.output/server/_tanstack-start-manifest_v-BTGNbRbN.mjs               6.47 kB │ gzip:   1.14 kB
+.output/server/_ssr/reading-evaluation.server-D3XKmutk.mjs           6.66 kB │ gzip:   2.49 kB
+.output/server/_libs/tanstack__react-query.mjs                       7.36 kB │ gzip:   1.94 kB
+.output/server/__23tanstack-start-server-fn-resolver-t25M0u8Y.mjs    7.41 kB │ gzip:   2.14 kB
+.output/server/_ssr/evaluation-runs.server-CV8Ep1-t.mjs              9.23 kB │ gzip:   2.71 kB
+.output/server/_ssr/sources-COXBEPnh.mjs                             9.30 kB │ gzip:   2.63 kB
+.output/server/_ssr/registry-Dz65mFtj.mjs                            9.38 kB │ gzip:   2.74 kB
+.output/server/_ssr/createServerFn-DXkrivVP.mjs                      9.48 kB │ gzip:   3.01 kB
+.output/server/_ssr/onboarding-BIsNiGOU.mjs                          9.67 kB │ gzip:   2.50 kB
+.output/server/_ssr/pattern.functions-CzfywxLz.mjs                   9.75 kB │ gzip:   3.13 kB
+.output/server/_libs/h3-v2+rou3+srvx.mjs                             9.89 kB │ gzip:   3.06 kB
+.output/server/_ssr/d1.server-bbIjjnag.mjs                          10.24 kB │ gzip:   3.51 kB
+.output/server/_ssr/TimingWindow-CuBVkcwd.mjs                       10.72 kB │ gzip:   2.39 kB
+.output/server/_libs/tanstack__history.mjs                          12.50 kB │ gzip:   3.70 kB
+.output/server/_ssr/TransitSequence-BjqW1HHk.mjs                    13.85 kB │ gzip:   4.17 kB
+.output/server/_ssr/birth-C-9TedFQ.mjs                              14.84 kB │ gzip:   3.73 kB
+.output/server/_libs/lucide-react.mjs                               15.08 kB │ gzip:   3.24 kB
+.output/server/_ssr/natal-candidate-bundle-ftPk4YW4.mjs             15.40 kB │ gzip:   5.33 kB
+.output/server/_ssr/journal-BaKxmbmn.mjs                            16.08 kB │ gzip:   3.88 kB
+.output/server/_ssr/timing-BOhUgEcU.mjs                             16.57 kB │ gzip:   4.38 kB
+.output/server/_libs/@radix-ui/react-compose-refs+[...].mjs         16.85 kB │ gzip:   4.68 kB
+.output/server/index.mjs                                            17.16 kB │ gzip:   4.91 kB
+.output/server/_ssr/Shell-DuH9yoFI.mjs                              20.72 kB │ gzip:   5.49 kB
+.output/server/_ssr/pattern.functions-DzJrbFRR.mjs                  21.84 kB │ gzip:   4.34 kB
+.output/server/_ssr/privacy-CNTSAOwy.mjs                            22.00 kB │ gzip:   5.06 kB
+.output/server/_libs/h3+rou3+srvx+unenv.mjs                         22.65 kB │ gzip:   6.11 kB
+.output/server/_ssr/time-travel-D3Iu2uNF.mjs                        24.69 kB │ gzip:   5.77 kB
+.output/server/_ssr/router-Cf35Jf57.mjs                             28.38 kB │ gzip:   6.90 kB
+.output/server/_libs/@tanstack/router-core+[...].mjs                29.60 kB │ gzip:   7.99 kB
+.output/server/_ssr/check-in-CT9Ts5gA.mjs                           30.78 kB │ gzip:  10.09 kB
+.output/server/_ssr/pattern-DpOBTYqA.mjs                            46.93 kB │ gzip:  10.45 kB
+.output/server/_ssr/language.server-CUGjJbRh.mjs                    49.21 kB │ gzip:  17.32 kB
+.output/server/_ssr/schema-Dp71skiS.mjs                             49.94 kB │ gzip:  16.50 kB
+.output/server/_libs/sonner.mjs                                     51.97 kB │ gzip:  11.79 kB
+.output/server/_ssr/server-VRmnMege.mjs                             63.05 kB │ gzip:  16.48 kB
+.output/server/_libs/tanstack__query-core.mjs                       66.02 kB │ gzip:  13.95 kB
+.output/server/_ssr/facts-DWZcK-IB.mjs                              70.71 kB │ gzip:  19.73 kB
+.output/server/_ssr/routes-BKvPryEv.mjs                             74.08 kB │ gzip:  15.85 kB
+.output/server/_ssr/content-DDBbRtPC.mjs                            87.87 kB │ gzip:  16.01 kB
+.output/server/_libs/tailwind-merge.mjs                             88.13 kB │ gzip:  15.66 kB
+.output/server/_libs/zod.mjs                                       100.21 kB │ gzip:  17.36 kB
+.output/server/_ssr/pattern.server-BfNJ7ere.mjs                    137.40 kB │ gzip:  36.90 kB
+.output/server/_libs/@react-email/render+[...].mjs                 526.66 kB │ gzip: 153.47 kB
+.output/server/_libs/@tanstack/react-router+[...].mjs              760.68 kB │ gzip: 161.39 kB
+
+✓ built in 761ms
+[nitro] ℹ Using auto generated worker name: henryperkins-pixel-perfect-view-757--worktrees-integrate-planning-natal-transit-20261011
+ℹ Generated .output/server/wrangler.json
+ℹ Generated .wrangler/deploy/config.json
+ℹ Generated .output/public/_headers
+ℹ Generated .output/nitro.json
+
+[nitro] ✔ You can preview this build using npx vite preview
+[nitro] ✔ You can deploy this build using npx nitro deploy --prebuilt

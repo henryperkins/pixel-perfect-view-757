@@ -1,0 +1,277 @@
+{
+  "sampleId": "sample-7",
+  "caseId": "arc-truncated-scan",
+  "repetition": 1,
+  "result": {
+    "metadata": {
+      "reportVersion": 1,
+      "storyPlanVersion": "daily-transit-story-1",
+      "anchorVersion": "transit-anchor-1",
+      "solverVersion": "transit-episode-1",
+      "sourceContract": "swiss-transit-episode/1",
+      "transitFixtureHash": "2025ee9077bb7c0053af5c601e076d7d0858754644901f680862090f01d665f7",
+      "storyUse": true,
+      "fixtureVersion": "synthetic-daily-6",
+      "caseSetHash": "5bae1e78705b97024d6ca6c8d7b242e32f316a52c54c7b9e9cb3c5af8154d9e8",
+      "bundleVersion": "builtin-0.7.0",
+      "bundleHash": "0e52a1dafb069a0b625a593ddaea183b27fb8e07a8231e659f9fd11dcadbadc6",
+      "transitCopyHash": "dae78f7d0bb47988f0fbddaff066f5c58a6c746beab01d68720a9f47bce650b9",
+      "planVersion": "daily-synthesis-1",
+      "natalPlanVersion": "daily-natal-lens-2",
+      "reliabilityVersion": "natal-reliability-1",
+      "promptVersion": "daily-astro-body-12",
+      "validatorVersion": "daily-reference-8",
+      "model": "gemini-enterprise/gemini-3.8-flash",
+      "gatewayTimeoutMs": 180000,
+      "source": "live-synthetic",
+      "network": "Live Gemini Enterprise Agent Platform; fixed synthetic facts only",
+      "warning": "Actual model outputs for synthetic plans. This run does not establish production-user acceptance, semantic grounding, or writing quality. Manual scores remain blank.",
+      "bundleSource": "transit-candidate"
+    },
+    "case": {
+      "id": "arc-truncated-scan",
+      "description": "Resource limits omit chronology and keep primary prose.",
+      "config": {
+        "day": "2026-12-17",
+        "timeZone": "UTC",
+        "tone": "plain",
+        "depth": "standard",
+        "granted": [
+          "USR-01",
+          "USR-02"
+        ]
+      },
+      "configHash": "653338bd3350aa6a21cd6359f7e733db0db25bfe5635a13efb5ea96a05c77941",
+      "localNoon": "2026-12-17T12:00:00.000Z",
+      "eligibleCycleKeys": [
+        "saturn_square_sun"
+      ],
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.00 degrees. phase exact. domain identity. Calculated exact date: 2026-12-17.",
+          "cycle": {
+            "transitBody": "saturn",
+            "natalPoint": "sun",
+            "aspect": "square",
+            "orb": 0,
+            "exactDate": "2026-12-17"
+          }
+        },
+        {
+          "id": "I1",
+          "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+          "kind": "interpretation",
+          "dependsOn": [
+            "C1"
+          ],
+          "sourceKey": "square:saturn:sun",
+          "releaseVersion": "builtin-0.7.0"
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: If a demand feels immediate, start with the choice you can describe clearly."
+        },
+        {
+          "id": "T1",
+          "statement": "Timing: exact today. This reading falls in the middle part of the calculated window."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+        }
+      ],
+      "interpretationPlan": {
+        "version": "daily-synthesis-1",
+        "interpretations": [
+          {
+            "index": 1,
+            "cycleKey": "saturn_square_sun",
+            "interpretationKey": "square:saturn:sun"
+          }
+        ],
+        "pairStatus": "insufficient",
+        "pairRuleKey": null,
+        "releaseVersion": "builtin-0.7.0",
+        "synthesis": null
+      },
+      "natalLensPlan": {
+        "version": "daily-natal-lens-2",
+        "reliabilityVersion": null,
+        "releaseVersion": "builtin-0.7.0",
+        "status": "unreliable",
+        "lens": null
+      },
+      "natalReliability": null,
+      "transitStoryPlan": {
+        "version": "daily-transit-story-1",
+        "solverVersion": "transit-episode-1",
+        "anchorVersion": "transit-anchor-1",
+        "status": "omitted",
+        "reason": "incomplete_scan"
+      },
+      "request": {
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "messages": [
+          {
+            "role": "system",
+            "content": "You write for an astrology app that shows its work. Calculated references C1–C3 supply astronomical measurements. Published interpretations I1–I3 and synthesis S1 supply reviewed editorial possibilities, not measured psychological properties or confirmed personal states. Keep each claim at the strength its source gives it: a possibility stays a possibility, and added frequency, necessity or exclusion needs its own supplied support. Preserve the direction of every condition and causal claim. A condition for one statement does not become the cause of a neighboring statement, and two supported ideas do not authorize a causal bridge between them. Develop only the supplied published meaning and relationship. Every paragraph must cite the supplied IDs it rests on; synthesis citations must include all their parents. Editorial IDs cannot stand in for a directly cited calculation when giving technical details. Never add astronomical or biographical facts, invent a joint relationship, predict, instruct, promise an outcome, or mention health, medication, diagnosis, money, investing, pregnancy, divorce or death. Use calm, plain, specific prose and conditional everyday comparisons. No zodiac cliches, mysticism, exclamation marks or second-hand claims about other people. Respect all supplied suppression limits."
+          },
+          {
+            "role": "user",
+            "content": "Tone: plain. Direct and observant. Use familiar verbs and one concrete distinction at a time. Sound matter-of-fact, with quiet confidence and no ceremonial lead-in or embellishment.\nStyle example only — not a factual source: \"A point can be clear before the words for it are. Another sentence may add useful detail, or simply say the same thing again.\"\nDo not copy the example or borrow its subject unless supported by the supplied interpretation. Its purpose is sentence rhythm and register; example content never supplies a reading fact.\nDepth: standard. Aim for about 90–170 words. Keep the everyday meaning in the foreground; the evidence panel already shows the calculation. Planet names, orb values and dates are optional, and should not lead the opening.\nOpen from a specific contrast or concrete detail in I1, in ordinary language. Do not use its first sentence as an automatic lead. A published sentence can be retained when it says the point most clearly; otherwise compose the opening from another supported detail rather than swapping adjectives for decorative variety.\nWrite two to four paragraphs of one to four complete sentences each; usually two or three paragraphs are enough. Each paragraph should add a distinct thought. Do not pad to meet the suggested word range.\nUse domain, phase or timing copy only when it adds a distinct, useful thought. Calendar phase describes the calculated contact, not the reader's feelings. Do not add a phase paragraph merely to say that something is building, settling or mostly anticipation. End when the meaningful contrast is complete, without a recap or stock bridge such as 'most legible'.\nKeep everyday scenes conditional and supported by the supplied copy. A scene offers a comparison; it does not establish that an event happened, a preference changed or a moment of hesitation made something clear. Use one natural qualification when needed, rather than stacking may, might and could.\nPreserve the modality of each supplied statement. If a source says something can happen or can feel a certain way, write that it can, not that it does, often does or tends to. Words that add frequency or necessity, such as often, usually, always, must, needs to or relies on, belong only where a supplied statement says so; keep them when it does.\nBefore returning the draft, check each reused claim for a dropped can, may or might. Keep the qualification attached to its own verb: 'can offer' must not become 'offers', even after a conditional opening or beside another qualified claim. This is a grammar example, not a reading fact. Preserve supported categorical sentences as supplied; do not add uncertainty merely because a neighboring sentence is conditional.\nKeep the complete condition attached to the exact claim it qualifies. If reinforcement depends on a well-chosen aim, retain that condition on reinforcement; do not say the aim causes low friction, or low friction enables reinforcement. If ease is conditional on action lining up with what matters, do not shorten it to unconditional flowing energy. These are logic examples, never additional reading facts.\nDo not turn co-occurrence into causation: returned attention does not therefore sharpen curiosity, and a practical distinction does not therefore show that a routine needs clearer boundaries. Avoid unsupported connectors such as 'allowing', 'giving you', 'so' or 'that shows' even when both adjacent ideas are separately supplied. Retain such a link only if its direction and qualification are explicit in the source.\nA contrast may set two supported options side by side, but do not rule out an alternative that no fact mentions, for example by opening with 'rather than' and an unsupplied change. Role, capacity and routine scenes stay possibilities: do not turn them into the reader's history, such as obligations that have grown or a relationship that has changed.\nTreat the interpretation as a frame for reflection, not a force that causes behavior or a confirmed personal state. Prefer 'offers a way to read' or 'frames' to claims that a planet makes the reader feel, act or recover. Do not invent a psychological interpretation for a supporting cycle that has no supplied curated meaning.\nFacts:\nCurated meaning of the strongest cycle (C1):\nI1: Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.\nOptional framing for that same cycle; cite only what you use:\nD1: Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.\nP1: Published phase wording: If a demand feels immediate, start with the choice you can describe clearly.\nT1: Timing: exact today. This reading falls in the middle part of the calculated window.\nCalculated references and limits; use these to check any technical claims:\nC1: transiting saturn square natal sun. Current orb at the reading's calculation time: 0.00 degrees. phase exact. domain identity. Calculated exact date: 2026-12-17.\nE1: Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0.\nU1: recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)\nRewrite only the astronomical body of today's reading, using the supplied published interpretation, domain and phase wording.\nKeep each paragraph under 200 words and the whole body under 700 words.\nThe first paragraph must concern the strongest eligible cycle and cite C1 and I1. D1, P1 and T1 are optional: cite them in any paragraph that uses their domain, phase or timing claims, and leave them out when unused.\nKeep C1 as the primary focus. No S1 is supplied: do not invent a joint relationship or premise. I2 and I3 may offer separately supported context without connecting the contacts into a new story.\nCite the supplied IDs each paragraph rests on. This is reference coverage, not permission to invent astronomical facts.\nAny paragraph naming a planet, aspect, orb or ISO exact date must cite the matching calculated cycle ID (C1, C2 or C3), even when it repeats a number from T1. Editorial IDs I1, I2, I3, S1, D1, P1 and T1 cannot replace that cycle citation.\nFor a paragraph using the strongest cycle's supplied phase and timing wording, include its cycle alongside the relevant editorial references: \"facts\": [\"C1\", \"P1\", \"T1\"]. Cite only IDs and values supplied above.\nDo not write a headline, reflection question, local-time context or wellbeing framing; those are provided separately.\nDo not introduce sign or individual house placements. Quote orb degrees as digit literals and ISO dates only when present in a cycle cited by that paragraph.\nC1-C3 describe a transiting body contacting a natal point, not two bodies in the current sky. Preserve those roles whenever naming the geometry: explicitly name the target as natal if describing the contact as occurring in the sky. A source's subjective 'feels like yours' stays subjective; do not turn it into an objective task allocation.\nAn orb is the angular deviation from the named aspect measured at this reading's calculation time; the calculated exact date is a separate calendar estimate. Window position describes THIS READING, never the future or past exact date. Put the current orb, this reading's window position, and any exact date or relative exact timing in separate sentences. Never attach a current measurement or window position to the exact pass. Do not infer an exact date from the phase label when the facts say no exact date was found.\nDo not repeat calculation caveats; the app appends them separately."
+          }
+        ],
+        "response_format": {
+          "type": "json_schema",
+          "json_schema": {
+            "name": "daily_reading",
+            "strict": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "paragraphs": {
+                  "type": "array",
+                  "minItems": 2,
+                  "maxItems": 4,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "text": {
+                        "type": "string"
+                      },
+                      "facts": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "required": [
+                      "text",
+                      "facts"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "paragraphs"
+              ],
+              "additionalProperties": false
+            }
+          }
+        }
+      },
+      "candidate": {
+        "paragraphs": [
+          {
+            "text": "A routine or responsibility can show where it needs clearer boundaries when expectations outpace available capacity. An established role can feel demanding when its obligations require more deliberate effort than usual. Transiting Saturn's square to the natal Sun highlights where expectations outpace available capacity.",
+            "facts": [
+              "C1",
+              "I1"
+            ]
+          },
+          {
+            "text": "A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.",
+            "facts": [
+              "D1"
+            ]
+          },
+          {
+            "text": "If a demand feels immediate, start with the choice you can describe clearly. The contact is exact today. This reading falls in the middle part of the calculated window.",
+            "facts": [
+              "C1",
+              "P1",
+              "T1"
+            ]
+          }
+        ],
+        "paragraphCount": 3,
+        "truncated": false,
+        "captureLossless": true
+      },
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-12",
+        "validatorVersion": "daily-reference-8",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 180000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 43187,
+        "paragraph": null
+      },
+      "output": {
+        "mode": "model",
+        "headline": "Saturn square Sun",
+        "body": "A routine or responsibility can show where it needs clearer boundaries when expectations outpace available capacity. An established role can feel demanding when its obligations require more deliberate effort than usual. Transiting Saturn's square to the natal Sun highlights where expectations outpace available capacity.\n\nA title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.\n\nIf a demand feels immediate, start with the choice you can describe clearly. The contact is exact today. This reading falls in the middle part of the calculated window.",
+        "prompt": "What responsibility is currently asking for clearer boundaries? Which description of yourself is out of date?",
+        "citations": [
+          {
+            "paragraph": 1,
+            "facts": [
+              "C1",
+              "I1"
+            ]
+          },
+          {
+            "paragraph": 2,
+            "facts": [
+              "D1"
+            ]
+          },
+          {
+            "paragraph": 3,
+            "facts": [
+              "C1",
+              "P1",
+              "T1"
+            ]
+          }
+        ]
+      },
+      "template": {
+        "body": "An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.\n\nA title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.\n\nIf a demand feels immediate, start with the choice you can describe clearly.\n\nTiming: exact today. This reading falls in the middle part of the calculated window."
+      },
+      "manualReview": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "temporalCoherence": null,
+        "chapterIntegration": null,
+        "unsupportedHistory": null,
+        "promisedResolution": null,
+        "notes": null
+      }
+    }
+  },
+  "transports": [
+    {
+      "startedAt": "2026-10-12T06:10:36.838Z",
+      "httpStatus": 200,
+      "modelVersion": "gemini-3.8-flash",
+      "usageMetadata": {
+        "promptTokenCount": 2035,
+        "candidatesTokenCount": 208,
+        "totalTokenCount": 9437,
+        "thoughtsTokenCount": 7194
+      },
+      "observation": "observed"
+    }
+  ],
+  "settledAt": "2026-10-12T06:11:19.986Z"
+}

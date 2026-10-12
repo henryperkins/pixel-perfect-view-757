@@ -1,0 +1,94 @@
+{
+  "kind": "targeted-transit-writing-capture",
+  "interCallPauseMs": 30000,
+  "sourceRevision": "1f70941281a6deffc23481a2fda249f8292517da",
+  "trackedSourceSha256": "4390257f7e87fe6dbbf8f0dea512dcb0ba4d9ea6213bf08f6776baa6a42644ba",
+  "runnerSha256": "7dc4f2af7de541e75c8f841b0c140fdfb17ac5afbb9335a15f586d8a92787607",
+  "configured": true,
+  "provider": "gemini-enterprise",
+  "model": "gemini-enterprise/gemini-3.8-flash",
+  "bundleSource": "transit-candidate",
+  "bundleVersion": "builtin-0.7.0",
+  "promptVersion": "daily-astro-body-12",
+  "validatorVersion": "daily-reference-8",
+  "schedule": [
+    {
+      "sampleId": "sample-1",
+      "caseId": "arc-single-pass",
+      "repetition": 1
+    },
+    {
+      "sampleId": "sample-2",
+      "caseId": "arc-opening-three",
+      "repetition": 1
+    },
+    {
+      "sampleId": "sample-3",
+      "caseId": "arc-return-three",
+      "repetition": 1
+    },
+    {
+      "sampleId": "sample-4",
+      "caseId": "arc-closing-three",
+      "repetition": 1
+    },
+    {
+      "sampleId": "sample-5",
+      "caseId": "arc-between-passes",
+      "repetition": 1
+    },
+    {
+      "sampleId": "sample-6",
+      "caseId": "arc-synthesis-natal-integration",
+      "repetition": 1
+    },
+    {
+      "sampleId": "sample-7",
+      "caseId": "arc-truncated-scan",
+      "repetition": 1
+    }
+  ],
+  "maximumModelAttempts": 7,
+  "retries": 0,
+  "concurrency": 1,
+  "resumeSupported": false,
+  "servingDeadlineMs": 60000,
+  "runtimeDeadlineMs": 180000,
+  "runtimePolicyOverride": {
+    "kind": "extended-synthetic-runtime-deadline",
+    "servingDeadlineMs": 60000,
+    "runtimeDeadlineMs": 180000,
+    "servingAvailabilityEstablished": false,
+    "transformedModule": "src/lib/ai/diagnostics.ts",
+    "originalModuleSha256": "424e6ad736c167234852af7d94f5e992bba70f573a6d3c52d38fc7d6089014c5",
+    "transformedModuleSha256": "2701fac75c0bfdf57296c54ac2dc06c3b2c08d9a6908bda1533525fccb70f9d7",
+    "transformSpecification": {
+      "kind": "exact-source-substitution",
+      "module": "src/lib/ai/diagnostics.ts",
+      "from": "export const DAILY_GATEWAY_TIMEOUT_MS = 60_000;",
+      "to": "export const DAILY_GATEWAY_TIMEOUT_MS = 180_000;",
+      "expectedMatches": 1,
+      "scope": "this runner's Vite SSR module loader only",
+      "servingDeadlineMs": 60000,
+      "runtimeDeadlineMs": 180000
+    },
+    "transformSpecificationSha256": "fa47d6c2bf3ff407357a30f404c71e2acf584613e211a97d2c2025bce1ed5db6",
+    "nativeProviderFunctionOrPayloadTransformed": false
+  },
+  "fullBenchmarkClaim": false,
+  "executionContext": {
+    "kind": "local-production-module-synthetic-capture",
+    "nodeVersion": "v24.21.0",
+    "moduleLoader": "Vite ssrLoadModule",
+    "configFile": false,
+    "envFile": false,
+    "hostedWorkflowExecuted": false,
+    "adminAuthenticationVerified": false,
+    "memberProviderVerified": false,
+    "servingAvailabilityEstablished": false,
+    "databaseOrReadingCacheAccessed": false,
+    "candidatesActivated": false
+  },
+  "providerCallsMade": 0
+}
+

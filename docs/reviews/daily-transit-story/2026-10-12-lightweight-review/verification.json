@@ -1,0 +1,64 @@
+{
+  "sourceRevision": "66d0d64",
+  "applicationRevision": "b7255c4",
+  "checks": [
+    {
+      "file": "tests.txt",
+      "result": "pass",
+      "scope": "521 tests before current repairs",
+      "sha256": "800222c91cde2e6931e82de3a5646d1b14da986e8c04aaaa9d141b5266452401"
+    },
+    {
+      "file": "regressions-red-corrected.txt",
+      "result": "expected-fail",
+      "scope": "two regressions reproduced before repair",
+      "sha256": "f25e57650d6e21be3c7f46c8ab21337a9c20e62fdd5837e750be1726ae5cb5b9"
+    },
+    {
+      "file": "regressions-green.txt",
+      "result": "pass",
+      "scope": "78 focused tests after repair",
+      "sha256": "c83a1beda9cdd15ca8e862bc00ca164c8e7a164c397438c6d3f8662a9b499bb8"
+    },
+    {
+      "file": "tests-final.txt",
+      "result": "fail",
+      "scope": "522 passed; one stale version assertion",
+      "sha256": "1da591badcc5761e6c8b8c8b837b9071d80f2e87503c372464bdf030d0733bcd"
+    },
+    {
+      "file": "tests-complete.txt",
+      "result": "interrupted",
+      "scope": "unbounded-concurrency worker stalled during setup; worker terminated",
+      "sha256": "cf29af6fd48d2c09bdf92e361c8e03ef4b6ed84408e4287872461d590cb234b7"
+    },
+    {
+      "file": "tests-bounded.txt",
+      "result": "pass",
+      "scope": "523 tests; concurrency four; 120-second per-file bound",
+      "sha256": "8ade2cd5d298267c39a28225a84c2d91e83b78a55eea78eb50dc2d2fcbd10a7b"
+    },
+    {
+      "file": "typecheck-final.txt",
+      "result": "pass",
+      "scope": "TypeScript noEmit",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "lint-final.txt",
+      "result": "pass",
+      "scope": "all 18 changed app/test files against origin/main",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "build-final.txt",
+      "result": "pass",
+      "scope": "production build",
+      "sha256": "907a3d5c1707b8159c38678e7fc09958cdee3c91e21797624868fa40723ac169"
+    }
+  ],
+  "fullRepositoryLint": "Not rerun; prior record retains 7612 existing errors and 6 warnings in 32 unchanged files",
+  "paidReplays": 0,
+  "memberProviderVerified": false,
+  "nativeSourceQualified": false
+}

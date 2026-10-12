@@ -1,0 +1,70 @@
+✔ captured dropped qualifier rejects the entire draft but preserves lossless evidence (392.764498ms)
+✔ near-verbatim can offer cannot become offers (1.975753ms)
+✔ can remains a valid qualification of the same claim (1.217333ms)
+✔ near-verbatim may offer cannot become offers (0.540523ms)
+✔ may remains a valid qualification of the same claim (0.641492ms)
+✔ near-verbatim might offer cannot become offers (0.472564ms)
+✔ might remains a valid qualification of the same claim (0.618ms)
+✔ another qualified claim cannot conceal a dropped qualifier in the same sentence (0.553362ms)
+✖ published phase copy keeps its own can qualifier (2.100821ms)
+✔ near-verbatim may be cannot become are (0.542582ms)
+✔ supported categorical wording remains categorical (0.494533ms)
+✔ an unchanged categorical sentence alongside a modal sentence stays valid (0.436293ms)
+✔ changed subject or meaning is outside this bounded near-verbatim guard (0.72903ms)
+✔ negation and a modal immediately attached to the claim do not look like a dropped modal (0.72724ms)
+✔ eight positive fallback bodies are compact, deterministic and keep the lens in paragraph one (465.372179ms)
+✔ technical depth adds a bounded calculation passage without repeating standard filler (10.455047ms)
+✔ every natal-negative control and natal-free bundle retain the old non-natal assembly (109.324276ms)
+✔ same-key edits to either full source invalidate authored prose; unfamiliar pairs retain current copy (2.690693ms)
+✔ unfamiliar decimal punctuation and later primary conditions survive alongside synthesis (0.901158ms)
+✔ a synthesis fallback names both parent contacts before their published relationship (11.933415ms)
+✔ edited second-parent or synthesis copy keeps every published sentence before S1 (1.760775ms)
+✖ synthesis and P2 keep their conditions and distinct claims, with one exact A1 chronology (15.239791ms)
+✔ consented context and reflection stay separate from composed astronomical prose (2.069301ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 21
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1361.958675
+
+✖ failing tests:
+
+test at tests/reading-modality.test.mjs:116:1
+✖ published phase copy keeps its own can qualifier (2.100821ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'accepted'
+  - 'editorial_claim'
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/tests/reading-modality.test.mjs:121:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'accepted',
+    expected: 'editorial_claim',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/reading-natal-composition.test.mjs:256:1
+✖ synthesis and P2 keep their conditions and distinct claims, with one exact A1 chronology (15.239791ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(paragraphs(result)[0].includes(SATURN_SUN))
+  
+      at TestContext.<anonymous> (file:///home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/tests/reading-natal-composition.test.mjs:272:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

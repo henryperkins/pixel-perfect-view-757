@@ -1,0 +1,18 @@
+{
+  "beforeSourceRevision": "1f70941281a6deffc23481a2fda249f8292517da",
+  "afterSourceRevision": "b7255c46c973e0bd484ef813afb833c9b6de4457",
+  "templates": 8,
+  "providerCalls": 0,
+  "changes": [
+    {
+      "caseId": "arc-synthesis-natal-integration",
+      "changedParagraphs": [
+        1
+      ],
+      "paragraphCountBefore": 2,
+      "paragraphCountAfter": 2,
+      "wordsAfter": 157
+    }
+  ],
+  "bundleUnchanged": true
+}

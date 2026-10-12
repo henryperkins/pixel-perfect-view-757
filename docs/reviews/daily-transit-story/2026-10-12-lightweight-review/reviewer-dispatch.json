@@ -1,0 +1,15 @@
+{
+  "contextId": "writing-transit",
+  "packetPath": "/home/ubuntu/.local/state/pixel-perfect-view-757/combined-release/20261012/review-collection/blind/writing-transit/packet.json",
+  "outputPath": "/home/ubuntu/.local/state/pixel-perfect-view-757/combined-release/20261012/review-collection/blind/writing-transit/review.json",
+  "packetSha256": "3de9834177b6a4c5a90ba41ad06f0174b54cae1dace32f652bca9045444927a4",
+  "itemSetHash": "b9c17e094cae6597c54ca1c1e612526e225dc3845588e223db8cd28691c3aa42",
+  "promptPath": "/home/ubuntu/.local/state/pixel-perfect-view-757/combined-release/20261012/reviewer-prompt.txt",
+  "promptSha256": "bd871476e1c2c3a23864fe596ad07f606585b84115d2c736eff5c68d162e3a5d",
+  "dispatchAtUTC": "2026-10-12T06:13:02.850Z",
+  "fullDispatchMessageSha256": "9f32c984e8deeb2503f1b95fc29d57f230a62474133a9bf64b55db8559c8221d",
+  "dispatchMechanism": "Codex collaboration.spawn_agent with fork_turns none",
+  "actualTaskName": "/root/writing_transit",
+  "coordinatorHadUnblindedContext": true,
+  "reviewerToolAccessTechnicallySandboxed": false
+}

@@ -1,0 +1,1075 @@
+{
+  "kind": "targeted-transit-writing-review-result",
+  "sourceRevision": "b7255c46c973e0bd484ef813afb833c9b6de4457",
+  "packetSha256": "3de9834177b6a4c5a90ba41ad06f0174b54cae1dace32f652bca9045444927a4",
+  "promptSha256": "bd871476e1c2c3a23864fe596ad07f606585b84115d2c736eff5c68d162e3a5d",
+  "reviewSha256": "02ecdd1af8fc4c9f9356e93658336dd66a20f07849138095fc8a01f4fd50f67e",
+  "itemSetHash": "b9c17e094cae6597c54ca1c1e612526e225dc3845588e223db8cd28691c3aa42",
+  "reviewedDrafts": 15,
+  "passedDrafts": 3,
+  "unavailable": [],
+  "verdict": "fail",
+  "fullBenchmarkClaim": false,
+  "candidatesActivated": false,
+  "humanReviewCompleted": false,
+  "contrastChecks": [
+    {
+      "setId": "contrast-1",
+      "supported": true,
+      "explanation": "The supplied chapters produce distinct practical emphasis within the boundary scene: an opening keeps a response open while a small decision can leave room to learn; a return offers a smaller adjustment only if an earlier method no longer fits; a closing considers repeatability while usefulness remains reviewable. The numbered contacts are calculations and do not assert lived personal stages. The separate instruction findings do not make these meanings unsupported.",
+      "passages": [
+        {
+          "itemId": "item-08",
+          "paragraph": 2,
+          "passage": "Where a routine or responsibility needs clearer boundaries, this return offers a chance to try a smaller adjustment to a method or boundary if an earlier way of handling this no longer fits. This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+          "factIds": [
+            "I1",
+            "P2",
+            "A1"
+          ]
+        },
+        {
+          "itemId": "item-09",
+          "paragraph": 2,
+          "passage": "This is the third of three calculated contacts; the first exact contact falls in September 2026. When a routine or responsibility needs clearer boundaries, if a response seems workable, consider how you could repeat it in an ordinary commitment. Its usefulness can remain open to review.",
+          "factIds": [
+            "A1",
+            "I1",
+            "P2"
+          ]
+        },
+        {
+          "itemId": "item-13",
+          "paragraph": 1,
+          "passage": "If a new demand catches your attention, notice your response before treating it as settled; a small decision can leave room to learn. This is the first of three calculated contacts; the first exact contact falls in September 2026.",
+          "factIds": [
+            "P2",
+            "A1"
+          ]
+        }
+      ]
+    },
+    {
+      "setId": "contrast-2",
+      "supported": true,
+      "explanation": "The common demanding-role interpretation receives three distinct supplied chapter meanings: room to learn before a response is settled, a smaller adjustment if earlier handling no longer fits, and possible repetition of a workable response whose usefulness remains open. None requires a claim that those conditions have actually occurred for the reader. These source-supported contrasts remain distinct despite the directive-form findings on individual items.",
+      "passages": [
+        {
+          "itemId": "item-04",
+          "paragraph": 1,
+          "passage": "This is the third of three calculated contacts; the first exact contact falls in September 2026. If a response seems workable, consider how you could repeat it in an ordinary commitment. Its usefulness can remain open to review.",
+          "factIds": [
+            "A1",
+            "P2"
+          ]
+        },
+        {
+          "itemId": "item-02",
+          "paragraph": 1,
+          "passage": "This is the first of three calculated contacts; the first exact contact falls in September 2026. If a new demand catches your attention, notice your response before treating it as settled. A small decision can leave room to learn.",
+          "factIds": [
+            "A1",
+            "P2"
+          ]
+        },
+        {
+          "itemId": "item-05",
+          "paragraph": 1,
+          "passage": "This is the second of three calculated contacts; the first exact contact falls in September 2026. If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.",
+          "factIds": [
+            "A1",
+            "P2"
+          ]
+        }
+      ]
+    }
+  ],
+  "sourceQualificationEstablished": false,
+  "samples": [
+    {
+      "sampleId": "sample-1-template",
+      "caseId": "arc-single-pass",
+      "output": "template",
+      "itemId": "item-11",
+      "structuralOutcome": "unavailable",
+      "structuralCode": "not_configured",
+      "verdict": "fail",
+      "scores": {
+        "specificity": {
+          "score": 5,
+          "reason": "The scope of a commitment makes a possibly familiar demand concrete within the established-role scene."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "The wording retains the supplied single-contact statement and conditional familiarity rather than inventing prior experiences."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The opening links demanding obligations to commitment scope; the calculation briefly interrupts that practical connection but does not obscure it."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "The prose is clear and consistent with a plain reading."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "The repeated choice language in the phase paragraph overlaps somewhat with commitment scope but does not reproduce a complete paragraph."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "One calculated contact in a complete passage remains a calculation description, without turning 'complete' into personal closure."
+        },
+        "chapterIntegration": {
+          "score": 4,
+          "reason": "The chapter's familiar-demand condition is applied to the responsibility through the concrete scope of a commitment."
+        }
+      },
+      "findings": [
+        {
+          "findingId": "writing-transit-11-1",
+          "paragraph": 1,
+          "passage": "If a demand feels familiar, notice it in a concrete choice you can describe, such as the scope of a commitment.",
+          "supportingFactIds": [
+            "P2"
+          ],
+          "missingFactIds": [],
+          "category": "prohibited_instruction",
+          "severity": "substantive",
+          "explanation": "The condition and example are source-supported, but 'notice it' is a direct instruction. Source retention establishes grounding, not an exemption from the rubric's instruction prohibition.",
+          "proposedCorrection": "Describe commitment scope as a possible concrete expression of a familiar demand, without telling the reader to notice it."
+        },
+        {
+          "findingId": "writing-transit-11-2",
+          "paragraph": 3,
+          "passage": "If a demand feels immediate, start with the choice you can describe clearly.",
+          "supportingFactIds": [
+            "P1"
+          ],
+          "missingFactIds": [],
+          "category": "prohibited_instruction",
+          "severity": "substantive",
+          "explanation": "P1 supplies this sentence verbatim, so it is grounded, but the imperative 'start with' directs the reader's behavior. The rubric separately prohibits instructions; conditional framing and source support do not remove that instruction.",
+          "proposedCorrection": "Remove the directive; phase guidance is optional at standard depth."
+        }
+      ]
+    },
+    {
+      "sampleId": "sample-1",
+      "caseId": "arc-single-pass",
+      "output": "raw-model",
+      "itemId": "item-01",
+      "structuralOutcome": "accepted",
+      "structuralCode": "accepted",
+      "verdict": "fail",
+      "scores": {
+        "specificity": {
+          "score": 5,
+          "reason": "The scope of a commitment makes a possibly familiar demand concrete after the capacity-and-boundary distinction."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "The routine, established role, conditional familiar demand, calculated passage and title example are traceable to I1, P2, A1 and D1."
+        },
+        "coherence": {
+          "score": 5,
+          "reason": "The paragraphs separately establish the capacity problem, apply it to commitment scope and supply the title-versus-attention example."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "The prose is plain and readable; the source's practical example is easy to understand."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "The role language supports the commitment example rather than repeating a complete sentence, and the common D1 example is justified by the supplied framing."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "The single calculated contact does not become a claim of personal finality, while familiarity is left conditional."
+        },
+        "chapterIntegration": {
+          "score": 5,
+          "reason": "The demand of an established role is immediately connected to the chapter's concrete commitment-scope choice within paragraph 2."
+        }
+      },
+      "findings": [
+        {
+          "findingId": "writing-transit-01-1",
+          "paragraph": 2,
+          "passage": "If a demand feels familiar, notice it in a concrete choice you can describe, such as the scope of a commitment.",
+          "supportingFactIds": [
+            "P2"
+          ],
+          "missingFactIds": [],
+          "category": "prohibited_instruction",
+          "severity": "substantive",
+          "explanation": "This is fully supported source wording, but 'notice it' is still an instruction to the reader and falls under the rubric's instruction prohibition.",
+          "proposedCorrection": "Present the scope of a commitment as a possible concrete expression of a familiar demand, preserving the condition without an imperative."
+        }
+      ]
+    },
+    {
+      "sampleId": "sample-2-template",
+      "caseId": "arc-opening-three",
+      "output": "template",
+      "itemId": "item-02",
+      "structuralOutcome": "unavailable",
+      "structuralCode": "not_configured",
+      "verdict": "fail",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "A new demand is connected to an unsettled response and a small decision, providing a supported opening emphasis."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1, A1, P2, D1, P1 and T1 support the role scene, calculated first contact, conditional new demand, title example and timing."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The opening paragraph has a clear progression through role, calculation and response, although later one-sentence paragraphs make the structure formulaic."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "The plain voice preserves conditional language around the possible demand."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "The shared source copy is appropriate here, while the small-decision emphasis distinguishes the chapter."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "First of three is stated as a calculated count, and the text does not assert a first occurrence in the reader's life."
+        },
+        "chapterIntegration": {
+          "score": 4,
+          "reason": "The response to a possible new demand is included in the same primary role-and-responsibility scene, though the practical application remains broad."
+        }
+      },
+      "findings": [
+        {
+          "findingId": "writing-transit-02-1",
+          "paragraph": 1,
+          "passage": "If a new demand catches your attention, notice your response before treating it as settled.",
+          "supportingFactIds": [
+            "P2"
+          ],
+          "missingFactIds": [],
+          "category": "prohibited_instruction",
+          "severity": "substantive",
+          "explanation": "P2 supplies this exact wording, but 'notice your response' instructs the reader to act and is prohibited by the rubric's separate instruction rule.",
+          "proposedCorrection": "Retain the supported possibility that a small decision can leave room to learn, and connect that possibility to the demand without an imperative."
+        },
+        {
+          "findingId": "writing-transit-02-2",
+          "paragraph": 3,
+          "passage": "If a demand feels immediate, start with the choice you can describe clearly.",
+          "supportingFactIds": [
+            "P1"
+          ],
+          "missingFactIds": [],
+          "category": "prohibited_instruction",
+          "severity": "substantive",
+          "explanation": "P1 supplies this sentence verbatim, so it is grounded, but the imperative 'start with' directs the reader's behavior. The rubric separately prohibits instructions; conditional framing and source support do not remove that instruction.",
+          "proposedCorrection": "Remove the directive; phase guidance is optional at standard depth."
+        }
+      ]
+    },
+    {
+      "sampleId": "sample-2",
+      "caseId": "arc-opening-three",
+      "output": "raw-model",
+      "itemId": "item-13",
+      "structuralOutcome": "accepted",
+      "structuralCode": "accepted",
+      "verdict": "fail",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "The reading gives a supported opening emphasis through a possible new demand, an unsettled response and room to learn from a small decision."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1, P2, A1 and D1 support the capacity distinction, conditional demand, calculated first contact and title example; omitting the aspect name at standard depth does not add a claim."
+        },
+        "coherence": {
+          "score": 5,
+          "reason": "The compact first paragraph develops the practical tension and opening response before the second supplies a distinct title-versus-attention example."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "The plain tone is consistent, and the semicolon keeps the small-decision possibility close to its conditional context."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "The common title example follows shared D1, while the small-decision distinction gives the chapter its own emphasis."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "The first-of-three statement is explicitly calculated, and 'if a new demand' does not turn the first contact into an asserted personal beginning."
+        },
+        "chapterIntegration": {
+          "score": 4,
+          "reason": "P2's possible new demand and room to learn are developed alongside the primary role and capacity issue in paragraph 1."
+        }
+      },
+      "findings": [
+        {
+          "findingId": "writing-transit-13-1",
+          "paragraph": 1,
+          "passage": "If a new demand catches your attention, notice your response before treating it as settled; a small decision can leave room to learn.",
+          "supportingFactIds": [
+            "P2"
+          ],
+          "missingFactIds": [],
+          "category": "prohibited_instruction",
+          "severity": "substantive",
+          "explanation": "The small-decision possibility and conditional demand are supported, but 'notice your response' remains a direct instruction. Source support does not satisfy the separate no-instructions requirement.",
+          "proposedCorrection": "Retain the supported possibility that a small decision can leave room to learn, and present the response as conditional editorial framing without telling the reader what to notice."
+        }
+      ]
+    },
+    {
+      "sampleId": "sample-3-template",
+      "caseId": "arc-return-three",
+      "output": "template",
+      "itemId": "item-05",
+      "structuralOutcome": "unavailable",
+      "structuralCode": "not_configured",
+      "verdict": "fail",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "The possibility of a smaller method-or-boundary adjustment gives the return a supported distinction within the demanding-role scene."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "The interpretation, second contact, conditional earlier method, title example and timing all match their supplied sources."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The opening connects the primary role to the calculated return and possible adjustment; the later phase and timing paragraphs are clear but formulaic."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "The language is plain and retains the conditional framing of an earlier method that might no longer fit."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "The shared I1 and D1 wording is supported by identical facts, and the return-specific adjustment adds a separate practical point."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "A1's second-of-three count and first-contact month are retained as calculations without asserting that the reader previously handled an event."
+        },
+        "chapterIntegration": {
+          "score": 4,
+          "reason": "The conditional adjustment of a method or boundary follows I1's responsibility-and-boundary meaning in paragraph 1."
+        }
+      },
+      "findings": [
+        {
+          "findingId": "writing-transit-05-1",
+          "paragraph": 3,
+          "passage": "If a demand feels immediate, start with the choice you can describe clearly.",
+          "supportingFactIds": [
+            "P1"
+          ],
+          "missingFactIds": [],
+          "category": "prohibited_instruction",
+          "severity": "substantive",
+          "explanation": "P1 supplies this sentence verbatim, so it is grounded, but the imperative 'start with' directs the reader's behavior. The rubric separately prohibits instructions; conditional framing and source support do not remove that instruction.",
+          "proposedCorrection": "Remove the directive; phase guidance is optional at standard depth."
+        }
+      ]
+    },
+    {
+      "sampleId": "sample-3",
+      "caseId": "arc-return-three",
+      "output": "raw-model",
+      "itemId": "item-08",
+      "structuralOutcome": "accepted",
+      "structuralCode": "accepted",
+      "verdict": "fail",
+      "scores": {
+        "specificity": {
+          "score": 5,
+          "reason": "The text locates the return's smaller adjustment specifically in a routine or responsibility needing clearer boundaries."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "The role interpretation, conditional earlier-method mismatch, contact count and date are supported by I1, P2, A1 and T1."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The sequence moves from the practical tension to a conditional adjustment and then to timing; the return sentence is long but understandable."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "The language is direct and avoids treating the earlier way of handling matters as established biography."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "The boundary phrase recurs to integrate the chapter, and the shared opening with another item is justified by the same interpretation."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "The second-of-three statement concerns calculated contacts, while an earlier method's lack of fit remains explicitly conditional."
+        },
+        "chapterIntegration": {
+          "score": 5,
+          "reason": "P2 is applied directly to I1's routine-and-boundary scene, with a smaller adjustment distinguished from a claim that change has already happened."
+        }
+      },
+      "findings": [
+        {
+          "findingId": "writing-transit-08-1",
+          "paragraph": 3,
+          "passage": "If a demand feels immediate, start with the choice you can describe clearly.",
+          "supportingFactIds": [
+            "P1"
+          ],
+          "missingFactIds": [],
+          "category": "prohibited_instruction",
+          "severity": "substantive",
+          "explanation": "P1 supplies this sentence verbatim, so it is grounded, but the imperative 'start with' directs the reader's behavior. The rubric separately prohibits instructions; conditional framing and source support do not remove that instruction.",
+          "proposedCorrection": "Remove the directive; phase guidance is optional at standard depth."
+        }
+      ]
+    },
+    {
+      "sampleId": "sample-4-template",
+      "caseId": "arc-closing-three",
+      "output": "template",
+      "itemId": "item-04",
+      "structuralOutcome": "unavailable",
+      "structuralCode": "not_configured",
+      "verdict": "fail",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "Repeating a workable response in an ordinary commitment adds a source-supported closing emphasis to the capacity and boundary scene."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1, A1, P2, D1, P1 and T1 support every statement, including the conditional response and its continuing openness to review."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The opening paragraph connects the role, calculated sequence and repeatability of a response; its length and the later short phase paragraph make the pacing a little mechanical."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "The wording remains plain and readable, including the qualified language around a workable response."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "The shared interpretation and title framing fit the identical sources; the closing choice provides a relevant distinction."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "The third-of-three count and September first contact remain explicitly calculated, and the March date does not imply personal resolution."
+        },
+        "chapterIntegration": {
+          "score": 4,
+          "reason": "P2's ordinary commitment and repeatable response are placed within the opening responsibility-and-boundary scene, with usefulness still open to review."
+        }
+      },
+      "findings": [
+        {
+          "findingId": "writing-transit-04-1",
+          "paragraph": 1,
+          "passage": "If a response seems workable, consider how you could repeat it in an ordinary commitment.",
+          "supportingFactIds": [
+            "P2"
+          ],
+          "missingFactIds": [],
+          "category": "prohibited_instruction",
+          "severity": "substantive",
+          "explanation": "This is source-supported P2 wording, but 'consider how you could repeat it' is an instruction to the reader. The rubric prohibits instructions independently of whether their content is grounded.",
+          "proposedCorrection": "Express repetition as a conditional possibility: 'If a response seems workable, repeating it in an ordinary commitment is one possibility. Its usefulness can remain open to review.'"
+        },
+        {
+          "findingId": "writing-transit-04-2",
+          "paragraph": 3,
+          "passage": "If a demand feels immediate, start with the choice you can describe clearly.",
+          "supportingFactIds": [
+            "P1"
+          ],
+          "missingFactIds": [],
+          "category": "prohibited_instruction",
+          "severity": "substantive",
+          "explanation": "P1 supplies this sentence verbatim, so it is grounded, but the imperative 'start with' directs the reader's behavior. The rubric separately prohibits instructions; conditional framing and source support do not remove that instruction.",
+          "proposedCorrection": "Remove the directive; phase guidance is optional at standard depth."
+        }
+      ]
+    },
+    {
+      "sampleId": "sample-4",
+      "caseId": "arc-closing-three",
+      "output": "raw-model",
+      "itemId": "item-09",
+      "structuralOutcome": "accepted",
+      "structuralCode": "accepted",
+      "verdict": "fail",
+      "scores": {
+        "specificity": {
+          "score": 5,
+          "reason": "The closing emphasis is explicitly applied to a routine whose boundaries need clarification, making repeatability of a response concrete."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "The boundary scene, title mismatch, calculated count and reviewable response all trace to I1, D1, A1 and P2."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The first paragraph establishes the practical scene and the second develops the closing choice; the stacked conditional requires a small edit."
+        },
+        "voice": {
+          "score": 3,
+          "reason": "The phrase 'When ... if ... consider' is cumbersome within otherwise plain prose."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "The repeated mention of clearer boundaries performs a useful connection between the primary interpretation and chapter rather than adding an unrelated scene."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "The third calculated contact is distinguished from a merely possible workable response; there is no assertion that the reader has finished a process."
+        },
+        "chapterIntegration": {
+          "score": 5,
+          "reason": "The chapter directly applies its conditional repeatability distinction to the routine and boundary named in I1."
+        }
+      },
+      "findings": [
+        {
+          "findingId": "writing-transit-09-1",
+          "paragraph": 2,
+          "passage": "When a routine or responsibility needs clearer boundaries, if a response seems workable, consider how you could repeat it in an ordinary commitment.",
+          "supportingFactIds": [
+            "I1",
+            "P2"
+          ],
+          "missingFactIds": [],
+          "category": "prohibited_instruction",
+          "severity": "substantive",
+          "explanation": "The practical connection is supported, but 'consider how you could repeat it' still directs the reader's behavior. The no-instructions rule applies even though P2 supplies the underlying directive.",
+          "proposedCorrection": "Keep the boundary condition and describe repetition as an available possibility, retaining the following sentence that usefulness can remain open to review."
+        },
+        {
+          "findingId": "writing-transit-09-2",
+          "paragraph": 2,
+          "passage": "When a routine or responsibility needs clearer boundaries, if a response seems workable, consider how you could repeat it in an ordinary commitment.",
+          "supportingFactIds": [
+            "I1",
+            "P2"
+          ],
+          "missingFactIds": [],
+          "category": "voice",
+          "severity": "minor",
+          "explanation": "Two introductory conditions delay the main clause and make this practical distinction harder to read.",
+          "proposedCorrection": "Split the boundary condition from the conditional possibility of repeating a workable response."
+        }
+      ]
+    },
+    {
+      "sampleId": "sample-5-template",
+      "caseId": "arc-between-passes",
+      "output": "template",
+      "itemId": "item-03",
+      "structuralOutcome": "unavailable",
+      "structuralCode": "not_configured",
+      "verdict": "fail",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "The provisional decision and missing-information distinction gives the pause a practical meaning beyond merely naming a phase."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1, A1, P2, D1, P1 and T1 support the content, including the absence of a single exact date."
+        },
+        "coherence": {
+          "score": 3,
+          "reason": "The final two paragraphs are identical timing statements, so the reading stops advancing and repeats its ending."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "The sentences themselves remain clear and plain; the duplicated ending is a structural problem."
+        },
+        "repetition": {
+          "score": 2,
+          "reason": "Paragraphs 3 and 4 repeat the same complete sentence verbatim."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "The three calculated contacts and pause are retained without an invented date, pass position or personal resolution."
+        },
+        "chapterIntegration": {
+          "score": 4,
+          "reason": "The possible unsettled decision follows the demanding-role and boundary scene and introduces the chapter's provisional-information distinction."
+        }
+      },
+      "findings": [
+        {
+          "findingId": "writing-transit-03-1",
+          "paragraph": 1,
+          "passage": "If a decision remains unsettled, let it stay provisional while you notice what information would help.",
+          "supportingFactIds": [
+            "P2"
+          ],
+          "missingFactIds": [],
+          "category": "prohibited_instruction",
+          "severity": "substantive",
+          "explanation": "This reproduces P2, but 'let it stay provisional' tells the reader how to handle a decision. It is an instruction even though its condition and practical content are supported.",
+          "proposedCorrection": "Use a descriptive possibility, such as 'If a decision remains unsettled, a pause can leave room to reconsider what information would help.'"
+        },
+        {
+          "findingId": "writing-transit-03-2",
+          "paragraph": 4,
+          "passage": "Timing: between calculated contacts in the connected current window.",
+          "supportingFactIds": [
+            "P1",
+            "T1"
+          ],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "Paragraph 4 duplicates paragraph 3 exactly and contributes no additional thought. The fact that both supplied sources use this sentence does not make two identical paragraphs useful.",
+          "proposedCorrection": "Delete one of the two identical timing paragraphs."
+        }
+      ]
+    },
+    {
+      "sampleId": "sample-5",
+      "caseId": "arc-between-passes",
+      "output": "raw-model",
+      "itemId": "item-14",
+      "structuralOutcome": "accepted",
+      "structuralCode": "accepted",
+      "verdict": "fail",
+      "scores": {
+        "specificity": {
+          "score": 5,
+          "reason": "Reconsidering where a routine needs clearer boundaries gives the pause and provisional decision a concrete practical focus."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "The interpretation, calculated pause, possible reconsideration and title example are supported by I1, A1, P2 and D1."
+        },
+        "coherence": {
+          "score": 5,
+          "reason": "The paragraphs advance from demanding roles to reconsidering boundaries during a pause, then to the concrete gap between a title and occupied time."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "The wording is plain and readable, including the explicitly conditional unsettled decision."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "The recurrence of boundaries connects the chapter to the interpretation; there is no duplicated timing paragraph."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "The episode's three contacts and pause remain calculated descriptions, and no exact day or personal completion is invented."
+        },
+        "chapterIntegration": {
+          "score": 5,
+          "reason": "P2's reconsideration is explicitly applied to the routine's boundaries before the provisional decision is introduced."
+        }
+      },
+      "findings": [
+        {
+          "findingId": "writing-transit-14-1",
+          "paragraph": 2,
+          "passage": "If a decision remains unsettled, let it stay provisional while you notice what information would help.",
+          "supportingFactIds": [
+            "P2"
+          ],
+          "missingFactIds": [],
+          "category": "prohibited_instruction",
+          "severity": "substantive",
+          "explanation": "The content is directly supported by P2, but the imperative tells the reader to keep a decision provisional and therefore violates the independent no-instructions rule.",
+          "proposedCorrection": "Describe the pause as a possible opportunity to reconsider the unsettled decision and the information that would help, preserving 'can' rather than directing an action."
+        }
+      ]
+    },
+    {
+      "sampleId": "sample-6-template",
+      "caseId": "arc-synthesis-natal-integration",
+      "output": "template",
+      "itemId": "item-06",
+      "structuralOutcome": "unavailable",
+      "structuralCode": "not_configured",
+      "verdict": "pass",
+      "scores": {
+        "specificity": {
+          "score": 5,
+          "reason": "Competing projects within a role, growing task ambitions and the structure needed to carry greater scope form concrete source-supported distinctions."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1, N1, A1, I2, S1 and P2 support the practical scene, conditional curiosity lens, contact count, expansion-versus-structure relationship and possible smaller adjustment."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "Two dense paragraphs connect the role and project choices to expanding work; the chapter at the end remains understandable through the boundary relationship."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "The voice is plain and conditional, though the opening aspect name and several successive source statements make it somewhat formal."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "The sampling, expansion and boundary distinctions each add relevant content; shared wording with the other synthesis item follows shared facts."
+        },
+        "synthesisCoherence": {
+          "score": 5,
+          "reason": "The possibility that greater scope requires more structure explicitly connects the Jupiter expansion meaning with Saturn's limits using S1."
+        },
+        "lensIntegration": {
+          "score": 5,
+          "reason": "N1's sampling-versus-choosing distinction is applied to projects within the established role in paragraph 1 and remains conditional."
+        },
+        "temporalCoherence": {
+          "score": 4,
+          "reason": "The second-of-three count is clearly attached to the Saturn paragraph and no personal history is asserted; the later 'this return' relies on that preceding anchor."
+        },
+        "chapterIntegration": {
+          "score": 4,
+          "reason": "The smaller method-or-boundary adjustment follows the task's ambitions exceeding agreed limits, which S1 connects to I1's boundary concern."
+        }
+      },
+      "findings": []
+    },
+    {
+      "sampleId": "sample-6",
+      "caseId": "arc-synthesis-natal-integration",
+      "output": "raw-model",
+      "itemId": "item-12",
+      "structuralOutcome": "accepted",
+      "structuralCode": "accepted",
+      "verdict": "pass",
+      "scores": {
+        "specificity": {
+          "score": 5,
+          "reason": "Projects competing for one afternoon, the stages of sampling and choosing, and a task growing beyond agreed limits give the reading concrete practical distinctions."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1 supports the boundary need, N1 supports the conditional project lens, A1/P2 support the return, and I2/S1 support the expansion-and-structure relationship without strengthened modality."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The first paragraph links the primary responsibility, natal lens and chapter, while the second develops the other contact and synthesis; the first is dense."
+        },
+        "voice": {
+          "score": 3,
+          "reason": "The phrase 'as transiting Saturn square natal Sun highlights' is grammatically awkward in otherwise straightforward prose."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "The project-choice and plan-scope material adds distinct supported thoughts despite sharing the same sources with another item."
+        },
+        "synthesisCoherence": {
+          "score": 5,
+          "reason": "S1's greater-scope-versus-required-structure relationship is stated explicitly after the Jupiter interpretation and connects back to the initial boundary need."
+        },
+        "lensIntegration": {
+          "score": 5,
+          "reason": "The conditional projects are explicitly projects for the responsibility described in I1, integrating N1's sampling-versus-choosing lens without assigning a temperament."
+        },
+        "temporalCoherence": {
+          "score": 5,
+          "reason": "The second of three calculated contacts is anchored within the Saturn scene; the earlier handling method remains an if-condition rather than known history."
+        },
+        "chapterIntegration": {
+          "score": 4,
+          "reason": "The return's possible smaller adjustment stays within the primary responsibility and project-choice paragraph, though the adjustment itself remains broadly phrased."
+        }
+      },
+      "findings": [
+        {
+          "findingId": "writing-transit-12-1",
+          "paragraph": 1,
+          "passage": "as transiting Saturn square natal Sun highlights.",
+          "supportingFactIds": [
+            "C1",
+            "I1"
+          ],
+          "missingFactIds": [],
+          "category": "voice",
+          "severity": "minor",
+          "explanation": "The aspect phrase lacks the possessive and connective wording needed to work naturally as the sentence's subject.",
+          "proposedCorrection": "Use 'as transiting Saturn's square to the natal Sun highlights.'"
+        }
+      ]
+    },
+    {
+      "sampleId": "sample-7-template",
+      "caseId": "arc-truncated-scan",
+      "output": "template",
+      "itemId": "item-15",
+      "structuralOutcome": "unavailable",
+      "structuralCode": "not_configured",
+      "verdict": "fail",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "The capacity-versus-expectations distinction and the gap between a title and actual responsibilities make the selected contact practically recognizable."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "The role, title, phase and timing statements reproduce I1, D1, P1 and T1 without inventing a personal event or strengthening a claim."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The reading moves from a demanding role to a concrete title mismatch and then to phase and timing, with a somewhat formulaic ending."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "The sentences are clear and consistent with the requested plain tone."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "The shared title language is supported by shared D1; this item does not duplicate a complete thought internally."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": null,
+          "reason": "No A1 supplied."
+        },
+        "chapterIntegration": {
+          "score": null,
+          "reason": "No P2 supplied."
+        }
+      },
+      "findings": [
+        {
+          "findingId": "writing-transit-15-1",
+          "paragraph": 3,
+          "passage": "If a demand feels immediate, start with the choice you can describe clearly.",
+          "supportingFactIds": [
+            "P1"
+          ],
+          "missingFactIds": [],
+          "category": "prohibited_instruction",
+          "severity": "substantive",
+          "explanation": "P1 supplies this sentence verbatim, so it is grounded, but the imperative 'start with' directs the reader's behavior. The rubric separately prohibits instructions; conditional framing and source support do not remove that instruction.",
+          "proposedCorrection": "Remove the directive; phase guidance is optional at standard depth."
+        }
+      ]
+    },
+    {
+      "sampleId": "sample-7",
+      "caseId": "arc-truncated-scan",
+      "output": "raw-model",
+      "itemId": "item-07",
+      "structuralOutcome": "accepted",
+      "structuralCode": "accepted",
+      "verdict": "fail",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "The role-capacity mismatch and the title-versus-week example provide useful practical detail."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "I1 supports the primary interpretation, D1 supports the everyday example, and P1/T1 support the phase and exact-today wording."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The role and title progression is clear, although the opening repeats its capacity premise before moving on."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "The tone is consistently plain, with only the repeated opening premise making it feel less natural."
+        },
+        "repetition": {
+          "score": 3,
+          "reason": "Paragraph 1 states that expectations outpace available capacity twice; the later occurrence adds the contact name but repeats the same practical point."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "No N1 supplied."
+        },
+        "temporalCoherence": {
+          "score": null,
+          "reason": "No A1 supplied."
+        },
+        "chapterIntegration": {
+          "score": null,
+          "reason": "No P2 supplied."
+        }
+      },
+      "findings": [
+        {
+          "findingId": "writing-transit-07-1",
+          "paragraph": 1,
+          "passage": "Transiting Saturn's square to the natal Sun highlights where expectations outpace available capacity.",
+          "supportingFactIds": [
+            "C1",
+            "I1"
+          ],
+          "missingFactIds": [],
+          "category": "repetition",
+          "severity": "minor",
+          "explanation": "This repeats the capacity-versus-expectations premise already stated in the paragraph's first sentence.",
+          "proposedCorrection": "Name the contact within the first statement and remove the repeated final sentence."
+        },
+        {
+          "findingId": "writing-transit-07-2",
+          "paragraph": 3,
+          "passage": "If a demand feels immediate, start with the choice you can describe clearly.",
+          "supportingFactIds": [
+            "P1"
+          ],
+          "missingFactIds": [],
+          "category": "prohibited_instruction",
+          "severity": "substantive",
+          "explanation": "P1 supplies this sentence verbatim, so it is grounded, but the imperative 'start with' directs the reader's behavior. The rubric separately prohibits instructions; conditional framing and source support do not remove that instruction.",
+          "proposedCorrection": "Remove the directive; phase guidance is optional at standard depth."
+        }
+      ]
+    },
+    {
+      "sampleId": "quiet-template",
+      "caseId": "quiet-threshold",
+      "output": "template",
+      "itemId": "item-10",
+      "structuralOutcome": "skipped",
+      "structuralCode": "no_cycle",
+      "verdict": "pass",
+      "scores": {
+        "specificity": {
+          "score": null,
+          "reason": "Quiet item has no model writing to score."
+        },
+        "grounding": {
+          "score": null,
+          "reason": "Quiet item is assessed through quietCheck."
+        },
+        "coherence": {
+          "score": null,
+          "reason": "Quiet item has no model writing to score."
+        },
+        "voice": {
+          "score": null,
+          "reason": "Quiet item has no model writing to score."
+        },
+        "repetition": {
+          "score": null,
+          "reason": "Quiet item has no model writing to score."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "Quiet item has no model writing to score."
+        },
+        "lensIntegration": {
+          "score": null,
+          "reason": "Quiet item has no model writing to score."
+        },
+        "temporalCoherence": {
+          "score": null,
+          "reason": "Quiet item has no model writing to score."
+        },
+        "chapterIntegration": {
+          "score": null,
+          "reason": "Quiet item has no model writing to score."
+        }
+      },
+      "findings": []
+    }
+  ]
+}
