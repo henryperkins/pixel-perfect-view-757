@@ -1,7 +1,9 @@
 {
-  "README.md": "03d024d0cbdbc3ecf19c766c92dacd1bab0ea60dbef2db376f9d55dc932a2d4e",
+  "README.md": "e89156d14b3da403d573f2e7b588e78c051bbaecafb27e75d3d748adaeba4ec8",
   "before-fix-live.json": "faafcf5d25acfa1fd82f0b41d1bb0de95e985ea129cbf0e8f30ead6d756af443",
+  "cleanup.json": "3f5fa45a8f77c2058a116c59d8c2569c34ff72ba970cb49322bee264f0dd5d45",
   "green.txt": "acd5fdb9ddc2727489f310e602f79ead325e5d222129e5a0ace187a72741d7fb",
+  "publication.json": "a44d5b402bc083cf0c767d719f8e0b629272506289bc56ca8bbef0e39d219494",
   "red.txt": "8dfd695caecb4070537fde3d2f34ec2cc51d74f5bbb32e75864b3509f5bdb59b",
-  "validation.json": "98f6a537955c00e97616cdbba801794123ac18715db85bdb35bcf83bab7d66df"
+  "validation.json": "1ca1d956c15c525a30d7ff04842711e07bd209a37ea79ed70625b1c9003de48d"
 }

@@ -44,5 +44,23 @@
     "rowsPerInsert": 14,
     "maxBoundParametersPerInsert": 98,
     "readOnlyLive101ParameterProbe": "rejected with too many SQL variables"
+  },
+  "integratedRevision": {
+    "sourceCommit": "f3eb0ceeee24b1ee5da8197d47b1b13560c14f20",
+    "preservedMainCommit": "3092f6b6845cce07e61f6042a74dede3e8212f88",
+    "tests": {
+      "pass": 561,
+      "fail": 0,
+      "skipped": 0,
+      "logSha256": "94d2b339857e34300639fb28d14c3843a24c4ade943e893af686142f2b4fc2fb"
+    },
+    "typecheck": "pass",
+    "scopedLint": "pass",
+    "build": "pass",
+    "sourceHashes": {
+      "src/lib/pattern.server.ts": "ca795fc948f91bebd9c261a05e2b3396aca1a618c8b6815d7a903ebed5cfe173",
+      "tests/reading-provenance-limit.test.mjs": "f21a70a75fe04b0ecd78b2984cc0be1a22629c4268023692398b72af88cf1b7b",
+      "tests/helpers/records-harness.mjs": "b72b5a62a239bfeaa5615225595884b3d355c49bd0de0f099eb5d493b72e6bb1"
+    }
   }
 }
