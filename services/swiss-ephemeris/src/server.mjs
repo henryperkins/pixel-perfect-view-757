@@ -15,20 +15,29 @@ function readBody(req) {
     let size = 0,
       body = "",
       failed = false;
+    const cleanup = () => {
+      clearTimeout(timer);
+      req.off("data", onData);
+      req.off("end", onEnd);
+      req.off("error", onError);
+      req.off("aborted", onError);
+    };
     const fail = (message) => {
       if (!failed) {
         failed = true;
+        cleanup();
+        req.pause();
         reject(new Error(message));
       }
     };
     const timer = setTimeout(() => fail("request_timeout"), 1500);
-    req.on("data", (chunk) => {
+    function onData(chunk) {
       size += chunk.length;
       if (size > MAX_BODY) fail("body_limit");
       else if (!failed) body += chunk.toString("utf8");
-    });
-    req.on("end", () => {
-      clearTimeout(timer);
+    }
+    function onEnd() {
+      cleanup();
       if (!failed) {
         try {
           resolve(JSON.parse(body));
@@ -36,15 +45,14 @@ function readBody(req) {
           fail("invalid_request");
         }
       }
-    });
-    req.on("error", () => {
-      clearTimeout(timer);
+    }
+    function onError() {
       fail("invalid_request");
-    });
-    req.on("aborted", () => {
-      clearTimeout(timer);
-      fail("invalid_request");
-    });
+    }
+    req.on("data", onData);
+    req.on("end", onEnd);
+    req.on("error", onError);
+    req.on("aborted", onError);
   });
 }
 export function createServer({
@@ -63,12 +71,17 @@ export function createServer({
   const server = httpServer(async (req, res) => {
     const reply = (status, value) => {
       if (res.destroyed || res.writableEnded) return;
+      const unfinishedUpload = !req.complete;
+      if (unfinishedUpload) req.pause();
       res.writeHead(status, {
         "content-type": "application/json",
         "cache-control": "no-store",
         "x-content-type-options": "nosniff",
+        ...(unfinishedUpload ? { connection: "close" } : {}),
       });
-      res.end(JSON.stringify(value));
+      res.end(JSON.stringify(value), () => {
+        if (unfinishedUpload) req.destroy();
+      });
     };
     const path = req.url?.split("?")[0];
     if (req.method === "GET" && path === "/health")

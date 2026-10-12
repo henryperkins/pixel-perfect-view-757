@@ -74,3 +74,31 @@ test("changed ephemeris bytes are rejected before calculation", () => {
     rmSync(folder, { recursive: true, force: true });
   }
 });
+test("unpinned Swiss time-conversion files cannot retain qualified source identity", () => {
+  for (const name of ["swe_deltat.txt", "sedeltat.txt", "seleapsec.txt"]) {
+    const folder = mkdtempSync(join(tmpdir(), "pattern-ephe-extra-"));
+    try {
+      cpSync(new URL("../data/ephe/", import.meta.url), folder, { recursive: true });
+      writeFileSync(join(folder, name), "1990 3600\n1991 3600\n");
+      assert.throws(() => createEngine({ ephemerisPath: folder }), /ephemeris_integrity/, name);
+    } finally {
+      rmSync(folder, { recursive: true, force: true });
+    }
+  }
+});
+test("native environment path cannot override the directory that was verified", () => {
+  const old = process.env.SE_EPHE_PATH;
+  const folder = mkdtempSync(join(tmpdir(), "pattern-ephe-env-"));
+  try {
+    cpSync(new URL("../data/ephe/", import.meta.url), folder, { recursive: true });
+    process.env.SE_EPHE_PATH = folder;
+    assert.throws(
+      () => createEngine({ ephemerisPath: new URL("../data/ephe/", import.meta.url).pathname }),
+      /ephemeris_integrity/,
+    );
+  } finally {
+    if (old === undefined) delete process.env.SE_EPHE_PATH;
+    else process.env.SE_EPHE_PATH = old;
+    rmSync(folder, { recursive: true, force: true });
+  }
+});

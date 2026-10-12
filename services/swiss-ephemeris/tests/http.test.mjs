@@ -5,6 +5,7 @@ import { createEngine } from "../src/engine.mjs";
 import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { readFileSync } from "node:fs";
+import { connect } from "node:net";
 const servers = [];
 const key = "synthetic-test-key-32-characters-minimum";
 async function start(options = {}) {
@@ -93,6 +94,53 @@ test("slow calculations are terminated and admission is bounded", async () => {
   assert.deepEqual(await response.json(), { error: "time_limit" });
   await new Promise((r) => setTimeout(r, 30));
   assert.equal((await post(`${base}/v1/chart`, chart)).status, 504);
+});
+test("rejected streaming bodies close the connection promptly after their error response", async () => {
+  const base = await start();
+  for (const scenario of ["unauthenticated", "oversized", "timeout"]) {
+    const url = new URL(base);
+    await new Promise((resolve, reject) => {
+      const socket = connect(Number(url.port), url.hostname);
+      let response = "",
+        keepAlive,
+        finished = false;
+      const deadline = setTimeout(
+        () => finish(new Error(`${scenario}: rejected upload stayed open`)),
+        2500,
+      );
+      function finish(error) {
+        if (finished) return;
+        finished = true;
+        clearTimeout(deadline);
+        clearInterval(keepAlive);
+        socket.destroy();
+        if (error) reject(error);
+        else resolve();
+      }
+      socket.on("error", finish);
+      socket.on("data", (bytes) => {
+        response += bytes.toString();
+      });
+      socket.on("close", () => {
+        const expected =
+          scenario === "unauthenticated" ? 401 : scenario === "oversized" ? 413 : 504;
+        try {
+          assert.match(response, new RegExp(`HTTP/1.1 ${expected}`));
+          finish();
+        } catch (error) {
+          finish(error);
+        }
+      });
+      socket.on("connect", () => {
+        const credential = scenario === "unauthenticated" ? "" : `X-Api-Key: ${key}\r\n`;
+        socket.write(
+          `POST /v1/chart HTTP/1.1\r\nHost: localhost\r\nContent-Type: application/json\r\n${credential}Transfer-Encoding: chunked\r\n\r\n`,
+        );
+        if (scenario === "oversized") socket.write(`2328\r\n${"x".repeat(9000)}\r\n`);
+        keepAlive = setInterval(() => socket.write("1\r\nx\r\n"), 100);
+      });
+    });
+  }
 });
 test("public source offer serves the complete service archive without private environment files", async () => {
   const root = fileURLToPath(new URL("../", import.meta.url));

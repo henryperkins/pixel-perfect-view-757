@@ -44,7 +44,7 @@
     {
       "id": "jupiter-single-direct",
       "pass": true,
-      "durationMs": 65.364386,
+      "durationMs": 65.85826300000001,
       "evaluations": 3362,
       "trackPoints": 19201,
       "contacts": 1,
@@ -56,7 +56,7 @@
     {
       "id": "jupiter-repeat-minus-branch",
       "pass": true,
-      "durationMs": 118.14280600000006,
+      "durationMs": 126.07785200000001,
       "evaluations": 5207,
       "trackPoints": 28801,
       "contacts": 3,
@@ -68,7 +68,7 @@
     {
       "id": "jupiter-station-near",
       "pass": true,
-      "durationMs": 100.32863900000007,
+      "durationMs": 127.3134849999999,
       "evaluations": 4340,
       "trackPoints": 24001,
       "contacts": 3,
@@ -80,7 +80,7 @@
     {
       "id": "saturn-single-direct",
       "pass": true,
-      "durationMs": 60.739749000000074,
+      "durationMs": 69.61576200000036,
       "evaluations": 3423,
       "trackPoints": 19201,
       "contacts": 1,
@@ -92,7 +92,7 @@
     {
       "id": "saturn-repeat-minus-branch",
       "pass": true,
-      "durationMs": 107.937455,
+      "durationMs": 160.80908799999997,
       "evaluations": 5193,
       "trackPoints": 28801,
       "contacts": 3,
@@ -104,7 +104,7 @@
     {
       "id": "saturn-station-near",
       "pass": true,
-      "durationMs": 98.7027909999997,
+      "durationMs": 117.99812199999997,
       "evaluations": 4328,
       "trackPoints": 24001,
       "contacts": 3,
@@ -116,7 +116,7 @@
     {
       "id": "uranus-single-direct",
       "pass": true,
-      "durationMs": 57.990208000000166,
+      "durationMs": 70.50709799999959,
       "evaluations": 3515,
       "trackPoints": 19201,
       "contacts": 1,
@@ -128,7 +128,7 @@
     {
       "id": "uranus-repeat-minus-branch",
       "pass": true,
-      "durationMs": 116.14065200000005,
+      "durationMs": 133.68780900000002,
       "evaluations": 5206,
       "trackPoints": 28801,
       "contacts": 3,
@@ -140,7 +140,7 @@
     {
       "id": "uranus-station-near",
       "pass": true,
-      "durationMs": 97.09988299999941,
+      "durationMs": 100.50478999999996,
       "evaluations": 4404,
       "trackPoints": 24001,
       "contacts": 3,
@@ -152,7 +152,7 @@
     {
       "id": "neptune-direct-five",
       "pass": true,
-      "durationMs": 178.8542470000002,
+      "durationMs": 180.70665699999972,
       "evaluations": 7137,
       "trackPoints": 38401,
       "contacts": 5,
@@ -164,7 +164,7 @@
     {
       "id": "neptune-repeat-minus-branch",
       "pass": true,
-      "durationMs": 107.36775399999988,
+      "durationMs": 108.1304570000002,
       "evaluations": 5238,
       "trackPoints": 28801,
       "contacts": 3,
@@ -176,7 +176,7 @@
     {
       "id": "neptune-station-near",
       "pass": true,
-      "durationMs": 187.0489459999999,
+      "durationMs": 189.2014419999996,
       "evaluations": 6195,
       "trackPoints": 33601,
       "contacts": 5,
@@ -188,7 +188,7 @@
     {
       "id": "pluto-direct-five",
       "pass": true,
-      "durationMs": 176.7943949999999,
+      "durationMs": 181.26860899999974,
       "evaluations": 7138,
       "trackPoints": 38401,
       "contacts": 5,
@@ -200,7 +200,7 @@
     {
       "id": "pluto-repeat-minus-branch",
       "pass": true,
-      "durationMs": 113.02038600000014,
+      "durationMs": 112.40222799999901,
       "evaluations": 5259,
       "trackPoints": 28801,
       "contacts": 3,
@@ -212,7 +212,7 @@
     {
       "id": "pluto-station-near",
       "pass": true,
-      "durationMs": 185.89026099999955,
+      "durationMs": 188.6192289999999,
       "evaluations": 6155,
       "trackPoints": 33601,
       "contacts": 5,
@@ -223,7 +223,7 @@
     }
   ],
   "sourceHashes": {
-    "../src/engine.mjs": "b85d73a45660a3609722583ddc73d7ba2349c8bc87680782324305c458a95436",
+    "../src/engine.mjs": "05f1395009012203de1ebeae0c75b28473278f3fc6dac084fd6a76b08776451d",
     "../src/track.mjs": "24b424ef02bc980ae032b1ce3cc015c2b3a9c1d79f7f762f8d7769a7244c9a95",
     "../src/episodes.mjs": "3073465e1a3d6f86ada6cd75f8cfb110f468439d812b8d0abb4e471c68aa6ddb",
     "./reference.mjs": "11b7579ce98671ca5fcf28b07724097bca17322e240fdcdac8fe58366044f0bc",

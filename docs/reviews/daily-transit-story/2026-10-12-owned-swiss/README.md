@@ -20,4 +20,4 @@ node services/swiss-ephemeris/scripts/qualify.mjs docs/reviews/daily-transit-sto
 node --test tests/owned-swiss-service.test.mjs
 ```
 
-The qualifier reuses `cases.json` when present. Recorded candidate computation took approximately 58–187 ms and 3,362–7,138 position evaluations on the development host. These are in-process measurements; cold process startup, HTTP latency and deployed limits require the separate deployment receipt. Hosting, application secret configuration and content activation are distinct gates and are not established by these local files.
+The qualifier reuses `cases.json` when present. Recorded candidate computation took approximately 65–190 ms and 3,362–7,138 position evaluations on the development host. These are in-process measurements; cold process startup, HTTP latency and deployed limits require the separate deployment receipt. Hosting, application secret configuration and content activation are distinct gates and are not established by these local files.

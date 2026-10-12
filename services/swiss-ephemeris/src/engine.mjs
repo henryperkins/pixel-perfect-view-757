@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync, realpathSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { join } from "node:path";
@@ -73,6 +73,21 @@ export function createEngine({
   ephemerisPath = process.env.SE_EPHE_PATH ||
     fileURLToPath(new URL("../data/ephe/", import.meta.url)),
 } = {}) {
+  // Swiss can load auxiliary time-conversion files and override its path from
+  // SE_EPHE_PATH. Only the two reviewed files may influence this source.
+  try {
+    ephemerisPath = realpathSync(ephemerisPath);
+    if (process.env.SE_EPHE_PATH && realpathSync(process.env.SE_EPHE_PATH) !== ephemerisPath)
+      throw new Error("path_override");
+    const entries = readdirSync(ephemerisPath, { withFileTypes: true });
+    if (
+      entries.length !== manifest.files.length ||
+      entries.some((entry) => !entry.isFile() || !manifest.files.some((f) => f.name === entry.name))
+    )
+      throw new Error("unpinned_input");
+  } catch {
+    throw new Error("ephemeris_integrity");
+  }
   for (const file of manifest.files) {
     let bytes;
     try {
