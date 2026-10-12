@@ -1,0 +1,9 @@
+Bundled 109 modules in 13ms
+
+  workerd-probe.js    217.37 KB  (entry point)
+  workerd-fixture.js  29.59 KB   (entry point)
+
+workerd/server/server.c++:8201: debug: [ TEST ] app
+Runtime diagnostic: Invalid redirect value, must be one of "follow" or "manual" ("error" won't be implemented since it does not make sense at the edge; use "manual" and check the response status code).
+PASS: the app adapter accepts the valid scan in workerd
+workerd/server/server.c++:8215: debug: [ PASS ] app (6.623499ms)

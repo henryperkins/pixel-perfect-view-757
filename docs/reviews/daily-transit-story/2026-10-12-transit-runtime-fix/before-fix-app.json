@@ -1,0 +1,64 @@
+{
+  "sourceCommit": "88459665485e6b4a229da58ff5715940cc54b2b9",
+  "activatedAt": "2026-10-12T09:06:29.676Z",
+  "activation": [
+    {
+      "changes": 1,
+      "rows": []
+    },
+    {
+      "changes": 2,
+      "rows": []
+    },
+    {
+      "changes": 0,
+      "rows": [
+        {
+          "version": "0.7.1",
+          "checksum": "20b793acda524da945b07ec32b2ed795f31e273c533ff6b4e9c4f96ef821eeac",
+          "is_active": 1
+        }
+      ]
+    },
+    {
+      "changes": 0,
+      "rows": [
+        {
+          "version": "0.7.1",
+          "checksum": "20b793acda524da945b07ec32b2ed795f31e273c533ff6b4e9c4f96ef821eeac",
+          "is_active": 1
+        }
+      ]
+    }
+  ],
+  "rolledBackAt": "2026-10-12T09:07:06.358Z",
+  "rollback": [
+    [],
+    [
+      {
+        "version": "editorial-1.0.0",
+        "checksum": null,
+        "is_active": 1
+      }
+    ]
+  ],
+  "probe": {
+    "durationMs": 1051.49583,
+    "computedAt": "2026-10-12T09:06:30.708Z",
+    "primary": "jupiter_square_midheaven",
+    "ephemeris": {
+      "engine": "swiss-ephemeris@2.10.03",
+      "precision": "high",
+      "degraded": false,
+      "degradedReason": null,
+      "transitEngine": "kepler-approx@1.0.0",
+      "eventTiming": null
+    },
+    "storyCalculation": {
+      "status": "omitted",
+      "reason": "service_unavailable"
+    }
+  },
+  "userConfirmedSettingsAndRepublished": true,
+  "modelCalls": 0
+}

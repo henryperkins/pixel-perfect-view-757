@@ -1,0 +1,7 @@
+workerd/server/server.c++:8201: debug: [ TEST ] app
+Runtime diagnostic: Invalid redirect value, must be one of "follow" or "manual" ("error" won't be implemented since it does not make sense at the edge; use "manual" and check the response status code).
+workerd/io/worker.c++:2586: info: uncaught exception; source = Uncaught (in promise); stack = Error: Valid episode request was rejected before the fixture could return its scan: {"status":"unavailable","reason":"transport"}
+    at Object.test (worker.mjs:7058:13)
+workerd/io/io-context.c++:494: info: uncaught exception; exception = workerd/jsg/_virtual_includes/iterator/workerd/jsg/value.h:1489: failed: jsg.Error: Valid episode request was rejected before the fixture could return its scan: {"status":"unavailable","reason":"transport"}
+workerd/server/server.c++:8215: debug: [ FAIL ] app (4.853334ms)
+Tests failed!

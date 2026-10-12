@@ -53,7 +53,9 @@ export async function resolveTransitEpisodeScan(
     const key = process.env["SWISS_EPHEMERIS_KEY"]!;
     const response = await fetch(policy.endpoint, {
       method: "POST",
-      redirect: "error",
+      // Workers rejects redirect: "error" before making a request. Manual mode
+      // leaves 3xx responses to the non-OK guard below without forwarding keys.
+      redirect: "manual",
       signal: controller.signal,
       headers: {
         "content-type": "application/json",

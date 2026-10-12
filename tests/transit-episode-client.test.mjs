@@ -71,7 +71,7 @@ test("episode_client_has_no_retry_and_sends_only_contract_fields", async () => {
   globalThis.fetch = async (_, init) => {
     calls++;
     assert.equal(init.headers["x-api-key"], "fixture-key");
-    assert.equal(init.redirect, "error");
+    assert.equal(init.redirect, "manual");
     assert.deepEqual(JSON.parse(init.body), request);
     throw Error("private transport detail");
   };
@@ -80,6 +80,51 @@ test("episode_client_has_no_retry_and_sends_only_contract_fields", async () => {
     reason: "transport",
   });
   assert.equal(calls, 1);
+});
+test("episode_client_accepts_a_valid_scan", async () => {
+  const { analyticEpisode } = await import("./fixtures/transit-episodes/analytic.mjs");
+  const f = analyticEpisode();
+  configure();
+  f.scan.sourceId = "synthetic";
+  f.scan.request.sourceId = "synthetic";
+  const wireScan = JSON.parse(JSON.stringify(f.scan));
+  let calls = 0;
+  globalThis.fetch = async () => {
+    calls++;
+    return Response.json(wireScan);
+  };
+  const result = await client.resolveTransitEpisodeScan(f.scan.request);
+  assert.equal(result.status, "available");
+  assert.deepEqual(result.scan, wireScan);
+  assert.equal(calls, 1);
+});
+test("episode_client_rejects_redirect_responses_without_following_them", async () => {
+  configure();
+  for (const status of [301, 302, 303, 307, 308]) {
+    let calls = 0;
+    let cancelled = false;
+    globalThis.fetch = async (_, init) => {
+      calls++;
+      assert.equal(init.redirect, "manual");
+      return new Response(
+        new ReadableStream({
+          cancel() {
+            cancelled = true;
+          },
+        }),
+        {
+          status,
+          headers: { location: "https://different-origin.invalid/secret-catcher" },
+        },
+      );
+    };
+    assert.deepEqual(await client.resolveTransitEpisodeScan(request), {
+      status: "unavailable",
+      reason: "transport",
+    });
+    assert.equal(calls, 1);
+    assert.equal(cancelled, true);
+  }
 });
 test("episode_body_read_shares_deadline", async (t) => {
   configure();

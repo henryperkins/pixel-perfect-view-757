@@ -1,0 +1,39 @@
+{
+  "checkedAt": "2026-10-12T09:12:19.622Z",
+  "baseCommit": "88459665485e6b4a229da58ff5715940cc54b2b9",
+  "sourceHashes": {
+    "src/lib/astro/transit-episodes.server.ts": "7973e92f7385097d0498510211d8613ff5dcb7fdb2b8b1198a9810f42513c87a",
+    "tests/transit-episode-client.test.mjs": "e84d162b059a18071af0ba366e36385d80afc10483ca525383aace62f5bb9695"
+  },
+  "tests": {
+    "command": "npm test",
+    "pass": 534,
+    "fail": 0,
+    "skipped": 0,
+    "logSha256": "263c350e0e2ab46e150881dcb753166cc889b6da7fedfc071d721f2ccf1d4b4e"
+  },
+  "typecheck": {
+    "command": "npx tsc --noEmit",
+    "exitCode": 0
+  },
+  "lint": {
+    "command": "npx eslint src/lib/astro/transit-episodes.server.ts tests/transit-episode-client.test.mjs",
+    "exitCode": 0
+  },
+  "build": {
+    "command": "npm run build",
+    "exitCode": 0,
+    "logSha256": "ca0b506eb6c85448b34f0757ea160251a385fa65841f31d31f7c1551e81c6cb3"
+  },
+  "nativeRuntime": {
+    "version": "1.20260926.1",
+    "before": "failed with closed transport omission",
+    "after": "passed with valid scan",
+    "network": "local fixture worker only"
+  },
+  "clientAfterFormatting": {
+    "pass": 8,
+    "fail": 0
+  },
+  "providerCalls": 0
+}
