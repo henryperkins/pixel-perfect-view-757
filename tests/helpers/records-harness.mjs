@@ -111,7 +111,7 @@ export async function createRecordsHarness() {
       return Response.json({ error: "Invalid local test signature" }, { status: 401 });
     const { sql, params } = JSON.parse(raw);
     requests.push({ sql, params });
-    if (fault?.matches(sql))
+    if (fault?.matches(sql, params))
       return Response.json({ error: "Injected local records failure" }, { status: 503 });
     try {
       return Response.json({ results: sqlite.prepare(sql).all(...params) });

@@ -1,0 +1,37 @@
+✖ a natal story with context saves complete provenance within the D1 parameter limit (591.563918ms)
+✖ a later provenance chunk failure removes only the incomplete new reading (82.088031ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 843.682191
+
+✖ failing tests:
+
+test at tests/reading-provenance-limit.test.mjs:19:1
+✖ a natal story with context saves complete provenance within the D1 parameter limit (591.563918ms)
+  Error: Reading sources could not be saved. Please retry.
+      at Module.getToday (/home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/src/lib/pattern.server.ts:974:10)
+      at async TestContext.<anonymous> (file:///home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/tests/reading-provenance-limit.test.mjs:24:17)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at tests/reading-provenance-limit.test.mjs:43:1
+✖ a later provenance chunk failure removes only the incomplete new reading (82.088031ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  0 !== 2
+
+      at TestContext.<anonymous> (file:///home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011/tests/reading-provenance-limit.test.mjs:57:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

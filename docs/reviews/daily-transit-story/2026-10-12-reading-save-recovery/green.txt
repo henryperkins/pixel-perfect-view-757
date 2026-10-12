@@ -1,0 +1,10 @@
+✔ a natal story with context saves complete provenance within the D1 parameter limit (593.217095ms)
+✔ a later provenance chunk failure removes only the incomplete new reading (109.607049ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 883.009409
