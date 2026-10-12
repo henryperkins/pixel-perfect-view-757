@@ -1,0 +1,355 @@
+{
+  "checkedAt": "2026-10-12T21:21:41.948Z",
+  "applicationCommit": "5bc7e4b6cab2995a8af8558bcbf5d18f60340683",
+  "initialApplicationCommit": "e8d4127ff0d8a8a8ce5c38b3209dd4d18987efa8",
+  "deploymentId": "d1471321-9293-4240-88b0-fa3752f24d77",
+  "initialDeploymentId": "99802096-2159-4f38-834a-0aa9527971b0",
+  "liveUrl": "https://patterns.lakefrontdigital.io",
+  "mainPushed": true,
+  "lovableSourceMatched": true,
+  "assets": {
+    "checkedAt": "2026-10-12T21:18:34.156Z",
+    "checks": [
+      {
+        "name": "privacy-CyrMyQc7.js",
+        "status": 200,
+        "matches": true,
+        "sha256": "3bf0393445558c8367c98bdc194a183a6431b4d52f2c17daeddad95724a9d85e"
+      },
+      {
+        "name": "Shell-DUOWE5ah.js",
+        "status": 200,
+        "matches": true,
+        "sha256": "360c4edf9cf05e364bb04a1eb6bcb4677cf58113455d29bd940d15ebbd14ae45"
+      },
+      {
+        "name": "styles-1jq0-8Pk.css",
+        "status": 200,
+        "matches": true,
+        "sha256": "d8e557d326e88a57b01806569d5afc6a16c1fef1e77db797f3628d47d40e4803"
+      },
+      {
+        "name": "index-C-vrYZtN.js",
+        "status": 200,
+        "matches": true,
+        "sha256": "c7ad9e5014ac599883fe82ffcea1ea4850a2a1ab43c3c20cc176d348b5a5a448"
+      }
+    ],
+    "root": {
+      "status": 200,
+      "deploymentHeader": "psr2.d1471321-9293-4240-88b0-fa3752f24d77.1792444713.9wVyH93MhRkcZwBgD4xtSEyPVpC7gM42vZiBruoq71c",
+      "referencesIndex": true
+    }
+  },
+  "migrations": {
+    "checkedAt": "2026-10-12T21:04:21.379Z",
+    "migrations": [
+      {
+        "id": "20261012_context_preferences",
+        "sourceHash": "fb64676d686bf7246180cfb3c0870790b97e472256e9fb8110864db635bd2870",
+        "applied": true,
+        "pendingColumns": []
+      },
+      {
+        "id": "20261012_context_retention",
+        "sourceHash": "406bc1d1ed2a18b74fc2f307edef38ee675ab0de5eb11b5f0ce4a60ebf3b130c",
+        "applied": true,
+        "pendingColumns": []
+      }
+    ],
+    "unchanged": {
+      "life_events": {
+        "rows": 3,
+        "fields": [
+          "label_ct",
+          "body_ct"
+        ],
+        "unchanged": true
+      },
+      "daily_readings": {
+        "rows": 37,
+        "fields": [
+          "body_ct"
+        ],
+        "unchanged": true
+      },
+      "birth_profiles": {
+        "rows": 8,
+        "fields": [
+          "payload_ct"
+        ],
+        "unchanged": true
+      },
+      "profiles": {
+        "rows": 15,
+        "fields": [
+          "wrapped_dek"
+        ],
+        "unchanged": true
+      },
+      "check_ins": {
+        "rows": 3,
+        "fields": [
+          "note_ct"
+        ],
+        "unchanged": true
+      },
+      "feature_narratives": {
+        "rows": 13,
+        "fields": [
+          "narrative_ct"
+        ],
+        "unchanged": true
+      }
+    },
+    "foreignKeyErrors": 0
+  },
+  "worker": {
+    "versionId": "cc8d53f5-59c6-40f2-aa2a-8952cac8c045",
+    "name": "pattern-workflows",
+    "cron": "0 3 * * *",
+    "workflowBindings": [
+      "RETENTION",
+      "NIGHTLY",
+      "EVALUATIONS"
+    ],
+    "dataBindings": [
+      "RECORDS",
+      "ARTIFACTS"
+    ],
+    "secretPreserved": "PATTERN_WORKFLOW_SECRET",
+    "appUrl": "https://patterns.lakefrontdigital.io"
+  },
+  "verification": {
+    "tests": 630,
+    "passed": 628,
+    "existingSkips": 2,
+    "failed": 0,
+    "command": "node --test --test-concurrency=1 tests/*.test.mjs",
+    "typecheck": true,
+    "scopedLint": true,
+    "build": true,
+    "fixtureBrowserChecks": 9,
+    "livePrivacyChecks": 10,
+    "liveDeletionChecks": 4,
+    "export": {
+      "schema": "pattern-account-export-1",
+      "ownerOnly": true,
+      "retainedJournalIncluded": true,
+      "authSecretsOmitted": true,
+      "savedOnly": true,
+      "counts": {
+        "users": 1,
+        "profiles": 1,
+        "source_consents": 0,
+        "birth_profiles": 0,
+        "chart_snapshots": 0,
+        "natal_features": 0,
+        "cycle_instances": 0,
+        "context_signals": 0,
+        "daily_readings": 2,
+        "reading_sources": 0,
+        "reading_feedback": 0,
+        "check_ins": 1,
+        "life_events": 1,
+        "audit_events": 2,
+        "feature_narratives": 0,
+        "content_drafts": 0,
+        "evaluation_runs": 0,
+        "identity_links": 0,
+        "assistant_grants": 0,
+        "user_roles": 0,
+        "sessions": 3,
+        "evaluation_results": 0
+      }
+    },
+    "deletion": {
+      "checkedAt": "2026-10-12T21:21:41.948Z",
+      "allOwnedRowsRemoved": true,
+      "otherOwnerRowCountsUnchanged": true,
+      "foreignKeyErrors": 0,
+      "tables": [
+        {
+          "table": "users",
+          "remainingOwnerRows": 0,
+          "otherOwnerCountsMatch": true
+        },
+        {
+          "table": "sessions",
+          "remainingOwnerRows": 0,
+          "otherOwnerCountsMatch": true
+        },
+        {
+          "table": "user_roles",
+          "remainingOwnerRows": 0,
+          "otherOwnerCountsMatch": true
+        },
+        {
+          "table": "profiles",
+          "remainingOwnerRows": 0,
+          "otherOwnerCountsMatch": true
+        },
+        {
+          "table": "source_consents",
+          "remainingOwnerRows": 0,
+          "otherOwnerCountsMatch": true
+        },
+        {
+          "table": "birth_profiles",
+          "remainingOwnerRows": 0,
+          "otherOwnerCountsMatch": true
+        },
+        {
+          "table": "chart_snapshots",
+          "remainingOwnerRows": 0,
+          "otherOwnerCountsMatch": true
+        },
+        {
+          "table": "natal_features",
+          "remainingOwnerRows": 0,
+          "otherOwnerCountsMatch": true
+        },
+        {
+          "table": "cycle_instances",
+          "remainingOwnerRows": 0,
+          "otherOwnerCountsMatch": true
+        },
+        {
+          "table": "context_signals",
+          "remainingOwnerRows": 0,
+          "otherOwnerCountsMatch": true
+        },
+        {
+          "table": "daily_readings",
+          "remainingOwnerRows": 0,
+          "otherOwnerCountsMatch": true
+        },
+        {
+          "table": "reading_sources",
+          "remainingOwnerRows": 0,
+          "otherOwnerCountsMatch": true
+        },
+        {
+          "table": "reading_feedback",
+          "remainingOwnerRows": 0,
+          "otherOwnerCountsMatch": true
+        },
+        {
+          "table": "check_ins",
+          "remainingOwnerRows": 0,
+          "otherOwnerCountsMatch": true
+        },
+        {
+          "table": "life_events",
+          "remainingOwnerRows": 0,
+          "otherOwnerCountsMatch": true
+        },
+        {
+          "table": "audit_events",
+          "remainingOwnerRows": 0,
+          "otherOwnerCountsMatch": true
+        },
+        {
+          "table": "feature_narratives",
+          "remainingOwnerRows": 0,
+          "otherOwnerCountsMatch": true
+        },
+        {
+          "table": "content_drafts",
+          "remainingOwnerRows": 0,
+          "otherOwnerCountsMatch": true
+        },
+        {
+          "table": "evaluation_runs",
+          "remainingOwnerRows": 0,
+          "otherOwnerCountsMatch": true
+        },
+        {
+          "table": "identity_links",
+          "remainingOwnerRows": 0,
+          "otherOwnerCountsMatch": true
+        },
+        {
+          "table": "assistant_grants",
+          "remainingOwnerRows": 0,
+          "otherOwnerCountsMatch": true
+        }
+      ]
+    },
+    "retention": {
+      "checkedAt": "2026-10-12T21:20:01.971Z",
+      "checks": {
+        "retainedJournalCiphertext": true,
+        "expiredJournalRemoved": true,
+        "mixedBodyUnavailable": true,
+        "enduringBodyUnchanged": true,
+        "localEnvelopeRemoved": true,
+        "ordinaryFieldsRemoved": true,
+        "wellnessClearedOrdinaryKept": true,
+        "feedbackRemoved": true,
+        "sourceCopiesRemoved": true
+      }
+    }
+  },
+  "retentionRuns": {
+    "failed": {
+      "runId": "retention-2026-10-12",
+      "status": "failed",
+      "now": "2026-10-12T21:07:46.111Z",
+      "pages": 0,
+      "counts": {}
+    },
+    "initialComplete": {
+      "runId": "retention-2026-10-12",
+      "status": "complete",
+      "now": "2026-10-12T21:07:46.111Z",
+      "pages": 1,
+      "counts": {
+        "owners": 15,
+        "legacy_clocks": 1,
+        "wellness": 2,
+        "check_in": 1,
+        "journal": 1,
+        "feedback": 1,
+        "signals": 0,
+        "context_sources": 1,
+        "source_counts": 1,
+        "local_copies": 1,
+        "legacy_sources": 1,
+        "mixed_bodies": 1
+      }
+    },
+    "repeatComplete": {
+      "runId": "retention-2026-10-12",
+      "status": "complete",
+      "now": "2026-10-12T21:07:46.111Z",
+      "pages": 1,
+      "counts": {
+        "owners": 15,
+        "legacy_clocks": 0,
+        "wellness": 0,
+        "check_in": 0,
+        "journal": 0,
+        "feedback": 0,
+        "signals": 1,
+        "context_sources": 0,
+        "source_counts": 0,
+        "local_copies": 0,
+        "legacy_sources": 0,
+        "mixed_bodies": 0
+      }
+    },
+    "failureAtomicity": {
+      "failedPageRolledBack": true,
+      "failedReceiptPreserved": true,
+      "note": "The owner Journal history read independently applied its existing wellness-only guard. Ordinary fields, expired journal and mixed body prove the failed retention page committed no changes."
+    },
+    "explanation": "Production required non-null language_mode. Red regression reproduced the page rollback; the corrected release preserves historical mode while removing private evidence. A manual resume completed. A second completed run removed one newly seeded ambient signal with every previously purged count zero. All use one fixed-cutoff Workflow instance."
+  },
+  "controlledAccountCleanup": "Deleted with all 21 account-owned table checks clear; other owner row counts unchanged; current cookie cleared, second session denied, sign-in denied. Credentials were private. No model calls.",
+  "limitations": [
+    "Real Google/assistant-token acceptance remains Task 8; assistants remain disabled.",
+    "Live chart-linked attachments and story/natal acceptance remain later controlled chart tests.",
+    "Writing qualification and human editorial review unchanged."
+  ]
+}

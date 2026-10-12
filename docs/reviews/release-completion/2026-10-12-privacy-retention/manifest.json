@@ -1,7 +1,7 @@
 {
   "release": "2026-10-12-privacy-retention",
   "baseCommit": "248e26bfdbdedb55e353f7e413c869d77313ecfc",
-  "applicationCommit": null,
+  "applicationCommit": "5bc7e4b6cab2995a8af8558bcbf5d18f60340683",
   "ownedPaths": [
     "d1/migrations/20261012_context_preferences.sql",
     "d1/migrations/20261012_context_retention.sql",
@@ -40,7 +40,7 @@
   "fileHashes": {
     "d1/migrations/20261012_context_preferences.sql": "fb64676d686bf7246180cfb3c0870790b97e472256e9fb8110864db635bd2870",
     "d1/migrations/20261012_context_retention.sql": "406bc1d1ed2a18b74fc2f307edef38ee675ab0de5eb11b5f0ce4a60ebf3b130c",
-    "d1/schema.sql": "d716bda9f4247535f42b62dbb84b88d1eec13bea4abef1b2ff095b4275e036b3",
+    "d1/schema.sql": "1f70793c493d961100b87c2e84987fce152941b8e9b26c4f91d49dee4099b333",
     "docs/reviews/release-completion/2026-10-12-privacy-retention/README.md": "45025475cb785ea62873b02c205bd2e07f7b0b2c544224972b38e6d9a7241cd9",
     "docs/superpowers/plans/2026-10-12-release-completion-checklist.md": "b6002dad7ec072bc1a9ba8181dac6cb472a76b29db7bf22659ca179a723dfe94",
     "edge/pattern-workflows/worker.mjs": "c62cfe8e7a0f00179a4d15d64802f05728e3865a24766668d940944f404265c9",
@@ -58,7 +58,7 @@
     "src/lib/pattern.server.ts": "01cc1a915e0f806903c9944e4485e575f3ca3198d5228e48aea4622f60e62970",
     "src/lib/reading.server.ts": "f80630c6284ee324714b24e9d23de95487a2e97bd06891fa0aa0ec1015e66cfb",
     "src/lib/registry.ts": "d66b6e0b73790596326127b7784ac02a22fe463824dc39619750eeead9340f74",
-    "src/lib/retention.server.ts": "a99551c8362c177614b72b00ab338126310d788872751356908f7fc1e6e91337",
+    "src/lib/retention.server.ts": "55e266bd9c145fe2d7e3446e5611b89a39b17c5ac42a773331e057929f007a05",
     "src/routeTree.gen.ts": "1127f6e70f5f9e70660b28cb71851c997e219a7d78ddea5534cb173252a375d5",
     "src/routes/_authenticated/privacy.tsx": "d09ffed97926fc2aec87718d6050fe52680c9f568ee067555fa0ea779f1073a0",
     "src/routes/_authenticated/timing.tsx": "56da11379f06422a0ae55e6f008f097fb77563da74757767718408d034271116",
@@ -69,7 +69,7 @@
     "tests/context-policy.test.mjs": "8edaa2a892be7c8f5a4a65b8b24ace055a35779c649006c2330341c7a48c122d",
     "tests/context-revocation.test.mjs": "6b9f7b90845041659120eb4aca693abdd70eafeba8d1513c6967bc6ea2a6a1c8",
     "tests/edge-pattern-workflows.test.mjs": "180a86d594548e484c4ffa694d358713971c24a3e4852bc13dcb461f8d966fdd",
-    "tests/retention.test.mjs": "894364239a8271fa17dcfea5791f646ea0d66c617d41b13fa5fe18286a1099df",
+    "tests/retention.test.mjs": "fbaf024d574cb0d309478ade2712da17a9c48b0fb95010efaaea22005196844d",
     "tests/today-feedback.test.mjs": "efdfc82db566673aee47b03b87fd4ea86679af6e4fab48c5c6f01db0102668b3"
   },
   "dependencyLockHash": "0cb585843c6a80029b97d024401a01ff530c8fb9bbbaceb59ae837332d7a3804",
@@ -82,18 +82,20 @@
     {
       "id": "20261012_context_preferences",
       "sourceHash": "fb64676d686bf7246180cfb3c0870790b97e472256e9fb8110864db635bd2870",
-      "status": "pending production apply"
+      "applied": true,
+      "pendingColumns": []
     },
     {
       "id": "20261012_context_retention",
       "sourceHash": "406bc1d1ed2a18b74fc2f307edef38ee675ab0de5eb11b5f0ce4a60ebf3b130c",
-      "status": "pending production apply"
+      "applied": true,
+      "pendingColumns": []
     }
   ],
   "verification": {
     "command": "node --test --test-concurrency=1 tests/*.test.mjs",
-    "tests": 629,
-    "passed": 627,
+    "tests": 630,
+    "passed": 628,
     "existingSkips": 2,
     "failed": 0,
     "typecheck": true,
@@ -104,12 +106,20 @@
     "qualificationNote": "Two concurrent suite attempts stalled in unchanged fixture startup and were preserved as incomplete. Final sequential-file suite passed; in-test race assertions retained."
   },
   "publication": {
-    "status": "pending"
+    "status": "published and controlled live checks passed",
+    "receipt": "publication.json",
+    "deploymentId": "d1471321-9293-4240-88b0-fa3752f24d77",
+    "workerVersionId": "cc8d53f5-59c6-40f2-aa2a-8952cac8c045"
   },
   "rollback": {
     "applicationCommit": "a267d073a58af38c31bbd41cabef42d51924ed54",
     "deploymentId": "c12cdc82-e831-4d55-94d3-a73d7bc713a8",
     "schema": "retain additive columns and migration ledger",
     "retention": "stop cron before any separately authorized restoration; code rollback cannot recover deleted private data"
-  }
+  },
+  "correctivePaths": [
+    "d1/schema.sql",
+    "src/lib/retention.server.ts",
+    "tests/retention.test.mjs"
+  ]
 }
