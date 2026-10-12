@@ -1,0 +1,115 @@
+{
+  "provider": "gemini-enterprise",
+  "model": "gemini-enterprise/gemini-3.8-flash",
+  "draftAttempts": 5,
+  "draftsCaptured": 4,
+  "timeoutAttempts": 1,
+  "rateLimitedAttempts": 0,
+  "healthProbeCalls": 1,
+  "totalCallsThisContinuation": 6,
+  "automaticRetries": 0,
+  "separateRecoveryAttempts": 1,
+  "reportedDraftTokens": {
+    "promptTokenCount": 10906,
+    "candidatesTokenCount": 895,
+    "thoughtsTokenCount": 28733,
+    "totalTokenCount": 40534
+  },
+  "reportedHealthProbeTokens": 65,
+  "unknownUsageAttempts": 1,
+  "monetaryCost": "unknown",
+  "servingDeadlineMs": 60000,
+  "servingAvailabilityEstablished": false,
+  "attempts": [
+    {
+      "run": "paid-run",
+      "sampleId": "sample-1",
+      "caseId": "natal-synthesis-integration",
+      "repetition": 1,
+      "httpStatus": 200,
+      "modelVersion": "gemini-3.8-flash",
+      "usageMetadata": {
+        "promptTokenCount": 2896,
+        "candidatesTokenCount": 250,
+        "totalTokenCount": 8944,
+        "thoughtsTokenCount": 5798
+      },
+      "observation": "observed",
+      "wallDurationMs": 31268,
+      "outcome": "accepted",
+      "code": "accepted",
+      "runtimeDeadlineMs": 120000
+    },
+    {
+      "run": "paid-run",
+      "sampleId": "sample-2",
+      "caseId": "natal-duty-reflex",
+      "repetition": 2,
+      "httpStatus": 200,
+      "modelVersion": "gemini-3.8-flash",
+      "usageMetadata": {
+        "promptTokenCount": 2572,
+        "candidatesTokenCount": 196,
+        "totalTokenCount": 11435,
+        "thoughtsTokenCount": 8667
+      },
+      "observation": "observed",
+      "wallDurationMs": 58528,
+      "outcome": "accepted",
+      "code": "accepted",
+      "runtimeDeadlineMs": 120000
+    },
+    {
+      "run": "paid-run",
+      "sampleId": "sample-3",
+      "caseId": "natal-moon-fallback",
+      "repetition": 2,
+      "httpStatus": 200,
+      "modelVersion": "gemini-3.8-flash",
+      "usageMetadata": {
+        "promptTokenCount": 2542,
+        "candidatesTokenCount": 207,
+        "totalTokenCount": 14826,
+        "thoughtsTokenCount": 12077
+      },
+      "observation": "observed",
+      "wallDurationMs": 103175,
+      "outcome": "accepted",
+      "code": "accepted",
+      "runtimeDeadlineMs": 120000
+    },
+    {
+      "run": "paid-run",
+      "sampleId": "sample-4",
+      "caseId": "natal-synthesis-integration",
+      "repetition": 2,
+      "httpStatus": null,
+      "modelVersion": null,
+      "usageMetadata": null,
+      "observation": "fetch_failed_usage_unknown",
+      "wallDurationMs": 119968,
+      "outcome": "unavailable",
+      "code": "timeout",
+      "runtimeDeadlineMs": 120000
+    },
+    {
+      "run": "synthesis-recovery",
+      "sampleId": "sample-1",
+      "caseId": "natal-synthesis-integration",
+      "repetition": 2,
+      "httpStatus": 200,
+      "modelVersion": "gemini-3.8-flash",
+      "usageMetadata": {
+        "promptTokenCount": 2896,
+        "candidatesTokenCount": 242,
+        "totalTokenCount": 5329,
+        "thoughtsTokenCount": 2191
+      },
+      "observation": "observed",
+      "wallDurationMs": 14230,
+      "outcome": "accepted",
+      "code": "accepted",
+      "runtimeDeadlineMs": 180000
+    }
+  ]
+}

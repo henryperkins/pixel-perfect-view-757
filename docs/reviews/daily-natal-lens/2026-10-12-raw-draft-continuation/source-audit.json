@@ -1,0 +1,29 @@
+{
+  "runs": [
+    {
+      "run": "paid-run",
+      "sourceFilesVerified": 172,
+      "sourceMismatches": [],
+      "runnerSha256": "9b11e62715ebb61e1b40a5c396b0f187cad67e757d5bb18d05f2c0eb03eaad38",
+      "runnerMatches": true,
+      "recordedDeadlineHelperSha256": "b0616656b470dc9e482e907a008a6a061f1d7b641d1a62e526e23305480d518b",
+      "deadlineHelperMatches": true,
+      "deadlineHelperPath": "docs/reviews/daily-natal-lens/2026-10-12-qualification-round-3/run-model-pair.mjs"
+    },
+    {
+      "run": "synthesis-recovery",
+      "sourceFilesVerified": 172,
+      "sourceMismatches": [],
+      "runnerSha256": "79c461f036fb48f2e65b31e15ea970c0f7e154286a8e164fc979acabce7007ab",
+      "runnerMatches": true,
+      "recordedDeadlineHelperSha256": "7e8e7157f1feb3a6d0b4f9e93e75a22bf91ec5dc098fbf5542151d189072f21d",
+      "deadlineHelperMatches": true,
+      "deadlineHelperPath": "docs/reviews/daily-natal-lens/2026-10-12-synthesis-recovery/deadline.mjs"
+    }
+  ],
+  "reviewSelectionPreservesFourCompleteRawResults": true,
+  "originalTimeoutRetained": true,
+  "applicationSourceUnchanged": true,
+  "previousImplementationRevision": "79ad05086b1f06179c0456b7e38a389757a5898c",
+  "verifiedAtRevision": "440a62e6b1537284ad9597da36b6681943813d42"
+}

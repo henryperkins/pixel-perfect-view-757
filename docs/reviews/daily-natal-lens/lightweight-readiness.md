@@ -7,6 +7,14 @@ writing decision. Existing full-benchmark results remain historical evidence;
 they are not relabeled as passes. Both candidates stay inactive pending the
 appropriate readiness check and a separate activation request.
 
+**Current result (2026-10-12): passed.** The
+[completed paid recheck](2026-10-12-raw-draft-continuation/README.md) passes all six
+requested raw drafts: two each for duty, Moon fallback and synthesis. The fresh
+review of the final four drafts found no substantive defects. Together with the
+retained passing templates, other raw cases, quiet safety check and supported
+duty/freedom distinctions, this satisfies the targeted natal writing gate. Both
+candidates remain inactive; publication and activation remain separate requests.
+
 **First result (2026-10-12):** the [targeted subset review](2026-10-12-lightweight-subset-review/README.md)
 failed. It passed 10/14 prose samples (4/7 raw drafts, 6/7 templates); the quiet template
 was safe, and both duty/freedom contrasts were supported. The duty, Moon-fallback and
@@ -15,8 +23,9 @@ cases are reviewed again. The [synthesis template fix](2026-10-12-synthesis-temp
 passed its re-review, leaving 11/14 passing at the end of step 2. The subsequently
 authorized [paid step-3 recheck](2026-10-12-raw-draft-recheck/README.md) captured new
 duty and Moon-fallback drafts that both passed one fresh blinded review. A synthesis
-call hit HTTP 429; the run stopped without retries, and three second drafts remain
-unattempted. The intended six-draft recheck is incomplete, so the gate remains failed.
+call hit HTTP 429; that run stopped without retries, leaving three second drafts
+unattempted at the time. The continuation above closes those writing gaps while
+preserving the partial run, its rate limit and a later timeout as historical evidence.
 
 This set covers natal writing only. It does not qualify transit-candidate chapter
 copy; that candidate needs its own small representative review before activation.
@@ -85,7 +94,9 @@ full benchmark. They are not passing raw drafts. **100% synthetic provider succe
 is not required for this targeted writing decision** when the relevant failure
 path returns the safe labeled template. Retain latency and usage observations as
 reliability notes; improve them separately if they cause an actual reader problem.
-The 120-second capture lane does not prove the member path's 60-second performance.
+The extended 120/180-second capture lanes do not prove the member path's 60-second
+performance. Step 3 retains one rate limit and one timeout, plus the separate
+successful recovery attempt; writing approval is not a provider reliability claim.
 
 The existing passing source tests, typecheck and build support these implementation
 changes. Repeat checks when code changes or a specific concern warrants them;

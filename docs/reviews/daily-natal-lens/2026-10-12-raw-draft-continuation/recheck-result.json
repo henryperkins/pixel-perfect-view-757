@@ -1,0 +1,235 @@
+{
+  "kind": "targeted-natal-raw-draft-continuation-result",
+  "sourceRevision": "440a62e6b1537284ad9597da36b6681943813d42",
+  "packetSha256": "bf03bf0d1096e345e9e214dd4f31c432976cd4cc0015c1edf82d5c008ebe2839",
+  "promptSha256": "b5729f1943509a844bbc38a85ddcaa0d9daf8e1c3f472336daf44d9aebaac41d",
+  "reviewSha256": "320f642ea86b61f63b2878f08b06bdbd951487bd311eca657f4f5778acce2df6",
+  "itemSetHash": "2695da91373ea7dc7f7ad2e79337ec6f65e0675c1ab4bc6ed73cc10361a0cedf",
+  "reviewedDrafts": 4,
+  "passedDrafts": 4,
+  "unavailable": [],
+  "verdict": "pass",
+  "fullBenchmarkClaim": false,
+  "candidatesActivated": false,
+  "humanReviewCompleted": false,
+  "samples": [
+    {
+      "sampleId": "sample-1",
+      "caseId": "natal-synthesis-integration",
+      "repetition": 1,
+      "itemId": "item-03",
+      "structuralOutcome": "accepted",
+      "structuralCode": "accepted",
+      "verdict": "pass",
+      "scores": {
+        "specificity": {
+          "score": 5,
+          "reason": "Possible projects within the demanding role compete for one afternoon, making sampling versus choosing concrete, while the expanding task's agreed limits provide a second supported practical distinction."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "The boundary and capacity language retains I1's supplied strength, the projects within the role remain an if-scenario supported by N1, and the limits/initiative contrast is authorized by I1, I2, and S1 rather than invented."
+        },
+        "coherence": {
+          "score": 5,
+          "reason": "The first paragraph connects role obligations to competing project choices, and the second explicitly develops the supported tension between available limits and the opportunity to expand a plan."
+        },
+        "voice": {
+          "score": 3,
+          "reason": "The plain meaning is understandable, but the opening repeats the where construction and uses clipped contact syntax, producing an unnecessarily stiff sentence."
+        },
+        "repetition": {
+          "score": 3,
+          "reason": "The shared source facts justify shared meanings with item-01, but the initiative, increased scope, and agreed-limits sequence remains nearly identical despite stronger connective wording here."
+        },
+        "synthesisCoherence": {
+          "score": 5,
+          "reason": "Alongside the limits established by I1, I2's low-friction initiative is explicitly linked through S1 to the extra structure that greater scope can require, retaining the distinct tension both parents support."
+        },
+        "lensIntegration": {
+          "score": 5,
+          "reason": "N1's several-projects example is conditionally situated within the same demanding role, so the distinction between sampling and choosing directly develops the primary scene without asserting a measured temperament."
+        }
+      },
+      "findings": [
+        {
+          "findingId": "writing-continuation-03-1",
+          "paragraph": 1,
+          "passage": "Where expectations outpace available capacity, transiting Saturn square the natal Sun highlights where a routine or responsibility needs clearer boundaries.",
+          "supportingFactIds": [
+            "C1",
+            "I1"
+          ],
+          "missingFactIds": [],
+          "category": "voice",
+          "severity": "minor",
+          "explanation": "The repeated where construction and clipped contact name make a supported, straightforward distinction harder to read naturally.",
+          "proposedCorrection": "Use one where construction and ordinary possessive phrasing for Saturn's square while preserving the capacity and boundary claim."
+        },
+        {
+          "findingId": "writing-continuation-03-2",
+          "paragraph": 2,
+          "passage": "A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.",
+          "supportingFactIds": [
+            "I2",
+            "S1"
+          ],
+          "missingFactIds": [],
+          "category": "repetition",
+          "severity": "minor",
+          "explanation": "The same closing sentence and nearly the same initiative/scope sequence occur in item-01, limiting variation across these two examples with identical source facts.",
+          "proposedCorrection": "Vary the grouping or emphasis of the supplied agreed-limits and additional-structure statements without inventing another interpretation."
+        }
+      ]
+    },
+    {
+      "sampleId": "sample-2",
+      "caseId": "natal-duty-reflex",
+      "repetition": 2,
+      "itemId": "item-02",
+      "structuralOutcome": "accepted",
+      "structuralCode": "accepted",
+      "verdict": "pass",
+      "scores": {
+        "specificity": {
+          "score": 5,
+          "reason": "The unfinished reply makes the small obligation concrete within a mentally occupied quiet moment and distinguishes useful preparation from waiting for everything to be settled."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "C1 and I1 support the hard Saturn-Moon contact and the optional quiet-moment/calendar scenes; N1 supplies the reply and preparation distinction, which is connected through a conditional scenario without asserting a personal event or temperament."
+        },
+        "coherence": {
+          "score": 5,
+          "reason": "The first paragraph introduces the responsibility/private-space tension, and the second narrows that same scene to an unfinished reply and develops a distinct practical lens."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "The prose remains clear and consistent with the plain tone, using familiar tasks and conditional language even where the second paragraph's opening is a little long."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "The reply and preparation language also appears in item-04 because N1 is shared, but here it is specifically developed as the task occupying a quiet moment, giving the repeated material a supported contextual distinction."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": 5,
+          "reason": "Paragraph 2 identifies the unfinished reply as the obligation already occupying the quiet moment, applying N1's preparation-versus-complete-settlement distinction inside the primary scene."
+        }
+      },
+      "findings": []
+    },
+    {
+      "sampleId": "sample-3",
+      "caseId": "natal-moon-fallback",
+      "repetition": 2,
+      "itemId": "item-04",
+      "structuralOutcome": "accepted",
+      "structuralCode": "accepted",
+      "verdict": "pass",
+      "scores": {
+        "specificity": {
+          "score": 5,
+          "reason": "The conditional reply within a demanding role gives the preparation-versus-complete-settlement lens a concrete use, and the second paragraph supplies the distinct title-versus-actual-attention example from D1."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "C1 and I1 support the role, boundary, and capacity statements; the reply remains conditional and preserves N1's can language; D1 explicitly supports the categorical rarely and seldom wording in the second paragraph."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "Paragraph 1 closely integrates the role obligation and reply lens, while paragraph 2 broadens the same role theme to the gap between a title and actual attention; that broadening is clear but loosely connected to the reply."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "The tone is natural and plain, with a readable conditional example and ordinary contact phrasing, although the opening sentence carries several qualifications."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "The natal wording is shared with item-02 and the role framing with other items, but the reply is explicitly made a possible obligation of that role and the title/attention paragraph adds supported variation."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": 5,
+          "reason": "The unfinished reply is explicitly introduced as a possible obligation of the demanding role in paragraph 1, applying N1's manageable preparation versus waiting for everything to be settled within the primary scene."
+        }
+      },
+      "findings": []
+    },
+    {
+      "sampleId": "sample-4",
+      "caseId": "natal-synthesis-integration",
+      "repetition": 2,
+      "itemId": "item-01",
+      "structuralOutcome": "accepted",
+      "structuralCode": "accepted",
+      "verdict": "pass",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "The reading distinguishes demands that exceed capacity, exploratory sampling versus choosing a project, and the additional structure an expanding task can require; the role-to-project connection remains fairly broad."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "C1 and I1 support the role and boundary statements, N1 supports the conditional curiosity and afternoon example, and C2, I2, and S1 support the initiative and scope/structure relationship; source modality and supported categorical wording are preserved."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "Paragraph 1 develops the demanding responsibility and a conditional way of approaching possible projects, while paragraph 2 adds initiative and the supported scope/structure tension; the transition into curiosity is serviceable but somewhat mechanical."
+        },
+        "voice": {
+          "score": 3,
+          "reason": "The everyday statements are clear, but the contact name is inserted using clipped chart-label syntax, which makes the plain voice less natural."
+        },
+        "repetition": {
+          "score": 3,
+          "reason": "Much of the second paragraph repeats item-03's initiative and expanding-task wording; the identical supplied facts explain the overlap, but verbal variation is limited."
+        },
+        "synthesisCoherence": {
+          "score": 5,
+          "reason": "The larger piece of work in I2 and the capacity/boundary problem in I1 meet in S1's distinct example of ambitions exceeding agreed limits and requiring more structure."
+        },
+        "lensIntegration": {
+          "score": 4,
+          "reason": "N1 is applied in paragraph 1 to organizing the demanding responsibility, with the same limited afternoon used to distinguish sampling from choosing; the link is explicit enough to avoid a separate personality block, although the projects are only broadly connected to the role."
+        }
+      },
+      "findings": [
+        {
+          "findingId": "writing-continuation-01-1",
+          "paragraph": 1,
+          "passage": "Transiting Saturn square natal Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+          "supportingFactIds": [
+            "C1",
+            "I1"
+          ],
+          "missingFactIds": [],
+          "category": "voice",
+          "severity": "minor",
+          "explanation": "The supported contact is expressed as a clipped chart label inside an otherwise plain sentence, making the phrasing stiff.",
+          "proposedCorrection": "Use ordinary possessive phrasing such as Saturn's square to the natal Sun while retaining the supported capacity and boundary distinction."
+        },
+        {
+          "findingId": "writing-continuation-01-2",
+          "paragraph": 2,
+          "passage": "A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.",
+          "supportingFactIds": [
+            "I2",
+            "S1"
+          ],
+          "missingFactIds": [],
+          "category": "repetition",
+          "severity": "minor",
+          "explanation": "This sentence and most of its preceding initiative/scope sequence recur in item-03, leaving little variation between the two readings with the same facts.",
+          "proposedCorrection": "For verbal variation, regroup the supplied expanding-task and structure statements without adding a new scene or changing their modality."
+        }
+      ]
+    }
+  ]
+}

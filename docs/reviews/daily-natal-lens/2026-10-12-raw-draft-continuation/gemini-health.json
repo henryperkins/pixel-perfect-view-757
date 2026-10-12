@@ -1,0 +1,37 @@
+{
+  "kind": "explicitly-requested-gemini-health-probe",
+  "startedAt": "2026-10-12T05:22:37.527Z",
+  "finishedAt": "2026-10-12T05:22:41.732Z",
+  "durationMs": 4205,
+  "httpStatus": 200,
+  "modelVersion": "gemini-3.8-flash",
+  "finishReason": "MAX_TOKENS",
+  "replyIsOK": false,
+  "responseHasText": true,
+  "usageMetadata": {
+    "promptTokenCount": 5,
+    "candidatesTokenCount": 3,
+    "totalTokenCount": 65,
+    "trafficType": "ON_DEMAND",
+    "promptTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 5
+      }
+    ],
+    "candidatesTokensDetails": [
+      {
+        "modality": "TEXT",
+        "tokenCount": 3
+      }
+    ],
+    "thoughtsTokenCount": 57
+  },
+  "errorStatus": null,
+  "errorReasons": [],
+  "retryAfter": null,
+  "retryDelays": [],
+  "quotaViolations": [],
+  "modelCalls": 1,
+  "retries": 0
+}

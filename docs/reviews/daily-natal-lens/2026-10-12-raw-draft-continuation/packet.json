@@ -1,0 +1,309 @@
+{
+  "protocolVersion": "daily-writing-ai-review-1",
+  "kind": "packet",
+  "contextId": "writing-continuation",
+  "itemSetHash": "2695da91373ea7dc7f7ad2e79337ec6f65e0675c1ab4bc6ed73cc10361a0cedf",
+  "instructionsSha256": "822af5b1599feb0384768d857feabd89f63691fe806b203b16dffe084dd7a42b",
+  "instructions": "# Reviewer instructions — `daily-writing-ai-review-1`\n\nYou are reviewing short daily astrology readings for an app that shows its work.\nEach item in your packet gives the facts supplied to the writer, the requested\ntone and depth, and the text to review. Judge each item only on that evidence. Do\nnot try to work out where an item came from, which version produced it or how\nother reviewers scored it.\n\n## How to review an item\n\n1. Read the supplied facts. `C` facts are calculations. `I`, `S`, `D`, `N`, `P` and\n   `T` facts are published editorial wording. `E` and `U` facts describe the\n   calculation source and its limits; a `U` fact can suppress whole kinds of claims.\n   `dependsOn` lists a fact's parents.\n2. Read each paragraph and trace every substantive claim to the supplied statements.\n   A cited ID is a pointer, not proof: the statement itself must support the claim.\n   All paragraph citation arrays are masked as `facts: null`; check each claim against all supplied statements. Structural citation validation is a separate check. Do not infer generation method from the masked array.\n3. Check specifically for:\n   - **Modality.** A possibility (\"can\", \"may\", \"might\") must stay a possibility.\n   - **Frequency.** \"often\", \"usually\", \"always\" need a supplied frequency statement.\n   - **Necessity.** \"must\", \"needs to\", \"has to\" need supplied support.\n   - **Exclusions.** \"rather than X\", \"not X\", \"instead of X\" must not deny an\n     alternative that the facts do not address. A contrast may explain two\n     supported options.\n   - **Personal events.** No claim that something happened to the reader, or that\n     their situation changed, unless supplied. An everyday scene stays conditional.\n   - **Clinical or behavioral claims, instructions, predictions.** None are allowed.\n     A supported calculated exact date is not a behavioral prediction.\n   - **Suppression.** Nothing the `U` facts suppress may appear, even paraphrased.\n   - **Joint relationships.** Two contacts may be connected only when an `S1` fact\n     supplies that relationship. Without `S1`, the meanings stay separate.\n   - **Natal lens.** `N1`, when present, is one conditional interpretation, never a\n     known temperament.\n4. Conditional interpretation supported by `I`, `D`, `S` or `N` statements is\n   editorial framing, not a measured personal state. That is fine.\n\nStandard depth: everyday meaning in the foreground; phase and timing are optional\nand their absence is not a defect. Technical depth: lead with the everyday meaning,\nthen connect it to the named contact and calculated detail; padding is never\nrequired.\n\n## Scores (integers 1–5)\n\n| Dimension            | 1                                      | 3                                               | 4                                                           | 5                                                               |\n| -------------------- | -------------------------------------- | ----------------------------------------------- | ----------------------------------------------------------- | --------------------------------------------------------------- |\n| `specificity`        | Interchangeable summary                | Tied to the selected contact                    | A useful, source-supported practical distinction            | Concrete distinctions supported by the published source copy    |\n| `grounding`          | Unsupported or contradictory claims    | Some statements need review                     | Every substantive claim supported; no strengthened modality | Each substantive claim traceable to supplied statements         |\n| `coherence`          | Contradictory or disjointed            | Understandable but repetitive                   | A clear supported progression; minor editing only           | Each paragraph advances a distinct useful thought               |\n| `voice`              | Stiff or inconsistent with the tone    | Clear and mostly consistent                     | Natural and consistent                                      | Natural, distinctive and consistent throughout                  |\n| `repetition`         | Stock phrasing dominates the packet    | Some reuse                                      | Little reuse; variation stays supported                     | Relevant variation without inventing facts                      |\n| `synthesisCoherence` | Interchangeable or invented connection | Both sources appear; relationship needs editing | Develops the relationship both parents support              | A distinct relationship supported by both sources               |\n| `lensIntegration`    | Separate personality text              | Cited but weakly applied                        | Applies `N1` within the primary distinction                 | A distinct, supported practical lens within the primary meaning |\n\n- Score `synthesisCoherence` only when the item supplies `S1`, and `lensIntegration`\n  only when it supplies `N1`. Otherwise give `null` with the reason.\n- More planet names or extra prose do not raise specificity.\n- `repetition` may compare phrasing across the items in your packet. Do not demand\n  variety that the facts do not support.\n- A **quiet** item has no model writing: give every score `null` with a reason and\n  fill `quietCheck` instead, as `{ \"safe\": true, \"reason\": \"…\" }` (or `false`): is it\n  a safe quiet-day message with no invented signal, claim or instruction? For every\n  other item, `quietCheck` is `null`.\n\n## Findings\n\nRecord a finding for every problem, with the exact passage copied from the\nparagraph. Substantive categories: `unsupported_personal_claim`,\n`invented_joint_premise`, `suppression_breach`, `factual_mismatch`,\n`strengthened_modality`, `unsupported_frequency`, `unsupported_necessity`,\n`unsupported_exclusion`, `prohibited_instruction`, `behavioral_prediction`,\n`clinical_claim`, `unsupported_claim`. Minor categories: `specificity`, `coherence`,\n`voice`, `repetition`, `style`. Severity follows the category.\n\nAn item fails when it has any substantive finding, a `specificity`, `grounding`,\n`coherence`, applicable `synthesisCoherence` or applicable `lensIntegration` score\nbelow 4, or an unsafe quiet check. Your item and overall verdicts must agree with\nyour own scores and findings.\n\n## Output\n\nWrite one JSON object and nothing else to the output path your prompt names. Read no\nfile other than the packet your prompt names, and run nothing. Copy your context\nID, `packetSha256`, `promptSha256` and the dispatch time (as `reviewedAt`) exactly\nas your prompt gives them; the packet cannot contain its own hash or the hash of the\nprompt that carries it.\n\nSet `sawImplementationContext` to `true` only if you saw source code, diffs, plans,\nspecifications, ledgers, earlier reviews or reports about this work, or anything\nthat tells you which run, case or version produced an item. Your environment may\nattach repository notes, a memory index or a git status with recent commit\nsubjects: name anything like that in your declaration, but it does not by itself\nmake that flag `true`.\n\n```json\n{\n  \"protocolVersion\": \"daily-writing-ai-review-1\",\n  \"kind\": \"review\",\n  \"packetSha256\": \"<packetSha256 from your prompt>\",\n  \"itemSetHash\": \"<itemSetHash from the packet>\",\n  \"reviewer\": {\n    \"contextId\": \"<the context ID you were given>\",\n    \"model\": \"<your model if you know it, otherwise unknown>\",\n    \"configuration\": \"unknown\",\n    \"promptSha256\": \"<promptSha256 from your prompt>\"\n  },\n  \"reviewedAt\": \"<the dispatch time your prompt gives>\",\n  \"blindness\": {\n    \"declaration\": \"<one sentence on what you saw>\",\n    \"inputs\": [\"packet\"],\n    \"sawOriginLabels\": false,\n    \"sawPriorVerdicts\": false,\n    \"sawOtherReviews\": false,\n    \"sawImplementationContext\": false\n  },\n  \"reassessmentOf\": null,\n  \"items\": [\n    {\n      \"itemId\": \"item-01\",\n      \"scores\": {\n        \"specificity\": { \"score\": 4, \"reason\": \"…\" },\n        \"grounding\": { \"score\": 4, \"reason\": \"…\" },\n        \"coherence\": { \"score\": 4, \"reason\": \"…\" },\n        \"voice\": { \"score\": 4, \"reason\": \"…\" },\n        \"repetition\": { \"score\": 4, \"reason\": \"…\" },\n        \"synthesisCoherence\": { \"score\": null, \"reason\": \"No S1 supplied\" },\n        \"lensIntegration\": { \"score\": null, \"reason\": \"No N1 supplied\" }\n      },\n      \"quietCheck\": null,\n      \"findings\": [\n        {\n          \"findingId\": \"<your-prefix>-01-1\",\n          \"paragraph\": 1,\n          \"passage\": \"<exact text>\",\n          \"supportingFactIds\": [],\n          \"missingFactIds\": [\"I1\"],\n          \"category\": \"strengthened_modality\",\n          \"severity\": \"substantive\",\n          \"explanation\": \"…\",\n          \"proposedCorrection\": \"…\"\n        }\n      ],\n      \"verdict\": \"fail\"\n    }\n  ],\n  \"verdict\": \"fail\"\n}\n```\n\nReview every item in the packet exactly once. Every fact ID you name must be\nsupplied in that item, and each finding needs at least one supporting or missing\nfact ID. If you are unsure whether a claim is supported, record the finding and\nexplain the doubt; an unresolved grounding doubt fails the item.\n\n## Natal comparison and cross-scenario checks\n\nN1 is a conditional practical distinction. Integration >=4 requires applying it within the primary scene in paragraph 1 or 2, rather than placing it in a separate personality block. Do not invent sign, house, aspect origins, biography, or a measured temperament from N1. Preserve a supplied source's categorical statement when it is supported; flag strengthened or added claims, not exact supported retention.\n\nFor every contrastSets entry, write an additional contrastChecks array entry with {setId, distinctSupportedDifference:boolean, reason, passages:[{itemId,paragraph,quote}]}. Quote exact passages establishing the two supported practical choices. If no distinct choice is supported, say so. Absence of N1 does not require invented variation.\n\nFor every repetitionSets entry, write an additional repetitionChecks entry with {setId, score:integer1to5, reason, passages:[{itemId,paragraph,quote}]}. Assess repeated scenes and distinctions across these supplied examples. This does not establish a chronological week or permission to invent unsupplied meaning.\n\nRead only your assigned packet and write only your assigned review. Prior scores, assignments, source labels, provider identities and the other reviewer are outside your inputs. A single shared model family and inferable prose style are limitations of this review. Review every item independently; do not assign uniform scores without specific reasons.\n",
+  "targetedScope": "Review all 4 supplied items independently. Specificity, grounding, coherence, and applicable lensIntegration and synthesisCoherence must each reach 4/5, with no substantive finding. Voice and repetition are recorded but do not gate alone. Preserve supported categorical statements and conditional statements at their supplied strength. There are no contrastSets or repetitionSets; return empty arrays for their checks. Read only the assigned packet and write only the assigned review.",
+  "items": [
+    {
+      "itemId": "item-01",
+      "tone": "plain",
+      "depth": "standard",
+      "quiet": false,
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain identity. Calculated exact date: 2026-10-14."
+        },
+        {
+          "id": "C2",
+          "kind": "calculation",
+          "statement": "transiting jupiter trine natal mars. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain identity. Calculated exact date: 2026-10-14."
+        },
+        {
+          "id": "I1",
+          "kind": "interpretation",
+          "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+          "dependsOn": [
+            "C1"
+          ]
+        },
+        {
+          "id": "I2",
+          "kind": "interpretation",
+          "statement": "Published interpretation trine:jupiter:mars: Enthusiasm and practical initiative reinforce one another when an aim is well chosen. Jupiter's trine to Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening.",
+          "dependsOn": [
+            "C2"
+          ]
+        },
+        {
+          "id": "S1",
+          "kind": "synthesis",
+          "statement": "Published tension synthesis square:saturn:sun_tension_trine:jupiter:mars (parents: C1, I1, C2, I2): Giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.",
+          "dependsOn": [
+            "C1",
+            "I1",
+            "C2",
+            "I2"
+          ]
+        },
+        {
+          "id": "N1",
+          "kind": "temperament",
+          "statement": "Published natal lens, an interpretive possibility: Following more than one line of curiosity can help a direction take shape. If several possible projects compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages.",
+          "dependsOn": [
+            "C1",
+            "I1"
+          ]
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: The contact is in its approaching phase within the calculated window."
+        },
+        {
+          "id": "T1",
+          "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"near\" (about plus or minus 15 minutes)"
+        }
+      ],
+      "paragraphs": [
+        {
+          "number": 1,
+          "text": "An established role can feel demanding when its obligations require more deliberate effort than usual. Transiting Saturn square natal Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries. In organizing that demanding responsibility, following more than one line of curiosity can help a direction take shape. If several possible projects compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages.",
+          "facts": null
+        },
+        {
+          "number": 2,
+          "text": "Enthusiasm and practical initiative reinforce one another when an aim is well chosen. Transiting Jupiter trine natal Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening. Giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.",
+          "facts": null
+        }
+      ]
+    },
+    {
+      "itemId": "item-02",
+      "tone": "plain",
+      "depth": "standard",
+      "quiet": false,
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting saturn square natal moon. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain inner-life. Calculated exact date: 2026-10-14."
+        },
+        {
+          "id": "I1",
+          "kind": "interpretation",
+          "statement": "Published interpretation hard:saturn:moon: A small obligation can take up more room than its size suggests. Saturn's hard contact with the Moon frames the tension between something you feel responsible for and the amount of uninterrupted space you would prefer. The everyday scene might be a calendar left too full, or a quiet moment spent mentally keeping track of the next task.",
+          "dependsOn": [
+            "C1"
+          ]
+        },
+        {
+          "id": "N1",
+          "kind": "temperament",
+          "statement": "Published natal lens, an interpretive possibility: A self-contained response to pressure can start with sorting what is manageable before sharing it. An unfinished reply can offer a place to notice the difference between useful preparation and waiting to have everything settled.",
+          "dependsOn": [
+            "C1",
+            "I1"
+          ]
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for inner life and rest: An unclaimed hour can still be mentally full of unfinished tasks. A full calendar or an obligation that follows you into a quiet moment can offer a scene for tension around the amount of private space you prefer."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: The contact is in its approaching phase within the calculated window."
+        },
+        {
+          "id": "T1",
+          "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"near\" (about plus or minus 15 minutes)"
+        }
+      ],
+      "paragraphs": [
+        {
+          "number": 1,
+          "text": "A quiet moment might be spent mentally keeping track of the next task. Transiting Saturn's hard contact with the natal Moon frames the tension between something you feel responsible for and the amount of uninterrupted space you would prefer. The everyday scene might also be a calendar left too full.",
+          "facts": null
+        },
+        {
+          "number": 2,
+          "text": "When the task kept in mind during a quiet moment is an unfinished reply, that small obligation can take up more room than its size suggests. Considering how to approach it, a self-contained response to pressure can start with sorting what is manageable before sharing it. The unfinished reply can offer a place to notice the difference between useful preparation and waiting to have everything settled.",
+          "facts": null
+        }
+      ]
+    },
+    {
+      "itemId": "item-03",
+      "tone": "plain",
+      "depth": "standard",
+      "quiet": false,
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain identity. Calculated exact date: 2026-10-14."
+        },
+        {
+          "id": "C2",
+          "kind": "calculation",
+          "statement": "transiting jupiter trine natal mars. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain identity. Calculated exact date: 2026-10-14."
+        },
+        {
+          "id": "I1",
+          "kind": "interpretation",
+          "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+          "dependsOn": [
+            "C1"
+          ]
+        },
+        {
+          "id": "I2",
+          "kind": "interpretation",
+          "statement": "Published interpretation trine:jupiter:mars: Enthusiasm and practical initiative reinforce one another when an aim is well chosen. Jupiter's trine to Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening.",
+          "dependsOn": [
+            "C2"
+          ]
+        },
+        {
+          "id": "S1",
+          "kind": "synthesis",
+          "statement": "Published tension synthesis square:saturn:sun_tension_trine:jupiter:mars (parents: C1, I1, C2, I2): Giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.",
+          "dependsOn": [
+            "C1",
+            "I1",
+            "C2",
+            "I2"
+          ]
+        },
+        {
+          "id": "N1",
+          "kind": "temperament",
+          "statement": "Published natal lens, an interpretive possibility: Following more than one line of curiosity can help a direction take shape. If several possible projects compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages.",
+          "dependsOn": [
+            "C1",
+            "I1"
+          ]
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: The contact is in its approaching phase within the calculated window."
+        },
+        {
+          "id": "T1",
+          "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"near\" (about plus or minus 15 minutes)"
+        }
+      ],
+      "paragraphs": [
+        {
+          "number": 1,
+          "text": "Where expectations outpace available capacity, transiting Saturn square the natal Sun highlights where a routine or responsibility needs clearer boundaries. An established role can feel demanding when its obligations require more deliberate effort than usual. When considering those obligations, following more than one line of curiosity can help a direction take shape. If several possible projects within that role compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages.",
+          "facts": null
+        },
+        {
+          "number": 2,
+          "text": "Alongside that demand for limits, transiting Jupiter trine natal Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening. Enthusiasm and practical initiative reinforce one another when an aim is well chosen. Yet giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.",
+          "facts": null
+        }
+      ]
+    },
+    {
+      "itemId": "item-04",
+      "tone": "plain",
+      "depth": "standard",
+      "quiet": false,
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain identity. Calculated exact date: 2026-10-14."
+        },
+        {
+          "id": "I1",
+          "kind": "interpretation",
+          "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+          "dependsOn": [
+            "C1"
+          ]
+        },
+        {
+          "id": "N1",
+          "kind": "temperament",
+          "statement": "Published natal lens, an interpretive possibility: A self-contained response to pressure can start with sorting what is manageable before sharing it. An unfinished reply can offer a place to notice the difference between useful preparation and waiting to have everything settled.",
+          "dependsOn": [
+            "C1",
+            "I1"
+          ]
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: The contact is in its approaching phase within the calculated window."
+        },
+        {
+          "id": "T1",
+          "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"near\" (about plus or minus 15 minutes)"
+        }
+      ],
+      "paragraphs": [
+        {
+          "number": 1,
+          "text": "Where a routine or responsibility needs clearer boundaries, an established role can feel demanding when its obligations require more deliberate effort than usual. Transiting Saturn's square to the natal Sun highlights where expectations outpace available capacity. If an obligation of that role involves an unfinished reply, a self-contained response to pressure can start with sorting what is manageable before sharing it. That unfinished reply can offer a place to notice the difference between useful preparation and waiting to have everything settled.",
+          "facts": null
+        },
+        {
+          "number": 2,
+          "text": "A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.",
+          "facts": null
+        }
+      ]
+    }
+  ],
+  "contrastSets": [],
+  "repetitionSets": []
+}

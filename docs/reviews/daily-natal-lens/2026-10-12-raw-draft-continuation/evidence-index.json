@@ -1,0 +1,199 @@
+{
+  "kind": "targeted-writing-continuation-evidence-index",
+  "pathsRelativeTo": "repository root",
+  "originalRunAndReviewBytesVerified": true,
+  "combinedDraftsPassed": 6,
+  "fullBenchmarkClaim": false,
+  "files": [
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/README.md",
+      "sha256": "98ace6e938f5f4880de564ded0cab558e3513e0fc8165e476a8fa59dc5583a77",
+      "bytes": 5590
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/application-source-parity.json",
+      "sha256": "46827765902f16c71ea9783f3dc238eaf28c3612c065a3d8392cb131257d43af",
+      "bytes": 650
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/assignment.json",
+      "sha256": "3b8e3ca6af80eabc52c1a411c7f8f57283b667788f6f65d6d5cecf8cf4beaeab",
+      "bytes": 18151
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/check-review.mjs",
+      "sha256": "c3716644646b8cc05d016430bd9653abfde6375bf63948fd0f625ffcd0886322",
+      "bytes": 12876
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/collection-manifest.json",
+      "sha256": "6c4bba5e7a437dbc33f2a7e8cc9ac699eba66813d5233abffa321e13e7e8ddab",
+      "bytes": 3831
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/combine-results.mjs",
+      "sha256": "5e4beea8fde89c31485628507dde913a730fb9c1d09b04f990cefa01c5176e83",
+      "bytes": 2232
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/combined-result.json",
+      "sha256": "b12f3aa8fc04b7bc5231ba9d3c64795d28398e9bb8dce2590b5b6af2814087ad",
+      "bytes": 21016
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/dry-plan.json",
+      "sha256": "6aced08eb7575b1af4240d51218a0c60aaf1221656a78f9438cdf842702953fa",
+      "bytes": 2772
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/gemini-health.json",
+      "sha256": "0037d5b34d1f5d5a95275027a7ac5fb53a85a2fcb9e9296d75bc1f5d6685bbb1",
+      "bytes": 838
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/packet.json",
+      "sha256": "bf03bf0d1096e345e9e214dd4f31c432976cd4cc0015c1edf82d5c008ebe2839",
+      "bytes": 27744
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/paid-run/capture.json",
+      "sha256": "bd9986a0f60a460ea89cfb9bf57c96714ac291bcf9bcd2a0111a1e82b3a19135",
+      "bytes": 119716
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/paid-run/run-finished.json",
+      "sha256": "07a4dbb3a66b2f1fd99048ae426d34dee5f480c8277234b4984297ff2b50dc46",
+      "bytes": 541
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/paid-run/run-plan.json",
+      "sha256": "b803403e18550a1923e603e41b574db4bfa499c02fb13131e1ad676a72fc7ce2",
+      "bytes": 2788
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/paid-run/source-manifest.json",
+      "sha256": "fb9d7708c1528b52842df51746473857108c8c96b33cbeeca16d30452d9f4118",
+      "bytes": 26491
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/prepare-review.mjs",
+      "sha256": "1a717b187c6ed1ea1d041dc779736d8da1d4c8a62a8d85574329fe92ff26851b",
+      "bytes": 6334
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/recheck-result.json",
+      "sha256": "98ffd64c57dc1d4eb33902b5b2e7c07ba4fe5ea706e424b3e540ce69cf4716f2",
+      "bytes": 12468
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/review-selection/capture.json",
+      "sha256": "99f062e6e14bb7602ee6f585c3d4e54e7c79b917795ca681289f82bbf0e16ff1",
+      "bytes": 123176
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/review-selection/run-finished.json",
+      "sha256": "a786db7253fa5be103e2e4ae99dfd48f3d8577d64148f82962d0dd86442e7a01",
+      "bytes": 218
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/review-selection/run-plan.json",
+      "sha256": "4b238eb68bc8161ee2ae57489e76620f4526e7f296f1ec34abf436b1bbb8450a",
+      "bytes": 1974
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/review.json",
+      "sha256": "320f642ea86b61f63b2878f08b06bdbd951487bd311eca657f4f5778acce2df6",
+      "bytes": 12212
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/reviewer-dispatch-message.txt",
+      "sha256": "c2b49da9e6b3e91653e2b3d3c4e1a6643f1a37397a54904038569bbf5557c836",
+      "bytes": 1550
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/reviewer-dispatch.json",
+      "sha256": "54dc505ae28db566ad124c456e961a35908c7adf565030b114cc9f48eab9db15",
+      "bytes": 1149
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/reviewer-frozen-receipt.json",
+      "sha256": "615388f6880288a41d2eedec51187f6c32c9fa310d0d357842d3fe51d45aee6e",
+      "bytes": 391
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/reviewer-prompt.txt",
+      "sha256": "b5729f1943509a844bbc38a85ddcaa0d9daf8e1c3f472336daf44d9aebaac41d",
+      "bytes": 1363
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/run-targeted.mjs",
+      "sha256": "9b11e62715ebb61e1b40a5c396b0f187cad67e757d5bb18d05f2c0eb03eaad38",
+      "bytes": 14122
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/select-review-drafts.mjs",
+      "sha256": "22fd3c399ec8a9db84897f7e19e9ba9c35dbf0ca996d64c13c8f296a7dd2a87f",
+      "bytes": 3294
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/service-status.json",
+      "sha256": "9be3c5fd30f7fe8144faad32717a610bdfbbbd54b10d51da974429caf14d02f4",
+      "bytes": 551
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/source-audit.json",
+      "sha256": "7cc79d7dcd1607e9337e44448bbdc33636be654093b11c858f008c158758d87a",
+      "bytes": 1251
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/tooling-checks.json",
+      "sha256": "7b857f4f93b7b1d44c1dc5cc441bd1088166f74a40cc9ca7df344d151d246711",
+      "bytes": 2005
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/transport-observations.json",
+      "sha256": "6ef74e9fd56f2a9870da3f3df463897c346ff137cf37c5a2939d4e81674037d5",
+      "bytes": 3161
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-synthesis-recovery/README.md",
+      "sha256": "67453406929d5ca4af727b7eec4f8bf9c8e0e18774dc4dae6b9f8e8f506fba0d",
+      "bytes": 1361
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-synthesis-recovery/capture.json",
+      "sha256": "e4320986a5db5fdfadd4ba19967ac604854f85f3f816c70851ec3f10ec64ab2d",
+      "bytes": 33050
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-synthesis-recovery/deadline.mjs",
+      "sha256": "7e8e7157f1feb3a6d0b4f9e93e75a22bf91ec5dc098fbf5542151d189072f21d",
+      "bytes": 2649
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-synthesis-recovery/dry-plan.json",
+      "sha256": "8e072f56fb20ae78dce31589a28fa3f865ec6567c3fe340e00754f1c87e058cf",
+      "bytes": 2449
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-synthesis-recovery/run-finished.json",
+      "sha256": "091e72d7ea0f4e9bc9499d4b59f2bd4eecc9b8916e5f0ba77c7f81411aee0855",
+      "bytes": 541
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-synthesis-recovery/run-plan.json",
+      "sha256": "be1935a1e96603b0236cc6ced3cd2147d9f80ccbfa37040a1425a0023fd0caf7",
+      "bytes": 2465
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-synthesis-recovery/run-targeted.mjs",
+      "sha256": "79c461f036fb48f2e65b31e15ea970c0f7e154286a8e164fc979acabce7007ab",
+      "bytes": 13860
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-synthesis-recovery/source-manifest.json",
+      "sha256": "702c758ffef221fd586f7c4df95ef537b1fe2665fb4b366b8cdec624a41f79c7",
+      "bytes": 26491
+    }
+  ]
+}

@@ -1,14 +1,23 @@
-# Natal writing readiness — paid recheck incomplete
+# Natal writing readiness — lightweight gate passed
 
-**Current result (2026-10-12):** [step 3](2026-10-12-raw-draft-recheck/README.md)
-implemented the qualifier guard and guidance changes in `79ad050`. The paid run
-captured one duty and one Moon-fallback draft; a fresh blinded reviewer passed both
-with no substantive findings. The third call (synthesis) returned HTTP 429, so the
-runner stopped without retries. Three scheduled second drafts remain unattempted.
-**Two of six planned drafts are captured and passing; the recheck is incomplete and
-the writing gate remains failed.** Both candidates remain inactive; nothing was
-pushed or deployed. All 521 tests, typecheck, build and changed-file lint pass. Full
-repository lint retains pre-existing failures documented with the new evidence.
+**Current result (2026-10-12):** the
+[completed step-3 recheck](2026-10-12-raw-draft-continuation/README.md) passes
+**all six raw drafts**, two each for duty, Moon fallback and synthesis, with no
+substantive findings. Together with the retained passing templates, other raw
+cases, quiet safety check and duty/freedom distinctions, this clears the
+[lightweight writing gate](lightweight-readiness.md). Both candidates remain
+inactive; nothing was pushed, deployed or activated.
+
+The [first partial run](2026-10-12-raw-draft-recheck/README.md) captured two passing
+drafts before HTTP 429. An authenticated Gemini health probe then returned HTTP 200;
+the authorized continuation captured the remaining four drafts and a fresh blinded
+reviewer passed all four. One continuation call timed out; a separate recovery
+attempt succeeded. Both failures and every original run remain preserved. The
+application source matches `79ad050`, which implemented the qualifier guard and
+guidance and passed all 521 tests, typecheck, build and changed-file lint. Those
+checks were not rerun for this evidence-only continuation. Full repository lint
+retains documented pre-existing failures. Extended local capture deadlines do not
+establish member-path availability.
 
 **Earlier targeted result (2026-10-12):** the first
 [targeted review of partial-run evidence](2026-10-12-lightweight-subset-review/README.md)

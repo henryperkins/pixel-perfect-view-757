@@ -1,0 +1,9 @@
+{
+  "previousApplicationRevision": "79ad05086b1f06179c0456b7e38a389757a5898c",
+  "continuationApplicationRevision": "440a62e6b1537284ad9597da36b6681943813d42",
+  "trackedSourceSha256": "4390257f7e87fe6dbbf8f0dea512dcb0ba4d9ea6213bf08f6776baa6a42644ba",
+  "applicationSourceByteIdentical": true,
+  "sourceFiles": 172,
+  "runnerStoredSeparatelyByHash": "9b11e62715ebb61e1b40a5c396b0f187cad67e757d5bb18d05f2c0eb03eaad38",
+  "note": "This continuation changes only capture/review tooling and evidence. The 521-test, typecheck and build evidence from the implementation commit still identifies the same application source; these checks were not rerun."
+}

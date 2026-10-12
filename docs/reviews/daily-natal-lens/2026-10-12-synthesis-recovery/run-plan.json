@@ -1,0 +1,64 @@
+{
+  "kind": "targeted-synthesis-recovery",
+  "previousPartialRun": "../2026-10-12-raw-draft-continuation",
+  "interCallPauseMs": 30000,
+  "sourceRevision": "440a62e6b1537284ad9597da36b6681943813d42",
+  "trackedSourceSha256": "4390257f7e87fe6dbbf8f0dea512dcb0ba4d9ea6213bf08f6776baa6a42644ba",
+  "runnerSha256": "79c461f036fb48f2e65b31e15ea970c0f7e154286a8e164fc979acabce7007ab",
+  "configured": true,
+  "provider": "gemini-enterprise",
+  "model": "gemini-enterprise/gemini-3.8-flash",
+  "bundleSource": "natal-candidate",
+  "bundleVersion": "builtin-0.6.1",
+  "promptVersion": "daily-astro-body-12",
+  "validatorVersion": "daily-reference-8",
+  "schedule": [
+    {
+      "sampleId": "sample-1",
+      "caseId": "natal-synthesis-integration",
+      "repetition": 2
+    }
+  ],
+  "maximumModelAttempts": 1,
+  "retries": 0,
+  "concurrency": 1,
+  "resumeSupported": false,
+  "servingDeadlineMs": 60000,
+  "runtimeDeadlineMs": 180000,
+  "runtimePolicyOverride": {
+    "kind": "extended-synthetic-runtime-deadline",
+    "servingDeadlineMs": 60000,
+    "runtimeDeadlineMs": 180000,
+    "servingAvailabilityEstablished": false,
+    "transformedModule": "src/lib/ai/diagnostics.ts",
+    "originalModuleSha256": "424e6ad736c167234852af7d94f5e992bba70f573a6d3c52d38fc7d6089014c5",
+    "transformedModuleSha256": "2701fac75c0bfdf57296c54ac2dc06c3b2c08d9a6908bda1533525fccb70f9d7",
+    "transformSpecification": {
+      "kind": "exact-source-substitution",
+      "module": "src/lib/ai/diagnostics.ts",
+      "from": "export const DAILY_GATEWAY_TIMEOUT_MS = 60_000;",
+      "to": "export const DAILY_GATEWAY_TIMEOUT_MS = 180_000;",
+      "expectedMatches": 1,
+      "scope": "this runner's Vite SSR module loader only",
+      "servingDeadlineMs": 60000,
+      "runtimeDeadlineMs": 180000
+    },
+    "transformSpecificationSha256": "fa47d6c2bf3ff407357a30f404c71e2acf584613e211a97d2c2025bce1ed5db6",
+    "nativeProviderFunctionOrPayloadTransformed": false
+  },
+  "fullBenchmarkClaim": false,
+  "executionContext": {
+    "kind": "local-production-module-synthetic-capture",
+    "nodeVersion": "v24.21.0",
+    "moduleLoader": "Vite ssrLoadModule",
+    "configFile": false,
+    "envFile": false,
+    "hostedWorkflowExecuted": false,
+    "adminAuthenticationVerified": false,
+    "memberProviderVerified": false,
+    "servingAvailabilityEstablished": false,
+    "databaseOrReadingCacheAccessed": false,
+    "candidatesActivated": false
+  },
+  "startedAt": "2026-10-12T05:31:18.292Z"
+}

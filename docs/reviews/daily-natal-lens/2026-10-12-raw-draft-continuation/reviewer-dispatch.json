@@ -1,0 +1,15 @@
+{
+  "contextId": "writing-continuation",
+  "packetPath": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-step3-continuation/review-collection/blind/writing-continuation/packet.json",
+  "outputPath": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-step3-continuation/review-collection/blind/writing-continuation/review.json",
+  "packetSha256": "bf03bf0d1096e345e9e214dd4f31c432976cd4cc0015c1edf82d5c008ebe2839",
+  "itemSetHash": "2695da91373ea7dc7f7ad2e79337ec6f65e0675c1ab4bc6ed73cc10361a0cedf",
+  "promptPath": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-step3-continuation/reviewer-prompt.txt",
+  "promptSha256": "b5729f1943509a844bbc38a85ddcaa0d9daf8e1c3f472336daf44d9aebaac41d",
+  "dispatchAtUTC": "2026-10-12T05:31:59.463Z",
+  "fullDispatchMessageSha256": "c2b49da9e6b3e91653e2b3d3c4e1a6643f1a37397a54904038569bbf5557c836",
+  "dispatchMechanism": "Codex collaboration.spawn_agent with fork_turns none",
+  "actualTaskName": "/root/writing_continuation",
+  "coordinatorHadUnblindedContext": true,
+  "reviewerToolAccessTechnicallySandboxed": false
+}

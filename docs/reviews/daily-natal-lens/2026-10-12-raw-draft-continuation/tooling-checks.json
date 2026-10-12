@@ -1,0 +1,38 @@
+{
+  "syntaxChecks": "pass",
+  "scopedLint": "pass",
+  "dryPlan": "pass; four outstanding slots plus one separate recovery slot, zero calls during dry runs",
+  "applicationTestsRerun": false,
+  "reason": "All 172 application source files match the previously tested source. Only capture/review tooling and evidence changed. Prior results: 521 tests, typecheck, build and changed-file lint pass; full repository lint has documented pre-existing failures.",
+  "files": [
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/check-review.mjs",
+      "sha256": "c3716644646b8cc05d016430bd9653abfde6375bf63948fd0f625ffcd0886322"
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/combine-results.mjs",
+      "sha256": "5e4beea8fde89c31485628507dde913a730fb9c1d09b04f990cefa01c5176e83"
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/prepare-review.mjs",
+      "sha256": "1a717b187c6ed1ea1d041dc779736d8da1d4c8a62a8d85574329fe92ff26851b"
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/run-targeted.mjs",
+      "sha256": "9b11e62715ebb61e1b40a5c396b0f187cad67e757d5bb18d05f2c0eb03eaad38"
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/select-review-drafts.mjs",
+      "sha256": "22fd3c399ec8a9db84897f7e19e9ba9c35dbf0ca996d64c13c8f296a7dd2a87f"
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-synthesis-recovery/deadline.mjs",
+      "sha256": "7e8e7157f1feb3a6d0b4f9e93e75a22bf91ec5dc098fbf5542151d189072f21d"
+    },
+    {
+      "path": "docs/reviews/daily-natal-lens/2026-10-12-synthesis-recovery/run-targeted.mjs",
+      "sha256": "79c461f036fb48f2e65b31e15ea970c0f7e154286a8e164fc979acabce7007ab"
+    }
+  ],
+  "dryPlanArchivalNote": "Trailing blank stdout line removed from archived dry-plan JSON only; original paid captures, run plans, receipts and review bytes are unchanged."
+}

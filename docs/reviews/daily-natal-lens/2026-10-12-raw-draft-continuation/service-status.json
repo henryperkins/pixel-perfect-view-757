@@ -1,0 +1,9 @@
+{
+  "dashboard": "https://status.cloud.google.com/",
+  "observedStatus": "No broad severe incidents",
+  "dashboardUpdated": "2026-10-11 22:03:20 PDT",
+  "geminiHistory": "https://status.cloud.google.com/products/Z0FZJAMvEB4j3NbCJs6B/history",
+  "latestListedGeminiIncident": "2026-02-27",
+  "rateLimitGuidance": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/deploy/error-code-429",
+  "scope": "Public status does not rule out project quota or shared capacity limits. Live authenticated health probe is recorded separately."
+}
