@@ -1,0 +1,11 @@
+{
+  "contextId": "natal-synthesis-recheck",
+  "promptSha256": "8d159bb3a6fe8d76b82bc56c999549f22ce169f7243cc3df14ee3583646e72b0",
+  "packetSha256": "e8915e27b8bbd773ba614644cf1de0456ea7915e2957508928478132d6dc625d",
+  "itemSetHash": "bdaca3dfa070266cf269516329138348d7624273e20f3f6d772ab44c2478837a",
+  "dispatchAtUTC": "2026-10-12T04:49:29.941Z",
+  "reviewSha256": "9dd050f7a238323b269e608ba0ba15cb1fb23f9bd5c90747848b911c83ee9e98",
+  "frozenAtUTC": "2026-10-12T04:58:21.655Z",
+  "frozenBeforeAssignmentRevealed": true,
+  "reviewEditedByCoordinator": false
+}

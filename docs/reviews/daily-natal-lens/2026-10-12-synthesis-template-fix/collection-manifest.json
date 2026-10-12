@@ -1,0 +1,109 @@
+{
+  "kind": "natal-synthesis-template-recheck",
+  "label": "Targeted re-review of the fixed natal synthesis template",
+  "policy": "../lightweight-readiness.md",
+  "fullBenchmarkClaim": false,
+  "newModelRequests": 0,
+  "humanReviewCompleted": false,
+  "candidatesActivated": false,
+  "sourceRevision": "9316cbf77e7ea51c47a48f3678bab6901f917093",
+  "capture": {
+    "receiptSha256": "96eea25cccc6fd26d1332b44bda8b0999ba092a8afafaaf5e0ec4fbf4b826e1e",
+    "templatesSha256": "cdb7aca13f5fe6cc6bd89073e3ac299aa4fdab09e66fa8d1a022b1b3788b99dd",
+    "changed": [
+      {
+        "bundleSource": "natal-candidate",
+        "caseId": "natal-synthesis-integration",
+        "storyStatus": "omitted"
+      },
+      {
+        "bundleSource": "natal-candidate",
+        "caseId": "arc-synthesis-natal-integration",
+        "storyStatus": "omitted"
+      },
+      {
+        "bundleSource": "transit-candidate",
+        "caseId": "natal-synthesis-integration",
+        "storyStatus": "omitted"
+      },
+      {
+        "bundleSource": "transit-candidate",
+        "caseId": "arc-synthesis-natal-integration",
+        "storyStatus": "selected"
+      }
+    ]
+  },
+  "previousTemplatesSha256": "f2434374eeccae29c27fc02d1827ab8ca8002340d85c12934ce82f56c49e1254",
+  "samples": [
+    {
+      "caseId": "natal-synthesis-integration",
+      "scope": "lightweight-subset",
+      "bundleSource": "natal-candidate",
+      "tone": "plain",
+      "depth": "standard",
+      "lensRuleKey": "nl-sun-03",
+      "storyStatus": "omitted",
+      "suppliedFactIds": [
+        "C1",
+        "C2",
+        "I1",
+        "I2",
+        "S1",
+        "N1",
+        "D1",
+        "P1",
+        "T1",
+        "E1",
+        "U1"
+      ],
+      "factsSha256": "ca1b3c22a0a56c36c7c06224a4230f004fa32c33f27e1eb97802a384c432955d",
+      "bodySha256": "7ce01878875f32b1a89ec86a0ddb966a3205d7940702fbe00c62b5e1f5d8a4ff",
+      "previousBodySha256": "bbfff69be05761c48d0a81701d3cdcdf20115d11a90caec153915b5f40f81416"
+    },
+    {
+      "caseId": "arc-synthesis-natal-integration",
+      "scope": "affected-outside-subset",
+      "bundleSource": "natal-candidate",
+      "tone": "plain",
+      "depth": "standard",
+      "lensRuleKey": "nl-sun-03",
+      "storyStatus": "omitted",
+      "suppliedFactIds": [
+        "C1",
+        "C2",
+        "I1",
+        "I2",
+        "S1",
+        "N1",
+        "D1",
+        "P1",
+        "T1",
+        "E1",
+        "U1"
+      ],
+      "factsSha256": "4955e7028f27b8e663c8f9643545be8ab79d1117703c51c562fa22c009b81e62",
+      "bodySha256": "7ce01878875f32b1a89ec86a0ddb966a3205d7940702fbe00c62b5e1f5d8a4ff",
+      "previousBodySha256": "bbfff69be05761c48d0a81701d3cdcdf20115d11a90caec153915b5f40f81416"
+    }
+  ],
+  "unreviewedChanges": [
+    {
+      "bundleSource": "transit-candidate",
+      "caseId": "natal-synthesis-integration",
+      "storyStatus": "omitted"
+    },
+    {
+      "bundleSource": "transit-candidate",
+      "caseId": "arc-synthesis-natal-integration",
+      "storyStatus": "selected"
+    }
+  ],
+  "packet": {
+    "contextId": "natal-synthesis-recheck",
+    "sha256": "e8915e27b8bbd773ba614644cf1de0456ea7915e2957508928478132d6dc625d",
+    "itemSetHash": "bdaca3dfa070266cf269516329138348d7624273e20f3f6d772ab44c2478837a",
+    "instructionsSha256": "822af5b1599feb0384768d857feabd89f63691fe806b203b16dffe084dd7a42b",
+    "targetedScopeSha256": "918e26e3c98d174e6c6961a2c37bf23a2561965cf534145f0262b06f1fa29703",
+    "uniqueItems": 2
+  }
+}

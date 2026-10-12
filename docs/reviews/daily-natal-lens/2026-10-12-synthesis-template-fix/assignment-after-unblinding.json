@@ -1,0 +1,218 @@
+{
+  "protocolVersion": "daily-writing-ai-review-1",
+  "kind": "targeted-recheck-assignment",
+  "itemSetHash": "bdaca3dfa070266cf269516329138348d7624273e20f3f6d772ab44c2478837a",
+  "packets": {
+    "natal-synthesis-recheck": {
+      "sha256": "e8915e27b8bbd773ba614644cf1de0456ea7915e2957508928478132d6dc625d"
+    }
+  },
+  "items": {
+    "item-01": {
+      "content": {
+        "itemId": "item-01",
+        "tone": "plain",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain identity. Calculated exact date: 2026-10-14."
+          },
+          {
+            "id": "C2",
+            "kind": "calculation",
+            "statement": "transiting jupiter trine natal mars. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain identity. Calculated exact date: 2026-10-14."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "I2",
+            "kind": "interpretation",
+            "statement": "Published interpretation trine:jupiter:mars: Enthusiasm and practical initiative reinforce one another when an aim is well chosen. Jupiter's trine to Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening.",
+            "dependsOn": [
+              "C2"
+            ]
+          },
+          {
+            "id": "S1",
+            "kind": "synthesis",
+            "statement": "Published tension synthesis square:saturn:sun_tension_trine:jupiter:mars (parents: C1, I1, C2, I2): Giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.",
+            "dependsOn": [
+              "C1",
+              "I1",
+              "C2",
+              "I2"
+            ]
+          },
+          {
+            "id": "N1",
+            "kind": "temperament",
+            "statement": "Published natal lens, an interpretive possibility: Following more than one line of curiosity can help a direction take shape. If several possible projects compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages.",
+            "dependsOn": [
+              "C1",
+              "I1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: The contact is in its approaching phase within the calculated window."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"near\" (about plus or minus 15 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "An established role can feel demanding when its obligations require more deliberate effort than usual. If several possible projects within that role compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages. Following more than one line of curiosity can help a direction take shape.",
+            "facts": null
+          },
+          {
+            "number": 2,
+            "text": "Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries. Jupiter's trine to Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening. Giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.",
+            "facts": null
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "caseId": "natal-synthesis-integration",
+          "scope": "lightweight-subset",
+          "output": "template"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": true,
+        "lensIntegration": true
+      }
+    },
+    "item-02": {
+      "content": {
+        "itemId": "item-02",
+        "tone": "plain",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.00 degrees. phase exact. domain identity. Calculated exact date: 2026-12-17."
+          },
+          {
+            "id": "C2",
+            "kind": "calculation",
+            "statement": "transiting jupiter trine natal mars. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain identity. Calculated exact date: 2026-12-19."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "I2",
+            "kind": "interpretation",
+            "statement": "Published interpretation trine:jupiter:mars: Enthusiasm and practical initiative reinforce one another when an aim is well chosen. Jupiter's trine to Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening.",
+            "dependsOn": [
+              "C2"
+            ]
+          },
+          {
+            "id": "S1",
+            "kind": "synthesis",
+            "statement": "Published tension synthesis square:saturn:sun_tension_trine:jupiter:mars (parents: C1, I1, C2, I2): Giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.",
+            "dependsOn": [
+              "C1",
+              "I1",
+              "C2",
+              "I2"
+            ]
+          },
+          {
+            "id": "N1",
+            "kind": "temperament",
+            "statement": "Published natal lens, an interpretive possibility: Following more than one line of curiosity can help a direction take shape. If several possible projects compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages.",
+            "dependsOn": [
+              "C1",
+              "I1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: The contact is close to exact within the calculated window."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: exact today. This reading falls in the middle part of the calculated window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "An established role can feel demanding when its obligations require more deliberate effort than usual. If several possible projects within that role compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages. Following more than one line of curiosity can help a direction take shape.",
+            "facts": null
+          },
+          {
+            "number": 2,
+            "text": "Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries. Jupiter's trine to Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening. Giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.",
+            "facts": null
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "caseId": "arc-synthesis-natal-integration",
+          "scope": "affected-outside-subset",
+          "output": "template"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": true,
+        "lensIntegration": true
+      }
+    }
+  },
+  "cases": {
+    "natal-synthesis-integration": {
+      "template": "item-01"
+    },
+    "arc-synthesis-natal-integration": {
+      "template": "item-02"
+    }
+  }
+}

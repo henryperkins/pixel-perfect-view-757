@@ -1,0 +1,40 @@
+{
+  "kind": "reviewer-tool-access-audit",
+  "contextId": "natal-synthesis-recheck",
+  "source": "Claude Code subagent transcript, preserved locally only (it embeds session environment context)",
+  "transcriptSha256": "ccfb2aa159899fca520963b311cb1fb278a25fda3555a2b5306a19e8dd54ac72",
+  "localTranscript": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-synthesis-template/dispatch/reviewer-transcript.jsonl",
+  "toolCalls": [
+    {
+      "sequence": 1,
+      "tool": "Read",
+      "filePath": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-synthesis-template/recheck-1/blind/natal-synthesis-recheck/packet.json",
+      "command": null
+    },
+    {
+      "sequence": 2,
+      "tool": "Write",
+      "filePath": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-synthesis-template/recheck-1/blind/natal-synthesis-recheck/review.json",
+      "command": null
+    },
+    {
+      "sequence": 3,
+      "tool": "Read",
+      "filePath": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-synthesis-template/recheck-1/blind/natal-synthesis-recheck/review.json",
+      "command": null
+    }
+  ],
+  "filesTouched": [
+    "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-synthesis-template/recheck-1/blind/natal-synthesis-recheck/packet.json",
+    "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-synthesis-template/recheck-1/blind/natal-synthesis-recheck/review.json"
+  ],
+  "onlyPacketAndOwnOutput": true,
+  "commandsRun": [],
+  "readsOfOtherFiles": [],
+  "reportedUsage": {
+    "subagentTokens": 112129,
+    "toolUses": 3,
+    "durationMs": 518250
+  },
+  "note": "The coordinator did not read the review before freezing it."
+}

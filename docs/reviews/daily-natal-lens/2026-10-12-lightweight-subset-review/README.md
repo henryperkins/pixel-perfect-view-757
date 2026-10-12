@@ -6,6 +6,10 @@ templates**. Four of the seven cases fully pass. The quiet template is safe, and
 duty/freedom contrasts are supported. One substantive finding and below-threshold
 lens, coherence and synthesis scores fail four samples in three cases.
 
+**Update (2026-10-12):** the synthesis template was fixed and passed a fresh
+re-review; see the [synthesis template fix](../2026-10-12-synthesis-template-fix/README.md).
+The original judgments below are unchanged. The three raw-draft failures remain.
+
 This is the first review under the [lightweight readiness gate](../lightweight-readiness.md).
 It reviews seven existing round-3 candidate cases: each case's raw draft and its
 deterministic template. It is **not a complete benchmark**. It does not change the

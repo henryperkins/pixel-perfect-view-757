@@ -11,7 +11,8 @@ appropriate readiness check and a separate activation request.
 failed. It passed 10/14 prose samples (4/7 raw drafts, 6/7 templates); the quiet template
 was safe, and both duty/freedom contrasts were supported. The duty, Moon-fallback and
 synthesis raw drafts and the synthesis template need fixes. After a fix, only those
-cases are reviewed again.
+cases are reviewed again. The [synthesis template fix](2026-10-12-synthesis-template-fix/README.md)
+passed its re-review, so current samples pass 11/14; the three raw drafts remain.
 
 This set covers natal writing only. It does not qualify transit-candidate chapter
 copy; that candidate needs its own small representative review before activation.

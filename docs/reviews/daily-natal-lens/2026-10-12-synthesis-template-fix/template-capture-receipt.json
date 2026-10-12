@@ -1,0 +1,58 @@
+{
+  "artifactVersion": "natal-template-capture-receipt-2",
+  "capturedAt": "2026-10-12T04:47:26.417Z",
+  "sourceIdentity": {
+    "sourceRevision": "9316cbf77e7ea51c47a48f3678bab6901f917093",
+    "trackedSourceSha256": "a1c6588cfb481dd2a8b112f9018a50ed6ce644b934a44e9ac170571331a333ed",
+    "trackedSourceFiles": 171,
+    "helperSha256": "7cbdc63448550482d67988e7ceac9c3fa5bf08ca77e60803e2cc3dfda7b13c96",
+    "manifestPath": "template-source-manifest.json"
+  },
+  "compared": 114,
+  "preservedNatalPositiveBodies": 7,
+  "changed": [
+    {
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-synthesis-integration",
+      "storyStatus": "omitted"
+    },
+    {
+      "bundleSource": "natal-candidate",
+      "caseId": "arc-synthesis-natal-integration",
+      "storyStatus": "omitted"
+    },
+    {
+      "bundleSource": "transit-candidate",
+      "caseId": "natal-synthesis-integration",
+      "storyStatus": "omitted"
+    },
+    {
+      "bundleSource": "transit-candidate",
+      "caseId": "arc-synthesis-natal-integration",
+      "storyStatus": "selected"
+    }
+  ],
+  "previousTemplates": {
+    "path": "docs/reviews/daily-natal-lens/2026-10-12-qualification-round-3/templates.json",
+    "sha256": "f2434374eeccae29c27fc02d1827ab8ca8002340d85c12934ce82f56c49e1254"
+  },
+  "files": [
+    {
+      "path": "template-source-manifest.json",
+      "sha256": "a67712612de04a1435683f14ae9d0a3237370959fe95ff7e93615148ff3372e9"
+    },
+    {
+      "path": "templates.json",
+      "sha256": "cdb7aca13f5fe6cc6bd89073e3ac299aa4fdab09e66fa8d1a022b1b3788b99dd"
+    },
+    {
+      "path": "case-contexts.json",
+      "sha256": "52a0e08caccb3015aaee0fd1a7934744253d91fe7256466fda6d0b97443a985e"
+    }
+  ],
+  "fixedContextsPreserved": 38,
+  "modelRequestsAttempted": 0,
+  "blockedFetchCalls": 0,
+  "handwrittenModelResponsesReplayed": 0,
+  "sourceUnchangedThroughoutCapture": true
+}

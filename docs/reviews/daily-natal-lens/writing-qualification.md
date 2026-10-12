@@ -12,11 +12,17 @@ supported. Freedom, exact-house, warm and legacy-snapshot samples pass.
 - Duty raw: N1 is attached to “an unfinished reply” that is never tied to the
   quiet-moment scene (lens integration 3).
 - Synthesis raw and template: coherence 3, with synthesis coherence 3 (raw) and 2
-  (template). The template presents S1 without its Jupiter–Mars parent, because
-  `composeNatalTemplate` uses S1 alone as the second paragraph.
+  (template). The template presented S1 without its Jupiter–Mars parent, because
+  `composeNatalTemplate` used S1 alone as the second paragraph.
 
-Fixing these changes application source. Re-reviewing the three raw drafts also needs
-new model calls, which require an explicit operator request. Both candidates remain
+**Template fix (2026-10-12):** commit `9316cbf` names the Saturn–Sun and Jupiter–Mars
+contacts, as published copy, before S1. An offline capture of all 114 template bodies
+shows that only the four lens-plus-synthesis bodies changed. A fresh AI reviewer then
+passed both affected natal-candidate templates at 5/5/4/3/4/4/4 with no substantive
+finding; see the [synthesis template fix](2026-10-12-synthesis-template-fix/README.md).
+Current samples pass **11/14: all seven templates and 4/7 raw drafts**. The gate still
+fails on the duty, Moon-fallback and synthesis raw drafts. Revising them needs new
+model calls, which require an explicit operator request. Both candidates remain
 inactive; release and activation stay separate requests after the gate passes.
 
 **Evidence policy (2026-10-12):** the operator requested a manageable review scope. The

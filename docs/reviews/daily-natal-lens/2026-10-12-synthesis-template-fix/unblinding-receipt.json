@@ -1,0 +1,22 @@
+{
+  "unblindedAtUTC": "2026-10-12T04:58:34.555Z",
+  "assignmentSha256": "891567d54f38ca169bea28c81d9693871d0663cfe3812c84e64a0246c80a3c48",
+  "collectionManifestSha256": "38b2bb6e7cb2d62acd02d314d1eaf3be39ac3ee7164ca1ee47a489a86bd53436",
+  "reviewers": [
+    {
+      "contextId": "natal-synthesis-recheck",
+      "promptSha256": "8d159bb3a6fe8d76b82bc56c999549f22ce169f7243cc3df14ee3583646e72b0",
+      "packetSha256": "e8915e27b8bbd773ba614644cf1de0456ea7915e2957508928478132d6dc625d",
+      "itemSetHash": "bdaca3dfa070266cf269516329138348d7624273e20f3f6d772ab44c2478837a",
+      "dispatchAtUTC": "2026-10-12T04:49:29.941Z",
+      "reviewSha256": "9dd050f7a238323b269e608ba0ba15cb1fb23f9bd5c90747848b911c83ee9e98",
+      "frozenAtUTC": "2026-10-12T04:58:21.655Z",
+      "frozenBeforeAssignmentRevealed": true,
+      "reviewEditedByCoordinator": false
+    }
+  ],
+  "reviewFrozenBeforeUnblinding": true,
+  "scoresAndFindingsEditedByCoordinator": false,
+  "resultFile": "recheck-result.json",
+  "resultSha256": "ac8d37dbd9f94b4100733680c2c94dda289521d739ee2b750f1a6483d0b877a7"
+}

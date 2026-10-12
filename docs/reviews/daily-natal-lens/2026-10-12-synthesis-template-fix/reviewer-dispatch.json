@@ -1,0 +1,15 @@
+{
+  "contextId": "natal-synthesis-recheck",
+  "role": "single fresh reviewer of the affected synthesis template bodies (lightweight gate re-review)",
+  "packetPath": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-synthesis-template/recheck-1/blind/natal-synthesis-recheck/packet.json",
+  "outputPath": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-synthesis-template/recheck-1/blind/natal-synthesis-recheck/review.json",
+  "packetSha256": "e8915e27b8bbd773ba614644cf1de0456ea7915e2957508928478132d6dc625d",
+  "itemSetHash": "bdaca3dfa070266cf269516329138348d7624273e20f3f6d772ab44c2478837a",
+  "promptPath": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-synthesis-template/dispatch/reviewer-prompt.txt",
+  "promptSha256": "8d159bb3a6fe8d76b82bc56c999549f22ce169f7243cc3df14ee3583646e72b0",
+  "dispatchAtUTC": "2026-10-12T04:49:29.941Z",
+  "promptHashDefinition": "Exact archived task text before appended hash-binding trailer",
+  "fullDispatchMessageSha256": "f2e5576e2fb3a4ebdccdd1ef42258d9df581322b0510ce1729b883ecdadb9f43",
+  "dispatchMechanism": "Claude Code Agent tool, general-purpose subagent with a fresh context (not a fork of the coordinator)",
+  "coordinatorHadUnblindedContext": true
+}
