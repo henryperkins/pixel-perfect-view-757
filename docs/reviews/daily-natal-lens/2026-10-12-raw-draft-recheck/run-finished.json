@@ -1,0 +1,16 @@
+{
+  "status": "halted",
+  "haltReason": "rate_limit",
+  "finishedAt": "2026-10-12T05:15:54.402Z",
+  "sourceRevision": "79ad05086b1f06179c0456b7e38a389757a5898c",
+  "trackedSourceSha256": "4390257f7e87fe6dbbf8f0dea512dcb0ba4d9ea6213bf08f6776baa6a42644ba",
+  "sourceUnchangedThroughout": false,
+  "modelAttempts": 3,
+  "settledSamples": 3,
+  "losslessRawDrafts": 2,
+  "unsettledSample": null,
+  "captureSha256": "5d284e1b36b61e5ed01172eaba68b5d1bd827834e6d236c52ec0517ec7175882",
+  "retries": 0,
+  "cost": "unknown",
+  "candidatesActivated": false
+}

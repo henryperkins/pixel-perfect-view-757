@@ -1,0 +1,163 @@
+{
+  "kind": "targeted-raw-draft-assignment",
+  "itemSetHash": "df6d54174018584d46a8482c689969b98a9016894af0e4434699f2a88a62551e",
+  "packets": {
+    "writing-primary": {
+      "sha256": "87c16cba5aea35729e06e819797440533ded08233412b5d2d18a09b758e21453"
+    }
+  },
+  "items": {
+    "item-01": {
+      "content": {
+        "itemId": "item-01",
+        "tone": "plain",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain identity. Calculated exact date: 2026-10-14."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "N1",
+            "kind": "temperament",
+            "statement": "Published natal lens, an interpretive possibility: A self-contained response to pressure can start with sorting what is manageable before sharing it. An unfinished reply can offer a place to notice the difference between useful preparation and waiting to have everything settled.",
+            "dependsOn": [
+              "C1",
+              "I1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: The contact is in its approaching phase within the calculated window."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"near\" (about plus or minus 15 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "When expectations outpace available capacity, a routine or responsibility needs clearer boundaries. An established role can feel demanding when its obligations require more deliberate effort than usual. Regarding an obligation such as an unfinished reply, a self-contained response to pressure can start with sorting what is manageable before sharing it. Considering that same reply can offer a place to notice the difference between useful preparation and waiting to have everything settled, framed by transiting Saturn square the natal Sun.",
+            "facts": null
+          },
+          {
+            "number": 2,
+            "text": "A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.",
+            "facts": null
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "sampleId": "sample-2",
+          "caseId": "natal-moon-fallback",
+          "repetition": 1,
+          "output": "raw-model"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": true
+      }
+    },
+    "item-02": {
+      "content": {
+        "itemId": "item-02",
+        "tone": "plain",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting saturn square natal moon. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain inner-life. Calculated exact date: 2026-10-14."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation hard:saturn:moon: A small obligation can take up more room than its size suggests. Saturn's hard contact with the Moon frames the tension between something you feel responsible for and the amount of uninterrupted space you would prefer. The everyday scene might be a calendar left too full, or a quiet moment spent mentally keeping track of the next task.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "N1",
+            "kind": "temperament",
+            "statement": "Published natal lens, an interpretive possibility: A self-contained response to pressure can start with sorting what is manageable before sharing it. An unfinished reply can offer a place to notice the difference between useful preparation and waiting to have everything settled.",
+            "dependsOn": [
+              "C1",
+              "I1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for inner life and rest: An unclaimed hour can still be mentally full of unfinished tasks. A full calendar or an obligation that follows you into a quiet moment can offer a scene for tension around the amount of private space you prefer."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: The contact is in its approaching phase within the calculated window."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"near\" (about plus or minus 15 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "A quiet moment might be spent mentally keeping track of the next task, such as an unfinished reply. Saturn's hard contact with the natal Moon frames the tension between something you feel responsible for and the amount of uninterrupted space you would prefer. A self-contained response to pressure can start with sorting what is manageable before sharing it. That same unfinished reply can offer a place to notice the difference between useful preparation and waiting to have everything settled.",
+            "facts": null
+          },
+          {
+            "number": 2,
+            "text": "Transiting Saturn is square the natal Moon, and the contact is in its approaching phase within the calculated window. The current orb at the reading's calculation time is 0.42 degrees. This reading falls in the middle part of the calculated window. The contact is calculated exact in 3 days, on 2026-10-14.",
+            "facts": null
+          }
+        ]
+      },
+      "mappings": [
+        {
+          "sampleId": "sample-1",
+          "caseId": "natal-duty-reflex",
+          "repetition": 1,
+          "output": "raw-model"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": true
+      }
+    }
+  }
+}

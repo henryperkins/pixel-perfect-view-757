@@ -12,7 +12,11 @@ failed. It passed 10/14 prose samples (4/7 raw drafts, 6/7 templates); the quiet
 was safe, and both duty/freedom contrasts were supported. The duty, Moon-fallback and
 synthesis raw drafts and the synthesis template need fixes. After a fix, only those
 cases are reviewed again. The [synthesis template fix](2026-10-12-synthesis-template-fix/README.md)
-passed its re-review, so current samples pass 11/14; the three raw drafts remain.
+passed its re-review, leaving 11/14 passing at the end of step 2. The subsequently
+authorized [paid step-3 recheck](2026-10-12-raw-draft-recheck/README.md) captured new
+duty and Moon-fallback drafts that both passed one fresh blinded review. A synthesis
+call hit HTTP 429; the run stopped without retries, and three second drafts remain
+unattempted. The intended six-draft recheck is incomplete, so the gate remains failed.
 
 This set covers natal writing only. It does not qualify transit-candidate chapter
 copy; that candidate needs its own small representative review before activation.

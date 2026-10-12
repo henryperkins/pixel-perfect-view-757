@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "networkCalls": 0,
+  "tests": [
+    "six scheduled transports including two rejections without retries",
+    "credit halts after one settled transport",
+    "existing output refused",
+    "wrong revision refused",
+    "missing key refused",
+    "dry plan makes zero calls"
+  ],
+  "work": "/tmp/natal-six-offline-HvdNMR"
+}

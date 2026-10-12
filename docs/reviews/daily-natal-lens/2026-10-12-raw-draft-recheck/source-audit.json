@@ -1,0 +1,10 @@
+{
+  "checkedAtUTC": "2026-10-12T05:17:30.535129+00:00",
+  "sourceRevision": "79ad05086b1f06179c0456b7e38a389757a5898c",
+  "capturedSourceRevision": "79ad05086b1f06179c0456b7e38a389757a5898c",
+  "trackedSourceFilesChecked": 172,
+  "changedSourceFiles": [],
+  "runnerMatchesExecutedBytes": true,
+  "deadlineHelperMatchesExecutedBytes": true,
+  "note": "The original run-finished sourceUnchangedThroughout flag is false whenever this runner halts, including rate limits. Independent comparison confirms the source and runner still match the captured manifest; the original receipt is retained unchanged."
+}

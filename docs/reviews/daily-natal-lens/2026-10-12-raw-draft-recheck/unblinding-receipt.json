@@ -1,0 +1,12 @@
+{
+  "unblindedAtUTC": "2026-10-12T05:20:50.912418+00:00",
+  "reviewSha256": "2ad3e1e4536efa267952f2408856d19889bc0dc7908cf437f11410510e30b1b0",
+  "frozenReceiptSha256": "2ab89f18e67cd2b100dd1d85dcb028ab65e68c8cb07e1c36730bcabbd94f07fd",
+  "assignmentSha256": "b2d0c5d37b50ade812a47e290751063dad0c6e6bbbbb19079808917dd2147595",
+  "checksPassed": true,
+  "reviewedDrafts": 2,
+  "passedDrafts": 2,
+  "requestedDrafts": 6,
+  "targetedGateVerdict": "fail",
+  "reason": "One rate-limited synthesis attempt and three unattempted second drafts; no replacement or retry."
+}

@@ -1,0 +1,8 @@
+{
+  "contextId": "writing-primary",
+  "packetSha256": "87c16cba5aea35729e06e819797440533ded08233412b5d2d18a09b758e21453",
+  "promptSha256": "feed0b3ee4d6d7ab7e96dcc0edc92deb729c4cf11a8d7c03f7faa1681ec38d86",
+  "reviewSha256": "2ad3e1e4536efa267952f2408856d19889bc0dc7908cf437f11410510e30b1b0",
+  "frozenAtUTC": "2026-10-12T05:18:28.535Z",
+  "coordinatorReadReviewBeforeFreeze": false
+}

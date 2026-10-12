@@ -1,0 +1,87 @@
+{
+  "kind": "targeted-natal-raw-draft-recheck",
+  "fullBenchmarkClaim": false,
+  "humanReviewCompleted": false,
+  "candidatesActivated": false,
+  "sourceRevision": "79ad05086b1f06179c0456b7e38a389757a5898c",
+  "capturePath": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-step3/paid-run/capture.json",
+  "captureSha256": "5d284e1b36b61e5ed01172eaba68b5d1bd827834e6d236c52ec0517ec7175882",
+  "runPlanSha256": "9a96d034d0840b25d3dc33cd7929309ec6268ff01c47cafe30d96d15fa65e0b8",
+  "runFinishedSha256": "b4306d167225932c4c94926f79ccb0748c5e9c2fae18aca19574ea3c13f24591",
+  "modelAttempts": 3,
+  "packet": {
+    "contextId": "writing-primary",
+    "sha256": "87c16cba5aea35729e06e819797440533ded08233412b5d2d18a09b758e21453",
+    "itemSetHash": "df6d54174018584d46a8482c689969b98a9016894af0e4434699f2a88a62551e",
+    "uniqueItems": 2,
+    "instructionsSha256": "822af5b1599feb0384768d857feabd89f63691fe806b203b16dffe084dd7a42b"
+  },
+  "samples": [
+    {
+      "sampleId": "sample-1",
+      "caseId": "natal-duty-reflex",
+      "repetition": 1,
+      "candidateSha256": "9cd7480a99892b809be8e0d9f7e1d20166e9ae31880a315f9b4c8561630afeef",
+      "factsSha256": "c733b8a9382b7cc7cc1023dc7820606db985191adaefebfd814ca89174bdf803",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-12",
+        "validatorVersion": "daily-reference-8",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 120000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 23763,
+        "paragraph": null
+      },
+      "itemId": "item-02"
+    },
+    {
+      "sampleId": "sample-2",
+      "caseId": "natal-moon-fallback",
+      "repetition": 1,
+      "candidateSha256": "e98866e5491ec62c9333f7675575dd2eac379b08390b09e7e648e950befab207",
+      "factsSha256": "7fc336cb1be37ab54ffaa1e75b5d76904c8b20492d5c56b841a4ea0846b25ebd",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-12",
+        "validatorVersion": "daily-reference-8",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 120000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 67680,
+        "paragraph": null
+      },
+      "itemId": "item-01"
+    }
+  ],
+  "unavailable": [
+    {
+      "sampleId": "sample-3",
+      "caseId": "natal-synthesis-integration",
+      "repetition": 1,
+      "code": "rate_limit"
+    },
+    {
+      "sampleId": "sample-4",
+      "caseId": "natal-duty-reflex",
+      "repetition": 2,
+      "code": "unattempted"
+    },
+    {
+      "sampleId": "sample-5",
+      "caseId": "natal-moon-fallback",
+      "repetition": 2,
+      "code": "unattempted"
+    },
+    {
+      "sampleId": "sample-6",
+      "caseId": "natal-synthesis-integration",
+      "repetition": 2,
+      "code": "unattempted"
+    }
+  ]
+}

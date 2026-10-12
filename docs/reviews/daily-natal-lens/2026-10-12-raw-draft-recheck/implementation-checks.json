@@ -1,0 +1,79 @@
+{
+  "sourceRevision": "79ad05086b1f06179c0456b7e38a389757a5898c",
+  "newRegressions": {
+    "total": 13,
+    "failedBeforeFix": 6,
+    "passedAfterFix": 13
+  },
+  "applicationTests": {
+    "passed": 521,
+    "failed": 0,
+    "skipped": 0
+  },
+  "typecheck": "pass",
+  "scopedLint": "pass",
+  "build": "pass with existing TanStack deprecation and bundling warnings",
+  "fullRepositoryLint": {
+    "status": "fail",
+    "errors": 7612,
+    "warnings": 6,
+    "reportedFiles": 32,
+    "allReportedFilesMatchPrechangeHEAD": true
+  },
+  "offlineRunnerChecks": {
+    "passed": true,
+    "networkCalls": 0,
+    "tests": [
+      "six scheduled transports including two rejections without retries",
+      "credit halts after one settled transport",
+      "existing output refused",
+      "wrong revision refused",
+      "missing key refused",
+      "dry plan makes zero calls"
+    ],
+    "work": "/tmp/natal-six-offline-HvdNMR"
+  },
+  "browserOrHostedChecksRun": false,
+  "logs": [
+    {
+      "path": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-step3/red.log",
+      "sha256": "789009121c38e8da5fcfe6f03ab74a5daf62919c1b7fdda48e64468222f3cd84"
+    },
+    {
+      "path": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-step3/green.log",
+      "sha256": "9b4bfff467747f3dbc553544049b010aed897da910a4383cb374be0ad67d7758"
+    },
+    {
+      "path": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-step3/tests.log",
+      "sha256": "20b261018e06f1ca5735746ac9f235ea8039aad0e062d20144f4d9437d9e4841"
+    },
+    {
+      "path": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-step3/tests-final.log",
+      "sha256": "8c2fd691eb4963c6320b98a19f24a480a73521aad1a2b55de0b2aa3f62ed0b54"
+    },
+    {
+      "path": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-step3/typecheck.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-step3/scoped-lint.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-step3/lint.log",
+      "sha256": "62986a5e724223079ae447577ca154ddd91d96c9503b9eef6af6ffcb0772400f"
+    },
+    {
+      "path": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-step3/build.log",
+      "sha256": "f4674b8b2685d5edfa05564faaf411e23f702cbc0d1fb6824c9e28bf6844b363"
+    },
+    {
+      "path": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-step3/runner-offline.json",
+      "sha256": "49b1c6f7f838a55f5bfaeedc588be11bd9ca8d18bcb72d9bbe5687d741493e89"
+    },
+    {
+      "path": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-step3/lint-baseline-check.json",
+      "sha256": "037770e966d8dc27f8d9006c3d5848b5a7257c081ebf4b8bf180cbfc26b70dd3"
+    }
+  ]
+}

@@ -1,6 +1,16 @@
-# Natal writing readiness — targeted review failed
+# Natal writing readiness — paid recheck incomplete
 
-**Current result (2026-10-12):** the first
+**Current result (2026-10-12):** [step 3](2026-10-12-raw-draft-recheck/README.md)
+implemented the qualifier guard and guidance changes in `79ad050`. The paid run
+captured one duty and one Moon-fallback draft; a fresh blinded reviewer passed both
+with no substantive findings. The third call (synthesis) returned HTTP 429, so the
+runner stopped without retries. Three scheduled second drafts remain unattempted.
+**Two of six planned drafts are captured and passing; the recheck is incomplete and
+the writing gate remains failed.** Both candidates remain inactive; nothing was
+pushed or deployed. All 521 tests, typecheck, build and changed-file lint pass. Full
+repository lint retains pre-existing failures documented with the new evidence.
+
+**Earlier targeted result (2026-10-12):** the first
 [targeted review of partial-run evidence](2026-10-12-lightweight-subset-review/README.md)
 **fails** the [lightweight readiness gate](lightweight-readiness.md). One fresh AI
 reviewer passed **10/14 prose samples: 4/7 raw drafts and 6/7 templates**. Four of the
@@ -20,10 +30,8 @@ contacts, as published copy, before S1. An offline capture of all 114 template b
 shows that only the four lens-plus-synthesis bodies changed. A fresh AI reviewer then
 passed both affected natal-candidate templates at 5/5/4/3/4/4/4 with no substantive
 finding; see the [synthesis template fix](2026-10-12-synthesis-template-fix/README.md).
-Current samples pass **11/14: all seven templates and 4/7 raw drafts**. The gate still
-fails on the duty, Moon-fallback and synthesis raw drafts. Revising them needs new
-model calls, which require an explicit operator request. Both candidates remain
-inactive; release and activation stay separate requests after the gate passes.
+At the end of step 2, samples passed **11/14: all seven templates and 4/7 raw drafts**. The remaining raw-draft failures motivated the explicitly authorized step-3 run
+reported above. Release and activation remain separate requests after the gate passes.
 
 **Evidence policy (2026-10-12):** the operator requested a manageable review scope. The
 lightweight gate uses seven representative candidate drafts and templates already

@@ -1,0 +1,154 @@
+{
+  "kind": "targeted-natal-raw-draft-recheck-result",
+  "sourceRevision": "79ad05086b1f06179c0456b7e38a389757a5898c",
+  "packetSha256": "87c16cba5aea35729e06e819797440533ded08233412b5d2d18a09b758e21453",
+  "promptSha256": "feed0b3ee4d6d7ab7e96dcc0edc92deb729c4cf11a8d7c03f7faa1681ec38d86",
+  "reviewSha256": "2ad3e1e4536efa267952f2408856d19889bc0dc7908cf437f11410510e30b1b0",
+  "itemSetHash": "df6d54174018584d46a8482c689969b98a9016894af0e4434699f2a88a62551e",
+  "reviewedDrafts": 2,
+  "passedDrafts": 2,
+  "unavailable": [
+    {
+      "sampleId": "sample-3",
+      "caseId": "natal-synthesis-integration",
+      "repetition": 1,
+      "code": "rate_limit"
+    },
+    {
+      "sampleId": "sample-4",
+      "caseId": "natal-duty-reflex",
+      "repetition": 2,
+      "code": "unattempted"
+    },
+    {
+      "sampleId": "sample-5",
+      "caseId": "natal-moon-fallback",
+      "repetition": 2,
+      "code": "unattempted"
+    },
+    {
+      "sampleId": "sample-6",
+      "caseId": "natal-synthesis-integration",
+      "repetition": 2,
+      "code": "unattempted"
+    }
+  ],
+  "verdict": "fail",
+  "fullBenchmarkClaim": false,
+  "candidatesActivated": false,
+  "humanReviewCompleted": false,
+  "samples": [
+    {
+      "sampleId": "sample-1",
+      "caseId": "natal-duty-reflex",
+      "repetition": 1,
+      "itemId": "item-02",
+      "structuralOutcome": "accepted",
+      "structuralCode": "accepted",
+      "verdict": "pass",
+      "scores": {
+        "specificity": {
+          "score": 5,
+          "reason": "The opening places an unfinished reply inside a quiet moment occupied by the next task, then distinguishes responsibility from preferred uninterrupted space and useful preparation from waiting for everything to be settled. These concrete distinctions are supported by I1 and N1."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "The quiet-moment scene remains a possibility from I1, the reply and response-to-pressure statements retain N1's conditional strength, and the square, orb, phase, window position, and exact timing match C1, P1, and T1. No personal event, behavioral prediction, or unsupported temperament is asserted."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "The reading leads with everyday meaning and applies the lens to the same reply before moving to the calculation details. The technical paragraph has a clear purpose, though its successive window and timing statements could be compressed."
+        },
+        "voice": {
+          "score": 4,
+          "reason": "The opening is direct and consistent with a plain tone, and the calculation paragraph stays neutral and understandable. Its repeated calculation terminology reduces fluency without making the overall voice inconsistent."
+        },
+        "repetition": {
+          "score": 3,
+          "reason": "Repeated N1 wording across the two items is supported by their identical lens. Within paragraph 2, however, two references to the calculated window and several calculation/contact formulations add avoidable verbal repetition."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": 4,
+          "reason": "The unfinished reply is introduced within the primary quiet-moment scene and explicitly reused for N1's preparation-versus-waiting distinction in paragraph 1. The response to pressure remains an interpretive possibility rather than a personality assertion."
+        }
+      },
+      "findings": [
+        {
+          "findingId": "writing-primary-02-1",
+          "paragraph": 2,
+          "passage": "Transiting Saturn is square the natal Moon, and the contact is in its approaching phase within the calculated window. The current orb at the reading's calculation time is 0.42 degrees. This reading falls in the middle part of the calculated window. The contact is calculated exact in 3 days, on 2026-10-14.",
+          "supportingFactIds": [
+            "C1",
+            "P1",
+            "T1"
+          ],
+          "missingFactIds": [],
+          "category": "repetition",
+          "severity": "minor",
+          "explanation": "The paragraph repeats 'calculated window' in separate sentences and clusters calculation and contact wording around facts that could be presented more economically.",
+          "proposedCorrection": "Combine the approaching phase and middle-of-window position into one sentence, then state the orb and supplied exact timing concisely while keeping their calculated status clear."
+        }
+      ]
+    },
+    {
+      "sampleId": "sample-2",
+      "caseId": "natal-moon-fallback",
+      "repetition": 1,
+      "itemId": "item-01",
+      "structuralOutcome": "accepted",
+      "structuralCode": "accepted",
+      "verdict": "pass",
+      "scores": {
+        "specificity": {
+          "score": 4,
+          "reason": "The role's obligations and available capacity establish the primary distinction, while the unfinished reply makes useful preparation versus waiting for complete resolution concrete. The title-versus-actual-attention paragraph adds a supported identity distinction."
+        },
+        "grounding": {
+          "score": 5,
+          "reason": "The capacity and boundary statements retain I1's supplied strength, including its categorical need for clearer boundaries. The response to pressure and unfinished-reply distinction preserve N1's conditional wording; paragraph 2 retains D1's supported statements, and the named contact matches C1."
+        },
+        "coherence": {
+          "score": 4,
+          "reason": "Paragraph 1 moves from role pressure to a practical reply scene, and paragraph 2 broadens the identity theme to the gap between a title and actual attention. Formal transitions and the contact appended to a long sentence need only minor editing."
+        },
+        "voice": {
+          "score": 3,
+          "reason": "The meaning is clear and restrained, but the consecutive 'Regarding' and 'Considering' openings and trailing 'framed by' phrase make the central scene sound formal for a plain reading."
+        },
+        "repetition": {
+          "score": 4,
+          "reason": "The shared natal-lens wording also appears in the other item, which supplies the same N1. Here it sits within role obligations and a distinct title-versus-attention paragraph; the repeated reference to the reply maintains the scene without adding unsupported variation."
+        },
+        "synthesisCoherence": {
+          "score": null,
+          "reason": "No S1 supplied."
+        },
+        "lensIntegration": {
+          "score": 4,
+          "reason": "N1 is applied inside paragraph 1 to an unfinished reply as an example of an obligation under pressure. Sorting what is manageable and distinguishing preparation from waiting stay conditional, without turning the lens into a known temperament."
+        }
+      },
+      "findings": [
+        {
+          "findingId": "writing-primary-01-1",
+          "paragraph": 1,
+          "passage": "Regarding an obligation such as an unfinished reply, a self-contained response to pressure can start with sorting what is manageable before sharing it. Considering that same reply can offer a place to notice the difference between useful preparation and waiting to have everything settled, framed by transiting Saturn square the natal Sun.",
+          "supportingFactIds": [
+            "C1",
+            "I1",
+            "N1"
+          ],
+          "missingFactIds": [],
+          "category": "voice",
+          "severity": "minor",
+          "explanation": "The paired formal lead-ins and the contact attached at the end make an otherwise supported practical scene cumbersome in the requested plain tone.",
+          "proposedCorrection": "Use a direct opening for the conditional unfinished-reply example and give the named contact a shorter sentence, preserving both supplied distinctions and their modality."
+        }
+      ]
+    }
+  ]
+}

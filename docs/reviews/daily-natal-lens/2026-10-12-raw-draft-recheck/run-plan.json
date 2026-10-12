@@ -1,0 +1,87 @@
+{
+  "kind": "targeted-natal-raw-draft-recheck",
+  "sourceRevision": "79ad05086b1f06179c0456b7e38a389757a5898c",
+  "trackedSourceSha256": "4390257f7e87fe6dbbf8f0dea512dcb0ba4d9ea6213bf08f6776baa6a42644ba",
+  "runnerSha256": "6f504e8530a28ba9c55c74182376013bfb28f4d1f44ca791e85c73f37c8d3c0d",
+  "configured": true,
+  "provider": "gemini-enterprise",
+  "model": "gemini-enterprise/gemini-3.8-flash",
+  "bundleSource": "natal-candidate",
+  "bundleVersion": "builtin-0.6.1",
+  "promptVersion": "daily-astro-body-12",
+  "validatorVersion": "daily-reference-8",
+  "schedule": [
+    {
+      "sampleId": "sample-1",
+      "caseId": "natal-duty-reflex",
+      "repetition": 1
+    },
+    {
+      "sampleId": "sample-2",
+      "caseId": "natal-moon-fallback",
+      "repetition": 1
+    },
+    {
+      "sampleId": "sample-3",
+      "caseId": "natal-synthesis-integration",
+      "repetition": 1
+    },
+    {
+      "sampleId": "sample-4",
+      "caseId": "natal-duty-reflex",
+      "repetition": 2
+    },
+    {
+      "sampleId": "sample-5",
+      "caseId": "natal-moon-fallback",
+      "repetition": 2
+    },
+    {
+      "sampleId": "sample-6",
+      "caseId": "natal-synthesis-integration",
+      "repetition": 2
+    }
+  ],
+  "maximumModelAttempts": 6,
+  "retries": 0,
+  "concurrency": 1,
+  "resumeSupported": false,
+  "servingDeadlineMs": 60000,
+  "runtimeDeadlineMs": 120000,
+  "runtimePolicyOverride": {
+    "kind": "extended-synthetic-runtime-deadline",
+    "servingDeadlineMs": 60000,
+    "runtimeDeadlineMs": 120000,
+    "servingAvailabilityEstablished": false,
+    "transformedModule": "src/lib/ai/diagnostics.ts",
+    "originalModuleSha256": "424e6ad736c167234852af7d94f5e992bba70f573a6d3c52d38fc7d6089014c5",
+    "transformedModuleSha256": "d3dfdcc77aba37589cc61f26b504fb852aae69ed1616e5707f23403f7ec6ab51",
+    "transformSpecification": {
+      "kind": "exact-source-substitution",
+      "module": "src/lib/ai/diagnostics.ts",
+      "from": "export const DAILY_GATEWAY_TIMEOUT_MS = 60_000;",
+      "to": "export const DAILY_GATEWAY_TIMEOUT_MS = 120_000;",
+      "expectedMatches": 1,
+      "scope": "this runner's Vite SSR module loader only",
+      "servingDeadlineMs": 60000,
+      "runtimeDeadlineMs": 120000
+    },
+    "transformSpecificationSha256": "9bc1fb17efea722fd0621a386ae0156f33fd68bc6d56019ebbe94cde7cc59d38",
+    "nativeProviderFunctionOrPayloadTransformed": false
+  },
+  "fullBenchmarkClaim": false,
+  "executionContext": {
+    "kind": "local-production-module-synthetic-capture",
+    "nodeVersion": "v24.21.0",
+    "moduleLoader": "Vite ssrLoadModule",
+    "configFile": false,
+    "envFile": false,
+    "hostedWorkflowExecuted": false,
+    "adminAuthenticationVerified": false,
+    "memberProviderVerified": false,
+    "servingAvailabilityEstablished": false,
+    "databaseOrReadingCacheAccessed": false,
+    "candidatesActivated": false
+  },
+  "startedAt": "2026-10-12T05:14:22.035Z"
+}
