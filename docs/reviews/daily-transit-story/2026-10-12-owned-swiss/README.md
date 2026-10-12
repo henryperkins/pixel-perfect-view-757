@@ -1,5 +1,7 @@
 # Owned Swiss calculation qualification
 
+The reviewed service is now [deployed and verified on Fly](deployment.md). Application secret configuration and joint content activation remain separate pending steps.
+
 The local numerical qualification passes all 15 frozen synthetic cases across Jupiter, Saturn, Uranus, Neptune and Pluto. Every contact, station and orb-window edge agrees with a separate dense enumerator within **5.625 seconds** (the acceptance limit is 300 seconds). Counts, direction, aspect branch, component closure and window separation match. All recorded scans also pass the application's existing wire and geometric proof validators.
 
 `qualification.json` binds the actual Swiss build, file hashes, calculation settings and numerical source-file hashes. Each case has the complete request, candidate scan, reference events and measured differences in `<case>.json`. Its `<case>.track.json.gz` contains the unrounded hourly reference track. Inputs are invented natal longitudes, never member records. `artifact-sha256.json` binds these evidence files.

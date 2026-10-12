@@ -1,0 +1,75 @@
+{
+  "capturedAt": "2026-10-12T07:58:48.066Z",
+  "deployment": {
+    "app": "pattern-transit-calc",
+    "organization": "imladris",
+    "hostname": "pattern-transit-calc.fly.dev",
+    "release": "4d217d9db60f393e55a891de53d632e9626c4321",
+    "machineId": "8346e0a74144d8",
+    "region": "iad",
+    "state": "started",
+    "image": "registry.fly.io/pattern-transit-calc:deployment-01M4QHRQJ4FSTHDRE992TZZT2M",
+    "imageDigest": "sha256:6082a1eae928c3cb9032dc0bb8635609221739451f79537995fcf7aaa1b5453b",
+    "vm": {
+      "cpuKind": "shared",
+      "cpus": 1,
+      "memoryMiB": 512,
+      "count": 1
+    },
+    "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+  },
+  "verification": {
+    "passed": true,
+    "authenticatedCases": 23,
+    "exactQualifiedEpisodeScans": 15,
+    "appProofAccepted": 15,
+    "nativeOmissions": 6,
+    "chartRequests": 2,
+    "unauthenticatedStatus": 401,
+    "maxRequestMs": 257.28353400000015,
+    "firstChartMs": 90.11061299999994,
+    "subsequentChartMs": 65.690925,
+    "sourceArchive": {
+      "bytes": 3786790,
+      "sha256": "08de87a818abf1ae82d03814cc9bec9a6208b061586c6eebafaf2d167689b929",
+      "manifestFilesVerified": 189,
+      "noPrivateKey": true
+    },
+    "flyHealth": "passing",
+    "memberBirthDataUsed": false
+  },
+  "tests": {
+    "application": {
+      "passed": 532,
+      "failed": 0,
+      "skipped": 0
+    },
+    "service": {
+      "passed": 22,
+      "failed": 0,
+      "skipped": 0
+    },
+    "typecheck": "passed",
+    "scopedRouteLint": "passed",
+    "applicationBuild": "passed",
+    "containerNodeMajor": 22
+  },
+  "application": {
+    "configuration": "pending Lovable server-secret operation",
+    "sourceReleaseActive": false,
+    "combinedContentVersion": "0.7.1",
+    "combinedContentReleaseId": "edcc53cf-d19a-415b-a8a2-a66040846b1d",
+    "combinedContentActive": false,
+    "priorMirror": {
+      "version": "editorial-1.0.0",
+      "checksum": null
+    }
+  },
+  "rollback": {
+    "chartUrl": "https://api.astroway.info/v1/chart",
+    "chartKey": "Restore the previous Lovable secret; its actual deployed value is not readable by this integration.",
+    "transitConfig": "Remove SWISS_TRANSIT_EPISODE_URL and SWISS_TRANSIT_EPISODE_SOURCE_ID.",
+    "content": "Keep combined 0.7.1 inactive; before any activation refresh and preserve both pointer tables.",
+    "charts": "Keep actual source metadata; explicit owner recalculation is required for another provider change."
+  }
+}

@@ -1,6 +1,6 @@
 # Owned Swiss Service Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Host an isolated, source-qualified Swiss chart and transit-episode API and connect the approved natal/transit release when its numerical and deployment checks pass.
 
@@ -38,11 +38,11 @@
 
 **Interfaces:** `createEngine({ephemerisPath})` returns `{source, sourceId, coverage, metadata, position(body, utcMillis), chart(request)}`. `position` returns finite normalized longitude, latitude and analytic speed; throws a closed source/range error when unavailable. `chart` accepts the app's existing UTC `date/time/timezoneOffset/latitude/longitude` request and returns its supported `data.planets/houses/aspects/meta/positionSource` shape.
 
-- [ ] Write behavior tests for actual synthetic chart geometry, UTC conversion, explicit Placidus/fallback, invalid dates/coordinates and file tampering.
-- [ ] Run `npm test --prefix services/swiss-ephemeris`; observe the absent engine failing.
-- [ ] Implement pinned installation/download verification, source identity, source-qualified positions and full chart response without importing app code.
-- [ ] Run engine tests; expected all pass and no hidden Moshier fallback.
-- [ ] Commit only the service files and this plan.
+- [x] Write behavior tests for actual synthetic chart geometry, UTC conversion, explicit Placidus/fallback, invalid dates/coordinates and file tampering.
+- [x] Run `npm test --prefix services/swiss-ephemeris`; observe the absent engine failing.
+- [x] Implement pinned installation/download verification, source identity, source-qualified positions and full chart response without importing app code.
+- [x] Run engine tests; expected all pass and no hidden Moshier fallback.
+- [x] Commit only the service files and this plan.
 
 ### Task 2: Complete transit-episode solver
 
@@ -50,12 +50,12 @@
 
 **Interfaces:** `solveEpisodes(request, engine, {now?, maxEvaluations?, maxDurationMs?}?)` returns a strict scan or throws a closed limit/source error. `engine.position` is the sole geometric source. The returned scan echoes the exact validated request; diagnostics stay outside it.
 
-- [ ] Write analytic tests for one/three/five crossings, both branches, wraparound, exact stationary targets, multiple orb windows, unresolved closure and calculation/output limits.
-- [ ] Run solver tests to establish failures before implementation.
-- [ ] Implement shared cached sampling, adaptive station detection, signed bisection with retained strict brackets, monotonic legs, all oriented target roots, connected windows, adjacent-leg components and two-sided closure.
-- [ ] Expand only unresolved sides; on an unresolved bound return omission/incomplete evidence, never a successful total.
-- [ ] Feed actual solver scans through the app's `parseTransitEpisodeScan` and `validateEpisodeProof`; expected complete analytic cases accepted and incomplete/tangent cases omitted.
-- [ ] Commit the solver and regression tests.
+- [x] Write analytic tests for one/three/five crossings, both branches, wraparound, exact stationary targets, multiple orb windows, unresolved closure and calculation/output limits.
+- [x] Run solver tests to establish failures before implementation.
+- [x] Implement shared cached sampling, adaptive station detection, signed bisection with retained strict brackets, monotonic legs, all oriented target roots, connected windows, adjacent-leg components and two-sided closure.
+- [x] Expand only unresolved sides; on an unresolved bound return omission/incomplete evidence, never a successful total.
+- [x] Feed actual solver scans through the app's `parseTransitEpisodeScan` and `validateEpisodeProof`; expected complete analytic cases accepted and incomplete/tangent cases omitted.
+- [x] Commit the solver and regression tests.
 
 ### Task 3: Independent Swiss qualification
 
@@ -63,11 +63,11 @@
 
 **Interfaces:** The reference enumerator calls Swiss directly, uses a dense uniform grid and independent refinement; it must not import the candidate solver, station finder, root refiner or expected-event builders. Reports bind input/file/tool/source hashes and compare time/count/direction/window/station results.
 
-- [ ] Test reference enumeration on hand-derived analytic tracks before collecting real-position evidence.
-- [ ] Record at least 15 tracks across Jupiter, Saturn, Uranus, Neptune and Pluto, covering single/repeat, station-near, wrap/branch and uncertainty behavior.
-- [ ] Compare every emitted root/station/edge within 300 seconds, identical nonambiguous counts/directions, closure and expected omissions; expected zero mismatches.
-- [ ] Record cold/warm timings, bounds, file/source IDs, commands and fixture hashes; no synthetic evidence is presented as an independent ephemeris model.
-- [ ] Commit source and qualification evidence.
+- [x] Test reference enumeration on hand-derived analytic tracks before collecting real-position evidence.
+- [x] Record at least 15 tracks across Jupiter, Saturn, Uranus, Neptune and Pluto, covering single/repeat, station-near, wrap/branch and uncertainty behavior.
+- [x] Compare every emitted root/station/edge within 300 seconds, identical nonambiguous counts/directions, closure and expected omissions; expected zero mismatches.
+- [x] Record cold/warm timings, bounds, file/source IDs, commands and fixture hashes; no synthetic evidence is presented as an independent ephemeris model.
+- [x] Commit source and qualification evidence.
 
 ### Task 4: HTTP, source offer and app integration
 
@@ -75,18 +75,18 @@
 
 **Interfaces:** Authenticated `POST /v1/chart`, `POST /v1/transit-episodes`; public `GET /health`, `/v1/engine`, `/source` and source archive. Health identifies the actual build/source data; calculation requires a strong configured shared key. All computation is isolated with bounded workers, request size, execution time and response size.
 
-- [ ] Write HTTP tests for auth, malformed/oversize bodies, overload/deadline behavior, source download and both actual calculation routes; observe failures.
-- [ ] Implement HTTP and lifecycle controls; build a self-contained source archive with licence, native dependency sources, pinned build inputs and reproduction instructions.
-- [ ] Test actual chart response through app `resolvePositions` and three-sample anchor qualification; verify old charts are unchanged and explicit save/recalculate creates new source evidence.
-- [ ] Run service suite and root `npm test`, typecheck, scoped lint and build; expected all relevant checks pass.
-- [ ] Commit the deployment package and app integration.
+- [x] Write HTTP tests for auth, malformed/oversize bodies, overload/deadline behavior, source download and both actual calculation routes; observe failures.
+- [x] Implement HTTP and lifecycle controls; build a self-contained source archive with licence, native dependency sources, pinned build inputs and reproduction instructions.
+- [x] Test actual chart response through app `resolvePositions` and three-sample anchor qualification; verify old charts are unchanged and explicit save/recalculate creates new source evidence.
+- [x] Run service suite and root `npm test`, typecheck, scoped lint and build; expected all relevant checks pass.
+- [x] Commit the deployment package and app integration.
 
 ### Task 5: Isolated deployment and joint release
 
 **Files:** Update source qualification/status documents and add deployment/rollback receipts under the new evidence directory.
 
-- [ ] Read current Fly access/configuration; deploy a separate `pattern-transit-calc` app using an independent generated secret, preserving the existing app.
-- [ ] Verify remote source/build identity, unauthenticated 401, public source archive, synthetic chart + 15-track qualification and measured service deadlines on the deployed version.
+- [x] Read current Fly access/configuration; deploy a separate `pattern-transit-calc` app using an independent generated secret, preserving the existing app.
+- [x] Verify remote source/build identity, unauthenticated 401, public source archive, synthetic chart + 15-track qualification and measured service deadlines on the deployed version.
 - [ ] Configure this app's chart URL/key and transit URL/source ID through an authorized server secret channel. If credentials/tooling are absent, finish everything independent and report the exact missing operation without exposing a secret.
 - [ ] Publish current source normally; verify remote commit and Lovable synchronization separately from production deployment.
 - [ ] Activate the staged combined content only when source settings and production checks establish both features can work. Existing owners use explicit recalculation; historical records keep their original source.
