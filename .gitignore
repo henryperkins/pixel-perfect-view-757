@@ -34,3 +34,5 @@ dist-ssr
 # Impeccable engine binaries (downloaded on demand by wrapper)
 .claude/skills/impeccable/scripts/bin/
 .agents/skills/impeccable/scripts/bin/
+# Impeccable design-hook cache (per machine and session)
+.impeccable/hook.cache.json

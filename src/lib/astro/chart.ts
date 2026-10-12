@@ -35,6 +35,12 @@ export const TIME_ACCURACY_LABEL: Record<TimeAccuracy, string> = {
   unknown: "Unknown — noon assumed",
 };
 
+/** What a birth time recorded at this accuracy can support. */
+export function birthTimeSupport(accuracy: TimeAccuracy) {
+  const minutes = TIME_ACCURACY_MINUTES[accuracy];
+  return { minutes, housesReliable: minutes <= 15, angleClaimsSuppressed: minutes > 60 };
+}
+
 export interface BirthInput {
   /** ISO instant of birth in UTC */
   utcISO: string;
@@ -264,7 +270,7 @@ export function computeChart(input: BirthInput, ephem?: EphemerisResult): Chart 
   }
   aspects.sort((x, y) => x.orb - y.orb);
 
-  const minutes = TIME_ACCURACY_MINUTES[input.accuracy];
+  const { minutes, housesReliable, angleClaimsSuppressed } = birthTimeSupport(input.accuracy);
   const ascSpread = (minutes / 60) * 15; // ~15 deg of RA per hour
   const moonSpread = (minutes / 1440) * 13.2;
 
@@ -295,8 +301,8 @@ export function computeChart(input: BirthInput, ephem?: EphemerisResult): Chart 
       minutes,
       ascendantSpreadDeg: Number(ascSpread.toFixed(2)),
       moonSpreadDeg: Number(moonSpread.toFixed(2)),
-      housesReliable: minutes <= 15,
-      angleClaimsSuppressed: minutes > 60,
+      housesReliable,
+      angleClaimsSuppressed,
     },
   };
 }

@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AssistantAuthRouteImport } from './routes/assistant-auth'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as McpRouteImport } from './routes/mcp'
+import { Route as TransitChartCalculatorRouteImport } from './routes/transit-chart-calculator'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as AuthenticatedAssistantsRouteImport } from './routes/_authenticated/assistants'
 import { Route as AuthenticatedBirthRouteImport } from './routes/_authenticated/birth'
@@ -53,6 +54,11 @@ const AuthRoute = AuthRouteImport.update({
 const McpRoute = McpRouteImport.update({
   id: '/mcp',
   path: '/mcp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TransitChartCalculatorRoute = TransitChartCalculatorRouteImport.update({
+  id: '/transit-chart-calculator',
+  path: '/transit-chart-calculator',
   getParentRoute: () => rootRouteImport,
 } as any)
 const Char91DotwellKnownChar93OauthProtectedResourceRoute =
@@ -145,6 +151,7 @@ export interface FileRoutesByFullPath {
   '/assistant-auth': typeof AssistantAuthRoute
   '/auth': typeof AuthRoute
   '/mcp': typeof McpRoute
+  '/transit-chart-calculator': typeof TransitChartCalculatorRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/assistants': typeof AuthenticatedAssistantsRoute
   '/birth': typeof AuthenticatedBirthRoute
@@ -167,6 +174,7 @@ export interface FileRoutesByTo {
   '/assistant-auth': typeof AssistantAuthRoute
   '/auth': typeof AuthRoute
   '/mcp': typeof McpRoute
+  '/transit-chart-calculator': typeof TransitChartCalculatorRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/assistants': typeof AuthenticatedAssistantsRoute
   '/birth': typeof AuthenticatedBirthRoute
@@ -191,6 +199,7 @@ export interface FileRoutesById {
   '/assistant-auth': typeof AssistantAuthRoute
   '/auth': typeof AuthRoute
   '/mcp': typeof McpRoute
+  '/transit-chart-calculator': typeof TransitChartCalculatorRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/_authenticated/assistants': typeof AuthenticatedAssistantsRoute
   '/_authenticated/birth': typeof AuthenticatedBirthRoute
@@ -215,6 +224,7 @@ export interface FileRouteTypes {
     | '/assistant-auth'
     | '/auth'
     | '/mcp'
+    | '/transit-chart-calculator'
     | '/.well-known/oauth-protected-resource'
     | '/assistants'
     | '/birth'
@@ -237,6 +247,7 @@ export interface FileRouteTypes {
     | '/assistant-auth'
     | '/auth'
     | '/mcp'
+    | '/transit-chart-calculator'
     | '/.well-known/oauth-protected-resource'
     | '/assistants'
     | '/birth'
@@ -260,6 +271,7 @@ export interface FileRouteTypes {
     | '/assistant-auth'
     | '/auth'
     | '/mcp'
+    | '/transit-chart-calculator'
     | '/.well-known/oauth-protected-resource'
     | '/_authenticated/assistants'
     | '/_authenticated/birth'
@@ -284,6 +296,7 @@ export interface RootRouteChildren {
   AssistantAuthRoute: typeof AssistantAuthRoute
   AuthRoute: typeof AuthRoute
   McpRoute: typeof McpRoute
+  TransitChartCalculatorRoute: typeof TransitChartCalculatorRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   OauthConsentRoute: typeof OauthConsentRoute
   ApiPublicContentReleasesRoute: typeof ApiPublicContentReleasesRouteWithChildren
@@ -326,6 +339,13 @@ declare module '@tanstack/react-router' {
       path: '/mcp'
       fullPath: '/mcp'
       preLoaderRoute: typeof McpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/transit-chart-calculator': {
+      id: '/transit-chart-calculator'
+      path: '/transit-chart-calculator'
+      fullPath: '/transit-chart-calculator'
+      preLoaderRoute: typeof TransitChartCalculatorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/.well-known/oauth-protected-resource': {
@@ -493,6 +513,7 @@ const rootRouteChildren: RootRouteChildren = {
   AssistantAuthRoute: AssistantAuthRoute,
   AuthRoute: AuthRoute,
   McpRoute: McpRoute,
+  TransitChartCalculatorRoute: TransitChartCalculatorRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
   OauthConsentRoute: OauthConsentRoute,

@@ -62,12 +62,23 @@ Rule: if a value came out of a calculation, measurement, or engine checksum, it 
 - **Timeline bar** — proportional opens · peak · closes track with a today marker.
 - **Band picker** — 1–5 monospace squares for mood, energy, sleep, stress.
 - **EphemerisNotice** — states precision and any degradation inline.
+- **Disclosure marker** — every `<summary>` carries the shared `+` / `−` marker in a
+  small sage circle (`.pattern-shell summary::before`).
+- **Contrast ledger** (`/transit-chart-calculator`) — hairline table of topic ·
+  sun-sign horoscope · Pattern, with the Pattern column on the `--evidence` surface
+  and its figures in mono at `0.92em` of the surrounding text. Below 640px each row
+  stacks into labelled blocks.
+- **Worked steps** — numbered derivation on the `--evidence` surface: a label, the
+  mono value right-aligned, and a one-line detail beneath. Values come from the same
+  rule functions the app calculates with.
+- **Native selects** — `appearance: none` with a lucide `ChevronDown` in `--primary`.
 - States: `animate-pulse` skeletons with `aria-busy`, bordered `role="alert"` panels
   with Retry, and empty panels that explain why empty is a valid result.
 
 ## Motion
 
-`animate-rise` on content entry, colour transitions on interactive elements. Nothing
+`animate-rise` on content entry, colour transitions on interactive elements. A worked
+value that changes after an edit settles once with a brief colour change. Nothing
 loops, nothing parallaxes, nothing celebrates.
 
 ## Copy rules

@@ -9,7 +9,7 @@ import { ASPECTS, type AspectKey, type Chart } from "./chart";
  * say where in the arc you currently are.
  */
 
-const TRANSIT_BODIES: Body[] = [
+export const TRANSIT_BODIES: Body[] = [
   "moon",
   "sun",
   "mercury",
@@ -22,7 +22,7 @@ const TRANSIT_BODIES: Body[] = [
   "pluto",
 ];
 
-const NATAL_TARGETS = [
+export const NATAL_TARGETS = [
   "sun",
   "moon",
   "mercury",
@@ -35,7 +35,7 @@ const NATAL_TARGETS = [
 ];
 
 /** Slow movers carry more weight; the Moon is noise unless it is exact. */
-const WEIGHT: Record<string, number> = {
+export const BODY_WEIGHT: Record<string, number> = {
   moon: 0.15,
   sun: 0.5,
   mercury: 0.35,
@@ -48,7 +48,7 @@ const WEIGHT: Record<string, number> = {
   pluto: 1,
 };
 
-const TARGET_WEIGHT: Record<string, number> = {
+export const TARGET_WEIGHT: Record<string, number> = {
   sun: 1,
   moon: 0.95,
   ascendant: 0.9,
@@ -63,7 +63,7 @@ const TARGET_WEIGHT: Record<string, number> = {
 export const DOMAINS = ["identity", "relationships", "work", "inner-life", "structure"] as const;
 export type Domain = (typeof DOMAINS)[number];
 
-const DOMAIN_BY_TARGET: Record<string, Domain> = {
+export const DOMAIN_BY_TARGET: Record<string, Domain> = {
   sun: "identity",
   moon: "inner-life",
   ascendant: "identity",
@@ -80,6 +80,41 @@ export function transitOrb(body: string, aspect: AspectKey): number {
   if (body === "moon") return tight * 0.6;
   if (body === "sun" || body === "mercury" || body === "venus") return tight;
   return tight * 1.2;
+}
+
+/** Sextiles and trines rank below the hard aspects. */
+export const SOFT_ASPECT_FACTOR = 0.85;
+/** Ascendant and Midheaven contacts when the birth time cannot support houses. */
+export const UNCERTAIN_ANGLE_FACTOR = 0.6;
+
+/** The terms a contact's strength multiplies, in the order they are applied. */
+export function contactFactors(
+  body: string,
+  target: string,
+  aspect: AspectKey,
+  orb: number,
+  angleDiscount = 1,
+) {
+  const hard = ASPECTS.find((candidate) => candidate.key === aspect)?.hard ?? true;
+  return {
+    body: BODY_WEIGHT[body] ?? 0.3,
+    target: TARGET_WEIGHT[target] ?? 0.5,
+    closeness: 1 - orb / (transitOrb(body, aspect) + 0.001),
+    aspect: hard ? 1 : SOFT_ASPECT_FACTOR,
+    angle: angleDiscount,
+  };
+}
+
+/** Strength used to rank contacts; the public calculator page shows the same terms. */
+export function contactImportance(
+  body: string,
+  target: string,
+  aspect: AspectKey,
+  orb: number,
+  angleDiscount = 1,
+): number {
+  const f = contactFactors(body, target, aspect, orb, angleDiscount);
+  return f.body * f.target * f.closeness * f.aspect * f.angle;
 }
 
 export type Phase = "approaching" | "exact" | "separating";
@@ -200,13 +235,9 @@ export function computeCycles(chart: Chart, when: Date): CycleInstance[] {
         if (dayOffset === 0 || (dayOffset === null && orb < 0.35)) phase = "exact";
         else if (dayOffset !== null && dayOffset < 0) phase = "separating";
 
-        const angleDiscount = np.angleDependent && !chart.uncertainty.housesReliable ? 0.6 : 1;
-        const importance =
-          (WEIGHT[tb] ?? 0.3) *
-          (TARGET_WEIGHT[target] ?? 0.5) *
-          (1 - orb / (maxOrb + 0.001)) *
-          (asp.hard ? 1 : 0.85) *
-          angleDiscount;
+        const angleDiscount =
+          np.angleDependent && !chart.uncertainty.housesReliable ? UNCERTAIN_ANGLE_FACTOR : 1;
+        const importance = contactImportance(tb, target, asp.key, orb, angleDiscount);
 
         out.push({
           cycle_key: `${tb}_${asp.key}_${target}`,

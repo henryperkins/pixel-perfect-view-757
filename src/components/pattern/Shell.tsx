@@ -434,8 +434,16 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
         </nav>
       ) : null}
       <footer className="mt-16 border-t border-rule">
-        <div className="mx-auto max-w-6xl px-6 py-6 technical text-muted-foreground">
-          Deterministic assembly · no prediction · evidence on every claim
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-1 px-6 py-4 technical text-muted-foreground">
+          <span className="py-2">
+            Deterministic assembly · no prediction · evidence on every claim
+          </span>
+          <Link
+            to="/transit-chart-calculator"
+            className="inline-flex min-h-11 items-center transition-colors hover:text-foreground"
+          >
+            Transit chart calculator
+          </Link>
         </div>
       </footer>
     </div>

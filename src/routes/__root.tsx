@@ -13,6 +13,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { Toaster } from "../components/ui/sonner";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { siteMeta } from "../lib/seo";
 
 function NotFoundComponent() {
   return (
@@ -79,18 +80,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Today — Pattern" },
-      {
-        name: "description",
-        content:
-          "One calculated theme for today, the cycle behind it, and the exact facts it rests on.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { property: "og:title", content: "Today — Pattern" },
-      { name: "twitter:title", content: "Today — Pattern" },
-      { property: "og:description", content: "One calculated theme for today, the cycle behind it, and the exact facts it rests on." },
-      { name: "twitter:description", content: "One calculated theme for today, the cycle behind it, and the exact facts it rests on." },
+      ...siteMeta(),
     ],
     links: [
       {

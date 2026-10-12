@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useServerFn } from "@tanstack/react-start";
+import { createIsomorphicFn, useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowDown, ArrowRight, RotateCcw } from "lucide-react";
@@ -10,7 +10,9 @@ import { CelestialScene } from "@/components/pattern/CelestialScene";
 import { Field, Shell } from "@/components/pattern/Shell";
 import { useAuth } from "@/hooks/useAuth";
 import { useCalendarQueryRefresh, useCalendarRefresh } from "@/hooks/useCalendarRefresh";
+import { currentSession } from "@/lib/auth.shared";
 import { localDayString } from "@/lib/local-day";
+import { absoluteUrl, jsonLd, publicPageHead, SITE_NAME } from "@/lib/seo";
 import {
   cycleTimingPhrase,
   DOMAIN_LABEL,
@@ -29,32 +31,46 @@ import { TodayEvidence } from "@/components/pattern/TodayEvidence";
 import { TodayFeedback } from "@/components/pattern/TodayFeedback";
 import { todayParagraphId } from "@/components/pattern/today-view";
 
+const HOME_TITLE = "Pattern — Birth chart, transit timing and daily readings";
+const HOME_DESCRIPTION =
+  "Calculate your birth chart, see which transits are active and when each peaks, and read one daily theme with the exact facts behind it. Nothing is predicted.";
+
+// A server render can tell that no session arrived, so visitors and crawlers get
+// the landing in the HTML. Client navigations still wait for useAuth as before.
+const signedOutOnServer = createIsomorphicFn()
+  .server(async () => {
+    try {
+      return !(await currentSession()).session;
+    } catch {
+      return false;
+    }
+  })
+  .client(async () => false);
+
 export const Route = createFileRoute("/")({
+  loader: async () => ({ visitor: await signedOutOnServer() }),
+  // Never reuse a visitor answer from an earlier load, e.g. right after sign-in.
+  gcTime: 0,
   head: () => ({
-    meta: [
-      { title: "Today — Pattern" },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      {
-        name: "description",
-        content:
-          "One calculated theme for today, the cycle behind it, and the exact facts it rests on.",
-      },
-      { property: "og:title", content: "Today — Pattern" },
-      {
-        property: "og:description",
-        content:
-          "One calculated theme for today, the cycle behind it, and the exact facts it rests on.",
-      },
+    ...publicPageHead({ path: "/", title: HOME_TITLE, description: HOME_DESCRIPTION }),
+    scripts: [
+      jsonLd({
+        "@type": "WebSite",
+        name: SITE_NAME,
+        url: absoluteUrl("/"),
+        description: HOME_DESCRIPTION,
+        inLanguage: "en",
+      }),
     ],
   }),
   component: TodayPage,
 });
 
 function TodayPage() {
+  const { visitor } = Route.useLoaderData();
   const { session, loading } = useAuth();
 
-  if (loading) {
+  if (loading && !visitor) {
     return (
       <Shell signedIn={false}>
         <p className="technical text-muted-foreground">Loading…</p>
@@ -94,6 +110,11 @@ function Landing() {
               <ArrowRight aria-hidden="true" />
             </Link>
           </Button>
+          <p className="mt-5 text-sm">
+            <Link to="/transit-chart-calculator" className="text-primary underline">
+              How the transit chart calculator works
+            </Link>
+          </p>
         </div>
       </CelestialScene>
       <ul className="landing-foundations grid gap-4 text-sm text-muted-foreground sm:grid-cols-3">

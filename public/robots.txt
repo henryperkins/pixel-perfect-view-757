@@ -12,3 +12,5 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+Sitemap: https://patterns.lakefrontdigital.io/sitemap.xml

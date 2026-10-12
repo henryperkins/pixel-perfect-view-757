@@ -51,18 +51,29 @@ export function pointName(key: string) {
   return POINT_NAME[key] ?? key.charAt(0).toUpperCase() + key.slice(1);
 }
 
-export function windowTitle(cycle: TimingCycle) {
+export function contactTitle(transitBody: string, aspect: string, natalPoint: string) {
   return (
-    pointName(cycle.transit_body) +
+    pointName(transitBody) +
     " " +
-    (ASPECT_MEANING[cycle.aspect] ?? cycle.aspect) +
+    (ASPECT_MEANING[aspect] ?? aspect) +
     " your " +
-    pointName(cycle.natal_point)
+    pointName(natalPoint)
   );
 }
 
+export function windowTitle(cycle: TimingCycle) {
+  return contactTitle(cycle.transit_body, cycle.aspect, cycle.natal_point);
+}
+
+/** Strength labels by minimum weight, strongest first. */
+export const STRENGTH_BANDS = [
+  { label: "Major", min: 0.7 },
+  { label: "Prominent", min: 0.4 },
+  { label: "Background", min: 0 },
+] as const;
+
 export function weightLabel(weight: number) {
-  return weight >= 0.7 ? "Major" : weight >= 0.4 ? "Prominent" : "Background";
+  return (STRENGTH_BANDS.find((band) => weight >= band.min) ?? STRENGTH_BANDS[2]).label;
 }
 
 export function daysToExact(
