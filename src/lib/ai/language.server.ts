@@ -394,15 +394,60 @@ function dailyTimingProblem(sentences: string[]): DailyProblem | null {
   const exactTiming =
     /\b\d{4}-\d{2}-\d{2}\b|\bexact\s+(?:on|in|at|today|tomorrow|yesterday|date|pass|alignment|contact|timing|moment|point|instant)\b|\bexact\s+\d+\s+days?\s+ago\b|\b(?:is|was|becomes?|became|reaches?|reached|be|being)\s+exact\b/i;
   const exactAspect = new RegExp(`\\bexact\\s+(?:${ASPECT_NAMES})\\b`, "i");
+  const windowPosition =
+    /\b(?:start|middle|later|early|late|opening|closing)(?:\s+(?:part|portion|section))?\s+of\s+(?:the\s+)?(?:calculated\s+)?window\b/i;
   if (
     sentences.some(
       (sentence) =>
-        orbReference.test(sentence) && (exactTiming.test(sentence) || exactAspect.test(sentence)),
+        (orbReference.test(sentence) || windowPosition.test(sentence)) &&
+        (exactTiming.test(sentence) || exactAspect.test(sentence)),
     )
   )
     return rejection(
       "timing",
-      "draft must separate current orb and exact timing into different sentences",
+      "draft must separate current orb/window position and exact timing into different sentences",
+    );
+  return null;
+}
+
+/** Observed source-specific contradictions only; this is not a semantic verifier. */
+function dailyEditorialProblem(sentences: string[], cited: FactAtom[]): DailyProblem | null {
+  const text = sentences.join(" ");
+  if (
+    cited.some((fact) => fact.cycle) &&
+    sentences.some(
+      (sentence) =>
+        /\b(?:in|across)\s+the\s+(?:current\s+)?sky\b/i.test(sentence) &&
+        new RegExp(`\\b(?:${ASPECT_NAMES})\\b`, "i").test(sentence) &&
+        [...sentence.matchAll(new RegExp(`\\b(?:${BODY_NAMES})\\b`, "gi"))].length >= 2 &&
+        !/\b(?:natal|birth)\b/i.test(sentence),
+    )
+  )
+    return rejection(
+      "relation",
+      "draft replaces a transit-to-natal contact with current-sky geometry",
+    );
+  if (
+    cited.some(
+      (fact) => fact.id === "D1" && /the part of a task that feels like yours/.test(fact.statement),
+    ) &&
+    /\b(?:which|the)\s+part\s+of\s+(?:a|the|your)\s+task\s+(?:actually\s+)?is\s+yours\b/i.test(text)
+  )
+    return rejection(
+      "editorial_claim",
+      "draft turns subjective ownership into an objective allocation",
+    );
+  const freedom =
+    "Published natal lens, an interpretive possibility: Wanting room to move can be part of a response to pressure. If an ordinary obligation feels narrow, the useful distinction may be between the commitment itself and how much choice it leaves in carrying it out.";
+  if (
+    cited.some((fact) => fact.id === "N1" && fact.statement === freedom) &&
+    /\b(?:mentally\s+)?(?:track(?:ing)?|keeping\s+track)[^.!?]{0,100}\b(?:makes?|causes?|renders?)[^.!?]{0,50}\bobligation[^.!?]{0,30}\b(?:narrow|confining|restrictive)\b/i.test(
+      text,
+    )
+  )
+    return rejection(
+      "editorial_claim",
+      "draft makes a supplied scene cause the natal lens condition",
     );
   return null;
 }
@@ -580,7 +625,12 @@ function dailyDraft(
         text,
         ids.map((id) => byId.get(id)!),
         input.suppression,
-      ) ?? dailyTimingProblem(sentences);
+      ) ??
+      dailyEditorialProblem(
+        sentences,
+        ids.map((id) => byId.get(id)!),
+      ) ??
+      dailyTimingProblem(sentences);
     if (problem) return { ...problem, paragraph: index + 1 };
     kept.push(text);
     citations.push({ paragraph: kept.length, facts: ids });
@@ -681,7 +731,8 @@ async function generateDailyProse(
     `For a paragraph using the strongest cycle's supplied phase and timing wording, include its cycle alongside the relevant editorial references: "facts": [${timingCitationIds.map((id) => JSON.stringify(id)).join(", ")}]. Cite only IDs and values supplied above.`,
     "Do not write a headline, reflection question, local-time context or wellbeing framing; those are provided separately.",
     "Do not introduce sign or individual house placements. Quote orb degrees as digit literals and ISO dates only when present in a cycle cited by that paragraph.",
-    "An orb is the angular deviation from the named aspect measured at this reading's calculation time; the calculated exact date is a separate calendar estimate. If using both, put the current orb and any exact date or relative exact timing in separate sentences. Never attach the current orb to the future or past exact pass. Do not infer an exact date from the phase label when the facts say no exact date was found.",
+    "C1-C3 describe a transiting body contacting a natal point, not two bodies in the current sky. Preserve those roles whenever naming the geometry: explicitly name the target as natal if describing the contact as occurring in the sky. A source's subjective 'feels like yours' stays subjective; do not turn it into an objective task allocation.",
+    "An orb is the angular deviation from the named aspect measured at this reading's calculation time; the calculated exact date is a separate calendar estimate. Window position describes THIS READING, never the future or past exact date. Put the current orb, this reading's window position, and any exact date or relative exact timing in separate sentences. Never attach a current measurement or window position to the exact pass. Do not infer an exact date from the phase label when the facts say no exact date was found.",
     input.suppression.angles
       ? "Angle claims are suppressed: do not mention Ascendant, rising sign (including shorthand such as 'your rising'), Midheaven or other angles."
       : "",

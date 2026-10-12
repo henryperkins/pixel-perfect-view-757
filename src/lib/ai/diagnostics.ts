@@ -1,8 +1,8 @@
 /** Measurement identifiers describe the current brief and guards, not a cache key. */
 export const DAILY_DIAGNOSTICS_VERSION = 1;
 export const DAILY_READING_PLAN_VERSION = "daily-synthesis-1";
-export const DAILY_PROMPT_VERSION = "daily-astro-body-10";
-export const DAILY_VALIDATOR_VERSION = "daily-reference-6";
+export const DAILY_PROMPT_VERSION = "daily-astro-body-11";
+export const DAILY_VALIDATOR_VERSION = "daily-reference-7";
 export const MAX_DAILY_DURATION_MS = 120_000;
 export const DAILY_GATEWAY_TIMEOUT_MS = 60_000;
 export const LANGUAGE_MODEL = "google/gemini-3.8-flash";
@@ -49,6 +49,7 @@ export const DAILY_DIAGNOSTIC_CODES = [
   "synthesis_coverage",
   "natal_coverage",
   "natal_claim",
+  "editorial_claim",
   "arc_dependencies",
   "arc_coverage",
   "arc_chronology",
@@ -119,6 +120,7 @@ const LABELS: Record<DailyDiagnosticCode, string> = {
   synthesis_coverage: "Published synthesis coverage missing",
   natal_coverage: "Published natal lens coverage missing",
   natal_claim: "Unsupported natal certainty or clinical claim",
+  editorial_claim: "Unsupported editorial cause or objective allocation",
   arc_dependencies: "Calculated story parent references missing",
   arc_coverage: "Published chapter coverage missing",
   arc_chronology: "Calculated chronology changed or misplaced",
@@ -132,7 +134,7 @@ const LABELS: Record<DailyDiagnosticCode, string> = {
   worded_degree: "Uncheckable worded degree value",
   orb: "Orb absent from cited cycles",
   date: "Date absent from cited cycles",
-  timing: "Current orb and exact timing combined in one sentence",
+  timing: "Current measurement or window position combined with exact timing",
 };
 export function diagnosticLabel(code: DailyDiagnosticCode): string {
   return LABELS[code];

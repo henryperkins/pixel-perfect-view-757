@@ -136,6 +136,19 @@ const TONE_OPENER: Record<string, string> = {
   clinical: "Observation: ",
 };
 
+// This composition consumes the complete published sources. Copy edits must
+// invalidate it rather than silently replacing a new condition with old prose.
+const WARM_MOON_TEMPLATE = {
+  interpretation:
+    "A small obligation can take up more room than its size suggests. Saturn's hard contact with the Moon frames the tension between something you feel responsible for and the amount of uninterrupted space you would prefer. The everyday scene might be a calendar left too full, or a quiet moment spent mentally keeping track of the next task.",
+  domain:
+    "An unclaimed hour can still be mentally full of unfinished tasks. A full calendar or an obligation that follows you into a quiet moment can offer a scene for tension around the amount of private space you prefer.",
+  scene:
+    "A small obligation can take up more room than its size suggests. You might picture a calendar left too full, or an unclaimed hour still mentally full of unfinished tasks—a quiet moment spent keeping track of the next thing.",
+  meaning:
+    "Saturn's hard contact with the Moon frames the tension between what you feel responsible for and how much uninterrupted space you would prefer.",
+} as const;
+
 export function assembleReading(
   chart: Chart,
   cycles: CycleInstance[],
@@ -200,10 +213,21 @@ export function assembleReading(
       primary.transit_body,
       primary.natal_point,
     );
+    const dom = bundle.domains?.[primary.domain];
+    const domainText = dom ? (aspectFamily(primary.aspect) === "soft" ? dom.soft : dom.hard) : null;
+    const warmMoon =
+      tone === "warm" &&
+      !natalLensPlan.lens &&
+      !interpretationPlan.synthesis &&
+      transitStoryPlan.status !== "selected" &&
+      interp.mechanism === WARM_MOON_TEMPLATE.interpretation &&
+      domainText === WARM_MOON_TEMPLATE.domain;
     headline = primary.label;
     prompt = interp.question;
     paragraphs.push(
-      `${TONE_OPENER[tone]}${interp.mechanism}${natalLensPlan.lens ? ` ${natalLensPlan.lens.mechanism}` : ""}${transitStoryPlan.status === "selected" ? ` ${transitStoryPlan.chronologySentence} ${transitStoryPlan.copy.mechanism}` : ""}`,
+      warmMoon
+        ? WARM_MOON_TEMPLATE.scene
+        : `${TONE_OPENER[tone]}${interp.mechanism}${natalLensPlan.lens ? ` ${natalLensPlan.lens.mechanism}` : ""}${transitStoryPlan.status === "selected" ? ` ${transitStoryPlan.chronologySentence} ${transitStoryPlan.copy.mechanism}` : ""}`,
     );
 
     if (interpretationPlan.synthesis) {
@@ -239,10 +263,8 @@ export function assembleReading(
 
     // Domain-specific framing: the same aspect reads differently depending on
     // which part of the chart it lands on, so the prose changes with domain.
-    const dom = bundle.domains?.[primary.domain];
-    const domainText = dom ? (aspectFamily(primary.aspect) === "soft" ? dom.soft : dom.hard) : null;
     if (dom && domainText) {
-      paragraphs.push(domainText);
+      paragraphs.push(warmMoon ? WARM_MOON_TEMPLATE.meaning : domainText);
       prompt = `${prompt} ${dom.prompt}`;
       record(
         provenance,

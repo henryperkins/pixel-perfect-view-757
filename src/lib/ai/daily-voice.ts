@@ -11,7 +11,7 @@ export const DAILY_SYSTEM_VOICE = [
 
 /** Appended only when N1 is supplied, so readings without a lens keep the prior request text. */
 export const DAILY_NATAL_SYSTEM_VOICE =
-  "N1 is one conditional symbolic interpretation, not known temperament, a nervous system, attachment style, diagnosis or biography. Apply its useful practical distinction inside a specific scene from the primary meaning in paragraph 1 or 2, citing N1, C1 and I1 together. The same task, obligation, exchange or choice must carry both meanings; do not place a complete N1 summary beside I1 and call that integration. A transition such as 'in this context' supplies no missing relationship. Do not add a personality section or verbalize raw natal origins. N1 may offer a way to consider the scene; it does not prove that a boundary is needed, a preference has changed or a particular response will help.";
+  "N1 is one conditional symbolic interpretation, not known temperament, a nervous system, attachment style, diagnosis or biography. Apply its useful practical distinction inside a specific scene from the primary meaning in paragraph 1 or 2, citing N1, C1 and I1 together. The same task, obligation, exchange or choice must carry both meanings; do not place a complete N1 summary beside I1 and call that integration. Preserve N1's condition as its own possibility. A scene supplied by I1 does not cause that condition: mentally tracking a task does not make an obligation feel narrow merely because both ideas are supplied. Use the scene as the task being considered, then develop N1's conditional distinction without adding a mechanism. A transition such as 'in this context' supplies no missing relationship. Do not add a personality section or verbalize raw natal origins. N1 may offer a way to consider the scene; it does not prove that a boundary is needed, a preference has changed or a particular response will help.";
 
 export function dailySystemVoice(hasNatalLens: boolean): string {
   return hasNatalLens ? `${DAILY_SYSTEM_VOICE} ${DAILY_NATAL_SYSTEM_VOICE}` : DAILY_SYSTEM_VOICE;
@@ -32,7 +32,7 @@ const TONES = {
   },
   clinical: {
     definition:
-      "Precise and reserved, using familiar words and active verbs. Name the distinction clearly and speak to the reader as 'you'. Say 'which part of the task is yours', not 'direct ownership of an output'. Reserve does not require jargon, diagnostic labels, a third-person case study or an 'Observation:' preface.",
+      "Precise and reserved, using familiar words and active verbs. Name the distinction clearly and speak to the reader as 'you'. Preserve subjective wording: when the source says a part of a task feels like yours, keep 'feels like yours'; the tone supplies no objective ownership claim. Reserve does not require jargon, diagnostic labels, a third-person case study or an 'Observation:' preface.",
     example:
       "Knowing a point and wording it are distinct tasks. A revision can improve precision without changing what the sentence says.",
   },

@@ -70,7 +70,7 @@ test("timing instructions explicitly require the cycle even when T1 repeats its 
   const prompt = accepted.case.request.messages[1].content;
   assert.match(prompt, /even (?:when|if).*T1/i);
   assert.match(prompt, /\["C1", "P1", "T1"\]/);
-  assert.equal(accepted.case.diagnostics.validatorVersion, "daily-reference-6");
+  assert.equal(accepted.case.diagnostics.validatorVersion, "daily-reference-7");
 });
 
 test("daily uses one 60-second call and exports its budget without changing provider settings", async () => {
@@ -79,7 +79,7 @@ test("daily uses one 60-second call and exports its budget without changing prov
   assert.equal(calls, 1);
   assert.equal(result.metadata.gatewayTimeoutMs, 60_000);
   assert.equal(result.case.diagnostics.gatewayTimeoutMs, 60_000);
-  assert.equal(result.metadata.promptVersion, "daily-astro-body-10");
+  assert.equal(result.metadata.promptVersion, "daily-astro-body-11");
   assert.deepEqual(Object.keys(requests[0]).sort(), ["messages", "model", "response_format"]);
 });
 
@@ -246,10 +246,11 @@ test("claim-strength guidance is sent with unchanged source statements, parents,
   assert.equal(calls, 3, "One dispatch per eligible case, no retries");
 });
 
-test("observed strengthening and exclusions still pass the lexical validator", async () => {
+test("historical strengthening needs review while combined window/exact timing is rejected", async () => {
   // Paragraphs from the hosted pre-correction report (docs/reviews/daily-reading-writing/2026-10-11).
   // Each adds an exclusion, a reader event, a frequency or a firmer joint claim
-  // that the facts do not supply, yet is structurally valid. Review must catch these.
+  // that the facts do not supply. The bounded timing guard now catches one
+  // combined sentence; other semantic defects still require independent review.
   const observed = {
     "natal-moon-fallback": [
       {
@@ -285,8 +286,10 @@ test("observed strengthening and exclusions still pass the lexical validator", a
   for (const [caseId, paragraphs] of Object.entries(observed)) {
     responder = async () => envelope({ paragraphs });
     const result = await runCase(caseId, bundle);
-    assert.equal(result.case.diagnostics.outcome, "accepted", caseId);
-    assert.equal(result.case.output.mode, "model", caseId);
+    const timingRejected = caseId === "natal-freedom-reflex";
+    assert.equal(result.case.diagnostics.outcome, timingRejected ? "rejected" : "accepted", caseId);
+    assert.equal(result.case.output.mode, timingRejected ? "template" : "model", caseId);
+    if (timingRejected) assert.equal(result.case.diagnostics.code, "timing");
   }
 });
 
