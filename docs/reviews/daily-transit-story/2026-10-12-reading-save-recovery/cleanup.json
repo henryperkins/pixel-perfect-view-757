@@ -1,0 +1,19 @@
+{
+  "checkedAt": "2026-10-12T10:03:19.433Z",
+  "normalErasureSucceeded": true,
+  "signOutSucceeded": true,
+  "accountDeleted": true,
+  "scope": "Only the recovery synthetic account",
+  "remaining": {
+    "users": 0,
+    "profiles": 0,
+    "chart_snapshots": 0,
+    "birth_profiles": 0,
+    "daily_readings": 0,
+    "natal_features": 0,
+    "source_consents": 0,
+    "audit_events": 0,
+    "identity_links": 0,
+    "assistant_grants": 0
+  }
+}

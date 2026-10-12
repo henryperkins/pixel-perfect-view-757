@@ -1,0 +1,74 @@
+{
+  "checkedAt": "2026-10-12T10:03:15.970Z",
+  "status": "published_and_verified",
+  "scope": "Fresh synthetic account; the same larger reading request that failed before correction",
+  "deployment": {
+    "status": "pending",
+    "deployment_id": "a0fe3742-30ba-49df-ac01-56bc157d93cf",
+    "url": "https://pixel-perfect-view-757.lovable.app",
+    "preview_url": "https://id-preview--16964b03-ff4a-4ee1-b4a5-76757e94bec3.lovable.app",
+    "requestedAt": "2026-10-12T09:58:01.192Z",
+    "sourceCommit": "f3eb0ceeee24b1ee5da8197d47b1b13560c14f20",
+    "initialToolStatus": "pending",
+    "assets": [
+      {
+        "asset": "/assets/index-QGMbzRBs.js",
+        "status": 200,
+        "sha256": "d114f8c3554bb7c9f5e3c1209d79e04ca13460f4eacbfcea34941964fb526bc6",
+        "matchesLocalBuild": true
+      },
+      {
+        "asset": "/assets/privacy-DVIoSU1u.js",
+        "status": 200,
+        "sha256": "c081a2446def750516a4258723b4675d4b80073cce612267b25b917b183b6f11",
+        "matchesLocalBuild": true
+      },
+      {
+        "asset": "/assets/birth-BCMRvEFN.js",
+        "status": 200,
+        "sha256": "9769419ca3e27088244e0a434059a2f985bb0dd6052b1393d1e898be3d7f6c83",
+        "matchesLocalBuild": true
+      }
+    ],
+    "serverRuntimeCommitIndependentlyExposed": false
+  },
+  "input": {
+    "birthDate": "1990-05-15",
+    "birthTime": "00:00",
+    "latitude": 34.0522,
+    "longitude": -118.2437,
+    "birthTimezone": "UTC",
+    "readingTimezone": "America/Chicago",
+    "accuracy": "exact",
+    "tone": "warm",
+    "optionalContextEnabled": true
+  },
+  "reading": {
+    "id": "44b3c200-7526-467d-a879-9649a94850bf",
+    "releaseVersion": "0.7.1",
+    "mode": "template",
+    "reason": "language gateway requires available credit",
+    "natalLensStatus": "selected",
+    "transitStoryStatus": "selected",
+    "eventTiming": {
+      "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+      "engine": "swiss-ephemeris@2.10.03",
+      "solverVersion": "transit-episode-1"
+    },
+    "evidenceRows": 16,
+    "parametersWithoutChunks": 112,
+    "firstRequestMs": 3953.5215709999998,
+    "reopenRequestMs": 2593.50787,
+    "sameReading": true,
+    "sameBody": true,
+    "sameEvidence": true,
+    "bodySha256": "1376c68cbe38e32d75f9b66524aaf8a79db8d2c1294098109b186bbd74e067f7"
+  },
+  "memberDataIncluded": false,
+  "actualModelGeneration": false,
+  "limits": [
+    "The provider returned credit unavailable, and the reading successfully used its published template.",
+    "The production save/reopen proves reading recovery for the synthetic reproduction; it is not an impersonated member request.",
+    "The concurrent assistant implementation was preserved; its separate activation and migration were not performed for this recovery."
+  ]
+}
