@@ -153,7 +153,7 @@ test("captured prompt requires scene application and preserves directional condi
   // This is evidence of the delivered brief, not a semantic acceptance test.
   const diagnostics = (await generate(draft())).meta.diagnostics;
   assert.equal(diagnostics.promptVersion, "daily-astro-body-12");
-  assert.equal(diagnostics.validatorVersion, "daily-reference-8");
+  assert.equal(diagnostics.validatorVersion, "daily-reference-9");
 });
 test("request_without_a_lens_keeps_the_pre_lens_brief", async () => {
   const voice = await h.vite.ssrLoadModule("/src/lib/ai/daily-voice.ts");
