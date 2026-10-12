@@ -90,8 +90,10 @@
 - [ ] Configure this app's chart URL/key and transit URL/source ID through an authorized server secret channel. If credentials/tooling are absent, finish everything independent and report the exact missing operation without exposing a secret.
 - [x] Publish current source normally; verify remote commit and Lovable synchronization separately from production deployment.
 - [ ] Activate the staged combined content only when source settings and production checks establish both features can work. Existing owners use explicit recalculation; historical records keep their original source.
-- [ ] Record final configuration, release pointers, live evidence and rollback instructions; keep any unfulfilled gate explicitly open.
+- [x] Record final configuration, release pointers, live evidence and rollback instructions; keep any unfulfilled gate explicitly open.
+
+Application check: the operator confirmed applying the settings; after publication, the synthetic chart returns all nine qualified anchors. Transit calculations through production fail on two uncached dates, while the identical local adapter request qualifies against Fly. Both activation probes were rolled back. URL/source-ID confirmation and successful production transit calculation remain open; see `docs/reviews/daily-transit-story/2026-10-12-owned-swiss/application-connection.md`. Synthetic account cleanup is complete.
 
 ## Execution notes
 
-Implementation is native in this session, using the existing clean isolated worktree. A fresh whole-change reviewer will inspect the completed implementation and qualification before release. No changes are planned in the separate `patternlike-app` checkout.
+Implementation used the existing isolated worktree. A fresh whole-change reviewer inspected the implementation and qualification before deployment; findings were fixed and verified. The separate `patternlike-app` checkout is unchanged.

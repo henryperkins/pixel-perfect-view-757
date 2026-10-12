@@ -1,0 +1,330 @@
+{
+  "recordedAt": "2026-10-12T08:59:38.540Z",
+  "status": "chart_connected_transit_blocked_content_rolled_back",
+  "projectId": "16964b03-ff4a-4ee1-b4a5-76757e94bec3",
+  "appUrl": "https://pixel-perfect-view-757.lovable.app",
+  "publication": {
+    "checkedAt": "2026-10-12T08:56:49.426Z",
+    "sourceCommit": "f62ef72ecd366ec5b8fa4be3aa3d7328f0ddab17",
+    "deploymentRequestId": "8130f1f0-c20b-470f-b7bd-e20b3035e959",
+    "results": [
+      {
+        "asset": "/assets/index-BWI3nirh.js",
+        "status": 200,
+        "sha256": "7a0836897e153c1deaea71f5813cfbc6b0ee346137dfa3a3e5b0b34597847728",
+        "matchesLocalBuild": true,
+        "referencedByRoot": true
+      },
+      {
+        "asset": "/assets/privacy-CE9XwhTg.js",
+        "status": 200,
+        "sha256": "3d11827c113c9d99031685909ed1c560c7b46b164b29d0c945034b22fdd8dd4b",
+        "matchesLocalBuild": true
+      },
+      {
+        "asset": "/assets/birth-BDOzol2s.js",
+        "status": 200,
+        "sha256": "3c3ab3097fa0a289510e685fc145daf0c2d9834d7c7defe0165471ff3294afd4",
+        "matchesLocalBuild": true
+      }
+    ],
+    "serverRuntimeCommitIndependentlyExposed": false
+  },
+  "checks": {
+    "sourceCommit": "f62ef72ecd366ec5b8fa4be3aa3d7328f0ddab17",
+    "tests": {
+      "pass": 532,
+      "fail": 0,
+      "skipped": 0
+    },
+    "typecheck": "pass",
+    "build": "pass",
+    "newModelCalls": 0,
+    "realMemberRecordsUsed": false
+  },
+  "syntheticInput": {
+    "birthDate": "1990-05-15",
+    "birthTime": "19:34",
+    "latitude": 34.0522,
+    "longitude": -118.2437,
+    "timezone": "UTC",
+    "accuracy": "exact"
+  },
+  "beforePublish": {
+    "saveMs": 1553.9791339999997,
+    "anchorStatus": "unavailable",
+    "reason": "unqualified_source"
+  },
+  "afterPublish": {
+    "saveMs": 1288.4641179999999,
+    "exportMs": 1065.5951929999999,
+    "natalEngine": "swiss-ephemeris@2.10.03",
+    "houseSystem": "placidus",
+    "ephemeris": {
+      "engine": "swiss-ephemeris@2.10.03",
+      "precision": "high",
+      "degraded": false,
+      "degradedReason": null,
+      "transitEngine": "kepler-approx@1.0.0",
+      "eventTiming": null
+    },
+    "transitAnchors": {
+      "version": "transit-anchor-1",
+      "chartFingerprint": "OBEFd6ME2TPaXQFRd0oLCM5UrmaBF7Y0",
+      "accuracy": "exact",
+      "status": "screened",
+      "sampleOffsetsMinutes": [
+        -2,
+        0,
+        2
+      ],
+      "sources": [
+        {
+          "engine": "swiss-ephemeris",
+          "engineVersion": "2.10.03",
+          "dataId": "sha256:975743cf9ca4c15e9e86d22f8d03fd973a1341f6b0bd971cabd21a4a02022797",
+          "frame": "tropical-apparent-geocentric-true-equinox-of-date",
+          "timeScale": "UT",
+          "returnedFlags": 258
+        },
+        {
+          "engine": "swiss-ephemeris",
+          "engineVersion": "2.10.03",
+          "dataId": "sha256:975743cf9ca4c15e9e86d22f8d03fd973a1341f6b0bd971cabd21a4a02022797",
+          "frame": "tropical-apparent-geocentric-true-equinox-of-date",
+          "timeScale": "UT",
+          "returnedFlags": 258
+        },
+        {
+          "engine": "swiss-ephemeris",
+          "engineVersion": "2.10.03",
+          "dataId": "sha256:975743cf9ca4c15e9e86d22f8d03fd973a1341f6b0bd971cabd21a4a02022797",
+          "frame": "tropical-apparent-geocentric-true-equinox-of-date",
+          "timeScale": "UT",
+          "returnedFlags": 258
+        }
+      ],
+      "anchors": [
+        {
+          "target": "sun",
+          "longitudes": [
+            54.698748410333906,
+            54.70008744806984,
+            54.70142648558493
+          ]
+        },
+        {
+          "target": "moon",
+          "longitudes": [
+            301.0516676143877,
+            301.06893233297455,
+            301.0861974739678
+          ]
+        },
+        {
+          "target": "mercury",
+          "longitudes": [
+            37.978402439582396,
+            37.97826823017675,
+            37.97813416637018
+          ]
+        },
+        {
+          "target": "venus",
+          "longitudes": [
+            13.17642879743994,
+            13.178013726792074,
+            13.17959865958079
+          ]
+        },
+        {
+          "target": "mars",
+          "longitudes": [
+            348.5669618427737,
+            348.5679932159269,
+            348.56902458886407
+          ]
+        },
+        {
+          "target": "jupiter",
+          "longitudes": [
+            99.6011929582927,
+            99.60145626692372,
+            99.60171957802487
+          ]
+        },
+        {
+          "target": "saturn",
+          "longitudes": [
+            295.2440267391378,
+            295.24400257119214,
+            295.2439784001608
+          ]
+        },
+        {
+          "target": "ascendant",
+          "longitudes": [
+            144.87849362525833,
+            145.2930314177181,
+            145.7076917671232
+          ]
+        },
+        {
+          "target": "midheaven",
+          "longitudes": [
+            50.46226636629751,
+            50.95693518161329,
+            51.450874111781616
+          ]
+        }
+      ]
+    }
+  },
+  "release": {
+    "id": "edcc53cf-d19a-415b-a8a2-a66040846b1d",
+    "version": "0.7.1",
+    "checksum": "20b793acda524da945b07ec32b2ed795f31e273c533ff6b4e9c4f96ef821eeac",
+    "graphValidation": "pass",
+    "natalLensRules": 62,
+    "transitChapterRules": 5,
+    "before": {
+      "content": [],
+      "mirror": [
+        {
+          "version": "editorial-1.0.0",
+          "checksum": null,
+          "is_active": 1
+        }
+      ]
+    },
+    "activationMethod": "Authorized operator D1 updates with target ID, checksum and prior-pointer guards; both pointers read back. No admin privilege was granted to the synthetic account.",
+    "attempts": [
+      {
+        "activatedAt": "2026-10-12T08:53:23.575Z",
+        "probe": {
+          "day": "2026-10-12",
+          "computedAt": "2026-10-12T08:53:29.658Z",
+          "durationMs": 1176.798949,
+          "primary": "jupiter_square_midheaven",
+          "ephemeris": {
+            "engine": "swiss-ephemeris@2.10.03",
+            "precision": "high",
+            "degraded": false,
+            "degradedReason": null,
+            "transitEngine": "kepler-approx@1.0.0",
+            "eventTiming": null
+          },
+          "storyCalculation": {
+            "status": "omitted",
+            "reason": "service_unavailable"
+          }
+        },
+        "rolledBackAt": "2026-10-12T08:54:02.778Z"
+      },
+      {
+        "probe": {
+          "day": "2026-10-13",
+          "computedAt": "2026-10-12T08:57:43.468Z",
+          "durationMs": 813.746382,
+          "primary": "jupiter_square_midheaven",
+          "ephemeris": {
+            "engine": "swiss-ephemeris@2.10.03",
+            "precision": "high",
+            "degraded": false,
+            "degradedReason": null,
+            "transitEngine": "kepler-approx@1.0.0",
+            "eventTiming": null
+          },
+          "storyCalculation": {
+            "status": "omitted",
+            "reason": "service_unavailable"
+          }
+        },
+        "rolledBackAt": "2026-10-12T08:57:52.459Z"
+      }
+    ],
+    "after": {
+      "content": [],
+      "mirror": [
+        {
+          "version": "editorial-1.0.0",
+          "checksum": null,
+          "is_active": 1
+        }
+      ]
+    }
+  },
+  "localAdapter": {
+    "scope": "Local application adapter calling the live service, using the production synthetic chart input and exported cycles/anchors; not a deployed-runtime result",
+    "checkedAt": "2026-10-12T08:55:53.308Z",
+    "source": {
+      "engine": "swiss-ephemeris",
+      "engineVersion": "2.10.03",
+      "dataId": "sha256:975743cf9ca4c15e9e86d22f8d03fd973a1341f6b0bd971cabd21a4a02022797",
+      "frame": "tropical-apparent-geocentric-true-equinox-of-date",
+      "timeScale": "UT",
+      "returnedFlags": 258
+    },
+    "natalReliabilityStatus": "screened",
+    "natalEvidenceCount": 23,
+    "primary": "jupiter_square_midheaven",
+    "natalLensStatus": "unsupported_anchor",
+    "calculationStatus": "qualified",
+    "transitStoryStatus": "selected",
+    "passTotal": 3,
+    "chronologySentence": "This is the first of three calculated contacts; the first exact contact falls in October 2026.",
+    "request": {
+      "contract": "swiss-transit-episode/1",
+      "solverVersion": "transit-episode-1",
+      "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+      "transitBody": "jupiter",
+      "aspect": "square",
+      "targets": [
+        {
+          "offsetMinutes": -2,
+          "longitude": 50.46226636629751
+        },
+        {
+          "offsetMinutes": 0,
+          "longitude": 50.95693518161329
+        },
+        {
+          "offsetMinutes": 2,
+          "longitude": 51.450874111781616
+        }
+      ],
+      "referenceAt": "2026-10-12T12:00:00.000Z",
+      "maxOrbDegrees": 3
+    }
+  },
+  "cleanup": {
+    "checkedAt": "2026-10-12T08:59:06.530Z",
+    "scope": "Only the synthetic account created for this release check",
+    "normalEraseSucceeded": true,
+    "signOutSucceeded": true,
+    "accountDeleted": true,
+    "remaining": {
+      "users": 0,
+      "profiles": 0,
+      "chart_snapshots": 0,
+      "birth_profiles": 0,
+      "daily_readings": 0,
+      "natal_features": 0,
+      "source_consents": 0,
+      "audit_events": 0
+    },
+    "verificationNote": "The first cleanup assertion required exactly one reported database change. Subsequent scoped counts verified that the account and all eight checked record sets were removed."
+  },
+  "pending": {
+    "deployedTransitEndpointAndSourceIdentity": true,
+    "productionTransitCalculation": true,
+    "jointContentActivation": true
+  },
+  "limits": [
+    "The deployed server revision is not independently exposed by frontend asset checks.",
+    "Production transit transport failures are coarsened to service_unavailable; the underlying HTTP status and runtime URL/source ID were not observable through available tools.",
+    "The same source and request pass in the local application adapter against Fly. This does not establish production transit connectivity.",
+    "The natal reliability screen passes locally against the live service; the production export directly exposes transit anchors, not the encrypted natal reliability manifest.",
+    "The primary contact targets Midheaven, so this particular local reading correctly omits a personal natal lens as unsupported_anchor."
+  ]
+}

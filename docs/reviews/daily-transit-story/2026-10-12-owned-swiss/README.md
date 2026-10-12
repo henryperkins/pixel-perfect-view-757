@@ -1,6 +1,6 @@
 # Owned Swiss calculation qualification
 
-The reviewed service is now [deployed and verified on Fly](deployment.md). Application secret configuration and joint content activation remain separate pending steps.
+The reviewed service is now [deployed and verified on Fly](deployment.md). The published app's chart connection passes, including all nine screened transit anchors. Its transit calculation still returns `service_unavailable`; two activation probes were rolled back. The [application connection receipt](application-connection.md) records the current evidence and pending settings check. Combined content remains inactive.
 
 The local numerical qualification passes all 15 frozen synthetic cases across Jupiter, Saturn, Uranus, Neptune and Pluto. Every contact, station and orb-window edge agrees with a separate dense enumerator within **5.625 seconds** (the acceptance limit is 300 seconds). Counts, direction, aspect branch, component closure and window separation match. All recorded scans also pass the application's existing wire and geometric proof validators.
 

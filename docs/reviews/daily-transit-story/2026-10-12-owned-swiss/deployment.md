@@ -1,4 +1,6 @@
-# Fly deployment and remaining application connection
+# Fly deployment and application connection
+
+Current status: the [application connection check](application-connection.md) verifies the published chart path. Production transit calls still fail; both attempted activations were rolled back. The initial deployment and publication evidence below remains historical.
 
 `pattern-transit-calc` is deployed in **Imladris**, region `iad`, on one shared-CPU 512 MiB machine. The deployed service revision is `4d217d9db60f393e55a891de53d632e9626c4321`; the image digest, machine identity, source ID and timings are in [deployment.json](deployment.json).
 
@@ -16,7 +18,7 @@ Remote reproduction from the repository root, using a private environment file c
 node --env-file=<private-key-file> docs/reviews/daily-transit-story/2026-10-12-owned-swiss/verify-http.mjs https://pattern-transit-calc.fly.dev 4d217d9db60f393e55a891de53d632e9626c4321 /tmp/swiss-live-check.json
 ```
 
-## Remaining connection
+## Initial connection handoff
 
 The operator must set these four **server-only Lovable secrets** together. The private operator settings file contains the generated key; the connected Lovable tools provide no secret editor.
 
@@ -27,7 +29,7 @@ SWISS_TRANSIT_EPISODE_URL=https://pattern-transit-calc.fly.dev/v1/transit-episod
 SWISS_TRANSIT_EPISODE_SOURCE_ID=pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a
 ```
 
-Then publish the current Lovable revision, verify a synthetic exact-time chart/anchor path through the deployed app, and activate the already reviewed combined `0.7.1` release. At this receipt, neither content candidate is active. The database still has no active `content_releases` row and its mirror remains `editorial-1.0.0`. Do not substitute Fly health or a Git push for application configuration evidence.
+The operator subsequently confirmed applying the settings. Publication and the synthetic exact-time chart/anchor check passed. Transit calculation through the app failed on two uncached dates, so the attempted joint activations were rolled back. There is again no active `content_releases` row and the mirror remains `editorial-1.0.0`. The latest receipt above records the exact pending check; Fly health and a Git push do not establish application configuration.
 
 Existing owners explicitly save/recalculate their birth details. No existing AstroWay source is relabelled. Historical readings retain their original evidence. The separate `patternlike-calc` service is unchanged.
 
