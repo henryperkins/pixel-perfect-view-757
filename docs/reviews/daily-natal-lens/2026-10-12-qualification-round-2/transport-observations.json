@@ -1,0 +1,2390 @@
+{
+  "kind": "provider-transport-observations",
+  "provider": "gemini-enterprise",
+  "transportAttempts": 74,
+  "observedModelVersions": [
+    "gemini-3.8-flash"
+  ],
+  "observedUsageCases": 65,
+  "unknownUsageCases": 9,
+  "reportedCounterTotals": {
+    "promptTokenCount": 129211,
+    "candidatesTokenCount": 12389,
+    "totalTokenCount": 452862,
+    "thoughtsTokenCount": 311262,
+    "cachedContentTokenCount": 0,
+    "toolUsePromptTokenCount": 0
+  },
+  "counterPresenceCounts": {
+    "promptTokenCount": 65,
+    "candidatesTokenCount": 65,
+    "totalTokenCount": 65,
+    "thoughtsTokenCount": 64,
+    "cachedContentTokenCount": 0,
+    "toolUsePromptTokenCount": 0
+  },
+  "cost": null,
+  "costStatus": "unknown; totals contain observed token counters only and cannot establish monetary cost or failed-request usage",
+  "receipts": [
+    {
+      "sequence": 1,
+      "bundleSource": "builtin",
+      "caseId": "saturn-square-sun",
+      "settledAt": "2026-10-12T00:48:30.684Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 48540,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T00:47:42.174Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1867,
+            "candidatesTokenCount": 233,
+            "totalTokenCount": 11425,
+            "thoughtsTokenCount": 9325
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 2,
+      "bundleSource": "builtin",
+      "caseId": "saturn-square-moon-warm",
+      "settledAt": "2026-10-12T00:48:49.620Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 18853,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T00:48:30.792Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1915,
+            "candidatesTokenCount": 224,
+            "totalTokenCount": 5501,
+            "thoughtsTokenCount": 3362
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 3,
+      "bundleSource": "builtin",
+      "caseId": "jupiter-trine-sun-technical",
+      "settledAt": "2026-10-12T00:49:20.714Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 31034,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T00:48:49.706Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1899,
+            "candidatesTokenCount": 264,
+            "totalTokenCount": 8204,
+            "thoughtsTokenCount": 6041
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 4,
+      "bundleSource": "builtin",
+      "caseId": "mercury-conjunction-clinical",
+      "settledAt": "2026-10-12T00:49:46.640Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 25849,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T00:49:20.821Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1895,
+            "candidatesTokenCount": 141,
+            "totalTokenCount": 6875,
+            "thoughtsTokenCount": 4839
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 5,
+      "bundleSource": "builtin",
+      "caseId": "venus-opposition-venus",
+      "settledAt": "2026-10-12T00:50:09.293Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 22585,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T00:49:46.752Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1869,
+            "candidatesTokenCount": 216,
+            "totalTokenCount": 6427,
+            "thoughtsTokenCount": 4342
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 6,
+      "bundleSource": "builtin",
+      "caseId": "unknown-birth-time",
+      "settledAt": "2026-10-12T00:50:32.427Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 23067,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T00:50:09.387Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1939,
+            "candidatesTokenCount": 140,
+            "totalTokenCount": 6470,
+            "thoughtsTokenCount": 4391
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 7,
+      "bundleSource": "builtin",
+      "caseId": "approximate-birth-time",
+      "settledAt": "2026-10-12T00:50:41.929Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 9415,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T00:50:32.556Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1932,
+            "candidatesTokenCount": 250,
+            "totalTokenCount": 3385,
+            "thoughtsTokenCount": 1203
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 8,
+      "bundleSource": "builtin",
+      "caseId": "moon-dst-boundary",
+      "settledAt": "2026-10-12T00:51:02.045Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 20047,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T00:50:42.026Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1896,
+            "candidatesTokenCount": 184,
+            "totalTokenCount": 5789,
+            "thoughtsTokenCount": 3709
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 9,
+      "bundleSource": "builtin",
+      "caseId": "multiple-cycles",
+      "settledAt": "2026-10-12T00:51:25.191Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 23056,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T00:51:02.182Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 2110,
+            "candidatesTokenCount": 221,
+            "totalTokenCount": 6193,
+            "thoughtsTokenCount": 3862
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 10,
+      "bundleSource": "builtin",
+      "caseId": "quiet-threshold",
+      "settledAt": "2026-10-12T00:51:25.257Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "skipped",
+        "attempted": false,
+        "code": "no_cycle",
+        "durationMs": null,
+        "paragraph": null
+      },
+      "transports": []
+    },
+    {
+      "sequence": 11,
+      "bundleSource": "builtin",
+      "caseId": "synthesis-tension",
+      "settledAt": "2026-10-12T00:51:35.710Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 10389,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T00:51:25.348Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 2154,
+            "candidatesTokenCount": 221,
+            "totalTokenCount": 4168,
+            "thoughtsTokenCount": 1793
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 12,
+      "bundleSource": "builtin",
+      "caseId": "synthesis-reinforcement",
+      "settledAt": "2026-10-12T00:51:38.081Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 2296,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T00:51:35.816Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 2143,
+            "candidatesTokenCount": 191,
+            "totalTokenCount": 2334
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 13,
+      "bundleSource": "builtin",
+      "caseId": "synthesis-independent",
+      "settledAt": "2026-10-12T00:52:02.201Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 24040,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T00:51:38.198Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1982,
+            "candidatesTokenCount": 193,
+            "totalTokenCount": 6030,
+            "thoughtsTokenCount": 3855
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 14,
+      "bundleSource": "builtin",
+      "caseId": "synthesis-reversed",
+      "settledAt": "2026-10-12T00:52:30.362Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 28085,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T00:52:02.309Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 2156,
+            "candidatesTokenCount": 190,
+            "totalTokenCount": 7386,
+            "thoughtsTokenCount": 5040
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 15,
+      "bundleSource": "builtin",
+      "caseId": "synthesis-suppressed-support",
+      "settledAt": "2026-10-12T00:52:49.506Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 19072,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T00:52:30.463Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 2048,
+            "candidatesTokenCount": 191,
+            "totalTokenCount": 6215,
+            "thoughtsTokenCount": 3976
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 16,
+      "bundleSource": "builtin",
+      "caseId": "synthesis-unmatched",
+      "settledAt": "2026-10-12T00:53:08.505Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 18923,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T00:52:49.612Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1977,
+            "candidatesTokenCount": 191,
+            "totalTokenCount": 5660,
+            "thoughtsTokenCount": 3492
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 17,
+      "bundleSource": "builtin",
+      "caseId": "natal-duty-reflex",
+      "settledAt": "2026-10-12T00:53:54.770Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 46177,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T00:53:08.628Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1898,
+            "candidatesTokenCount": 127,
+            "totalTokenCount": 11742,
+            "thoughtsTokenCount": 9717
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 18,
+      "bundleSource": "builtin",
+      "caseId": "natal-freedom-reflex",
+      "settledAt": "2026-10-12T00:54:21.354Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 26508,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T00:53:54.878Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1898,
+            "candidatesTokenCount": 169,
+            "totalTokenCount": 7534,
+            "thoughtsTokenCount": 5467
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 19,
+      "bundleSource": "builtin",
+      "caseId": "natal-service-aspect",
+      "settledAt": "2026-10-12T00:55:21.461Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "unavailable",
+        "attempted": true,
+        "code": "timeout",
+        "durationMs": 60005,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T00:54:21.489Z",
+          "httpStatus": null,
+          "modelVersion": null,
+          "usageMetadata": null,
+          "observation": "fetch_failed_usage_unknown"
+        }
+      ]
+    },
+    {
+      "sequence": 20,
+      "bundleSource": "builtin",
+      "caseId": "natal-exact-house",
+      "settledAt": "2026-10-12T00:55:46.149Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 24591,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T00:55:21.595Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1897,
+            "candidatesTokenCount": 236,
+            "totalTokenCount": 7061,
+            "thoughtsTokenCount": 4928
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 21,
+      "bundleSource": "builtin",
+      "caseId": "natal-own-target",
+      "settledAt": "2026-10-12T00:56:30.856Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 44573,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T00:55:46.374Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1868,
+            "candidatesTokenCount": 143,
+            "totalTokenCount": 10607,
+            "thoughtsTokenCount": 8596
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 22,
+      "bundleSource": "builtin",
+      "caseId": "natal-moon-fallback",
+      "settledAt": "2026-10-12T00:56:53.064Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 22119,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T00:56:30.980Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1868,
+            "candidatesTokenCount": 106,
+            "totalTokenCount": 5978,
+            "thoughtsTokenCount": 4004
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 23,
+      "bundleSource": "builtin",
+      "caseId": "natal-sign-boundary",
+      "settledAt": "2026-10-12T00:57:29.167Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 36021,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T00:56:53.174Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1868,
+            "candidatesTokenCount": 207,
+            "totalTokenCount": 8746,
+            "thoughtsTokenCount": 6671
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 24,
+      "bundleSource": "builtin",
+      "caseId": "natal-unknown-time",
+      "settledAt": "2026-10-12T00:57:53.177Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 23941,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T00:57:29.263Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1939,
+            "candidatesTokenCount": 154,
+            "totalTokenCount": 6409,
+            "thoughtsTokenCount": 4316
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 25,
+      "bundleSource": "builtin",
+      "caseId": "natal-mixed-source",
+      "settledAt": "2026-10-12T00:58:30.777Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 37511,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T00:57:53.299Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1897,
+            "candidatesTokenCount": 123,
+            "totalTokenCount": 10053,
+            "thoughtsTokenCount": 8033
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 26,
+      "bundleSource": "builtin",
+      "caseId": "natal-degraded-positions",
+      "settledAt": "2026-10-12T00:58:56.575Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 25721,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T00:58:30.886Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1868,
+            "candidatesTokenCount": 104,
+            "totalTokenCount": 6670,
+            "thoughtsTokenCount": 4698
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 27,
+      "bundleSource": "builtin",
+      "caseId": "natal-legacy-snapshot",
+      "settledAt": "2026-10-12T00:59:56.654Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "unavailable",
+        "attempted": true,
+        "code": "timeout",
+        "durationMs": 60001,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T00:58:56.684Z",
+          "httpStatus": null,
+          "modelVersion": null,
+          "usageMetadata": null,
+          "observation": "fetch_failed_usage_unknown"
+        }
+      ]
+    },
+    {
+      "sequence": 28,
+      "bundleSource": "builtin",
+      "caseId": "natal-synthesis-integration",
+      "settledAt": "2026-10-12T01:00:20.158Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 23418,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T00:59:56.774Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 2155,
+            "candidatesTokenCount": 186,
+            "totalTokenCount": 6384,
+            "thoughtsTokenCount": 4043
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 29,
+      "bundleSource": "builtin",
+      "caseId": "arc-single-pass",
+      "settledAt": "2026-10-12T01:00:44.059Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 23806,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:00:20.287Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1863,
+            "candidatesTokenCount": 178,
+            "totalTokenCount": 6934,
+            "thoughtsTokenCount": 4893
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 30,
+      "bundleSource": "builtin",
+      "caseId": "arc-opening-three",
+      "settledAt": "2026-10-12T01:01:07.219Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 23075,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:00:44.175Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1863,
+            "candidatesTokenCount": 238,
+            "totalTokenCount": 6478,
+            "thoughtsTokenCount": 4377
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 31,
+      "bundleSource": "builtin",
+      "caseId": "arc-return-three",
+      "settledAt": "2026-10-12T01:01:58.751Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 51447,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:01:07.337Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1863,
+            "candidatesTokenCount": 157,
+            "totalTokenCount": 11571,
+            "thoughtsTokenCount": 9551
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 32,
+      "bundleSource": "builtin",
+      "caseId": "arc-closing-three",
+      "settledAt": "2026-10-12T01:02:31.300Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 32451,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:01:58.883Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1863,
+            "candidatesTokenCount": 200,
+            "totalTokenCount": 7445,
+            "thoughtsTokenCount": 5382
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 33,
+      "bundleSource": "builtin",
+      "caseId": "arc-return-five",
+      "settledAt": "2026-10-12T01:03:31.395Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "unavailable",
+        "attempted": true,
+        "code": "timeout",
+        "durationMs": 60001,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:02:31.431Z",
+          "httpStatus": null,
+          "modelVersion": null,
+          "usageMetadata": null,
+          "observation": "fetch_failed_usage_unknown"
+        }
+      ]
+    },
+    {
+      "sequence": 34,
+      "bundleSource": "builtin",
+      "caseId": "arc-between-passes",
+      "settledAt": "2026-10-12T01:03:48.815Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 17327,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:03:31.523Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1863,
+            "candidatesTokenCount": 223,
+            "totalTokenCount": 4850,
+            "thoughtsTokenCount": 2764
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 35,
+      "bundleSource": "builtin",
+      "caseId": "arc-truncated-scan",
+      "settledAt": "2026-10-12T01:04:25.064Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 36149,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:03:48.957Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1863,
+            "candidatesTokenCount": 139,
+            "totalTokenCount": 9144,
+            "thoughtsTokenCount": 7142
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 36,
+      "bundleSource": "builtin",
+      "caseId": "arc-station-tangent",
+      "settledAt": "2026-10-12T01:05:02.994Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 37842,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:04:25.181Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1863,
+            "candidatesTokenCount": 187,
+            "totalTokenCount": 9211,
+            "thoughtsTokenCount": 7161
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 37,
+      "bundleSource": "builtin",
+      "caseId": "arc-birth-window-disagreement",
+      "settledAt": "2026-10-12T01:05:21.778Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 18709,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:05:03.096Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1863,
+            "candidatesTokenCount": 226,
+            "totalTokenCount": 5569,
+            "thoughtsTokenCount": 3480
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 38,
+      "bundleSource": "builtin",
+      "caseId": "arc-synthesis-natal-integration",
+      "settledAt": "2026-10-12T01:05:44.211Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 22350,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:05:21.891Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 2150,
+            "candidatesTokenCount": 148,
+            "totalTokenCount": 6448,
+            "thoughtsTokenCount": 4150
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 39,
+      "bundleSource": "natal-candidate",
+      "caseId": "saturn-square-sun",
+      "settledAt": "2026-10-12T01:06:44.313Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "unavailable",
+        "attempted": true,
+        "code": "timeout",
+        "durationMs": 60001,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:05:44.342Z",
+          "httpStatus": null,
+          "modelVersion": null,
+          "usageMetadata": null,
+          "observation": "fetch_failed_usage_unknown"
+        }
+      ]
+    },
+    {
+      "sequence": 40,
+      "bundleSource": "natal-candidate",
+      "caseId": "saturn-square-moon-warm",
+      "settledAt": "2026-10-12T01:07:27.835Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 43439,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:06:44.431Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1915,
+            "candidatesTokenCount": 214,
+            "totalTokenCount": 10332,
+            "thoughtsTokenCount": 8203
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 41,
+      "bundleSource": "natal-candidate",
+      "caseId": "jupiter-trine-sun-technical",
+      "settledAt": "2026-10-12T01:08:27.915Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "unavailable",
+        "attempted": true,
+        "code": "timeout",
+        "durationMs": 60001,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:07:27.948Z",
+          "httpStatus": null,
+          "modelVersion": null,
+          "usageMetadata": null,
+          "observation": "fetch_failed_usage_unknown"
+        }
+      ]
+    },
+    {
+      "sequence": 42,
+      "bundleSource": "natal-candidate",
+      "caseId": "mercury-conjunction-clinical",
+      "settledAt": "2026-10-12T01:09:18.410Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 50419,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:08:28.022Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1895,
+            "candidatesTokenCount": 218,
+            "totalTokenCount": 11695,
+            "thoughtsTokenCount": 9582
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 43,
+      "bundleSource": "natal-candidate",
+      "caseId": "venus-opposition-venus",
+      "settledAt": "2026-10-12T01:09:42.156Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 23677,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:09:18.505Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1869,
+            "candidatesTokenCount": 139,
+            "totalTokenCount": 6441,
+            "thoughtsTokenCount": 4433
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 44,
+      "bundleSource": "natal-candidate",
+      "caseId": "unknown-birth-time",
+      "settledAt": "2026-10-12T01:09:56.258Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 14021,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:09:42.272Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1939,
+            "candidatesTokenCount": 249,
+            "totalTokenCount": 4286,
+            "thoughtsTokenCount": 2098
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 45,
+      "bundleSource": "natal-candidate",
+      "caseId": "approximate-birth-time",
+      "settledAt": "2026-10-12T01:10:14.947Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 18619,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:09:56.356Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1932,
+            "candidatesTokenCount": 230,
+            "totalTokenCount": 5268,
+            "thoughtsTokenCount": 3106
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 46,
+      "bundleSource": "natal-candidate",
+      "caseId": "moon-dst-boundary",
+      "settledAt": "2026-10-12T01:10:24.750Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 9725,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:10:15.057Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1896,
+            "candidatesTokenCount": 170,
+            "totalTokenCount": 3757,
+            "thoughtsTokenCount": 1691
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 47,
+      "bundleSource": "natal-candidate",
+      "caseId": "multiple-cycles",
+      "settledAt": "2026-10-12T01:10:52.345Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 27509,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:10:24.875Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 2110,
+            "candidatesTokenCount": 227,
+            "totalTokenCount": 5581,
+            "thoughtsTokenCount": 3244
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 48,
+      "bundleSource": "natal-candidate",
+      "caseId": "quiet-threshold",
+      "settledAt": "2026-10-12T01:10:52.420Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "skipped",
+        "attempted": false,
+        "code": "no_cycle",
+        "durationMs": null,
+        "paragraph": null
+      },
+      "transports": []
+    },
+    {
+      "sequence": 49,
+      "bundleSource": "natal-candidate",
+      "caseId": "synthesis-tension",
+      "settledAt": "2026-10-12T01:11:13.845Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 21344,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:10:52.534Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 2154,
+            "candidatesTokenCount": 200,
+            "totalTokenCount": 5884,
+            "thoughtsTokenCount": 3530
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 50,
+      "bundleSource": "natal-candidate",
+      "caseId": "synthesis-reinforcement",
+      "settledAt": "2026-10-12T01:11:30.105Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 16181,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:11:13.950Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 2143,
+            "candidatesTokenCount": 186,
+            "totalTokenCount": 3664,
+            "thoughtsTokenCount": 1335
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 51,
+      "bundleSource": "natal-candidate",
+      "caseId": "synthesis-independent",
+      "settledAt": "2026-10-12T01:12:00.293Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 30103,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:11:30.224Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1982,
+            "candidatesTokenCount": 196,
+            "totalTokenCount": 7427,
+            "thoughtsTokenCount": 5249
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 52,
+      "bundleSource": "natal-candidate",
+      "caseId": "synthesis-reversed",
+      "settledAt": "2026-10-12T01:12:14.476Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 14100,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:12:00.410Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 2156,
+            "candidatesTokenCount": 186,
+            "totalTokenCount": 3849,
+            "thoughtsTokenCount": 1507
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 53,
+      "bundleSource": "natal-candidate",
+      "caseId": "synthesis-suppressed-support",
+      "settledAt": "2026-10-12T01:12:39.384Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 24829,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:12:14.592Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 2048,
+            "candidatesTokenCount": 205,
+            "totalTokenCount": 6701,
+            "thoughtsTokenCount": 4448
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 54,
+      "bundleSource": "natal-candidate",
+      "caseId": "synthesis-unmatched",
+      "settledAt": "2026-10-12T01:12:53.839Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 14374,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:12:39.497Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1977,
+            "candidatesTokenCount": 183,
+            "totalTokenCount": 4550,
+            "thoughtsTokenCount": 2390
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 55,
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-duty-reflex",
+      "settledAt": "2026-10-12T01:13:12.939Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 19019,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:12:53.948Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 2262,
+            "candidatesTokenCount": 167,
+            "totalTokenCount": 5510,
+            "thoughtsTokenCount": 3081
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 56,
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-freedom-reflex",
+      "settledAt": "2026-10-12T01:13:30.465Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 17448,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:13:13.051Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 2264,
+            "candidatesTokenCount": 169,
+            "totalTokenCount": 5168,
+            "thoughtsTokenCount": 2735
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 57,
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-service-aspect",
+      "settledAt": "2026-10-12T01:14:03.182Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 32636,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:13:30.577Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 2256,
+            "candidatesTokenCount": 147,
+            "totalTokenCount": 8356,
+            "thoughtsTokenCount": 5953
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 58,
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-exact-house",
+      "settledAt": "2026-10-12T01:14:26.597Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 23336,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:14:03.296Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 2258,
+            "candidatesTokenCount": 220,
+            "totalTokenCount": 6508,
+            "thoughtsTokenCount": 4030
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 59,
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-own-target",
+      "settledAt": "2026-10-12T01:15:16.481Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 49805,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:14:26.705Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 2231,
+            "candidatesTokenCount": 181,
+            "totalTokenCount": 10002,
+            "thoughtsTokenCount": 7590
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 60,
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-moon-fallback",
+      "settledAt": "2026-10-12T01:16:16.573Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "unavailable",
+        "attempted": true,
+        "code": "timeout",
+        "durationMs": 60000,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:15:16.607Z",
+          "httpStatus": null,
+          "modelVersion": null,
+          "usageMetadata": null,
+          "observation": "fetch_failed_usage_unknown"
+        }
+      ]
+    },
+    {
+      "sequence": 61,
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-sign-boundary",
+      "settledAt": "2026-10-12T01:16:37.018Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 20360,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:16:16.692Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1868,
+            "candidatesTokenCount": 140,
+            "totalTokenCount": 5702,
+            "thoughtsTokenCount": 3694
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 62,
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-unknown-time",
+      "settledAt": "2026-10-12T01:17:37.138Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "unavailable",
+        "attempted": true,
+        "code": "timeout",
+        "durationMs": 60001,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:16:37.171Z",
+          "httpStatus": null,
+          "modelVersion": null,
+          "usageMetadata": null,
+          "observation": "fetch_failed_usage_unknown"
+        }
+      ]
+    },
+    {
+      "sequence": 63,
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-mixed-source",
+      "settledAt": "2026-10-12T01:18:08.427Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 31185,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:17:37.279Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 2261,
+            "candidatesTokenCount": 184,
+            "totalTokenCount": 8394,
+            "thoughtsTokenCount": 5949
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 64,
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-degraded-positions",
+      "settledAt": "2026-10-12T01:19:08.511Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "unavailable",
+        "attempted": true,
+        "code": "timeout",
+        "durationMs": 60001,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:18:08.540Z",
+          "httpStatus": null,
+          "modelVersion": null,
+          "usageMetadata": null,
+          "observation": "fetch_failed_usage_unknown"
+        }
+      ]
+    },
+    {
+      "sequence": 65,
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-legacy-snapshot",
+      "settledAt": "2026-10-12T01:19:25.999Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 17395,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:19:08.664Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1868,
+            "candidatesTokenCount": 233,
+            "totalTokenCount": 4935,
+            "thoughtsTokenCount": 2834
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 66,
+      "bundleSource": "natal-candidate",
+      "caseId": "natal-synthesis-integration",
+      "settledAt": "2026-10-12T01:19:51.841Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 25769,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:19:26.100Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 2518,
+            "candidatesTokenCount": 213,
+            "totalTokenCount": 7413,
+            "thoughtsTokenCount": 4682
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 67,
+      "bundleSource": "natal-candidate",
+      "caseId": "arc-single-pass",
+      "settledAt": "2026-10-12T01:20:22.040Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 30113,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:19:51.955Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1863,
+            "candidatesTokenCount": 259,
+            "totalTokenCount": 8101,
+            "thoughtsTokenCount": 5979
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 68,
+      "bundleSource": "natal-candidate",
+      "caseId": "arc-opening-three",
+      "settledAt": "2026-10-12T01:20:57.433Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 35301,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:20:22.170Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1863,
+            "candidatesTokenCount": 212,
+            "totalTokenCount": 8307,
+            "thoughtsTokenCount": 6232
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 69,
+      "bundleSource": "natal-candidate",
+      "caseId": "arc-return-three",
+      "settledAt": "2026-10-12T01:21:23.691Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 26171,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:20:57.550Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1863,
+            "candidatesTokenCount": 151,
+            "totalTokenCount": 6954,
+            "thoughtsTokenCount": 4940
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 70,
+      "bundleSource": "natal-candidate",
+      "caseId": "arc-closing-three",
+      "settledAt": "2026-10-12T01:21:55.838Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 32046,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:21:23.830Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1863,
+            "candidatesTokenCount": 190,
+            "totalTokenCount": 7873,
+            "thoughtsTokenCount": 5820
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 71,
+      "bundleSource": "natal-candidate",
+      "caseId": "arc-return-five",
+      "settledAt": "2026-10-12T01:22:23.814Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 27872,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:21:55.993Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1863,
+            "candidatesTokenCount": 134,
+            "totalTokenCount": 7342,
+            "thoughtsTokenCount": 5345
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 72,
+      "bundleSource": "natal-candidate",
+      "caseId": "arc-between-passes",
+      "settledAt": "2026-10-12T01:23:04.918Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 41010,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:22:23.947Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1863,
+            "candidatesTokenCount": 236,
+            "totalTokenCount": 10326,
+            "thoughtsTokenCount": 8227
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 73,
+      "bundleSource": "natal-candidate",
+      "caseId": "arc-truncated-scan",
+      "settledAt": "2026-10-12T01:24:05.002Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "unavailable",
+        "attempted": true,
+        "code": "timeout",
+        "durationMs": 60001,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:23:05.030Z",
+          "httpStatus": null,
+          "modelVersion": null,
+          "usageMetadata": null,
+          "observation": "fetch_failed_usage_unknown"
+        }
+      ]
+    },
+    {
+      "sequence": 74,
+      "bundleSource": "natal-candidate",
+      "caseId": "arc-station-tangent",
+      "settledAt": "2026-10-12T01:24:40.686Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 35589,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:24:05.142Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1863,
+            "candidatesTokenCount": 167,
+            "totalTokenCount": 9320,
+            "thoughtsTokenCount": 7290
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 75,
+      "bundleSource": "natal-candidate",
+      "caseId": "arc-birth-window-disagreement",
+      "settledAt": "2026-10-12T01:24:56.095Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 15311,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:24:40.817Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 1863,
+            "candidatesTokenCount": 241,
+            "totalTokenCount": 4856,
+            "thoughtsTokenCount": 2752
+          },
+          "observation": "observed"
+        }
+      ]
+    },
+    {
+      "sequence": 76,
+      "bundleSource": "natal-candidate",
+      "caseId": "arc-synthesis-natal-integration",
+      "settledAt": "2026-10-12T01:25:23.768Z",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-10",
+        "validatorVersion": "daily-reference-6",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 27585,
+        "paragraph": null
+      },
+      "transports": [
+        {
+          "startedAt": "2026-10-12T01:24:56.215Z",
+          "httpStatus": 200,
+          "modelVersion": "gemini-3.8-flash",
+          "usageMetadata": {
+            "promptTokenCount": 2513,
+            "candidatesTokenCount": 241,
+            "totalTokenCount": 7464,
+            "thoughtsTokenCount": 4710
+          },
+          "observation": "observed"
+        }
+      ]
+    }
+  ]
+}

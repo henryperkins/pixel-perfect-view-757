@@ -1,0 +1,302 @@
+{
+  "kind": "independent-model-pair-provenance-audit",
+  "protocolVersion": "natal-evidence-integrity-audit-1",
+  "checkedAtUTC": "2026-10-12T01:37:33.785Z",
+  "provenanceIntegrityPassed": true,
+  "auditScope": "Read-only synthetic evaluation reports, source/run identity records, transport receipts, immutable journals and reviewed runner/server-module code; no reviewer artifacts or prose scoring; no env files or credentials; no provider or network calls.",
+  "source": {
+    "sourceRevision": "8b73148241adbe38d9e1f2e58e34e241314a92dd",
+    "trackedSourceFileCount": 171,
+    "trackedSourceSha256": "b870399d7fa84f95c7f7e9b924c7c239c807a2cb8ca2615615eb555edc078147",
+    "runnerSha256": "0249f007b598a1e5bb51d88ca9142c4245ea9475b7b862b9c01b13d51a46df80",
+    "allTrackedFilesMatchWorkingTreeAndGeneratingRevision": true,
+    "runnerMatchesFrozenManifest": true
+  },
+  "reports": {
+    "builtin": {
+      "reportSha256": "fc584c35e13afb7fb1313b5c05cca696f75db8236bb3c45598ec7776308357b6",
+      "cases": 38,
+      "transports": 37,
+      "quietSkips": 1,
+      "losslessCaptures": 34,
+      "outcomes": {
+        "accepted": 34,
+        "rejected": 0,
+        "unavailable": 3,
+        "skipped": 1
+      }
+    },
+    "natal-candidate": {
+      "reportSha256": "b51680f991ddf191ff8ed978e0f40891fa9bfe4d3db6cb354eb5f52f398658d9",
+      "cases": 38,
+      "transports": 37,
+      "quietSkips": 1,
+      "losslessCaptures": 31,
+      "outcomes": {
+        "accepted": 31,
+        "rejected": 0,
+        "unavailable": 6,
+        "skipped": 1
+      }
+    }
+  },
+  "references": {
+    "builtin-report.json": {
+      "sha256": "fc584c35e13afb7fb1313b5c05cca696f75db8236bb3c45598ec7776308357b6",
+      "copyMatchesLocalReceipts": true
+    },
+    "natal-candidate-report.json": {
+      "sha256": "b51680f991ddf191ff8ed978e0f40891fa9bfe4d3db6cb354eb5f52f398658d9",
+      "copyMatchesLocalReceipts": true
+    },
+    "builtin-identity.json": {
+      "sha256": "e0ebe24b9c1e1b29afe00351dc465bb4a376cb227bf24d5e63e037404ee72a89",
+      "copyMatchesLocalReceipts": true
+    },
+    "natal-candidate-identity.json": {
+      "sha256": "6da9e1a5caf382395f67b4ae8a1b7a51195340f30273825a11bb95558b50c5d7",
+      "copyMatchesLocalReceipts": true
+    },
+    "source-manifest.json": {
+      "sha256": "15f3b0da3f8ae6b45ba18b923c099378c4feafd19715f530a8bd39f4f20ce9d1",
+      "copyMatchesLocalReceipts": true
+    },
+    "run-plan.json": {
+      "sha256": "013960c7bfb4397547b3e9600c608725343cc3949b46ee2ccb96eea38043e9d1",
+      "copyMatchesLocalReceipts": true
+    },
+    "run-finished.json": {
+      "sha256": "7db71c5f9018cc24b13f7d9d90546916ae74448debd5c48f92d72b95f2711d4c",
+      "copyMatchesLocalReceipts": true
+    },
+    "transport-observations.json": {
+      "sha256": "d32ccbd60e5514feeaa625b9f82402ff6c7152078262dd49c304579e0104a1d6"
+    },
+    "pair-integrity.json": {
+      "sha256": "05b6c42b3d38d48c7eddd901ec4fe35b52386d393e8785a853d2117a64f52f61"
+    }
+  },
+  "journalIntegrity": {
+    "startMarkers": 76,
+    "resultRecords": 76,
+    "transportRecords": 76,
+    "journalFileCount": 228,
+    "journalFilesSha256": "12cec3b951e6c9c24b2f65bc23f10ec98cd993af0641c920f94e10d117a57f84",
+    "partialCheckpoints": 76,
+    "everyResultMatchesRawReport": true,
+    "everyMetadataMatchesRawReport": true,
+    "everyCheckpointMatchesReportPrefix": true,
+    "sequenceComplete": true,
+    "startBeforeTransportBeforeSettlement": true,
+    "noUnsettledCases": true,
+    "noRepeatedTransports": true,
+    "retries": 0
+  },
+  "captureIntegrity": {
+    "manualScoreNullCases": 76,
+    "losslessCapturedResponses": 65,
+    "capturedResponsesTruncatedOrSanitized": 0,
+    "unavailableResponses": [
+      {
+        "source": "builtin",
+        "caseId": "natal-service-aspect",
+        "code": "timeout",
+        "durationMs": 60005,
+        "usageKnown": false
+      },
+      {
+        "source": "builtin",
+        "caseId": "natal-legacy-snapshot",
+        "code": "timeout",
+        "durationMs": 60001,
+        "usageKnown": false
+      },
+      {
+        "source": "builtin",
+        "caseId": "arc-return-five",
+        "code": "timeout",
+        "durationMs": 60001,
+        "usageKnown": false
+      },
+      {
+        "source": "natal-candidate",
+        "caseId": "saturn-square-sun",
+        "code": "timeout",
+        "durationMs": 60001,
+        "usageKnown": false
+      },
+      {
+        "source": "natal-candidate",
+        "caseId": "jupiter-trine-sun-technical",
+        "code": "timeout",
+        "durationMs": 60001,
+        "usageKnown": false
+      },
+      {
+        "source": "natal-candidate",
+        "caseId": "natal-moon-fallback",
+        "code": "timeout",
+        "durationMs": 60000,
+        "usageKnown": false
+      },
+      {
+        "source": "natal-candidate",
+        "caseId": "natal-unknown-time",
+        "code": "timeout",
+        "durationMs": 60001,
+        "usageKnown": false
+      },
+      {
+        "source": "natal-candidate",
+        "caseId": "natal-degraded-positions",
+        "code": "timeout",
+        "durationMs": 60001,
+        "usageKnown": false
+      },
+      {
+        "source": "natal-candidate",
+        "caseId": "arc-truncated-scan",
+        "code": "timeout",
+        "durationMs": 60001,
+        "usageKnown": false
+      }
+    ],
+    "quietSkips": 2,
+    "allRequestShapesExcludeHeadersAndCredentials": true
+  },
+  "transportIntegrity": {
+    "attempts": 74,
+    "attemptsPerBundle": 37,
+    "http200Responses": 65,
+    "failedTimeoutTransportsWithNoHttpStatus": 9,
+    "observedModelVersions": [
+      "gemini-3.8-flash"
+    ],
+    "declaredModel": "gemini-enterprise/gemini-3.8-flash",
+    "usageMetadataObservedResponses": 65,
+    "usageUnknownResponses": 9,
+    "metadataAllowlistValidated": true,
+    "counterTotals": {
+      "promptTokenCount": 129211,
+      "candidatesTokenCount": 12389,
+      "totalTokenCount": 452862,
+      "thoughtsTokenCount": 311262,
+      "cachedContentTokenCount": 0,
+      "toolUsePromptTokenCount": 0
+    },
+    "counterPresenceCounts": {
+      "promptTokenCount": 65,
+      "candidatesTokenCount": 65,
+      "totalTokenCount": 65,
+      "thoughtsTokenCount": 64,
+      "cachedContentTokenCount": 0,
+      "toolUsePromptTokenCount": 0
+    },
+    "cost": null,
+    "costStatus": "unknown; failed-request usage is unknown and observed token counters do not establish monetary cost"
+  },
+  "pairIntegrity": {
+    "matchedCases": 38,
+    "sourceRevisionMatch": true,
+    "qualificationProvenanceGaps": [],
+    "nonNatalFactsAndReliabilityMatch": true,
+    "n1Cases": [
+      "natal-duty-reflex",
+      "natal-freedom-reflex",
+      "natal-service-aspect",
+      "natal-exact-house",
+      "natal-own-target",
+      "natal-moon-fallback",
+      "natal-mixed-source",
+      "natal-synthesis-integration",
+      "arc-synthesis-natal-integration"
+    ],
+    "changedRequestCases": [
+      "natal-duty-reflex",
+      "natal-freedom-reflex",
+      "natal-service-aspect",
+      "natal-exact-house",
+      "natal-own-target",
+      "natal-moon-fallback",
+      "natal-mixed-source",
+      "natal-synthesis-integration",
+      "arc-synthesis-natal-integration"
+    ],
+    "onlyN1CasesChangeRequest": true,
+    "completeModelPairs": 28,
+    "completePositiveModelPairs": 7,
+    "completeNegativeModelPairs": 1,
+    "missingModelPairCases": [
+      {
+        "caseId": "saturn-square-sun",
+        "beforeAvailable": true,
+        "afterAvailable": false
+      },
+      {
+        "caseId": "jupiter-trine-sun-technical",
+        "beforeAvailable": true,
+        "afterAvailable": false
+      },
+      {
+        "caseId": "natal-service-aspect",
+        "beforeAvailable": false,
+        "afterAvailable": true
+      },
+      {
+        "caseId": "natal-moon-fallback",
+        "beforeAvailable": true,
+        "afterAvailable": false
+      },
+      {
+        "caseId": "natal-unknown-time",
+        "beforeAvailable": true,
+        "afterAvailable": false
+      },
+      {
+        "caseId": "natal-degraded-positions",
+        "beforeAvailable": true,
+        "afterAvailable": false
+      },
+      {
+        "caseId": "natal-legacy-snapshot",
+        "beforeAvailable": false,
+        "afterAvailable": true
+      },
+      {
+        "caseId": "arc-return-five",
+        "beforeAvailable": false,
+        "afterAvailable": true
+      },
+      {
+        "caseId": "arc-truncated-scan",
+        "beforeAvailable": true,
+        "afterAvailable": false
+      }
+    ]
+  },
+  "executionBoundary": {
+    "kind": "local-direct-production-module-synthetic-evaluation",
+    "nodeVersion": "v24.21.0",
+    "viteConfigAndEnvFilesLoaded": false,
+    "standaloneAppServerStarted": false,
+    "providerCalls": "Gemini Enterprise only; one allowed production POST per non-quiet case",
+    "syntheticLocalChartCalculation": true,
+    "liveSwissChartOrTransitServiceCalledByScope": false,
+    "accountDatabaseReadingCacheOrActivationCallsInRunnerScope": false,
+    "evidenceBasis": "Reviewed closed production synthetic entrypoint and exact-endpoint fetch guard; these are scope/source checks, not independent database or network telemetry.",
+    "hostedWorkflowVerified": false,
+    "adminAuthenticationVerified": false,
+    "memberServingLovableGatewayVerified": false,
+    "productionVerified": false,
+    "contentActivated": false
+  },
+  "writingQualificationAssessed": false,
+  "humanReviewCompleted": false,
+  "limitations": [
+    "All 74 transport attempts settled, but nine timed out without captured model prose or usage. A complete inventory is not complete model-pair coverage.",
+    "Hash agreement corroborates these retained local receipts; it is not external notarization and does not independently expose hidden provider internals.",
+    "Provider response modelVersion corroborates 65 responses; the nine failed requests have no observed response model identity.",
+    "Direct local production-module execution does not verify hosted Workflow/admin authentication, real-reader quality, live Swiss/owner paths, chronological-week reuse, production deployment or content activation.",
+    "No new prose scores or blinded reviewer artifacts were inspected. Original reports retain null manual scores."
+  ]
+}

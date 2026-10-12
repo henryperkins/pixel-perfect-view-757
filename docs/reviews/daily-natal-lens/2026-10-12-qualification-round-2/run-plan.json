@@ -1,0 +1,42 @@
+{
+  "mode": "--run",
+  "configured": true,
+  "sourceRevision": "8b73148241adbe38d9e1f2e58e34e241314a92dd",
+  "trackedSourceFiles": 171,
+  "trackedSourceSha256": "b870399d7fa84f95c7f7e9b924c7c239c807a2cb8ca2615615eb555edc078147",
+  "runnerSha256": "0249f007b598a1e5bb51d88ca9142c4245ea9475b7b862b9c01b13d51a46df80",
+  "provider": "gemini-enterprise",
+  "model": "gemini-enterprise/gemini-3.8-flash",
+  "bundleSources": [
+    "builtin",
+    "natal-candidate"
+  ],
+  "fixtureVersion": "synthetic-daily-6",
+  "casesPerBundle": 38,
+  "maximumModelAttempts": 74,
+  "retries": 0,
+  "resumeSupported": false,
+  "executionContext": {
+    "kind": "local-direct-production-module-synthetic-evaluation",
+    "projectRoot": "/home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011",
+    "processWorkingDirectory": "/home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011",
+    "nodeVersion": "v24.21.0",
+    "platform": "linux",
+    "architecture": "x64",
+    "moduleLoader": "Vite ssrLoadModule",
+    "viteConfigFile": false,
+    "viteEnvFile": false,
+    "middlewareMode": true,
+    "entrypoint": "src/lib/ai/reading-evaluation.server.ts#runSyntheticEvaluationCase",
+    "provider": "gemini-enterprise",
+    "declaredModel": "gemini-enterprise/gemini-3.8-flash",
+    "hostedWorkflowExecuted": false,
+    "adminAuthenticationVerified": false,
+    "productionVerified": false,
+    "appServerStarted": false,
+    "databaseOrReadingCacheAccessed": false,
+    "contentActivated": false,
+    "cost": "unknown; usage observations do not establish monetary cost"
+  },
+  "startedAt": "2026-10-12T00:47:42.074Z"
+}

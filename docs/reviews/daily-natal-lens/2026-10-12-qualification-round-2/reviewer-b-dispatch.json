@@ -1,0 +1,12 @@
+{
+  "contextId": "natal-round2-b",
+  "packetPath": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-round-2/blind/natal-round2-b/packet.json",
+  "outputPath": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-round-2/blind/natal-round2-b/review.json",
+  "packetSha256": "81854b54006218cd4377b185c7a364fe6cdeeb76896c79aa1a17f5971dd7b411",
+  "itemSetHash": "5930699aec363099dd8dd80d224eeed2149545023b0372a88e2a5075c4131bef",
+  "promptSha256": "bc8b2809e32429c96be7fa0e77b4b058d1eb339fcae87f081e06279b3642cdb8",
+  "dispatchAtUTC": "2026-10-12T01:28:03.595Z",
+  "promptHashDefinition": "Exact archived task text before appended hash-binding trailer",
+  "taskName": "/root/natal_round2_reviewer_b",
+  "fullDispatchMessageSha256": "b9259a1390d454005e9d8ef5a45faabbf6f431ef4dfa18c5aeb82ff71d3c1833"
+}

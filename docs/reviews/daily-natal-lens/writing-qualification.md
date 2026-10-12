@@ -1,239 +1,221 @@
-# Natal writing qualification — failed blinded AI round 1
+# Natal writing qualification — fresh round 2 fails
 
-The 2026-10-11 blinded AI review **fails writing qualification**: **3/8 candidate
-model outputs pass, 0/8 candidate templates pass, and 0/8 positive cases fully
-pass**. The candidate adds supported practical distinctions, including the
-duty/freedom contrast, but several lenses remain appended and substantive claims
-remain unresolved. Catalogue approval is separate from this failed writing gate.
+The 2026-10-12 actual-model and blinded AI round **fails writing qualification**.
+For the nine natal-positive cases, **6/9 candidate model outputs pass, 9/9
+candidate templates pass, and 6/9 cases fully pass**. Freedom has an unresolved
+causal bridge, exact-house transfers a window-position claim to the future exact
+date, and Moon fallback has no captured model response. Both candidates remain
+inactive.
 
-The [frozen review summary](2026-10-11-blinded-review/review-summary.json) is the
-source for the scores and verdicts below. The [evidence index](2026-10-11-blinded-review/README.md),
-[source identity](2026-10-11-blinded-review/source-identity.json),
-[review manifest](2026-10-11-blinded-review/review-manifest.json) and
-[review integrity](2026-10-11-blinded-review/review-integrity.json) retain the exact
-reports, reviewer packets, instructions, assignments and assessments. The original
-artifacts remain unchanged; source-report `manualReview` fields remain null.
+The [frozen round-2 summary](2026-10-12-qualification-round-2/qualification-summary.json)
+(SHA-256 `7de4af6d2c59b62bb3d7c7d8a09f7a55e294cfb4642e53db2eb0c854f4b6bef1`) and
+[evidence index](2026-10-12-qualification-round-2/README.md) retain the full results.
+The [prior qualification document](2026-10-12-qualification-round-2/previous-qualification-document.md)
+and all original [round-1 evidence](2026-10-11-blinded-review/README.md) are
+preserved. The earlier body-8 round remains failed at 3/8 models and 0/8 templates;
+its unproven generating revisions are not backfilled from this fresh run.
 
-The earlier `4c96fd5` baseline and `builtin-0.6.0` candidate attempt that stopped on
-gateway credit remain historical evidence. That failed catalogue and partial run
-are separate from the `builtin-0.6.1` Enterprise pair reviewed here.
+## Fresh paired run and source identity
 
-## Paired reports and provenance
+Both runs executed the existing server-side
+`runSyntheticEvaluationCase` function locally from **observed revision
+`8b73148241adbe38d9e1f2e58e34e241314a92dd`**, with Gemini Enterprise only,
+`gemini-enterprise/gemini-3.8-flash`, and a 60,000 ms deadline. The
+[171-file source manifest](2026-10-12-qualification-round-2/source-manifest.json),
+[identity sidecars](2026-10-12-qualification-round-2/builtin-identity.json),
+[candidate identity](2026-10-12-qualification-round-2/natal-candidate-identity.json),
+[strict comparison](2026-10-12-qualification-round-2/pair-integrity.json), and
+[independent provenance audit](2026-10-12-qualification-round-2/integrity-audit.json)
+bind the actual reports to that one generating revision. Source-file hashes were
+checked before/after each case and before each transport.
 
-These are actual-model **admin synthetic evaluation** reports from Gemini
-Enterprise, using `gemini-enterprise/gemini-3.8-flash` and a `60000` ms deadline.
-They do not verify the member-serving Lovable gateway. Current main uses a
-`60000` ms daily deadline after `28bf467`; that source setting is separate from
-observed member-provider latency and acceptance. Member readings and natal
-chapters remain on the Lovable gateway.
+This is a **local production-module synthetic run**. It does not verify the hosted
+Workflow, signed callback or admin UI authentication. Member readings and natal
+chapters retain the Lovable gateway; its acceptance and latency remain separate
+qualification gaps. No serving-provider implementation, content pointer, account,
+reading cache, native chart service or deployment was changed by this round.
 
-| Recorded field                   | Baseline                                                           | Candidate                                                          |
-| -------------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
-| Bundle selection/version         | `builtin` / `builtin-0.5.0`, natal-free                            | `natal-candidate` / `builtin-0.6.1`, inactive                      |
-| Source-report SHA-256            | `ce0b8acdc47c5d9d2bffa8eb4bd469364145438a12897009b8d2cddf668d35a9` | `16af47ded750b4d2b4e31747395331a3657d6f8f26f1056247fe24ba7135343e` |
-| Case inventory / attempts        | 28 / 27                                                            | 28 / 27                                                            |
-| Accepted / unavailable / skipped | 25 / 2 / 1                                                         | 26 / 1 / 1                                                         |
-| Generating `sourceRevision`      | `null`, unproven                                                   | `null`, unproven                                                   |
-| Provider cost/token usage        | Absent                                                             | Absent                                                             |
+| Field                          | Baseline                                                           | Candidate                                                          |
+| ------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
+| Bundle selector/version        | `builtin` / `builtin-0.5.0`                                        | `natal-candidate` / `builtin-0.6.1`, inactive                      |
+| Source report SHA-256          | `fc584c35e13afb7fb1313b5c05cca696f75db8236bb3c45598ec7776308357b6` | `b51680f991ddf191ff8ed978e0f40891fa9bfe4d3db6cb354eb5f52f398658d9` |
+| Inventory / model attempts     | 38 / 37                                                            | 38 / 37                                                            |
+| Accepted / unavailable / quiet | 34 / 3 / 1                                                         | 31 / 6 / 1                                                         |
+| Rejected returned drafts       | 0                                                                  | 0                                                                  |
+| Generating revision            | `8b73148`, observed locally                                        | `8b73148`, observed locally                                        |
 
-Both reports record `partial: false`: their inventories are complete, but three
-attempts timed out and have no model response. Each also contains the `no_cycle`
-quiet skip. No unavailable response receives a prose score or counts as a pass.
+Shared policies are **`synthetic-daily-6`, `daily-astro-body-10`,
+`daily-reference-6`, `daily-synthesis-1`, `daily-natal-lens-2`, and
+`natal-reliability-1`**. All 38 configurations, non-natal facts and reliability
+manifests match. Only the nine requests supplied with `N1` differ. The built-in,
+natal and transit candidate bundles retain their previous hashes.
 
-Shared recorded metadata are `synthetic-daily-5`, case-set hash
-`1fec5a7a3842cbc4f374a9058dfa3264294df875db607db2d3a92aa1306f9b07`,
-`daily-synthesis-1`, `daily-natal-lens-2`, `natal-reliability-1`,
-`daily-astro-body-8`, `daily-reference-5`, and transit-copy hash
-`4d6048ea1d303410e2845d9dde9960da95749ff7ab20fd886779a4627abc677d`.
-The [input integrity checks](2026-10-11-blinded-review/integrity-checks.json) find
-matching configuration hashes, non-natal facts and reliability manifests; requests
-change only in the eight selected-lens cases. There are **24 complete model pairs**,
-including **7/8 natal-positive** and **3/4 natal-negative** pairs.
+The run completed **74 transports with zero retries**. Both reports have
+`partial: false` because every fixed case settled; nine attempts timed out with no
+model prose. Complete model-pair coverage is **28/37 overall, 7/9 natal-positive,
+and 1/4 natal-negative**. A timeout remains an uncovered failure, never a prose
+score or a passing fallback.
 
-The [strict natal comparison](2026-10-11-blinded-review/natal-comparison.json)
-retains both generating-revision gaps; `sourceRevisionMatch` is `null`. Neither the
-review checkout's `c3ac5ca` nor the review workspace's `bb033d3` proves the revision
-that generated either report. Recorded metadata matching is not proof that both
-runs used one deployed source revision.
+| Run       | Unavailable model cases                                                                                                                           |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Baseline  | `natal-service-aspect`, `natal-legacy-snapshot`, `arc-return-five`                                                                                |
+| Candidate | `saturn-square-sun`, `jupiter-trine-sun-technical`, `natal-moon-fallback`, `natal-unknown-time`, `natal-degraded-positions`, `arc-truncated-scan` |
 
-| Missing model response              | Recorded outcome    | Effect on coverage                                            |
-| ----------------------------------- | ------------------- | ------------------------------------------------------------- |
-| Baseline `natal-exact-house`        | `timeout`, 60000 ms | No paired positive model comparison                           |
-| Baseline `natal-degraded-positions` | `timeout`, 60000 ms | No paired negative model comparison                           |
-| Candidate `saturn-square-moon-warm` | `timeout`, 60000 ms | Uncovered candidate failure outside the eight natal positives |
+[Transport observations](2026-10-12-qualification-round-2/transport-observations.json)
+record the provider's `gemini-3.8-flash` response identity and token counters for
+65 successful calls. Their reported total is **452,862 tokens**, including
+311,262 thought tokens. Usage for the nine timed-out requests and monetary cost
+remain unknown; absent counter fields are not proof of zero usage. Original
+report `manualReview` fields remain null.
 
-## Review coverage and gate
+## Blinded AI protocol and coverage
 
-Protocol `natal-writing-blind-ai-1` used two fresh AI contexts, A
-(`/root/blind_reviewer_a`) and B (`/root/blind_reviewer_b`), with distinct randomized,
-source-masked packets. Each reviewed **79 unique prose/support contexts: 78 scored
-and one quiet safety check**, representing **107 occurrences: 51 captured model
-outputs and 56 template occurrences**. Deduplication required identical text,
-support, tone, depth and suppression context. Each also covered all four contrast
-sets and eight repetition sets. The quiet item was safe with null scores.
+Two fresh contexts, `/root/natal_round2_reviewer_a` and
+`/root/natal_round2_reviewer_b`, each reviewed **99 unique prose/support contexts:
+98 scored and one quiet safety check**, representing 217 occurrences: 65 captured
+model outputs, 76 displayed bodies and 76 templates. Deduplication required
+identical text and full visible fact/tone/depth/quiet context;
+[suppression checks](2026-10-12-qualification-round-2/packet-context-integrity.json)
+confirm identical suppression flags within every deduplicated context. All
+paragraph citation arrays were masked uniformly. Structural acceptance was
+reported separately.
 
-Both reviews were frozen before source assignments were revealed at
-`2026-10-11T23:45:53.683614+00:00`; hash bindings, complete unique coverage, score
-bounds/applicability and exact quoted findings passed the saved integrity check.
-A's review SHA-256 is
-`93bd33998761e69e0a8a6b0d5562c478940e94761713ce0cf690509cb5cad46a`;
-B's is `4f3d5822eff6dc674b70ba772bc5dcffb9c1005a69ad356543ec2f96527fa79e`.
+Each reviewer received only an independently shuffled isolated packet with embedded
+instructions, four contrast sets and eight cross-scenario repetition sets. Repeated
+item IDs retained their occurrence counts. Both reviews were frozen before
+[unblinding](2026-10-12-qualification-round-2/unblinding-receipt.json). Hash bindings,
+complete item/set coverage, applicability, score bounds, verdict consistency and
+exact quoted passages passed the saved checker. See
+[review A](2026-10-12-qualification-round-2/review-a.json) and
+[review B](2026-10-12-qualification-round-2/review-b.json).
 
-These contexts share the inherited model family. Their model/configuration
-identities were not exposed; **model diversity and human review are not
-established**. The coordinator had prior unblinded context; the reviewers declared
-that they saw only their assigned packet/instructions and no prior verdicts or
-other review. Tool access was not technically sandboxed, and N1 presence/prose
-style can make treatment or template origin inferable. Citation arrays were masked
-uniformly; structural acceptance remains separate from semantic review.
+The [established AI gate](../daily-reading-writing/review-protocol.md) requires
+both reviewers to give every eligible raw candidate and template specificity,
+grounding and coherence **at least 4/5**, plus lens integration when `N1` is supplied
+and synthesis coherence when `S1` is supplied. Zero unresolved substantive findings
+are allowed. Voice and repetition are recorded but do not gate alone. Both
+reviewers must also identify a supported candidate duty/freedom distinction.
+Scores are never averaged and safe templates cannot rescue raw failures.
 
-Under the [AI qualification contract](../daily-reading-writing/review-protocol.md),
-both reviewers must give every eligible candidate/template specificity, grounding
-and coherence **≥4/5**, plus lens integration **≥4/5** when N1 is supplied and
-synthesis coherence **≥4/5** when S1 is supplied. There must be **zero unresolved
-substantive findings**. Voice/repetition are recorded but do not gate by themselves.
-Unavailable responses are uncovered failures. Baseline lens integration is null
-because N1 is absent; that is inapplicability, not an integration failure. A safe
-template cannot rescue a failed raw model output. Means and majority votes cannot
-override any failing score or unresolved finding.
+The coordinator had prior unblinded context; reviewer model/configuration identities
+were not exposed. Reviewers declared only their assigned packet as input, but tool
+access was not technically sandboxed and style or `N1` presence can suggest an
+origin. These are separate AI assessments using inherited contexts, with no
+established model diversity or human approval. `humanReviewCompleted` remains
+`false`.
 
-## Positive-case scores
+## Natal-positive scores
 
-Each tuple is **specificity / grounding / voice / repetition / coherence / lens
-integration / synthesis coherence**, on the 1–5 rubric. `—` means inapplicable;
-`unavailable` means there was no model prose. Values are the original individual
-judgments in [review A](2026-10-11-blinded-review/review-a.json) and
-[review B](2026-10-11-blinded-review/review-b.json).
+Tuples are **specificity / grounding / voice / repetition / coherence / lens
+integration / synthesis coherence**. `—` means inapplicable. Unavailable drafts
+have no scores. The historical eight natal-positive cases are retained, plus the
+current fixture's combined `arc-synthesis-natal-integration` case. That ninth case
+supplies `N1`/`S1`; the natal bundle has no transit chapter catalogue, so it does not
+qualify `P2`, native episode chronology or transit chapter integration.
 
-| Candidate model case        | A             | B             | Model gate                          |
-| --------------------------- | ------------- | ------------- | ----------------------------------- |
-| natal-duty-reflex           | 4/5/4/4/4/4/— | 4/5/4/4/4/4/— | Pass                                |
-| natal-freedom-reflex        | 4/5/4/3/3/3/— | 4/5/4/3/4/4/— | Fail: A coherence/integration       |
-| natal-service-aspect        | 4/5/3/3/3/3/— | 4/5/3/3/3/3/— | Fail: both coherence/integration    |
-| natal-exact-house           | 4/5/4/4/3/3/— | 4/5/4/4/4/3/— | Fail: A coherence, both integration |
-| natal-own-target            | 5/5/4/4/4/4/— | 4/5/4/4/4/4/— | Pass                                |
-| natal-moon-fallback         | 4/5/4/4/4/4/— | 4/5/4/4/4/4/— | Pass                                |
-| natal-mixed-source          | 4/5/4/4/3/3/— | 4/5/4/4/4/3/— | Fail: A coherence, both integration |
-| natal-synthesis-integration | 5/5/4/4/4/4/4 | 4/3/4/4/4/4/4 | Fail: B grounding/substantive claim |
+### Raw candidate models
 
-| Candidate template case     | A             | B             | Template gate |
-| --------------------------- | ------------- | ------------- | ------------- |
-| natal-duty-reflex           | 4/5/3/2/3/3/— | 4/5/3/2/3/3/— | Fail          |
-| natal-freedom-reflex        | 4/5/3/2/3/3/— | 4/5/3/2/3/3/— | Fail          |
-| natal-service-aspect        | 4/5/3/2/3/3/— | 4/5/3/2/3/3/— | Fail          |
-| natal-exact-house           | 4/5/3/2/3/3/— | 4/5/3/2/3/3/— | Fail          |
-| natal-own-target            | 4/5/3/3/3/3/— | 4/5/3/3/3/3/— | Fail          |
-| natal-moon-fallback         | 4/5/3/3/3/3/— | 4/5/3/3/3/3/— | Fail          |
-| natal-mixed-source          | 4/5/3/2/3/3/— | 4/5/3/2/3/3/— | Fail          |
-| natal-synthesis-integration | 4/5/3/2/3/3/4 | 4/5/3/3/3/3/4 | Fail          |
+| Candidate case                    | A             | B             | Gate               |
+| --------------------------------- | ------------- | ------------- | ------------------ |
+| `natal-duty-reflex`               | 5/5/4/4/5/5/— | 5/5/4/3/4/5/— | Pass               |
+| `natal-freedom-reflex`            | 5/5/4/4/5/5/— | 5/3/4/4/4/3/— | Fail               |
+| `natal-service-aspect`            | 5/5/4/4/5/5/— | 5/5/4/3/4/4/— | Pass               |
+| `natal-exact-house`               | 5/3/4/4/5/5/— | 5/3/4/3/4/4/— | Fail               |
+| `natal-own-target`                | 5/5/4/3/5/5/— | 5/5/4/3/4/4/— | Pass               |
+| `natal-moon-fallback`             | unavailable   | unavailable   | Uncovered: timeout |
+| `natal-mixed-source`              | 5/5/4/4/5/5/— | 5/5/4/4/5/5/— | Pass               |
+| `natal-synthesis-integration`     | 5/5/3/4/4/4/5 | 5/5/4/3/4/4/4 | Pass               |
+| `arc-synthesis-natal-integration` | 5/5/4/4/5/5/5 | 5/5/4/3/4/4/4 | Pass               |
 
-Every candidate template has coherence/integration 3 from both reviewers.
-Copying a supported lens into paragraph 1 does not establish meaningful application
-to the primary scene. All eight candidate positive model/template personal-claim
-flags are false, but B flags a separate unsupported substantive claim in the model
-`natal-synthesis-integration`. No positive case passes both its model and template.
+### Candidate templates
 
-| Baseline model case         | A             | B             |
-| --------------------------- | ------------- | ------------- |
-| natal-duty-reflex           | 4/3/3/3/3/—/— | 3/5/3/3/3/—/— |
-| natal-freedom-reflex        | 4/5/4/2/3/—/— | 3/5/4/2/3/—/— |
-| natal-service-aspect        | 4/5/4/2/3/—/— | 3/5/4/2/3/—/— |
-| natal-exact-house           | unavailable   | unavailable   |
-| natal-own-target            | 4/5/4/3/4/—/— | 4/5/4/3/4/—/— |
-| natal-moon-fallback         | 4/5/4/2/3/—/— | 4/3/4/3/4/—/— |
-| natal-mixed-source          | 4/5/3/2/3/—/— | 3/5/4/2/3/—/— |
-| natal-synthesis-integration | 4/5/4/4/4/—/4 | 4/5/4/4/4/—/4 |
+| Candidate case                    | A             | B             | Gate |
+| --------------------------------- | ------------- | ------------- | ---- |
+| `natal-duty-reflex`               | 5/5/4/3/5/5/— | 5/5/4/3/5/5/— | Pass |
+| `natal-freedom-reflex`            | 5/5/4/4/5/5/— | 5/5/4/4/5/5/— | Pass |
+| `natal-service-aspect`            | 5/5/4/4/5/5/— | 5/5/4/4/5/5/— | Pass |
+| `natal-exact-house`               | 5/5/4/4/5/5/— | 5/5/4/4/5/5/— | Pass |
+| `natal-own-target`                | 5/5/4/3/5/5/— | 5/5/4/3/5/5/— | Pass |
+| `natal-moon-fallback`             | 5/5/4/4/5/5/— | 5/5/4/4/5/5/— | Pass |
+| `natal-mixed-source`              | 5/5/4/3/5/5/— | 5/5/4/3/5/5/— | Pass |
+| `natal-synthesis-integration`     | 5/5/4/3/5/5/4 | 5/5/4/3/5/5/4 | Pass |
+| `arc-synthesis-natal-integration` | 5/5/4/3/5/5/4 | 5/5/4/3/5/5/4 | Pass |
 
-| Baseline template case      | A             | B             |
-| --------------------------- | ------------- | ------------- |
-| natal-duty-reflex           | 4/5/3/2/3/—/— | 3/5/3/2/3/—/— |
-| natal-freedom-reflex        | 4/5/3/2/3/—/— | 3/5/3/2/3/—/— |
-| natal-service-aspect        | 4/5/3/2/3/—/— | 3/5/3/2/3/—/— |
-| natal-exact-house           | 4/5/3/2/3/—/— | 3/5/3/2/3/—/— |
-| natal-own-target            | 4/5/3/3/3/—/— | 3/5/3/3/3/—/— |
-| natal-moon-fallback         | 4/5/3/3/3/—/— | 3/5/3/3/3/—/— |
-| natal-mixed-source          | 4/5/3/2/3/—/— | 3/5/3/2/3/—/— |
-| natal-synthesis-integration | 4/5/3/3/3/—/4 | 4/5/3/3/3/—/4 |
+All nine positive templates meet the fixed-suite AI gate. Both reviewers find a
+supported practical duty/freedom contrast in models and templates. The freedom
+model's contrast still contains B's unresolved causal claim and below-threshold
+grounding/integration scores. Exact-house meaningfully applies its lens but fails
+both reviewers' grounding checks on timing. Those failures remain separate from
+lens use.
 
-## Supported contrast, suppression and repetition
+## Whole-suite failures and suppression controls
 
-Both reviewers find a supported duty/freedom distinction in candidate models and
-templates: **useful preparation versus waiting for everything to be settled**, and
-**the commitment itself versus choice in carrying it out**. This passes the
-practical-contrast check. It does not pass freedom-model integration (A: 3) or
-either template's integration (both: 3). Baseline samples lack N1 and appropriately
-offer no invented practical difference; their identical meanings are not an
-integration failure.
+Across 37 non-quiet candidate cases, **26/37 raw models pass, 36/37 templates pass,
+and 25/37 cases fully pass**. Six models are unavailable. Five captured candidate
+model items have seven unresolved substantive findings; one additional template
+fails coherence. The quiet template passes both safety checks with all scores null.
 
-Both reviewers found no raw natal-origin leakage, invented unsupplied joint
-premise, personal-claim flag or suppression breach in the captured prose. The four
-negative controls—sign boundary, unknown time, degraded positions and legacy
-snapshot—remain natal-free in available models/templates. Baseline degraded
-positions has no model response. The selected own-target and Moon-fallback model
-outputs pass meaningful lens use; house/service/mixed-source outputs retain the
-specific integration weaknesses above. Synthetic reliability labels do not prove
-live Swiss Ephemeris/Placidus provenance.
+The four natal-negative templates pass and contain no `N1`. Available candidate
+models for sign-boundary and legacy snapshot pass; unknown-time and degraded-position
+models timed out. Therefore raw negative coverage is 2/4, paired negative coverage
+1/4, and suppression qualification is incomplete. Available source-masked negative
+prose does not supply a natal origin or require invented integration.
 
-| Cross-scenario repetition set                                     | Baseline model A/B | Baseline template A/B | Candidate model A/B | Candidate template A/B |
-| ----------------------------------------------------------------- | ------------------ | --------------------- | ------------------- | ---------------------- |
-| Moon/fallback: duty, service, exact-house, fallback, mixed-source | 2/2                | 1/2                   | 3/3                 | 1/1                    |
-| Own-target and natal-synthesis-integration                        | 3/4                | 2/2                   | 3/3                 | 2/2                    |
+| Candidate model case / reviewer                             | Exact passage                                                                                                      | Unresolved issue                                                                                                                                                                                                                      |
+| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `unknown-birth-time` / A; `item-047`, paragraph 1           | “In the sky, Saturn forms a square to the Sun with an orb of 0.42 degrees.”                                        | C1 is a transit-to-natal contact. In the sky describes a current Saturn-to-current-Sun square and omits the natal target, which the supplied geometry does not establish.                                                             |
+| `approximate-birth-time` / A; `item-081`, paragraph 2       | “The calculated exact date is 2026-10-14, which falls in the middle part of the window, exact in 3 days.”          | T1 places this reading in the middle part of the calculated window. The relative clause instead places the future calculated exact date there; no supplied fact establishes that date's position within the window.                   |
+| `natal-exact-house` / A; `item-082`, paragraph 2            | “Calculated exact alignment occurs on 2026-10-14, which is in 3 days in the middle part of the calculated window.” | T1 places this reading in the middle part of the calculated window. The relative clause instead places the future calculated exact date there; no supplied fact establishes that date's position within the window.                   |
+| `natal-exact-house` / B; `item-082`, paragraph 2            | “Calculated exact alignment occurs on 2026-10-14, which is in 3 days in the middle part of the calculated window.” | The sentence appears to locate the future exact alignment in the middle of the window. T1 locates this reading there. The referent is unresolved and the supplied facts do not support transferring that position to exact alignment. |
+| `approximate-birth-time` / B; `item-081`, paragraph 2       | “The calculated exact date is 2026-10-14, which falls in the middle part of the window, exact in 3 days.”          | The relative clause assigns the middle-window position to the exact date. T1 assigns it to this reading, while C1 supplies only the exact date, orb and phase.                                                                        |
+| `natal-freedom-reflex` / B; `item-027`, paragraph 2         | “When mentally tracking what comes next makes an obligation feel narrow”                                           | I1 supplies mentally tracking a task in a quiet moment, and N1 allows an obligation to feel narrow. Neither supplies mentally tracking as the cause of that narrowness; the conditional bridge adds that mechanism.                   |
+| `mercury-conjunction-clinical` / B; `item-022`, paragraph 2 | “Pace, scope, and which part of the task is yours are separate pieces of working on something.”                    | D1 says the part of a task that feels like yours. This turns felt ownership into which part actually is yours, an objective allocation the supplied framing does not establish.                                                       |
 
-The baseline model Moon/fallback set omits its unavailable exact-house response.
-Reviewers describe recurring quiet-moment/calendar blocks, preparation/waiting
-wording, and free-afternoon sampling/choosing wording; some candidate models add
-supported contextual variation, while templates repeat whole blocks. These are
-**likely-reuse assessments across scenarios, not an observed chronological week**.
-The lens remains deterministic for contacts to one body and uses the Moon only
-when the target body's sign is unscreened. A real week of contacts, cache reuse and
-repeated-reader experience remain unverified; varying unsupported natal meaning
-is not a remedy.
+The candidate `saturn-square-moon-warm` template also fails A's **coherence 3**:
+its second paragraph repeats the full-calendar/obligation-in-a-quiet-moment scene
+already developed in paragraph 1. Warmth is largely a “Taking this gently:” prefix;
+voice/repetition weaknesses are recorded separately. The raw warm model passes.
+This is an existing natal-free template issue, not a failing natal-positive template.
 
-## Unresolved findings and remaining qualification
+The summary retains **56 item disagreements** and **10 substantive reviewer
+findings in total**: seven candidate findings across five items, and three baseline
+findings across three separate model items. Baseline-only findings are comparison
+evidence, not candidate failures. No adjudication or reassessment was performed.
+Approximate-birth-time and exact-house timing findings are shared by both reviewers;
+a single adjudicator cannot overturn them. A disagreement or a higher score from
+the other reviewer does not resolve any original finding.
 
-The summary preserves **43 item disagreements**, including **seven disagreements
-on substantive-claim flags**. A flags five substantive items and B flags eight:
-three overlap, leaving ten distinct items with unresolved substantive findings.
-The table retains every affected item and each reviewer's grounding score. A
-reviewer not flagging a passage does not resolve the other reviewer's finding.
+## Repetition and remaining qualification
 
-| Source/model case; item                                     | Grounding A/B; claimant | Exact passage and unresolved source-support issue                                                                                                                             |
-| ----------------------------------------------------------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Baseline `jupiter-trine-sun-technical`; `item-75c165b573`   | 5/3; B                  | “can allow an existing plan to look roomier” adds a causal effect of considering curiosity (`I1`).                                                                            |
-| Baseline `mercury-conjunction-clinical`; `item-6038eb1772`  | 3/5; A                  | “How you articulate what you mean becomes the central focus” adds central priority (`I1`).                                                                                    |
-| Baseline `multiple-cycles`; `item-bc55d7c7e3`               | 5/3; B                  | “giving you space to notice where curiosity fits alongside what's already underway.” adds a definite personal benefit (`I2`).                                                 |
-| Baseline `natal-duty-reflex`; `item-1b44910009`             | 3/5; A                  | “while a small obligation takes up more room than its size suggests.” turns a possibility into an asserted outcome (`I1`).                                                    |
-| Baseline `natal-moon-fallback`; `item-d5098717a0`           | 5/3; B                  | “framing the places where deliberate effort is called for.” drops the conditional established-role scene (`I1`).                                                              |
-| Candidate `mercury-conjunction-clinical`; `item-51003eb7a6` | 5/3; B                  | “sharpening curiosity around new phrasing, questions, or ideas.” makes returned focus cause curiosity (`I1`).                                                                 |
-| Candidate `natal-synthesis-integration`; `item-493bd0abab`  | 5/3; B                  | “That distinction shows where a routine or responsibility needs clearer boundaries.” makes N1's sampling/choosing distinction establish a boundary need (`I1`, `N1`).         |
-| Baseline `synthesis-reversed`; `item-dce1e5e69a`            | 3/3; both               | “allowing enthusiasm and practical initiative to reinforce one another.” makes low friction enable reinforcement, rather than retaining the well-chosen-aim condition (`I1`). |
-| Candidate `synthesis-reversed`; `item-bd72385300`           | 3/3; both               | “An aim that is well chosen lets effort encounter little friction.” makes aim selection enable low friction (`I1`).                                                           |
-| Candidate `synthesis-reinforcement`; `item-f2fd99f6bc`      | 3/3; both               | “where energy flows easily” omits the condition that action lines up with what matters (`I2`; B also cites `S1`).                                                             |
+| Reuse set            | Baseline model A/B | Baseline template A/B | Candidate model A/B | Candidate template A/B |
+| -------------------- | ------------------ | --------------------- | ------------------- | ---------------------- |
+| Moon/fallback        | 2/2                | 1/1                   | 4/3                 | 4/3                    |
+| Own-target/synthesis | 4/4                | 3/3                   | 3/3                 | 3/3                    |
 
-Exact full findings, paragraph numbers, fact IDs, proposed corrections and all
-score disagreements remain in the original reviews and summary. No adjudication
-or fresh reassessment has resolved them; below-threshold scores still fail even
-if a later adjudication resolves a finding. Joint substantive failures require a
-new evidence round. The source already contains some categorical statements;
-reviewers distinguished their supported retention from the added relationships
-above. A calculated future exact date was not classified as behavioral prediction.
+The candidate Moon set shows supported distinctions for preparation, accepting
+support, and one task versus completing the routine; repeated duty/mixed-source
+reply text remains. Own-target/synthesis share a primary project-choice paragraph,
+with the supported synthesis adding a different second thought. These are
+cross-scenario reuse assessments, not an observed chronological week. Identical
+source meanings do not permit invented variation.
 
-Qualification still requires corrected candidate/template prose, a versioned
-frozen source if copy or policy changes, complete fresh paired responses on one
-**observed generating revision**, and renewed blinded review without unresolved
-findings or below-threshold applicable scores. Preserve the three missing responses
-and unknown cost/token usage; do not backfill either from this checkout. Member
-Lovable behavior under the current 60-second deadline, live Swiss/owner paths and chronological-week repetition
-need their own evidence. Human review remains deferred and model diversity remains
-unestablished. Public deployment, content publication, activation and rollback are
-separate requested gates; this documentation update performs none of those actions.
-
-## Integration evidence boundary
-
-Reconciliation retains the original reports, packets and reviews byte for byte.
-Current transit-aware code uses `daily-astro-body-9`, `daily-reference-6`, and
-`synthetic-daily-6` with 38 cases. The preserved fallback and natal candidate
-bundle hashes remain identical to this round. The original body-8 scores and
-unknown generating revisions do not establish qualification of current code;
-a fresh frozen-source evidence round remains necessary. See the
-[integration record](../reconciliation/2026-10-11-main-integration.md).
+1. Remediate the freedom model's added cause, preserve the distinction between this
+   reading's window position and a future exact date, preserve transit-to-natal
+   geometry, and retain subjective “feels like yours” wording. Update the shared
+   brief/guards with a new version if changed; never edit frozen model outputs.
+2. Remediate the warm natal-free fallback's repeated scene and prefatory tone marker.
+   Retain the nine passing natal templates while testing broader catalogue/source
+   combinations; six authored pairings do not qualify all 62 catalogue entries in
+   every primary context.
+3. Qualify complete availability under the chosen provider/deadline and start a new
+   frozen-source paired round. Preserve this round's nine timeouts and unknown failed
+   usage. No automatic retries or backfilled drafts are part of this evidence.
+4. Repeat fresh blinded review for all eligible raw outputs/templates and controls.
+   Every applicable score and substantive finding must clear its gate; the current
+   synthetic pipeline and writing qualification remain failed.
+5. Complete member-serving Lovable, hosted Workflow/admin, live Swiss/owner-source,
+   chronological-week/account/browser, cost and human-review lanes separately.
+   Transit source/proof gaps remain in the
+   [source discovery](../daily-transit-story/2026-10-12-source-discovery.md).
+6. Keep both candidates inactive. Publication, activation, production verification
+   and rollback remain separate requested gates.

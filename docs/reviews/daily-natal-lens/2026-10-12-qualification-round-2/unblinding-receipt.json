@@ -1,0 +1,26 @@
+{
+  "unblindedAtUTC": "2026-10-12T01:43:10.792Z",
+  "assignmentSha256": "b966b2f567d1396f4d76b8661546e6d8f33d8f925dfa2003c05c17609410fa6b",
+  "reviewers": [
+    {
+      "contextId": "natal-round2-a",
+      "promptSha256": "f8e24e7385b3374067f5284cf28a82fcd552b458a85cdd34604d7297842e3981",
+      "packetSha256": "29a0ec69e75fb493f40f0ac0d6196792866adb828430564e65dcc8523bc8182f",
+      "itemSetHash": "5930699aec363099dd8dd80d224eeed2149545023b0372a88e2a5075c4131bef",
+      "dispatchAtUTC": "2026-10-12T01:28:03.595Z",
+      "reviewSha256": "403ffc0425a5bc957de376db586c05d6aa656ce0a09839e32962b26e1cd628ee",
+      "frozenAtUTC": "2026-10-12T01:42:32.905Z"
+    },
+    {
+      "contextId": "natal-round2-b",
+      "promptSha256": "bc8b2809e32429c96be7fa0e77b4b058d1eb339fcae87f081e06279b3642cdb8",
+      "packetSha256": "81854b54006218cd4377b185c7a364fe6cdeeb76896c79aa1a17f5971dd7b411",
+      "itemSetHash": "5930699aec363099dd8dd80d224eeed2149545023b0372a88e2a5075c4131bef",
+      "dispatchAtUTC": "2026-10-12T01:28:03.595Z",
+      "reviewSha256": "0a7afc735bd1f8a38a5880d8158864cbd7cb367a1f9086987d6e47e9b3a57525",
+      "frozenAtUTC": "2026-10-12T01:41:29.492Z"
+    }
+  ],
+  "allReviewsFrozenBeforeUnblinding": true,
+  "scoresAndFindingsEditedByCoordinator": false
+}

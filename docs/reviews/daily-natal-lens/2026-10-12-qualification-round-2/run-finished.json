@@ -1,0 +1,51 @@
+{
+  "finishedAt": "2026-10-12T01:25:23.860Z",
+  "status": "complete",
+  "haltReason": null,
+  "sourceRevision": "8b73148241adbe38d9e1f2e58e34e241314a92dd",
+  "trackedSourceSha256": "b870399d7fa84f95c7f7e9b924c7c239c807a2cb8ca2615615eb555edc078147",
+  "sourceUnchangedThroughout": true,
+  "startedModelCases": 74,
+  "transportAttempts": 74,
+  "completedCases": {
+    "builtin": 38,
+    "natal-candidate": 38
+  },
+  "completedReports": {
+    "builtin": {
+      "path": "builtin-report.json",
+      "sha256": "fc584c35e13afb7fb1313b5c05cca696f75db8236bb3c45598ec7776308357b6"
+    },
+    "natal-candidate": {
+      "path": "natal-candidate-report.json",
+      "sha256": "b51680f991ddf191ff8ed978e0f40891fa9bfe4d3db6cb354eb5f52f398658d9"
+    }
+  },
+  "unsettledCase": null,
+  "usageObservedCases": 65,
+  "cost": "unknown",
+  "retries": 0,
+  "resumeSupported": false,
+  "executionContext": {
+    "kind": "local-direct-production-module-synthetic-evaluation",
+    "projectRoot": "/home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011",
+    "processWorkingDirectory": "/home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011",
+    "nodeVersion": "v24.21.0",
+    "platform": "linux",
+    "architecture": "x64",
+    "moduleLoader": "Vite ssrLoadModule",
+    "viteConfigFile": false,
+    "viteEnvFile": false,
+    "middlewareMode": true,
+    "entrypoint": "src/lib/ai/reading-evaluation.server.ts#runSyntheticEvaluationCase",
+    "provider": "gemini-enterprise",
+    "declaredModel": "gemini-enterprise/gemini-3.8-flash",
+    "hostedWorkflowExecuted": false,
+    "adminAuthenticationVerified": false,
+    "productionVerified": false,
+    "appServerStarted": false,
+    "databaseOrReadingCacheAccessed": false,
+    "contentActivated": false,
+    "cost": "unknown; usage observations do not establish monetary cost"
+  }
+}

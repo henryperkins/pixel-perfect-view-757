@@ -1,0 +1,61 @@
+{
+  "identityVersion": "reading-evaluation-identity-1",
+  "report": {
+    "path": "builtin-report.json",
+    "sha256": "fc584c35e13afb7fb1313b5c05cca696f75db8236bb3c45598ec7776308357b6",
+    "recordedMetadata": {
+      "reportVersion": 1,
+      "storyPlanVersion": "daily-transit-story-1",
+      "anchorVersion": "transit-anchor-1",
+      "solverVersion": "transit-episode-1",
+      "sourceContract": "swiss-transit-episode/1",
+      "transitFixtureHash": "2025ee9077bb7c0053af5c601e076d7d0858754644901f680862090f01d665f7",
+      "storyUse": true,
+      "fixtureVersion": "synthetic-daily-6",
+      "caseSetHash": "5bae1e78705b97024d6ca6c8d7b242e32f316a52c54c7b9e9cb3c5af8154d9e8",
+      "bundleVersion": "builtin-0.5.0",
+      "bundleHash": "f68cc97e749d78d6a2332b9d87fb9fc4ce367d61d437ffa19f8485a2778330c1",
+      "transitCopyHash": "4d6048ea1d303410e2845d9dde9960da95749ff7ab20fd886779a4627abc677d",
+      "planVersion": "daily-synthesis-1",
+      "natalPlanVersion": "daily-natal-lens-2",
+      "reliabilityVersion": "natal-reliability-1",
+      "promptVersion": "daily-astro-body-10",
+      "validatorVersion": "daily-reference-6",
+      "model": "gemini-enterprise/gemini-3.8-flash",
+      "gatewayTimeoutMs": 60000,
+      "source": "live-synthetic",
+      "network": "Live Gemini Enterprise Agent Platform; fixed synthetic facts only",
+      "warning": "Actual model outputs for synthetic plans. This run does not establish production-user acceptance, semantic grounding, or writing quality. Manual scores remain blank.",
+      "bundleSource": "builtin",
+      "partial": false,
+      "expectedCases": 38
+    }
+  },
+  "build": {
+    "sourceRevision": "8b73148241adbe38d9e1f2e58e34e241314a92dd",
+    "trackedSourceSha256": "b870399d7fa84f95c7f7e9b924c7c239c807a2cb8ca2615615eb555edc078147",
+    "runnerSha256": "0249f007b598a1e5bb51d88ca9142c4245ea9475b7b862b9c01b13d51a46df80",
+    "executionContext": {
+      "kind": "local-direct-production-module-synthetic-evaluation",
+      "projectRoot": "/home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011",
+      "processWorkingDirectory": "/home/ubuntu/pixel-perfect-view-757/.worktrees/integrate-planning-natal-transit-20261011",
+      "nodeVersion": "v24.21.0",
+      "platform": "linux",
+      "architecture": "x64",
+      "moduleLoader": "Vite ssrLoadModule",
+      "viteConfigFile": false,
+      "viteEnvFile": false,
+      "middlewareMode": true,
+      "entrypoint": "src/lib/ai/reading-evaluation.server.ts#runSyntheticEvaluationCase",
+      "provider": "gemini-enterprise",
+      "declaredModel": "gemini-enterprise/gemini-3.8-flash",
+      "hostedWorkflowExecuted": false,
+      "adminAuthenticationVerified": false,
+      "productionVerified": false,
+      "appServerStarted": false,
+      "databaseOrReadingCacheAccessed": false,
+      "contentActivated": false,
+      "cost": "unknown; usage observations do not establish monetary cost"
+    }
+  }
+}

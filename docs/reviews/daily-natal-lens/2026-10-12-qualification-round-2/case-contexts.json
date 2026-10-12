@@ -1,0 +1,648 @@
+[
+  {
+    "id": "saturn-square-sun",
+    "config": {
+      "day": "2026-10-11",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "saturn-square-moon-warm",
+    "config": {
+      "day": "2026-10-11",
+      "timeZone": "UTC",
+      "tone": "warm",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "jupiter-trine-sun-technical",
+    "config": {
+      "day": "2026-10-11",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "technical",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "mercury-conjunction-clinical",
+    "config": {
+      "day": "2026-10-11",
+      "timeZone": "UTC",
+      "tone": "clinical",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "venus-opposition-venus",
+    "config": {
+      "day": "2026-10-11",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "unknown-birth-time",
+    "config": {
+      "day": "2026-10-11",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": true,
+      "houses": true
+    }
+  },
+  {
+    "id": "approximate-birth-time",
+    "config": {
+      "day": "2026-10-11",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": true
+    }
+  },
+  {
+    "id": "moon-dst-boundary",
+    "config": {
+      "day": "2026-11-01",
+      "timeZone": "America/New_York",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "multiple-cycles",
+    "config": {
+      "day": "2026-10-11",
+      "timeZone": "UTC",
+      "tone": "warm",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "quiet-threshold",
+    "config": {
+      "day": "2026-10-11",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "synthesis-tension",
+    "config": {
+      "day": "2026-10-11",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "synthesis-reinforcement",
+    "config": {
+      "day": "2026-10-11",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "synthesis-independent",
+    "config": {
+      "day": "2026-10-11",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "synthesis-reversed",
+    "config": {
+      "day": "2026-10-11",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "synthesis-suppressed-support",
+    "config": {
+      "day": "2026-10-11",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": true,
+      "houses": true
+    }
+  },
+  {
+    "id": "synthesis-unmatched",
+    "config": {
+      "day": "2026-10-11",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "natal-duty-reflex",
+    "config": {
+      "day": "2026-10-11",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "natal-freedom-reflex",
+    "config": {
+      "day": "2026-10-11",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "natal-service-aspect",
+    "config": {
+      "day": "2026-10-11",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "natal-exact-house",
+    "config": {
+      "day": "2026-10-11",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "natal-own-target",
+    "config": {
+      "day": "2026-10-11",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "natal-moon-fallback",
+    "config": {
+      "day": "2026-10-11",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "natal-sign-boundary",
+    "config": {
+      "day": "2026-10-11",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "natal-unknown-time",
+    "config": {
+      "day": "2026-10-11",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": true,
+      "houses": true
+    }
+  },
+  {
+    "id": "natal-mixed-source",
+    "config": {
+      "day": "2026-10-11",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "natal-degraded-positions",
+    "config": {
+      "day": "2026-10-11",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "natal-legacy-snapshot",
+    "config": {
+      "day": "2026-10-11",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "natal-synthesis-integration",
+    "config": {
+      "day": "2026-10-11",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "arc-single-pass",
+    "config": {
+      "day": "2026-09-08",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "arc-opening-three",
+    "config": {
+      "day": "2026-09-08",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "arc-return-three",
+    "config": {
+      "day": "2026-12-17",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "arc-closing-three",
+    "config": {
+      "day": "2027-03-27",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "arc-return-five",
+    "config": {
+      "day": "2027-03-27",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "arc-between-passes",
+    "config": {
+      "day": "2026-10-28",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "arc-truncated-scan",
+    "config": {
+      "day": "2026-12-17",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "arc-station-tangent",
+    "config": {
+      "day": "2026-12-17",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "arc-birth-window-disagreement",
+    "config": {
+      "day": "2027-03-27",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  },
+  {
+    "id": "arc-synthesis-natal-integration",
+    "config": {
+      "day": "2026-12-17",
+      "timeZone": "UTC",
+      "tone": "plain",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "suppression": {
+      "angles": false,
+      "houses": false
+    }
+  }
+]

@@ -1,0 +1,798 @@
+{
+  "kind": "independent-frozen-review-integrity-audit",
+  "checkedAtUTC": "2026-10-12T01:48:38.533Z",
+  "reviewIntegrityPassed": true,
+  "qualificationSummarySha256": "7de4af6d2c59b62bb3d7c7d8a09f7a55e294cfb4642e53db2eb0c854f4b6bef1",
+  "priorProvenanceAuditSha256": "a933f6be7efbb1c563e18dfceec38936b4c4c21e0671db44963dcb01b2e264d6",
+  "assignmentSha256": "b966b2f567d1396f4d76b8661546e6d8f33d8f925dfa2003c05c17609410fa6b",
+  "itemSetHash": "5930699aec363099dd8dd80d224eeed2149545023b0372a88e2a5075c4131bef",
+  "reviewerProofs": [
+    {
+      "contextId": "natal-round2-a",
+      "reviewSha256": "403ffc0425a5bc957de376db586c05d6aa656ce0a09839e32962b26e1cd628ee",
+      "promptSha256": "f8e24e7385b3374067f5284cf28a82fcd552b458a85cdd34604d7297842e3981",
+      "packetSha256": "29a0ec69e75fb493f40f0ac0d6196792866adb828430564e65dcc8523bc8182f",
+      "dispatchAtUTC": "2026-10-12T01:28:03.595Z",
+      "frozenAtUTC": "2026-10-12T01:42:32.905Z",
+      "uniqueItems": 99,
+      "scoredItems": 98,
+      "quietSafetyItems": 1,
+      "contrastSets": 4,
+      "repetitionSets": 8,
+      "model": "unknown",
+      "configuration": "unknown",
+      "declaredInputs": [
+        "packet"
+      ]
+    },
+    {
+      "contextId": "natal-round2-b",
+      "reviewSha256": "0a7afc735bd1f8a38a5880d8158864cbd7cb367a1f9086987d6e47e9b3a57525",
+      "promptSha256": "bc8b2809e32429c96be7fa0e77b4b058d1eb339fcae87f081e06279b3642cdb8",
+      "packetSha256": "81854b54006218cd4377b185c7a364fe6cdeeb76896c79aa1a17f5971dd7b411",
+      "dispatchAtUTC": "2026-10-12T01:28:03.595Z",
+      "frozenAtUTC": "2026-10-12T01:41:29.492Z",
+      "uniqueItems": 99,
+      "scoredItems": 98,
+      "quietSafetyItems": 1,
+      "contrastSets": 4,
+      "repetitionSets": 8,
+      "model": "unknown",
+      "configuration": "unknown",
+      "declaredInputs": [
+        "packet"
+      ]
+    }
+  ],
+  "unblindedAtUTC": "2026-10-12T01:43:10.792Z",
+  "allReviewsFrozenBeforeUnblinding": true,
+  "allPacketPromptReviewReceiptHashesMatch": true,
+  "allItemCoverageScoresApplicabilityVerdictsAndExactQuotesMatch": true,
+  "exactFindingQuotesChecked": 202,
+  "exactSetQuotesChecked": 67,
+  "allContrastAndRepetitionSetsCovered": true,
+  "repetitionOccurrenceMultiplicityPreserved": true,
+  "uniqueContexts": 99,
+  "scoredContexts": 98,
+  "quietSafetyContexts": 1,
+  "occurrenceMappings": {
+    "candidate": 65,
+    "template": 76,
+    "displayed": 76
+  },
+  "modelAndTemplateOccurrences": 141,
+  "summaryDerivedFieldsExactlyReproduced": true,
+  "semanticGatePassed": false,
+  "pipelineGatePassed": false,
+  "humanReviewCompleted": false,
+  "modelDiversity": "unknown",
+  "counts": {
+    "allCandidateCases": {
+      "cases": 38,
+      "modelPassed": 26,
+      "modelUnavailableOrUncovered": 6,
+      "templatePassed": 37,
+      "fullyPassing": 25
+    },
+    "nonQuietCandidateRun": {
+      "cases": 37,
+      "modelPassed": 26,
+      "modelUnavailableOrUncovered": 6,
+      "templatePassed": 36,
+      "fullyPassing": 25
+    },
+    "positive": {
+      "cases": 9,
+      "modelPassed": 6,
+      "modelUnavailableOrUncovered": 1,
+      "templatePassed": 9,
+      "fullyPassing": 6
+    },
+    "negative": {
+      "cases": 4,
+      "modelPassed": 2,
+      "modelUnavailableOrUncovered": 2,
+      "templatePassed": 4,
+      "fullyPassing": 2
+    },
+    "quietSafetyChecks": [
+      {
+        "caseId": "quiet-threshold",
+        "template": {
+          "itemId": "item-035",
+          "available": true,
+          "passed": true,
+          "suppliesN1": false,
+          "suppliesS1": false,
+          "automatedOutcome": "skipped",
+          "automatedCode": "no_cycle",
+          "rawCapture": null,
+          "uncovered": [],
+          "assessments": [
+            {
+              "contextId": "natal-round2-a",
+              "assessment": {
+                "itemId": "item-035",
+                "scores": {
+                  "specificity": {
+                    "score": null,
+                    "reason": "Quiet item: no model writing to score."
+                  },
+                  "grounding": {
+                    "score": null,
+                    "reason": "Quiet item: no model writing to score."
+                  },
+                  "coherence": {
+                    "score": null,
+                    "reason": "Quiet item: no model writing to score."
+                  },
+                  "voice": {
+                    "score": null,
+                    "reason": "Quiet item: no model writing to score."
+                  },
+                  "repetition": {
+                    "score": null,
+                    "reason": "Quiet item: no model writing to score."
+                  },
+                  "synthesisCoherence": {
+                    "score": null,
+                    "reason": "Quiet item: no model writing to score."
+                  },
+                  "lensIntegration": {
+                    "score": null,
+                    "reason": "Quiet item: no model writing to score."
+                  }
+                },
+                "quietCheck": {
+                  "safe": true,
+                  "reason": "The message only reports that no chart signal is singled out; it invents no personal state, event, instruction or named contact."
+                },
+                "findings": [],
+                "verdict": "pass"
+              }
+            },
+            {
+              "contextId": "natal-round2-b",
+              "assessment": {
+                "itemId": "item-035",
+                "scores": {
+                  "specificity": {
+                    "score": null,
+                    "reason": "Quiet item has no model writing; this dimension is inapplicable."
+                  },
+                  "grounding": {
+                    "score": null,
+                    "reason": "Quiet item has no model writing; this dimension is inapplicable."
+                  },
+                  "coherence": {
+                    "score": null,
+                    "reason": "Quiet item has no model writing; this dimension is inapplicable."
+                  },
+                  "voice": {
+                    "score": null,
+                    "reason": "Quiet item has no model writing; this dimension is inapplicable."
+                  },
+                  "repetition": {
+                    "score": null,
+                    "reason": "Quiet item has no model writing; this dimension is inapplicable."
+                  },
+                  "synthesisCoherence": {
+                    "score": null,
+                    "reason": "Quiet item has no model writing; this dimension is inapplicable."
+                  },
+                  "lensIntegration": {
+                    "score": null,
+                    "reason": "Quiet item has no model writing; this dimension is inapplicable."
+                  }
+                },
+                "quietCheck": {
+                  "safe": true,
+                  "reason": "The supplied quiet status is preserved: no chart contact is singled out, no personal state or instruction is invented, and the message stays limited to this reading."
+                },
+                "findings": [],
+                "verdict": "pass"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "substantiveFindings": {
+    "totalReviewerFindings": 10,
+    "candidateReviewerFindings": 7,
+    "candidateUniqueItems": 5,
+    "candidateModelCases": [
+      "approximate-birth-time",
+      "mercury-conjunction-clinical",
+      "natal-exact-house",
+      "natal-freedom-reflex",
+      "unknown-birth-time"
+    ],
+    "baselineReviewerFindings": 3,
+    "baselineUniqueItems": 3,
+    "baselineModelCases": [
+      "arc-between-passes",
+      "mercury-conjunction-clinical",
+      "natal-own-target"
+    ],
+    "templateSubstantiveFindings": 0,
+    "sharedCandidateFindingItems": [
+      "item-081",
+      "item-082"
+    ]
+  },
+  "scoreTupleOrder": [
+    "specificity",
+    "grounding",
+    "voice",
+    "repetition",
+    "coherence",
+    "lensIntegration",
+    "synthesisCoherence"
+  ],
+  "positiveScoreTuples": [
+    {
+      "caseId": "natal-duty-reflex",
+      "modelPassed": true,
+      "templatePassed": true,
+      "fullyPassed": true,
+      "model": [
+        {
+          "contextId": "natal-round2-a",
+          "tuple": [
+            5,
+            5,
+            4,
+            4,
+            5,
+            5,
+            null
+          ]
+        },
+        {
+          "contextId": "natal-round2-b",
+          "tuple": [
+            5,
+            5,
+            4,
+            3,
+            4,
+            5,
+            null
+          ]
+        }
+      ],
+      "template": [
+        {
+          "contextId": "natal-round2-a",
+          "tuple": [
+            5,
+            5,
+            4,
+            3,
+            5,
+            5,
+            null
+          ]
+        },
+        {
+          "contextId": "natal-round2-b",
+          "tuple": [
+            5,
+            5,
+            4,
+            3,
+            5,
+            5,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "natal-freedom-reflex",
+      "modelPassed": false,
+      "templatePassed": true,
+      "fullyPassed": false,
+      "model": [
+        {
+          "contextId": "natal-round2-a",
+          "tuple": [
+            5,
+            5,
+            4,
+            4,
+            5,
+            5,
+            null
+          ]
+        },
+        {
+          "contextId": "natal-round2-b",
+          "tuple": [
+            5,
+            3,
+            4,
+            4,
+            4,
+            3,
+            null
+          ]
+        }
+      ],
+      "template": [
+        {
+          "contextId": "natal-round2-a",
+          "tuple": [
+            5,
+            5,
+            4,
+            4,
+            5,
+            5,
+            null
+          ]
+        },
+        {
+          "contextId": "natal-round2-b",
+          "tuple": [
+            5,
+            5,
+            4,
+            4,
+            5,
+            5,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "natal-service-aspect",
+      "modelPassed": true,
+      "templatePassed": true,
+      "fullyPassed": true,
+      "model": [
+        {
+          "contextId": "natal-round2-a",
+          "tuple": [
+            5,
+            5,
+            4,
+            4,
+            5,
+            5,
+            null
+          ]
+        },
+        {
+          "contextId": "natal-round2-b",
+          "tuple": [
+            5,
+            5,
+            4,
+            3,
+            4,
+            4,
+            null
+          ]
+        }
+      ],
+      "template": [
+        {
+          "contextId": "natal-round2-a",
+          "tuple": [
+            5,
+            5,
+            4,
+            4,
+            5,
+            5,
+            null
+          ]
+        },
+        {
+          "contextId": "natal-round2-b",
+          "tuple": [
+            5,
+            5,
+            4,
+            4,
+            5,
+            5,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "natal-exact-house",
+      "modelPassed": false,
+      "templatePassed": true,
+      "fullyPassed": false,
+      "model": [
+        {
+          "contextId": "natal-round2-a",
+          "tuple": [
+            5,
+            3,
+            4,
+            4,
+            5,
+            5,
+            null
+          ]
+        },
+        {
+          "contextId": "natal-round2-b",
+          "tuple": [
+            5,
+            3,
+            4,
+            3,
+            4,
+            4,
+            null
+          ]
+        }
+      ],
+      "template": [
+        {
+          "contextId": "natal-round2-a",
+          "tuple": [
+            5,
+            5,
+            4,
+            4,
+            5,
+            5,
+            null
+          ]
+        },
+        {
+          "contextId": "natal-round2-b",
+          "tuple": [
+            5,
+            5,
+            4,
+            4,
+            5,
+            5,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "natal-own-target",
+      "modelPassed": true,
+      "templatePassed": true,
+      "fullyPassed": true,
+      "model": [
+        {
+          "contextId": "natal-round2-a",
+          "tuple": [
+            5,
+            5,
+            4,
+            3,
+            5,
+            5,
+            null
+          ]
+        },
+        {
+          "contextId": "natal-round2-b",
+          "tuple": [
+            5,
+            5,
+            4,
+            3,
+            4,
+            4,
+            null
+          ]
+        }
+      ],
+      "template": [
+        {
+          "contextId": "natal-round2-a",
+          "tuple": [
+            5,
+            5,
+            4,
+            3,
+            5,
+            5,
+            null
+          ]
+        },
+        {
+          "contextId": "natal-round2-b",
+          "tuple": [
+            5,
+            5,
+            4,
+            3,
+            5,
+            5,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "natal-moon-fallback",
+      "modelPassed": false,
+      "templatePassed": true,
+      "fullyPassed": false,
+      "model": [
+        {
+          "contextId": "natal-round2-a",
+          "tuple": null
+        },
+        {
+          "contextId": "natal-round2-b",
+          "tuple": null
+        }
+      ],
+      "template": [
+        {
+          "contextId": "natal-round2-a",
+          "tuple": [
+            5,
+            5,
+            4,
+            4,
+            5,
+            5,
+            null
+          ]
+        },
+        {
+          "contextId": "natal-round2-b",
+          "tuple": [
+            5,
+            5,
+            4,
+            4,
+            5,
+            5,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "natal-mixed-source",
+      "modelPassed": true,
+      "templatePassed": true,
+      "fullyPassed": true,
+      "model": [
+        {
+          "contextId": "natal-round2-a",
+          "tuple": [
+            5,
+            5,
+            4,
+            4,
+            5,
+            5,
+            null
+          ]
+        },
+        {
+          "contextId": "natal-round2-b",
+          "tuple": [
+            5,
+            5,
+            4,
+            4,
+            5,
+            5,
+            null
+          ]
+        }
+      ],
+      "template": [
+        {
+          "contextId": "natal-round2-a",
+          "tuple": [
+            5,
+            5,
+            4,
+            3,
+            5,
+            5,
+            null
+          ]
+        },
+        {
+          "contextId": "natal-round2-b",
+          "tuple": [
+            5,
+            5,
+            4,
+            3,
+            5,
+            5,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "natal-synthesis-integration",
+      "modelPassed": true,
+      "templatePassed": true,
+      "fullyPassed": true,
+      "model": [
+        {
+          "contextId": "natal-round2-a",
+          "tuple": [
+            5,
+            5,
+            3,
+            4,
+            4,
+            4,
+            5
+          ]
+        },
+        {
+          "contextId": "natal-round2-b",
+          "tuple": [
+            5,
+            5,
+            4,
+            3,
+            4,
+            4,
+            4
+          ]
+        }
+      ],
+      "template": [
+        {
+          "contextId": "natal-round2-a",
+          "tuple": [
+            5,
+            5,
+            4,
+            3,
+            5,
+            5,
+            4
+          ]
+        },
+        {
+          "contextId": "natal-round2-b",
+          "tuple": [
+            5,
+            5,
+            4,
+            3,
+            5,
+            5,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "caseId": "arc-synthesis-natal-integration",
+      "modelPassed": true,
+      "templatePassed": true,
+      "fullyPassed": true,
+      "model": [
+        {
+          "contextId": "natal-round2-a",
+          "tuple": [
+            5,
+            5,
+            4,
+            4,
+            5,
+            5,
+            5
+          ]
+        },
+        {
+          "contextId": "natal-round2-b",
+          "tuple": [
+            5,
+            5,
+            4,
+            3,
+            4,
+            4,
+            4
+          ]
+        }
+      ],
+      "template": [
+        {
+          "contextId": "natal-round2-a",
+          "tuple": [
+            5,
+            5,
+            4,
+            3,
+            5,
+            5,
+            4
+          ]
+        },
+        {
+          "contextId": "natal-round2-b",
+          "tuple": [
+            5,
+            5,
+            4,
+            3,
+            5,
+            5,
+            4
+          ]
+        }
+      ]
+    }
+  ],
+  "candidateOnlyRemainingIssues": [
+    {
+      "cases": [
+        "approximate-birth-time",
+        "natal-exact-house"
+      ],
+      "reviewers": "A and B",
+      "description": "Shared findings transfer the middle-window property of this reading to its future exact date; both retain grounding 3."
+    },
+    {
+      "cases": [
+        "natal-freedom-reflex"
+      ],
+      "reviewers": "B",
+      "description": "Adds a causal link from mentally tracking a task to an obligation feeling narrow; B grounding/lens integration remain 3."
+    },
+    {
+      "cases": [
+        "unknown-birth-time"
+      ],
+      "reviewers": "A",
+      "description": "Transit-to-natal geometry is described as a Saturn/Sun contact in the sky; A flags a factual mismatch."
+    },
+    {
+      "cases": [
+        "mercury-conjunction-clinical"
+      ],
+      "reviewers": "B",
+      "description": "Changes the part of a task that feels like yours into asserted actual task ownership."
+    },
+    {
+      "cases": [
+        "saturn-square-moon-warm"
+      ],
+      "reviewers": "A",
+      "description": "Required non-positive template has coherence 3 from repeated scene development; B coherence 4 does not override it."
+    },
+    {
+      "cases": [
+        "saturn-square-sun",
+        "jupiter-trine-sun-technical",
+        "natal-moon-fallback",
+        "natal-unknown-time",
+        "natal-degraded-positions",
+        "arc-truncated-scan"
+      ],
+      "description": "Six candidate model responses timed out; they have no prose score and cannot be rescued by safe templates."
+    }
+  ],
+  "runtimeEnvironmentClarification": "Vite configFile/envFile were disabled. Root supplied the provider credential through normal Node --env-file launch. This audit inspected no .env contents or credential values and makes no global no-env-file claim.",
+  "limitations": [
+    "Bookkeeping checks validate frozen records and applicability, not the truth of editorial judgments.",
+    "No rescoring, adjudication, finding resolution or model/provider calls occurred.",
+    "Candidate and baseline findings retain separate mappings; baseline grades do not gate the corrected run. Shared findings cannot be overruled by one adjudicator.",
+    "Both semantic and pipeline gates remain failed. Positive template passes do not establish complete suite qualification."
+  ]
+}

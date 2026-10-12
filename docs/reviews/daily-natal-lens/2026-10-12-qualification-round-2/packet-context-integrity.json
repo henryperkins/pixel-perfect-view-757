@@ -1,0 +1,8 @@
+{
+  "kind": "blinded-packet-context-integrity",
+  "uniqueContexts": 99,
+  "suppressionConsistentWithinEveryDeduplicatedContext": true,
+  "suppressionContextMismatches": [],
+  "sourceContext": "fixed fixture uncertainty flags; full supplied U/E statements retained in packets",
+  "maskedCitations": true
+}
