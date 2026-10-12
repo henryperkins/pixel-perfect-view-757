@@ -1,0 +1,22 @@
+{
+  "unblindedAtUTC": "2026-10-12T04:26:29.938Z",
+  "assignmentSha256": "c4faa1d12e8587a7ff1d4e3c92f1597bcfc9ee4a75f39301fe1f67f63a6dd51f",
+  "collectionManifestSha256": "590d4f439c429991a56250ea1c51c5c084bcec15597bcb29f41448987ba8c856",
+  "reviewers": [
+    {
+      "contextId": "natal-subset-primary",
+      "promptSha256": "45f6670fcb461ed025269b416fe833eb5c25f8bb2d162b6fdd8f33eb76563538",
+      "packetSha256": "98d230ae5ac4772d242571d73f4652809c9c8dd3418930d8d78f1897c247a641",
+      "itemSetHash": "020f6fae6103af6c7a51713af2b43788e3e4470a48a1ab6bb84150407b91e14b",
+      "dispatchAtUTC": "2026-10-12T04:10:14.446Z",
+      "reviewSha256": "6953fed92ddd57207a134b484c8a34ace0226ed2aecdd9d7d9fcc91c983fe147",
+      "frozenAtUTC": "2026-10-12T04:26:19.551Z",
+      "frozenBeforeAssignmentRevealed": true,
+      "reviewEditedByCoordinator": false
+    }
+  ],
+  "reviewFrozenBeforeUnblinding": true,
+  "scoresAndFindingsEditedByCoordinator": false,
+  "resultFile": "targeted-review-result.json",
+  "resultSha256": "9c9170342234b0360f85f3bed5df8a064372edb5ba1c8f0aaf6d56ef9521e9d8"
+}

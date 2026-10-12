@@ -1,0 +1,504 @@
+{
+  "protocolVersion": "daily-writing-ai-review-1",
+  "kind": "review",
+  "packetSha256": "98d230ae5ac4772d242571d73f4652809c9c8dd3418930d8d78f1897c247a641",
+  "itemSetHash": "020f6fae6103af6c7a51713af2b43788e3e4470a48a1ab6bb84150407b91e14b",
+  "reviewer": {
+    "contextId": "natal-subset-primary",
+    "model": "claude-opus-5-5",
+    "configuration": "unknown",
+    "promptSha256": "45f6670fcb461ed025269b416fe833eb5c25f8bb2d162b6fdd8f33eb76563538"
+  },
+  "reviewedAt": "2026-10-12T04:10:14.446Z",
+  "blindness": {
+    "declaration": "I read only the assigned packet and wrote only this review, while the session environment also showed project instruction notes (AGENTS.md), a user auto-memory index, a git status listing the branch, recent commit subjects and the names of untracked plan and spec files (not opened), and tool and skill listings, none of which identified the run, case, version or origin of any item.",
+    "inputs": ["packet"],
+    "sawOriginLabels": false,
+    "sawPriorVerdicts": false,
+    "sawOtherReviews": false,
+    "sawImplementationContext": false
+  },
+  "reassessmentOf": null,
+  "items": [
+    {
+      "itemId": "item-13",
+      "scores": {
+        "specificity": { "score": 4, "reason": "Applies N1's distinction between the commitment itself and how much choice it leaves in carrying it out to the task held in I1's quiet-moment scene, a useful source-supported practical distinction. Not 5 because p1's 'as in a calendar left too full' blurs which scene illustrates the small obligation." },
+        "grounding": { "score": 4, "reason": "Every substantive claim traces to C1, I1 or N1, with 'might', 'can' and 'may' kept and roles intact (transiting Saturn, natal Moon). Recasting I1's calendar scene with 'as in' slightly reframes supported material (minor finding) but is not an unsupported claim. No house, angle or other claim limited by U1 appears." },
+        "coherence": { "score": 4, "reason": "Clear progression from scene and meaning (p1) to the lens applied to the same task (p2). Only the 'as in' link and the stiff p2 opener need minor edits." },
+        "voice": { "score": 3, "reason": "Plain and clear, but the p2 opener 'For the task being considered during that quiet moment' is stiff, and p1 is mostly source sentences stitched together." },
+        "repetition": { "score": 4, "reason": "Reorders and trims I1, putting the scene first. Its N1 wording matches item-04, which has the same lens, but this item applies it through its own bridge, and no paragraph repeats another item's paragraph." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied." },
+        "lensIntegration": { "score": 4, "reason": "N1 is applied in p2 to the task from p1's quiet moment ('that ordinary obligation'). It stays within the primary scene and remains conditional; it is not a separate personality block. Not 5 because the link between 'room to move' and I1's 'uninterrupted space you would prefer' is left implicit." }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "nsp-13-1",
+          "paragraph": 1,
+          "passage": "A small obligation can take up more room than its size suggests, as in a calendar left too full.",
+          "supportingFactIds": ["I1", "D1"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "I1 offers the over-full calendar as a separate possible everyday scene. 'as in' turns a crowded calendar into an example of one small obligation taking up more room than its size, which blurs the image. Both parts are supported, so this is a clarity edit, not a grounding failure.",
+          "proposedCorrection": "A small obligation can take up more room than its size suggests; the everyday scene might also be a calendar left too full."
+        },
+        {
+          "findingId": "nsp-13-2",
+          "paragraph": 2,
+          "passage": "For the task being considered during that quiet moment, wanting room to move can be part of a response to pressure.",
+          "supportingFactIds": ["N1", "D1"],
+          "missingFactIds": [],
+          "category": "voice",
+          "severity": "minor",
+          "explanation": "The prepositional opener is stiff, and 'being considered' does not match p1's 'keeping track of the next task'. D1's obligation that follows you into a quiet moment gives a smoother bridge that the facts support.",
+          "proposedCorrection": "If the next task follows you into that quiet moment, wanting room to move can be part of a response to pressure."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-09",
+      "scores": {
+        "specificity": { "score": 4, "reason": "Gives N1's practical distinction (sorting what is manageable before sharing; useful preparation versus waiting to have everything settled) plus the calculated orb, phase and timing, all useful and source-supported. Not higher because the distinction is attached to a reply that the item never connects to its own scene." },
+        "grounding": { "score": 4, "reason": "All claims trace to I1, N1, C1, P1 and T1. I1's 'might be' scene becomes 'can be spent', which is still a possibility. The 0.42-degree orb, the approaching phase, the reading's place in the middle of the window, 'exact in 3 days' and 2026-10-14 match C1 and T1 and stay distinct from one another. U1 limits nothing that appears." },
+        "coherence": { "score": 4, "reason": "Scene, meaning, lens and timing come in a clear order. The jump to 'For an unfinished reply,' is abrupt, and p2 ends two consecutive sentences on 'calculated window'; both need only minor edits." },
+        "voice": { "score": 3, "reason": "Plain and clear, but p2 is a run of four data sentences, and p1 uses 'unfinished reply' in two consecutive sentences." },
+        "repetition": { "score": 3, "reason": "p2's timing sentences closely match item-10 p2 and item-12 p2, and 'calculated window' repeats in consecutive sentences." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied." },
+        "lensIntegration": { "score": 3, "reason": "N1 sits in p1, but it is attached to a new object ('For an unfinished reply,') that is never tied to p1's quiet moment, its next task, or the tension between something you feel responsible for and uninterrupted space. The lens is cited next to the primary scene and only weakly applied within it, so it falls below the threshold of 4." }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "nsp-09-1",
+          "paragraph": 1,
+          "passage": "For an unfinished reply, a self-contained response to pressure can start with sorting what is manageable before sharing it.",
+          "supportingFactIds": ["N1", "I1"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "The unfinished reply appears with no link to the quiet moment or the next task, so N1 reads as a separate example rather than a lens on the primary scene. This is why lensIntegration is scored 3. The wording itself keeps N1's 'can'.",
+          "proposedCorrection": "If the next task is an unfinished reply, a self-contained response to that pressure can start with sorting what is manageable before sharing it."
+        },
+        {
+          "findingId": "nsp-09-2",
+          "paragraph": 2,
+          "passage": "The contact is in its approaching phase within the calculated window. This reading falls in the middle part of the calculated window.",
+          "supportingFactIds": ["P1", "T1"],
+          "missingFactIds": [],
+          "category": "repetition",
+          "severity": "minor",
+          "explanation": "Two consecutive sentences end on 'calculated window'; one sentence can carry both supplied facts.",
+          "proposedCorrection": "The contact is in its approaching phase, and this reading falls in the middle part of the calculated window."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-04",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Turns I1's small obligation, with the over-full calendar as 'one possible setting', into N1's concrete distinction between the commitment itself and how much choice it leaves in carrying it out, and names wanting room to move as part of the response. These are concrete distinctions, all from the published copy." },
+        "grounding": { "score": 4, "reason": "Every claim traces to I1 or N1, and 'can', 'may' and 'one possible setting' keep the possibility. 'the response to that pressure' slightly personalises N1's 'a response to pressure' but stays inside 'can be part of'. p2 keeps I1's 'Saturn's hard contact with the Moon' exactly, and nothing touches U1." },
+        "coherence": { "score": 4, "reason": "p1 moves cleanly from obligation to lens. The motive sentence comes after the distinction it motivates, and p2's contact sentence is not tied back to 'room to move'; minor editing only." },
+        "voice": { "score": 4, "reason": "Natural plain prose; 'one possible setting' is an apt paraphrase that keeps the possibility." },
+        "repetition": { "score": 3, "reason": "p2 is the verbatim I1 sentence that also stands alone as the closing paragraph of item-07 and item-03. The reuse is supported but stock." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied." },
+        "lensIntegration": { "score": 5, "reason": "N1 is applied directly to I1's small obligation in p1 ('If that obligation feels narrow'), remains conditional and adds no origin or temperament. It works as a distinct, supported practical lens inside the primary meaning." }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-02",
+      "scores": {
+        "specificity": { "score": 4, "reason": "Applies N1's distinction between preparation and waiting to the established role's demands, and D1 adds concrete identity scenes (an interest you seldom mention, a responsibility that occupies more of your week than your title suggests). The practical distinction is useful and source-supported." },
+        "grounding": { "score": 3, "reason": "N1's 'can offer' becomes 'offers', a substantive strengthening of modality. The opening sentence also puts two separate I1 clauses under a new 'when' condition (minor finding). Everything else traces to I1, N1 and D1, with transiting Saturn and the natal Sun in their supplied roles." },
+        "coherence": { "score": 3, "reason": "The parts are stitched together rather than developed. The opening recombines I1, N1's two sentences appear in reverse order, the contact sentence comes after the lens, and the D1 paragraph is a detached block that never connects to the role or the reply." },
+        "voice": { "score": 3, "reason": "Clear sentence by sentence, but it reads as assembled source copy, and the closing D1 block shifts register." },
+        "repetition": { "score": 3, "reason": "p2 is D1 verbatim, the same paragraph as item-06 p2 and item-12 p3." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied." },
+        "lensIntegration": { "score": 4, "reason": "N1 is applied within p1 to the role's demanding responsibility ('When that responsibility feels demanding') rather than placed in a separate personality block. The strengthened modality is scored under grounding." }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "nsp-02-1",
+          "paragraph": 1,
+          "passage": "an unfinished reply offers a place to notice the difference between useful preparation and waiting to have everything settled",
+          "supportingFactIds": [],
+          "missingFactIds": ["N1"],
+          "category": "strengthened_modality",
+          "severity": "substantive",
+          "explanation": "N1 says only that an unfinished reply 'can offer' a place to notice this difference. The paragraph says it 'offers' one whenever the responsibility feels demanding, which turns a conditional lens into a categorical claim. No supplied statement supports the stronger form.",
+          "proposedCorrection": "When that responsibility feels demanding, an unfinished reply can offer a place to notice the difference between useful preparation and waiting to have everything settled."
+        },
+        {
+          "findingId": "nsp-02-2",
+          "paragraph": 1,
+          "passage": "Expectations can outpace available capacity when the obligations of an established role require more deliberate effort than usual.",
+          "supportingFactIds": ["I1"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "In I1, the condition 'when its obligations require more deliberate effort than usual' belongs to a role feeling demanding, and I1 separately says the square highlights where expectations outpace available capacity. This sentence moves the condition onto the second clause. Both clauses belong to the same published interpretation and keep 'can', so I resolve this as a clarity issue rather than an unsupported claim.",
+          "proposedCorrection": "An established role can feel demanding when its obligations require more deliberate effort than usual, and transiting Saturn square the natal Sun highlights where expectations outpace available capacity."
+        },
+        {
+          "findingId": "nsp-02-3",
+          "paragraph": 2,
+          "passage": "A title rarely describes everything that holds your attention.",
+          "supportingFactIds": ["D1"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "The D1 paragraph is appended with no link to the role or the reply in p1, so the reading ends on a separate thought.",
+          "proposedCorrection": "Place D1 directly after the role sentence as a second identity scene: 'A title rarely describes everything that holds your attention; a responsibility that occupies more of your week than your title suggests can make that gap concrete.'"
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-15",
+      "scores": {
+        "specificity": { "score": 4, "reason": "Gives source-supported practical distinctions: N1's 'sampling a few and choosing one to pursue may be different stages', and S1's point that more scope can increase the structure needed, with a task growing beyond its agreed limits. No contact is named, but planet names alone would not raise specificity." },
+        "grounding": { "score": 4, "reason": "Each sentence is I1, N1 or S1 wording with the possibility kept ('can', 'may'). The only addition is the conditional bridge 'within that role', which applies N1 (dependent on C1 and I1) rather than adding a fact. No joint claim is made beyond S1." },
+        "coherence": { "score": 3, "reason": "Understandable, but the parts sit side by side without a visible thread. 'projects within that role' competing for 'the same free afternoon' pulls against the role's demanding obligations, and p2's S1 arrives with no second contact on the page, so it reads as an unrelated closing thought." },
+        "voice": { "score": 4, "reason": "Natural, even plain prose throughout." },
+        "repetition": { "score": 3, "reason": "p1's opening sentence, the N1 sentences and all of p2 are shared nearly word for word with item-14." },
+        "synthesisCoherence": { "score": 2, "reason": "Only the Saturn-Sun parent appears (I1's first sentence). The Jupiter-Mars parent (C2, I2) is absent and neither contact is named, so S1 stands as a bare verbatim block rather than a relationship developed from both sources. That falls below the rubric's level 3 ('both sources appear')." },
+        "lensIntegration": { "score": 4, "reason": "N1 is applied in p1 within the established role ('within that role'), consistent with its dependence on C1 and I1, and stays conditional. The free-afternoon setting fits awkwardly (scored under coherence), but this is an application, not a separate personality block." }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "nsp-15-1",
+          "paragraph": 2,
+          "passage": "Giving a plan more scope can increase the structure needed to carry it.",
+          "supportingFactIds": ["S1", "C1", "I1"],
+          "missingFactIds": ["C2", "I2"],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "S1 is published as a tension between both parents, but the reading never presents the transiting Jupiter trine natal Mars contact or I2's meaning (effort meeting little friction, taking on a larger piece of work) and never names either contact. The synthesis therefore lacks one of its sources on the page, which is why synthesisCoherence is 2.",
+          "proposedCorrection": "Introduce I2 with its contact before S1, for example: 'Jupiter's trine to natal Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work. Giving a plan more scope can increase the structure needed to carry it.'"
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-14",
+      "scores": {
+        "specificity": { "score": 4, "reason": "Names both contacts and carries N1's distinction between sampling and choosing, S1's tension between scope and structure, and I2's low-friction effort. These distinctions are useful and source-supported but are mostly stated in source wording rather than made concrete." },
+        "grounding": { "score": 4, "reason": "Every sentence traces to I1, I2, N1 or S1, with the possibilities kept and roles intact ('Saturn's square to the Sun', 'Jupiter's trine to natal Mars'). 'When organizing that responsibility' is a conditional bridge. The 'while' joining N1 to I1 is a stylistic juxtaposition rather than a supplied relation (minor finding). The two contacts are linked only through S1." },
+        "coherence": { "score": 3, "reason": "Stitched. A long 'while' sentence sets curiosity against Saturn's capacity limits, which no statement does. p2 states the synthesis before introducing the Jupiter-Mars parent and then ends on I2's encouragement without returning to the tension." },
+        "voice": { "score": 3, "reason": "Plain, but the long compound 'while' sentence and the run of source sentences in p2 read mechanically." },
+        "repetition": { "score": 3, "reason": "Shares p1's opening sentence, the N1 sentences and S1 nearly word for word with item-15, and reproduces I2 verbatim." },
+        "synthesisCoherence": { "score": 3, "reason": "Both parents (I1 in p1, I2 in p2) and S1 appear, but S1 comes before its second parent is introduced and is never developed or tied back afterwards, so the relationship needs editing." },
+        "lensIntegration": { "score": 4, "reason": "N1 is applied in p1 to the role's responsibility ('When organizing that responsibility'), stays conditional ('may be distinct stages') and sits within the primary scene." }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "nsp-14-1",
+          "paragraph": 1,
+          "passage": "Following more than one line of curiosity can help a direction take shape, while Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine needs clearer boundaries.",
+          "supportingFactIds": ["N1", "I1"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "'while' sets N1's curiosity against I1's capacity and boundaries, implying a contrast that neither statement makes. Each clause is supported on its own.",
+          "proposedCorrection": "Following more than one line of curiosity can help a direction take shape. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries."
+        },
+        {
+          "findingId": "nsp-14-2",
+          "paragraph": 2,
+          "passage": "Giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.",
+          "supportingFactIds": ["S1", "I2"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "The synthesis comes before the Jupiter-Mars parent appears, and the paragraph ends on I2 without returning to the tension, so the relationship reads in reverse.",
+          "proposedCorrection": "Open p2 with I2 ('Enthusiasm and practical initiative reinforce one another when an aim is well chosen. Jupiter's trine to natal Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening.') and then give S1 ('Giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.')."
+        }
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-05",
+      "scores": {
+        "specificity": { "score": 4, "reason": "Draws on I1's tension between what you feel responsible for and uninterrupted space, and makes it concrete with I1's over-full calendar and D1's unclaimed hour that is still mentally full. These are useful, source-supported scenes; no lens is supplied." },
+        "grounding": { "score": 5, "reason": "Each sentence traces to I1, D1, P1 or T1. 'You might picture' keeps the scenes as possibilities, the phase and the reading's position in the middle of the window match P1 and T1, and the exact date is not misplaced. Nothing touches U1." },
+        "coherence": { "score": 4, "reason": "Moves in order from scene to meaning to phase to timing; p3 and p4 are one-line data paragraphs that could be merged." },
+        "voice": { "score": 2, "reason": "p1 and p2 are suitably warm, but p4 reproduces the raw 'Timing:' label, and p3 and p4 are bare data lines. That is stiff and inconsistent with the requested warm tone." },
+        "repetition": { "score": 3, "reason": "p3 and p4 are identical to item-06's p3 and p4 (P1 and T1 verbatim, including the label)." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied." },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied." }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "nsp-05-1",
+          "paragraph": 4,
+          "passage": "Timing: exact in 3 days.",
+          "supportingFactIds": ["T1", "P1"],
+          "missingFactIds": [],
+          "category": "voice",
+          "severity": "minor",
+          "explanation": "A field label copied into a warm reading reads as raw data, and p3 and p4 split one timing thought across two one-line paragraphs.",
+          "proposedCorrection": "The contact is in its approaching phase and is exact in 3 days; this reading falls in the middle part of the calculated window."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-10",
+      "scores": {
+        "specificity": { "score": 4, "reason": "Ties I1's tension between responsibility and uninterrupted space, with its everyday scenes, to the named contact and its calculated detail. The distinction is useful and source-supported; no lens is supplied." },
+        "grounding": { "score": 5, "reason": "All claims trace to I1, C1, P1 and T1. 'You might find' and 'might be' keep the scenes as possibilities, the roles are correct ('transiting Saturn', 'your natal Moon'), and the orb, phase, the reading's place in the middle of the window and the exact date 2026-10-14 are kept distinct. Nothing touches U1." },
+        "coherence": { "score": 4, "reason": "Moves clearly from scene and meaning to timing. The 'or' that joins a general claim to a scene and the doubled 'calculated window' need minor editing." },
+        "voice": { "score": 3, "reason": "Opens warmly ('You might find', 'you'd prefer'), but p2 turns into a mechanical data run, and 'which is exact in 3 days' attaches exactness to the date." },
+        "repetition": { "score": 3, "reason": "p2's timing sentences closely match item-09 p2 and item-12 p2, and 'calculated window' repeats in consecutive sentences." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied." },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied." }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "nsp-10-1",
+          "paragraph": 1,
+          "passage": "A small obligation can take up more room than its size suggests, or the everyday scene might be a calendar left too full.",
+          "supportingFactIds": ["I1"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "'or' joins a general claim and an example scene as if they were alternatives.",
+          "proposedCorrection": "A small obligation can take up more room than its size suggests; the everyday scene might also be a calendar left too full."
+        },
+        {
+          "findingId": "nsp-10-2",
+          "paragraph": 2,
+          "passage": "The calculated exact date is 2026-10-14, which is exact in 3 days.",
+          "supportingFactIds": ["C1", "T1"],
+          "missingFactIds": [],
+          "category": "style",
+          "severity": "minor",
+          "explanation": "The contact, not the date, is exact in 3 days. The facts are right, but the wording is garbled.",
+          "proposedCorrection": "The contact is exact on 2026-10-14, in 3 days."
+        },
+        {
+          "findingId": "nsp-10-3",
+          "paragraph": 2,
+          "passage": "This reading falls in the middle part of the calculated window. The contact is in its approaching phase within the calculated window.",
+          "supportingFactIds": ["T1", "P1"],
+          "missingFactIds": [],
+          "category": "repetition",
+          "severity": "minor",
+          "explanation": "Two consecutive sentences end on 'calculated window'; one sentence can carry both supplied facts.",
+          "proposedCorrection": "The contact is in its approaching phase, and this reading falls in the middle part of the calculated window."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-07",
+      "scores": {
+        "specificity": { "score": 4, "reason": "Applies N1's distinction between one useful task and making the entire routine a condition for a pause, with a manageable routine as a way to meet pressure, to I1's quiet moment. Useful and source-supported, but the restated opening sentence blurs the distinction." },
+        "grounding": { "score": 4, "reason": "Claims trace to I1 and N1 with 'may' and 'can' kept. N1's 'An unfinished list may distinguish one useful task from...' becomes 'one useful task may be different from...', a loose paraphrase that does not strengthen the claim. Putting 'an unfinished list' in place of I1's 'next task' happens inside an 'If' clause. Nothing touches U1." },
+        "coherence": { "score": 4, "reason": "The lens opens p1 before the meaning it qualifies, and the opening sentence is convoluted, but the order otherwise holds ('that pressure' refers back correctly) and needs only minor editing." },
+        "voice": { "score": 3, "reason": "Plain, but the opening sentence compares a task with an act ('one useful task may be different from making...') and reads awkwardly." },
+        "repetition": { "score": 3, "reason": "p2 is the same verbatim I1 sentence that stands alone as the closing paragraph of item-04 and item-03." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied." },
+        "lensIntegration": { "score": 4, "reason": "N1 is applied in p1 to I1's quiet moment ('If a quiet moment is spent mentally keeping track of an unfinished list'), within the primary scene and conditional. Not 5 because the restatement muddles the distinction." }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "nsp-07-1",
+          "paragraph": 1,
+          "passage": "one useful task may be different from making the entire routine a condition for taking a pause",
+          "supportingFactIds": ["N1", "I1"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "Without N1's subject ('An unfinished list may distinguish...'), the restatement sets a task against an act, which obscures the practical choice.",
+          "proposedCorrection": "If a quiet moment is spent mentally keeping track of an unfinished list, that list may distinguish one useful task from making the entire routine a condition for taking a pause."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-03",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Makes the scene concrete (a quiet moment spent tracking an unfinished reply, framed as I1's small obligation), then gives N1's distinction between preparation and waiting and its practical first step of sorting what is manageable before sharing. Each distinction is concrete and supported." },
+        "grounding": { "score": 5, "reason": "Each claim traces to I1 or N1. 'might', 'can' and 'may be different' keep or soften the source modality, the I1 contact sentence is exact retention, and nothing touches U1." },
+        "coherence": { "score": 4, "reason": "p1 progresses tightly from scene to distinction to approach. p2's standalone contact sentence is accurate but is not tied back to the reply." },
+        "voice": { "score": 4, "reason": "Natural, economical plain prose." },
+        "repetition": { "score": 3, "reason": "p1 is distinctive, but p2 is the verbatim I1 sentence that also closes item-04 and item-07." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied." },
+        "lensIntegration": { "score": 5, "reason": "N1's unfinished reply becomes the small obligation in I1's quiet moment ('an unfinished reply, a small obligation that can take up more room than its size suggests'), so the lens works inside the primary meaning. It stays conditional and invents no origin or temperament." }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-11",
+      "scores": {
+        "specificity": { "score": null, "reason": "Quiet item: there is no model writing to score; it is assessed through quietCheck." },
+        "grounding": { "score": null, "reason": "Quiet item: there is no model writing to score; it is assessed through quietCheck." },
+        "coherence": { "score": null, "reason": "Quiet item: there is no model writing to score; it is assessed through quietCheck." },
+        "voice": { "score": null, "reason": "Quiet item: there is no model writing to score; it is assessed through quietCheck." },
+        "repetition": { "score": null, "reason": "Quiet item: there is no model writing to score; it is assessed through quietCheck." },
+        "synthesisCoherence": { "score": null, "reason": "Quiet item, and no S1 supplied." },
+        "lensIntegration": { "score": null, "reason": "Quiet item, and no N1 supplied." }
+      },
+      "quietCheck": { "safe": true, "reason": "Only E1 and U1 are supplied, and no contact is calculated. The text says only that no cycle is strong enough to name and that no chart signal is singled out. It invents no signal, interpretation, personal event, instruction or prediction, and it makes no claim that U1 would limit." },
+      "findings": [],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-01",
+      "scores": {
+        "specificity": { "score": 4, "reason": "Gives I1's tension between responsibility and uninterrupted space with its scenes, then N1's distinction between one useful task and making the whole routine a condition for a pause. This is a useful, source-supported distinction, though the dangling opener of p2 leaves unclear whose list it is." },
+        "grounding": { "score": 5, "reason": "p1 is I1 with 'natal' correctly added to the Moon, and p2 keeps N1's 'may distinguish' and 'can offer'. Every claim traces to the supplied statements, and nothing touches U1." },
+        "coherence": { "score": 4, "reason": "p1 gives the meaning and scenes, and p2 applies the lens to the task-tracking scene, a clear progression. The dangling modifier needs a minor edit." },
+        "voice": { "score": 3, "reason": "Plain, but p1 reads as the interpretation copied whole, and p2's 'When mentally keeping track of the next task, an unfinished list...' makes the list the one doing the tracking." },
+        "repetition": { "score": 3, "reason": "p1 reproduces I1 whole, in source order (item-10 p1 reuses the same sentences in a different order), and p2 reuses the N1 sentences that item-07 also uses." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied." },
+        "lensIntegration": { "score": 4, "reason": "N1 is applied in p2 to p1's 'mentally keeping track of the next task' scene, within the primary scene and conditional. Not 5 because the dangling construction weakens the link." }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "nsp-01-1",
+          "paragraph": 2,
+          "passage": "When mentally keeping track of the next task, an unfinished list may distinguish one useful task from making the entire routine a condition for taking a pause.",
+          "supportingFactIds": ["N1", "I1"],
+          "missingFactIds": [],
+          "category": "style",
+          "severity": "minor",
+          "explanation": "Dangling modifier: grammatically, the list is the one keeping track of the next task.",
+          "proposedCorrection": "If a quiet moment goes to keeping track of the next task, an unfinished list may distinguish one useful task from making the entire routine a condition for taking a pause."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-12",
+      "scores": {
+        "specificity": { "score": 4, "reason": "Ties I1's meaning about capacity and boundaries to the named contact and adds D1's concrete identity scenes. The distinction is useful and source-supported; no lens is supplied." },
+        "grounding": { "score": 4, "reason": "Supported throughout. The roles are correct (transiting Saturn, natal Sun), and the orb, phase, the reading's position in the middle of the window and the exact date 2026-10-14 match C1 and T1 and are kept distinct. The opening sentence reassigns I1's relation (minor finding) but stays within its meaning with 'can'. Nothing touches U1." },
+        "coherence": { "score": 4, "reason": "Meaning, timing, then domain framing: the progression is clear, but p1 runs from abstract to concrete, and the everyday D1 scene follows the technical paragraph. Moving it up is a minor edit." },
+        "voice": { "score": 3, "reason": "Plain and clear, but p2 is a mechanical data run that uses 'calculated window' twice." },
+        "repetition": { "score": 3, "reason": "p3 is D1 verbatim, as in item-02 and item-06, and p2's timing sentences mirror item-09 and item-10." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied." },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied." }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "nsp-12-1",
+          "paragraph": 1,
+          "passage": "A routine or responsibility can show where expectations outpace available capacity.",
+          "supportingFactIds": ["I1"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "In I1, the square highlights where expectations outpace capacity, and that shows where a routine or responsibility needs clearer boundaries. This sentence makes the routine the thing that shows the overreach. With 'can' it stays within I1's meaning, but the restatement loses the source's sequence.",
+          "proposedCorrection": "Transiting Saturn's square to the natal Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries."
+        },
+        {
+          "findingId": "nsp-12-2",
+          "paragraph": 3,
+          "passage": "A title rarely describes everything that holds your attention.",
+          "supportingFactIds": ["D1"],
+          "missingFactIds": [],
+          "category": "coherence",
+          "severity": "minor",
+          "explanation": "The everyday identity scene comes after the technical timing paragraph, so the reading ends on a thought that does not connect to what precedes it.",
+          "proposedCorrection": "Move p3 directly after p1 so the everyday identity scene stays in the foreground, and end with the timing paragraph."
+        },
+        {
+          "findingId": "nsp-12-3",
+          "paragraph": 2,
+          "passage": "The contact is in its approaching phase within the calculated window. This reading falls in the middle part of the calculated window.",
+          "supportingFactIds": ["P1", "T1"],
+          "missingFactIds": [],
+          "category": "repetition",
+          "severity": "minor",
+          "explanation": "Two consecutive sentences end on 'calculated window'; one sentence can carry both supplied facts.",
+          "proposedCorrection": "The contact is in its approaching phase, and this reading falls in the middle part of the calculated window."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-06",
+      "scores": {
+        "specificity": { "score": 4, "reason": "Keeps I1's distinction (expectations outpacing capacity, showing where a routine or responsibility needs clearer boundaries) and D1's concrete scenes. These are useful and source-supported but not developed beyond the published copy." },
+        "grounding": { "score": 5, "reason": "Every paragraph reproduces a supplied statement (I1, D1, P1, T1) exactly, with modality and roles as published. Nothing touches U1." },
+        "coherence": { "score": 4, "reason": "Meaning, everyday framing, phase, then timing is a sensible order, but the reading is four pasted blocks without connectives, and D1's 'gap' is not linked to the role." },
+        "voice": { "score": 3, "reason": "Clear and consistent plain copy, but the bare 'Timing:' label and one-line data paragraphs read as raw fields rather than prose." },
+        "repetition": { "score": 2, "reason": "Every paragraph is verbatim source copy, and three recur word for word elsewhere in the packet (p2 in item-02 and item-12; p3 and p4 in item-05). The facts would support varied phrasing, as other items show." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied." },
+        "lensIntegration": { "score": null, "reason": "No N1 supplied." }
+      },
+      "quietCheck": null,
+      "findings": [
+        {
+          "findingId": "nsp-06-1",
+          "paragraph": 4,
+          "passage": "Timing: exact in 3 days.",
+          "supportingFactIds": ["T1", "P1"],
+          "missingFactIds": [],
+          "category": "voice",
+          "severity": "minor",
+          "explanation": "A field label is copied as prose, and p3 and p4 split one timing thought across two one-line paragraphs.",
+          "proposedCorrection": "The contact is in its approaching phase and is exact in 3 days; this reading falls in the middle part of the calculated window."
+        }
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-08",
+      "scores": {
+        "specificity": { "score": 5, "reason": "Makes N1 concrete inside the role ('If an unfinished reply is one of those obligations'): it separates useful preparation from waiting to have everything settled and gives sorting what is manageable before sharing as a first step, while keeping I1's distinction about capacity and boundaries. These are concrete, supported distinctions." },
+        "grounding": { "score": 5, "reason": "All claims trace to I1 and N1. 'may be different' softens N1 rather than strengthening it, the I1 sentences are exact retention, and nothing touches U1." },
+        "coherence": { "score": 4, "reason": "p1 moves cleanly from role to obligation to approach. p2's closing contact sentence is accurate but is not tied back to the reply." },
+        "voice": { "score": 4, "reason": "Natural, economical plain prose." },
+        "repetition": { "score": 3, "reason": "p2 is I1's second sentence verbatim (also in item-06 p1), and the pattern of a lens paragraph followed by a standalone I1 sentence repeats across item-03, item-04 and item-07." },
+        "synthesisCoherence": { "score": null, "reason": "No S1 supplied." },
+        "lensIntegration": { "score": 5, "reason": "N1 is applied through an explicit conditional bridge ('If an unfinished reply is one of those obligations') to I1's role obligations. This makes it a distinct, supported practical lens within the primary meaning, with no invented origin or temperament." }
+      },
+      "quietCheck": null,
+      "findings": [],
+      "verdict": "pass"
+    }
+  ],
+  "contrastChecks": [
+    {
+      "setId": "contrast-407b5d3c97",
+      "distinctSupportedDifference": true,
+      "reason": "Both items share C1, I1 and D1 for transiting Saturn square natal Moon but supply different N1s, and each applies its own. item-04 separates the commitment itself from how much choice it leaves in carrying it out, for a small obligation that feels narrow. item-03 separates useful preparation from waiting to have everything settled for an unfinished reply, and starts by sorting what is manageable before sharing it. These are two distinct practical choices, each supported by its own item's N1; neither borrows the other's lens or invents variation.",
+      "passages": [
+        { "itemId": "item-04", "paragraph": 1, "quote": "If that obligation feels narrow, the useful distinction may be between the commitment itself and how much choice it leaves in carrying it out." },
+        { "itemId": "item-03", "paragraph": 1, "quote": "For that reply, useful preparation may be different from waiting to have everything settled." },
+        { "itemId": "item-03", "paragraph": 1, "quote": "A self-contained response to the pressure can start with sorting what is manageable before sharing it." }
+      ]
+    },
+    {
+      "setId": "contrast-ea29170873",
+      "distinctSupportedDifference": true,
+      "reason": "Both items share C1, I1 and D1 but supply different N1s. item-13 applies the distinction between the commitment and the choice in carrying it out to the task held in its quiet moment. item-09 offers sorting what is manageable before sharing, and preparation versus waiting, for an unfinished reply. The two practical choices are distinct and each is supported by its own N1. item-09 does not tie its reply to its quiet-moment scene; that is scored under its lensIntegration and does not erase the difference.",
+      "passages": [
+        { "itemId": "item-13", "paragraph": 2, "quote": "If that ordinary obligation feels narrow, the useful distinction may be between the commitment itself and how much choice it leaves in carrying it out." },
+        { "itemId": "item-09", "paragraph": 1, "quote": "For an unfinished reply, a self-contained response to pressure can start with sorting what is manageable before sharing it." },
+        { "itemId": "item-09", "paragraph": 1, "quote": "That unfinished reply can offer a place to notice the difference between useful preparation and waiting to have everything settled." }
+      ]
+    }
+  ],
+  "repetitionChecks": [],
+  "verdict": "fail"
+}

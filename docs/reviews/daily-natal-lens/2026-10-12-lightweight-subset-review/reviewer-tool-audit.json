@@ -1,0 +1,46 @@
+{
+  "kind": "reviewer-tool-access-audit",
+  "contextId": "natal-subset-primary",
+  "source": "Claude Code subagent transcript, preserved locally only (it embeds session environment context)",
+  "transcriptSha256": "f08efcb62472cd5f0013edd1362ebb259d3cce5f85ac31daf6fffbfbc98c4603",
+  "localTranscript": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-lightweight-subset/dispatch/reviewer-transcript.jsonl",
+  "toolCalls": [
+    {
+      "sequence": 1,
+      "tool": "Read",
+      "filePath": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-lightweight-subset/collection-1/blind/natal-subset-primary/packet.json",
+      "command": null
+    },
+    {
+      "sequence": 2,
+      "tool": "Write",
+      "filePath": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-lightweight-subset/collection-1/blind/natal-subset-primary/review.json",
+      "command": null
+    },
+    {
+      "sequence": 3,
+      "tool": "Read",
+      "filePath": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-lightweight-subset/collection-1/blind/natal-subset-primary/review.json",
+      "command": null
+    },
+    {
+      "sequence": 4,
+      "tool": "Edit",
+      "filePath": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-lightweight-subset/collection-1/blind/natal-subset-primary/review.json",
+      "command": null
+    }
+  ],
+  "filesTouched": [
+    "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-lightweight-subset/collection-1/blind/natal-subset-primary/packet.json",
+    "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-lightweight-subset/collection-1/blind/natal-subset-primary/review.json"
+  ],
+  "onlyPacketAndOwnOutput": true,
+  "commandsRun": [],
+  "readsOfOtherFiles": [],
+  "reportedUsage": {
+    "subagentTokens": 191576,
+    "toolUses": 4,
+    "durationMs": 948228
+  },
+  "note": "The fourth call edited the reviewer's own output during its self-validation, before the coordinator froze it. The coordinator did not read the review before freezing it."
+}

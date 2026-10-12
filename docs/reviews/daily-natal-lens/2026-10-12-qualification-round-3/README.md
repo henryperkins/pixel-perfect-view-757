@@ -37,7 +37,8 @@ existing candidate raw draft and template for seven cases: `natal-duty-reflex`,
 `natal-legacy-snapshot`. One primary reviewer will grade those **14 prose samples**;
 a second reviewer is needed only for a disputed finding. The existing candidate
 `quiet-threshold` template also receives a small safety check without numerical
-grades. **This review has not started.**
+grades. **The review ran on 2026-10-12 and failed (10/14 prose samples); see the
+[lightweight subset review](../2026-10-12-lightweight-subset-review/README.md).**
 
 Every prose sample must score at least 4/5 for specificity, grounding and
 coherence, lens integration when N1 applies, and synthesis coherence when S1 applies.

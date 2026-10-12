@@ -1,30 +1,41 @@
-# Natal writing readiness — targeted review pending
+# Natal writing readiness — targeted review failed
 
-**Current evidence policy (2026-10-12):** the operator requested a manageable
-review scope. The [lightweight readiness gate](lightweight-readiness.md) now uses
-seven representative candidate drafts and templates already captured in round 3,
-one quiet safety check and one primary reviewer. A second opinion is needed only
-for a disputed finding. No new model calls or full 38-case paired round are
-required to make this writing decision. Catalogue-wide and extended reliability
-evidence move to follow-up work.
+**Current result (2026-10-12):** the first
+[targeted review of partial-run evidence](2026-10-12-lightweight-subset-review/README.md)
+**fails** the [lightweight readiness gate](lightweight-readiness.md). One fresh AI
+reviewer passed **10/14 prose samples: 4/7 raw drafts and 6/7 templates**. Four of the
+seven cases fully pass. The quiet template is safe and both duty/freedom contrasts are
+supported. Freedom, exact-house, warm and legacy-snapshot samples pass.
 
-The smaller gate keeps factual support, useful natal distinctions, readable prose
-and safe fallback behavior. It is **pending**, not passed. Both candidates remain
-inactive, and activation/release require a separate request. Existing full-benchmark
-failures and partial flags remain unchanged; the targeted gate does not claim a
-complete benchmark pass.
+- Moon fallback raw: “an unfinished reply offers a place to notice…” strengthens N1's
+  “can offer” (substantive finding), with grounding and coherence 3.
+- Duty raw: N1 is attached to “an unfinished reply” that is never tied to the
+  quiet-moment scene (lens integration 3).
+- Synthesis raw and template: coherence 3, with synthesis coherence 3 (raw) and 2
+  (template). The template presents S1 without its Jupiter–Mars parent, because
+  `composeNatalTemplate` uses S1 alone as the second paragraph.
 
-**Current stopping point (2026-10-12):** round-3 remediation is committed as
-`948aa00`; its actual-model run was stopped at the operator's request after
-37/38 cases per bundle. It preserved 69 raw drafts from 72 transports, three
-timeouts and two unattempted final-pair cases, with no retries or unsettled
-request. No round-3 blinded review or scores were produced. That partial run
-cannot establish full-benchmark qualification; its available samples can support
-the new targeted review. See the
-[round-3 evidence](2026-10-12-qualification-round-3/README.md) and
-[handoff prompt](2026-10-12-qualification-round-3/HANDOFF.md). Both candidates remain
-inactive. The completed round-2 judgment below is historical full-benchmark evidence,
-not the current prerequisite checklist.
+Fixing these changes application source. Re-reviewing the three raw drafts also needs
+new model calls, which require an explicit operator request. Both candidates remain
+inactive; release and activation stay separate requests after the gate passes.
+
+**Evidence policy (2026-10-12):** the operator requested a manageable review scope. The
+lightweight gate uses seven representative candidate drafts and templates already
+captured in round 3, one quiet safety check and one primary reviewer. A second opinion
+is needed only for a disputed finding. The gate keeps factual support, useful natal
+distinctions, readable prose and safe fallback behavior. Catalogue-wide and extended
+reliability evidence are follow-up work. Existing full-benchmark failures and partial
+flags remain unchanged; the targeted gate never claims a complete benchmark pass.
+
+**Round-3 capture (2026-10-12):** round-3 remediation is committed as `948aa00`. Its
+actual-model run was stopped at the operator's request after 37/38 cases per bundle. It
+preserved 69 raw drafts from 72 transports, three timeouts and two unattempted
+final-pair cases, with no retries or unsettled request. No complete round-3 blinded
+review was produced; the targeted review used seven of its captured cases. See the
+[round-3 evidence](2026-10-12-qualification-round-3/README.md) and its
+[handoff prompt](2026-10-12-qualification-round-3/HANDOFF.md). The completed round-2
+judgment below is historical full-benchmark evidence, not the current prerequisite
+checklist.
 
 ## Historical full-benchmark round 2
 

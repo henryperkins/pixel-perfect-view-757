@@ -1,0 +1,472 @@
+{
+  "kind": "natal-lightweight-subset-collection",
+  "collectionVersion": "natal-lightweight-subset-1",
+  "label": "Targeted review of partial-run evidence",
+  "policy": "../lightweight-readiness.md",
+  "establishes": "AI-reviewed lightweight subset writing readiness for natal writing only",
+  "fullBenchmarkClaim": false,
+  "roundQualificationChanged": false,
+  "partialFlagsChanged": false,
+  "missingDraftsBackfilled": false,
+  "newModelRequests": 0,
+  "baselineReviewed": false,
+  "humanReviewCompleted": false,
+  "candidatesActivated": false,
+  "sourceIdentity": {
+    "sourceRevision": "948aa00ed8935a6026904461831844a47e98356c",
+    "trackedSourceSha256": "a50ca0c80f0998ff2c884ad70c5e9fa6548d7e60f30aabbe29bac31017fad7e0",
+    "runnerSha256": "b0616656b470dc9e482e907a008a6a061f1d7b641d1a62e526e23305480d518b",
+    "servingDeadlineMs": 60000,
+    "captureDeadlineMs": 120000
+  },
+  "boundFiles": {
+    "../2026-10-12-qualification-round-3/natal-candidate-partial-report.json": "75a082fc149dc616b994b358978afa61d224d0af4c14beec9bdfdacfa9a19d60",
+    "../2026-10-12-qualification-round-3/templates.json": "f2434374eeccae29c27fc02d1827ab8ca8002340d85c12934ce82f56c49e1254",
+    "../2026-10-12-qualification-round-3/template-source-manifest.json": "84282660e25ca4b80e249b2e890ac11c6443d742a8d76c4c7a370e557d2c09b2",
+    "../2026-10-12-qualification-round-3/template-capture-receipt.json": "fe65d9e6bfabe0480e43ec8bdfcba24068a708a495e33147305f6627da827c22",
+    "../2026-10-12-qualification-round-3/case-contexts.json": "52a0e08caccb3015aaee0fd1a7934744253d91fe7256466fda6d0b97443a985e",
+    "../2026-10-12-qualification-round-3/source-manifest.json": "e078ef5bbbc4a93344b38499b3f75012fc3d3271cc57e83f8388bdb19c7692f2",
+    "../2026-10-12-qualification-round-3/run-plan.json": "e83c37a74f2c9e68e29882ca12a74820aca5fb3d43f83a5aaf55f4d198569682",
+    "../2026-10-12-qualification-round-3/run-finished.json": "420e838af6895e8c04b9bc7a07bbcc6ebfcbc35929c903a574164ce56db5bc74",
+    "../2026-10-12-qualification-round-3/interrupted-evidence-index.json": "2457d6598fc4ed6c3118777b0a6b90b1a715e40910102020b2884588354ff95f",
+    "../2026-10-12-qualification-round-3/interrupted-run-audit.json": "cea348b52506b962b5aea605435a142ccd4f7e9a8f95a52e3ab06e23ce3b1a3e",
+    "../2026-10-12-qualification-round-3/reviewer-instructions.md": "822af5b1599feb0384768d857feabd89f63691fe806b203b16dffe084dd7a42b"
+  },
+  "candidateReport": {
+    "sha256": "75a082fc149dc616b994b358978afa61d224d0af4c14beec9bdfdacfa9a19d60",
+    "partial": true,
+    "bundleSource": "natal-candidate",
+    "bundleVersion": "builtin-0.6.1",
+    "bundleHash": "b073d625c23b5bede66eba25e37bd3f3397263710dd63ab67d8af06b6e216500",
+    "promptVersion": "daily-astro-body-11",
+    "validatorVersion": "daily-reference-7",
+    "model": "gemini-enterprise/gemini-3.8-flash"
+  },
+  "selection": {
+    "proseCases": [
+      "natal-duty-reflex",
+      "natal-freedom-reflex",
+      "natal-exact-house",
+      "natal-moon-fallback",
+      "natal-synthesis-integration",
+      "saturn-square-moon-warm",
+      "natal-legacy-snapshot"
+    ],
+    "proseSamples": 14,
+    "quietSafetyCase": "quiet-threshold",
+    "contrast": [
+      "natal-duty-reflex",
+      "natal-freedom-reflex"
+    ],
+    "uniqueItems": 15
+  },
+  "samples": [
+    {
+      "caseId": "natal-duty-reflex",
+      "class": "natal-positive",
+      "description": "Matched primary Moon contact, with a reviewed preparation-versus-settled lens.",
+      "tone": "plain",
+      "depth": "standard",
+      "configHash": "3a65b0d6df3e2a2269ae5e165257d1b4e293ea1874dea4406a656641bbf76ffd",
+      "suppliedFactIds": [
+        "C1",
+        "I1",
+        "N1",
+        "D1",
+        "P1",
+        "T1",
+        "E1",
+        "U1"
+      ],
+      "factsSha256": "c733b8a9382b7cc7cc1023dc7820606db985191adaefebfd814ca89174bdf803",
+      "limits": [
+        "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0.",
+        "recorded birth-time accuracy is \"near\" (about plus or minus 15 minutes)"
+      ],
+      "suppression": {
+        "angles": false,
+        "houses": false
+      },
+      "natalLens": {
+        "status": "selected",
+        "ruleKey": "nl-moon-10",
+        "role": "emotional_reflex",
+        "n1Supplied": true
+      },
+      "synthesisSupplied": false,
+      "raw": {
+        "capture": "lossless",
+        "automatedOutcome": "accepted",
+        "automatedCode": "accepted",
+        "durationMs": 27999,
+        "servingDeadlineMs": 60000,
+        "exceededServingDeadline": false,
+        "bodySha256": "a1867f3f6688364ab3c989c8c17f9245e29b2b988448e5f85ffca1369a1b500b"
+      },
+      "template": {
+        "bodySha256": "b4b71a411f926420f8bccaf062e1f3c3c1fcec74adf8e99cf286943c0924a8a1",
+        "matchesOfflineCapture": true
+      }
+    },
+    {
+      "caseId": "natal-freedom-reflex",
+      "class": "natal-positive",
+      "description": "Identical primary inputs; only synthetic natal evidence changes the commitment-versus-route distinction.",
+      "tone": "plain",
+      "depth": "standard",
+      "configHash": "c1f1ff83440ce74b844630fa448a80e3d12f5ccbb48ca14276541809d46119f3",
+      "suppliedFactIds": [
+        "C1",
+        "I1",
+        "N1",
+        "D1",
+        "P1",
+        "T1",
+        "E1",
+        "U1"
+      ],
+      "factsSha256": "95ba7551557ee17997ed8f586dfbff2faac8144fa378af4f3be72389595d6853",
+      "limits": [
+        "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0.",
+        "recorded birth-time accuracy is \"near\" (about plus or minus 15 minutes)"
+      ],
+      "suppression": {
+        "angles": false,
+        "houses": false
+      },
+      "natalLens": {
+        "status": "selected",
+        "ruleKey": "nl-moon-09",
+        "role": "emotional_reflex",
+        "n1Supplied": true
+      },
+      "synthesisSupplied": false,
+      "raw": {
+        "capture": "lossless",
+        "automatedOutcome": "accepted",
+        "automatedCode": "accepted",
+        "durationMs": 32755,
+        "servingDeadlineMs": 60000,
+        "exceededServingDeadline": false,
+        "bodySha256": "9336aa159abe1703e8e19ab6ae6b193d2853c2b0871b18219e56b9e12b31ff65"
+      },
+      "template": {
+        "bodySha256": "fc8922709fc00a99409f55be26004437576f51a6d52b4a125340e4b1eaaa0d69",
+        "matchesOfflineCapture": true
+      }
+    },
+    {
+      "caseId": "natal-exact-house",
+      "class": "natal-positive",
+      "description": "A synthetic exact-time Placidus house qualifies the routine comparison for a Moon contact.",
+      "tone": "plain",
+      "depth": "standard",
+      "configHash": "99f54fd01658020790c37408a63adc2aca1287aa584fc87a770d04ce229f9178",
+      "suppliedFactIds": [
+        "C1",
+        "I1",
+        "N1",
+        "D1",
+        "P1",
+        "T1",
+        "E1",
+        "U1"
+      ],
+      "factsSha256": "3f34e2208a6cada5735838d49d435274a0eac9e9b3358c789027700099579cc6",
+      "limits": [
+        "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0.",
+        "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+      ],
+      "suppression": {
+        "angles": false,
+        "houses": false
+      },
+      "natalLens": {
+        "status": "selected",
+        "ruleKey": "nl-moon-10-house-01",
+        "role": "emotional_reflex",
+        "n1Supplied": true
+      },
+      "synthesisSupplied": false,
+      "raw": {
+        "capture": "lossless",
+        "automatedOutcome": "accepted",
+        "automatedCode": "accepted",
+        "durationMs": 53204,
+        "servingDeadlineMs": 60000,
+        "exceededServingDeadline": false,
+        "bodySha256": "96c12ec82c18bd142bfbd2c010b0537132e4b025845b6fc60066b7d1eadbcc29"
+      },
+      "template": {
+        "bodySha256": "e9f517860eb107586071e0c27092b626e2a2efe87e9ea55a508db93d1018f361",
+        "matchesOfflineCapture": true
+      }
+    },
+    {
+      "caseId": "natal-moon-fallback",
+      "class": "natal-positive",
+      "description": "An unscreened transited-body sign falls back to the screened Moon sign.",
+      "tone": "plain",
+      "depth": "standard",
+      "configHash": "4633dbc57d07af7296919ea2234400223d67d33bd01a9c2adbd5013e0b27630e",
+      "suppliedFactIds": [
+        "C1",
+        "I1",
+        "N1",
+        "D1",
+        "P1",
+        "T1",
+        "E1",
+        "U1"
+      ],
+      "factsSha256": "7fc336cb1be37ab54ffaa1e75b5d76904c8b20492d5c56b841a4ea0846b25ebd",
+      "limits": [
+        "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0.",
+        "recorded birth-time accuracy is \"near\" (about plus or minus 15 minutes)"
+      ],
+      "suppression": {
+        "angles": false,
+        "houses": false
+      },
+      "natalLens": {
+        "status": "selected",
+        "ruleKey": "nl-moon-10",
+        "role": "emotional_reflex",
+        "n1Supplied": true
+      },
+      "synthesisSupplied": false,
+      "raw": {
+        "capture": "lossless",
+        "automatedOutcome": "accepted",
+        "automatedCode": "accepted",
+        "durationMs": 37549,
+        "servingDeadlineMs": 60000,
+        "exceededServingDeadline": false,
+        "bodySha256": "1c5913922384effd66bca093d63da7c080758e37f4a72ee44d1b0860c6bae4e7"
+      },
+      "template": {
+        "bodySha256": "bdad578aafa4fcbc66a2e1f418e663622f389a3eaa5211ff2d2fbf6cecc863c7",
+        "matchesOfflineCapture": true
+      }
+    },
+    {
+      "caseId": "natal-synthesis-integration",
+      "class": "natal-positive",
+      "description": "S1 and the transited body's N1 share an early paragraph with every explicit parent.",
+      "tone": "plain",
+      "depth": "standard",
+      "configHash": "7401a35994fd219f25c7fe86fa908c08961c79433c21e29a928fc92b85ea0875",
+      "suppliedFactIds": [
+        "C1",
+        "C2",
+        "I1",
+        "I2",
+        "S1",
+        "N1",
+        "D1",
+        "P1",
+        "T1",
+        "E1",
+        "U1"
+      ],
+      "factsSha256": "ca1b3c22a0a56c36c7c06224a4230f004fa32c33f27e1eb97802a384c432955d",
+      "limits": [
+        "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0.",
+        "recorded birth-time accuracy is \"near\" (about plus or minus 15 minutes)"
+      ],
+      "suppression": {
+        "angles": false,
+        "houses": false
+      },
+      "natalLens": {
+        "status": "selected",
+        "ruleKey": "nl-sun-03",
+        "role": "self_direction",
+        "n1Supplied": true
+      },
+      "synthesisSupplied": true,
+      "raw": {
+        "capture": "lossless",
+        "automatedOutcome": "accepted",
+        "automatedCode": "accepted",
+        "durationMs": 13130,
+        "servingDeadlineMs": 60000,
+        "exceededServingDeadline": false,
+        "bodySha256": "284e3e567844d58d55c3c2c162d06b9e65e25c2fd777e9263075e5ad4230cbc1"
+      },
+      "template": {
+        "bodySha256": "bbfff69be05761c48d0a81701d3cdcdf20115d11a90caec153915b5f40f81416",
+        "matchesOfflineCapture": true
+      }
+    },
+    {
+      "caseId": "saturn-square-moon-warm",
+      "class": "natal-free",
+      "description": "Warm tone with the published inner-life interpretation.",
+      "tone": "warm",
+      "depth": "standard",
+      "configHash": "e369f97aed8febe9a65ac50c90708b27b0d3f104456ecae67ec4730714bdc0c0",
+      "suppliedFactIds": [
+        "C1",
+        "I1",
+        "D1",
+        "P1",
+        "T1",
+        "E1",
+        "U1"
+      ],
+      "factsSha256": "e4ca474b7362ee69c8b54b43833496adcb86d4770085948fa03464061409c06a",
+      "limits": [
+        "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0.",
+        "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+      ],
+      "suppression": {
+        "angles": false,
+        "houses": false
+      },
+      "natalLens": {
+        "status": "unreliable",
+        "ruleKey": null,
+        "role": null,
+        "n1Supplied": false
+      },
+      "synthesisSupplied": false,
+      "raw": {
+        "capture": "lossless",
+        "automatedOutcome": "accepted",
+        "automatedCode": "accepted",
+        "durationMs": 17059,
+        "servingDeadlineMs": 60000,
+        "exceededServingDeadline": false,
+        "bodySha256": "e05024b5d3d51585260a1040f80dd364bc304c094c7e7a111dd7376df85cbb83"
+      },
+      "template": {
+        "bodySha256": "649462c26e77e66d87058a6264648bdb83c94a947cb3593101a31e8981042c62",
+        "matchesOfflineCapture": true
+      }
+    },
+    {
+      "caseId": "natal-legacy-snapshot",
+      "class": "natal-negative",
+      "description": "Absent legacy manifest supplies no invented natal lens.",
+      "tone": "plain",
+      "depth": "standard",
+      "configHash": "8266feba507191e2a5b0dbaa6369295d6b1115d593c206259723669808d0c471",
+      "suppliedFactIds": [
+        "C1",
+        "I1",
+        "D1",
+        "P1",
+        "T1",
+        "E1",
+        "U1"
+      ],
+      "factsSha256": "1b5457109a65e9c97117c3a0d6cbddc84841285ff95c0ccb2357caf78395d504",
+      "limits": [
+        "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0.",
+        "recorded birth-time accuracy is \"near\" (about plus or minus 15 minutes)"
+      ],
+      "suppression": {
+        "angles": false,
+        "houses": false
+      },
+      "natalLens": {
+        "status": "unreliable",
+        "ruleKey": null,
+        "role": null,
+        "n1Supplied": false
+      },
+      "synthesisSupplied": false,
+      "raw": {
+        "capture": "lossless",
+        "automatedOutcome": "accepted",
+        "automatedCode": "accepted",
+        "durationMs": 100635,
+        "servingDeadlineMs": 60000,
+        "exceededServingDeadline": true,
+        "bodySha256": "2b48d3124617db5bf719d612e44fdd166c3d39214fbae60b03e669ca8aba094e"
+      },
+      "template": {
+        "bodySha256": "1f861b9995253a41574012a999c756cdad90e8b579f21790e74842aafd54917b",
+        "matchesOfflineCapture": true
+      }
+    },
+    {
+      "caseId": "quiet-threshold",
+      "class": "quiet-control",
+      "description": "No contact exceeds the shared importance threshold.",
+      "tone": "plain",
+      "depth": "standard",
+      "configHash": "bfdfbb5382449b33e3a182b6e21977b4c0c9ed332a5bd1e7c70c2c185e673471",
+      "suppliedFactIds": [
+        "E1",
+        "U1"
+      ],
+      "factsSha256": "7d5e3e6cf9def25efbd4a1fb56f69fbb659666abcac675f06e0e3d7f8811645d",
+      "limits": [
+        "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0.",
+        "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+      ],
+      "suppression": {
+        "angles": false,
+        "houses": false
+      },
+      "natalLens": {
+        "status": "no_cycle",
+        "ruleKey": null,
+        "role": null,
+        "n1Supplied": false
+      },
+      "synthesisSupplied": false,
+      "raw": null,
+      "template": {
+        "bodySha256": "0f16089801634a658a88f975b7d79cd13def6abf4bd43d2ec4916741ac18fc3c",
+        "matchesOfflineCapture": true
+      }
+    }
+  ],
+  "packet": {
+    "contextId": "natal-subset-primary",
+    "sha256": "98d230ae5ac4772d242571d73f4652809c9c8dd3418930d8d78f1897c247a641",
+    "itemSetHash": "020f6fae6103af6c7a51713af2b43788e3e4470a48a1ab6bb84150407b91e14b",
+    "instructionsSha256": "822af5b1599feb0384768d857feabd89f63691fe806b203b16dffe084dd7a42b",
+    "targetedScopeSha256": "76848e5ee6e1753dcf2d2b2e865e5215c103bfde8872e7657f383619f1f31953",
+    "masking": "Every paragraph citation array is masked as null; original citations stay in the private assignment."
+  },
+  "missingInventory": {
+    "sourceIndex": "../2026-10-12-qualification-round-3/interrupted-evidence-index.json",
+    "sourceAudit": "../2026-10-12-qualification-round-3/interrupted-run-audit.json",
+    "expectedCasesPerBundle": 38,
+    "settledCasesPerBundle": {
+      "builtin": 37,
+      "natal-candidate": 37
+    },
+    "timeouts": [
+      {
+        "source": "builtin",
+        "caseId": "jupiter-trine-sun-technical",
+        "durationMs": 120000
+      },
+      {
+        "source": "natal-candidate",
+        "caseId": "natal-unknown-time",
+        "durationMs": 120000
+      },
+      {
+        "source": "natal-candidate",
+        "caseId": "natal-degraded-positions",
+        "durationMs": 120000
+      }
+    ],
+    "unattemptedCasesByBundle": {
+      "builtin": [
+        "arc-synthesis-natal-integration"
+      ],
+      "natal-candidate": [
+        "arc-synthesis-natal-integration"
+      ]
+    },
+    "plannedNonquietSlotsWithoutRawCapture": 5,
+    "note": "Timeouts and unattempted cases have no raw draft and no passing writing score. They are retained, never backfilled, and outside this subset."
+  }
+}

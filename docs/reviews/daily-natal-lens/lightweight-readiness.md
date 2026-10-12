@@ -7,6 +7,12 @@ writing decision. Existing full-benchmark results remain historical evidence;
 they are not relabeled as passes. Both candidates stay inactive pending the
 appropriate readiness check and a separate activation request.
 
+**First result (2026-10-12):** the [targeted subset review](2026-10-12-lightweight-subset-review/README.md)
+failed. It passed 10/14 prose samples (4/7 raw drafts, 6/7 templates); the quiet template
+was safe, and both duty/freedom contrasts were supported. The duty, Moon-fallback and
+synthesis raw drafts and the synthesis template need fixes. After a fix, only those
+cases are reviewed again.
+
 This set covers natal writing only. It does not qualify transit-candidate chapter
 copy; that candidate needs its own small representative review before activation.
 

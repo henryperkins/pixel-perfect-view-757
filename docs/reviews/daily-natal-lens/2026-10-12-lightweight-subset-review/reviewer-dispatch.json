@@ -1,0 +1,15 @@
+{
+  "contextId": "natal-subset-primary",
+  "role": "single fresh primary reviewer (lightweight readiness gate)",
+  "packetPath": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-lightweight-subset/collection-1/blind/natal-subset-primary/packet.json",
+  "outputPath": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-lightweight-subset/collection-1/blind/natal-subset-primary/review.json",
+  "packetSha256": "98d230ae5ac4772d242571d73f4652809c9c8dd3418930d8d78f1897c247a641",
+  "itemSetHash": "020f6fae6103af6c7a51713af2b43788e3e4470a48a1ab6bb84150407b91e14b",
+  "promptPath": "/home/ubuntu/.local/state/pixel-perfect-view-757/natal-qualification/20261012-lightweight-subset/dispatch/reviewer-prompt.txt",
+  "promptSha256": "45f6670fcb461ed025269b416fe833eb5c25f8bb2d162b6fdd8f33eb76563538",
+  "dispatchAtUTC": "2026-10-12T04:10:14.446Z",
+  "promptHashDefinition": "Exact archived task text before appended hash-binding trailer",
+  "fullDispatchMessageSha256": "3f1df4354a65ceea93b1281c7b1ed2c5d0466272f4fb62219d5e83542c0870b8",
+  "dispatchMechanism": "Claude Code Agent tool, general-purpose subagent with a fresh context (not a fork of the coordinator)",
+  "coordinatorHadUnblindedContext": true
+}
