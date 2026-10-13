@@ -8,6 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { clearPatternQueries, clearReadingContextQueries } from "@/lib/pattern-query-cache";
 import { LIFE_DOMAINS, type LifeDomain } from "@/lib/context-policy";
 import { DOMAIN_LABEL } from "@/components/pattern/timing";
+import { CurrentLocation } from "@/components/pattern/CurrentLocation";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import {
@@ -250,6 +251,15 @@ function PrivacyPage() {
               history.
             </p>
             <p className="mt-2 text-sm text-muted-foreground">
+              Upcoming Timing sends the owned ephemeris service the requested range and up to nine
+              screened natal position triples, in bounded groups. Raw birth details and journal text
+              are omitted from these requests. Global Moon and eclipse queries need no member chart.
+              Daylight queries send only the coarse current location, calendar timezone and day that
+              you explicitly permit. That location is separate from birthplace, is encrypted in
+              Pattern, and is replaced on change or removed after 30 days. Daylight and seasonal
+              framing stay in Your Context and never enter a model request or cycle ranking.
+            </p>
+            <p className="mt-2 text-sm text-muted-foreground">
               The Daily check-in switch controls whether mood and energy frame your reading. You can
               still save a private check-in with that switch off. Saving never turns the switch on.
             </p>
@@ -373,6 +383,13 @@ function PrivacyPage() {
             </section>
           ))}
 
+          {session ? (
+            <CurrentLocation
+              ownerId={session.userId}
+              permitted={granted.has("DEV-02")}
+              disabled={consentControlsDisabled}
+            />
+          ) : null}
           <section className="mt-12">
             <h2 className="font-serif text-xl">Never collected</h2>
             <p className="mt-1 text-sm text-muted-foreground">

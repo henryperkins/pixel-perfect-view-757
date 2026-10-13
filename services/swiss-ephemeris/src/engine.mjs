@@ -68,6 +68,12 @@ function utcToUt(ms) {
     throw new Error("time_conversion");
   return converted.data[1];
 }
+function utToUtc(jd) {
+  if (!Number.isFinite(jd)) throw Error("time_conversion");
+  const d = sweph.jdut1_to_utc(jd, sweph.constants.SE_GREG_CAL);
+  if (!Object.values(d).every(Number.isFinite)) throw Error("time_conversion");
+  return Date.UTC(d.year, d.month - 1, d.day, d.hour, d.minute, 0) + Math.round(d.second * 1000);
+}
 
 export function createEngine({
   ephemerisPath = process.env.SE_EPHE_PATH ||
@@ -210,6 +216,101 @@ export function createEngine({
     houseSystem: "placidus",
     houseFallback: "porphyry-explicit",
     license: "AGPL-3.0-or-later",
+    capabilities: {
+      astronomyEvents: {
+        contract: "swiss-astronomy-events/1",
+        solverVersion: "lunations-eclipses-1",
+        maximumRangeDays: 366,
+        coverageEnd: "2399-01-01T00:00:00.000Z",
+      },
+      solarContext: {
+        contract: "swiss-solar-context/1",
+        solverVersion: "solar-civil-day-1",
+        convention: "apparent-upper-limb; sea-level; 1013.25hPa; 15C",
+      },
+      upcomingCycles: {
+        contract: "swiss-upcoming-cycles/1",
+        solverVersion: "upcoming-cycles-1",
+        maximumRangeDays: 365,
+        maximumTargets: 3,
+        maximumEvaluations: 120000,
+      },
+    },
   });
-  return { source, sourceId, coverage, metadata, position, chart };
+  const eclipseAfter = (kind, ms) => {
+    const jd = utcToUt(ms);
+    const result =
+      kind === "solar"
+        ? sweph.sol_eclipse_when_glob(jd, 2, 0, false)
+        : kind === "lunar"
+          ? sweph.lun_eclipse_when(jd, 2, 0, false)
+          : null;
+    if (!result || result.flag <= 0 || result.error || !Number.isFinite(result.data?.[0]))
+      throw Error("unqualified_source");
+    return { at: utToUtc(result.data[0]), classification: result.flag };
+  };
+  const solarEvent = (ms, latitude, longitude, kind) => {
+    const mode = { rise: 1, set: 2, upper: 4, lower: 8 }[kind];
+    if (!mode) throw Error("invalid_request");
+    const result = sweph.rise_trans(
+      utcToUt(ms),
+      0,
+      null,
+      2,
+      mode,
+      [longitude, latitude, 0],
+      1013.25,
+      15,
+    );
+    if (result.flag === -2) return null;
+    if (result.flag !== 0 || result.error || !Number.isFinite(result.data))
+      throw Error("unqualified_source");
+    return utToUtc(result.data);
+  };
+  const sunAboveHorizon = (ms, latitude, longitude) => {
+    sweph.set_topo(longitude, latitude, 0);
+    const jd = utcToUt(ms),
+      p = sweph.calc_ut(jd, 0, 35074);
+    if (p.flag !== 35074 || p.error || !p.data.every(Number.isFinite))
+      throw Error("unqualified_source");
+    const horizontal = sweph.azalt(
+      jd,
+      1,
+      [longitude, latitude, 0],
+      1013.25,
+      15,
+      p.data.slice(0, 3),
+    );
+    if (!Array.isArray(horizontal) || !horizontal.every(Number.isFinite))
+      throw Error("unqualified_source");
+    // Same solar radius as the pinned native swecl.c upper-limb calculation.
+    const radius = (Math.asin(1392000000 / 2 / 149597870700 / p.data[2]) * 180) / Math.PI;
+    // rise_trans refracts the upper limb after adding the radius to the true
+    // topocentric altitude. Refracting the center first misclassifies polar edges.
+    const upper = sweph.azalt_rev(
+      jd,
+      1,
+      [longitude, latitude, 0],
+      [horizontal[0], horizontal[1] + radius],
+    );
+    const apparent = sweph.azalt(jd, 1, [longitude, latitude, 0], 1013.25, 15, [
+      upper[0],
+      upper[1],
+      p.data[2],
+    ]);
+    if (!Array.isArray(apparent) || !apparent.every(Number.isFinite))
+      throw Error("unqualified_source");
+    return apparent[2] > 0;
+  };
+  return {
+    source,
+    sourceId,
+    coverage,
+    metadata,
+    position,
+    chart,
+    eclipseAfter,
+    solarEvent,
+    sunAboveHorizon,
+  };
 }

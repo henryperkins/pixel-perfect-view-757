@@ -60,11 +60,9 @@ test("optional context requires the permitted use, consent and unexpired data", 
   assert.equal(allowed("USR-07", "framing", "2030-01-01"), false);
 });
 
-test("unavailable season/daylight cannot be enabled but an old grant can be revoked", async () => {
-  await assert.rejects(h.app.setConsent(db(), h.userA, "AMB-05", true), /not available/i);
-  h.sqlite
-    .prepare("INSERT INTO source_consents(id,user_id,source_id,tier,granted) VALUES (?,?,?,?,?)")
-    .run("old-ambient", h.userA, "AMB-05", 2, 1);
+test("season/daylight opt-in is independent of current location and remains revocable", async () => {
+  await h.app.setConsent(db(), h.userA, "AMB-05", true);
+  assert.equal((await h.app.grantedSet(db(), h.userA)).has("DEV-02"), false);
   await h.app.setConsent(db(), h.userA, "AMB-05", false);
   assert.equal(
     (await h.app.loadConsents(db(), h.userA)).find((x) => x.source_id === "AMB-05").granted,

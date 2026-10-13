@@ -43,4 +43,5 @@ export interface LocalReadingContext {
   markedMoments: boolean;
   preferredDomain: LifeDomain | null;
   previousResonance: { score: -1 | 0 | 1; day: string } | null;
+  solar?: import("./astro/solar-context.server").SolarContext | null;
 }

@@ -1,0 +1,45 @@
+{
+  "id": "solar-dst-short",
+  "input": {
+    "contract": "swiss-solar-context/1",
+    "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+    "latitude": 41,
+    "longitude": -74,
+    "day": "2026-03-08",
+    "timeZone": "America/New_York",
+    "from": "2026-03-08T05:00:00.000Z",
+    "to": "2026-03-09T04:00:00.000Z"
+  },
+  "actual": {
+    "contract": "swiss-solar-context/1",
+    "solverVersion": "solar-civil-day-1",
+    "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+    "source": {
+      "engine": "swiss-ephemeris",
+      "engineVersion": "2.10.03",
+      "dataId": "sha256:975743cf9ca4c15e9e86d22f8d03fd973a1341f6b0bd971cabd21a4a02022797",
+      "frame": "tropical-apparent-geocentric-true-equinox-of-date",
+      "timeScale": "UT",
+      "returnedFlags": 258
+    },
+    "day": "2026-03-08",
+    "timeZone": "America/New_York",
+    "range": {
+      "from": "2026-03-08T05:00:00.000Z",
+      "to": "2026-03-09T04:00:00.000Z"
+    },
+    "daylight": "ordinary",
+    "sunriseUtc": "2026-03-08T11:19:02.000Z",
+    "sunsetUtc": "2026-03-08T22:54:59.000Z",
+    "daylightMinutes": 696,
+    "precision": "native-for-supplied-location",
+    "convention": "apparent-upper-limb; sea-level; 1013.25hPa; 15C",
+    "uncertaintySeconds": 60
+  },
+  "reference": {
+    "sunriseUtc": "2026-03-08T11:19:02.000Z",
+    "sunsetUtc": "2026-03-08T22:54:59.000Z"
+  },
+  "issues": [],
+  "durationMs": 0.5956009999999878
+}

@@ -7,7 +7,15 @@ const sign = (x) => (Math.abs(x) < 1e-12 ? 0 : Math.sign(x));
 export function makeTrack(
   engine,
   body,
-  { now = () => performance.now(), maxEvaluations = 20000, maxDurationMs = 4000 } = {},
+  {
+    now = () => performance.now(),
+    maxEvaluations = 20000,
+    maxDurationMs = 4000,
+    evaluationCeiling = 20000,
+    speedCeiling = 10,
+    fastRefine = false,
+    rootTolerance = 1e-7,
+  } = {},
 ) {
   const started = now(),
     cache = new Map();
@@ -19,14 +27,15 @@ export function makeTrack(
     ms = Math.round(ms);
     if (ms < engine.coverage.from || ms > engine.coverage.to) throw new Error("source_range");
     if (cache.has(ms)) return cache.get(ms);
-    if (cache.size >= Math.min(20000, maxEvaluations)) throw new Error("evaluation_limit");
+    if (cache.size >= Math.min(evaluationCeiling, maxEvaluations))
+      throw new Error("evaluation_limit");
     const p = engine.position(body, ms);
     if (
       !Number.isFinite(p.longitude) ||
       p.longitude < 0 ||
       p.longitude >= 360 ||
       !Number.isFinite(p.speed) ||
-      Math.abs(p.speed) > 10
+      Math.abs(p.speed) > speedCeiling
     )
       throw new Error("unqualified_source");
     cache.set(ms, p);
@@ -46,18 +55,34 @@ export function makeTrack(
       a.unwrappedLongitude +
         ((b.unwrappedLongitude - a.unwrappedLongitude) * (ms - time(a))) / (time(b) - time(a)),
     );
-  function refine(a, b, value, tolerance = 1e-7) {
+  function refine(a, b, value, tolerance = rootTolerance) {
     let fa = value(a),
       fb = value(b),
       best = Math.abs(fa) < Math.abs(fb) ? a : b;
     if (!(fa * fb < 0)) throw new Error("ambiguous_station_contact");
     for (let i = 0; i < 80; i++) {
       check();
-      const middle = Math.floor((time(a) + time(b)) / 2);
+      const predicted = (time(a) * fb - time(b) * fa) / (fb - fa);
+      // Every third step bisects, so interpolation cannot stagnate at an
+      // endpoint near a station; fast bodies retain their useful secant step.
+      const interpolate =
+        fastRefine && i % 3 !== 2 && predicted > time(a) + 1 && predicted < time(b) - 1;
+      const middle = Math.floor(interpolate ? predicted : (time(a) + time(b)) / 2);
       if (middle <= time(a) || middle >= time(b)) break;
       const p = between(middle, a, b),
         fp = value(p);
       if (Math.abs(fp) < Math.abs(value(best))) best = p;
+      if (fastRefine && Math.abs(fp) <= tolerance) {
+        const radius = Math.min(15000, Math.floor((time(b) - time(a)) / 4)),
+          leftTime = Math.max(time(a), middle - radius),
+          rightTime = Math.min(time(b), middle + radius);
+        if (leftTime < middle && rightTime > middle) {
+          const left = between(leftTime, a, b),
+            right = between(rightTime, a, b);
+          if (value(left) * value(right) < 0)
+            return { ...plain(p), bracket: [plain(left), plain(right)] };
+        }
+      }
       if (time(b) - time(a) <= 30000 && Math.abs(value(best)) <= tolerance)
         return { ...plain(best), bracket: [plain(a), plain(b)] };
       if (fp === 0) {

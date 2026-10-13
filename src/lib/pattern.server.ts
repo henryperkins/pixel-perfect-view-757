@@ -393,7 +393,7 @@ export async function setConsent(db: DB, userId: string, sourceId: string, grant
   const now = new Date().toISOString();
   await execBatch([
     {
-      sql: "INSERT INTO source_consents(id,user_id,source_id,tier,granted,granted_at,revoked_at,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?) ON CONFLICT(user_id,source_id) DO UPDATE SET tier=excluded.tier,granted=excluded.granted,granted_at=excluded.granted_at,revoked_at=excluded.revoked_at,updated_at=excluded.updated_at",
+      sql: "INSERT INTO source_consents(id,user_id,source_id,tier,granted,granted_at,revoked_at,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?) ON CONFLICT(user_id,source_id) DO UPDATE SET id=excluded.id,tier=excluded.tier,granted=excluded.granted,granted_at=excluded.granted_at,revoked_at=excluded.revoked_at,updated_at=excluded.updated_at",
       params: [
         crypto.randomUUID(),
         userId,
@@ -419,8 +419,8 @@ export async function setConsent(db: DB, userId: string, sourceId: string, grant
     ...(!granted
       ? [
           {
-            sql: "DELETE FROM context_signals WHERE user_id=? AND source_id=?",
-            params: [userId, sourceId],
+            sql: "DELETE FROM context_signals WHERE user_id=? AND (source_id=? OR (?='DEV-02' AND source_id='AMB-05'))",
+            params: [userId, sourceId, sourceId],
           },
           {
             sql: "DELETE FROM reading_sources AS s WHERE s.user_id=? AND EXISTS(SELECT 1 FROM daily_readings d WHERE d.id=s.reading_id AND d.user_id=s.user_id AND d.context_version=? AND EXISTS(SELECT 1 FROM json_each(d.local_context_sources) WHERE value=?) AND s.source_id IN (SELECT value FROM json_each(d.local_context_sources)))",
@@ -2236,6 +2236,8 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       previousResonance = { score: prior.resonance, day: prior.reading_date };
     }
   }
+  const { solarForToday } = await import("./solar-location.server");
+  const solar = await solarForToday(db, userId);
   const localContext: LocalReadingContext = {
     version: "local-context-1",
     identity: await keyedFingerprint(userId, {
@@ -2243,10 +2245,12 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       markedMoments,
       preferredDomain,
       previousResonance,
+      solar,
     }),
     markedMoments,
     preferredDomain,
     previousResonance,
+    solar,
   };
   await assertPolicy();
   return { ...reading, localContext };
@@ -2901,6 +2905,74 @@ export async function getCyclesFor(db: DB, userId: string, day?: string, timeZon
 }
 
 // ---------------------------------------------------------------------------
+// Future timing is a separate native scan; it never generates reading prose.
+export async function getUpcomingCycles(
+  db: DB,
+  userId: string,
+  timeZone: string,
+  horizonDays: 90 | 365,
+  domain: LifeDomain | "all",
+  duration: import("./astro/upcoming.server").DurationFilter,
+) {
+  const snapshot = await loadSnapshot(db, userId);
+  if (!snapshot) return { needsOnboarding: true as const };
+  const birth = await captureBirthForRead(db, userId, snapshot),
+    granted = await grantedSet(db, userId);
+  const timezone = isPermitted("DEV-01", "timing", granted) ? validTimeZone(timeZone) : "UTC";
+  const day = localDayString(new Date(), timezone),
+    from = localNoon(day, timezone).toISOString(),
+    to = new Date(Date.parse(from) + horizonDays * 86400000).toISOString();
+  const anchors = (
+    await ensureTransitAnchors(db, userId, snapshot, await getDek(db, userId), new Date())
+  ).manifest;
+  const { getUpcomingFromAnchors } = await import("./astro/upcoming.server");
+  const key = await keyedFingerprint(userId, {
+    version: "future-timing-cache-1",
+    snapshotId: snapshot.id,
+    fingerprint: snapshot.fingerprint,
+    anchors,
+    from,
+    to,
+    domain,
+    duration,
+    policy: transitEpisodePolicy(),
+  });
+  const saved = await cachedTimingCalculation(userId, key, async () => ({
+    calculation: await getUpcomingFromAnchors(
+      anchors,
+      from,
+      to,
+      domain,
+      duration,
+      birth.assertCurrent,
+    ),
+    computedAt: new Date().toISOString(),
+  }));
+  await birth.assertCurrent();
+  const current = await grantedSet(db, userId);
+  if (isPermitted("DEV-01", "timing", current) !== isPermitted("DEV-01", "timing", granted))
+    throw Error("Your calendar permission changed. Please refresh Timing.");
+  return { needsOnboarding: false as const, day, timezone, from, to, ...saved };
+}
+export async function getSkyEvents(
+  db: DB,
+  userId: string,
+  timeZone: string,
+  horizonDays: 90 | 365,
+) {
+  const granted = await grantedSet(db, userId),
+    timezone = isPermitted("DEV-01", "timing", granted) ? validTimeZone(timeZone) : "UTC";
+  const day = localDayString(new Date(), timezone),
+    from = zonedToUtc(day, "00:00", timezone).toISOString(),
+    to = new Date(Date.parse(from) + horizonDays * 86400000).toISOString();
+  const { getLunations } = await import("./astro/lunations.server");
+  const calculation = await getLunations(from, to);
+  const current = await grantedSet(db, userId);
+  if (isPermitted("DEV-01", "timing", current) !== isPermitted("DEV-01", "timing", granted))
+    throw Error("Your calendar permission changed. Please refresh Timing.");
+  return { day, timezone, from, to, computedAt: new Date().toISOString(), calculation };
+}
+
 // content releases (editorial provenance, read-only)
 // ---------------------------------------------------------------------------
 

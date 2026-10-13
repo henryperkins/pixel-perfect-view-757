@@ -2,7 +2,13 @@
 import { ASPECTS, DAY, time, plain, iso, validateRequest } from "./contract.mjs";
 import { makeTrack } from "./track.mjs";
 
-function sampleScan(request, target, track, geometry) {
+export function sampleScan(
+  request,
+  target,
+  track,
+  geometry,
+  { maxContacts = 16, maxWindows = 32 } = {},
+) {
   const { legs, stations } = geometry,
     angle = ASPECTS[request.aspect];
   const branches = angle === 0 || angle === 180 ? ["plus"] : ["plus", "minus"];
@@ -49,7 +55,7 @@ function sampleScan(request, target, track, geometry) {
       }
     }
   contacts.sort((a, b) => time(a) - time(b));
-  if (contacts.length > 16) throw new Error("output_limit");
+  if (contacts.length > maxContacts) throw new Error("output_limit");
   const targets = new Map();
   for (const c of contacts)
     targets.set(
@@ -97,7 +103,7 @@ function sampleScan(request, target, track, geometry) {
   windows.sort(
     (a, b) => (a.ingress ? time(a.ingress) : -Infinity) - (b.ingress ? time(b.ingress) : -Infinity),
   );
-  if (windows.length > 32) throw new Error("output_limit");
+  if (windows.length > maxWindows) throw new Error("output_limit");
   const groups = [];
   for (const c of contacts) {
     const previous = groups.at(-1),

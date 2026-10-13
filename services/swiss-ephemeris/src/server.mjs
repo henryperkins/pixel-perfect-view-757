@@ -67,7 +67,8 @@ export function createServer({
   const engine = createEngine(),
     expected = digest(key),
     children = new Set();
-  let active = 0;
+  let active = 0,
+    futureActive = 0;
   const server = httpServer(async (req, res) => {
     const reply = (status, value) => {
       if (res.destroyed || res.writableEnded) return;
@@ -119,7 +120,16 @@ export function createServer({
       stream.pipe(res);
       return;
     }
-    if (req.method !== "POST" || !["/v1/chart", "/v1/transit-episodes"].includes(path))
+    if (
+      req.method !== "POST" ||
+      ![
+        "/v1/chart",
+        "/v1/transit-episodes",
+        "/v1/astronomy-events",
+        "/v1/solar-context",
+        "/v1/upcoming-cycles",
+      ].includes(path)
+    )
       return reply(404, { error: "not_found" });
     const authorization = req.headers.authorization?.replace(/^Bearer /, "");
     const apiKey = req.headers["x-api-key"];
@@ -134,6 +144,10 @@ export function createServer({
     if (Number(req.headers["content-length"] || 0) > MAX_BODY)
       return reply(413, { error: "body_limit" });
     if (active >= maxConcurrency) return reply(503, { error: "busy" });
+    // One future scan at a time leaves capacity for the member chart endpoint.
+    const future = path === "/v1/upcoming-cycles";
+    if (future && futureActive >= 1) return reply(503, { error: "busy" });
+    if (future) futureActive++;
     active++;
     let child, deadline;
     const terminate = () => {
@@ -205,6 +219,7 @@ export function createServer({
       clearTimeout(deadline);
       terminate();
       active--;
+      if (future) futureActive--;
       res.off("close", terminate);
     }
   });

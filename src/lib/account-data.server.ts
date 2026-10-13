@@ -132,6 +132,10 @@ export async function exportAccountData(userId: string, db: DBClient = records()
     : null;
   const granted = await grantedSet(db, userId),
     now = new Date();
+  const consentEpochs = await db.exec<{ source_id: string; id: string }>(
+    "SELECT source_id,id FROM source_consents WHERE user_id=? ORDER BY source_id",
+    [userId],
+  );
   const saved = {} as Record<OwnerTable, Row[]>;
   const counts: Record<string, number> = { users: 1, profiles: profile ? 1 : 0 };
   for (const table of OWNER_TABLES) {
@@ -319,6 +323,10 @@ export async function exportAccountData(userId: string, db: DBClient = records()
   );
   await requireOwner(db, userId);
   const currentConsents = await grantedSet(db, userId);
+  const currentConsentEpochs = await db.exec<{ source_id: string; id: string }>(
+    "SELECT source_id,id FROM source_consents WHERE user_id=? ORDER BY source_id",
+    [userId],
+  );
   const { data: currentProfile, error: currentProfileError } = await db
     .from<Row>("profiles")
     .select("*")
@@ -326,6 +334,7 @@ export async function exportAccountData(userId: string, db: DBClient = records()
     .maybeSingle();
   if (
     currentProfileError ||
+    JSON.stringify(currentConsentEpochs) !== JSON.stringify(consentEpochs) ||
     JSON.stringify([...currentConsents].sort()) !== JSON.stringify([...granted].sort()) ||
     JSON.stringify(currentProfile) !== JSON.stringify(profile)
   ) {

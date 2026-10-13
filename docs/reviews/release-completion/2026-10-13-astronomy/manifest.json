@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "baseCommit": "aebb0eb2170da9f5a632d045ee0368cde804cffb",
+  "sourceCommit": null,
+  "stage": "verified-local",
+  "appTests": {
+    "passed": 764,
+    "failed": 0,
+    "skipped": 0,
+    "command": "node --test --test-concurrency=1 tests/*.test.mjs"
+  },
+  "serviceTests": {
+    "passed": 38,
+    "failed": 0,
+    "command": "npm test (services/swiss-ephemeris)"
+  },
+  "nativeQualification": {
+    "passed": 27,
+    "command": "node scripts/qualify-astronomy.mjs OUTPUT_DIRECTORY",
+    "artifact": "native-reference/qualification.json",
+    "maximumDeltaSeconds": 60,
+    "maximumLongitudeDeltaDegrees": 0.001
+  },
+  "browserChecks": {
+    "passed": 10,
+    "viewports": [
+      390,
+      1440
+    ],
+    "reducedMotion": true,
+    "scope": "actual frontend with intercepted services; production checks separate"
+  },
+  "typecheck": "passed",
+  "scopedLint": "passed",
+  "paidModelCalls": 0,
+  "schemaMigrationsRequired": false,
+  "activeContentVersion": "0.7.1",
+  "publication": null,
+  "remainingGates": [
+    "signed-in production acceptance",
+    "Task13 writing qualification and actual human editorial approval",
+    "Task15 full meaning-based source registry coverage",
+    "Task8 Google/settings acceptance",
+    "Task19 paid Enterprise experiment"
+  ]
+}

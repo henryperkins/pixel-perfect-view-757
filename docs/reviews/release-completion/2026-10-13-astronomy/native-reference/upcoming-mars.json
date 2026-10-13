@@ -1,0 +1,205 @@
+{
+  "id": "upcoming-mars",
+  "input": {
+    "contract": "swiss-upcoming-cycles/1",
+    "solverVersion": "upcoming-cycles-1",
+    "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+    "from": "2026-01-01T12:00:00.000Z",
+    "to": "2026-04-01T12:00:00.000Z",
+    "bodies": [
+      "mars"
+    ],
+    "aspects": [
+      "conjunction"
+    ],
+    "targets": [
+      {
+        "name": "sun",
+        "offsets": [
+          -2,
+          0,
+          2
+        ],
+        "longitudes": [
+          307.11916013577206,
+          307.11917013577204,
+          307.119180135772
+        ]
+      }
+    ],
+    "duration": "all"
+  },
+  "actual": {
+    "contract": "swiss-upcoming-cycles/1",
+    "solverVersion": "upcoming-cycles-1",
+    "status": "complete",
+    "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+    "source": {
+      "engine": "swiss-ephemeris",
+      "engineVersion": "2.10.03",
+      "dataId": "sha256:975743cf9ca4c15e9e86d22f8d03fd973a1341f6b0bd971cabd21a4a02022797",
+      "frame": "tropical-apparent-geocentric-true-equinox-of-date",
+      "timeScale": "UT",
+      "returnedFlags": 258
+    },
+    "range": {
+      "from": "2026-01-01T12:00:00.000Z",
+      "to": "2026-04-01T12:00:00.000Z",
+      "boundary": "half-open"
+    },
+    "scope": {
+      "bodies": [
+        "mars"
+      ],
+      "aspects": [
+        "conjunction"
+      ],
+      "targets": [
+        "sun"
+      ],
+      "duration": "all"
+    },
+    "windows": [
+      {
+        "id": "cycle:7222b805d74947540ebb063a9c38cd46",
+        "transitBody": "mars",
+        "natalPoint": "sun",
+        "aspect": "conjunction",
+        "branch": "plus",
+        "start": "2026-01-28T15:57:02.000Z",
+        "end": "2026-02-05T07:53:49.000Z",
+        "startRange": [
+          "2026-01-28T15:57:00.000Z",
+          "2026-01-28T15:57:04.000Z"
+        ],
+        "endRange": [
+          "2026-02-05T07:53:47.000Z",
+          "2026-02-05T07:53:50.000Z"
+        ],
+        "exactAt": [
+          "2026-02-01T12:00:00.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-02-01T11:59:58.000Z",
+            "2026-02-01T12:00:02.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 7.66443287037037,
+        "duration": "medium",
+        "confidence": "exact",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      }
+    ],
+    "activeMatched": 0,
+    "upcomingMatched": 1,
+    "uncertainMatched": 0,
+    "totalMatched": 1,
+    "truncated": false,
+    "incompleteWindows": 0,
+    "evaluations": 894
+  },
+  "reference": {
+    "tool": "independent-dense-swiss-et-1",
+    "swissVersion": "2.10.03",
+    "stepMs": 3600000,
+    "coverage": {
+      "from": 1762084800000,
+      "to": 1780228800000
+    },
+    "stations": [],
+    "samples": [
+      {
+        "contacts": [
+          {
+            "at": 1769947198896,
+            "level": 307.11916013577206,
+            "branch": "plus",
+            "turn": 0,
+            "direction": "direct"
+          }
+        ],
+        "windows": [
+          {
+            "ingress": 1769615820951,
+            "egress": 1770278027677,
+            "contacts": [
+              1769947198896
+            ]
+          }
+        ],
+        "components": [
+          {
+            "contacts": [
+              1769947198896
+            ],
+            "complete": false
+          }
+        ],
+        "ambiguous": false
+      },
+      {
+        "contacts": [
+          {
+            "at": 1769947200000,
+            "level": 307.11917013577204,
+            "branch": "plus",
+            "turn": 0,
+            "direction": "direct"
+          }
+        ],
+        "windows": [
+          {
+            "ingress": 1769615822057,
+            "egress": 1770278028779,
+            "contacts": [
+              1769947200000
+            ]
+          }
+        ],
+        "components": [
+          {
+            "contacts": [
+              1769947200000
+            ],
+            "complete": false
+          }
+        ],
+        "ambiguous": false
+      },
+      {
+        "contacts": [
+          {
+            "at": 1769947201104,
+            "level": 307.119180135772,
+            "branch": "plus",
+            "turn": 0,
+            "direction": "direct"
+          }
+        ],
+        "windows": [
+          {
+            "ingress": 1769615823162,
+            "egress": 1770278029881,
+            "contacts": [
+              1769947201104
+            ]
+          }
+        ],
+        "components": [
+          {
+            "contacts": [
+              1769947201104
+            ],
+            "complete": false
+          }
+        ],
+        "ambiguous": false
+      }
+    ]
+  },
+  "issues": [],
+  "durationMs": 17.169558000000052
+}

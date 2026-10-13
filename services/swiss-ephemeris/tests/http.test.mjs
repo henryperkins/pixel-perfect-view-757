@@ -43,6 +43,39 @@ test("private calculations require credentials while health exposes actual sourc
   assert.equal(h.license, "AGPL-3.0-or-later");
   assert.throws(() => createServer({ key: "" }), /authentication_required/);
 });
+test("lunar events and solar context retain authenticated bounded HTTP contracts and actual native source", async () => {
+  const base = await start(),
+    engine = createEngine();
+  const events = {
+    contract: "swiss-astronomy-events/1",
+    sourceId: engine.sourceId,
+    from: "2026-01-01T00:00:00.000Z",
+    to: "2026-02-01T00:00:00.000Z",
+  };
+  assert.equal((await post(base + "/v1/astronomy-events", events, null)).status, 401);
+  const range = await post(base + "/v1/astronomy-events", events);
+  assert.equal(range.status, 200);
+  assert.equal((await range.json()).events.length, 2);
+  assert.equal(
+    (await post(base + "/v1/astronomy-events", { ...events, to: "2028-01-01T00:00:00.000Z" }))
+      .status,
+    400,
+  );
+  const solar = await post(base + "/v1/solar-context", {
+    contract: "swiss-solar-context/1",
+    sourceId: engine.sourceId,
+    day: "2026-10-13",
+    timeZone: "UTC",
+    from: "2026-10-13T00:00:00.000Z",
+    to: "2026-10-14T00:00:00.000Z",
+    latitude: 52,
+    longitude: 0,
+  });
+  assert.equal(solar.status, 200);
+  assert.equal((await solar.json()).daylight, "ordinary");
+  const metadata = await (await fetch(base + "/v1/engine")).json();
+  assert.equal(metadata.capabilities.astronomyEvents.solverVersion, "lunations-eclipses-1");
+});
 test("real chart and episode requests share source identity across isolated processes", async () => {
   const base = await start(),
     engine = createEngine();

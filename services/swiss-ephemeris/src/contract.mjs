@@ -16,6 +16,35 @@ export const plain = (p) => ({
   unwrappedLongitude: p.unwrappedLongitude,
   speed: p.speed,
 });
+export function utcInstant(value) {
+  if (
+    typeof value !== "string" ||
+    !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{3})?Z$/.test(value)
+  )
+    throw Error("invalid_request");
+  const ms = Date.parse(value);
+  const canonical = value.includes(".") ? value : value.slice(0, -1) + ".000Z";
+  if (!Number.isFinite(ms) || new Date(ms).toISOString() !== canonical)
+    throw Error("invalid_request");
+  return ms;
+}
+export function validateEventRange(r, sourceId) {
+  const keys = ["contract", "sourceId", "from", "to"];
+  if (
+    !r ||
+    typeof r !== "object" ||
+    Array.isArray(r) ||
+    Object.keys(r).length !== keys.length ||
+    Object.keys(r).some((k) => !keys.includes(k)) ||
+    r.contract !== "swiss-astronomy-events/1"
+  )
+    throw Error("invalid_request");
+  if (r.sourceId !== sourceId) throw Error("unqualified_source");
+  const from = utcInstant(r.from),
+    to = utcInstant(r.to);
+  if (from >= to || to - from > 366 * DAY) throw Error("invalid_request");
+  return { from, to };
+}
 export function validateRequest(r, sourceId) {
   const keys = [
     "contract",

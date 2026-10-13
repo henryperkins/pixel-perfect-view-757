@@ -1,0 +1,481 @@
+{
+  "id": "upcoming-moon",
+  "input": {
+    "contract": "swiss-upcoming-cycles/1",
+    "solverVersion": "upcoming-cycles-1",
+    "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+    "from": "2026-01-01T12:00:00.000Z",
+    "to": "2026-04-01T12:00:00.000Z",
+    "bodies": [
+      "moon"
+    ],
+    "aspects": [
+      "conjunction"
+    ],
+    "targets": [
+      {
+        "name": "sun",
+        "offsets": [
+          -2,
+          0,
+          2
+        ],
+        "longitudes": [
+          127.06156852865695,
+          127.06157852865695,
+          127.06158852865696
+        ]
+      }
+    ],
+    "duration": "all"
+  },
+  "actual": {
+    "contract": "swiss-upcoming-cycles/1",
+    "solverVersion": "upcoming-cycles-1",
+    "status": "complete",
+    "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+    "source": {
+      "engine": "swiss-ephemeris",
+      "engineVersion": "2.10.03",
+      "dataId": "sha256:975743cf9ca4c15e9e86d22f8d03fd973a1341f6b0bd971cabd21a4a02022797",
+      "frame": "tropical-apparent-geocentric-true-equinox-of-date",
+      "timeScale": "UT",
+      "returnedFlags": 258
+    },
+    "range": {
+      "from": "2026-01-01T12:00:00.000Z",
+      "to": "2026-04-01T12:00:00.000Z",
+      "boundary": "half-open"
+    },
+    "scope": {
+      "bodies": [
+        "moon"
+      ],
+      "aspects": [
+        "conjunction"
+      ],
+      "targets": [
+        "sun"
+      ],
+      "duration": "all"
+    },
+    "windows": [
+      {
+        "id": "cycle:c4ee7ef091f2c45503e717495249f42c",
+        "transitBody": "moon",
+        "natalPoint": "sun",
+        "aspect": "conjunction",
+        "branch": "plus",
+        "start": "2026-01-04T22:58:00.000Z",
+        "end": "2026-01-05T03:59:42.000Z",
+        "startRange": [
+          "2026-01-04T22:57:59.000Z",
+          "2026-01-04T22:58:00.000Z"
+        ],
+        "endRange": [
+          "2026-01-05T03:59:41.000Z",
+          "2026-01-05T03:59:42.000Z"
+        ],
+        "exactAt": [
+          "2026-01-05T01:28:37.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-01-05T01:28:36.000Z",
+            "2026-01-05T01:28:37.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.2095138888888889,
+        "duration": "short",
+        "confidence": "exact",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:232ca70b7eef1cc2450d0c244e7538ce",
+        "transitBody": "moon",
+        "natalPoint": "sun",
+        "aspect": "conjunction",
+        "branch": "plus",
+        "start": "2026-02-01T09:28:27.000Z",
+        "end": "2026-02-01T14:31:51.000Z",
+        "startRange": [
+          "2026-02-01T09:28:27.000Z",
+          "2026-02-01T09:28:28.000Z"
+        ],
+        "endRange": [
+          "2026-02-01T14:31:50.000Z",
+          "2026-02-01T14:31:51.000Z"
+        ],
+        "exactAt": [
+          "2026-02-01T12:00:00.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-02-01T11:59:59.000Z",
+            "2026-02-01T12:00:01.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.21069444444444443,
+        "duration": "short",
+        "confidence": "exact",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:824402234e3942d01f24a2fa9096baef",
+        "transitBody": "moon",
+        "natalPoint": "sun",
+        "aspect": "conjunction",
+        "branch": "plus",
+        "start": "2026-02-28T17:51:15.000Z",
+        "end": "2026-02-28T23:02:19.000Z",
+        "startRange": [
+          "2026-02-28T17:51:15.000Z",
+          "2026-02-28T17:51:16.000Z"
+        ],
+        "endRange": [
+          "2026-02-28T23:02:19.000Z",
+          "2026-02-28T23:02:20.000Z"
+        ],
+        "exactAt": [
+          "2026-02-28T20:26:41.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-02-28T20:26:40.000Z",
+            "2026-02-28T20:26:42.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.21601851851851853,
+        "duration": "short",
+        "confidence": "exact",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:623e4d2e8351b803996ed5a7b4505944",
+        "transitBody": "moon",
+        "natalPoint": "sun",
+        "aspect": "conjunction",
+        "branch": "plus",
+        "start": "2026-03-27T23:55:42.000Z",
+        "end": "2026-03-28T05:13:04.000Z",
+        "startRange": [
+          "2026-03-27T23:55:41.000Z",
+          "2026-03-27T23:55:42.000Z"
+        ],
+        "endRange": [
+          "2026-03-28T05:13:03.000Z",
+          "2026-03-28T05:13:05.000Z"
+        ],
+        "exactAt": [
+          "2026-03-28T02:34:15.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-03-28T02:34:14.000Z",
+            "2026-03-28T02:34:15.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.22039351851851852,
+        "duration": "short",
+        "confidence": "exact",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      }
+    ],
+    "activeMatched": 0,
+    "upcomingMatched": 4,
+    "uncertainMatched": 0,
+    "totalMatched": 4,
+    "truncated": false,
+    "incompleteWindows": 0,
+    "evaluations": 1598
+  },
+  "reference": {
+    "tool": "independent-dense-swiss-et-1",
+    "swissVersion": "2.10.03",
+    "stepMs": 3600000,
+    "coverage": {
+      "from": 1767009600000,
+      "to": 1775304000000
+    },
+    "stations": [],
+    "samples": [
+      {
+        "contacts": [
+          {
+            "at": 1767576516582,
+            "level": 127.06156852865695,
+            "branch": "plus",
+            "turn": 0,
+            "direction": "direct"
+          },
+          {
+            "at": 1769947200000,
+            "level": 487.06156852865695,
+            "branch": "plus",
+            "turn": 1,
+            "direction": "direct"
+          },
+          {
+            "at": 1772310400974,
+            "level": 847.061568528657,
+            "branch": "plus",
+            "turn": 2,
+            "direction": "direct"
+          },
+          {
+            "at": 1774665254553,
+            "level": 1207.061568528657,
+            "branch": "plus",
+            "turn": 3,
+            "direction": "direct"
+          }
+        ],
+        "windows": [
+          {
+            "ingress": 1767567479708,
+            "egress": 1767585581580,
+            "contacts": [
+              1767576516582
+            ]
+          },
+          {
+            "ingress": 1769938107013,
+            "egress": 1769956310659,
+            "contacts": [
+              1769947200000
+            ]
+          },
+          {
+            "ingress": 1772301075360,
+            "egress": 1772319739128,
+            "contacts": [
+              1772310400974
+            ]
+          },
+          {
+            "ingress": 1774655741541,
+            "egress": 1774674783977,
+            "contacts": [
+              1774665254553
+            ]
+          }
+        ],
+        "components": [
+          {
+            "contacts": [
+              1767576516582
+            ],
+            "complete": false
+          },
+          {
+            "contacts": [
+              1769947200000
+            ],
+            "complete": false
+          },
+          {
+            "contacts": [
+              1772310400974
+            ],
+            "complete": false
+          },
+          {
+            "contacts": [
+              1774665254553
+            ],
+            "complete": false
+          }
+        ],
+        "ambiguous": false
+      },
+      {
+        "contacts": [
+          {
+            "at": 1767576516642,
+            "level": 127.06157852865695,
+            "branch": "plus",
+            "turn": 0,
+            "direction": "direct"
+          },
+          {
+            "at": 1769947200000,
+            "level": 487.0615785286569,
+            "branch": "plus",
+            "turn": 1,
+            "direction": "direct"
+          },
+          {
+            "at": 1772310401036,
+            "level": 847.0615785286569,
+            "branch": "plus",
+            "turn": 2,
+            "direction": "direct"
+          },
+          {
+            "at": 1774665254617,
+            "level": 1207.061578528657,
+            "branch": "plus",
+            "turn": 3,
+            "direction": "direct"
+          }
+        ],
+        "windows": [
+          {
+            "ingress": 1767567479768,
+            "egress": 1767585581641,
+            "contacts": [
+              1767576516642
+            ]
+          },
+          {
+            "ingress": 1769938107074,
+            "egress": 1769956310720,
+            "contacts": [
+              1769947200000
+            ]
+          },
+          {
+            "ingress": 1772301075422,
+            "egress": 1772319739191,
+            "contacts": [
+              1772310401036
+            ]
+          },
+          {
+            "ingress": 1774655741604,
+            "egress": 1774674784041,
+            "contacts": [
+              1774665254617
+            ]
+          }
+        ],
+        "components": [
+          {
+            "contacts": [
+              1767576516642
+            ],
+            "complete": false
+          },
+          {
+            "contacts": [
+              1769947200000
+            ],
+            "complete": false
+          },
+          {
+            "contacts": [
+              1772310401036
+            ],
+            "complete": false
+          },
+          {
+            "contacts": [
+              1774665254617
+            ],
+            "complete": false
+          }
+        ],
+        "ambiguous": false
+      },
+      {
+        "contacts": [
+          {
+            "at": 1767576516703,
+            "level": 127.06158852865696,
+            "branch": "plus",
+            "turn": 0,
+            "direction": "direct"
+          },
+          {
+            "at": 1769947200000,
+            "level": 487.06158852865696,
+            "branch": "plus",
+            "turn": 1,
+            "direction": "direct"
+          },
+          {
+            "at": 1772310401098,
+            "level": 847.061588528657,
+            "branch": "plus",
+            "turn": 2,
+            "direction": "direct"
+          },
+          {
+            "at": 1774665254680,
+            "level": 1207.061588528657,
+            "branch": "plus",
+            "turn": 3,
+            "direction": "direct"
+          }
+        ],
+        "windows": [
+          {
+            "ingress": 1767567479828,
+            "egress": 1767585581701,
+            "contacts": [
+              1767576516703
+            ]
+          },
+          {
+            "ingress": 1769938107134,
+            "egress": 1769956310780,
+            "contacts": [
+              1769947200000
+            ]
+          },
+          {
+            "ingress": 1772301075485,
+            "egress": 1772319739253,
+            "contacts": [
+              1772310401098
+            ]
+          },
+          {
+            "ingress": 1774655741667,
+            "egress": 1774674784104,
+            "contacts": [
+              1774665254680
+            ]
+          }
+        ],
+        "components": [
+          {
+            "contacts": [
+              1767576516703
+            ],
+            "complete": false
+          },
+          {
+            "contacts": [
+              1769947200000
+            ],
+            "complete": false
+          },
+          {
+            "contacts": [
+              1772310401098
+            ],
+            "complete": false
+          },
+          {
+            "contacts": [
+              1774665254680
+            ],
+            "complete": false
+          }
+        ],
+        "ambiguous": false
+      }
+    ]
+  },
+  "issues": [],
+  "durationMs": 30.12431700000002
+}

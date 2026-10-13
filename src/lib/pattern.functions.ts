@@ -17,6 +17,74 @@ export const fetchToday = createServerFn({ method: "POST" })
     return m.getToday(context.db, context.userId, data.timezone);
   });
 
+export const fetchUpcomingCycles = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
+  .inputValidator((d: unknown) =>
+    z
+      .object({
+        timezone: z.string().max(80),
+        horizonDays: z.union([z.literal(90), z.literal(365)]),
+        domain: z.enum(["all", ...LIFE_DOMAINS]),
+        duration: z.enum(["all", "short", "medium", "long", "unknown"]),
+      })
+      .strict()
+      .parse(d),
+  )
+  .handler(async ({ data, context }) => {
+    const m = await import("./pattern.server");
+    return m.getUpcomingCycles(
+      context.db,
+      context.userId,
+      data.timezone,
+      data.horizonDays,
+      data.domain,
+      data.duration,
+    );
+  });
+export const fetchSkyEvents = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
+  .inputValidator((d: unknown) =>
+    z
+      .object({
+        timezone: z.string().max(80),
+        horizonDays: z.union([z.literal(90), z.literal(365)]),
+      })
+      .strict()
+      .parse(d),
+  )
+  .handler(async ({ data, context }) => {
+    const m = await import("./pattern.server");
+    return m.getSkyEvents(context.db, context.userId, data.timezone, data.horizonDays);
+  });
+export const fetchCoarseLocation = createServerFn({ method: "GET" })
+  .middleware([requireAuth])
+  .handler(async ({ context }) => {
+    const m = await import("./solar-location.server");
+    return m.loadCoarseLocation(context.db, context.userId);
+  });
+export const saveCurrentLocation = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
+  .inputValidator((d: unknown) =>
+    z
+      .object({
+        latitude: z.number().int().min(-90).max(90),
+        longitude: z.number().int().min(-180).max(180),
+        timeZone: z.string().min(1).max(80),
+      })
+      .strict()
+      .parse(d),
+  )
+  .handler(async ({ data, context }) => {
+    const m = await import("./solar-location.server");
+    return m.saveCoarseLocation(context.db, context.userId, data);
+  });
+export const clearCurrentLocation = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
+  .handler(async ({ context }) => {
+    const m = await import("./solar-location.server");
+    return m.clearCoarseLocation(context.db, context.userId);
+  });
+
 export const fetchBootstrap = createServerFn({ method: "GET" })
   .middleware([requireAuth])
   .handler(async ({ context }) => {

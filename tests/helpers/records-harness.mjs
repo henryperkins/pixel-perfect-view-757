@@ -45,6 +45,8 @@ export async function createRecordsHarness() {
   const releasePublications = [];
   const swissRequests = [];
   const episodeRequests = [];
+  const calculationRequests = [];
+  let calculationHandler = null;
   let episodeHandler = null;
   let sqlite;
   let vite;
@@ -70,6 +72,16 @@ export async function createRecordsHarness() {
 
   globalThis.fetch = async (input, init = {}) => {
     const url = typeof input === "string" ? input : input instanceof URL ? input.href : input.url;
+    if (
+      calculationHandler &&
+      ["astronomy-events", "solar-context", "upcoming-cycles"].some(
+        (path) => url === "https://swiss-fixture.invalid/v1/" + path,
+      )
+    ) {
+      const body = JSON.parse(String(init.body));
+      calculationRequests.push({ url, body });
+      return calculationHandler(body, init, url);
+    }
     if (url === "https://swiss-fixture.invalid/episodes" && episodeHandler) {
       const body = JSON.parse(String(init.body));
       episodeRequests.push(body);
@@ -211,6 +223,8 @@ export async function createRecordsHarness() {
       releasePublicationHandler = null;
       swissRequests.length = 0;
       episodeRequests.length = 0;
+      calculationRequests.length = 0;
+      calculationHandler = null;
       episodeHandler = null;
       delete process.env.SWISS_TRANSIT_EPISODE_URL;
       delete process.env.SWISS_TRANSIT_EPISODE_SOURCE_ID;
@@ -323,6 +337,13 @@ export async function createRecordsHarness() {
       releasePublications,
       swissRequests,
       episodeRequests,
+      calculationRequests,
+      setSwissCalculations(handler, sourceId = "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a") {
+        calculationHandler = handler;
+        process.env.SWISS_TRANSIT_EPISODE_URL = "https://swiss-fixture.invalid/episodes";
+        process.env.SWISS_TRANSIT_EPISODE_SOURCE_ID = sourceId;
+        process.env.SWISS_EPHEMERIS_KEY = "local-fixture-key";
+      },
       setEpisode(handler) {
         episodeHandler = handler;
         process.env.SWISS_TRANSIT_EPISODE_URL = "https://swiss-fixture.invalid/episodes";

@@ -1,0 +1,295 @@
+{
+  "id": "upcoming-jupiter",
+  "input": {
+    "contract": "swiss-upcoming-cycles/1",
+    "solverVersion": "upcoming-cycles-1",
+    "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+    "from": "2026-01-01T12:00:00.000Z",
+    "to": "2026-04-01T12:00:00.000Z",
+    "bodies": [
+      "jupiter"
+    ],
+    "aspects": [
+      "conjunction"
+    ],
+    "targets": [
+      {
+        "name": "sun",
+        "offsets": [
+          -2,
+          0,
+          2
+        ],
+        "longitudes": [
+          107.30503341015128,
+          107.30504341015127,
+          107.30505341015129
+        ]
+      }
+    ],
+    "duration": "all"
+  },
+  "actual": {
+    "contract": "swiss-upcoming-cycles/1",
+    "solverVersion": "upcoming-cycles-1",
+    "status": "complete",
+    "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+    "source": {
+      "engine": "swiss-ephemeris",
+      "engineVersion": "2.10.03",
+      "dataId": "sha256:975743cf9ca4c15e9e86d22f8d03fd973a1341f6b0bd971cabd21a4a02022797",
+      "frame": "tropical-apparent-geocentric-true-equinox-of-date",
+      "timeScale": "UT",
+      "returnedFlags": 258
+    },
+    "range": {
+      "from": "2026-01-01T12:00:00.000Z",
+      "to": "2026-04-01T12:00:00.000Z",
+      "boundary": "half-open"
+    },
+    "scope": {
+      "bodies": [
+        "jupiter"
+      ],
+      "aspects": [
+        "conjunction"
+      ],
+      "targets": [
+        "sun"
+      ],
+      "duration": "all"
+    },
+    "windows": [
+      {
+        "id": "cycle:03ae346da9c31fbefef92284ef5bd70a",
+        "transitBody": "jupiter",
+        "natalPoint": "sun",
+        "aspect": "conjunction",
+        "branch": "plus",
+        "start": "2026-01-08T21:37:52.000Z",
+        "end": "2026-05-10T08:54:32.000Z",
+        "startRange": [
+          "2026-01-08T21:37:45.000Z",
+          "2026-01-08T21:37:59.000Z"
+        ],
+        "endRange": [
+          "2026-05-10T08:54:26.000Z",
+          "2026-05-10T08:54:38.000Z"
+        ],
+        "exactAt": [
+          "2026-02-01T12:00:00.000Z",
+          "2026-04-18T04:28:21.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-02-01T11:59:52.000Z",
+            "2026-02-01T12:00:08.000Z"
+          ],
+          [
+            "2026-04-18T04:28:12.000Z",
+            "2026-04-18T04:28:29.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 121.4699074074074,
+        "duration": "long",
+        "confidence": "exact",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      }
+    ],
+    "activeMatched": 0,
+    "upcomingMatched": 1,
+    "uncertainMatched": 0,
+    "totalMatched": 1,
+    "truncated": false,
+    "incompleteWindows": 0,
+    "evaluations": 2037
+  },
+  "reference": {
+    "tool": "independent-dense-swiss-et-1",
+    "swissVersion": "2.10.03",
+    "stepMs": 3600000,
+    "coverage": {
+      "from": 1751716800000,
+      "to": 1790596800000
+    },
+    "stations": [
+      {
+        "at": 1762879284510,
+        "longitude": 115.15254954699213,
+        "directionBefore": "direct",
+        "directionAfter": "retrograde"
+      },
+      {
+        "at": 1773199790609,
+        "longitude": 105.08728158321127,
+        "directionBefore": "retrograde",
+        "directionAfter": "direct"
+      }
+    ],
+    "samples": [
+      {
+        "contacts": [
+          {
+            "at": 1756415342951,
+            "level": 107.30503341015128,
+            "branch": "plus",
+            "turn": 0,
+            "direction": "direct"
+          },
+          {
+            "at": 1769947207823,
+            "level": 107.30503341015128,
+            "branch": "plus",
+            "turn": 0,
+            "direction": "retrograde"
+          },
+          {
+            "at": 1776486493018,
+            "level": 107.30503341015128,
+            "branch": "plus",
+            "turn": 0,
+            "direction": "direct"
+          }
+        ],
+        "windows": [
+          {
+            "ingress": 1755079628685,
+            "egress": 1757937233118,
+            "contacts": [
+              1756415342951
+            ]
+          },
+          {
+            "ingress": 1767908278585,
+            "egress": 1778403266469,
+            "contacts": [
+              1769947207823,
+              1776486493018
+            ]
+          }
+        ],
+        "components": [
+          {
+            "contacts": [
+              1756415342951,
+              1769947207823,
+              1776486493018
+            ],
+            "complete": false
+          }
+        ],
+        "ambiguous": false
+      },
+      {
+        "contacts": [
+          {
+            "at": 1756415347644,
+            "level": 107.30504341015127,
+            "branch": "plus",
+            "turn": 0,
+            "direction": "direct"
+          },
+          {
+            "at": 1769947200000,
+            "level": 107.30504341015127,
+            "branch": "plus",
+            "turn": 0,
+            "direction": "retrograde"
+          },
+          {
+            "at": 1776486500805,
+            "level": 107.30504341015127,
+            "branch": "plus",
+            "turn": 0,
+            "direction": "direct"
+          }
+        ],
+        "windows": [
+          {
+            "ingress": 1755079632944,
+            "egress": 1757937238685,
+            "contacts": [
+              1756415347644
+            ]
+          },
+          {
+            "ingress": 1767908272180,
+            "egress": 1778403271972,
+            "contacts": [
+              1769947200000,
+              1776486500805
+            ]
+          }
+        ],
+        "components": [
+          {
+            "contacts": [
+              1756415347644,
+              1769947200000,
+              1776486500805
+            ],
+            "complete": false
+          }
+        ],
+        "ambiguous": false
+      },
+      {
+        "contacts": [
+          {
+            "at": 1756415352337,
+            "level": 107.30505341015129,
+            "branch": "plus",
+            "turn": 0,
+            "direction": "direct"
+          },
+          {
+            "at": 1769947192177,
+            "level": 107.30505341015129,
+            "branch": "plus",
+            "turn": 0,
+            "direction": "retrograde"
+          },
+          {
+            "at": 1776486508593,
+            "level": 107.30505341015129,
+            "branch": "plus",
+            "turn": 0,
+            "direction": "direct"
+          }
+        ],
+        "windows": [
+          {
+            "ingress": 1755079637202,
+            "egress": 1757937244288,
+            "contacts": [
+              1756415352337
+            ]
+          },
+          {
+            "ingress": 1767908265774,
+            "egress": 1778403277475,
+            "contacts": [
+              1769947192177,
+              1776486508593
+            ]
+          }
+        ],
+        "components": [
+          {
+            "contacts": [
+              1756415352337,
+              1769947192177,
+              1776486508593
+            ],
+            "complete": false
+          }
+        ],
+        "ambiguous": false
+      }
+    ]
+  },
+  "issues": [],
+  "durationMs": 43.37319000000002
+}

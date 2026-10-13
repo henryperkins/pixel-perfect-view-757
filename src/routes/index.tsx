@@ -11,6 +11,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useCalendarQueryRefresh, useCalendarRefresh } from "@/hooks/useCalendarRefresh";
 import { currentSession } from "@/lib/auth.shared";
 import { localDayString } from "@/lib/local-day";
+import { solarContextLine } from "@/lib/solar-context";
 import { absoluteUrl, jsonLd, publicPageHead, SITE_NAME } from "@/lib/seo";
 import {
   cycleTimingPhrase,
@@ -248,6 +249,19 @@ function TodayContent({
             </p>
           ))}
         </div>
+        {data.localContext?.solar ? (
+          <section className="mt-5 border-t border-rule pt-4" aria-labelledby="today-solar-context">
+            <h2 id="today-solar-context" className="flow-section-title">
+              Your Context
+            </h2>
+            <p className="mt-2 text-sm">{solarContextLine(data.localContext.solar)}</p>
+            <p className="mt-2 text-xs text-muted-foreground">
+              {data.localContext.solar.timeZone} · selected current location on a 1° grid ·{" "}
+              {data.localContext.solar.source}. Daylight is calculated with standard refraction at
+              sea level; seasons use calendar months outside the tropics.
+            </p>
+          </section>
+        ) : null}
         <details className="today-reading-calculation mt-5 border-b border-rule pb-4">
           <summary className="text-sm text-primary">Reading calculation</summary>
           {primary ? (

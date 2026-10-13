@@ -1,18 +1,16 @@
-import type { DailyTransitCalculation } from "./transit-episodes";
-
 const MAX_SELECTIONS = 64;
 const RETENTION_MS = 15 * 60_000;
 const selections = new Map<
   string,
-  { ownerId: string; expires: number; result: Promise<DailyTransitCalculation> }
+  { ownerId: string; expires: number; result: Promise<unknown> }
 >();
 
 /** Bounded, private worker memory. Database reading history remains the durable cache. */
-export async function cachedTimingCalculation(
+export async function cachedTimingCalculation<T>(
   ownerId: string,
   key: string,
-  calculate: () => Promise<DailyTransitCalculation>,
-): Promise<DailyTransitCalculation> {
+  calculate: () => Promise<T>,
+): Promise<T> {
   const now = Date.now();
   for (const [id, item] of selections) if (item.expires <= now) selections.delete(id);
   let entry = selections.get(key);
@@ -22,7 +20,7 @@ export async function cachedTimingCalculation(
     selections.set(key, entry);
   }
   try {
-    return structuredClone(await entry.result);
+    return structuredClone(await entry.result) as T;
   } catch (error) {
     if (selections.get(key) === entry) selections.delete(key);
     throw error;

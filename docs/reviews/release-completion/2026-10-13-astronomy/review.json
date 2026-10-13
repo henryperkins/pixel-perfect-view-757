@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "native": {
+    "reviewer": "astronomy_service_review",
+    "critical": 0,
+    "important": 0,
+    "scope": "offline native geometry, HTTP, resource limits and independent ET root probes",
+    "checks": [
+      "38 native tests",
+      "three actual365-day target batches below75k evaluations/1.3s locally",
+      "142 ET exact contacts; maximum longitude residual0.000084 degrees",
+      "auth, future admission, chart capacity, timeout cleanup",
+      "polar upper-limb correction",
+      "unclosed-window membership",
+      "explicit lunar shadow coverage limit"
+    ]
+  },
+  "app": {
+    "reviewer": "astronomy_app_review",
+    "status": "final decision pending",
+    "fixedFindings": [
+      "late location read after revocation",
+      "stale save after revoke/regrant",
+      "stale save after Clear"
+    ],
+    "regressions": "all included in764-test suite; same-ms epoch probe passed"
+  }
+}

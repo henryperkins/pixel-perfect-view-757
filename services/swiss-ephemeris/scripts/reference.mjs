@@ -10,7 +10,18 @@ const angles = {
   quincunx: 150,
   opposition: 180,
 };
-const bodies = { jupiter: 5, saturn: 6, uranus: 7, neptune: 8, pluto: 9 };
+const bodies = {
+  sun: 0,
+  moon: 1,
+  mercury: 2,
+  venus: 3,
+  mars: 4,
+  jupiter: 5,
+  saturn: 6,
+  uranus: 7,
+  neptune: 8,
+  pluto: 9,
+};
 const near = (lon, target) => lon + 360 * Math.round((target - lon) / 360);
 let initialized = false;
 export function referencePosition(body, ms) {

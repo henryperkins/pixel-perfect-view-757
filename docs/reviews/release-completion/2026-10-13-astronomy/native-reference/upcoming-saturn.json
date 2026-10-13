@@ -1,0 +1,269 @@
+{
+  "id": "upcoming-saturn",
+  "input": {
+    "contract": "swiss-upcoming-cycles/1",
+    "solverVersion": "upcoming-cycles-1",
+    "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+    "from": "2026-01-01T12:00:00.000Z",
+    "to": "2026-04-01T12:00:00.000Z",
+    "bodies": [
+      "saturn"
+    ],
+    "aspects": [
+      "conjunction"
+    ],
+    "targets": [
+      {
+        "name": "sun",
+        "offsets": [
+          -2,
+          0,
+          2
+        ],
+        "longitudes": [
+          358.6900673297647,
+          358.6900773297647,
+          358.69008732976465
+        ]
+      }
+    ],
+    "duration": "all"
+  },
+  "actual": {
+    "contract": "swiss-upcoming-cycles/1",
+    "solverVersion": "upcoming-cycles-1",
+    "status": "complete",
+    "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+    "source": {
+      "engine": "swiss-ephemeris",
+      "engineVersion": "2.10.03",
+      "dataId": "sha256:975743cf9ca4c15e9e86d22f8d03fd973a1341f6b0bd971cabd21a4a02022797",
+      "frame": "tropical-apparent-geocentric-true-equinox-of-date",
+      "timeScale": "UT",
+      "returnedFlags": 258
+    },
+    "range": {
+      "from": "2026-01-01T12:00:00.000Z",
+      "to": "2026-04-01T12:00:00.000Z",
+      "boundary": "half-open"
+    },
+    "scope": {
+      "bodies": [
+        "saturn"
+      ],
+      "aspects": [
+        "conjunction"
+      ],
+      "targets": [
+        "sun"
+      ],
+      "duration": "all"
+    },
+    "windows": [
+      {
+        "id": "cycle:7be5b75abc0ddb42d84f60dd793ea774",
+        "transitBody": "saturn",
+        "natalPoint": "sun",
+        "aspect": "conjunction",
+        "branch": "plus",
+        "start": "2025-12-22T14:33:54.000Z",
+        "end": "2026-02-28T17:08:44.000Z",
+        "startRange": [
+          "2025-12-22T14:33:33.000Z",
+          "2025-12-22T14:34:14.000Z"
+        ],
+        "endRange": [
+          "2026-02-28T17:08:36.000Z",
+          "2026-02-28T17:08:52.000Z"
+        ],
+        "exactAt": [
+          "2026-02-01T12:00:00.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-02-01T11:59:50.000Z",
+            "2026-02-01T12:00:09.000Z"
+          ]
+        ],
+        "phase": "active",
+        "durationDays": 68.10752314814815,
+        "duration": "long",
+        "confidence": "exact",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      }
+    ],
+    "activeMatched": 1,
+    "upcomingMatched": 0,
+    "uncertainMatched": 0,
+    "totalMatched": 1,
+    "truncated": false,
+    "incompleteWindows": 0,
+    "evaluations": 2059
+  },
+  "reference": {
+    "tool": "independent-dense-swiss-et-1",
+    "swissVersion": "2.10.03",
+    "stepMs": 3600000,
+    "coverage": {
+      "from": 1751716800000,
+      "to": 1790596800000
+    },
+    "stations": [
+      {
+        "at": 1752379639523,
+        "longitude": 1.9344165880873918,
+        "directionBefore": "direct",
+        "directionAfter": "retrograde"
+      },
+      {
+        "at": 1764301893723,
+        "longitude": -4.842440232812294,
+        "directionBefore": "retrograde",
+        "directionAfter": "direct"
+      },
+      {
+        "at": 1785095789137,
+        "longitude": 14.749958750976749,
+        "directionBefore": "direct",
+        "directionAfter": "retrograde"
+      }
+    ],
+    "samples": [
+      {
+        "contacts": [
+          {
+            "at": 1758232696174,
+            "level": -1.3099326702352982,
+            "branch": "plus",
+            "turn": -1,
+            "direction": "retrograde"
+          },
+          {
+            "at": 1769947191270,
+            "level": -1.3099326702352982,
+            "branch": "plus",
+            "turn": -1,
+            "direction": "direct"
+          }
+        ],
+        "windows": [
+          {
+            "ingress": 1753857162157,
+            "egress": 1762165379307,
+            "contacts": [
+              1758232696174
+            ]
+          },
+          {
+            "ingress": 1766414013718,
+            "egress": 1772298516807,
+            "contacts": [
+              1769947191270
+            ]
+          }
+        ],
+        "components": [
+          {
+            "contacts": [
+              1758232696174,
+              1769947191270
+            ],
+            "complete": false
+          }
+        ],
+        "ambiguous": false
+      },
+      {
+        "contacts": [
+          {
+            "at": 1758232685034,
+            "level": -1.3099226702353235,
+            "branch": "plus",
+            "turn": -1,
+            "direction": "retrograde"
+          },
+          {
+            "at": 1769947200000,
+            "level": -1.3099226702353235,
+            "branch": "plus",
+            "turn": -1,
+            "direction": "direct"
+          }
+        ],
+        "windows": [
+          {
+            "ingress": 1753857131654,
+            "egress": 1762165358656,
+            "contacts": [
+              1758232685034
+            ]
+          },
+          {
+            "ingress": 1766414033755,
+            "egress": 1772298524063,
+            "contacts": [
+              1769947200000
+            ]
+          }
+        ],
+        "components": [
+          {
+            "contacts": [
+              1758232685034,
+              1769947200000
+            ],
+            "complete": false
+          }
+        ],
+        "ambiguous": false
+      },
+      {
+        "contacts": [
+          {
+            "at": 1758232673894,
+            "level": -1.3099126702353487,
+            "branch": "plus",
+            "turn": -1,
+            "direction": "retrograde"
+          },
+          {
+            "at": 1769947208730,
+            "level": -1.3099126702353487,
+            "branch": "plus",
+            "turn": -1,
+            "direction": "direct"
+          }
+        ],
+        "windows": [
+          {
+            "ingress": 1753857101150,
+            "egress": 1762165338006,
+            "contacts": [
+              1758232673894
+            ]
+          },
+          {
+            "ingress": 1766414053791,
+            "egress": 1772298531319,
+            "contacts": [
+              1769947208730
+            ]
+          }
+        ],
+        "components": [
+          {
+            "contacts": [
+              1758232673894,
+              1769947208730
+            ],
+            "complete": false
+          }
+        ],
+        "ambiguous": false
+      }
+    ]
+  },
+  "issues": [],
+  "durationMs": 35.11782600000015
+}

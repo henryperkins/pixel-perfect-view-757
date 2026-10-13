@@ -1,0 +1,1498 @@
+{
+  "id": "upcoming-full-year-0",
+  "input": {
+    "contract": "swiss-upcoming-cycles/1",
+    "solverVersion": "upcoming-cycles-1",
+    "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+    "from": "2026-10-13T12:00:00.000Z",
+    "to": "2027-10-13T12:00:00.000Z",
+    "bodies": [
+      "moon",
+      "sun",
+      "mercury",
+      "venus",
+      "mars",
+      "jupiter",
+      "saturn",
+      "uranus",
+      "neptune",
+      "pluto"
+    ],
+    "aspects": [
+      "conjunction",
+      "sextile",
+      "square",
+      "trine",
+      "quincunx",
+      "opposition"
+    ],
+    "targets": [
+      {
+        "name": "sun",
+        "offsets": [
+          -2,
+          0,
+          2
+        ],
+        "longitudes": [
+          280.81284868559965,
+          280.8142646248141,
+          280.8156805639138
+        ]
+      },
+      {
+        "name": "moon",
+        "offsets": [
+          -2,
+          0,
+          2
+        ],
+        "longitudes": [
+          333.2489973357101,
+          333.26770566874154,
+          333.28641438540103
+        ]
+      },
+      {
+        "name": "mercury",
+        "offsets": [
+          -2,
+          0,
+          2
+        ],
+        "longitudes": [
+          295.67323315362546,
+          295.67282420855804,
+          295.67241488093987
+        ]
+      }
+    ],
+    "duration": "all"
+  },
+  "actual": {
+    "contract": "swiss-upcoming-cycles/1",
+    "solverVersion": "upcoming-cycles-1",
+    "status": "partial",
+    "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+    "source": {
+      "engine": "swiss-ephemeris",
+      "engineVersion": "2.10.03",
+      "dataId": "sha256:975743cf9ca4c15e9e86d22f8d03fd973a1341f6b0bd971cabd21a4a02022797",
+      "frame": "tropical-apparent-geocentric-true-equinox-of-date",
+      "timeScale": "UT",
+      "returnedFlags": 258
+    },
+    "range": {
+      "from": "2026-10-13T12:00:00.000Z",
+      "to": "2027-10-13T12:00:00.000Z",
+      "boundary": "half-open"
+    },
+    "scope": {
+      "bodies": [
+        "moon",
+        "sun",
+        "mercury",
+        "venus",
+        "mars",
+        "jupiter",
+        "saturn",
+        "uranus",
+        "neptune",
+        "pluto"
+      ],
+      "aspects": [
+        "conjunction",
+        "sextile",
+        "square",
+        "trine",
+        "quincunx",
+        "opposition"
+      ],
+      "targets": [
+        "sun",
+        "moon",
+        "mercury"
+      ],
+      "duration": "all"
+    },
+    "windows": [
+      {
+        "id": "cycle:9d2b3233560f3ce422aa51862327e23c",
+        "transitBody": "uranus",
+        "natalPoint": "moon",
+        "aspect": "square",
+        "branch": "plus",
+        "start": "2026-04-30T21:32:49.000Z",
+        "end": "2027-06-04T22:00:25.000Z",
+        "startRange": [
+          "2026-04-30T13:28:51.000Z",
+          "2026-05-01T05:36:04.000Z"
+        ],
+        "endRange": [
+          "2027-06-04T14:18:12.000Z",
+          "2027-06-05T05:42:52.000Z"
+        ],
+        "exactAt": [
+          "2026-06-22T11:45:19.000Z",
+          "2026-12-05T17:08:32.000Z",
+          "2027-04-11T15:37:33.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-06-22T03:19:25.000Z",
+            "2026-06-22T20:12:21.000Z"
+          ],
+          [
+            "2026-12-05T06:14:52.000Z",
+            "2026-12-06T04:03:34.000Z"
+          ],
+          [
+            "2027-04-11T06:02:26.000Z",
+            "2027-04-12T01:10:11.000Z"
+          ]
+        ],
+        "phase": "active",
+        "durationDays": 400.01916666666665,
+        "duration": "long",
+        "confidence": "range",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:7afcf1eec1e147087b0977e2e1c2c9de",
+        "transitBody": "saturn",
+        "natalPoint": "sun",
+        "aspect": "square",
+        "branch": "plus",
+        "start": "2026-08-29T13:25:32.000Z",
+        "end": "2027-03-07T10:21:38.000Z",
+        "startRange": [
+          "2026-08-29T12:47:10.000Z",
+          "2026-08-29T14:03:52.000Z"
+        ],
+        "endRange": [
+          "2027-03-07T10:04:12.000Z",
+          "2027-03-07T10:39:04.000Z"
+        ],
+        "exactAt": [
+          "2026-10-10T17:44:18.000Z",
+          "2027-02-07T02:42:08.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-10-10T17:18:07.000Z",
+            "2026-10-10T18:10:29.000Z"
+          ],
+          [
+            "2027-02-07T02:20:02.000Z",
+            "2027-02-07T03:04:14.000Z"
+          ]
+        ],
+        "phase": "active",
+        "durationDays": 189.87229166666665,
+        "duration": "long",
+        "confidence": "range",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:74d6a6e90eff43baf64186a3d6ad42b3",
+        "transitBody": "moon",
+        "natalPoint": "mercury",
+        "aspect": "sextile",
+        "branch": "minus",
+        "start": "2026-10-13T13:35:29.000Z",
+        "end": "2026-10-13T19:26:52.000Z",
+        "startRange": [
+          "2026-10-13T13:35:25.000Z",
+          "2026-10-13T13:35:32.000Z"
+        ],
+        "endRange": [
+          "2026-10-13T19:26:49.000Z",
+          "2026-10-13T19:26:55.000Z"
+        ],
+        "exactAt": [
+          "2026-10-13T16:30:59.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-10-13T16:30:55.000Z",
+            "2026-10-13T16:31:02.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.2440162037037037,
+        "duration": "short",
+        "confidence": "exact",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:3cbccbb84fe7fc921ec998406e854ce5",
+        "transitBody": "moon",
+        "natalPoint": "moon",
+        "aspect": "square",
+        "branch": "minus",
+        "start": "2026-10-14T04:27:59.000Z",
+        "end": "2026-10-14T10:23:07.000Z",
+        "startRange": [
+          "2026-10-14T04:25:46.000Z",
+          "2026-10-14T04:30:12.000Z"
+        ],
+        "endRange": [
+          "2026-10-14T10:20:54.000Z",
+          "2026-10-14T10:25:21.000Z"
+        ],
+        "exactAt": [
+          "2026-10-14T07:25:22.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-10-14T07:23:09.000Z",
+            "2026-10-14T07:27:36.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.24662037037037038,
+        "duration": "short",
+        "confidence": "range",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:7dc8c496c27888453674a35ec40c2e8c",
+        "transitBody": "mars",
+        "natalPoint": "sun",
+        "aspect": "quincunx",
+        "branch": "minus",
+        "start": "2026-10-14T12:34:30.000Z",
+        "end": "2026-10-19T19:11:30.000Z",
+        "startRange": [
+          "2026-10-14T12:30:49.000Z",
+          "2026-10-14T12:38:12.000Z"
+        ],
+        "endRange": [
+          "2026-10-19T19:07:42.000Z",
+          "2026-10-19T19:15:17.000Z"
+        ],
+        "exactAt": [
+          "2026-10-17T03:29:21.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-10-17T03:25:37.000Z",
+            "2026-10-17T03:33:06.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 5.2756944444444445,
+        "duration": "short",
+        "confidence": "range",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:f2f00e9ab45ca4c712c775f3f670795b",
+        "transitBody": "venus",
+        "natalPoint": "moon",
+        "aspect": "trine",
+        "branch": "minus",
+        "start": "2026-10-15T02:38:25.000Z",
+        "end": "2026-10-24T03:04:13.000Z",
+        "startRange": [
+          "2026-10-15T01:38:21.000Z",
+          "2026-10-15T03:38:19.000Z"
+        ],
+        "endRange": [
+          "2026-10-24T02:20:14.000Z",
+          "2026-10-24T03:48:11.000Z"
+        ],
+        "exactAt": [
+          "2026-10-19T22:48:10.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-10-19T22:01:04.000Z",
+            "2026-10-19T23:35:12.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 9.017916666666666,
+        "duration": "medium",
+        "confidence": "range",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:109a5e2aebe582d50c2bf24c6301bb24",
+        "transitBody": "sun",
+        "natalPoint": "mercury",
+        "aspect": "square",
+        "branch": "minus",
+        "start": "2026-10-16T12:41:52.000Z",
+        "end": "2026-10-21T13:32:37.000Z",
+        "startRange": [
+          "2026-10-16T12:41:16.000Z",
+          "2026-10-16T12:42:28.000Z"
+        ],
+        "endRange": [
+          "2026-10-21T13:32:01.000Z",
+          "2026-10-21T13:33:13.000Z"
+        ],
+        "exactAt": [
+          "2026-10-19T01:09:26.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-10-19T01:08:49.000Z",
+            "2026-10-19T01:10:02.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 5.035243055555555,
+        "duration": "short",
+        "confidence": "range",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:4b1db9e5076c7a83d0ff4576fa4d4cf8",
+        "transitBody": "moon",
+        "natalPoint": "moon",
+        "aspect": "sextile",
+        "branch": "minus",
+        "start": "2026-10-16T16:31:48.000Z",
+        "end": "2026-10-16T22:36:37.000Z",
+        "startRange": [
+          "2026-10-16T16:29:31.000Z",
+          "2026-10-16T16:34:05.000Z"
+        ],
+        "endRange": [
+          "2026-10-16T22:34:20.000Z",
+          "2026-10-16T22:38:54.000Z"
+        ],
+        "exactAt": [
+          "2026-10-16T19:34:10.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-10-16T19:31:53.000Z",
+            "2026-10-16T19:36:27.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.2533449074074074,
+        "duration": "short",
+        "confidence": "range",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:2a02f8685ae40ca69bf0c2da119dca05",
+        "transitBody": "moon",
+        "natalPoint": "sun",
+        "aspect": "conjunction",
+        "branch": "plus",
+        "start": "2026-10-17T07:49:59.000Z",
+        "end": "2026-10-17T13:55:12.000Z",
+        "startRange": [
+          "2026-10-17T07:49:48.000Z",
+          "2026-10-17T07:50:10.000Z"
+        ],
+        "endRange": [
+          "2026-10-17T13:55:01.000Z",
+          "2026-10-17T13:55:22.000Z"
+        ],
+        "exactAt": [
+          "2026-10-17T10:52:36.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-10-17T10:52:25.000Z",
+            "2026-10-17T10:52:47.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.25362268518518516,
+        "duration": "short",
+        "confidence": "exact",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:3b9d10e1af70787eb7f95d2d7ebde919",
+        "transitBody": "moon",
+        "natalPoint": "mercury",
+        "aspect": "conjunction",
+        "branch": "plus",
+        "start": "2026-10-18T13:55:54.000Z",
+        "end": "2026-10-18T19:58:48.000Z",
+        "startRange": [
+          "2026-10-18T13:55:51.000Z",
+          "2026-10-18T13:55:57.000Z"
+        ],
+        "endRange": [
+          "2026-10-18T19:58:45.000Z",
+          "2026-10-18T19:58:52.000Z"
+        ],
+        "exactAt": [
+          "2026-10-18T16:57:28.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-10-18T16:57:24.000Z",
+            "2026-10-18T16:57:31.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.25201388888888887,
+        "duration": "short",
+        "confidence": "exact",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:a899566db4c15fde15151044db863863",
+        "transitBody": "moon",
+        "natalPoint": "moon",
+        "aspect": "conjunction",
+        "branch": "plus",
+        "start": "2026-10-21T15:57:14.000Z",
+        "end": "2026-10-21T21:38:22.000Z",
+        "startRange": [
+          "2026-10-21T15:55:05.000Z",
+          "2026-10-21T15:59:23.000Z"
+        ],
+        "endRange": [
+          "2026-10-21T21:36:14.000Z",
+          "2026-10-21T21:40:30.000Z"
+        ],
+        "exactAt": [
+          "2026-10-21T18:48:05.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-10-21T18:45:57.000Z",
+            "2026-10-21T18:50:13.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.23689814814814814,
+        "duration": "short",
+        "confidence": "range",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:557eb69d5a4c187531f9448666b4fd1b",
+        "transitBody": "moon",
+        "natalPoint": "sun",
+        "aspect": "sextile",
+        "branch": "plus",
+        "start": "2026-10-22T06:10:52.000Z",
+        "end": "2026-10-22T11:46:03.000Z",
+        "startRange": [
+          "2026-10-22T06:10:42.000Z",
+          "2026-10-22T06:11:02.000Z"
+        ],
+        "endRange": [
+          "2026-10-22T11:45:53.000Z",
+          "2026-10-22T11:46:13.000Z"
+        ],
+        "exactAt": [
+          "2026-10-22T08:58:46.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-10-22T08:58:36.000Z",
+            "2026-10-22T08:58:56.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.2327662037037037,
+        "duration": "short",
+        "confidence": "exact",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:7d2c1765cc23bd89b19061589cf862c6",
+        "transitBody": "moon",
+        "natalPoint": "mercury",
+        "aspect": "sextile",
+        "branch": "plus",
+        "start": "2026-10-23T09:27:30.000Z",
+        "end": "2026-10-23T14:50:53.000Z",
+        "startRange": [
+          "2026-10-23T09:27:27.000Z",
+          "2026-10-23T09:27:33.000Z"
+        ],
+        "endRange": [
+          "2026-10-23T14:50:50.000Z",
+          "2026-10-23T14:50:56.000Z"
+        ],
+        "exactAt": [
+          "2026-10-23T12:09:29.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-10-23T12:09:26.000Z",
+            "2026-10-23T12:09:32.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.22457175925925926,
+        "duration": "short",
+        "confidence": "exact",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:8896f886b410becf7d9ba81ccd1b0551",
+        "transitBody": "sun",
+        "natalPoint": "moon",
+        "aspect": "trine",
+        "branch": "minus",
+        "start": "2026-10-24T04:08:41.000Z",
+        "end": "2026-10-29T04:31:22.000Z",
+        "startRange": [
+          "2026-10-24T03:41:36.000Z",
+          "2026-10-24T04:35:45.000Z"
+        ],
+        "endRange": [
+          "2026-10-29T04:04:23.000Z",
+          "2026-10-29T04:58:22.000Z"
+        ],
+        "exactAt": [
+          "2026-10-26T16:22:37.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-10-26T15:55:35.000Z",
+            "2026-10-26T16:49:39.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 5.015752314814815,
+        "duration": "short",
+        "confidence": "range",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:c75e573c1c307b5cfde6ae3fb7c725c1",
+        "transitBody": "moon",
+        "natalPoint": "sun",
+        "aspect": "square",
+        "branch": "plus",
+        "start": "2026-10-24T12:16:52.000Z",
+        "end": "2026-10-24T17:29:18.000Z",
+        "startRange": [
+          "2026-10-24T12:16:43.000Z",
+          "2026-10-24T12:17:02.000Z"
+        ],
+        "endRange": [
+          "2026-10-24T17:29:09.000Z",
+          "2026-10-24T17:29:28.000Z"
+        ],
+        "exactAt": [
+          "2026-10-24T14:53:20.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-10-24T14:53:11.000Z",
+            "2026-10-24T14:53:30.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.2169675925925926,
+        "duration": "short",
+        "confidence": "exact",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:07325fbceac508a8b5243377767df55d",
+        "transitBody": "moon",
+        "natalPoint": "mercury",
+        "aspect": "square",
+        "branch": "plus",
+        "start": "2026-10-25T13:46:07.000Z",
+        "end": "2026-10-25T18:49:50.000Z",
+        "startRange": [
+          "2026-10-25T13:46:04.000Z",
+          "2026-10-25T13:46:10.000Z"
+        ],
+        "endRange": [
+          "2026-10-25T18:49:47.000Z",
+          "2026-10-25T18:49:53.000Z"
+        ],
+        "exactAt": [
+          "2026-10-25T16:18:10.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-10-25T16:18:07.000Z",
+            "2026-10-25T16:18:13.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.21091435185185184,
+        "duration": "short",
+        "confidence": "exact",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:7dd56af768a500a286ed8921bc527d5c",
+        "transitBody": "moon",
+        "natalPoint": "moon",
+        "aspect": "sextile",
+        "branch": "plus",
+        "start": "2026-10-26T02:32:11.000Z",
+        "end": "2026-10-26T07:32:24.000Z",
+        "startRange": [
+          "2026-10-26T02:30:18.000Z",
+          "2026-10-26T02:34:04.000Z"
+        ],
+        "endRange": [
+          "2026-10-26T07:30:31.000Z",
+          "2026-10-26T07:34:17.000Z"
+        ],
+        "exactAt": [
+          "2026-10-26T05:02:27.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-10-26T05:00:34.000Z",
+            "2026-10-26T05:04:20.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.2084837962962963,
+        "duration": "short",
+        "confidence": "range",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:8b28e534b8bf6d7a75f79a374ec3d2b8",
+        "transitBody": "moon",
+        "natalPoint": "sun",
+        "aspect": "trine",
+        "branch": "plus",
+        "start": "2026-10-26T15:05:10.000Z",
+        "end": "2026-10-26T20:02:37.000Z",
+        "startRange": [
+          "2026-10-26T15:05:01.000Z",
+          "2026-10-26T15:05:19.000Z"
+        ],
+        "endRange": [
+          "2026-10-26T20:02:28.000Z",
+          "2026-10-26T20:02:46.000Z"
+        ],
+        "exactAt": [
+          "2026-10-26T17:34:00.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-10-26T17:33:52.000Z",
+            "2026-10-26T17:34:09.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.2065625,
+        "duration": "short",
+        "confidence": "exact",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:1a05faeec6604a2f3b3178f429b65798",
+        "transitBody": "moon",
+        "natalPoint": "mercury",
+        "aspect": "trine",
+        "branch": "plus",
+        "start": "2026-10-27T15:30:48.000Z",
+        "end": "2026-10-27T20:24:58.000Z",
+        "startRange": [
+          "2026-10-27T15:30:45.000Z",
+          "2026-10-27T15:30:51.000Z"
+        ],
+        "endRange": [
+          "2026-10-27T20:24:55.000Z",
+          "2026-10-27T20:25:01.000Z"
+        ],
+        "exactAt": [
+          "2026-10-27T17:57:56.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-10-27T17:57:53.000Z",
+            "2026-10-27T17:57:59.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.2042824074074074,
+        "duration": "short",
+        "confidence": "exact",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:154c699c4ceeabf3775d55a09f6d84de",
+        "transitBody": "moon",
+        "natalPoint": "moon",
+        "aspect": "square",
+        "branch": "plus",
+        "start": "2026-10-28T03:54:56.000Z",
+        "end": "2026-10-28T08:48:30.000Z",
+        "startRange": [
+          "2026-10-28T03:53:06.000Z",
+          "2026-10-28T03:56:46.000Z"
+        ],
+        "endRange": [
+          "2026-10-28T08:46:40.000Z",
+          "2026-10-28T08:50:20.000Z"
+        ],
+        "exactAt": [
+          "2026-10-28T06:21:44.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-10-28T06:19:53.000Z",
+            "2026-10-28T06:23:34.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.20386574074074074,
+        "duration": "short",
+        "confidence": "range",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:5e2e0ae4eb98c21a4d697260b993138a",
+        "transitBody": "venus",
+        "natalPoint": "mercury",
+        "aspect": "square",
+        "branch": "minus",
+        "start": "2026-10-28T10:32:12.000Z",
+        "end": "2026-11-10T02:54:28.000Z",
+        "startRange": [
+          "2026-10-28T10:31:11.000Z",
+          "2026-10-28T10:33:14.000Z"
+        ],
+        "endRange": [
+          "2026-11-10T02:50:46.000Z",
+          "2026-11-10T02:58:11.000Z"
+        ],
+        "exactAt": [
+          "2026-11-02T04:48:26.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-11-02T04:47:09.000Z",
+            "2026-11-02T04:49:44.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 12.68212962962963,
+        "duration": "medium",
+        "confidence": "range",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:0b056cf35509083b9fbd5ce13acb691c",
+        "transitBody": "moon",
+        "natalPoint": "sun",
+        "aspect": "quincunx",
+        "branch": "plus",
+        "start": "2026-10-28T17:29:41.000Z",
+        "end": "2026-10-28T19:50:38.000Z",
+        "startRange": [
+          "2026-10-28T17:29:32.000Z",
+          "2026-10-28T17:29:50.000Z"
+        ],
+        "endRange": [
+          "2026-10-28T19:50:29.000Z",
+          "2026-10-28T19:50:47.000Z"
+        ],
+        "exactAt": [
+          "2026-10-28T18:40:09.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-10-28T18:40:00.000Z",
+            "2026-10-28T18:40:18.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.09788194444444444,
+        "duration": "short",
+        "confidence": "exact",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:18dbf2b189649c5b43b131ed97365d4b",
+        "transitBody": "moon",
+        "natalPoint": "mercury",
+        "aspect": "quincunx",
+        "branch": "plus",
+        "start": "2026-10-29T17:47:33.000Z",
+        "end": "2026-10-29T20:09:27.000Z",
+        "startRange": [
+          "2026-10-29T17:47:30.000Z",
+          "2026-10-29T17:47:36.000Z"
+        ],
+        "endRange": [
+          "2026-10-29T20:09:24.000Z",
+          "2026-10-29T20:09:30.000Z"
+        ],
+        "exactAt": [
+          "2026-10-29T18:58:29.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-10-29T18:58:26.000Z",
+            "2026-10-29T18:58:32.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.09854166666666667,
+        "duration": "short",
+        "confidence": "exact",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:de0bb3c068c9f606efe67ed812c9f022",
+        "transitBody": "moon",
+        "natalPoint": "moon",
+        "aspect": "trine",
+        "branch": "plus",
+        "start": "2026-10-30T05:00:27.000Z",
+        "end": "2026-10-30T09:57:53.000Z",
+        "startRange": [
+          "2026-10-30T04:58:36.000Z",
+          "2026-10-30T05:02:19.000Z"
+        ],
+        "endRange": [
+          "2026-10-30T09:56:01.000Z",
+          "2026-10-30T09:59:45.000Z"
+        ],
+        "exactAt": [
+          "2026-10-30T07:29:04.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-10-30T07:27:12.000Z",
+            "2026-10-30T07:30:56.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.20655092592592592,
+        "duration": "short",
+        "confidence": "range",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:56b84dff0aef4de22c66465f35b5fb95",
+        "transitBody": "moon",
+        "natalPoint": "sun",
+        "aspect": "opposition",
+        "branch": "plus",
+        "start": "2026-10-30T17:30:16.000Z",
+        "end": "2026-10-30T22:29:56.000Z",
+        "startRange": [
+          "2026-10-30T17:30:07.000Z",
+          "2026-10-30T17:30:25.000Z"
+        ],
+        "endRange": [
+          "2026-10-30T22:29:47.000Z",
+          "2026-10-30T22:30:05.000Z"
+        ],
+        "exactAt": [
+          "2026-10-30T19:59:59.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-10-30T19:59:50.000Z",
+            "2026-10-30T20:00:08.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.20810185185185184,
+        "duration": "short",
+        "confidence": "exact",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:019c7a0de2378d080740be69a562efe6",
+        "transitBody": "jupiter",
+        "natalPoint": "mercury",
+        "aspect": "quincunx",
+        "branch": "minus",
+        "start": "2026-10-31T06:16:54.000Z",
+        "end": "2027-01-24T21:10:47.000Z",
+        "startRange": [
+          "2026-10-31T06:12:07.000Z",
+          "2026-10-31T06:21:41.000Z"
+        ],
+        "endRange": [
+          "2027-01-24T21:05:49.000Z",
+          "2027-01-24T21:15:46.000Z"
+        ],
+        "exactAt": [
+          "2026-11-13T17:57:42.000Z",
+          "2027-01-11T04:28:05.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-11-13T17:51:06.000Z",
+            "2026-11-13T18:04:18.000Z"
+          ],
+          [
+            "2027-01-11T04:21:30.000Z",
+            "2027-01-11T04:34:40.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 85.62075231481481,
+        "duration": "long",
+        "confidence": "range",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:34e1e7cd7989f4f8a5858d2e965d53f1",
+        "transitBody": "sun",
+        "natalPoint": "sun",
+        "aspect": "sextile",
+        "branch": "minus",
+        "start": "2026-10-31T17:41:47.000Z",
+        "end": "2026-11-05T17:32:22.000Z",
+        "startRange": [
+          "2026-10-31T17:39:44.000Z",
+          "2026-10-31T17:43:50.000Z"
+        ],
+        "endRange": [
+          "2026-11-05T17:30:20.000Z",
+          "2026-11-05T17:34:25.000Z"
+        ],
+        "exactAt": [
+          "2026-11-03T05:39:41.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-11-03T05:37:38.000Z",
+            "2026-11-03T05:41:44.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 4.993460648148148,
+        "duration": "short",
+        "confidence": "range",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:de5bec6b0fa25d2663da8705ca894bab",
+        "transitBody": "moon",
+        "natalPoint": "mercury",
+        "aspect": "opposition",
+        "branch": "plus",
+        "start": "2026-10-31T18:24:38.000Z",
+        "end": "2026-10-31T23:29:39.000Z",
+        "startRange": [
+          "2026-10-31T18:24:35.000Z",
+          "2026-10-31T18:24:41.000Z"
+        ],
+        "endRange": [
+          "2026-10-31T23:29:36.000Z",
+          "2026-10-31T23:29:42.000Z"
+        ],
+        "exactAt": [
+          "2026-10-31T20:57:00.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-10-31T20:56:57.000Z",
+            "2026-10-31T20:57:03.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.21181712962962962,
+        "duration": "short",
+        "confidence": "exact",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:048c902b43f0cd17fb0034a9f4ce4eb0",
+        "transitBody": "moon",
+        "natalPoint": "moon",
+        "aspect": "quincunx",
+        "branch": "plus",
+        "start": "2026-11-01T08:39:07.000Z",
+        "end": "2026-11-01T11:06:59.000Z",
+        "startRange": [
+          "2026-11-01T08:37:11.000Z",
+          "2026-11-01T08:41:03.000Z"
+        ],
+        "endRange": [
+          "2026-11-01T11:05:03.000Z",
+          "2026-11-01T11:08:55.000Z"
+        ],
+        "exactAt": [
+          "2026-11-01T09:53:01.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-11-01T09:51:05.000Z",
+            "2026-11-01T09:54:57.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.10268518518518518,
+        "duration": "short",
+        "confidence": "range",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:1a32394ad934a5f2962d106b7d4d994b",
+        "transitBody": "moon",
+        "natalPoint": "sun",
+        "aspect": "quincunx",
+        "branch": "minus",
+        "start": "2026-11-01T21:37:14.000Z",
+        "end": "2026-11-02T00:06:37.000Z",
+        "startRange": [
+          "2026-11-01T21:37:05.000Z",
+          "2026-11-01T21:37:24.000Z"
+        ],
+        "endRange": [
+          "2026-11-02T00:06:28.000Z",
+          "2026-11-02T00:06:46.000Z"
+        ],
+        "exactAt": [
+          "2026-11-01T22:51:53.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-11-01T22:51:44.000Z",
+            "2026-11-01T22:52:03.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.10373842592592593,
+        "duration": "short",
+        "confidence": "exact",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:343c5b4af5f2dfd7339eefaf9c023db6",
+        "transitBody": "moon",
+        "natalPoint": "mercury",
+        "aspect": "quincunx",
+        "branch": "minus",
+        "start": "2026-11-02T23:32:30.000Z",
+        "end": "2026-11-03T02:04:51.000Z",
+        "startRange": [
+          "2026-11-02T23:32:26.000Z",
+          "2026-11-02T23:32:33.000Z"
+        ],
+        "endRange": [
+          "2026-11-03T02:04:48.000Z",
+          "2026-11-03T02:04:54.000Z"
+        ],
+        "exactAt": [
+          "2026-11-03T00:48:38.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-11-03T00:48:35.000Z",
+            "2026-11-03T00:48:41.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.10579861111111111,
+        "duration": "short",
+        "confidence": "exact",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:85dc72ce4bf920aa3fd5ae3e72536710",
+        "transitBody": "moon",
+        "natalPoint": "moon",
+        "aspect": "opposition",
+        "branch": "plus",
+        "start": "2026-11-03T11:36:02.000Z",
+        "end": "2026-11-03T16:56:32.000Z",
+        "startRange": [
+          "2026-11-03T11:34:02.000Z",
+          "2026-11-03T11:38:02.000Z"
+        ],
+        "endRange": [
+          "2026-11-03T16:54:32.000Z",
+          "2026-11-03T16:58:33.000Z"
+        ],
+        "exactAt": [
+          "2026-11-03T14:16:08.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-11-03T14:14:08.000Z",
+            "2026-11-03T14:18:09.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.22256944444444443,
+        "duration": "short",
+        "confidence": "range",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:f1236172093b3e7f67e72ef372e9367f",
+        "transitBody": "mercury",
+        "natalPoint": "sun",
+        "aspect": "sextile",
+        "branch": "minus",
+        "start": "2026-11-03T17:35:46.000Z",
+        "end": "2026-11-07T18:32:11.000Z",
+        "startRange": [
+          "2026-11-03T17:34:12.000Z",
+          "2026-11-03T17:37:21.000Z"
+        ],
+        "endRange": [
+          "2026-11-07T18:30:16.000Z",
+          "2026-11-07T18:34:07.000Z"
+        ],
+        "exactAt": [
+          "2026-11-05T15:46:32.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-11-05T15:44:56.000Z",
+            "2026-11-05T15:48:09.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 4.039178240740741,
+        "duration": "short",
+        "confidence": "range",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:7aad536a7bc5014512259c3b4cdd6e2d",
+        "transitBody": "moon",
+        "natalPoint": "sun",
+        "aspect": "trine",
+        "branch": "minus",
+        "start": "2026-11-04T01:04:33.000Z",
+        "end": "2026-11-04T06:28:03.000Z",
+        "startRange": [
+          "2026-11-04T01:04:24.000Z",
+          "2026-11-04T01:04:43.000Z"
+        ],
+        "endRange": [
+          "2026-11-04T06:27:53.000Z",
+          "2026-11-04T06:28:13.000Z"
+        ],
+        "exactAt": [
+          "2026-11-04T03:46:09.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-11-04T03:46:00.000Z",
+            "2026-11-04T03:46:19.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.22465277777777778,
+        "duration": "short",
+        "confidence": "exact",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:ab12218c9dd85a8f2b45b53245568dc0",
+        "transitBody": "moon",
+        "natalPoint": "mercury",
+        "aspect": "trine",
+        "branch": "minus",
+        "start": "2026-11-05T03:58:01.000Z",
+        "end": "2026-11-05T09:27:08.000Z",
+        "startRange": [
+          "2026-11-05T03:57:58.000Z",
+          "2026-11-05T03:58:04.000Z"
+        ],
+        "endRange": [
+          "2026-11-05T09:27:05.000Z",
+          "2026-11-05T09:27:11.000Z"
+        ],
+        "exactAt": [
+          "2026-11-05T06:42:26.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-11-05T06:42:23.000Z",
+            "2026-11-05T06:42:29.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.22855324074074074,
+        "duration": "short",
+        "confidence": "exact",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:fefe236b7663168babc4d0f3980dec19",
+        "transitBody": "moon",
+        "natalPoint": "moon",
+        "aspect": "quincunx",
+        "branch": "minus",
+        "start": "2026-11-05T19:19:32.000Z",
+        "end": "2026-11-05T21:58:51.000Z",
+        "startRange": [
+          "2026-11-05T19:17:28.000Z",
+          "2026-11-05T19:21:37.000Z"
+        ],
+        "endRange": [
+          "2026-11-05T21:56:46.000Z",
+          "2026-11-05T22:00:56.000Z"
+        ],
+        "exactAt": [
+          "2026-11-05T20:39:10.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-11-05T20:37:05.000Z",
+            "2026-11-05T20:41:15.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.11063657407407407,
+        "duration": "short",
+        "confidence": "range",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:af9e4772d3a74c75038a9a1ee4d17b13",
+        "transitBody": "moon",
+        "natalPoint": "sun",
+        "aspect": "square",
+        "branch": "minus",
+        "start": "2026-11-06T07:50:19.000Z",
+        "end": "2026-11-06T13:24:56.000Z",
+        "startRange": [
+          "2026-11-06T07:50:09.000Z",
+          "2026-11-06T07:50:29.000Z"
+        ],
+        "endRange": [
+          "2026-11-06T13:24:46.000Z",
+          "2026-11-06T13:25:06.000Z"
+        ],
+        "exactAt": [
+          "2026-11-06T10:37:29.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-11-06T10:37:19.000Z",
+            "2026-11-06T10:37:39.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.2323726851851852,
+        "duration": "short",
+        "confidence": "exact",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:412e932394222dff5783009b0478e885",
+        "transitBody": "moon",
+        "natalPoint": "mercury",
+        "aspect": "square",
+        "branch": "minus",
+        "start": "2026-11-07T11:38:22.000Z",
+        "end": "2026-11-07T17:18:26.000Z",
+        "startRange": [
+          "2026-11-07T11:38:19.000Z",
+          "2026-11-07T11:38:25.000Z"
+        ],
+        "endRange": [
+          "2026-11-07T17:18:23.000Z",
+          "2026-11-07T17:18:30.000Z"
+        ],
+        "exactAt": [
+          "2026-11-07T14:28:16.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-11-07T14:28:13.000Z",
+            "2026-11-07T14:28:19.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.2361574074074074,
+        "duration": "short",
+        "confidence": "exact",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:5cab1c36e9cf51ced1843cf6eccc23c3",
+        "transitBody": "moon",
+        "natalPoint": "moon",
+        "aspect": "trine",
+        "branch": "minus",
+        "start": "2026-11-08T02:01:30.000Z",
+        "end": "2026-11-08T07:44:27.000Z",
+        "startRange": [
+          "2026-11-08T01:59:21.000Z",
+          "2026-11-08T02:03:38.000Z"
+        ],
+        "endRange": [
+          "2026-11-08T07:42:18.000Z",
+          "2026-11-08T07:46:36.000Z"
+        ],
+        "exactAt": [
+          "2026-11-08T04:52:50.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-11-08T04:50:41.000Z",
+            "2026-11-08T04:54:58.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.23815972222222223,
+        "duration": "short",
+        "confidence": "range",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:9fbcc17ae2a5add9ec2b04b3af1ae841",
+        "transitBody": "moon",
+        "natalPoint": "sun",
+        "aspect": "sextile",
+        "branch": "minus",
+        "start": "2026-11-08T16:26:24.000Z",
+        "end": "2026-11-08T22:12:17.000Z",
+        "startRange": [
+          "2026-11-08T16:26:14.000Z",
+          "2026-11-08T16:26:34.000Z"
+        ],
+        "endRange": [
+          "2026-11-08T22:12:07.000Z",
+          "2026-11-08T22:12:28.000Z"
+        ],
+        "exactAt": [
+          "2026-11-08T19:19:12.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-11-08T19:19:02.000Z",
+            "2026-11-08T19:19:22.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.24019675925925926,
+        "duration": "short",
+        "confidence": "exact",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:8c7892f76d053a7798b62b64cecc0edd",
+        "transitBody": "moon",
+        "natalPoint": "mercury",
+        "aspect": "sextile",
+        "branch": "minus",
+        "start": "2026-11-09T21:11:14.000Z",
+        "end": "2026-11-10T03:03:04.000Z",
+        "startRange": [
+          "2026-11-09T21:11:11.000Z",
+          "2026-11-09T21:11:17.000Z"
+        ],
+        "endRange": [
+          "2026-11-10T03:03:01.000Z",
+          "2026-11-10T03:03:08.000Z"
+        ],
+        "exactAt": [
+          "2026-11-10T00:07:00.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-11-10T00:06:57.000Z",
+            "2026-11-10T00:07:04.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.24432870370370371,
+        "duration": "short",
+        "confidence": "exact",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      },
+      {
+        "id": "cycle:6d8952715b99c33cd61b37f86998add1",
+        "transitBody": "moon",
+        "natalPoint": "moon",
+        "aspect": "square",
+        "branch": "minus",
+        "start": "2026-11-10T12:04:18.000Z",
+        "end": "2026-11-10T17:59:11.000Z",
+        "startRange": [
+          "2026-11-10T12:02:05.000Z",
+          "2026-11-10T12:06:31.000Z"
+        ],
+        "endRange": [
+          "2026-11-10T17:56:58.000Z",
+          "2026-11-10T18:01:25.000Z"
+        ],
+        "exactAt": [
+          "2026-11-10T15:01:36.000Z"
+        ],
+        "exactRanges": [
+          [
+            "2026-11-10T14:59:23.000Z",
+            "2026-11-10T15:03:49.000Z"
+          ]
+        ],
+        "phase": "upcoming",
+        "durationDays": 0.24644675925925927,
+        "duration": "short",
+        "confidence": "range",
+        "complete": true,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
+      }
+    ],
+    "activeMatched": 2,
+    "upcomingMatched": 517,
+    "uncertainMatched": 0,
+    "totalMatched": 519,
+    "truncated": true,
+    "incompleteWindows": 0,
+    "evaluations": 73046
+  },
+  "reference": {
+    "independentNativeET": true,
+    "maximumResidualDegrees": 0.0000837094700614216
+  },
+  "issues": [],
+  "durationMs": 1257.5529429999997
+}

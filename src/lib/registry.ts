@@ -255,6 +255,17 @@ export const SOURCES: SourceDef[] = [
     retention_days: 90,
   },
   {
+    id: "DEV-02",
+    label: "Coarse current location",
+    description:
+      "A location you select on a one-degree grid with its calendar timezone. One encrypted value, replaced on change; no GPS or location history. Used only to calculate local daylight.",
+    tier: 2,
+    sensitivity: "personal",
+    allowed_uses: ["calculation", "framing"],
+    phase: "launch",
+    retention_days: 30,
+  },
+  {
     id: "AMB-02",
     label: "Local time of day",
     description: "Morning / afternoon / evening bucket at read time.",
@@ -267,13 +278,13 @@ export const SOURCES: SourceDef[] = [
   {
     id: "AMB-05",
     label: "Season and daylight",
-    description: "Coarse seasonal band derived from date and latitude.",
+    description:
+      "Native sunrise, sunset and daylight for your selected coarse current location, plus a hemisphere-based seasonal band outside the tropics. Local Your Context only; never sent to a model or used to rank cycles. Requires Coarse current location permission.",
     tier: 2,
-    sensitivity: "public",
+    sensitivity: "personal",
     allowed_uses: ["framing"],
     phase: "launch",
     retention_days: 30,
-    available: false,
   },
 
   // ---- Tier 3 — sensitive wellness
