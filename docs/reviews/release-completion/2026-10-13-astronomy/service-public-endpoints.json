@@ -1,0 +1,123 @@
+{
+  "createdAt": "2026-10-13T06:39:46.904Z",
+  "url": "https://pattern-transit-calc.fly.dev",
+  "checks": [
+    {
+      "path": "/health",
+      "status": 200,
+      "value": {
+        "ok": true,
+        "engine": {
+          "engine": "swiss-ephemeris",
+          "engineVersion": "2.10.03",
+          "dataId": "sha256:975743cf9ca4c15e9e86d22f8d03fd973a1341f6b0bd971cabd21a4a02022797",
+          "frame": "tropical-apparent-geocentric-true-equinox-of-date",
+          "timeScale": "UT",
+          "returnedFlags": 258
+        },
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "release": "a3631cba2c5735973a85e64224434fc525fc5d87",
+        "license": "AGPL-3.0-or-later",
+        "source": "/source",
+        "sourceAvailable": true
+      }
+    },
+    {
+      "path": "/v1/engine",
+      "status": 200,
+      "value": {
+        "source": {
+          "engine": "swiss-ephemeris",
+          "engineVersion": "2.10.03",
+          "dataId": "sha256:975743cf9ca4c15e9e86d22f8d03fd973a1341f6b0bd971cabd21a4a02022797",
+          "frame": "tropical-apparent-geocentric-true-equinox-of-date",
+          "timeScale": "UT",
+          "returnedFlags": 258
+        },
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "wrapper": "sweph@2.10.3-7",
+        "files": [
+          {
+            "name": "sepl_18.se1",
+            "bytes": 484061,
+            "sha256": "ca1393ceab3a44fbc895887cf789c68819ae6a1cbc9b22225872dbe4ccd99a66",
+            "required": true
+          },
+          {
+            "name": "semo_18.se1",
+            "bytes": 1304771,
+            "sha256": "1ca07bd67c24374d77226180c20a4f9996cba013697894810518e7eb582ca4f7",
+            "required": true
+          }
+        ],
+        "upstreamCommit": "85e65da01dce506bd0ec044ad3e39ab6d144d82b",
+        "utcConversion": "swe_utc_to_jd: UT1 result -> swe_calc_ut; pre-1972 input follows Swiss UT convention",
+        "coverage": {
+          "from": "1800-01-02T00:00:00.000Z",
+          "to": "2399-12-30T00:00:00.000Z"
+        },
+        "houseSystem": "placidus",
+        "houseFallback": "porphyry-explicit",
+        "license": "AGPL-3.0-or-later",
+        "capabilities": {
+          "astronomyEvents": {
+            "contract": "swiss-astronomy-events/1",
+            "solverVersion": "lunations-eclipses-1",
+            "maximumRangeDays": 366,
+            "coverageEnd": "2399-01-01T00:00:00.000Z"
+          },
+          "solarContext": {
+            "contract": "swiss-solar-context/1",
+            "solverVersion": "solar-civil-day-1",
+            "convention": "apparent-upper-limb; sea-level; 1013.25hPa; 15C"
+          },
+          "upcomingCycles": {
+            "contract": "swiss-upcoming-cycles/1",
+            "solverVersion": "upcoming-cycles-1",
+            "maximumRangeDays": 365,
+            "maximumTargets": 3,
+            "maximumEvaluations": 120000
+          }
+        },
+        "release": "a3631cba2c5735973a85e64224434fc525fc5d87"
+      }
+    },
+    {
+      "path": "/source",
+      "status": 200,
+      "value": {
+        "license": "AGPL-3.0-or-later",
+        "archive": "/source.tar.gz",
+        "release": "a3631cba2c5735973a85e64224434fc525fc5d87",
+        "build": "Extract archive, then read swiss-ephemeris/README.md. Includes service source, native dependency sources, pinned ephemeris files and build inputs."
+      }
+    },
+    {
+      "path": "/v1/astronomy-events",
+      "status": 401,
+      "value": {
+        "error": "unauthorized"
+      }
+    },
+    {
+      "path": "/v1/solar-context",
+      "status": 401,
+      "value": {
+        "error": "unauthorized"
+      }
+    },
+    {
+      "path": "/v1/upcoming-cycles",
+      "status": 401,
+      "value": {
+        "error": "unauthorized"
+      }
+    },
+    {
+      "path": "/source.tar.gz",
+      "status": 200,
+      "bytes": 3803353,
+      "sha256": "d55bcc108b90149457cd205ef990022fd44b988cef6ca67d39dc288f58971919"
+    }
+  ]
+}

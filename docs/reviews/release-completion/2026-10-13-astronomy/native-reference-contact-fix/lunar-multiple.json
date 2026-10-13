@@ -1,0 +1,118 @@
+{
+  "id": "lunar-multiple",
+  "input": {
+    "contract": "swiss-astronomy-events/1",
+    "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+    "from": "2026-08-01T00:00:00.000Z",
+    "to": "2026-09-01T00:00:00.000Z"
+  },
+  "actual": {
+    "status": "complete",
+    "contract": "swiss-astronomy-events/1",
+    "solverVersion": "lunations-eclipses-1",
+    "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+    "source": {
+      "engine": "swiss-ephemeris",
+      "engineVersion": "2.10.03",
+      "dataId": "sha256:975743cf9ca4c15e9e86d22f8d03fd973a1341f6b0bd971cabd21a4a02022797",
+      "frame": "tropical-apparent-geocentric-true-equinox-of-date",
+      "timeScale": "UT",
+      "returnedFlags": 258
+    },
+    "range": {
+      "from": "2026-08-01T00:00:00.000Z",
+      "to": "2026-09-01T00:00:00.000Z",
+      "boundary": "half-open"
+    },
+    "events": [
+      {
+        "id": "sky:317d55368eb2352697c159f63f3df822",
+        "kind": "new-moon",
+        "at": "2026-08-12T17:36:45.000Z",
+        "sunLongitude": 140.03291636554798,
+        "moonLongitude": 140.03291906390928,
+        "elongationDegrees": 0.000002698361299735552,
+        "targetDegrees": 0,
+        "residualDegrees": 0.000002698361299735552,
+        "nativeClassification": null,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:75889106cb8cf647283ba127a7700ce5",
+        "kind": "solar-total",
+        "at": "2026-08-12T17:45:59.000Z",
+        "sunLongitude": 140.0390737285893,
+        "moonLongitude": 140.12544487835635,
+        "elongationDegrees": 0.08637114976704652,
+        "targetDegrees": null,
+        "residualDegrees": null,
+        "nativeClassification": 5,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:67d0e8c0bc3b7a1e54989879fa1bf215",
+        "kind": "lunar-partial",
+        "at": "2026-08-28T04:12:58.000Z",
+        "sunLongitude": 154.89823156703585,
+        "moonLongitude": 334.852594116172,
+        "elongationDegrees": 179.95436254913614,
+        "targetDegrees": null,
+        "residualDegrees": null,
+        "nativeClassification": 16,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:ef7a652d2b98f04666e4259e43d686b1",
+        "kind": "full-moon",
+        "at": "2026-08-28T04:18:32.000Z",
+        "sunLongitude": 154.90196326606474,
+        "moonLongitude": 334.90195671646984,
+        "elongationDegrees": 179.9999934504051,
+        "targetDegrees": 180,
+        "residualDegrees": 0.000006549594900207012,
+        "nativeClassification": null,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      }
+    ]
+  },
+  "reference": [
+    {
+      "kind": "new-moon",
+      "at": "2026-08-12T17:36:45.000Z",
+      "sunLongitude": 140.03291636554795,
+      "moonLongitude": 140.0329190639093,
+      "elongationDegrees": 0.000002698361356578971
+    },
+    {
+      "kind": "solar-total",
+      "at": "2026-08-12T17:45:59.000Z",
+      "sunLongitude": 140.0390737285893,
+      "moonLongitude": 140.12544487835632,
+      "elongationDegrees": 0.08637114976704652
+    },
+    {
+      "kind": "lunar-partial",
+      "at": "2026-08-28T04:12:58.000Z",
+      "sunLongitude": 154.89823156703585,
+      "moonLongitude": 334.85259411617204,
+      "elongationDegrees": 179.95436254913625
+    },
+    {
+      "kind": "full-moon",
+      "at": "2026-08-28T04:18:32.000Z",
+      "sunLongitude": 154.90196326606477,
+      "moonLongitude": 334.9019567164698,
+      "elongationDegrees": 179.999993450405
+    }
+  ],
+  "issues": [],
+  "durationMs": 6.210266000000047
+}

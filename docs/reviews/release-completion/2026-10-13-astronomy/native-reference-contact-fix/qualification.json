@@ -1,0 +1,243 @@
+{
+  "version": 1,
+  "source": {
+    "source": {
+      "engine": "swiss-ephemeris",
+      "engineVersion": "2.10.03",
+      "dataId": "sha256:975743cf9ca4c15e9e86d22f8d03fd973a1341f6b0bd971cabd21a4a02022797",
+      "frame": "tropical-apparent-geocentric-true-equinox-of-date",
+      "timeScale": "UT",
+      "returnedFlags": 258
+    },
+    "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+    "wrapper": "sweph@2.10.3-7",
+    "files": [
+      {
+        "name": "sepl_18.se1",
+        "bytes": 484061,
+        "sha256": "ca1393ceab3a44fbc895887cf789c68819ae6a1cbc9b22225872dbe4ccd99a66",
+        "required": true
+      },
+      {
+        "name": "semo_18.se1",
+        "bytes": 1304771,
+        "sha256": "1ca07bd67c24374d77226180c20a4f9996cba013697894810518e7eb582ca4f7",
+        "required": true
+      }
+    ],
+    "upstreamCommit": "85e65da01dce506bd0ec044ad3e39ab6d144d82b",
+    "utcConversion": "swe_utc_to_jd: UT1 result -> swe_calc_ut; pre-1972 input follows Swiss UT convention",
+    "coverage": {
+      "from": "1800-01-02T00:00:00.000Z",
+      "to": "2399-12-30T00:00:00.000Z"
+    },
+    "houseSystem": "placidus",
+    "houseFallback": "porphyry-explicit",
+    "license": "AGPL-3.0-or-later",
+    "capabilities": {
+      "astronomyEvents": {
+        "contract": "swiss-astronomy-events/1",
+        "solverVersion": "lunations-eclipses-1",
+        "maximumRangeDays": 366,
+        "coverageEnd": "2399-01-01T00:00:00.000Z"
+      },
+      "solarContext": {
+        "contract": "swiss-solar-context/1",
+        "solverVersion": "solar-civil-day-1",
+        "convention": "apparent-upper-limb; sea-level; 1013.25hPa; 15C"
+      },
+      "upcomingCycles": {
+        "contract": "swiss-upcoming-cycles/1",
+        "solverVersion": "upcoming-cycles-1",
+        "maximumRangeDays": 365,
+        "maximumTargets": 3,
+        "maximumEvaluations": 120000
+      }
+    }
+  },
+  "reference": "independent-native-et-hourly-astronomy-1",
+  "allowedDeltaSeconds": 60,
+  "allowedLongitudeDeltaDegrees": 0.001,
+  "passed": true,
+  "results": [
+    {
+      "id": "lunar-year",
+      "pass": true,
+      "durationMs": 47.46420200000001,
+      "issues": []
+    },
+    {
+      "id": "lunar-rolling-year",
+      "pass": true,
+      "durationMs": 42.09674600000005,
+      "issues": []
+    },
+    {
+      "id": "lunar-multiple",
+      "pass": true,
+      "durationMs": 6.210266000000047,
+      "issues": []
+    },
+    {
+      "id": "lunar-empty",
+      "pass": true,
+      "durationMs": 1.7340560000000096,
+      "issues": []
+    },
+    {
+      "id": "lunar-source-start",
+      "pass": true,
+      "durationMs": 2.0517019999999775,
+      "issues": []
+    },
+    {
+      "id": "lunar-source-end",
+      "pass": true,
+      "durationMs": 3.0299190000000635,
+      "issues": []
+    },
+    {
+      "id": "solar-north",
+      "pass": true,
+      "durationMs": 12.295301999999992,
+      "issues": []
+    },
+    {
+      "id": "solar-south",
+      "pass": true,
+      "durationMs": 0.624561999999969,
+      "issues": []
+    },
+    {
+      "id": "solar-equator",
+      "pass": true,
+      "durationMs": 0.3760749999999007,
+      "issues": []
+    },
+    {
+      "id": "solar-dst-short",
+      "pass": true,
+      "durationMs": 0.5658330000001115,
+      "issues": []
+    },
+    {
+      "id": "solar-dst-long",
+      "pass": true,
+      "durationMs": 0.46142399999985173,
+      "issues": []
+    },
+    {
+      "id": "solar-polar-89-2026-06-21",
+      "pass": true,
+      "durationMs": 2.433945999999878,
+      "issues": []
+    },
+    {
+      "id": "solar-polar-89-2026-12-21",
+      "pass": true,
+      "durationMs": 2.374137000000019,
+      "issues": []
+    },
+    {
+      "id": "solar-polar--89-2026-06-21",
+      "pass": true,
+      "durationMs": 2.2781689999999344,
+      "issues": []
+    },
+    {
+      "id": "solar-polar--89-2026-12-21",
+      "pass": true,
+      "durationMs": 2.3101980000001276,
+      "issues": []
+    },
+    {
+      "id": "upcoming-moon",
+      "pass": true,
+      "durationMs": 28.558019999999942,
+      "issues": []
+    },
+    {
+      "id": "upcoming-sun",
+      "pass": true,
+      "durationMs": 14.313024000000041,
+      "issues": []
+    },
+    {
+      "id": "upcoming-mercury",
+      "pass": true,
+      "durationMs": 29.63136499999996,
+      "issues": []
+    },
+    {
+      "id": "upcoming-venus",
+      "pass": true,
+      "durationMs": 14.026527999999871,
+      "issues": []
+    },
+    {
+      "id": "upcoming-mars",
+      "pass": true,
+      "durationMs": 15.037194,
+      "issues": []
+    },
+    {
+      "id": "upcoming-jupiter",
+      "pass": true,
+      "durationMs": 34.93357399999991,
+      "issues": []
+    },
+    {
+      "id": "upcoming-saturn",
+      "pass": true,
+      "durationMs": 35.178138999999874,
+      "issues": []
+    },
+    {
+      "id": "upcoming-uranus",
+      "pass": true,
+      "durationMs": 34.28898200000003,
+      "issues": []
+    },
+    {
+      "id": "upcoming-neptune",
+      "pass": true,
+      "durationMs": 30.746819999999843,
+      "issues": []
+    },
+    {
+      "id": "upcoming-pluto",
+      "pass": true,
+      "durationMs": 31.556759000000056,
+      "issues": []
+    },
+    {
+      "id": "upcoming-full-year-0",
+      "pass": true,
+      "durationMs": 1244.574235,
+      "issues": []
+    },
+    {
+      "id": "upcoming-full-year-1",
+      "pass": true,
+      "durationMs": 1256.0249189999995,
+      "issues": []
+    },
+    {
+      "id": "upcoming-full-year-2",
+      "pass": true,
+      "durationMs": 1219.1566819999998,
+      "issues": []
+    }
+  ],
+  "sourceHashes": {
+    "../src/engine.mjs": "9049b8076730c4ddc49da6a2de7684aed8ffabbea79d6ecff14e2e965673dded",
+    "../src/track.mjs": "69de8d2df0edcbe81742d869eb5687205061fe033a060568f05f1fd7712e052d",
+    "../src/episodes.mjs": "a67ce37845573923ed5e7dafc6fa0313ecdeb78de4f55f338f8d04e0c7692895",
+    "../src/lunations.mjs": "d969d7567dddd62c24ed496ce16d928ba7f41a9d0edcfa6c10547734ebb82884",
+    "../src/solar.mjs": "ac20a481079fd374ff004a8ece6b454c1fa8de075fbba5e5856e65e9cc0ab3ca",
+    "../src/upcoming.mjs": "01eec3981208d23f2da4db59123c8f9167423e7e53845ce9ffa3311a15262098",
+    "./astronomy-reference.mjs": "0b515d2c836d34a4c2f864b74c84b28e1986cdce285ae1898ecff43691007f37",
+    "./reference.mjs": "b2370913189c9cc232d6855af0586cdea82e1d939ced538cad56d3f89ad3c364",
+    "./qualify-astronomy.mjs": "3a685b854347d6ca9fd8dd82ce4a897305323dcd9a87a0b5c04629714edda80b"
+  }
+}

@@ -1,23 +1,23 @@
 {
   "version": 1,
   "baseCommit": "aebb0eb2170da9f5a632d045ee0368cde804cffb",
-  "sourceCommit": null,
-  "stage": "verified-local",
+  "sourceCommit": "a3631cba2c5735973a85e64224434fc525fc5d87",
+  "stage": "published with scoped live acceptance",
   "appTests": {
-    "passed": 764,
+    "passed": 765,
     "failed": 0,
     "skipped": 0,
     "command": "node --test --test-concurrency=1 tests/*.test.mjs"
   },
   "serviceTests": {
-    "passed": 38,
+    "passed": 40,
     "failed": 0,
     "command": "npm test (services/swiss-ephemeris)"
   },
   "nativeQualification": {
-    "passed": 27,
+    "passed": 28,
     "command": "node scripts/qualify-astronomy.mjs OUTPUT_DIRECTORY",
-    "artifact": "native-reference/qualification.json",
+    "artifact": "native-reference-contact-fix/qualification.json",
     "maximumDeltaSeconds": 60,
     "maximumLongitudeDeltaDegrees": 0.001
   },
@@ -35,12 +35,48 @@
   "paidModelCalls": 0,
   "schemaMigrationsRequired": false,
   "activeContentVersion": "0.7.1",
-  "publication": null,
+  "publication": {
+    "artifact": "publication.json",
+    "deploymentId": "7da1f6d5-b0ed-48c9-9027-ed723c2d8f04",
+    "url": "https://patterns.lakefrontdigital.io",
+    "appSourceCommit": "a3631cba2c5735973a85e64224434fc525fc5d87",
+    "service": {
+      "sourceCommit": "a3631cba2c5735973a85e64224434fc525fc5d87",
+      "machine": "8346e0a74144d8",
+      "machineVersion": "01M4SWYZEXKP7B788V9B0GV23C",
+      "image": "registry.fly.io/pattern-transit-calc:deployment-01M4SWY0V1B83TXPHQV5V6DEPH",
+      "releaseId": "8z4AyglQQDp4BTBkn097zbw7",
+      "releaseVersion": 3,
+      "status": "complete",
+      "url": "https://pattern-transit-calc.fly.dev"
+    },
+    "workerVersion": "144aebb1-748f-4601-8efe-e1e3fa75420f",
+    "contentVersion": "0.7.1",
+    "publishedAssetGraphPassed": true,
+    "publishedAssets": 33,
+    "exactLocalArtifactParity": false
+  },
   "remainingGates": [
-    "signed-in production acceptance",
-    "Task13 writing qualification and actual human editorial approval",
-    "Task15 full meaning-based source registry coverage",
+    "Task17 Solar Your Context on a generated Today reading",
+    "Task13 writing qualification, repetition tooling and actual human editorial approval",
+    "Task15 full meaning-based source registry coverage and other original-MVP requirements",
     "Task8 Google/settings acceptance",
     "Task19 paid Enterprise experiment"
+  ],
+  "implementationCommit": "3c6bd001ca3fc235cabf784ea3f6306b69353dc2",
+  "contactFixCommit": "1994e4cee8a06090b23c3d9726aa22fd68ea7e46",
+  "mergedLovableCommit": "9c4ccd14dc069ca07b3544c081d0f29bd680111d",
+  "liveAcceptance": {
+    "passed": 18,
+    "artifact": "live-acceptance.json",
+    "memberGenerationBlocked": true,
+    "notExercised": [
+      "Solar Your Context on a generated Today reading",
+      "live Google sign-in and five assistant tools",
+      "paid writing and Enterprise qualification"
+    ]
+  },
+  "limitations": [
+    "Hosted JS/CSS chunks differ from local builds; runtime commit and all published dependency references verified separately."
   ]
 }

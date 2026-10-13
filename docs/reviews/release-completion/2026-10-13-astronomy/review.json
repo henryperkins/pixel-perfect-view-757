@@ -13,16 +13,33 @@
       "polar upper-limb correction",
       "unclosed-window membership",
       "explicit lunar shadow coverage limit"
-    ]
+    ],
+    "contactFix": {
+      "status": "ready",
+      "critical": 0,
+      "important": 0,
+      "reviewer": "astronomy_service_review",
+      "scope": "positive lunar flags and contact-search diagnostics; fatal other errors retained",
+      "serviceTests": 40,
+      "nativeQualificationCases": 28
+    }
   },
   "app": {
     "reviewer": "astronomy_app_review",
-    "status": "final decision pending",
+    "status": "ready to release",
     "fixedFindings": [
       "late location read after revocation",
       "stale save after revoke/regrant",
       "stale save after Clear"
     ],
-    "regressions": "all included in764-test suite; same-ms epoch probe passed"
+    "regressions": "all included in764-test suite; same-ms epoch probe passed",
+    "critical": 0,
+    "important": 0,
+    "checks": [
+      "fresh final read-only review",
+      "27 targeted checks and16 final lifecycle checks",
+      "same-ms consent epoch probe",
+      "byte-identical gateway input under different solar contexts"
+    ]
   }
 }

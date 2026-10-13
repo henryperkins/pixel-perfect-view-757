@@ -1,0 +1,26 @@
+{
+  "createdAt": "2026-10-13T06:56:13.732Z",
+  "activeContent": [
+    {
+      "version": "0.7.1",
+      "checksum": "20b793acda524da945b07ec32b2ed795f31e273c533ff6b4e9c4f96ef821eeac"
+    }
+  ],
+  "workerDeployments": [
+    {
+      "id": "a7c41342-0480-4234-8c8d-b0f55399e8d4",
+      "source": "wrangler",
+      "strategy": "percentage",
+      "annotations": {
+        "workers/triggered_by": "deployment"
+      },
+      "versions": [
+        {
+          "version_id": "144aebb1-748f-4601-8efe-e1e3fa75420f",
+          "percentage": 100
+        }
+      ],
+      "created_on": "2026-10-13T01:57:00.944292Z"
+    }
+  ]
+}

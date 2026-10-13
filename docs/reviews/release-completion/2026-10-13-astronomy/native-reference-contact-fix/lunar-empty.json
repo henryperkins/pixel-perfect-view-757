@@ -1,0 +1,32 @@
+{
+  "id": "lunar-empty",
+  "input": {
+    "contract": "swiss-astronomy-events/1",
+    "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+    "from": "2026-01-10T00:00:00.000Z",
+    "to": "2026-01-10T01:00:00.000Z"
+  },
+  "actual": {
+    "status": "complete",
+    "contract": "swiss-astronomy-events/1",
+    "solverVersion": "lunations-eclipses-1",
+    "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+    "source": {
+      "engine": "swiss-ephemeris",
+      "engineVersion": "2.10.03",
+      "dataId": "sha256:975743cf9ca4c15e9e86d22f8d03fd973a1341f6b0bd971cabd21a4a02022797",
+      "frame": "tropical-apparent-geocentric-true-equinox-of-date",
+      "timeScale": "UT",
+      "returnedFlags": 258
+    },
+    "range": {
+      "from": "2026-01-10T00:00:00.000Z",
+      "to": "2026-01-10T01:00:00.000Z",
+      "boundary": "half-open"
+    },
+    "events": []
+  },
+  "reference": [],
+  "issues": [],
+  "durationMs": 1.7340560000000096
+}

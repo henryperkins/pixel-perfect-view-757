@@ -1,0 +1,90 @@
+{
+  "createdAt": "2026-10-13T06:51:06.260485+00:00",
+  "url": "https://patterns.lakefrontdigital.io",
+  "appSourceCommit": "a3631cba2c5735973a85e64224434fc525fc5d87",
+  "initialLocationAndBirthCommit": "3c6bd001ca3fc235cabf784ea3f6306b69353dc2",
+  "passed": 18,
+  "checks": {
+    "live-birth-finish": {
+      "passed": 2,
+      "checks": [
+        "controlled account created",
+        "synthetic precise birth chart saved with Swiss source"
+      ],
+      "memberGenerationBlocked": true
+    },
+    "live-location-checks": {
+      "passed": 6,
+      "checks": [
+        "separately consented coarse location saved",
+        "encrypted location read back after reload",
+        "owned saved-data export downloaded",
+        "location Clear removes saved value",
+        "location revocation disables location controls",
+        "Privacy fits390px"
+      ],
+      "memberGenerationBlocked": true,
+      "solarTodayChecked": false
+    },
+    "live-timing-final": {
+      "passed": 8,
+      "checks": [
+        "native90-day future windows visible",
+        "365-day capped future coverage is explicit",
+        "Timing fits390px reduced-motion viewport",
+        "visited future panel remains open",
+        "actual future windows visible at1440px",
+        "365-day native solar eclipse classification visible",
+        "2027 penumbral eclipses visible after native contact fix",
+        "filtered eclipse page fits390px"
+      ],
+      "appSourceCommit": "a3631cba2c5735973a85e64224434fc525fc5d87",
+      "memberGenerationBlocked": true
+    },
+    "live-cleanup": {
+      "passed": 2,
+      "checks": [
+        "controlled account deleted through the live password-confirmed flow",
+        "deleted session denied Timing"
+      ],
+      "controlledAccountOnly": true
+    }
+  },
+  "cleanup": {
+    "createdAt": "2026-10-13T06:49:51.428Z",
+    "controlledAccountOnly": true,
+    "deletedThroughApplication": true,
+    "deniedSession": true,
+    "remainingRows": {
+      "users": 0,
+      "profiles": 0,
+      "sessions": 0,
+      "source_consents": 0,
+      "birth_profiles": 0,
+      "chart_snapshots": 0,
+      "natal_features": 0,
+      "cycle_instances": 0,
+      "context_signals": 0,
+      "daily_readings": 0,
+      "reading_sources": 0,
+      "reading_feedback": 0,
+      "check_ins": 0,
+      "life_events": 0,
+      "audit_events": 0,
+      "feature_narratives": 0,
+      "content_drafts": 0,
+      "evaluation_runs": 0,
+      "identity_links": 0,
+      "assistant_grants": 0,
+      "user_roles": 0
+    },
+    "allOwnedRowsRemoved": true
+  },
+  "paidModelCalls": 0,
+  "memberGenerationBlocked": true,
+  "notExercised": [
+    "Solar Your Context on a generated Today reading",
+    "live Google sign-in and five assistant tools",
+    "paid writing and Enterprise qualification"
+  ]
+}

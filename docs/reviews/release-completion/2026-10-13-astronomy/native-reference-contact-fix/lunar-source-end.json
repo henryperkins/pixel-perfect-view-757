@@ -1,0 +1,55 @@
+{
+  "id": "lunar-source-end",
+  "input": {
+    "contract": "swiss-astronomy-events/1",
+    "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+    "from": "2398-12-20T00:00:00.000Z",
+    "to": "2399-01-01T00:00:00.000Z"
+  },
+  "actual": {
+    "status": "complete",
+    "contract": "swiss-astronomy-events/1",
+    "solverVersion": "lunations-eclipses-1",
+    "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+    "source": {
+      "engine": "swiss-ephemeris",
+      "engineVersion": "2.10.03",
+      "dataId": "sha256:975743cf9ca4c15e9e86d22f8d03fd973a1341f6b0bd971cabd21a4a02022797",
+      "frame": "tropical-apparent-geocentric-true-equinox-of-date",
+      "timeScale": "UT",
+      "returnedFlags": 258
+    },
+    "range": {
+      "from": "2398-12-20T00:00:00.000Z",
+      "to": "2399-01-01T00:00:00.000Z",
+      "boundary": "half-open"
+    },
+    "events": [
+      {
+        "id": "sky:2376d18568a0c57f00ecfddf4d725aa1",
+        "kind": "full-moon",
+        "at": "2398-12-24T09:11:17.000Z",
+        "sunLongitude": 272.26950079629535,
+        "moonLongitude": 92.26950278283391,
+        "elongationDegrees": 180.00000198653856,
+        "targetDegrees": 180,
+        "residualDegrees": 0.0000019865385638695443,
+        "nativeClassification": null,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      }
+    ]
+  },
+  "reference": [
+    {
+      "kind": "full-moon",
+      "at": "2398-12-24T09:11:17.000Z",
+      "sunLongitude": 272.26950079629535,
+      "moonLongitude": 92.26950278283392,
+      "elongationDegrees": 180.00000198653856
+    }
+  ],
+  "issues": [],
+  "durationMs": 3.0299190000000635
+}

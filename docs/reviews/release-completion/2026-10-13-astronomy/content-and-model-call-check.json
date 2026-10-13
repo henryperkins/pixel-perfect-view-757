@@ -1,0 +1,14 @@
+{
+  "createdAt": "2026-10-13T05:34:43.191Z",
+  "controlledAccountOnly": true,
+  "readings": 0,
+  "natal_essays": 0,
+  "birth_profiles": 1,
+  "chart_snapshots": 1,
+  "activeContent": [
+    {
+      "version": "0.7.1",
+      "checksum": "20b793acda524da945b07ec32b2ed795f31e273c533ff6b4e9c4f96ef821eeac"
+    }
+  ]
+}

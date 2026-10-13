@@ -1,0 +1,107 @@
+{
+  "createdAt": "2026-10-13T05:51:18.541Z",
+  "url": "https://pattern-transit-calc.fly.dev",
+  "sourceCommit": "a3631cba2c5735973a85e64224434fc525fc5d87",
+  "passed": 10,
+  "total": 10,
+  "results": [
+    {
+      "id": "lunar-year",
+      "httpStatus": 200,
+      "durationMs": 183,
+      "identicalToFrozenNativeOutput": true,
+      "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+      "resultStatus": "complete",
+      "events": 29,
+      "sha256": "2496dd0cd01e8dc5e8d7df118b5bb41a9d08cfa27a5048f70f1b707a00f9d01e"
+    },
+    {
+      "id": "lunar-rolling-year",
+      "httpStatus": 200,
+      "durationMs": 96,
+      "identicalToFrozenNativeOutput": true,
+      "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+      "resultStatus": "complete",
+      "events": 29,
+      "sha256": "af00c4d73f5c232176065262dec2b80e01a17bf1bee6defefe2c6c7e1910ba99"
+    },
+    {
+      "id": "solar-north",
+      "httpStatus": 200,
+      "durationMs": 113,
+      "identicalToFrozenNativeOutput": true,
+      "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+      "daylight": "ordinary",
+      "sha256": "d6ba386ff9b847883f1935adcf3d45aa2afce58f44b17338d84d191df38a8e9d"
+    },
+    {
+      "id": "solar-dst-short",
+      "httpStatus": 200,
+      "durationMs": 52,
+      "identicalToFrozenNativeOutput": true,
+      "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+      "daylight": "ordinary",
+      "sha256": "4084ba69bacb3958c00a25e1999c3f3a887a2f675da90722930c48327b5e1ca9"
+    },
+    {
+      "id": "solar-dst-long",
+      "httpStatus": 200,
+      "durationMs": 48,
+      "identicalToFrozenNativeOutput": true,
+      "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+      "daylight": "ordinary",
+      "sha256": "1a3a1d64ff0d94f46c0fafc57c11cf33414e41d65aea658c5761ffd41366f605"
+    },
+    {
+      "id": "solar-polar-89-2026-06-21",
+      "httpStatus": 200,
+      "durationMs": 50,
+      "identicalToFrozenNativeOutput": true,
+      "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+      "daylight": "polar_day",
+      "sha256": "27d5fc55a81c8a86bf466bde0d1c636683b82a75b7dfdf3d16c7b677212ac854"
+    },
+    {
+      "id": "solar-polar--89-2026-06-21",
+      "httpStatus": 200,
+      "durationMs": 50,
+      "identicalToFrozenNativeOutput": true,
+      "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+      "daylight": "polar_night",
+      "sha256": "14e01a80071406f27ab201ee57731d7e31f9f9236510d15599f838c1b9a7917f"
+    },
+    {
+      "id": "upcoming-full-year-0",
+      "httpStatus": 200,
+      "durationMs": 1200,
+      "identicalToFrozenNativeOutput": true,
+      "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+      "resultStatus": "partial",
+      "windows": 42,
+      "evaluations": 73046,
+      "sha256": "a349ae4989d589f2cd0650f5b8b8f3c05bab6d98b4502543613a302aa922d0b1"
+    },
+    {
+      "id": "upcoming-full-year-1",
+      "httpStatus": 200,
+      "durationMs": 1216,
+      "identicalToFrozenNativeOutput": true,
+      "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+      "resultStatus": "partial",
+      "windows": 45,
+      "evaluations": 74427,
+      "sha256": "c86349d5da4d9ba382775abe12a52d0bd259dbd4f22bca700cbefa5278f62c64"
+    },
+    {
+      "id": "upcoming-full-year-2",
+      "httpStatus": 200,
+      "durationMs": 1202,
+      "identicalToFrozenNativeOutput": true,
+      "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+      "resultStatus": "partial",
+      "windows": 44,
+      "evaluations": 71928,
+      "sha256": "617088eef06438eb1f7211f12a16ff6a641998f02ee911e44e9ca9c915cfe593"
+    }
+  ]
+}

@@ -1,0 +1,259 @@
+{
+  "createdAt": "2026-10-13T06:55:12.881Z",
+  "deploymentId": "7da1f6d5-b0ed-48c9-9027-ed723c2d8f04",
+  "sourceCommit": "a3631cba2c5735973a85e64224434fc525fc5d87",
+  "url": "https://patterns.lakefrontdigital.io",
+  "rootStatus": 200,
+  "rootDeploymentHeader": "psr2.7da1f6d5-b0ed-48c9-9027-ed723c2d8f04.1792478385.3BnJMqA51cEfEdywU3asuuxdPSi6IzqxkgvNNaHwBas",
+  "identity": {
+    "sourceSha": "a3631cba2c5735973a85e64224434fc525fc5d87",
+    "requestPolicyVersion": "synthetic-facts-local-context-1",
+    "fixtureVersion": "synthetic-daily-7"
+  },
+  "identityStatus": 200,
+  "identityDeploymentHeader": "psr2.7da1f6d5-b0ed-48c9-9027-ed723c2d8f04.1792478386.aWJ8n5mlh_Hreeevqy7bhQPYBgU9cgySPCESBBBEfPw",
+  "assets": [
+    {
+      "name": "arrow-left-uZ7ZDnIe.js",
+      "status": 200,
+      "bytes": 154,
+      "sha256": "8429f4c034fe41cebf3a40c40c247cc9d89b7aa89ff7cfeb0d0b74f53e72e24c"
+    },
+    {
+      "name": "auth-aBd-TF-o.js",
+      "status": 200,
+      "bytes": 2427,
+      "sha256": "5aa410cd2dd610e90353014b90fd8fd04471ac44f58d130691935729856b984b"
+    },
+    {
+      "name": "birth-kXCx5_sT.js",
+      "status": 200,
+      "bytes": 11212,
+      "sha256": "eaf07f7eacf734b13f64c778d4a1b24a35ed3347f0cea1e492593f1c8b3a0951"
+    },
+    {
+      "name": "check-Ce3jOf-v.js",
+      "status": 200,
+      "bytes": 113,
+      "sha256": "1316f5c51788eb8e288b66d6ba83c1fb7db4fd17cc1d73ee850e4b3338e54ac9"
+    },
+    {
+      "name": "content-DMcSu5yJ.js",
+      "status": 200,
+      "bytes": 226954,
+      "sha256": "84e7ac6cee50c050e17e5366eed58dedc8a0c2373c667db73e4e5f9f14b18b37"
+    },
+    {
+      "name": "context-policy-B-j_A00A.js",
+      "status": 200,
+      "bytes": 82,
+      "sha256": "2241eb8d972d8170834bc894390c9bdb7e22107ce20e97a5db3132b9e93a19c2"
+    },
+    {
+      "name": "index-DuTbeLS7.js",
+      "status": 200,
+      "bytes": 618112,
+      "sha256": "ce059e295eca366b3b08c92d88b771c4f2dbfd735250259d5787e293c4989b6a"
+    },
+    {
+      "name": "journal-BWC2yZU_.js",
+      "status": 200,
+      "bytes": 12661,
+      "sha256": "bd7267876f550359fe2240ed593ff10988ec01e1870bddc78698bcde0d5f3a54"
+    },
+    {
+      "name": "MotionSelection-CHjmbC8z.js",
+      "status": 200,
+      "bytes": 2883,
+      "sha256": "9f0f3cd3b2f26e0369a631e7d5c3c59ffef9aa248bfca9f1cb92255331da9897"
+    },
+    {
+      "name": "onboarding-Dh3CZ_xb.js",
+      "status": 200,
+      "bytes": 5670,
+      "sha256": "21f8ea75b837ad160ebf5b1642daf3531731ea0741550b49ace188ea373820c2"
+    },
+    {
+      "name": "pattern-7Sfp4-1N.js",
+      "status": 200,
+      "bytes": 27284,
+      "sha256": "6a664e80494e6cedaa168ccd97351c48a446b7555b76ba9c9a452834cba84958"
+    },
+    {
+      "name": "pattern-query-cache-Biwod78K.js",
+      "status": 200,
+      "bytes": 519,
+      "sha256": "66bd346835bece522bd1cce8f50fc718c2c068964d178387bbe7c0810a1d01e9"
+    },
+    {
+      "name": "pattern.functions-Mj89AYuI.js",
+      "status": 200,
+      "bytes": 5822,
+      "sha256": "bb0617fe1e39fd2b404963cd64fed7c059509e2851dd0094155b4ce7bc9392fe"
+    },
+    {
+      "name": "preload-helper-BYapQy5A.js",
+      "status": 200,
+      "bytes": 5167,
+      "sha256": "f05e6b60cc53414b36a51a895f1169938b59e67b252e3974dd0bbcc79443ec95"
+    },
+    {
+      "name": "privacy-BjGDNKcK.js",
+      "status": 200,
+      "bytes": 30456,
+      "sha256": "09bac4422f79ecadd6c6d7fbcc5fb634590e009f1fd86a5ae39b1b22176994cc"
+    },
+    {
+      "name": "root-DLTE-HSj.js",
+      "status": 200,
+      "bytes": 32,
+      "sha256": "2eb1d17f334d79f5c2b7c68aa45a2b50b46a7b2416a9a0f5e7de6ff7f2430322"
+    },
+    {
+      "name": "route-BhxzY1eQ.js",
+      "status": 200,
+      "bytes": 142,
+      "sha256": "df32daea8715a1567a1ed8b7203d9464ac2b745dcf6b8c2958844eec4a7c8c88"
+    },
+    {
+      "name": "routes-CInLODhC.js",
+      "status": 200,
+      "bytes": 43568,
+      "sha256": "b90f8f71b8131233fbefb422f252d67db1eb97bda98a3a99587f5acd3b3cc551"
+    },
+    {
+      "name": "Shell-CJD0sgoy.js",
+      "status": 200,
+      "bytes": 94423,
+      "sha256": "e7e8b66c0861717ab3b52add637d2cf9e38dbf1955be1406eb176764c968cde5"
+    },
+    {
+      "name": "sources-B__NUQ5w.js",
+      "status": 200,
+      "bytes": 5572,
+      "sha256": "d9bfac39e31a2111edc710841363544b26a65cefbcc41973a440520763ebe318"
+    },
+    {
+      "name": "styles-CodqdMSh.css",
+      "status": 200,
+      "bytes": 139544,
+      "sha256": "914487d1927de4a4a1c5b1d3fd83f828db409222f53fd27f650c862f55feaeb5"
+    },
+    {
+      "name": "sunrise-DhDZ5j57.js",
+      "status": 200,
+      "bytes": 520,
+      "sha256": "492020425b6144a90f37c63b982a4b0df6129d15bd61095f44e33c37fd95c523"
+    },
+    {
+      "name": "sunset-CY5iKEkE.js",
+      "status": 200,
+      "bytes": 537,
+      "sha256": "bf19cdd5ef033373b03d88219b424907217cc6aa413c57b54870eaab611f971f"
+    },
+    {
+      "name": "time-travel-C_KNUktJ.js",
+      "status": 200,
+      "bytes": 12934,
+      "sha256": "4b881b79606c5064ea1b63cedc5d6325b0e7ab49f36f86600d489d5390510851"
+    },
+    {
+      "name": "timing-D--uA9Hv.js",
+      "status": 200,
+      "bytes": 18728,
+      "sha256": "39f996beaabe17d86792cd56740433aa6f75a1fe7092b7e6b42ccc6530408b43"
+    },
+    {
+      "name": "TimingWindow-CbVHPsYF.js",
+      "status": 200,
+      "bytes": 5546,
+      "sha256": "2948d755ade19c4443bed516abd490f6a016113e7505663e8a7a13b3a748eae5"
+    },
+    {
+      "name": "TodayJournal-DkheAYeX.js",
+      "status": 200,
+      "bytes": 3601,
+      "sha256": "e63d92bad508239a2e4e9a892ede73bfbae99f885d00e5c15b6223829220754d"
+    },
+    {
+      "name": "transit-chart-calculator-De0celNf.js",
+      "status": 200,
+      "bytes": 22709,
+      "sha256": "09a53dd3dc7768d9e95ee7b508641142b236e9214f3c420b1e321669d8b4e421"
+    },
+    {
+      "name": "TransitSequence-ByI3wKpt.js",
+      "status": 200,
+      "bytes": 4940,
+      "sha256": "9e9ab6f707892d5c9f047afb2f1ae70614e97f4de27ffe13d8dd700b11ebd6ec"
+    },
+    {
+      "name": "useCalendarRefresh-DXI7qaV9.js",
+      "status": 200,
+      "bytes": 978,
+      "sha256": "5e110c6e8b76f80b47f97c6b953a55e46b2ba5d1e97ad5f5cc46a046f38c6f23"
+    },
+    {
+      "name": "useMutation-CpFhHlpF.js",
+      "status": 200,
+      "bytes": 2329,
+      "sha256": "22ddfb4d8d0685d90c69d998574dc11784981c6db3869fa5d62371c9d086f55a"
+    },
+    {
+      "name": "useNavigate-BR4U6F24.js",
+      "status": 200,
+      "bytes": 191,
+      "sha256": "06000d1173ae5e98ee6e49c2324b3e65adde805782ad4bc9f63e96a66e79be16"
+    },
+    {
+      "name": "useSelector-dW4koh07.js",
+      "status": 200,
+      "bytes": 10991,
+      "sha256": "efee347d9d4ac2ca6d5467a7b853f5a8f4ff71c8f2bbc4b1adbd81b5bf0676e3"
+    }
+  ],
+  "htmlAssetReferences": [
+    "/assets/styles-CodqdMSh.css",
+    "/assets/index-DuTbeLS7.js",
+    "/assets/useSelector-dW4koh07.js",
+    "/assets/Shell-CJD0sgoy.js",
+    "/assets/root-DLTE-HSj.js",
+    "/assets/preload-helper-BYapQy5A.js",
+    "/assets/routes-CInLODhC.js",
+    "/assets/pattern.functions-Mj89AYuI.js",
+    "/assets/useMutation-CpFhHlpF.js",
+    "/assets/sunrise-DhDZ5j57.js",
+    "/assets/check-Ce3jOf-v.js",
+    "/assets/sunset-CY5iKEkE.js",
+    "/assets/TodayJournal-DkheAYeX.js",
+    "/assets/useCalendarRefresh-DXI7qaV9.js",
+    "/assets/TransitSequence-ByI3wKpt.js"
+  ],
+  "workerChanged": false,
+  "workerVersion": "144aebb1-748f-4601-8efe-e1e3fa75420f",
+  "paidModelCalls": 0,
+  "localFrozenLockComparison": {
+    "passed": false,
+    "matching": 13,
+    "total": 33,
+    "scope": "Fresh frozen-lock local build: chunk names and bytes differ from hosted output. Does not establish exact build parity."
+  },
+  "publishedAssetGraph": {
+    "passed": true,
+    "count": 33,
+    "scope": "All JS/CSS references discovered from published HTML and its static/lazy dependency graph returned200; hashes recorded."
+  },
+  "contentVersion": "0.7.1",
+  "contentChecksum": "20b793acda524da945b07ec32b2ed795f31e273c533ff6b4e9c4f96ef821eeac",
+  "service": {
+    "sourceCommit": "a3631cba2c5735973a85e64224434fc525fc5d87",
+    "machine": "8346e0a74144d8",
+    "machineVersion": "01M4SWYZEXKP7B788V9B0GV23C",
+    "image": "registry.fly.io/pattern-transit-calc:deployment-01M4SWY0V1B83TXPHQV5V6DEPH",
+    "releaseId": "8z4AyglQQDp4BTBkn097zbw7",
+    "releaseVersion": 3,
+    "status": "complete",
+    "url": "https://pattern-transit-calc.fly.dev"
+  },
+  "liveAcceptance": "live-acceptance.json"
+}
