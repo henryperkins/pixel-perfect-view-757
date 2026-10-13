@@ -9,7 +9,7 @@ import { EmailChangeEmail } from '@/lib/email-templates/email-change'
 import { ReauthenticationEmail } from '@/lib/email-templates/reauthentication'
 
 // Configuration
-const SITE_NAME = "Pixel Perfect Clone"
+const SITE_NAME = "Pattern"
 const SENDER_DOMAIN = "notify.hperkins.com"
 const ROOT_DOMAIN = "hperkins.com"
 const FROM_DOMAIN = "notify.hperkins.com"
