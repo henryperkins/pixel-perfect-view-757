@@ -33,19 +33,31 @@ import {
   READING_EVAL_CASES,
   READING_EVAL_FIXTURE_VERSION,
 } from "./reading-evaluation.fixtures.mjs";
+import {
+  qualificationBundle,
+  qualificationPolicy,
+  type QualificationProfile,
+} from "./qualification-profiles";
 import type { ReadingEvaluationCaseResult } from "./reading-evaluation.shared";
+import type { SyntheticTransportControl } from "./admin-transport";
 
 const hash = (value: unknown) => createHash("sha256").update(JSON.stringify(value)).digest("hex");
 
-export async function runSyntheticEvaluationCase(
+export function prepareSyntheticEvaluationCase(
   caseId: string,
   bundle: ContentBundle,
-  provider: LanguageProvider = "lovable",
-): Promise<ReadingEvaluationCaseResult> {
+  qualificationProfile?: QualificationProfile,
+) {
   const fixed = READING_EVAL_CASES.find((item) => item.id === caseId);
   if (!fixed) throw new Error("Unknown fixed synthetic evaluation case");
+  const policy = qualificationProfile ? qualificationPolicy(qualificationProfile) : null;
+  const selectedBundle = qualificationProfile
+    ? qualificationBundle(bundle, qualificationProfile)
+    : bundle;
   const effectiveBundle =
-    fixed.writingFrameMode === "none" ? { ...bundle, dailyWritingFrames: [] } : bundle;
+    fixed.writingFrameMode === "none"
+      ? { ...selectedBundle, dailyWritingFrames: [] }
+      : selectedBundle;
   const reference = localNoon(fixed.config.day, fixed.config.timeZone);
   const cycles = fixed.cycles.map((cycle) => ({
     ...cycle,
@@ -53,7 +65,7 @@ export async function runSyntheticEvaluationCase(
   })) as CycleInstance[];
   // These minimal chart plans deliberately contain no birth coordinates, timestamp or identity.
   const chart = fixed.chart as unknown as Chart;
-  const natalReliability = syntheticNatalReliability(fixed);
+  const natalReliability = !policy || policy.natal ? syntheticNatalReliability(fixed) : null;
   let assembled = assembleReading(
     chart,
     cycles,
@@ -68,7 +80,10 @@ export async function runSyntheticEvaluationCase(
     effectiveBundle,
     natalReliability,
   );
-  const calculation = syntheticTransitCalculation(fixed, assembled.eligibleCycles[0]);
+  const calculation =
+    !policy || policy.transit
+      ? syntheticTransitCalculation(fixed, assembled.eligibleCycles[0])
+      : null;
   if (calculation)
     assembled = assembleReading(
       chart,
@@ -86,45 +101,68 @@ export async function runSyntheticEvaluationCase(
       calculation,
     );
   const facts = readingFacts(chart, assembled, fixed.config.timeZone);
-  const observed = await generateSyntheticReadingProse(
-    {
-      facts,
-      hasEligibleCycles: assembled.eligibleCycles.length > 0,
-      tone: fixed.config.tone,
-      depth: fixed.config.depth,
-      suppression: {
-        angles: chart.uncertainty.angleClaimsSuppressed,
-        houses: !chart.uncertainty.housesReliable,
-      },
-      fallback: {
-        headline: assembled.headline,
-        body: assembled.astroBody,
-        prompt: assembled.prompt,
-      },
-      ...(assembled.writingTemplate
-        ? {
-            writing: {
-              plan: assembled.writingPlan,
-              template: assembled.writingTemplate,
-              minimalTemplate: composeDailyWritingTemplate(
-                assembled.writingPlan,
-                assembled.natalLensPlan,
-                assembled.transitStoryPlan,
-                true,
-              ),
-              recent: fixed.recentWritingBodies ?? [],
-            },
-          }
-        : {}),
+  const input = {
+    facts,
+    hasEligibleCycles: assembled.eligibleCycles.length > 0,
+    tone: fixed.config.tone,
+    depth: fixed.config.depth,
+    suppression: {
+      angles: chart.uncertainty.angleClaimsSuppressed,
+      houses: !chart.uncertainty.housesReliable,
     },
-    provider,
-  );
+    fallback: {
+      headline: assembled.headline,
+      body: assembled.astroBody,
+      prompt: assembled.prompt,
+    },
+    ...(assembled.writingTemplate
+      ? {
+          writing: {
+            plan: assembled.writingPlan,
+            template: assembled.writingTemplate,
+            minimalTemplate: composeDailyWritingTemplate(
+              assembled.writingPlan,
+              assembled.natalLensPlan,
+              assembled.transitStoryPlan,
+              true,
+            ),
+            recent: fixed.recentWritingBodies ?? [],
+          },
+        }
+      : {}),
+  };
+  return { fixed, reference, cycles, chart, natalReliability, assembled, facts, input, policy };
+}
+
+export async function runSyntheticEvaluationCase(
+  caseId: string,
+  bundle: ContentBundle,
+  provider: LanguageProvider = "lovable",
+  qualificationProfile?: QualificationProfile,
+  control: SyntheticTransportControl = {},
+): Promise<ReadingEvaluationCaseResult> {
+  const { fixed, reference, natalReliability, assembled, facts, input, policy } =
+    prepareSyntheticEvaluationCase(caseId, bundle, qualificationProfile);
+  const observed = await generateSyntheticReadingProse(input, provider, {
+    ...control,
+    ...(qualificationProfile ? { boundedQualification: true } : {}),
+  });
   const { prose } = observed;
   if (!prose.meta.diagnostics) throw new Error("Synthetic evaluation requires daily diagnostics");
   return {
     metadata: {
       reportVersion: 1,
+      ...(control.enterpriseThinking
+        ? {
+            enterpriseThinking: control.enterpriseThinking,
+            experimentVersion: "enterprise-thinking-pilot-1" as const,
+          }
+        : {}),
+      ...(policy
+        ? { qualificationProfile: policy.profile, qualificationPolicyVersion: policy.version }
+        : {}),
       ...TRANSIT_EVALUATION_METADATA,
+      ...(policy ? { storyUse: policy.transit } : {}),
       fixtureVersion: READING_EVAL_FIXTURE_VERSION,
       caseSetHash: hash(READING_EVAL_CASES),
       bundleVersion: bundle.version,
@@ -154,6 +192,7 @@ export async function runSyntheticEvaluationCase(
         "Actual model outputs for synthetic plans. This run does not establish production-user acceptance, semantic grounding, or writing quality. Manual scores remain blank.",
     },
     case: {
+      transport: observed.transport,
       id: fixed.id,
       description: fixed.description,
       config: structuredClone(fixed.config),

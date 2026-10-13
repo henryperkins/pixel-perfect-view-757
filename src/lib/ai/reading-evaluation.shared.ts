@@ -13,6 +13,8 @@ import type { NatalReliabilityManifest } from "../astro/natal-reliability";
 import type { DailyWritingPlan } from "../content/daily-writing";
 import type { DailyReflectionPlan } from "../content/daily-reflection";
 import type { DailyWritingQualityReport, DailyWritingRenderMode } from "./daily-writing-quality";
+import { QUALIFICATION_PROFILES, type QualificationProfile } from "./qualification-profiles";
+import type { AdminTransportTrace } from "./admin-transport";
 
 export { READING_EVAL_FIXTURE_VERSION };
 export const READING_EVALUATION_CATALOG = READING_EVAL_CASES.map((fixed) => ({
@@ -45,6 +47,20 @@ export const readingEvaluationRunInputSchema = z
   .object({
     bundleSource: z.enum(READING_EVALUATION_BUNDLE_SOURCES),
     provider: z.enum(LANGUAGE_PROVIDERS),
+    qualificationProfile: z.enum(QUALIFICATION_PROFILES).optional(),
+    enterpriseThinking: z.enum(["LOW", "MEDIUM"]).optional(),
+    expectedPlanHash: z
+      .string()
+      .regex(/^[a-f0-9]{64}$/)
+      .optional(),
+    campaignId: z.string().uuid().optional(),
+    budget: z
+      .object({
+        dollarCeilingCents: z.number().int().min(100).max(100_000),
+        reviewReserveCents: z.number().int().min(0).max(100_000),
+      })
+      .strict()
+      .optional(),
   })
   .strict();
 
@@ -73,6 +89,10 @@ export interface ReadingEvaluationRun {
   message: string | null;
   createdAt: string;
   updatedAt: string;
+  qualificationProfile?: QualificationProfile;
+  campaignId?: string;
+  attemptLimit?: number;
+  enterpriseThinking?: "LOW" | "MEDIUM";
 }
 
 /** The only accepted request: a fixed case ID plus optional closed copy and provider selectors. */
@@ -89,6 +109,7 @@ export type EvaluationJsonValue =
 
 export interface SyntheticReadingRequest {
   model: string;
+  max_tokens?: number;
   messages: { role: "system" | "user"; content: string }[];
   response_format: {
     type: "json_schema";
@@ -107,6 +128,13 @@ export interface SyntheticReadingCandidate {
 }
 export interface ReadingEvaluationMetadata {
   reportVersion: 1;
+  qualificationProfile?: QualificationProfile;
+  qualificationPolicyVersion?: string;
+  sourceSha?: string | null;
+  runPlanHash?: string;
+  requestPolicyVersion?: string;
+  enterpriseThinking?: "LOW" | "MEDIUM";
+  experimentVersion?: "enterprise-thinking-pilot-1";
   fixtureVersion: string;
   caseSetHash: string;
   bundleVersion: string;
@@ -138,6 +166,7 @@ export interface ReadingEvaluationMetadata {
   warning: string;
 }
 export interface ReadingEvaluationCaseRow {
+  transport?: AdminTransportTrace | null;
   id: string;
   description: string;
   config: { day: string; timeZone: string; tone: string; depth: string; granted: string[] };
@@ -186,6 +215,29 @@ export interface ReadingEvaluationCaseRow {
 export interface ReadingEvaluationCaseResult {
   metadata: ReadingEvaluationMetadata;
   case: ReadingEvaluationCaseRow;
+  controller?: {
+    version: "evaluation-disposition-1";
+    status: "running" | "complete" | "halted" | "error";
+    message: string | null;
+  };
+}
+/** Includes uncertain attempts even when no complete case can be combined. Admin-only. */
+export interface ReadingEvaluationLedger {
+  version: "evaluation-ledger-1";
+  costStatus: "reservation-estimates-not-invoices" | "legacy-accounting-unknown";
+  sourcePlan: EvaluationJsonValue;
+  dollarCeilingMicros: number | null;
+  reviewReserveMicros: number | null;
+  campaignAttempts: number;
+  campaignReservedMicros: number;
+  entries: {
+    position: number;
+    caseId: string;
+    attempted: boolean;
+    reservedMicros: number;
+    capture: "uncertain" | "stored";
+    raw: EvaluationJsonValue;
+  }[];
 }
 export interface ReadingEvaluationSummary {
   cases: number;
@@ -237,6 +289,13 @@ export function combineReadingEvaluationResults(
   if (!first) throw new Error("No synthetic evaluation results to combine");
   const metadataFields = [
     "reportVersion",
+    "qualificationProfile",
+    "qualificationPolicyVersion",
+    "sourceSha",
+    "runPlanHash",
+    "requestPolicyVersion",
+    "enterpriseThinking",
+    "experimentVersion",
     "fixtureVersion",
     "caseSetHash",
     "bundleVersion",
@@ -308,6 +367,11 @@ export function combineReadingEvaluationResults(
   }
   if (!partial && seen.size !== expected.size)
     throw new Error("A complete synthetic evaluation requires all fixed cases");
+  const actualModels = new Set(
+    results.map((r) => r.case.transport?.actualModel).filter((m): m is string => !!m),
+  );
+  if (actualModels.size > 1)
+    throw Error("Synthetic evaluation actual provider model changed during the run.");
   const cases = catalog.flatMap((fixed) =>
     results.filter((result) => result.case.id === fixed.id).map((result) => result.case),
   );

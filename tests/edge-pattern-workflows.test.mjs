@@ -235,6 +235,9 @@ test("/evaluations starts one Workflow per run, only for the signed app step cal
 
   for (const [body, status] of [
     [{ ...good, callback: "http://app.example.test/api/public/evaluation-step" }, 400],
+    [{ ...good, planHash: "bad", qualificationProfile: "writing-base" }, 400],
+    [{ ...good, planHash: "a".repeat(64), qualificationProfile: "arbitrary" }, 400],
+    [{ ...good, planHash: "a".repeat(64), enterpriseThinking: "MINIMAL" }, 400],
     [{ ...good, callback: "https://attacker.example.test/collect" }, 400],
     [{ ...good, callback: "not a url" }, 400],
     [{ ...good, runId: "../../escape" }, 400],
@@ -247,6 +250,36 @@ test("/evaluations starts one Workflow per run, only for the signed app step cal
     401,
   );
   assert.equal(created.length, 1);
+});
+
+test("the evaluation Workflow carries the immutable plan and closed profile in every signed step", async () => {
+  const savedFetch = globalThis.fetch,
+    calls = [];
+  globalThis.fetch = async (url, init) => {
+    calls.push(init);
+    return Response.json({ next: calls.length < 2 });
+  };
+  try {
+    const profile = { planHash: "b".repeat(64), qualificationProfile: "writing-final" };
+    const flow = new worker.SyntheticEvaluationWorkflow({}, { PATTERN_WORKFLOW_SECRET: SECRET });
+    await flow.run(
+      {
+        payload: {
+          runId: "run-frozen",
+          total: 50,
+          callback: "https://app.example.test/api/public/evaluation-step",
+          ...profile,
+        },
+      },
+      { do: async (name, config, callback) => callback() },
+    );
+    for (const [position, init] of calls.entries()) {
+      assert.deepEqual(JSON.parse(init.body), { runId: "run-frozen", position, ...profile });
+      assert.equal(init.headers["x-pattern-signature"], sign(init.body));
+    }
+  } finally {
+    globalThis.fetch = savedFetch;
+  }
 });
 
 test("the evaluation Workflow signs one step per case and stops when the app says so", async () => {

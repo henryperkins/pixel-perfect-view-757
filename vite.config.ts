@@ -5,12 +5,15 @@
 //     React/TanStack dedupe, error logger plugins, and sandbox detection (port/host/strictPort).
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import path from "node:path";
+import { readBuildSourceSha } from "./scripts/build-source-identity.mjs";
 import { mcpPlugin } from "@lovable.dev/mcp-js/stacks/tanstack/vite";
 import { loadEnv } from "vite";
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 // Server routes (email sending) read non-VITE env vars from process.env.
 Object.assign(process.env, loadEnv(process.env["NODE_ENV"] ?? "development", process.cwd(), ""));
+
+const sourceSha = readBuildSourceSha();
 
 export default defineConfig({
   tanstackStart: {
@@ -19,6 +22,7 @@ export default defineConfig({
     server: { entry: "server" },
   },
   vite: {
+    define: { __PATTERN_SOURCE_SHA__: JSON.stringify(sourceSha) },
     plugins: [mcpPlugin()],
     resolve: {
       alias: {

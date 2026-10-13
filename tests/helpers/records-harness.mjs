@@ -172,6 +172,7 @@ export async function createRecordsHarness() {
       root: projectRoot,
       configFile: false,
       envFile: false,
+      define: { __PATTERN_SOURCE_SHA__: JSON.stringify("a".repeat(40)) },
       resolve: { alias: { "@": join(projectRoot, "src") } },
       appType: "custom",
       logLevel: "error",

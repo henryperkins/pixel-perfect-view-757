@@ -7,6 +7,14 @@ const stepSchema = z
   .object({
     runId: z.string().min(1).max(80),
     position: z.number().int().min(0).max(1000),
+    planHash: z
+      .string()
+      .regex(/^[a-f0-9]{64}$/)
+      .optional(),
+    qualificationProfile: z
+      .enum(["writing-base", "writing-natal", "writing-final", "writing-baseline"])
+      .optional(),
+    enterpriseThinking: z.enum(["LOW", "MEDIUM"]).optional(),
   })
   .strict();
 

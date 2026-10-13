@@ -394,6 +394,14 @@ export const startReadingEvaluationRun = createServerFn({ method: "POST" })
     return m.startEvaluationRun(context.db, context.userId, data, new URL(getRequest().url).origin);
   });
 
+export const previewReadingEvaluationPlan = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
+  .inputValidator((d: unknown) => readingEvaluationRunInputSchema.parse(d))
+  .handler(async ({ data, context }) => {
+    const m = await import("./evaluation-runs.server");
+    return m.previewEvaluationPlan(context.db, context.userId, data);
+  });
+
 export const fetchReadingEvaluationRun = createServerFn({ method: "POST" })
   .middleware([requireAuth])
   .inputValidator((d: unknown) =>

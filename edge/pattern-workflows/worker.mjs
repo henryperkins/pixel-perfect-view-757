@@ -193,14 +193,21 @@ export class NightlyReadingWorkflow extends WorkflowEntrypoint {
 // (no retries), so a model request is never repeated automatically.
 export class SyntheticEvaluationWorkflow extends WorkflowEntrypoint {
   async run(event, step) {
-    const { runId, total, callback } = event.payload || {};
+    const { runId, total, callback, planHash, qualificationProfile, enterpriseThinking } =
+      event.payload || {};
     let steps = 0;
     for (let position = 0; position < total; position++) {
       const outcome = await step.do(
         "case " + position,
         { retries: { limit: 0, delay: "1 second" }, timeout: "5 minutes" },
         async () => {
-          const raw = JSON.stringify({ runId, position });
+          const raw = JSON.stringify({
+            runId,
+            position,
+            ...(planHash ? { planHash } : {}),
+            ...(qualificationProfile ? { qualificationProfile } : {}),
+            ...(enterpriseThinking ? { enterpriseThinking } : {}),
+          });
           const res = await fetch(callback, {
             method: "POST",
             headers: {
@@ -381,7 +388,9 @@ export default {
     }
 
     if (request.method === "POST" && url.pathname === "/evaluations") {
-      const { runId, total, callback } = raw ? JSON.parse(raw) : {};
+      const { runId, total, callback, planHash, qualificationProfile, enterpriseThinking } = raw
+        ? JSON.parse(raw)
+        : {};
       let target;
       try {
         target = new URL(callback);
@@ -399,9 +408,28 @@ export default {
         total > 200
       )
         return new Response("invalid evaluation run", { status: 400 });
+      if (
+        (planHash !== undefined &&
+          (typeof planHash !== "string" || !/^[a-f0-9]{64}$/.test(planHash))) ||
+        (qualificationProfile !== undefined &&
+          !["writing-base", "writing-natal", "writing-final", "writing-baseline"].includes(
+            qualificationProfile,
+          )) ||
+        (enterpriseThinking !== undefined && !["LOW", "MEDIUM"].includes(enterpriseThinking)) ||
+        ((qualificationProfile || enterpriseThinking) && !planHash) ||
+        (qualificationProfile && enterpriseThinking)
+      )
+        return new Response("invalid frozen evaluation identity", { status: 400 });
       const instance = await env.EVALUATIONS.create({
         id: runId,
-        params: { runId, total, callback: target.toString() },
+        params: {
+          runId,
+          total,
+          callback: target.toString(),
+          ...(planHash ? { planHash } : {}),
+          ...(qualificationProfile ? { qualificationProfile } : {}),
+          ...(enterpriseThinking ? { enterpriseThinking } : {}),
+        },
       });
       return Response.json({ ok: true, instanceId: instance.id });
     }

@@ -7,6 +7,9 @@ export const startReadingEvaluationRun = async () => {
   throw new Error("A static render never starts an evaluation");
 };
 export const fetchReadingEvaluationRun = async () => ({ run: null, results: [] });
+export const previewReadingEvaluationPlan = async () => {
+  throw Error("A static render never prepares a plan");
+};
 export const stopReadingEvaluationRun = async () => {
   throw new Error("A static render never stops an evaluation");
 };

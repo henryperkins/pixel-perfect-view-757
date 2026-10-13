@@ -2992,32 +2992,65 @@ export async function runReadingEvaluationCase(
   return evaluateFixedCase(db, caseId, bundleSource, provider);
 }
 
+/** Evaluation-only copy read; run/single-case callers establish admin authority first. */
+export async function evaluationBundle(
+  db: DB,
+  bundleSource: ReadingEvaluationBundleSource,
+): Promise<ContentBundle> {
+  if (!(READING_EVALUATION_BUNDLE_SOURCES as readonly unknown[]).includes(bundleSource))
+    throw new Error("Unknown synthetic evaluation bundle.");
+  return bundleSource === "builtin"
+    ? DEFAULT_BUNDLE
+    : bundleSource === "natal-candidate"
+      ? (await import("./content/natal-candidate-bundle")).NATAL_CANDIDATE_BUNDLE
+      : bundleSource === "transit-candidate"
+        ? (await import("./content/transit-candidate-bundle")).TRANSIT_CANDIDATE_BUNDLE
+        : bundleSource === "writing-candidate"
+          ? (await import("./content/writing-candidate-bundle")).WRITING_CANDIDATE_BUNDLE
+          : await activeBundle(db, { requireSuccessfulRead: true });
+}
+
 /** One fixed synthetic case; callers have already established admin authority. */
 export async function evaluateFixedCase(
   db: DB,
   caseId: string,
   bundleSource: ReadingEvaluationBundleSource,
   provider: LanguageProvider,
+  qualification?: {
+    profile?: import("./ai/qualification-profiles").QualificationProfile;
+    enterpriseThinking?: import("./ai/admin-transport").EnterpriseThinkingLevel;
+    sourceSha: string | null;
+    runPlanHash: string;
+  },
+  frozenBundle?: ContentBundle,
 ) {
-  if (!(READING_EVALUATION_BUNDLE_SOURCES as readonly unknown[]).includes(bundleSource))
-    throw new Error("Unknown synthetic evaluation bundle.");
   if (!(LANGUAGE_PROVIDERS as readonly unknown[]).includes(provider))
     throw new Error("Unknown language provider.");
   const evaluation = await import("./ai/reading-evaluation.server");
-  // Evaluation-only copy choice. Shipped baseline/candidates need no records read; nothing
-  // here publishes, activates or caches content, so production copy is unaffected.
-  const bundle =
-    bundleSource === "builtin"
-      ? DEFAULT_BUNDLE
-      : bundleSource === "natal-candidate"
-        ? (await import("./content/natal-candidate-bundle")).NATAL_CANDIDATE_BUNDLE
-        : bundleSource === "transit-candidate"
-          ? (await import("./content/transit-candidate-bundle")).TRANSIT_CANDIDATE_BUNDLE
-          : bundleSource === "writing-candidate"
-            ? (await import("./content/writing-candidate-bundle")).WRITING_CANDIDATE_BUNDLE
-            : await activeBundle(db, { requireSuccessfulRead: true });
-  const result = await evaluation.runSyntheticEvaluationCase(caseId, bundle, provider);
-  return { ...result, metadata: { ...result.metadata, bundleSource } };
+  const bundle = frozenBundle ?? (await evaluationBundle(db, bundleSource));
+  const result = await evaluation.runSyntheticEvaluationCase(
+    caseId,
+    bundle,
+    provider,
+    qualification?.profile,
+    qualification?.enterpriseThinking
+      ? { enterpriseThinking: qualification.enterpriseThinking, boundedQualification: true }
+      : {},
+  );
+  return {
+    ...result,
+    metadata: {
+      ...result.metadata,
+      bundleSource,
+      ...(qualification
+        ? {
+            sourceSha: qualification.sourceSha,
+            runPlanHash: qualification.runPlanHash,
+            requestPolicyVersion: "synthetic-facts-local-context-1",
+          }
+        : {}),
+    },
+  };
 }
 
 /** Which admin language providers have a server key; never returns key material. */

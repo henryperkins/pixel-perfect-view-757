@@ -18,11 +18,14 @@ import {
   type ReadingEvaluationCaseResult,
   type ReadingEvaluationCaseRow,
   type ReadingEvaluationRun,
+  type ReadingEvaluationLedger,
 } from "@/lib/ai/reading-evaluation.shared";
+import { QUALIFICATION_PROFILES, type QualificationProfile } from "@/lib/ai/qualification-profiles";
 import {
   fetchReadingEvaluationRun,
   startReadingEvaluationRun,
   stopReadingEvaluationRun,
+  previewReadingEvaluationPlan,
 } from "@/lib/pattern.functions";
 
 /** Evaluation-only copy; choosing one never publishes or activates a release. */
@@ -69,11 +72,17 @@ function outcomeLabel(row: ReadingEvaluationCaseRow): string {
           : "Skipped before a model call";
 }
 
-function EvaluationCase({ result }: { result: ReadingEvaluationCaseResult }) {
+function EvaluationCase({
+  result,
+  position,
+}: {
+  result: ReadingEvaluationCaseResult;
+  position: number;
+}) {
   const [expanded, setExpanded] = useState(false);
   const row = result.case;
   const label = READING_EVALUATION_CATALOG.find((fixed) => fixed.id === row.id)?.label ?? row.id;
-  const panelId = `synthetic-evaluation-${row.id}`;
+  const panelId = `synthetic-evaluation-${row.id}-${position}`;
   return (
     <article className="min-w-0 rounded-md border border-rule bg-card">
       <Button
@@ -296,12 +305,21 @@ export function ReadingEvaluation({
   const startRun = useServerFn(startReadingEvaluationRun);
   const fetchRun = useServerFn(fetchReadingEvaluationRun);
   const stopRun = useServerFn(stopReadingEvaluationRun);
+  const previewPlan = useServerFn(previewReadingEvaluationPlan);
   const fetchRef = useRef(fetchRun);
   fetchRef.current = fetchRun;
   const [provider, setProvider] = useState<LanguageProvider>("lovable");
   const [bundleSource, setBundleSource] = useState<ReadingEvaluationBundleSource>("active");
   const [run, setRun] = useState<ReadingEvaluationRun | null>(null);
   const [results, setResults] = useState<ReadingEvaluationCaseResult[]>([]);
+  const [ledger, setLedger] = useState<ReadingEvaluationLedger | null>(null);
+  const [mode, setMode] = useState<"standard" | "writing" | "enterprise">("standard");
+  const [profile, setProfile] = useState<QualificationProfile>("writing-base");
+  const [thinking, setThinking] = useState<"LOW" | "MEDIUM">("LOW");
+  const [campaign, setCampaign] = useState("");
+  const [ceiling, setCeiling] = useState("");
+  const [reserve, setReserve] = useState("");
+  const [dry, setDry] = useState<Awaited<ReturnType<typeof previewPlan>> | null>(null);
   const [loaded, setLoaded] = useState(false);
   const [pending, setPending] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
@@ -330,6 +348,7 @@ export function ReadingEvaluation({
       held.current = { runId: data.run?.id ?? null, results: next };
       setRun(data.run);
       setResults(next);
+      setLedger(data.ledger);
       setNow(Date.now());
     } finally {
       polling.current = false;
@@ -357,6 +376,45 @@ export function ReadingEvaluation({
   const summary = summarizeReadingEvaluation(rows);
   const total = run?.total ?? READING_EVALUATION_CATALOG.length;
   const current = READING_EVALUATION_CATALOG[results.length];
+  const settings =
+    mode === "writing"
+      ? {
+          bundleSource: "writing-candidate" as const,
+          provider: "lovable" as const,
+          qualificationProfile: profile,
+        }
+      : mode === "enterprise"
+        ? {
+            bundleSource: "transit-candidate" as const,
+            provider: "gemini-enterprise" as const,
+            enterpriseThinking: thinking,
+          }
+        : { bundleSource, provider };
+  function saveJson(value: unknown, name: string) {
+    const url = URL.createObjectURL(
+      new Blob([JSON.stringify(value, null, 2) + "\n"], { type: "application/json" }),
+    );
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = name;
+    anchor.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+  async function prepare() {
+    setPending(true);
+    setMessage(null);
+    try {
+      const plan = await previewPlan({ data: settings });
+      setDry(plan);
+      saveJson(plan, `evaluation-dry-plan-${mode}.json`);
+    } catch (error) {
+      setMessage(
+        error instanceof Error ? error.message : "The source plans could not be prepared.",
+      );
+    } finally {
+      setPending(false);
+    }
+  }
   const complete = run?.status === "complete";
   const idleMinutes = run ? Math.max(1, Math.round((now - Date.parse(run.updatedAt)) / 60_000)) : 0;
   const stalled = Boolean(
@@ -368,11 +426,30 @@ export function ReadingEvaluation({
     setMessage(null);
     setDownloadError(null);
     try {
-      const started = await startRun({ data: { bundleSource, provider } });
+      const started = await startRun({
+        data: {
+          ...settings,
+          ...(mode !== "standard"
+            ? {
+                expectedPlanHash: dry?.hash,
+                ...(campaign.trim()
+                  ? { campaignId: campaign.trim() }
+                  : {
+                      budget: {
+                        dollarCeilingCents: Math.round(Number(ceiling) * 100),
+                        reviewReserveCents: Math.round(Number(reserve) * 100),
+                      },
+                    }),
+              }
+            : {}),
+        },
+      });
       held.current = { runId: started.id, results: [] };
       setRun(started);
       setResults([]);
+      setLedger(null);
       setNow(Date.now());
+      await refresh(started.id);
     } catch (error) {
       setMessage(
         error instanceof Error && error.message ? error.message : "The run could not be started.",
@@ -409,7 +486,7 @@ export function ReadingEvaluation({
       setTimeout(() => URL.revokeObjectURL(url), 1000);
     } catch {
       setDownloadError(
-        "The report could not be downloaded. Completed results are still available.",
+        "These captures cannot form one full-suite report. Download stored attempts to retain every outcome and source plan.",
       );
     }
   }
@@ -441,11 +518,132 @@ export function ReadingEvaluation({
       <h3 id="synthetic-evaluation-heading" className="text-xl">
         Synthetic reading evaluation
       </h3>
+      <div className="mt-4 space-y-4">
+        <label className="block text-sm">
+          Evaluation scope
+          <select
+            className="mt-2 block min-h-11 w-full rounded-md border border-rule bg-card px-3"
+            value={mode}
+            disabled={busy && !stalled}
+            onChange={(e) => {
+              setMode(e.target.value as typeof mode);
+              setDry(null);
+            }}
+          >
+            <option value="standard">Fixed suite</option>
+            <option value="writing">Matched writing qualification</option>
+            <option value="enterprise">Enterprise LOW / MEDIUM pilot</option>
+          </select>
+        </label>
+        {mode !== "standard" ? (
+          <>
+            {mode === "writing" ? (
+              <label className="block text-sm">
+                Qualification arm
+                <select
+                  className="mt-2 block min-h-11 w-full rounded-md border border-rule bg-card px-3"
+                  value={profile}
+                  disabled={busy && !stalled}
+                  onChange={(e) => {
+                    setProfile(e.target.value as QualificationProfile);
+                    setDry(null);
+                  }}
+                >
+                  {QUALIFICATION_PROFILES.map((p, i) => (
+                    <option key={p} value={p}>
+                      {
+                        [
+                          "A · concrete writing",
+                          "B · writing and natal lens",
+                          "C · final writing, natal and story",
+                          "D · previous writing, natal and story",
+                        ][i]
+                      }
+                    </option>
+                  ))}
+                </select>
+              </label>
+            ) : (
+              <label className="block text-sm">
+                Pilot arm
+                <select
+                  className="mt-2 block min-h-11 w-full rounded-md border border-rule bg-card px-3"
+                  value={thinking}
+                  disabled={busy && !stalled}
+                  onChange={(e) => {
+                    setThinking(e.target.value as typeof thinking);
+                    setDry(null);
+                  }}
+                >
+                  <option value="LOW">LOW · first arm</option>
+                  <option value="MEDIUM">MEDIUM · matched arm</option>
+                </select>
+              </label>
+            )}
+            <p className="text-xs leading-relaxed text-muted-foreground">
+              {mode === "writing"
+                ? "The four frozen arms share one campaign: 196 planned calls, with 28 further calls reserved for the seven-day review. Use the member Lovable provider at 60 seconds."
+                : "Six fixed cases, two independent repetitions per setting: at most 24 native Enterprise calls at 60 seconds. These are separate observations; failed calls are never repeated."}
+            </p>
+            <label className="block text-sm">
+              Existing campaign ID{" "}
+              <span className="text-muted-foreground">(leave blank for A or LOW)</span>
+              <input
+                className="mt-2 block min-h-11 w-full rounded-md border border-rule bg-card px-3 font-mono"
+                value={campaign}
+                onChange={(e) => setCampaign(e.target.value)}
+                disabled={busy && !stalled}
+              />
+            </label>
+            {!campaign.trim() ? (
+              <div className="grid gap-3 sm:grid-cols-2">
+                <label className="block text-sm">
+                  Campaign reservation ceiling (USD)
+                  <input
+                    type="number"
+                    min="1"
+                    max="1000"
+                    step="0.01"
+                    className="mt-2 block min-h-11 w-full rounded-md border border-rule bg-card px-3"
+                    value={ceiling}
+                    onChange={(e) => setCeiling(e.target.value)}
+                    disabled={busy && !stalled}
+                  />
+                </label>
+                <label className="block text-sm">
+                  Separate paid-review reserve (USD)
+                  <input
+                    type="number"
+                    min="0"
+                    max="1000"
+                    step="0.01"
+                    className="mt-2 block min-h-11 w-full rounded-md border border-rule bg-card px-3"
+                    value={reserve}
+                    onChange={(e) => setReserve(e.target.value)}
+                    disabled={busy && !stalled}
+                  />
+                </label>
+              </div>
+            ) : null}
+            <p className="text-xs leading-relaxed text-muted-foreground">
+              Reservations use a conservative token estimate. They are not invoices or a verified
+              Lovable billing limit. Verify your account rates and approved spend before starting.
+              Missing model identity or usage stops qualification and retains the full reservation.
+            </p>
+            {dry ? (
+              <p className="break-all text-xs text-muted-foreground">
+                Prepared source: {dry.sourceSha ?? "unknown"} · {dry.attemptLimit} planned calls ·{" "}
+                {dry.hash}
+              </p>
+            ) : null}
+          </>
+        ) : null}
+      </div>
       <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-        Run the {READING_EVALUATION_CATALOG.length} fixed synthetic cases against the selected
-        provider's model and the evaluation copy chosen below, one at a time: up to{" "}
-        {READING_EVALUATION_CATALOG.filter((row) => row.expectsModel).length} model calls. Quiet
-        days and cases without a published primary interpretation skip the model. This uses
+        {mode === "enterprise"
+          ? "Run 12 planned observations for the selected Enterprise arm, one at a time."
+          : `Run the ${READING_EVALUATION_CATALOG.length} fixed synthetic cases against the selected provider and copy, one at a time: up to ${READING_EVALUATION_CATALOG.filter((row) => row.expectsModel).length} model calls.`}{" "}
+        Quiet days and cases without a published primary interpretation skip the model. This uses
         synthetic chart inputs and no account readings or notes. The run continues on the server if
         you leave or close this page; your latest run and its results load when you return.
       </p>
@@ -456,7 +654,7 @@ export function ReadingEvaluation({
         these results do not assign writing-quality scores or establish a production acceptance
         rate.
       </p>
-      <div className="mt-4 max-w-md min-w-0">
+      <div className="mt-4 max-w-md min-w-0" hidden={mode !== "standard"}>
         <label
           htmlFor="synthetic-evaluation-copy"
           className="technical block text-muted-foreground"
@@ -485,7 +683,7 @@ export function ReadingEvaluation({
           when a run starts.
         </p>
       </div>
-      <div className="mt-4">
+      <div className="mt-4" hidden={mode !== "standard"}>
         <LanguageProviderChoice
           value={provider}
           onChange={setProvider}
@@ -496,8 +694,25 @@ export function ReadingEvaluation({
       <div className="mt-4 flex flex-wrap gap-3">
         <Button
           type="button"
-          onClick={() => void start()}
+          variant="outline"
+          onClick={() => void prepare()}
           disabled={!loaded || pending || (busy && !stalled)}
+          className="min-h-11 whitespace-normal"
+        >
+          Prepare and download source plans
+        </Button>
+        <Button
+          type="button"
+          onClick={() => void start()}
+          disabled={
+            !loaded ||
+            pending ||
+            (busy && !stalled) ||
+            (mode !== "standard" &&
+              (!dry ||
+                (!campaign.trim() &&
+                  (!ceiling || reserve === "" || Number(reserve) >= Number(ceiling)))))
+          }
           className="min-h-11"
         >
           Run synthetic evaluation
@@ -513,6 +728,16 @@ export function ReadingEvaluation({
             {run?.status === "stopping"
               ? "Stopping after current case…"
               : "Stop after current case"}
+          </Button>
+        ) : null}
+        {ledger?.entries.length ? (
+          <Button
+            type="button"
+            variant="outline"
+            className="min-h-11 whitespace-normal"
+            onClick={() => saveJson({ run, ledger }, `evaluation-stored-attempts-${run?.id}.json`)}
+          >
+            Download stored attempts
           </Button>
         ) : null}
         {results.length ? (
@@ -534,6 +759,21 @@ export function ReadingEvaluation({
       >
         {progress}
       </p>
+      {ledger ? (
+        <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+          {ledger.campaignAttempts} attempts or reservations · $
+          {(ledger.campaignReservedMicros / 1_000_000).toFixed(4)} reserved estimate ·{" "}
+          {ledger.entries.filter((e) => e.capture === "uncertain").length} uncertain captures
+          {run?.campaignId ? ` · campaign ${run.campaignId}` : ""}. Actual billed cost requires
+          account reconciliation.
+        </p>
+      ) : null}
+      {ledger?.costStatus === "legacy-accounting-unknown" ? (
+        <p className="mt-2 text-xs text-muted-foreground">
+          This historical run predates reservations. Observed attempts are retained; its billing and
+          reservation totals are unknown.
+        </p>
+      ) : null}
       {busy && !stalled ? (
         <p className="mt-2 text-xs text-muted-foreground">
           You can leave this page while the run continues. Stopping lets the current request finish
@@ -566,7 +806,7 @@ export function ReadingEvaluation({
               { label: "Skipped before a model call", value: String(summary.outcomes.skipped) },
               {
                 label: "Completed cases",
-                value: `${rows.length}/${READING_EVALUATION_CATALOG.length}`,
+                value: `${rows.length}/${total}`,
               },
             ].map(({ label, value }) => (
               <div key={label} className="min-w-0 border border-rule bg-card p-3">
@@ -580,9 +820,11 @@ export function ReadingEvaluation({
           <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
             The denominator includes attempted cases only. Quiet skips and missing configuration are
             excluded.{" "}
-            {complete
-              ? "This run contains all fixed cases and can be compared with another complete export using the existing comparison CLI."
-              : "This run is partial; downloaded reports include completed cases only and cannot be used as a complete comparison."}
+            {run?.enterpriseThinking
+              ? "Pilot captures retain every repetition by position; download stored attempts for this experiment."
+              : complete
+                ? "This run contains all fixed cases and can be compared with another complete export using the existing comparison CLI."
+                : "This run is partial; downloaded reports include completed cases only and cannot be used as a complete comparison."}
           </p>
           <p className="mt-2 font-mono text-xs leading-relaxed text-muted-foreground [overflow-wrap:anywhere]">
             {results[0]?.metadata.model} · {results[0]?.metadata.promptVersion} ·{" "}
@@ -596,8 +838,8 @@ export function ReadingEvaluation({
               : `${results[0].metadata.gatewayTimeoutMs / 1000}s gateway budget`}
           </p>
           <div className="mt-5 space-y-3">
-            {results.map((result) => (
-              <EvaluationCase key={result.case.id} result={result} />
+            {results.map((result, index) => (
+              <EvaluationCase key={`${result.case.id}-${index}`} result={result} position={index} />
             ))}
           </div>
         </>

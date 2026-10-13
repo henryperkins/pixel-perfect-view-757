@@ -99,6 +99,9 @@ export async function startEvaluationWorkflow(params: {
   runId: string;
   total: number;
   callback: string;
+  planHash: string;
+  qualificationProfile?: import("./ai/qualification-profiles").QualificationProfile;
+  enterpriseThinking?: import("./ai/admin-transport").EnterpriseThinkingLevel;
 }) {
   return call<{ ok: boolean; instanceId: string }>("POST", "/evaluations", params);
 }

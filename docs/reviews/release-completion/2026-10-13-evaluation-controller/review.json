@@ -1,0 +1,30 @@
+{
+  "kind": "fresh-independent-source-review",
+  "reviewer": "qualification_controller_review",
+  "verdict": "ready-to-merge",
+  "criticalFindings": 0,
+  "importantFindings": 0,
+  "verification": {
+    "controllerAndRequestPolicy": {
+      "passed": 38,
+      "failed": 0
+    },
+    "sourceIdentityAndDryPlans": {
+      "passed": 3,
+      "failed": 0
+    },
+    "worker": {
+      "passed": 8,
+      "failed": 0
+    },
+    "rootGraphBytes": 1769867,
+    "writingPlannedAttempts": 196
+  },
+  "limitations": [
+    "No paid-provider or billing evidence",
+    "No production verification by reviewer",
+    "No rendered-browser evidence by reviewer",
+    "No human editorial approval",
+    "Protocol-v2 and seven-day tooling remain open"
+  ]
+}

@@ -33,6 +33,7 @@ export const DAILY_DIAGNOSTIC_CODES = [
   "no_cycle",
   "no_interpretation",
   "not_configured",
+  "request_limit",
   "timeout",
   "http",
   "rate_limit",
@@ -71,6 +72,7 @@ export const DAILY_DIAGNOSTIC_CODES = [
 export type DailyDiagnosticCode = (typeof DAILY_DIAGNOSTIC_CODES)[number];
 export type DailyGatewayCode =
   | "not_configured"
+  | "request_limit"
   | "timeout"
   | "http"
   | "rate_limit"
@@ -105,6 +107,7 @@ const LABELS: Record<DailyDiagnosticCode, string> = {
   no_cycle: "No eligible cycle",
   no_interpretation: "No published primary interpretation",
   not_configured: "language layer is not configured",
+  request_limit: "synthetic request exceeds its frozen resource limit",
   timeout: "language gateway timed out",
   http: "language gateway is unavailable",
   rate_limit: "language gateway is rate limited",

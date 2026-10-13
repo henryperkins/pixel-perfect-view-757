@@ -1,0 +1,81 @@
+{
+  "version": "evaluation-controller-receipt-1",
+  "createdAt": "2026-10-13T01:50:01.837167+00:00",
+  "tests": {
+    "full": {
+      "passed": 749,
+      "failed": 0,
+      "skipped": 0
+    },
+    "browser": {
+      "passed": 12,
+      "widths": [
+        1440,
+        390
+      ],
+      "reducedMotion": true,
+      "kind": "controlled fixture"
+    },
+    "typecheck": "passed",
+    "scopedLint": "passed",
+    "build": "passed"
+  },
+  "migration": {
+    "id": "20261013_evaluation_qualification",
+    "sourceHash": "1a338d6a60381dbb19b759940ad6787dd12910347b4af16fb484c7a4ec18cf28",
+    "applied": true,
+    "pendingColumns": [],
+    "statements": []
+  },
+  "backup": {
+    "consistent": true,
+    "tables": 26,
+    "bytes": 3764224,
+    "sha256": "d009b456fb58ccbdc576cd6a4d66a7193ff923183dfc44d29a1c4da0542761f7",
+    "foreignKeyViolations": 0
+  },
+  "paidModelCalls": 0,
+  "humanReviewCompleted": false,
+  "contentActivation": false,
+  "currentContentVersion": "0.7.1",
+  "currentContentChecksum": "20b793acda524da945b07ec32b2ed795f31e273c533ff6b4e9c4f96ef821eeac",
+  "sourceCommit": null,
+  "mainPushed": false,
+  "published": false,
+  "fileHashes": {
+    "d1/schema.sql": "194a769c9027244c06971bc07db82dfe4a636d66bbfe17a7be1f3d007ea8bb7a",
+    "d1/migrations/20261013_evaluation_qualification.sql": "1a338d6a60381dbb19b759940ad6787dd12910347b4af16fb484c7a4ec18cf28",
+    "edge/pattern-workflows/worker.mjs": "b846884a9dc4f1a9383ad55443fc14fec1342870224863ec78dbdadcf5955e52",
+    "src/components/pattern/ReadingEvaluation.tsx": "afbc358c2476bb847ddce013d6411947d0232da6ed6b6813ad1664290edd94a5",
+    "src/lib/ai/admin-transport.ts": "7766c746d42c24804b49481ec0eabd938227b3264d980a2016c9af8261684454",
+    "src/lib/ai/diagnostics.ts": "8b586d2220e893150ff04aa846c7c1ece9d81284153ca8417e5723a7dad0689a",
+    "src/lib/ai/language.server.ts": "5959786b29d81db49084451603708be613cade73ca15c38c57ddac32a43f1e50",
+    "src/lib/ai/qualification-plan.server.ts": "a995fbfc1a2f42a23c41e2fb5ee1c14ee1bfeb0ad5978f7d80adfe184c338e30",
+    "src/lib/ai/qualification-profiles.ts": "803c9dc7dd326d7ac2de9332133f018f3a2bc7f60a1137cad47316e0aa0e081e",
+    "src/lib/ai/reading-evaluation.server.ts": "9a452661eb908cdd364f37c74052b0e30169714567fdf7b4c76d3097db86b74a",
+    "src/lib/ai/reading-evaluation.shared.ts": "c1af954b98aab4c23c6363d171e2c73e7d20d3aa947018618cb5ec5dc9825e36",
+    "src/lib/d1.server.ts": "bdbff3cbb5ab835ed4527988e9c7261e9da9bbc11d9fe46353563b29d527f8f7",
+    "src/lib/evaluation-runs.server.ts": "a4d8d9d1754879e183397939d23a0dcae2302c9f184669a4a157714ac2c82bff",
+    "src/lib/pattern.functions.ts": "183bf5bef6e4da6e5611ad9cc2bf2c11a73e1af09171ba18a3743f88a9369c63",
+    "src/lib/pattern.server.ts": "d2b8fa600b596a3d079aa8d3681084ead6c5a4e1d944023cfb31ca295cadf3c3",
+    "src/lib/workflows.server.ts": "5db83ba4b9fea5e30044339f6dc8edbe382d52866c39d3891f9b97b6f2bdc585",
+    "src/routeTree.gen.ts": "432d19ab2213f938fe8b33b4605e8ab1416df260a7500e925f7331de0038e16d",
+    "src/routes/api/public/evaluation-identity.ts": "6d89eaec05d2829f704141a08dfa5e77f375c54f674736d24f1d62c7ebc3e282",
+    "src/routes/api/public/evaluation-step.ts": "70e7881741e08e85e5b6c1073389ee21856254d7ccf247018405ac5b2f91f85d",
+    "scripts/build-source-identity.mjs": "ae3bd59ca0c2bc4ee860422e5935bdf550772f3ebc29350e9e29ae45b2e24ec5",
+    "scripts/build-source-identity.d.mts": "837c5edae3a71a6b089d04f38c014d0d38d3158acddf40991ccb3ad652484e94",
+    "scripts/freeze-evaluation-plans.mjs": "46197226cdd11329325b3a6e6d0bf32a205ea7cdb78e36d433c3b4bd127ea580",
+    "tests/evaluation-build-identity.test.mjs": "b7e0fcf69a3635e2f21e63dec94a496f2efdec1945aa868783ca1506c43bbb70",
+    "tests/edge-pattern-workflows.test.mjs": "dba68b6dbc42652cb8603a5a45c4d3b3e51e5b8ba25a56d3691cd12a8ee321e9",
+    "tests/helpers/reading-evaluation-ui-stubs.mjs": "5a7196142265a5057c26b4cd51a3bdb2aeb60df84eb6df24896220d2eb6e55d4",
+    "tests/helpers/records-harness.mjs": "f136ea66595ae78d079e663ae1e9762193d8bd7f7c374dc30165d4929b80444a",
+    "tests/reading-admin-transport.test.mjs": "125e0da38fc7dcd929761a5e33a431c5364d444a1f329a14d91d9cb2b22e0f15",
+    "tests/reading-evaluation-runs.test.mjs": "988ecb1740138b5802f6aec8fdaf50ffa287997afa4faa404f0e5a2b797cfb36",
+    "tests/reading-qualification-plan.test.mjs": "62238907cd0efc719dcebcbcaf4074700acc77e72f1e08dd7cb74f08d5af657e",
+    "tests/reading-qualification-profiles.test.mjs": "f138c30708cc0395b313955a4eb3750a2c0efb6dd9759b4633a77b47741b4c25",
+    "tests/reading-request-policy.test.mjs": "ab5fca8a2019dc123aafa4a95e6bd19a08200886f931eddc19d906cec8d64702",
+    "vite.config.ts": "525a89251bf949a4af57c0a01697114476c5ebcb48f575347b1914e986269fe9",
+    "docs/superpowers/plans/2026-10-12-release-completion-checklist.md": "f0c1a92b83c681fdb367cc267425d972697ef0e8626c8df56b176296d2e72fa5"
+  },
+  "independentReview": "ready-to-merge"
+}

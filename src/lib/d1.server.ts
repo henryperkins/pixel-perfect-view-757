@@ -35,7 +35,7 @@ const JSON_COLUMNS: Record<string, readonly string[]> = {
   context_signals: ["value"],
   daily_readings: ["language_meta", "local_context_sources"],
   feature_narratives: ["citations"],
-  evaluation_runs: ["case_ids"],
+  evaluation_runs: ["case_ids", "plan"],
   evaluation_results: ["result"],
 };
 

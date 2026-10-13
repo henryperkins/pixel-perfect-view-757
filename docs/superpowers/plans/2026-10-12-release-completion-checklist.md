@@ -310,6 +310,8 @@ Current source has six directed rules for three unordered pairs: four positive d
 
 ## Task 13 — Qualify the final writing stack with matched evidence
 
+**Controller implementation (2026-10-13):** Closed A/B/C/D plans, source attribution, durable pre-call reservations, capture decisions, campaign ceilings and admin raw-ledger exports are implemented and verified. Publication details are in the [evaluation controller receipt](../../reviews/release-completion/2026-10-13-evaluation-controller/README.md). This does not close paid generation, protocol-v2 scoring, sequential seven-day checks or human approval. No paid calls have been made in this implementation.
+
 **Modify:** `src/lib/ai/reading-evaluation.server.ts`, `src/lib/ai/reading-evaluation.shared.ts`, `src/lib/evaluation-runs.server.ts`, fixture modules, `scripts/reading-writing-review.mjs`, `docs/reviews/daily-reading-writing/review-protocol.md`; extend `tests/reading-writing-review.test.mjs`, `tests/reading-evaluation-runs.test.mjs`, `tests/reading-eval-fixtures.test.mjs`. **Create:** `docs/reviews/release-completion/<release-id>/qualification/` during the run.
 
 **Interface:** Add a closed admin-only `qualificationProfile` enum to evaluation run metadata and signed steps. Profiles select reviewed deterministic policy variants; they never accept arbitrary prompts, member IDs, or user-supplied executable settings. Pin source SHA, release/hash, fixture/hash, profile, prompt/validator versions, actual provider/model, timeout, and request policy in every report.
@@ -431,6 +433,8 @@ Replace the uppercase path placeholders with the manifest's paths. These command
 **Done when:** A member can inspect and filter a qualified future interval, including cycles not active today, with truthful timing and uncertainty.
 
 ## Task 19 — Finish the Gemini Enterprise timeout investigation
+
+**Pilot preparation (2026-10-13):** Bounded transport telemetry and the durable LOW/MEDIUM 24-observation pilot are implemented. Both arms freeze before dispatch, carry signed source-plan/control identities and export repetitions by position. Google documentation confirms the two controls; MINIMAL is rejected before traffic. Controlled tests prove orchestration, not latency, billed cost or writing quality. The live pilot and any expanded comparison remain pending a declared budget and verified account pricing; see the [controller receipt](../../reviews/release-completion/2026-10-13-evaluation-controller/README.md).
 
 **Read:** [Existing investigation and scoring](../../reviews/daily-transit-story/2026-10-12-enterprise-investigation/README.md). **Modify:** `src/lib/ai/language.server.ts`, `src/lib/ai/diagnostics.ts`, evaluation report types; extend `tests/reading-provider.test.mjs`, `tests/reading-diagnostics.test.mjs`, `tests/reading-evaluation-runs.test.mjs`.
 

@@ -126,7 +126,19 @@ for (const boundary of ["fetch", "response body"]) {
         );
       });
     responder = async ({ signal }) =>
-      boundary === "fetch" ? waitForAbort(signal) : { ok: true, json: () => waitForAbort(signal) };
+      boundary === "fetch"
+        ? waitForAbort(signal)
+        : new Response(
+            new ReadableStream({
+              start(stream) {
+                signal.addEventListener("abort", () => stream.error(signal.reason), { once: true });
+                queueMicrotask(() =>
+                  controller.abort(new DOMException("private-fixture-error", "TimeoutError")),
+                );
+              },
+            }),
+            { headers: { "content-type": "application/json" } },
+          );
     try {
       const result = await runCase("saturn-square-sun", bundle);
       assert.equal(result.case.diagnostics.code, "timeout");

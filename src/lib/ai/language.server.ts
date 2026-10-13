@@ -32,6 +32,13 @@ import {
   type DailyWritingRenderMode,
   type RecentDailyBody,
 } from "./daily-writing-quality";
+import {
+  createAdminTransportTrace,
+  assertSyntheticTransportControl,
+  type AdminTransportRecorder,
+  type AdminTransportTrace,
+  type SyntheticTransportControl,
+} from "./admin-transport";
 import { dropsSourceModality } from "./daily-modality";
 import { natalLensWordingProblem } from "../content/natal-lens-policy";
 import type {
@@ -118,6 +125,7 @@ interface JsonSchemaObject extends Record<string, EvaluationJsonValue> {
 }
 
 interface SyntheticObservation {
+  transport?(value: AdminTransportTrace): void;
   request(value: SyntheticReadingRequest): void;
   candidate(value: unknown): void;
 }
@@ -169,6 +177,7 @@ async function lovableContent(
   request: SyntheticReadingRequest,
   key: string,
   signal: AbortSignal,
+  recorder?: AdminTransportRecorder,
 ): Promise<string> {
   let res: Response;
   try {
@@ -186,24 +195,39 @@ async function lovableContent(
   } catch (error) {
     throw gatewayFailure(error, signal);
   }
+  recorder?.headers(res);
   if (!res.ok) throw new GatewayUnavailable(statusFailure(res.status));
   let payload: { choices?: { message?: { content?: string } }[] } | null;
   try {
-    payload = await res.json();
+    payload = await transportJson(res, recorder);
   } catch (error) {
     throw gatewayFailure(error, signal);
   }
+  recorder?.payload(payload);
   const content = payload?.choices?.[0]?.message?.content;
   if (!content) throw new GatewayUnavailable("empty_response");
   return content;
 }
 
 /** Reads only Google's bounded error status and reasons, so a bad key or billing stops admin runs. */
-async function geminiEnterpriseFailure(res: Response): Promise<DailyGatewayCode> {
+async function transportJson(res: Response, recorder?: AdminTransportRecorder) {
+  if (!recorder) return res.json();
+  const raw = await res.text();
+  recorder.body();
+  return JSON.parse(raw);
+}
+
+async function geminiEnterpriseFailure(
+  res: Response,
+  recorder?: AdminTransportRecorder,
+): Promise<DailyGatewayCode> {
   let reasons: unknown[] = [];
   try {
-    const error = ((await res.json()) as { error?: { status?: unknown; details?: unknown } } | null)
-      ?.error;
+    const error = (
+      (await transportJson(res, recorder)) as {
+        error?: { status?: unknown; details?: unknown };
+      } | null
+    )?.error;
     const details: unknown[] = Array.isArray(error?.details) ? error.details : [];
     reasons = [
       error?.status,
@@ -231,6 +255,8 @@ async function geminiEnterpriseContent(
   schema: JsonSchemaObject,
   key: string,
   signal: AbortSignal,
+  recorder?: AdminTransportRecorder,
+  control: SyntheticTransportControl = {},
 ): Promise<string> {
   let res: Response;
   try {
@@ -241,19 +267,28 @@ async function geminiEnterpriseContent(
       body: JSON.stringify({
         systemInstruction: { parts: [{ text: system }] },
         contents: [{ role: "user", parts: [{ text: user }] }],
-        generationConfig: { responseMimeType: "application/json", responseJsonSchema: schema },
+        generationConfig: {
+          responseMimeType: "application/json",
+          responseJsonSchema: schema,
+          ...(control.enterpriseThinking
+            ? { thinkingConfig: { thinkingLevel: control.enterpriseThinking } }
+            : {}),
+          ...(control.boundedQualification ? { maxOutputTokens: 65536 } : {}),
+        },
       }),
     });
   } catch (error) {
     throw gatewayFailure(error, signal);
   }
-  if (!res.ok) throw new GatewayUnavailable(await geminiEnterpriseFailure(res));
+  recorder?.headers(res);
+  if (!res.ok) throw new GatewayUnavailable(await geminiEnterpriseFailure(res, recorder));
   let payload: { candidates?: { content?: { parts?: unknown } }[] } | null;
   try {
-    payload = await res.json();
+    payload = await transportJson(res, recorder);
   } catch (error) {
     throw gatewayFailure(error, signal);
   }
+  recorder?.payload(payload);
   const parts = payload?.candidates?.[0]?.content?.parts;
   // Thought summaries are not draft text.
   const content = (Array.isArray(parts) ? parts : [])
@@ -270,6 +305,7 @@ interface GatewayOptions {
   observation?: SyntheticObservation | undefined;
   system?: string;
   provider?: LanguageProvider;
+  control?: SyntheticTransportControl;
 }
 
 /** One provider call returning a strict-schema JSON object, or a safe closed failure. */
@@ -277,14 +313,22 @@ async function callGateway<T>(
   user: string,
   schemaName: string,
   schema: JsonSchemaObject,
-  { timeoutMs = 90000, observation, system = VOICE, provider = "lovable" }: GatewayOptions = {},
+  {
+    timeoutMs = 90000,
+    observation,
+    system = VOICE,
+    provider = "lovable",
+    control = {},
+  }: GatewayOptions = {},
 ): Promise<T> {
+  assertSyntheticTransportControl(provider, control);
   const key = providerKey(provider);
   if (!key) throw new GatewayUnavailable("not_configured");
   const signal = AbortSignal.timeout(timeoutMs);
   // Gemini Enterprise receives these same messages and schema in its native shape.
   const request: SyntheticReadingRequest = {
     model: languageModel(provider),
+    ...(control.boundedQualification ? { max_tokens: 65536 } : {}),
     messages: [
       { role: "system", content: system },
       { role: "user", content: user },
@@ -294,17 +338,26 @@ async function callGateway<T>(
       json_schema: { name: schemaName, strict: true, schema },
     },
   };
+  if (control.boundedQualification && Buffer.byteLength(JSON.stringify(request), "utf8") > 65536)
+    throw new GatewayUnavailable("request_limit");
   observation?.request(structuredClone(request));
-  const content =
-    provider === "gemini-enterprise"
-      ? await geminiEnterpriseContent(system, user, schema, key, signal)
-      : await lovableContent(request, key, signal);
+  const recorder = observation?.transport
+    ? createAdminTransportTrace(provider, request.model, timeoutMs, control, signal)
+    : undefined;
   try {
-    const parsed = JSON.parse(content) as T;
-    observation?.candidate(parsed);
-    return parsed;
-  } catch (error) {
-    throw gatewayFailure(error, signal);
+    const content =
+      provider === "gemini-enterprise"
+        ? await geminiEnterpriseContent(system, user, schema, key, signal, recorder, control)
+        : await lovableContent(request, key, signal, recorder);
+    try {
+      const parsed = JSON.parse(content) as T;
+      observation?.candidate(parsed);
+      return parsed;
+    } catch (error) {
+      throw gatewayFailure(error, signal);
+    }
+  } finally {
+    if (recorder) observation?.transport?.(recorder.finish());
   }
 }
 
@@ -745,6 +798,7 @@ async function generateDailyProse(
   input: ReadingProseInput,
   observation?: SyntheticObservation,
   provider: LanguageProvider = "lovable",
+  control: SyntheticTransportControl = {},
 ): Promise<ReadingProse> {
   const { fallback } = input;
   const model = languageModel(provider);
@@ -905,13 +959,18 @@ async function generateDailyProse(
         observation,
         system: dailySystemVoice(hasNatalLens),
         provider,
+        control,
       },
     );
   } catch (error) {
     const failure = gatewayFailure(error);
     return fallbackResult(
       diagnosticLabel(failure.code),
-      diagnose("unavailable", failure.code, failure.code === "not_configured" ? null : started),
+      diagnose(
+        "unavailable",
+        failure.code,
+        ["not_configured", "request_limit"].includes(failure.code) ? null : started,
+      ),
     );
   }
   const result = dailyDraft(raw, input);
@@ -1049,16 +1108,23 @@ function captureSyntheticCandidate(
 export async function generateSyntheticReadingProse(
   input: ReadingProseInput,
   provider: LanguageProvider = "lovable",
+  control: SyntheticTransportControl = {},
 ): Promise<{
   prose: ReadingProse;
   request: SyntheticReadingRequest | null;
   candidate: SyntheticReadingCandidate | null;
+  transport: AdminTransportTrace | null;
 }> {
   let request: SyntheticReadingRequest | null = null;
   let candidate: SyntheticReadingCandidate | null = null;
+  let transport: AdminTransportTrace | null = null;
+  assertSyntheticTransportControl(provider, control);
   const prose = await generateDailyProse(
     input,
     {
+      transport(value) {
+        transport = value;
+      },
       request(value) {
         request = value;
       },
@@ -1067,8 +1133,9 @@ export async function generateSyntheticReadingProse(
       },
     },
     provider,
+    control,
   );
-  return { prose, request, candidate };
+  return { prose, request, candidate, transport };
 }
 
 // ---------------------------------------------------------------------------
