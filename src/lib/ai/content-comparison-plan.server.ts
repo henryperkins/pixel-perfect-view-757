@@ -16,14 +16,15 @@ import { languageModel, type LanguageProvider } from "./diagnostics";
 import { createEvaluationPlan, type EvaluationPlan } from "./qualification-plan.server";
 
 export type ContentComparisonArm = "baseline" | "candidate";
+export type ContentComparisonCaseSetId = "draft-pilot-1" | "draft-pilot-2";
 type DryPlan = ReturnType<typeof createEvaluationPlan>;
 
 export interface FrozenContentComparisonPlan {
-  version: "content-comparison-1";
+  version: "content-comparison-1" | "content-comparison-2";
   sourceSha: string;
   provider: LanguageProvider;
   model: string;
-  caseSetId: "draft-pilot-1";
+  caseSetId: ContentComparisonCaseSetId;
   caseManifest: EvaluationCaseSet;
   source: ContentComparisonSource;
   bundles: { baseline: ContentBundle; candidate: ContentBundle };
@@ -64,11 +65,14 @@ export function createContentComparisonPlan(
   resolved: ResolvedContentComparisonSource,
   sourceSha: string | null,
   provider: LanguageProvider,
+  caseSetId: ContentComparisonCaseSetId = "draft-pilot-1",
 ): FrozenContentComparisonPlan {
   if (!sourceSha || !/^[a-f0-9]{40}$/.test(sourceSha))
     throw Error("A content comparison requires the exact built source SHA.");
   if (provider !== "lovable" && provider !== "gemini-enterprise")
     throw Error("A content comparison requires an explicit supported provider.");
+  if (caseSetId !== "draft-pilot-1" && caseSetId !== "draft-pilot-2")
+    throw Error("The content comparison case set must be an explicit four-case pilot.");
   for (const arm of ["baseline", "candidate"] as const)
     assertSourceIdentity(resolved[arm], resolved.identities[arm]);
   const comparison = compareContentBundles(
@@ -85,7 +89,7 @@ export function createContentComparisonPlan(
     hash(changedKeys) !== hash(resolved.changedKeys)
   )
     throw Error("The frozen comparison changes failed their integrity check.");
-  const caseManifest = getEvaluationCaseSet("draft-pilot-1");
+  const caseManifest = getEvaluationCaseSet(caseSetId);
   const arms = {
     baseline: createEvaluationPlan(
       resolved.baseline,
@@ -120,11 +124,14 @@ export function createContentComparisonPlan(
   )
     throw Error("The fixed content pilot coverage no longer selects its declared changed entries.");
   const frozen = structuredClone({
-    version: "content-comparison-1" as const,
+    version:
+      caseSetId === "draft-pilot-2"
+        ? ("content-comparison-2" as const)
+        : ("content-comparison-1" as const),
     sourceSha,
     provider,
     model: languageModel(provider),
-    caseSetId: "draft-pilot-1" as const,
+    caseSetId,
     caseManifest,
     source: resolved.source,
     bundles: { baseline: resolved.baseline, candidate: resolved.candidate },
@@ -161,8 +168,10 @@ export function revalidateContentComparisonPlan(
 ): FrozenContentComparisonPlan {
   if (
     !pair ||
-    pair.version !== "content-comparison-1" ||
-    pair.caseSetId !== "draft-pilot-1" ||
+    !(
+      (pair.version === "content-comparison-1" && pair.caseSetId === "draft-pilot-1") ||
+      (pair.version === "content-comparison-2" && pair.caseSetId === "draft-pilot-2")
+    ) ||
     pair.attemptLimit !== 8
   )
     throw Error("The frozen content comparison scope failed its integrity check.");
@@ -185,6 +194,7 @@ export function revalidateContentComparisonPlan(
     },
     sourceSha,
     provider,
+    pair.caseSetId,
   );
   if (rebuilt.hash !== expected)
     throw Error("The content comparison runtime, fixture, or policy identity drifted.");

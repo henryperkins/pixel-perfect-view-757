@@ -1,0 +1,32 @@
+{
+  "version": "content-repair-pilot-authorization-1",
+  "recordedAt": "2026-10-13T21:36:21.389Z",
+  "authority": "User Proceed in response to the proposed four-case repair round; user confirms billing enabled at published pay-as-you-go rates.",
+  "attemptLimit": 8,
+  "dollarCeilingCents": 500,
+  "retries": 0,
+  "replacementOutputs": 0,
+  "caseSetId": "draft-pilot-2",
+  "comparisonVersion": "content-comparison-2",
+  "provider": "gemini-enterprise",
+  "model": "gemini-3.8-flash",
+  "baselineCanonicalHash": "44c05c8b0336dc778c2efdcbf0c28dc2091d33a96b91c352a2481123b7f7ccae",
+  "candidateCanonicalHash": "78be37d2740102c827fd291777f43f686b9c9f3488c887d76c00212ca84db632",
+  "pricing": {
+    "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+    "currency": "USD",
+    "publishedGlobalInputPerMillion": 0.75,
+    "publishedGlobalOutputIncludingReasoningPerMillion": 3.75,
+    "grossBeforePromotionalCreditsInputPerMillion": 1.5,
+    "grossBeforePromotionalCreditsOutputPerMillion": 7.5,
+    "conservativeInputPerMillion": 2,
+    "conservativeOutputPerMillion": 20,
+    "reservationPerAttemptMicros": 2800000,
+    "billingStatus": "Operator confirms billing enabled",
+    "invoiceStatus": "unavailable"
+  },
+  "additionalPaidReviewAuthorized": false,
+  "widerGenerationAuthorized": false,
+  "humanApproval": false,
+  "activationAuthorized": false
+}

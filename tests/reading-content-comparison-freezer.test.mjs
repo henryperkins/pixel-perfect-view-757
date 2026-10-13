@@ -65,6 +65,32 @@ async function sourcePair() {
 }
 const freeze = (source) => freezer.createContentComparisonPlan(source, SHA, "gemini-enterprise");
 
+test("portable repair freeze uses a distinct version and preserves the original manifest", async () => {
+  const source = await sourcePair();
+  const original = freeze(source);
+  const repair = freezer.createContentComparisonPlan(
+    source,
+    SHA,
+    "gemini-enterprise",
+    "draft-pilot-2",
+  );
+  assert.equal(repair.version, "content-comparison-2");
+  assert.equal(repair.caseSetId, "draft-pilot-2");
+  assert.equal(repair.caseManifest.fixtureVersion, "draft-pilot-2");
+  assert.notEqual(repair.hash, original.hash);
+  assert.deepEqual(repair.bundles, original.bundles);
+  assert.deepEqual(freeze(source), original);
+  assert.deepEqual(
+    freezer.revalidateContentComparisonPlan(repair, SHA, "gemini-enterprise"),
+    repair,
+  );
+  const switched = { ...repair, caseSetId: "draft-pilot-1" };
+  assert.throws(
+    () => freezer.revalidateContentComparisonPlan(switched, SHA, "gemini-enterprise"),
+    /scope|integrity/i,
+  );
+});
+
 test("comparison freeze retains both exact sources, identities, closed manifest and eight-call scope without SQL guards", async () => {
   const source = await sourcePair();
   const pair = freeze(source);

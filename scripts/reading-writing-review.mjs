@@ -10,7 +10,7 @@ import { fileURLToPath } from "node:url";
 import {
   compareContentReports,
   freezeContentReviewRubric,
-  CONTENT_REFLECTION_INSTRUCTIONS,
+  contentReflectionInstructions,
 } from "./reading-content-comparison.mjs";
 
 export const PROTOCOL_VERSION = "daily-writing-ai-review-1";
@@ -174,7 +174,7 @@ export function prepareReview({
   const contentComparison = contentPlan
     ? compareContentReports(before.report, after.report, { plan: contentPlan })
     : null;
-  if (contentComparison) instructions += `\n\n${CONTENT_REFLECTION_INSTRUCTIONS}`;
+  if (contentComparison) instructions += `\n\n${contentReflectionInstructions(contentPlan)}`;
   for (const [field, label] of [
     ["fixtureVersion", "fixture version"],
     ["caseSetHash", "case set"],
@@ -346,8 +346,16 @@ const FINAL_QUESTION_CHECKS = ["answerableWithoutPremise", "consistentWithSource
 export function prepareReflectionReview({ assignment, contextId }) {
   if (!assignment?.contentComparison || !assignment.packets?.[contextId])
     throw new Error("Reflection review needs a content-pair assignment and assigned context");
+  const protocolVersion =
+    assignment.contentReviewRubric?.reflectionProtocolVersion ?? REFLECTION_PROTOCOL_VERSION;
+  if (![REFLECTION_PROTOCOL_VERSION, "content-reflection-review-2"].includes(protocolVersion))
+    throw new Error("Unknown content reflection review version");
+  const finalChecks =
+    protocolVersion === "content-reflection-review-2"
+      ? ["singleQuestion", ...FINAL_QUESTION_CHECKS]
+      : FINAL_QUESTION_CHECKS;
   return {
-    protocolVersion: REFLECTION_PROTOCOL_VERSION,
+    protocolVersion,
     kind: "reflection-review",
     pairHash: assignment.contentComparison.pairHash,
     itemSetHash: assignment.itemSetHash,
@@ -364,7 +372,7 @@ export function prepareReflectionReview({ assignment, contextId }) {
       finalPrompt: {
         text: content.reflectionQuestion,
         questionCount: (content.reflectionQuestion.match(/\?/g) ?? []).length,
-        checks: Object.fromEntries(FINAL_QUESTION_CHECKS.map((key) => [key, null])),
+        checks: Object.fromEntries(finalChecks.map((key) => [key, null])),
         rationale: { quote: null, explanation: null },
         verdict: "unreviewed",
       },
@@ -400,7 +408,7 @@ export function qualifyReflectionReviews({ assignment, reviews }) {
       if (!item) throw new Error("Reflection review has a missing or foreign item");
       for (const [part, checks] of [
         ["sourceQuestion", SOURCE_QUESTION_CHECKS],
-        ["finalPrompt", FINAL_QUESTION_CHECKS],
+        ["finalPrompt", Object.keys(expected.finalPrompt.checks)],
       ]) {
         const result = item[part],
           source = expected[part];
@@ -417,12 +425,8 @@ export function qualifyReflectionReviews({ assignment, reviews }) {
           );
         if (part === "finalPrompt" && result.questionCount !== source.questionCount)
           throw new Error("Final prompt question count differs from the recorded prompt");
-        if (
-          part === "sourceQuestion" &&
-          result.checks.singleQuestion &&
-          (source.text.match(/\?/g) ?? []).length !== 1
-        )
-          throw new Error("Source singleQuestion conflicts with the recorded question count");
+        if (result.checks.singleQuestion && (source.text.match(/\?/g) ?? []).length !== 1)
+          throw new Error("singleQuestion conflicts with the recorded question count");
         if (
           !nonEmpty(result.rationale?.quote) ||
           !source.text.includes(result.rationale.quote) ||
@@ -451,7 +455,8 @@ export function qualifyReflectionReviews({ assignment, reviews }) {
     assignment.items[failure.itemId].mappings.some((mapping) => mapping.run === "after"),
   );
   return {
-    protocolVersion: REFLECTION_PROTOCOL_VERSION,
+    protocolVersion:
+      assignment.contentReviewRubric?.reflectionProtocolVersion ?? REFLECTION_PROTOCOL_VERSION,
     kind: "reflection-qualification",
     pairHash: assignment.contentComparison.pairHash,
     itemSetHash: assignment.itemSetHash,

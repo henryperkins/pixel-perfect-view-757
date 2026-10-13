@@ -167,7 +167,7 @@ function view(row: RunRow): ReadingEvaluationRun {
           contentComparison: {
             arm: row.plan.contentComparison.arm,
             pairHash: row.plan.contentComparison.pair.hash,
-            caseSetId: "draft-pilot-1" as const,
+            caseSetId: row.plan.contentComparison.pair.caseSetId,
           },
         }
       : {}),
@@ -279,12 +279,12 @@ async function comparisonCaptureGuards(db: DBClient, root: RunRow, plan: Evaluat
     const diagnostics = readDailyDiagnostics(result.case?.diagnostics);
     const trace = result.case?.transport;
     const expectedComparison = {
-      version: "content-comparison-1",
+      version: pair.version,
       arm: "baseline",
       pairHash: pair.hash,
       baselineCanonicalHash: pair.identities.baseline.canonicalHash,
       candidateCanonicalHash: pair.identities.candidate.canonicalHash,
-      caseSetId: "draft-pilot-1",
+      caseSetId: pair.caseSetId,
     };
     const metadata = result.metadata as unknown as Record<string, unknown> | undefined;
     const metadataMatches =
@@ -355,7 +355,12 @@ async function comparisonPair(
     if (settings.campaignId) throw Error("The baseline starts a new comparison campaign.");
     const resolved = await resolveContentComparisonSource(db, userId, settings.source);
     return {
-      pair: createContentComparisonPlan(resolved, evaluationSourceSha(), settings.provider),
+      pair: createContentComparisonPlan(
+        resolved,
+        evaluationSourceSha(),
+        settings.provider,
+        settings.caseSetId,
+      ),
       guards: resolved.guards,
       root: null,
     };
@@ -383,6 +388,8 @@ async function comparisonPair(
     evaluationSourceSha(),
     settings.provider,
   );
+  if (pair.caseSetId !== settings.caseSetId)
+    throw Error("The comparison case set cannot switch manifests within a campaign.");
   const baselinePlan = contentComparisonArmPlan(pair, "baseline");
   if (JSON.stringify(root.plan) !== JSON.stringify(baselinePlan))
     throw Error("The completed baseline arm plan failed its integrity check.");
@@ -1093,16 +1100,16 @@ export async function evaluationStep(
         ...(run.plan.contentComparison
           ? {
               boundedQualification: true,
-              caseSetId: "draft-pilot-1" as const,
+              caseSetId: run.plan.contentComparison.pair.caseSetId,
               contentComparison: {
-                version: "content-comparison-1" as const,
+                version: run.plan.contentComparison.pair.version,
                 arm: run.plan.contentComparison.arm,
                 pairHash: run.plan.contentComparison.pair.hash,
                 baselineCanonicalHash:
                   run.plan.contentComparison.pair.identities.baseline.canonicalHash,
                 candidateCanonicalHash:
                   run.plan.contentComparison.pair.identities.candidate.canonicalHash,
-                caseSetId: "draft-pilot-1" as const,
+                caseSetId: run.plan.contentComparison.pair.caseSetId,
               },
             }
           : {}),

@@ -1,0 +1,15 @@
+# Repair pilot execution ledger
+
+Plan: `docs/superpowers/plans/2026-10-13-content-draft-effectiveness-checklist.md`, Tasks 14–16. Base `694553b001e132b6838d5a1aa2079775945e6b6f`, isolated managed worktree, branch `feat/content-repair-pilot`.
+
+- Authorization: the user's “Proceed.” accepts the proposed separate four paired cases, eight attempts maximum, $5 cap, no retries or replacement outputs; publication and fresh review are included. Exact-content human approval and wider paid coverage are not included.
+- Ruling: use `content-comparison-2` only with explicitly selected `draft-pilot-2`, retain the original version-1 API and reports, and reject switching a root campaign's manifest. Reason: portable fixtures need a distinct recorded identity and the original campaign is exhausted. Cost if wrong: a future compatible fixture version requires an explicit extension.
+- Pre-flight: source freezer → controller → captures → report validator share manifest/version identities; repair UI recovery must exclude original campaigns. Editorial packets share the unchanged frozen rubric and retain both source and final questions.
+- RED: four repair boundary tests failed before implementation because the schema/freezer accepted only version 1. GREEN: targeted controller/freezer/report/UI suite passed 39/39 with intercepted transport, including eight captures, budget/attempt limits, manifest switching rejection and original-version compatibility.
+- Verification correction: the new reflection assertion initially used the schema-3 builtin test fixture, which intentionally retains its legacy composition. The repair fixture now explicitly uses schema 4. No production behavior was changed to accommodate the test.
+- Live read-only preflight: published source `13113be0ca50d9590208fa24bd586a969c094bab`, active release `0.7.1`. Schema inspection preceded further draft queries after two guessed review column names were rejected; no writes occurred.
+- Billing information requested: published pricing is accessible, account-specific billing/credit evidence is not available through current credentials. Generation remains pending that evidence; all preparation and local checks continue.
+
+- Billing follow-up: the user confirms billing is enabled and authorizes using published pay-as-you-go rates. Official pricing was checked on 2026-10-13; conservative reservations remain $2/M input and $20/M output, with $2.80 retained when usage is uncertain. No invoice is claimed.
+- Final local checks: full suite 865 total, 863 passed, two existing skips, zero failures, workerd enabled; typecheck/scoped lint/diff checks passed. Local browser fixture passed at 1440px and 390px with zero provider calls, including explicit portable manifest requests and original-campaign exclusion.
+- Reflection review supplement: version 2 adds an explicit single-final-question gate before generation; historical version-1 companions retain their original two-question observation and rules. Its RED test failed on version 1, then passed with the archived-packet regression.

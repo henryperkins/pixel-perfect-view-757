@@ -8,6 +8,17 @@ import {
 
 export const CONTENT_REFLECTION_INSTRUCTIONS =
   "Content reflection supplement — content-reflection-review-1: Review sourceQuestion and reflectionQuestion separately. The source checks are singleQuestion, answerableWithoutPremise, and consistentWithSources; all must pass with a verbatim quote and explanation. For the final prompt record question count separately and check answerableWithoutPremise, consistentWithSources, and coherent. A schema-4 domain question is an inherited composition, not a second source question. Record all body dimensions using the existing 1–5 rubric and existing item-verdict rules. A separate qualification gate requires voice and repetition >= 4 for affected candidate items; packet origins remain concealed. Citations do not establish substantive incorporation.";
+export function contentReflectionInstructions(plan) {
+  return plan.version === "content-comparison-2"
+    ? CONTENT_REFLECTION_INSTRUCTIONS.replace(
+        "content-reflection-review-1",
+        "content-reflection-review-2",
+      ).replace(
+        "A schema-4 domain question is an inherited composition, not a second source question.",
+        "Require a single final question: finalPrompt.singleQuestion must pass independently of the source question, and its recorded question count must be one.",
+      )
+    : CONTENT_REFLECTION_INSTRUCTIONS;
+}
 const hash = (value) => createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const canonical = (value) =>
   Array.isArray(value)
@@ -58,14 +69,16 @@ const POLICY_FIELDS = [
 /** Reject cycles-only archives and unbound snapshots before touching a report. */
 export function validateContentComparisonPlan(plan) {
   if (
-    plan?.version !== "content-comparison-1" ||
-    plan.caseSetId !== "draft-pilot-1" ||
+    !(
+      (plan?.version === "content-comparison-1" && plan.caseSetId === "draft-pilot-1") ||
+      (plan?.version === "content-comparison-2" && plan.caseSetId === "draft-pilot-2")
+    ) ||
     !/^[a-f0-9]{40}$/.test(plan.sourceSha ?? "")
   )
     throw new Error("Content comparison requires a frozen source-bound draft pilot plan");
   requireEqual(plan.hash, hash(withoutHash(plan)), "pair hash");
-  requireEqual(plan.caseManifest?.id, "draft-pilot-1", "manifest identity");
-  requireEqual(plan.caseManifest?.fixtureVersion, "draft-pilot-1", "fixture version");
+  requireEqual(plan.caseManifest?.id, plan.caseSetId, "manifest identity");
+  requireEqual(plan.caseManifest?.fixtureVersion, plan.caseSetId, "fixture version");
   requireEqual(plan.caseManifest?.cases, DRAFT_PILOT_CASES, "ordered fixture catalogue");
   requireEqual(plan.caseManifest.caseSetHash, hash(DRAFT_PILOT_CASES), "fixture hash");
   requireEqual(plan.attemptLimit, 8, "eight-attempt scope");
@@ -153,7 +166,7 @@ export function validateContentReport(report, { plan, arm }) {
   requireEqual(
     report.contentComparison,
     {
-      version: "content-comparison-1",
+      version: plan.version,
       arm,
       pairHash: plan.hash,
       baselineCanonicalHash: plan.identities.baseline.canonicalHash,
@@ -377,10 +390,11 @@ export function extractContentResponses(report, { plan, arm } = {}) {
 /** Save this artifact before generation; scores remain blank until outputs are reviewed. */
 export function freezeContentReviewRubric(plan) {
   validateContentComparisonPlan(plan);
+  const repair = plan.version === "content-comparison-2";
   const rubric = {
-    version: "content-pilot-review-rubric-1",
-    packetGenerationVersion: "content-writing-packet-1",
-    packetInstructionsSupplement: CONTENT_REFLECTION_INSTRUCTIONS,
+    version: repair ? "content-pilot-review-rubric-2" : "content-pilot-review-rubric-1",
+    packetGenerationVersion: repair ? "content-writing-packet-2" : "content-writing-packet-1",
+    packetInstructionsSupplement: contentReflectionInstructions(plan),
     pairHash: plan.hash,
     caseSetId: plan.caseSetId,
     scope: "Four matched cases only; no whole-catalogue qualification or production-use claim.",
@@ -405,14 +419,22 @@ export function freezeContentReviewRubric(plan) {
         "When S1 is supplied, develops the relationship supported by both parents.",
       lensIntegration: "When N1 is supplied, applies its distinction within the primary meaning.",
     },
-    reflectionProtocolVersion: "content-reflection-review-1",
+    reflectionProtocolVersion: repair
+      ? "content-reflection-review-2"
+      : "content-reflection-review-1",
     reflectionChecks: {
       source: ["singleQuestion", "answerableWithoutPremise", "consistentWithSources"],
-      final: ["answerableWithoutPremise", "consistentWithSources", "coherent"],
+      final: [
+        ...(repair ? ["singleQuestion"] : []),
+        "answerableWithoutPremise",
+        "consistentWithSources",
+        "coherent",
+      ],
       evidence:
         "Quote the reviewed question verbatim and explain the judgment; every check must pass.",
-      finalQuestionCount:
-        "Record separately; schema 4 may append a domain question. Do not assume a one-question final prompt.",
+      finalQuestionCount: repair
+        ? "Require exactly one final question, reviewed independently from the source question."
+        : "Record separately; schema 4 may append a domain question. Do not assume a one-question final prompt.",
     },
     requiredChecks: [
       "No planetary causal assertion, prediction, directive, clinical claim or invented personal history.",

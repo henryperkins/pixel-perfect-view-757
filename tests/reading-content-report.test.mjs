@@ -23,7 +23,7 @@ import {
 } from "../scripts/reading-writing-review.mjs";
 
 const hash = (value) => createHash("sha256").update(JSON.stringify(value)).digest("hex");
-let h, plan, armPlan;
+let h, plan, repairPlan, armPlan;
 before(async () => {
   h = await createRecordsHarness();
   const { createContentComparisonPlan, contentComparisonArmPlan } = await h.vite.ssrLoadModule(
@@ -81,6 +81,19 @@ before(async () => {
     "a".repeat(40),
     "gemini-enterprise",
   );
+  repairPlan = createContentComparisonPlan(
+    {
+      source: plan.source,
+      ...plan.bundles,
+      identities: plan.identities,
+      changedKeys: plan.changedKeys,
+      changes: plan.changes,
+      guards: [],
+    },
+    "a".repeat(40),
+    "gemini-enterprise",
+    "draft-pilot-2",
+  );
 });
 after(async () => h?.close());
 
@@ -102,14 +115,15 @@ test("the pilot rubric freezes source and final question checks before outputs e
     }
 });
 
-function report(arm) {
+function report(arm, planOverride = plan) {
+  const plan = planOverride;
   const dry = armPlan(plan, arm);
   return {
     ...dry.metadata,
     reportVersion: 1,
     runPlanHash: dry.hash,
     contentComparison: {
-      version: "content-comparison-1",
+      version: plan.version,
       arm,
       pairHash: plan.hash,
       baselineCanonicalHash: plan.identities.baseline.canonicalHash,
@@ -161,6 +175,55 @@ function report(arm) {
     }),
   };
 }
+
+test("repair comparison and rubric retain v2 identities and reject mixed historical reports", () => {
+  const baseline = report("baseline", repairPlan),
+    candidate = report("candidate", repairPlan);
+  const result = compareContentReports(baseline, candidate, { plan: repairPlan });
+  assert.equal(result.pairHash, repairPlan.hash);
+  assert.equal(freezeContentReviewRubric(repairPlan).pairHash, repairPlan.hash);
+  assert.throws(
+    () => compareContentReports(report("baseline"), candidate, { plan: repairPlan }),
+    /plan|pair|match/i,
+  );
+  assert.throws(() => compareContentReports(baseline, candidate, { plan }), /plan|pair|match/i);
+});
+
+test("repair review freezes a single final question gate under a new companion version", () => {
+  const before = report("baseline", repairPlan),
+    after = report("candidate", repairPlan);
+  const rubric = freezeContentReviewRubric(repairPlan);
+  assert.equal(rubric.reflectionProtocolVersion, "content-reflection-review-2");
+  assert.ok(rubric.reflectionChecks.final.includes("singleQuestion"));
+  const { assignment, packets } = prepareReview({
+    before: { report: before, sha256: hash(before) },
+    after: { report: after, sha256: hash(after) },
+    contentPlan: repairPlan,
+    instructions: "Review every supplied body and question.",
+  });
+  for (const packet of packets) assert.match(packet.packet.instructions, /single final question/i);
+  const reviews = Object.keys(assignment.packets).map((contextId) =>
+    prepareReflectionReview({ assignment, contextId }),
+  );
+  for (const review of reviews) {
+    assert.equal(review.protocolVersion, "content-reflection-review-2");
+    for (const item of review.items) {
+      assert.equal(item.finalPrompt.checks.singleQuestion, null);
+      for (const part of [item.sourceQuestion, item.finalPrompt]) {
+        part.checks = Object.fromEntries(Object.keys(part.checks).map((key) => [key, true]));
+        part.rationale = {
+          quote: part.text,
+          explanation: "The question permits a conditional answer.",
+        };
+        part.verdict = "pass";
+      }
+    }
+    review.verdict = "pass";
+  }
+  assert.equal(qualifyReflectionReviews({ assignment, reviews }).passed, true);
+  reviews[0].items[0].finalPrompt.questionCount = 2;
+  assert.throws(() => qualifyReflectionReviews({ assignment, reviews }), /question count/i);
+});
 
 test("explicit frozen content comparison reports four exercised sources and leaves semantic quality unreviewed", () => {
   const result = compareContentReports(report("baseline"), report("candidate"), { plan });

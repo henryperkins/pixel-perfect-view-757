@@ -69,7 +69,7 @@ export function ContentComparisonEvaluation({
   const sourceId = sourceIdentity(source);
   const isDraft = source.kind === "draft";
   const sourceName = isDraft ? "draft" : "release";
-  const storageKey = `pattern-content-pilot:${userId}:${sourceId}`;
+  const storageKey = `pattern-content-repair-pilot:${userId}:${sourceId}`;
   const [open, setOpen] = useState(false);
   const [visited, setVisited] = useState(false);
   const [loaded, setLoaded] = useState(false);
@@ -88,7 +88,12 @@ export function ContentComparisonEvaluation({
       const next = await fetchRef.current({ data: runId ? { runId } : {} });
       if (generation !== readGeneration.current) return;
       const recoveredSource = frozenPair(next)?.source;
-      if (next.run && recoveredSource && sourceIdentity(recoveredSource) === sourceId) {
+      if (
+        next.run &&
+        recoveredSource &&
+        sourceIdentity(recoveredSource) === sourceId &&
+        frozenPair(next)?.caseSetId === "draft-pilot-2"
+      ) {
         setCapture(next);
         try {
           localStorage.setItem(storageKey, next.run.id);
@@ -167,7 +172,7 @@ export function ContentComparisonEvaluation({
           mode: "content-comparison",
           source,
           arm: nextArm,
-          caseSetId: "draft-pilot-1",
+          caseSetId: "draft-pilot-2",
           provider,
           ...(run?.campaignId ? { campaignId: run.campaignId } : {}),
         },
@@ -197,7 +202,7 @@ export function ContentComparisonEvaluation({
           mode: "content-comparison",
           source,
           arm: prepared.arm,
-          caseSetId: "draft-pilot-1",
+          caseSetId: "draft-pilot-2",
           provider,
           expectedPlanHash: prepared.hash,
           ...(prepared.arm === "candidate" && run?.campaignId

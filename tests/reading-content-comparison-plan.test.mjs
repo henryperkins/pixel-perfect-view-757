@@ -27,10 +27,11 @@ const request = () => ({
   budget: { dollarCeilingCents: 500, reviewReserveCents: 0 },
 });
 
-async function draft() {
+async function draft({ schemaVersion } = {}) {
   await h.records().from("user_roles").insert({ user_id: h.userA, role: "admin" });
   const baseline = structuredClone(base);
   const candidate = structuredClone(base);
+  if (schemaVersion) baseline.schemaVersion = candidate.schemaVersion = schemaVersion;
   candidate.version = "pending";
   for (const body of [
     "sun",
@@ -127,6 +128,29 @@ test("content comparison accepts an explicit eight-call pilot but rejects unboun
     { ...request(), prompt: "arbitrary input" },
   ])
     assert.equal(shared.readingEvaluationRunInputSchema.safeParse(input).success, false);
+});
+
+test("repair pilot accepts only its explicit portable four-case manifest", async () => {
+  const settings = { ...(await draft()), caseSetId: "draft-pilot-2" };
+  assert.equal(shared.contentComparisonPreviewSchema.safeParse(settings).success, true);
+  assert.equal(
+    shared.contentComparisonRunSchema.safeParse({
+      ...request(),
+      caseSetId: "draft-pilot-2",
+    }).success,
+    true,
+  );
+  for (const caseSetId of ["draft-fallback-2", "synthetic-daily-7", "draft-pilot-3"])
+    assert.equal(
+      shared.contentComparisonPreviewSchema.safeParse({ ...settings, caseSetId }).success,
+      false,
+    );
+  const preview = await runs.previewEvaluationPlan(h.records(), h.userA, settings);
+  assert.equal(preview.plans.version, "content-comparison-2");
+  assert.equal(preview.plans.caseSetId, "draft-pilot-2");
+  assert.equal(preview.plans.arms.candidate.metadata.fixtureVersion, "draft-pilot-2");
+  assert.equal(preview.attemptLimit, 8);
+  assert.equal(h.gatewayRequests.length, 0);
 });
 
 const ORIGIN = "https://pattern.example.test";
@@ -236,6 +260,45 @@ test("paired pilot freezes content across edits, caps at eight, and never replay
   await assert.rejects(begin(candidateSettings), /already started/i);
   assert.equal(h.gatewayRequests.length, 8);
   assert.equal(h.sqlite.prepare("SELECT count(*) n FROM daily_readings").get().n, 0);
+});
+
+test("repair pilot retains portable identities through eight captures and rejects manifest switching", async () => {
+  const settings = { ...(await draft({ schemaVersion: 4 })), caseSetId: "draft-pilot-2" };
+  meteredGateway();
+  const baseline = await begin(settings);
+  assert.equal(baseline.contentComparison.caseSetId, "draft-pilot-2");
+  for (let position = 0; position < 4; position++) await step(baseline, position);
+  await assert.rejects(
+    begin({ ...settings, arm: "candidate", campaignId: baseline.id, caseSetId: "draft-pilot-1" }),
+    /manifest|case set|scope/i,
+  );
+  assert.equal(h.gatewayRequests.length, 4);
+  const candidateSettings = { ...settings, arm: "candidate", campaignId: baseline.id };
+  const candidate = await begin(candidateSettings);
+  for (let position = 0; position < 4; position++) await step(candidate, position);
+  const capture = await runs.readEvaluationRun(h.records(), h.userA, { runId: candidate.id });
+  assert.equal(capture.run.status, "complete", capture.run.message);
+  assert.equal(capture.ledger.campaignAttempts, 8);
+  assert.equal(capture.ledger.dollarCeilingMicros, 5_000_000);
+  for (const result of capture.results) {
+    assert.equal(result.metadata.caseSetId, "draft-pilot-2");
+    assert.equal(result.metadata.contentComparison.version, "content-comparison-2");
+    assert.equal(result.metadata.contentComparison.caseSetId, "draft-pilot-2");
+    assert.equal(result.case.output.prompt.split("?").length - 1, 1);
+  }
+  await step(candidate, 0);
+  await assert.rejects(begin(candidateSettings), /already started/i);
+  assert.equal(h.gatewayRequests.length, 8);
+});
+
+test("an original campaign cannot become a repair campaign", async () => {
+  const { baseline, settings } = await finishedBaseline();
+  await assert.rejects(
+    begin({ ...settings, caseSetId: "draft-pilot-2" }),
+    /manifest|case set|scope/i,
+  );
+  assert.equal(h.gatewayRequests.length, 4);
+  assert.equal(h.sqlite.prepare("SELECT count(*) n FROM evaluation_runs").get().n, 1);
 });
 
 test("unknown billing stops after one attempt and retains full reservation", async () => {

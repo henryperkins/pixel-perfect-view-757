@@ -59,7 +59,7 @@ export const contentComparisonPreviewSchema = z
     mode: z.literal("content-comparison"),
     source: contentComparisonSourceSchema,
     arm: z.enum(["baseline", "candidate"]),
-    caseSetId: z.literal("draft-pilot-1"),
+    caseSetId: z.enum(["draft-pilot-1", "draft-pilot-2"]),
     provider: z.enum(LANGUAGE_PROVIDERS),
     campaignId: z.string().uuid().optional(),
   })
@@ -143,7 +143,7 @@ export interface ReadingEvaluationRun {
   contentComparison?: {
     arm: "baseline" | "candidate";
     pairHash: string;
-    caseSetId: "draft-pilot-1";
+    caseSetId: "draft-pilot-1" | "draft-pilot-2";
   };
 }
 
@@ -209,12 +209,12 @@ export interface ReadingEvaluationMetadata {
   caseSetHash: string;
   caseSetId?: import("./evaluation-case-sets").EvaluationCaseSetId;
   contentComparison?: {
-    version: "content-comparison-1";
+    version: "content-comparison-1" | "content-comparison-2";
     arm: "baseline" | "candidate";
     pairHash: string;
     baselineCanonicalHash: string;
     candidateCanonicalHash: string;
-    caseSetId: "draft-pilot-1";
+    caseSetId: "draft-pilot-1" | "draft-pilot-2";
   };
   bundleVersion: string;
   bundleHash: string;

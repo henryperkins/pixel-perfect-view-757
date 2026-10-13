@@ -281,6 +281,28 @@ Execution: two fresh reviewers and one fresh adjudicator completed the scoped as
 
 Local completion: Tasks 4 and 11–13 are verified on implementation `7c81ab7975fab12329f66cc043b135673d5e5b6f`: 857 tests pass, two existing tests skip, workerd checks run, typecheck/lint/build/browser checks pass, and independent review reports no findings requiring changes. [Validation and identities](../../reviews/content-draft-effectiveness/2026-10-13-offline-repair/validation.json) and [review dispositions](../../reviews/content-draft-effectiveness/2026-10-13-offline-repair/implementation-review.md) preserve the distinction between local completion and the open Tasks 8–10 release gates.
 
+## Authorized repair follow-up
+
+The user's subsequent **“Proceed.”** accepts the proposed separate four-case repair pilot: a new campaign, at most eight generation attempts, a $5 total generation cap, and no retries or replacement outputs. It also authorizes preparing, committing, publishing and verifying the repaired capability and obtaining fresh blinded reviews. It does not approve exact content, authorize paid coverage for the other 16 additions, or close the applicable release gates. Preserve the original pilot and offline-repair evidence; record this round under `docs/reviews/content-draft-effectiveness/2026-10-13-repair-pilot/`.
+
+## Task 14 — Bind the separate portable repair campaign
+
+- [ ] Accept the explicitly selected `draft-pilot-2` in preview/start, freeze it as `content-comparison-2`, and propagate its identity into stored runs, captures and reports. Keep `draft-pilot-1` and historical reports supported; reject switching a campaign between manifests.
+- [ ] Use a separate browser recovery identity for the repair campaign. Prepare the exact complete saved source, provider/model and repaired prompt/reflection policies without generation. Freeze the unchanged editorial rubric before attempts.
+- [ ] Verify campaign limits, frozen-source execution, source/request identity and report integrity with intercepted transport, then run the full suite with workerd, typecheck, scoped lint, build and browser checks. Obtain one fresh implementation review before publication.
+
+## Task 15 — Publish and execute the bounded repair pilot
+
+- [ ] Merge and push owned ordinary commits, verify Lovable source sync, publish the reviewed build, and verify public and authenticated source identities. Recheck the unchanged Workflow version and inactive draft/active pointer; no Worker deployment or migration unless its protocol changes.
+- [ ] Recheck selected member provider, configuration and published pricing. Obtain account billing/credit evidence before generation; preserve estimates separately from invoiced charges. Freeze source/plan/rubric and the new eight-attempt/$5 authorization.
+- [ ] Run the baseline and candidate sequentially through the durable server Workflow, preserve every attempt/capture, verify browser-departure recovery, and archive the raw envelope, reports, ledgers, comparison and strict offline replay. Do not restart or replace a failed/uncertain campaign.
+
+## Task 16 — Review the repair outputs and hand off approval
+
+- [ ] Prepare neutral versioned packets for two fresh blinded reviewers, assess body and final reflection independently, adjudicate substantive disagreements and validate the review records.
+- [ ] Record observed improvements, failures and semantic use. Keep all 16 remaining additions explicitly unqualified by live outputs; prepare any proposed wider scope and budget offline.
+- [ ] Present the exact candidate bytes and observed outputs for human review only when applicable qualification gates pass. Keep approval, staging, activation, member-use and rollback gates open until their stated evidence exists.
+
 ## Historical execution record
 
 Tasks 1–4 are the evaluation capability; Task 5 can proceed alongside them after the baseline is frozen. Task 6 is the local gate, Task 7 publishes that capability, Task 8 executes only the approved eight-call/$5 pilot, Task 9 records scoped review and remaining qualification/approval gates, and Task 10 changes serving content only after those gates close. The proposed editorial delta and its limitations are recorded in [editorial notes](../../reviews/content-draft-effectiveness/2026-10-13/editorial-notes.md) and the [publication decision](../../reviews/content-draft-effectiveness/2026-10-13/publication-decision.md).

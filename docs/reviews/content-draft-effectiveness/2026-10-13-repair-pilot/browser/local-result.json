@@ -1,0 +1,22 @@
+{
+  "transport": "mocked",
+  "modelCalls": 0,
+  "viewports": [
+    1440,
+    390
+  ],
+  "checks": [
+    "explicit v2 preview/start",
+    "zero automatic generation",
+    "source switch clears preparation",
+    "keyboard and retained panel",
+    "frozen pair download",
+    "baseline $5 cap",
+    "candidate uses frozen campaign and budget",
+    "repair recovery survives reload",
+    "original campaign excluded",
+    "no overflow",
+    "no page or console errors"
+  ],
+  "errors": []
+}

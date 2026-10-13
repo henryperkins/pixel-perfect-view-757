@@ -44,9 +44,9 @@ const MANIFESTS: Record<EvaluationCaseSetId, EvaluationCaseSet> = {
     cases: DRAFT_PILOT_CASES,
     caseSetHash: "43562fc3e43edfa47087c1461209b6592269ec2d9b9f048a6e08a2f1c0e33aac",
   },
-  // New offline identities freeze analytic scan numbers and scope transit hashes
-  // to their own cases. Paid campaign preparation remains on the original v1
-  // manifest; these identities do not extend that campaign's authorization.
+  // Portable identities freeze analytic scan numbers and scope transit hashes
+  // to their own cases. A v2 paid pilot requires a new explicit comparison
+  // campaign; these identities never extend a v1 campaign's authorization.
   "draft-fallback-2": {
     id: "draft-fallback-2",
     fixtureVersion: "draft-fallback-2",
