@@ -31,6 +31,7 @@ function compare(a, b, label, issues) {
 }
 for (const [id, from, to] of [
   ["lunar-year", "2026-01-01T00:00:00.000Z", "2027-01-01T00:00:00.000Z"],
+  ["lunar-rolling-year", "2026-10-13T00:00:00.000Z", "2027-10-13T00:00:00.000Z"],
   ["lunar-multiple", "2026-08-01T00:00:00.000Z", "2026-09-01T00:00:00.000Z"],
   ["lunar-empty", "2026-01-10T00:00:00.000Z", "2026-01-10T01:00:00.000Z"],
   ["lunar-source-start", "1800-01-02T00:00:00.000Z", "1800-01-10T00:00:00.000Z"],
@@ -342,7 +343,7 @@ const report = {
   reference: "independent-native-et-hourly-astronomy-1",
   allowedDeltaSeconds: 60,
   allowedLongitudeDeltaDegrees: 0.001,
-  passed: results.length === 27 && results.every((r) => r.pass),
+  passed: results.length === 28 && results.every((r) => r.pass),
   results,
   sourceHashes: Object.fromEntries(
     paths.map((p) => [

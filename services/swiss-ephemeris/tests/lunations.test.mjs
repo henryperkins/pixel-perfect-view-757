@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+import sweph from "sweph";
 import { createEngine } from "../src/engine.mjs";
 import { calculateLunations } from "../src/lunations.mjs";
 const engine = createEngine();
@@ -42,6 +43,40 @@ test("native lunar range returns12 new Moons,13 full Moons and four real eclipse
   assert.ok(
     r.events.every((e, i) => i === 0 || Date.parse(e.at) >= Date.parse(r.events[i - 1].at)),
   );
+});
+test("a rolling year crossing2027 retains native penumbral eclipses despite contact-search diagnostics", () => {
+  const r = calculateLunations(
+    request("2026-10-13T00:00:00.000Z", "2027-10-13T00:00:00.000Z"),
+    engine,
+  );
+  assert.equal(r.status, "complete");
+  assert.deepEqual(
+    r.events.filter((e) => e.nativeClassification !== null).map((e) => [e.kind, e.at.slice(0, 10)]),
+    [
+      ["solar-annular", "2027-02-06"],
+      ["lunar-penumbral", "2027-02-20"],
+      ["lunar-penumbral", "2027-07-18"],
+      ["solar-total", "2027-08-02"],
+      ["lunar-penumbral", "2027-08-17"],
+    ],
+  );
+});
+test("successful lunar flags do not admit other native errors, failed searches or invalid dates", (t) => {
+  const original = sweph.lun_eclipse_when;
+  const start = Date.parse("2027-02-21T00:00:00.000Z");
+  for (const patch of [
+    { error: "SwissEph file is unavailable" },
+    { flag: -1, error: "no lunar eclipse at tjd = 2461605.174095" },
+    { flag: 128, error: "no lunar eclipse at tjd = 2461605.174095" },
+    { data: [NaN] },
+  ]) {
+    const mock = t.mock.method(sweph, "lun_eclipse_when", (...args) => ({
+      ...original(...args),
+      ...patch,
+    }));
+    assert.throws(() => engine.eclipseAfter("lunar", start), /unqualified_source/);
+    mock.mock.restore();
+  }
 });
 test("range boundaries are half open, event identity is stable across overlapping queries, and short empty ranges are complete", () => {
   const events = calculateLunations(

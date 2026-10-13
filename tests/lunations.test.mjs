@@ -23,6 +23,17 @@ test("qualified lunar range retains independently captured phases and native ecl
   assert.equal(h.calculationRequests.length, 1);
   assert.ok(!JSON.stringify(h.calculationRequests).includes(h.userA));
 });
+test("the app accepts the rolling-year native output containing2027 penumbral eclipses", async () => {
+  const rolling = JSON.parse(
+    await readFile(new URL("./fixtures/native-astronomy/lunar-rolling-year.json", import.meta.url)),
+  );
+  h.setSwissCalculations(() => Response.json(rolling.actual));
+  const r = await lunar.getLunations(rolling.input.from, rolling.input.to);
+  assert.equal(r.status, "available");
+  assert.deepEqual(r.value, rolling.actual.events);
+  assert.equal(r.value.filter((e) => e.kind === "lunar-penumbral").length, 3);
+  assert.equal(h.calculationRequests.length, 1);
+});
 test("bad source data, oversized output, redirects and missing configuration fail closed without retries", async () => {
   const call = (parse = (x) => x) =>
     transport.swissCalculation("/v1/astronomy-events", fixture.input, parse);

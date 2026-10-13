@@ -1,0 +1,643 @@
+{
+  "id": "lunar-rolling-year",
+  "input": {
+    "contract": "swiss-astronomy-events/1",
+    "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+    "from": "2026-10-13T00:00:00.000Z",
+    "to": "2027-10-13T00:00:00.000Z"
+  },
+  "actual": {
+    "status": "complete",
+    "contract": "swiss-astronomy-events/1",
+    "solverVersion": "lunations-eclipses-1",
+    "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+    "source": {
+      "engine": "swiss-ephemeris",
+      "engineVersion": "2.10.03",
+      "dataId": "sha256:975743cf9ca4c15e9e86d22f8d03fd973a1341f6b0bd971cabd21a4a02022797",
+      "frame": "tropical-apparent-geocentric-true-equinox-of-date",
+      "timeScale": "UT",
+      "returnedFlags": 258
+    },
+    "range": {
+      "from": "2026-10-13T00:00:00.000Z",
+      "to": "2027-10-13T00:00:00.000Z",
+      "boundary": "half-open"
+    },
+    "events": [
+      {
+        "id": "sky:d662409b8eaa4d22e8819b4abbd21f5d",
+        "kind": "full-moon",
+        "at": "2026-10-26T04:11:49.000Z",
+        "sunLongitude": 212.76188777247194,
+        "moonLongitude": 32.76192283280517,
+        "elongationDegrees": 180.00003506033323,
+        "targetDegrees": 180,
+        "residualDegrees": 0.00003506033317535184,
+        "nativeClassification": null,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:46def2647a9270be58cf4b135f5ef005",
+        "kind": "new-moon",
+        "at": "2026-11-09T07:02:07.000Z",
+        "sunLongitude": 226.8897989214438,
+        "moonLongitude": 226.88981013831187,
+        "elongationDegrees": 0.000011216868074370723,
+        "targetDegrees": 0,
+        "residualDegrees": 0.000011216868074370723,
+        "nativeClassification": null,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:62bb32a50086ae89fff7ea87cd30f2e8",
+        "kind": "full-moon",
+        "at": "2026-11-24T14:53:34.000Z",
+        "sunLongitude": 242.33616490022337,
+        "moonLongitude": 62.33621120110479,
+        "elongationDegrees": 180.00004630088142,
+        "targetDegrees": 180,
+        "residualDegrees": 0.000046300881422212115,
+        "nativeClassification": null,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:2323f80c74d8169b198df991be554598",
+        "kind": "new-moon",
+        "at": "2026-12-09T00:51:51.000Z",
+        "sunLongitude": 256.94656919012823,
+        "moonLongitude": 256.94655578244306,
+        "elongationDegrees": 359.9999865923148,
+        "targetDegrees": 0,
+        "residualDegrees": 0.000013407685173660866,
+        "nativeClassification": null,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:c3db48cc5da02238eb147bde89bda759",
+        "kind": "full-moon",
+        "at": "2026-12-24T01:28:14.000Z",
+        "sunLongitude": 272.2328096572958,
+        "moonLongitude": 92.23279158533023,
+        "elongationDegrees": 179.99998192803446,
+        "targetDegrees": 180,
+        "residualDegrees": 0.000018071965541821555,
+        "nativeClassification": null,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:6042193943acf5ac35bdbfd73cfdfcd1",
+        "kind": "new-moon",
+        "at": "2027-01-07T20:24:23.000Z",
+        "sunLongitude": 287.3043121561291,
+        "moonLongitude": 287.30428376769896,
+        "elongationDegrees": 359.9999716115699,
+        "targetDegrees": 0,
+        "residualDegrees": 0.000028388430109771434,
+        "nativeClassification": null,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:027bffc52bd8bb2f72286e4ef2a425fa",
+        "kind": "full-moon",
+        "at": "2027-01-22T12:17:23.000Z",
+        "sunLongitude": 302.237801122503,
+        "moonLongitude": 122.23778806232303,
+        "elongationDegrees": 179.99998693982002,
+        "targetDegrees": 180,
+        "residualDegrees": 0.000013060179981039255,
+        "nativeClassification": null,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:f0299faffa195ff83f35358c20f24998",
+        "kind": "new-moon",
+        "at": "2027-02-06T15:56:07.000Z",
+        "sunLongitude": 317.62710883895727,
+        "moonLongitude": 317.62707689500326,
+        "elongationDegrees": 359.999968056046,
+        "targetDegrees": 0,
+        "residualDegrees": 0.000031943954013513576,
+        "nativeClassification": null,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:29f6741195b3d0b8c610cce228c56dc5",
+        "kind": "solar-annular",
+        "at": "2027-02-06T15:59:39.000Z",
+        "sunLongitude": 317.6295965279395,
+        "moonLongitude": 317.6565411760057,
+        "elongationDegrees": 0.026944648066205446,
+        "targetDegrees": null,
+        "residualDegrees": null,
+        "nativeClassification": 9,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:16853a70c3a8cfcd4e4dc83dd4f48bef",
+        "kind": "lunar-penumbral",
+        "at": "2027-02-20T23:12:52.000Z",
+        "sunLongitude": 332.0855647577449,
+        "moonLongitude": 151.98285449879506,
+        "elongationDegrees": 179.89728974105014,
+        "targetDegrees": null,
+        "residualDegrees": null,
+        "nativeClassification": 64,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:624443fa8f3992617994d09695838645",
+        "kind": "full-moon",
+        "at": "2027-02-20T23:23:39.000Z",
+        "sunLongitude": 332.09310940354067,
+        "moonLongitude": 152.09309024030085,
+        "elongationDegrees": 179.9999808367602,
+        "targetDegrees": 180,
+        "residualDegrees": 0.00001916323981276946,
+        "nativeClassification": null,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:cd60b13f5cf6c2eb7a50a46328e86068",
+        "kind": "new-moon",
+        "at": "2027-03-08T09:29:29.000Z",
+        "sunLongitude": 347.58013702970175,
+        "moonLongitude": 347.5801392899856,
+        "elongationDegrees": 0.0000022602838498642086,
+        "targetDegrees": 0,
+        "residualDegrees": 0.0000022602838498642086,
+        "nativeClassification": null,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:e41879020d51345a47e199c73ff46a8a",
+        "kind": "full-moon",
+        "at": "2027-03-22T10:43:48.000Z",
+        "sunLongitude": 1.5851770317577802,
+        "moonLongitude": 181.58519828935573,
+        "elongationDegrees": 180.00002125759795,
+        "targetDegrees": 180,
+        "residualDegrees": 0.000021257597950352647,
+        "nativeClassification": null,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:3aa48dda79144a466e4e741c1cff0e09",
+        "kind": "new-moon",
+        "at": "2027-04-06T23:51:10.000Z",
+        "sunLongitude": 16.951821697327148,
+        "moonLongitude": 16.951859315214108,
+        "elongationDegrees": 0.00003761788696010626,
+        "targetDegrees": 0,
+        "residualDegrees": 0.00003761788696010626,
+        "nativeClassification": null,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:eada7eb3c7d0e9baa3577c8de64e983d",
+        "kind": "full-moon",
+        "at": "2027-04-20T22:27:10.000Z",
+        "sunLongitude": 30.616526314266025,
+        "moonLongitude": 210.61658404368143,
+        "elongationDegrees": 180.0000577294154,
+        "targetDegrees": 180,
+        "residualDegrees": 0.00005772941540271859,
+        "nativeClassification": null,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:8448c9ee124bcbc14e5d03b64ded8f64",
+        "kind": "new-moon",
+        "at": "2027-05-06T10:58:38.000Z",
+        "sunLongitude": 45.70894326958717,
+        "moonLongitude": 45.70893026233904,
+        "elongationDegrees": 359.9999869927519,
+        "targetDegrees": 0,
+        "residualDegrees": 0.000013007248071517097,
+        "nativeClassification": null,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:8bbd684f71c767d2c13f44ea48fbd783",
+        "kind": "full-moon",
+        "at": "2027-05-20T10:59:02.000Z",
+        "sunLongitude": 59.22552746231588,
+        "moonLongitude": 239.22558353705017,
+        "elongationDegrees": 180.0000560747343,
+        "targetDegrees": 180,
+        "residualDegrees": 0.00005607473428881349,
+        "nativeClassification": null,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:9c2c463c8f051605daa9b32836ee70c5",
+        "kind": "new-moon",
+        "at": "2027-06-04T19:40:21.000Z",
+        "sunLongitude": 73.97197376260664,
+        "moonLongitude": 73.97195559470015,
+        "elongationDegrees": 359.9999818320935,
+        "targetDegrees": 0,
+        "residualDegrees": 0.000018167906546295853,
+        "nativeClassification": null,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:194396a40de604226f1f6429f003f5a3",
+        "kind": "full-moon",
+        "at": "2027-06-19T00:44:21.000Z",
+        "sunLongitude": 87.55736831498791,
+        "moonLongitude": 267.55732434781714,
+        "elongationDegrees": 179.99995603282923,
+        "targetDegrees": 180,
+        "residualDegrees": 0.000043967170768155484,
+        "nativeClassification": null,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:f10026371ccbdf8f5b1e528287ce7804",
+        "kind": "new-moon",
+        "at": "2027-07-04T03:02:05.000Z",
+        "sunLongitude": 101.95648455320071,
+        "moonLongitude": 101.95643693255784,
+        "elongationDegrees": 359.9999523793571,
+        "targetDegrees": 0,
+        "residualDegrees": 0.0000476206428174919,
+        "nativeClassification": null,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:b02dda3991d0c08081ce1cd82979221a",
+        "kind": "full-moon",
+        "at": "2027-07-18T15:44:56.000Z",
+        "sunLongitude": 115.81261969364505,
+        "moonLongitude": 295.81266554277363,
+        "elongationDegrees": 180.00004584912858,
+        "targetDegrees": 180,
+        "residualDegrees": 0.00004584912858263124,
+        "nativeClassification": null,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:42608324f0df5ba296a5057af7c8075d",
+        "kind": "lunar-penumbral",
+        "at": "2027-07-18T16:03:00.000Z",
+        "sunLongitude": 115.82458668306873,
+        "moonLongitude": 295.96090892596465,
+        "elongationDegrees": 180.13632224289586,
+        "targetDegrees": null,
+        "residualDegrees": null,
+        "nativeClassification": 64,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:a185ef3672a09b7501f72288468bf5ff",
+        "kind": "new-moon",
+        "at": "2027-08-02T10:05:14.000Z",
+        "sunLongitude": 129.91736792974984,
+        "moonLongitude": 129.9173040530336,
+        "elongationDegrees": 359.99993612328376,
+        "targetDegrees": 0,
+        "residualDegrees": 0.00006387671623997448,
+        "nativeClassification": null,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:5a65cfdfe8f12af4242e63629045e86c",
+        "kind": "solar-total",
+        "at": "2027-08-02T10:06:41.000Z",
+        "sunLongitude": 129.91833181574486,
+        "moonLongitude": 129.93260001573668,
+        "elongationDegrees": 0.014268199991818165,
+        "targetDegrees": null,
+        "residualDegrees": null,
+        "nativeClassification": 5,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:ebb731d528a1a1490d95bb8647e9e572",
+        "kind": "lunar-penumbral",
+        "at": "2027-08-17T07:13:51.000Z",
+        "sunLongitude": 144.18693672509642,
+        "moonLongitude": 324.0745102762371,
+        "elongationDegrees": 179.8875735511407,
+        "targetDegrees": null,
+        "residualDegrees": null,
+        "nativeClassification": 64,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:042e2ab819b1d3f129f61b5da8deefba",
+        "kind": "full-moon",
+        "at": "2027-08-17T07:28:42.000Z",
+        "sunLongitude": 144.19684623515957,
+        "moonLongitude": 324.19688170109134,
+        "elongationDegrees": 180.00003546593177,
+        "targetDegrees": 180,
+        "residualDegrees": 0.00003546593177361501,
+        "nativeClassification": null,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:b024365a8d5da65091a61b8115f0a4e7",
+        "kind": "new-moon",
+        "at": "2027-08-31T17:41:11.000Z",
+        "sunLongitude": 158.10430495249102,
+        "moonLongitude": 158.10426261098473,
+        "elongationDegrees": 359.9999576584937,
+        "targetDegrees": 0,
+        "residualDegrees": 0.000042341506286902586,
+        "nativeClassification": null,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:eb77cfcdaf8e44fa89e9c67d68255a2f",
+        "kind": "full-moon",
+        "at": "2027-09-15T23:03:32.000Z",
+        "sunLongitude": 172.88278454007445,
+        "moonLongitude": 352.88284728724875,
+        "elongationDegrees": 180.0000627471743,
+        "targetDegrees": 180,
+        "residualDegrees": 0.00006274717429732846,
+        "nativeClassification": null,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      },
+      {
+        "id": "sky:644546d65b3db77de3d1fd2b7461799a",
+        "kind": "new-moon",
+        "at": "2027-09-30T02:36:05.000Z",
+        "sunLongitude": 186.72404275860652,
+        "moonLongitude": 186.7240435071467,
+        "elongationDegrees": 7.485401738449582e-7,
+        "targetDegrees": 0,
+        "residualDegrees": 7.485401738449582e-7,
+        "nativeClassification": null,
+        "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
+        "localVisibility": null,
+        "uncertaintySeconds": 60
+      }
+    ]
+  },
+  "reference": [
+    {
+      "kind": "full-moon",
+      "at": "2026-10-26T04:11:49.000Z",
+      "sunLongitude": 212.761887772472,
+      "moonLongitude": 32.76192283280515,
+      "elongationDegrees": 180.00003506033315
+    },
+    {
+      "kind": "new-moon",
+      "at": "2026-11-09T07:02:07.000Z",
+      "sunLongitude": 226.88979892144383,
+      "moonLongitude": 226.88981013831187,
+      "elongationDegrees": 0.000011216868074370723
+    },
+    {
+      "kind": "full-moon",
+      "at": "2026-11-24T14:53:34.000Z",
+      "sunLongitude": 242.33616490022342,
+      "moonLongitude": 62.336211201104774,
+      "elongationDegrees": 180.00004630088137
+    },
+    {
+      "kind": "new-moon",
+      "at": "2026-12-09T00:51:51.000Z",
+      "sunLongitude": 256.9465691901282,
+      "moonLongitude": 256.94655578244306,
+      "elongationDegrees": 359.9999865923149
+    },
+    {
+      "kind": "full-moon",
+      "at": "2026-12-24T01:28:14.000Z",
+      "sunLongitude": 272.2328096572958,
+      "moonLongitude": 92.23279158533026,
+      "elongationDegrees": 179.9999819280345
+    },
+    {
+      "kind": "new-moon",
+      "at": "2027-01-07T20:24:23.000Z",
+      "sunLongitude": 287.304312156129,
+      "moonLongitude": 287.3042837676989,
+      "elongationDegrees": 359.9999716115699
+    },
+    {
+      "kind": "full-moon",
+      "at": "2027-01-22T12:17:23.000Z",
+      "sunLongitude": 302.2378011225031,
+      "moonLongitude": 122.23778806232306,
+      "elongationDegrees": 179.99998693982
+    },
+    {
+      "kind": "new-moon",
+      "at": "2027-02-06T15:56:07.000Z",
+      "sunLongitude": 317.62710883895727,
+      "moonLongitude": 317.6270768950032,
+      "elongationDegrees": 359.99996805604593
+    },
+    {
+      "kind": "solar-annular",
+      "at": "2027-02-06T15:59:39.000Z",
+      "sunLongitude": 317.6295965279395,
+      "moonLongitude": 317.65654117600565,
+      "elongationDegrees": 0.026944648066148602
+    },
+    {
+      "kind": "lunar-penumbral",
+      "at": "2027-02-20T23:12:52.000Z",
+      "sunLongitude": 332.0855647577449,
+      "moonLongitude": 151.98285449879506,
+      "elongationDegrees": 179.89728974105014
+    },
+    {
+      "kind": "full-moon",
+      "at": "2027-02-20T23:23:39.000Z",
+      "sunLongitude": 332.0931094035407,
+      "moonLongitude": 152.0930902403009,
+      "elongationDegrees": 179.9999808367602
+    },
+    {
+      "kind": "new-moon",
+      "at": "2027-03-08T09:29:29.000Z",
+      "sunLongitude": 347.5801370297017,
+      "moonLongitude": 347.5801392899856,
+      "elongationDegrees": 0.0000022602839067076275
+    },
+    {
+      "kind": "full-moon",
+      "at": "2027-03-22T10:43:48.000Z",
+      "sunLongitude": 1.5851770317577876,
+      "moonLongitude": 181.5851982893557,
+      "elongationDegrees": 180.00002125759795
+    },
+    {
+      "kind": "new-moon",
+      "at": "2027-04-06T23:51:10.000Z",
+      "sunLongitude": 16.95182169732715,
+      "moonLongitude": 16.9518593152141,
+      "elongationDegrees": 0.00003761788696010626
+    },
+    {
+      "kind": "full-moon",
+      "at": "2027-04-20T22:27:10.000Z",
+      "sunLongitude": 30.616526314265997,
+      "moonLongitude": 210.61658404368146,
+      "elongationDegrees": 180.0000577294154
+    },
+    {
+      "kind": "new-moon",
+      "at": "2027-05-06T10:58:38.000Z",
+      "sunLongitude": 45.708943269587145,
+      "moonLongitude": 45.70893026233902,
+      "elongationDegrees": 359.9999869927519
+    },
+    {
+      "kind": "full-moon",
+      "at": "2027-05-20T10:59:02.000Z",
+      "sunLongitude": 59.22552746231587,
+      "moonLongitude": 239.22558353705014,
+      "elongationDegrees": 180.0000560747343
+    },
+    {
+      "kind": "new-moon",
+      "at": "2027-06-04T19:40:21.000Z",
+      "sunLongitude": 73.97197376260662,
+      "moonLongitude": 73.97195559470013,
+      "elongationDegrees": 359.9999818320935
+    },
+    {
+      "kind": "full-moon",
+      "at": "2027-06-19T00:44:21.000Z",
+      "sunLongitude": 87.5573683149879,
+      "moonLongitude": 267.55732434781714,
+      "elongationDegrees": 179.99995603282923
+    },
+    {
+      "kind": "new-moon",
+      "at": "2027-07-04T03:02:05.000Z",
+      "sunLongitude": 101.9564845532007,
+      "moonLongitude": 101.95643693255782,
+      "elongationDegrees": 359.9999523793571
+    },
+    {
+      "kind": "full-moon",
+      "at": "2027-07-18T15:44:56.000Z",
+      "sunLongitude": 115.81261969364506,
+      "moonLongitude": 295.81266554277363,
+      "elongationDegrees": 180.00004584912858
+    },
+    {
+      "kind": "lunar-penumbral",
+      "at": "2027-07-18T16:03:00.000Z",
+      "sunLongitude": 115.82458668306873,
+      "moonLongitude": 295.96090892596465,
+      "elongationDegrees": 180.13632224289586
+    },
+    {
+      "kind": "new-moon",
+      "at": "2027-08-02T10:05:14.000Z",
+      "sunLongitude": 129.91736792974984,
+      "moonLongitude": 129.91730405303363,
+      "elongationDegrees": 359.99993612328376
+    },
+    {
+      "kind": "solar-total",
+      "at": "2027-08-02T10:06:41.000Z",
+      "sunLongitude": 129.91833181574484,
+      "moonLongitude": 129.93260001573668,
+      "elongationDegrees": 0.014268199991875008
+    },
+    {
+      "kind": "lunar-penumbral",
+      "at": "2027-08-17T07:13:51.000Z",
+      "sunLongitude": 144.1869367250964,
+      "moonLongitude": 324.07451027623705,
+      "elongationDegrees": 179.8875735511407
+    },
+    {
+      "kind": "full-moon",
+      "at": "2027-08-17T07:28:42.000Z",
+      "sunLongitude": 144.1968462351596,
+      "moonLongitude": 324.1968817010914,
+      "elongationDegrees": 180.00003546593177
+    },
+    {
+      "kind": "new-moon",
+      "at": "2027-08-31T17:41:11.000Z",
+      "sunLongitude": 158.10430495249105,
+      "moonLongitude": 158.10426261098468,
+      "elongationDegrees": 359.9999576584936
+    },
+    {
+      "kind": "full-moon",
+      "at": "2027-09-15T23:03:32.000Z",
+      "sunLongitude": 172.8827845400744,
+      "moonLongitude": 352.88284728724875,
+      "elongationDegrees": 180.0000627471743
+    },
+    {
+      "kind": "new-moon",
+      "at": "2027-09-30T02:36:05.000Z",
+      "sunLongitude": 186.72404275860652,
+      "moonLongitude": 186.72404350714666,
+      "elongationDegrees": 7.485401738449582e-7
+    }
+  ],
+  "issues": [],
+  "durationMs": 42.225142000000005
+}

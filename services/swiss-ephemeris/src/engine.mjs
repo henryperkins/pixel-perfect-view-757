@@ -245,7 +245,19 @@ export function createEngine({
         : kind === "lunar"
           ? sweph.lun_eclipse_when(jd, 2, 0, false)
           : null;
-    if (!result || result.flag <= 0 || result.error || !Number.isFinite(result.data?.[0]))
+    // swe_lun_eclipse_when leaves this diagnostic in serr while sampling
+    // outside the penumbra for contact times. A positive eclipse flag is
+    // still successful; keep every other source/native error fatal.
+    const lunarContactDiagnostic =
+      kind === "lunar" &&
+      [4, 16, 64].includes(result?.flag) &&
+      /^no lunar eclipse at tjd = -?\d+\.\d+$/.test(result?.error || "");
+    if (
+      !result ||
+      result.flag <= 0 ||
+      (result.error && !lunarContactDiagnostic) ||
+      !Number.isFinite(result.data?.[0])
+    )
       throw Error("unqualified_source");
     return { at: utToUtc(result.data[0]), classification: result.flag };
   };
