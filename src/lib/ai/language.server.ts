@@ -17,7 +17,21 @@ import { safetyPass } from "../content/default-bundle";
 import { normalizeDepth, normalizeTone } from "../reading.server";
 import { assertDailyFactGraph, dailyFactBlock, factBlock, factIds, type FactAtom } from "./facts";
 import { storyParagraphProblem, storyCoverageProblem } from "./transit-story-facts";
-import { dailySystemVoice, dailyVoice } from "./daily-voice";
+import { dailySystemVoice, dailyVoice, DAILY_VOICE_EXAMPLES } from "./daily-voice";
+import {
+  assertDailyWritingBrief,
+  toDailyWritingBrief,
+  type DailyWritingPlan,
+} from "../content/daily-writing";
+import type { DailyWritingTemplate } from "../content/daily-writing-template";
+import {
+  checkDailyWritingQuality,
+  writingNotEvaluated,
+  type DailyWritingParagraph,
+  type DailyWritingQualityReport,
+  type DailyWritingRenderMode,
+  type RecentDailyBody,
+} from "./daily-writing-quality";
 import { dropsSourceModality } from "./daily-modality";
 import { natalLensWordingProblem } from "../content/natal-lens-policy";
 import type {
@@ -29,6 +43,8 @@ import {
   DAILY_DIAGNOSTICS_VERSION,
   DAILY_PROMPT_VERSION,
   DAILY_VALIDATOR_VERSION,
+  CONCRETE_DAILY_PROMPT_VERSION,
+  CONCRETE_DAILY_VALIDATOR_VERSION,
   DAILY_GATEWAY_TIMEOUT_MS,
   MAX_DAILY_DURATION_MS,
   GEMINI_ENTERPRISE_MODEL,
@@ -72,6 +88,13 @@ export interface LanguageMeta {
   flagged: string[];
   reason: string | null;
   diagnostics?: DailyDiagnostics;
+  writing?: {
+    renderMode: DailyWritingRenderMode;
+    reason: "template_editorial_failure" | null;
+    sceneUse: { id: "SC1" | "SC2"; paragraph: number }[];
+    candidateQuality: DailyWritingQualityReport;
+    finalQuality: DailyWritingQualityReport;
+  };
 }
 
 export interface ReadingProse {
@@ -324,6 +347,13 @@ export interface ReadingProseInput {
   suppression: { angles: boolean; houses: boolean };
   /** Only the astronomical body is rewritten. Headline and reflection stay deterministic. */
   fallback: { headline: string; body: string; prompt: string };
+  /** Presence is the schema-5 policy gate; recent text is consumed locally only. */
+  writing?: {
+    plan: DailyWritingPlan;
+    template: DailyWritingTemplate;
+    minimalTemplate: DailyWritingTemplate;
+    recent: RecentDailyBody[];
+  };
 }
 
 const READING_SCHEMA: JsonSchemaObject = {
@@ -346,6 +376,26 @@ const READING_SCHEMA: JsonSchemaObject = {
   },
   required: ["paragraphs"],
   additionalProperties: false,
+};
+const CONCRETE_READING_SCHEMA: JsonSchemaObject = {
+  ...READING_SCHEMA,
+  properties: {
+    paragraphs: {
+      type: "array",
+      minItems: 2,
+      maxItems: 4,
+      items: {
+        type: "object",
+        properties: {
+          text: { type: "string" },
+          facts: { type: "array", items: { type: "string" } },
+          scenes: { type: "array", maxItems: 2, uniqueItems: true, items: { type: "string" } },
+        },
+        required: ["text", "facts", "scenes"],
+        additionalProperties: false,
+      },
+    },
+  },
 };
 
 const BODY_NAMES =
@@ -568,7 +618,15 @@ function dailyReferenceProblem(
 function dailyDraft(
   raw: unknown,
   input: ReadingProseInput,
-): { body: string; paragraphs: string[]; citations: Citation[] } | DailyProblem {
+  template = false,
+):
+  | {
+      body: string;
+      paragraphs: string[];
+      citations: Citation[];
+      writingParagraphs: DailyWritingParagraph[];
+    }
+  | DailyProblem {
   if (
     !raw ||
     typeof raw !== "object" ||
@@ -576,11 +634,12 @@ function dailyDraft(
   )
     return rejection("shape", "draft has malformed paragraph data");
   const paragraphs = (raw as { paragraphs: unknown[] }).paragraphs;
-  if (paragraphs.length < 2 || paragraphs.length > 4)
+  if (paragraphs.length < (template ? 1 : 2) || paragraphs.length > 4)
     return rejection("count", "draft must contain two to four paragraphs");
   const byId = new Map(input.facts.map((f) => [f.id, f]));
   const kept: string[] = [],
     citations: Citation[] = [];
+  const writingParagraphs: DailyWritingParagraph[] = [];
   const segmenter = new Intl.Segmenter("en", { granularity: "sentence" });
   let words = 0;
   for (const [index, paragraph] of paragraphs.entries()) {
@@ -591,7 +650,7 @@ function dailyDraft(
     });
     if (!paragraph || typeof paragraph !== "object")
       return rejectParagraph("shape", "draft has malformed paragraph data");
-    const p = paragraph as { text?: unknown; facts?: unknown };
+    const p = paragraph as { text?: unknown; facts?: unknown; scenes?: unknown };
     if (
       typeof p.text !== "string" ||
       !p.text.trim() ||
@@ -640,6 +699,7 @@ function dailyDraft(
     if (problem) return { ...problem, paragraph: index + 1 };
     kept.push(text);
     citations.push({ paragraph: kept.length, facts: ids });
+    writingParagraphs.push({ text, facts: ids, scenes: p.scenes as string[] });
   }
   if (!citations[0]?.facts.includes("C1") || !citations[0]?.facts.includes("I1"))
     return rejection("coverage", "draft failed strongest-cycle and interpretation ID coverage");
@@ -653,7 +713,7 @@ function dailyDraft(
   const storyCoverage = storyCoverageProblem(kept, citations, input.facts);
   if (storyCoverage)
     return rejection(storyCoverage, "draft omitted the supplied chronology or chapter");
-  return { body: kept.join("\n\n"), paragraphs: kept, citations };
+  return { body: kept.join("\n\n"), paragraphs: kept, citations, writingParagraphs };
 }
 
 function dailyDiagnostics(
@@ -662,11 +722,12 @@ function dailyDiagnostics(
   code: DailyDiagnostics["code"],
   started: number | null,
   paragraph: number | null = null,
+  concrete = false,
 ): DailyDiagnostics {
   return {
     version: DAILY_DIAGNOSTICS_VERSION,
-    promptVersion: DAILY_PROMPT_VERSION,
-    validatorVersion: DAILY_VALIDATOR_VERSION,
+    promptVersion: concrete ? CONCRETE_DAILY_PROMPT_VERSION : DAILY_PROMPT_VERSION,
+    validatorVersion: concrete ? CONCRETE_DAILY_VALIDATOR_VERSION : DAILY_VALIDATOR_VERSION,
     model,
     gatewayTimeoutMs: DAILY_GATEWAY_TIMEOUT_MS,
     outcome,
@@ -688,33 +749,118 @@ async function generateDailyProse(
   const { fallback } = input;
   const model = languageModel(provider);
   assertDailyFactGraph(input.facts);
+  const concrete = !!input.writing;
+  if (input.writing)
+    assertDailyWritingBrief(
+      toDailyWritingBrief(input.writing.plan),
+      input.writing.plan,
+      input.facts,
+    );
+  const diagnose = (
+    outcome: DailyDiagnostics["outcome"],
+    code: DailyDiagnostics["code"],
+    started: number | null,
+    paragraph: number | null = null,
+  ) => dailyDiagnostics(model, outcome, code, started, paragraph, concrete);
+  const quality = (paragraphs: DailyWritingParagraph[], renderMode: DailyWritingRenderMode) => {
+    const sources = input.facts
+      .filter((fact) => /^(I[123]|S1|N1|P2)$/.test(fact.id))
+      .map((fact) =>
+        fact.statement
+          .replace(/^Published (?:tension|reinforcement) synthesis [^\n]+ \(parents: [^)]+\): /, "")
+          .replace(
+            /^Published interpretation [^\n]+?: |^Published natal lens, an interpretive possibility: |^Published transit chapter: /,
+            "",
+          ),
+      );
+    return checkDailyWritingQuality({
+      paragraphs,
+      plan: input.writing!.plan,
+      renderMode,
+      recent: input.writing!.recent,
+      requiredLiteralSentences: input.facts
+        .filter((fact) => fact.arc)
+        .map((fact) => fact.arc!.chronologySentence),
+      sourceTexts: [
+        ...sources,
+        ...input.writing!.plan.scenes.flatMap((scene) => [scene.situation, scene.focus]),
+      ],
+      example: DAILY_VOICE_EXAMPLES[normalizeTone(input.tone)][normalizeDepth(input.depth)],
+    });
+  };
+  const sceneUse = (paragraphs: DailyWritingParagraph[]) =>
+    paragraphs.flatMap((p, index) =>
+      (p.scenes ?? []).map((id) => ({ id: id as "SC1" | "SC2", paragraph: index + 1 })),
+    );
+  const fallbackResult = (
+    reason: string,
+    diagnostics: DailyDiagnostics,
+    candidateQuality = writingNotEvaluated(),
+  ): ReadingProse => {
+    if (!input.writing)
+      return {
+        ...fallback,
+        paragraphs: fallback.body.split("\n\n"),
+        meta: { ...templateMeta(reason), diagnostics },
+      };
+    let template = input.writing.template;
+    const validate = (candidate: DailyWritingTemplate) => {
+      if (!input.writing!.plan.theme) return null;
+      const result = dailyDraft({ paragraphs: candidate.paragraphs }, input, true);
+      if ("code" in result)
+        throw Error(`Required template source failed ${result.code} validation.`);
+      return result;
+    };
+    let validated = validate(template),
+      finalQuality = quality(template.paragraphs, template.renderMode);
+    if (finalQuality.outcome === "reject") {
+      template = input.writing.minimalTemplate;
+      validated = validate(template);
+      finalQuality = quality(template.paragraphs, template.renderMode);
+      if (finalQuality.outcome === "reject")
+        throw Error("Required minimal template source failed editorial validation.");
+    }
+    return {
+      ...fallback,
+      body: template.paragraphs.map((p) => p.text).join("\n\n"),
+      paragraphs: template.paragraphs.map((p) => p.text),
+      meta: {
+        ...templateMeta(template.reason ?? reason),
+        citations: validated?.citations ?? [],
+        diagnostics,
+        writing: {
+          renderMode: template.renderMode,
+          reason: template.reason,
+          sceneUse: sceneUse(template.paragraphs),
+          candidateQuality,
+          finalQuality,
+        },
+      },
+    };
+  };
   if (!input.hasEligibleCycles || !input.facts.some((f) => f.id === "C1" && f.cycle))
-    return {
-      ...fallback,
-      paragraphs: fallback.body.split("\n\n"),
-      meta: {
-        ...templateMeta("no eligible cycle to write from"),
-        diagnostics: dailyDiagnostics(model, "skipped", "no_cycle", null),
-      },
-    };
+    return fallbackResult("no eligible cycle to write from", diagnose("skipped", "no_cycle", null));
   if (!input.facts.some((f) => f.id === "I1"))
-    return {
-      ...fallback,
-      paragraphs: fallback.body.split("\n\n"),
-      meta: {
-        ...templateMeta(diagnosticLabel("no_interpretation")),
-        diagnostics: dailyDiagnostics(model, "skipped", "no_interpretation", null),
-      },
-    };
+    return fallbackResult(
+      diagnosticLabel("no_interpretation"),
+      diagnose("skipped", "no_interpretation", null),
+    );
   const timingCitationIds = [
     "C1",
     ...["P1", "T1"].filter((id) => input.facts.some((fact) => fact.id === id)),
   ];
   const hasNatalLens = input.facts.some((fact) => fact.id === "N1");
   const prompt = [
-    dailyVoice(normalizeTone(input.tone), normalizeDepth(input.depth)),
+    dailyVoice(normalizeTone(input.tone), normalizeDepth(input.depth), concrete),
     "Facts:",
     dailyFactBlock(input.facts),
+    ...(input.writing
+      ? [
+          "Source-bound writing brief:",
+          JSON.stringify(toDailyWritingBrief(input.writing.plan)),
+          "Develop one central thread through one or two supplied possible illustrations only. Declare scenes separately from facts, once per scene across the body; every scene paragraph cites the central source and all required parents. Do not introduce a third setting for a supporting cycle, natal lens or transit chapter. An unfinished reply is a comparison, not the reply you avoided this morning. Never borrow a demonstration's subject or EX-* identifiers. No-frame cases declare empty scenes. Keep each condition attached to the claim it qualifies.",
+        ]
+      : []),
     "",
     "Rewrite only the astronomical body of today's reading, using the supplied published interpretation, domain and phase wording.",
     "Keep each paragraph under 200 words and the whole body under 700 words.",
@@ -750,38 +896,51 @@ async function generateDailyProse(
   let raw: unknown;
   const started = performance.now();
   try {
-    raw = await callGateway(prompt, "daily_reading", READING_SCHEMA, {
-      timeoutMs: DAILY_GATEWAY_TIMEOUT_MS,
-      observation,
-      system: dailySystemVoice(hasNatalLens),
-      provider,
-    });
+    raw = await callGateway(
+      prompt,
+      "daily_reading",
+      concrete ? CONCRETE_READING_SCHEMA : READING_SCHEMA,
+      {
+        timeoutMs: DAILY_GATEWAY_TIMEOUT_MS,
+        observation,
+        system: dailySystemVoice(hasNatalLens),
+        provider,
+      },
+    );
   } catch (error) {
     const failure = gatewayFailure(error);
-    return {
-      ...fallback,
-      paragraphs: fallback.body.split("\n\n"),
-      meta: {
-        ...templateMeta(diagnosticLabel(failure.code)),
-        diagnostics: dailyDiagnostics(
-          model,
-          "unavailable",
-          failure.code,
-          failure.code === "not_configured" ? null : started,
-        ),
-      },
-    };
+    return fallbackResult(
+      diagnosticLabel(failure.code),
+      diagnose("unavailable", failure.code, failure.code === "not_configured" ? null : started),
+    );
   }
   const result = dailyDraft(raw, input);
   if ("code" in result)
-    return {
-      ...fallback,
-      paragraphs: fallback.body.split("\n\n"),
-      meta: {
-        ...templateMeta(result.reason),
-        diagnostics: dailyDiagnostics(model, "rejected", result.code, started, result.paragraph),
-      },
-    };
+    return fallbackResult(
+      result.reason,
+      diagnose("rejected", result.code, started, result.paragraph),
+    );
+  const candidateQuality = input.writing
+    ? quality(
+        result.writingParagraphs,
+        input.writing.plan.status === "ready"
+          ? "framed"
+          : input.writing.plan.theme
+            ? "unframed"
+            : "quiet",
+      )
+    : null;
+  if (candidateQuality?.outcome === "reject")
+    return fallbackResult(
+      diagnosticLabel("writing_quality"),
+      diagnose(
+        "rejected",
+        "writing_quality",
+        started,
+        candidateQuality.issues.find((issue) => issue.severity === "reject")?.paragraph ?? null,
+      ),
+      candidateQuality,
+    );
   return {
     headline: fallback.headline,
     body: result.body,
@@ -794,7 +953,19 @@ async function generateDailyProse(
       dropped: 0,
       flagged: [],
       reason: null,
-      diagnostics: dailyDiagnostics(model, "accepted", "accepted", started),
+      diagnostics: diagnose("accepted", "accepted", started),
+      ...(input.writing && candidateQuality
+        ? {
+            writing: {
+              renderMode:
+                input.writing.plan.status === "ready" ? ("framed" as const) : ("unframed" as const),
+              reason: null,
+              sceneUse: sceneUse(result.writingParagraphs),
+              candidateQuality,
+              finalQuality: candidateQuality,
+            },
+          }
+        : {}),
     },
   };
 }
@@ -805,7 +976,10 @@ export async function generateReadingProse(input: ReadingProseInput): Promise<Re
 }
 
 /** Only whitelisted, bounded paragraph fields are retained for fixed synthetic evaluations. */
-function captureSyntheticCandidate(raw: unknown): SyntheticReadingCandidate | null {
+function captureSyntheticCandidate(
+  raw: unknown,
+  concrete = false,
+): SyntheticReadingCandidate | null {
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) return null;
   const paragraphs = (raw as { paragraphs?: unknown }).paragraphs;
   if (!Array.isArray(paragraphs)) return null;
@@ -814,20 +988,28 @@ function captureSyntheticCandidate(raw: unknown): SyntheticReadingCandidate | nu
     paragraphs.length <= 10 &&
     paragraphs.every((paragraph) => {
       if (!paragraph || typeof paragraph !== "object" || Array.isArray(paragraph)) return false;
-      const { text, facts } = paragraph as { text?: unknown; facts?: unknown };
+      const { text, facts, scenes } = paragraph as {
+        text?: unknown;
+        facts?: unknown;
+        scenes?: unknown;
+      };
       return (
         typeof text === "string" &&
         text.length <= 4000 &&
         Array.isArray(facts) &&
         facts.length <= 20 &&
-        facts.every((fact) => typeof fact === "string" && fact.length <= 80)
+        facts.every((fact) => typeof fact === "string" && fact.length <= 80) &&
+        (!concrete ||
+          (Array.isArray(scenes) &&
+            scenes.length <= 10 &&
+            scenes.every((id) => typeof id === "string" && id.length <= 80)))
       );
     });
   let truncated = paragraphs.length > 10;
   const captured = paragraphs.slice(0, 10).map((paragraph) => {
     const value =
       paragraph && typeof paragraph === "object" && !Array.isArray(paragraph)
-        ? (paragraph as { text?: unknown; facts?: unknown })
+        ? (paragraph as { text?: unknown; facts?: unknown; scenes?: unknown })
         : {};
     const text = typeof value.text === "string" ? value.text.slice(0, 4000) : null;
     if (typeof value.text === "string" && value.text.length > 4000) truncated = true;
@@ -840,6 +1022,24 @@ function captureSyntheticCandidate(raw: unknown): SyntheticReadingCandidate | nu
         if (fact.length > 80) truncated = true;
         return fact.slice(0, 80);
       });
+    if (concrete) {
+      const scenes = Array.isArray(value.scenes) ? value.scenes : null;
+      if (
+        scenes &&
+        (scenes.length > 10 || scenes.some((id) => typeof id === "string" && id.length > 80))
+      )
+        truncated = true;
+      return {
+        text,
+        facts,
+        scenes: scenes
+          ? scenes
+              .slice(0, 10)
+              .filter((id): id is string => typeof id === "string")
+              .map((id) => id.slice(0, 80))
+          : null,
+      };
+    }
     return { text, facts };
   });
   return { paragraphs: captured, paragraphCount: paragraphs.length, truncated, captureLossless };
@@ -863,7 +1063,7 @@ export async function generateSyntheticReadingProse(
         request = value;
       },
       candidate(value) {
-        candidate = captureSyntheticCandidate(value);
+        candidate = captureSyntheticCandidate(value, !!input.writing);
       },
     },
     provider,

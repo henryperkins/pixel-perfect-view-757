@@ -65,6 +65,37 @@ const props = () => ({
 });
 const render = (value = props()) => renderToStaticMarkup(createElement(TodayEvidence, value));
 
+test("saved source illustrations explain their possible status and link to the exact saved source and paragraph", () => {
+  const value = props();
+  value.language.dailyWriting = {
+    status: "saved",
+    evidence: {
+      releaseVersion: "saved-content-1",
+      plan: {
+        theme: { factId: "S1" },
+        scenes: [
+          {
+            id: "SC1",
+            situation:
+              "If a calendar is full, one commitment can be compared with available capacity.",
+            focus: "The comparison concerns responsibility and room for another option.",
+          },
+        ],
+      },
+      sceneUse: [{ id: "SC1", paragraph: 2 }],
+    },
+  };
+  const html = render(value);
+  assert.match(html, /Published illustrations/);
+  assert.match(html, /possible examples/);
+  assert.match(html, /Used by paragraph 2/);
+  assert.ok(html.includes(`href="#${view.todayParagraphId(value.readingId, 2)}"`));
+  assert.ok(html.includes(`href="#${view.todayFactId(value.readingId, "S1")}"`));
+  assert.ok(!html.includes("daily-writing-quality") && !html.includes("scene_unverified"));
+  value.language.dailyWriting.evidence.sceneUse = [];
+  assert.match(render(value), /Not used in this saved wording/);
+});
+
 test("synthesis has a distinct published category and saved text is presented without its instruction prefix", () => {
   assert.equal(view.todayFactLabel("S1"), "Published synthesis");
   assert.equal(view.todayFactCategory("S1"), "Published synthesis");

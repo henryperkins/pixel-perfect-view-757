@@ -82,10 +82,16 @@ test("corrected Mercury fixture produces past timing and separating facts throug
 });
 
 test("corrected fixtures have a new identity shared by offline and server evaluation", () => {
-  assert.equal(READING_EVAL_FIXTURE_VERSION, "synthetic-daily-6");
+  assert.equal(READING_EVAL_FIXTURE_VERSION, "synthetic-daily-7");
   assert.equal(scriptVersion, READING_EVAL_FIXTURE_VERSION);
   assert.equal(scriptCases, READING_EVAL_CASES);
-  assert.equal(READING_EVAL_CASES.length, 38);
+  assert.equal(READING_EVAL_CASES.length, 50);
+  assert.equal(READING_EVAL_CASES.filter((item) => item.id.startsWith("writing-")).length, 12);
+  assert.equal(new Set(READING_EVAL_CASES.map((item) => item.id)).size, 50);
+  assert.equal(
+    READING_EVAL_CASES.find((item) => item.id === "writing-legacy-no-scenes").writingFrameMode,
+    "none",
+  );
   assert.equal(READING_EVAL_CASES.filter((item) => item.id.startsWith("arc-")).length, 10);
   assert.equal(READING_EVAL_CASES.filter((item) => item.id.startsWith("natal-")).length, 12);
   for (const id of ["natal-own-target", "natal-moon-fallback"])

@@ -196,12 +196,18 @@ export function TodayEvidence({
         <h3 id="today-language-title" className="text-lg text-evidence-foreground">
           Wording and its references
         </h3>
-        {language?.mode === "model" ? (
+        {language?.mode === "model" || language?.dailyWriting?.status === "saved" ? (
           <>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              {language.model ? `Wording by ${language.model}. ` : "Model-written wording. "}
-              Paragraph citations identify the supplied references. They do not prove that every
-              interpretation is supported by a reference.
+              {language.mode === "model" ? (
+                <>
+                  {language.model ? `Wording by ${language.model}. ` : "Model-written wording. "}
+                  Paragraph citations identify the supplied references. They do not prove that every
+                  interpretation is supported by a reference.
+                </>
+              ) : (
+                "This reading uses published source wording. Paragraph links identify the references retained with that wording."
+              )}
             </p>
             {!paragraphLinksAvailable && citations.length ? (
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
@@ -261,6 +267,61 @@ export function TodayEvidence({
             the source trail below identifies its calculations, reference copy, and local context.
           </p>
         )}
+
+        {language?.dailyWriting?.status === "saved" &&
+        language.dailyWriting.evidence.plan.scenes.length ? (
+          <section className="mt-5" aria-labelledby="today-illustrations-title">
+            <h4 id="today-illustrations-title" className="text-base text-foreground">
+              Published illustrations
+            </h4>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              These are possible examples published with the selected meaning. They do not establish
+              that an event happened.
+            </p>
+            <ul className="mt-4 space-y-4">
+              {language.dailyWriting.evidence.plan.scenes.map((scene) => {
+                const saved =
+                  language.dailyWriting!.status === "saved"
+                    ? language.dailyWriting!.evidence
+                    : null;
+                const use = saved?.sceneUse.find((item) => item.id === scene.id);
+                return (
+                  <li key={scene.id} className="min-w-0 border-t border-rule pt-4">
+                    <h5 className="text-sm font-medium text-foreground">
+                      Published illustration · {saved?.releaseVersion}
+                    </h5>
+                    <p className="mt-2 break-words text-sm leading-relaxed text-foreground">
+                      {scene.situation} {scene.focus}
+                    </p>
+                    <div className="mt-2 flex flex-wrap gap-x-4">
+                      {saved?.plan.theme && byId.has(saved.plan.theme.factId) ? (
+                        <SourceLink id={todayFactId(readingId, saved.plan.theme.factId)}>
+                          {todayFactLabel(saved.plan.theme.factId)}
+                        </SourceLink>
+                      ) : null}
+                      {use && paragraphLinksAvailable && use.paragraph <= paragraphCount ? (
+                        <SourceLink id={todayParagraphId(readingId, use.paragraph)}>
+                          Used by paragraph {use.paragraph}
+                        </SourceLink>
+                      ) : (
+                        <span className="py-3 text-xs text-muted-foreground">
+                          {use
+                            ? "Saved paragraph link unavailable"
+                            : "Not used in this saved wording"}
+                        </span>
+                      )}
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        ) : language?.dailyWriting?.status === "unavailable" ? (
+          <p className="mt-5 text-sm leading-relaxed text-muted-foreground">
+            The saved reflection and illustration evidence are unavailable because their private
+            context expired or its permission was removed.
+          </p>
+        ) : null}
 
         {facts.length ? (
           <>

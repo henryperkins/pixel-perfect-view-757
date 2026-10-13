@@ -149,7 +149,13 @@ const onlyRoles = () =>
   h.requests.every(({ sql }) => /select .* from user_roles/i.test(sql.replaceAll('"', "")));
 
 test("every bundle selector is denied before copy reads or model calls for non-admins", async () => {
-  for (const selector of ["active", "builtin", "natal-candidate", "transit-candidate"]) {
+  for (const selector of [
+    "active",
+    "builtin",
+    "natal-candidate",
+    "transit-candidate",
+    "writing-candidate",
+  ]) {
     h.requests.length = 0;
     await assert.rejects(
       h.app.runReadingEvaluationCase(h.records(), h.userA, "saturn-square-sun", selector),
@@ -160,7 +166,13 @@ test("every bundle selector is denied before copy reads or model calls for non-a
   }
   await makeAdmin();
   h.setFault({ matches: (sql) => /from user_roles/i.test(sql.replaceAll('"', "")) });
-  for (const selector of ["active", "builtin", "natal-candidate", "transit-candidate"]) {
+  for (const selector of [
+    "active",
+    "builtin",
+    "natal-candidate",
+    "transit-candidate",
+    "writing-candidate",
+  ]) {
     h.requests.length = 0;
     await assert.rejects(
       h.app.runReadingEvaluationCase(h.records(), h.userA, "saturn-square-sun", selector),

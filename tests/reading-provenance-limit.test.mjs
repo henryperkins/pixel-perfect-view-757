@@ -11,6 +11,10 @@ after(async () => h?.close());
 async function enableContext() {
   await h.app.setConsent(h.records(), h.userA, "USR-01", true);
   await h.app.setConsent(h.records(), h.userA, "AMB-02", true);
+  await h.app.setConsent(h.records(), h.userA, "USR-04", true);
+  // Keep the test over the 14-row boundary even when the selected natal lens
+  // has fewer origins as real ephemeris positions change across civil dates.
+  await h.app.saveCheckIn(h.records(), h.userA, new Date().toISOString().slice(0, 10), 3, 3, null);
   await h.records().from("profiles").update({ tone_pref: "warm" }).eq("id", h.userA);
 }
 

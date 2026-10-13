@@ -1,8 +1,6 @@
 # Reading integrity audit
 
-Implemented 2026-10-11. Verification uses isolated local fixtures, not a live
-signed-in account or external model. No production migration or publication was
-performed.
+The original integrity implementation was verified on 2026-10-11 with local fixtures. Later releases added verified privacy, retention, birth recovery and content lifecycle behavior; their receipts are under `docs/reviews/release-completion/`. The schema-5 concrete-writing candidate described below remains inactive pending editorial qualification.
 
 | Finding                               | Result                                                                                                                                                                                                                                                                                                  |
 | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -91,6 +89,18 @@ traffic and are excluded from attempt-based fallback rates. The model is
 2026-10-11), with one strict-schema call and a 60,000 ms daily deadline (raised from
 20,000 ms the same day, when 3.8 Flash drafts took 15–55 s).
 Wellbeing bands, local-time framing, private notes, and authoring notes remain local.
+
+## Concrete-writing candidate integrity
+
+Schema 5 adds explicit source-owned illustration/question frames. A selected positive synthesis owns the theme; otherwise the primary interpretation does. Missing frames remain authoritative. Source edits remove affected frames before graph validation. Reviewed compact sentences, conditional scenes and complete natal/story sources share one deterministic template plan. The separate editorial checker runs after safety/reference validation, reports bounded code-only findings, accepts warnings and rejects blocking defects without another model call. Literal everyday vocabulary remains permitted.
+
+Prompt 14 / validator 11 apply only to schema 5. Legacy schema 4 retains prompt 13 / validator 10. Six complete isolated `EX-*` demonstrations teach tone/depth; none supplies live evidence. Member model/provider/deadline and independently validated natal chapter reflections remain unchanged.
+
+New schema-5 rows encrypt the exact plan, selected reflection, scene use, policy versions and validated paragraph count in `language_meta.daily_writing_ct`; their clear prompt column is null. A frozen legacy primary question is retained only as an encrypted validation operand when that fallback is selected. Readers validate reading/snapshot/release/primary/source/paragraph bindings and fail closed on present corruption without reconstructing current copy. Owner Evidence calls illustrations possible examples and links their exact saved source and used paragraph. Admin telemetry exposes only closed outcomes/codes/counts.
+
+Local history loads only after a cache miss: same owner/snapshot/timezone, the preceding three civil days, four candidates per day, twelve examined and at most three astronomical bodies. History never enters provider inputs, persistent diagnostic bodies or cache identity. Local wellness-selected reflections require current permission and fixed 180-day retention; revocation/expiry removes their encrypted evidence and private context while preserving chart wording and journal history. The civil-age purge prevents forged metadata from extending retention.
+
+These code and deterministic-template checks do not establish generated prose quality, live candidate acceptance or human approval. [Implementation receipt](docs/reviews/release-completion/2026-10-13-concrete-writing/README.md); final qualification remains open.
 
 ## Natal lens source contract
 

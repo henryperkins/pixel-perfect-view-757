@@ -15,6 +15,12 @@ import { resolveInterpretationPlan, type DailyInterpretationPlan } from "./conte
 import { resolveDailyNatalLens, type DailyNatalLensPlan } from "./content/natal-lens";
 import { composeNatalTemplate } from "./content/natal-template";
 import type { NatalReliabilityManifest } from "./astro/natal-reliability";
+import { resolveDailyWritingPlan, type DailyWritingPlan } from "./content/daily-writing";
+import { resolveDailyReflection, type DailyReflectionPlan } from "./content/daily-reflection";
+import {
+  composeDailyWritingTemplate,
+  type DailyWritingTemplate,
+} from "./content/daily-writing-template";
 
 /**
  * Cycle arc position, in plain language: how many days to the exact pass and
@@ -71,6 +77,9 @@ export interface AssembledReading {
   /** The same eligible contacts feed the template and the language layer. */
   eligibleCycles: CycleInstance[];
   interpretationPlan: DailyInterpretationPlan;
+  writingPlan: DailyWritingPlan;
+  writingTemplate: DailyWritingTemplate | null;
+  reflectionPlan: DailyReflectionPlan | null;
   natalLensPlan: DailyNatalLensPlan;
   transitStoryPlan: DailyTransitStoryPlan;
   storyCalculation: DailyTransitCalculation | null;
@@ -175,6 +184,7 @@ export function assembleReading(
 
   const ranked = eligibleReadingCycles(chart, cycles);
   const interpretationPlan = resolveInterpretationPlan(bundle, ranked);
+  const writingPlan = resolveDailyWritingPlan(bundle, interpretationPlan);
   const primary = ranked[0] ?? null;
   const natalLensPlan = resolveDailyNatalLens(
     bundle,
@@ -411,7 +421,12 @@ export function assembleReading(
     }
 
     // Reflection prompt is allowed to adapt to a band (WEL reflection_prompt).
-    if (stressOk && stress >= 4 && isPermitted("WEL-03", "reflection_prompt", ctx.granted)) {
+    if (
+      bundle.schemaVersion !== 5 &&
+      stressOk &&
+      stress >= 4 &&
+      isPermitted("WEL-03", "reflection_prompt", ctx.granted)
+    ) {
       prompt = `${prompt} And with pressure running high today, which part of that is actually yours to carry right now?`;
       record(
         provenance,
@@ -422,7 +437,12 @@ export function assembleReading(
         "Prompt adapted to stress band",
         { band: stress },
       );
-    } else if (sleepOk && sleep <= 2 && isPermitted("WEL-01", "reflection_prompt", ctx.granted)) {
+    } else if (
+      bundle.schemaVersion !== 5 &&
+      sleepOk &&
+      sleep <= 2 &&
+      isPermitted("WEL-01", "reflection_prompt", ctx.granted)
+    ) {
       prompt = `${prompt} On thin sleep, notice how much of what you read today is the sky and how much is tiredness.`;
       record(
         provenance,
@@ -442,8 +462,35 @@ export function assembleReading(
     });
   }
 
-  const astroParagraphs =
-    natalLensPlan.lens && primary && editorial
+  const writingTemplate =
+    bundle.schemaVersion === 5
+      ? composeDailyWritingTemplate(writingPlan, natalLensPlan, transitStoryPlan)
+      : null;
+  const reflectionPlan =
+    bundle.schemaVersion === 5
+      ? resolveDailyReflection(
+          writingPlan,
+          primary
+            ? findInterpretation(bundle, primary.aspect, primary.transit_body, primary.natal_point)
+                .question
+            : null,
+          ctx,
+        )
+      : null;
+  if (reflectionPlan) prompt = reflectionPlan.question;
+  if (reflectionPlan?.localSource)
+    record(
+      provenance,
+      ctx,
+      "reflection",
+      reflectionPlan.localSource,
+      "reflection_prompt",
+      "Source-aligned reflection variant",
+      {},
+    );
+  const astroParagraphs = writingTemplate
+    ? writingTemplate.paragraphs.map((item) => item.text)
+    : natalLensPlan.lens && primary && editorial
       ? composeNatalTemplate({
           interpretation: editorial.interpretation.mechanism,
           lens: natalLensPlan.lens.mechanism,
@@ -470,13 +517,25 @@ export function assembleReading(
     flagged: [...astro.flagged, ...context.flagged, ...safePrompt.flagged],
     eligibleCycles: ranked,
     interpretationPlan,
+    writingPlan,
+    writingTemplate,
+    reflectionPlan,
     natalLensPlan,
     transitStoryPlan,
     storyCalculation: selectedCalculation,
     astroBody: astro.text,
     contextBody: context.text,
     contextParts,
-    astroPrompt,
+    astroPrompt: reflectionPlan
+      ? resolveDailyReflection(
+          writingPlan,
+          primary
+            ? findInterpretation(bundle, primary.aspect, primary.transit_body, primary.natal_point)
+                .question
+            : null,
+          { ...ctx, granted: new Set(), wellness: null },
+        ).question
+      : astroPrompt,
     editorial,
   };
 }

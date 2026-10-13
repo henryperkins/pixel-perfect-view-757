@@ -24,6 +24,11 @@ import {
   type LanguageProvider,
 } from "./diagnostics";
 import { generateSyntheticReadingProse } from "./language.server";
+import { composeDailyWritingTemplate } from "../content/daily-writing-template";
+import { DAILY_WRITING_PLAN_VERSION } from "../content/daily-writing";
+import { DAILY_REFLECTION_VERSION } from "../content/daily-reflection";
+import { DAILY_WRITING_QUALITY_VERSION } from "./daily-writing-quality";
+import { DAILY_VOICE_EXAMPLES_VERSION } from "./daily-voice";
 import {
   READING_EVAL_CASES,
   READING_EVAL_FIXTURE_VERSION,
@@ -39,6 +44,8 @@ export async function runSyntheticEvaluationCase(
 ): Promise<ReadingEvaluationCaseResult> {
   const fixed = READING_EVAL_CASES.find((item) => item.id === caseId);
   if (!fixed) throw new Error("Unknown fixed synthetic evaluation case");
+  const effectiveBundle =
+    fixed.writingFrameMode === "none" ? { ...bundle, dailyWritingFrames: [] } : bundle;
   const reference = localNoon(fixed.config.day, fixed.config.timeZone);
   const cycles = fixed.cycles.map((cycle) => ({
     ...cycle,
@@ -58,7 +65,7 @@ export async function runSyntheticEvaluationCase(
       checkIn: null,
       wellness: null,
     },
-    bundle,
+    effectiveBundle,
     natalReliability,
   );
   const calculation = syntheticTransitCalculation(fixed, assembled.eligibleCycles[0]);
@@ -74,7 +81,7 @@ export async function runSyntheticEvaluationCase(
         checkIn: null,
         wellness: null,
       },
-      bundle,
+      effectiveBundle,
       natalReliability,
       calculation,
     );
@@ -94,6 +101,21 @@ export async function runSyntheticEvaluationCase(
         body: assembled.astroBody,
         prompt: assembled.prompt,
       },
+      ...(assembled.writingTemplate
+        ? {
+            writing: {
+              plan: assembled.writingPlan,
+              template: assembled.writingTemplate,
+              minimalTemplate: composeDailyWritingTemplate(
+                assembled.writingPlan,
+                assembled.natalLensPlan,
+                assembled.transitStoryPlan,
+                true,
+              ),
+              recent: fixed.recentWritingBodies ?? [],
+            },
+          }
+        : {}),
     },
     provider,
   );
@@ -111,8 +133,16 @@ export async function runSyntheticEvaluationCase(
       planVersion: DAILY_READING_PLAN_VERSION,
       natalPlanVersion: NATAL_LENS_PLAN_VERSION,
       reliabilityVersion: NATAL_RELIABILITY_VERSION,
-      promptVersion: DAILY_PROMPT_VERSION,
-      validatorVersion: DAILY_VALIDATOR_VERSION,
+      promptVersion: prose.meta.diagnostics.promptVersion,
+      validatorVersion: prose.meta.diagnostics.validatorVersion,
+      ...(assembled.writingTemplate
+        ? {
+            writingPlanVersion: DAILY_WRITING_PLAN_VERSION,
+            writingQualityVersion: DAILY_WRITING_QUALITY_VERSION,
+            reflectionVersion: DAILY_REFLECTION_VERSION,
+            voiceExamplesVersion: DAILY_VOICE_EXAMPLES_VERSION,
+          }
+        : {}),
       model: languageModel(provider),
       gatewayTimeoutMs: DAILY_GATEWAY_TIMEOUT_MS,
       source: "live-synthetic",
@@ -135,6 +165,14 @@ export async function runSyntheticEvaluationCase(
       natalLensPlan: assembled.natalLensPlan,
       natalReliability,
       transitStoryPlan: assembled.transitStoryPlan,
+      ...(assembled.writingTemplate
+        ? {
+            writingPlan: assembled.writingPlan,
+            reflectionPlan: assembled.reflectionPlan!,
+            writing: prose.meta.writing!,
+          }
+        : {}),
+      ...(fixed.writingFrameMode ? { writingFrameMode: fixed.writingFrameMode } : {}),
       request: observed.request,
       candidate: observed.candidate,
       diagnostics: prose.meta.diagnostics,

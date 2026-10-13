@@ -37,8 +37,8 @@ before(async () => {
 });
 after(async () => h?.close());
 test("natal_fixed_cases_use_production_screen_and_planner", async () => {
-  assert.equal(READING_EVAL_FIXTURE_VERSION, "synthetic-daily-6");
-  assert.equal(READING_EVAL_CASES.length, 38);
+  assert.equal(READING_EVAL_FIXTURE_VERSION, "synthetic-daily-7");
+  assert.equal(READING_EVAL_CASES.length, 50);
   for (const [id, rule] of [
     ["natal-duty-reflex", "nl-moon-10"],
     ["natal-freedom-reflex", "nl-moon-09"],
@@ -188,8 +188,8 @@ test("strict natal comparison permits only bundle and selector differences", asy
 test("current natal comparison isolates the declared catalogue while generic comparisons freeze its bundle", async () => {
   const baseline = await evaluateReadings({ bundleSource: "builtin" });
   const candidate = await evaluateReadings({ bundleSource: "natal-candidate" });
-  assert.equal(baseline.fixtureVersion, "synthetic-daily-6");
-  assert.equal(candidate.cases.length, 38);
+  assert.equal(baseline.fixtureVersion, "synthetic-daily-7");
+  assert.equal(candidate.cases.length, 50);
   const identity = (sha256, sourceRevision = "a".repeat(40)) => ({
     identityVersion: "reading-evaluation-identity-1",
     report: { sha256 },
@@ -204,7 +204,7 @@ test("current natal comparison isolates the declared catalogue while generic com
   assert.throws(() => compareReports(baseline, candidate), /frozen source bundle/);
   const compared = compareNatalReports(baseline, candidate, evidence);
   assert.equal(compared.mode, "natal");
-  assert.equal(compared.cases.length, 38);
+  assert.equal(compared.cases.length, 50);
   assert.deepEqual(
     compared.configurationChanges.map((change) => change.field),
     ["bundleVersion", "bundleHash", "bundleSource"],

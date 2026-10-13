@@ -1,4 +1,9 @@
 import { diagnosticLabel, readDailyDiagnostics, type DailyDiagnostics } from "./diagnostics";
+import {
+  readDailyWritingQualityReport,
+  DAILY_WRITING_QUALITY_VERSION,
+  type DailyWritingIssueCode,
+} from "./daily-writing-quality";
 
 export interface QualityReading {
   id: string;
@@ -65,6 +70,15 @@ export function summarizeReadingQuality(
     fallbackCount: 0,
     fallbackRate: null as number | null,
   };
+  const writing = {
+    version: DAILY_WRITING_QUALITY_VERSION,
+    instrumented: 0,
+    minimal: 0,
+    candidate: { pass: 0, warning: 0, reject: 0, not_evaluated: 0 },
+    final: { pass: 0, warning: 0, reject: 0, not_evaluated: 0 },
+    issues: [] as { code: DailyWritingIssueCode; count: number }[],
+  };
+  const writingIssues = new Map<DailyWritingIssueCode, number>();
   const outcomes = new Map<
     string,
     { outcome: string; code: string; label: string; count: number }
@@ -121,6 +135,17 @@ export function summarizeReadingQuality(
 
   for (const row of rows) {
     const meta = object(row.language_meta);
+    const observations = object(meta["writing"]);
+    const candidateWriting = readDailyWritingQualityReport(observations["candidateQuality"]);
+    const finalWriting = readDailyWritingQualityReport(observations["finalQuality"]);
+    if (candidateWriting && finalWriting) {
+      writing.instrumented++;
+      writing.candidate[candidateWriting.outcome]++;
+      writing.final[finalWriting.outcome]++;
+      if (observations["renderMode"] === "minimal") writing.minimal++;
+      for (const issue of [...candidateWriting.issues, ...finalWriting.issues])
+        writingIssues.set(issue.code, (writingIssues.get(issue.code) ?? 0) + 1);
+    }
     const candidate = readDailyDiagnostics(meta["diagnostics"]);
     const diag: DailyDiagnostics | null =
       candidate && (candidate.outcome === "accepted") === (row.language_mode === "model")
@@ -286,6 +311,12 @@ export function summarizeReadingQuality(
       .map((c) => ({ reason: c.label, count: c.count })),
     samples,
     measurement,
+    writing: {
+      ...writing,
+      issues: [...writingIssues]
+        .map(([code, count]) => ({ code, count }))
+        .sort((a, b) => b.count - a.count || a.code.localeCompare(b.code)),
+    },
     outcomes: causes,
     configurations: [...configurations.values()],
     feedback: cohorts,

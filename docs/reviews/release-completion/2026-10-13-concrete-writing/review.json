@@ -1,0 +1,32 @@
+{
+  "reviewScope": "Task11 inactive implementation",
+  "humanReviewCompleted": false,
+  "core": {
+    "status": "approved-no-open-findings",
+    "focusedTests": 26,
+    "directProbes": [
+      "natal aspect and noun-like rising restrictions",
+      "fixed expiry tampering",
+      "civil-age scheduled purge",
+      "two-owner revocation/purge isolation"
+    ]
+  },
+  "evaluationUI": {
+    "status": "approved-no-blocking-findings",
+    "testExecutions": 105,
+    "passed": 105,
+    "failed": 0,
+    "first38FixturesUnchanged": true,
+    "workflowResults": 50,
+    "interceptedRequests": 49,
+    "memberWrites": 0,
+    "scopeLimits": [
+      "No live deployment acceptance",
+      "No generated prose qualification",
+      "No human editorial approval",
+      "No native Swiss numerical qualification"
+    ]
+  },
+  "paidCalls": 0,
+  "productionActionsByReviewers": 0
+}

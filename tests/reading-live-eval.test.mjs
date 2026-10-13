@@ -227,6 +227,7 @@ test("the admin panel offers a labeled, closed evaluation-copy selector defaulti
         ["builtin", false, "Natal-free built-in baseline"],
         ["natal-candidate", false, "Inactive natal candidate"],
         ["transit-candidate", false, "Inactive transit candidate"],
+        ["writing-candidate", false, "Inactive concrete-writing candidate"],
       ],
     );
     assert.match(markup, /aria-describedby="synthetic-evaluation-copy-note"/);

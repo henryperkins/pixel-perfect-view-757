@@ -74,6 +74,7 @@ export function validateSavedNatalLens(
     releaseVersion: string | null;
     primaryCycleKey: string | null;
     mode: "model" | "template";
+    sourceTemplate?: boolean;
     citations: { paragraph: number; facts: string[] }[];
     astroParagraphCount: number;
   },
@@ -149,9 +150,9 @@ export function validateSavedNatalLens(
   )
     throw new Error("Invalid saved natal paragraph linkage");
   const cited = saved.citations.filter((c) => c.facts.includes("N1"));
-  if (saved.mode === "model") {
+  if (saved.mode === "model" || saved.sourceTemplate) {
     if (
-      saved.astroParagraphCount < 2 ||
+      saved.astroParagraphCount < (saved.sourceTemplate ? 1 : 2) ||
       saved.astroParagraphCount > 4 ||
       saved.citations.length !== saved.astroParagraphCount ||
       !saved.citations.every((c, i) => c.paragraph === i + 1) ||

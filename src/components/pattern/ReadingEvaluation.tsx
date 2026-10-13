@@ -47,6 +47,11 @@ const COPY_CHOICES: { value: ReadingEvaluationBundleSource; label: string; note:
     label: "Inactive transit candidate",
     note: "Uses the unpublished transit chapters with synthetic tracks for this run only. Selecting it activates nothing.",
   },
+  {
+    value: "writing-candidate",
+    label: "Inactive concrete-writing candidate",
+    note: "Uses the schema-5 scenes and focused reflections for this synthetic run. It does not activate member copy.",
+  },
 ];
 
 const POLL_MS = 4_000;
@@ -115,6 +120,12 @@ function EvaluationCase({ result }: { result: ReadingEvaluationCaseResult }) {
                     alongside it.
                   </p>
                 ) : null}
+                {row.candidate.captureLossless === false && !row.candidate.truncated ? (
+                  <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                    Draft capture did not retain every required field. It is unavailable for a
+                    lossless review of the raw output.
+                  </p>
+                ) : null}
                 <ol className="mt-3 space-y-4">
                   {row.candidate.paragraphs.map((paragraph, index) => (
                     <li key={index} className="min-w-0">
@@ -125,6 +136,11 @@ function EvaluationCase({ result }: { result: ReadingEvaluationCaseResult }) {
                         ¶{index + 1} · cites{" "}
                         {paragraph.facts.length ? paragraph.facts.join(", ") : "no IDs"}
                       </p>
+                      {paragraph.scenes ? (
+                        <p className="mt-1 text-xs text-muted-foreground">
+                          Declared illustrations: {paragraph.scenes.join(", ") || "none"}
+                        </p>
+                      ) : null}
                     </li>
                   ))}
                 </ol>
@@ -158,6 +174,30 @@ function EvaluationCase({ result }: { result: ReadingEvaluationCaseResult }) {
           <p className="mt-3 text-sm leading-relaxed whitespace-pre-wrap [overflow-wrap:anywhere]">
             {row.template.body}
           </p>
+          {row.writing ? (
+            <div className="mt-4 space-y-2 text-xs text-muted-foreground">
+              <p>
+                Editorial candidate: {row.writing.candidateQuality.outcome} · final wording:{" "}
+                {row.writing.finalQuality.outcome} · {row.writing.renderMode}
+              </p>
+              <p className="break-words font-mono">
+                {[
+                  ...new Set(
+                    [
+                      ...row.writing.candidateQuality.issues,
+                      ...row.writing.finalQuality.issues,
+                    ].map((issue) => issue.code),
+                  ),
+                ].join(", ") || "No editorial issue codes recorded"}
+              </p>
+              {row.reflectionPlan ? (
+                <p>
+                  Reflection source: {row.reflectionPlan.themeFactId ?? "quiet"} ·{" "}
+                  {row.reflectionPlan.frameKey ?? "source fallback"}
+                </p>
+              ) : null}
+            </div>
+          ) : null}
         </section>
         {row.interpretationPlan ? (
           <section

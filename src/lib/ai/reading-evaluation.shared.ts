@@ -10,6 +10,9 @@ import { LANGUAGE_PROVIDERS, type DailyDiagnostics, type LanguageProvider } from
 import type { DailyPlanIdentity } from "../content/synthesis";
 import type { DailyNatalLensPlan } from "../content/natal-lens";
 import type { NatalReliabilityManifest } from "../astro/natal-reliability";
+import type { DailyWritingPlan } from "../content/daily-writing";
+import type { DailyReflectionPlan } from "../content/daily-reflection";
+import type { DailyWritingQualityReport, DailyWritingRenderMode } from "./daily-writing-quality";
 
 export { READING_EVAL_FIXTURE_VERSION };
 export const READING_EVALUATION_CATALOG = READING_EVAL_CASES.map((fixed) => ({
@@ -33,6 +36,7 @@ export const READING_EVALUATION_BUNDLE_SOURCES = [
   "builtin",
   "natal-candidate",
   "transit-candidate",
+  "writing-candidate",
 ] as const;
 export type ReadingEvaluationBundleSource = (typeof READING_EVALUATION_BUNDLE_SOURCES)[number];
 
@@ -92,7 +96,7 @@ export interface SyntheticReadingRequest {
   };
 }
 export interface SyntheticReadingCandidate {
-  paragraphs: { text: string | null; facts: string[] }[];
+  paragraphs: { text: string | null; facts: string[]; scenes?: string[] | null }[];
   paragraphCount: number | null;
   truncated: boolean;
   /**
@@ -119,6 +123,10 @@ export interface ReadingEvaluationMetadata {
   sourceContract?: string;
   transitFixtureHash?: string;
   storyUse?: boolean;
+  writingPlanVersion?: string;
+  writingQualityVersion?: string;
+  reflectionVersion?: string;
+  voiceExamplesVersion?: string;
   promptVersion: string;
   validatorVersion: string;
   model: string;
@@ -141,6 +149,15 @@ export interface ReadingEvaluationCaseRow {
   natalLensPlan?: DailyNatalLensPlan;
   transitStoryPlan?: DailyTransitStoryPlan;
   natalReliability?: NatalReliabilityManifest | null;
+  writingPlan?: DailyWritingPlan;
+  reflectionPlan?: DailyReflectionPlan;
+  writingFrameMode?: "none";
+  writing?: {
+    renderMode: DailyWritingRenderMode;
+    sceneUse: { id: "SC1" | "SC2"; paragraph: number }[];
+    candidateQuality: DailyWritingQualityReport;
+    finalQuality: DailyWritingQualityReport;
+  };
   request: SyntheticReadingRequest | null;
   candidate: SyntheticReadingCandidate | null;
   diagnostics: DailyDiagnostics;
@@ -234,6 +251,10 @@ export function combineReadingEvaluationResults(
     "sourceContract",
     "transitFixtureHash",
     "storyUse",
+    "writingPlanVersion",
+    "writingQualityVersion",
+    "reflectionVersion",
+    "voiceExamplesVersion",
     "promptVersion",
     "validatorVersion",
     "model",
@@ -243,7 +264,7 @@ export function combineReadingEvaluationResults(
     "network",
   ] as const;
   if (
-    (first.metadata.fixtureVersion === "synthetic-daily-6" &&
+    (["synthetic-daily-6", "synthetic-daily-7"].includes(first.metadata.fixtureVersion) &&
       (
         [
           "storyPlanVersion",
@@ -253,13 +274,15 @@ export function combineReadingEvaluationResults(
           "transitFixtureHash",
         ] as const
       ).some((key) => !first.metadata[key])) ||
-    (first.metadata.fixtureVersion === "synthetic-daily-6" &&
+    (["synthetic-daily-6", "synthetic-daily-7"].includes(first.metadata.fixtureVersion) &&
       typeof first.metadata.storyUse !== "boolean")
   )
     throw new Error("Synthetic evaluation configuration requires transit policy identities");
   // Persisted completed runs retain the fixture inventory that generated them.
   // Adding current cases must not turn an old complete download into a partial run.
   let catalog = READING_EVAL_CASES;
+  if (first.metadata.fixtureVersion !== "synthetic-daily-7")
+    catalog = catalog.filter((fixed) => !fixed.id.startsWith("writing-"));
   if (first.metadata.fixtureVersion === "synthetic-daily-5") {
     const historicalTransit = Boolean(first.metadata.storyPlanVersion);
     catalog = catalog.filter((fixed) => historicalTransit || !fixed.id.startsWith("arc-"));

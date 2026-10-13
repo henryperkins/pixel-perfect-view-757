@@ -136,7 +136,6 @@ Use Task 14 for **every** code slice; do not wait for P3 to publish P0/P1. Assis
 
 **Done when:** Every enabled control has a named consumer, truthful copy, permission enforcement, and a passing revocation test.
 
-
 ## Task 3 — Complete account deletion, personalization reset, and export
 
 **Modify:** `src/lib/auth.server.ts`, `src/lib/pattern.server.ts`, `src/lib/pattern.functions.ts`, `src/routes/_authenticated/privacy.tsx`. **Create:** `src/lib/account-data.server.ts`, `tests/account-data.test.mjs`.
@@ -152,7 +151,6 @@ Use Task 14 for **every** code slice; do not wait for P3 to publish P0/P1. Assis
 - [x] Run `node --test tests/account-data.test.mjs tests/assistant-access.test.mjs tests/assistant-readers.test.mjs`. Perform live destructive acceptance only on a purpose-created test account.
 
 **Done when:** Reset, data erasure, and account deletion have distinct truthful behavior; a deleted test account cannot log in or read through an existing session/token; export contains all retained owner records.
-
 
 ## Task 4 — Enforce retention without relying on a member visiting the app
 
@@ -176,7 +174,6 @@ Use Task 14 for **every** code slice; do not wait for P3 to publish P0/P1. Assis
 - [x] Run `node --test tests/retention.test.mjs tests/edge-pattern-workflows.test.mjs tests/reading-privacy.test.mjs tests/assistant-readers.test.mjs`; deploy the Worker separately and record one controlled expiry cycle.
 
 **Done when:** Each finite retention policy has a storage owner, read guard, scheduled deletion path, boundary test, and observed production test result.
-
 
 ## Task 5 — Add safe journal editing
 
@@ -206,7 +203,6 @@ Use Task 14 for **every** code slice; do not wait for P3 to publish P0/P1. Assis
 
 **Done when:** A birth edit atomically produces a consistent chart and an understandable account of what changed, without relying on a hard reload.
 
-
 ## Task 7 — Repair missing transit anchors for existing charts
 
 **Modify:** `src/lib/astro/transit-anchors.server.ts`, `src/lib/pattern.server.ts`; extend `tests/transit-anchors.test.mjs`, `tests/reading-transit-storage.test.mjs`, `tests/reading-transit-integration.test.mjs`.
@@ -221,7 +217,6 @@ Use Task 14 for **every** code slice; do not wait for P3 to publish P0/P1. Assis
 - [x] Run `node --test tests/transit-anchors.test.mjs tests/reading-transit-storage.test.mjs tests/reading-transit-integration.test.mjs tests/assistant-readers.test.mjs` and test one controlled legacy production chart.
 
 **Done when:** Eligible existing members receive a story without re-entering unchanged birth details, with no unsupported story for ineligible charts.
-
 
 ## Task 8 — Activate and prove assistant connections
 
@@ -283,18 +278,20 @@ The migrations and disabled deployment already exist. The recorded blocker is Lo
 
 **Files:** Create `src/lib/content/daily-writing.ts`, `src/lib/content/daily-reflection.ts`, `src/lib/ai/daily-writing-quality.ts`, and the new tests named in the detailed checklist. Modify content schema/default bundle, `daily-voice.ts`, `language.server.ts`, `reading.server.ts`, `pattern.server.ts`, evaluation modules, and saved-evidence UI exactly where the detailed checklist assigns ownership. Use Task 10's shared lifecycle for the new content fields.
 
-- [ ] **11.1 Content:** Add schema-5 `dailyWritingFrames`, at most 2,000 frames, unique source bindings and frame keys, one/two scenes, 180-character situation/focus bounds, 220-character questions, and the exact cue/sentence checks in the spec. Legacy absence becomes `[]`; never borrow a built-in frame for a missing active-release source. Seed reviewed frames for the actual interpretation/positive-synthesis inventory after Task 12, not a stale fixed count. Editing/deleting source copy invalidates/removes affected frames.
-- [ ] **11.2 Theme plan:** Implement the spec's `DailyWritingPlan` and exact source selector. Positive `S1` owns the central theme; otherwise `I1` does. Independent pairs do not acquire a joint story. Select only reviewed source scenes, preserve required fact parents, and keep supporting cycles/natal/history from introducing unrelated scenes.
-- [ ] **11.3 Voice:** Add all six complete `plain`/`warm`/`clinical` × standard/technical examples and `DAILY_VOICE_EXAMPLES_VERSION`. Use the spec's identical synthetic source card across tones, with isolated `EX-*` IDs. Review examples as authored copy; test that an unrelated reply scene does not borrow calendar/project meaning.
-- [ ] **11.4 Quality:** Add the separate bounded editorial checker after existing safety/reference validation. Reject invalid scene references/parents, the spec's narrowly recognized unqualified past-event assertions, exact duplicate sentences of at least eight words, and copied complete demonstration sentences of at least ten words unless independently present in supplied published copy. Broader semantic invention remains a review responsibility. Keep stock abstractions and bounded recent/repeated phrases as warnings, with at most 20 issue records and 32 source texts of at most 2,000 characters. Do not add broad word bans to `safetyPass`.
-- [ ] **11.5 Generation/fallback:** Pass the writing plan to the existing one-call model contract and record scene use independently from fact citations. Apply the same plan to deterministic fallback. Rejection/timeouts use the complete valid fallback; no repair call or silent model retry. Distinguish a minimal emergency fallback from a qualified framed template.
-- [ ] **11.6 Reflection:** Implement `dailyQuestionProblem` and `resolveDailyReflection` with one conceptual question centered on the selected source. Choose standard/high-stress/low-sleep variants locally; stop concatenating unrelated prompts. Preserve the separate natal reflection contract.
-- [ ] **11.7 Saved evidence:** Add the spec's encrypted `language_meta.daily_writing_ct` envelope with plan, source-bound reflection, paragraph scene use, astronomical paragraph count, versions, and bounded issue codes. For new rows leave clear `daily_readings.prompt` null; preserve legacy reading compatibility. Present-but-corrupt evidence fails closed without a silent recomputation. Include bounded canonical writing identities in cache HMACs, never random ciphertext or private recent bodies.
-- [ ] **11.8 History:** Implement `loadRecentDailyWritingBodies` only after a cache miss: same owner/snapshot/effective timezone; preceding three civil days; at most four rows per day, 12 examined, three usable bodies. Compare only stored astronomical paragraphs. Do not send history to the model or add it to the cache identity. Consent/retention rules still govern any private evidence loaded.
-- [ ] **11.9 Evaluation/UI:** Add the 12 named writing fixtures from the detailed plan once, show source-supported illustrative scenes accurately in Evidence, and extend quality diagnostics without exposing private bodies or editorial internals in the main reading. Update fixture declarations, evaluation UI, `READING-EVALUATION.md`, and `READING-INTEGRITY.md`.
-- [ ] Run `node --test tests/reading-writing-*.test.mjs tests/reading-daily-*.test.mjs tests/reading-template-composition.test.mjs tests/reading-cache.test.mjs tests/reading-request-policy.test.mjs tests/today-evidence.test.mjs`, then the final checks in Task 14. Keep the candidate inactive until Task 13 passes.
+- [x] **11.1 Content:** Add schema-5 `dailyWritingFrames`, at most 2,000 frames, unique source bindings and frame keys, one/two scenes, 180-character situation/focus bounds, 220-character questions, and the exact cue/sentence checks in the spec. Legacy absence becomes `[]`; never borrow a built-in frame for a missing active-release source. Seed reviewed frames for the actual interpretation/positive-synthesis inventory after Task 12, not a stale fixed count. Editing/deleting source copy invalidates/removes affected frames.
+- [x] **11.2 Theme plan:** Implement the spec's `DailyWritingPlan` and exact source selector. Positive `S1` owns the central theme; otherwise `I1` does. Independent pairs do not acquire a joint story. Select only reviewed source scenes, preserve required fact parents, and keep supporting cycles/natal/history from introducing unrelated scenes.
+- [x] **11.3 Voice:** Add all six complete `plain`/`warm`/`clinical` × standard/technical examples and `DAILY_VOICE_EXAMPLES_VERSION`. Use the spec's identical synthetic source card across tones, with isolated `EX-*` IDs. Review examples as authored copy; test that an unrelated reply scene does not borrow calendar/project meaning.
+- [x] **11.4 Quality:** Add the separate bounded editorial checker after existing safety/reference validation. Reject invalid scene references/parents, the spec's narrowly recognized unqualified past-event assertions, exact duplicate sentences of at least eight words, and copied complete demonstration sentences of at least ten words unless independently present in supplied published copy. Broader semantic invention remains a review responsibility. Keep stock abstractions and bounded recent/repeated phrases as warnings, with at most 20 issue records and 32 source texts of at most 2,000 characters. Do not add broad word bans to `safetyPass`.
+- [x] **11.5 Generation/fallback:** Pass the writing plan to the existing one-call model contract and record scene use independently from fact citations. Apply the same plan to deterministic fallback. Rejection/timeouts use the complete valid fallback; no repair call or silent model retry. Distinguish a minimal emergency fallback from a qualified framed template.
+- [x] **11.6 Reflection:** Implement `dailyQuestionProblem` and `resolveDailyReflection` with one conceptual question centered on the selected source. Choose standard/high-stress/low-sleep variants locally; stop concatenating unrelated prompts. Preserve the separate natal reflection contract.
+- [x] **11.7 Saved evidence:** Add the spec's encrypted `language_meta.daily_writing_ct` envelope with plan, source-bound reflection, paragraph scene use, astronomical paragraph count, versions, and bounded issue codes. For new rows leave clear `daily_readings.prompt` null; preserve legacy reading compatibility. Present-but-corrupt evidence fails closed without a silent recomputation. Include bounded canonical writing identities in cache HMACs, never random ciphertext or private recent bodies.
+- [x] **11.8 History:** Implement `loadRecentDailyWritingBodies` only after a cache miss: same owner/snapshot/effective timezone; preceding three civil days; at most four rows per day, 12 examined, three usable bodies. Compare only stored astronomical paragraphs. Do not send history to the model or add it to the cache identity. Consent/retention rules still govern any private evidence loaded.
+- [x] **11.9 Evaluation/UI:** Add the 12 named writing fixtures from the detailed plan once, show source-supported illustrative scenes accurately in Evidence, and extend quality diagnostics without exposing private bodies or editorial internals in the main reading. Update fixture declarations, evaluation UI, `READING-EVALUATION.md`, and `READING-INTEGRITY.md`.
+- [x] Run `node --test tests/reading-writing-*.test.mjs tests/reading-daily-*.test.mjs tests/reading-template-composition.test.mjs tests/reading-cache.test.mjs tests/reading-request-policy.test.mjs tests/today-evidence.test.mjs`, then the final checks in Task 14. Keep the candidate inactive until Task 13 passes.
 
 **Done when:** All nine original implementation packages are built against the current versions, the 90 detailed items have real evidence, and model/template/reflection/storage use the same reviewed theme. Final editorial approval belongs to Task 13.
+
+**Implementation receipt (2026-10-13):** All nine packages built and verified; candidate inactive. See [source, template and browser evidence](../../reviews/release-completion/2026-10-13-concrete-writing/README.md). Exact source/main/publication status is recorded in its manifest and publication receipt. Task 13 remains open.
 
 ## Task 12 — Broaden synthesis only where reviewed source copy supports it
 
@@ -302,12 +299,14 @@ The migrations and disabled deployment already exist. The recorded blocker is Lo
 
 Current source has six directed rules for three unordered pairs: four positive directions and two explicit independent directions. An unmatched pair is a supported independent/no-synthesis outcome, not permission to invent a connection.
 
-- [ ] Enumerate all interpretation pairs reached by the fixed synthetic suite and any already-authorized, non-personal coverage sample. Report both-direction coverage, eligible/selected positive synthesis, explicit independence, and unmatched pairs; do not turn synthetic percentages into claims about all members.
+- [x] Enumerate all interpretation pairs reached by the fixed synthetic suite and any already-authorized, non-personal coverage sample. Report both-direction coverage, eligible/selected positive synthesis, explicit independence, and unmatched pairs; do not turn synthetic percentages into claims about all members.
 - [ ] Build the editorial matrix for all directed pairs of concrete, non-wildcard interpretations in the published catalogue that can coexist; mark impossible combinations with their calculation constraint. Prioritize pairs reached by the 50-case suite and production scenarios, then finish the remaining matrix. For each possible pair, an editor must add a defensible tension/reinforcement rule or explicitly classify it independent with a source-based reason. Do not mass-label unreviewed pairs independent just to close the checklist.
 - [ ] Review both directions separately and enforce existing selection priority/thresholds. Add source-bound frames for each new positive direction in Task 11; never annotate an independent rule with a joint theme.
-- [ ] Test deterministic selection, invalid/missing source rejection, directionality, no-synthesis fallback, and catalogue preservation through staging/rollback. Run `node --test tests/reading-synthesis.test.mjs tests/reading-content-releases.test.mjs` and the new coverage script offline.
+- [x] Test deterministic selection, invalid/missing source rejection, directionality, no-synthesis fallback, and catalogue preservation through staging/rollback. Run `node --test tests/reading-synthesis.test.mjs tests/reading-content-releases.test.mjs` and the new coverage script offline.
 
 **Done when:** The published concrete-pair matrix and defined acceptance population have explicit editorial decisions, all justified positive rules are implemented in both reviewed directions, and the coverage report states wildcard/unmatched limits without implying universal synthesis.
+
+**Current matrix:** r3/v7 frozen artifacts enumerate 6,162 directions: 110 positive proposals, 2 existing explicit independent directions, 2,754 calculation/resolver-impossible directions, and 3,296 pending source decisions. All 110 positive directions have inactive source frames. The 50-case synthetic population has 11 selections / 1 explicit independence / 2 unmatched / 36 insufficient. Full matrix/human sign-off remains open; [coverage evidence](../../reviews/daily-synthesis/README.md).
 
 ## Task 13 — Qualify the final writing stack with matched evidence
 

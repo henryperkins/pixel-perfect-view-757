@@ -1,0 +1,684 @@
+{
+  "fixtureVersion": "synthetic-daily-7",
+  "fixtureHash": "5b296b9956646ea6490cab2bab0ad7e5357bdce89d70d2b4d13eb3f23015977a",
+  "population": "fixed synthetic plans; not member coverage",
+  "bundleVersion": "builtin-0.8.0-synthesis-r3",
+  "bundleHash": "74ff431c504094711f6db6778ea0d03d0d5e4ff4035f5e67d70e0c5278fde187",
+  "caseCount": 50,
+  "cases": [
+    {
+      "id": "saturn-square-sun",
+      "eligibleCycleKeys": [
+        "saturn_square_sun"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "saturn-square-moon-warm",
+      "eligibleCycleKeys": [
+        "saturn_square_moon"
+      ],
+      "interpretationKeys": [
+        "square:saturn:moon"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "jupiter-trine-sun-technical",
+      "eligibleCycleKeys": [
+        "jupiter_trine_sun"
+      ],
+      "interpretationKeys": [
+        "trine:jupiter:sun"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "mercury-conjunction-clinical",
+      "eligibleCycleKeys": [
+        "mercury_conjunction_mercury"
+      ],
+      "interpretationKeys": [
+        "conjunction:mercury:mercury"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "venus-opposition-venus",
+      "eligibleCycleKeys": [
+        "venus_opposition_venus"
+      ],
+      "interpretationKeys": [
+        "opposition:venus:venus"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "unknown-birth-time",
+      "eligibleCycleKeys": [
+        "saturn_square_sun"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "approximate-birth-time",
+      "eligibleCycleKeys": [
+        "mars_square_sun"
+      ],
+      "interpretationKeys": [
+        "square:mars:sun"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "moon-dst-boundary",
+      "eligibleCycleKeys": [
+        "moon_conjunction_moon"
+      ],
+      "interpretationKeys": [
+        "conjunction:moon:moon"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "multiple-cycles",
+      "eligibleCycleKeys": [
+        "saturn_square_sun",
+        "jupiter_trine_sun",
+        "venus_opposition_venus"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun",
+        "trine:jupiter:sun",
+        "opposition:venus:venus"
+      ],
+      "pairStatus": "selected",
+      "ruleKey": "square:saturn:sun_tension_trine:jupiter:sun"
+    },
+    {
+      "id": "quiet-threshold",
+      "eligibleCycleKeys": [],
+      "interpretationKeys": [],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "synthesis-tension",
+      "eligibleCycleKeys": [
+        "saturn_square_sun",
+        "jupiter_trine_mars"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun",
+        "trine:jupiter:mars"
+      ],
+      "pairStatus": "selected",
+      "ruleKey": "square:saturn:sun_tension_trine:jupiter:mars"
+    },
+    {
+      "id": "synthesis-reinforcement",
+      "eligibleCycleKeys": [
+        "saturn_trine_sun",
+        "mars_trine_sun"
+      ],
+      "interpretationKeys": [
+        "trine:saturn:sun",
+        "trine:mars:sun"
+      ],
+      "pairStatus": "selected",
+      "ruleKey": "trine:saturn:sun_reinforcement_trine:mars:sun"
+    },
+    {
+      "id": "synthesis-independent",
+      "eligibleCycleKeys": [
+        "venus_opposition_venus",
+        "mercury_conjunction_mercury"
+      ],
+      "interpretationKeys": [
+        "opposition:venus:venus",
+        "conjunction:mercury:mercury"
+      ],
+      "pairStatus": "independent",
+      "ruleKey": "opposition:venus:venus_independent_conjunction:mercury:mercury"
+    },
+    {
+      "id": "synthesis-reversed",
+      "eligibleCycleKeys": [
+        "jupiter_trine_mars",
+        "saturn_square_sun"
+      ],
+      "interpretationKeys": [
+        "trine:jupiter:mars",
+        "square:saturn:sun"
+      ],
+      "pairStatus": "selected",
+      "ruleKey": "trine:jupiter:mars_tension_square:saturn:sun"
+    },
+    {
+      "id": "synthesis-suppressed-support",
+      "eligibleCycleKeys": [
+        "saturn_square_sun",
+        "venus_opposition_venus"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun",
+        "opposition:venus:venus"
+      ],
+      "pairStatus": "unmatched",
+      "ruleKey": null
+    },
+    {
+      "id": "synthesis-unmatched",
+      "eligibleCycleKeys": [
+        "saturn_square_sun",
+        "mars_trine_sun"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun",
+        "trine:mars:sun"
+      ],
+      "pairStatus": "unmatched",
+      "ruleKey": null
+    },
+    {
+      "id": "natal-duty-reflex",
+      "eligibleCycleKeys": [
+        "saturn_square_moon"
+      ],
+      "interpretationKeys": [
+        "square:saturn:moon"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "natal-freedom-reflex",
+      "eligibleCycleKeys": [
+        "saturn_square_moon"
+      ],
+      "interpretationKeys": [
+        "square:saturn:moon"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "natal-service-aspect",
+      "eligibleCycleKeys": [
+        "saturn_square_moon"
+      ],
+      "interpretationKeys": [
+        "square:saturn:moon"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "natal-exact-house",
+      "eligibleCycleKeys": [
+        "saturn_square_moon"
+      ],
+      "interpretationKeys": [
+        "square:saturn:moon"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "natal-own-target",
+      "eligibleCycleKeys": [
+        "saturn_square_sun"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "natal-moon-fallback",
+      "eligibleCycleKeys": [
+        "saturn_square_sun"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "natal-sign-boundary",
+      "eligibleCycleKeys": [
+        "saturn_square_sun"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "natal-unknown-time",
+      "eligibleCycleKeys": [
+        "saturn_square_sun"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "natal-mixed-source",
+      "eligibleCycleKeys": [
+        "saturn_square_moon"
+      ],
+      "interpretationKeys": [
+        "square:saturn:moon"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "natal-degraded-positions",
+      "eligibleCycleKeys": [
+        "saturn_square_sun"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "natal-legacy-snapshot",
+      "eligibleCycleKeys": [
+        "saturn_square_sun"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "natal-synthesis-integration",
+      "eligibleCycleKeys": [
+        "saturn_square_sun",
+        "jupiter_trine_mars"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun",
+        "trine:jupiter:mars"
+      ],
+      "pairStatus": "selected",
+      "ruleKey": "square:saturn:sun_tension_trine:jupiter:mars"
+    },
+    {
+      "id": "arc-single-pass",
+      "eligibleCycleKeys": [
+        "saturn_square_sun"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "arc-opening-three",
+      "eligibleCycleKeys": [
+        "saturn_square_sun"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "arc-return-three",
+      "eligibleCycleKeys": [
+        "saturn_square_sun"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "arc-closing-three",
+      "eligibleCycleKeys": [
+        "saturn_square_sun"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "arc-return-five",
+      "eligibleCycleKeys": [
+        "saturn_square_sun"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "arc-between-passes",
+      "eligibleCycleKeys": [
+        "saturn_square_sun"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "arc-truncated-scan",
+      "eligibleCycleKeys": [
+        "saturn_square_sun"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "arc-station-tangent",
+      "eligibleCycleKeys": [
+        "saturn_square_sun"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "arc-birth-window-disagreement",
+      "eligibleCycleKeys": [
+        "saturn_square_sun"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "arc-synthesis-natal-integration",
+      "eligibleCycleKeys": [
+        "saturn_square_sun",
+        "jupiter_trine_mars"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun",
+        "trine:jupiter:mars"
+      ],
+      "pairStatus": "selected",
+      "ruleKey": "square:saturn:sun_tension_trine:jupiter:mars"
+    },
+    {
+      "id": "writing-reply-scene",
+      "eligibleCycleKeys": [
+        "mercury_conjunction_mercury"
+      ],
+      "interpretationKeys": [
+        "conjunction:mercury:mercury"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "writing-calendar-scene",
+      "eligibleCycleKeys": [
+        "saturn_square_moon"
+      ],
+      "interpretationKeys": [
+        "square:saturn:moon"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "writing-default-task-scene",
+      "eligibleCycleKeys": [
+        "saturn_opposition_sun"
+      ],
+      "interpretationKeys": [
+        "opposition:saturn:sun"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "writing-synthesis-focus",
+      "eligibleCycleKeys": [
+        "saturn_square_sun",
+        "jupiter_trine_mars"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun",
+        "trine:jupiter:mars"
+      ],
+      "pairStatus": "selected",
+      "ruleKey": "square:saturn:sun_tension_trine:jupiter:mars"
+    },
+    {
+      "id": "writing-legacy-no-scenes",
+      "eligibleCycleKeys": [
+        "saturn_square_sun"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "writing-example-isolation",
+      "eligibleCycleKeys": [
+        "mercury_conjunction_mercury"
+      ],
+      "interpretationKeys": [
+        "conjunction:mercury:mercury"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "writing-tone-plain",
+      "eligibleCycleKeys": [
+        "saturn_square_sun",
+        "jupiter_trine_mars"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun",
+        "trine:jupiter:mars"
+      ],
+      "pairStatus": "selected",
+      "ruleKey": "square:saturn:sun_tension_trine:jupiter:mars"
+    },
+    {
+      "id": "writing-tone-warm",
+      "eligibleCycleKeys": [
+        "saturn_square_sun",
+        "jupiter_trine_mars"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun",
+        "trine:jupiter:mars"
+      ],
+      "pairStatus": "selected",
+      "ruleKey": "square:saturn:sun_tension_trine:jupiter:mars"
+    },
+    {
+      "id": "writing-tone-clinical",
+      "eligibleCycleKeys": [
+        "saturn_square_sun",
+        "jupiter_trine_mars"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun",
+        "trine:jupiter:mars"
+      ],
+      "pairStatus": "selected",
+      "ruleKey": "square:saturn:sun_tension_trine:jupiter:mars"
+    },
+    {
+      "id": "writing-technical-scene",
+      "eligibleCycleKeys": [
+        "saturn_square_sun"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "writing-recent-repeat",
+      "eligibleCycleKeys": [
+        "mercury_conjunction_mercury"
+      ],
+      "interpretationKeys": [
+        "conjunction:mercury:mercury"
+      ],
+      "pairStatus": "insufficient",
+      "ruleKey": null
+    },
+    {
+      "id": "writing-all-evidence",
+      "eligibleCycleKeys": [
+        "saturn_square_sun",
+        "jupiter_trine_mars"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun",
+        "trine:jupiter:mars"
+      ],
+      "pairStatus": "selected",
+      "ruleKey": "square:saturn:sun_tension_trine:jupiter:mars"
+    }
+  ],
+  "pairs": [
+    {
+      "primaryKey": "square:saturn:sun",
+      "supportingKey": "trine:jupiter:sun",
+      "caseIds": [
+        "multiple-cycles"
+      ],
+      "positiveCovered": true,
+      "independentCovered": false,
+      "reverseCovered": true
+    },
+    {
+      "primaryKey": "square:saturn:sun",
+      "supportingKey": "trine:jupiter:mars",
+      "caseIds": [
+        "synthesis-tension",
+        "natal-synthesis-integration",
+        "arc-synthesis-natal-integration",
+        "writing-synthesis-focus",
+        "writing-tone-plain",
+        "writing-tone-warm",
+        "writing-tone-clinical",
+        "writing-all-evidence"
+      ],
+      "positiveCovered": true,
+      "independentCovered": false,
+      "reverseCovered": true
+    },
+    {
+      "primaryKey": "trine:saturn:sun",
+      "supportingKey": "trine:mars:sun",
+      "caseIds": [
+        "synthesis-reinforcement"
+      ],
+      "positiveCovered": true,
+      "independentCovered": false,
+      "reverseCovered": true
+    },
+    {
+      "primaryKey": "opposition:venus:venus",
+      "supportingKey": "conjunction:mercury:mercury",
+      "caseIds": [
+        "synthesis-independent"
+      ],
+      "positiveCovered": false,
+      "independentCovered": true,
+      "reverseCovered": true
+    },
+    {
+      "primaryKey": "trine:jupiter:mars",
+      "supportingKey": "square:saturn:sun",
+      "caseIds": [
+        "synthesis-reversed"
+      ],
+      "positiveCovered": true,
+      "independentCovered": false,
+      "reverseCovered": true
+    },
+    {
+      "primaryKey": "square:saturn:sun",
+      "supportingKey": "opposition:venus:venus",
+      "caseIds": [
+        "synthesis-suppressed-support"
+      ],
+      "positiveCovered": false,
+      "independentCovered": false,
+      "reverseCovered": false
+    },
+    {
+      "primaryKey": "square:saturn:sun",
+      "supportingKey": "trine:mars:sun",
+      "caseIds": [
+        "synthesis-unmatched"
+      ],
+      "positiveCovered": false,
+      "independentCovered": false,
+      "reverseCovered": false
+    }
+  ],
+  "wildcardSourceKeys": [],
+  "unmatchedPairs": [
+    [
+      "square:saturn:sun",
+      "opposition:venus:venus"
+    ],
+    [
+      "square:saturn:sun",
+      "trine:mars:sun"
+    ]
+  ],
+  "counts": {
+    "selected": 11,
+    "independent": 1,
+    "unmatched": 2,
+    "insufficient": 36
+  },
+  "scope": "Structural catalogue/selection coverage only; no member data, model call or physical ephemeris qualification.",
+  "humanReviewCompleted": false
+}

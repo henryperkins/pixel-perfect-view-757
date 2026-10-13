@@ -993,6 +993,25 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
           </dl>
 
           <h3 className="mt-8 text-xl font-serif">Recorded outcome causes</h3>
+          {data.writing.instrumented ? (
+            <div className="mt-4 rounded-sm border border-rule p-4">
+              <p className="text-sm text-foreground">
+                Daily editorial checks · {data.writing.instrumented} readings ·{" "}
+                {data.writing.minimal} minimal templates
+              </p>
+              <p className="mt-2 text-xs text-muted-foreground">
+                Warnings are editorial observations. They do not mark a reading unsafe. This summary
+                contains counts and closed codes only.
+              </p>
+              <ul className="mt-3 flex flex-wrap gap-3 text-xs font-mono">
+                {data.writing.issues.map(({ code, count }) => (
+                  <li key={code}>
+                    {code}: {count}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
           <p className="mt-2 text-sm max-w-prose text-muted-foreground">
             Closed codes from instrumented generations. A rejected draft records its first failing
             check, rather than every possible failure.

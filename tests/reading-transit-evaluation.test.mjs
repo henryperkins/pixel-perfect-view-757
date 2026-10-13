@@ -24,8 +24,8 @@ before(async () => {
 after(async () => h?.close());
 test("arc_fixed_cases_use_production_validation_and_planner", async () => {
   h.requests.length = 0;
-  assert.equal(READING_EVAL_FIXTURE_VERSION, "synthetic-daily-6");
-  assert.equal(READING_EVAL_CASES.length, 38);
+  assert.equal(READING_EVAL_FIXTURE_VERSION, "synthetic-daily-7");
+  assert.equal(READING_EVAL_CASES.length, 50);
   for (const [id, chapter] of [
     ["single-pass", "single"],
     ["opening-three", "opening"],
@@ -86,8 +86,8 @@ test("arc_policy_change_stops_mixed_run", async () => {
 });
 test("version6_comparison_requires_identical_inputs", async () => {
   const report = await evaluateReadings({ bundleSource: "transit-candidate" });
-  assert.equal(report.summary.gatewayReplays, 37);
-  assert.equal(report.summary.outcomes.accepted, 37);
+  assert.equal(report.summary.gatewayReplays, 49);
+  assert.equal(report.summary.outcomes.accepted, 49);
   for (const field of [
     "bundleHash",
     "solverVersion",
@@ -125,7 +125,7 @@ test("current transit comparison permits a declared story-use ablation with all 
   ]);
   assert.equal(comparison.before.storyUse, false);
   assert.equal(comparison.after.storyUse, true);
-  assert.equal(comparison.cases.length, 38);
+  assert.equal(comparison.cases.length, 50);
 });
 test("archived_version5_transit_reports_compare_as_36_cases_and_cannot_replay_as_current", async () => {
   const archived = async (side) =>
@@ -145,6 +145,6 @@ test("archived_version5_transit_reports_compare_as_36_cases_and_cannot_replay_as
   const current = await evaluateReadings({ bundleSource: "transit-candidate" });
   assert.throws(() => compareReports(candidate, current), /different fixture versions/);
   const relabeled = structuredClone(candidate);
-  relabeled.fixtureVersion = "synthetic-daily-6";
+  relabeled.fixtureVersion = "synthetic-daily-7";
   assert.throws(() => compareReports(relabeled, current), /fixed case IDs/);
 });

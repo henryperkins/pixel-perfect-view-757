@@ -1,6 +1,6 @@
 import { analyticEpisode } from "./reading-evaluation.transit.fixtures.mjs";
 /** Synthetic plans only: these are not birth records or an ephemeris quality test. */
-export const READING_EVAL_FIXTURE_VERSION = "synthetic-daily-6";
+export const READING_EVAL_FIXTURE_VERSION = "synthetic-daily-7";
 
 const CHART = {
   engine: "synthetic-evaluation-engine",
@@ -442,5 +442,100 @@ READING_EVAL_CASES.push(
     {},
     () => {},
     true,
+  ),
+);
+
+// v6's first 38 plans remain byte-identical. These twelve are the approved
+// concrete-writing population; the quiet case remains the sole model skip.
+const writingCase = (id, description, sourceId, overrides = {}) => {
+  const original = READING_EVAL_CASES.find((item) => item.id === sourceId);
+  if (!original) throw Error("Missing fixed source for writing fixture.");
+  return {
+    ...structuredClone(original),
+    id,
+    description,
+    ...overrides,
+    config: { ...original.config, ...(overrides.config ?? {}) },
+  };
+};
+READING_EVAL_CASES.push(
+  writingCase(
+    "writing-reply-scene",
+    "One unfinished reply remains a possible comparison, never an observed event.",
+    "mercury-conjunction-clinical",
+    { config: { tone: "plain" } },
+  ),
+  writingCase(
+    "writing-calendar-scene",
+    "A full calendar illustrates the room around an obligation.",
+    "saturn-square-moon-warm",
+  ),
+  fixedCase(
+    "writing-default-task-scene",
+    "A default task illustrates the fit between a role and its effort.",
+    [cycle("saturn", "sun", "opposition")],
+  ),
+  writingCase(
+    "writing-synthesis-focus",
+    "Positive S1 owns one central thread with both interpretation parents.",
+    "synthesis-tension",
+  ),
+  writingCase(
+    "writing-legacy-no-scenes",
+    "An explicitly empty frame inventory yields useful source copy without borrowing a scene.",
+    "saturn-square-sun",
+    { writingFrameMode: "none" },
+  ),
+  writingCase(
+    "writing-example-isolation",
+    "A Mercury reply cannot borrow the demonstration calendar or project subject.",
+    "mercury-conjunction-clinical",
+    { config: { tone: "plain" } },
+  ),
+  writingCase(
+    "writing-tone-plain",
+    "Plain voice develops the same structure/initiative facts.",
+    "synthesis-tension",
+    { config: { tone: "plain" } },
+  ),
+  writingCase(
+    "writing-tone-warm",
+    "Warm voice develops the same structure/initiative facts.",
+    "synthesis-tension",
+    { config: { tone: "warm" } },
+  ),
+  writingCase(
+    "writing-tone-clinical",
+    "Clinical voice develops the same structure/initiative facts.",
+    "synthesis-tension",
+    { config: { tone: "clinical" } },
+  ),
+  writingCase(
+    "writing-technical-scene",
+    "Technical prose keeps calculated measurements separate from a possible calendar illustration.",
+    "saturn-square-sun",
+    { config: { depth: "technical" } },
+  ),
+  writingCase(
+    "writing-recent-repeat",
+    "Fixed recent prose is checked locally and never enters the provider request.",
+    "mercury-conjunction-clinical",
+    {
+      config: { tone: "plain" },
+      recentWritingBodies: [
+        {
+          day: "2026-10-10",
+          paragraphs: [
+            "If a reply remains unfinished, its point can need clearer wording. The comparison concerns what is meant and the words used to articulate it.",
+          ],
+          requiredLiteralSentences: [],
+        },
+      ],
+    },
+  ),
+  writingCase(
+    "writing-all-evidence",
+    "Synthesis, natal lens and calculated chapter retain one supported scene and one source reflection.",
+    "arc-synthesis-natal-integration",
   ),
 );

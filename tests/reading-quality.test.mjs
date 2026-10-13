@@ -59,6 +59,44 @@ async function reading(outcome = "accepted", code = "accepted", options = {}) {
   assert.equal(result.error, null, result.error?.message);
   return id;
 }
+test("daily writing telemetry exposes bounded outcomes and issue counts without prose, scene copy, variants or matched text", async () => {
+  await admin();
+  const report = (outcome, issues) => ({ version: "daily-writing-quality-1", outcome, issues });
+  await reading("accepted", "accepted", {
+    meta: {
+      diagnostics: diagnostic(),
+      citations: [{ paragraph: 1, facts: ["C1", "I1"] }],
+      writing: {
+        renderMode: "framed",
+        plan: { reflection: "PRIVATE_WRITING_QUESTION", scenes: ["PRIVATE_WRITING_SCENE"] },
+        candidateQuality: report("warning", [
+          {
+            code: "stock_abstraction",
+            severity: "warning",
+            paragraph: 1,
+            ruleId: "PRIVATE_RULE_TEXT",
+            matchedText: "PRIVATE_MATCHED_TEXT",
+          },
+        ]),
+        finalQuality: report("pass", []),
+      },
+      daily_writing_ct: "UNREAD_WRITING_CIPHERTEXT",
+    },
+  });
+  const quality = await h.app.readingQuality(h.records(), h.userA);
+  assert.equal(quality.writing.instrumented, 1);
+  assert.equal(quality.writing.candidate.warning, 1);
+  assert.equal(quality.writing.final.pass, 1);
+  assert.deepEqual(quality.writing.issues, [{ code: "stock_abstraction", count: 1 }]);
+  for (const text of [
+    "PRIVATE_WRITING_QUESTION",
+    "PRIVATE_WRITING_SCENE",
+    "PRIVATE_RULE_TEXT",
+    "PRIVATE_MATCHED_TEXT",
+    "UNREAD_WRITING_CIPHERTEXT",
+  ])
+    assert.ok(!JSON.stringify(quality).includes(text));
+});
 
 test("quality feedback has separate default-off permission and never crosses the language boundary", () => {
   const { SOURCE_MAP, defaultGranted, isPermitted, assertUse } = h.registryModule;

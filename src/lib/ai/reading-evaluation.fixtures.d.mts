@@ -1,4 +1,6 @@
 export interface SyntheticFixture {
+  writingFrameMode?: "none";
+  recentWritingBodies?: { day: string; paragraphs: string[]; requiredLiteralSentences: string[] }[];
   transitEpisodeScan?: unknown;
   transitAnchor?: unknown;
   natalWindowSamples?: Omit<import("../astro/natal-reliability").NatalWindowSample, "chart">[];

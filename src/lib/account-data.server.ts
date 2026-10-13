@@ -231,6 +231,7 @@ export async function exportAccountData(userId: string, db: DBClient = records()
           language = await readingLanguage(
             { ...row, language_meta: meta } as Parameters<typeof readingLanguage>[0],
             dek,
+            { granted, now },
           );
         } catch {
           unreadable.push("language");
@@ -247,9 +248,15 @@ export async function exportAccountData(userId: string, db: DBClient = records()
           }
         }
         const local = await savedLocalContext(contextRow, dek, granted, now);
+        if (language?.dailyWriting) {
+          decoded["prompt"] =
+            language.dailyWriting.status === "saved"
+              ? language.dailyWriting.evidence.reflection.question
+              : null;
+        }
         if (local) {
           decoded["body"] = [decoded["body"], local.body].filter(Boolean).join("\n\n");
-          decoded["prompt"] = local.prompt;
+          if (!language?.dailyWriting) decoded["prompt"] = local.prompt;
           if (paragraphState)
             paragraphState.paragraphs.push(...(local.body ? local.body.split("\n\n") : []));
         }

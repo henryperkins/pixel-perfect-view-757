@@ -31,17 +31,17 @@ test("before/after comparison rejects a partial flag even when every case is pre
 
 test("fixed synthetic baseline exercises the real daily validators without quality scores", async () => {
   const report = await evaluateReadings({ bundleSource: "transit-candidate" });
-  assert.equal(READING_EVAL_CASES.length, 38);
+  assert.equal(READING_EVAL_CASES.length, 50);
   assert.equal(report.fixtureVersion, READING_EVAL_FIXTURE_VERSION);
   assert.equal(report.source, "synthetic-baseline");
   assert.equal(report.network, "blocked; gateway replayed in memory");
   assert.deepEqual(report.summary.outcomes, {
-    accepted: 37,
+    accepted: 49,
     rejected: 0,
     unavailable: 0,
     skipped: 1,
   });
-  assert.equal(report.summary.gatewayReplays, 37);
+  assert.equal(report.summary.gatewayReplays, 49);
   assert.equal(report.summary.liveAcceptanceRate, null);
   assert.equal(report.summary.replayAcceptanceRate, 1);
   assert.match(report.warning, /not.*live|does not.*live/i);
@@ -68,7 +68,7 @@ test("candidate replay records a real validator rejection and deterministic fall
   const report = await evaluateReadings({ responses, bundleSource: "transit-candidate" });
   assert.equal(report.source, "candidate-replay");
   assert.equal(report.summary.outcomes.rejected, 1);
-  assert.equal(report.summary.replayAcceptanceRate, 36 / 37);
+  assert.equal(report.summary.replayAcceptanceRate, 48 / 49);
   const item = report.cases.find((c) => c.id === "saturn-square-sun");
   assert.equal(item.diagnostics.outcome, "rejected");
   assert.equal(item.diagnostics.code, "id");
@@ -95,6 +95,18 @@ test("comparison refuses changed fixtures, case sets, or input configs", async (
   const compared = compareReports(before, after);
   assert.equal(compared.acceptedDelta, 0);
   assert.equal(compared.cases.length, READING_EVAL_CASES.length);
+  const writingReport = await evaluateReadings({ bundleSource: "writing-candidate" });
+  const writingComparison = compareReports(writingReport, structuredClone(writingReport));
+  for (const field of [
+    "writingPlanVersion",
+    "writingQualityVersion",
+    "reflectionVersion",
+    "voiceExamplesVersion",
+  ]) {
+    assert.equal(writingComparison.before[field], writingReport[field]);
+    assert.equal(writingComparison.after[field], writingReport[field]);
+    assert.equal(compared.before[field], null);
+  }
   assert.equal(
     compared.warning,
     "Replay changes do not establish live acceptance, grounding, or writing quality.",
@@ -236,7 +248,7 @@ test("a current captured report extracts and replays only against its selected f
   });
   assert.equal(replay.source, "source-report-replay");
   assert.deepEqual(replay.summary.outcomes, {
-    accepted: 37,
+    accepted: 49,
     rejected: 0,
     unavailable: 0,
     skipped: 1,
@@ -253,7 +265,7 @@ test("a current captured report extracts and replays only against its selected f
   ])
     assert.equal(replay.sourceReport[field], report[field]);
   assert.ok(!Object.hasOwn(replay.sourceReport, "sourceRevision"));
-  assert.deepEqual(replay.sourceComparison, { cases: 38, matchingOutcomes: 38, differences: [] });
+  assert.deepEqual(replay.sourceComparison, { cases: 50, matchingOutcomes: 50, differences: [] });
   const edited = structuredClone(responses);
   edited["saturn-square-sun"].paragraphs[0].text += " Added later.";
   await assert.rejects(
@@ -343,12 +355,12 @@ test("the explicit transit candidate CLI writes current coverage with blank huma
   try {
     await main(["--bundle-source", "transit-candidate", "--output", output]);
     const report = JSON.parse(await readFile(output, "utf8"));
-    assert.equal(report.fixtureVersion, "synthetic-daily-6");
+    assert.equal(report.fixtureVersion, "synthetic-daily-7");
     assert.equal(report.bundleSource, "transit-candidate");
     assert.equal(report.bundleVersion, "builtin-0.7.1");
-    assert.equal(report.cases.length, 38);
-    assert.equal(report.summary.gatewayReplays, 37);
-    assert.equal(report.summary.outcomes.accepted, 37);
+    assert.equal(report.cases.length, 50);
+    assert.equal(report.summary.gatewayReplays, 49);
+    assert.equal(report.summary.outcomes.accepted, 49);
     assert.ok(
       report.cases.every((row) => Object.values(row.manualReview).every((value) => value === null)),
     );

@@ -1,3 +1,4 @@
+import { READING_EVAL_CASES as WRITING_FIXTURE_CASES } from "../src/lib/ai/reading-evaluation.fixtures.mjs";
 /** Canonical synthetic plans are shared with the on-demand server evaluator. */
 export {
   READING_EVAL_CASES,
@@ -285,3 +286,26 @@ Object.assign(BASELINE_RESPONSES, {
     ],
   },
 });
+
+// Validator fixtures only, copied from the matching fixed legacy source graph.
+// They contain no scene declarations and are negative schema-5 replay examples.
+for (const fixed of WRITING_FIXTURE_CASES.filter((item) => item.id.startsWith("writing-"))) {
+  const original =
+    fixed.id === "writing-all-evidence"
+      ? "arc-synthesis-natal-integration"
+      : fixed.id === "writing-calendar-scene"
+        ? "saturn-square-moon-warm"
+        : /writing-(?:synthesis-focus|tone-)/.test(fixed.id)
+          ? "synthesis-tension"
+          : fixed.cycles[0].transit_body === "mercury"
+            ? "mercury-conjunction-clinical"
+            : "saturn-square-sun";
+  BASELINE_RESPONSES[fixed.id] =
+    fixed.id === "writing-default-task-scene"
+      ? draft(
+          "Saturn opposition natal Sun",
+          "The published mechanism offers a comparison between a role and its effort.",
+          "identity and direction",
+        )
+      : structuredClone(BASELINE_RESPONSES[original]);
+}

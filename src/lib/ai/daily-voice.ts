@@ -1,4 +1,50 @@
 /** Daily-only writing guidance. Examples demonstrate register, never supply facts. */
+export const DAILY_VOICE_EXAMPLES_VERSION = "daily-voice-examples-1" as const;
+export interface DailyVoiceExample {
+  sourceCard: string;
+  paragraphs: { text: string; facts: string[]; scenes: string[] }[];
+}
+const DEMONSTRATION_CARD = [
+  "Synthetic demonstration only; EX-* identifiers cannot be cited in a live reading.",
+  "EX-C1: Saturn square natal Sun. EX-I1: Responsibility, expectations and available capacity can be compared through a role's boundaries.",
+  "EX-C2: Jupiter trine natal Mars. EX-I2: A well-chosen aim can connect enthusiasm with practical initiative and a larger piece of work.",
+  "EX-S1 (parents EX-C1/EX-I1/EX-C2/EX-I2): Expanding scope can be considered alongside the capacity and commitments needed to carry it.",
+  "EX-SC1: If a proposed project would fill the last gap in a calendar, its appeal can be compared with existing commitments.",
+  "EX-SC2: If a task accepted by default still occupies time, its commitment can be considered alongside a larger plan.",
+].join("\n");
+const TECHNICAL_CARD = `${DEMONSTRATION_CARD}\nEX-C1 technical fixture inputs: current orb 1.2°, reference day 2026-10-11, exact date 2026-10-15. Orb is angular deviation at calculation time; the date describes the astronomical contact, without establishing a personal event or deadline.`;
+const EXAMPLE_TEXT = {
+  plain: [
+    "If a new project would take the last open space in your calendar, its appeal and its cost are visible in the same place. Wanting to begin does not make the existing commitments smaller. The tension here is between room to grow and the structure needed to carry that growth. A workable next step has to account for both.",
+    "A task accepted by default offers another possible view of the same tension. If it is still occupying time, that commitment has a place in the decision about what comes next. The useful distinction is between work you would choose again and work that continues through habit. That can make the cost of a larger plan easier to describe.",
+    "The current orb for Saturn square natal Sun is 1.2°. The calculated exact date is 2026-10-15. An orb measures the angular distance from the named aspect at the time this reading was calculated. The date describes the contact's timing without establishing when a personal decision will be made.",
+  ],
+  warm: [
+    "If a new project catches your attention while your calendar is already full, interest and hesitation may arrive together. The possibility can be appealing without there being a clear place for it yet. Making room is part of considering it. You can take the appeal seriously while giving the existing commitments their full weight.",
+    "If a task accepted by default still occupies time, it might offer a smaller example. If that fits, its claim on your time belongs in the picture too. It can help make a distinction visible: a commitment you still choose has a different place from one that carries on through habit. The larger possibility can then be considered alongside what is already being carried.",
+    "For the timing detail, Saturn square natal Sun has a current orb of 1.2°. Its calculated exact date is 2026-10-15. The angular distance describes the contact at the time of the reading. That date can give the theme a place on the calendar without deciding when something in your life has to be settled.",
+  ],
+  clinical: [
+    "If a proposed project would fill the last gap in your calendar, its attraction and its demands are visible in the same place. The point of comparison is the fit between expanding scope and existing capacity. Available time gives that comparison a concrete measure. A larger plan can be appealing while its practical requirements remain unclear.",
+    "A task accepted by default provides a second possible example. If it remains on the calendar, it occupies capacity whether or not you would choose it again. The distinction concerns the basis of the commitment: an active choice or an arrangement continuing through habit. Naming that basis can make the trade-off in a new project more precise.",
+    "Saturn square natal Sun has a current orb of 1.2°. The calculated exact date is 2026-10-15. The orb measures angular deviation from the named aspect at calculation time. The date identifies a calculated astronomical contact and establishes neither the occurrence of an example nor a personal deadline.",
+  ],
+} as const;
+const example = (tone: keyof typeof EXAMPLE_TEXT, technical: boolean): DailyVoiceExample => ({
+  sourceCard: technical ? TECHNICAL_CARD : DEMONSTRATION_CARD,
+  paragraphs: EXAMPLE_TEXT[tone].slice(0, technical ? 3 : 2).map((text, index) => ({
+    text,
+    facts: index < 2 ? ["EX-C1", "EX-I1", "EX-C2", "EX-I2", "EX-S1"] : ["EX-C1"],
+    scenes: index < 2 ? [`EX-SC${index + 1}`] : [],
+  })),
+});
+/** Inactive candidate copy; final human editorial approval is recorded separately. */
+export const DAILY_VOICE_EXAMPLES = {
+  plain: { standard: example("plain", false), technical: example("plain", true) },
+  warm: { standard: example("warm", false), technical: example("warm", true) },
+  clinical: { standard: example("clinical", false), technical: example("clinical", true) },
+};
+
 export const DAILY_SYSTEM_VOICE = [
   "You write for an astrology app that shows its work.",
   "Calculated references C1–C3 supply astronomical measurements. Published interpretations I1–I3 and synthesis S1 supply reviewed editorial possibilities, not measured psychological properties or confirmed personal states.",
@@ -38,11 +84,17 @@ const TONES = {
   },
 } as const;
 
-export function dailyVoice(tone: keyof typeof TONES, depth: "standard" | "technical"): string {
+export function dailyVoice(
+  tone: keyof typeof TONES,
+  depth: "standard" | "technical",
+  concrete = false,
+): string {
   const voice = TONES[tone];
   return [
     `Tone: ${tone}. ${voice.definition}`,
-    `Style example only — not a factual source: "${voice.example}"`,
+    concrete
+      ? `Synthetic source card (demonstration only):\n${DAILY_VOICE_EXAMPLES[tone][depth].sourceCard}\nComplete style demonstration (not live output):\n${JSON.stringify({ paragraphs: DAILY_VOICE_EXAMPLES[tone][depth].paragraphs })}`
+      : `Style example only — not a factual source: "${voice.example}"`,
     "Do not copy the example or borrow its subject unless supported by the supplied interpretation. Its purpose is sentence rhythm and register; example content never supplies a reading fact.",
     depth === "technical"
       ? "Depth: technical. Aim for about 140–240 words. Lead with the everyday meaning, then connect it to the named contact and relevant calculated detail in a compact passage. Explain what a detail means only when supplied editorial copy supports that explanation."

@@ -3,6 +3,22 @@ import {
   clearTimingCalculations,
 } from "./astro/transit-timing-cache.server";
 import { resolveTransitForReading, transitEpisodePolicy } from "./astro/transit-episodes.server";
+import { invalidateDailyWritingFrames } from "./content/daily-writing-invalidation";
+import { composeDailyWritingTemplate } from "./content/daily-writing-template";
+import {
+  readSavedDailyWriting,
+  validateSavedDailyWriting,
+  type SavedDailyWriting,
+  type SavedWritingState,
+} from "./content/daily-writing-storage.server";
+import { DAILY_WRITING_PLAN_VERSION } from "./content/daily-writing";
+import { DAILY_REFLECTION_VERSION } from "./content/daily-reflection";
+import {
+  DAILY_WRITING_QUALITY_VERSION,
+  type RecentDailyWritingHistory,
+} from "./ai/daily-writing-quality";
+import { DAILY_VOICE_EXAMPLES_VERSION } from "./ai/daily-voice";
+import { CONCRETE_DAILY_PROMPT_VERSION, CONCRETE_DAILY_VALIDATOR_VERSION } from "./ai/diagnostics";
 import { type DailyTransitCalculation } from "./astro/transit-episodes";
 import { DAILY_TRANSIT_STORY_VERSION } from "./content/transit-story";
 import {
@@ -135,6 +151,7 @@ interface CheckInBands {
 }
 interface ExistingReadingRow {
   id: string;
+  snapshot_id?: string;
   reading_date: string;
   headline: string;
   body_ct: string;
@@ -403,6 +420,18 @@ export async function setConsent(db: DB, userId: string, sourceId: string, grant
       ? [
           {
             sql: "DELETE FROM context_signals WHERE user_id=? AND source_id=?",
+            params: [userId, sourceId],
+          },
+          {
+            sql: "DELETE FROM reading_sources AS s WHERE s.user_id=? AND EXISTS(SELECT 1 FROM daily_readings d WHERE d.id=s.reading_id AND d.user_id=s.user_id AND d.context_version=? AND EXISTS(SELECT 1 FROM json_each(d.local_context_sources) WHERE value=?) AND s.source_id IN (SELECT value FROM json_each(d.local_context_sources)))",
+            params: [userId, CONTEXT_STORAGE_VERSION, sourceId],
+          },
+          {
+            sql: "UPDATE daily_readings SET language_meta=json_set(CASE WHEN json_valid(language_meta) THEN language_meta ELSE '{}' END,'$.sourceCount',(SELECT COUNT(*) FROM reading_sources s WHERE s.reading_id=daily_readings.id AND s.user_id=daily_readings.user_id)),local_context_ct=NULL,local_context_sources='[]',local_context_expires_at=NULL WHERE user_id=? AND context_version=? AND EXISTS(SELECT 1 FROM json_each(local_context_sources) WHERE value=?)",
+            params: [userId, CONTEXT_STORAGE_VERSION, sourceId],
+          },
+          {
+            sql: "UPDATE daily_readings SET language_meta=json_set(json_remove(language_meta,'$.daily_writing_ct','$.dailyWritingRetention'),'$.dailyWritingStatus','unavailable','$.daily_writing_unavailable',json('{\"version\":1,\"reason\":\"revoked\"}')) WHERE user_id=? AND json_valid(language_meta) AND EXISTS(SELECT 1 FROM json_each(language_meta,'$.dailyWritingRetention.sourceIds') WHERE value=?)",
             params: [userId, sourceId],
           },
         ]
@@ -1078,11 +1107,15 @@ export interface ReadingLanguage {
   interpretationPlan: DailyPlanIdentity | null;
   natalLens?: SavedNatalLens | null;
   transitStory?: SavedTransitStory | null;
+  dailyWriting?: SavedWritingState;
 }
 
 /** Revives the stored language-layer metadata for a cached reading. */
 export async function readingLanguage(
   row: {
+    id?: string;
+    snapshot_id?: string;
+    reading_date?: string;
     language_mode: string | null;
     language_model: string | null;
     language_meta: JsonValue;
@@ -1090,6 +1123,7 @@ export async function readingLanguage(
     primary_cycle_key: string | null;
   },
   dek: CryptoKey,
+  privacy: { granted: Set<string>; now: Date } = { granted: new Set(), now: new Date() },
 ): Promise<ReadingLanguage> {
   const meta = (row.language_meta ?? {}) as Record<string, unknown>;
   let facts = readSavedFactAtoms(meta["facts"]);
@@ -1139,6 +1173,8 @@ export async function readingLanguage(
           releaseVersion: row.release_version,
           primaryCycleKey: row.primary_cycle_key,
           mode: row.language_mode === "model" ? "model" : "template",
+          sourceTemplate:
+            meta["dailyWritingStatus"] === "saved" || !!meta["daily_writing_unavailable"],
           citations,
           astroParagraphCount: count,
         },
@@ -1209,13 +1245,24 @@ export async function readingLanguage(
     const interpretation = primary?.statement.startsWith(prefix)
       ? primary.statement.slice(prefix.length)
       : null;
+    const sourceTemplate =
+      meta["dailyWritingStatus"] === "saved" || !!meta["daily_writing_unavailable"];
+    const sourceParagraphs =
+      sourceTemplate && typeof meta["paragraphs_ct"] === "string"
+        ? await decryptJson<string[]>(dek, meta["paragraphs_ct"])
+        : [];
     if (
-      !consumedNatalTemplate(
-        natalTemplateParagraph ?? "",
-        interpretation,
-        natalLens.plan.lens!.mechanism,
-        transitStory?.plan.status === "selected" ? transitStory.plan.chronologySentence : null,
-      )
+      sourceTemplate
+        ? !sourceParagraphs
+            .slice(0, Number(meta["astroParagraphCount"]))
+            .join(" ")
+            .includes(natalLens.plan.lens!.mechanism)
+        : !consumedNatalTemplate(
+            natalTemplateParagraph ?? "",
+            interpretation,
+            natalLens.plan.lens!.mechanism,
+            transitStory?.plan.status === "selected" ? transitStory.plan.chronologySentence : null,
+          )
     )
       throw new Error("Saved natal reading evidence could not be loaded. Please retry.");
   }
@@ -1230,6 +1277,20 @@ export async function readingLanguage(
       throw new Error("Saved reading evidence could not be loaded. Please retry.");
     facts = order.map((id) => facts.find((f) => f.id === id)!);
   }
+  const savedParagraphs =
+    (Object.hasOwn(meta, "daily_writing_ct") || meta["dailyWritingStatus"] === "saved") &&
+    typeof meta["paragraphs_ct"] === "string"
+      ? await decryptJson<string[]>(dek, meta["paragraphs_ct"])
+      : [];
+  const dailyWriting = await readSavedDailyWriting(
+    row,
+    dek,
+    facts,
+    savedParagraphs,
+    citations,
+    privacy.granted,
+    privacy.now,
+  );
   return {
     mode: row.language_mode === "model" ? "model" : "template",
     model: row.language_model ?? null,
@@ -1240,6 +1301,7 @@ export async function readingLanguage(
     interpretationPlan: readDailyPlanIdentity(meta["interpretationPlan"], facts),
     natalLens,
     transitStory,
+    ...(dailyWriting ? { dailyWriting } : {}),
   };
 }
 
@@ -1435,6 +1497,21 @@ async function getTodayReading(
     transitAnchors: canonicalStoryValue(transitAnchors),
     promptVersion: DAILY_PROMPT_VERSION,
     validatorVersion: DAILY_VALIDATOR_VERSION,
+    ...(bundle.schemaVersion === 5
+      ? {
+          promptVersion: CONCRETE_DAILY_PROMPT_VERSION,
+          validatorVersion: CONCRETE_DAILY_VALIDATOR_VERSION,
+          writingPolicy: {
+            plan: DAILY_WRITING_PLAN_VERSION,
+            quality: DAILY_WRITING_QUALITY_VERSION,
+            reflection: DAILY_REFLECTION_VERSION,
+            examples: DAILY_VOICE_EXAMPLES_VERSION,
+            frames: bundle.dailyWritingFrames ?? [],
+            sources: bundle.cycles,
+            synthesis: bundle.synthesisRules ?? [],
+          },
+        }
+      : {}),
     model: LANGUAGE_MODEL,
     snapshot: { ...snapRow, houses: snapshotHouses },
     natalReliabilityVersion: NATAL_RELIABILITY_VERSION,
@@ -1456,7 +1533,7 @@ async function getTodayReading(
   const { data: existing, error: cacheError } = await db
     .from<ExistingReadingRow>("daily_readings")
     .select(
-      "id, reading_date, headline, body_ct, prompt, confidence, primary_cycle_key, release_version, language_mode, language_model, language_meta, context_version, local_context_ct, local_context_sources, local_context_expires_at, mixed_context_expires_at, retention_state, created_at",
+      "id, snapshot_id, reading_date, headline, body_ct, prompt, confidence, primary_cycle_key, release_version, language_mode, language_model, language_meta, context_version, local_context_ct, local_context_sources, local_context_expires_at, mixed_context_expires_at, retention_state, created_at",
     )
     .eq("user_id", userId)
     .eq("idempotency_key", idem)
@@ -1498,7 +1575,7 @@ async function getTodayReading(
       ...astroParagraphs,
       paragraphs: [...astroParagraphs.paragraphs, ...(local?.body ? local.body.split("\n\n") : [])],
     };
-    const language = await readingLanguage(existing, dek);
+    const language = await readingLanguage(existing, dek, { granted, now });
     const storyCalculation = language.transitStory
       ? calculationFromStory(language.transitStory)
       : null;
@@ -1512,7 +1589,12 @@ async function getTodayReading(
         headline: existing.headline,
         body,
         ...paragraphState,
-        prompt: local?.prompt ?? existing.prompt,
+        prompt:
+          language.dailyWriting?.status === "saved"
+            ? language.dailyWriting.evidence.reflection.question
+            : language.dailyWriting?.status === "unavailable"
+              ? null
+              : (local?.prompt ?? existing.prompt),
         confidence: existing.confidence,
         primary_cycle_key: existing.primary_cycle_key,
         release_version: existing.release_version,
@@ -1563,6 +1645,9 @@ async function getTodayReading(
     assembled,
     tz,
   );
+  const recentWriting = assembled.writingTemplate
+    ? await loadRecentDailyWritingBodies(db, userId, snapRow.id, day, tz, dek, granted, now)
+    : null;
   const prose = await generateReadingProse({
     facts,
     hasEligibleCycles: assembled.eligibleCycles.length > 0,
@@ -1577,6 +1662,21 @@ async function getTodayReading(
       body: assembled.astroBody,
       prompt: assembled.prompt,
     },
+    ...(assembled.writingTemplate
+      ? {
+          writing: {
+            plan: assembled.writingPlan,
+            template: assembled.writingTemplate,
+            minimalTemplate: composeDailyWritingTemplate(
+              assembled.writingPlan,
+              assembled.natalLensPlan,
+              assembled.transitStoryPlan,
+              true,
+            ),
+            recent: recentWriting!.bodies,
+          },
+        }
+      : {}),
   });
   await assertPolicy();
   const body = [prose.body, assembled.contextBody].filter(Boolean).join("\n\n");
@@ -1600,7 +1700,7 @@ async function getTodayReading(
   const interpretationPlan = dailyPlanIdentity(assembled.interpretationPlan);
   const natalFact = suppliedFacts.find((f) => f.id === "N1");
   const usedNatalParagraphs = natalFact
-    ? prose.meta.mode === "model"
+    ? prose.meta.mode === "model" || prose.meta.writing
       ? prose.meta.citations.filter((c) => c.facts.includes("N1")).map((c) => c.paragraph)
       : [1]
     : [];
@@ -1725,6 +1825,7 @@ async function getTodayReading(
         releaseVersion: assembled.release_version,
         primaryCycleKey: assembled.primary_cycle_key,
         mode: prose.meta.mode,
+        sourceTemplate: !!prose.meta.writing,
         citations: prose.meta.citations,
         astroParagraphCount: prose.paragraphs.length,
       },
@@ -1768,19 +1869,55 @@ async function getTodayReading(
         detail: { factId },
       });
   }
+  const readingId = crypto.randomUUID();
+  const dailyWriting: SavedDailyWriting | null =
+    prose.meta.writing && assembled.reflectionPlan && recentWriting
+      ? {
+          version: 1,
+          readingId,
+          snapshotId: snapRow.id,
+          releaseVersion: assembled.release_version,
+          primaryCycleKey: assembled.primary_cycle_key,
+          plan: assembled.writingPlan,
+          ...prose.meta.writing,
+          reflection: assembled.reflectionPlan,
+          legacySourceQuestion:
+            assembled.reflectionPlan.variant === "legacy"
+              ? assembled.reflectionPlan.question
+              : null,
+          effectiveTimezone: tz,
+          astroParagraphCount: prose.paragraphs.length,
+          historyAvailability: recentWriting.availability,
+        }
+      : null;
+  if (dailyWriting)
+    validateSavedDailyWriting(
+      dailyWriting,
+      {
+        id: readingId,
+        snapshot_id: snapRow.id,
+        release_version: assembled.release_version,
+        primary_cycle_key: assembled.primary_cycle_key,
+        language_meta: { astroParagraphCount: prose.paragraphs.length },
+      },
+      suppliedFacts,
+      prose.paragraphs,
+      prose.meta.citations,
+    );
   const { data: inserted, error } = await db
     .from<{ id: string }>("daily_readings")
     .insert({
+      id: readingId,
       user_id: userId,
       reading_date: day,
       snapshot_id: snapRow.id,
       release_version: assembled.release_version,
       headline: prose.headline,
       body_ct: await encryptField(dek, durableBody),
-      prompt: assembled.astroPrompt,
+      prompt: dailyWriting ? null : assembled.astroPrompt,
       context_version: CONTEXT_STORAGE_VERSION,
       local_context_ct: localSources.length
-        ? await encryptJson(dek, { body: localBody, prompt: prose.prompt })
+        ? await encryptJson(dek, { body: localBody, prompt: dailyWriting ? "" : prose.prompt })
         : null,
       local_context_sources: localSources,
       local_context_expires_at: localExpiry,
@@ -1796,6 +1933,24 @@ async function getTodayReading(
       language_model: prose.meta.model,
       language_meta: {
         ...prose.meta,
+        ...(dailyWriting
+          ? {
+              daily_writing_ct: await encryptJson(dek, dailyWriting),
+              dailyWritingStatus: "saved",
+              ...(dailyWriting.reflection.localSource
+                ? {
+                    dailyWritingRetention: {
+                      sourceIds: [dailyWriting.reflection.localSource],
+                      expiresAt: finiteContextExpiry(
+                        [dailyWriting.reflection.localSource],
+                        day,
+                        now,
+                      ),
+                    },
+                  }
+                : {}),
+            }
+          : {}),
         facts: storyFacts.length ? [] : suppliedFacts.filter((f) => f.id !== "N1"),
         ...(storyFacts.length
           ? {
@@ -1937,6 +2092,9 @@ async function getTodayReading(
       interpretationPlan,
       natalLens,
       transitStory,
+      ...(dailyWriting
+        ? { dailyWriting: { status: "saved" as const, evidence: dailyWriting } }
+        : {}),
     },
     storyCalculation,
     feedback: await loadReadingFeedback(db, userId, inserted.id),
@@ -1951,6 +2109,101 @@ async function getTodayReading(
 // ---------------------------------------------------------------------------
 // pattern view, journal, export
 // ---------------------------------------------------------------------------
+
+/** Optional comparison history: twelve saved rows at most, never provider input or cache identity. */
+export async function loadRecentDailyWritingBodies(
+  db: DB,
+  userId: string,
+  snapshotId: string,
+  day: string,
+  timezone: string,
+  dek: CryptoKey,
+  granted = new Set<string>(),
+  now = new Date(),
+): Promise<RecentDailyWritingHistory> {
+  const reference = new Date(day + "T12:00:00Z");
+  if (
+    !/^\d{4}-\d{2}-\d{2}$/.test(day) ||
+    !Number.isFinite(+reference) ||
+    reference.toISOString().slice(0, 10) !== day
+  )
+    throw Error("Invalid comparison civil day.");
+  const bodies: RecentDailyWritingHistory["bodies"] = [];
+  const omissions = new Map<
+    RecentDailyWritingHistory["availability"]["omissions"][number]["reason"],
+    number
+  >();
+  const omit = (reason: RecentDailyWritingHistory["availability"]["omissions"][number]["reason"]) =>
+    omissions.set(reason, (omissions.get(reason) ?? 0) + 1);
+  let inspected = 0;
+  for (let offset = 1; offset <= 3; offset++) {
+    const date = new Date(reference);
+    date.setUTCDate(date.getUTCDate() - offset);
+    const previousDay = date.toISOString().slice(0, 10);
+    const { data, error } = await db
+      .from<ExistingReadingRow>("daily_readings")
+      .select(
+        "id,snapshot_id,reading_date,release_version,primary_cycle_key,language_mode,language_model,language_meta,body_ct,context_version,local_context_ct,local_context_sources,local_context_expires_at,mixed_context_expires_at,retention_state,created_at",
+      )
+      .eq("user_id", userId)
+      .eq("snapshot_id", snapshotId)
+      .eq("reading_date", previousDay)
+      .order("created_at", { ascending: false })
+      .order("id", { ascending: false })
+      .limit(4);
+    if (error) {
+      omit("invalid");
+      continue;
+    }
+    let retained = false;
+    for (const row of data ?? []) {
+      inspected++;
+      const meta = row.language_meta as Record<string, unknown> | null;
+      if (!meta || !Object.hasOwn(meta, "daily_writing_ct")) {
+        omit("legacy");
+        continue;
+      }
+      try {
+        if (
+          legacyContextUnavailable(row, [], granted, now) ||
+          typeof meta["paragraphs_ct"] !== "string"
+        )
+          throw Error("Unavailable comparison.");
+        const saved = await readingLanguage(row, dek, { granted, now });
+        if (saved.dailyWriting?.status !== "saved") throw Error("Unavailable writing comparison.");
+        const evidence = saved.dailyWriting.evidence;
+        if (evidence.effectiveTimezone !== timezone) {
+          omit("timezone");
+          continue;
+        }
+        const body = await decryptField(dek, row.body_ct);
+        const { paragraphs } = await savedReadingParagraphs(dek, row, body);
+        bodies.push({
+          day: previousDay,
+          paragraphs: paragraphs.slice(0, evidence.astroParagraphCount),
+          requiredLiteralSentences:
+            saved.transitStory?.plan.status === "selected"
+              ? [saved.transitStory.plan.chronologySentence]
+              : [],
+        });
+        retained = true;
+        break;
+      } catch {
+        omit("invalid");
+      }
+    }
+    if (!retained && data?.length === 4) omit("candidate_limit");
+  }
+  return {
+    bodies,
+    availability: {
+      status: bodies.length === 3 ? "available" : bodies.length ? "partial" : "unavailable",
+      inspected,
+      retainedDays: bodies.length,
+      omissions: [...omissions].map(([reason, count]) => ({ reason, count })),
+    },
+  };
+}
 
 /** Optional reuse is loaded after the immutable astronomical reading, never into its provider inputs. */
 export async function getToday(db: DB, userId: string, timeZone: string) {
@@ -2693,13 +2946,15 @@ export async function listReleases(db: DB) {
       cycles: cyclesCount,
       synthesisRules: rulesCount,
       schemaVersion:
-        bundle["schemaVersion"] === 4
-          ? 4
-          : bundle["schemaVersion"] === 3
-            ? 3
-            : bundle["schemaVersion"] === 2
-              ? 2
-              : 1,
+        bundle["schemaVersion"] === 5
+          ? 5
+          : bundle["schemaVersion"] === 4
+            ? 4
+            : bundle["schemaVersion"] === 3
+              ? 3
+              : bundle["schemaVersion"] === 2
+                ? 2
+                : 1,
       transitChapters: Array.isArray(bundle["transitChapters"])
         ? bundle["transitChapters"].length
         : 0,
@@ -2758,7 +3013,9 @@ export async function evaluateFixedCase(
         ? (await import("./content/natal-candidate-bundle")).NATAL_CANDIDATE_BUNDLE
         : bundleSource === "transit-candidate"
           ? (await import("./content/transit-candidate-bundle")).TRANSIT_CANDIDATE_BUNDLE
-          : await activeBundle(db, { requireSuccessfulRead: true });
+          : bundleSource === "writing-candidate"
+            ? (await import("./content/writing-candidate-bundle")).WRITING_CANDIDATE_BUNDLE
+            : await activeBundle(db, { requireSuccessfulRead: true });
   const result = await evaluation.runSyntheticEvaluationCase(caseId, bundle, provider);
   return { ...result, metadata: { ...result.metadata, bundleSource } };
 }
@@ -3251,9 +3508,16 @@ export async function draftRelease(db: DB, userId: string, provider: LanguagePro
     }
   }
 
-  const bundle: ContentBundle = {
+  const candidateBundle: ContentBundle = {
     version: "pending",
-    schemaVersion: base.schemaVersion === 4 ? 4 : base.schemaVersion === 3 ? 3 : 2,
+    schemaVersion:
+      base.schemaVersion === 5
+        ? 5
+        : base.schemaVersion === 4
+          ? 4
+          : base.schemaVersion === 3
+            ? 3
+            : 2,
     phases: base.phases,
     natal: base.natal,
     domains: base.domains,
@@ -3261,7 +3525,9 @@ export async function draftRelease(db: DB, userId: string, provider: LanguagePro
     synthesisRules: survivingRules,
     natalLenses: structuredClone(base.natalLenses ?? []),
     transitChapters: structuredClone(base.transitChapters ?? []),
+    dailyWritingFrames: structuredClone(base.dailyWritingFrames ?? []),
   };
+  const { bundle, removedFrameKeys } = invalidateDailyWritingFrames(base, candidateBundle);
 
   validateContentGraph(bundle);
 
@@ -3283,6 +3549,7 @@ export async function draftRelease(db: DB, userId: string, provider: LanguagePro
         flagged: drafted.flagged.length,
         affectedKeys: Array.from(changedKeys),
         synthesisReviewRequired: removedRuleKeys,
+        writingFrameReviewRequired: removedFrameKeys,
         themeCount,
         ruleCount: survivingRules.length,
       },

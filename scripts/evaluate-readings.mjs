@@ -25,15 +25,16 @@ const WARNING =
 const hash = (value) => createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const caseIds = () => READING_EVAL_CASES.map((item) => item.id);
 /** Shipped inactive candidates are explicit offline choices; active copy lives in the hosted app. */
-const OFFLINE_BUNDLES = ["builtin", "natal-candidate", "transit-candidate"];
-const HISTORICAL_NATAL_IDS = READING_EVAL_CASES.filter((item) => !item.id.startsWith("arc-")).map(
-  (item) => item.id,
-);
+const OFFLINE_BUNDLES = ["builtin", "natal-candidate", "transit-candidate", "writing-candidate"];
+const HISTORICAL_NATAL_IDS = READING_EVAL_CASES.filter(
+  (item) => !item.id.startsWith("arc-") && !item.id.startsWith("writing-"),
+).map((item) => item.id);
 // The archived transit snapshot predates two restored main natal cases. Its changed
 // input configurations remain in the original reports and cannot be replayed as v6.
 const HISTORICAL_TRANSIT_IDS = caseIds().filter(
-  (id) => !["natal-own-target", "natal-moon-fallback"].includes(id),
+  (id) => !["natal-own-target", "natal-moon-fallback"].includes(id) && !id.startsWith("writing-"),
 );
+const HISTORICAL_V6_IDS = caseIds().filter((id) => !id.startsWith("writing-"));
 const STORY_POLICY_FIELDS = [
   "storyPlanVersion",
   "anchorVersion",
@@ -41,6 +42,12 @@ const STORY_POLICY_FIELDS = [
   "sourceContract",
   "transitFixtureHash",
   "storyUse",
+];
+const WRITING_POLICY_FIELDS = [
+  "writingPlanVersion",
+  "writingQualityVersion",
+  "reflectionVersion",
+  "voiceExamplesVersion",
 ];
 const IDENTITY_VERSION = "reading-evaluation-identity-1";
 const SHA256 = /^[0-9a-f]{64}$/;
@@ -55,6 +62,7 @@ const SOURCE_IDENTITY_FIELDS = [
   "natalPlanVersion",
   "reliabilityVersion",
   ...STORY_POLICY_FIELDS,
+  ...WRITING_POLICY_FIELDS,
   "promptVersion",
   "validatorVersion",
   "model",
@@ -149,6 +157,7 @@ async function shippedBundles(load) {
     "/src/lib/content/natal-candidate-bundle.ts",
   );
   const { TRANSIT_CANDIDATE_BUNDLE } = await load("/src/lib/content/transit-candidate-bundle.ts");
+  const { WRITING_CANDIDATE_BUNDLE } = await load("/src/lib/content/writing-candidate-bundle.ts");
   const identity = (bundle) => ({
     bundle,
     version: bundle.version,
@@ -159,6 +168,7 @@ async function shippedBundles(load) {
     builtin: identity(DEFAULT_BUNDLE),
     "natal-candidate": identity(NATAL_CANDIDATE_BUNDLE),
     "transit-candidate": identity(TRANSIT_CANDIDATE_BUNDLE),
+    "writing-candidate": identity(WRITING_CANDIDATE_BUNDLE),
   };
 }
 
@@ -266,12 +276,19 @@ function responsesFromReport(report, bundleSource, shipped, model, transitMetada
           !paragraph ||
           typeof paragraph.text !== "string" ||
           !Array.isArray(paragraph.facts) ||
-          paragraph.facts.some((fact) => typeof fact !== "string"),
+          paragraph.facts.some((fact) => typeof fact !== "string") ||
+          (bundleSource === "writing-candidate" &&
+            (!Array.isArray(paragraph.scenes) ||
+              paragraph.scenes.some((id) => typeof id !== "string"))),
       )
     )
       throw new Error(`Case ${row.id} has a malformed captured paragraph`);
     responses[row.id] = {
-      paragraphs: candidate.paragraphs.map(({ text, facts }) => ({ text, facts: [...facts] })),
+      paragraphs: candidate.paragraphs.map(({ text, facts, scenes }) => ({
+        text,
+        facts: [...facts],
+        ...(scenes ? { scenes: [...scenes] } : {}),
+      })),
     };
   }
   return validateResponses(responses);
@@ -319,6 +336,13 @@ export async function evaluateReadings({
   return withEvaluationModules(
     async (load) => {
       const { assembleReading } = await load("/src/lib/reading.server.ts");
+      const { composeDailyWritingTemplate } = await load(
+        "/src/lib/content/daily-writing-template.ts",
+      );
+      const { DAILY_WRITING_PLAN_VERSION } = await load("/src/lib/content/daily-writing.ts");
+      const { DAILY_REFLECTION_VERSION } = await load("/src/lib/content/daily-reflection.ts");
+      const { DAILY_WRITING_QUALITY_VERSION } = await load("/src/lib/ai/daily-writing-quality.ts");
+      const { DAILY_VOICE_EXAMPLES_VERSION } = await load("/src/lib/ai/daily-voice.ts");
       const { readingFacts } = await load("/src/lib/ai/facts.ts");
       const { dailyPlanIdentity } = await load("/src/lib/content/synthesis.ts");
       const { NATAL_LENS_PLAN_VERSION } = await load("/src/lib/content/natal-lens.ts");
@@ -359,6 +383,8 @@ export async function evaluateReadings({
       for (const fixed of READING_EVAL_CASES) {
         currentResponse = replayResponses[fixed.id];
         currentRequests = [];
+        const effectiveBundle =
+          fixed.writingFrameMode === "none" ? { ...bundle, dailyWritingFrames: [] } : bundle;
         const reference = localNoon(fixed.config.day, fixed.config.timeZone);
         const cycles = fixed.cycles.map((cycle) => ({
           ...cycle,
@@ -378,7 +404,7 @@ export async function evaluateReadings({
             checkIn: null,
             wellness: null,
           },
-          bundle,
+          effectiveBundle,
           natalReliability,
         );
         const calculation = syntheticTransitCalculation(fixed, assembled.eligibleCycles[0]);
@@ -394,7 +420,7 @@ export async function evaluateReadings({
               checkIn: null,
               wellness: null,
             },
-            bundle,
+            effectiveBundle,
             natalReliability,
             calculation,
           );
@@ -413,6 +439,21 @@ export async function evaluateReadings({
             body: assembled.astroBody,
             prompt: assembled.prompt,
           },
+          ...(assembled.writingTemplate
+            ? {
+                writing: {
+                  plan: assembled.writingPlan,
+                  template: assembled.writingTemplate,
+                  minimalTemplate: composeDailyWritingTemplate(
+                    assembled.writingPlan,
+                    assembled.natalLensPlan,
+                    assembled.transitStoryPlan,
+                    true,
+                  ),
+                  recent: fixed.recentWritingBodies ?? [],
+                },
+              }
+            : {}),
         });
         const output = observed.prose;
         if (!output.meta.diagnostics)
@@ -431,6 +472,14 @@ export async function evaluateReadings({
           natalLensPlan: assembled.natalLensPlan,
           natalReliability,
           transitStoryPlan: assembled.transitStoryPlan,
+          ...(assembled.writingTemplate
+            ? {
+                writingPlan: assembled.writingPlan,
+                reflectionPlan: assembled.reflectionPlan,
+                writing: output.meta.writing,
+              }
+            : {}),
+          ...(fixed.writingFrameMode ? { writingFrameMode: fixed.writingFrameMode } : {}),
           diagnostics: output.meta.diagnostics,
           output: {
             mode: output.meta.mode,
@@ -466,8 +515,16 @@ export async function evaluateReadings({
         planVersion: DAILY_READING_PLAN_VERSION,
         natalPlanVersion: NATAL_LENS_PLAN_VERSION,
         reliabilityVersion: NATAL_RELIABILITY_VERSION,
-        promptVersion: DAILY_PROMPT_VERSION,
-        validatorVersion: DAILY_VALIDATOR_VERSION,
+        ...(bundle.schemaVersion === 5
+          ? {
+              writingPlanVersion: DAILY_WRITING_PLAN_VERSION,
+              writingQualityVersion: DAILY_WRITING_QUALITY_VERSION,
+              reflectionVersion: DAILY_REFLECTION_VERSION,
+              voiceExamplesVersion: DAILY_VOICE_EXAMPLES_VERSION,
+            }
+          : {}),
+        promptVersion: cases[0].diagnostics.promptVersion,
+        validatorVersion: cases[0].diagnostics.validatorVersion,
         model: LANGUAGE_MODEL,
         gatewayTimeoutMs: DAILY_GATEWAY_TIMEOUT_MS,
         bundleSource,
@@ -540,18 +597,21 @@ function validateReport(report) {
   const expected =
     report.fixtureVersion === READING_EVAL_FIXTURE_VERSION
       ? caseIds()
-      : report.fixtureVersion === "synthetic-daily-5"
-        ? historicalTransit
-          ? HISTORICAL_TRANSIT_IDS
-          : HISTORICAL_NATAL_IDS
-        : report.fixtureVersion === "synthetic-daily-4"
-          ? HISTORICAL_NATAL_IDS.filter((id) => !id.startsWith("natal-"))
-          : null;
+      : report.fixtureVersion === "synthetic-daily-6"
+        ? HISTORICAL_V6_IDS
+        : report.fixtureVersion === "synthetic-daily-5"
+          ? historicalTransit
+            ? HISTORICAL_TRANSIT_IDS
+            : HISTORICAL_NATAL_IDS
+          : report.fixtureVersion === "synthetic-daily-4"
+            ? HISTORICAL_NATAL_IDS.filter((id) => !id.startsWith("natal-"))
+            : null;
   if (!expected) throw new Error("Unsupported evaluation fixture version");
   if (JSON.stringify([...ids].sort()) !== JSON.stringify([...expected].sort()))
     throw new Error("Report must contain exactly the fixed case IDs");
   if (
-    (report.fixtureVersion === "synthetic-daily-6" || historicalTransit) &&
+    (["synthetic-daily-6", "synthetic-daily-7"].includes(report.fixtureVersion) ||
+      historicalTransit) &&
     STORY_POLICY_FIELDS.some((field) =>
       field === "storyUse" ? typeof report[field] !== "boolean" : !report[field],
     )
@@ -589,7 +649,8 @@ function compareReportPair(before, after, { natalBundleDifference = false } = {}
   )
     throw new Error("Version-5 comparison requires identical transit copy and model");
   if (
-    (before.fixtureVersion === "synthetic-daily-6" || historicalTransit) &&
+    (["synthetic-daily-6", "synthetic-daily-7"].includes(before.fixtureVersion) ||
+      historicalTransit) &&
     (natalBundleDifference ? ["model"] : ["bundleVersion", "bundleHash", "model"]).some(
       (field) => before[field] !== after[field],
     )
@@ -604,12 +665,13 @@ function compareReportPair(before, after, { natalBundleDifference = false } = {}
     "natalPlanVersion",
     "reliabilityVersion",
     "gatewayTimeoutMs",
-    ...(before.fixtureVersion === "synthetic-daily-6"
+    ...(["synthetic-daily-6", "synthetic-daily-7"].includes(before.fixtureVersion)
       ? ["storyPlanVersion", "transitCopyHash"]
       : []),
   ];
   if (
-    (before.fixtureVersion === "synthetic-daily-6" || historicalTransit) &&
+    (["synthetic-daily-6", "synthetic-daily-7"].includes(before.fixtureVersion) ||
+      historicalTransit) &&
     fixedPolicy.some((field) => before[field] !== after[field])
   )
     throw new Error(
@@ -640,6 +702,7 @@ function compareReportPair(before, after, { natalBundleDifference = false } = {}
     "natalPlanVersion",
     "reliabilityVersion",
     ...STORY_POLICY_FIELDS,
+    ...WRITING_POLICY_FIELDS,
     "promptVersion",
     "validatorVersion",
     "bundleVersion",
@@ -656,6 +719,7 @@ function compareReportPair(before, after, { natalBundleDifference = false } = {}
     natalPlanVersion: report.natalPlanVersion ?? null,
     reliabilityVersion: report.reliabilityVersion ?? null,
     ...Object.fromEntries(STORY_POLICY_FIELDS.map((field) => [field, report[field] ?? null])),
+    ...Object.fromEntries(WRITING_POLICY_FIELDS.map((field) => [field, report[field] ?? null])),
     promptVersion: report.promptVersion,
     validatorVersion: report.validatorVersion,
     bundleVersion: report.bundleVersion ?? null,
@@ -717,13 +781,15 @@ export function compareNatalReports(
 ) {
   const fixedFields = [
     ...NATAL_FIXED_FIELDS,
-    ...(before.fixtureVersion === "synthetic-daily-6" ? STORY_POLICY_FIELDS : []),
+    ...(["synthetic-daily-6", "synthetic-daily-7"].includes(before.fixtureVersion)
+      ? STORY_POLICY_FIELDS
+      : []),
   ];
   for (const field of fixedFields)
     if (before[field] == null || before[field] !== after[field])
       throw new Error(`Natal comparison requires an identical recorded ${field}`);
   const natalBundleDifference =
-    before.fixtureVersion === "synthetic-daily-6" &&
+    ["synthetic-daily-6", "synthetic-daily-7"].includes(before.fixtureVersion) &&
     (before.bundleVersion !== after.bundleVersion || before.bundleHash !== after.bundleHash);
   if (natalBundleDifference) {
     const sources = new Set([before.bundleSource, after.bundleSource]);
@@ -779,10 +845,10 @@ async function readJsonFile(path) {
 const readJson = async (path) => (await readJsonFile(path)).value;
 
 const HELP = `Offline synthetic reading evaluator (no network; fake gateway key)
-  --bundle-source builtin|natal-candidate|transit-candidate --output report.json
-  --bundle-source builtin|natal-candidate|transit-candidate --responses candidate.json --output report.json
-  --bundle-source builtin|natal-candidate|transit-candidate --responses responses.json --source-report complete-report.json --output replay.json
-  --bundle-source builtin|natal-candidate|transit-candidate --extract-responses complete-report.json --output responses.json
+  --bundle-source builtin|natal-candidate|transit-candidate|writing-candidate --output report.json
+  --bundle-source builtin|natal-candidate|transit-candidate|writing-candidate --responses candidate.json --output report.json
+  --bundle-source builtin|natal-candidate|transit-candidate|writing-candidate --responses responses.json --source-report complete-report.json --output replay.json
+  --bundle-source builtin|natal-candidate|transit-candidate|writing-candidate --extract-responses complete-report.json --output responses.json
   --bundle remains an alias for --bundle-source
   --write-responses candidate.json
   --compare before.json after.json --output comparison.json
@@ -843,10 +909,12 @@ export async function main(args) {
   if (!comparing && !("--write-responses" in options)) {
     if (bundleSource === undefined)
       throw new Error(
-        "Choose the evaluation copy explicitly: --bundle-source builtin|natal-candidate|transit-candidate",
+        "Choose the evaluation copy explicitly: --bundle-source builtin|natal-candidate|transit-candidate|writing-candidate",
       );
     if (!OFFLINE_BUNDLES.includes(bundleSource))
-      throw new Error("--bundle-source must be builtin, natal-candidate or transit-candidate");
+      throw new Error(
+        "--bundle-source must be builtin, natal-candidate, transit-candidate or writing-candidate",
+      );
   }
   if ("--source-report" in options && !("--responses" in options))
     throw new Error("--source-report binds a replay: pass the extracted --responses file");

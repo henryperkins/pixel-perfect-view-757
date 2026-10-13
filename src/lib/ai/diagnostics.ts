@@ -3,6 +3,8 @@ export const DAILY_DIAGNOSTICS_VERSION = 1;
 export const DAILY_READING_PLAN_VERSION = "daily-synthesis-1";
 export const DAILY_PROMPT_VERSION = "daily-astro-body-13";
 export const DAILY_VALIDATOR_VERSION = "daily-reference-10";
+export const CONCRETE_DAILY_PROMPT_VERSION = "daily-astro-body-14";
+export const CONCRETE_DAILY_VALIDATOR_VERSION = "daily-reference-11";
 export const MAX_DAILY_DURATION_MS = 120_000;
 export const DAILY_GATEWAY_TIMEOUT_MS = 60_000;
 export const LANGUAGE_MODEL = "google/gemini-3.8-flash";
@@ -64,6 +66,7 @@ export const DAILY_DIAGNOSTIC_CODES = [
   "orb",
   "date",
   "timing",
+  "writing_quality",
 ] as const;
 export type DailyDiagnosticCode = (typeof DAILY_DIAGNOSTIC_CODES)[number];
 export type DailyGatewayCode =
@@ -135,6 +138,7 @@ const LABELS: Record<DailyDiagnosticCode, string> = {
   orb: "Orb absent from cited cycles",
   date: "Date absent from cited cycles",
   timing: "Current measurement or window position combined with exact timing",
+  writing_quality: "Daily editorial checks rejected the draft",
 };
 export function diagnosticLabel(code: DailyDiagnosticCode): string {
   return LABELS[code];

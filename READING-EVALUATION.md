@@ -4,7 +4,7 @@
 
 Sign in as an admin, open `/content`, choose the **Evaluation copy** and
 **Language provider**, and choose **Run synthetic evaluation** in Reading quality.
-This runs the 28 fixed cases below on the server: at most 27 eligible model requests
+This runs `synthetic-daily-7`: 50 fixed cases on the server, at most 49 eligible model requests
 and one quiet-day check that makes no model call. Each case uses the production
 prompt and validator with the chosen copy and the selected provider's model.
 Provider keys stay on the server.
@@ -19,11 +19,13 @@ stalled and may be replaced by a new run. The edge plane must reach a public
 origin: start runs from the published site, or set `PATTERN_APP_URL` to it, because
 the auth-gated editor preview cannot answer the Workflow.
 
-| Evaluation copy              | `bundleSource`    | Copy used                                                                     |
-| ---------------------------- | ----------------- | ----------------------------------------------------------------------------- |
-| Current active copy          | `active`          | The effective published release, or the built-in fallback when none is active |
-| Natal-free built-in baseline | `builtin`         | `builtin-0.5.0`, without the natal catalogue                                  |
-| Inactive natal candidate     | `natal-candidate` | `builtin-0.6.1`, for this run only                                            |
+| Evaluation copy                     | `bundleSource`      | Copy used                                                                     |
+| ----------------------------------- | ------------------- | ----------------------------------------------------------------------------- |
+| Current active copy                 | `active`            | The effective published release, or the built-in fallback when none is active |
+| Natal-free built-in baseline        | `builtin`           | `builtin-0.5.0`, without the natal catalogue                                  |
+| Inactive natal candidate            | `natal-candidate`   | `builtin-0.6.1`, for this run only                                            |
+| Inactive transit candidate          | `transit-candidate` | `builtin-0.7.1`, for this run only                                            |
+| Inactive concrete-writing candidate | `writing-candidate` | Schema 5 `builtin-0.8.0`, for this run only                                   |
 
 The choice is fixed when the run starts, sent with every case and recorded in the
 report as `bundleSource`. Choosing a bundle never publishes, activates or caches it,
@@ -55,13 +57,13 @@ result, and template fallback for each completed case. Rejected drafts remain
 visible for review; generated paragraphs are bounded and marked when truncated.
 New captures also record `captureLossless`, decided on the raw draft before any
 bounding or filtering, so a dropped or cut paragraph, text or fact ID is never
-mistaken for a clean capture. Provider error bodies, exception text and
+mistaken for a clean capture. Schema-5 captures also require every scene-ID array to survive unchanged. A malformed or missing scene field makes the raw capture unavailable for lossless qualification even when the paragraph text remains visible. Provider error bodies, exception text and
 credentials are excluded. Production reading diagnostics continue excluding
 generated draft text.
 
 Download the JSON report from `/content` at any time; stored results stay with the
 run. Partial runs are marked as partial; a before/after comparison needs all
-28 fixed cases. A completed report is compatible with the comparison command:
+50 fixed cases. Historical completed reports retain their original versioned inventories. A completed report is compatible with the comparison command:
 
 ```sh
 npm run eval:reading -- --compare /tmp/pattern-before.json /tmp/pattern-after.json --output /tmp/pattern-comparison.json
@@ -99,10 +101,18 @@ Writing quality is judged separately under the
 [AI review lane](#current-writing-gate-ai-review-lane), before and after a prompt or
 copy change.
 
+## Concrete-writing candidate
+
+`writing-candidate` contains 191 source-owned frames: 81 interpretations and 110 positive directed syntheses. Independent pairs acquire no joint frame. The final source catalogue is the separately reviewed synthesis r3 candidate; its full matrix still has 3,296 pending editorial directions. Coverage percentages describe only the fixed synthetic population.
+
+Schema-5 assembly uses prompt `daily-astro-body-14`, validator `daily-reference-11`, and version-1 writing, quality, reflection and voice-example policies. The active schema-4 release continues using prompt 13 / validator 10. Both use the same member Lovable model and 60,000 ms deadline. The schema-5 model returns scene IDs separately from fact citations; the final question and wellness variants stay local. Editorial warnings stay separate from safety failures. Rejected drafts, displayed fallbacks, exact theme/reflection plans and bounded editorial codes are retained in synthetic reports.
+
+The twelve new writing cases are appended once to the unchanged first 38 cases. The writing candidate is inactive: deterministic template captures and code review establish source/shape behavior, while matched generation, blinded review, seven-day variation and actual human approval remain open under Tasks 12–13 of the [completion checklist](docs/superpowers/plans/2026-10-12-release-completion-checklist.md). [Current implementation evidence](docs/reviews/release-completion/2026-10-13-concrete-writing/README.md).
+
 ## Offline replay
 
 Every offline run names its copy explicitly with `--bundle builtin` (natal-free
-`builtin-0.5.0`) or `--bundle natal-candidate` (inactive `builtin-0.6.1`). Active
+`builtin-0.5.0`), `--bundle natal-candidate` (inactive `builtin-0.6.1`), `--bundle transit-candidate` (inactive `builtin-0.7.1`), or `--bundle writing-candidate` (inactive schema-5 `builtin-0.8.0`). Active
 copy exists only in the hosted app. Run the fixed suite before changing the daily
 prompt or published copy:
 
@@ -115,7 +125,7 @@ The fixture run replays handwritten JSON through the actual `assembleReading`, `
 
 The baseline answers are validator fixtures, not model outputs or recommended prose. Its acceptance rate only describes those fixtures. It cannot measure the live fallback rate, provider performance, tone quality, or semantic truth. The chart plans are synthetic contacts, not an ephemeris accuracy test. Local dates and daylight-saving conversions use the app's date helpers.
 
-The `synthetic-daily-5` suite retains the sixteen v3 cases (including corrected
+Historical `synthetic-daily-5` retained the sixteen v3 cases (including corrected
 Mercury chronology and six synthesis cases) and adds twelve natal cases. Version 5
 moves the Moon-lens cases onto a Moon contact and adds own-target and Moon-fallback
 cases for the `daily-natal-lens-2` order. Saved v1–v4 reports remain historical

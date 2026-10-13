@@ -1,6 +1,8 @@
 import type { DBClient } from "../d1.server";
 import { compareContentBundles, contentChecksum, type ContentValue } from "./draft-comparison";
 import { validateContentGraph } from "./schema";
+import { invalidateDailyWritingFrames } from "./daily-writing-invalidation";
+import type { ContentBundle } from "./default-bundle";
 
 export interface ReviewedDraft {
   id: string;
@@ -128,7 +130,19 @@ export async function editContentDraft(
   const draft = await loadReviewedDraft(db, userId, input.draftId);
   if ((await contentChecksum(draft.bundle)) !== input.expectedCandidateHash)
     throw new Error("The draft changed in another review. Reload before editing.");
-  const bundle = { ...input.bundle, version: "pending" };
+  const proposed = { ...input.bundle, version: "pending" };
+  if (JSON.stringify(proposed).length > 1000000)
+    throw new Error("The candidate exceeds the content limit.");
+  if (
+    (proposed as Record<string, unknown>)["dailyWritingFrames"] !== undefined &&
+    !Array.isArray((proposed as Record<string, unknown>)["dailyWritingFrames"])
+  )
+    throw new Error("Invalid daily writing frame catalogue.");
+  const invalidation = invalidateDailyWritingFrames(
+    draft.bundle as unknown as ContentBundle,
+    proposed as unknown as ContentBundle,
+  );
+  const bundle = invalidation.bundle;
   validateContentGraph(bundle);
   if (JSON.stringify(bundle).length > 1000000)
     throw new Error("The candidate exceeds the content limit.");
@@ -145,7 +159,11 @@ export async function editContentDraft(
   } catch {
     throw new Error("The draft or administrator authority changed. Your edit was not saved.");
   }
-  return { saved: true, candidateHash: await contentChecksum(bundle) };
+  return {
+    saved: true,
+    candidateHash: await contentChecksum(bundle),
+    removedFrameKeys: invalidation.removedFrameKeys,
+  };
 }
 
 export async function rebaseContentDraft(

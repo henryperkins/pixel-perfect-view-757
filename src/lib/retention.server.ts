@@ -245,6 +245,8 @@ export async function purgeExpiredContext(
           `(source_id='${source.id}' AND (julianday(captured_at)+${source.retention_days}<=julianday(?) OR julianday(captured_at) IS NULL))`,
       )
       .join(" OR ");
+    const writingRevoked =
+      "EXISTS(SELECT 1 FROM json_each(language_meta,'$.dailyWritingRetention.sourceIds') x WHERE x.value NOT IN ('WEL-01','WEL-03') OR NOT EXISTS(SELECT 1 FROM source_consents c WHERE c.user_id=daily_readings.user_id AND c.source_id=x.value AND c.granted=1))";
     const changes = [
       {
         name: "wellness",
@@ -285,6 +287,11 @@ export async function purgeExpiredContext(
         name: "local_copies",
         sql: `UPDATE daily_readings SET local_context_ct=NULL,local_context_sources='[]',local_context_expires_at=NULL WHERE ${expiredLocal}`,
         params: [userId, fixed],
+      },
+      {
+        name: "writing_copies",
+        sql: `UPDATE daily_readings SET language_meta=json_set(json_remove(language_meta,'$.daily_writing_ct','$.dailyWritingRetention'),'$.dailyWritingStatus','unavailable','$.daily_writing_unavailable',json(CASE WHEN ${writingRevoked} THEN '{"version":1,"reason":"revoked"}' ELSE '{"version":1,"reason":"expired"}' END)) WHERE user_id=? AND json_valid(language_meta) AND json_type(language_meta,'$.dailyWritingRetention') IS NOT NULL AND (julianday(reading_date)+181<=julianday(?) OR julianday(reading_date) IS NULL OR julianday(json_extract(language_meta,'$.dailyWritingRetention.expiresAt'))<=julianday(?) OR julianday(json_extract(language_meta,'$.dailyWritingRetention.expiresAt')) IS NULL OR ${writingRevoked})`,
+        params: [userId, fixed, fixed],
       },
       {
         name: "legacy_sources",

@@ -3,6 +3,9 @@ import type { ContentBundle, Interpretation } from "./default-bundle";
 import { BODIES, SIGNS } from "../astro/ephemeris";
 import { ASPECTS } from "../astro/chart";
 import { natalLensWordingProblem, natalMechanismHasTechnicalClaim } from "./natal-lens-policy";
+import { completeDailySentences, type DailyWritingFrame } from "./daily-writing";
+import { dailyQuestionProblem } from "./daily-reflection";
+import { dailyWritingReferenceClaim } from "./daily-writing-policy";
 
 import { NATAL_PERSONAL_BODIES, NATAL_BODY_ROLE, type NatalLensRule } from "./natal-lens-types";
 export * from "./natal-lens-types";
@@ -26,7 +29,7 @@ function validateNatalCatalogue(value: unknown, schemaVersion: number | undefine
   if (value === undefined) return;
   if (!Array.isArray(value) || value.length > 2000)
     throw new Error("Invalid natalLenses catalogue bounds");
-  if (value.length && schemaVersion !== 3 && schemaVersion !== 4)
+  if (value.length && schemaVersion !== 3 && schemaVersion !== 4 && schemaVersion !== 5)
     throw new Error("natalLenses require schemaVersion 3");
   const keys = new Set<string>(),
     selectors = new Set<string>();
@@ -149,6 +152,7 @@ interface RawContentBundle {
   synthesisRules?: unknown[];
   natalLenses?: unknown[];
   transitChapters?: unknown[];
+  dailyWritingFrames?: unknown;
   natal?: Record<string, string>;
   phases?: Record<string, string>;
   domains?: Record<string, unknown>;
@@ -168,7 +172,8 @@ export function validateContentGraph(raw: unknown): void {
     bundle.schemaVersion !== undefined &&
     bundle.schemaVersion !== 2 &&
     bundle.schemaVersion !== 3 &&
-    bundle.schemaVersion !== 4
+    bundle.schemaVersion !== 4 &&
+    bundle.schemaVersion !== 5
   ) {
     throw new Error(`Unsupported schemaVersion: ${bundle.schemaVersion}`);
   }
@@ -192,7 +197,8 @@ export function validateContentGraph(raw: unknown): void {
     (hasRules || hasAnnotatedThemes) &&
     bundle.schemaVersion !== 2 &&
     bundle.schemaVersion !== 3 &&
-    bundle.schemaVersion !== 4
+    bundle.schemaVersion !== 4 &&
+    bundle.schemaVersion !== 5
   ) {
     throw new Error("Theme annotations and synthesisRules require schemaVersion 2");
   }
@@ -374,6 +380,103 @@ export function validateContentGraph(raw: unknown): void {
       seenOrderedPairs.add(pairKey);
     }
   }
+  validateDailyWritingFrames(bundle);
+}
+
+/** Frames carry editorial examples, never selectors for private/member facts. */
+export function validateDailyWritingFrames(bundle: RawContentBundle) {
+  const value = bundle.dailyWritingFrames;
+  if (value === undefined) return;
+  if (!Array.isArray(value) || value.length > 2000 || (value.length && bundle.schemaVersion !== 5))
+    throw Error("Invalid daily writing frame catalogue or schema version.");
+  const keys = new Set<string>(),
+    bindings = new Set<string>();
+  const key = (text: unknown): text is string =>
+    typeof text === "string" && text === text.trim() && !!text && text.length <= 100;
+  const oneSentence = (text: unknown): text is string =>
+    typeof text === "string" &&
+    text === text.trim() &&
+    !!text &&
+    text.length <= 180 &&
+    !/[\r\n]/.test(text) &&
+    /[.!?]$/.test(text) &&
+    completeDailySentences(text).length === 1 &&
+    !safetyPass(text).flagged.length &&
+    !dailyWritingReferenceClaim(text);
+  const cues = (list: unknown): list is string[] =>
+    Array.isArray(list) &&
+    list.length >= 1 &&
+    list.length <= 5 &&
+    new Set(list).size === list.length &&
+    list.every(
+      (text) =>
+        typeof text === "string" &&
+        !!text &&
+        text === text.trim() &&
+        text.length <= 40 &&
+        /^[a-z0-9]+(?:[ '-][a-z0-9]+)*$/.test(text),
+    );
+  for (const frame of value) {
+    if (!frame || !key(frame.key) || keys.has(frame.key))
+      throw Error("Invalid or duplicate writing frame key.");
+    keys.add(frame.key);
+    if (
+      !frame.source ||
+      !["interpretation", "synthesis"].includes(frame.source.kind) ||
+      !key(frame.source.key)
+    )
+      throw Error("Invalid writing frame source binding.");
+    const binding = `${frame.source.kind}:${frame.source.key}`;
+    if (bindings.has(binding)) throw Error("Duplicate writing frame source binding.");
+    bindings.add(binding);
+    const source =
+      frame.source.kind === "interpretation"
+        ? (bundle.cycles as Interpretation[] | undefined)?.find(
+            (item) => item.key === frame.source.key,
+          )
+        : (bundle.synthesisRules as SynthesisRule[] | undefined)?.find(
+            (item) => item.key === frame.source.key && item.relationship !== "independent",
+          );
+    if (!source || !source.mechanism)
+      throw Error("Writing frame needs an existing positive/interpretation source.");
+    const sentences = completeDailySentences(source.mechanism);
+    if (
+      !Number.isInteger(frame.templateSentenceIndex) ||
+      frame.templateSentenceIndex < 0 ||
+      frame.templateSentenceIndex >= sentences.length ||
+      !/[.!?]$/.test(sentences[frame.templateSentenceIndex]!) ||
+      dailyWritingReferenceClaim(sentences[frame.templateSentenceIndex]!)
+    )
+      throw Error("Writing frame needs a reviewed complete source sentence index.");
+    if (!Array.isArray(frame.scenes) || frame.scenes.length < 1 || frame.scenes.length > 2)
+      throw Error("Writing frame needs one or two scenes.");
+    const sceneKeys = new Set<string>();
+    for (const scene of frame.scenes) {
+      if (
+        !scene ||
+        !key(scene.key) ||
+        sceneKeys.has(scene.key) ||
+        !oneSentence(scene.situation) ||
+        !oneSentence(scene.focus)
+      )
+        throw Error("Invalid or duplicate writing scene.");
+      sceneKeys.add(scene.key);
+      if (!scene.cues || !cues(scene.cues.objects) || !cues(scene.cues.actions))
+        throw Error("Invalid writing scene cues.");
+    }
+    if (!frame.reflection || typeof frame.reflection.standard !== "string")
+      throw Error("Missing writing frame reflection.");
+    for (const question of [
+      frame.reflection.standard,
+      frame.reflection.highStress,
+      frame.reflection.lowSleep,
+    ])
+      if (
+        question !== undefined &&
+        (typeof question !== "string" || dailyQuestionProblem(question))
+      )
+        throw Error("Invalid writing frame reflection question.");
+  }
 }
 
 export function normalizeContentBundle(
@@ -404,14 +507,16 @@ export function normalizeContentBundle(
   const domains = { ...defaults.domains, ...((rawObj.domains as ContentBundle["domains"]) || {}) };
 
   const hasAnnotatedThemes = cycles.some((c) => c.themes && c.themes.length > 0);
-  const schemaVersion: 2 | 3 | 4 | undefined =
-    rawObj.schemaVersion === 4
-      ? 4
-      : rawObj.schemaVersion === 3
-        ? 3
-        : rawObj.schemaVersion === 2 || synthesisRules.length > 0 || hasAnnotatedThemes
-          ? 2
-          : undefined;
+  const schemaVersion: 2 | 3 | 4 | 5 | undefined =
+    rawObj.schemaVersion === 5
+      ? 5
+      : rawObj.schemaVersion === 4
+        ? 4
+        : rawObj.schemaVersion === 3
+          ? 3
+          : rawObj.schemaVersion === 2 || synthesisRules.length > 0 || hasAnnotatedThemes
+            ? 2
+            : undefined;
 
   const bundle: ContentBundle = {
     version,
@@ -420,6 +525,9 @@ export function normalizeContentBundle(
     phases,
     domains,
     synthesisRules,
+    dailyWritingFrames: Array.isArray(rawObj.dailyWritingFrames)
+      ? (structuredClone(rawObj.dailyWritingFrames) as DailyWritingFrame[])
+      : [],
     transitChapters: Array.isArray(rawObj.transitChapters)
       ? (structuredClone(rawObj.transitChapters) as NonNullable<ContentBundle["transitChapters"]>)
       : [],
@@ -471,7 +579,11 @@ export function samePublishedBundle(a: unknown, b: unknown): boolean {
 
 export function validateTransitCatalogue(value: unknown, schemaVersion: number | undefined) {
   if (value === undefined) return;
-  if (!Array.isArray(value) || value.length > 5 || (value.length > 0 && schemaVersion !== 4))
+  if (
+    !Array.isArray(value) ||
+    value.length > 5 ||
+    (value.length > 0 && schemaVersion !== 4 && schemaVersion !== 5)
+  )
     throw new Error("Invalid transit chapter catalogue");
   const keys = new Set<string>(),
     chapters = new Set<string>();
