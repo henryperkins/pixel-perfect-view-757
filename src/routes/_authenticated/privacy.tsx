@@ -9,6 +9,8 @@ import { clearPatternQueries, clearReadingContextQueries } from "@/lib/pattern-q
 import { LIFE_DOMAINS, type LifeDomain } from "@/lib/context-policy";
 import { DOMAIN_LABEL } from "@/components/pattern/timing";
 import { CurrentLocation } from "@/components/pattern/CurrentLocation";
+import { MembershipSettings } from "@/components/pattern/MembershipSettings";
+import { AccountSecurity } from "@/components/pattern/AccountSecurity";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import {
@@ -202,6 +204,8 @@ function PrivacyPage() {
             </div>
           ) : null}
 
+          <MembershipSettings />
+          <AccountSecurity />
           <section className="mt-8 max-w-2xl" aria-labelledby="reading-language-privacy">
             <h2 id="reading-language-privacy" className="font-serif text-xl">
               How reading language is written
@@ -590,9 +594,9 @@ function PrivacyPage() {
               >
                 <p className="text-sm">
                   Delete your Pattern login, all sessions, saved chart, readings, journal and
-                  encryption key, and stop all connected assistant access. This cannot be undone.
-                  Your separate Google or assistant sign-in account is kept. Provider backups follow
-                  their own retention policy.
+                  encryption key, cancel your membership immediately, and stop all connected
+                  assistant access. This cannot be undone. Your separate Google or assistant sign-in
+                  account is kept. Provider backups follow their own retention policy.
                 </p>
                 <label className="block text-sm">
                   Current password

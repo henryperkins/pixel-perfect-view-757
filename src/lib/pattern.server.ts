@@ -3300,6 +3300,20 @@ function unavailableNarrative(reason: string | null) {
  * encrypted like every other piece of written output.
  */
 export async function getFeatureNarrative(db: DB, userId: string, featureKey: string) {
+  const narrative = await loadFeatureNarrative(db, userId, featureKey);
+  if (!narrative.available) return narrative;
+  const { getMembership } = await import("./billing.server");
+  const { chapterPreview } = await import("./billing-policy");
+  // Recheck after generation as a chapter can finish after access has expired.
+  const access = await getMembership(userId, db);
+  return {
+    ...(access.fullAccess ? narrative : chapterPreview(narrative)),
+    locked: !access.fullAccess,
+    accessUntil: access.accessUntil,
+  };
+}
+
+async function loadFeatureNarrative(db: DB, userId: string, featureKey: string) {
   const snapRow = await loadSnapshot(db, userId);
   if (!snapRow)
     return { available: false as const, retryable: false, reason: "No chart calculated yet." };

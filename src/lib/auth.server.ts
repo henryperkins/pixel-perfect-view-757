@@ -93,7 +93,7 @@ export async function requireCurrentPassword(
   db: DBClient = records(),
 ) {
   if (typeof password !== "string" || password.length < 1 || password.length > 200) {
-    throw new Error("Enter your current password to delete this account.");
+    throw new Error("Enter your current password to continue.");
   }
   const { data, error } = await db
     .from<{ password_hash: string }>("users")
@@ -120,7 +120,10 @@ async function issueSession(userId: string) {
 }
 
 /** Creates an account and signs it in. */
-export async function signUpWithPassword(email: string, password: string): Promise<SessionUser> {
+export async function signUpWithPassword(
+  email: string,
+  password: string,
+): Promise<SessionUser & { confirmationSent: boolean }> {
   const normalized = email.trim().toLowerCase();
   const db = records();
   const { data: existing } = await db
@@ -139,7 +142,17 @@ export async function signUpWithPassword(email: string, password: string): Promi
 
   await db.from("profiles").upsert({ id: created.id }, { onConflict: "id" });
   await issueSession(created.id);
-  return { userId: created.id, email: normalized };
+  // Account creation remains successful if email delivery is temporarily unavailable.
+  let confirmationSent = false;
+  try {
+    await (await import("./account-security.server")).sendConfirmation(created.id, db);
+    confirmationSent = true;
+  } catch {
+    console.warn(
+      "Pattern confirmation email could not be sent; available to resend in account settings.",
+    );
+  }
+  return { userId: created.id, email: normalized, confirmationSent };
 }
 
 /** Verifies a password and starts a session. */

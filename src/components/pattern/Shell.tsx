@@ -15,6 +15,7 @@ const NAV = [
   { to: "/birth", label: "Birth details" },
   { to: "/time-travel", label: "Time travel" },
   { to: "/privacy", label: "Context & privacy" },
+  { to: "/plans", label: "Plans" },
   { to: "/assistants", label: "Connected assistants" },
   { to: "/content", label: "Content" },
 ] as const;

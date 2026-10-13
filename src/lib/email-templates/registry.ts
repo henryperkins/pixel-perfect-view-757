@@ -1,12 +1,24 @@
-import type { ComponentType } from 'react'
+import type { ComponentType } from "react";
+import { SignupEmail } from "./signup";
+import { RecoveryEmail } from "./recovery";
+import { EmailChangeEmail } from "./email-change";
 
+export interface EmailTemplateData {
+  siteName: string;
+  siteUrl: string;
+  recipient: string;
+  confirmationUrl: string;
+  oldEmail: string;
+  email: string;
+  newEmail: string;
+}
 export interface TemplateEntry {
-  component: ComponentType<any>
-  subject: string | ((data: Record<string, any>) => string)
-  displayName?: string
-  previewData?: Record<string, any>
+  component: ComponentType<EmailTemplateData>;
+  subject: string | ((data: EmailTemplateData) => string);
+  displayName?: string;
+  previewData?: EmailTemplateData;
   /** Fixed recipient — overrides caller-provided recipientEmail when set. */
-  to?: string
+  to?: string;
 }
 
 /**
@@ -18,6 +30,7 @@ export interface TemplateEntry {
  *   // then add to TEMPLATES: 'welcome': welcomeTemplate
  */
 export const TEMPLATES: Record<string, TemplateEntry> = {
-  // Add templates here as they are created, e.g.:
-  // 'welcome': welcomeTemplate,
-}
+  "account-confirmation": { component: SignupEmail, subject: "Confirm your Pattern email" },
+  "password-reset": { component: RecoveryEmail, subject: "Reset your Pattern password" },
+  "email-change": { component: EmailChangeEmail, subject: "Confirm your new Pattern email" },
+};

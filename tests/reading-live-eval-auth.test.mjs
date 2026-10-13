@@ -26,7 +26,7 @@ function snapshot() {
   return Object.fromEntries(
     tables.map(({ name }) => {
       assert.match(name, /^[a-z_]+$/);
-      return [name, h.sqlite.prepare(`SELECT * FROM ${name} ORDER BY id`).all()];
+      return [name, h.sqlite.prepare(`SELECT * FROM ${name} ORDER BY 1`).all()];
     }),
   );
 }

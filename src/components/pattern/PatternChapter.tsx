@@ -1,6 +1,10 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { RotateCcw } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { useMembership } from "@/hooks/useMembership";
+import { chapterPreview } from "@/lib/billing-policy";
 
 import { Button } from "@/components/ui/button";
 import { fetchFeatureNarrative } from "@/lib/pattern.functions";
@@ -18,15 +22,41 @@ export function PatternChapter({
   cacheKey: string;
 }) {
   const client = useQueryClient();
+  const membership = useMembership();
+  const [clock, setClock] = useState(Date.now());
+  const accessUntil = membership.data?.accessUntil;
+  const refetchMembership = membership.refetch;
+  useEffect(() => {
+    if (!accessUntil) return;
+    const remaining = Date.parse(accessUntil) - Date.now();
+    const timer = window.setTimeout(
+      () => {
+        setClock(Date.now());
+        void refetchMembership();
+      },
+      Math.min(Math.max(remaining + 25, 50), 2_147_000_000),
+    );
+    return () => window.clearTimeout(timer);
+  }, [accessUntil, refetchMembership]);
+  const fullAccess =
+    membership.data?.fullAccess &&
+    !membership.isError &&
+    (!accessUntil || Date.parse(accessUntil) > clock);
   const load = useServerFn(fetchFeatureNarrative);
   const query = useQuery({
-    queryKey: ["feature-narrative", cacheKey, feature.feature_key],
+    queryKey: ["feature-narrative", cacheKey, feature.feature_key, Boolean(fullAccess)],
     queryFn: () => load({ data: { featureKey: feature.feature_key } }),
+    enabled: Boolean(membership.data),
     staleTime: Infinity,
     retry: false,
   });
   const changedChart = query.data?.available && query.data.cacheKey !== cacheKey;
-  const narrative = query.data?.available && !changedChart ? query.data : null;
+  const narrative =
+    query.data?.available && !changedChart
+      ? fullAccess
+        ? query.data
+        : chapterPreview(query.data)
+      : null;
   const paragraphs = narrative?.paragraphs ?? [];
   const narrativeRef = useReadingArrival(Boolean(narrative));
   const retryable = Boolean(
@@ -35,7 +65,16 @@ export function PatternChapter({
 
   return (
     <div>
-      {query.isPending || (query.isFetching && !narrative) ? (
+      {membership.error ? (
+        <div className="pattern-narrative-fallback">
+          <p role="alert">
+            Your membership could not be checked. Please try again to read this chapter.
+          </p>
+          <Button variant="outline" className="mt-4" onClick={() => membership.refetch()}>
+            Retry membership check
+          </Button>
+        </div>
+      ) : query.isPending || (query.isFetching && !narrative) ? (
         <div className="pattern-narrative-loading" aria-busy="true" aria-label="Preparing chapter">
           <p role="status">
             Your chapter is taking shape. The first reading can take up to 90 seconds; it stays
@@ -105,6 +144,17 @@ export function PatternChapter({
               <RotateCcw aria-hidden="true" /> Try this chapter again
             </Button>
           ) : null}
+        </div>
+      )}
+      {narrative && (narrative.locked || !fullAccess) && (
+        <div className="mt-6 border-t border-rule pt-5">
+          <h3 className="font-serif text-xl">Continue this chapter with Pattern Plus</h3>
+          <p className="mt-2 text-sm text-muted-foreground">
+            You’re reading the opening. Plus includes the full essay and reflection question.
+          </p>
+          <Button asChild className="mt-4">
+            <Link to="/plans">View plans</Link>
+          </Button>
         </div>
       )}
 

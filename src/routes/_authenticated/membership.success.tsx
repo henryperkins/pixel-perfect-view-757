@@ -1,0 +1,81 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
+import { Shell } from "@/components/pattern/Shell";
+import { Button } from "@/components/ui/button";
+import { refreshMembership } from "@/lib/billing.functions";
+
+export const Route = createFileRoute("/_authenticated/membership/success")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    session_id:
+      typeof search["session_id"] === "string" &&
+      /^cs_test_[A-Za-z0-9_]{1,240}$/.test(search["session_id"])
+        ? search["session_id"]
+        : "",
+  }),
+  head: () => ({
+    meta: [{ title: "Membership confirmation — Pattern" }, { name: "robots", content: "noindex" }],
+  }),
+  component: MembershipSuccess,
+});
+function MembershipSuccess() {
+  const { session_id } = Route.useSearch(),
+    { user } = Route.useRouteContext(),
+    client = useQueryClient();
+  const query = useQuery({
+    queryKey: ["membership-checkout", user.userId, session_id],
+    queryFn: () => refreshMembership({ data: { sessionId: session_id } }),
+    enabled: Boolean(session_id),
+    retry: false,
+  });
+  useEffect(() => {
+    if (query.data) {
+      void client.invalidateQueries({ queryKey: ["membership"] });
+      void client.invalidateQueries({ queryKey: ["feature-narrative"] });
+    }
+  }, [query.data, client]);
+  return (
+    <Shell>
+      <div className="mx-auto max-w-xl">
+        <h1 className="text-3xl">
+          {query.data?.fullAccess ? "Your full chapters are ready" : "Confirming your membership"}
+        </h1>
+        {!session_id ? (
+          <p role="alert" className="mt-4">
+            This checkout link is incomplete. Check your membership in Context &amp; privacy.
+          </p>
+        ) : query.isPending ? (
+          <p role="status" className="mt-4">
+            Checking your payment with Stripe…
+          </p>
+        ) : query.error ? (
+          <p role="alert" className="mt-4">
+            {query.error.message}
+          </p>
+        ) : (
+          <p role="status" className="mt-4">
+            {query.data?.fullAccess
+              ? query.data.membership?.status === "trialing"
+                ? "Your 7-day Pattern Plus trial has started. Full chapters are unlocked."
+                : "Your Pattern Plus payment is confirmed. Full chapters are unlocked."
+              : "Your checkout has not finished processing. Check again in a moment."}
+          </p>
+        )}
+        <div className="mt-6 flex flex-wrap gap-3">
+          {query.data?.fullAccess ? (
+            <Button asChild>
+              <Link to="/pattern">Read your chapters</Link>
+            </Button>
+          ) : session_id ? (
+            <Button disabled={query.isFetching} onClick={() => query.refetch()}>
+              Check again
+            </Button>
+          ) : null}
+          <Button asChild variant="outline">
+            <Link to="/privacy">Manage membership</Link>
+          </Button>
+        </div>
+      </div>
+    </Shell>
+  );
+}

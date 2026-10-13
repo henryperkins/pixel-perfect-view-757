@@ -278,7 +278,7 @@ test("runs write only evaluation tables and never read member records", async ()
           "SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%' AND name NOT LIKE 'evaluation_%' ORDER BY name",
         )
         .all()
-        .map(({ name }) => [name, h.sqlite.prepare(`SELECT * FROM ${name} ORDER BY id`).all()]),
+        .map(({ name }) => [name, h.sqlite.prepare(`SELECT * FROM ${name} ORDER BY 1`).all()]),
     );
   const previous = memberTables();
   gatewayAnswers();

@@ -49,7 +49,7 @@ export default {
     const path = new URL(request.url).pathname;
     if (
       (path === "/mcp" || path === "/.well-known/oauth-protected-resource") &&
-      process.env["PATTERN_ASSISTANTS_ENABLED"] !== "true"
+      process.env["PATTERN_ASSISTANTS_ENABLED"] === "false"
     ) {
       return new Response("Assistant connections are currently unavailable.", {
         status: 503,

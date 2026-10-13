@@ -13,7 +13,9 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AssistantAuthRouteImport } from './routes/assistant-auth'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ConfirmEmailRouteImport } from './routes/confirm-email'
 import { Route as McpRouteImport } from './routes/mcp'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as TransitChartCalculatorRouteImport } from './routes/transit-chart-calculator'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as AuthenticatedAssistantsRouteImport } from './routes/_authenticated/assistants'
@@ -22,15 +24,19 @@ import { Route as AuthenticatedContentRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedJournalRouteImport } from './routes/_authenticated/journal'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
 import { Route as AuthenticatedPatternRouteImport } from './routes/_authenticated/pattern'
+import { Route as AuthenticatedPlansRouteImport } from './routes/_authenticated/plans'
 import { Route as AuthenticatedPrivacyRouteImport } from './routes/_authenticated/privacy'
 import { Route as AuthenticatedSourcesRouteImport } from './routes/_authenticated/sources'
 import { Route as AuthenticatedTimeTravelRouteImport } from './routes/_authenticated/time-travel'
 import { Route as AuthenticatedTimingRouteImport } from './routes/_authenticated/timing'
 import { Route as OauthConsentRouteImport } from './routes/oauth/consent'
+import { Route as Char91DotlovableChar93OauthConsentRouteImport } from './routes/[.lovable]/oauth/consent'
+import { Route as AuthenticatedMembershipSuccessRouteImport } from './routes/_authenticated/membership.success'
 import { Route as ApiPublicContentReleasesRouteImport } from './routes/api/public/content-releases'
 import { Route as ApiPublicEvaluationIdentityRouteImport } from './routes/api/public/evaluation-identity'
 import { Route as ApiPublicEvaluationStepRouteImport } from './routes/api/public/evaluation-step'
 import { Route as ApiPublicRetentionStepRouteImport } from './routes/api/public/retention-step'
+import { Route as ApiPublicStripeWebhookRouteImport } from './routes/api/public/stripe-webhook'
 import { Route as ApiPublicContentReleasesRollbackRouteImport } from './routes/api/public/content-releases.rollback'
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
 import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
@@ -55,9 +61,19 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ConfirmEmailRoute = ConfirmEmailRouteImport.update({
+  id: '/confirm-email',
+  path: '/confirm-email',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const McpRoute = McpRouteImport.update({
   id: '/mcp',
   path: '/mcp',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TransitChartCalculatorRoute = TransitChartCalculatorRouteImport.update({
@@ -101,6 +117,11 @@ const AuthenticatedPatternRoute = AuthenticatedPatternRouteImport.update({
   path: '/pattern',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedPlansRoute = AuthenticatedPlansRouteImport.update({
+  id: '/plans',
+  path: '/plans',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedPrivacyRoute = AuthenticatedPrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
@@ -126,6 +147,18 @@ const OauthConsentRoute = OauthConsentRouteImport.update({
   path: '/oauth/consent',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Char91DotlovableChar93OauthConsentRoute =
+  Char91DotlovableChar93OauthConsentRouteImport.update({
+    id: '/.lovable/oauth/consent',
+    path: '/.lovable/oauth/consent',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const AuthenticatedMembershipSuccessRoute =
+  AuthenticatedMembershipSuccessRouteImport.update({
+    id: '/membership/success',
+    path: '/membership/success',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const ApiPublicContentReleasesRoute =
   ApiPublicContentReleasesRouteImport.update({
     id: '/api/public/content-releases',
@@ -146,6 +179,11 @@ const ApiPublicEvaluationStepRoute = ApiPublicEvaluationStepRouteImport.update({
 const ApiPublicRetentionStepRoute = ApiPublicRetentionStepRouteImport.update({
   id: '/api/public/retention-step',
   path: '/api/public/retention-step',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicStripeWebhookRoute = ApiPublicStripeWebhookRouteImport.update({
+  id: '/api/public/stripe-webhook',
+  path: '/api/public/stripe-webhook',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicContentReleasesRollbackRoute =
@@ -175,7 +213,9 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/assistant-auth': typeof AssistantAuthRoute
   '/auth': typeof AuthRoute
+  '/confirm-email': typeof ConfirmEmailRoute
   '/mcp': typeof McpRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/transit-chart-calculator': typeof TransitChartCalculatorRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/assistants': typeof AuthenticatedAssistantsRoute
@@ -184,15 +224,19 @@ export interface FileRoutesByFullPath {
   '/journal': typeof AuthenticatedJournalRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/pattern': typeof AuthenticatedPatternRoute
+  '/plans': typeof AuthenticatedPlansRoute
   '/privacy': typeof AuthenticatedPrivacyRoute
   '/sources': typeof AuthenticatedSourcesRoute
   '/time-travel': typeof AuthenticatedTimeTravelRoute
   '/timing': typeof AuthenticatedTimingRoute
   '/oauth/consent': typeof OauthConsentRoute
+  '/.lovable/oauth/consent': typeof Char91DotlovableChar93OauthConsentRoute
+  '/membership/success': typeof AuthenticatedMembershipSuccessRoute
   '/api/public/content-releases': typeof ApiPublicContentReleasesRouteWithChildren
   '/api/public/evaluation-identity': typeof ApiPublicEvaluationIdentityRoute
   '/api/public/evaluation-step': typeof ApiPublicEvaluationStepRoute
   '/api/public/retention-step': typeof ApiPublicRetentionStepRoute
+  '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/api/public/content-releases/rollback': typeof ApiPublicContentReleasesRollbackRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
@@ -202,7 +246,9 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/assistant-auth': typeof AssistantAuthRoute
   '/auth': typeof AuthRoute
+  '/confirm-email': typeof ConfirmEmailRoute
   '/mcp': typeof McpRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/transit-chart-calculator': typeof TransitChartCalculatorRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/assistants': typeof AuthenticatedAssistantsRoute
@@ -211,15 +257,19 @@ export interface FileRoutesByTo {
   '/journal': typeof AuthenticatedJournalRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/pattern': typeof AuthenticatedPatternRoute
+  '/plans': typeof AuthenticatedPlansRoute
   '/privacy': typeof AuthenticatedPrivacyRoute
   '/sources': typeof AuthenticatedSourcesRoute
   '/time-travel': typeof AuthenticatedTimeTravelRoute
   '/timing': typeof AuthenticatedTimingRoute
   '/oauth/consent': typeof OauthConsentRoute
+  '/.lovable/oauth/consent': typeof Char91DotlovableChar93OauthConsentRoute
+  '/membership/success': typeof AuthenticatedMembershipSuccessRoute
   '/api/public/content-releases': typeof ApiPublicContentReleasesRouteWithChildren
   '/api/public/evaluation-identity': typeof ApiPublicEvaluationIdentityRoute
   '/api/public/evaluation-step': typeof ApiPublicEvaluationStepRoute
   '/api/public/retention-step': typeof ApiPublicRetentionStepRoute
+  '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/api/public/content-releases/rollback': typeof ApiPublicContentReleasesRollbackRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
@@ -231,7 +281,9 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/assistant-auth': typeof AssistantAuthRoute
   '/auth': typeof AuthRoute
+  '/confirm-email': typeof ConfirmEmailRoute
   '/mcp': typeof McpRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/transit-chart-calculator': typeof TransitChartCalculatorRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/_authenticated/assistants': typeof AuthenticatedAssistantsRoute
@@ -240,15 +292,19 @@ export interface FileRoutesById {
   '/_authenticated/journal': typeof AuthenticatedJournalRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
   '/_authenticated/pattern': typeof AuthenticatedPatternRoute
+  '/_authenticated/plans': typeof AuthenticatedPlansRoute
   '/_authenticated/privacy': typeof AuthenticatedPrivacyRoute
   '/_authenticated/sources': typeof AuthenticatedSourcesRoute
   '/_authenticated/time-travel': typeof AuthenticatedTimeTravelRoute
   '/_authenticated/timing': typeof AuthenticatedTimingRoute
   '/oauth/consent': typeof OauthConsentRoute
+  '/.lovable/oauth/consent': typeof Char91DotlovableChar93OauthConsentRoute
+  '/_authenticated/membership/success': typeof AuthenticatedMembershipSuccessRoute
   '/api/public/content-releases': typeof ApiPublicContentReleasesRouteWithChildren
   '/api/public/evaluation-identity': typeof ApiPublicEvaluationIdentityRoute
   '/api/public/evaluation-step': typeof ApiPublicEvaluationStepRoute
   '/api/public/retention-step': typeof ApiPublicRetentionStepRoute
+  '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/api/public/content-releases/rollback': typeof ApiPublicContentReleasesRollbackRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
@@ -260,7 +316,9 @@ export interface FileRouteTypes {
     | '/'
     | '/assistant-auth'
     | '/auth'
+    | '/confirm-email'
     | '/mcp'
+    | '/reset-password'
     | '/transit-chart-calculator'
     | '/.well-known/oauth-protected-resource'
     | '/assistants'
@@ -269,15 +327,19 @@ export interface FileRouteTypes {
     | '/journal'
     | '/onboarding'
     | '/pattern'
+    | '/plans'
     | '/privacy'
     | '/sources'
     | '/time-travel'
     | '/timing'
     | '/oauth/consent'
+    | '/.lovable/oauth/consent'
+    | '/membership/success'
     | '/api/public/content-releases'
     | '/api/public/evaluation-identity'
     | '/api/public/evaluation-step'
     | '/api/public/retention-step'
+    | '/api/public/stripe-webhook'
     | '/api/public/content-releases/rollback'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
@@ -287,7 +349,9 @@ export interface FileRouteTypes {
     | '/'
     | '/assistant-auth'
     | '/auth'
+    | '/confirm-email'
     | '/mcp'
+    | '/reset-password'
     | '/transit-chart-calculator'
     | '/.well-known/oauth-protected-resource'
     | '/assistants'
@@ -296,15 +360,19 @@ export interface FileRouteTypes {
     | '/journal'
     | '/onboarding'
     | '/pattern'
+    | '/plans'
     | '/privacy'
     | '/sources'
     | '/time-travel'
     | '/timing'
     | '/oauth/consent'
+    | '/.lovable/oauth/consent'
+    | '/membership/success'
     | '/api/public/content-releases'
     | '/api/public/evaluation-identity'
     | '/api/public/evaluation-step'
     | '/api/public/retention-step'
+    | '/api/public/stripe-webhook'
     | '/api/public/content-releases/rollback'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
@@ -315,7 +383,9 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/assistant-auth'
     | '/auth'
+    | '/confirm-email'
     | '/mcp'
+    | '/reset-password'
     | '/transit-chart-calculator'
     | '/.well-known/oauth-protected-resource'
     | '/_authenticated/assistants'
@@ -324,15 +394,19 @@ export interface FileRouteTypes {
     | '/_authenticated/journal'
     | '/_authenticated/onboarding'
     | '/_authenticated/pattern'
+    | '/_authenticated/plans'
     | '/_authenticated/privacy'
     | '/_authenticated/sources'
     | '/_authenticated/time-travel'
     | '/_authenticated/timing'
     | '/oauth/consent'
+    | '/.lovable/oauth/consent'
+    | '/_authenticated/membership/success'
     | '/api/public/content-releases'
     | '/api/public/evaluation-identity'
     | '/api/public/evaluation-step'
     | '/api/public/retention-step'
+    | '/api/public/stripe-webhook'
     | '/api/public/content-releases/rollback'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
@@ -344,14 +418,18 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AssistantAuthRoute: typeof AssistantAuthRoute
   AuthRoute: typeof AuthRoute
+  ConfirmEmailRoute: typeof ConfirmEmailRoute
   McpRoute: typeof McpRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   TransitChartCalculatorRoute: typeof TransitChartCalculatorRoute
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   OauthConsentRoute: typeof OauthConsentRoute
+  Char91DotlovableChar93OauthConsentRoute: typeof Char91DotlovableChar93OauthConsentRoute
   ApiPublicContentReleasesRoute: typeof ApiPublicContentReleasesRouteWithChildren
   ApiPublicEvaluationIdentityRoute: typeof ApiPublicEvaluationIdentityRoute
   ApiPublicEvaluationStepRoute: typeof ApiPublicEvaluationStepRoute
   ApiPublicRetentionStepRoute: typeof ApiPublicRetentionStepRoute
+  ApiPublicStripeWebhookRoute: typeof ApiPublicStripeWebhookRoute
   LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
   LovableEmailAuthWebhookRoute: typeof LovableEmailAuthWebhookRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
@@ -387,11 +465,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/confirm-email': {
+      id: '/confirm-email'
+      path: '/confirm-email'
+      fullPath: '/confirm-email'
+      preLoaderRoute: typeof ConfirmEmailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/mcp': {
       id: '/mcp'
       path: '/mcp'
       fullPath: '/mcp'
       preLoaderRoute: typeof McpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/transit-chart-calculator': {
@@ -450,6 +542,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPatternRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/plans': {
+      id: '/_authenticated/plans'
+      path: '/plans'
+      fullPath: '/plans'
+      preLoaderRoute: typeof AuthenticatedPlansRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/privacy': {
       id: '/_authenticated/privacy'
       path: '/privacy'
@@ -485,6 +584,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OauthConsentRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/.lovable/oauth/consent': {
+      id: '/.lovable/oauth/consent'
+      path: '/.lovable/oauth/consent'
+      fullPath: '/.lovable/oauth/consent'
+      preLoaderRoute: typeof Char91DotlovableChar93OauthConsentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/membership/success': {
+      id: '/_authenticated/membership/success'
+      path: '/membership/success'
+      fullPath: '/membership/success'
+      preLoaderRoute: typeof AuthenticatedMembershipSuccessRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/api/public/content-releases': {
       id: '/api/public/content-releases'
       path: '/api/public/content-releases'
@@ -511,6 +624,13 @@ declare module '@tanstack/react-router' {
       path: '/api/public/retention-step'
       fullPath: '/api/public/retention-step'
       preLoaderRoute: typeof ApiPublicRetentionStepRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/stripe-webhook': {
+      id: '/api/public/stripe-webhook'
+      path: '/api/public/stripe-webhook'
+      fullPath: '/api/public/stripe-webhook'
+      preLoaderRoute: typeof ApiPublicStripeWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/content-releases/rollback': {
@@ -551,10 +671,12 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedJournalRoute: typeof AuthenticatedJournalRoute
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
   AuthenticatedPatternRoute: typeof AuthenticatedPatternRoute
+  AuthenticatedPlansRoute: typeof AuthenticatedPlansRoute
   AuthenticatedPrivacyRoute: typeof AuthenticatedPrivacyRoute
   AuthenticatedSourcesRoute: typeof AuthenticatedSourcesRoute
   AuthenticatedTimeTravelRoute: typeof AuthenticatedTimeTravelRoute
   AuthenticatedTimingRoute: typeof AuthenticatedTimingRoute
+  AuthenticatedMembershipSuccessRoute: typeof AuthenticatedMembershipSuccessRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -564,10 +686,12 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedJournalRoute: AuthenticatedJournalRoute,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
   AuthenticatedPatternRoute: AuthenticatedPatternRoute,
+  AuthenticatedPlansRoute: AuthenticatedPlansRoute,
   AuthenticatedPrivacyRoute: AuthenticatedPrivacyRoute,
   AuthenticatedSourcesRoute: AuthenticatedSourcesRoute,
   AuthenticatedTimeTravelRoute: AuthenticatedTimeTravelRoute,
   AuthenticatedTimingRoute: AuthenticatedTimingRoute,
+  AuthenticatedMembershipSuccessRoute: AuthenticatedMembershipSuccessRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -593,15 +717,20 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AssistantAuthRoute: AssistantAuthRoute,
   AuthRoute: AuthRoute,
+  ConfirmEmailRoute: ConfirmEmailRoute,
   McpRoute: McpRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   TransitChartCalculatorRoute: TransitChartCalculatorRoute,
   Char91DotwellKnownChar93OauthProtectedResourceRoute:
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
   OauthConsentRoute: OauthConsentRoute,
+  Char91DotlovableChar93OauthConsentRoute:
+    Char91DotlovableChar93OauthConsentRoute,
   ApiPublicContentReleasesRoute: ApiPublicContentReleasesRouteWithChildren,
   ApiPublicEvaluationIdentityRoute: ApiPublicEvaluationIdentityRoute,
   ApiPublicEvaluationStepRoute: ApiPublicEvaluationStepRoute,
   ApiPublicRetentionStepRoute: ApiPublicRetentionStepRoute,
+  ApiPublicStripeWebhookRoute: ApiPublicStripeWebhookRoute,
   LovableEmailAuthPreviewRoute: LovableEmailAuthPreviewRoute,
   LovableEmailAuthWebhookRoute: LovableEmailAuthWebhookRoute,
   LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,

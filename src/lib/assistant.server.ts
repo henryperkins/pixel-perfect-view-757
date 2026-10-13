@@ -5,7 +5,7 @@ import { exec } from "./d1.server";
 export const ASSISTANT_SCOPES = ["today", "pattern", "journal"] as const;
 export type AssistantScope = (typeof ASSISTANT_SCOPES)[number];
 export function assistantsEnabled() {
-  return process.env["PATTERN_ASSISTANTS_ENABLED"] === "true";
+  return process.env["PATTERN_ASSISTANTS_ENABLED"] !== "false";
 }
 export function assistantIssuer(): string {
   const ref =

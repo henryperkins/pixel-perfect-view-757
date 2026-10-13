@@ -9,7 +9,10 @@ export const Route = createFileRoute("/_authenticated")({
     if (!session)
       throw redirect({
         to: "/auth",
-        search: location.pathname === "/assistants" ? { next: "/assistants" } : {},
+        search:
+          location.pathname === "/assistants" || location.pathname === "/plans"
+            ? { next: location.pathname }
+            : {},
       });
     return { user: session };
   },

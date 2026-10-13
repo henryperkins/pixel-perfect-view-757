@@ -30,6 +30,36 @@ after(async () => {
   await rm(directory, { recursive: true, force: true });
 });
 
+test("billing configuration requires a fresh signed server request and forbids caching", async () => {
+  const env = {
+    PATTERN_WORKFLOW_SECRET: SECRET,
+    PATTERN_MEMBERSHIPS_ENABLED: "true",
+    STRIPE_SECRET_KEY: "sk_test_fixture",
+  };
+  const request = (data, signature = true) => {
+    const raw = JSON.stringify(data);
+    return new Request("https://worker.example.test/billing/config", {
+      method: "POST",
+      body: raw,
+      headers: signature ? { "x-pattern-signature": sign(raw) } : {},
+    });
+  };
+  const data = { purpose: "membership-config", issuedAt: Date.now(), nonce: crypto.randomUUID() };
+  assert.equal((await worker.default.fetch(request(data, false), env)).status, 401);
+  assert.equal(
+    (await worker.default.fetch(request({ ...data, issuedAt: Date.now() - 61000 }), env)).status,
+    401,
+  );
+  assert.equal(
+    (await worker.default.fetch(request({ ...data, purpose: "other" }), env)).status,
+    401,
+  );
+  const response = await worker.default.fetch(request(data), env);
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get("Cache-Control"), "no-store");
+  assert.equal((await response.json()).secretKey, "sk_test_fixture");
+});
+
 function publicationFixture() {
   const db = new DatabaseSync(":memory:");
   db.exec(

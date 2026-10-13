@@ -227,6 +227,11 @@ export async function readPattern(userId: string) {
 }
 export async function readChapter(userId: string, featureKey: string) {
   z.string().min(1).max(200).parse(featureKey);
+  const { getMembership } = await import("../billing.server");
+  if (!(await getMembership(userId)).fullAccess)
+    return unavailable(
+      "Full chapters require an active Pattern Plus membership. Open Plans in Pattern.",
+    );
   const currentPolicy = await savedPrivacyPolicy(userId, ["USR-01"]);
   const snap = await snapshot(userId);
   if (!snap) return unavailable("No saved chart.");
@@ -266,6 +271,8 @@ export async function readChapter(userId: string, featureKey: string) {
       return unavailable(
         "Your privacy settings changed during this read. Open Pattern to refresh.",
       );
+    if (!(await getMembership(userId)).fullAccess)
+      return unavailable("Your membership access has ended. Open Plans in Pattern.");
     return chapterOutput.parse({
       status: "available",
       key: featureKey,

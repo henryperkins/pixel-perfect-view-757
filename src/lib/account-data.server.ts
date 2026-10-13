@@ -17,6 +17,7 @@ import {
   legacyClockExpiry,
 } from "./retention.server";
 import { SOURCE_MAP } from "./registry";
+import { prepareBillingDeletion, withBillingLock } from "./billing.server";
 
 const OWNER_TABLES = [
   "source_consents",
@@ -72,24 +73,28 @@ export async function resetPersonalization(userId: string, db: DBClient = record
 /** Local assistant access is revoked in the same transaction, before owner removal. */
 export async function deleteAccount(userId: string, password: string, db: DBClient = records()) {
   const hash = await requireCurrentPassword(userId, password, db);
-  try {
-    const results = await execBatch([
-      {
-        sql: "SELECT CASE WHEN EXISTS(SELECT 1 FROM users WHERE id=? AND password_hash=?) THEN 1 ELSE json('account-changed') END",
-        params: [userId, hash],
-      },
-      { sql: "DELETE FROM identity_links WHERE user_id=?", params: [userId] },
-      {
-        sql: "DELETE FROM users WHERE id=? AND password_hash=? RETURNING id",
-        params: [userId, hash],
-      },
-    ]);
-    if (results[2]!.results.length !== 1) throw new Error("Account changed");
-  } catch {
-    throw new Error("Your account could not be deleted. Please retry.");
-  }
-  clearTimingCalculations(userId);
-  return { ok: true as const };
+  return withBillingLock(db, userId, async () => {
+    // A failed cancellation leaves the account intact and checkout disabled for retry.
+    await prepareBillingDeletion(userId, db);
+    try {
+      const results = await execBatch([
+        {
+          sql: "SELECT CASE WHEN EXISTS(SELECT 1 FROM users WHERE id=? AND password_hash=?) THEN 1 ELSE json('account-changed') END",
+          params: [userId, hash],
+        },
+        { sql: "DELETE FROM identity_links WHERE user_id=?", params: [userId] },
+        {
+          sql: "DELETE FROM users WHERE id=? AND password_hash=? RETURNING id",
+          params: [userId, hash],
+        },
+      ]);
+      if (results[2]!.results.length !== 1) throw new Error("Account changed");
+    } catch {
+      throw new Error("Your account could not be deleted. Please retry.");
+    }
+    clearTimingCalculations(userId);
+    return { ok: true as const };
+  });
 }
 
 /** Keyset pagination; UI list limits never constrain an account export. */
@@ -348,6 +353,10 @@ export async function exportAccountData(userId: string, db: DBClient = records()
     account,
     profile: profileSafe,
     consents: data.source_consents,
+    memberships: await db.exec<Row>(
+      "SELECT status,plan,current_period_end,trial_end,paid_until,cancel_at_period_end,updated_at FROM memberships WHERE user_id=?",
+      [userId],
+    ),
     birth,
     pattern: { snapshots: data.chart_snapshots, features: data.natal_features },
     transitAnchors,

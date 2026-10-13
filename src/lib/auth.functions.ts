@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { setResponseHeader } from "@tanstack/react-start/server";
 
 const credentials = z.object({
   email: z.string().email().max(200),
@@ -26,6 +27,7 @@ export const signOut = createServerFn({ method: "POST" }).handler(async () => {
 });
 
 export const currentSession = createServerFn({ method: "GET" }).handler(async () => {
+  setResponseHeader("Cache-Control", "private, no-store");
   const m = await import("./auth.server");
   return { session: await m.getSessionUser() };
 });

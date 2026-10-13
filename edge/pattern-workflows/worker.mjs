@@ -339,6 +339,33 @@ export default {
     );
     if (!ok) return new Response("Invalid signature", { status: 401 });
 
+    if (request.method === "POST" && url.pathname === "/billing/config") {
+      let input;
+      try {
+        input = JSON.parse(raw);
+      } catch {
+        return new Response("Invalid request", { status: 400 });
+      }
+      if (
+        input.purpose !== "membership-config" ||
+        !Number.isFinite(input.issuedAt) ||
+        Math.abs(Date.now() - input.issuedAt) > 60_000 ||
+        typeof input.nonce !== "string"
+      )
+        return new Response("Expired configuration request", { status: 401 });
+      return Response.json(
+        {
+          enabled: env.PATTERN_MEMBERSHIPS_ENABLED === "true",
+          secretKey: env.STRIPE_SECRET_KEY ?? "",
+          webhookSecret: env.STRIPE_WEBHOOK_SECRET ?? "",
+          monthPriceId: env.STRIPE_MONTHLY_PRICE_ID ?? "",
+          yearPriceId: env.STRIPE_YEARLY_PRICE_ID ?? "",
+          portalConfigurationId: env.STRIPE_PORTAL_CONFIGURATION_ID ?? "",
+        },
+        { headers: { "Cache-Control": "no-store" } },
+      );
+    }
+
     // ---- signed data plane: the app's only route to the records database ----
     if (request.method === "POST" && url.pathname === "/d1/query") {
       const { sql, params } = JSON.parse(raw);

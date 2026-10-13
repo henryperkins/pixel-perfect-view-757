@@ -71,7 +71,13 @@ Constraints that future work must preserve:
 - Cycle phase and strength are recomputed from the user's own natal positions, not
   read from stale cached rows.
 
-Undecided / not established: pricing, accounts beyond a single owner, notifications,
+- Pattern Plus is authorized at $8/month or $72/year with a seven-day free trial.
+  This release uses Stripe test payments only; no real money is charged.
+  Full natal essays require active trial or paid access; the free plan keeps chapter
+  openings. Canceling renewal retains access through the current trial or paid
+  period, then access ends. Deleting the account cancels the membership immediately.
+
+Undecided / not established: accounts beyond a single owner, notifications,
 localisation, native apps.
 
 ## Brand Commitments
@@ -85,7 +91,8 @@ localisation, native apps.
 
 - Real calculation engine and live ephemeris service; readings are genuinely computed.
 - Live content release records and workflow-run ledger.
-- No testimonials, customer names, benchmarks, press, pricing or usage numbers exist.
+- Sandbox prices and membership terms are confirmed by the owner and Stripe test configuration.
+- No testimonials, customer names, benchmarks, press or usage numbers exist.
   Future work must not invent any of these.
 
 ## Product Principles

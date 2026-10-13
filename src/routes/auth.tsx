@@ -5,10 +5,14 @@ import { toast } from "sonner";
 import { Shell } from "@/components/pattern/Shell";
 import { signIn, signUp } from "@/lib/auth.shared";
 import { assistantReturnTo } from "@/lib/assistant-navigation";
+import { requestPasswordReset } from "@/lib/account-security.functions";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/auth")({
   validateSearch: (search: Record<string, unknown>): { next?: string } =>
-    typeof search["next"] === "string" ? { next: assistantReturnTo(search["next"]) } : {},
+    typeof search["next"] === "string"
+      ? { next: search["next"] === "/plans" ? "/plans" : assistantReturnTo(search["next"]) }
+      : {},
   head: () => ({
     meta: [
       { title: "Sign in — Pattern" },
@@ -29,7 +33,9 @@ export const Route = createFileRoute("/auth")({
 function AuthPage() {
   const navigate = useNavigate();
   const { next } = Route.useSearch();
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const [mode, setMode] = useState<"signin" | "signup" | "reset">("signin");
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
@@ -37,17 +43,30 @@ function AuthPage() {
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setBusy(true);
+    setError("");
+    setMessage("");
     try {
+      if (mode === "reset") {
+        await requestPasswordReset({ data: { email } });
+        setMessage(
+          "If this email belongs to a Pattern account, you’ll receive a password reset link. Check your inbox and spam folder.",
+        );
+        return;
+      }
       if (mode === "signup") {
-        await signUp({ data: { email, password } });
-        toast.success("Account created.");
+        const result = await signUp({ data: { email, password } });
+        toast.success(
+          result.confirmationSent
+            ? "Account created. Check your email to confirm your address."
+            : "Account created. You can resend your confirmation email in Context & privacy.",
+        );
       } else {
         await signIn({ data: { email, password } });
       }
       if (next) window.location.assign(next);
       else void navigate({ to: "/" });
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Sign-in failed");
+      setError(err instanceof Error ? err.message : "Sign-in failed. Please try again.");
     } finally {
       setBusy(false);
     }
@@ -56,7 +75,13 @@ function AuthPage() {
   return (
     <Shell signedIn={false}>
       <div className="mx-auto max-w-md animate-rise">
-        <h1 className="text-3xl">{mode === "signin" ? "Sign in" : "Create an account"}</h1>
+        <h1 className="text-3xl">
+          {mode === "signin"
+            ? "Sign in"
+            : mode === "reset"
+              ? "Reset your password"
+              : "Create an account"}
+        </h1>
         <p className="mt-3 text-sm text-muted-foreground">
           Your birth details are encrypted per account and never leave the calculation layer.
         </p>
@@ -66,39 +91,79 @@ function AuthPage() {
             <span className="technical text-muted-foreground">Email</span>
             <input
               type="email"
+              autoComplete="email"
+              maxLength={200}
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 font-mono text-sm outline-none focus:border-ring"
             />
           </label>
-          <label className="block">
-            <span className="technical text-muted-foreground">Password</span>
-            <input
-              type="password"
-              required
-              minLength={8}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 font-mono text-sm outline-none focus:border-ring"
-            />
-          </label>
-          <button
-            type="submit"
-            disabled={busy}
-            className="w-full rounded-sm bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-50"
-          >
-            {busy ? "Working…" : mode === "signin" ? "Sign in" : "Create account"}
-          </button>
+          {mode !== "reset" && (
+            <label className="block">
+              <span className="technical text-muted-foreground">Password</span>
+              <input
+                type="password"
+                autoComplete={mode === "signup" ? "new-password" : "current-password"}
+                maxLength={200}
+                required
+                minLength={8}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 font-mono text-sm outline-none focus:border-ring"
+              />
+            </label>
+          )}
+          <Button type="submit" disabled={busy} className="min-h-11 w-full">
+            {busy
+              ? "Working…"
+              : mode === "signin"
+                ? "Sign in"
+                : mode === "reset"
+                  ? "Email reset link"
+                  : "Create account"}
+          </Button>
         </form>
+        {error && (
+          <p role="alert" className="mt-4 text-sm text-destructive">
+            {error}
+          </p>
+        )}
+        {message && (
+          <p role="status" className="mt-4 text-sm">
+            {message}
+          </p>
+        )}
 
-        <button
+        <Button
+          variant="link"
           type="button"
-          onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
-          className="mt-6 technical text-primary"
+          disabled={busy}
+          onClick={() => {
+            setMode(mode === "signin" ? "signup" : "signin");
+            setError("");
+            setMessage("");
+            setPassword("");
+          }}
+          className="mt-4 min-h-11 px-0"
         >
-          {mode === "signin" ? "Need an account?" : "Already have an account?"}
-        </button>
+          {mode === "signin" ? "Need an account?" : "Back to sign in"}
+        </Button>
+        {mode === "signin" && (
+          <Button
+            variant="link"
+            className="ml-5 min-h-11 px-0"
+            disabled={busy}
+            onClick={() => {
+              setMode("reset");
+              setPassword("");
+              setError("");
+              setMessage("");
+            }}
+          >
+            Forgot password?
+          </Button>
+        )}
 
         <p className="mt-10 text-xs text-muted-foreground">
           <Link to="/" className="underline">

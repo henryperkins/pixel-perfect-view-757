@@ -15,6 +15,7 @@ const gatewayURL = "https://ai.gateway.lovable.dev/v1/chat/completions";
 const geminiEnterpriseURL =
   "https://aiplatform.googleapis.com/v1/publishers/google/models/gemini-3.8-flash:generateContent";
 const envNames = [
+  "PATTERN_MEMBERSHIPS_ENABLED",
   "PATTERN_ROOT_KEY",
   "PATTERN_WORKFLOW_URL",
   "PATTERN_WORKFLOW_SECRET",
@@ -59,6 +60,7 @@ export async function createRecordsHarness() {
   let closed = false;
 
   process.env.PATTERN_ROOT_KEY = randomBytes(32).toString("hex");
+  process.env.PATTERN_MEMBERSHIPS_ENABLED = "false";
   process.env.PATTERN_WORKFLOW_URL = testURL.replace(/\/d1\/query$/, "");
   process.env.PATTERN_WORKFLOW_SECRET = secret;
   for (const name of [
