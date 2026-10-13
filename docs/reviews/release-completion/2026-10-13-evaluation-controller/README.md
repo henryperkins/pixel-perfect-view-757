@@ -24,3 +24,7 @@ The current model supports LOW and MEDIUM; MINIMAL is rejected before transport.
 3. Confirm generation and paid-review budgets and actual account pricing. Start A with its budget; start B/C/D using that campaign ID. Do not retry or replace failed cases. The four-arm ceiling is 196; 28 further attempts are reserved for a separately prepared seven-day review, which is still pending.
 4. Start Enterprise LOW with a separate pilot budget, then MEDIUM under its campaign ID. Inspect the raw ledger by position. No expanded 98-attempt comparison or admin-default change is authorized by the pilot setup alone.
 5. Obtain two fresh blinded reviews, adjudication and actual human editorial approval against the final hashes. Keep writing candidate inactive and all applicable sign-offs open until these pass.
+
+## Publication
+
+Source commit `3c70de7` was fast-forwarded to main and pushed, then published as Lovable deployment `40a99466-2ae4-41b7-8523-7ec76d2f563f`. The public build-identity endpoint reports that exact source SHA and fixture v7. Worker `144aebb1-748f-4601-8efe-e1e3fa75420f` serves 100% traffic. Content remains 0.7.1 with its existing checksum; zero production evaluation runs are active. The offline clean-source freeze succeeded after commit and preserves all six plans/template/source graphs under `dry-freeze/`. See [publication and asset receipt](publication.json).

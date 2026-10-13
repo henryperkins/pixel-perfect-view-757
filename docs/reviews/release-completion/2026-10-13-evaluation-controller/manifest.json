@@ -39,9 +39,9 @@
   "contentActivation": false,
   "currentContentVersion": "0.7.1",
   "currentContentChecksum": "20b793acda524da945b07ec32b2ed795f31e273c533ff6b4e9c4f96ef821eeac",
-  "sourceCommit": null,
-  "mainPushed": false,
-  "published": false,
+  "sourceCommit": "3c70de7a35cc251b6557a0d0b6e25ee9f6905eaa",
+  "mainPushed": true,
+  "published": true,
   "fileHashes": {
     "d1/schema.sql": "194a769c9027244c06971bc07db82dfe4a636d66bbfe17a7be1f3d007ea8bb7a",
     "d1/migrations/20261013_evaluation_qualification.sql": "1a338d6a60381dbb19b759940ad6787dd12910347b4af16fb484c7a4ec18cf28",
@@ -77,5 +77,8 @@
     "vite.config.ts": "525a89251bf949a4af57c0a01697114476c5ebcb48f575347b1914e986269fe9",
     "docs/superpowers/plans/2026-10-12-release-completion-checklist.md": "f0c1a92b83c681fdb367cc267425d972697ef0e8626c8df56b176296d2e72fa5"
   },
-  "independentReview": "ready-to-merge"
+  "independentReview": "ready-to-merge",
+  "publication": "publication.json",
+  "dryFreeze": "dry-freeze/manifest.json",
+  "workerVersion": "144aebb1-748f-4601-8efe-e1e3fa75420f"
 }

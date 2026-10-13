@@ -1,0 +1,267 @@
+{
+  "createdAt": "2026-10-13T02:07:27.614Z",
+  "deploymentId": "40a99466-2ae4-41b7-8523-7ec76d2f563f",
+  "sourceCommit": "3c70de7a35cc251b6557a0d0b6e25ee9f6905eaa",
+  "url": "https://patterns.lakefrontdigital.io",
+  "rootStatus": 200,
+  "rootDeploymentHeader": "psr2.40a99466-2ae4-41b7-8523-7ec76d2f563f.1792462042.OQzhKkEqrDE1hTMJMcV5P_DmqO_lvU0ZNtw-dnt6_HA",
+  "identity": {
+    "sourceSha": "3c70de7a35cc251b6557a0d0b6e25ee9f6905eaa",
+    "requestPolicyVersion": "synthetic-facts-local-context-1",
+    "fixtureVersion": "synthetic-daily-7"
+  },
+  "identityStatus": 200,
+  "identityDeploymentHeader": "psr2.40a99466-2ae4-41b7-8523-7ec76d2f563f.1792462043.Kvo_cqN3O0YI5WrQ1woCmQyx9eBRUlHxeKEnE4jXvpY",
+  "assets": [
+    {
+      "name": "MotionSelection-Dnn3ETWY.js",
+      "status": 200,
+      "bytes": 2883,
+      "sha256": "33f4d1a7b89787ddfa83ea4d4341bace7e9542bcf8e2d88ddcc62148bc4979ef",
+      "match": true
+    },
+    {
+      "name": "Shell-DUOWE5ah.js",
+      "status": 200,
+      "bytes": 94521,
+      "sha256": "360c4edf9cf05e364bb04a1eb6bcb4677cf58113455d29bd940d15ebbd14ae45",
+      "match": true
+    },
+    {
+      "name": "TimingWindow-BWiBkKCp.js",
+      "status": 200,
+      "bytes": 5552,
+      "sha256": "6f0073e8ebb3f44c9eed2b1041eef613a3a0e8d114bd54f113075ccb46a328e3",
+      "match": true
+    },
+    {
+      "name": "TodayJournal-SYnkjlIo.js",
+      "status": 200,
+      "bytes": 3635,
+      "sha256": "8d928cc5ecfa0b265f435a1241f7e39abdffac01433cec0d4ddd232df478ff49",
+      "match": true
+    },
+    {
+      "name": "TransitSequence-dHW_G_F9.js",
+      "status": 200,
+      "bytes": 4941,
+      "sha256": "bba2965a9bdea88611b709f93dec1637ce2a29b3216bf8f4ac46ea90af307e98",
+      "match": true
+    },
+    {
+      "name": "arrow-left-BdqNiOcO.js",
+      "status": 200,
+      "bytes": 154,
+      "sha256": "d71efefc5b6d7ce365c1e8979504c0ae13f57ec49918f13af4d49d375abc8987",
+      "match": true
+    },
+    {
+      "name": "auth-Bq1m3Guu.js",
+      "status": 200,
+      "bytes": 2422,
+      "sha256": "c0209e06dbdd105ae765dd6907b98840e1ecdc3c7243be02dc6ba2777132b5b5",
+      "match": true
+    },
+    {
+      "name": "auth-middleware-DT6C3nBT.js",
+      "status": 200,
+      "bytes": 8138,
+      "sha256": "24f6048a456b0f38c02346889e36d5aeda43de0ac046b85dc72dc3620d21516d",
+      "match": true
+    },
+    {
+      "name": "birth-CJuS0VQI.js",
+      "status": 200,
+      "bytes": 11254,
+      "sha256": "3018509bd525f0d3636919e8c46f66e8992a1128c083108a5550c9914abb9448",
+      "match": true
+    },
+    {
+      "name": "check-CQ5nVvDV.js",
+      "status": 200,
+      "bytes": 113,
+      "sha256": "8cdb3231ca0407d37eb40c78fd69904503310d8f265f3fbe26e414fede546633",
+      "match": true
+    },
+    {
+      "name": "content-BlnGcpuv.js",
+      "status": 200,
+      "bytes": 220311,
+      "sha256": "9e532fb89926336d17641ab083ea652eefde8ca6fafdd73dcd293a93e54ab3f6",
+      "match": true
+    },
+    {
+      "name": "index-OjiCYWo7.js",
+      "status": 200,
+      "bytes": 569511,
+      "sha256": "889c05a3bf34157f044b6d689fef7891043044d4f451564b20a210bb7682c14b",
+      "match": true
+    },
+    {
+      "name": "journal-CmABVoWJ.js",
+      "status": 200,
+      "bytes": 12715,
+      "sha256": "159aa176f7ab7a60792cd673efe5e937d418161d1a9e3a6de0630343c92f1b7a",
+      "match": true
+    },
+    {
+      "name": "local-day-C_y_tj-2.js",
+      "status": 200,
+      "bytes": 1554,
+      "sha256": "5857b01e6368b574fa36b21228da593d2a2e5f0c6fbddf9b9e7a067e6334d2d5",
+      "match": true
+    },
+    {
+      "name": "onboarding-D3TUkcAm.js",
+      "status": 200,
+      "bytes": 5670,
+      "sha256": "10a6fe40cfa4568ab52e41cda539df5701c01c20533ff86574e7603649f5de83",
+      "match": true
+    },
+    {
+      "name": "pattern-CQbKALFS.js",
+      "status": 200,
+      "bytes": 27328,
+      "sha256": "8c34501b76427d6327d3a866fb0316f40f06d712c0e43a662b69b3163978e715",
+      "match": true
+    },
+    {
+      "name": "pattern-query-cache-C2kxybXe.js",
+      "status": 200,
+      "bytes": 374,
+      "sha256": "7e5a11cb2ca78c52e2fb8e6d9ce83c112c6d90cf1d623de0fdd9441b97cc74b1",
+      "match": true
+    },
+    {
+      "name": "pattern.functions-D7WETtOZ.js",
+      "status": 200,
+      "bytes": 5218,
+      "sha256": "d5bfd42b250ecfaf7b424dc25d0bc0df2c55532d7cfe34804133d701b31d0289",
+      "match": true
+    },
+    {
+      "name": "preload-helper-DY0eRZ7F.js",
+      "status": 200,
+      "bytes": 4843,
+      "sha256": "7ad2d4eec57e3e151e2ce357fa4edbb624e5fc7e490336782077f0e921fbd675",
+      "match": true
+    },
+    {
+      "name": "privacy-BS5S5rue.js",
+      "status": 200,
+      "bytes": 25973,
+      "sha256": "bb4f82cf2062dd825ded77b4dd17dd3f4fa7c56c534f372e9e009e4dbba90bc6",
+      "match": true
+    },
+    {
+      "name": "root-DLTE-HSj.js",
+      "status": 200,
+      "bytes": 32,
+      "sha256": "2eb1d17f334d79f5c2b7c68aa45a2b50b46a7b2416a9a0f5e7de6ff7f2430322",
+      "match": true
+    },
+    {
+      "name": "route-Bz22qPpx.js",
+      "status": 200,
+      "bytes": 141,
+      "sha256": "21795a7e24fb305a60989f592f99159bfd37f71eef47ad35903fb5493879102b",
+      "match": true
+    },
+    {
+      "name": "routes-Bv2KBHwZ.js",
+      "status": 200,
+      "bytes": 42096,
+      "sha256": "b968c5ce66e02a045c031eeae4022dbc4efd4ec6ea8ec78e58eddfbf736a5f9d",
+      "match": true
+    },
+    {
+      "name": "sources-B3MO8YJi.js",
+      "status": 200,
+      "bytes": 5572,
+      "sha256": "af8ca92c059d9720ee4073808c2cff862deb84d1085bf8a6442a67d945fe3164",
+      "match": true
+    },
+    {
+      "name": "styles-ZbN_8Esl.css",
+      "status": 200,
+      "bytes": 139147,
+      "sha256": "5bdabc04df4ee5223f8d008f9495e91befdb9836d601dde78279d300d4461f40",
+      "match": true
+    },
+    {
+      "name": "sunrise-CyE52Jd2.js",
+      "status": 200,
+      "bytes": 520,
+      "sha256": "a37ffc6b2ddf513b728583deaba6bb359063bf881e125b5d4c7a348a0489c64e",
+      "match": true
+    },
+    {
+      "name": "sunset-TlKFr08S.js",
+      "status": 200,
+      "bytes": 537,
+      "sha256": "c8a9be566ba3d137d2d5ac418689bb92f95696c4da4a0e5b8e0046afa0cfedc6",
+      "match": true
+    },
+    {
+      "name": "time-travel-BknjXVOS.js",
+      "status": 200,
+      "bytes": 12965,
+      "sha256": "f03ea74c8ab4875a4e403962ffeb6f06b11d12eb4bd79c8c54ac4ddb6af794a8",
+      "match": true
+    },
+    {
+      "name": "timing-CxBzES0H.js",
+      "status": 200,
+      "bytes": 3567,
+      "sha256": "117e440e57c8481a26482938f91481249fbfd6089b8a82596f1306b39771acb7",
+      "match": true
+    },
+    {
+      "name": "timing-DeWvIutE.js",
+      "status": 200,
+      "bytes": 8853,
+      "sha256": "f72780d8703836c754355cdf1907b2c12d5910e8c488151160944fcc02d4cd2e",
+      "match": true
+    },
+    {
+      "name": "transit-chart-calculator-45VCTglF.js",
+      "status": 200,
+      "bytes": 22743,
+      "sha256": "b55f8dbcbc04fa3c3eace6abfbd543043215d2114d57c171f2b080007bd7abab",
+      "match": true
+    },
+    {
+      "name": "useCalendarRefresh-CXhLu4wi.js",
+      "status": 200,
+      "bytes": 1019,
+      "sha256": "004879dc8b4721c2b79519b94af75b24b113a592b5f5ff8d6b46bd44f6c347be",
+      "match": true
+    },
+    {
+      "name": "useMutation-DUpVamNM.js",
+      "status": 200,
+      "bytes": 2293,
+      "sha256": "e93f13fa873994444fa17d12cffa8948bfb2a41b176c53bb108f6840001a80e9",
+      "match": true
+    },
+    {
+      "name": "useNavigate-DKUoU2jh.js",
+      "status": 200,
+      "bytes": 191,
+      "sha256": "b0c0fcf6db02466c83e67d9aa7d23882f7c68be58e831b2547626739e3cf36f1",
+      "match": true
+    },
+    {
+      "name": "useSelector-DnJy_gso.js",
+      "status": 200,
+      "bytes": 10625,
+      "sha256": "2df093078aa622eeaa47c34a6acec6aade92a180d3339bd87683ec931983f24b",
+      "match": true
+    }
+  ],
+  "allAssetsMatch": true,
+  "workerVersion": "144aebb1-748f-4601-8efe-e1e3fa75420f",
+  "paidModelCalls": 0,
+  "contentVersion": "0.7.1",
+  "contentChecksum": "20b793acda524da945b07ec32b2ed795f31e273c533ff6b4e9c4f96ef821eeac"
+}
