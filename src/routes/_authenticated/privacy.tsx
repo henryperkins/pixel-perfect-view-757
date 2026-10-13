@@ -224,10 +224,10 @@ function PrivacyPage() {
               is available under the GNU Affero General Public License.
             </p>
             <p className="mt-2 text-sm text-muted-foreground">
-              Google Gemini, through the Lovable AI gateway, can write from calculated chart facts
-              and curated interpretation text. Tone and depth preferences are included only when
-              their source switches are on. With those switches off, readings use plain tone and
-              standard depth.
+              Google Gemini, through Gemini Enterprise or the Lovable AI gateway, can write from
+              calculated chart facts and curated interpretation text. Tone and depth preferences are
+              included only when their source switches are on. With those switches off, readings use
+              plain tone and standard depth.
             </p>
             <p className="mt-2 text-sm text-muted-foreground">
               Raw birth details, journal notes, check-in bands, sleep and stress bands, device

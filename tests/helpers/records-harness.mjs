@@ -22,6 +22,7 @@ const envNames = [
   "PATTERN_APP_URL",
   "LOVABLE_API_KEY",
   "GEMINI_ENTERPRISE_API_KEY",
+  "PATTERN_MEMBER_LANGUAGE_PROVIDER",
   "SWISS_EPHEMERIS_URL",
   "SWISS_EPHEMERIS_KEY",
   "SWISS_TRANSIT_EPISODE_URL",
@@ -67,6 +68,7 @@ export async function createRecordsHarness() {
     "PATTERN_APP_URL",
     "LOVABLE_API_KEY",
     "GEMINI_ENTERPRISE_API_KEY",
+    "PATTERN_MEMBER_LANGUAGE_PROVIDER",
     "SWISS_EPHEMERIS_URL",
     "SWISS_EPHEMERIS_KEY",
   ])
@@ -239,6 +241,7 @@ export async function createRecordsHarness() {
       delete process.env.SWISS_EPHEMERIS_URL;
       delete process.env.LOVABLE_API_KEY;
       delete process.env.GEMINI_ENTERPRISE_API_KEY;
+      delete process.env.PATTERN_MEMBER_LANGUAGE_PROVIDER;
       delete process.env.PATTERN_APP_URL;
       await seedUser(userA);
       await seedUser(userB);

@@ -181,13 +181,13 @@ test("a missing Gemini Enterprise key makes no request even when Lovable is conf
   );
 });
 
-test("member readings and natal chapters stay on the Lovable gateway", async () => {
-  h.setGeminiEnterprise(() => {
-    throw new Error("Member language must not reach Gemini Enterprise");
+test("member readings and natal chapters use configured Gemini Enterprise and record its identity", async () => {
+  h.setGateway(() => {
+    throw new Error("Configured member language must not reach the Lovable gateway");
   });
   const draft = BASELINE_RESPONSES["saturn-square-sun"];
-  h.setGateway(() => lovableResponse(draft));
-  const synthetic = await runCase("saturn-square-sun", bundle);
+  h.setGeminiEnterprise(() => enterpriseResponse(draft));
+  const synthetic = await runCase("saturn-square-sun", bundle, "gemini-enterprise");
   const production = await language.generateReadingProse({
     facts: synthetic.case.facts,
     hasEligibleCycles: true,
@@ -200,10 +200,10 @@ test("member readings and natal chapters stay on the Lovable gateway", async () 
       prompt: synthetic.case.output.prompt,
     },
   });
-  assert.equal(production.meta.diagnostics.model, "google/gemini-3.8-flash");
-  assert.equal(production.meta.model, "google/gemini-3.8-flash");
-  h.setGateway(() =>
-    lovableResponse({
+  assert.equal(production.meta.diagnostics.model, ENTERPRISE_MODEL);
+  assert.equal(production.meta.model, ENTERPRISE_MODEL);
+  h.setGeminiEnterprise(() =>
+    enterpriseResponse({
       paragraphs: [{ text: "A supplied natal pattern. A second sentence.", facts: ["F1"] }],
       reflection_question: "Where do you recognise this pattern in your life?",
     }),
@@ -213,9 +213,46 @@ test("member readings and natal chapters stay on the Lovable gateway", async () 
     title: "Synthetic natal chapter",
     tone: "plain",
   });
-  assert.equal(chapter.meta.model, "google/gemini-3.8-flash");
-  assert.equal(h.gatewayRequests.length, 3);
-  assert.equal(h.geminiEnterpriseRequests.length, 0);
+  assert.equal(chapter.meta.model, ENTERPRISE_MODEL);
+  assert.equal(h.gatewayRequests.length, 0);
+  assert.equal(h.geminiEnterpriseRequests.length, 3);
+});
+
+test("member provider selection supports an explicit override and never retries another provider", async () => {
+  h.setGateway(() => {
+    throw new Error("A failed Enterprise member request must not fall back to Lovable");
+  });
+  assert.equal(language.memberLanguageProvider(), "lovable");
+  h.setGeminiEnterprise(() => new Response(null, { status: 503 }));
+  assert.equal(language.memberLanguageProvider(), "gemini-enterprise");
+  const input = {
+    facts: [{ id: "F1", statement: "Synthetic natal pattern." }],
+    title: "Synthetic natal chapter",
+    tone: "plain",
+  };
+  const failed = await language.generateFeatureNarrative(input);
+  assert.equal(failed.narrative, "");
+  assert.equal(h.geminiEnterpriseRequests.length, 1);
+  assert.equal(h.gatewayRequests.length, 0);
+
+  process.env.PATTERN_MEMBER_LANGUAGE_PROVIDER = "lovable";
+  h.setGateway(() =>
+    lovableResponse({
+      paragraphs: [{ text: "A supplied natal pattern. A second sentence.", facts: ["F1"] }],
+      reflection_question: "Where do you recognise this pattern?",
+    }),
+  );
+  const overridden = await language.generateFeatureNarrative(input);
+  assert.equal(overridden.meta.model, "google/gemini-3.8-flash");
+  assert.equal(h.gatewayRequests.length, 1);
+  assert.equal(h.geminiEnterpriseRequests.length, 1);
+
+  process.env.PATTERN_MEMBER_LANGUAGE_PROVIDER = "gemini-enterprise";
+  h.setGeminiEnterprise(null);
+  const unconfigured = await language.generateFeatureNarrative(input);
+  assert.equal(unconfigured.narrative, "");
+  assert.match(unconfigured.meta.reason, /not configured/);
+  assert.equal(h.gatewayRequests.length, 1);
 });
 
 test("one report cannot mix providers; Gemini Enterprise results combine together", async () => {

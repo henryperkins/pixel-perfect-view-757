@@ -55,7 +55,6 @@ import {
   DAILY_GATEWAY_TIMEOUT_MS,
   MAX_DAILY_DURATION_MS,
   GEMINI_ENTERPRISE_MODEL,
-  LANGUAGE_MODEL,
   LANGUAGE_PROVIDERS,
   LANGUAGE_PROVIDER_LABELS,
   diagnosticLabel,
@@ -160,6 +159,14 @@ function providerKey(provider: LanguageProvider): string | undefined {
   return provider === "gemini-enterprise"
     ? process.env["GEMINI_ENTERPRISE_API_KEY"]
     : process.env["LOVABLE_API_KEY"];
+}
+
+/** Choose once before a member request. A failed request never retries another provider. */
+export function memberLanguageProvider(): LanguageProvider {
+  const selected = process.env["PATTERN_MEMBER_LANGUAGE_PROVIDER"];
+  if (selected === "lovable" || selected === "gemini-enterprise") return selected;
+  if (selected) throw new Error("The member language provider is not configured correctly.");
+  return providerKey("gemini-enterprise") ? "gemini-enterprise" : "lovable";
 }
 
 /** Configuration presence only; key values never leave the server. */
@@ -1031,7 +1038,7 @@ async function generateDailyProse(
 
 /** Production readings expose only the established prose/diagnostics contract. */
 export async function generateReadingProse(input: ReadingProseInput): Promise<ReadingProse> {
-  return generateDailyProse(input);
+  return generateDailyProse(input, undefined, memberLanguageProvider());
 }
 
 /** Only whitelisted, bounded paragraph fields are retained for fixed synthetic evaluations. */
@@ -1179,6 +1186,7 @@ export async function generateFeatureNarrative(input: {
   title: string;
   tone: string;
 }): Promise<FeatureProse> {
+  const provider = memberLanguageProvider();
   const prompt = [
     `Tone preference: ${input.tone}.`,
     "Facts:",
@@ -1212,7 +1220,7 @@ export async function generateFeatureNarrative(input: {
 
   let raw: { reflection_question: string; paragraphs: Written[] };
   try {
-    raw = await callGateway(prompt, "natal_chapter", FEATURE_SCHEMA);
+    raw = await callGateway(prompt, "natal_chapter", FEATURE_SCHEMA, { provider });
   } catch (e) {
     return { narrative: "", paragraphs: [], meta: templateMeta((e as Error).message) };
   }
@@ -1234,7 +1242,7 @@ export async function generateFeatureNarrative(input: {
     paragraphs: body,
     meta: {
       mode: "model",
-      model: LANGUAGE_MODEL,
+      model: languageModel(provider),
       citations,
       dropped,
       flagged: [...new Set([...flagged, ...question.flagged])],

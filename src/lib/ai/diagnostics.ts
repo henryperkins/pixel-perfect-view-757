@@ -11,7 +11,7 @@ export const LANGUAGE_MODEL = "google/gemini-3.8-flash";
 
 /**
  * Admin-selectable providers for /content evaluation and drafting. Member
- * readings and natal chapters always use the Lovable gateway.
+ * writing selects its configured provider separately and records the same identities.
  */
 export const LANGUAGE_PROVIDERS = ["lovable", "gemini-enterprise"] as const;
 export type LanguageProvider = (typeof LANGUAGE_PROVIDERS)[number];
