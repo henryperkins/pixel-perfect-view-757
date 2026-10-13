@@ -418,7 +418,8 @@ Draft edits, discard or active-pointer changes do not replace an already frozen 
 The separate `draft-fallback-1` manifest provides 70 offline cases (the unchanged legacy 50 plus 20 body/family fallbacks). The paid `draft-pilot-1` contains only hard Mars, hard Uranus, soft Saturn and soft Neptune against natal Mercury. Four pairs do not qualify all 20 additions; the two global catch-alls are shadowed in the supported catalogue and tested in isolated lookup fixtures.
 
 Manifest-bound comparison and review keep selection, submitted facts, accepted citations, deterministic rendering and human semantic assessment separate. Generic report comparison still rejects changed bundle identities. See the [execution checklist](docs/superpowers/plans/2026-10-13-content-draft-effectiveness-checklist.md) and [pilot evidence](docs/reviews/content-draft-effectiveness/2026-10-13/progress.md). Evaluation never approves, stages or activates content; exact-content human approval and applicable release gates remain separate.
-# Historical content replay and portable offline fixtures
+
+## Historical content replay and portable offline fixtures
 
 The completed 2026-10-13 pilot has an additional strict offline replay path:
 

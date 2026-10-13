@@ -273,11 +273,13 @@ Execution: two fresh reviewers and one fresh adjudicator completed the scoped as
 
 **Owner:** Engineer, then operator/editor. **Depends on:** Tasks 11–12.
 
-- [ ] Run the full suite with workerd enabled, typecheck, scoped lint, build and diff checks. Record the exact implementation and dependency identities, then obtain a fresh whole-change implementation review.
-- [ ] Preserve all original pilot files and unrelated checkout changes; add new evidence under a separate directory. Record zero new model attempts and no publication, approval or activation.
-- [ ] Leave unresolved writing findings, wider affected-key coverage, account-cost reconciliation, human approval, activation and consented member-use evidence explicitly open. Provide a concrete next-round scope for the operator to authorize after reviewing the local result.
+- [x] Run the full suite with workerd enabled, typecheck, scoped lint, build and diff checks. Record the exact implementation and dependency identities, then obtain a fresh whole-change implementation review.
+- [x] Preserve all original pilot files and unrelated checkout changes; add new evidence under a separate directory. Record zero new model attempts and no publication, approval or activation.
+- [x] Leave unresolved writing findings, wider affected-key coverage, account-cost reconciliation, human approval, activation and consented member-use evidence explicitly open. Provide a concrete next-round scope for the operator to authorize after reviewing the local result.
 
 **Done when:** All local repairs are verified and reviewable, with external release gates clearly separated. Completion of this task does not mark the entire release checklist complete.
+
+Local completion: Tasks 4 and 11–13 are verified on implementation `7c81ab7975fab12329f66cc043b135673d5e5b6f`: 857 tests pass, two existing tests skip, workerd checks run, typecheck/lint/build/browser checks pass, and independent review reports no findings requiring changes. [Validation and identities](../../reviews/content-draft-effectiveness/2026-10-13-offline-repair/validation.json) and [review dispositions](../../reviews/content-draft-effectiveness/2026-10-13-offline-repair/implementation-review.md) preserve the distinction between local completion and the open Tasks 8–10 release gates.
 
 ## Historical execution record
 
