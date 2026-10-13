@@ -18,7 +18,7 @@ const EMAIL_TEMPLATES: Record<string, React.ComponentType<any>> = {
 }
 
 // Configuration
-const SITE_NAME = "Pixel Perfect Clone"
+const SITE_NAME = "Pattern"
 const ROOT_DOMAIN = "hperkins.com"
 
 // Sample data for preview mode ONLY (not used in actual email sending).
