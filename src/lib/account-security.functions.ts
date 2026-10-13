@@ -38,6 +38,11 @@ export const sendConfirmation = createServerFn({ method: "POST" })
   .handler(async ({ context }) =>
     (await import("./account-security.server")).sendConfirmation(context.userId, context.db),
   );
+export const fetchEmailDelivery = createServerFn({ method: "GET" })
+  .middleware([requireAuth])
+  .handler(async ({ context }) =>
+    (await import("./account-security.server")).emailDeliveryStatus(context.userId, context.db),
+  );
 export const changeEmail = createServerFn({ method: "POST" })
   .middleware([requireAuth])
   .inputValidator(

@@ -15,7 +15,7 @@ before(async () => {
     const url = String(input instanceof Request ? input.url : input);
     if (url.startsWith("https://api.lovable.dev/")) {
       emails.push(JSON.parse(String(init.body)));
-      return Response.json({ id: "synthetic-delivery", status: "queued" });
+      return Response.json({ success: true, message_id: "synthetic-delivery", status: "queued" });
     }
     return delegate(input, init);
   };
@@ -41,6 +41,62 @@ function emailToken() {
   assert.ok(match);
   return match[1];
 }
+
+test("delivery inspection is restricted to the owner's current email and returns metadata only", async () => {
+  const currentFetch = globalThis.fetch;
+  globalThis.fetch = async (input, init) => {
+    if (String(input).startsWith("https://api.lovable.dev/")) {
+      assert.equal(new URL(String(input)).searchParams.get("recipient"), "fixture@example.invalid");
+      return Response.json({
+        data: [
+          {
+            recipient: "fixture@example.invalid",
+            timestamp: new Date().toISOString(),
+            event_type: "delivered",
+            message_id: "private-message-id",
+          },
+          {
+            recipient: "another@example.invalid",
+            timestamp: new Date().toISOString(),
+            event_type: "bounced",
+          },
+        ],
+        pagination: { has_more: false, next_cursor: null },
+        history_starts_at: new Date().toISOString(),
+      });
+    }
+    return currentFetch(input, init);
+  };
+  try {
+    const result = await api.emailDeliveryStatus(h.userA, h.records());
+    assert.equal(result.available, true);
+    assert.equal(result.events.length, 1);
+    assert.equal(result.events[0].event, "delivered");
+    assert.equal(JSON.stringify(result).includes("another@example"), false);
+    assert.equal(JSON.stringify(result).includes("private-message-id"), false);
+  } finally {
+    globalThis.fetch = currentFetch;
+  }
+});
+
+test("an unaccepted send removes its token and records only safe failure metadata", async () => {
+  const currentFetch = globalThis.fetch;
+  globalThis.fetch = (input, init) =>
+    String(input).startsWith("https://api.lovable.dev/")
+      ? Promise.resolve(Response.json({ success: false, status: "rejected" }))
+      : currentFetch(input, init);
+  try {
+    await assert.rejects(api.sendConfirmation(h.userA, h.records()), /could not be sent/);
+    assert.equal(h.sqlite.prepare("SELECT count(*) n FROM account_tokens").get().n, 0);
+    const receipt = h.sqlite
+      .prepare("SELECT detail FROM audit_events WHERE kind='account.email'")
+      .get();
+    assert.equal(JSON.parse(receipt.detail).status, "failed");
+    assert.equal(receipt.detail.includes("password"), false);
+  } finally {
+    globalThis.fetch = currentFetch;
+  }
+});
 
 test("confirmation email uses the requested sender and trusted origin, and cannot be replayed", async () => {
   await api.sendConfirmation(h.userA, h.records());

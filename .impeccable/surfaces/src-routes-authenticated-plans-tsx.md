@@ -31,6 +31,9 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 - Context & privacy places membership status and renewal controls before email
   and password controls, followed by the existing context settings. Cancellation
   opens an inline confirmation that repeats when chapter access ends.
+- Email & password includes a ghost "Check email delivery" Button. Delivery is
+  fetched only on request, with no automatic polling; recent provider events,
+  an empty result, or unavailable status appear inline beneath the controls.
 - Sign-in, recovery, and email confirmation use a narrow, centered form within
   the signed-out Shell. Visible labels, inline status and error messages, and the
   existing Button variants carry each step and its route back to sign-in.

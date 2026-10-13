@@ -6,6 +6,7 @@ import {
   changePassword,
   fetchAccountSecurity,
   sendConfirmation,
+  fetchEmailDelivery,
 } from "@/lib/account-security.functions";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -24,6 +25,12 @@ export function AccountSecurity() {
   const [busy, setBusy] = useState(false),
     [error, setError] = useState(""),
     [message, setMessage] = useState("");
+  const delivery = useQuery({
+    queryKey: ["account-email-delivery", session?.userId],
+    queryFn: () => fetchEmailDelivery(),
+    enabled: false,
+    retry: false,
+  });
   async function act(event?: React.FormEvent) {
     event?.preventDefault();
     setBusy(true);
@@ -102,7 +109,34 @@ export function AccountSecurity() {
                 Change {next}
               </Button>
             ))}
+            <Button
+              variant="ghost"
+              disabled={delivery.isFetching}
+              onClick={() => delivery.refetch()}
+            >
+              {delivery.isFetching ? "Checking delivery…" : "Check email delivery"}
+            </Button>
           </div>
+          {delivery.isError || (delivery.data && !delivery.data.available) ? (
+            <p role="status" className="mt-3 text-sm">
+              Email delivery status is unavailable. Please try again later.
+            </p>
+          ) : delivery.data?.available ? (
+            <div className="mt-3 text-sm" role="status">
+              {delivery.data.events.length ? (
+                <ul className="space-y-2">
+                  {delivery.data.events.map((event, index) => (
+                    <li key={`${event.timestamp}-${index}`}>
+                      {event.event.replace(/[._-]/g, " ")} ·{" "}
+                      {new Date(event.timestamp).toLocaleString()}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No recent delivery updates. Check your inbox and spam folder.</p>
+              )}
+            </div>
+          ) : null}
           {mode && (
             <form onSubmit={act} className="mt-5 max-w-md space-y-4">
               <label className="block text-sm">

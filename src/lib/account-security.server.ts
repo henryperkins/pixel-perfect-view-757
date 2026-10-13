@@ -3,6 +3,7 @@ import { records, type DBClient } from "./d1.server";
 import { hashPassword, requireCurrentPassword } from "./auth.server";
 import { appOrigin } from "./app-origin.server";
 import { sendTemplateEmail } from "./email-templates/send-email";
+import { EmailAPIError, listEmailLogs } from "@lovable.dev/email-js";
 
 type Purpose = "verify" | "reset" | "change";
 type Account = { id: string; email: string; password_hash: string };
@@ -79,8 +80,34 @@ async function emailToken(account: Account, purpose: Purpose, db: DBClient, newE
         },
       },
     );
-    if (!result.sent) throw new Error("Email delivery is unavailable for this address.");
-  } catch {
+    if (!result.sent)
+      throw new EmailAPIError(
+        409,
+        "Email delivery is unavailable for this address.",
+        null,
+        result.reason,
+      );
+    await db.from("audit_events").insert({
+      user_id: account.id,
+      kind: "account.email",
+      detail: {
+        purpose,
+        status: "accepted",
+        messageId: result.messageId ?? null,
+        providerStatus: result.status ?? null,
+      },
+    });
+  } catch (error) {
+    await db.from("audit_events").insert({
+      user_id: account.id,
+      kind: "account.email",
+      detail: {
+        purpose,
+        status: "failed",
+        providerStatus: error instanceof EmailAPIError ? error.status : null,
+        providerCode: error instanceof EmailAPIError ? error.code : "send_failed",
+      },
+    });
     await db.exec("DELETE FROM account_tokens WHERE token_hash=?", [hash]);
     throw new Error("The email could not be sent. Please try again later.");
   }
@@ -128,6 +155,42 @@ export async function securityStatus(userId: string, db = records()) {
   );
   if (!row) throw new Error("Sign in again to manage this account.");
   return { email: row.email, confirmed: Boolean(row.confirmed_at) };
+}
+
+/** Delivery metadata only, scoped to the signed-in account's current address. */
+export async function emailDeliveryStatus(userId: string, db = records()) {
+  const { email } = await securityStatus(userId, db);
+  const attempts = await db.exec<{ detail: string; created_at: string }>(
+    "SELECT detail,created_at FROM audit_events WHERE user_id=? AND kind='account.email' ORDER BY created_at DESC LIMIT 20",
+    [userId],
+  );
+  const apiKey = process.env["LOVABLE_API_KEY"];
+  if (!apiKey) throw new Error("Email delivery status is unavailable.");
+  try {
+    const result = await listEmailLogs(
+      { recipient: email, since: new Date(Date.now() - 7 * 86400_000).toISOString(), limit: 20 },
+      { apiKey },
+    );
+    return {
+      available: true as const,
+      attempts,
+      events: result.data
+        .filter((event) => event.recipient.toLowerCase() === email.toLowerCase())
+        .map((event) => ({
+          timestamp: event.timestamp,
+          event: event.event_type,
+          status: event.status ?? "",
+          tags: event.tags ?? [],
+        })),
+    };
+  } catch (error) {
+    return {
+      available: false as const,
+      attempts,
+      providerStatus: error instanceof EmailAPIError ? error.status : null,
+      providerCode: error instanceof EmailAPIError ? (error.code ?? null) : null,
+    };
+  }
 }
 
 export async function changeEmail(userId: string, password: string, email: string, db = records()) {

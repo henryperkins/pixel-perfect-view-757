@@ -15,7 +15,8 @@ const SENDER_DOMAIN = "notify.hperkins.com";
 const FROM_DOMAIN = "notify.hperkins.com";
 
 export type SendTemplateEmailResult =
-  { sent: true } | { sent: false; reason: "recipient_suppressed" };
+  | { sent: true; messageId: string | null; status: string | null }
+  | { sent: false; reason: "recipient_suppressed" };
 
 export interface SendTemplateEmailOptions {
   templateData?: EmailTemplateData;
@@ -64,7 +65,7 @@ export async function sendTemplateEmail(
     typeof template.subject === "function" ? template.subject(templateData) : template.subject;
 
   try {
-    await sendLovableEmail(
+    const result = await sendLovableEmail(
       {
         to: recipient,
         from: { name: SITE_NAME, address: `noreply@${FROM_DOMAIN}` },
@@ -79,12 +80,12 @@ export async function sendTemplateEmail(
       },
       { apiKey, sendUrl: process.env["LOVABLE_SEND_URL"] },
     );
+    if (!result.success) throw new Error("Email provider did not accept the message");
+    return { sent: true, messageId: result.message_id ?? null, status: result.status ?? null };
   } catch (error) {
     if (error instanceof EmailAPIError && error.code === "recipient_suppressed") {
       return { sent: false, reason: "recipient_suppressed" };
     }
     throw error;
   }
-
-  return { sent: true };
 }
