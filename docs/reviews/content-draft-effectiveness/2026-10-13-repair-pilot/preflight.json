@@ -1,0 +1,53 @@
+{
+  "recordedAt": "2026-10-13T21:43:40.112Z",
+  "attemptsBeforeStart": 0,
+  "attemptLimit": 8,
+  "dollarCeilingCents": 500,
+  "retries": 0,
+  "memberProvider": "gemini-enterprise",
+  "model": "gemini-enterprise/gemini-3.8-flash",
+  "nativeProviderModel": "gemini-3.8-flash",
+  "pairHash": "804ad82b566574901b55c1fcdf2cefc76ceb4e6ed63c476dd3d525868c3b443c",
+  "sourceSha": "9348a243e35b6af2ba1925a3265d0211f9a7bed4",
+  "caseSetId": "draft-pilot-2",
+  "baselineCanonicalHash": "44c05c8b0336dc778c2efdcbf0c28dc2091d33a96b91c352a2481123b7f7ccae",
+  "candidateCanonicalHash": "78be37d2740102c827fd291777f43f686b9c9f3488c887d76c00212ca84db632",
+  "nodeLivePairRevalidation": "exact match",
+  "questionCounts": [
+    [
+      1,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      1,
+      1,
+      1
+    ]
+  ],
+  "rubric": "76eb4656fc4677eaa0720697f4966671404bc3db0c3a8ef1a1e795573f0ea422",
+  "fileSha256": {
+    "frozen-pair.json": "2079f21a58c1d266529e516110f50180d1476590357206a942c796b8887d0edb",
+    "review-rubric.json": "94c2501a3eeaf1eaf9a40f3755dddc41e2230633e4779e0ecb38172231675886",
+    "authorization.json": "58e5ae05fa85718a01c6caa4cba4af3a364ec6a08ee5ecd363664b7a1aef0422"
+  },
+  "authoritative": {
+    "checkedAt": "2026-10-13T21:44:08.133Z",
+    "operatorRuns": 0,
+    "active": [
+      {
+        "id": "edcc53cf-d19a-415b-a8a2-a66040846b1d",
+        "version": "0.7.1",
+        "is_active": 1
+      }
+    ],
+    "draft": {
+      "id": "5b1a0e46-a1eb-4a36-90b9-d884993cf212",
+      "status": "draft",
+      "review_candidate_hash": null,
+      "review_base_hash": null
+    }
+  }
+}

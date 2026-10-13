@@ -1,0 +1,35 @@
+{
+  "checkedAt": "2026-10-13T21:54:00.786Z",
+  "syntheticOperatorUserId": "1e03e7a5-476b-4531-bed5-6c271ee46adc",
+  "authority": {
+    "roles": 0,
+    "sessions": 0,
+    "disabledPasswordLogin": 1
+  },
+  "active": [
+    {
+      "id": "edcc53cf-d19a-415b-a8a2-a66040846b1d",
+      "version": "0.7.1",
+      "is_active": 1
+    }
+  ],
+  "draft": {
+    "id": "5b1a0e46-a1eb-4a36-90b9-d884993cf212",
+    "status": "draft",
+    "review_candidate_hash": null,
+    "review_base_hash": null
+  },
+  "runs": [
+    {
+      "id": "1bdd2ec1-ea11-4051-9f39-03528177a0b8",
+      "status": "halted",
+      "completed": 4
+    }
+  ],
+  "evaluationOwnerPreserved": true,
+  "browserAccessAfterRevocation": {
+    "url": "https://patterns.lakefrontdigital.io/auth",
+    "observed": "Sign in",
+    "authenticatedContentAvailable": false
+  }
+}

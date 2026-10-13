@@ -1,0 +1,22 @@
+{
+  "checkedAt": "2026-10-13T21:38:09.584Z",
+  "worker": "pattern-workflows",
+  "current": {
+    "id": "debd4c29-901c-45b1-9a55-a19d0fce31bb",
+    "source": "wrangler",
+    "strategy": "percentage",
+    "annotations": {
+      "workers/triggered_by": "deployment"
+    },
+    "versions": [
+      {
+        "version_id": "83d0842f-9898-4402-83cd-cd3d5b003440",
+        "percentage": 100
+      }
+    ],
+    "created_on": "2026-10-13T08:11:32.584653Z"
+  },
+  "sourceChanged": false,
+  "migrationRequired": false,
+  "modelCalls": 0
+}

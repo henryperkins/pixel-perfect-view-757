@@ -1,0 +1,1015 @@
+{
+  "reportVersion": 1,
+  "storyPlanVersion": "daily-transit-story-1",
+  "anchorVersion": "transit-anchor-1",
+  "solverVersion": "transit-episode-1",
+  "sourceContract": "swiss-transit-episode/1",
+  "transitFixtureHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "storyUse": true,
+  "caseSetId": "draft-pilot-2",
+  "fixtureVersion": "draft-pilot-2",
+  "caseSetHash": "43562fc3e43edfa47087c1461209b6592269ec2d9b9f048a6e08a2f1c0e33aac",
+  "bundleVersion": "0.7.1",
+  "bundleHash": "300173610977707a1852f4e5898d8e27a2e0d4b932ab3fc4db398eda7efbdad8",
+  "transitCopyHash": "c2b68b767f48bbd54befaa0c6290f76e62ab2e0d7f0450321b13be56db7f6588",
+  "planVersion": "daily-synthesis-1",
+  "natalPlanVersion": "daily-natal-lens-2",
+  "reliabilityVersion": "natal-reliability-1",
+  "promptVersion": "daily-astro-body-15",
+  "validatorVersion": "daily-reference-10",
+  "reflectionVersion": "primary-reflection-1",
+  "model": "gemini-enterprise/gemini-3.8-flash",
+  "gatewayTimeoutMs": 60000,
+  "source": "live-synthetic",
+  "network": "Live Gemini Enterprise Agent Platform; fixed synthetic facts only",
+  "warning": "Actual model outputs for synthetic plans. This run does not establish production-user acceptance, semantic grounding, or writing quality. Manual scores remain blank.",
+  "bundleSource": "content-comparison",
+  "sourceSha": "9348a243e35b6af2ba1925a3265d0211f9a7bed4",
+  "runPlanHash": "1e951c4c4f87748a3d8f9e78fadc979357947fb4ada7966296e5875660601d25",
+  "contentComparison": {
+    "version": "content-comparison-2",
+    "arm": "baseline",
+    "pairHash": "804ad82b566574901b55c1fcdf2cefc76ceb4e6ed63c476dd3d525868c3b443c",
+    "baselineCanonicalHash": "44c05c8b0336dc778c2efdcbf0c28dc2091d33a96b91c352a2481123b7f7ccae",
+    "candidateCanonicalHash": "78be37d2740102c827fd291777f43f686b9c9f3488c887d76c00212ca84db632",
+    "caseSetId": "draft-pilot-2"
+  },
+  "requestPolicyVersion": "synthetic-facts-local-context-1",
+  "partial": true,
+  "expectedCases": 4,
+  "summary": {
+    "cases": 4,
+    "gatewayReplays": 0,
+    "modelAttempts": 4,
+    "outcomes": {
+      "accepted": 3,
+      "rejected": 0,
+      "unavailable": 1,
+      "skipped": 0
+    },
+    "reasons": {
+      "accepted": 3,
+      "timeout": 1
+    },
+    "replayAcceptanceRate": null,
+    "syntheticModelAcceptanceRate": 0.75,
+    "liveAcceptanceRate": null
+  },
+  "cases": [
+    {
+      "transport": {
+        "version": "admin-model-transport-1",
+        "provider": "gemini-enterprise",
+        "requestedModel": "gemini-enterprise/gemini-3.8-flash",
+        "actualModel": "gemini-3.8-flash",
+        "thinkingLevel": null,
+        "maxOutputTokens": 65536,
+        "deadlineMs": 60000,
+        "startedAt": "2026-10-13T21:44:17.283Z",
+        "headersAt": "2026-10-13T21:44:49.157Z",
+        "bodyAt": "2026-10-13T21:44:49.157Z",
+        "abortAt": null,
+        "finishedAt": "2026-10-13T21:44:49.157Z",
+        "httpStatus": 200,
+        "requestId": null,
+        "responseId": "MabOar3oGLyYotQPrcjTyA0",
+        "finishReason": "STOP",
+        "usage": {
+          "inputTokens": 2255,
+          "outputTokens": 222,
+          "thinkingTokens": 4490,
+          "totalTokens": 6967,
+          "outputIncludesThinking": false
+        }
+      },
+      "id": "fallback-hard-mars-mercury",
+      "description": "Fixed mars square natal mercury; exercises the hard:mars:* candidate source.",
+      "config": {
+        "day": "2026-10-11",
+        "timeZone": "UTC",
+        "tone": "plain",
+        "depth": "standard",
+        "granted": [
+          "USR-01",
+          "USR-02"
+        ]
+      },
+      "configHash": "7926565f451b86fd56d310210ce2b0f36fcdc22523b6c5a6d674ad712e16c0fe",
+      "localNoon": "2026-10-11T12:00:00.000Z",
+      "eligibleCycleKeys": [
+        "mars_square_mercury"
+      ],
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting mars square natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain work. Calculated exact date: 2026-10-14.",
+          "cycle": {
+            "transitBody": "mars",
+            "natalPoint": "mercury",
+            "aspect": "square",
+            "orb": 0.42,
+            "exactDate": "2026-10-14"
+          }
+        },
+        {
+          "id": "I1",
+          "statement": "Published interpretation hard:*:*: A hard contact is forming between a moving body and a fixed point in your chart. Hard angles tend to coincide with noticing friction rather than with events.",
+          "kind": "interpretation",
+          "dependsOn": [
+            "C1"
+          ],
+          "sourceKey": "hard:*:*",
+          "releaseVersion": "0.7.1"
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for work and output: Pace, scope, and the part of a task that feels like yours are separate pieces of working on something. An unfinished list or a draft with competing aims can be a place to notice friction between those pieces."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+        },
+        {
+          "id": "T1",
+          "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+        }
+      ],
+      "interpretationPlan": {
+        "version": "daily-synthesis-1",
+        "interpretations": [
+          {
+            "index": 1,
+            "cycleKey": "mars_square_mercury",
+            "interpretationKey": "hard:*:*"
+          }
+        ],
+        "pairStatus": "insufficient",
+        "pairRuleKey": null,
+        "releaseVersion": "0.7.1",
+        "synthesis": null
+      },
+      "natalLensPlan": {
+        "version": "daily-natal-lens-2",
+        "reliabilityVersion": null,
+        "releaseVersion": "0.7.1",
+        "status": "unreliable",
+        "lens": null
+      },
+      "natalReliability": null,
+      "transitStoryPlan": {
+        "version": "daily-transit-story-1",
+        "solverVersion": "transit-episode-1",
+        "anchorVersion": "transit-anchor-1",
+        "status": "omitted",
+        "reason": "unsupported_primary"
+      },
+      "request": {
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "max_tokens": 65536,
+        "messages": [
+          {
+            "role": "system",
+            "content": "You write for an astrology app that shows its work. Calculated references C1–C3 supply astronomical measurements. Published interpretations I1–I3 and synthesis S1 supply reviewed editorial possibilities, not measured psychological properties or confirmed personal states. Keep each claim at the strength its source gives it: a possibility stays a possibility, and added frequency, necessity or exclusion needs its own supplied support. Preserve the direction of every condition and causal claim. A condition for one statement does not become the cause of a neighboring statement, and two supported ideas do not authorize a causal bridge between them. Develop only the supplied published meaning and relationship. Every paragraph must cite the supplied IDs it rests on; synthesis citations must include all their parents. Editorial IDs cannot stand in for a directly cited calculation when giving technical details. Never add astronomical or biographical facts, invent a joint relationship, predict, instruct, promise an outcome, or mention health, medication, diagnosis, money, investing, pregnancy, divorce or death. Use calm, plain, specific prose and conditional everyday comparisons. No zodiac cliches, mysticism, exclamation marks or second-hand claims about other people. Respect all supplied suppression limits."
+          },
+          {
+            "role": "user",
+            "content": "Tone: plain. Direct and observant. Use familiar verbs and one concrete distinction at a time. Sound matter-of-fact, with quiet confidence and no ceremonial lead-in or embellishment.\nStyle example only — not a factual source: \"A point can be clear before the words for it are. Another sentence may add useful detail, or simply say the same thing again.\"\nDo not copy the example or borrow its subject unless supported by the supplied interpretation. Its purpose is sentence rhythm and register; example content never supplies a reading fact.\nDepth: standard. Aim for about 90–170 words. Keep the everyday meaning in the foreground; the evidence panel already shows the calculation. Planet names, orb values and dates are optional, and should not lead the opening.\nOpen from a specific contrast or concrete detail in I1, in ordinary language. Do not use its first sentence as an automatic lead. A published sentence can be retained when it says the point most clearly; otherwise compose the opening from another supported detail rather than swapping adjectives for decorative variety.\nWrite two to four paragraphs of one to four complete sentences each; usually two or three paragraphs are enough. Each paragraph should add a distinct thought. Do not pad to meet the suggested word range.\nUse domain, phase or timing copy only when it adds a distinct, useful thought. Calendar phase describes the calculated contact, not the reader's feelings. Do not add a phase paragraph merely to say that something is building, settling or mostly anticipation. End when the meaningful contrast is complete, without a recap or stock bridge such as 'most legible'.\nKeep everyday scenes conditional and supported by the supplied copy. A scene offers a comparison; it does not establish that an event happened, a preference changed or a moment of hesitation made something clear. Use one natural qualification when needed, rather than stacking may, might and could.\nPreserve the modality of each supplied statement. If a source says something can happen or can feel a certain way, write that it can, not that it does, often does or tends to. Words that add frequency or necessity, such as often, usually, always, must, needs to or relies on, belong only where a supplied statement says so; keep them when it does.\nBefore returning the draft, check each reused claim for a dropped can, may or might. Keep the qualification attached to its own verb: 'can offer' must not become 'offers', even after a conditional opening or beside another qualified claim. This is a grammar example, not a reading fact. Preserve supported categorical sentences as supplied; do not add uncertainty merely because a neighboring sentence is conditional.\nKeep the complete condition attached to the exact claim it qualifies. If reinforcement depends on a well-chosen aim, retain that condition on reinforcement; do not say the aim causes low friction, or low friction enables reinforcement. If ease is conditional on action lining up with what matters, do not shorten it to unconditional flowing energy. These are logic examples, never additional reading facts.\nDo not turn co-occurrence into causation: returned attention does not therefore sharpen curiosity, and a practical distinction does not therefore show that a routine needs clearer boundaries. Avoid unsupported connectors such as 'allowing', 'giving you', 'so' or 'that shows' even when both adjacent ideas are separately supplied. Retain such a link only if its direction and qualification are explicit in the source.\nA contrast may set two supported options side by side, but do not rule out an alternative that no fact mentions, for example by opening with 'rather than' and an unsupplied change. Role, capacity and routine scenes stay possibilities: do not turn them into the reader's history, such as obligations that have grown or a relationship that has changed.\nTreat the interpretation as a frame for reflection, not a force that causes behavior or a confirmed personal state. Prefer 'offers a way to read' or 'frames' to claims that a planet makes the reader feel, act or recover. Do not invent a psychological interpretation for a supporting cycle that has no supplied curated meaning.\nFacts:\nCurated meaning of the strongest cycle (C1):\nI1: Published interpretation hard:*:*: A hard contact is forming between a moving body and a fixed point in your chart. Hard angles tend to coincide with noticing friction rather than with events.\nOptional framing for that same cycle; cite only what you use:\nD1: Published framing for work and output: Pace, scope, and the part of a task that feels like yours are separate pieces of working on something. An unfinished list or a draft with competing aims can be a place to notice friction between those pieces.\nP1: Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act.\nT1: Timing: exact in 3 days. This reading falls in the middle part of the calculated window.\nCalculated references and limits; use these to check any technical claims:\nC1: transiting mars square natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain work. Calculated exact date: 2026-10-14.\nE1: Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0.\nU1: recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)\nRewrite only the astronomical body of today's reading, using the supplied published interpretation, domain and phase wording.\nKeep each paragraph under 200 words and the whole body under 700 words.\nThe first paragraph must concern the strongest eligible cycle and cite C1 and I1. D1, P1 and T1 are optional: cite them in any paragraph that uses their domain, phase or timing claims, and leave them out when unused.\nCitations belong in the facts arrays, not in explanatory prose. Let a supported everyday meaning stand without repeatedly explaining that it frames or offers a way to read the planet contact. Name the contact only when it adds useful context or identifies a technical measurement; avoid restating it in each paragraph. Omit optional shared phase prose when it adds no distinction specific to this reading.\nKeep every frequency or tendency claim attached to the subject named by its source. For example, a tendency about periods with lower-friction contacts cannot become a claim about all periods of lower friction. Preserve the source's conditions and qualifications when paraphrasing or changing sentence order.\nAn approaching phase means approaching the exact aspect, not approaching the natal point. When explaining an orb or phase, name the aspect and natal target explicitly. For a supplied Saturn sextile natal Mercury with approaching phase and orb 0.42 degrees, a supported rendering is: Saturn's sextile to natal Mercury is approaching exactness; its current aspect orb is 0.42 degrees. This example supplies no facts or numbers for any other contact.\nKeep C1 as the primary focus. No S1 is supplied: do not invent a joint relationship or premise. I2 and I3 may offer separately supported context without connecting the contacts into a new story.\nCite the supplied IDs each paragraph rests on. This is reference coverage, not permission to invent astronomical facts.\nAny paragraph naming a planet, aspect, orb or ISO exact date must cite the matching calculated cycle ID (C1, C2 or C3), even when it repeats a number from T1. Editorial IDs I1, I2, I3, S1, D1, P1 and T1 cannot replace that cycle citation.\nFor a paragraph using the strongest cycle's supplied phase and timing wording, include its cycle alongside the relevant editorial references: \"facts\": [\"C1\", \"P1\", \"T1\"]. Cite only IDs and values supplied above.\nDo not write a headline, reflection question, local-time context or wellbeing framing; those are provided separately.\nDo not introduce sign or individual house placements. Quote orb degrees as digit literals and ISO dates only when present in a cycle cited by that paragraph.\nC1-C3 describe a transiting body contacting a natal point, not two bodies in the current sky. Preserve those roles whenever naming the geometry: explicitly name the target as natal if describing the contact as occurring in the sky. A source's subjective 'feels like yours' stays subjective; do not turn it into an objective task allocation.\nAn orb is the angular deviation from the named aspect measured at this reading's calculation time; the calculated exact date is a separate calendar estimate. Window position describes THIS READING, never the future or past exact date. Put the current orb, this reading's window position, and any exact date or relative exact timing in separate sentences. Never attach a current measurement or window position to the exact pass. Do not infer an exact date from the phase label when the facts say no exact date was found.\nDo not repeat calculation caveats; the app appends them separately."
+          }
+        ],
+        "response_format": {
+          "type": "json_schema",
+          "json_schema": {
+            "name": "daily_reading",
+            "strict": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "paragraphs": {
+                  "type": "array",
+                  "minItems": 2,
+                  "maxItems": 4,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "text": {
+                        "type": "string"
+                      },
+                      "facts": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "required": [
+                      "text",
+                      "facts"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "paragraphs"
+              ],
+              "additionalProperties": false
+            }
+          }
+        }
+      },
+      "candidate": {
+        "paragraphs": [
+          {
+            "text": "Hard angles tend to coincide with noticing friction rather than with events. A hard contact is forming between transiting Mars and natal Mercury. Pace, scope, and the part of a task that feels like yours are separate pieces of working on something. An unfinished list or a draft with competing aims can be a place to notice friction between those pieces.",
+            "facts": [
+              "C1",
+              "D1",
+              "I1"
+            ]
+          },
+          {
+            "text": "If a demand catches your attention, you can notice your response before deciding how to act. Transiting Mars's square to natal Mercury is approaching exactness, and its current aspect orb is 0.42 degrees. This reading falls in the middle part of the calculated window. The contact is exact in 3 days, on the calculated exact date of 2026-10-14.",
+            "facts": [
+              "C1",
+              "P1",
+              "T1"
+            ]
+          }
+        ],
+        "paragraphCount": 2,
+        "truncated": false,
+        "captureLossless": true
+      },
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-15",
+        "validatorVersion": "daily-reference-10",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 31874,
+        "paragraph": null
+      },
+      "output": {
+        "mode": "model",
+        "headline": "mars square natal mercury",
+        "body": "Hard angles tend to coincide with noticing friction rather than with events. A hard contact is forming between transiting Mars and natal Mercury. Pace, scope, and the part of a task that feels like yours are separate pieces of working on something. An unfinished list or a draft with competing aims can be a place to notice friction between those pieces.\n\nIf a demand catches your attention, you can notice your response before deciding how to act. Transiting Mars's square to natal Mercury is approaching exactness, and its current aspect orb is 0.42 degrees. This reading falls in the middle part of the calculated window. The contact is exact in 3 days, on the calculated exact date of 2026-10-14.",
+        "prompt": "Where are you meeting more resistance than the task deserves?",
+        "citations": [
+          {
+            "paragraph": 1,
+            "facts": [
+              "C1",
+              "D1",
+              "I1"
+            ]
+          },
+          {
+            "paragraph": 2,
+            "facts": [
+              "C1",
+              "P1",
+              "T1"
+            ]
+          }
+        ]
+      },
+      "template": {
+        "body": "A hard contact is forming between a moving body and a fixed point in your chart. Hard angles tend to coincide with noticing friction rather than with events.\n\nPace, scope, and the part of a task that feels like yours are separate pieces of working on something. An unfinished list or a draft with competing aims can be a place to notice friction between those pieces.\n\nTiming: exact in 3 days. This reading falls in the middle part of the calculated window."
+      },
+      "manualReview": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "temporalCoherence": null,
+        "chapterIntegration": null,
+        "unsupportedHistory": null,
+        "promisedResolution": null,
+        "notes": null
+      }
+    },
+    {
+      "transport": {
+        "version": "admin-model-transport-1",
+        "provider": "gemini-enterprise",
+        "requestedModel": "gemini-enterprise/gemini-3.8-flash",
+        "actualModel": "gemini-3.8-flash",
+        "thinkingLevel": null,
+        "maxOutputTokens": 65536,
+        "deadlineMs": 60000,
+        "startedAt": "2026-10-13T21:44:50.865Z",
+        "headersAt": "2026-10-13T21:45:13.163Z",
+        "bodyAt": "2026-10-13T21:45:13.163Z",
+        "abortAt": null,
+        "finishedAt": "2026-10-13T21:45:13.163Z",
+        "httpStatus": 200,
+        "requestId": null,
+        "responseId": "UqbOav-wO5KbotQPmISqqQ8",
+        "finishReason": "STOP",
+        "usage": {
+          "inputTokens": 2268,
+          "outputTokens": 218,
+          "thinkingTokens": 3023,
+          "totalTokens": 5509,
+          "outputIncludesThinking": false
+        }
+      },
+      "id": "fallback-hard-uranus-mercury",
+      "description": "Fixed uranus square natal mercury; exercises the hard:uranus:* candidate source.",
+      "config": {
+        "day": "2026-10-11",
+        "timeZone": "UTC",
+        "tone": "warm",
+        "depth": "standard",
+        "granted": [
+          "USR-01",
+          "USR-02"
+        ]
+      },
+      "configHash": "0ff9811bcda723cedb23beb8b76802a63f4f20d84581d722dd7b5702c3ae2257",
+      "localNoon": "2026-10-11T12:00:00.000Z",
+      "eligibleCycleKeys": [
+        "uranus_square_mercury"
+      ],
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting uranus square natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain identity. Calculated exact date: 2026-10-14.",
+          "cycle": {
+            "transitBody": "uranus",
+            "natalPoint": "mercury",
+            "aspect": "square",
+            "orb": 0.42,
+            "exactDate": "2026-10-14"
+          }
+        },
+        {
+          "id": "I1",
+          "statement": "Published interpretation hard:*:*: A hard contact is forming between a moving body and a fixed point in your chart. Hard angles tend to coincide with noticing friction rather than with events.",
+          "kind": "interpretation",
+          "dependsOn": [
+            "C1"
+          ],
+          "sourceKey": "hard:*:*",
+          "releaseVersion": "0.7.1"
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+        },
+        {
+          "id": "T1",
+          "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+        }
+      ],
+      "interpretationPlan": {
+        "version": "daily-synthesis-1",
+        "interpretations": [
+          {
+            "index": 1,
+            "cycleKey": "uranus_square_mercury",
+            "interpretationKey": "hard:*:*"
+          }
+        ],
+        "pairStatus": "insufficient",
+        "pairRuleKey": null,
+        "releaseVersion": "0.7.1",
+        "synthesis": null
+      },
+      "natalLensPlan": {
+        "version": "daily-natal-lens-2",
+        "reliabilityVersion": null,
+        "releaseVersion": "0.7.1",
+        "status": "unreliable",
+        "lens": null
+      },
+      "natalReliability": null,
+      "transitStoryPlan": {
+        "version": "daily-transit-story-1",
+        "solverVersion": "transit-episode-1",
+        "anchorVersion": "transit-anchor-1",
+        "status": "omitted",
+        "reason": "no_anchor"
+      },
+      "request": {
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "max_tokens": 65536,
+        "messages": [
+          {
+            "role": "system",
+            "content": "You write for an astrology app that shows its work. Calculated references C1–C3 supply astronomical measurements. Published interpretations I1–I3 and synthesis S1 supply reviewed editorial possibilities, not measured psychological properties or confirmed personal states. Keep each claim at the strength its source gives it: a possibility stays a possibility, and added frequency, necessity or exclusion needs its own supplied support. Preserve the direction of every condition and causal claim. A condition for one statement does not become the cause of a neighboring statement, and two supported ideas do not authorize a causal bridge between them. Develop only the supplied published meaning and relationship. Every paragraph must cite the supplied IDs it rests on; synthesis citations must include all their parents. Editorial IDs cannot stand in for a directly cited calculation when giving technical details. Never add astronomical or biographical facts, invent a joint relationship, predict, instruct, promise an outcome, or mention health, medication, diagnosis, money, investing, pregnancy, divorce or death. Use calm, plain, specific prose and conditional everyday comparisons. No zodiac cliches, mysticism, exclamation marks or second-hand claims about other people. Respect all supplied suppression limits."
+          },
+          {
+            "role": "user",
+            "content": "Tone: warm. Attentive and conversational. Use natural direct address and an occasional contraction. Give the reader room to recognize a supplied possibility without assuming feelings, offering reassurance, praising them or sounding like a therapist. Warmth comes from the phrasing, not extra emotional claims.\nStyle example only — not a factual source: \"You might know the point you're trying to make before the words quite fit. It can take a moment to find a sentence that feels accurate.\"\nDo not copy the example or borrow its subject unless supported by the supplied interpretation. Its purpose is sentence rhythm and register; example content never supplies a reading fact.\nDepth: standard. Aim for about 90–170 words. Keep the everyday meaning in the foreground; the evidence panel already shows the calculation. Planet names, orb values and dates are optional, and should not lead the opening.\nOpen from a specific contrast or concrete detail in I1, in ordinary language. Do not use its first sentence as an automatic lead. A published sentence can be retained when it says the point most clearly; otherwise compose the opening from another supported detail rather than swapping adjectives for decorative variety.\nWrite two to four paragraphs of one to four complete sentences each; usually two or three paragraphs are enough. Each paragraph should add a distinct thought. Do not pad to meet the suggested word range.\nUse domain, phase or timing copy only when it adds a distinct, useful thought. Calendar phase describes the calculated contact, not the reader's feelings. Do not add a phase paragraph merely to say that something is building, settling or mostly anticipation. End when the meaningful contrast is complete, without a recap or stock bridge such as 'most legible'.\nKeep everyday scenes conditional and supported by the supplied copy. A scene offers a comparison; it does not establish that an event happened, a preference changed or a moment of hesitation made something clear. Use one natural qualification when needed, rather than stacking may, might and could.\nPreserve the modality of each supplied statement. If a source says something can happen or can feel a certain way, write that it can, not that it does, often does or tends to. Words that add frequency or necessity, such as often, usually, always, must, needs to or relies on, belong only where a supplied statement says so; keep them when it does.\nBefore returning the draft, check each reused claim for a dropped can, may or might. Keep the qualification attached to its own verb: 'can offer' must not become 'offers', even after a conditional opening or beside another qualified claim. This is a grammar example, not a reading fact. Preserve supported categorical sentences as supplied; do not add uncertainty merely because a neighboring sentence is conditional.\nKeep the complete condition attached to the exact claim it qualifies. If reinforcement depends on a well-chosen aim, retain that condition on reinforcement; do not say the aim causes low friction, or low friction enables reinforcement. If ease is conditional on action lining up with what matters, do not shorten it to unconditional flowing energy. These are logic examples, never additional reading facts.\nDo not turn co-occurrence into causation: returned attention does not therefore sharpen curiosity, and a practical distinction does not therefore show that a routine needs clearer boundaries. Avoid unsupported connectors such as 'allowing', 'giving you', 'so' or 'that shows' even when both adjacent ideas are separately supplied. Retain such a link only if its direction and qualification are explicit in the source.\nA contrast may set two supported options side by side, but do not rule out an alternative that no fact mentions, for example by opening with 'rather than' and an unsupplied change. Role, capacity and routine scenes stay possibilities: do not turn them into the reader's history, such as obligations that have grown or a relationship that has changed.\nTreat the interpretation as a frame for reflection, not a force that causes behavior or a confirmed personal state. Prefer 'offers a way to read' or 'frames' to claims that a planet makes the reader feel, act or recover. Do not invent a psychological interpretation for a supporting cycle that has no supplied curated meaning.\nFacts:\nCurated meaning of the strongest cycle (C1):\nI1: Published interpretation hard:*:*: A hard contact is forming between a moving body and a fixed point in your chart. Hard angles tend to coincide with noticing friction rather than with events.\nOptional framing for that same cycle; cite only what you use:\nD1: Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.\nP1: Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act.\nT1: Timing: exact in 3 days. This reading falls in the middle part of the calculated window.\nCalculated references and limits; use these to check any technical claims:\nC1: transiting uranus square natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain identity. Calculated exact date: 2026-10-14.\nE1: Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0.\nU1: recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)\nRewrite only the astronomical body of today's reading, using the supplied published interpretation, domain and phase wording.\nKeep each paragraph under 200 words and the whole body under 700 words.\nThe first paragraph must concern the strongest eligible cycle and cite C1 and I1. D1, P1 and T1 are optional: cite them in any paragraph that uses their domain, phase or timing claims, and leave them out when unused.\nCitations belong in the facts arrays, not in explanatory prose. Let a supported everyday meaning stand without repeatedly explaining that it frames or offers a way to read the planet contact. Name the contact only when it adds useful context or identifies a technical measurement; avoid restating it in each paragraph. Omit optional shared phase prose when it adds no distinction specific to this reading.\nKeep every frequency or tendency claim attached to the subject named by its source. For example, a tendency about periods with lower-friction contacts cannot become a claim about all periods of lower friction. Preserve the source's conditions and qualifications when paraphrasing or changing sentence order.\nAn approaching phase means approaching the exact aspect, not approaching the natal point. When explaining an orb or phase, name the aspect and natal target explicitly. For a supplied Saturn sextile natal Mercury with approaching phase and orb 0.42 degrees, a supported rendering is: Saturn's sextile to natal Mercury is approaching exactness; its current aspect orb is 0.42 degrees. This example supplies no facts or numbers for any other contact.\nKeep C1 as the primary focus. No S1 is supplied: do not invent a joint relationship or premise. I2 and I3 may offer separately supported context without connecting the contacts into a new story.\nCite the supplied IDs each paragraph rests on. This is reference coverage, not permission to invent astronomical facts.\nAny paragraph naming a planet, aspect, orb or ISO exact date must cite the matching calculated cycle ID (C1, C2 or C3), even when it repeats a number from T1. Editorial IDs I1, I2, I3, S1, D1, P1 and T1 cannot replace that cycle citation.\nFor a paragraph using the strongest cycle's supplied phase and timing wording, include its cycle alongside the relevant editorial references: \"facts\": [\"C1\", \"P1\", \"T1\"]. Cite only IDs and values supplied above.\nDo not write a headline, reflection question, local-time context or wellbeing framing; those are provided separately.\nDo not introduce sign or individual house placements. Quote orb degrees as digit literals and ISO dates only when present in a cycle cited by that paragraph.\nC1-C3 describe a transiting body contacting a natal point, not two bodies in the current sky. Preserve those roles whenever naming the geometry: explicitly name the target as natal if describing the contact as occurring in the sky. A source's subjective 'feels like yours' stays subjective; do not turn it into an objective task allocation.\nAn orb is the angular deviation from the named aspect measured at this reading's calculation time; the calculated exact date is a separate calendar estimate. Window position describes THIS READING, never the future or past exact date. Put the current orb, this reading's window position, and any exact date or relative exact timing in separate sentences. Never attach a current measurement or window position to the exact pass. Do not infer an exact date from the phase label when the facts say no exact date was found.\nDo not repeat calculation caveats; the app appends them separately."
+          }
+        ],
+        "response_format": {
+          "type": "json_schema",
+          "json_schema": {
+            "name": "daily_reading",
+            "strict": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "paragraphs": {
+                  "type": "array",
+                  "minItems": 2,
+                  "maxItems": 4,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "text": {
+                        "type": "string"
+                      },
+                      "facts": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "required": [
+                      "text",
+                      "facts"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "paragraphs"
+              ],
+              "additionalProperties": false
+            }
+          }
+        }
+      },
+      "candidate": {
+        "paragraphs": [
+          {
+            "text": "Hard angles tend to coincide with noticing friction rather than with events. In your chart, there's a hard contact forming between a moving body and a fixed point. Transiting Uranus square natal Mercury is approaching exactness. Its current aspect orb is 0.42 degrees.",
+            "facts": [
+              "C1",
+              "I1"
+            ]
+          },
+          {
+            "text": "A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.",
+            "facts": [
+              "D1"
+            ]
+          },
+          {
+            "text": "If a demand catches your attention, you can notice your response before deciding how to act. This reading falls in the middle part of the calculated window. The contact is exact in 3 days.",
+            "facts": [
+              "C1",
+              "P1",
+              "T1"
+            ]
+          }
+        ],
+        "paragraphCount": 3,
+        "truncated": false,
+        "captureLossless": true
+      },
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-15",
+        "validatorVersion": "daily-reference-10",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 22298,
+        "paragraph": null
+      },
+      "output": {
+        "mode": "model",
+        "headline": "uranus square natal mercury",
+        "body": "Hard angles tend to coincide with noticing friction rather than with events. In your chart, there's a hard contact forming between a moving body and a fixed point. Transiting Uranus square natal Mercury is approaching exactness. Its current aspect orb is 0.42 degrees.\n\nA title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.\n\nIf a demand catches your attention, you can notice your response before deciding how to act. This reading falls in the middle part of the calculated window. The contact is exact in 3 days.",
+        "prompt": "Where are you meeting more resistance than the task deserves?",
+        "citations": [
+          {
+            "paragraph": 1,
+            "facts": [
+              "C1",
+              "I1"
+            ]
+          },
+          {
+            "paragraph": 2,
+            "facts": [
+              "D1"
+            ]
+          },
+          {
+            "paragraph": 3,
+            "facts": [
+              "C1",
+              "P1",
+              "T1"
+            ]
+          }
+        ]
+      },
+      "template": {
+        "body": "A hard contact is forming between a moving body and a fixed point in your chart. Hard angles tend to coincide with noticing friction rather than with events.\n\nA title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.\n\nTiming: exact in 3 days. This reading falls in the middle part of the calculated window."
+      },
+      "manualReview": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "temporalCoherence": null,
+        "chapterIntegration": null,
+        "unsupportedHistory": null,
+        "promisedResolution": null,
+        "notes": null
+      }
+    },
+    {
+      "transport": {
+        "version": "admin-model-transport-1",
+        "provider": "gemini-enterprise",
+        "requestedModel": "gemini-enterprise/gemini-3.8-flash",
+        "actualModel": "gemini-3.8-flash",
+        "thinkingLevel": null,
+        "maxOutputTokens": 65536,
+        "deadlineMs": 60000,
+        "startedAt": "2026-10-13T21:45:15.126Z",
+        "headersAt": "2026-10-13T21:45:52.578Z",
+        "bodyAt": "2026-10-13T21:45:52.578Z",
+        "abortAt": null,
+        "finishedAt": "2026-10-13T21:45:52.578Z",
+        "httpStatus": 200,
+        "requestId": null,
+        "responseId": "a6bOas6xD_7TsbwPjazM6AQ",
+        "finishReason": "STOP",
+        "usage": {
+          "inputTokens": 2283,
+          "outputTokens": 240,
+          "thinkingTokens": 6173,
+          "totalTokens": 8696,
+          "outputIncludesThinking": false
+        }
+      },
+      "id": "fallback-soft-saturn-mercury",
+      "description": "Fixed saturn sextile natal mercury; exercises the soft:saturn:* candidate source.",
+      "config": {
+        "day": "2026-10-11",
+        "timeZone": "UTC",
+        "tone": "plain",
+        "depth": "technical",
+        "granted": [
+          "USR-01",
+          "USR-02"
+        ]
+      },
+      "configHash": "fba4a783db831cafda883854cc06b3651dc9668d3aaacb806de62c2668d27423",
+      "localNoon": "2026-10-11T12:00:00.000Z",
+      "eligibleCycleKeys": [
+        "saturn_sextile_mercury"
+      ],
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting saturn sextile natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain work. Calculated exact date: 2026-10-14.",
+          "cycle": {
+            "transitBody": "saturn",
+            "natalPoint": "mercury",
+            "aspect": "sextile",
+            "orb": 0.42,
+            "exactDate": "2026-10-14"
+          }
+        },
+        {
+          "id": "I1",
+          "statement": "Published interpretation soft:*:*: A supportive contact is in range. These tend to be unremarkable in the moment and only visible in hindsight as periods of lower friction.",
+          "kind": "interpretation",
+          "dependsOn": [
+            "C1"
+          ],
+          "sourceKey": "soft:*:*",
+          "releaseVersion": "0.7.1"
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for work and output: A task can feel manageable when its purpose and next small piece are easy to describe. A clear outline or a commitment with a clear scope can illustrate that kind of alignment."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+        },
+        {
+          "id": "T1",
+          "statement": "Saturn's sextile to natal Mercury is approaching exactness; its current aspect orb is 0.42 degrees. Timing: exact in 3 days. This reading falls in the middle part of the calculated window. The calculated arc position is 30%."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+        }
+      ],
+      "interpretationPlan": {
+        "version": "daily-synthesis-1",
+        "interpretations": [
+          {
+            "index": 1,
+            "cycleKey": "saturn_sextile_mercury",
+            "interpretationKey": "soft:*:*"
+          }
+        ],
+        "pairStatus": "insufficient",
+        "pairRuleKey": null,
+        "releaseVersion": "0.7.1",
+        "synthesis": null
+      },
+      "natalLensPlan": {
+        "version": "daily-natal-lens-2",
+        "reliabilityVersion": null,
+        "releaseVersion": "0.7.1",
+        "status": "unreliable",
+        "lens": null
+      },
+      "natalReliability": null,
+      "transitStoryPlan": {
+        "version": "daily-transit-story-1",
+        "solverVersion": "transit-episode-1",
+        "anchorVersion": "transit-anchor-1",
+        "status": "omitted",
+        "reason": "no_anchor"
+      },
+      "request": {
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "max_tokens": 65536,
+        "messages": [
+          {
+            "role": "system",
+            "content": "You write for an astrology app that shows its work. Calculated references C1–C3 supply astronomical measurements. Published interpretations I1–I3 and synthesis S1 supply reviewed editorial possibilities, not measured psychological properties or confirmed personal states. Keep each claim at the strength its source gives it: a possibility stays a possibility, and added frequency, necessity or exclusion needs its own supplied support. Preserve the direction of every condition and causal claim. A condition for one statement does not become the cause of a neighboring statement, and two supported ideas do not authorize a causal bridge between them. Develop only the supplied published meaning and relationship. Every paragraph must cite the supplied IDs it rests on; synthesis citations must include all their parents. Editorial IDs cannot stand in for a directly cited calculation when giving technical details. Never add astronomical or biographical facts, invent a joint relationship, predict, instruct, promise an outcome, or mention health, medication, diagnosis, money, investing, pregnancy, divorce or death. Use calm, plain, specific prose and conditional everyday comparisons. No zodiac cliches, mysticism, exclamation marks or second-hand claims about other people. Respect all supplied suppression limits."
+          },
+          {
+            "role": "user",
+            "content": "Tone: plain. Direct and observant. Use familiar verbs and one concrete distinction at a time. Sound matter-of-fact, with quiet confidence and no ceremonial lead-in or embellishment.\nStyle example only — not a factual source: \"A point can be clear before the words for it are. Another sentence may add useful detail, or simply say the same thing again.\"\nDo not copy the example or borrow its subject unless supported by the supplied interpretation. Its purpose is sentence rhythm and register; example content never supplies a reading fact.\nDepth: technical. Aim for about 140–240 words. Lead with the everyday meaning, then connect it to the named contact and relevant calculated detail in a compact passage. Explain what a detail means only when supplied editorial copy supports that explanation.\nOpen from a specific contrast or concrete detail in I1, in ordinary language. Do not use its first sentence as an automatic lead. A published sentence can be retained when it says the point most clearly; otherwise compose the opening from another supported detail rather than swapping adjectives for decorative variety.\nWrite two to four paragraphs of one to four complete sentences each; usually two or three paragraphs are enough. Each paragraph should add a distinct thought. Do not pad to meet the suggested word range.\nUse domain, phase or timing copy only when it adds a distinct, useful thought. Calendar phase describes the calculated contact, not the reader's feelings. Do not add a phase paragraph merely to say that something is building, settling or mostly anticipation. End when the meaningful contrast is complete, without a recap or stock bridge such as 'most legible'.\nKeep everyday scenes conditional and supported by the supplied copy. A scene offers a comparison; it does not establish that an event happened, a preference changed or a moment of hesitation made something clear. Use one natural qualification when needed, rather than stacking may, might and could.\nPreserve the modality of each supplied statement. If a source says something can happen or can feel a certain way, write that it can, not that it does, often does or tends to. Words that add frequency or necessity, such as often, usually, always, must, needs to or relies on, belong only where a supplied statement says so; keep them when it does.\nBefore returning the draft, check each reused claim for a dropped can, may or might. Keep the qualification attached to its own verb: 'can offer' must not become 'offers', even after a conditional opening or beside another qualified claim. This is a grammar example, not a reading fact. Preserve supported categorical sentences as supplied; do not add uncertainty merely because a neighboring sentence is conditional.\nKeep the complete condition attached to the exact claim it qualifies. If reinforcement depends on a well-chosen aim, retain that condition on reinforcement; do not say the aim causes low friction, or low friction enables reinforcement. If ease is conditional on action lining up with what matters, do not shorten it to unconditional flowing energy. These are logic examples, never additional reading facts.\nDo not turn co-occurrence into causation: returned attention does not therefore sharpen curiosity, and a practical distinction does not therefore show that a routine needs clearer boundaries. Avoid unsupported connectors such as 'allowing', 'giving you', 'so' or 'that shows' even when both adjacent ideas are separately supplied. Retain such a link only if its direction and qualification are explicit in the source.\nA contrast may set two supported options side by side, but do not rule out an alternative that no fact mentions, for example by opening with 'rather than' and an unsupplied change. Role, capacity and routine scenes stay possibilities: do not turn them into the reader's history, such as obligations that have grown or a relationship that has changed.\nTreat the interpretation as a frame for reflection, not a force that causes behavior or a confirmed personal state. Prefer 'offers a way to read' or 'frames' to claims that a planet makes the reader feel, act or recover. Do not invent a psychological interpretation for a supporting cycle that has no supplied curated meaning.\nFacts:\nCurated meaning of the strongest cycle (C1):\nI1: Published interpretation soft:*:*: A supportive contact is in range. These tend to be unremarkable in the moment and only visible in hindsight as periods of lower friction.\nOptional framing for that same cycle; cite only what you use:\nD1: Published framing for work and output: A task can feel manageable when its purpose and next small piece are easy to describe. A clear outline or a commitment with a clear scope can illustrate that kind of alignment.\nP1: Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act.\nT1: Saturn's sextile to natal Mercury is approaching exactness; its current aspect orb is 0.42 degrees. Timing: exact in 3 days. This reading falls in the middle part of the calculated window. The calculated arc position is 30%.\nCalculated references and limits; use these to check any technical claims:\nC1: transiting saturn sextile natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain work. Calculated exact date: 2026-10-14.\nE1: Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0.\nU1: recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)\nRewrite only the astronomical body of today's reading, using the supplied published interpretation, domain and phase wording.\nKeep each paragraph under 200 words and the whole body under 700 words.\nThe first paragraph must concern the strongest eligible cycle and cite C1 and I1. D1, P1 and T1 are optional: cite them in any paragraph that uses their domain, phase or timing claims, and leave them out when unused.\nCitations belong in the facts arrays, not in explanatory prose. Let a supported everyday meaning stand without repeatedly explaining that it frames or offers a way to read the planet contact. Name the contact only when it adds useful context or identifies a technical measurement; avoid restating it in each paragraph. Omit optional shared phase prose when it adds no distinction specific to this reading.\nKeep every frequency or tendency claim attached to the subject named by its source. For example, a tendency about periods with lower-friction contacts cannot become a claim about all periods of lower friction. Preserve the source's conditions and qualifications when paraphrasing or changing sentence order.\nAn approaching phase means approaching the exact aspect, not approaching the natal point. When explaining an orb or phase, name the aspect and natal target explicitly. For a supplied Saturn sextile natal Mercury with approaching phase and orb 0.42 degrees, a supported rendering is: Saturn's sextile to natal Mercury is approaching exactness; its current aspect orb is 0.42 degrees. This example supplies no facts or numbers for any other contact.\nKeep C1 as the primary focus. No S1 is supplied: do not invent a joint relationship or premise. I2 and I3 may offer separately supported context without connecting the contacts into a new story.\nCite the supplied IDs each paragraph rests on. This is reference coverage, not permission to invent astronomical facts.\nAny paragraph naming a planet, aspect, orb or ISO exact date must cite the matching calculated cycle ID (C1, C2 or C3), even when it repeats a number from T1. Editorial IDs I1, I2, I3, S1, D1, P1 and T1 cannot replace that cycle citation.\nFor a paragraph using the strongest cycle's supplied phase and timing wording, include its cycle alongside the relevant editorial references: \"facts\": [\"C1\", \"P1\", \"T1\"]. Cite only IDs and values supplied above.\nDo not write a headline, reflection question, local-time context or wellbeing framing; those are provided separately.\nDo not introduce sign or individual house placements. Quote orb degrees as digit literals and ISO dates only when present in a cycle cited by that paragraph.\nC1-C3 describe a transiting body contacting a natal point, not two bodies in the current sky. Preserve those roles whenever naming the geometry: explicitly name the target as natal if describing the contact as occurring in the sky. A source's subjective 'feels like yours' stays subjective; do not turn it into an objective task allocation.\nAn orb is the angular deviation from the named aspect measured at this reading's calculation time; the calculated exact date is a separate calendar estimate. Window position describes THIS READING, never the future or past exact date. Put the current orb, this reading's window position, and any exact date or relative exact timing in separate sentences. Never attach a current measurement or window position to the exact pass. Do not infer an exact date from the phase label when the facts say no exact date was found.\nDo not repeat calculation caveats; the app appends them separately."
+          }
+        ],
+        "response_format": {
+          "type": "json_schema",
+          "json_schema": {
+            "name": "daily_reading",
+            "strict": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "paragraphs": {
+                  "type": "array",
+                  "minItems": 2,
+                  "maxItems": 4,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "text": {
+                        "type": "string"
+                      },
+                      "facts": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "required": [
+                      "text",
+                      "facts"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "paragraphs"
+              ],
+              "additionalProperties": false
+            }
+          }
+        }
+      },
+      "candidate": {
+        "paragraphs": [
+          {
+            "text": "Supportive contacts tend to be unremarkable in the moment and only visible in hindsight as periods of lower friction. A supportive contact is in range. A task can feel manageable when its purpose and next small piece are easy to describe. A clear outline or a commitment with a clear scope can illustrate that kind of alignment.",
+            "facts": [
+              "C1",
+              "D1",
+              "I1"
+            ]
+          },
+          {
+            "text": "If a demand catches your attention, you can notice your response before deciding how to act. Saturn's sextile to natal Mercury is approaching exactness; its current aspect orb is 0.42 degrees. This reading falls in the middle part of the calculated window, and the calculated arc position is 30%. The calculated exact date is 2026-10-14, exact in 3 days.",
+            "facts": [
+              "C1",
+              "P1",
+              "T1"
+            ]
+          }
+        ],
+        "paragraphCount": 2,
+        "truncated": false,
+        "captureLossless": true
+      },
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-15",
+        "validatorVersion": "daily-reference-10",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 37452,
+        "paragraph": null
+      },
+      "output": {
+        "mode": "model",
+        "headline": "saturn sextile natal mercury",
+        "body": "Supportive contacts tend to be unremarkable in the moment and only visible in hindsight as periods of lower friction. A supportive contact is in range. A task can feel manageable when its purpose and next small piece are easy to describe. A clear outline or a commitment with a clear scope can illustrate that kind of alignment.\n\nIf a demand catches your attention, you can notice your response before deciding how to act. Saturn's sextile to natal Mercury is approaching exactness; its current aspect orb is 0.42 degrees. This reading falls in the middle part of the calculated window, and the calculated arc position is 30%. The calculated exact date is 2026-10-14, exact in 3 days.",
+        "prompt": "What has been easier than expected lately?",
+        "citations": [
+          {
+            "paragraph": 1,
+            "facts": [
+              "C1",
+              "D1",
+              "I1"
+            ]
+          },
+          {
+            "paragraph": 2,
+            "facts": [
+              "C1",
+              "P1",
+              "T1"
+            ]
+          }
+        ]
+      },
+      "template": {
+        "body": "A supportive contact is in range. These tend to be unremarkable in the moment and only visible in hindsight as periods of lower friction.\n\nA task can feel manageable when its purpose and next small piece are easy to describe. A clear outline or a commitment with a clear scope can illustrate that kind of alignment.\n\nSaturn's sextile to natal Mercury is approaching exactness; its current aspect orb is 0.42 degrees. Timing: exact in 3 days. This reading falls in the middle part of the calculated window. The calculated arc position is 30%."
+      },
+      "manualReview": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "temporalCoherence": null,
+        "chapterIntegration": null,
+        "unsupportedHistory": null,
+        "promisedResolution": null,
+        "notes": null
+      }
+    },
+    {
+      "transport": {
+        "version": "admin-model-transport-1",
+        "provider": "gemini-enterprise",
+        "requestedModel": "gemini-enterprise/gemini-3.8-flash",
+        "actualModel": null,
+        "thinkingLevel": null,
+        "maxOutputTokens": 65536,
+        "deadlineMs": 60000,
+        "startedAt": "2026-10-13T21:45:54.360Z",
+        "headersAt": null,
+        "bodyAt": null,
+        "abortAt": "2026-10-13T21:46:54.360Z",
+        "finishedAt": "2026-10-13T21:46:54.360Z",
+        "httpStatus": null,
+        "requestId": null,
+        "responseId": null,
+        "finishReason": null,
+        "usage": {
+          "inputTokens": null,
+          "outputTokens": null,
+          "thinkingTokens": null,
+          "totalTokens": null,
+          "outputIncludesThinking": null
+        }
+      },
+      "id": "fallback-soft-neptune-mercury",
+      "description": "Fixed neptune sextile natal mercury; exercises the soft:neptune:* candidate source.",
+      "config": {
+        "day": "2026-10-11",
+        "timeZone": "UTC",
+        "tone": "clinical",
+        "depth": "standard",
+        "granted": [
+          "USR-01",
+          "USR-02"
+        ]
+      },
+      "configHash": "ba9cc952127606949d925c13ac6d603d8956881c756450e09935e7551bfeb372",
+      "localNoon": "2026-10-11T12:00:00.000Z",
+      "eligibleCycleKeys": [
+        "neptune_sextile_mercury"
+      ],
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting neptune sextile natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain inner-life. Calculated exact date: 2026-10-14.",
+          "cycle": {
+            "transitBody": "neptune",
+            "natalPoint": "mercury",
+            "aspect": "sextile",
+            "orb": 0.42,
+            "exactDate": "2026-10-14"
+          }
+        },
+        {
+          "id": "I1",
+          "statement": "Published interpretation soft:*:*: A supportive contact is in range. These tend to be unremarkable in the moment and only visible in hindsight as periods of lower friction.",
+          "kind": "interpretation",
+          "dependsOn": [
+            "C1"
+          ],
+          "sourceKey": "soft:*:*",
+          "releaseVersion": "0.7.1"
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for inner life and rest: Private time can have a comfortable shape of its own. A familiar corner, an unclaimed hour, or a routine with fewer demands can serve as ordinary examples of that ease."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+        },
+        {
+          "id": "T1",
+          "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+        }
+      ],
+      "interpretationPlan": {
+        "version": "daily-synthesis-1",
+        "interpretations": [
+          {
+            "index": 1,
+            "cycleKey": "neptune_sextile_mercury",
+            "interpretationKey": "soft:*:*"
+          }
+        ],
+        "pairStatus": "insufficient",
+        "pairRuleKey": null,
+        "releaseVersion": "0.7.1",
+        "synthesis": null
+      },
+      "natalLensPlan": {
+        "version": "daily-natal-lens-2",
+        "reliabilityVersion": null,
+        "releaseVersion": "0.7.1",
+        "status": "unreliable",
+        "lens": null
+      },
+      "natalReliability": null,
+      "transitStoryPlan": {
+        "version": "daily-transit-story-1",
+        "solverVersion": "transit-episode-1",
+        "anchorVersion": "transit-anchor-1",
+        "status": "omitted",
+        "reason": "no_anchor"
+      },
+      "request": {
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "max_tokens": 65536,
+        "messages": [
+          {
+            "role": "system",
+            "content": "You write for an astrology app that shows its work. Calculated references C1–C3 supply astronomical measurements. Published interpretations I1–I3 and synthesis S1 supply reviewed editorial possibilities, not measured psychological properties or confirmed personal states. Keep each claim at the strength its source gives it: a possibility stays a possibility, and added frequency, necessity or exclusion needs its own supplied support. Preserve the direction of every condition and causal claim. A condition for one statement does not become the cause of a neighboring statement, and two supported ideas do not authorize a causal bridge between them. Develop only the supplied published meaning and relationship. Every paragraph must cite the supplied IDs it rests on; synthesis citations must include all their parents. Editorial IDs cannot stand in for a directly cited calculation when giving technical details. Never add astronomical or biographical facts, invent a joint relationship, predict, instruct, promise an outcome, or mention health, medication, diagnosis, money, investing, pregnancy, divorce or death. Use calm, plain, specific prose and conditional everyday comparisons. No zodiac cliches, mysticism, exclamation marks or second-hand claims about other people. Respect all supplied suppression limits."
+          },
+          {
+            "role": "user",
+            "content": "Tone: clinical. Precise and reserved, using familiar words and active verbs. Name the distinction clearly and speak to the reader as 'you'. Preserve subjective wording: when the source says a part of a task feels like yours, keep 'feels like yours'; the tone supplies no objective ownership claim. Reserve does not require jargon, diagnostic labels, a third-person case study or an 'Observation:' preface.\nStyle example only — not a factual source: \"Knowing a point and wording it are distinct tasks. A revision can improve precision without changing what the sentence says.\"\nDo not copy the example or borrow its subject unless supported by the supplied interpretation. Its purpose is sentence rhythm and register; example content never supplies a reading fact.\nDepth: standard. Aim for about 90–170 words. Keep the everyday meaning in the foreground; the evidence panel already shows the calculation. Planet names, orb values and dates are optional, and should not lead the opening.\nOpen from a specific contrast or concrete detail in I1, in ordinary language. Do not use its first sentence as an automatic lead. A published sentence can be retained when it says the point most clearly; otherwise compose the opening from another supported detail rather than swapping adjectives for decorative variety.\nWrite two to four paragraphs of one to four complete sentences each; usually two or three paragraphs are enough. Each paragraph should add a distinct thought. Do not pad to meet the suggested word range.\nUse domain, phase or timing copy only when it adds a distinct, useful thought. Calendar phase describes the calculated contact, not the reader's feelings. Do not add a phase paragraph merely to say that something is building, settling or mostly anticipation. End when the meaningful contrast is complete, without a recap or stock bridge such as 'most legible'.\nKeep everyday scenes conditional and supported by the supplied copy. A scene offers a comparison; it does not establish that an event happened, a preference changed or a moment of hesitation made something clear. Use one natural qualification when needed, rather than stacking may, might and could.\nPreserve the modality of each supplied statement. If a source says something can happen or can feel a certain way, write that it can, not that it does, often does or tends to. Words that add frequency or necessity, such as often, usually, always, must, needs to or relies on, belong only where a supplied statement says so; keep them when it does.\nBefore returning the draft, check each reused claim for a dropped can, may or might. Keep the qualification attached to its own verb: 'can offer' must not become 'offers', even after a conditional opening or beside another qualified claim. This is a grammar example, not a reading fact. Preserve supported categorical sentences as supplied; do not add uncertainty merely because a neighboring sentence is conditional.\nKeep the complete condition attached to the exact claim it qualifies. If reinforcement depends on a well-chosen aim, retain that condition on reinforcement; do not say the aim causes low friction, or low friction enables reinforcement. If ease is conditional on action lining up with what matters, do not shorten it to unconditional flowing energy. These are logic examples, never additional reading facts.\nDo not turn co-occurrence into causation: returned attention does not therefore sharpen curiosity, and a practical distinction does not therefore show that a routine needs clearer boundaries. Avoid unsupported connectors such as 'allowing', 'giving you', 'so' or 'that shows' even when both adjacent ideas are separately supplied. Retain such a link only if its direction and qualification are explicit in the source.\nA contrast may set two supported options side by side, but do not rule out an alternative that no fact mentions, for example by opening with 'rather than' and an unsupplied change. Role, capacity and routine scenes stay possibilities: do not turn them into the reader's history, such as obligations that have grown or a relationship that has changed.\nTreat the interpretation as a frame for reflection, not a force that causes behavior or a confirmed personal state. Prefer 'offers a way to read' or 'frames' to claims that a planet makes the reader feel, act or recover. Do not invent a psychological interpretation for a supporting cycle that has no supplied curated meaning.\nFacts:\nCurated meaning of the strongest cycle (C1):\nI1: Published interpretation soft:*:*: A supportive contact is in range. These tend to be unremarkable in the moment and only visible in hindsight as periods of lower friction.\nOptional framing for that same cycle; cite only what you use:\nD1: Published framing for inner life and rest: Private time can have a comfortable shape of its own. A familiar corner, an unclaimed hour, or a routine with fewer demands can serve as ordinary examples of that ease.\nP1: Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act.\nT1: Timing: exact in 3 days. This reading falls in the middle part of the calculated window.\nCalculated references and limits; use these to check any technical claims:\nC1: transiting neptune sextile natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain inner-life. Calculated exact date: 2026-10-14.\nE1: Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0.\nU1: recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)\nRewrite only the astronomical body of today's reading, using the supplied published interpretation, domain and phase wording.\nKeep each paragraph under 200 words and the whole body under 700 words.\nThe first paragraph must concern the strongest eligible cycle and cite C1 and I1. D1, P1 and T1 are optional: cite them in any paragraph that uses their domain, phase or timing claims, and leave them out when unused.\nCitations belong in the facts arrays, not in explanatory prose. Let a supported everyday meaning stand without repeatedly explaining that it frames or offers a way to read the planet contact. Name the contact only when it adds useful context or identifies a technical measurement; avoid restating it in each paragraph. Omit optional shared phase prose when it adds no distinction specific to this reading.\nKeep every frequency or tendency claim attached to the subject named by its source. For example, a tendency about periods with lower-friction contacts cannot become a claim about all periods of lower friction. Preserve the source's conditions and qualifications when paraphrasing or changing sentence order.\nAn approaching phase means approaching the exact aspect, not approaching the natal point. When explaining an orb or phase, name the aspect and natal target explicitly. For a supplied Saturn sextile natal Mercury with approaching phase and orb 0.42 degrees, a supported rendering is: Saturn's sextile to natal Mercury is approaching exactness; its current aspect orb is 0.42 degrees. This example supplies no facts or numbers for any other contact.\nKeep C1 as the primary focus. No S1 is supplied: do not invent a joint relationship or premise. I2 and I3 may offer separately supported context without connecting the contacts into a new story.\nCite the supplied IDs each paragraph rests on. This is reference coverage, not permission to invent astronomical facts.\nAny paragraph naming a planet, aspect, orb or ISO exact date must cite the matching calculated cycle ID (C1, C2 or C3), even when it repeats a number from T1. Editorial IDs I1, I2, I3, S1, D1, P1 and T1 cannot replace that cycle citation.\nFor a paragraph using the strongest cycle's supplied phase and timing wording, include its cycle alongside the relevant editorial references: \"facts\": [\"C1\", \"P1\", \"T1\"]. Cite only IDs and values supplied above.\nDo not write a headline, reflection question, local-time context or wellbeing framing; those are provided separately.\nDo not introduce sign or individual house placements. Quote orb degrees as digit literals and ISO dates only when present in a cycle cited by that paragraph.\nC1-C3 describe a transiting body contacting a natal point, not two bodies in the current sky. Preserve those roles whenever naming the geometry: explicitly name the target as natal if describing the contact as occurring in the sky. A source's subjective 'feels like yours' stays subjective; do not turn it into an objective task allocation.\nAn orb is the angular deviation from the named aspect measured at this reading's calculation time; the calculated exact date is a separate calendar estimate. Window position describes THIS READING, never the future or past exact date. Put the current orb, this reading's window position, and any exact date or relative exact timing in separate sentences. Never attach a current measurement or window position to the exact pass. Do not infer an exact date from the phase label when the facts say no exact date was found.\nDo not repeat calculation caveats; the app appends them separately."
+          }
+        ],
+        "response_format": {
+          "type": "json_schema",
+          "json_schema": {
+            "name": "daily_reading",
+            "strict": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "paragraphs": {
+                  "type": "array",
+                  "minItems": 2,
+                  "maxItems": 4,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "text": {
+                        "type": "string"
+                      },
+                      "facts": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "required": [
+                      "text",
+                      "facts"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "paragraphs"
+              ],
+              "additionalProperties": false
+            }
+          }
+        }
+      },
+      "candidate": null,
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-astro-body-15",
+        "validatorVersion": "daily-reference-10",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "unavailable",
+        "attempted": true,
+        "code": "timeout",
+        "durationMs": 60000,
+        "paragraph": null
+      },
+      "output": {
+        "mode": "template",
+        "headline": "neptune sextile natal mercury",
+        "body": "A supportive contact is in range. These tend to be unremarkable in the moment and only visible in hindsight as periods of lower friction.\n\nPrivate time can have a comfortable shape of its own. A familiar corner, an unclaimed hour, or a routine with fewer demands can serve as ordinary examples of that ease.\n\nTiming: exact in 3 days. This reading falls in the middle part of the calculated window.",
+        "prompt": "What has been easier than expected lately?",
+        "citations": []
+      },
+      "template": {
+        "body": "A supportive contact is in range. These tend to be unremarkable in the moment and only visible in hindsight as periods of lower friction.\n\nPrivate time can have a comfortable shape of its own. A familiar corner, an unclaimed hour, or a routine with fewer demands can serve as ordinary examples of that ease.\n\nTiming: exact in 3 days. This reading falls in the middle part of the calculated window."
+      },
+      "manualReview": {
+        "specificity": null,
+        "voice": null,
+        "repetition": null,
+        "grounding": null,
+        "lensIntegration": null,
+        "unsupportedPersonalClaim": null,
+        "temporalCoherence": null,
+        "chapterIntegration": null,
+        "unsupportedHistory": null,
+        "promisedResolution": null,
+        "notes": null
+      }
+    }
+  ]
+}

@@ -28,5 +28,7 @@
   "additionalPaidReviewAuthorized": false,
   "widerGenerationAuthorized": false,
   "humanApproval": false,
-  "activationAuthorized": false
+  "activationAuthorized": false,
+  "requestModelIdentity": "gemini-enterprise/gemini-3.8-flash",
+  "nativeProviderModel": "gemini-3.8-flash"
 }

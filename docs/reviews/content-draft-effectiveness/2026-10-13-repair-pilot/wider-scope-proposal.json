@@ -1,0 +1,80 @@
+{
+  "version": "content-wider-scope-proposal-1",
+  "status": "offline-proposal-not-authorized",
+  "sourceSha": "9348a243e35b6af2ba1925a3265d0211f9a7bed4",
+  "provider": "gemini-enterprise",
+  "model": "gemini-enterprise/gemini-3.8-flash",
+  "baselineCanonicalHash": "44c05c8b0336dc778c2efdcbf0c28dc2091d33a96b91c352a2481123b7f7ccae",
+  "candidateCanonicalHash": "78be37d2740102c827fd291777f43f686b9c9f3488c887d76c00212ca84db632",
+  "policy": "A published serving-policy or fixture change requires its own final source/pair identity and new frozen rubric.",
+  "repairOnly": {
+    "cases": [
+      "fallback-hard-mars-mercury",
+      "fallback-hard-uranus-mercury",
+      "fallback-soft-saturn-mercury",
+      "fallback-soft-neptune-mercury"
+    ],
+    "proposedAttempts": 8,
+    "budget": "Operator must explicitly authorize the new cap; no campaign is scheduled."
+  },
+  "other16": {
+    "cases": [
+      "fallback-hard-sun-mercury",
+      "fallback-soft-sun-mercury",
+      "fallback-hard-moon-mercury",
+      "fallback-soft-moon-mercury",
+      "fallback-hard-mercury-moon",
+      "fallback-soft-mercury-moon",
+      "fallback-hard-venus-mercury",
+      "fallback-soft-venus-mercury",
+      "fallback-soft-mars-mercury",
+      "fallback-hard-jupiter-mercury",
+      "fallback-soft-jupiter-mercury",
+      "fallback-hard-saturn-mercury",
+      "fallback-soft-uranus-mercury",
+      "fallback-hard-neptune-mercury",
+      "fallback-hard-pluto-mercury",
+      "fallback-soft-pluto-mercury"
+    ],
+    "pairedAttemptsAlone": 32,
+    "qualificationLimitation": "These alone cannot qualify all20 under the repaired policy because this round produced no candidate outputs."
+  },
+  "fullChangedKeyMinimum": {
+    "cases": [
+      "fallback-hard-sun-mercury",
+      "fallback-soft-sun-mercury",
+      "fallback-hard-moon-mercury",
+      "fallback-soft-moon-mercury",
+      "fallback-hard-mercury-moon",
+      "fallback-soft-mercury-moon",
+      "fallback-hard-venus-mercury",
+      "fallback-soft-venus-mercury",
+      "fallback-hard-mars-mercury",
+      "fallback-soft-mars-mercury",
+      "fallback-hard-jupiter-mercury",
+      "fallback-soft-jupiter-mercury",
+      "fallback-hard-saturn-mercury",
+      "fallback-soft-saturn-mercury",
+      "fallback-hard-uranus-mercury",
+      "fallback-soft-uranus-mercury",
+      "fallback-hard-neptune-mercury",
+      "fallback-soft-neptune-mercury",
+      "fallback-hard-pluto-mercury",
+      "fallback-soft-pluto-mercury"
+    ],
+    "pairedAttempts": 40,
+    "preservedSpecificControls": "Declare additional controls before authorization; do not reuse changed-policy historical outputs as a current pass.",
+    "budget": "Unapproved; choose and enforce a new cap after latency-policy review.",
+    "maximumPerAttemptConservativeReservationMicros": 2800000,
+    "worstCaseReservationFor40AttemptsMicros": 112000000
+  },
+  "prerequisites": [
+    "Offline investigate the observed 60-second timeout without replacement calls.",
+    "Review any proposed serving/runtime policy change and its identity.",
+    "Bind a new closed manifest, attempt limit and spending cap; the existing API accepts four-case pilots only.",
+    "Freeze rubric before generation, retain every unavailable/rejected output, and prohibit retries.",
+    "Complete affected-key and applicable broader release gates before exact-content human approval."
+  ],
+  "scheduled": false,
+  "modelCalls": 0
+}

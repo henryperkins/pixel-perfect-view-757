@@ -1,0 +1,56 @@
+{
+  "before": {
+    "recordedAt": "2026-10-13T21:44:36.132Z",
+    "url": "https://patterns.lakefrontdigital.io/content",
+    "runs": [
+      {
+        "id": "1bdd2ec1-ea11-4051-9f39-03528177a0b8",
+        "status": "running",
+        "completed": 0,
+        "campaign_id": "1bdd2ec1-ea11-4051-9f39-03528177a0b8",
+        "attempt_limit": 4,
+        "dollar_ceiling_micros": 5000000,
+        "campaign_attempt_limit": 8
+      }
+    ]
+  },
+  "after": {
+    "recordedAt": "2026-10-13T21:45:38.432Z",
+    "browserURL": "https://patterns.lakefrontdigital.io/privacy",
+    "runs": [
+      {
+        "id": "1bdd2ec1-ea11-4051-9f39-03528177a0b8",
+        "status": "running",
+        "completed": 2,
+        "message": null
+      }
+    ],
+    "results": [
+      {
+        "position": 0,
+        "case_id": "fallback-hard-mars-mercury",
+        "attempted": 1,
+        "reserved_micros": 98750,
+        "captureKind": null
+      },
+      {
+        "position": 1,
+        "case_id": "fallback-hard-uranus-mercury",
+        "attempted": 1,
+        "reserved_micros": 69356,
+        "captureKind": null
+      },
+      {
+        "position": 2,
+        "case_id": "fallback-soft-saturn-mercury",
+        "attempted": 1,
+        "reserved_micros": 2800000,
+        "captureKind": "attempt-reservation"
+      }
+    ]
+  },
+  "returnedURL": "https://patterns.lakefrontdigital.io/content",
+  "recoveredStatus": "halted",
+  "recoveredRunId": "1bdd2ec1-ea11-4051-9f39-03528177a0b8",
+  "modelCallsFromBrowser": 0
+}

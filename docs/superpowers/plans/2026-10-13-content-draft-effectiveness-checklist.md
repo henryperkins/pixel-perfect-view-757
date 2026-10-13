@@ -287,21 +287,25 @@ The user's subsequent **“Proceed.”** accepts the proposed separate four-case
 
 ## Task 14 — Bind the separate portable repair campaign
 
-- [ ] Accept the explicitly selected `draft-pilot-2` in preview/start, freeze it as `content-comparison-2`, and propagate its identity into stored runs, captures and reports. Keep `draft-pilot-1` and historical reports supported; reject switching a campaign between manifests.
-- [ ] Use a separate browser recovery identity for the repair campaign. Prepare the exact complete saved source, provider/model and repaired prompt/reflection policies without generation. Freeze the unchanged editorial rubric before attempts.
-- [ ] Verify campaign limits, frozen-source execution, source/request identity and report integrity with intercepted transport, then run the full suite with workerd, typecheck, scoped lint, build and browser checks. Obtain one fresh implementation review before publication.
+- [x] Accept the explicitly selected `draft-pilot-2` in preview/start, freeze it as `content-comparison-2`, and propagate its identity into stored runs, captures and reports. Keep `draft-pilot-1` and historical reports supported; reject switching a campaign between manifests.
+- [x] Use a separate browser recovery identity for the repair campaign. Prepare the exact complete saved source, provider/model and repaired prompt/reflection policies without generation. Freeze the declared body thresholds and versioned reflection rubric before attempts.
+- [x] Verify campaign limits, frozen-source execution, source/request identity and report integrity with intercepted transport, then run the full suite with workerd, typecheck, scoped lint, build and browser checks. Obtain one fresh implementation review before publication.
 
 ## Task 15 — Publish and execute the bounded repair pilot
 
-- [ ] Merge and push owned ordinary commits, verify Lovable source sync, publish the reviewed build, and verify public and authenticated source identities. Recheck the unchanged Workflow version and inactive draft/active pointer; no Worker deployment or migration unless its protocol changes.
-- [ ] Recheck selected member provider, configuration and published pricing. Obtain account billing/credit evidence before generation; preserve estimates separately from invoiced charges. Freeze source/plan/rubric and the new eight-attempt/$5 authorization.
+- [x] Merge and push owned ordinary commits, verify Lovable source sync, publish the reviewed build, and verify public and authenticated source identities. Recheck the unchanged Workflow version and inactive draft/active pointer; no Worker deployment or migration unless its protocol changes.
+- [x] Recheck selected member provider, configuration and published pricing. Obtain account billing/credit evidence before generation; preserve estimates separately from invoiced charges. Freeze source/plan/rubric and the new eight-attempt/$5 authorization.
 - [ ] Run the baseline and candidate sequentially through the durable server Workflow, preserve every attempt/capture, verify browser-departure recovery, and archive the raw envelope, reports, ledgers, comparison and strict offline replay. Do not restart or replace a failed/uncertain campaign.
+
+Execution: published source `9348a243e35b6af2ba1925a3265d0211f9a7bed4`, pair `804ad82b566574901b55c1fcdf2cefc76ceb4e6ed63c476dd3d525868c3b443c`. Baseline attempted four cases: three lossless accepted responses and one Neptune timeout at 60 seconds before headers. The baseline halted, so the candidate arm was blocked and no complete comparison/replay/review can be claimed. Four stored attempt records, zero retries, conservative accounting **$3.100932** including the full $2.80 unknown-result reservation; invoices unavailable. Browser departure/recovery and terminal safe stop are verified. [Repair round evidence](../../reviews/content-draft-effectiveness/2026-10-13-repair-pilot/README.md).
 
 ## Task 16 — Review the repair outputs and hand off approval
 
 - [ ] Prepare neutral versioned packets for two fresh blinded reviewers, assess body and final reflection independently, adjudicate substantive disagreements and validate the review records.
-- [ ] Record observed improvements, failures and semantic use. Keep all 16 remaining additions explicitly unqualified by live outputs; prepare any proposed wider scope and budget offline.
+- [x] Record observed improvements, failures and semantic use. Keep all 16 remaining additions explicitly unqualified by live outputs; prepare any proposed wider scope and budget offline.
 - [ ] Present the exact candidate bytes and observed outputs for human review only when applicable qualification gates pass. Keep approval, staging, activation, member-use and rollback gates open until their stated evidence exists.
+
+The new paired blinded editorial review was not run because the complete pair precondition is unsatisfied. The original failed editorial round remains unchanged. This repair round establishes no new candidate meaning in live prose; all 20 additions still need qualification under the repaired serving policy. Wider scope is proposed offline only, and no further generation is scheduled.
 
 ## Historical execution record
 

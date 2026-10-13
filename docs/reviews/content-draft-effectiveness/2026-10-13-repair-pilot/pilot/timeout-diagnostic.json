@@ -1,0 +1,61 @@
+{
+  "sourceSha": "9348a243e35b6af2ba1925a3265d0211f9a7bed4",
+  "runId": "1bdd2ec1-ea11-4051-9f39-03528177a0b8",
+  "pairHash": "804ad82b566574901b55c1fcdf2cefc76ceb4e6ed63c476dd3d525868c3b443c",
+  "deadlineMs": 60000,
+  "successfulAttempts": [
+    {
+      "caseId": "fallback-hard-mars-mercury",
+      "elapsedMs": 31874,
+      "usage": {
+        "inputTokens": 2255,
+        "outputTokens": 222,
+        "thinkingTokens": 4490,
+        "totalTokens": 6967,
+        "outputIncludesThinking": false
+      }
+    },
+    {
+      "caseId": "fallback-hard-uranus-mercury",
+      "elapsedMs": 22298,
+      "usage": {
+        "inputTokens": 2268,
+        "outputTokens": 218,
+        "thinkingTokens": 3023,
+        "totalTokens": 5509,
+        "outputIncludesThinking": false
+      }
+    },
+    {
+      "caseId": "fallback-soft-saturn-mercury",
+      "elapsedMs": 37452,
+      "usage": {
+        "inputTokens": 2283,
+        "outputTokens": 240,
+        "thinkingTokens": 6173,
+        "totalTokens": 8696,
+        "outputIncludesThinking": false
+      }
+    }
+  ],
+  "failedAttempt": {
+    "caseId": "fallback-soft-neptune-mercury",
+    "elapsedMs": 60000,
+    "headersReceived": false,
+    "bodyReceived": false,
+    "abortedAt": "2026-10-13T21:46:54.360Z",
+    "httpStatus": null,
+    "usage": {
+      "inputTokens": null,
+      "outputTokens": null,
+      "thinkingTokens": null,
+      "totalTokens": null,
+      "outputIncludesThinking": null
+    }
+  },
+  "establishes": "The request reached the configured 60-second abort deadline without response headers. Earlier requests completed under that deadline.",
+  "doesNotEstablish": "No root cause is established for provider latency, network behavior or the unobserved final generation/charge. Thinking usage on other requests does not prove the cause of this timeout.",
+  "repairCalls": 0,
+  "retries": 0,
+  "limitsUnchanged": true
+}
