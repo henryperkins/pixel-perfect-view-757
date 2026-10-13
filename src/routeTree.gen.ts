@@ -32,6 +32,8 @@ import { Route as ApiPublicEvaluationIdentityRouteImport } from './routes/api/pu
 import { Route as ApiPublicEvaluationStepRouteImport } from './routes/api/public/evaluation-step'
 import { Route as ApiPublicRetentionStepRouteImport } from './routes/api/public/retention-step'
 import { Route as ApiPublicContentReleasesRollbackRouteImport } from './routes/api/public/content-releases.rollback'
+import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
+import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 
 const IndexRoute = IndexRouteImport.update({
@@ -152,6 +154,16 @@ const ApiPublicContentReleasesRollbackRoute =
     path: '/rollback',
     getParentRoute: () => ApiPublicContentReleasesRoute,
   } as any)
+const LovableEmailAuthPreviewRoute = LovableEmailAuthPreviewRouteImport.update({
+  id: '/lovable/email/auth/preview',
+  path: '/lovable/email/auth/preview',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LovableEmailAuthWebhookRoute = LovableEmailAuthWebhookRouteImport.update({
+  id: '/lovable/email/auth/webhook',
+  path: '/lovable/email/auth/webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LovableEmailTransactionalPreviewRoute =
   LovableEmailTransactionalPreviewRouteImport.update({
     id: '/lovable/email/transactional/preview',
@@ -182,6 +194,8 @@ export interface FileRoutesByFullPath {
   '/api/public/evaluation-step': typeof ApiPublicEvaluationStepRoute
   '/api/public/retention-step': typeof ApiPublicRetentionStepRoute
   '/api/public/content-releases/rollback': typeof ApiPublicContentReleasesRollbackRoute
+  '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
+  '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
 export interface FileRoutesByTo {
@@ -207,6 +221,8 @@ export interface FileRoutesByTo {
   '/api/public/evaluation-step': typeof ApiPublicEvaluationStepRoute
   '/api/public/retention-step': typeof ApiPublicRetentionStepRoute
   '/api/public/content-releases/rollback': typeof ApiPublicContentReleasesRollbackRoute
+  '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
+  '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
 export interface FileRoutesById {
@@ -234,6 +250,8 @@ export interface FileRoutesById {
   '/api/public/evaluation-step': typeof ApiPublicEvaluationStepRoute
   '/api/public/retention-step': typeof ApiPublicRetentionStepRoute
   '/api/public/content-releases/rollback': typeof ApiPublicContentReleasesRollbackRoute
+  '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
+  '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
 }
 export interface FileRouteTypes {
@@ -261,6 +279,8 @@ export interface FileRouteTypes {
     | '/api/public/evaluation-step'
     | '/api/public/retention-step'
     | '/api/public/content-releases/rollback'
+    | '/lovable/email/auth/preview'
+    | '/lovable/email/auth/webhook'
     | '/lovable/email/transactional/preview'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -286,6 +306,8 @@ export interface FileRouteTypes {
     | '/api/public/evaluation-step'
     | '/api/public/retention-step'
     | '/api/public/content-releases/rollback'
+    | '/lovable/email/auth/preview'
+    | '/lovable/email/auth/webhook'
     | '/lovable/email/transactional/preview'
   id:
     | '__root__'
@@ -312,6 +334,8 @@ export interface FileRouteTypes {
     | '/api/public/evaluation-step'
     | '/api/public/retention-step'
     | '/api/public/content-releases/rollback'
+    | '/lovable/email/auth/preview'
+    | '/lovable/email/auth/webhook'
     | '/lovable/email/transactional/preview'
   fileRoutesById: FileRoutesById
 }
@@ -328,6 +352,8 @@ export interface RootRouteChildren {
   ApiPublicEvaluationIdentityRoute: typeof ApiPublicEvaluationIdentityRoute
   ApiPublicEvaluationStepRoute: typeof ApiPublicEvaluationStepRoute
   ApiPublicRetentionStepRoute: typeof ApiPublicRetentionStepRoute
+  LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
+  LovableEmailAuthWebhookRoute: typeof LovableEmailAuthWebhookRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
 }
 
@@ -494,6 +520,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicContentReleasesRollbackRouteImport
       parentRoute: typeof ApiPublicContentReleasesRoute
     }
+    '/lovable/email/auth/preview': {
+      id: '/lovable/email/auth/preview'
+      path: '/lovable/email/auth/preview'
+      fullPath: '/lovable/email/auth/preview'
+      preLoaderRoute: typeof LovableEmailAuthPreviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lovable/email/auth/webhook': {
+      id: '/lovable/email/auth/webhook'
+      path: '/lovable/email/auth/webhook'
+      fullPath: '/lovable/email/auth/webhook'
+      preLoaderRoute: typeof LovableEmailAuthWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lovable/email/transactional/preview': {
       id: '/lovable/email/transactional/preview'
       path: '/lovable/email/transactional/preview'
@@ -562,6 +602,8 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicEvaluationIdentityRoute: ApiPublicEvaluationIdentityRoute,
   ApiPublicEvaluationStepRoute: ApiPublicEvaluationStepRoute,
   ApiPublicRetentionStepRoute: ApiPublicRetentionStepRoute,
+  LovableEmailAuthPreviewRoute: LovableEmailAuthPreviewRoute,
+  LovableEmailAuthWebhookRoute: LovableEmailAuthWebhookRoute,
   LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,
 }
 export const routeTree = rootRouteImport
