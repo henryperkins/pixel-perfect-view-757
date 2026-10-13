@@ -1,0 +1,113 @@
+{
+  "applicationCommit": "78c9b538553e856579b14351a88ea666d4e60298",
+  "deploymentId": "64812d27-6fd5-4710-8b97-c21dec23a72c",
+  "servedDeploymentId": "psr2.64812d27-6fd5-4710-8b97-c21dec23a72c.1792456711.TV6SonpWxSrYAn29rO3Sd092Upd036Ms6b2vpUN0-p4",
+  "canonicalURL": "https://patterns.lakefrontdigital.io",
+  "verifiedAt": "2026-10-13T00:39:42.217Z",
+  "assets": [
+    {
+      "path": "/assets/styles-ZbN_8Esl.css",
+      "sha256": "5bdabc04df4ee5223f8d008f9495e91befdb9836d601dde78279d300d4461f40",
+      "byteEqual": true
+    },
+    {
+      "path": "/assets/index-B1fvXo-T.js",
+      "sha256": "a62bdfd6818aba545848624169caa348120fe52517c1eb6cb4396d2597919772",
+      "byteEqual": true
+    },
+    {
+      "path": "/assets/useSelector-DnJy_gso.js",
+      "sha256": "2df093078aa622eeaa47c34a6acec6aade92a180d3339bd87683ec931983f24b",
+      "byteEqual": true
+    },
+    {
+      "path": "/assets/Shell-DUOWE5ah.js",
+      "sha256": "360c4edf9cf05e364bb04a1eb6bcb4677cf58113455d29bd940d15ebbd14ae45",
+      "byteEqual": true
+    },
+    {
+      "path": "/assets/root-DLTE-HSj.js",
+      "sha256": "2eb1d17f334d79f5c2b7c68aa45a2b50b46a7b2416a9a0f5e7de6ff7f2430322",
+      "byteEqual": true
+    },
+    {
+      "path": "/assets/preload-helper-DY0eRZ7F.js",
+      "sha256": "7ad2d4eec57e3e151e2ce357fa4edbb624e5fc7e490336782077f0e921fbd675",
+      "byteEqual": true
+    },
+    {
+      "path": "/assets/auth-middleware-DT6C3nBT.js",
+      "sha256": "24f6048a456b0f38c02346889e36d5aeda43de0ac046b85dc72dc3620d21516d",
+      "byteEqual": true
+    },
+    {
+      "path": "/assets/timing-CxBzES0H.js",
+      "sha256": "117e440e57c8481a26482938f91481249fbfd6089b8a82596f1306b39771acb7",
+      "byteEqual": true
+    },
+    {
+      "path": "/assets/routes-DfZJanYk.js",
+      "sha256": "e7e6698a6256d0a38ed8705342a6b6fab30c2840797c18a78af81be62dafc4b6",
+      "byteEqual": true
+    },
+    {
+      "path": "/assets/pattern.functions-CZvssuqg.js",
+      "sha256": "b88e87a28701064d7c773436b51ca589f2c91090d234e177ff212aa8e7564946",
+      "byteEqual": true
+    },
+    {
+      "path": "/assets/useMutation-CqRfseuD.js",
+      "sha256": "59fc6be3eb34982b3696bd46ed448138d5f8568020159ce62b166078d05d7cd1",
+      "byteEqual": true
+    },
+    {
+      "path": "/assets/sunrise-CyE52Jd2.js",
+      "sha256": "a37ffc6b2ddf513b728583deaba6bb359063bf881e125b5d4c7a348a0489c64e",
+      "byteEqual": true
+    },
+    {
+      "path": "/assets/check-CQ5nVvDV.js",
+      "sha256": "8cdb3231ca0407d37eb40c78fd69904503310d8f265f3fbe26e414fede546633",
+      "byteEqual": true
+    },
+    {
+      "path": "/assets/sunset-TlKFr08S.js",
+      "sha256": "c8a9be566ba3d137d2d5ac418689bb92f95696c4da4a0e5b8e0046afa0cfedc6",
+      "byteEqual": true
+    },
+    {
+      "path": "/assets/TodayJournal-BAKNJo_W.js",
+      "sha256": "d03799c090f5ee2fafcd385ca3f274705d6d2a8f4b4810d6d71b1fc75b6e0cd9",
+      "byteEqual": true
+    },
+    {
+      "path": "/assets/local-day-C_y_tj-2.js",
+      "sha256": "5857b01e6368b574fa36b21228da593d2a2e5f0c6fbddf9b9e7a067e6334d2d5",
+      "byteEqual": true
+    },
+    {
+      "path": "/assets/useCalendarRefresh-CXhLu4wi.js",
+      "sha256": "004879dc8b4721c2b79519b94af75b24b113a592b5f5ff8d6b46bd44f6c347be",
+      "byteEqual": true
+    },
+    {
+      "path": "/assets/TransitSequence-dHW_G_F9.js",
+      "sha256": "bba2965a9bdea88611b709f93dec1637ce2a29b3216bf8f4ac46ea90af307e98",
+      "byteEqual": true
+    },
+    {
+      "path": "/assets/content-ByktbL9N.js",
+      "sha256": "2fb0b2c68449992425d1408900cd4af2c1dab4e83ea1eda8691d759ce1b1e732",
+      "byteEqual": true
+    }
+  ],
+  "activeContent": {
+    "version": "0.7.1",
+    "checksum": "20b793acda524da945b07ec32b2ed795f31e273c533ff6b4e9c4f96ef821eeac"
+  },
+  "candidateEnabled": false,
+  "workerVersion": "61de7326-4bf2-40bc-a1c7-a197461fe6a2",
+  "migrationRequired": false,
+  "paidCalls": 0,
+  "acceptanceBoundary": "Public health/asset identity and read-only content authority; local 390px/desktop fixture evidence, candidate not activated or generated live."
+}

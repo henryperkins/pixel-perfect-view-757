@@ -1,7 +1,7 @@
 {
   "release": "2026-10-13-concrete-writing",
   "baseCommit": "df627ad7c8ab023e7d5d7fa896b32ef038f7c3dc",
-  "applicationCommit": null,
+  "applicationCommit": "78c9b538553e856579b14351a88ea666d4e60298",
   "ownedPaths": [
     "READING-EVALUATION.md",
     "READING-INTEGRITY.md",
@@ -237,7 +237,10 @@
   "migrationRequired": false,
   "workerChanged": false,
   "publication": {
-    "status": "verified-source-not-yet-pushed-or-published",
+    "status": "pushed-and-published-candidate-inactive",
+    "deploymentId": "64812d27-6fd5-4710-8b97-c21dec23a72c",
+    "canonicalURL": "https://patterns.lakefrontdigital.io",
+    "receipt": "publication.json",
     "candidateEnabled": false
   },
   "pending": [
