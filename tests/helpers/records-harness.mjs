@@ -30,7 +30,7 @@ const envNames = [
 ];
 
 /** Real application SQL, crypto and server modules with no live network access. */
-export async function createRecordsHarness() {
+export async function createRecordsHarness({ plugins = [] } = {}) {
   const oldEnv = Object.fromEntries(envNames.map((name) => [name, process.env[name]]));
   const oldFetch = globalThis.fetch;
   const directory = await mkdtemp(join(tmpdir(), "pattern-records-"));
@@ -185,6 +185,7 @@ export async function createRecordsHarness() {
 
   try {
     vite = await createServer({
+      plugins,
       root: projectRoot,
       // Concurrent suites must not remove or rebuild another harness's Vite cache.
       cacheDir: join(directory, "vite-cache"),

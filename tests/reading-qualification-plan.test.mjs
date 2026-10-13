@@ -54,7 +54,7 @@ test("the dry campaign freezes four 49-attempt source-bound arms and rejects unk
     196,
   );
   for (const p of all) assert.equal(p.metadata.bundleHash, dry.metadata.bundleHash);
-  assert.equal(all[3].metadata.promptVersion, "daily-astro-body-13");
+  assert.equal(all[3].metadata.promptVersion, "daily-astro-body-15");
   assert.equal(
     h.gatewayRequests.length + h.geminiEnterpriseRequests.length + h.swissRequests.length,
     0,

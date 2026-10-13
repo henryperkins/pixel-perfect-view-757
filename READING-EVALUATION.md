@@ -418,3 +418,15 @@ Draft edits, discard or active-pointer changes do not replace an already frozen 
 The separate `draft-fallback-1` manifest provides 70 offline cases (the unchanged legacy 50 plus 20 body/family fallbacks). The paid `draft-pilot-1` contains only hard Mars, hard Uranus, soft Saturn and soft Neptune against natal Mercury. Four pairs do not qualify all 20 additions; the two global catch-alls are shadowed in the supported catalogue and tested in isolated lookup fixtures.
 
 Manifest-bound comparison and review keep selection, submitted facts, accepted citations, deterministic rendering and human semantic assessment separate. Generic report comparison still rejects changed bundle identities. See the [execution checklist](docs/superpowers/plans/2026-10-13-content-draft-effectiveness-checklist.md) and [pilot evidence](docs/reviews/content-draft-effectiveness/2026-10-13/progress.md). Evaluation never approves, stages or activates content; exact-content human approval and applicable release gates remain separate.
+# Historical content replay and portable offline fixtures
+
+The completed 2026-10-13 pilot has an additional strict offline replay path:
+
+```bash
+node scripts/evaluate-readings.mjs --replay-content-workerd complete-report.json --content-plan frozen-pair.json --arm baseline --workerd /path/to/workerd --output NEW-replay.json
+```
+
+This loads the plan's exact source from Git, checks the dependency lock against the installed checkout, revalidates the frozen pair inside workerd and substitutes only recorded responses. Outbound network access is denied. It compares requests, facts, candidates, templates, displayed outputs and validator outcomes; it never calls a provider or qualifies writing. Use the matching runtime (the pilot was reproduced with workerd 2026-10-06), keep the original Node failure and never overwrite its evidence. The report records source, archive, harness, bundle, dependency-lock and runtime identities.
+
+`draft-fallback-2` and `draft-pilot-2` are separate **offline** case sets with checked-in analytic scan values and catalogue-scoped transit hashes. Both bundles' complete plans have Node/workerd parity. Historical case sets and frozen plans remain unchanged. These versions do not expand the paid campaign or its authorization; a future paid manifest must adopt them explicitly. See the [offline repair evidence](docs/reviews/content-draft-effectiveness/2026-10-13-offline-repair/README.md).
+

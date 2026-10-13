@@ -141,6 +141,18 @@ test("quiet-day fallback has a readable body and never calls the model", async (
   assert.equal(requests.length, 0);
 });
 
+test("the serving request separates citation metadata from prose and preserves the subject of qualified claims", async () => {
+  const output = await generateReadingProse(input());
+  const brief = requests[0].messages.find((message) => message.role === "user").content;
+  assert.match(brief, /Citations belong in the facts arrays, not in explanatory prose/);
+  assert.match(
+    brief,
+    /Keep every frequency or tendency claim attached to the subject named by its source/,
+  );
+  assert.match(brief, /approaching the exact aspect, not approaching the natal point/);
+  assert.notEqual(output.meta.diagnostics.promptVersion, "daily-astro-body-13");
+});
+
 test("one shared plan sorts, filters at >0.02, caps at three, and removes suppressed angle contacts", () => {
   const unknown = {
     ...chart,

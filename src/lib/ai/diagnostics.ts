@@ -1,7 +1,7 @@
 /** Measurement identifiers describe the current brief and guards, not a cache key. */
 export const DAILY_DIAGNOSTICS_VERSION = 1;
 export const DAILY_READING_PLAN_VERSION = "daily-synthesis-1";
-export const DAILY_PROMPT_VERSION = "daily-astro-body-13";
+export const DAILY_PROMPT_VERSION = "daily-astro-body-15";
 export const DAILY_VALIDATOR_VERSION = "daily-reference-10";
 export const CONCRETE_DAILY_PROMPT_VERSION = "daily-astro-body-14";
 export const CONCRETE_DAILY_VALIDATOR_VERSION = "daily-reference-11";

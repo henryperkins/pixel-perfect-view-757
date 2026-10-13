@@ -119,6 +119,10 @@ import {
 } from "./ai/diagnostics";
 import { readSavedFactAtoms, type FactAtom } from "./ai/facts";
 import { NATAL_LENS_PLAN_VERSION } from "./content/natal-lens";
+import {
+  PRIMARY_COMPOSITION_VERSION,
+  PRIMARY_REFLECTION_VERSION,
+} from "./content/primary-composition";
 import { validateSavedNatalLens, type SavedNatalLens } from "./content/natal-lens-storage";
 import {
   dailyPlanIdentity,
@@ -1497,6 +1501,12 @@ async function getTodayReading(
     transitAnchors: canonicalStoryValue(transitAnchors),
     promptVersion: DAILY_PROMPT_VERSION,
     validatorVersion: DAILY_VALIDATOR_VERSION,
+    ...(bundle.schemaVersion === 4
+      ? {
+          compositionVersion: PRIMARY_COMPOSITION_VERSION,
+          reflectionVersion: PRIMARY_REFLECTION_VERSION,
+        }
+      : {}),
     ...(bundle.schemaVersion === 5
       ? {
           promptVersion: CONCRETE_DAILY_PROMPT_VERSION,

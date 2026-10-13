@@ -297,7 +297,7 @@ test("reflection companions bind neutral items, pair, packets, quoted rationale 
   assert.throws(() => qualifyReflectionReviews({ assignment, reviews }), /completed boolean/);
   for (const review of reviews) {
     for (const item of review.items) {
-      assert.equal(item.finalPrompt.questionCount, 2);
+      assert.equal(item.finalPrompt.questionCount, 1);
       for (const section of [item.sourceQuestion, item.finalPrompt]) {
         section.checks = Object.fromEntries(Object.keys(section.checks).map((key) => [key, true]));
         section.rationale = {
@@ -314,13 +314,34 @@ test("reflection companions bind neutral items, pair, packets, quoted rationale 
   assert.equal(summary.wholeDraftQualified, false);
   for (const change of [
     (r) => (r[0].packetSha256 = "b".repeat(64)),
-    (r) => (r[0].items[0].finalPrompt.questionCount = 1),
+    (r) => (r[0].items[0].finalPrompt.questionCount = 2),
     (r) => (r[0].items[0].sourceQuestion.rationale.quote = "Not a supplied quote"),
     (r) => r[0].items.pop(),
   ]) {
     const changed = structuredClone(reviews);
     change(changed);
     assert.throws(() => qualifyReflectionReviews({ assignment, reviews: changed }));
+  }
+});
+
+test("archived pilot reflection packets retain their original two-question composition", async () => {
+  const directory = new URL(
+    "../docs/reviews/content-draft-effectiveness/2026-10-13/pilot/",
+    import.meta.url,
+  );
+  const archivedPlan = JSON.parse(await readFile(new URL("frozen-pair.json", directory), "utf8"));
+  const before = JSON.parse(await readFile(new URL("baseline-report.json", directory), "utf8"));
+  const after = JSON.parse(await readFile(new URL("candidate-report.json", directory), "utf8"));
+  const { assignment } = prepareReview({
+    before: { report: before, sha256: hash(before) },
+    after: { report: after, sha256: hash(after) },
+    instructions: "Use the historical rubric.",
+    contentPlan: archivedPlan,
+    random: () => 0.25,
+  });
+  for (const contextId of Object.keys(assignment.packets)) {
+    const review = prepareReflectionReview({ assignment, contextId });
+    for (const item of review.items) assert.equal(item.finalPrompt.questionCount, 2);
   }
 });
 

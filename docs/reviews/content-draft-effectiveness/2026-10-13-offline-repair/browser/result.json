@@ -1,0 +1,80 @@
+{
+  "browser": "Chromium",
+  "modelAttempts": 0,
+  "checks": [
+    {
+      "caseIndex": 0,
+      "width": 1440,
+      "reflection": "Where, if anywhere, is your preferred pace out of step with the task?",
+      "questionCount": 1,
+      "overflow": false
+    },
+    {
+      "caseIndex": 1,
+      "width": 1440,
+      "reflection": "What routine, if any, feels manageable at your ordinary pace?",
+      "questionCount": 1,
+      "overflow": false
+    },
+    {
+      "caseIndex": 2,
+      "width": 1440,
+      "reflection": "Which familiar approach, if any, would you like more room to vary?",
+      "questionCount": 1,
+      "overflow": false
+    },
+    {
+      "caseIndex": 3,
+      "width": 1440,
+      "reflection": "What possibility, if any, would you like to imagine without settling it?",
+      "questionCount": 1,
+      "overflow": false
+    },
+    {
+      "caseIndex": 0,
+      "width": 390,
+      "reflection": "Where, if anywhere, is your preferred pace out of step with the task?",
+      "questionCount": 1,
+      "overflow": false
+    },
+    {
+      "caseIndex": 1,
+      "width": 390,
+      "reflection": "What routine, if any, feels manageable at your ordinary pace?",
+      "questionCount": 1,
+      "overflow": false
+    },
+    {
+      "caseIndex": 2,
+      "width": 390,
+      "reflection": "Which familiar approach, if any, would you like more room to vary?",
+      "questionCount": 1,
+      "overflow": false
+    },
+    {
+      "caseIndex": 3,
+      "width": 390,
+      "reflection": "What possibility, if any, would you like to imagine without settling it?",
+      "questionCount": 1,
+      "overflow": false
+    }
+  ],
+  "errors": [],
+  "source": "server-rendered TodayContent from src/routes/index.tsx with compiled application stylesheet",
+  "checksDescription": [
+    "Each pilot reflection remains one question",
+    "Keyboard navigation to reflection",
+    "No horizontal overflow at 1440x1000 and 390x844",
+    "No console or page errors"
+  ],
+  "screenshots": [
+    "saturn-1440.png",
+    "saturn-390.png"
+  ],
+  "limitations": [
+    "Static synthetic reading body/reflection/calculation markup; adjacent check-in, journal, timing, feedback and evidence components stubbed.",
+    "No authenticated route, member account, hydration or device testing.",
+    "No model or Workflow calls."
+  ],
+  "routeSha256": "31a6dad9c5cf9a6f33efa4b9aff47d174ab5157c0769e1742318946ca10bc56d"
+}

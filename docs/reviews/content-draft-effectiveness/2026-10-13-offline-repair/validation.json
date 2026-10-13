@@ -1,0 +1,57 @@
+{
+  "status": "local-verified-awaiting-independent-review",
+  "baseSha": "13113be0ca50d9590208fa24bd586a969c094bab",
+  "branch": "feat/content-pilot-offline-repair",
+  "checks": {
+    "tests": {
+      "command": "PATTERN_TEST_WORKERD=/path/to/workerd npm test",
+      "total": 859,
+      "passed": 857,
+      "failed": 0,
+      "skipped": 2,
+      "workerdEnabled": true
+    },
+    "typecheck": "passed",
+    "scopedLint": "passed",
+    "build": "passed",
+    "diffCheck": "passed",
+    "browser": "browser/result.json"
+  },
+  "policies": {
+    "composition": "primary-composition-1",
+    "reflection": "primary-reflection-1",
+    "prompt": "daily-astro-body-15",
+    "validator": "daily-reference-10"
+  },
+  "modelAttempts": 0,
+  "sourceFiles": {
+    "scripts/evaluate-readings.mjs": "e5db6becce473ee22cb82e3b6939fa11039648cc1322d1e26d1c750473bdb951",
+    "src/lib/ai/diagnostics.ts": "028d5d355f55101b3283f850965bd6e4c9766f1b100c485cb11b26fde07844b5",
+    "src/lib/ai/evaluation-case-sets.ts": "8c523930a65feb8a0143855ac28526ee1142d41c3811e058a4d99cdec568a8c1",
+    "src/lib/ai/language.server.ts": "6953951ad83fbfaff1b4273706f16a18fc186973ca4967379351eb1aec3af5f3",
+    "src/lib/ai/qualification-plan.server.ts": "5fa5c2e92aad8b1c4b5d93ce81fcc2cddc37e6f1715385092237faeb839531b8",
+    "src/lib/ai/reading-evaluation.server.ts": "eb093ecbefadecc1751dc5d8dd38162841f88d6cc404120769c5ffdb668ce1c5",
+    "src/lib/ai/reading-evaluation.transit.ts": "9a2cf61e07bb4d7966decbe9e222204ea947aa681c66c0b45f4807b178151771",
+    "src/lib/pattern.server.ts": "d434737b0d5c2588d61903fddb13051e29309ada4984535461d191643914e179",
+    "src/lib/reading.server.ts": "913a16480abe36773a11431b7f043dcb831b6d102969ad1e9c08e443def134b7",
+    "tests/helpers/records-harness.mjs": "6fa1341ad6e40b55938e3d99f5f76299d0234967cd698a65b7dd28649011d6b8",
+    "tests/reading-content-report.test.mjs": "ebc4e33d018e25f2d0d80b0f1c68972246f8639b33bfd73fc0c7faa5a7c8fd8f",
+    "tests/reading-diagnostics.test.mjs": "946045e55aa1580d4f8cce2a78b88f5c73c0800ab67b978be2b533d9df2029c2",
+    "tests/reading-language.test.mjs": "d6258d6a29aab3bc762db30e68205b4a23c796f8c643ada07cc44205ace47b1f",
+    "tests/reading-natal-language.test.mjs": "72a624c2b0c75d488a7adecbb04355cf5f283cfbbce223c89aefcf255870faf7",
+    "tests/reading-qualification-plan.test.mjs": "3afd9a784f3fe8e3753bdf2cf5bed274de3c54d773d843313cc72e09a2be49e0",
+    "tests/reading-request-policy.test.mjs": "edd774bd1d12c93cf5e806270307356fff8e5613e6a3064224ec50a99f898aeb",
+    "scripts/reading-workerd-replay.mjs": "fbe089bb07246ae75fcdbf3907880ea12fad9aeb297671cee1bcb105273c445b",
+    "src/lib/ai/reading-evaluation.canonical-scans.d.mts": "63be0ff8a8a9c495b7ad752ded32c26a03d7f5c6203837c9669020e4f9e3c9a6",
+    "src/lib/ai/reading-evaluation.canonical-scans.mjs": "3200bf764e2b689f1626f94a9b233d6b76d06ebe7ed8518ba1c840a761849de6",
+    "src/lib/content/primary-composition.ts": "c307ab0d754739ac2ff3c5083f0ec7378c9ac0ae9135685fe876c4f74ab7e039",
+    "tests/helpers/offline-workerd.mjs": "89ed914a489f1efc4463f8ad583c1a417cd900b5dc147ca0a0e0f85b0884ee75",
+    "tests/reading-portable-fixtures.test.mjs": "58353826b0d3492cc57ca7d5a3b490d341e82cf28f7577e7acdfeee2ff57c8ee",
+    "tests/reading-primary-cache.test.mjs": "8408c594e9ee45273335c827d3bfade454f2fbea0e8ac2bac2e3c4ac3ccbf717",
+    "tests/reading-primary-composition.test.mjs": "bb1c7e2d846b770c5c6214c5dd91c3cec9d78a70439c4ff1656ee9493afa85e6",
+    "tests/reading-workerd-replay.test.mjs": "40931d478e046acb54b6a5c81177af98e6f1a65d12428aaa8a29ef02a5efbd64"
+  },
+  "humanApproval": false,
+  "published": false,
+  "activated": false
+}

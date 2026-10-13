@@ -34,6 +34,8 @@ Original comparison identities: baseline `44c05c8b0336dc778c2efdcbf0c28dc2091d33
 
 Current outcome: **pilot complete; editorial qualification failed; candidate inactive**. Read the [effectiveness result and remaining solutions](../../reviews/content-draft-effectiveness/2026-10-13/effectiveness-summary.md). No further paid calls are authorized.
 
+The subsequent local repair is recorded separately in [offline repair evidence](../../reviews/content-draft-effectiveness/2026-10-13-offline-repair/README.md). Tasks 11–13 implement the summary's concrete offline solutions; they do not replace the failed writing round or satisfy Tasks 8–10's remaining account, editorial, human-approval and release gates. All 58 original evidence files are preserved.
+
 ## Global constraints
 
 - Preserve unrelated `.env`, transcripts, untracked directories and other work. Use a separate implementation worktree if necessary; stage an explicit owned-file manifest. Never rewrite pushed history.
@@ -124,7 +126,7 @@ Current outcome: **pilot complete; editorial qualification failed; candidate ina
 - [x] Extend combination to validate ordered case IDs/hashes from the new manifest while retaining historical fixture-version behavior. Reject duplicate/missing/foreign cases and mismatched pair or arm identities. Never loosen generic/natal comparison guards to allow arbitrary content differences.
 - [x] Add manifest-bound comparison/replay and review-packet preparation. Permit only declared baseline/candidate content differences; require identical fixture/config, runtime, provider/model and policies. The current `transitCopyHash` includes cycle copy: allow its expected change only inside this declared pair while separately proving transit/natal/pair catalogues stayed unchanged. Preserve raw candidate, fallback and reflected question for review.
 - [x] Implement and test the offline commands below, including mocked-capture replay guards, exact hash checks and no-overwrite behavior. Rubric freezing, evidence unpacking, paired comparison, response extraction and review preparation succeeded against the final frozen pair.
-- [ ] Complete strict captured-response replay for the final live pair. Both attempts stopped before request equality or response replay because one legacy analytic fixture float differs between Node and workerd. The unchanged source reproduces the live identity under workerd. Retain this diagnosed failure; do not weaken hashes. The implemented replay blocks network and rejects dirty runtime or a different Git SHA; documentation, tests and evidence may differ. These are command capabilities, not a claim that final-pair replay passed:
+- [x] Complete strict captured-response replay for the final live pair in its matching runtime. The new archived-source workerd runner reproduces all eight requests, supplied facts, captured paragraphs, templates, displayed outputs and validator outcomes. It loads the exact original Git source and matching dependency lock, revalidates the full frozen pair, and denies outbound networking. The two failed Node replays and their runtime diagnostic remain unchanged. This establishes reproduction, not a new writing pass. Reports and reproducible commands are in the separate offline repair evidence.
 
 ```bash
 node scripts/evaluate-readings.mjs --freeze-content-rubric frozen-pair.json --output review-rubric.json
@@ -245,7 +247,39 @@ Execution: two fresh reviewers and one fresh adjudicator completed the scoped as
 
 **Done when:** The intended release is live, new member readings demonstrably use its selected entries, history remains intact, and the exact previous release remains a verified rollback target.
 
-## Execution order and completion record
+## Task 11 — Repair schema-4 composition and reflection offline
+
+**Owner:** Engineer and editor. **Depends on:** Preserved Task 9 findings. **Scope:** A separate schema-4 assembly policy and serving-prompt revision; keep the saved candidate bytes and schema-5 policy unchanged.
+
+- [x] Use one validated primary interpretation question; when absent or malformed, use one safe domain fallback. Do not append inherited domain or wellness questions. Record reflection provenance and version both composition/reflection cache identity so saved readings remain immutable.
+- [x] Omit the three identified generic phase sentences from deterministic templates while preserving distinct authored phase text and the supplied facts. Remove mechanical tone openers. Technical templates must name the aspect whose orb and phase they describe.
+- [x] Version the serving prompt separately. Keep citations in structured metadata, avoid repeating contact explanations, attach frequency statements to their supplied subject, and distinguish approaching an aspect's exactness from approaching a natal point.
+- [x] Verify all tone/depth combinations, specific-entry controls, provider-request instructions, actual cache rollover and saved text/source/feedback preservation. Preserve historical two-question review packets.
+- [x] Check the actual reading body/reflection markup at desktop/mobile widths with local fixtures. Record the limits of the browser evidence.
+
+**Done when:** Deterministic composition, reflection, cache and request-boundary checks pass. New model prose remains unqualified until a separately authorized captured round is reviewed.
+
+## Task 12 — Add portable fixture identities without reinterpreting history
+
+**Owner:** Engineer. **Depends on:** Task 4 runtime diagnosis.
+
+- [x] Freeze the eleven analytic scan/anchor inputs as checked-in canonical data. Give the portable offline catalogues new identities, `draft-fallback-2` and `draft-pilot-2`; retain legacy catalogues, hashes and frozen plans.
+- [x] Scope new transit hashes to the selected canonical catalogue. Verify JSON integrity and complete Node/workerd plan equality for both bundles: 70-case coverage plus four-case pilot plans.
+- [x] Keep the existing paid campaign/API on its original manifest. These offline identities confer no authorization for additional calls; a future paid round needs its own reviewed manifest, budget and campaign.
+
+**Done when:** The new offline plans have runtime-independent identities and the original pilot still replays against its exact archived source.
+
+## Task 13 — Verify, independently review and hand off the remaining release gates
+
+**Owner:** Engineer, then operator/editor. **Depends on:** Tasks 11–12.
+
+- [ ] Run the full suite with workerd enabled, typecheck, scoped lint, build and diff checks. Record the exact implementation and dependency identities, then obtain a fresh whole-change implementation review.
+- [ ] Preserve all original pilot files and unrelated checkout changes; add new evidence under a separate directory. Record zero new model attempts and no publication, approval or activation.
+- [ ] Leave unresolved writing findings, wider affected-key coverage, account-cost reconciliation, human approval, activation and consented member-use evidence explicitly open. Provide a concrete next-round scope for the operator to authorize after reviewing the local result.
+
+**Done when:** All local repairs are verified and reviewable, with external release gates clearly separated. Completion of this task does not mark the entire release checklist complete.
+
+## Historical execution record
 
 Tasks 1–4 are the evaluation capability; Task 5 can proceed alongside them after the baseline is frozen. Task 6 is the local gate, Task 7 publishes that capability, Task 8 executes only the approved eight-call/$5 pilot, Task 9 records scoped review and remaining qualification/approval gates, and Task 10 changes serving content only after those gates close. The proposed editorial delta and its limitations are recorded in [editorial notes](../../reviews/content-draft-effectiveness/2026-10-13/editorial-notes.md) and the [publication decision](../../reviews/content-draft-effectiveness/2026-10-13/publication-decision.md).
 

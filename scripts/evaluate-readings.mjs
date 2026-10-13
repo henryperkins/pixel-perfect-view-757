@@ -1074,6 +1074,7 @@ const HELP = `Offline synthetic reading evaluator (no network; fake gateway key)
   --freeze-content-rubric frozen-pair.json --output review-rubric.json
   --unpack-content-evidence content-pilot.json --output-dir NEW_DIR
   --replay-content complete-report.json --content-plan frozen-pair.json --arm baseline|candidate --output replay.json
+  --replay-content-workerd complete-report.json --content-plan frozen-pair.json --arm baseline|candidate --workerd /path/to/workerd --output replay.json
   --extract-content-responses report.json --content-plan frozen-pair.json --arm baseline|candidate --output responses.json
   --compare-natal baseline.json candidate.json --before-identity identity.json --after-identity identity.json --output comparison.json
 `;
@@ -1099,6 +1100,8 @@ export async function main(args) {
         "--unpack-content-evidence",
         "--output-dir",
         "--replay-content",
+        "--replay-content-workerd",
+        "--workerd",
         "--content-plan",
         "--extract-content-responses",
         "--arm",
@@ -1127,6 +1130,7 @@ export async function main(args) {
     "--freeze-content-rubric",
     "--unpack-content-evidence",
     "--replay-content",
+    "--replay-content-workerd",
     "--extract-content-responses",
     "--extract-responses",
   ].filter((flag) => flag in options);
@@ -1136,7 +1140,10 @@ export async function main(args) {
     );
   const freezingContent = "--freeze-content-rubric" in options;
   const unpackingContent = "--unpack-content-evidence" in options;
-  const replayingContent = "--replay-content" in options;
+  const replayingWorkerd = "--replay-content-workerd" in options;
+  const replayingContent = "--replay-content" in options || replayingWorkerd;
+  if (replayingWorkerd !== "--workerd" in options)
+    throw new Error("--workerd is required only with --replay-content-workerd");
   const contentMode =
     "--compare-content" in options ||
     "--extract-content-responses" in options ||
@@ -1218,6 +1225,16 @@ export async function main(args) {
         { flag: "wx" },
       );
     return;
+  } else if (replayingWorkerd) {
+    const { replayContentReportInWorkerd } = await import("./reading-workerd-replay.mjs");
+    result = await replayContentReportInWorkerd(
+      await readJson(options["--replay-content-workerd"]),
+      {
+        plan: await readJson(options["--content-plan"]),
+        arm: options["--arm"],
+        workerd: options["--workerd"],
+      },
+    );
   } else if (replayingContent) {
     result = await replayContentReport(await readJson(options["--replay-content"]), {
       plan: await readJson(options["--content-plan"]),

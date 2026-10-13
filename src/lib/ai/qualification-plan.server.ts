@@ -19,9 +19,10 @@ import { toDailyWritingBrief } from "../content/daily-writing";
 import { dailyPlanIdentity } from "../content/synthesis";
 import { NATAL_LENS_PLAN_VERSION } from "../content/natal-lens";
 import { NATAL_RELIABILITY_VERSION } from "../astro/natal-reliability";
-import { TRANSIT_EVALUATION_METADATA } from "./reading-evaluation.transit";
+import { transitEvaluationMetadata } from "./reading-evaluation.transit";
 import { DAILY_WRITING_PLAN_VERSION } from "../content/daily-writing";
 import { DAILY_REFLECTION_VERSION } from "../content/daily-reflection";
+import { PRIMARY_REFLECTION_VERSION } from "../content/primary-composition";
 import { DAILY_WRITING_QUALITY_VERSION } from "./daily-writing-quality";
 import { DAILY_VOICE_EXAMPLES_VERSION } from "./daily-voice";
 import { assertSyntheticTransportControl, type EnterpriseThinkingLevel } from "./admin-transport";
@@ -40,7 +41,8 @@ export function createEvaluationPlan(
   provider: LanguageProvider = "lovable",
   caseSetId: EvaluationCaseSetId = "synthetic-daily-7",
 ) {
-  const bounded = Boolean(profile) || caseSetId === "draft-pilot-1";
+  const bounded =
+    Boolean(profile) || caseSetId === "draft-pilot-1" || caseSetId === "draft-pilot-2";
   if (bounded && (!sourceSha || !/^[a-f0-9]{40}$/.test(sourceSha)))
     throw Error("Qualification requires the exact built source SHA.");
   if (profile && caseSetId !== "synthetic-daily-7")
@@ -74,6 +76,7 @@ export function createEvaluationPlan(
     };
     return { ...dry, planHash: hash(dry) };
   });
+  const transitMetadata = transitEvaluationMetadata(caseSetId);
   const metadata = {
     sourceSha,
     fixtureVersion: manifest.fixtureVersion,
@@ -94,13 +97,17 @@ export function createEvaluationPlan(
     model: languageModel(provider),
     gatewayTimeoutMs: DAILY_GATEWAY_TIMEOUT_MS,
     requestPolicyVersion: EVALUATION_REQUEST_POLICY_VERSION,
-    ...TRANSIT_EVALUATION_METADATA,
-    storyUse: policy?.transit ?? TRANSIT_EVALUATION_METADATA.storyUse,
+    ...transitMetadata,
+    storyUse: policy?.transit ?? transitMetadata.storyUse,
     natalPlanVersion: NATAL_LENS_PLAN_VERSION,
     reliabilityVersion: NATAL_RELIABILITY_VERSION,
     writingPlanVersion: concrete ? DAILY_WRITING_PLAN_VERSION : null,
     writingQualityVersion: concrete ? DAILY_WRITING_QUALITY_VERSION : null,
-    reflectionVersion: concrete ? DAILY_REFLECTION_VERSION : null,
+    reflectionVersion: concrete
+      ? DAILY_REFLECTION_VERSION
+      : bundle.schemaVersion === 4
+        ? PRIMARY_REFLECTION_VERSION
+        : null,
     voiceExamplesVersion: concrete ? DAILY_VOICE_EXAMPLES_VERSION : null,
     maxOutputTokens: bounded ? 65536 : null,
     maxInputBytes: bounded ? 65536 : null,

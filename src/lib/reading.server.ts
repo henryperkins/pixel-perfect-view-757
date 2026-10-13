@@ -18,6 +18,13 @@ import type { NatalReliabilityManifest } from "./astro/natal-reliability";
 import { resolveDailyWritingPlan, type DailyWritingPlan } from "./content/daily-writing";
 import { resolveDailyReflection, type DailyReflectionPlan } from "./content/daily-reflection";
 import {
+  PRIMARY_COMPOSITION_VERSION,
+  PRIMARY_REFLECTION_VERSION,
+  primaryReflection,
+  includePrimaryPhase,
+  primaryTechnicalGeometry,
+} from "./content/primary-composition";
+import {
   composeDailyWritingTemplate,
   type DailyWritingTemplate,
 } from "./content/daily-writing-template";
@@ -26,7 +33,7 @@ import {
  * Cycle arc position, in plain language: how many days to the exact pass and
  * how far through the ingress -> egress window today sits.
  */
-function arcParagraph(c: CycleInstance, technical: boolean): string {
+function arcParagraph(c: CycleInstance, technical: boolean, primaryComposition = false): string {
   const phrase = exactPhrase(c.days_to_exact ?? null);
   const pct =
     c.arc_position === null || c.arc_position === undefined
@@ -40,7 +47,7 @@ function arcParagraph(c: CycleInstance, technical: boolean): string {
         : pct <= 60
           ? "This reading falls in the middle part of the calculated window."
           : "This reading falls in the later part of the calculated window.";
-  return `Timing: ${phrase}. ${where}${technical ? `${pct !== null ? ` The calculated arc position is ${pct}%.` : ""} Current orb at the reading's calculation time: ${c.orb}\u00b0.` : ""}`;
+  return `${technical && primaryComposition ? `${primaryTechnicalGeometry(c)} ` : ""}Timing: ${phrase}. ${where}${technical ? `${pct !== null ? ` The calculated arc position is ${pct}%.` : ""}${primaryComposition ? "" : ` Current orb at the reading's calculation time: ${c.orb}\u00b0.`}` : ""}`;
 }
 import { assertUse, isPermitted, type AllowedUse } from "./registry";
 
@@ -169,6 +176,7 @@ export function assembleReading(
   storyCalculation: DailyTransitCalculation | null = null,
 ): AssembledReading {
   const provenance: ProvenanceEntry[] = [];
+  const primaryComposition = bundle.schemaVersion === 4;
 
   record(provenance, ctx, "calculation", "AST-05", "calculation", "Planetary ephemeris", {
     engine: chart.engine,
@@ -219,8 +227,9 @@ export function assembleReading(
     isPermitted("USR-02", "framing", ctx.granted) && normalizeDepth(ctx.depth) === "technical";
   let editorial: AssembledReading["editorial"] = null;
   let headline = "A quiet day in the pattern";
-  let prompt =
-    "Nothing is close enough to name today. What would you notice if nothing were pointing at it?";
+  let prompt = primaryComposition
+    ? primaryReflection(null, "").question
+    : "Nothing is close enough to name today. What would you notice if nothing were pointing at it?";
   let confidence: AssembledReading["confidence"] = "low";
 
   if (primary) {
@@ -240,11 +249,22 @@ export function assembleReading(
       interp.mechanism === WARM_MOON_TEMPLATE.interpretation &&
       domainText === WARM_MOON_TEMPLATE.domain;
     headline = primary.label;
-    prompt = interp.question;
+    const reflection = primaryComposition
+      ? primaryReflection(interp.question, primary.domain)
+      : null;
+    prompt = reflection?.question ?? interp.question;
+    if (reflection)
+      record(provenance, ctx, "reflection", "AST-05", "provenance", "Primary reflection question", {
+        compositionVersion: PRIMARY_COMPOSITION_VERSION,
+        reflectionVersion: PRIMARY_REFLECTION_VERSION,
+        source: reflection.source,
+        interpretationKey: interp.key,
+        domain: primary.domain,
+      });
     paragraphs.push(
       warmMoon
         ? WARM_MOON_TEMPLATE.scene
-        : `${TONE_OPENER[tone]}${interp.mechanism}${natalLensPlan.lens ? ` ${natalLensPlan.lens.mechanism}` : ""}${transitStoryPlan.status === "selected" ? ` ${transitStoryPlan.chronologySentence} ${transitStoryPlan.copy.mechanism}` : ""}`,
+        : `${primaryComposition ? "" : TONE_OPENER[tone]}${interp.mechanism}${natalLensPlan.lens ? ` ${natalLensPlan.lens.mechanism}` : ""}${transitStoryPlan.status === "selected" ? ` ${transitStoryPlan.chronologySentence} ${transitStoryPlan.copy.mechanism}` : ""}`,
     );
 
     if (interpretationPlan.synthesis) {
@@ -282,7 +302,7 @@ export function assembleReading(
     // which part of the chart it lands on, so the prose changes with domain.
     if (dom && domainText) {
       paragraphs.push(warmMoon ? WARM_MOON_TEMPLATE.meaning : domainText);
-      prompt = `${prompt} ${dom.prompt}`;
+      if (!primaryComposition) prompt = `${prompt} ${dom.prompt}`;
       record(
         provenance,
         ctx,
@@ -304,10 +324,13 @@ export function assembleReading(
         ? storyTimingLine(overlay)
         : (bundle.phases[presentationPhase] ?? "");
     // Where in the arc we are, in days rather than jargon.
-    const timing = overlay ? storyTimingLine(overlay) : arcParagraph(primary, technical);
+    const timing = overlay
+      ? storyTimingLine(overlay)
+      : arcParagraph(primary, technical, primaryComposition);
     // Between contacts the phase and timing share one factual sentence.
     // Keep both editorial references, but render that sentence only once.
-    if (phaseText !== timing) paragraphs.push(phaseText);
+    if (phaseText !== timing && (!primaryComposition || includePrimaryPhase(phaseText)))
+      paragraphs.push(phaseText);
     paragraphs.push(timing);
     editorial = {
       interpretation: { key: interp.key, mechanism: interp.mechanism },
@@ -423,6 +446,7 @@ export function assembleReading(
     // Reflection prompt is allowed to adapt to a band (WEL reflection_prompt).
     if (
       bundle.schemaVersion !== 5 &&
+      !primaryComposition &&
       stressOk &&
       stress >= 4 &&
       isPermitted("WEL-03", "reflection_prompt", ctx.granted)
@@ -439,6 +463,7 @@ export function assembleReading(
       );
     } else if (
       bundle.schemaVersion !== 5 &&
+      !primaryComposition &&
       sleepOk &&
       sleep <= 2 &&
       isPermitted("WEL-01", "reflection_prompt", ctx.granted)

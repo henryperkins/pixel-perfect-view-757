@@ -12,7 +12,7 @@ import { NATAL_LENS_PLAN_VERSION } from "../content/natal-lens";
 import { NATAL_RELIABILITY_VERSION } from "../astro/natal-reliability";
 import {
   syntheticTransitCalculation,
-  TRANSIT_EVALUATION_METADATA,
+  transitEvaluationMetadata,
 } from "./reading-evaluation.transit";
 import { syntheticNatalReliability } from "./reading-evaluation.natal";
 import {
@@ -27,6 +27,7 @@ import { generateSyntheticReadingProse } from "./language.server";
 import { composeDailyWritingTemplate } from "../content/daily-writing-template";
 import { DAILY_WRITING_PLAN_VERSION } from "../content/daily-writing";
 import { DAILY_REFLECTION_VERSION } from "../content/daily-reflection";
+import { PRIMARY_REFLECTION_VERSION } from "../content/primary-composition";
 import { DAILY_WRITING_QUALITY_VERSION } from "./daily-writing-quality";
 import { DAILY_VOICE_EXAMPLES_VERSION } from "./daily-voice";
 import { getEvaluationCaseSet, type EvaluationCaseSetId } from "./evaluation-case-sets";
@@ -172,7 +173,7 @@ export async function runSyntheticEvaluationCase(
       ...(policy
         ? { qualificationProfile: policy.profile, qualificationPolicyVersion: policy.version }
         : {}),
-      ...TRANSIT_EVALUATION_METADATA,
+      ...transitEvaluationMetadata(manifest.id),
       ...(policy ? { storyUse: policy.transit } : {}),
       ...(manifest.id !== "synthetic-daily-7" ? { caseSetId: manifest.id } : {}),
       fixtureVersion: manifest.fixtureVersion,
@@ -192,7 +193,9 @@ export async function runSyntheticEvaluationCase(
             reflectionVersion: DAILY_REFLECTION_VERSION,
             voiceExamplesVersion: DAILY_VOICE_EXAMPLES_VERSION,
           }
-        : {}),
+        : bundle.schemaVersion === 4
+          ? { reflectionVersion: PRIMARY_REFLECTION_VERSION }
+          : {}),
       model: languageModel(provider),
       gatewayTimeoutMs: DAILY_GATEWAY_TIMEOUT_MS,
       source: "live-synthetic",
