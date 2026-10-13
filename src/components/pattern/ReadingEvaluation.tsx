@@ -12,6 +12,8 @@ import {
   READING_EVALUATION_CATALOG,
   READING_EVALUATION_STALL_MS,
   readingEvaluationRunActive,
+  readingEvaluationCurrentCaseLabel,
+  readingEvaluationReportScope,
   serializeReadingEvaluationReport,
   summarizeReadingEvaluation,
   type ReadingEvaluationBundleSource,
@@ -375,7 +377,7 @@ export function ReadingEvaluation({
   const rows = results.map((result) => result.case);
   const summary = summarizeReadingEvaluation(rows);
   const total = run?.total ?? READING_EVALUATION_CATALOG.length;
-  const current = READING_EVALUATION_CATALOG[results.length];
+  const currentLabel = readingEvaluationCurrentCaseLabel(run);
   const settings =
     mode === "writing"
       ? {
@@ -501,7 +503,7 @@ export function ReadingEvaluation({
           ? `${results.length}/${total} cases complete · ${
               run.status === "queued"
                 ? "starting the run"
-                : `${run.status === "stopping" ? "stopping after" : "running"} ${current?.label ?? "the current case"}`
+                : `${run.status === "stopping" ? "stopping after" : "running"} ${currentLabel ?? "the current case"}`
             }`
           : complete
             ? `${results.length}/${total} cases complete`
@@ -819,18 +821,15 @@ export function ReadingEvaluation({
           </dl>
           <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
             The denominator includes attempted cases only. Quiet skips and missing configuration are
-            excluded.{" "}
-            {run?.enterpriseThinking
-              ? "Pilot captures retain every repetition by position; download stored attempts for this experiment."
-              : complete
-                ? "This run contains all fixed cases and can be compared with another complete export using the existing comparison CLI."
-                : "This run is partial; downloaded reports include completed cases only and cannot be used as a complete comparison."}
+            excluded. {readingEvaluationReportScope(run)}
           </p>
           <p className="mt-2 font-mono text-xs leading-relaxed text-muted-foreground [overflow-wrap:anywhere]">
             {results[0]?.metadata.model} · {results[0]?.metadata.promptVersion} ·{" "}
             {results[0]?.metadata.validatorVersion} ·{" "}
-            {COPY_CHOICES.find((choice) => choice.value === results[0]?.metadata.bundleSource)
-              ?.label ?? "Unrecorded copy choice"}{" "}
+            {results[0]?.metadata.contentComparison
+              ? `Saved-content comparison · ${results[0].metadata.contentComparison.arm} arm`
+              : (COPY_CHOICES.find((choice) => choice.value === results[0]?.metadata.bundleSource)
+                  ?.label ?? "Unrecorded copy choice")}{" "}
             · {results[0]?.metadata.bundleVersion} · bundle{" "}
             {results[0]?.metadata.bundleHash.slice(0, 12)} ·{" "}
             {results[0]?.metadata.gatewayTimeoutMs == null

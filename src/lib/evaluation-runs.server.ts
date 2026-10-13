@@ -155,6 +155,7 @@ function view(row: RunRow): ReadingEvaluationRun {
     provider: row.provider,
     bundleSource: row.bundle_source,
     total: row.case_ids.length,
+    caseIds: [...row.case_ids],
     completed: row.completed,
     message: row.message,
     createdAt: row.created_at,

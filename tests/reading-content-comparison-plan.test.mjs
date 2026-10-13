@@ -195,9 +195,30 @@ test("paired pilot freezes content across edits, caps at eight, and never replay
     .from("content_drafts")
     .update({ status: "discarded" })
     .eq("id", settings.source.draftId);
-  for (let position = 0; position < 4; position++) await step(baseline, position);
+  await step(baseline, 0);
+  // Reloading the generic panel must recover this four-case run's persisted order.
+  const recovered = await runs.readEvaluationRun(h.records(), h.userA);
+  assert.equal(recovered.run.id, baseline.id);
+  assert.deepEqual(recovered.run.caseIds, [
+    "fallback-hard-mars-mercury",
+    "fallback-hard-uranus-mercury",
+    "fallback-soft-saturn-mercury",
+    "fallback-soft-neptune-mercury",
+  ]);
+  assert.equal(recovered.run.completed, 1);
+  assert.equal(
+    shared.readingEvaluationCurrentCaseLabel(recovered.run),
+    "fallback-hard-uranus-mercury",
+  );
+  for (let position = 1; position < 4; position++) await step(baseline, position);
   const baseState = await runs.readEvaluationRun(h.records(), h.userA, { runId: baseline.id });
   assert.equal(baseState.run.status, "complete", baseState.run.message);
+  assert.equal(shared.readingEvaluationCurrentCaseLabel(baseState.run), null);
+  assert.match(
+    shared.readingEvaluationReportScope(baseState.run),
+    /baseline arm contains all 4 pilot cases/,
+  );
+  assert.doesNotMatch(shared.readingEvaluationReportScope(baseState.run), /all fixed cases/);
   assert.equal(h.gatewayRequests.length, 4);
   assert.equal(shared.combineReadingEvaluationResults(baseState.results).expectedCases, 4);
   await step(baseline, 0);
@@ -562,4 +583,32 @@ test("unavailable candidate generation uses its frozen fallback after draft and 
     "candidate fallback",
   );
   assert.deepEqual(nonEvaluationSnapshot(), before);
+});
+
+test("run labels preserve repeated case order and avoid inferring absent or completed cases", () => {
+  const run = {
+    status: "running",
+    completed: 2,
+    total: 4,
+    caseIds: [
+      "saturn-square-sun",
+      "saturn-square-moon-warm",
+      "saturn-square-sun",
+      "saturn-square-moon-warm",
+    ],
+    enterpriseThinking: "LOW",
+  };
+  assert.equal(shared.readingEvaluationCurrentCaseLabel(run), "Saturn Square Sun");
+  assert.equal(
+    shared.readingEvaluationCurrentCaseLabel({ ...run, completed: 3 }),
+    "Saturn Square Moon Warm",
+  );
+  assert.equal(shared.readingEvaluationCurrentCaseLabel({ ...run, completed: 4 }), null);
+  assert.equal(shared.readingEvaluationCurrentCaseLabel({ ...run, status: "complete" }), null);
+  assert.equal(shared.readingEvaluationCurrentCaseLabel({ ...run, caseIds: undefined }), null);
+  assert.equal(shared.readingEvaluationCurrentCaseLabel(null), null);
+  assert.match(shared.readingEvaluationReportScope(run), /every repetition by position/);
+  const standard = { ...run, enterpriseThinking: undefined, total: 50, status: "complete" };
+  assert.match(shared.readingEvaluationReportScope(standard), /all 50 scheduled cases/);
+  assert.match(shared.readingEvaluationReportScope({ ...standard, status: "halted" }), /partial/);
 });

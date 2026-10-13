@@ -88,6 +88,10 @@ test("only admins start, read and stop runs; a start asks the edge plane to call
   const run = await runs.startEvaluationRun(h.records(), h.userA, BUILTIN, ORIGIN);
   assert.equal(run.status, "queued");
   assert.equal(run.total, READING_EVAL_CASES.length);
+  assert.deepEqual(
+    run.caseIds,
+    READING_EVAL_CASES.map((fixed) => fixed.id),
+  );
   assert.equal(run.completed, 0);
   assert.deepEqual(h.evaluationStarts, [
     {

@@ -130,6 +130,8 @@ export interface ReadingEvaluationRun {
   provider: LanguageProvider;
   bundleSource: ReadingEvaluationBundleSource;
   total: number;
+  /** Persisted execution order, including repeated cases. Older responses may omit it. */
+  caseIds?: string[];
   completed: number;
   message: string | null;
   createdAt: string;
@@ -143,6 +145,24 @@ export interface ReadingEvaluationRun {
     pairHash: string;
     caseSetId: "draft-pilot-1";
   };
+}
+
+/** The next scheduled case comes from the persisted run, never an unrelated catalogue index. */
+export function readingEvaluationCurrentCaseLabel(run: ReadingEvaluationRun | null): string | null {
+  if (!run || !readingEvaluationRunActive(run.status)) return null;
+  const caseId = run.caseIds?.[run.completed];
+  if (!caseId) return null;
+  return READING_EVALUATION_CATALOG.find((fixed) => fixed.id === caseId)?.label ?? caseId;
+}
+
+export function readingEvaluationReportScope(run: ReadingEvaluationRun | null): string {
+  if (run?.enterpriseThinking)
+    return "Pilot captures retain every repetition by position; download stored attempts for this experiment.";
+  if (run?.status !== "complete")
+    return "This run is partial; downloaded reports include completed cases only and cannot be used as a complete comparison.";
+  if (run.contentComparison)
+    return `This ${run.contentComparison.arm} arm contains all ${run.total} pilot cases. Download paired pilot evidence from the saved-content evaluation panel to compare both arms.`;
+  return `This run contains all ${run.total} scheduled cases. Compare exports only when their source plans and case sets match.`;
 }
 
 /** The only accepted request: a fixed case ID plus optional closed copy and provider selectors. */
