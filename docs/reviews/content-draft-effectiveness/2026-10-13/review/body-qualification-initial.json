@@ -1,0 +1,641 @@
+{
+  "protocolVersion": "daily-writing-ai-review-1",
+  "kind": "qualification",
+  "humanReviewCompleted": false,
+  "result": "AI writing-review failed",
+  "passed": false,
+  "bodyReviewPassed": false,
+  "contentComparison": {
+    "pairHash": "21bbc57f6ef4492a1715d5aa645b2c0ca019c0c7be137a88ba68005d5665f10e",
+    "qualified": false,
+    "semanticIncorporation": "unreviewed",
+    "reflectionQuestionQuality": "unreviewed",
+    "limitation": "The body-review protocol does not score source incorporation or reflection questions, and a four-case pilot cannot qualify all changed sources."
+  },
+  "itemSetHash": "d894c4eb6e2e7aa44091dfae77cbe004606b225f1411945302d9b7c884f69e21",
+  "automated": {
+    "before": {
+      "sha256": "6609ab39bdce92e9037d62632b37b2952b1cc77269a7d39b6b8c24a2c4df0f7f",
+      "fixtureVersion": "draft-pilot-1",
+      "caseSetHash": "43562fc3e43edfa47087c1461209b6592269ec2d9b9f048a6e08a2f1c0e33aac",
+      "bundleVersion": "0.7.1",
+      "bundleHash": "300173610977707a1852f4e5898d8e27a2e0d4b932ab3fc4db398eda7efbdad8",
+      "transitCopyHash": "c2b68b767f48bbd54befaa0c6290f76e62ab2e0d7f0450321b13be56db7f6588",
+      "promptVersion": "daily-astro-body-13",
+      "validatorVersion": "daily-reference-10",
+      "model": "gemini-enterprise/gemini-3.8-flash",
+      "bundleSource": "content-comparison",
+      "source": "live-synthetic",
+      "outcomes": {
+        "accepted": 4,
+        "rejected": 0,
+        "unavailable": 0,
+        "skipped": 0
+      }
+    },
+    "after": {
+      "sha256": "7338824f9d79d6d773e00fc4ed6511293ee417f5b709cc4562e6ccb77c6a298e",
+      "fixtureVersion": "draft-pilot-1",
+      "caseSetHash": "43562fc3e43edfa47087c1461209b6592269ec2d9b9f048a6e08a2f1c0e33aac",
+      "bundleVersion": "pending",
+      "bundleHash": "7c719bcb735b6120398fbdfd0d0b0e2d67f4ae236fe6def7f475765b5b40a21c",
+      "transitCopyHash": "04c9ccb5b9a23da222800f34e6ecdce63fe64bf3f6f3a1707979cbe30644a0c5",
+      "promptVersion": "daily-astro-body-13",
+      "validatorVersion": "daily-reference-10",
+      "model": "gemini-enterprise/gemini-3.8-flash",
+      "bundleSource": "content-comparison",
+      "source": "live-synthetic",
+      "outcomes": {
+        "accepted": 4,
+        "rejected": 0,
+        "unavailable": 0,
+        "skipped": 0
+      }
+    }
+  },
+  "reviewerCount": 2,
+  "reviewers": [
+    {
+      "contextId": "reviewer-a",
+      "model": "unknown",
+      "configuration": "unknown",
+      "promptSha256": "000db7eb655187f7608dcb551f0b1c79a0ea8650eb1d81a30b592f3c8275d6ff",
+      "packetSha256": "4ffe549f1acc4bdf7c869b731b01cf5708f10e29895c03a4cb2837e63663f687",
+      "reviewedAt": "2026-10-13T09:46:21.764342Z",
+      "reassessmentOf": null,
+      "superseded": false
+    },
+    {
+      "contextId": "reviewer-b",
+      "model": "unknown",
+      "configuration": "unknown",
+      "promptSha256": "a91d884aac3cbff319d6a5bf8845183b323e8f48a26a065aee843490d0bffb22",
+      "packetSha256": "1374d2c5ca6590959192282da96b4e40256dbda8499b381f6e5c584bd484204b",
+      "reviewedAt": "2026-10-13T09:46:21.764493Z",
+      "reassessmentOf": null,
+      "superseded": false
+    }
+  ],
+  "supersededAssessments": [],
+  "adjudication": null,
+  "coverage": {
+    "items": 16,
+    "correctedItems": 8,
+    "quietItems": 0,
+    "scoredItems": 16,
+    "uncovered": []
+  },
+  "corrected": {
+    "failures": [
+      {
+        "itemId": "item-01",
+        "mappings": [
+          {
+            "run": "after",
+            "caseId": "fallback-soft-saturn-mercury",
+            "output": "template"
+          }
+        ],
+        "reasons": [
+          "reviewer-a: coherence 3 is below 4",
+          "reviewer-a: repetition 3 is below 4",
+          "reviewer-b: specificity 3 is below 4",
+          "reviewer-b: repetition 3 is below 4"
+        ]
+      },
+      {
+        "itemId": "item-07",
+        "mappings": [
+          {
+            "run": "after",
+            "caseId": "fallback-hard-mars-mercury",
+            "output": "template"
+          }
+        ],
+        "reasons": [
+          "reviewer-a: repetition 3 is below 4",
+          "reviewer-b: repetition 3 is below 4"
+        ]
+      },
+      {
+        "itemId": "item-09",
+        "mappings": [
+          {
+            "run": "after",
+            "caseId": "fallback-hard-mars-mercury",
+            "output": "displayed"
+          },
+          {
+            "run": "after",
+            "caseId": "fallback-hard-mars-mercury",
+            "output": "candidate"
+          }
+        ],
+        "reasons": [
+          "reviewer-a: repetition 3 is below 4",
+          "reviewer-b: repetition 3 is below 4"
+        ]
+      },
+      {
+        "itemId": "item-10",
+        "mappings": [
+          {
+            "run": "after",
+            "caseId": "fallback-soft-neptune-mercury",
+            "output": "displayed"
+          },
+          {
+            "run": "after",
+            "caseId": "fallback-soft-neptune-mercury",
+            "output": "candidate"
+          }
+        ],
+        "reasons": [
+          "reviewer-a: repetition 3 is below 4",
+          "reviewer-b: repetition 3 is below 4"
+        ]
+      },
+      {
+        "itemId": "item-11",
+        "mappings": [
+          {
+            "run": "after",
+            "caseId": "fallback-soft-neptune-mercury",
+            "output": "template"
+          }
+        ],
+        "reasons": [
+          "reviewer-a: repetition 3 is below 4",
+          "reviewer-b: voice 3 is below 4",
+          "reviewer-b: repetition 3 is below 4"
+        ]
+      },
+      {
+        "itemId": "item-13",
+        "mappings": [
+          {
+            "run": "after",
+            "caseId": "fallback-soft-saturn-mercury",
+            "output": "displayed"
+          },
+          {
+            "run": "after",
+            "caseId": "fallback-soft-saturn-mercury",
+            "output": "candidate"
+          }
+        ],
+        "reasons": [
+          "reviewer-a: grounding 3 is below 4",
+          "reviewer-a: coherence 3 is below 4",
+          "reviewer-a: voice 2 is below 4",
+          "reviewer-a: repetition 2 is below 4",
+          "reviewer-b: coherence 3 is below 4",
+          "reviewer-b: voice 3 is below 4",
+          "reviewer-b: repetition 2 is below 4",
+          "unresolved substantive finding a-13-1 (factual_mismatch) from reviewer-a"
+        ]
+      },
+      {
+        "itemId": "item-15",
+        "mappings": [
+          {
+            "run": "after",
+            "caseId": "fallback-hard-uranus-mercury",
+            "output": "displayed"
+          },
+          {
+            "run": "after",
+            "caseId": "fallback-hard-uranus-mercury",
+            "output": "candidate"
+          }
+        ],
+        "reasons": [
+          "reviewer-a: repetition 3 is below 4",
+          "reviewer-b: repetition 3 is below 4"
+        ]
+      },
+      {
+        "itemId": "item-16",
+        "mappings": [
+          {
+            "run": "after",
+            "caseId": "fallback-hard-uranus-mercury",
+            "output": "template"
+          }
+        ],
+        "reasons": [
+          "reviewer-a: voice 3 is below 4",
+          "reviewer-a: repetition 3 is below 4",
+          "reviewer-b: voice 3 is below 4",
+          "reviewer-b: repetition 3 is below 4"
+        ]
+      }
+    ]
+  },
+  "baseline": {
+    "failures": [
+      {
+        "itemId": "item-02",
+        "mappings": [
+          {
+            "run": "before",
+            "caseId": "fallback-soft-neptune-mercury",
+            "output": "template"
+          }
+        ],
+        "reasons": [
+          "reviewer-b: specificity 3 is below 4"
+        ]
+      },
+      {
+        "itemId": "item-04",
+        "mappings": [
+          {
+            "run": "before",
+            "caseId": "fallback-soft-saturn-mercury",
+            "output": "template"
+          }
+        ],
+        "reasons": [
+          "reviewer-a: coherence 3 is below 4",
+          "reviewer-b: specificity 3 is below 4"
+        ]
+      },
+      {
+        "itemId": "item-05",
+        "mappings": [
+          {
+            "run": "before",
+            "caseId": "fallback-soft-saturn-mercury",
+            "output": "displayed"
+          },
+          {
+            "run": "before",
+            "caseId": "fallback-soft-saturn-mercury",
+            "output": "candidate"
+          }
+        ],
+        "reasons": [
+          "reviewer-b: grounding 3 is below 4",
+          "unresolved substantive finding b-05-1 (unsupported_frequency) from reviewer-b"
+        ]
+      },
+      {
+        "itemId": "item-14",
+        "mappings": [
+          {
+            "run": "before",
+            "caseId": "fallback-soft-neptune-mercury",
+            "output": "displayed"
+          },
+          {
+            "run": "before",
+            "caseId": "fallback-soft-neptune-mercury",
+            "output": "candidate"
+          }
+        ],
+        "reasons": [
+          "reviewer-b: specificity 3 is below 4",
+          "reviewer-b: grounding 3 is below 4",
+          "unresolved substantive finding b-14-1 (unsupported_frequency) from reviewer-b"
+        ]
+      }
+    ]
+  },
+  "scoreDeltas": [
+    {
+      "caseId": "fallback-hard-mars-mercury",
+      "reviewer": "reviewer-a",
+      "dimension": "specificity",
+      "before": 4,
+      "after": 5,
+      "delta": 1
+    },
+    {
+      "caseId": "fallback-hard-mars-mercury",
+      "reviewer": "reviewer-a",
+      "dimension": "grounding",
+      "before": 5,
+      "after": 5,
+      "delta": 0
+    },
+    {
+      "caseId": "fallback-hard-mars-mercury",
+      "reviewer": "reviewer-a",
+      "dimension": "coherence",
+      "before": 4,
+      "after": 4,
+      "delta": 0
+    },
+    {
+      "caseId": "fallback-hard-mars-mercury",
+      "reviewer": "reviewer-a",
+      "dimension": "voice",
+      "before": 4,
+      "after": 4,
+      "delta": 0
+    },
+    {
+      "caseId": "fallback-hard-mars-mercury",
+      "reviewer": "reviewer-a",
+      "dimension": "repetition",
+      "before": 3,
+      "after": 3,
+      "delta": 0
+    },
+    {
+      "caseId": "fallback-hard-mars-mercury",
+      "reviewer": "reviewer-b",
+      "dimension": "specificity",
+      "before": 4,
+      "after": 5,
+      "delta": 1
+    },
+    {
+      "caseId": "fallback-hard-mars-mercury",
+      "reviewer": "reviewer-b",
+      "dimension": "grounding",
+      "before": 5,
+      "after": 5,
+      "delta": 0
+    },
+    {
+      "caseId": "fallback-hard-mars-mercury",
+      "reviewer": "reviewer-b",
+      "dimension": "coherence",
+      "before": 4,
+      "after": 4,
+      "delta": 0
+    },
+    {
+      "caseId": "fallback-hard-mars-mercury",
+      "reviewer": "reviewer-b",
+      "dimension": "voice",
+      "before": 4,
+      "after": 4,
+      "delta": 0
+    },
+    {
+      "caseId": "fallback-hard-mars-mercury",
+      "reviewer": "reviewer-b",
+      "dimension": "repetition",
+      "before": 2,
+      "after": 3,
+      "delta": 1
+    },
+    {
+      "caseId": "fallback-hard-uranus-mercury",
+      "reviewer": "reviewer-a",
+      "dimension": "specificity",
+      "before": 4,
+      "after": 5,
+      "delta": 1
+    },
+    {
+      "caseId": "fallback-hard-uranus-mercury",
+      "reviewer": "reviewer-a",
+      "dimension": "grounding",
+      "before": 5,
+      "after": 5,
+      "delta": 0
+    },
+    {
+      "caseId": "fallback-hard-uranus-mercury",
+      "reviewer": "reviewer-a",
+      "dimension": "coherence",
+      "before": 4,
+      "after": 4,
+      "delta": 0
+    },
+    {
+      "caseId": "fallback-hard-uranus-mercury",
+      "reviewer": "reviewer-a",
+      "dimension": "voice",
+      "before": 3,
+      "after": 4,
+      "delta": 1
+    },
+    {
+      "caseId": "fallback-hard-uranus-mercury",
+      "reviewer": "reviewer-a",
+      "dimension": "repetition",
+      "before": 3,
+      "after": 3,
+      "delta": 0
+    },
+    {
+      "caseId": "fallback-hard-uranus-mercury",
+      "reviewer": "reviewer-b",
+      "dimension": "specificity",
+      "before": 4,
+      "after": 5,
+      "delta": 1
+    },
+    {
+      "caseId": "fallback-hard-uranus-mercury",
+      "reviewer": "reviewer-b",
+      "dimension": "grounding",
+      "before": 5,
+      "after": 5,
+      "delta": 0
+    },
+    {
+      "caseId": "fallback-hard-uranus-mercury",
+      "reviewer": "reviewer-b",
+      "dimension": "coherence",
+      "before": 4,
+      "after": 4,
+      "delta": 0
+    },
+    {
+      "caseId": "fallback-hard-uranus-mercury",
+      "reviewer": "reviewer-b",
+      "dimension": "voice",
+      "before": 3,
+      "after": 4,
+      "delta": 1
+    },
+    {
+      "caseId": "fallback-hard-uranus-mercury",
+      "reviewer": "reviewer-b",
+      "dimension": "repetition",
+      "before": 2,
+      "after": 3,
+      "delta": 1
+    },
+    {
+      "caseId": "fallback-soft-saturn-mercury",
+      "reviewer": "reviewer-a",
+      "dimension": "specificity",
+      "before": 4,
+      "after": 4,
+      "delta": 0
+    },
+    {
+      "caseId": "fallback-soft-saturn-mercury",
+      "reviewer": "reviewer-a",
+      "dimension": "grounding",
+      "before": 5,
+      "after": 3,
+      "delta": -2
+    },
+    {
+      "caseId": "fallback-soft-saturn-mercury",
+      "reviewer": "reviewer-a",
+      "dimension": "coherence",
+      "before": 4,
+      "after": 3,
+      "delta": -1
+    },
+    {
+      "caseId": "fallback-soft-saturn-mercury",
+      "reviewer": "reviewer-a",
+      "dimension": "voice",
+      "before": 4,
+      "after": 2,
+      "delta": -2
+    },
+    {
+      "caseId": "fallback-soft-saturn-mercury",
+      "reviewer": "reviewer-a",
+      "dimension": "repetition",
+      "before": 3,
+      "after": 2,
+      "delta": -1
+    },
+    {
+      "caseId": "fallback-soft-saturn-mercury",
+      "reviewer": "reviewer-b",
+      "dimension": "specificity",
+      "before": 4,
+      "after": 4,
+      "delta": 0
+    },
+    {
+      "caseId": "fallback-soft-saturn-mercury",
+      "reviewer": "reviewer-b",
+      "dimension": "grounding",
+      "before": 3,
+      "after": 4,
+      "delta": 1
+    },
+    {
+      "caseId": "fallback-soft-saturn-mercury",
+      "reviewer": "reviewer-b",
+      "dimension": "coherence",
+      "before": 4,
+      "after": 3,
+      "delta": -1
+    },
+    {
+      "caseId": "fallback-soft-saturn-mercury",
+      "reviewer": "reviewer-b",
+      "dimension": "voice",
+      "before": 4,
+      "after": 3,
+      "delta": -1
+    },
+    {
+      "caseId": "fallback-soft-saturn-mercury",
+      "reviewer": "reviewer-b",
+      "dimension": "repetition",
+      "before": 3,
+      "after": 2,
+      "delta": -1
+    },
+    {
+      "caseId": "fallback-soft-neptune-mercury",
+      "reviewer": "reviewer-a",
+      "dimension": "specificity",
+      "before": 4,
+      "after": 5,
+      "delta": 1
+    },
+    {
+      "caseId": "fallback-soft-neptune-mercury",
+      "reviewer": "reviewer-a",
+      "dimension": "grounding",
+      "before": 5,
+      "after": 5,
+      "delta": 0
+    },
+    {
+      "caseId": "fallback-soft-neptune-mercury",
+      "reviewer": "reviewer-a",
+      "dimension": "coherence",
+      "before": 4,
+      "after": 4,
+      "delta": 0
+    },
+    {
+      "caseId": "fallback-soft-neptune-mercury",
+      "reviewer": "reviewer-a",
+      "dimension": "voice",
+      "before": 4,
+      "after": 4,
+      "delta": 0
+    },
+    {
+      "caseId": "fallback-soft-neptune-mercury",
+      "reviewer": "reviewer-a",
+      "dimension": "repetition",
+      "before": 3,
+      "after": 3,
+      "delta": 0
+    },
+    {
+      "caseId": "fallback-soft-neptune-mercury",
+      "reviewer": "reviewer-b",
+      "dimension": "specificity",
+      "before": 3,
+      "after": 5,
+      "delta": 2
+    },
+    {
+      "caseId": "fallback-soft-neptune-mercury",
+      "reviewer": "reviewer-b",
+      "dimension": "grounding",
+      "before": 3,
+      "after": 5,
+      "delta": 2
+    },
+    {
+      "caseId": "fallback-soft-neptune-mercury",
+      "reviewer": "reviewer-b",
+      "dimension": "coherence",
+      "before": 4,
+      "after": 4,
+      "delta": 0
+    },
+    {
+      "caseId": "fallback-soft-neptune-mercury",
+      "reviewer": "reviewer-b",
+      "dimension": "voice",
+      "before": 4,
+      "after": 4,
+      "delta": 0
+    },
+    {
+      "caseId": "fallback-soft-neptune-mercury",
+      "reviewer": "reviewer-b",
+      "dimension": "repetition",
+      "before": 2,
+      "after": 3,
+      "delta": 1
+    }
+  ],
+  "resolvedDisputes": [],
+  "limitations": [
+    "AI writing-review is not human approval, empirical psychological validation or proof of real-reader quality.",
+    "Fresh contexts using one model are separate assessments, not evidence of independent model families.",
+    "The checker validates bookkeeping; it does not establish that any reviewer judgment is true."
+  ],
+  "files": {
+    "assignmentSha256": "6e068e9390908eeb340df1372f04cf26fbc3650177c3f0da18c5e751afaaf217",
+    "reviewSha256": [
+      "d4617037663d4aa4cc13691744a04522d30d71011e7a14ed571fac6438698ae0",
+      "e4e4383b40bafec857d98e60af36b17c785f084f2d72e5b67faac94425069e52"
+    ],
+    "adjudicationSha256": null
+  }
+}

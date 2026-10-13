@@ -1,0 +1,21 @@
+{
+  "applicationCommit": "e1571ef0ca315c0d8ba7e2c48b2f75d7c7dbd22e",
+  "deploymentId": "6a97a844-237c-45e0-832e-cc57014ffe9b",
+  "canonicalURL": "https://patterns.lakefrontdigital.io",
+  "sourceIdentityVerifiedAt": "2026-10-13T09:52:43.173219+00:00",
+  "change": "Display recovered evaluation progress by persisted case ID and label report scope/arm correctly",
+  "paidPilotSourceCommit": "82efe38df4c5ee571d6c583de144498c93f596f1",
+  "additionalModelCalls": 0,
+  "workerChanged": false,
+  "generationBehaviorChanged": false,
+  "liveUI": {
+    "completedArm": "candidate",
+    "cases": 4,
+    "campaignAttempts": 8,
+    "accountedDollars": 0.879908,
+    "scopeLabel": "This candidate arm contains all 4 pilot cases",
+    "sourceLabel": "Saved-content comparison \u00b7 candidate arm",
+    "recoveredCapture": true,
+    "extraModelCalls": 0
+  }
+}

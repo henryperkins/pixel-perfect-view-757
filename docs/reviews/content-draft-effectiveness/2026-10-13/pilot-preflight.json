@@ -1,0 +1,18 @@
+{
+  "recordedAt": "2026-10-13T09:39:51.718922+00:00",
+  "attemptsBeforeStart": 0,
+  "authorizedAttemptLimit": 8,
+  "dollarCap": 5,
+  "retries": 0,
+  "activeRelease": "0.7.1",
+  "draftStatus": "draft",
+  "humanApproved": false,
+  "frozen-pair.json": {
+    "sha256": "4619d2345f7aee0c208b8d68d49163bc00f5bd8116dcaf248691cf5857e27ce8",
+    "objectHash": "21bbc57f6ef4492a1715d5aa645b2c0ca019c0c7be137a88ba68005d5665f10e"
+  },
+  "review-rubric.json": {
+    "sha256": "d2196873998f792ae0726ac0556ec32d8c5bf7e8fbe5700dd550569fd1b59bb7",
+    "objectHash": "6809e96705c7b753bb4e8599d65b221b1cbe21e127c1314dd96cb635ee084e48"
+  }
+}

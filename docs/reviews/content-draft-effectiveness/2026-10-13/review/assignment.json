@@ -1,0 +1,2334 @@
+{
+  "protocolVersion": "daily-writing-ai-review-1",
+  "kind": "assignment",
+  "itemSetHash": "d894c4eb6e2e7aa44091dfae77cbe004606b225f1411945302d9b7c884f69e21",
+  "instructionsSha256": "37088003c51d17f5ee073ba1c6653e81a44a9285f02a84065e08822ab8698784",
+  "reports": {
+    "before": {
+      "sha256": "6609ab39bdce92e9037d62632b37b2952b1cc77269a7d39b6b8c24a2c4df0f7f",
+      "fixtureVersion": "draft-pilot-1",
+      "caseSetHash": "43562fc3e43edfa47087c1461209b6592269ec2d9b9f048a6e08a2f1c0e33aac",
+      "bundleVersion": "0.7.1",
+      "bundleHash": "300173610977707a1852f4e5898d8e27a2e0d4b932ab3fc4db398eda7efbdad8",
+      "transitCopyHash": "c2b68b767f48bbd54befaa0c6290f76e62ab2e0d7f0450321b13be56db7f6588",
+      "promptVersion": "daily-astro-body-13",
+      "validatorVersion": "daily-reference-10",
+      "model": "gemini-enterprise/gemini-3.8-flash",
+      "bundleSource": "content-comparison",
+      "source": "live-synthetic",
+      "outcomes": {
+        "accepted": 4,
+        "rejected": 0,
+        "unavailable": 0,
+        "skipped": 0
+      }
+    },
+    "after": {
+      "sha256": "7338824f9d79d6d773e00fc4ed6511293ee417f5b709cc4562e6ccb77c6a298e",
+      "fixtureVersion": "draft-pilot-1",
+      "caseSetHash": "43562fc3e43edfa47087c1461209b6592269ec2d9b9f048a6e08a2f1c0e33aac",
+      "bundleVersion": "pending",
+      "bundleHash": "7c719bcb735b6120398fbdfd0d0b0e2d67f4ae236fe6def7f475765b5b40a21c",
+      "transitCopyHash": "04c9ccb5b9a23da222800f34e6ecdce63fe64bf3f6f3a1707979cbe30644a0c5",
+      "promptVersion": "daily-astro-body-13",
+      "validatorVersion": "daily-reference-10",
+      "model": "gemini-enterprise/gemini-3.8-flash",
+      "bundleSource": "content-comparison",
+      "source": "live-synthetic",
+      "outcomes": {
+        "accepted": 4,
+        "rejected": 0,
+        "unavailable": 0,
+        "skipped": 0
+      }
+    }
+  },
+  "packets": {
+    "reviewer-a": {
+      "sha256": "4ffe549f1acc4bdf7c869b731b01cf5708f10e29895c03a4cb2837e63663f687"
+    },
+    "reviewer-b": {
+      "sha256": "1374d2c5ca6590959192282da96b4e40256dbda8499b381f6e5c584bd484204b"
+    }
+  },
+  "items": {
+    "item-03": {
+      "content": {
+        "itemId": "item-03",
+        "tone": "plain",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting mars square natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain work. Calculated exact date: 2026-10-14."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation hard:*:*: A hard contact is forming between a moving body and a fixed point in your chart. Hard angles tend to coincide with noticing friction rather than with events.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for work and output: Pace, scope, and the part of a task that feels like yours are separate pieces of working on something. An unfinished list or a draft with competing aims can be a place to notice friction between those pieces."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "A hard contact is forming between a moving body and a fixed point in your chart. Hard angles tend to coincide with noticing friction rather than with events.",
+            "facts": null
+          },
+          {
+            "number": 2,
+            "text": "Pace, scope, and the part of a task that feels like yours are separate pieces of working on something. An unfinished list or a draft with competing aims can be a place to notice friction between those pieces.",
+            "facts": null
+          },
+          {
+            "number": 3,
+            "text": "If a demand catches your attention, you can notice your response before deciding how to act.",
+            "facts": null
+          },
+          {
+            "number": 4,
+            "text": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window.",
+            "facts": null
+          }
+        ],
+        "sourceQuestion": "Where are you meeting more resistance than the task deserves?",
+        "reflectionQuestion": "Where are you meeting more resistance than the task deserves? What piece of work would you defend if someone asked you to drop it this week?",
+        "questionReview": "unreviewed"
+      },
+      "mappings": [
+        {
+          "run": "before",
+          "caseId": "fallback-hard-mars-mercury",
+          "output": "template"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": false
+      }
+    },
+    "item-12": {
+      "content": {
+        "itemId": "item-12",
+        "tone": "plain",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting mars square natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain work. Calculated exact date: 2026-10-14."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation hard:*:*: A hard contact is forming between a moving body and a fixed point in your chart. Hard angles tend to coincide with noticing friction rather than with events.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for work and output: Pace, scope, and the part of a task that feels like yours are separate pieces of working on something. An unfinished list or a draft with competing aims can be a place to notice friction between those pieces."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "Hard angles tend to coincide with noticing friction rather than with events. Transiting Mars is forming a square to natal Mercury, marking a hard contact between a moving body and a fixed point in your chart.",
+            "facts": [
+              "C1",
+              "I1"
+            ]
+          },
+          {
+            "number": 2,
+            "text": "Pace, scope, and the part of a task that feels like yours are separate pieces of working on something. An unfinished list or a draft with competing aims can be a place to notice friction between those pieces.",
+            "facts": [
+              "D1"
+            ]
+          },
+          {
+            "number": 3,
+            "text": "If a demand catches your attention, you can notice your response before deciding how to act. This reading falls in the middle part of the calculated window. The current orb at calculation time is 0.42 degrees. The contact is exact in 3 days.",
+            "facts": [
+              "C1",
+              "P1",
+              "T1"
+            ]
+          }
+        ],
+        "sourceQuestion": "Where are you meeting more resistance than the task deserves?",
+        "reflectionQuestion": "Where are you meeting more resistance than the task deserves? What piece of work would you defend if someone asked you to drop it this week?",
+        "questionReview": "unreviewed"
+      },
+      "mappings": [
+        {
+          "run": "before",
+          "caseId": "fallback-hard-mars-mercury",
+          "output": "displayed"
+        },
+        {
+          "run": "before",
+          "caseId": "fallback-hard-mars-mercury",
+          "output": "candidate"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": false
+      }
+    },
+    "item-06": {
+      "content": {
+        "itemId": "item-06",
+        "tone": "warm",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting uranus square natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain identity. Calculated exact date: 2026-10-14."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation hard:*:*: A hard contact is forming between a moving body and a fixed point in your chart. Hard angles tend to coincide with noticing friction rather than with events.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "Taking this gently: A hard contact is forming between a moving body and a fixed point in your chart. Hard angles tend to coincide with noticing friction rather than with events.",
+            "facts": null
+          },
+          {
+            "number": 2,
+            "text": "A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.",
+            "facts": null
+          },
+          {
+            "number": 3,
+            "text": "If a demand catches your attention, you can notice your response before deciding how to act.",
+            "facts": null
+          },
+          {
+            "number": 4,
+            "text": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window.",
+            "facts": null
+          }
+        ],
+        "sourceQuestion": "Where are you meeting more resistance than the task deserves?",
+        "reflectionQuestion": "Where are you meeting more resistance than the task deserves? Which description of yourself is out of date?",
+        "questionReview": "unreviewed"
+      },
+      "mappings": [
+        {
+          "run": "before",
+          "caseId": "fallback-hard-uranus-mercury",
+          "output": "template"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": false
+      }
+    },
+    "item-08": {
+      "content": {
+        "itemId": "item-08",
+        "tone": "warm",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting uranus square natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain identity. Calculated exact date: 2026-10-14."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation hard:*:*: A hard contact is forming between a moving body and a fixed point in your chart. Hard angles tend to coincide with noticing friction rather than with events.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "Hard angles tend to coincide with noticing friction rather than with events. In your chart, a hard contact is forming between a moving body and a fixed point, where transiting Uranus forms a square with your natal Mercury. At the calculation time of this reading, the current orb is 0.42 degrees.",
+            "facts": [
+              "C1",
+              "I1"
+            ]
+          },
+          {
+            "number": 2,
+            "text": "A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.",
+            "facts": [
+              "D1"
+            ]
+          },
+          {
+            "number": 3,
+            "text": "This reading falls in the middle part of the calculated window. It's calculated to be exact in 3 days. If a demand catches your attention, you can notice your response before deciding how to act.",
+            "facts": [
+              "C1",
+              "P1",
+              "T1"
+            ]
+          }
+        ],
+        "sourceQuestion": "Where are you meeting more resistance than the task deserves?",
+        "reflectionQuestion": "Where are you meeting more resistance than the task deserves? Which description of yourself is out of date?",
+        "questionReview": "unreviewed"
+      },
+      "mappings": [
+        {
+          "run": "before",
+          "caseId": "fallback-hard-uranus-mercury",
+          "output": "displayed"
+        },
+        {
+          "run": "before",
+          "caseId": "fallback-hard-uranus-mercury",
+          "output": "candidate"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": false
+      }
+    },
+    "item-04": {
+      "content": {
+        "itemId": "item-04",
+        "tone": "plain",
+        "depth": "technical",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting saturn sextile natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain work. Calculated exact date: 2026-10-14."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation soft:*:*: A supportive contact is in range. These tend to be unremarkable in the moment and only visible in hindsight as periods of lower friction.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for work and output: A task can feel manageable when its purpose and next small piece are easy to describe. A clear outline or a commitment with a clear scope can illustrate that kind of alignment."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window. The calculated arc position is 30%. Current orb at the reading's calculation time: 0.42°."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "A supportive contact is in range. These tend to be unremarkable in the moment and only visible in hindsight as periods of lower friction.",
+            "facts": null
+          },
+          {
+            "number": 2,
+            "text": "A task can feel manageable when its purpose and next small piece are easy to describe. A clear outline or a commitment with a clear scope can illustrate that kind of alignment.",
+            "facts": null
+          },
+          {
+            "number": 3,
+            "text": "If a demand catches your attention, you can notice your response before deciding how to act.",
+            "facts": null
+          },
+          {
+            "number": 4,
+            "text": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window. The calculated arc position is 30%. Current orb at the reading's calculation time: 0.42°.",
+            "facts": null
+          }
+        ],
+        "sourceQuestion": "What has been easier than expected lately?",
+        "reflectionQuestion": "What has been easier than expected lately? What piece of work would you defend if someone asked you to drop it this week?",
+        "questionReview": "unreviewed"
+      },
+      "mappings": [
+        {
+          "run": "before",
+          "caseId": "fallback-soft-saturn-mercury",
+          "output": "template"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": false
+      }
+    },
+    "item-05": {
+      "content": {
+        "itemId": "item-05",
+        "tone": "plain",
+        "depth": "technical",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting saturn sextile natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain work. Calculated exact date: 2026-10-14."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation soft:*:*: A supportive contact is in range. These tend to be unremarkable in the moment and only visible in hindsight as periods of lower friction.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for work and output: A task can feel manageable when its purpose and next small piece are easy to describe. A clear outline or a commitment with a clear scope can illustrate that kind of alignment."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window. The calculated arc position is 30%. Current orb at the reading's calculation time: 0.42°."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "Periods of lower friction tend to be unremarkable in the moment and only visible in hindsight. A supportive contact is in range as transiting Saturn forms a sextile to natal Mercury. In work and output, a task can feel manageable when its purpose and next small piece are easy to describe. A clear outline or a commitment with a clear scope can illustrate that kind of alignment.",
+            "facts": [
+              "C1",
+              "D1",
+              "I1"
+            ]
+          },
+          {
+            "number": 2,
+            "text": "If a demand catches your attention, you can notice your response before deciding how to act. At the reading's calculation time, the current orb between transiting Saturn and natal Mercury is 0.42 degrees in an approaching phase. This reading falls in the middle part of the calculated window, with a calculated arc position of 30%. The contact is exact in 3 days, with a calculated exact date of 2026-10-14.",
+            "facts": [
+              "C1",
+              "P1",
+              "T1"
+            ]
+          }
+        ],
+        "sourceQuestion": "What has been easier than expected lately?",
+        "reflectionQuestion": "What has been easier than expected lately? What piece of work would you defend if someone asked you to drop it this week?",
+        "questionReview": "unreviewed"
+      },
+      "mappings": [
+        {
+          "run": "before",
+          "caseId": "fallback-soft-saturn-mercury",
+          "output": "displayed"
+        },
+        {
+          "run": "before",
+          "caseId": "fallback-soft-saturn-mercury",
+          "output": "candidate"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": false
+      }
+    },
+    "item-02": {
+      "content": {
+        "itemId": "item-02",
+        "tone": "clinical",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting neptune sextile natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain inner-life. Calculated exact date: 2026-10-14."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation soft:*:*: A supportive contact is in range. These tend to be unremarkable in the moment and only visible in hindsight as periods of lower friction.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for inner life and rest: Private time can have a comfortable shape of its own. A familiar corner, an unclaimed hour, or a routine with fewer demands can serve as ordinary examples of that ease."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "Observation: A supportive contact is in range. These tend to be unremarkable in the moment and only visible in hindsight as periods of lower friction.",
+            "facts": null
+          },
+          {
+            "number": 2,
+            "text": "Private time can have a comfortable shape of its own. A familiar corner, an unclaimed hour, or a routine with fewer demands can serve as ordinary examples of that ease.",
+            "facts": null
+          },
+          {
+            "number": 3,
+            "text": "If a demand catches your attention, you can notice your response before deciding how to act.",
+            "facts": null
+          },
+          {
+            "number": 4,
+            "text": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window.",
+            "facts": null
+          }
+        ],
+        "sourceQuestion": "What has been easier than expected lately?",
+        "reflectionQuestion": "What has been easier than expected lately? What would genuine rest look like today, as opposed to distraction?",
+        "questionReview": "unreviewed"
+      },
+      "mappings": [
+        {
+          "run": "before",
+          "caseId": "fallback-soft-neptune-mercury",
+          "output": "template"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": false
+      }
+    },
+    "item-14": {
+      "content": {
+        "itemId": "item-14",
+        "tone": "clinical",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting neptune sextile natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain inner-life. Calculated exact date: 2026-10-14."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation soft:*:*: A supportive contact is in range. These tend to be unremarkable in the moment and only visible in hindsight as periods of lower friction.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for inner life and rest: Private time can have a comfortable shape of its own. A familiar corner, an unclaimed hour, or a routine with fewer demands can serve as ordinary examples of that ease."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "Periods of lower friction tend to be unremarkable in the moment and only visible in hindsight. A supportive contact is in range as transiting Neptune forms a sextile to natal Mercury. At the calculation time of this reading, the current orb is 0.42 degrees. This reading falls in the middle part of the calculated window.",
+            "facts": [
+              "C1",
+              "I1",
+              "T1"
+            ]
+          },
+          {
+            "number": 2,
+            "text": "Private time can have a comfortable shape of its own. A familiar corner, an unclaimed hour, or a routine with fewer demands can serve as ordinary examples of that ease. If a demand catches your attention, you can notice your response before deciding how to act.",
+            "facts": [
+              "C1",
+              "D1",
+              "P1"
+            ]
+          }
+        ],
+        "sourceQuestion": "What has been easier than expected lately?",
+        "reflectionQuestion": "What has been easier than expected lately? What would genuine rest look like today, as opposed to distraction?",
+        "questionReview": "unreviewed"
+      },
+      "mappings": [
+        {
+          "run": "before",
+          "caseId": "fallback-soft-neptune-mercury",
+          "output": "displayed"
+        },
+        {
+          "run": "before",
+          "caseId": "fallback-soft-neptune-mercury",
+          "output": "candidate"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": false
+      }
+    },
+    "item-07": {
+      "content": {
+        "itemId": "item-07",
+        "tone": "plain",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting mars square natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain work. Calculated exact date: 2026-10-14."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation hard:mars:*: Wanting to finish can run ahead of the pace a task allows. If a reply is begun before a question is fully explained, it may need to wait for the missing detail.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for work and output: Pace, scope, and the part of a task that feels like yours are separate pieces of working on something. An unfinished list or a draft with competing aims can be a place to notice friction between those pieces."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "Wanting to finish can run ahead of the pace a task allows. If a reply is begun before a question is fully explained, it may need to wait for the missing detail.",
+            "facts": null
+          },
+          {
+            "number": 2,
+            "text": "Pace, scope, and the part of a task that feels like yours are separate pieces of working on something. An unfinished list or a draft with competing aims can be a place to notice friction between those pieces.",
+            "facts": null
+          },
+          {
+            "number": 3,
+            "text": "If a demand catches your attention, you can notice your response before deciding how to act.",
+            "facts": null
+          },
+          {
+            "number": 4,
+            "text": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window.",
+            "facts": null
+          }
+        ],
+        "sourceQuestion": "Where, if anywhere, is your preferred pace out of step with the task?",
+        "reflectionQuestion": "Where, if anywhere, is your preferred pace out of step with the task? What piece of work would you defend if someone asked you to drop it this week?",
+        "questionReview": "unreviewed"
+      },
+      "mappings": [
+        {
+          "run": "after",
+          "caseId": "fallback-hard-mars-mercury",
+          "output": "template"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": false
+      }
+    },
+    "item-09": {
+      "content": {
+        "itemId": "item-09",
+        "tone": "plain",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting mars square natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain work. Calculated exact date: 2026-10-14."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation hard:mars:*: Wanting to finish can run ahead of the pace a task allows. If a reply is begun before a question is fully explained, it may need to wait for the missing detail.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for work and output: Pace, scope, and the part of a task that feels like yours are separate pieces of working on something. An unfinished list or a draft with competing aims can be a place to notice friction between those pieces."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "If a reply is begun before a question is fully explained, it may need to wait for the missing detail. Wanting to finish can run ahead of the pace a task allows. Transiting Mars forms a square to natal Mercury. At this reading's calculation time, the current orb is 0.42 degrees.",
+            "facts": [
+              "C1",
+              "I1"
+            ]
+          },
+          {
+            "number": 2,
+            "text": "Pace, scope, and the part of a task that feels like yours are separate pieces of working on something. An unfinished list or a draft with competing aims can be a place to notice friction between those pieces.",
+            "facts": [
+              "D1"
+            ]
+          },
+          {
+            "number": 3,
+            "text": "If a demand catches your attention, you can notice your response before deciding how to act. This reading falls in the middle part of the calculated window. The contact is exact in 3 days.",
+            "facts": [
+              "C1",
+              "P1",
+              "T1"
+            ]
+          }
+        ],
+        "sourceQuestion": "Where, if anywhere, is your preferred pace out of step with the task?",
+        "reflectionQuestion": "Where, if anywhere, is your preferred pace out of step with the task? What piece of work would you defend if someone asked you to drop it this week?",
+        "questionReview": "unreviewed"
+      },
+      "mappings": [
+        {
+          "run": "after",
+          "caseId": "fallback-hard-mars-mercury",
+          "output": "displayed"
+        },
+        {
+          "run": "after",
+          "caseId": "fallback-hard-mars-mercury",
+          "output": "candidate"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": false
+      }
+    },
+    "item-16": {
+      "content": {
+        "itemId": "item-16",
+        "tone": "warm",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting uranus square natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain identity. Calculated exact date: 2026-10-14."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation hard:uranus:*: A familiar arrangement can be useful while leaving little room to vary an approach. A desk layout could suit one kind of task while crowding another.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "Taking this gently: A familiar arrangement can be useful while leaving little room to vary an approach. A desk layout could suit one kind of task while crowding another.",
+            "facts": null
+          },
+          {
+            "number": 2,
+            "text": "A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.",
+            "facts": null
+          },
+          {
+            "number": 3,
+            "text": "If a demand catches your attention, you can notice your response before deciding how to act.",
+            "facts": null
+          },
+          {
+            "number": 4,
+            "text": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window.",
+            "facts": null
+          }
+        ],
+        "sourceQuestion": "Which familiar approach, if any, would you like more room to vary?",
+        "reflectionQuestion": "Which familiar approach, if any, would you like more room to vary? Which description of yourself is out of date?",
+        "questionReview": "unreviewed"
+      },
+      "mappings": [
+        {
+          "run": "after",
+          "caseId": "fallback-hard-uranus-mercury",
+          "output": "template"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": false
+      }
+    },
+    "item-15": {
+      "content": {
+        "itemId": "item-15",
+        "tone": "warm",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting uranus square natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain identity. Calculated exact date: 2026-10-14."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation hard:uranus:*: A familiar arrangement can be useful while leaving little room to vary an approach. A desk layout could suit one kind of task while crowding another.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "A desk layout could suit one kind of task while crowding another. A familiar arrangement can be useful while leaving little room to vary an approach.",
+            "facts": [
+              "C1",
+              "I1"
+            ]
+          },
+          {
+            "number": 2,
+            "text": "A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.",
+            "facts": [
+              "D1"
+            ]
+          },
+          {
+            "number": 3,
+            "text": "If a demand catches your attention, you can notice your response before deciding how to act. Transiting Uranus is square your natal Mercury, and it's at an orb of 0.42 degrees at the calculation time. This reading falls in the middle part of the calculated window. The contact is calculated as exact in 3 days on 2026-10-14.",
+            "facts": [
+              "C1",
+              "P1",
+              "T1"
+            ]
+          }
+        ],
+        "sourceQuestion": "Which familiar approach, if any, would you like more room to vary?",
+        "reflectionQuestion": "Which familiar approach, if any, would you like more room to vary? Which description of yourself is out of date?",
+        "questionReview": "unreviewed"
+      },
+      "mappings": [
+        {
+          "run": "after",
+          "caseId": "fallback-hard-uranus-mercury",
+          "output": "displayed"
+        },
+        {
+          "run": "after",
+          "caseId": "fallback-hard-uranus-mercury",
+          "output": "candidate"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": false
+      }
+    },
+    "item-01": {
+      "content": {
+        "itemId": "item-01",
+        "tone": "plain",
+        "depth": "technical",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting saturn sextile natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain work. Calculated exact date: 2026-10-14."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation soft:saturn:*: A small recurring task might fit between two parts of a day without a special burst of effort. Its place in the routine can leave room for pauses as well as completion.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for work and output: A task can feel manageable when its purpose and next small piece are easy to describe. A clear outline or a commitment with a clear scope can illustrate that kind of alignment."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window. The calculated arc position is 30%. Current orb at the reading's calculation time: 0.42°."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "A small recurring task might fit between two parts of a day without a special burst of effort. Its place in the routine can leave room for pauses as well as completion.",
+            "facts": null
+          },
+          {
+            "number": 2,
+            "text": "A task can feel manageable when its purpose and next small piece are easy to describe. A clear outline or a commitment with a clear scope can illustrate that kind of alignment.",
+            "facts": null
+          },
+          {
+            "number": 3,
+            "text": "If a demand catches your attention, you can notice your response before deciding how to act.",
+            "facts": null
+          },
+          {
+            "number": 4,
+            "text": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window. The calculated arc position is 30%. Current orb at the reading's calculation time: 0.42°.",
+            "facts": null
+          }
+        ],
+        "sourceQuestion": "What routine, if any, feels manageable at your ordinary pace?",
+        "reflectionQuestion": "What routine, if any, feels manageable at your ordinary pace? What piece of work would you defend if someone asked you to drop it this week?",
+        "questionReview": "unreviewed"
+      },
+      "mappings": [
+        {
+          "run": "after",
+          "caseId": "fallback-soft-saturn-mercury",
+          "output": "template"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": false
+      }
+    },
+    "item-13": {
+      "content": {
+        "itemId": "item-13",
+        "tone": "plain",
+        "depth": "technical",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting saturn sextile natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain work. Calculated exact date: 2026-10-14."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation soft:saturn:*: A small recurring task might fit between two parts of a day without a special burst of effort. Its place in the routine can leave room for pauses as well as completion.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for work and output: A task can feel manageable when its purpose and next small piece are easy to describe. A clear outline or a commitment with a clear scope can illustrate that kind of alignment."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window. The calculated arc position is 30%. Current orb at the reading's calculation time: 0.42°."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "The place of a routine can leave room for pauses as well as completion. A small recurring task might fit between two parts of a day without a special burst of effort. This perspective offers a way to read transiting saturn sextile natal mercury.",
+            "facts": [
+              "C1",
+              "I1"
+            ]
+          },
+          {
+            "number": 2,
+            "text": "In the domain of work and output, a task can feel manageable when its purpose and next small piece are easy to describe. A clear outline or a commitment with a clear scope can illustrate that kind of alignment. This description frames transiting saturn sextile natal mercury.",
+            "facts": [
+              "C1",
+              "D1"
+            ]
+          },
+          {
+            "number": 3,
+            "text": "If a demand catches your attention, you can notice your response before deciding how to act. Transiting saturn is approaching natal mercury with a current orb of 0.42 degrees at the calculation time. This reading falls in the middle part of the calculated window, at a calculated arc position of 30%. The contact is exact in 3 days, with a calculated exact date of 2026-10-14.",
+            "facts": [
+              "C1",
+              "P1",
+              "T1"
+            ]
+          }
+        ],
+        "sourceQuestion": "What routine, if any, feels manageable at your ordinary pace?",
+        "reflectionQuestion": "What routine, if any, feels manageable at your ordinary pace? What piece of work would you defend if someone asked you to drop it this week?",
+        "questionReview": "unreviewed"
+      },
+      "mappings": [
+        {
+          "run": "after",
+          "caseId": "fallback-soft-saturn-mercury",
+          "output": "displayed"
+        },
+        {
+          "run": "after",
+          "caseId": "fallback-soft-saturn-mercury",
+          "output": "candidate"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": false
+      }
+    },
+    "item-11": {
+      "content": {
+        "itemId": "item-11",
+        "tone": "clinical",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting neptune sextile natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain inner-life. Calculated exact date: 2026-10-14."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation soft:neptune:*: Several shapes might be imagined in an unfinished sketch. Leaving them as possibilities makes room for imagination without treating it as evidence of what is there.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for inner life and rest: Private time can have a comfortable shape of its own. A familiar corner, an unclaimed hour, or a routine with fewer demands can serve as ordinary examples of that ease."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "Observation: Several shapes might be imagined in an unfinished sketch. Leaving them as possibilities makes room for imagination without treating it as evidence of what is there.",
+            "facts": null
+          },
+          {
+            "number": 2,
+            "text": "Private time can have a comfortable shape of its own. A familiar corner, an unclaimed hour, or a routine with fewer demands can serve as ordinary examples of that ease.",
+            "facts": null
+          },
+          {
+            "number": 3,
+            "text": "If a demand catches your attention, you can notice your response before deciding how to act.",
+            "facts": null
+          },
+          {
+            "number": 4,
+            "text": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window.",
+            "facts": null
+          }
+        ],
+        "sourceQuestion": "What possibility, if any, would you like to imagine without settling it?",
+        "reflectionQuestion": "What possibility, if any, would you like to imagine without settling it? What would genuine rest look like today, as opposed to distraction?",
+        "questionReview": "unreviewed"
+      },
+      "mappings": [
+        {
+          "run": "after",
+          "caseId": "fallback-soft-neptune-mercury",
+          "output": "template"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": false
+      }
+    },
+    "item-10": {
+      "content": {
+        "itemId": "item-10",
+        "tone": "clinical",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting neptune sextile natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain inner-life. Calculated exact date: 2026-10-14."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation soft:neptune:*: Several shapes might be imagined in an unfinished sketch. Leaving them as possibilities makes room for imagination without treating it as evidence of what is there.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for inner life and rest: Private time can have a comfortable shape of its own. A familiar corner, an unclaimed hour, or a routine with fewer demands can serve as ordinary examples of that ease."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "Leaving several shapes as possibilities makes room for imagination without treating it as evidence of what is there. Several shapes might be imagined in an unfinished sketch. Transiting Neptune forms a sextile to your natal Mercury. At the reading's calculation time, the current orb is 0.42 degrees.",
+            "facts": [
+              "C1",
+              "I1"
+            ]
+          },
+          {
+            "number": 2,
+            "text": "Private time can have a comfortable shape of its own. A familiar corner, an unclaimed hour, or a routine with fewer demands can serve as ordinary examples of that ease.",
+            "facts": [
+              "D1"
+            ]
+          },
+          {
+            "number": 3,
+            "text": "If a demand catches your attention, you can notice your response before deciding how to act. This reading falls in the middle part of the calculated window. The contact is exact in 3 days.",
+            "facts": [
+              "C1",
+              "P1",
+              "T1"
+            ]
+          }
+        ],
+        "sourceQuestion": "What possibility, if any, would you like to imagine without settling it?",
+        "reflectionQuestion": "What possibility, if any, would you like to imagine without settling it? What would genuine rest look like today, as opposed to distraction?",
+        "questionReview": "unreviewed"
+      },
+      "mappings": [
+        {
+          "run": "after",
+          "caseId": "fallback-soft-neptune-mercury",
+          "output": "displayed"
+        },
+        {
+          "run": "after",
+          "caseId": "fallback-soft-neptune-mercury",
+          "output": "candidate"
+        }
+      ],
+      "applicable": {
+        "synthesisCoherence": false,
+        "lensIntegration": false
+      }
+    }
+  },
+  "cases": {
+    "before": {
+      "fallback-hard-mars-mercury": {
+        "outcome": "accepted",
+        "code": "accepted",
+        "capture": "lossless",
+        "candidate": "item-12",
+        "displayed": "item-12",
+        "template": "item-03"
+      },
+      "fallback-hard-uranus-mercury": {
+        "outcome": "accepted",
+        "code": "accepted",
+        "capture": "lossless",
+        "candidate": "item-08",
+        "displayed": "item-08",
+        "template": "item-06"
+      },
+      "fallback-soft-saturn-mercury": {
+        "outcome": "accepted",
+        "code": "accepted",
+        "capture": "lossless",
+        "candidate": "item-05",
+        "displayed": "item-05",
+        "template": "item-04"
+      },
+      "fallback-soft-neptune-mercury": {
+        "outcome": "accepted",
+        "code": "accepted",
+        "capture": "lossless",
+        "candidate": "item-14",
+        "displayed": "item-14",
+        "template": "item-02"
+      }
+    },
+    "after": {
+      "fallback-hard-mars-mercury": {
+        "outcome": "accepted",
+        "code": "accepted",
+        "capture": "lossless",
+        "candidate": "item-09",
+        "displayed": "item-09",
+        "template": "item-07"
+      },
+      "fallback-hard-uranus-mercury": {
+        "outcome": "accepted",
+        "code": "accepted",
+        "capture": "lossless",
+        "candidate": "item-15",
+        "displayed": "item-15",
+        "template": "item-16"
+      },
+      "fallback-soft-saturn-mercury": {
+        "outcome": "accepted",
+        "code": "accepted",
+        "capture": "lossless",
+        "candidate": "item-13",
+        "displayed": "item-13",
+        "template": "item-01"
+      },
+      "fallback-soft-neptune-mercury": {
+        "outcome": "accepted",
+        "code": "accepted",
+        "capture": "lossless",
+        "candidate": "item-10",
+        "displayed": "item-10",
+        "template": "item-11"
+      }
+    }
+  },
+  "uncovered": [],
+  "contentComparison": {
+    "version": "content-comparison-report-1",
+    "mode": "content-comparison",
+    "pairHash": "21bbc57f6ef4492a1715d5aa645b2c0ca019c0c7be137a88ba68005d5665f10e",
+    "sourceSha": "82efe38df4c5ee571d6c583de144498c93f596f1",
+    "provider": "gemini-enterprise",
+    "model": "gemini-enterprise/gemini-3.8-flash",
+    "actualModel": "gemini-3.8-flash",
+    "caseSetId": "draft-pilot-1",
+    "caseSetHash": "43562fc3e43edfa47087c1461209b6592269ec2d9b9f048a6e08a2f1c0e33aac",
+    "baselineCanonicalHash": "44c05c8b0336dc778c2efdcbf0c28dc2091d33a96b91c352a2481123b7f7ccae",
+    "candidateCanonicalHash": "78be37d2740102c827fd291777f43f686b9c9f3488c887d76c00212ca84db632",
+    "acceptedDelta": 0,
+    "cases": [
+      {
+        "id": "fallback-hard-mars-mercury",
+        "baseline": {
+          "outcome": "accepted",
+          "code": "accepted"
+        },
+        "candidate": {
+          "outcome": "accepted",
+          "code": "accepted"
+        },
+        "textChanged": true
+      },
+      {
+        "id": "fallback-hard-uranus-mercury",
+        "baseline": {
+          "outcome": "accepted",
+          "code": "accepted"
+        },
+        "candidate": {
+          "outcome": "accepted",
+          "code": "accepted"
+        },
+        "textChanged": true
+      },
+      {
+        "id": "fallback-soft-saturn-mercury",
+        "baseline": {
+          "outcome": "accepted",
+          "code": "accepted"
+        },
+        "candidate": {
+          "outcome": "accepted",
+          "code": "accepted"
+        },
+        "textChanged": true
+      },
+      {
+        "id": "fallback-soft-neptune-mercury",
+        "baseline": {
+          "outcome": "accepted",
+          "code": "accepted"
+        },
+        "candidate": {
+          "outcome": "accepted",
+          "code": "accepted"
+        },
+        "textChanged": true
+      }
+    ],
+    "coverage": {
+      "version": "content-source-utilization-1",
+      "entries": [
+        {
+          "key": "hard:*:*",
+          "reachability": "shadowed-in-supported-catalogue",
+          "baseline": {
+            "selected": 2,
+            "submitted": 2,
+            "acceptedCited": 2,
+            "templateRendered": 2,
+            "finalRendered": 0,
+            "evidence": [
+              {
+                "caseId": "fallback-hard-mars-mercury",
+                "factId": "I1",
+                "selected": true,
+                "submitted": true,
+                "acceptedCited": true,
+                "templateRendered": true,
+                "finalRendered": false,
+                "sourceQuestion": "Where are you meeting more resistance than the task deserves?",
+                "finalQuestion": "Where are you meeting more resistance than the task deserves? What piece of work would you defend if someone asked you to drop it this week?",
+                "semanticIncorporation": "unreviewed"
+              },
+              {
+                "caseId": "fallback-hard-uranus-mercury",
+                "factId": "I1",
+                "selected": true,
+                "submitted": true,
+                "acceptedCited": true,
+                "templateRendered": true,
+                "finalRendered": false,
+                "sourceQuestion": "Where are you meeting more resistance than the task deserves?",
+                "finalQuestion": "Where are you meeting more resistance than the task deserves? Which description of yourself is out of date?",
+                "semanticIncorporation": "unreviewed"
+              }
+            ]
+          },
+          "candidate": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "semanticIncorporation": "unreviewed"
+        },
+        {
+          "key": "hard:jupiter:*",
+          "reachability": "supported-source",
+          "baseline": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "candidate": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "semanticIncorporation": "unreviewed"
+        },
+        {
+          "key": "hard:mars:*",
+          "reachability": "supported-source",
+          "baseline": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "candidate": {
+            "selected": 1,
+            "submitted": 1,
+            "acceptedCited": 1,
+            "templateRendered": 1,
+            "finalRendered": 1,
+            "evidence": [
+              {
+                "caseId": "fallback-hard-mars-mercury",
+                "factId": "I1",
+                "selected": true,
+                "submitted": true,
+                "acceptedCited": true,
+                "templateRendered": true,
+                "finalRendered": true,
+                "sourceQuestion": "Where, if anywhere, is your preferred pace out of step with the task?",
+                "finalQuestion": "Where, if anywhere, is your preferred pace out of step with the task? What piece of work would you defend if someone asked you to drop it this week?",
+                "semanticIncorporation": "unreviewed"
+              }
+            ]
+          },
+          "semanticIncorporation": "unreviewed"
+        },
+        {
+          "key": "hard:mercury:*",
+          "reachability": "supported-source",
+          "baseline": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "candidate": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "semanticIncorporation": "unreviewed"
+        },
+        {
+          "key": "hard:moon:*",
+          "reachability": "supported-source",
+          "baseline": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "candidate": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "semanticIncorporation": "unreviewed"
+        },
+        {
+          "key": "hard:neptune:*",
+          "reachability": "supported-source",
+          "baseline": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "candidate": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "semanticIncorporation": "unreviewed"
+        },
+        {
+          "key": "hard:pluto:*",
+          "reachability": "supported-source",
+          "baseline": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "candidate": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "semanticIncorporation": "unreviewed"
+        },
+        {
+          "key": "hard:saturn:*",
+          "reachability": "supported-source",
+          "baseline": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "candidate": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "semanticIncorporation": "unreviewed"
+        },
+        {
+          "key": "hard:sun:*",
+          "reachability": "supported-source",
+          "baseline": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "candidate": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "semanticIncorporation": "unreviewed"
+        },
+        {
+          "key": "hard:uranus:*",
+          "reachability": "supported-source",
+          "baseline": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "candidate": {
+            "selected": 1,
+            "submitted": 1,
+            "acceptedCited": 1,
+            "templateRendered": 1,
+            "finalRendered": 1,
+            "evidence": [
+              {
+                "caseId": "fallback-hard-uranus-mercury",
+                "factId": "I1",
+                "selected": true,
+                "submitted": true,
+                "acceptedCited": true,
+                "templateRendered": true,
+                "finalRendered": true,
+                "sourceQuestion": "Which familiar approach, if any, would you like more room to vary?",
+                "finalQuestion": "Which familiar approach, if any, would you like more room to vary? Which description of yourself is out of date?",
+                "semanticIncorporation": "unreviewed"
+              }
+            ]
+          },
+          "semanticIncorporation": "unreviewed"
+        },
+        {
+          "key": "hard:venus:*",
+          "reachability": "supported-source",
+          "baseline": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "candidate": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "semanticIncorporation": "unreviewed"
+        },
+        {
+          "key": "soft:*:*",
+          "reachability": "shadowed-in-supported-catalogue",
+          "baseline": {
+            "selected": 2,
+            "submitted": 2,
+            "acceptedCited": 2,
+            "templateRendered": 2,
+            "finalRendered": 0,
+            "evidence": [
+              {
+                "caseId": "fallback-soft-saturn-mercury",
+                "factId": "I1",
+                "selected": true,
+                "submitted": true,
+                "acceptedCited": true,
+                "templateRendered": true,
+                "finalRendered": false,
+                "sourceQuestion": "What has been easier than expected lately?",
+                "finalQuestion": "What has been easier than expected lately? What piece of work would you defend if someone asked you to drop it this week?",
+                "semanticIncorporation": "unreviewed"
+              },
+              {
+                "caseId": "fallback-soft-neptune-mercury",
+                "factId": "I1",
+                "selected": true,
+                "submitted": true,
+                "acceptedCited": true,
+                "templateRendered": true,
+                "finalRendered": false,
+                "sourceQuestion": "What has been easier than expected lately?",
+                "finalQuestion": "What has been easier than expected lately? What would genuine rest look like today, as opposed to distraction?",
+                "semanticIncorporation": "unreviewed"
+              }
+            ]
+          },
+          "candidate": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "semanticIncorporation": "unreviewed"
+        },
+        {
+          "key": "soft:jupiter:*",
+          "reachability": "supported-source",
+          "baseline": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "candidate": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "semanticIncorporation": "unreviewed"
+        },
+        {
+          "key": "soft:mars:*",
+          "reachability": "supported-source",
+          "baseline": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "candidate": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "semanticIncorporation": "unreviewed"
+        },
+        {
+          "key": "soft:mercury:*",
+          "reachability": "supported-source",
+          "baseline": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "candidate": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "semanticIncorporation": "unreviewed"
+        },
+        {
+          "key": "soft:moon:*",
+          "reachability": "supported-source",
+          "baseline": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "candidate": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "semanticIncorporation": "unreviewed"
+        },
+        {
+          "key": "soft:neptune:*",
+          "reachability": "supported-source",
+          "baseline": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "candidate": {
+            "selected": 1,
+            "submitted": 1,
+            "acceptedCited": 1,
+            "templateRendered": 1,
+            "finalRendered": 0,
+            "evidence": [
+              {
+                "caseId": "fallback-soft-neptune-mercury",
+                "factId": "I1",
+                "selected": true,
+                "submitted": true,
+                "acceptedCited": true,
+                "templateRendered": true,
+                "finalRendered": false,
+                "sourceQuestion": "What possibility, if any, would you like to imagine without settling it?",
+                "finalQuestion": "What possibility, if any, would you like to imagine without settling it? What would genuine rest look like today, as opposed to distraction?",
+                "semanticIncorporation": "unreviewed"
+              }
+            ]
+          },
+          "semanticIncorporation": "unreviewed"
+        },
+        {
+          "key": "soft:pluto:*",
+          "reachability": "supported-source",
+          "baseline": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "candidate": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "semanticIncorporation": "unreviewed"
+        },
+        {
+          "key": "soft:saturn:*",
+          "reachability": "supported-source",
+          "baseline": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "candidate": {
+            "selected": 1,
+            "submitted": 1,
+            "acceptedCited": 1,
+            "templateRendered": 1,
+            "finalRendered": 0,
+            "evidence": [
+              {
+                "caseId": "fallback-soft-saturn-mercury",
+                "factId": "I1",
+                "selected": true,
+                "submitted": true,
+                "acceptedCited": true,
+                "templateRendered": true,
+                "finalRendered": false,
+                "sourceQuestion": "What routine, if any, feels manageable at your ordinary pace?",
+                "finalQuestion": "What routine, if any, feels manageable at your ordinary pace? What piece of work would you defend if someone asked you to drop it this week?",
+                "semanticIncorporation": "unreviewed"
+              }
+            ]
+          },
+          "semanticIncorporation": "unreviewed"
+        },
+        {
+          "key": "soft:sun:*",
+          "reachability": "supported-source",
+          "baseline": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "candidate": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "semanticIncorporation": "unreviewed"
+        },
+        {
+          "key": "soft:uranus:*",
+          "reachability": "supported-source",
+          "baseline": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "candidate": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "semanticIncorporation": "unreviewed"
+        },
+        {
+          "key": "soft:venus:*",
+          "reachability": "supported-source",
+          "baseline": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "candidate": {
+            "selected": 0,
+            "submitted": 0,
+            "acceptedCited": 0,
+            "templateRendered": 0,
+            "finalRendered": 0,
+            "evidence": []
+          },
+          "semanticIncorporation": "unreviewed"
+        }
+      ]
+    },
+    "qualified": false,
+    "semanticIncorporation": "unreviewed",
+    "qualificationGaps": [
+      "Semantic incorporation and reflection-question quality require independent review.",
+      "16 changed reachable sources were not exercised by this pilot."
+    ],
+    "limitations": [
+      "This four-case pilot cannot qualify all 20 new body-specific sources.",
+      "Selected sources, submitted facts, accepted citations and literal rendered text are distinct observations; none establishes semantic incorporation.",
+      "Literal rendering checks every source sentence; a paraphrase or authored composition requires manual review.",
+      "Synthetic reports do not establish production use, member acceptance or empirical astrology validity."
+    ]
+  },
+  "contentReviewRubric": {
+    "version": "content-pilot-review-rubric-1",
+    "packetGenerationVersion": "content-writing-packet-1",
+    "packetInstructionsSupplement": "Content reflection supplement — content-reflection-review-1: Review sourceQuestion and reflectionQuestion separately. The source checks are singleQuestion, answerableWithoutPremise, and consistentWithSources; all must pass with a verbatim quote and explanation. For the final prompt record question count separately and check answerableWithoutPremise, consistentWithSources, and coherent. A schema-4 domain question is an inherited composition, not a second source question. Record all body dimensions using the existing 1–5 rubric and existing item-verdict rules. A separate qualification gate requires voice and repetition >= 4 for affected candidate items; packet origins remain concealed. Citations do not establish substantive incorporation.",
+    "pairHash": "21bbc57f6ef4492a1715d5aa645b2c0ca019c0c7be137a88ba68005d5665f10e",
+    "caseSetId": "draft-pilot-1",
+    "scope": "Four matched cases only; no whole-catalogue qualification or production-use claim.",
+    "scoreScale": {
+      "1": "Interchangeable, unsupported, contradictory, stiff, or dominated by stock phrasing.",
+      "2": "Between the existing protocol's 1 and 3 anchors.",
+      "3": "Recognizable but needs editing, support review, or less repetition.",
+      "4": "Useful supported distinction; clear progression; natural voice and little unsupported reuse.",
+      "5": "Concrete and traceable throughout; each paragraph advances a distinct useful thought."
+    },
+    "bodyProtocolVersion": "daily-writing-ai-review-1",
+    "bodyProtocol": "docs/reviews/daily-reading-writing/review-protocol.md",
+    "minimumScore": 4,
+    "additionalCandidateGates": [
+      "voice",
+      "repetition"
+    ],
+    "dimensions": {
+      "specificity": "Names a distinct ordinary situation or practical contrast.",
+      "voice": "Uses familiar, concrete language with conditional framing.",
+      "repetition": "Gives each sentence a purpose and avoids repeated openings across cases.",
+      "grounding": "Preserves supplied meanings, uncertainty, conditions and cycle roles.",
+      "coherence": "Maintains a clear supported progression, with only minor editing needed.",
+      "synthesisCoherence": "When S1 is supplied, develops the relationship supported by both parents.",
+      "lensIntegration": "When N1 is supplied, applies its distinction within the primary meaning."
+    },
+    "reflectionProtocolVersion": "content-reflection-review-1",
+    "reflectionChecks": {
+      "source": [
+        "singleQuestion",
+        "answerableWithoutPremise",
+        "consistentWithSources"
+      ],
+      "final": [
+        "answerableWithoutPremise",
+        "consistentWithSources",
+        "coherent"
+      ],
+      "evidence": "Quote the reviewed question verbatim and explain the judgment; every check must pass.",
+      "finalQuestionCount": "Record separately; schema 4 may append a domain question. Do not assume a one-question final prompt."
+    },
+    "requiredChecks": [
+      "No planetary causal assertion, prediction, directive, clinical claim or invented personal history.",
+      "No loss or strengthening of any source qualification.",
+      "The candidate's distinctive published meaning is substantively present; a citation alone is insufficient.",
+      "Review the source question and assembled final question separately; inherited domain wording can introduce an assumption.",
+      "A question may be answered with nothing relevant without implying a defect."
+    ],
+    "decisionRule": [
+      "Use the existing substantive-claim and specificity/grounding/coherence gates at 4/5, including applicable synthesis and natal criteria.",
+      "Both fresh blinded reviewers must score voice and repetition at least 4/5 for each affected candidate item; legacy item-verdict rules remain unchanged and this is an additional qualification gate.",
+      "All source-question and final-prompt boolean checks must pass with quoted rationale. Keep inherited composition limitations explicit.",
+      "No unresolved substantive finding or new preserved-entry failure is allowed. Record paired improvements and regressions rather than inferring quality from length or acceptance.",
+      "Unavailable, uncertain or missing captures are unevaluable; never replace them silently.",
+      "Even a passing pilot leaves the other 16 reachable additions unqualified by live comparison and both globals isolated-only."
+    ],
+    "cases": [
+      {
+        "id": "fallback-hard-mars-mercury",
+        "baseline": {
+          "sourceKey": "hard:*:*",
+          "sourceQuestion": "Where are you meeting more resistance than the task deserves?",
+          "finalQuestion": "Where are you meeting more resistance than the task deserves? What piece of work would you defend if someone asked you to drop it this week?",
+          "sourceQuestionReview": "unreviewed",
+          "finalQuestionReview": "unreviewed",
+          "finalQuestionCount": 2,
+          "semanticIncorporation": "unreviewed",
+          "scores": {
+            "specificity": null,
+            "voice": null,
+            "repetition": null,
+            "grounding": null,
+            "coherence": null,
+            "synthesisCoherence": null,
+            "lensIntegration": null
+          },
+          "evidence": null
+        },
+        "candidate": {
+          "sourceKey": "hard:mars:*",
+          "sourceQuestion": "Where, if anywhere, is your preferred pace out of step with the task?",
+          "finalQuestion": "Where, if anywhere, is your preferred pace out of step with the task? What piece of work would you defend if someone asked you to drop it this week?",
+          "sourceQuestionReview": "unreviewed",
+          "finalQuestionReview": "unreviewed",
+          "finalQuestionCount": 2,
+          "semanticIncorporation": "unreviewed",
+          "scores": {
+            "specificity": null,
+            "voice": null,
+            "repetition": null,
+            "grounding": null,
+            "coherence": null,
+            "synthesisCoherence": null,
+            "lensIntegration": null
+          },
+          "evidence": null
+        },
+        "pairedDecision": "unreviewed",
+        "notes": null
+      },
+      {
+        "id": "fallback-hard-uranus-mercury",
+        "baseline": {
+          "sourceKey": "hard:*:*",
+          "sourceQuestion": "Where are you meeting more resistance than the task deserves?",
+          "finalQuestion": "Where are you meeting more resistance than the task deserves? Which description of yourself is out of date?",
+          "sourceQuestionReview": "unreviewed",
+          "finalQuestionReview": "unreviewed",
+          "finalQuestionCount": 2,
+          "semanticIncorporation": "unreviewed",
+          "scores": {
+            "specificity": null,
+            "voice": null,
+            "repetition": null,
+            "grounding": null,
+            "coherence": null,
+            "synthesisCoherence": null,
+            "lensIntegration": null
+          },
+          "evidence": null
+        },
+        "candidate": {
+          "sourceKey": "hard:uranus:*",
+          "sourceQuestion": "Which familiar approach, if any, would you like more room to vary?",
+          "finalQuestion": "Which familiar approach, if any, would you like more room to vary? Which description of yourself is out of date?",
+          "sourceQuestionReview": "unreviewed",
+          "finalQuestionReview": "unreviewed",
+          "finalQuestionCount": 2,
+          "semanticIncorporation": "unreviewed",
+          "scores": {
+            "specificity": null,
+            "voice": null,
+            "repetition": null,
+            "grounding": null,
+            "coherence": null,
+            "synthesisCoherence": null,
+            "lensIntegration": null
+          },
+          "evidence": null
+        },
+        "pairedDecision": "unreviewed",
+        "notes": null
+      },
+      {
+        "id": "fallback-soft-saturn-mercury",
+        "baseline": {
+          "sourceKey": "soft:*:*",
+          "sourceQuestion": "What has been easier than expected lately?",
+          "finalQuestion": "What has been easier than expected lately? What piece of work would you defend if someone asked you to drop it this week?",
+          "sourceQuestionReview": "unreviewed",
+          "finalQuestionReview": "unreviewed",
+          "finalQuestionCount": 2,
+          "semanticIncorporation": "unreviewed",
+          "scores": {
+            "specificity": null,
+            "voice": null,
+            "repetition": null,
+            "grounding": null,
+            "coherence": null,
+            "synthesisCoherence": null,
+            "lensIntegration": null
+          },
+          "evidence": null
+        },
+        "candidate": {
+          "sourceKey": "soft:saturn:*",
+          "sourceQuestion": "What routine, if any, feels manageable at your ordinary pace?",
+          "finalQuestion": "What routine, if any, feels manageable at your ordinary pace? What piece of work would you defend if someone asked you to drop it this week?",
+          "sourceQuestionReview": "unreviewed",
+          "finalQuestionReview": "unreviewed",
+          "finalQuestionCount": 2,
+          "semanticIncorporation": "unreviewed",
+          "scores": {
+            "specificity": null,
+            "voice": null,
+            "repetition": null,
+            "grounding": null,
+            "coherence": null,
+            "synthesisCoherence": null,
+            "lensIntegration": null
+          },
+          "evidence": null
+        },
+        "pairedDecision": "unreviewed",
+        "notes": null
+      },
+      {
+        "id": "fallback-soft-neptune-mercury",
+        "baseline": {
+          "sourceKey": "soft:*:*",
+          "sourceQuestion": "What has been easier than expected lately?",
+          "finalQuestion": "What has been easier than expected lately? What would genuine rest look like today, as opposed to distraction?",
+          "sourceQuestionReview": "unreviewed",
+          "finalQuestionReview": "unreviewed",
+          "finalQuestionCount": 2,
+          "semanticIncorporation": "unreviewed",
+          "scores": {
+            "specificity": null,
+            "voice": null,
+            "repetition": null,
+            "grounding": null,
+            "coherence": null,
+            "synthesisCoherence": null,
+            "lensIntegration": null
+          },
+          "evidence": null
+        },
+        "candidate": {
+          "sourceKey": "soft:neptune:*",
+          "sourceQuestion": "What possibility, if any, would you like to imagine without settling it?",
+          "finalQuestion": "What possibility, if any, would you like to imagine without settling it? What would genuine rest look like today, as opposed to distraction?",
+          "sourceQuestionReview": "unreviewed",
+          "finalQuestionReview": "unreviewed",
+          "finalQuestionCount": 2,
+          "semanticIncorporation": "unreviewed",
+          "scores": {
+            "specificity": null,
+            "voice": null,
+            "repetition": null,
+            "grounding": null,
+            "coherence": null,
+            "synthesisCoherence": null,
+            "lensIntegration": null
+          },
+          "evidence": null
+        },
+        "pairedDecision": "unreviewed",
+        "notes": null
+      }
+    ],
+    "qualified": false,
+    "hash": "6809e96705c7b753bb4e8599d65b221b1cbe21e127c1314dd96cb635ee084e48"
+  }
+}

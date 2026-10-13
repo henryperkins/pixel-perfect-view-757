@@ -1,0 +1,1087 @@
+{
+  "protocolVersion": "daily-writing-ai-review-1",
+  "kind": "packet",
+  "contextId": "reviewer-a",
+  "itemSetHash": "d894c4eb6e2e7aa44091dfae77cbe004606b225f1411945302d9b7c884f69e21",
+  "instructionsSha256": "37088003c51d17f5ee073ba1c6653e81a44a9285f02a84065e08822ab8698784",
+  "instructions": "# Reviewer instructions — `daily-writing-ai-review-1`\n\nYou are reviewing short daily astrology readings for an app that shows its work.\nEach item in your packet gives the facts supplied to the writer, the requested\ntone and depth, and the text to review. Judge each item only on that evidence. Do\nnot try to work out where an item came from, which version produced it or how\nother reviewers scored it.\n\n## How to review an item\n\n1. Read the supplied facts. `C` facts are calculations. `I`, `S`, `D`, `N`, `P` and\n   `T` facts are published editorial wording. `E` and `U` facts describe the\n   calculation source and its limits; a `U` fact can suppress whole kinds of claims.\n   `dependsOn` lists a fact's parents.\n2. Read each paragraph and trace every substantive claim to the supplied statements.\n   A cited ID is a pointer, not proof: the statement itself must support the claim.\n   Template paragraphs have `facts: null`; check them against all supplied facts.\n3. Check specifically for:\n   - **Modality.** A possibility (\"can\", \"may\", \"might\") must stay a possibility.\n   - **Frequency.** \"often\", \"usually\", \"always\" need a supplied frequency statement.\n   - **Necessity.** \"must\", \"needs to\", \"has to\" need supplied support.\n   - **Exclusions.** \"rather than X\", \"not X\", \"instead of X\" must not deny an\n     alternative that the facts do not address. A contrast may explain two\n     supported options.\n   - **Personal events.** No claim that something happened to the reader, or that\n     their situation changed, unless supplied. An everyday scene stays conditional.\n   - **Clinical or behavioral claims, instructions, predictions.** None are allowed.\n     A supported calculated exact date is not a behavioral prediction.\n   - **Suppression.** Nothing the `U` facts suppress may appear, even paraphrased.\n   - **Joint relationships.** Two contacts may be connected only when an `S1` fact\n     supplies that relationship. Without `S1`, the meanings stay separate.\n   - **Natal lens.** `N1`, when present, is one conditional interpretation, never a\n     known temperament.\n4. Conditional interpretation supported by `I`, `D`, `S` or `N` statements is\n   editorial framing, not a measured personal state. That is fine.\n\nStandard depth: everyday meaning in the foreground; phase and timing are optional\nand their absence is not a defect. Technical depth: lead with the everyday meaning,\nthen connect it to the named contact and calculated detail; padding is never\nrequired.\n\n## Scores (integers 1–5)\n\n| Dimension            | 1                                      | 3                                               | 4                                                           | 5                                                               |\n| -------------------- | -------------------------------------- | ----------------------------------------------- | ----------------------------------------------------------- | --------------------------------------------------------------- |\n| `specificity`        | Interchangeable summary                | Tied to the selected contact                    | A useful, source-supported practical distinction            | Concrete distinctions supported by the published source copy    |\n| `grounding`          | Unsupported or contradictory claims    | Some statements need review                     | Every substantive claim supported; no strengthened modality | Each substantive claim traceable to supplied statements         |\n| `coherence`          | Contradictory or disjointed            | Understandable but repetitive                   | A clear supported progression; minor editing only           | Each paragraph advances a distinct useful thought               |\n| `voice`              | Stiff or inconsistent with the tone    | Clear and mostly consistent                     | Natural and consistent                                      | Natural, distinctive and consistent throughout                  |\n| `repetition`         | Stock phrasing dominates the packet    | Some reuse                                      | Little reuse; variation stays supported                     | Relevant variation without inventing facts                      |\n| `synthesisCoherence` | Interchangeable or invented connection | Both sources appear; relationship needs editing | Develops the relationship both parents support              | A distinct relationship supported by both sources               |\n| `lensIntegration`    | Separate personality text              | Cited but weakly applied                        | Applies `N1` within the primary distinction                 | A distinct, supported practical lens within the primary meaning |\n\n- Score `synthesisCoherence` only when the item supplies `S1`, and `lensIntegration`\n  only when it supplies `N1`. Otherwise give `null` with the reason.\n- More planet names or extra prose do not raise specificity.\n- `repetition` may compare phrasing across the items in your packet. Do not demand\n  variety that the facts do not support.\n- A **quiet** item has no model writing: give every score `null` with a reason and\n  fill `quietCheck` instead, as `{ \"safe\": true, \"reason\": \"…\" }` (or `false`): is it\n  a safe quiet-day message with no invented signal, claim or instruction? For every\n  other item, `quietCheck` is `null`.\n\n## Findings\n\nRecord a finding for every problem, with the exact passage copied from the\nparagraph. Substantive categories: `unsupported_personal_claim`,\n`invented_joint_premise`, `suppression_breach`, `factual_mismatch`,\n`strengthened_modality`, `unsupported_frequency`, `unsupported_necessity`,\n`unsupported_exclusion`, `prohibited_instruction`, `behavioral_prediction`,\n`clinical_claim`, `unsupported_claim`. Minor categories: `specificity`, `coherence`,\n`voice`, `repetition`, `style`. Severity follows the category.\n\nAn item fails when it has any substantive finding, a `specificity`, `grounding`,\n`coherence`, applicable `synthesisCoherence` or applicable `lensIntegration` score\nbelow 4, or an unsafe quiet check. Your item and overall verdicts must agree with\nyour own scores and findings.\n\n## Output\n\nWrite one JSON object and nothing else to the output path your prompt names. Read no\nfile other than the packet your prompt names, and run nothing. Copy your context\nID, `packetSha256`, `promptSha256` and the dispatch time (as `reviewedAt`) exactly\nas your prompt gives them; the packet cannot contain its own hash or the hash of the\nprompt that carries it.\n\nSet `sawImplementationContext` to `true` only if you saw source code, diffs, plans,\nspecifications, ledgers, earlier reviews or reports about this work, or anything\nthat tells you which run, case or version produced an item. Your environment may\nattach repository notes, a memory index or a git status with recent commit\nsubjects: name anything like that in your declaration, but it does not by itself\nmake that flag `true`.\n\n```json\n{\n  \"protocolVersion\": \"daily-writing-ai-review-1\",\n  \"kind\": \"review\",\n  \"packetSha256\": \"<packetSha256 from your prompt>\",\n  \"itemSetHash\": \"<itemSetHash from the packet>\",\n  \"reviewer\": {\n    \"contextId\": \"<the context ID you were given>\",\n    \"model\": \"<your model if you know it, otherwise unknown>\",\n    \"configuration\": \"unknown\",\n    \"promptSha256\": \"<promptSha256 from your prompt>\"\n  },\n  \"reviewedAt\": \"<the dispatch time your prompt gives>\",\n  \"blindness\": {\n    \"declaration\": \"<one sentence on what you saw>\",\n    \"inputs\": [\"packet\"],\n    \"sawOriginLabels\": false,\n    \"sawPriorVerdicts\": false,\n    \"sawOtherReviews\": false,\n    \"sawImplementationContext\": false\n  },\n  \"reassessmentOf\": null,\n  \"items\": [\n    {\n      \"itemId\": \"item-01\",\n      \"scores\": {\n        \"specificity\": { \"score\": 4, \"reason\": \"…\" },\n        \"grounding\": { \"score\": 4, \"reason\": \"…\" },\n        \"coherence\": { \"score\": 4, \"reason\": \"…\" },\n        \"voice\": { \"score\": 4, \"reason\": \"…\" },\n        \"repetition\": { \"score\": 4, \"reason\": \"…\" },\n        \"synthesisCoherence\": { \"score\": null, \"reason\": \"No S1 supplied\" },\n        \"lensIntegration\": { \"score\": null, \"reason\": \"No N1 supplied\" }\n      },\n      \"quietCheck\": null,\n      \"findings\": [\n        {\n          \"findingId\": \"<your-prefix>-01-1\",\n          \"paragraph\": 1,\n          \"passage\": \"<exact text>\",\n          \"supportingFactIds\": [],\n          \"missingFactIds\": [\"I1\"],\n          \"category\": \"strengthened_modality\",\n          \"severity\": \"substantive\",\n          \"explanation\": \"…\",\n          \"proposedCorrection\": \"…\"\n        }\n      ],\n      \"verdict\": \"fail\"\n    }\n  ],\n  \"verdict\": \"fail\"\n}\n```\n\nReview every item in the packet exactly once. Every fact ID you name must be\nsupplied in that item, and each finding needs at least one supporting or missing\nfact ID. If you are unsure whether a claim is supported, record the finding and\nexplain the doubt; an unresolved grounding doubt fails the item.\n\n\nContent reflection supplement — content-reflection-review-1: Review sourceQuestion and reflectionQuestion separately. The source checks are singleQuestion, answerableWithoutPremise, and consistentWithSources; all must pass with a verbatim quote and explanation. For the final prompt record question count separately and check answerableWithoutPremise, consistentWithSources, and coherent. A schema-4 domain question is an inherited composition, not a second source question. Record all body dimensions using the existing 1–5 rubric and existing item-verdict rules. A separate qualification gate requires voice and repetition >= 4 for affected candidate items; packet origins remain concealed. Citations do not establish substantive incorporation.",
+  "items": [
+    {
+      "itemId": "item-05",
+      "tone": "plain",
+      "depth": "technical",
+      "quiet": false,
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting saturn sextile natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain work. Calculated exact date: 2026-10-14."
+        },
+        {
+          "id": "I1",
+          "kind": "interpretation",
+          "statement": "Published interpretation soft:*:*: A supportive contact is in range. These tend to be unremarkable in the moment and only visible in hindsight as periods of lower friction.",
+          "dependsOn": [
+            "C1"
+          ]
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for work and output: A task can feel manageable when its purpose and next small piece are easy to describe. A clear outline or a commitment with a clear scope can illustrate that kind of alignment."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+        },
+        {
+          "id": "T1",
+          "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window. The calculated arc position is 30%. Current orb at the reading's calculation time: 0.42°."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+        }
+      ],
+      "paragraphs": [
+        {
+          "number": 1,
+          "text": "Periods of lower friction tend to be unremarkable in the moment and only visible in hindsight. A supportive contact is in range as transiting Saturn forms a sextile to natal Mercury. In work and output, a task can feel manageable when its purpose and next small piece are easy to describe. A clear outline or a commitment with a clear scope can illustrate that kind of alignment.",
+          "facts": [
+            "C1",
+            "D1",
+            "I1"
+          ]
+        },
+        {
+          "number": 2,
+          "text": "If a demand catches your attention, you can notice your response before deciding how to act. At the reading's calculation time, the current orb between transiting Saturn and natal Mercury is 0.42 degrees in an approaching phase. This reading falls in the middle part of the calculated window, with a calculated arc position of 30%. The contact is exact in 3 days, with a calculated exact date of 2026-10-14.",
+          "facts": [
+            "C1",
+            "P1",
+            "T1"
+          ]
+        }
+      ],
+      "sourceQuestion": "What has been easier than expected lately?",
+      "reflectionQuestion": "What has been easier than expected lately? What piece of work would you defend if someone asked you to drop it this week?",
+      "questionReview": "unreviewed"
+    },
+    {
+      "itemId": "item-16",
+      "tone": "warm",
+      "depth": "standard",
+      "quiet": false,
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting uranus square natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain identity. Calculated exact date: 2026-10-14."
+        },
+        {
+          "id": "I1",
+          "kind": "interpretation",
+          "statement": "Published interpretation hard:uranus:*: A familiar arrangement can be useful while leaving little room to vary an approach. A desk layout could suit one kind of task while crowding another.",
+          "dependsOn": [
+            "C1"
+          ]
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+        },
+        {
+          "id": "T1",
+          "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+        }
+      ],
+      "paragraphs": [
+        {
+          "number": 1,
+          "text": "Taking this gently: A familiar arrangement can be useful while leaving little room to vary an approach. A desk layout could suit one kind of task while crowding another.",
+          "facts": null
+        },
+        {
+          "number": 2,
+          "text": "A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.",
+          "facts": null
+        },
+        {
+          "number": 3,
+          "text": "If a demand catches your attention, you can notice your response before deciding how to act.",
+          "facts": null
+        },
+        {
+          "number": 4,
+          "text": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window.",
+          "facts": null
+        }
+      ],
+      "sourceQuestion": "Which familiar approach, if any, would you like more room to vary?",
+      "reflectionQuestion": "Which familiar approach, if any, would you like more room to vary? Which description of yourself is out of date?",
+      "questionReview": "unreviewed"
+    },
+    {
+      "itemId": "item-13",
+      "tone": "plain",
+      "depth": "technical",
+      "quiet": false,
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting saturn sextile natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain work. Calculated exact date: 2026-10-14."
+        },
+        {
+          "id": "I1",
+          "kind": "interpretation",
+          "statement": "Published interpretation soft:saturn:*: A small recurring task might fit between two parts of a day without a special burst of effort. Its place in the routine can leave room for pauses as well as completion.",
+          "dependsOn": [
+            "C1"
+          ]
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for work and output: A task can feel manageable when its purpose and next small piece are easy to describe. A clear outline or a commitment with a clear scope can illustrate that kind of alignment."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+        },
+        {
+          "id": "T1",
+          "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window. The calculated arc position is 30%. Current orb at the reading's calculation time: 0.42°."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+        }
+      ],
+      "paragraphs": [
+        {
+          "number": 1,
+          "text": "The place of a routine can leave room for pauses as well as completion. A small recurring task might fit between two parts of a day without a special burst of effort. This perspective offers a way to read transiting saturn sextile natal mercury.",
+          "facts": [
+            "C1",
+            "I1"
+          ]
+        },
+        {
+          "number": 2,
+          "text": "In the domain of work and output, a task can feel manageable when its purpose and next small piece are easy to describe. A clear outline or a commitment with a clear scope can illustrate that kind of alignment. This description frames transiting saturn sextile natal mercury.",
+          "facts": [
+            "C1",
+            "D1"
+          ]
+        },
+        {
+          "number": 3,
+          "text": "If a demand catches your attention, you can notice your response before deciding how to act. Transiting saturn is approaching natal mercury with a current orb of 0.42 degrees at the calculation time. This reading falls in the middle part of the calculated window, at a calculated arc position of 30%. The contact is exact in 3 days, with a calculated exact date of 2026-10-14.",
+          "facts": [
+            "C1",
+            "P1",
+            "T1"
+          ]
+        }
+      ],
+      "sourceQuestion": "What routine, if any, feels manageable at your ordinary pace?",
+      "reflectionQuestion": "What routine, if any, feels manageable at your ordinary pace? What piece of work would you defend if someone asked you to drop it this week?",
+      "questionReview": "unreviewed"
+    },
+    {
+      "itemId": "item-02",
+      "tone": "clinical",
+      "depth": "standard",
+      "quiet": false,
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting neptune sextile natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain inner-life. Calculated exact date: 2026-10-14."
+        },
+        {
+          "id": "I1",
+          "kind": "interpretation",
+          "statement": "Published interpretation soft:*:*: A supportive contact is in range. These tend to be unremarkable in the moment and only visible in hindsight as periods of lower friction.",
+          "dependsOn": [
+            "C1"
+          ]
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for inner life and rest: Private time can have a comfortable shape of its own. A familiar corner, an unclaimed hour, or a routine with fewer demands can serve as ordinary examples of that ease."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+        },
+        {
+          "id": "T1",
+          "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+        }
+      ],
+      "paragraphs": [
+        {
+          "number": 1,
+          "text": "Observation: A supportive contact is in range. These tend to be unremarkable in the moment and only visible in hindsight as periods of lower friction.",
+          "facts": null
+        },
+        {
+          "number": 2,
+          "text": "Private time can have a comfortable shape of its own. A familiar corner, an unclaimed hour, or a routine with fewer demands can serve as ordinary examples of that ease.",
+          "facts": null
+        },
+        {
+          "number": 3,
+          "text": "If a demand catches your attention, you can notice your response before deciding how to act.",
+          "facts": null
+        },
+        {
+          "number": 4,
+          "text": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window.",
+          "facts": null
+        }
+      ],
+      "sourceQuestion": "What has been easier than expected lately?",
+      "reflectionQuestion": "What has been easier than expected lately? What would genuine rest look like today, as opposed to distraction?",
+      "questionReview": "unreviewed"
+    },
+    {
+      "itemId": "item-09",
+      "tone": "plain",
+      "depth": "standard",
+      "quiet": false,
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting mars square natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain work. Calculated exact date: 2026-10-14."
+        },
+        {
+          "id": "I1",
+          "kind": "interpretation",
+          "statement": "Published interpretation hard:mars:*: Wanting to finish can run ahead of the pace a task allows. If a reply is begun before a question is fully explained, it may need to wait for the missing detail.",
+          "dependsOn": [
+            "C1"
+          ]
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for work and output: Pace, scope, and the part of a task that feels like yours are separate pieces of working on something. An unfinished list or a draft with competing aims can be a place to notice friction between those pieces."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+        },
+        {
+          "id": "T1",
+          "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+        }
+      ],
+      "paragraphs": [
+        {
+          "number": 1,
+          "text": "If a reply is begun before a question is fully explained, it may need to wait for the missing detail. Wanting to finish can run ahead of the pace a task allows. Transiting Mars forms a square to natal Mercury. At this reading's calculation time, the current orb is 0.42 degrees.",
+          "facts": [
+            "C1",
+            "I1"
+          ]
+        },
+        {
+          "number": 2,
+          "text": "Pace, scope, and the part of a task that feels like yours are separate pieces of working on something. An unfinished list or a draft with competing aims can be a place to notice friction between those pieces.",
+          "facts": [
+            "D1"
+          ]
+        },
+        {
+          "number": 3,
+          "text": "If a demand catches your attention, you can notice your response before deciding how to act. This reading falls in the middle part of the calculated window. The contact is exact in 3 days.",
+          "facts": [
+            "C1",
+            "P1",
+            "T1"
+          ]
+        }
+      ],
+      "sourceQuestion": "Where, if anywhere, is your preferred pace out of step with the task?",
+      "reflectionQuestion": "Where, if anywhere, is your preferred pace out of step with the task? What piece of work would you defend if someone asked you to drop it this week?",
+      "questionReview": "unreviewed"
+    },
+    {
+      "itemId": "item-11",
+      "tone": "clinical",
+      "depth": "standard",
+      "quiet": false,
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting neptune sextile natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain inner-life. Calculated exact date: 2026-10-14."
+        },
+        {
+          "id": "I1",
+          "kind": "interpretation",
+          "statement": "Published interpretation soft:neptune:*: Several shapes might be imagined in an unfinished sketch. Leaving them as possibilities makes room for imagination without treating it as evidence of what is there.",
+          "dependsOn": [
+            "C1"
+          ]
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for inner life and rest: Private time can have a comfortable shape of its own. A familiar corner, an unclaimed hour, or a routine with fewer demands can serve as ordinary examples of that ease."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+        },
+        {
+          "id": "T1",
+          "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+        }
+      ],
+      "paragraphs": [
+        {
+          "number": 1,
+          "text": "Observation: Several shapes might be imagined in an unfinished sketch. Leaving them as possibilities makes room for imagination without treating it as evidence of what is there.",
+          "facts": null
+        },
+        {
+          "number": 2,
+          "text": "Private time can have a comfortable shape of its own. A familiar corner, an unclaimed hour, or a routine with fewer demands can serve as ordinary examples of that ease.",
+          "facts": null
+        },
+        {
+          "number": 3,
+          "text": "If a demand catches your attention, you can notice your response before deciding how to act.",
+          "facts": null
+        },
+        {
+          "number": 4,
+          "text": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window.",
+          "facts": null
+        }
+      ],
+      "sourceQuestion": "What possibility, if any, would you like to imagine without settling it?",
+      "reflectionQuestion": "What possibility, if any, would you like to imagine without settling it? What would genuine rest look like today, as opposed to distraction?",
+      "questionReview": "unreviewed"
+    },
+    {
+      "itemId": "item-01",
+      "tone": "plain",
+      "depth": "technical",
+      "quiet": false,
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting saturn sextile natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain work. Calculated exact date: 2026-10-14."
+        },
+        {
+          "id": "I1",
+          "kind": "interpretation",
+          "statement": "Published interpretation soft:saturn:*: A small recurring task might fit between two parts of a day without a special burst of effort. Its place in the routine can leave room for pauses as well as completion.",
+          "dependsOn": [
+            "C1"
+          ]
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for work and output: A task can feel manageable when its purpose and next small piece are easy to describe. A clear outline or a commitment with a clear scope can illustrate that kind of alignment."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+        },
+        {
+          "id": "T1",
+          "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window. The calculated arc position is 30%. Current orb at the reading's calculation time: 0.42°."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+        }
+      ],
+      "paragraphs": [
+        {
+          "number": 1,
+          "text": "A small recurring task might fit between two parts of a day without a special burst of effort. Its place in the routine can leave room for pauses as well as completion.",
+          "facts": null
+        },
+        {
+          "number": 2,
+          "text": "A task can feel manageable when its purpose and next small piece are easy to describe. A clear outline or a commitment with a clear scope can illustrate that kind of alignment.",
+          "facts": null
+        },
+        {
+          "number": 3,
+          "text": "If a demand catches your attention, you can notice your response before deciding how to act.",
+          "facts": null
+        },
+        {
+          "number": 4,
+          "text": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window. The calculated arc position is 30%. Current orb at the reading's calculation time: 0.42°.",
+          "facts": null
+        }
+      ],
+      "sourceQuestion": "What routine, if any, feels manageable at your ordinary pace?",
+      "reflectionQuestion": "What routine, if any, feels manageable at your ordinary pace? What piece of work would you defend if someone asked you to drop it this week?",
+      "questionReview": "unreviewed"
+    },
+    {
+      "itemId": "item-03",
+      "tone": "plain",
+      "depth": "standard",
+      "quiet": false,
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting mars square natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain work. Calculated exact date: 2026-10-14."
+        },
+        {
+          "id": "I1",
+          "kind": "interpretation",
+          "statement": "Published interpretation hard:*:*: A hard contact is forming between a moving body and a fixed point in your chart. Hard angles tend to coincide with noticing friction rather than with events.",
+          "dependsOn": [
+            "C1"
+          ]
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for work and output: Pace, scope, and the part of a task that feels like yours are separate pieces of working on something. An unfinished list or a draft with competing aims can be a place to notice friction between those pieces."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+        },
+        {
+          "id": "T1",
+          "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+        }
+      ],
+      "paragraphs": [
+        {
+          "number": 1,
+          "text": "A hard contact is forming between a moving body and a fixed point in your chart. Hard angles tend to coincide with noticing friction rather than with events.",
+          "facts": null
+        },
+        {
+          "number": 2,
+          "text": "Pace, scope, and the part of a task that feels like yours are separate pieces of working on something. An unfinished list or a draft with competing aims can be a place to notice friction between those pieces.",
+          "facts": null
+        },
+        {
+          "number": 3,
+          "text": "If a demand catches your attention, you can notice your response before deciding how to act.",
+          "facts": null
+        },
+        {
+          "number": 4,
+          "text": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window.",
+          "facts": null
+        }
+      ],
+      "sourceQuestion": "Where are you meeting more resistance than the task deserves?",
+      "reflectionQuestion": "Where are you meeting more resistance than the task deserves? What piece of work would you defend if someone asked you to drop it this week?",
+      "questionReview": "unreviewed"
+    },
+    {
+      "itemId": "item-08",
+      "tone": "warm",
+      "depth": "standard",
+      "quiet": false,
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting uranus square natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain identity. Calculated exact date: 2026-10-14."
+        },
+        {
+          "id": "I1",
+          "kind": "interpretation",
+          "statement": "Published interpretation hard:*:*: A hard contact is forming between a moving body and a fixed point in your chart. Hard angles tend to coincide with noticing friction rather than with events.",
+          "dependsOn": [
+            "C1"
+          ]
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+        },
+        {
+          "id": "T1",
+          "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+        }
+      ],
+      "paragraphs": [
+        {
+          "number": 1,
+          "text": "Hard angles tend to coincide with noticing friction rather than with events. In your chart, a hard contact is forming between a moving body and a fixed point, where transiting Uranus forms a square with your natal Mercury. At the calculation time of this reading, the current orb is 0.42 degrees.",
+          "facts": [
+            "C1",
+            "I1"
+          ]
+        },
+        {
+          "number": 2,
+          "text": "A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.",
+          "facts": [
+            "D1"
+          ]
+        },
+        {
+          "number": 3,
+          "text": "This reading falls in the middle part of the calculated window. It's calculated to be exact in 3 days. If a demand catches your attention, you can notice your response before deciding how to act.",
+          "facts": [
+            "C1",
+            "P1",
+            "T1"
+          ]
+        }
+      ],
+      "sourceQuestion": "Where are you meeting more resistance than the task deserves?",
+      "reflectionQuestion": "Where are you meeting more resistance than the task deserves? Which description of yourself is out of date?",
+      "questionReview": "unreviewed"
+    },
+    {
+      "itemId": "item-12",
+      "tone": "plain",
+      "depth": "standard",
+      "quiet": false,
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting mars square natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain work. Calculated exact date: 2026-10-14."
+        },
+        {
+          "id": "I1",
+          "kind": "interpretation",
+          "statement": "Published interpretation hard:*:*: A hard contact is forming between a moving body and a fixed point in your chart. Hard angles tend to coincide with noticing friction rather than with events.",
+          "dependsOn": [
+            "C1"
+          ]
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for work and output: Pace, scope, and the part of a task that feels like yours are separate pieces of working on something. An unfinished list or a draft with competing aims can be a place to notice friction between those pieces."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+        },
+        {
+          "id": "T1",
+          "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+        }
+      ],
+      "paragraphs": [
+        {
+          "number": 1,
+          "text": "Hard angles tend to coincide with noticing friction rather than with events. Transiting Mars is forming a square to natal Mercury, marking a hard contact between a moving body and a fixed point in your chart.",
+          "facts": [
+            "C1",
+            "I1"
+          ]
+        },
+        {
+          "number": 2,
+          "text": "Pace, scope, and the part of a task that feels like yours are separate pieces of working on something. An unfinished list or a draft with competing aims can be a place to notice friction between those pieces.",
+          "facts": [
+            "D1"
+          ]
+        },
+        {
+          "number": 3,
+          "text": "If a demand catches your attention, you can notice your response before deciding how to act. This reading falls in the middle part of the calculated window. The current orb at calculation time is 0.42 degrees. The contact is exact in 3 days.",
+          "facts": [
+            "C1",
+            "P1",
+            "T1"
+          ]
+        }
+      ],
+      "sourceQuestion": "Where are you meeting more resistance than the task deserves?",
+      "reflectionQuestion": "Where are you meeting more resistance than the task deserves? What piece of work would you defend if someone asked you to drop it this week?",
+      "questionReview": "unreviewed"
+    },
+    {
+      "itemId": "item-14",
+      "tone": "clinical",
+      "depth": "standard",
+      "quiet": false,
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting neptune sextile natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain inner-life. Calculated exact date: 2026-10-14."
+        },
+        {
+          "id": "I1",
+          "kind": "interpretation",
+          "statement": "Published interpretation soft:*:*: A supportive contact is in range. These tend to be unremarkable in the moment and only visible in hindsight as periods of lower friction.",
+          "dependsOn": [
+            "C1"
+          ]
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for inner life and rest: Private time can have a comfortable shape of its own. A familiar corner, an unclaimed hour, or a routine with fewer demands can serve as ordinary examples of that ease."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+        },
+        {
+          "id": "T1",
+          "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+        }
+      ],
+      "paragraphs": [
+        {
+          "number": 1,
+          "text": "Periods of lower friction tend to be unremarkable in the moment and only visible in hindsight. A supportive contact is in range as transiting Neptune forms a sextile to natal Mercury. At the calculation time of this reading, the current orb is 0.42 degrees. This reading falls in the middle part of the calculated window.",
+          "facts": [
+            "C1",
+            "I1",
+            "T1"
+          ]
+        },
+        {
+          "number": 2,
+          "text": "Private time can have a comfortable shape of its own. A familiar corner, an unclaimed hour, or a routine with fewer demands can serve as ordinary examples of that ease. If a demand catches your attention, you can notice your response before deciding how to act.",
+          "facts": [
+            "C1",
+            "D1",
+            "P1"
+          ]
+        }
+      ],
+      "sourceQuestion": "What has been easier than expected lately?",
+      "reflectionQuestion": "What has been easier than expected lately? What would genuine rest look like today, as opposed to distraction?",
+      "questionReview": "unreviewed"
+    },
+    {
+      "itemId": "item-15",
+      "tone": "warm",
+      "depth": "standard",
+      "quiet": false,
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting uranus square natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain identity. Calculated exact date: 2026-10-14."
+        },
+        {
+          "id": "I1",
+          "kind": "interpretation",
+          "statement": "Published interpretation hard:uranus:*: A familiar arrangement can be useful while leaving little room to vary an approach. A desk layout could suit one kind of task while crowding another.",
+          "dependsOn": [
+            "C1"
+          ]
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+        },
+        {
+          "id": "T1",
+          "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+        }
+      ],
+      "paragraphs": [
+        {
+          "number": 1,
+          "text": "A desk layout could suit one kind of task while crowding another. A familiar arrangement can be useful while leaving little room to vary an approach.",
+          "facts": [
+            "C1",
+            "I1"
+          ]
+        },
+        {
+          "number": 2,
+          "text": "A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.",
+          "facts": [
+            "D1"
+          ]
+        },
+        {
+          "number": 3,
+          "text": "If a demand catches your attention, you can notice your response before deciding how to act. Transiting Uranus is square your natal Mercury, and it's at an orb of 0.42 degrees at the calculation time. This reading falls in the middle part of the calculated window. The contact is calculated as exact in 3 days on 2026-10-14.",
+          "facts": [
+            "C1",
+            "P1",
+            "T1"
+          ]
+        }
+      ],
+      "sourceQuestion": "Which familiar approach, if any, would you like more room to vary?",
+      "reflectionQuestion": "Which familiar approach, if any, would you like more room to vary? Which description of yourself is out of date?",
+      "questionReview": "unreviewed"
+    },
+    {
+      "itemId": "item-07",
+      "tone": "plain",
+      "depth": "standard",
+      "quiet": false,
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting mars square natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain work. Calculated exact date: 2026-10-14."
+        },
+        {
+          "id": "I1",
+          "kind": "interpretation",
+          "statement": "Published interpretation hard:mars:*: Wanting to finish can run ahead of the pace a task allows. If a reply is begun before a question is fully explained, it may need to wait for the missing detail.",
+          "dependsOn": [
+            "C1"
+          ]
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for work and output: Pace, scope, and the part of a task that feels like yours are separate pieces of working on something. An unfinished list or a draft with competing aims can be a place to notice friction between those pieces."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+        },
+        {
+          "id": "T1",
+          "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+        }
+      ],
+      "paragraphs": [
+        {
+          "number": 1,
+          "text": "Wanting to finish can run ahead of the pace a task allows. If a reply is begun before a question is fully explained, it may need to wait for the missing detail.",
+          "facts": null
+        },
+        {
+          "number": 2,
+          "text": "Pace, scope, and the part of a task that feels like yours are separate pieces of working on something. An unfinished list or a draft with competing aims can be a place to notice friction between those pieces.",
+          "facts": null
+        },
+        {
+          "number": 3,
+          "text": "If a demand catches your attention, you can notice your response before deciding how to act.",
+          "facts": null
+        },
+        {
+          "number": 4,
+          "text": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window.",
+          "facts": null
+        }
+      ],
+      "sourceQuestion": "Where, if anywhere, is your preferred pace out of step with the task?",
+      "reflectionQuestion": "Where, if anywhere, is your preferred pace out of step with the task? What piece of work would you defend if someone asked you to drop it this week?",
+      "questionReview": "unreviewed"
+    },
+    {
+      "itemId": "item-04",
+      "tone": "plain",
+      "depth": "technical",
+      "quiet": false,
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting saturn sextile natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain work. Calculated exact date: 2026-10-14."
+        },
+        {
+          "id": "I1",
+          "kind": "interpretation",
+          "statement": "Published interpretation soft:*:*: A supportive contact is in range. These tend to be unremarkable in the moment and only visible in hindsight as periods of lower friction.",
+          "dependsOn": [
+            "C1"
+          ]
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for work and output: A task can feel manageable when its purpose and next small piece are easy to describe. A clear outline or a commitment with a clear scope can illustrate that kind of alignment."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+        },
+        {
+          "id": "T1",
+          "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window. The calculated arc position is 30%. Current orb at the reading's calculation time: 0.42°."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+        }
+      ],
+      "paragraphs": [
+        {
+          "number": 1,
+          "text": "A supportive contact is in range. These tend to be unremarkable in the moment and only visible in hindsight as periods of lower friction.",
+          "facts": null
+        },
+        {
+          "number": 2,
+          "text": "A task can feel manageable when its purpose and next small piece are easy to describe. A clear outline or a commitment with a clear scope can illustrate that kind of alignment.",
+          "facts": null
+        },
+        {
+          "number": 3,
+          "text": "If a demand catches your attention, you can notice your response before deciding how to act.",
+          "facts": null
+        },
+        {
+          "number": 4,
+          "text": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window. The calculated arc position is 30%. Current orb at the reading's calculation time: 0.42°.",
+          "facts": null
+        }
+      ],
+      "sourceQuestion": "What has been easier than expected lately?",
+      "reflectionQuestion": "What has been easier than expected lately? What piece of work would you defend if someone asked you to drop it this week?",
+      "questionReview": "unreviewed"
+    },
+    {
+      "itemId": "item-10",
+      "tone": "clinical",
+      "depth": "standard",
+      "quiet": false,
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting neptune sextile natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain inner-life. Calculated exact date: 2026-10-14."
+        },
+        {
+          "id": "I1",
+          "kind": "interpretation",
+          "statement": "Published interpretation soft:neptune:*: Several shapes might be imagined in an unfinished sketch. Leaving them as possibilities makes room for imagination without treating it as evidence of what is there.",
+          "dependsOn": [
+            "C1"
+          ]
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for inner life and rest: Private time can have a comfortable shape of its own. A familiar corner, an unclaimed hour, or a routine with fewer demands can serve as ordinary examples of that ease."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+        },
+        {
+          "id": "T1",
+          "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+        }
+      ],
+      "paragraphs": [
+        {
+          "number": 1,
+          "text": "Leaving several shapes as possibilities makes room for imagination without treating it as evidence of what is there. Several shapes might be imagined in an unfinished sketch. Transiting Neptune forms a sextile to your natal Mercury. At the reading's calculation time, the current orb is 0.42 degrees.",
+          "facts": [
+            "C1",
+            "I1"
+          ]
+        },
+        {
+          "number": 2,
+          "text": "Private time can have a comfortable shape of its own. A familiar corner, an unclaimed hour, or a routine with fewer demands can serve as ordinary examples of that ease.",
+          "facts": [
+            "D1"
+          ]
+        },
+        {
+          "number": 3,
+          "text": "If a demand catches your attention, you can notice your response before deciding how to act. This reading falls in the middle part of the calculated window. The contact is exact in 3 days.",
+          "facts": [
+            "C1",
+            "P1",
+            "T1"
+          ]
+        }
+      ],
+      "sourceQuestion": "What possibility, if any, would you like to imagine without settling it?",
+      "reflectionQuestion": "What possibility, if any, would you like to imagine without settling it? What would genuine rest look like today, as opposed to distraction?",
+      "questionReview": "unreviewed"
+    },
+    {
+      "itemId": "item-06",
+      "tone": "warm",
+      "depth": "standard",
+      "quiet": false,
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting uranus square natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain identity. Calculated exact date: 2026-10-14."
+        },
+        {
+          "id": "I1",
+          "kind": "interpretation",
+          "statement": "Published interpretation hard:*:*: A hard contact is forming between a moving body and a fixed point in your chart. Hard angles tend to coincide with noticing friction rather than with events.",
+          "dependsOn": [
+            "C1"
+          ]
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+        },
+        {
+          "id": "T1",
+          "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+        }
+      ],
+      "paragraphs": [
+        {
+          "number": 1,
+          "text": "Taking this gently: A hard contact is forming between a moving body and a fixed point in your chart. Hard angles tend to coincide with noticing friction rather than with events.",
+          "facts": null
+        },
+        {
+          "number": 2,
+          "text": "A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.",
+          "facts": null
+        },
+        {
+          "number": 3,
+          "text": "If a demand catches your attention, you can notice your response before deciding how to act.",
+          "facts": null
+        },
+        {
+          "number": 4,
+          "text": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window.",
+          "facts": null
+        }
+      ],
+      "sourceQuestion": "Where are you meeting more resistance than the task deserves?",
+      "reflectionQuestion": "Where are you meeting more resistance than the task deserves? Which description of yourself is out of date?",
+      "questionReview": "unreviewed"
+    }
+  ]
+}

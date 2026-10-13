@@ -1,0 +1,62 @@
+{
+  "protocolVersion": "daily-writing-ai-review-1",
+  "kind": "adjudication",
+  "itemSetHash": "d894c4eb6e2e7aa44091dfae77cbe004606b225f1411945302d9b7c884f69e21",
+  "adjudicator": {
+    "contextId": "adjudicator-c",
+    "model": "unknown",
+    "configuration": "unknown",
+    "promptSha256": "2b8f639fd27b6d22c5ed28e24fc4fd9eea4b28ec0afd3ec8d3d03c151fb583a3"
+  },
+  "adjudicatedAt": "2026-10-13T09:51:17.209892Z",
+  "blindness": {
+    "declaration": "I read the dispatched adjudication prompt and its named neutral packet containing three findings, their supplied facts, full paragraphs, and reflection questions. I did not inspect repository code, history, reports, other reviews, or memory, and did not see passage-origin labels or implementation context for the evaluated passages.",
+    "sawOriginLabels": false,
+    "sawImplementationContext": false,
+    "inputs": ["findings", "items"]
+  },
+  "resolutions": [
+    {
+      "reviewerContextId": "reviewer-a",
+      "findingId": "a-13-1",
+      "itemId": "item-13",
+      "passage": "Transiting saturn is approaching natal mercury with a current orb of 0.42 degrees at the calculation time.",
+      "resolution": "unsupported",
+      "factEvidence": [
+        {
+          "factId": "C1",
+          "statement": "transiting saturn sextile natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain work. Calculated exact date: 2026-10-14."
+        }
+      ],
+      "explanation": "The source supplies an approaching sextile and its aspect orb. The earlier paragraphs identify that sextile, and the following timing sentence refers to the contact, so the intended relationship is recoverable. Nevertheless, the quoted sentence makes natal Mercury itself the object being approached. An approach to sextile exactness does not establish an approach to Mercury's position. The surrounding text does not remove this unresolved geometric ambiguity; the sentence should attach approaching to the sextile's exactness."
+    },
+    {
+      "reviewerContextId": "reviewer-b",
+      "findingId": "b-14-1",
+      "itemId": "item-14",
+      "passage": "Periods of lower friction tend to be unremarkable in the moment and only visible in hindsight.",
+      "resolution": "unsupported",
+      "factEvidence": [
+        {
+          "factId": "I1",
+          "statement": "Published interpretation soft:*:*: A supportive contact is in range. These tend to be unremarkable in the moment and only visible in hindsight as periods of lower friction."
+        }
+      ],
+      "explanation": "The supplied tendency concerns supportive contacts, with periods of lower friction describing how those contacts are recognized retrospectively. The passage instead predicates that tendency of periods of lower friction generally. The next sentence identifies the present supportive sextile, but it does not limit the opening claim to periods associated with supportive contacts. The remaining geometry and timing statements supply no support for the broader tendency. This change of scope remains unresolved when the whole paragraph and surrounding text are considered."
+    },
+    {
+      "reviewerContextId": "reviewer-b",
+      "findingId": "b-05-1",
+      "itemId": "item-05",
+      "passage": "Periods of lower friction tend to be unremarkable in the moment and only visible in hindsight.",
+      "resolution": "unsupported",
+      "factEvidence": [
+        {
+          "factId": "I1",
+          "statement": "Published interpretation soft:*:*: A supportive contact is in range. These tend to be unremarkable in the moment and only visible in hindsight as periods of lower friction."
+        }
+      ],
+      "explanation": "The fact attributes the tendency to supportive contacts and describes their retrospective appearance as periods of lower friction. The opening sentence generalizes the tendency to periods of lower friction themselves. The following supportive-contact sentence gives relevant context without expressly restricting that generalized subject, and the work examples and later timing paragraph do not establish the broader claim. The supplied text therefore leaves the scope change unsupported."
+    }
+  ]
+}

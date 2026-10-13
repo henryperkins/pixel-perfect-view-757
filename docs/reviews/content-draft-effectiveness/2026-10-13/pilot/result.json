@@ -1,0 +1,176 @@
+{
+  "version": "content-pilot-result-1",
+  "recordedAt": "2026-10-13T09:47:39.578999+00:00",
+  "campaignId": "197e497d-8696-4605-a202-f20c562315b8",
+  "baselineRunId": "197e497d-8696-4605-a202-f20c562315b8",
+  "candidateRunId": "04ac4a72-087f-4747-ba54-407c26f87d7e",
+  "attempts": 8,
+  "captureCount": 8,
+  "uncertainCaptures": 0,
+  "retryCount": 0,
+  "accountedDollars": 0.879908,
+  "accounting": "Conservative reservation reconciliation, not invoiced charges",
+  "capDollars": 5,
+  "acceptedBaseline": 4,
+  "acceptedCandidate": 4,
+  "validatorAcceptanceDelta": 0,
+  "rows": [
+    {
+      "arm": "baseline",
+      "position": 0,
+      "caseId": "fallback-hard-mars-mercury",
+      "attempted": true,
+      "capture": "stored",
+      "accountedMicros": 53724,
+      "outcome": "accepted",
+      "provider": "gemini-enterprise",
+      "actualModel": "gemini-3.8-flash",
+      "durationMs": 16565,
+      "usage": {
+        "inputTokens": 2032,
+        "outputTokens": 223,
+        "thinkingTokens": 2260,
+        "totalTokens": 4515,
+        "outputIncludesThinking": false
+      }
+    },
+    {
+      "arm": "baseline",
+      "position": 1,
+      "caseId": "fallback-hard-uranus-mercury",
+      "attempted": true,
+      "capture": "stored",
+      "accountedMicros": 157570,
+      "outcome": "accepted",
+      "provider": "gemini-enterprise",
+      "actualModel": "gemini-3.8-flash",
+      "durationMs": 51196,
+      "usage": {
+        "inputTokens": 2045,
+        "outputTokens": 227,
+        "thinkingTokens": 7447,
+        "totalTokens": 9719,
+        "outputIncludesThinking": false
+      }
+    },
+    {
+      "arm": "baseline",
+      "position": 2,
+      "caseId": "fallback-soft-saturn-mercury",
+      "attempted": true,
+      "capture": "stored",
+      "accountedMicros": 134342,
+      "outcome": "accepted",
+      "provider": "gemini-enterprise",
+      "actualModel": "gemini-3.8-flash",
+      "durationMs": 39126,
+      "usage": {
+        "inputTokens": 2051,
+        "outputTokens": 203,
+        "thinkingTokens": 6309,
+        "totalTokens": 8563,
+        "outputIncludesThinking": false
+      }
+    },
+    {
+      "arm": "baseline",
+      "position": 3,
+      "caseId": "fallback-soft-neptune-mercury",
+      "attempted": true,
+      "capture": "stored",
+      "accountedMicros": 77506,
+      "outcome": "accepted",
+      "provider": "gemini-enterprise",
+      "actualModel": "gemini-3.8-flash",
+      "durationMs": 24400,
+      "usage": {
+        "inputTokens": 2063,
+        "outputTokens": 188,
+        "thinkingTokens": 3481,
+        "totalTokens": 5732,
+        "outputIncludesThinking": false
+      }
+    },
+    {
+      "arm": "candidate",
+      "position": 0,
+      "caseId": "fallback-hard-mars-mercury",
+      "attempted": true,
+      "capture": "stored",
+      "accountedMicros": 167998,
+      "outcome": "accepted",
+      "provider": "gemini-enterprise",
+      "actualModel": "gemini-3.8-flash",
+      "durationMs": 51949,
+      "usage": {
+        "inputTokens": 2039,
+        "outputTokens": 258,
+        "thinkingTokens": 7938,
+        "totalTokens": 10235,
+        "outputIncludesThinking": false
+      }
+    },
+    {
+      "arm": "candidate",
+      "position": 1,
+      "caseId": "fallback-hard-uranus-mercury",
+      "attempted": true,
+      "capture": "stored",
+      "accountedMicros": 80110,
+      "outcome": "accepted",
+      "provider": "gemini-enterprise",
+      "actualModel": "gemini-3.8-flash",
+      "durationMs": 26098,
+      "usage": {
+        "inputTokens": 2045,
+        "outputTokens": 232,
+        "thinkingTokens": 3569,
+        "totalTokens": 5846,
+        "outputIncludesThinking": false
+      }
+    },
+    {
+      "arm": "candidate",
+      "position": 2,
+      "caseId": "fallback-soft-saturn-mercury",
+      "attempted": true,
+      "capture": "stored",
+      "accountedMicros": 124622,
+      "outcome": "accepted",
+      "provider": "gemini-enterprise",
+      "actualModel": "gemini-3.8-flash",
+      "durationMs": 34495,
+      "usage": {
+        "inputTokens": 2061,
+        "outputTokens": 286,
+        "thinkingTokens": 5739,
+        "totalTokens": 8086,
+        "outputIncludesThinking": false
+      }
+    },
+    {
+      "arm": "candidate",
+      "position": 3,
+      "caseId": "fallback-soft-neptune-mercury",
+      "attempted": true,
+      "capture": "stored",
+      "accountedMicros": 84036,
+      "outcome": "accepted",
+      "provider": "gemini-enterprise",
+      "actualModel": "gemini-3.8-flash",
+      "durationMs": 25971,
+      "usage": {
+        "inputTokens": 2068,
+        "outputTokens": 244,
+        "thinkingTokens": 3751,
+        "totalTokens": 6063,
+        "outputIncludesThinking": false
+      }
+    }
+  ],
+  "changedCandidateKeysLiveCovered": 4,
+  "changedCandidateKeysOfflineOnly": 16,
+  "shadowedGlobalKeys": 2,
+  "memberUseProven": false,
+  "fullDraftQualified": false
+}

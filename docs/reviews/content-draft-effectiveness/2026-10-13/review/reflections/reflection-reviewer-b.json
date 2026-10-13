@@ -1,0 +1,491 @@
+{
+  "protocolVersion": "content-reflection-review-1",
+  "kind": "reflection-review",
+  "pairHash": "21bbc57f6ef4492a1715d5aa645b2c0ca019c0c7be137a88ba68005d5665f10e",
+  "itemSetHash": "d894c4eb6e2e7aa44091dfae77cbe004606b225f1411945302d9b7c884f69e21",
+  "packetSha256": "1374d2c5ca6590959192282da96b4e40256dbda8499b381f6e5c584bd484204b",
+  "contextId": "reviewer-b",
+  "items": [
+    {
+      "itemId": "item-03",
+      "sourceQuestion": {
+        "text": "Where are you meeting more resistance than the task deserves?",
+        "checks": {
+          "singleQuestion": null,
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      },
+      "finalPrompt": {
+        "text": "Where are you meeting more resistance than the task deserves? What piece of work would you defend if someone asked you to drop it this week?",
+        "questionCount": 2,
+        "checks": {
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null,
+          "coherent": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      }
+    },
+    {
+      "itemId": "item-12",
+      "sourceQuestion": {
+        "text": "Where are you meeting more resistance than the task deserves?",
+        "checks": {
+          "singleQuestion": null,
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      },
+      "finalPrompt": {
+        "text": "Where are you meeting more resistance than the task deserves? What piece of work would you defend if someone asked you to drop it this week?",
+        "questionCount": 2,
+        "checks": {
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null,
+          "coherent": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      }
+    },
+    {
+      "itemId": "item-06",
+      "sourceQuestion": {
+        "text": "Where are you meeting more resistance than the task deserves?",
+        "checks": {
+          "singleQuestion": null,
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      },
+      "finalPrompt": {
+        "text": "Where are you meeting more resistance than the task deserves? Which description of yourself is out of date?",
+        "questionCount": 2,
+        "checks": {
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null,
+          "coherent": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      }
+    },
+    {
+      "itemId": "item-08",
+      "sourceQuestion": {
+        "text": "Where are you meeting more resistance than the task deserves?",
+        "checks": {
+          "singleQuestion": null,
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      },
+      "finalPrompt": {
+        "text": "Where are you meeting more resistance than the task deserves? Which description of yourself is out of date?",
+        "questionCount": 2,
+        "checks": {
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null,
+          "coherent": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      }
+    },
+    {
+      "itemId": "item-04",
+      "sourceQuestion": {
+        "text": "What has been easier than expected lately?",
+        "checks": {
+          "singleQuestion": null,
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      },
+      "finalPrompt": {
+        "text": "What has been easier than expected lately? What piece of work would you defend if someone asked you to drop it this week?",
+        "questionCount": 2,
+        "checks": {
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null,
+          "coherent": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      }
+    },
+    {
+      "itemId": "item-05",
+      "sourceQuestion": {
+        "text": "What has been easier than expected lately?",
+        "checks": {
+          "singleQuestion": null,
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      },
+      "finalPrompt": {
+        "text": "What has been easier than expected lately? What piece of work would you defend if someone asked you to drop it this week?",
+        "questionCount": 2,
+        "checks": {
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null,
+          "coherent": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      }
+    },
+    {
+      "itemId": "item-02",
+      "sourceQuestion": {
+        "text": "What has been easier than expected lately?",
+        "checks": {
+          "singleQuestion": null,
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      },
+      "finalPrompt": {
+        "text": "What has been easier than expected lately? What would genuine rest look like today, as opposed to distraction?",
+        "questionCount": 2,
+        "checks": {
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null,
+          "coherent": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      }
+    },
+    {
+      "itemId": "item-14",
+      "sourceQuestion": {
+        "text": "What has been easier than expected lately?",
+        "checks": {
+          "singleQuestion": null,
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      },
+      "finalPrompt": {
+        "text": "What has been easier than expected lately? What would genuine rest look like today, as opposed to distraction?",
+        "questionCount": 2,
+        "checks": {
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null,
+          "coherent": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      }
+    },
+    {
+      "itemId": "item-07",
+      "sourceQuestion": {
+        "text": "Where, if anywhere, is your preferred pace out of step with the task?",
+        "checks": {
+          "singleQuestion": null,
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      },
+      "finalPrompt": {
+        "text": "Where, if anywhere, is your preferred pace out of step with the task? What piece of work would you defend if someone asked you to drop it this week?",
+        "questionCount": 2,
+        "checks": {
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null,
+          "coherent": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      }
+    },
+    {
+      "itemId": "item-09",
+      "sourceQuestion": {
+        "text": "Where, if anywhere, is your preferred pace out of step with the task?",
+        "checks": {
+          "singleQuestion": null,
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      },
+      "finalPrompt": {
+        "text": "Where, if anywhere, is your preferred pace out of step with the task? What piece of work would you defend if someone asked you to drop it this week?",
+        "questionCount": 2,
+        "checks": {
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null,
+          "coherent": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      }
+    },
+    {
+      "itemId": "item-16",
+      "sourceQuestion": {
+        "text": "Which familiar approach, if any, would you like more room to vary?",
+        "checks": {
+          "singleQuestion": null,
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      },
+      "finalPrompt": {
+        "text": "Which familiar approach, if any, would you like more room to vary? Which description of yourself is out of date?",
+        "questionCount": 2,
+        "checks": {
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null,
+          "coherent": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      }
+    },
+    {
+      "itemId": "item-15",
+      "sourceQuestion": {
+        "text": "Which familiar approach, if any, would you like more room to vary?",
+        "checks": {
+          "singleQuestion": null,
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      },
+      "finalPrompt": {
+        "text": "Which familiar approach, if any, would you like more room to vary? Which description of yourself is out of date?",
+        "questionCount": 2,
+        "checks": {
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null,
+          "coherent": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      }
+    },
+    {
+      "itemId": "item-01",
+      "sourceQuestion": {
+        "text": "What routine, if any, feels manageable at your ordinary pace?",
+        "checks": {
+          "singleQuestion": null,
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      },
+      "finalPrompt": {
+        "text": "What routine, if any, feels manageable at your ordinary pace? What piece of work would you defend if someone asked you to drop it this week?",
+        "questionCount": 2,
+        "checks": {
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null,
+          "coherent": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      }
+    },
+    {
+      "itemId": "item-13",
+      "sourceQuestion": {
+        "text": "What routine, if any, feels manageable at your ordinary pace?",
+        "checks": {
+          "singleQuestion": null,
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      },
+      "finalPrompt": {
+        "text": "What routine, if any, feels manageable at your ordinary pace? What piece of work would you defend if someone asked you to drop it this week?",
+        "questionCount": 2,
+        "checks": {
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null,
+          "coherent": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      }
+    },
+    {
+      "itemId": "item-11",
+      "sourceQuestion": {
+        "text": "What possibility, if any, would you like to imagine without settling it?",
+        "checks": {
+          "singleQuestion": null,
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      },
+      "finalPrompt": {
+        "text": "What possibility, if any, would you like to imagine without settling it? What would genuine rest look like today, as opposed to distraction?",
+        "questionCount": 2,
+        "checks": {
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null,
+          "coherent": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      }
+    },
+    {
+      "itemId": "item-10",
+      "sourceQuestion": {
+        "text": "What possibility, if any, would you like to imagine without settling it?",
+        "checks": {
+          "singleQuestion": null,
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      },
+      "finalPrompt": {
+        "text": "What possibility, if any, would you like to imagine without settling it? What would genuine rest look like today, as opposed to distraction?",
+        "questionCount": 2,
+        "checks": {
+          "answerableWithoutPremise": null,
+          "consistentWithSources": null,
+          "coherent": null
+        },
+        "rationale": {
+          "quote": null,
+          "explanation": null
+        },
+        "verdict": "unreviewed"
+      }
+    }
+  ],
+  "verdict": "unreviewed"
+}

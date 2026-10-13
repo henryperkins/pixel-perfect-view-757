@@ -1,0 +1,16 @@
+{
+  "verifiedAt": "2026-10-13T09:53:50.834784+00:00",
+  "activeRelease": "0.7.1",
+  "draftId": "5b1a0e46-a1eb-4a36-90b9-d884993cf212",
+  "draftStatus": "draft",
+  "reviewCandidateHash": null,
+  "reviewBaseHash": null,
+  "stagedOrActivated": false,
+  "operatorAdminRoles": 0,
+  "operatorSessions": 0,
+  "operatorLoginDisabled": true,
+  "preservedEvaluationRuns": 2,
+  "preservedEvaluationResults": 8,
+  "liveRevokedRoleCheck": "Administrator access required; content/evaluation controls absent",
+  "additionalModelCalls": 0
+}

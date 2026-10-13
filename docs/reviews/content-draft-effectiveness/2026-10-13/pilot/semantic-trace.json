@@ -1,0 +1,49 @@
+{
+  "version": "content-semantic-trace-1",
+  "pairHash": "21bbc57f6ef4492a1715d5aa645b2c0ca019c0c7be137a88ba68005d5665f10e",
+  "recordedAt": "2026-10-13T09:47:04.438819+00:00",
+  "scope": "Four synthetic candidate cases only; no member utilization claim",
+  "items": [
+    {
+      "caseId": "fallback-hard-mars-mercury",
+      "key": "hard:mars:*",
+      "sourceStatement": "Published interpretation hard:mars:*: Wanting to finish can run ahead of the pace a task allows. If a reply is begun before a question is fully explained, it may need to wait for the missing detail.",
+      "finalQuote": "If a reply is begun before a question is fully explained, it may need to wait for the missing detail.",
+      "semanticIncorporation": true,
+      "rationale": "The final paragraph preserves the conditional reply example and the mismatch between finishing speed and the task; generic hard-angle friction has been replaced.",
+      "question": "Where, if anywhere, is your preferred pace out of step with the task? What piece of work would you defend if someone asked you to drop it this week?",
+      "reviewLimitation": "Unblinded source-to-output trace by implementation agent; independent quality review is separate."
+    },
+    {
+      "caseId": "fallback-hard-uranus-mercury",
+      "key": "hard:uranus:*",
+      "sourceStatement": "Published interpretation hard:uranus:*: A familiar arrangement can be useful while leaving little room to vary an approach. A desk layout could suit one kind of task while crowding another.",
+      "finalQuote": "A desk layout could suit one kind of task while crowding another.",
+      "semanticIncorporation": true,
+      "rationale": "The final paragraph preserves the desk-layout example and useful arrangement versus room to vary; this is the selected Uranus mechanism, not merely an I1 citation.",
+      "question": "Which familiar approach, if any, would you like more room to vary? Which description of yourself is out of date?",
+      "reviewLimitation": "Unblinded source-to-output trace by implementation agent; independent quality review is separate."
+    },
+    {
+      "caseId": "fallback-soft-saturn-mercury",
+      "key": "soft:saturn:*",
+      "sourceStatement": "Published interpretation soft:saturn:*: A small recurring task might fit between two parts of a day without a special burst of effort. Its place in the routine can leave room for pauses as well as completion.",
+      "finalQuote": "A small recurring task might fit between two parts of a day without a special burst of effort.",
+      "semanticIncorporation": true,
+      "rationale": "The final paragraph retains manageable recurring work, pauses and completion. The opening paraphrase is awkward and repeated planet-frame sentences remain a quality concern; semantic presence does not imply editorial quality.",
+      "question": "What routine, if any, feels manageable at your ordinary pace? What piece of work would you defend if someone asked you to drop it this week?",
+      "reviewLimitation": "Unblinded source-to-output trace by implementation agent; independent quality review is separate."
+    },
+    {
+      "caseId": "fallback-soft-neptune-mercury",
+      "key": "soft:neptune:*",
+      "sourceStatement": "Published interpretation soft:neptune:*: Several shapes might be imagined in an unfinished sketch. Leaving them as possibilities makes room for imagination without treating it as evidence of what is there.",
+      "finalQuote": "Leaving several shapes as possibilities makes room for imagination without treating it as evidence of what is there.",
+      "semanticIncorporation": true,
+      "rationale": "The final paragraph retains imagined sketch shapes as possibilities and the distinction between imagination and evidence. Reversing the source sentences produces an awkward opening; meaning remains present.",
+      "question": "What possibility, if any, would you like to imagine without settling it? What would genuine rest look like today, as opposed to distraction?",
+      "reviewLimitation": "Unblinded source-to-output trace by implementation agent; independent quality review is separate."
+    }
+  ],
+  "qualified": false
+}

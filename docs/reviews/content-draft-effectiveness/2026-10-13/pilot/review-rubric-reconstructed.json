@@ -1,0 +1,237 @@
+{
+  "version": "content-pilot-review-rubric-1",
+  "packetGenerationVersion": "content-writing-packet-1",
+  "packetInstructionsSupplement": "Content reflection supplement — content-reflection-review-1: Review sourceQuestion and reflectionQuestion separately. The source checks are singleQuestion, answerableWithoutPremise, and consistentWithSources; all must pass with a verbatim quote and explanation. For the final prompt record question count separately and check answerableWithoutPremise, consistentWithSources, and coherent. A schema-4 domain question is an inherited composition, not a second source question. Record all body dimensions using the existing 1–5 rubric and existing item-verdict rules. A separate qualification gate requires voice and repetition >= 4 for affected candidate items; packet origins remain concealed. Citations do not establish substantive incorporation.",
+  "pairHash": "21bbc57f6ef4492a1715d5aa645b2c0ca019c0c7be137a88ba68005d5665f10e",
+  "caseSetId": "draft-pilot-1",
+  "scope": "Four matched cases only; no whole-catalogue qualification or production-use claim.",
+  "scoreScale": {
+    "1": "Interchangeable, unsupported, contradictory, stiff, or dominated by stock phrasing.",
+    "2": "Between the existing protocol's 1 and 3 anchors.",
+    "3": "Recognizable but needs editing, support review, or less repetition.",
+    "4": "Useful supported distinction; clear progression; natural voice and little unsupported reuse.",
+    "5": "Concrete and traceable throughout; each paragraph advances a distinct useful thought."
+  },
+  "bodyProtocolVersion": "daily-writing-ai-review-1",
+  "bodyProtocol": "docs/reviews/daily-reading-writing/review-protocol.md",
+  "minimumScore": 4,
+  "additionalCandidateGates": [
+    "voice",
+    "repetition"
+  ],
+  "dimensions": {
+    "specificity": "Names a distinct ordinary situation or practical contrast.",
+    "voice": "Uses familiar, concrete language with conditional framing.",
+    "repetition": "Gives each sentence a purpose and avoids repeated openings across cases.",
+    "grounding": "Preserves supplied meanings, uncertainty, conditions and cycle roles.",
+    "coherence": "Maintains a clear supported progression, with only minor editing needed.",
+    "synthesisCoherence": "When S1 is supplied, develops the relationship supported by both parents.",
+    "lensIntegration": "When N1 is supplied, applies its distinction within the primary meaning."
+  },
+  "reflectionProtocolVersion": "content-reflection-review-1",
+  "reflectionChecks": {
+    "source": [
+      "singleQuestion",
+      "answerableWithoutPremise",
+      "consistentWithSources"
+    ],
+    "final": [
+      "answerableWithoutPremise",
+      "consistentWithSources",
+      "coherent"
+    ],
+    "evidence": "Quote the reviewed question verbatim and explain the judgment; every check must pass.",
+    "finalQuestionCount": "Record separately; schema 4 may append a domain question. Do not assume a one-question final prompt."
+  },
+  "requiredChecks": [
+    "No planetary causal assertion, prediction, directive, clinical claim or invented personal history.",
+    "No loss or strengthening of any source qualification.",
+    "The candidate's distinctive published meaning is substantively present; a citation alone is insufficient.",
+    "Review the source question and assembled final question separately; inherited domain wording can introduce an assumption.",
+    "A question may be answered with nothing relevant without implying a defect."
+  ],
+  "decisionRule": [
+    "Use the existing substantive-claim and specificity/grounding/coherence gates at 4/5, including applicable synthesis and natal criteria.",
+    "Both fresh blinded reviewers must score voice and repetition at least 4/5 for each affected candidate item; legacy item-verdict rules remain unchanged and this is an additional qualification gate.",
+    "All source-question and final-prompt boolean checks must pass with quoted rationale. Keep inherited composition limitations explicit.",
+    "No unresolved substantive finding or new preserved-entry failure is allowed. Record paired improvements and regressions rather than inferring quality from length or acceptance.",
+    "Unavailable, uncertain or missing captures are unevaluable; never replace them silently.",
+    "Even a passing pilot leaves the other 16 reachable additions unqualified by live comparison and both globals isolated-only."
+  ],
+  "cases": [
+    {
+      "id": "fallback-hard-mars-mercury",
+      "baseline": {
+        "sourceKey": "hard:*:*",
+        "sourceQuestion": "Where are you meeting more resistance than the task deserves?",
+        "finalQuestion": "Where are you meeting more resistance than the task deserves? What piece of work would you defend if someone asked you to drop it this week?",
+        "sourceQuestionReview": "unreviewed",
+        "finalQuestionReview": "unreviewed",
+        "finalQuestionCount": 2,
+        "semanticIncorporation": "unreviewed",
+        "scores": {
+          "specificity": null,
+          "voice": null,
+          "repetition": null,
+          "grounding": null,
+          "coherence": null,
+          "synthesisCoherence": null,
+          "lensIntegration": null
+        },
+        "evidence": null
+      },
+      "candidate": {
+        "sourceKey": "hard:mars:*",
+        "sourceQuestion": "Where, if anywhere, is your preferred pace out of step with the task?",
+        "finalQuestion": "Where, if anywhere, is your preferred pace out of step with the task? What piece of work would you defend if someone asked you to drop it this week?",
+        "sourceQuestionReview": "unreviewed",
+        "finalQuestionReview": "unreviewed",
+        "finalQuestionCount": 2,
+        "semanticIncorporation": "unreviewed",
+        "scores": {
+          "specificity": null,
+          "voice": null,
+          "repetition": null,
+          "grounding": null,
+          "coherence": null,
+          "synthesisCoherence": null,
+          "lensIntegration": null
+        },
+        "evidence": null
+      },
+      "pairedDecision": "unreviewed",
+      "notes": null
+    },
+    {
+      "id": "fallback-hard-uranus-mercury",
+      "baseline": {
+        "sourceKey": "hard:*:*",
+        "sourceQuestion": "Where are you meeting more resistance than the task deserves?",
+        "finalQuestion": "Where are you meeting more resistance than the task deserves? Which description of yourself is out of date?",
+        "sourceQuestionReview": "unreviewed",
+        "finalQuestionReview": "unreviewed",
+        "finalQuestionCount": 2,
+        "semanticIncorporation": "unreviewed",
+        "scores": {
+          "specificity": null,
+          "voice": null,
+          "repetition": null,
+          "grounding": null,
+          "coherence": null,
+          "synthesisCoherence": null,
+          "lensIntegration": null
+        },
+        "evidence": null
+      },
+      "candidate": {
+        "sourceKey": "hard:uranus:*",
+        "sourceQuestion": "Which familiar approach, if any, would you like more room to vary?",
+        "finalQuestion": "Which familiar approach, if any, would you like more room to vary? Which description of yourself is out of date?",
+        "sourceQuestionReview": "unreviewed",
+        "finalQuestionReview": "unreviewed",
+        "finalQuestionCount": 2,
+        "semanticIncorporation": "unreviewed",
+        "scores": {
+          "specificity": null,
+          "voice": null,
+          "repetition": null,
+          "grounding": null,
+          "coherence": null,
+          "synthesisCoherence": null,
+          "lensIntegration": null
+        },
+        "evidence": null
+      },
+      "pairedDecision": "unreviewed",
+      "notes": null
+    },
+    {
+      "id": "fallback-soft-saturn-mercury",
+      "baseline": {
+        "sourceKey": "soft:*:*",
+        "sourceQuestion": "What has been easier than expected lately?",
+        "finalQuestion": "What has been easier than expected lately? What piece of work would you defend if someone asked you to drop it this week?",
+        "sourceQuestionReview": "unreviewed",
+        "finalQuestionReview": "unreviewed",
+        "finalQuestionCount": 2,
+        "semanticIncorporation": "unreviewed",
+        "scores": {
+          "specificity": null,
+          "voice": null,
+          "repetition": null,
+          "grounding": null,
+          "coherence": null,
+          "synthesisCoherence": null,
+          "lensIntegration": null
+        },
+        "evidence": null
+      },
+      "candidate": {
+        "sourceKey": "soft:saturn:*",
+        "sourceQuestion": "What routine, if any, feels manageable at your ordinary pace?",
+        "finalQuestion": "What routine, if any, feels manageable at your ordinary pace? What piece of work would you defend if someone asked you to drop it this week?",
+        "sourceQuestionReview": "unreviewed",
+        "finalQuestionReview": "unreviewed",
+        "finalQuestionCount": 2,
+        "semanticIncorporation": "unreviewed",
+        "scores": {
+          "specificity": null,
+          "voice": null,
+          "repetition": null,
+          "grounding": null,
+          "coherence": null,
+          "synthesisCoherence": null,
+          "lensIntegration": null
+        },
+        "evidence": null
+      },
+      "pairedDecision": "unreviewed",
+      "notes": null
+    },
+    {
+      "id": "fallback-soft-neptune-mercury",
+      "baseline": {
+        "sourceKey": "soft:*:*",
+        "sourceQuestion": "What has been easier than expected lately?",
+        "finalQuestion": "What has been easier than expected lately? What would genuine rest look like today, as opposed to distraction?",
+        "sourceQuestionReview": "unreviewed",
+        "finalQuestionReview": "unreviewed",
+        "finalQuestionCount": 2,
+        "semanticIncorporation": "unreviewed",
+        "scores": {
+          "specificity": null,
+          "voice": null,
+          "repetition": null,
+          "grounding": null,
+          "coherence": null,
+          "synthesisCoherence": null,
+          "lensIntegration": null
+        },
+        "evidence": null
+      },
+      "candidate": {
+        "sourceKey": "soft:neptune:*",
+        "sourceQuestion": "What possibility, if any, would you like to imagine without settling it?",
+        "finalQuestion": "What possibility, if any, would you like to imagine without settling it? What would genuine rest look like today, as opposed to distraction?",
+        "sourceQuestionReview": "unreviewed",
+        "finalQuestionReview": "unreviewed",
+        "finalQuestionCount": 2,
+        "semanticIncorporation": "unreviewed",
+        "scores": {
+          "specificity": null,
+          "voice": null,
+          "repetition": null,
+          "grounding": null,
+          "coherence": null,
+          "synthesisCoherence": null,
+          "lensIntegration": null
+        },
+        "evidence": null
+      },
+      "pairedDecision": "unreviewed",
+      "notes": null
+    }
+  ],
+  "qualified": false,
+  "hash": "6809e96705c7b753bb4e8599d65b221b1cbe21e127c1314dd96cb635ee084e48"
+}

@@ -1,0 +1,257 @@
+{
+  "version": "blind-adjudication-packet-1",
+  "itemSetHash": "d894c4eb6e2e7aa44091dfae77cbe004606b225f1411945302d9b7c884f69e21",
+  "disputes": [
+    {
+      "reviewerContextId": "reviewer-a",
+      "item": {
+        "itemId": "item-13",
+        "tone": "plain",
+        "depth": "technical",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting saturn sextile natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain work. Calculated exact date: 2026-10-14."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation soft:saturn:*: A small recurring task might fit between two parts of a day without a special burst of effort. Its place in the routine can leave room for pauses as well as completion.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for work and output: A task can feel manageable when its purpose and next small piece are easy to describe. A clear outline or a commitment with a clear scope can illustrate that kind of alignment."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window. The calculated arc position is 30%. Current orb at the reading's calculation time: 0.42\u00b0."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "The place of a routine can leave room for pauses as well as completion. A small recurring task might fit between two parts of a day without a special burst of effort. This perspective offers a way to read transiting saturn sextile natal mercury.",
+            "facts": [
+              "C1",
+              "I1"
+            ]
+          },
+          {
+            "number": 2,
+            "text": "In the domain of work and output, a task can feel manageable when its purpose and next small piece are easy to describe. A clear outline or a commitment with a clear scope can illustrate that kind of alignment. This description frames transiting saturn sextile natal mercury.",
+            "facts": [
+              "C1",
+              "D1"
+            ]
+          },
+          {
+            "number": 3,
+            "text": "If a demand catches your attention, you can notice your response before deciding how to act. Transiting saturn is approaching natal mercury with a current orb of 0.42 degrees at the calculation time. This reading falls in the middle part of the calculated window, at a calculated arc position of 30%. The contact is exact in 3 days, with a calculated exact date of 2026-10-14.",
+            "facts": [
+              "C1",
+              "P1",
+              "T1"
+            ]
+          }
+        ],
+        "sourceQuestion": "What routine, if any, feels manageable at your ordinary pace?",
+        "reflectionQuestion": "What routine, if any, feels manageable at your ordinary pace? What piece of work would you defend if someone asked you to drop it this week?",
+        "questionReview": "unreviewed"
+      },
+      "finding": {
+        "findingId": "a-13-1",
+        "paragraph": 3,
+        "passage": "Transiting saturn is approaching natal mercury with a current orb of 0.42 degrees at the calculation time.",
+        "supportingFactIds": [
+          "C1"
+        ],
+        "missingFactIds": [],
+        "category": "factual_mismatch",
+        "severity": "substantive",
+        "explanation": "C1 identifies an approaching sextile with a 0.42-degree aspect orb; the sentence instead makes natal Mercury itself the target of the approach, leaving an unresolved geometry ambiguity.",
+        "proposedCorrection": "State that Saturn's sextile to natal Mercury is approaching exactness, preserving the supplied aspect orb."
+      }
+    },
+    {
+      "reviewerContextId": "reviewer-b",
+      "item": {
+        "itemId": "item-14",
+        "tone": "clinical",
+        "depth": "standard",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting neptune sextile natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain inner-life. Calculated exact date: 2026-10-14."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation soft:*:*: A supportive contact is in range. These tend to be unremarkable in the moment and only visible in hindsight as periods of lower friction.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for inner life and rest: Private time can have a comfortable shape of its own. A familiar corner, an unclaimed hour, or a routine with fewer demands can serve as ordinary examples of that ease."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "Periods of lower friction tend to be unremarkable in the moment and only visible in hindsight. A supportive contact is in range as transiting Neptune forms a sextile to natal Mercury. At the calculation time of this reading, the current orb is 0.42 degrees. This reading falls in the middle part of the calculated window.",
+            "facts": [
+              "C1",
+              "I1",
+              "T1"
+            ]
+          },
+          {
+            "number": 2,
+            "text": "Private time can have a comfortable shape of its own. A familiar corner, an unclaimed hour, or a routine with fewer demands can serve as ordinary examples of that ease. If a demand catches your attention, you can notice your response before deciding how to act.",
+            "facts": [
+              "C1",
+              "D1",
+              "P1"
+            ]
+          }
+        ],
+        "sourceQuestion": "What has been easier than expected lately?",
+        "reflectionQuestion": "What has been easier than expected lately? What would genuine rest look like today, as opposed to distraction?",
+        "questionReview": "unreviewed"
+      },
+      "finding": {
+        "findingId": "b-14-1",
+        "paragraph": 1,
+        "passage": "Periods of lower friction tend to be unremarkable in the moment and only visible in hindsight.",
+        "supportingFactIds": [
+          "I1"
+        ],
+        "missingFactIds": [
+          "I1"
+        ],
+        "category": "unsupported_frequency",
+        "severity": "substantive",
+        "explanation": "I1's 'These' refers to supportive contacts. The revision makes periods of lower friction generally the subject of the tendency. I cannot trace that broader frequency claim to the supplied statement; naming a contact in the next sentence does not explicitly restore its scope.",
+        "proposedCorrection": "Keep the tendency attached to supportive contacts and describe lower friction only as the way those contacts may be recognized in hindsight."
+      }
+    },
+    {
+      "reviewerContextId": "reviewer-b",
+      "item": {
+        "itemId": "item-05",
+        "tone": "plain",
+        "depth": "technical",
+        "quiet": false,
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting saturn sextile natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain work. Calculated exact date: 2026-10-14."
+          },
+          {
+            "id": "I1",
+            "kind": "interpretation",
+            "statement": "Published interpretation soft:*:*: A supportive contact is in range. These tend to be unremarkable in the moment and only visible in hindsight as periods of lower friction.",
+            "dependsOn": [
+              "C1"
+            ]
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for work and output: A task can feel manageable when its purpose and next small piece are easy to describe. A clear outline or a commitment with a clear scope can illustrate that kind of alignment."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window. The calculated arc position is 30%. Current orb at the reading's calculation time: 0.42\u00b0."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "paragraphs": [
+          {
+            "number": 1,
+            "text": "Periods of lower friction tend to be unremarkable in the moment and only visible in hindsight. A supportive contact is in range as transiting Saturn forms a sextile to natal Mercury. In work and output, a task can feel manageable when its purpose and next small piece are easy to describe. A clear outline or a commitment with a clear scope can illustrate that kind of alignment.",
+            "facts": [
+              "C1",
+              "D1",
+              "I1"
+            ]
+          },
+          {
+            "number": 2,
+            "text": "If a demand catches your attention, you can notice your response before deciding how to act. At the reading's calculation time, the current orb between transiting Saturn and natal Mercury is 0.42 degrees in an approaching phase. This reading falls in the middle part of the calculated window, with a calculated arc position of 30%. The contact is exact in 3 days, with a calculated exact date of 2026-10-14.",
+            "facts": [
+              "C1",
+              "P1",
+              "T1"
+            ]
+          }
+        ],
+        "sourceQuestion": "What has been easier than expected lately?",
+        "reflectionQuestion": "What has been easier than expected lately? What piece of work would you defend if someone asked you to drop it this week?",
+        "questionReview": "unreviewed"
+      },
+      "finding": {
+        "findingId": "b-05-1",
+        "paragraph": 1,
+        "passage": "Periods of lower friction tend to be unremarkable in the moment and only visible in hindsight.",
+        "supportingFactIds": [
+          "I1"
+        ],
+        "missingFactIds": [
+          "I1"
+        ],
+        "category": "unsupported_frequency",
+        "severity": "substantive",
+        "explanation": "I1 attributes the tendency to supportive contacts and describes their retrospective appearance as periods of lower friction. This opening instead attributes it to periods of lower friction generally. The supplied fact does not clearly establish that broader frequency statement.",
+        "proposedCorrection": "Preserve supportive contacts as the subject of the tendency and keep periods of lower friction as their described retrospective appearance."
+      }
+    }
+  ]
+}

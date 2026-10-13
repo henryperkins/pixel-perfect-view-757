@@ -1,0 +1,87 @@
+{
+  "version": "content-replay-runtime-diagnostic-1",
+  "recordedAt": "2026-10-13T09:48:46.744Z",
+  "sourceSha": "82efe38df4c5ee571d6c583de144498c93f596f1",
+  "sourceCleanDuringDiagnosis": true,
+  "pairHash": "21bbc57f6ef4492a1715d5aa645b2c0ca019c0c7be137a88ba68005d5665f10e",
+  "replayPassed": false,
+  "qualified": false,
+  "strictReplay": {
+    "runtime": "Node v24.21.0",
+    "arms": [
+      {
+        "arm": "baseline",
+        "report": "baseline-report.json",
+        "outcome": "failed before response replay",
+        "error": "The content comparison runtime, fixture, or policy identity drifted.",
+        "capturedResponsesReplayed": 0
+      },
+      {
+        "arm": "candidate",
+        "report": "candidate-report.json",
+        "outcome": "failed before response replay",
+        "error": "The content comparison runtime, fixture, or policy identity drifted.",
+        "capturedResponsesReplayed": 0
+      }
+    ],
+    "policyUnchanged": true,
+    "frozenPlanUnchanged": true,
+    "capturesUnchanged": true
+  },
+  "runtimeComparison": {
+    "nodeVersion": "v24.21.0",
+    "nodeHash": "82b5887883c97b274d03013eff86543fc048d82d6bdfa18bf19f55db07604fea",
+    "workerdVersion": "2026-10-06",
+    "workerdHash": "234ea6b7fb37803dc78f93e244a7f4a678c677a63f36fcce88613ebc102ac7ce",
+    "differenceCount": 1,
+    "differences": [
+      {
+        "path": ".8.scan.samples.2.windows.0.egress.bracket.1.speed",
+        "node": 0.14049560922953028,
+        "workerd": 0.14049560922953025
+      }
+    ],
+    "v8Version": "13.6.233.17-node.53",
+    "platform": "linux",
+    "architecture": "x64",
+    "fixtureCaseId": "arc-birth-window-disagreement",
+    "liveTransitFixtureHash": "234ea6b7fb37803dc78f93e244a7f4a678c677a63f36fcce88613ebc102ac7ce",
+    "workerdMatchesLive": true,
+    "sourceAndLocallyBundledFixturesMatchUnderNode": true,
+    "method": "Executed the unchanged analytic fixture generator and reading fixture catalogue in local Node and local workerd test handlers. Hashed the exact scan/anchor JSON projection used by TRANSIT_EVALUATION_METADATA; compared every field recursively. No network or provider calls."
+  },
+  "rebuiltPlanDifferences": [
+    {
+      "path": ".arms.baseline.metadata.transitFixtureHash",
+      "live": "234ea6b7fb37803dc78f93e244a7f4a678c677a63f36fcce88613ebc102ac7ce",
+      "local": "82b5887883c97b274d03013eff86543fc048d82d6bdfa18bf19f55db07604fea"
+    },
+    {
+      "path": ".arms.baseline.hash",
+      "live": "b751409bb81306e5ed4e32d9422f2111c3f96daec0a25b140567f6a924891e69",
+      "local": "b6355c6c0b82b387ed0edcb7c57d2602e9ed155653f65c396a2cdc67c4bc009c"
+    },
+    {
+      "path": ".arms.candidate.metadata.transitFixtureHash",
+      "live": "234ea6b7fb37803dc78f93e244a7f4a678c677a63f36fcce88613ebc102ac7ce",
+      "local": "82b5887883c97b274d03013eff86543fc048d82d6bdfa18bf19f55db07604fea"
+    },
+    {
+      "path": ".arms.candidate.hash",
+      "live": "54ba7d1a20c90f4295e2f43f8d17f0859f97ba2ff0f241b9fc09b9535182aaac",
+      "local": "aa2f5d7ef222e5892dbad523635f0866a0233feb9faf3b19a24b8122fb776c4c"
+    },
+    {
+      "path": ".hash",
+      "live": "21bbc57f6ef4492a1715d5aa645b2c0ca019c0c7be137a88ba68005d5665f10e",
+      "local": "337ac07676a30f07007c2bfcd5c416dc3a4cdbce1c46a246fb0dc90b0d3f6182"
+    }
+  ],
+  "fourCasePlanComparison": {
+    "baselineIdentical": true,
+    "candidateIdentical": true,
+    "note": "Every actual pilot case, supplied fact, interpretation plan, template, source bundle and source identity in the rebuilt frozen plan matched. Only legacy transitFixtureHash metadata and its dependent arm/pair hashes differed. Captured provider request equality and replayed outcomes were not checked because strict validation stopped first."
+  },
+  "disposition": "Retain both failed strict Node replays. The local workerd reproduces the live fixture hash exactly and isolates a single approximately 3e-17 floating-point difference in an unrelated legacy analytic transit fixture. This diagnoses runtime portability; it does not convert either failed replay into a passed replay or qualify the pilot. No fixture values, policy checks, hashes or captures were changed to force a pass.",
+  "providerCalls": 0
+}

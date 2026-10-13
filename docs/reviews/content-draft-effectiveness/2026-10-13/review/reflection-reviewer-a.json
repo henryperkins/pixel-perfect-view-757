@@ -1,0 +1,267 @@
+{
+  "protocolVersion": "content-reflection-review-1",
+  "kind": "reflection-review",
+  "pairHash": "21bbc57f6ef4492a1715d5aa645b2c0ca019c0c7be137a88ba68005d5665f10e",
+  "itemSetHash": "d894c4eb6e2e7aa44091dfae77cbe004606b225f1411945302d9b7c884f69e21",
+  "packetSha256": "4ffe549f1acc4bdf7c869b731b01cf5708f10e29895c03a4cb2837e63663f687",
+  "contextId": "reviewer-a",
+  "items": [
+    {
+      "itemId": "item-03",
+      "sourceQuestion": {
+        "text": "Where are you meeting more resistance than the task deserves?",
+        "checks": {"singleQuestion": true, "answerableWithoutPremise": false, "consistentWithSources": false},
+        "rationale": {"quote": "Where are you meeting more resistance than the task deserves?", "explanation": "This is one question, but it presupposes current resistance and judges its amount excessive. I1 supplies a general tendency to notice friction; D1 offers conditional work examples. Neither establishes the reader's resistance or what a task deserves."},
+        "verdict": "fail"
+      },
+      "finalPrompt": {
+        "text": "Where are you meeting more resistance than the task deserves? What piece of work would you defend if someone asked you to drop it this week?",
+        "questionCount": 2,
+        "checks": {"answerableWithoutPremise": false, "consistentWithSources": false, "coherent": true},
+        "rationale": {"quote": "Where are you meeting more resistance than the task deserves? What piece of work would you defend if someone asked you to drop it this week?", "explanation": "The two questions are coherent around work and ownership, and the second explicitly imagines a request rather than asserting one happened, consistent with D1's concern for the part of a task that feels like yours. The first still requires accepting excessive resistance, which I1 and D1 do not establish; that makes the complete prompt fail."},
+        "verdict": "fail"
+      }
+    },
+    {
+      "itemId": "item-12",
+      "sourceQuestion": {
+        "text": "Where are you meeting more resistance than the task deserves?",
+        "checks": {"singleQuestion": true, "answerableWithoutPremise": false, "consistentWithSources": false},
+        "rationale": {"quote": "Where are you meeting more resistance than the task deserves?", "explanation": "It contains a single question but assumes the reader is experiencing disproportionate resistance. I1 describes a general friction tendency and D1 only possible friction between pace, scope and ownership; neither supplies the personal event or the normative comparison."},
+        "verdict": "fail"
+      },
+      "finalPrompt": {
+        "text": "Where are you meeting more resistance than the task deserves? What piece of work would you defend if someone asked you to drop it this week?",
+        "questionCount": 2,
+        "checks": {"answerableWithoutPremise": false, "consistentWithSources": false, "coherent": true},
+        "rationale": {"quote": "Where are you meeting more resistance than the task deserves? What piece of work would you defend if someone asked you to drop it this week?", "explanation": "Both questions concern work and ownership, so the sequence is coherent. The second is expressly hypothetical and compatible with D1. The first nevertheless assumes an excessive amount of real resistance absent from I1 and D1, so the combined prompt is neither premise-free nor fully source-consistent."},
+        "verdict": "fail"
+      }
+    },
+    {
+      "itemId": "item-06",
+      "sourceQuestion": {
+        "text": "Where are you meeting more resistance than the task deserves?",
+        "checks": {"singleQuestion": true, "answerableWithoutPremise": false, "consistentWithSources": false},
+        "rationale": {"quote": "Where are you meeting more resistance than the task deserves?", "explanation": "This is one question, but it requires accepting present resistance and a judgment that it exceeds what a task deserves. I1's general friction tendency and D1's title/attention gap do not establish either assumption."},
+        "verdict": "fail"
+      },
+      "finalPrompt": {
+        "text": "Where are you meeting more resistance than the task deserves? Which description of yourself is out of date?",
+        "questionCount": 2,
+        "checks": {"answerableWithoutPremise": false, "consistentWithSources": false, "coherent": false},
+        "rationale": {"quote": "Where are you meeting more resistance than the task deserves? Which description of yourself is out of date?", "explanation": "The first question assumes excessive resistance without I1 support. The second assumes an outdated self-description, whereas D1 addresses a title's incomplete coverage, not a change over time. The prompt also jumps from task resistance to an outdated identity without a supplied relationship that explains the transition."},
+        "verdict": "fail"
+      }
+    },
+    {
+      "itemId": "item-08",
+      "sourceQuestion": {
+        "text": "Where are you meeting more resistance than the task deserves?",
+        "checks": {"singleQuestion": true, "answerableWithoutPremise": false, "consistentWithSources": false},
+        "rationale": {"quote": "Where are you meeting more resistance than the task deserves?", "explanation": "There is one question. Its wording assumes actual disproportionate resistance; I1 supports only a general association with noticing friction, and D1's identity framing supplies no judgment about deserved task resistance."},
+        "verdict": "fail"
+      },
+      "finalPrompt": {
+        "text": "Where are you meeting more resistance than the task deserves? Which description of yourself is out of date?",
+        "questionCount": 2,
+        "checks": {"answerableWithoutPremise": false, "consistentWithSources": false, "coherent": false},
+        "rationale": {"quote": "Where are you meeting more resistance than the task deserves? Which description of yourself is out of date?", "explanation": "The final prompt contains two unsupported premises: excessive task resistance, not established by I1, and a self-description that became outdated, not established by D1's incomplete-title distinction. Their juxtaposition does not develop a clear supplied connection between task resistance and identity changing over time."},
+        "verdict": "fail"
+      }
+    },
+    {
+      "itemId": "item-04",
+      "sourceQuestion": {
+        "text": "What has been easier than expected lately?",
+        "checks": {"singleQuestion": true, "answerableWithoutPremise": false, "consistentWithSources": false},
+        "rationale": {"quote": "What has been easier than expected lately?", "explanation": "This is a single question, but it assumes a recent easier-than-expected experience. I1 describes supportive contacts and a tendency toward retrospectively noticed lower friction; D1 supplies possible manageability. Neither establishes the reader's recent experience or expectations."},
+        "verdict": "fail"
+      },
+      "finalPrompt": {
+        "text": "What has been easier than expected lately? What piece of work would you defend if someone asked you to drop it this week?",
+        "questionCount": 2,
+        "checks": {"answerableWithoutPremise": false, "consistentWithSources": false, "coherent": true},
+        "rationale": {"quote": "What has been easier than expected lately? What piece of work would you defend if someone asked you to drop it this week?", "explanation": "Ease and a valued commitment are compatible work reflections under D1; the second question makes the request hypothetical. However, the first presupposes recent ease relative to expectations, which I1 and D1 do not establish. This unsupported personal premise makes the full prompt fail despite the coherent work theme."},
+        "verdict": "fail"
+      }
+    },
+    {
+      "itemId": "item-05",
+      "sourceQuestion": {
+        "text": "What has been easier than expected lately?",
+        "checks": {"singleQuestion": true, "answerableWithoutPremise": false, "consistentWithSources": false},
+        "rationale": {"quote": "What has been easier than expected lately?", "explanation": "The sentence asks one question but assumes something recently exceeded the reader's expectation of ease. I1's lower-friction tendency and D1's conditional manageable task do not support that personal experience or expectations comparison."},
+        "verdict": "fail"
+      },
+      "finalPrompt": {
+        "text": "What has been easier than expected lately? What piece of work would you defend if someone asked you to drop it this week?",
+        "questionCount": 2,
+        "checks": {"answerableWithoutPremise": false, "consistentWithSources": false, "coherent": true},
+        "rationale": {"quote": "What has been easier than expected lately? What piece of work would you defend if someone asked you to drop it this week?", "explanation": "The hypothetical defense of a piece of work is compatible with D1's clear-purpose and commitment framing, and the two questions have a coherent work theme. The earlier question still assumes actual recent ease beyond expectations, absent from I1 and D1, so the combined prompt fails the premise and source checks."},
+        "verdict": "fail"
+      }
+    },
+    {
+      "itemId": "item-02",
+      "sourceQuestion": {
+        "text": "What has been easier than expected lately?",
+        "checks": {"singleQuestion": true, "answerableWithoutPremise": false, "consistentWithSources": false},
+        "rationale": {"quote": "What has been easier than expected lately?", "explanation": "This single question presupposes recent ease compared with the reader's expectations. I1 offers a general lower-friction tendency, and D1 offers possible comfortable private time; neither supplies a recent personal change or an expectations comparison."},
+        "verdict": "fail"
+      },
+      "finalPrompt": {
+        "text": "What has been easier than expected lately? What would genuine rest look like today, as opposed to distraction?",
+        "questionCount": 2,
+        "checks": {"answerableWithoutPremise": false, "consistentWithSources": false, "coherent": true},
+        "rationale": {"quote": "What has been easier than expected lately? What would genuine rest look like today, as opposed to distraction?", "explanation": "Ease and rest form a coherent inner-life theme, but the first question assumes recent easier-than-expected experience. The second introduces a genuine-rest-versus-distraction distinction absent from D1's private-time examples; neither I1 nor D1 says distraction excludes genuine rest. Both source-consistency problems remain in the complete prompt."},
+        "verdict": "fail"
+      }
+    },
+    {
+      "itemId": "item-14",
+      "sourceQuestion": {
+        "text": "What has been easier than expected lately?",
+        "checks": {"singleQuestion": true, "answerableWithoutPremise": false, "consistentWithSources": false},
+        "rationale": {"quote": "What has been easier than expected lately?", "explanation": "There is a single question, but answering it as framed requires accepting recent personal ease beyond expectations. I1 supports only a general lower-friction tendency and D1 conditional examples of private ease; no supplied fact establishes the expectation or the recent experience."},
+        "verdict": "fail"
+      },
+      "finalPrompt": {
+        "text": "What has been easier than expected lately? What would genuine rest look like today, as opposed to distraction?",
+        "questionCount": 2,
+        "checks": {"answerableWithoutPremise": false, "consistentWithSources": false, "coherent": true},
+        "rationale": {"quote": "What has been easier than expected lately? What would genuine rest look like today, as opposed to distraction?", "explanation": "The ease/rest sequence is thematically coherent. It nevertheless retains the unsupported recent-experience premise and adds an unsupported opposition between genuine rest and distraction. D1 gives possible comfortable private-time examples without deciding which experiences count as real rest."},
+        "verdict": "fail"
+      }
+    },
+    {
+      "itemId": "item-07",
+      "sourceQuestion": {
+        "text": "Where, if anywhere, is your preferred pace out of step with the task?",
+        "checks": {"singleQuestion": true, "answerableWithoutPremise": true, "consistentWithSources": true},
+        "rationale": {"quote": "Where, if anywhere, is your preferred pace out of step with the task?", "explanation": "This is one question, and 'if anywhere' permits an answer that there is no mismatch. Its comparison follows I1's possibility that wanting to finish can exceed the pace a task allows and D1's distinction between pace and other work dimensions."},
+        "verdict": "pass"
+      },
+      "finalPrompt": {
+        "text": "Where, if anywhere, is your preferred pace out of step with the task? What piece of work would you defend if someone asked you to drop it this week?",
+        "questionCount": 2,
+        "checks": {"answerableWithoutPremise": true, "consistentWithSources": true, "coherent": true},
+        "rationale": {"quote": "Where, if anywhere, is your preferred pace out of step with the task? What piece of work would you defend if someone asked you to drop it this week?", "explanation": "The first question explicitly permits no pace mismatch, and the second makes the request to drop work counterfactual rather than claiming an actual event. I1 supports reflecting on pace; D1 supports considering scope and ownership. The two questions therefore form a coherent optional reflection on different pieces of working on something."},
+        "verdict": "pass"
+      }
+    },
+    {
+      "itemId": "item-09",
+      "sourceQuestion": {
+        "text": "Where, if anywhere, is your preferred pace out of step with the task?",
+        "checks": {"singleQuestion": true, "answerableWithoutPremise": true, "consistentWithSources": true},
+        "rationale": {"quote": "Where, if anywhere, is your preferred pace out of step with the task?", "explanation": "It asks one question and expressly allows no mismatch. I1's possible gap between wanting to finish and available task pace, illustrated by missing reply detail, supports the inquiry; D1 also identifies pace as one work dimension."},
+        "verdict": "pass"
+      },
+      "finalPrompt": {
+        "text": "Where, if anywhere, is your preferred pace out of step with the task? What piece of work would you defend if someone asked you to drop it this week?",
+        "questionCount": 2,
+        "checks": {"answerableWithoutPremise": true, "consistentWithSources": true, "coherent": true},
+        "rationale": {"quote": "Where, if anywhere, is your preferred pace out of step with the task? What piece of work would you defend if someone asked you to drop it this week?", "explanation": "No mismatch is required by the first question, and the second poses a hypothetical choice without asserting someone has made a demand. The pace inquiry follows I1; the ownership/priority inquiry is compatible with D1's separate work dimensions. Their shared task focus makes the pair coherent."},
+        "verdict": "pass"
+      }
+    },
+    {
+      "itemId": "item-16",
+      "sourceQuestion": {
+        "text": "Which familiar approach, if any, would you like more room to vary?",
+        "checks": {"singleQuestion": true, "answerableWithoutPremise": true, "consistentWithSources": true},
+        "rationale": {"quote": "Which familiar approach, if any, would you like more room to vary?", "explanation": "This is a single question with an explicit no-example option. Asking about desired room to vary an approach follows I1's possibility that a useful familiar arrangement leaves little variation, without asserting that the reader currently has that limitation."},
+        "verdict": "pass"
+      },
+      "finalPrompt": {
+        "text": "Which familiar approach, if any, would you like more room to vary? Which description of yourself is out of date?",
+        "questionCount": 2,
+        "checks": {"answerableWithoutPremise": false, "consistentWithSources": false, "coherent": true},
+        "rationale": {"quote": "Which familiar approach, if any, would you like more room to vary? Which description of yourself is out of date?", "explanation": "The first question is optional and supported by I1. The second assumes that an outdated self-description exists; D1 only says a title may incompletely cover attention and responsibilities, not that it used to fit and no longer does. The approach/self-description pairing is thematically coherent, but the added temporal premise fails the complete prompt."},
+        "verdict": "fail"
+      }
+    },
+    {
+      "itemId": "item-15",
+      "sourceQuestion": {
+        "text": "Which familiar approach, if any, would you like more room to vary?",
+        "checks": {"singleQuestion": true, "answerableWithoutPremise": true, "consistentWithSources": true},
+        "rationale": {"quote": "Which familiar approach, if any, would you like more room to vary?", "explanation": "The single question includes 'if any', so it need not assume an unwanted limitation. I1 directly supplies the useful-arrangement versus room-to-vary distinction that the question invites the reader to consider."},
+        "verdict": "pass"
+      },
+      "finalPrompt": {
+        "text": "Which familiar approach, if any, would you like more room to vary? Which description of yourself is out of date?",
+        "questionCount": 2,
+        "checks": {"answerableWithoutPremise": false, "consistentWithSources": false, "coherent": true},
+        "rationale": {"quote": "Which familiar approach, if any, would you like more room to vary? Which description of yourself is out of date?", "explanation": "The two questions are coherent as reflections on flexibility and self-description. Nevertheless, the second requires accepting that a description has become outdated. D1 supplies incomplete coverage by a title, not temporal change, and I1 does not establish this personal condition either. The first question passes independently; the inherited addition makes the final prompt fail."},
+        "verdict": "fail"
+      }
+    },
+    {
+      "itemId": "item-01",
+      "sourceQuestion": {
+        "text": "What routine, if any, feels manageable at your ordinary pace?",
+        "checks": {"singleQuestion": true, "answerableWithoutPremise": true, "consistentWithSources": true},
+        "rationale": {"quote": "What routine, if any, feels manageable at your ordinary pace?", "explanation": "This asks one question, explicitly allows no such routine, and retains I1's possible small recurring task without a special effort burst. D1's possible manageable task also supports the question; it does not assert a known temperament or recent event."},
+        "verdict": "pass"
+      },
+      "finalPrompt": {
+        "text": "What routine, if any, feels manageable at your ordinary pace? What piece of work would you defend if someone asked you to drop it this week?",
+        "questionCount": 2,
+        "checks": {"answerableWithoutPremise": true, "consistentWithSources": true, "coherent": true},
+        "rationale": {"quote": "What routine, if any, feels manageable at your ordinary pace? What piece of work would you defend if someone asked you to drop it this week?", "explanation": "The routine question permits no example, and the work question poses a hypothetical request rather than a real pressure. I1 supports ordinary-effort routine reflection; D1's purpose and clear commitment make a question about a valued piece of work compatible. Both concern how work fits and matters, so the combined prompt is coherent without claiming an event."},
+        "verdict": "pass"
+      }
+    },
+    {
+      "itemId": "item-13",
+      "sourceQuestion": {
+        "text": "What routine, if any, feels manageable at your ordinary pace?",
+        "checks": {"singleQuestion": true, "answerableWithoutPremise": true, "consistentWithSources": true},
+        "rationale": {"quote": "What routine, if any, feels manageable at your ordinary pace?", "explanation": "There is one question, with an explicit option that no routine fits. I1's recurring task without special effort and D1's conditional manageability support reflecting on ordinary pace without assuming the reader is experiencing ease."},
+        "verdict": "pass"
+      },
+      "finalPrompt": {
+        "text": "What routine, if any, feels manageable at your ordinary pace? What piece of work would you defend if someone asked you to drop it this week?",
+        "questionCount": 2,
+        "checks": {"answerableWithoutPremise": true, "consistentWithSources": true, "coherent": true},
+        "rationale": {"quote": "What routine, if any, feels manageable at your ordinary pace? What piece of work would you defend if someone asked you to drop it this week?", "explanation": "The first question is explicitly optional; the second is counterfactual and does not assert an actual request or conflict. I1 supports the ordinary-routine inquiry and D1's purpose/commitment framing is compatible with considering valued work. The questions remain coherent within the work domain despite covering different aspects."},
+        "verdict": "pass"
+      }
+    },
+    {
+      "itemId": "item-11",
+      "sourceQuestion": {
+        "text": "What possibility, if any, would you like to imagine without settling it?",
+        "checks": {"singleQuestion": true, "answerableWithoutPremise": true, "consistentWithSources": true},
+        "rationale": {"quote": "What possibility, if any, would you like to imagine without settling it?", "explanation": "The single question permits no possibility to explore. It follows I1's distinction between imagining possible shapes and treating them as evidence, without claiming the reader is confused or needs to make a decision."},
+        "verdict": "pass"
+      },
+      "finalPrompt": {
+        "text": "What possibility, if any, would you like to imagine without settling it? What would genuine rest look like today, as opposed to distraction?",
+        "questionCount": 2,
+        "checks": {"answerableWithoutPremise": true, "consistentWithSources": false, "coherent": true},
+        "rationale": {"quote": "What possibility, if any, would you like to imagine without settling it? What would genuine rest look like today, as opposed to distraction?", "explanation": "Both questions can be answered hypothetically without accepting that an actual problem has occurred, and they are coherent within imagination/private time. The second nevertheless imposes an unsupported genuine-rest-versus-distraction distinction: D1 provides comfortable private-time examples without excluding distraction as rest, and I1's imagination/evidence distinction does not supply that exclusion."},
+        "verdict": "fail"
+      }
+    },
+    {
+      "itemId": "item-10",
+      "sourceQuestion": {
+        "text": "What possibility, if any, would you like to imagine without settling it?",
+        "checks": {"singleQuestion": true, "answerableWithoutPremise": true, "consistentWithSources": true},
+        "rationale": {"quote": "What possibility, if any, would you like to imagine without settling it?", "explanation": "This single optional question allows the reader to name no possibility. I1 supports leaving imagined shapes as possibilities rather than evidence, so imagining without settling is a faithful inquiry rather than a claim about the reader's circumstances."},
+        "verdict": "pass"
+      },
+      "finalPrompt": {
+        "text": "What possibility, if any, would you like to imagine without settling it? What would genuine rest look like today, as opposed to distraction?",
+        "questionCount": 2,
+        "checks": {"answerableWithoutPremise": true, "consistentWithSources": false, "coherent": true},
+        "rationale": {"quote": "What possibility, if any, would you like to imagine without settling it? What would genuine rest look like today, as opposed to distraction?", "explanation": "The optional possibility question and hypothetical rest question do not require a real personal event, and their inner-life theme is coherent. However, 'genuine rest' opposed to 'distraction' is not a distinction supplied by D1's corner/hour/routine examples or I1's imagination/evidence framing. That unsupported exclusion makes the combined prompt fail while its source question passes."},
+        "verdict": "fail"
+      }
+    }
+  ],
+  "verdict": "fail"
+}

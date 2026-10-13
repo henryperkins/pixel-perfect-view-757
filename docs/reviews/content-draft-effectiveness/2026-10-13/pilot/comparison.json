@@ -1,0 +1,645 @@
+{
+  "version": "content-comparison-report-1",
+  "mode": "content-comparison",
+  "pairHash": "21bbc57f6ef4492a1715d5aa645b2c0ca019c0c7be137a88ba68005d5665f10e",
+  "sourceSha": "82efe38df4c5ee571d6c583de144498c93f596f1",
+  "provider": "gemini-enterprise",
+  "model": "gemini-enterprise/gemini-3.8-flash",
+  "actualModel": "gemini-3.8-flash",
+  "caseSetId": "draft-pilot-1",
+  "caseSetHash": "43562fc3e43edfa47087c1461209b6592269ec2d9b9f048a6e08a2f1c0e33aac",
+  "baselineCanonicalHash": "44c05c8b0336dc778c2efdcbf0c28dc2091d33a96b91c352a2481123b7f7ccae",
+  "candidateCanonicalHash": "78be37d2740102c827fd291777f43f686b9c9f3488c887d76c00212ca84db632",
+  "acceptedDelta": 0,
+  "cases": [
+    {
+      "id": "fallback-hard-mars-mercury",
+      "baseline": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "candidate": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "textChanged": true
+    },
+    {
+      "id": "fallback-hard-uranus-mercury",
+      "baseline": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "candidate": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "textChanged": true
+    },
+    {
+      "id": "fallback-soft-saturn-mercury",
+      "baseline": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "candidate": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "textChanged": true
+    },
+    {
+      "id": "fallback-soft-neptune-mercury",
+      "baseline": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "candidate": {
+        "outcome": "accepted",
+        "code": "accepted"
+      },
+      "textChanged": true
+    }
+  ],
+  "coverage": {
+    "version": "content-source-utilization-1",
+    "entries": [
+      {
+        "key": "hard:*:*",
+        "reachability": "shadowed-in-supported-catalogue",
+        "baseline": {
+          "selected": 2,
+          "submitted": 2,
+          "acceptedCited": 2,
+          "templateRendered": 2,
+          "finalRendered": 0,
+          "evidence": [
+            {
+              "caseId": "fallback-hard-mars-mercury",
+              "factId": "I1",
+              "selected": true,
+              "submitted": true,
+              "acceptedCited": true,
+              "templateRendered": true,
+              "finalRendered": false,
+              "sourceQuestion": "Where are you meeting more resistance than the task deserves?",
+              "finalQuestion": "Where are you meeting more resistance than the task deserves? What piece of work would you defend if someone asked you to drop it this week?",
+              "semanticIncorporation": "unreviewed"
+            },
+            {
+              "caseId": "fallback-hard-uranus-mercury",
+              "factId": "I1",
+              "selected": true,
+              "submitted": true,
+              "acceptedCited": true,
+              "templateRendered": true,
+              "finalRendered": false,
+              "sourceQuestion": "Where are you meeting more resistance than the task deserves?",
+              "finalQuestion": "Where are you meeting more resistance than the task deserves? Which description of yourself is out of date?",
+              "semanticIncorporation": "unreviewed"
+            }
+          ]
+        },
+        "candidate": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "semanticIncorporation": "unreviewed"
+      },
+      {
+        "key": "hard:jupiter:*",
+        "reachability": "supported-source",
+        "baseline": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "candidate": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "semanticIncorporation": "unreviewed"
+      },
+      {
+        "key": "hard:mars:*",
+        "reachability": "supported-source",
+        "baseline": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "candidate": {
+          "selected": 1,
+          "submitted": 1,
+          "acceptedCited": 1,
+          "templateRendered": 1,
+          "finalRendered": 1,
+          "evidence": [
+            {
+              "caseId": "fallback-hard-mars-mercury",
+              "factId": "I1",
+              "selected": true,
+              "submitted": true,
+              "acceptedCited": true,
+              "templateRendered": true,
+              "finalRendered": true,
+              "sourceQuestion": "Where, if anywhere, is your preferred pace out of step with the task?",
+              "finalQuestion": "Where, if anywhere, is your preferred pace out of step with the task? What piece of work would you defend if someone asked you to drop it this week?",
+              "semanticIncorporation": "unreviewed"
+            }
+          ]
+        },
+        "semanticIncorporation": "unreviewed"
+      },
+      {
+        "key": "hard:mercury:*",
+        "reachability": "supported-source",
+        "baseline": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "candidate": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "semanticIncorporation": "unreviewed"
+      },
+      {
+        "key": "hard:moon:*",
+        "reachability": "supported-source",
+        "baseline": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "candidate": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "semanticIncorporation": "unreviewed"
+      },
+      {
+        "key": "hard:neptune:*",
+        "reachability": "supported-source",
+        "baseline": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "candidate": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "semanticIncorporation": "unreviewed"
+      },
+      {
+        "key": "hard:pluto:*",
+        "reachability": "supported-source",
+        "baseline": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "candidate": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "semanticIncorporation": "unreviewed"
+      },
+      {
+        "key": "hard:saturn:*",
+        "reachability": "supported-source",
+        "baseline": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "candidate": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "semanticIncorporation": "unreviewed"
+      },
+      {
+        "key": "hard:sun:*",
+        "reachability": "supported-source",
+        "baseline": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "candidate": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "semanticIncorporation": "unreviewed"
+      },
+      {
+        "key": "hard:uranus:*",
+        "reachability": "supported-source",
+        "baseline": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "candidate": {
+          "selected": 1,
+          "submitted": 1,
+          "acceptedCited": 1,
+          "templateRendered": 1,
+          "finalRendered": 1,
+          "evidence": [
+            {
+              "caseId": "fallback-hard-uranus-mercury",
+              "factId": "I1",
+              "selected": true,
+              "submitted": true,
+              "acceptedCited": true,
+              "templateRendered": true,
+              "finalRendered": true,
+              "sourceQuestion": "Which familiar approach, if any, would you like more room to vary?",
+              "finalQuestion": "Which familiar approach, if any, would you like more room to vary? Which description of yourself is out of date?",
+              "semanticIncorporation": "unreviewed"
+            }
+          ]
+        },
+        "semanticIncorporation": "unreviewed"
+      },
+      {
+        "key": "hard:venus:*",
+        "reachability": "supported-source",
+        "baseline": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "candidate": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "semanticIncorporation": "unreviewed"
+      },
+      {
+        "key": "soft:*:*",
+        "reachability": "shadowed-in-supported-catalogue",
+        "baseline": {
+          "selected": 2,
+          "submitted": 2,
+          "acceptedCited": 2,
+          "templateRendered": 2,
+          "finalRendered": 0,
+          "evidence": [
+            {
+              "caseId": "fallback-soft-saturn-mercury",
+              "factId": "I1",
+              "selected": true,
+              "submitted": true,
+              "acceptedCited": true,
+              "templateRendered": true,
+              "finalRendered": false,
+              "sourceQuestion": "What has been easier than expected lately?",
+              "finalQuestion": "What has been easier than expected lately? What piece of work would you defend if someone asked you to drop it this week?",
+              "semanticIncorporation": "unreviewed"
+            },
+            {
+              "caseId": "fallback-soft-neptune-mercury",
+              "factId": "I1",
+              "selected": true,
+              "submitted": true,
+              "acceptedCited": true,
+              "templateRendered": true,
+              "finalRendered": false,
+              "sourceQuestion": "What has been easier than expected lately?",
+              "finalQuestion": "What has been easier than expected lately? What would genuine rest look like today, as opposed to distraction?",
+              "semanticIncorporation": "unreviewed"
+            }
+          ]
+        },
+        "candidate": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "semanticIncorporation": "unreviewed"
+      },
+      {
+        "key": "soft:jupiter:*",
+        "reachability": "supported-source",
+        "baseline": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "candidate": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "semanticIncorporation": "unreviewed"
+      },
+      {
+        "key": "soft:mars:*",
+        "reachability": "supported-source",
+        "baseline": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "candidate": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "semanticIncorporation": "unreviewed"
+      },
+      {
+        "key": "soft:mercury:*",
+        "reachability": "supported-source",
+        "baseline": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "candidate": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "semanticIncorporation": "unreviewed"
+      },
+      {
+        "key": "soft:moon:*",
+        "reachability": "supported-source",
+        "baseline": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "candidate": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "semanticIncorporation": "unreviewed"
+      },
+      {
+        "key": "soft:neptune:*",
+        "reachability": "supported-source",
+        "baseline": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "candidate": {
+          "selected": 1,
+          "submitted": 1,
+          "acceptedCited": 1,
+          "templateRendered": 1,
+          "finalRendered": 0,
+          "evidence": [
+            {
+              "caseId": "fallback-soft-neptune-mercury",
+              "factId": "I1",
+              "selected": true,
+              "submitted": true,
+              "acceptedCited": true,
+              "templateRendered": true,
+              "finalRendered": false,
+              "sourceQuestion": "What possibility, if any, would you like to imagine without settling it?",
+              "finalQuestion": "What possibility, if any, would you like to imagine without settling it? What would genuine rest look like today, as opposed to distraction?",
+              "semanticIncorporation": "unreviewed"
+            }
+          ]
+        },
+        "semanticIncorporation": "unreviewed"
+      },
+      {
+        "key": "soft:pluto:*",
+        "reachability": "supported-source",
+        "baseline": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "candidate": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "semanticIncorporation": "unreviewed"
+      },
+      {
+        "key": "soft:saturn:*",
+        "reachability": "supported-source",
+        "baseline": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "candidate": {
+          "selected": 1,
+          "submitted": 1,
+          "acceptedCited": 1,
+          "templateRendered": 1,
+          "finalRendered": 0,
+          "evidence": [
+            {
+              "caseId": "fallback-soft-saturn-mercury",
+              "factId": "I1",
+              "selected": true,
+              "submitted": true,
+              "acceptedCited": true,
+              "templateRendered": true,
+              "finalRendered": false,
+              "sourceQuestion": "What routine, if any, feels manageable at your ordinary pace?",
+              "finalQuestion": "What routine, if any, feels manageable at your ordinary pace? What piece of work would you defend if someone asked you to drop it this week?",
+              "semanticIncorporation": "unreviewed"
+            }
+          ]
+        },
+        "semanticIncorporation": "unreviewed"
+      },
+      {
+        "key": "soft:sun:*",
+        "reachability": "supported-source",
+        "baseline": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "candidate": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "semanticIncorporation": "unreviewed"
+      },
+      {
+        "key": "soft:uranus:*",
+        "reachability": "supported-source",
+        "baseline": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "candidate": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "semanticIncorporation": "unreviewed"
+      },
+      {
+        "key": "soft:venus:*",
+        "reachability": "supported-source",
+        "baseline": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "candidate": {
+          "selected": 0,
+          "submitted": 0,
+          "acceptedCited": 0,
+          "templateRendered": 0,
+          "finalRendered": 0,
+          "evidence": []
+        },
+        "semanticIncorporation": "unreviewed"
+      }
+    ]
+  },
+  "qualified": false,
+  "semanticIncorporation": "unreviewed",
+  "qualificationGaps": [
+    "Semantic incorporation and reflection-question quality require independent review.",
+    "16 changed reachable sources were not exercised by this pilot."
+  ],
+  "limitations": [
+    "This four-case pilot cannot qualify all 20 new body-specific sources.",
+    "Selected sources, submitted facts, accepted citations and literal rendered text are distinct observations; none establishes semantic incorporation.",
+    "Literal rendering checks every source sentence; a paraphrase or authored composition requires manual review.",
+    "Synthetic reports do not establish production use, member acceptance or empirical astrology validity."
+  ]
+}

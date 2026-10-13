@@ -1,0 +1,12 @@
+{
+  "reviewer-a": {
+    "promptPath": "/home/ubuntu/pixel-perfect-view-757/.worktrees/content-draft-effectiveness-20261013/docs/reviews/content-draft-effectiveness/2026-10-13/review/prompt-reviewer-a.txt",
+    "promptSha256": "000db7eb655187f7608dcb551f0b1c79a0ea8650eb1d81a30b592f3c8275d6ff",
+    "dispatchAt": "2026-10-13T09:46:21.764342Z"
+  },
+  "reviewer-b": {
+    "promptPath": "/home/ubuntu/pixel-perfect-view-757/.worktrees/content-draft-effectiveness-20261013/docs/reviews/content-draft-effectiveness/2026-10-13/review/prompt-reviewer-b.txt",
+    "promptSha256": "a91d884aac3cbff319d6a5bf8845183b323e8f48a26a065aee843490d0bffb22",
+    "dispatchAt": "2026-10-13T09:46:21.764493Z"
+  }
+}

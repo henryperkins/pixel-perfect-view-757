@@ -1,0 +1,85 @@
+{
+  "applicationCommit": "82efe38df4c5ee571d6c583de144498c93f596f1",
+  "deploymentId": "36df77ad-e352-4452-a03b-1afdcd8a0e49",
+  "canonicalURL": "https://patterns.lakefrontdigital.io",
+  "verifiedAt": "2026-10-13T09:40:26.096Z",
+  "sourceIdentity": {
+    "path": "/api/public/evaluation-identity",
+    "httpStatus": 200,
+    "sourceSha": "82efe38df4c5ee571d6c583de144498c93f596f1",
+    "requestPolicyVersion": "synthetic-facts-local-context-1",
+    "fixtureVersion": "synthetic-daily-7"
+  },
+  "assets": [
+    {
+      "localPath": ".output/public/assets/styles-CpUL10Rp.css",
+      "publishedPath": "/assets/styles-CpUL10Rp.css",
+      "httpStatus": 200,
+      "localBytes": 139628,
+      "publishedBytes": 139628,
+      "localSha256": "c099c101736980cd0e63b50c96909b328709a89a3ed4f28c6860399ee0c05a92",
+      "publishedSha256": "c099c101736980cd0e63b50c96909b328709a89a3ed4f28c6860399ee0c05a92",
+      "byteEqual": true,
+      "assetReferenceNormalizedEqual": true,
+      "localAssetReferenceNormalizedSha256": "c099c101736980cd0e63b50c96909b328709a89a3ed4f28c6860399ee0c05a92",
+      "publishedAssetReferenceNormalizedSha256": "c099c101736980cd0e63b50c96909b328709a89a3ed4f28c6860399ee0c05a92"
+    },
+    {
+      "localPath": ".output/public/assets/content-DgHxsh6z.js",
+      "publishedPath": "/assets/content-DUB1flRe.js",
+      "httpStatus": 200,
+      "localBytes": 245094,
+      "publishedBytes": 245094,
+      "localSha256": "f8fbdfe1722ff26a1e48881dbe7cbe94a5efa07685429083e8fa4584af243179",
+      "publishedSha256": "5d4e00fbd71f0d55c629f2f79e49f6b9ce94482b1672d3e5ef8c01749887bd29",
+      "byteEqual": false,
+      "assetReferenceNormalizedEqual": true,
+      "localAssetReferenceNormalizedSha256": "94428f10e188e71412a5a57e4ebf173358a5a6287b04c8c88b5b5ea7b2727852",
+      "publishedAssetReferenceNormalizedSha256": "94428f10e188e71412a5a57e4ebf173358a5a6287b04c8c88b5b5ea7b2727852"
+    },
+    {
+      "localPath": ".output/public/assets/pattern.functions-BVg2TfxU.js",
+      "publishedPath": "/assets/pattern.functions-Dgu__ZTA.js",
+      "httpStatus": 200,
+      "localBytes": 5822,
+      "publishedBytes": 5822,
+      "localSha256": "2fda91c202fc8ed4d3aa05d370925e06ddaec0c6e30d74b2f2f62509edc30c4f",
+      "publishedSha256": "97d2f7c8fc10201b7fa97d68c2c4b756f4c8334f9c66b8efab35a34d0cbd4ef1",
+      "byteEqual": false,
+      "assetReferenceNormalizedEqual": true,
+      "localAssetReferenceNormalizedSha256": "3069b75d849161c1cdbce9761b4b90b89ef611b0983e0ed94a88600cb87183c2",
+      "publishedAssetReferenceNormalizedSha256": "3069b75d849161c1cdbce9761b4b90b89ef611b0983e0ed94a88600cb87183c2"
+    },
+    {
+      "localPath": ".output/public/assets/index-DLHartKT.js",
+      "publishedPath": "/assets/index-C9VqY23j.js",
+      "httpStatus": 200,
+      "localBytes": 619794,
+      "publishedBytes": 620068,
+      "localSha256": "a9f437324cba3336b5cbe51cbfb43c62277844d51cb9a05c56778a07f4d8292c",
+      "publishedSha256": "9cfc5c06ca8acacb053a7c57ff3332e4dcb11b3ad4da3bb7dc59afb76ef959f5",
+      "byteEqual": false,
+      "assetReferenceNormalizedEqual": false,
+      "localAssetReferenceNormalizedSha256": "2a27426bfbbc393fa90eebc02a2b1ed047fafe8088570ce99ba74b8e42e7d265",
+      "publishedAssetReferenceNormalizedSha256": "709ba78fa3a5708e85cc29d5dd985bfce281b7a616b22a4ab88b27198d7f0415",
+      "additionalDifference": {
+        "property": "VITE_PAYMENTS_CLIENT_TOKEN",
+        "publishedOccurrences": 2,
+        "localOccurrences": 0,
+        "valueRecorded": false,
+        "equalAfterRemovingOnlyThisPublishedProperty": true
+      }
+    }
+  ],
+  "normalization": "Only the eight-character hash suffix in quoted relative or assets/ JavaScript and CSS asset paths is replaced with HASH. This does not normalize application code or environment values.",
+  "deploymentEvidence": "Deployment ID supplied by the publication operation; served application source independently verified through the public evaluation identity endpoint.",
+  "adminEvidence": {
+    "reportedByOperator": true,
+    "path": "/content",
+    "observed": "Authenticated published UI prepared and downloaded the frozen eight-call comparison plan without starting generation."
+  },
+  "workerChanged": false,
+  "migrationRequired": false,
+  "verificationModelCalls": 0,
+  "acceptanceBoundary": "The public source identity matches the application commit. CSS has exact byte parity. Content and server-function client bundles have parity after asset-reference hash normalization. The entry bundle additionally contains two production-injected public VITE_PAYMENTS_CLIENT_TOKEN properties; removing exactly those properties establishes parity. This is not a claim of complete deployment byte identity, model acceptance, draft approval, or content activation."
+}

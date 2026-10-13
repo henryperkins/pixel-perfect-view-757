@@ -1,0 +1,310 @@
+{
+  "protocolVersion": "daily-writing-ai-review-1",
+  "kind": "review",
+  "packetSha256": "1374d2c5ca6590959192282da96b4e40256dbda8499b381f6e5c584bd484204b",
+  "itemSetHash": "d894c4eb6e2e7aa44091dfae77cbe004606b225f1411945302d9b7c884f69e21",
+  "reviewer": {
+    "contextId": "reviewer-b",
+    "model": "unknown",
+    "configuration": "unknown",
+    "promptSha256": "a91d884aac3cbff319d6a5bf8845183b323e8f48a26a065aee843490d0bffb22"
+  },
+  "reviewedAt": "2026-10-13T09:46:21.764493Z",
+  "blindness": {
+    "declaration": "I used only the neutral packet as substantive evidence and read its dispatch prompt and blank reflection companion as binding metadata; attached repository AGENTS notes, environment metadata, and a general memory index were present in context but I did not consult repository code, history, memory files, origin assignments, prior verdicts, reports, or other reviews.",
+    "inputs": ["packet"],
+    "sawOriginLabels": false,
+    "sawPriorVerdicts": false,
+    "sawOtherReviews": false,
+    "sawImplementationContext": false
+  },
+  "reassessmentOf": null,
+  "items": [
+    {
+      "itemId": "item-13",
+      "scores": {
+        "specificity": {"score": 4, "reason": "The routine, pauses, and scoped work distinction comes from I1 and D1, with the contact and calculated details from C1 and T1."},
+        "grounding": {"score": 4, "reason": "The substantive possibilities and calculated detail remain within I1, D1, P1, C1, and T1; the awkward opening is an editing problem rather than a clear new claim."},
+        "coherence": {"score": 3, "reason": "The unclear opening and repeated declarations that the prose frames the same contact interrupt the progression between routine, work, and timing."},
+        "voice": {"score": 3, "reason": "Plain meaning is present, but explanatory scaffolding and lowercase planet names sound mechanical."},
+        "repetition": {"score": 2, "reason": "The same contact is restated in each paragraph, two framing formulas repeat internally, and the phase sentence repeats across the packet."},
+        "synthesisCoherence": {"score": null, "reason": "No S1 supplied."},
+        "lensIntegration": {"score": null, "reason": "No N1 supplied."}
+      },
+      "quietCheck": null,
+      "findings": [
+        {"findingId": "b-13-1", "paragraph": 1, "passage": "The place of a routine can leave room for pauses as well as completion.", "supportingFactIds": ["I1"], "missingFactIds": [], "category": "coherence", "severity": "minor", "explanation": "I1 discusses a task's place in a routine. The revision makes the routine itself have a place, obscuring the practical relationship before the task is introduced.", "proposedCorrection": "Make the recurring task the clear antecedent of its place in the routine."},
+        {"findingId": "b-13-2", "paragraph": 2, "passage": "This description frames transiting saturn sextile natal mercury.", "supportingFactIds": ["C1", "D1"], "missingFactIds": [], "category": "repetition", "severity": "minor", "explanation": "This repeats paragraph 1's explicit framing of the same contact and adds no interpretation or distinction; paragraph 3 then names the contact again.", "proposedCorrection": "Connect the everyday meaning to the named contact once and keep the remaining prose focused on meaning or calculation."},
+        {"findingId": "b-13-3", "paragraph": 1, "passage": "This perspective offers a way to read transiting saturn sextile natal mercury.", "supportingFactIds": ["C1", "I1"], "missingFactIds": [], "category": "voice", "severity": "minor", "explanation": "The self-descriptive framing and uncapitalized names feel like assembly language within otherwise plain prose.", "proposedCorrection": "Use a direct, naturally worded connection to Saturn sextile natal Mercury."}
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-01",
+      "scores": {
+        "specificity": {"score": 3, "reason": "I1 and D1 provide useful practical details, but this technical reading never names the selected contact, leaving its final calculation block unattached."},
+        "grounding": {"score": 5, "reason": "All four paragraphs trace directly to I1, D1, P1, and T1 without stronger modality or added personal events."},
+        "coherence": {"score": 4, "reason": "Routine, manageable work, a conditional response, and timing form a clear sequence, though the technical link is omitted."},
+        "voice": {"score": 4, "reason": "The concise conditional sentences are natural and consistent with the plain tone."},
+        "repetition": {"score": 3, "reason": "The recurring-task interpretation varies meaning, but the phase sentence and timing block follow the packet's recurring formula."},
+        "synthesisCoherence": {"score": null, "reason": "No S1 supplied."},
+        "lensIntegration": {"score": null, "reason": "No N1 supplied."}
+      },
+      "quietCheck": null,
+      "findings": [
+        {"findingId": "b-01-1", "paragraph": 4, "passage": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window. The calculated arc position is 30%. Current orb at the reading's calculation time: 0.42°.", "supportingFactIds": ["T1"], "missingFactIds": ["C1"], "category": "specificity", "severity": "minor", "explanation": "The calculated figures are supported, but the required technical connection to the named Saturn-Mercury sextile never appears anywhere in the body.", "proposedCorrection": "Identify the C1 contact when connecting the everyday meaning to this timing."},
+        {"findingId": "b-01-2", "paragraph": 3, "passage": "If a demand catches your attention, you can notice your response before deciding how to act.", "supportingFactIds": ["P1"], "missingFactIds": [], "category": "repetition", "severity": "minor", "explanation": "This identical optional phase sentence appears throughout the packet, making otherwise distinct interpretations converge on the same closing movement.", "proposedCorrection": "Omit optional phase wording when it adds no distinct practical point, or integrate it concisely without changing its meaning."}
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-16",
+      "scores": {
+        "specificity": {"score": 5, "reason": "The desk layout distinguishes usefulness from freedom to vary, and D1 adds the concrete difference between a title and actual interests or responsibilities."},
+        "grounding": {"score": 5, "reason": "The interpretation and domain examples preserve I1 and D1, the phase stays conditional, and the timing follows T1."},
+        "coherence": {"score": 4, "reason": "The practical example, identity lens, and phase are understandable without claiming an unsupported personal event."},
+        "voice": {"score": 3, "reason": "The substance is accessible, but the prefixed reassurance labels warmth instead of sustaining it naturally."},
+        "repetition": {"score": 3, "reason": "The desk example supplies meaningful variety, while the warm prefix, full domain paragraph, phase, and timing recur elsewhere."},
+        "synthesisCoherence": {"score": null, "reason": "No S1 supplied."},
+        "lensIntegration": {"score": null, "reason": "No N1 supplied."}
+      },
+      "quietCheck": null,
+      "findings": [
+        {"findingId": "b-16-1", "paragraph": 1, "passage": "Taking this gently:", "supportingFactIds": ["I1"], "missingFactIds": [], "category": "voice", "severity": "minor", "explanation": "The added label sounds prefabricated and supplies nearly all of the explicitly warm tone; it does not arise from the desk-layout distinction.", "proposedCorrection": "Let the inviting conditional example carry the warmth without a tone label."},
+        {"findingId": "b-16-2", "paragraph": 3, "passage": "If a demand catches your attention, you can notice your response before deciding how to act.", "supportingFactIds": ["P1"], "missingFactIds": [], "category": "repetition", "severity": "minor", "explanation": "The same optional phase sentence and separate timing ending recur across the packet despite distinct primary material.", "proposedCorrection": "Trim optional shared wording when the primary example already provides the useful reading."}
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-08",
+      "scores": {
+        "specificity": {"score": 4, "reason": "D1 supplies a useful distinction between a title and lived responsibilities or interests; the named Uranus-Mercury square alone does not add practical specificity."},
+        "grounding": {"score": 5, "reason": "C1 supports the named square and orb; I1 expressly supports the frequency and contrast; D1, P1, and T1 support the remainder."},
+        "coherence": {"score": 4, "reason": "The contact, identity example, and timing are clearly separated and do not invent a personal event or joint premise."},
+        "voice": {"score": 3, "reason": "The technical introduction and calculation phrasing are clear but impersonal for the requested warm tone."},
+        "repetition": {"score": 2, "reason": "Generic hard-angle framing, the full identity paragraph, and the identical phase sentence are reused with little distinct treatment."},
+        "synthesisCoherence": {"score": null, "reason": "No S1 supplied."},
+        "lensIntegration": {"score": null, "reason": "No N1 supplied."}
+      },
+      "quietCheck": null,
+      "findings": [
+        {"findingId": "b-08-1", "paragraph": 1, "passage": "In your chart, a hard contact is forming between a moving body and a fixed point, where transiting Uranus forms a square with your natal Mercury.", "supportingFactIds": ["C1", "I1"], "missingFactIds": [], "category": "voice", "severity": "minor", "explanation": "The abstract moving-body explanation and repeated formation wording give a textbook opening rather than a natural warm reading.", "proposedCorrection": "Lead with the supported everyday identity distinction and state the contact more economically if retained."},
+        {"findingId": "b-08-2", "paragraph": 3, "passage": "If a demand catches your attention, you can notice your response before deciding how to act.", "supportingFactIds": ["P1"], "missingFactIds": [], "category": "repetition", "severity": "minor", "explanation": "This unchanged phase sentence joins reused I1 and D1 language, so much of the item reads as shared scaffolding.", "proposedCorrection": "Reduce optional shared material while keeping the distinct domain example."}
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-15",
+      "scores": {
+        "specificity": {"score": 5, "reason": "A desk that accommodates one task while crowding another makes the supported utility-versus-flexibility distinction concrete; D1 gives a second useful identity example."},
+        "grounding": {"score": 5, "reason": "All interpretations retain their source modality, and the named square, orb, window, and exact timing are supported by C1 and T1."},
+        "coherence": {"score": 4, "reason": "The concrete opening leads to a general distinction, then identity and calculation, without claiming that these situations actually occurred."},
+        "voice": {"score": 4, "reason": "The gentle conditional example and direct language are compatible with a restrained warm tone."},
+        "repetition": {"score": 3, "reason": "The useful opening varies the packet, but D1 and the repeated phase sentence remain nearly verbatim shared blocks."},
+        "synthesisCoherence": {"score": null, "reason": "No S1 supplied."},
+        "lensIntegration": {"score": null, "reason": "No N1 supplied."}
+      },
+      "quietCheck": null,
+      "findings": [
+        {"findingId": "b-15-1", "paragraph": 3, "passage": "If a demand catches your attention, you can notice your response before deciding how to act.", "supportingFactIds": ["P1"], "missingFactIds": [], "category": "repetition", "severity": "minor", "explanation": "The same phase sentence closes readings with substantially different everyday meanings and adds no new detail to this item's distinctive opening.", "proposedCorrection": "Omit the optional phase sentence or integrate its conditional meaning only where it advances this reading."}
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-09",
+      "scores": {
+        "specificity": {"score": 5, "reason": "The premature reply makes the distinction between wanting completion and the information a task permits concrete, with scope and ownership developed from D1."},
+        "grounding": {"score": 5, "reason": "The reply remains hypothetical, waiting remains a possibility, and C1, D1, P1, and T1 support the other statements."},
+        "coherence": {"score": 4, "reason": "Example, general pace distinction, work framing, and timing progress clearly with only a routine transition at the end."},
+        "voice": {"score": 4, "reason": "The practical opening and restrained language fit the plain tone naturally."},
+        "repetition": {"score": 3, "reason": "The primary interpretation supplies relevant variation, but the work paragraph and phase ending recur verbatim."},
+        "synthesisCoherence": {"score": null, "reason": "No S1 supplied."},
+        "lensIntegration": {"score": null, "reason": "No N1 supplied."}
+      },
+      "quietCheck": null,
+      "findings": [
+        {"findingId": "b-09-1", "paragraph": 3, "passage": "If a demand catches your attention, you can notice your response before deciding how to act.", "supportingFactIds": ["P1"], "missingFactIds": [], "category": "repetition", "severity": "minor", "explanation": "This optional sentence repeats the packet-wide ending after a more specific and useful conditional example.", "proposedCorrection": "Let the reply and task-pace distinction carry the reading and trim the optional shared ending."}
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-03",
+      "scores": {
+        "specificity": {"score": 4, "reason": "The opening is generic, but D1 makes the useful practical distinction between pace, scope, and ownership concrete through lists and competing aims."},
+        "grounding": {"score": 5, "reason": "Each paragraph directly preserves I1, D1, P1, or T1; the frequency and exclusion in the opening are expressly supplied by I1."},
+        "coherence": {"score": 4, "reason": "General friction moves into distinct work considerations, a conditional response, and timing without an invented causal connection."},
+        "voice": {"score": 4, "reason": "The language is straightforward and consistent with a plain reading."},
+        "repetition": {"score": 2, "reason": "The generic contact opening, entire work block, phase sentence, and timing block recur across the packet."},
+        "synthesisCoherence": {"score": null, "reason": "No S1 supplied."},
+        "lensIntegration": {"score": null, "reason": "No N1 supplied."}
+      },
+      "quietCheck": null,
+      "findings": [
+        {"findingId": "b-03-1", "paragraph": 3, "passage": "If a demand catches your attention, you can notice your response before deciding how to act.", "supportingFactIds": ["P1"], "missingFactIds": [], "category": "repetition", "severity": "minor", "explanation": "With both the generic contact and domain paragraphs also repeated elsewhere, this unchanged optional ending leaves little item-specific composition.", "proposedCorrection": "Foreground the supplied work distinction and omit optional shared language that adds no further meaning."}
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-14",
+      "scores": {
+        "specificity": {"score": 3, "reason": "The item describes lower friction and examples of comfortable private time, but offers little distinction beyond general ease; the extra orb and contact names do not repair that."},
+        "grounding": {"score": 3, "reason": "The opening transfers a frequency statement about supportive contacts to periods of lower friction generally, a scope expansion not established by I1."},
+        "coherence": {"score": 4, "reason": "The two paragraphs are understandable, moving from contact and calculation to private time and a conditional response."},
+        "voice": {"score": 4, "reason": "The restrained descriptive voice fits the clinical tone without making a clinical diagnosis."},
+        "repetition": {"score": 2, "reason": "Generic supportive-contact wording and the unchanged private-time and phase blocks dominate, and the opening is also reused in item-05."},
+        "synthesisCoherence": {"score": null, "reason": "No S1 supplied."},
+        "lensIntegration": {"score": null, "reason": "No N1 supplied."}
+      },
+      "quietCheck": null,
+      "findings": [
+        {"findingId": "b-14-1", "paragraph": 1, "passage": "Periods of lower friction tend to be unremarkable in the moment and only visible in hindsight.", "supportingFactIds": ["I1"], "missingFactIds": ["I1"], "category": "unsupported_frequency", "severity": "substantive", "explanation": "I1's 'These' refers to supportive contacts. The revision makes periods of lower friction generally the subject of the tendency. I cannot trace that broader frequency claim to the supplied statement; naming a contact in the next sentence does not explicitly restore its scope.", "proposedCorrection": "Keep the tendency attached to supportive contacts and describe lower friction only as the way those contacts may be recognized in hindsight."},
+        {"findingId": "b-14-2", "paragraph": 2, "passage": "Private time can have a comfortable shape of its own. A familiar corner, an unclaimed hour, or a routine with fewer demands can serve as ordinary examples of that ease.", "supportingFactIds": ["D1"], "missingFactIds": [], "category": "specificity", "severity": "minor", "explanation": "The examples are grounded but illustrate the same broad ease rather than developing a useful practical distinction in this reading.", "proposedCorrection": "Within D1, foreground the concrete difference between a familiar place, available time, and fewer routine demands rather than leave them as an undifferentiated list."},
+        {"findingId": "b-14-3", "paragraph": 2, "passage": "If a demand catches your attention, you can notice your response before deciding how to act.", "supportingFactIds": ["P1"], "missingFactIds": [], "category": "repetition", "severity": "minor", "explanation": "The repeated phase sentence follows a private-time paragraph repeated in other items, preserving the packet's stock ending despite the condensed layout.", "proposedCorrection": "Trim optional shared wording that does not develop the private-time examples."}
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-02",
+      "scores": {
+        "specificity": {"score": 3, "reason": "Generic support and comfortable private time give examples of ease but no well-developed practical distinction."},
+        "grounding": {"score": 5, "reason": "The body retains the subject and frequency of I1 and accurately reproduces D1, P1, and T1 without adding measured personal states."},
+        "coherence": {"score": 4, "reason": "The progression from ease to private time, conditional response, and timing is clear, if block-like."},
+        "voice": {"score": 3, "reason": "The Observation label and disconnected Timing block feel formulaic even for a clinical tone."},
+        "repetition": {"score": 2, "reason": "Every substantive block uses phrasing repeated elsewhere in the packet, with little distinct treatment beyond the tone label."},
+        "synthesisCoherence": {"score": null, "reason": "No S1 supplied."},
+        "lensIntegration": {"score": null, "reason": "No N1 supplied."}
+      },
+      "quietCheck": null,
+      "findings": [
+        {"findingId": "b-02-1", "paragraph": 2, "passage": "Private time can have a comfortable shape of its own. A familiar corner, an unclaimed hour, or a routine with fewer demands can serve as ordinary examples of that ease.", "supportingFactIds": ["D1"], "missingFactIds": [], "category": "specificity", "severity": "minor", "explanation": "The concrete nouns offer examples but do not develop a distinction beyond a broadly interchangeable description of ease.", "proposedCorrection": "Use D1's difference between place, time, and routine demands to give a more useful, still conditional practical distinction."},
+        {"findingId": "b-02-2", "paragraph": 1, "passage": "Observation:", "supportingFactIds": ["I1"], "missingFactIds": [], "category": "voice", "severity": "minor", "explanation": "This label announces the requested clinical register mechanically instead of giving the prose a naturally precise observational voice.", "proposedCorrection": "Use direct descriptive wording without an introductory tone label."},
+        {"findingId": "b-02-3", "paragraph": 3, "passage": "If a demand catches your attention, you can notice your response before deciding how to act.", "supportingFactIds": ["P1"], "missingFactIds": [], "category": "repetition", "severity": "minor", "explanation": "This identical optional phase block adds to already repeated generic-support and rest wording.", "proposedCorrection": "Reduce optional repeated blocks without inventing new material."}
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-11",
+      "scores": {
+        "specificity": {"score": 5, "reason": "The unfinished sketch gives a concrete, source-supported distinction between imagination and evidence."},
+        "grounding": {"score": 5, "reason": "I1 supports the possibilities and evidence distinction, while D1, P1, and T1 directly support the other paragraphs."},
+        "coherence": {"score": 4, "reason": "The interpretation is clearly stated before private time, a conditional phase observation, and timing."},
+        "voice": {"score": 3, "reason": "The precise content fits the clinical tone, but the Observation and Timing labels make the presentation stiff."},
+        "repetition": {"score": 3, "reason": "The sketch interpretation adds meaningful variation; the rest, phase, and timing blocks still recur verbatim."},
+        "synthesisCoherence": {"score": null, "reason": "No S1 supplied."},
+        "lensIntegration": {"score": null, "reason": "No N1 supplied."}
+      },
+      "quietCheck": null,
+      "findings": [
+        {"findingId": "b-11-1", "paragraph": 1, "passage": "Observation:", "supportingFactIds": ["I1"], "missingFactIds": [], "category": "voice", "severity": "minor", "explanation": "The prefixed label is a mechanical marker of tone; the supplied sketch distinction can carry a precise clinical voice unaided.", "proposedCorrection": "Remove the prefixed tone label and keep the conditional sketch example."},
+        {"findingId": "b-11-2", "paragraph": 3, "passage": "If a demand catches your attention, you can notice your response before deciding how to act.", "supportingFactIds": ["P1"], "missingFactIds": [], "category": "repetition", "severity": "minor", "explanation": "The packet-wide phase sentence and repeated rest paragraph take up substantial space after an otherwise distinctive opening.", "proposedCorrection": "Shorten optional shared material where it does not advance the imagination-versus-evidence distinction."}
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-12",
+      "scores": {
+        "specificity": {"score": 4, "reason": "The useful specificity comes from D1's pace, scope, and ownership distinction rather than the added names or orb."},
+        "grounding": {"score": 5, "reason": "The hard-angle tendency and contrast are expressly in I1; C1, D1, P1, and T1 support the remaining content."},
+        "coherence": {"score": 4, "reason": "The contact, practical work framing, and timing are organized clearly with no unsupported combined premise."},
+        "voice": {"score": 4, "reason": "The explanatory prose is plain and readable."},
+        "repetition": {"score": 2, "reason": "The generic hard-angle sentence, entire work framing, and repeated phase sentence dominate the item despite additional calculated details."},
+        "synthesisCoherence": {"score": null, "reason": "No S1 supplied."},
+        "lensIntegration": {"score": null, "reason": "No N1 supplied."}
+      },
+      "quietCheck": null,
+      "findings": [
+        {"findingId": "b-12-1", "paragraph": 3, "passage": "If a demand catches your attention, you can notice your response before deciding how to act.", "supportingFactIds": ["P1"], "missingFactIds": [], "category": "repetition", "severity": "minor", "explanation": "The unchanged phase sentence compounds reuse of the main interpretation and domain paragraph; the additional orb does not create meaningful variation.", "proposedCorrection": "Focus the reading on the supported work distinction and trim optional shared scaffolding."}
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-10",
+      "scores": {
+        "specificity": {"score": 5, "reason": "The distinction between imagined possibilities and evidence is concrete and directly supported by the unfinished-sketch example in I1."},
+        "grounding": {"score": 5, "reason": "Reordering the I1 statements preserves their meaning and modality; the other claims trace to C1, D1, P1, and T1."},
+        "coherence": {"score": 4, "reason": "The abstract distinction is promptly made concrete by the sketch, followed by rest framing and calculation."},
+        "voice": {"score": 4, "reason": "The measured descriptive language fits the clinical tone naturally."},
+        "repetition": {"score": 3, "reason": "The imagination distinction is relevant variation, but the whole rest paragraph and optional phase sentence remain repeated blocks."},
+        "synthesisCoherence": {"score": null, "reason": "No S1 supplied."},
+        "lensIntegration": {"score": null, "reason": "No N1 supplied."}
+      },
+      "quietCheck": null,
+      "findings": [
+        {"findingId": "b-10-1", "paragraph": 3, "passage": "If a demand catches your attention, you can notice your response before deciding how to act.", "supportingFactIds": ["P1"], "missingFactIds": [], "category": "repetition", "severity": "minor", "explanation": "The identical phase wording makes the ending converge with every other reading despite this item's distinct imagination example.", "proposedCorrection": "Omit optional common wording where it does not advance the primary distinction."}
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-07",
+      "scores": {
+        "specificity": {"score": 5, "reason": "Wanting completion versus the pace a task permits is made concrete through a conditional reply awaiting missing detail, with D1 adding distinct scope and ownership considerations."},
+        "grounding": {"score": 5, "reason": "The full body preserves I1, D1, P1, and T1, including conditional modality and the non-imperative framing."},
+        "coherence": {"score": 4, "reason": "The primary pace distinction leads clearly into broader work considerations and then phase and timing."},
+        "voice": {"score": 4, "reason": "The language is concrete, direct, and consistent with the plain tone."},
+        "repetition": {"score": 3, "reason": "The specific reply example supplies variation, while the repeated domain and phase blocks retain a recognizable formula."},
+        "synthesisCoherence": {"score": null, "reason": "No S1 supplied."},
+        "lensIntegration": {"score": null, "reason": "No N1 supplied."}
+      },
+      "quietCheck": null,
+      "findings": [
+        {"findingId": "b-07-1", "paragraph": 3, "passage": "If a demand catches your attention, you can notice your response before deciding how to act.", "supportingFactIds": ["P1"], "missingFactIds": [], "category": "repetition", "severity": "minor", "explanation": "The optional phase sentence repeats throughout the packet after an already complete practical interpretation.", "proposedCorrection": "Keep the supported pace and work distinctions prominent and trim the optional shared ending."}
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-04",
+      "scores": {
+        "specificity": {"score": 3, "reason": "D1 offers a practical scope-and-purpose distinction, but the technical reading never connects its numbers to the named Saturn-Mercury sextile."},
+        "grounding": {"score": 5, "reason": "The statements preserve I1, D1, P1, and T1, including the supplied supportive-contact frequency wording."},
+        "coherence": {"score": 4, "reason": "The generic support, work illustration, conditional phase, and timing are understandable, though the technical contact is missing."},
+        "voice": {"score": 4, "reason": "The sentences are plain and readable despite the block structure."},
+        "repetition": {"score": 2, "reason": "Generic support, the work paragraph, phase wording, and timing are all extensively reused in the packet."},
+        "synthesisCoherence": {"score": null, "reason": "No S1 supplied."},
+        "lensIntegration": {"score": null, "reason": "No N1 supplied."}
+      },
+      "quietCheck": null,
+      "findings": [
+        {"findingId": "b-04-1", "paragraph": 4, "passage": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window. The calculated arc position is 30%. Current orb at the reading's calculation time: 0.42°.", "supportingFactIds": ["T1"], "missingFactIds": ["C1"], "category": "specificity", "severity": "minor", "explanation": "The technical measurements are accurate to T1, but the body never identifies which contact they describe, contrary to the technical-depth requirement to connect meaning with the named contact.", "proposedCorrection": "Tie the practical distinction and calculation to the Saturn-Mercury sextile supplied by C1."},
+        {"findingId": "b-04-2", "paragraph": 3, "passage": "If a demand catches your attention, you can notice your response before deciding how to act.", "supportingFactIds": ["P1"], "missingFactIds": [], "category": "repetition", "severity": "minor", "explanation": "This identical phase sentence joins three other repeated blocks, leaving the item strongly formulaic at packet level.", "proposedCorrection": "Reduce optional shared wording and develop only the distinctions the supplied facts support."}
+      ],
+      "verdict": "fail"
+    },
+    {
+      "itemId": "item-06",
+      "scores": {
+        "specificity": {"score": 4, "reason": "D1 makes a useful practical distinction between a title and the interests or responsibilities it omits, despite the generic hard-contact opening."},
+        "grounding": {"score": 5, "reason": "I1 expressly supplies the frequency and contrast, and D1, P1, and T1 support the remaining body without added events or certainty."},
+        "coherence": {"score": 4, "reason": "The general contact, identity example, conditional response, and timing form a clear sequence."},
+        "voice": {"score": 3, "reason": "The stock reassurance prefix does little to make the otherwise abstract contact explanation naturally warm."},
+        "repetition": {"score": 2, "reason": "The warm prefix, generic hard-contact statement, identity block, phase, and timing all recur elsewhere."},
+        "synthesisCoherence": {"score": null, "reason": "No S1 supplied."},
+        "lensIntegration": {"score": null, "reason": "No N1 supplied."}
+      },
+      "quietCheck": null,
+      "findings": [
+        {"findingId": "b-06-1", "paragraph": 1, "passage": "Taking this gently:", "supportingFactIds": ["I1"], "missingFactIds": [], "category": "voice", "severity": "minor", "explanation": "The label advertises warmth while the following moving-body description stays abstract and impersonal.", "proposedCorrection": "Use the supported everyday identity example to establish an inviting tone without a stock reassurance label."},
+        {"findingId": "b-06-2", "paragraph": 3, "passage": "If a demand catches your attention, you can notice your response before deciding how to act.", "supportingFactIds": ["P1"], "missingFactIds": [], "category": "repetition", "severity": "minor", "explanation": "This unchanged optional ending compounds reuse of the opening and domain paragraphs, so the reading largely repeats shared blocks.", "proposedCorrection": "Trim optional reused material while retaining the supported identity distinction."}
+      ],
+      "verdict": "pass"
+    },
+    {
+      "itemId": "item-05",
+      "scores": {
+        "specificity": {"score": 4, "reason": "D1's purpose and next-piece distinction makes manageable work concrete; C1 and T1 provide the named contact and technical connection."},
+        "grounding": {"score": 3, "reason": "The opening shifts I1's frequency statement from supportive contacts to periods of lower friction generally, leaving a scope doubt that the packet does not resolve."},
+        "coherence": {"score": 4, "reason": "Everyday work meaning and its contact are followed by the phase and calculated detail in a clear two-paragraph progression."},
+        "voice": {"score": 4, "reason": "The prose is straightforward and consistent with the plain technical request."},
+        "repetition": {"score": 3, "reason": "Combining the contact and work meaning improves flow, but the generic opening, full work illustration, and phase sentence still recur across the packet."},
+        "synthesisCoherence": {"score": null, "reason": "No S1 supplied."},
+        "lensIntegration": {"score": null, "reason": "No N1 supplied."}
+      },
+      "quietCheck": null,
+      "findings": [
+        {"findingId": "b-05-1", "paragraph": 1, "passage": "Periods of lower friction tend to be unremarkable in the moment and only visible in hindsight.", "supportingFactIds": ["I1"], "missingFactIds": ["I1"], "category": "unsupported_frequency", "severity": "substantive", "explanation": "I1 attributes the tendency to supportive contacts and describes their retrospective appearance as periods of lower friction. This opening instead attributes it to periods of lower friction generally. The supplied fact does not clearly establish that broader frequency statement.", "proposedCorrection": "Preserve supportive contacts as the subject of the tendency and keep periods of lower friction as their described retrospective appearance."},
+        {"findingId": "b-05-2", "paragraph": 2, "passage": "If a demand catches your attention, you can notice your response before deciding how to act.", "supportingFactIds": ["P1"], "missingFactIds": [], "category": "repetition", "severity": "minor", "explanation": "The same optional phase sentence repeats across the packet, and the change in paragraph count does not provide meaningful variation in that material.", "proposedCorrection": "Omit optional phase wording when the work distinction and technical connection already complete the reading."}
+      ],
+      "verdict": "fail"
+    }
+  ],
+  "verdict": "fail"
+}
