@@ -1,5 +1,6 @@
 /** Browser-safe synthetic evaluation catalog and report helpers. No account or gateway access. */
 import { z } from "zod";
+import { getEvaluationCaseSet } from "./evaluation-case-sets";
 import {
   READING_EVAL_CASES,
   READING_EVAL_FIXTURE_VERSION,
@@ -40,10 +41,45 @@ export const READING_EVALUATION_BUNDLE_SOURCES = [
   "transit-candidate",
   "writing-candidate",
 ] as const;
-export type ReadingEvaluationBundleSource = (typeof READING_EVALUATION_BUNDLE_SOURCES)[number];
+export type ReadingEvaluationBundleSource =
+  (typeof READING_EVALUATION_BUNDLE_SOURCES)[number] | "content-comparison";
+
+export const contentComparisonSourceSchema = z.discriminatedUnion("kind", [
+  z.object({ kind: z.literal("draft"), draftId: z.string().min(1).max(80) }).strict(),
+  z
+    .object({
+      kind: z.literal("release"),
+      releaseId: z.string().min(1).max(80),
+      baselineReleaseId: z.string().min(1).max(80),
+    })
+    .strict(),
+]);
+export const contentComparisonPreviewSchema = z
+  .object({
+    mode: z.literal("content-comparison"),
+    source: contentComparisonSourceSchema,
+    arm: z.enum(["baseline", "candidate"]),
+    caseSetId: z.literal("draft-pilot-1"),
+    provider: z.enum(LANGUAGE_PROVIDERS),
+    campaignId: z.string().uuid().optional(),
+  })
+  .strict();
+export const contentComparisonRunSchema = contentComparisonPreviewSchema
+  .extend({
+    expectedPlanHash: z.string().regex(/^[a-f0-9]{64}$/),
+    budget: z
+      .object({
+        dollarCeilingCents: z.number().int().min(100).max(500),
+        reviewReserveCents: z.number().int().min(0).max(500),
+      })
+      .strict()
+      .optional(),
+  })
+  .strict();
+export type ContentComparisonSettings = z.infer<typeof contentComparisonRunSchema>;
 
 /** A server-side run fixes its copy and provider when it starts. */
-export const readingEvaluationRunInputSchema = z
+const legacyReadingEvaluationRunInputSchema = z
   .object({
     bundleSource: z.enum(READING_EVALUATION_BUNDLE_SOURCES),
     provider: z.enum(LANGUAGE_PROVIDERS),
@@ -63,6 +99,15 @@ export const readingEvaluationRunInputSchema = z
       .optional(),
   })
   .strict();
+
+export const readingEvaluationRunInputSchema = z.union([
+  legacyReadingEvaluationRunInputSchema,
+  contentComparisonRunSchema,
+]);
+export const readingEvaluationPreviewInputSchema = z.union([
+  legacyReadingEvaluationRunInputSchema,
+  contentComparisonPreviewSchema,
+]);
 
 export const READING_EVALUATION_RUN_STATUSES = [
   "queued",
@@ -93,6 +138,11 @@ export interface ReadingEvaluationRun {
   campaignId?: string;
   attemptLimit?: number;
   enterpriseThinking?: "LOW" | "MEDIUM";
+  contentComparison?: {
+    arm: "baseline" | "candidate";
+    pairHash: string;
+    caseSetId: "draft-pilot-1";
+  };
 }
 
 /** The only accepted request: a fixed case ID plus optional closed copy and provider selectors. */
@@ -137,6 +187,15 @@ export interface ReadingEvaluationMetadata {
   experimentVersion?: "enterprise-thinking-pilot-1";
   fixtureVersion: string;
   caseSetHash: string;
+  caseSetId?: import("./evaluation-case-sets").EvaluationCaseSetId;
+  contentComparison?: {
+    version: "content-comparison-1";
+    arm: "baseline" | "candidate";
+    pairHash: string;
+    baselineCanonicalHash: string;
+    candidateCanonicalHash: string;
+    caseSetId: "draft-pilot-1";
+  };
   bundleVersion: string;
   bundleHash: string;
   /** Normalized transit copy without release identity or candidate catalogues. */
@@ -298,6 +357,7 @@ export function combineReadingEvaluationResults(
     "experimentVersion",
     "fixtureVersion",
     "caseSetHash",
+    "caseSetId",
     "bundleVersion",
     "bundleHash",
     "transitCopyHash",
@@ -354,10 +414,23 @@ export function combineReadingEvaluationResults(
       (fixed) => !fixed.id.startsWith("natal-") && !fixed.id.startsWith("arc-"),
     );
   }
+  if (first.metadata.caseSetId) {
+    const manifest = getEvaluationCaseSet(first.metadata.caseSetId);
+    if (
+      manifest.fixtureVersion !== first.metadata.fixtureVersion ||
+      manifest.caseSetHash !== first.metadata.caseSetHash
+    )
+      throw new Error("Synthetic evaluation case set identity changed.");
+    catalog = manifest.cases;
+  }
   const expected = new Set(catalog.map((fixed) => fixed.id));
   const seen = new Set<string>();
   for (const result of results) {
-    if (metadataFields.some((field) => first.metadata[field] !== result.metadata[field]))
+    if (
+      metadataFields.some((field) => first.metadata[field] !== result.metadata[field]) ||
+      JSON.stringify(first.metadata.contentComparison) !==
+        JSON.stringify(result.metadata.contentComparison)
+    )
       throw new Error(
         "Synthetic evaluation configuration changed during the run. Start a new run.",
       );

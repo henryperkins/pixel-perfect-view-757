@@ -1,13 +1,13 @@
 import { createHash } from "node:crypto";
 import type { ContentBundle } from "../content/default-bundle";
+import { transitCopyIdentity } from "../content/natal-candidate-bundle";
 import { prepareSyntheticEvaluationCase } from "./reading-evaluation.server";
-import {
-  READING_EVAL_CASES,
-  READING_EVAL_FIXTURE_VERSION,
-} from "./reading-evaluation.fixtures.mjs";
+import { getEvaluationCaseSet, type EvaluationCaseSetId } from "./evaluation-case-sets";
+import type { FrozenContentComparisonPlan } from "./content-comparison-plan.server";
 import { qualificationPolicy, type QualificationProfile } from "./qualification-profiles";
 import {
   DAILY_PROMPT_VERSION,
+  DAILY_READING_PLAN_VERSION,
   DAILY_VALIDATOR_VERSION,
   CONCRETE_DAILY_PROMPT_VERSION,
   CONCRETE_DAILY_VALIDATOR_VERSION,
@@ -38,13 +38,20 @@ export function createEvaluationPlan(
   profile: QualificationProfile | undefined,
   sourceSha: string | null,
   provider: LanguageProvider = "lovable",
+  caseSetId: EvaluationCaseSetId = "synthetic-daily-7",
 ) {
-  if (profile && (!sourceSha || !/^[a-f0-9]{40}$/.test(sourceSha)))
+  const bounded = Boolean(profile) || caseSetId === "draft-pilot-1";
+  if (bounded && (!sourceSha || !/^[a-f0-9]{40}$/.test(sourceSha)))
     throw Error("Qualification requires the exact built source SHA.");
+  if (profile && caseSetId !== "synthetic-daily-7")
+    throw Error("Writing qualification profiles require their original case set.");
+  const manifest = getEvaluationCaseSet(caseSetId);
+  if (hash(manifest.cases) !== manifest.caseSetHash)
+    throw Error("The fixed evaluation case set failed its integrity check.");
   const policy = profile ? qualificationPolicy(profile) : null;
   const concrete = policy ? policy.writing : bundle.schemaVersion === 5;
-  const cases = READING_EVAL_CASES.map((fixed) => {
-    const prepared = prepareSyntheticEvaluationCase(fixed.id, bundle, profile);
+  const cases = manifest.cases.map((fixed) => {
+    const prepared = prepareSyntheticEvaluationCase(fixed.id, bundle, profile, caseSetId);
     const dry = {
       id: fixed.id,
       configHash: hash(fixed),
@@ -69,8 +76,15 @@ export function createEvaluationPlan(
   });
   const metadata = {
     sourceSha,
-    fixtureVersion: READING_EVAL_FIXTURE_VERSION,
-    caseSetHash: hash(READING_EVAL_CASES),
+    fixtureVersion: manifest.fixtureVersion,
+    caseSetHash: manifest.caseSetHash,
+    ...(caseSetId !== "synthetic-daily-7"
+      ? {
+          caseSetId,
+          transitCopyHash: hash(transitCopyIdentity(bundle)),
+          planVersion: DAILY_READING_PLAN_VERSION,
+        }
+      : {}),
     bundleVersion: bundle.version,
     bundleHash: hash(bundle),
     qualificationProfile: profile ?? null,
@@ -88,8 +102,8 @@ export function createEvaluationPlan(
     writingQualityVersion: concrete ? DAILY_WRITING_QUALITY_VERSION : null,
     reflectionVersion: concrete ? DAILY_REFLECTION_VERSION : null,
     voiceExamplesVersion: concrete ? DAILY_VOICE_EXAMPLES_VERSION : null,
-    maxOutputTokens: profile ? 65536 : null,
-    maxInputBytes: profile ? 65536 : null,
+    maxOutputTokens: bounded ? 65536 : null,
+    maxInputBytes: bounded ? 65536 : null,
   };
   const plan = {
     version: "synthetic-evaluation-plan-1",
@@ -108,6 +122,10 @@ export function createQualificationPlan(
   return createEvaluationPlan(bundle, profile, sourceSha, "lovable");
 }
 export type EvaluationPlan = ReturnType<typeof createEvaluationPlan> & {
+  contentComparison?: {
+    arm: "baseline" | "candidate";
+    pair: FrozenContentComparisonPlan;
+  };
   campaignPlans?: Record<QualificationProfile, ReturnType<typeof createEvaluationPlan>>;
   pilotPlans?: Record<EnterpriseThinkingLevel, ReturnType<typeof createEnterprisePilotPlan>>;
   metadata: ReturnType<typeof createEvaluationPlan>["metadata"] & {

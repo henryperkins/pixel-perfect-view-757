@@ -40,7 +40,11 @@ import {
   qualificationPolicy,
   type QualificationProfile,
 } from "./ai/qualification-profiles";
-import { readingEvaluationRunInputSchema } from "./ai/reading-evaluation.shared";
+import {
+  readingEvaluationRunInputSchema,
+  readingEvaluationPreviewInputSchema,
+  type ContentComparisonSettings,
+} from "./ai/reading-evaluation.shared";
 import {
   qualificationReservationMicros,
   qualificationTransportIssue,
@@ -48,16 +52,37 @@ import {
 } from "./ai/admin-transport";
 import { startEvaluationWorkflow } from "./workflows.server";
 
+import {
+  resolveContentComparisonSource,
+  type ContentComparisonGuard,
+} from "./content/evaluation-source.server";
+import { draftAdminGuard } from "./content/content-drafts.server";
+import { memberLanguageProvider } from "./ai/language.server";
+import {
+  createContentComparisonPlan,
+  contentComparisonArmPlan,
+  revalidateContentComparisonPlan,
+} from "./ai/content-comparison-plan.server";
+
 const HALT_CODES = new Set(["not_configured", "auth", "credit", "rate_limit"]);
 const jsonValue = (x: unknown): EvaluationJsonValue => JSON.parse(JSON.stringify(x));
 /** Reviewable plans and templates; this read-only call never dispatches a Workflow. */
 export async function previewEvaluationPlan(
   db: DBClient,
   userId: string,
-  settings: ReturnType<typeof readingEvaluationRunInputSchema.parse>,
+  settings: ReturnType<typeof readingEvaluationPreviewInputSchema.parse>,
 ) {
   await requireAdmin(db, userId);
-  readingEvaluationRunInputSchema.parse(settings);
+  readingEvaluationPreviewInputSchema.parse(settings);
+  if ("mode" in settings) {
+    const { pair } = await comparisonPair(db, userId, settings);
+    return {
+      hash: contentComparisonArmPlan(pair, settings.arm).hash,
+      attemptLimit: 8,
+      sourceSha: pair.sourceSha,
+      plans: jsonValue(pair),
+    };
+  }
   const bundle = await evaluationBundle(db, settings.bundleSource);
   const sourceSha = evaluationSourceSha();
   if (settings.enterpriseThinking) {
@@ -134,6 +159,17 @@ function view(row: RunRow): ReadingEvaluationRun {
     message: row.message,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
+    ...(row.plan?.contentComparison
+      ? {
+          campaignId: row.campaign_id!,
+          attemptLimit: row.attempt_limit!,
+          contentComparison: {
+            arm: row.plan.contentComparison.arm,
+            pairHash: row.plan.contentComparison.pair.hash,
+            caseSetId: "draft-pilot-1" as const,
+          },
+        }
+      : {}),
     ...(row.enterprise_thinking
       ? {
           enterpriseThinking: row.enterprise_thinking,
@@ -208,6 +244,238 @@ async function latestRun(db: DBClient, userId: string): Promise<RunRow | null> {
   return data;
 }
 
+/** Return byte guards only after every baseline capture and its accounting is complete. */
+async function comparisonCaptureGuards(db: DBClient, root: RunRow, plan: EvaluationPlan) {
+  const pair = plan.contentComparison!.pair;
+  const { data: rows, error } = await db
+    .from<{
+      id: string;
+      position: number;
+      case_id: string;
+      result: ReadingEvaluationCaseResult | { kind: string };
+      result_identity: string;
+      attempted: number;
+      reserved_micros: number;
+    }>("evaluation_results")
+    .select("id,position,case_id,result,result AS result_identity,attempted,reserved_micros")
+    .eq("run_id", root.id)
+    .order("position");
+  if (error) throw Error("The baseline captures could not be verified.");
+  if (!rows || rows.length !== 4)
+    throw Error("The comparison requires four complete baseline captures.");
+  const guards: ContentComparisonGuard[] = [
+    {
+      sql: "SELECT CASE WHEN (SELECT count(*) FROM evaluation_results WHERE run_id=?)=4 THEN 1 ELSE json('comparison-baseline-captures-changed') END",
+      params: [root.id],
+    },
+  ];
+  let actualModel: string | null = null;
+  for (const [position, row] of rows.entries()) {
+    if (!row.result || "kind" in row.result)
+      throw Error("The comparison baseline has an uncertain or missing capture.");
+    const result = row.result;
+    const fixed = plan.cases[position]!;
+    const diagnostics = readDailyDiagnostics(result.case?.diagnostics);
+    const trace = result.case?.transport;
+    const expectedComparison = {
+      version: "content-comparison-1",
+      arm: "baseline",
+      pairHash: pair.hash,
+      baselineCanonicalHash: pair.identities.baseline.canonicalHash,
+      candidateCanonicalHash: pair.identities.candidate.canonicalHash,
+      caseSetId: "draft-pilot-1",
+    };
+    const metadata = result.metadata as unknown as Record<string, unknown> | undefined;
+    const metadataMatches =
+      metadata &&
+      Object.entries(plan.metadata).every(
+        ([key, value]) =>
+          value === null ||
+          ["maxInputBytes", "maxOutputTokens"].includes(key) ||
+          metadata[key] === value,
+      );
+    if (
+      row.position !== position ||
+      row.case_id !== fixed.id ||
+      result.case?.id !== fixed.id ||
+      result.case.configHash !== fixed.configHash ||
+      JSON.stringify(result.case.facts) !== JSON.stringify(fixed.facts) ||
+      JSON.stringify(result.case.interpretationPlan) !== JSON.stringify(fixed.interpretationPlan) ||
+      result.case.template?.body !== fixed.template.body ||
+      !metadataMatches ||
+      result.metadata.bundleSource !== "content-comparison" ||
+      result.metadata.runPlanHash !== plan.hash ||
+      JSON.stringify(result.metadata.contentComparison) !== JSON.stringify(expectedComparison) ||
+      !diagnostics?.attempted ||
+      diagnostics.outcome === "unavailable" ||
+      HALT_CODES.has(diagnostics.code) ||
+      (diagnostics.outcome === "accepted") !== (result.case.output?.mode === "model") ||
+      result.controller?.status !== (position === 3 ? "complete" : "running") ||
+      row.attempted !== 1 ||
+      !trace ||
+      trace.provider !== pair.provider ||
+      trace.requestedModel !== pair.model ||
+      trace.deadlineMs !== plan.metadata.gatewayTimeoutMs ||
+      qualificationTransportIssue(trace) ||
+      row.reserved_micros !== qualificationReservationMicros(trace, true) ||
+      (actualModel !== null && trace.actualModel !== actualModel)
+    )
+      throw Error(
+        "The comparison baseline capture identity or reservation is incomplete or inconsistent.",
+      );
+    actualModel = trace.actualModel;
+    guards.push({
+      sql: "SELECT CASE WHEN EXISTS(SELECT 1 FROM evaluation_results WHERE id=? AND run_id=? AND position=? AND case_id=? AND result=? AND attempted=? AND reserved_micros=?) THEN 1 ELSE json('comparison-baseline-capture-changed') END",
+      params: [
+        row.id,
+        root.id,
+        row.position,
+        row.case_id,
+        row.result_identity,
+        row.attempted,
+        row.reserved_micros,
+      ],
+    });
+  }
+  return guards;
+}
+
+/** A candidate arm always uses the pair frozen by its baseline, even after draft edits. */
+async function comparisonPair(
+  db: DBClient,
+  userId: string,
+  settings: ReturnType<
+    typeof import("./ai/reading-evaluation.shared").contentComparisonPreviewSchema.parse
+  >,
+) {
+  if (settings.provider !== memberLanguageProvider())
+    throw Error("Content comparison must use the currently selected member provider.");
+  if (settings.arm === "baseline") {
+    if (settings.campaignId) throw Error("The baseline starts a new comparison campaign.");
+    const resolved = await resolveContentComparisonSource(db, userId, settings.source);
+    return {
+      pair: createContentComparisonPlan(resolved, evaluationSourceSha(), settings.provider),
+      guards: resolved.guards,
+      root: null,
+    };
+  }
+  if (!settings.campaignId) throw Error("The candidate requires its completed baseline campaign.");
+  const { data: root, error } = await db
+    .from<RunRow>("evaluation_runs")
+    .select(RUN_COLUMNS)
+    .eq("id", settings.campaignId)
+    .eq("user_id", userId)
+    .maybeSingle();
+  if (error) throw Error(error.message);
+  if (
+    !root ||
+    root.status !== "complete" ||
+    root.completed !== 4 ||
+    root.campaign_id !== root.id ||
+    root.arm_key !== "content-baseline" ||
+    !root.plan?.contentComparison ||
+    root.provider !== settings.provider
+  )
+    throw Error("The candidate requires a complete baseline from this content comparison.");
+  const pair = revalidateContentComparisonPlan(
+    root.plan.contentComparison.pair,
+    evaluationSourceSha(),
+    settings.provider,
+  );
+  const baselinePlan = contentComparisonArmPlan(pair, "baseline");
+  if (JSON.stringify(root.plan) !== JSON.stringify(baselinePlan))
+    throw Error("The completed baseline arm plan failed its integrity check.");
+  if (JSON.stringify(pair.source) !== JSON.stringify(settings.source))
+    throw Error("The comparison source selector changed.");
+  const guards: ContentComparisonGuard[] = [
+    draftAdminGuard(userId),
+    {
+      sql: "SELECT CASE WHEN EXISTS(SELECT 1 FROM evaluation_runs WHERE id=? AND user_id=? AND status='complete' AND completed=4 AND plan=?) THEN 1 ELSE json('comparison-baseline-changed') END",
+      params: [root.id, userId, JSON.stringify(root.plan)],
+    },
+    ...(await comparisonCaptureGuards(db, root, baselinePlan)),
+  ];
+  await requireAdmin(db, userId);
+  return { pair, guards, root };
+}
+async function startContentComparisonRun(
+  db: DBClient,
+  userId: string,
+  settings: ContentComparisonSettings,
+  origin: string,
+) {
+  const { pair, guards, root } = await comparisonPair(db, userId, settings);
+  const plan = contentComparisonArmPlan(pair, settings.arm);
+  if (plan.hash !== settings.expectedPlanHash)
+    throw Error("The reviewed comparison plan changed. Prepare a new dry plan.");
+  if (
+    root
+      ? !!settings.budget
+      : !settings.budget || settings.budget.reviewReserveCents >= settings.budget.dollarCeilingCents
+  )
+    throw Error(
+      "Set the immutable budget on the baseline only, up to $5 with a separate review reserve.",
+    );
+  const ceiling = root?.dollar_ceiling_micros ?? settings.budget!.dollarCeilingCents * 10_000;
+  const reserve = root?.review_reserve_micros ?? settings.budget!.reviewReserveCents * 10_000;
+  if (!ceiling || ceiling > 5_000_000 || reserve < 0 || reserve >= ceiling)
+    throw Error("Invalid content comparison budget.");
+  if (Buffer.byteLength(JSON.stringify(plan)) > 1_900_000)
+    throw Error("Frozen comparison exceeds the database row size.");
+  const runId = crypto.randomUUID(),
+    campaignId = root?.id ?? runId,
+    armKey = `content-${settings.arm}`;
+  const now = new Date().toISOString();
+  const cutoff = new Date(Date.now() - READING_EVALUATION_STALL_MS).toISOString();
+  const result = await db.batch([
+    ...guards,
+    {
+      sql: "INSERT INTO evaluation_runs(id,user_id,status,provider,bundle_source,case_ids,completed,plan,campaign_id,attempt_limit,dollar_ceiling_micros,review_reserve_micros,created_at,updated_at,arm_key,campaign_attempt_limit) SELECT ?,?,'queued',?,'content-comparison',?,0,?,?,4,?,?,?,?,?,8 WHERE NOT EXISTS(SELECT 1 FROM evaluation_runs WHERE user_id=? AND status IN ('queued','running','stopping') AND julianday(updated_at)>julianday(?)) AND NOT EXISTS(SELECT 1 FROM evaluation_runs WHERE campaign_id=? AND arm_key=?) RETURNING id",
+      params: [
+        runId,
+        userId,
+        settings.provider,
+        JSON.stringify(plan.cases.map((c) => c.id)),
+        JSON.stringify(plan),
+        campaignId,
+        ceiling,
+        reserve,
+        now,
+        now,
+        armKey,
+        userId,
+        cutoff,
+        campaignId,
+        armKey,
+      ],
+    },
+  ]);
+  if (!result.at(-1)?.results.length)
+    throw Error("An evaluation is already running or this comparison arm already started.");
+  const { data: created, error } = await db
+    .from<RunRow>("evaluation_runs")
+    .select(RUN_COLUMNS)
+    .eq("id", runId)
+    .single();
+  if (error || !created) throw Error(error?.message ?? "Comparison run could not be read.");
+  const base = (process.env["PATTERN_APP_URL"] || origin).replace(/\/$/, "");
+  const started = await startEvaluationWorkflow({
+    runId,
+    total: 4,
+    callback: `${base}/api/public/evaluation-step`,
+    planHash: plan.hash,
+  });
+  if (!started?.ok) {
+    const message =
+      "Workflow dispatch could not be confirmed. No retry was made; the campaign is retained.";
+    await updateRun(db, runId, { status: "error", message });
+    throw Error(message);
+  }
+  return view(
+    (await updateRun(db, runId, { workflow_instance_id: started.instanceId })) ?? created,
+  );
+}
+
 /** Starts a run that continues on the edge plane until it completes, stops or halts. */
 export async function startEvaluationRun(
   db: DBClient,
@@ -216,6 +484,11 @@ export async function startEvaluationRun(
   origin: string,
 ): Promise<ReadingEvaluationRun> {
   await requireAdmin(db, userId);
+  if ("mode" in settings) {
+    readingEvaluationRunInputSchema.parse(settings);
+    return startContentComparisonRun(db, userId, settings, origin);
+  }
+
   if (!(READING_EVALUATION_BUNDLE_SOURCES as readonly unknown[]).includes(settings.bundleSource))
     throw new Error("Unknown synthetic evaluation bundle.");
   if (!(LANGUAGE_PROVIDERS as readonly unknown[]).includes(settings.provider))
@@ -491,7 +764,10 @@ async function caseDisposition(
   const diagnostics = readDailyDiagnostics(result.case.diagnostics);
   if (!diagnostics)
     return { ...base, status: "error", message: "The captured case has invalid diagnostics." };
-  if (HALT_CODES.has(diagnostics.code))
+  if (
+    HALT_CODES.has(diagnostics.code) ||
+    (run.plan?.contentComparison && diagnostics.outcome === "unavailable")
+  )
     return {
       ...base,
       status: "halted",
@@ -530,16 +806,21 @@ async function caseDisposition(
   }
   const actual = result.case.transport?.actualModel;
   if (actual) {
-    const known = await db.exec<{ actual: string }>(
-      "SELECT DISTINCT json_extract(result,'$.case.transport.actualModel') actual FROM evaluation_results WHERE run_id=? AND json_valid(result) AND json_extract(result,'$.case.transport.actualModel') IS NOT NULL",
-      [run.id],
-    );
+    const known = run.plan?.contentComparison
+      ? await db.exec<{ actual: string }>(
+          "SELECT DISTINCT json_extract(e.result,'$.case.transport.actualModel') actual FROM evaluation_results e JOIN evaluation_runs r ON r.id=e.run_id WHERE r.campaign_id=? AND r.user_id=? AND json_valid(e.result) AND json_extract(e.result,'$.case.transport.actualModel') IS NOT NULL",
+          [run.campaign_id, run.user_id],
+        )
+      : await db.exec<{ actual: string }>(
+          "SELECT DISTINCT json_extract(result,'$.case.transport.actualModel') actual FROM evaluation_results WHERE run_id=? AND json_valid(result) AND json_extract(result,'$.case.transport.actualModel') IS NOT NULL",
+          [run.id],
+        );
     if (known.some((row) => row.actual !== actual))
       return {
         ...base,
-        status: "error",
+        status: run.plan?.contentComparison ? "halted" : "error",
         message:
-          "The reported model identity changed during this run. This capture is retained; remaining cases were not requested.",
+          "The reported model identity changed during this run or its comparison campaign. This capture is retained; remaining cases were not requested.",
       };
   }
   if (actual && !/^(?:google\/)?gemini-3\.8-flash(?:-\d{3,8})?$/.test(actual))
@@ -549,7 +830,10 @@ async function caseDisposition(
       message:
         "The reported model differs from the frozen configuration. This capture is retained.",
     };
-  if ((run.qualification_profile || run.enterprise_thinking) && diagnostics.attempted) {
+  if (
+    (run.qualification_profile || run.enterprise_thinking || run.plan?.contentComparison) &&
+    diagnostics.attempted
+  ) {
     const issue = qualificationTransportIssue(result.case.transport ?? undefined);
     if (issue)
       return {
@@ -692,20 +976,34 @@ export async function evaluationStep(
     });
     return { next: false };
   }
-  const capturedBundle = await evaluationBundle(db, run.bundle_source);
-  const currentPlan = run.enterprise_thinking
-    ? createEnterprisePilotPlan(capturedBundle, run.enterprise_thinking, evaluationSourceSha())
-    : createEvaluationPlan(
-        capturedBundle,
-        run.qualification_profile ?? undefined,
+  let capturedBundle: import("./content/default-bundle").ContentBundle;
+  let currentPlan: EvaluationPlan;
+  try {
+    if (run.plan.contentComparison) {
+      const pair = revalidateContentComparisonPlan(
+        run.plan.contentComparison.pair,
         evaluationSourceSha(),
-        run.provider,
+        memberLanguageProvider(),
       );
-  if (currentPlan.hash !== run.plan.hash) {
+      currentPlan = contentComparisonArmPlan(pair, run.plan.contentComparison.arm);
+      capturedBundle = pair.bundles[run.plan.contentComparison.arm];
+    } else {
+      capturedBundle = await evaluationBundle(db, run.bundle_source);
+      currentPlan = run.enterprise_thinking
+        ? createEnterprisePilotPlan(capturedBundle, run.enterprise_thinking, evaluationSourceSha())
+        : createEvaluationPlan(
+            capturedBundle,
+            run.qualification_profile ?? undefined,
+            evaluationSourceSha(),
+            run.provider,
+          );
+    }
+    if (currentPlan.hash !== run.plan.hash) throw Error("Frozen plan mismatch.");
+  } catch {
     await updateRun(db, run.id, {
       status: "error",
       message:
-        "Frozen evaluation source or policy changed. This case was stopped before provider traffic.",
+        "Frozen evaluation source, provider or policy changed. This case stopped before provider traffic.",
     });
     return { next: false };
   }
@@ -724,9 +1022,12 @@ export async function evaluationStep(
   // Reserve a conservative amount before transport. Unknown billing keeps its
   // full reservation; billing estimates never masquerade as an invoice.
   const reservedMicros =
-    (run.qualification_profile || run.enterprise_thinking) && planned.expectsModel ? 2_800_000 : 0;
+    (run.qualification_profile || run.enterprise_thinking || run.plan?.contentComparison) &&
+    planned.expectsModel
+      ? 2_800_000
+      : 0;
   const [claimed] = await db.exec<{ id: string }>(
-    "INSERT INTO evaluation_results(id,run_id,position,case_id,result,reserved_micros,attempted) SELECT ?,?,?,?,?,?,? WHERE EXISTS(SELECT 1 FROM evaluation_runs r WHERE r.id=? AND r.completed=? AND r.status IN ('queued','running') AND (SELECT COALESCE(SUM(e.attempted),0) FROM evaluation_results e WHERE e.run_id=r.id)+?<=r.attempt_limit AND (r.campaign_id IS NULL OR ((SELECT COALESCE(SUM(e.attempted),0) FROM evaluation_results e JOIN evaluation_runs a ON a.id=e.run_id WHERE a.campaign_id=r.campaign_id)+?<=r.campaign_attempt_limit AND (SELECT COALESCE(SUM(e.reserved_micros),0) FROM evaluation_results e JOIN evaluation_runs a ON a.id=e.run_id WHERE a.campaign_id=r.campaign_id)+?<=r.dollar_ceiling_micros-r.review_reserve_micros))) ON CONFLICT(run_id,position) DO NOTHING RETURNING id",
+    "INSERT INTO evaluation_results(id,run_id,position,case_id,result,reserved_micros,attempted) SELECT ?,?,?,?,?,?,? WHERE EXISTS(SELECT 1 FROM evaluation_runs r WHERE r.id=? AND r.completed=? AND r.status IN ('queued','running') AND EXISTS(SELECT 1 FROM user_roles WHERE user_id=r.user_id AND role='admin') AND (SELECT COALESCE(SUM(e.attempted),0) FROM evaluation_results e WHERE e.run_id=r.id)+?<=r.attempt_limit AND (r.campaign_id IS NULL OR ((SELECT COALESCE(SUM(e.attempted),0) FROM evaluation_results e JOIN evaluation_runs a ON a.id=e.run_id WHERE a.campaign_id=r.campaign_id)+?<=r.campaign_attempt_limit AND (SELECT COALESCE(SUM(e.reserved_micros),0) FROM evaluation_results e JOIN evaluation_runs a ON a.id=e.run_id WHERE a.campaign_id=r.campaign_id)+?<=r.dollar_ceiling_micros-r.review_reserve_micros))) ON CONFLICT(run_id,position) DO NOTHING RETURNING id",
     [
       reservationId,
       run.id,
@@ -758,6 +1059,17 @@ export async function evaluationStep(
     if (latestError) throw Error(latestError.message);
     if (!winner && latest?.status === "stopping")
       await updateRun(db, run.id, { status: "stopped" });
+    else if (
+      !winner &&
+      latest &&
+      readingEvaluationRunActive(latest.status) &&
+      !(await isAdmin(db, run.user_id))
+    )
+      await updateRun(db, run.id, {
+        status: "error",
+        message:
+          "The admin authority changed before the attempt was reserved. No case was requested.",
+      });
     else if (!winner && latest && readingEvaluationRunActive(latest.status))
       await updateRun(db, run.id, {
         status: "halted",
@@ -777,6 +1089,22 @@ export async function evaluationStep(
       {
         ...(run.qualification_profile ? { profile: run.qualification_profile } : {}),
         ...(run.enterprise_thinking ? { enterpriseThinking: run.enterprise_thinking } : {}),
+        ...(run.plan.contentComparison
+          ? {
+              boundedQualification: true,
+              caseSetId: "draft-pilot-1" as const,
+              contentComparison: {
+                version: "content-comparison-1" as const,
+                arm: run.plan.contentComparison.arm,
+                pairHash: run.plan.contentComparison.pair.hash,
+                baselineCanonicalHash:
+                  run.plan.contentComparison.pair.identities.baseline.canonicalHash,
+                candidateCanonicalHash:
+                  run.plan.contentComparison.pair.identities.candidate.canonicalHash,
+                caseSetId: "draft-pilot-1" as const,
+              },
+            }
+          : {}),
         sourceSha: run.plan.sourceSha,
         runPlanHash: run.plan.hash,
       },
@@ -811,7 +1139,7 @@ export async function evaluationStep(
       result: { ...result, controller: await caseDisposition(db, run, result, step.position) },
       attempted: diagnostics.attempted ? 1 : 0,
       reserved_micros:
-        run.qualification_profile || run.enterprise_thinking
+        run.qualification_profile || run.enterprise_thinking || run.plan?.contentComparison
           ? qualificationReservationMicros(
               result.case.transport ?? undefined,
               diagnostics.attempted,

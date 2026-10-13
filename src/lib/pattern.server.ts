@@ -3093,6 +3093,9 @@ export async function evaluateFixedCase(
     enterpriseThinking?: import("./ai/admin-transport").EnterpriseThinkingLevel;
     sourceSha: string | null;
     runPlanHash: string;
+    caseSetId?: import("./ai/evaluation-case-sets").EvaluationCaseSetId;
+    contentComparison?: import("./ai/reading-evaluation.shared").ReadingEvaluationMetadata["contentComparison"];
+    boundedQualification?: boolean;
   },
   frozenBundle?: ContentBundle,
 ) {
@@ -3107,7 +3110,10 @@ export async function evaluateFixedCase(
     qualification?.profile,
     qualification?.enterpriseThinking
       ? { enterpriseThinking: qualification.enterpriseThinking, boundedQualification: true }
-      : {},
+      : qualification?.boundedQualification
+        ? { boundedQualification: true }
+        : {},
+    qualification?.caseSetId,
   );
   return {
     ...result,
@@ -3118,6 +3124,9 @@ export async function evaluateFixedCase(
         ? {
             sourceSha: qualification.sourceSha,
             runPlanHash: qualification.runPlanHash,
+            ...(qualification.contentComparison
+              ? { contentComparison: qualification.contentComparison }
+              : {}),
             requestPolicyVersion: "synthetic-facts-local-context-1",
           }
         : {}),
@@ -3130,8 +3139,8 @@ export async function listLanguageProviders(db: DB, userId: string) {
   if (!(await isAdmin(db, userId))) {
     throw new Error("Only admins can view language providers.");
   }
-  const { languageProviderStatus } = await import("./ai/language.server");
-  return { providers: languageProviderStatus() };
+  const { languageProviderStatus, memberLanguageProvider } = await import("./ai/language.server");
+  return { providers: languageProviderStatus(), memberProvider: memberLanguageProvider() };
 }
 
 /**
@@ -3662,6 +3671,7 @@ export async function draftRelease(db: DB, userId: string, provider: LanguagePro
       model: drafted.model,
       bundle: bundle,
       notes: {
+        promptVersion: drafted.promptVersion,
         requested: DRAFT_SLOTS.length,
         returned: draftedMap.size,
         dropped,

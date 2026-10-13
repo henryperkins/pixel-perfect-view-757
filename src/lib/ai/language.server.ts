@@ -1292,9 +1292,59 @@ const BUNDLE_SCHEMA: JsonSchemaObject = {
 export interface DraftResult {
   entries: DraftedEntry[];
   model: string;
+  promptVersion: string;
   dropped: number;
   flagged: string[];
 }
+
+export const BUNDLE_DRAFT_PROMPT_VERSION = "bundle-draft-v2";
+
+const BUNDLE_DRAFT_BRIEFS: Record<string, { hard: string; soft: string }> = {
+  saturn: {
+    hard: "Commitment versus available capacity",
+    soft: "A routine sustainable at an ordinary pace",
+  },
+  jupiter: {
+    hard: "Added scope versus room to carry it",
+    soft: "One additional option within an existing plan",
+  },
+  mars: {
+    hard: "Urgency versus task pace",
+    soft: "Effort with a clear next action",
+  },
+  venus: {
+    hard: "Habitual choice versus current preference",
+    soft: "A small preference that is easy to name",
+  },
+  mercury: {
+    hard: "Intended meaning versus wording",
+    soft: "An idea becoming understandable",
+  },
+  sun: {
+    hard: "A role versus what receives attention",
+    soft: "A description fitting a chosen activity",
+  },
+  moon: {
+    hard: "A moment versus a familiar rhythm",
+    soft: "An ordinary arrangement that feels comfortable",
+  },
+  uranus: {
+    hard: "A familiar arrangement versus room to vary it",
+    soft: "A small alternative without forced disruption",
+  },
+  neptune: {
+    hard: "Impression versus available detail",
+    soft: "Imagination with uncertainty left explicit",
+  },
+  pluto: {
+    hard: "An established arrangement versus what remains negotiable",
+    soft: "Deliberate attention to a lasting priority",
+  },
+  "*": {
+    hard: "Competing preferences without assuming a problem or a required resolution",
+    soft: "An ordinary moment of ease without requiring a productive outcome",
+  },
+};
 
 export async function generateBundleEntries(
   specs: BundleSpec[],
@@ -1302,17 +1352,24 @@ export async function generateBundleEntries(
 ): Promise<DraftResult> {
   const wanted = new Set(specs.map((s) => s.key));
   const prompt = [
+    `Bundle drafting prompt: ${BUNDLE_DRAFT_PROMPT_VERSION}.`,
     "Each line below is an interpretation slot that needs reusable copy.",
     "A `hard` family means conjunction, square or opposition; `soft` means trine or sextile.",
     "A `*` means the slot is a catch-all for that position.",
     "",
-    ...specs.map(
-      (s) =>
-        `${s.key} — ${s.family} aspect from transiting ${s.transitBody} to natal ${s.natalPoint}`,
-    ),
+    ...specs.map((s) => {
+      const brief = BUNDLE_DRAFT_BRIEFS[s.key.split(":")[1] ?? ""];
+      const distinction = s.family === "hard" ? brief?.hard : brief?.soft;
+      return `${s.key} — ${s.family} aspect from transiting ${s.transitBody} to natal ${s.natalPoint}${distinction ? `; reflective brief: ${distinction}` : ""}`;
+    }),
     "",
-    "For each slot return the exact key, a two-to-three sentence mechanism (what the contact is and what it tends to coincide with),",
-    "and one reflection question. Copy is reused for every reader, so it must not mention dates, orbs or personal circumstances.",
+    "For each slot return the exact key, a two-to-three sentence mechanism and one separate open reflection question in the question field.",
+    "Use conditional framing for reflection: the contact offers a way to consider the supplied distinction, not evidence that it describes this reader. These briefs are proposed reflective contrasts, not new chart facts.",
+    "Include exactly one concrete, conditional everyday comparison in each mechanism. A comparison is hypothetical; do not claim the scene occurred or invent a reader's history.",
+    "Use familiar verbs and concise prose. Vary openings and sentence structure across the whole set; do not repeat the same three-sentence template or add decorative synonyms for variety.",
+    "No planetary causation, mandatory outcomes, unsupported frequency, diagnoses or presumed biography. Do not claim a planet makes, forces, disrupts or requires anything; do not add tends to, often, usually or always.",
+    "The question must allow answers such as 'nothing' or 'that does not fit' without assuming imbalance, a boundary problem, a changed preference or a productivity demand. Do not put another question in the mechanism.",
+    "Copy is reused for every reader, so it must not mention dates, orbs or personal circumstances. Return only the supplied slots and fields; do not add themes or synthesis relationships.",
   ].join("\n");
 
   const raw = await callGateway<{ entries: DraftedEntry[] }>(
@@ -1340,6 +1397,7 @@ export async function generateBundleEntries(
   return {
     entries,
     model: languageModel(provider),
+    promptVersion: BUNDLE_DRAFT_PROMPT_VERSION,
     dropped,
     flagged: [...new Set(flagged)],
   };

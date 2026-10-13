@@ -311,6 +311,7 @@ test("provider status and Gemini Enterprise runs are admin-only and expose no ke
   await makeAdmin();
   const status = await h.app.listLanguageProviders(h.records(), h.userA);
   assert.deepEqual(status, {
+    memberProvider: "gemini-enterprise",
     providers: [
       {
         id: "lovable",

@@ -7,6 +7,7 @@ import { LIFE_DOMAINS } from "./context-policy";
 import {
   readingEvaluationInputSchema,
   readingEvaluationRunInputSchema,
+  readingEvaluationPreviewInputSchema,
 } from "./ai/reading-evaluation.shared";
 
 export const fetchToday = createServerFn({ method: "POST" })
@@ -464,7 +465,7 @@ export const startReadingEvaluationRun = createServerFn({ method: "POST" })
 
 export const previewReadingEvaluationPlan = createServerFn({ method: "POST" })
   .middleware([requireAuth])
-  .inputValidator((d: unknown) => readingEvaluationRunInputSchema.parse(d))
+  .inputValidator((d: unknown) => readingEvaluationPreviewInputSchema.parse(d))
   .handler(async ({ data, context }) => {
     const m = await import("./evaluation-runs.server");
     return m.previewEvaluationPlan(context.db, context.userId, data);

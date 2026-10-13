@@ -1,0 +1,50 @@
+{
+  "flow": "Saved draft \u2192 prepare frozen pilot \u2192 baseline \u2192 page reload \u2192 frozen candidate \u2192 evidence download",
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "browser": "Chromium with mocked transport; Browser plugin unavailable",
+  "checks": [
+    "zero automatic starts",
+    "keyboard open and retained closed content",
+    "source switch clears prepared state",
+    "stale preview rejection clears start",
+    "budget error preserves safe state",
+    "frozen pair download",
+    "baseline exact $5 budget",
+    "baseline recovery survives refresh",
+    "candidate binds frozen campaign and has no replacement budget",
+    "paired evidence download",
+    "uncertain/halted state cannot restart",
+    "poll slower than 4 seconds does not overlap or starve",
+    "delayed baseline poll cannot overwrite candidate state or persisted run ID",
+    "inactive release preview carries exact candidate/baseline IDs",
+    "baseline switch clears release preparation",
+    "same release excluded as baseline",
+    "no viewport overflow",
+    "no console/page errors"
+  ],
+  "providerCalls": 0,
+  "consoleErrors": [],
+  "screenshots": [
+    "desktop-prepared.png",
+    "mobile-completed.png",
+    "mobile-release-preview.png"
+  ],
+  "sourceFiles": {
+    "src/components/pattern/ContentDraftEvaluation.tsx": "fb5db2bdfed51f8ab279efc261ae56a9ec9f649657cb6aa7713b012dd075bc97",
+    "src/routes/_authenticated/content.tsx": "8b2379265b0d857b12d0cf442fb1623c01ba37a71c6605940877951235f27a50"
+  },
+  "limits": [
+    "Actual pilot components and app stylesheet rendered in a local fixture shell, not an authenticated production route.",
+    "All server functions were mocked; no real provider or Workflow requests.",
+    "Chromium only; no cross-engine qualification."
+  ]
+}

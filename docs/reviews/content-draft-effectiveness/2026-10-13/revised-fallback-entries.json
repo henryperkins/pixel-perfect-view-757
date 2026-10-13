@@ -1,0 +1,117 @@
+{
+  "version": "2026-10-13.2",
+  "promptVersion": "bundle-draft-v2",
+  "status": "proposed",
+  "entries": [
+    {
+      "key": "hard:saturn:*",
+      "mechanism": "A weekly task could still matter when its allotted hour is too full to hold it. Its importance does not determine how much time is available.",
+      "question": "Which commitment, if any, would you like to compare with the room you have for it?"
+    },
+    {
+      "key": "soft:saturn:*",
+      "mechanism": "A small recurring task might fit between two parts of a day without a special burst of effort. Its place in the routine can leave room for pauses as well as completion.",
+      "question": "What routine, if any, feels manageable at your ordinary pace?"
+    },
+    {
+      "key": "hard:jupiter:*",
+      "mechanism": "Adding something appealing can also change the size of a plan. An extra book on a reading list could illustrate that distinction: the new subject may interest you while the time set aside stays the same.",
+      "question": "What addition, if any, would you like to weigh against the room in an existing plan?"
+    },
+    {
+      "key": "soft:jupiter:*",
+      "mechanism": "There can be more than one way to use the room inside a plan. A spare hour on an outing might leave a choice between two nearby places. The additional option does not require visiting both.",
+      "question": "What additional option, if any, fits within something you already have planned?"
+    },
+    {
+      "key": "hard:mars:*",
+      "mechanism": "Wanting to finish can run ahead of the pace a task allows. If a reply is begun before a question is fully explained, it may need to wait for the missing detail.",
+      "question": "Where, if anywhere, is your preferred pace out of step with the task?"
+    },
+    {
+      "key": "soft:mars:*",
+      "mechanism": "If a shelf has a loose screw and the right screwdriver is at hand, the next action may be clear. The effort has somewhere specific to go, even if the rest of the room stays as it is.",
+      "question": "What, if anything, has a next step you can clearly describe?"
+    },
+    {
+      "key": "hard:venus:*",
+      "mechanism": "A familiar choice and a present preference can be considered side by side. At an imagined menu, the usual order might still appeal, or another choice might fit better.",
+      "question": "Which familiar choice, if any, would you like to consider afresh?"
+    },
+    {
+      "key": "soft:venus:*",
+      "mechanism": "Wanting to hear a particular song while making a meal could be a simple expression of preference. A small choice can be clear without a lengthy explanation.",
+      "question": "What small preference, if any, is easy for you to name?"
+    },
+    {
+      "key": "hard:mercury:*",
+      "mechanism": "Having a point in mind and finding words for it are separate tasks. Rereading a message before sending might reveal a detail left out because it seemed clear in thought.",
+      "question": "Where, if anywhere, would different wording come closer to what you mean?"
+    },
+    {
+      "key": "soft:mercury:*",
+      "mechanism": "Writing three steps in order could make an idea easier to follow. The words give someone else a way to trace what first seemed clear only in thought.",
+      "question": "Which idea, if any, feels easier to explain in your own words?"
+    },
+    {
+      "key": "hard:sun:*",
+      "mechanism": "Someone introduced as an organizer might spend an afternoon arranging one small part of an event. The title names a broad role; the detail holds their attention.",
+      "question": "What, if anything, receives your attention beyond the way you describe your role?"
+    },
+    {
+      "key": "soft:sun:*",
+      "mechanism": "A description can feel fitting when it names something you choose to do. The word maker, for example, might fit an afternoon spent putting together a small object by hand.",
+      "question": "What description, if any, feels close to an activity you choose for yourself?"
+    },
+    {
+      "key": "hard:moon:*",
+      "mechanism": "A passing moment can feel different from a familiar rhythm without making that rhythm wrong. An empty kitchen at an hour set aside for cooking might feel unexpectedly quiet.",
+      "question": "What, if anything, feels different from your usual rhythm today?"
+    },
+    {
+      "key": "soft:moon:*",
+      "mechanism": "A chair placed where the light suits a page might be a small example of comfort. An ordinary arrangement can feel fitting as it is.",
+      "question": "Which ordinary arrangement, if any, feels comfortable as it is?"
+    },
+    {
+      "key": "hard:uranus:*",
+      "mechanism": "A familiar arrangement can be useful while leaving little room to vary an approach. A desk layout could suit one kind of task while crowding another.",
+      "question": "Which familiar approach, if any, would you like more room to vary?"
+    },
+    {
+      "key": "soft:uranus:*",
+      "mechanism": "Trying a small alternative can leave the rest of an arrangement intact. A different order for sorting a few files could be tried with the original order still available.",
+      "question": "What small alternative, if any, would you be curious to try?"
+    },
+    {
+      "key": "hard:neptune:*",
+      "mechanism": "An impression can be vivid while the available detail remains incomplete. A blurred photograph might suggest a scene without showing enough to identify every part of it.",
+      "question": "Where, if anywhere, would you like to distinguish an impression from what you can describe?"
+    },
+    {
+      "key": "soft:neptune:*",
+      "mechanism": "Several shapes might be imagined in an unfinished sketch. Leaving them as possibilities makes room for imagination without treating it as evidence of what is there.",
+      "question": "What possibility, if any, would you like to imagine without settling it?"
+    },
+    {
+      "key": "hard:pluto:*",
+      "mechanism": "A recurring meeting might have a set time but a changeable agenda. Knowing which parts remain open to discussion can make a proposed change more specific.",
+      "question": "What part of an established arrangement, if any, still feels open to discussion?"
+    },
+    {
+      "key": "soft:pluto:*",
+      "mechanism": "A lasting priority can receive deliberate attention in an ordinary moment. Choosing one item to keep in a personal collection could illustrate care for something that continues to matter.",
+      "question": "What, if anything, continues to matter enough to hold your attention?"
+    },
+    {
+      "key": "hard:*:*",
+      "mechanism": "Two reasonable preferences can pull in different directions without either being a mistake. A plan for both a quiet afternoon and a lively gathering might leave a choice about how to divide the time.",
+      "question": "What preferences, if any, would you like to consider alongside each other?"
+    },
+    {
+      "key": "soft:*:*",
+      "mechanism": "Some moments can involve less friction than expected. An exchange in which a simple request is easily understood might illustrate that ease. There is no requirement to turn the ease into another task.",
+      "question": "What, if anything, has felt easier than expected?"
+    }
+  ]
+}

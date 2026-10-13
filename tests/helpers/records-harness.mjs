@@ -186,6 +186,8 @@ export async function createRecordsHarness() {
   try {
     vite = await createServer({
       root: projectRoot,
+      // Concurrent suites must not remove or rebuild another harness's Vite cache.
+      cacheDir: join(directory, "vite-cache"),
       configFile: false,
       envFile: false,
       define: { __PATTERN_SOURCE_SHA__: JSON.stringify("a".repeat(40)) },

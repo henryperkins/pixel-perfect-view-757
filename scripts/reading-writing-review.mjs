@@ -7,6 +7,11 @@ import { createHash, randomInt } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  compareContentReports,
+  freezeContentReviewRubric,
+  CONTENT_REFLECTION_INSTRUCTIONS,
+} from "./reading-content-comparison.mjs";
 
 export const PROTOCOL_VERSION = "daily-writing-ai-review-1";
 const DEFAULT_CONTEXTS = ["reviewer-a", "reviewer-b"];
@@ -141,6 +146,7 @@ export function prepareReview({
   instructions,
   random = cryptoRandom,
   contexts = DEFAULT_CONTEXTS,
+  contentPlan = undefined,
 }) {
   checkReport("before", before?.report);
   checkReport("after", after?.report);
@@ -165,14 +171,20 @@ export function prepareReview({
       throw new Error(
         `The ${label} report is not a hosted live-synthetic run; offline replays contain no model writing`,
       );
+  const contentComparison = contentPlan
+    ? compareContentReports(before.report, after.report, { plan: contentPlan })
+    : null;
+  if (contentComparison) instructions += `\n\n${CONTENT_REFLECTION_INSTRUCTIONS}`;
   for (const [field, label] of [
     ["fixtureVersion", "fixture version"],
     ["caseSetHash", "case set"],
     ["model", "model"],
-    ["transitCopyHash", "transit copy"],
+    ...(!contentComparison ? [["transitCopyHash", "transit copy"]] : []),
   ])
     if (before.report[field] !== after.report[field])
       throw new Error(`Unmatched reports: the ${label} differs`);
+  if (!contentComparison && (before.report.contentComparison || after.report.contentComparison))
+    throw new Error("Content comparison review requires its explicit frozen content plan");
   const afterConfig = new Map(after.report.cases.map((row) => [row.id, row.configHash]));
   for (const row of before.report.cases)
     if (row.configHash !== afterConfig.get(row.id))
@@ -187,6 +199,19 @@ export function prepareReview({
       quiet: row.diagnostics.code === "no_cycle",
       facts: visibleFacts(row.facts),
       paragraphs,
+      ...(contentComparison
+        ? {
+            sourceQuestion:
+              contentPlan.bundles[run === "before" ? "baseline" : "candidate"].cycles.find(
+                (entry) =>
+                  entry.key ===
+                  row.interpretationPlan.interpretations.find((item) => item.index === 1)
+                    ?.interpretationKey,
+              )?.question ?? null,
+            reflectionQuestion: row.output.prompt,
+            questionReview: "unreviewed",
+          }
+        : {}),
     };
     const key = JSON.stringify(content);
     if (!entries.has(key)) entries.set(key, { content, mappings: [] });
@@ -302,7 +327,141 @@ export function prepareReview({
       items,
       cases,
       uncovered,
+      ...(contentComparison
+        ? { contentComparison, contentReviewRubric: freezeContentReviewRubric(contentPlan) }
+        : {}),
     },
+  };
+}
+
+export const REFLECTION_PROTOCOL_VERSION = "content-reflection-review-1";
+const SOURCE_QUESTION_CHECKS = [
+  "singleQuestion",
+  "answerableWithoutPremise",
+  "consistentWithSources",
+];
+const FINAL_QUESTION_CHECKS = ["answerableWithoutPremise", "consistentWithSources", "coherent"];
+
+/** Blank companion; no checker guesses an editorial answer from punctuation or citations. */
+export function prepareReflectionReview({ assignment, contextId }) {
+  if (!assignment?.contentComparison || !assignment.packets?.[contextId])
+    throw new Error("Reflection review needs a content-pair assignment and assigned context");
+  return {
+    protocolVersion: REFLECTION_PROTOCOL_VERSION,
+    kind: "reflection-review",
+    pairHash: assignment.contentComparison.pairHash,
+    itemSetHash: assignment.itemSetHash,
+    packetSha256: assignment.packets[contextId].sha256,
+    contextId,
+    items: Object.values(assignment.items).map(({ content }) => ({
+      itemId: content.itemId,
+      sourceQuestion: {
+        text: content.sourceQuestion,
+        checks: Object.fromEntries(SOURCE_QUESTION_CHECKS.map((key) => [key, null])),
+        rationale: { quote: null, explanation: null },
+        verdict: "unreviewed",
+      },
+      finalPrompt: {
+        text: content.reflectionQuestion,
+        questionCount: (content.reflectionQuestion.match(/\?/g) ?? []).length,
+        checks: Object.fromEntries(FINAL_QUESTION_CHECKS.map((key) => [key, null])),
+        rationale: { quote: null, explanation: null },
+        verdict: "unreviewed",
+      },
+    })),
+    verdict: "unreviewed",
+  };
+}
+
+export function qualifyReflectionReviews({ assignment, reviews }) {
+  if (!assignment?.contentComparison || !Array.isArray(reviews))
+    throw new Error("Reflection qualification needs the content-pair assignment and reviews");
+  const contexts = Object.keys(assignment.packets);
+  if (
+    contexts.length < 2 ||
+    reviews.length !== contexts.length ||
+    new Set(reviews.map((review) => review.contextId)).size !== contexts.length
+  )
+    throw new Error("Reflection qualification needs every assigned fresh reviewer exactly once");
+  const failures = [];
+  for (const review of reviews) {
+    const blank = prepareReflectionReview({ assignment, contextId: review.contextId });
+    for (const key of ["protocolVersion", "kind", "pairHash", "itemSetHash", "packetSha256"])
+      if (review[key] !== blank[key]) throw new Error(`Reflection review ${key} binding differs`);
+    if (
+      !Array.isArray(review.items) ||
+      review.items.length !== blank.items.length ||
+      new Set(review.items.map((item) => item.itemId)).size !== blank.items.length
+    )
+      throw new Error("Reflection review must cover every neutral item exactly once");
+    let anyFailure = false;
+    for (const expected of blank.items) {
+      const item = review.items.find((row) => row.itemId === expected.itemId);
+      if (!item) throw new Error("Reflection review has a missing or foreign item");
+      for (const [part, checks] of [
+        ["sourceQuestion", SOURCE_QUESTION_CHECKS],
+        ["finalPrompt", FINAL_QUESTION_CHECKS],
+      ]) {
+        const result = item[part],
+          source = expected[part];
+        if (
+          !result ||
+          result.text !== source.text ||
+          Object.keys(result.checks ?? {})
+            .sort()
+            .join() !== [...checks].sort().join() ||
+          checks.some((key) => typeof result.checks[key] !== "boolean")
+        )
+          throw new Error(
+            "Reflection review needs the exact question and completed boolean checks",
+          );
+        if (part === "finalPrompt" && result.questionCount !== source.questionCount)
+          throw new Error("Final prompt question count differs from the recorded prompt");
+        if (
+          part === "sourceQuestion" &&
+          result.checks.singleQuestion &&
+          (source.text.match(/\?/g) ?? []).length !== 1
+        )
+          throw new Error("Source singleQuestion conflicts with the recorded question count");
+        if (
+          !nonEmpty(result.rationale?.quote) ||
+          !source.text.includes(result.rationale.quote) ||
+          !nonEmpty(result.rationale?.explanation)
+        )
+          throw new Error("Reflection review needs a verbatim quoted rationale and explanation");
+        const passed = checks.every((key) => result.checks[key]);
+        if (result.verdict !== (passed ? "pass" : "fail"))
+          throw new Error("Reflection verdict disagrees with its checks");
+        if (!passed) {
+          anyFailure = true;
+          failures.push({
+            contextId: review.contextId,
+            itemId: item.itemId,
+            part,
+            checks: checks.filter((key) => !result.checks[key]),
+            rationale: result.rationale,
+          });
+        }
+      }
+    }
+    if (review.verdict !== (anyFailure ? "fail" : "pass"))
+      throw new Error("Reflection overall verdict disagrees with its checks");
+  }
+  const candidateFailures = failures.filter((failure) =>
+    assignment.items[failure.itemId].mappings.some((mapping) => mapping.run === "after"),
+  );
+  return {
+    protocolVersion: REFLECTION_PROTOCOL_VERSION,
+    kind: "reflection-qualification",
+    pairHash: assignment.contentComparison.pairHash,
+    itemSetHash: assignment.itemSetHash,
+    passed: candidateFailures.length === 0,
+    candidateFailures,
+    allFindings: failures,
+    wholeDraftQualified: false,
+    humanApproval: "deferred",
+    limitation:
+      "A reflection review covers this four-case pilot only; it does not close body, semantic-incorporation, other-source or human-approval gates.",
   };
 }
 
@@ -640,7 +799,12 @@ export function qualifyReviews({ assignment, reviews, adjudication = null }) {
       return item.quietCheck.safe === true
         ? []
         : [`${review.reviewer.contextId}: quiet message judged unsafe`];
-    return gateDimensions(entry)
+    return [
+      ...gateDimensions(entry),
+      ...(assignment.contentComparison && entry.mappings.some((mapping) => mapping.run === "after")
+        ? ["voice", "repetition"]
+        : []),
+    ]
       .filter((dimension) => item.scores[dimension].score < 4)
       .map(
         (dimension) =>
@@ -697,8 +861,26 @@ export function qualifyReviews({ assignment, reviews, adjudication = null }) {
     protocolVersion: PROTOCOL_VERSION,
     kind: "qualification",
     humanReviewCompleted: false,
-    result: passed ? "AI writing-review passed" : "AI writing-review failed",
-    passed,
+    result:
+      assignment.contentComparison && passed
+        ? "Body writing-review passed; content comparison remains unqualified"
+        : passed
+          ? "AI writing-review passed"
+          : "AI writing-review failed",
+    passed: assignment.contentComparison ? false : passed,
+    ...(assignment.contentComparison
+      ? {
+          bodyReviewPassed: passed,
+          contentComparison: {
+            pairHash: assignment.contentComparison.pairHash,
+            qualified: false,
+            semanticIncorporation: "unreviewed",
+            reflectionQuestionQuality: "unreviewed",
+            limitation:
+              "The body-review protocol does not score source incorporation or reflection questions, and a four-case pilot cannot qualify all changed sources.",
+          },
+        }
+      : {}),
     itemSetHash: assignment.itemSetHash,
     automated: assignment.reports,
     reviewerCount: assigned.length,
@@ -1127,6 +1309,9 @@ export async function main([command, ...args]) {
       after: { report: after.value, sha256: after.sha256 },
       instructions,
       contexts: options.contexts ? options.contexts.split(",") : DEFAULT_CONTEXTS,
+      contentPlan: options["content-plan"]
+        ? (await readJsonFile(options["content-plan"])).value
+        : undefined,
     });
     // A new directory each time: an earlier round is never overwritten.
     await mkdir(options["output-dir"]);
@@ -1144,6 +1329,15 @@ export async function main([command, ...args]) {
       `${JSON.stringify(prepared.assignment, null, 2)}\n`,
       { flag: "wx" },
     );
+    if (prepared.assignment.contentComparison) {
+      await mkdir(join(options["output-dir"], "reflections"));
+      for (const packet of prepared.packets)
+        await writeFile(
+          join(options["output-dir"], "reflections", `reflection-${packet.contextId}.json`),
+          `${JSON.stringify(prepareReflectionReview({ assignment: prepared.assignment, contextId: packet.contextId }), null, 2)}\n`,
+          { flag: "wx" },
+        );
+    }
     process.stdout.write(
       `${JSON.stringify(
         {
@@ -1155,6 +1349,27 @@ export async function main([command, ...args]) {
         null,
         2,
       )}\n`,
+    );
+    return;
+  }
+  if (command === "qualify-reflections") {
+    const options = parseArgs(args, ["review"]);
+    for (const key of ["assignment", "output"])
+      if (!options[key]) throw new Error(`qualify-reflections needs --${key}`);
+    if (!options.review?.length) throw new Error("qualify-reflections needs --review files");
+    const assignment = await readJsonFile(options.assignment);
+    const reviews = await Promise.all(options.review.map(readJsonFile));
+    const summary = qualifyReflectionReviews({
+      assignment: assignment.value,
+      reviews: reviews.map((review) => review.value),
+    });
+    summary.files = {
+      assignmentSha256: assignment.sha256,
+      reviewSha256: reviews.map((review) => review.sha256),
+    };
+    await writeFile(options.output, `${JSON.stringify(summary, null, 2)}\n`, { flag: "wx" });
+    process.stdout.write(
+      `Reflection pilot review ${summary.passed ? "passed" : "failed"}; whole-draft approval remains open.\n`,
     );
     return;
   }
@@ -1228,8 +1443,9 @@ export async function main([command, ...args]) {
     return;
   }
   throw new Error(
-    "Usage: reading-writing-review.mjs prepare --before report.json --after report.json --output-dir NEW_DIR\n" +
+    "Usage: reading-writing-review.mjs prepare --before report.json --after report.json [--content-plan frozen-pair.json] --output-dir NEW_DIR\n" +
       "       reading-writing-review.mjs qualify --assignment assignment.json --review a.json --review b.json [--adjudication adjudication.json] --output NEW_FILE\n" +
+      "       reading-writing-review.mjs qualify-reflections --assignment assignment.json --review reflection-a.json --review reflection-b.json --output NEW_FILE\n" +
       "       reading-writing-review.mjs catalogue-packets --bundle frozen-candidate.json --output-dir NEW_DIR\n" +
       "       reading-writing-review.mjs catalogue --bundle frozen-candidate.json --review a.json --review b.json [--adjudication adjudication.json] --output NEW_FILE",
   );

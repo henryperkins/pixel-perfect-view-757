@@ -1,0 +1,47 @@
+{
+  "version": "content-effectiveness-execution-1",
+  "baselineCommit": "c3619c061f2b8ca3579b94979cc9cce9959c443c",
+  "branch": "feat/content-draft-effectiveness",
+  "draftId": "5b1a0e46-a1eb-4a36-90b9-d884993cf212",
+  "baselineCanonicalHash": "44c05c8b0336dc778c2efdcbf0c28dc2091d33a96b91c352a2481123b7f7ccae",
+  "originalCandidateCanonicalHash": "3638d096972ab2f47616edff0da91c15ea6bccd29424e26ed2bf10b2ae77a42e",
+  "finalCandidateCanonicalHash": "78be37d2740102c827fd291777f43f686b9c9f3488c887d76c00212ca84db632",
+  "activeRelease": {
+    "id": "edcc53cf-d19a-415b-a8a2-a66040846b1d",
+    "version": "0.7.1",
+    "storedChecksum": "20b793acda524da945b07ec32b2ed795f31e273c533ff6b4e9c4f96ef821eeac",
+    "storedChecksumAlgorithm": "legacy-unlabelled"
+  },
+  "draftStatus": "draft",
+  "humanApproval": false,
+  "activationAuthorizedByPilot": false,
+  "paidScope": {
+    "caseSetId": "draft-pilot-1",
+    "casesPerArm": 4,
+    "maximumAttempts": 8,
+    "maximumGenerationDollars": 5,
+    "retries": 0,
+    "authorization": "User explicitly approved eight-call pilot, $5 cap"
+  },
+  "offlineScope": {
+    "caseSetId": "draft-fallback-1",
+    "cases": 70,
+    "legacyChangedEntryHits": 0,
+    "newReachableEntriesCovered": 20,
+    "shadowedGlobals": 2,
+    "modelCalls": 0
+  },
+  "providerPolicy": "Use the currently selected member provider for both arms. Explicit selector wins, then configured Gemini Enterprise, then Lovable. No failover.",
+  "providerPolicyAuthority": "User replacement AGENTS instructions, 2026-10-13",
+  "worker": {
+    "deployment": "debd4c29-901c-45b1-9a55-a19d0fce31bb",
+    "version": "83d0842f-9898-4402-83cd-cd3d5b003440",
+    "trafficPercent": 100,
+    "protocolChanged": false,
+    "deployedForThisTask": false
+  },
+  "lockSha256": "d464759ac5d20f3be380c28a16e9d68126d2a3645b15ff5a074615badaad5667",
+  "protectedMainEnvSha256": "d1d4e605edd14896ba7feb163ce1ac2d2d42a95dd80efae0949a30000369e8e9",
+  "historicalEvidence": "The attachment active-0.7.1 27/37 result is historical and does not qualify this candidate.",
+  "updatedAt": "2026-10-13T09:31:39.614548+00:00"
+}

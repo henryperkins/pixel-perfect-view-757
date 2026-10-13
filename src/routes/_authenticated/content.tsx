@@ -22,6 +22,10 @@ import {
   type LanguageProviderStatus,
 } from "@/components/pattern/LanguageProviderChoice";
 import { ContentDraftReview } from "@/components/pattern/ContentDraftReview";
+import {
+  ContentDraftEvaluation,
+  InactiveReleaseEvaluation,
+} from "@/components/pattern/ContentDraftEvaluation";
 import { isEarlierRelease } from "@/lib/content/release-version";
 import { ReadingEvaluation } from "@/components/pattern/ReadingEvaluation";
 import type { LanguageProvider } from "@/lib/ai/diagnostics";
@@ -113,6 +117,12 @@ function ContentPage() {
   const releases: Release[] = query.data?.releases ?? [];
   const isAdmin = authIsAdmin;
   const providerStatus = useLanguageProviderStatus(isAdmin);
+  const memberProvidersFn = useServerFn(fetchLanguageProviders);
+  const memberProviders = useQuery({
+    queryKey: ["language-providers", session?.userId],
+    queryFn: () => memberProvidersFn({}),
+    enabled: Boolean(isAdmin && session),
+  });
   const activeRelease = releases.find((r) => r.is_active);
 
   const rollback = useMutation({
@@ -479,6 +489,15 @@ function ContentPage() {
                           </Button>
                         ) : null}
                       </div>
+                      {!isLive && session ? (
+                        <InactiveReleaseEvaluation
+                          release={r}
+                          releases={releases}
+                          userId={session.userId}
+                          memberProvider={memberProviders.data?.memberProvider}
+                          disabled={rollback.isPending || reconcile.isPending}
+                        />
+                      ) : null}
                     </article>
                   );
                 })}
@@ -1333,12 +1352,19 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
  * as a release and activates it.
  */
 function DraftPlane({ isAdmin }: { isAdmin: boolean }) {
+  const { session } = useAuth();
   const listFn = useServerFn(fetchContentDrafts);
   const draftFn = useServerFn(draftContentRelease);
   const discardFn = useServerFn(discardContentDraft);
   const queryClient = useQueryClient();
   const [provider, setProvider] = useState<LanguageProvider>("lovable");
   const providerStatus = useLanguageProviderStatus(isAdmin);
+  const providersFn = useServerFn(fetchLanguageProviders);
+  const providerQuery = useQuery({
+    queryKey: ["language-providers", session?.userId],
+    queryFn: () => providersFn({}),
+    enabled: Boolean(isAdmin && session),
+  });
   const [discardTarget, setDiscardTarget] = useState<string | null>(null);
   const [expandedRules, setExpandedRules] = useState<Record<string, boolean>>({});
   const [expandedEntries, setExpandedEntries] = useState<Record<string, boolean>>({});
@@ -1613,6 +1639,17 @@ function DraftPlane({ isAdmin }: { isAdmin: boolean }) {
                       refresh();
                     }}
                   />
+                  {session ? (
+                    <ContentDraftEvaluation
+                      key={`${session.userId}:${d.id}`}
+                      draftId={d.id}
+                      userId={session.userId}
+                      baseVersion={d.base_version}
+                      authoringModel={d.model}
+                      memberProvider={providerQuery.data?.memberProvider}
+                      disabled={Boolean(discard.isPending || reviewBusy[d.id])}
+                    />
+                  ) : null}
                   <Button
                     type="button"
                     variant="outline"

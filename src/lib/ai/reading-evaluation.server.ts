@@ -29,10 +29,7 @@ import { DAILY_WRITING_PLAN_VERSION } from "../content/daily-writing";
 import { DAILY_REFLECTION_VERSION } from "../content/daily-reflection";
 import { DAILY_WRITING_QUALITY_VERSION } from "./daily-writing-quality";
 import { DAILY_VOICE_EXAMPLES_VERSION } from "./daily-voice";
-import {
-  READING_EVAL_CASES,
-  READING_EVAL_FIXTURE_VERSION,
-} from "./reading-evaluation.fixtures.mjs";
+import { getEvaluationCaseSet, type EvaluationCaseSetId } from "./evaluation-case-sets";
 import {
   qualificationBundle,
   qualificationPolicy,
@@ -47,8 +44,10 @@ export function prepareSyntheticEvaluationCase(
   caseId: string,
   bundle: ContentBundle,
   qualificationProfile?: QualificationProfile,
+  caseSetId?: EvaluationCaseSetId,
 ) {
-  const fixed = READING_EVAL_CASES.find((item) => item.id === caseId);
+  const manifest = getEvaluationCaseSet(caseSetId);
+  const fixed = manifest.cases.find((item) => item.id === caseId);
   if (!fixed) throw new Error("Unknown fixed synthetic evaluation case");
   const policy = qualificationProfile ? qualificationPolicy(qualificationProfile) : null;
   const selectedBundle = qualificationProfile
@@ -131,7 +130,18 @@ export function prepareSyntheticEvaluationCase(
         }
       : {}),
   };
-  return { fixed, reference, cycles, chart, natalReliability, assembled, facts, input, policy };
+  return {
+    fixed,
+    reference,
+    cycles,
+    chart,
+    natalReliability,
+    assembled,
+    facts,
+    input,
+    policy,
+    manifest,
+  };
 }
 
 export async function runSyntheticEvaluationCase(
@@ -140,9 +150,10 @@ export async function runSyntheticEvaluationCase(
   provider: LanguageProvider = "lovable",
   qualificationProfile?: QualificationProfile,
   control: SyntheticTransportControl = {},
+  caseSetId?: EvaluationCaseSetId,
 ): Promise<ReadingEvaluationCaseResult> {
-  const { fixed, reference, natalReliability, assembled, facts, input, policy } =
-    prepareSyntheticEvaluationCase(caseId, bundle, qualificationProfile);
+  const { fixed, reference, natalReliability, assembled, facts, input, policy, manifest } =
+    prepareSyntheticEvaluationCase(caseId, bundle, qualificationProfile, caseSetId);
   const observed = await generateSyntheticReadingProse(input, provider, {
     ...control,
     ...(qualificationProfile ? { boundedQualification: true } : {}),
@@ -163,8 +174,9 @@ export async function runSyntheticEvaluationCase(
         : {}),
       ...TRANSIT_EVALUATION_METADATA,
       ...(policy ? { storyUse: policy.transit } : {}),
-      fixtureVersion: READING_EVAL_FIXTURE_VERSION,
-      caseSetHash: hash(READING_EVAL_CASES),
+      ...(manifest.id !== "synthetic-daily-7" ? { caseSetId: manifest.id } : {}),
+      fixtureVersion: manifest.fixtureVersion,
+      caseSetHash: manifest.caseSetHash,
       bundleVersion: bundle.version,
       bundleHash: hash(bundle),
       transitCopyHash: hash(transitCopyIdentity(bundle)),

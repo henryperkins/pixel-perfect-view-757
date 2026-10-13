@@ -406,3 +406,15 @@ recorded inventories; replay under a changed fixture or policy requires the
 original frozen snapshot. They do not count as current 38-case coverage. The
 [blinded review](docs/reviews/daily-natal-lens/writing-qualification.md) failed its
 writing gate; integrating its evidence does not qualify the changed prompt.
+
+## Saved-draft comparison pilot
+
+Each open draft now has **Evaluate this draft**. Preparation is read-only and freezes its complete stored baseline and candidate, both named hash algorithms, the source revision, selected member provider, prompt/validator policy and four fixed cases. Both copies can be downloaded before starting. Preparation requires no content approval.
+
+The explicit start runs four baseline cases and, only after four intact captures with reconciled accounting, four candidate cases. The entire campaign permits at most eight generation attempts and a $5 generation ceiling. The current member provider is used for both arms. Calls are never retried or sent to another provider. Each call reserves $2.80 before transport, so the cap may stop a partial pilot early; consistent usage lowers the reserved estimate after capture. Unknown usage keeps its reservation and halts. Estimates are not invoices.
+
+Draft edits, discard or active-pointer changes do not replace an already frozen campaign. Changed source code, provider configuration, model identity or lost admin access stop affected execution. Each arm runs in the existing signed server Workflow and survives closing the browser. Reopen the draft evaluation to recover status or download the pair, captured outputs and accounting ledger.
+
+The separate `draft-fallback-1` manifest provides 70 offline cases (the unchanged legacy 50 plus 20 body/family fallbacks). The paid `draft-pilot-1` contains only hard Mars, hard Uranus, soft Saturn and soft Neptune against natal Mercury. Four pairs do not qualify all 20 additions; the two global catch-alls are shadowed in the supported catalogue and tested in isolated lookup fixtures.
+
+Manifest-bound comparison and review keep selection, submitted facts, accepted citations, deterministic rendering and human semantic assessment separate. Generic report comparison still rejects changed bundle identities. See the [execution checklist](docs/superpowers/plans/2026-10-13-content-draft-effectiveness-checklist.md) and [pilot evidence](docs/reviews/content-draft-effectiveness/2026-10-13/progress.md). Evaluation never approves, stages or activates content; exact-content human approval and applicable release gates remain separate.

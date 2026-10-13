@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile, writeFile, mkdir } from "node:fs/promises";
+import { execFileSync } from "node:child_process";
 import { createRequire, syncBuiltinESMExports } from "node:module";
 import { resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -16,8 +17,18 @@ import {
   READING_EVAL_CASES,
   READING_EVAL_FIXTURE_VERSION,
 } from "./reading-eval-cases.mjs";
+import {
+  compareContentReports,
+  extractContentResponses,
+  freezeContentReviewRubric,
+  validateContentReport,
+  validateContentComparisonPlan,
+} from "./reading-content-comparison.mjs";
+export { compareContentReports, extractContentResponses } from "./reading-content-comparison.mjs";
 
 const GATEWAY = "https://ai.gateway.lovable.dev/v1/chat/completions";
+const ENTERPRISE_GATEWAY =
+  "https://aiplatform.googleapis.com/v1/publishers/google/models/gemini-3.8-flash:generateContent";
 const REPORT_VERSION = 1;
 const PROJECT_ROOT = fileURLToPath(new URL("../", import.meta.url));
 const WARNING =
@@ -108,8 +119,9 @@ export async function withNetworkBlocked(run, replay = null) {
   }
   syncBuiltinESMExports();
   globalThis.fetch = async (url, init = {}) => {
-    if (String(url) !== GATEWAY || !replay || init.method !== "POST") return blocked();
-    return replay(JSON.parse(String(init.body)));
+    if (![GATEWAY, ENTERPRISE_GATEWAY].includes(String(url)) || !replay || init.method !== "POST")
+      return blocked();
+    return replay(JSON.parse(String(init.body)), { url: String(url) });
   };
   try {
     return await run();
@@ -126,8 +138,10 @@ export async function withNetworkBlocked(run, replay = null) {
  */
 async function withEvaluationModules(run, replay = null) {
   const originalKey = process.env.LOVABLE_API_KEY;
+  const originalEnterpriseKey = process.env.GEMINI_ENTERPRISE_API_KEY;
   // The real gateway code is exercised, but this value is never sent over a socket or included in reports.
   process.env.LOVABLE_API_KEY = "synthetic-evaluation-no-network";
+  process.env.GEMINI_ENTERPRISE_API_KEY = "synthetic-evaluation-no-network";
   let vite;
   try {
     return await withNetworkBlocked(async () => {
@@ -147,7 +161,206 @@ async function withEvaluationModules(run, replay = null) {
     await vite?.close();
     if (originalKey === undefined) delete process.env.LOVABLE_API_KEY;
     else process.env.LOVABLE_API_KEY = originalKey;
+    if (originalEnterpriseKey === undefined) delete process.env.GEMINI_ENTERPRISE_API_KEY;
+    else process.env.GEMINI_ENTERPRISE_API_KEY = originalEnterpriseKey;
   }
+}
+
+function localRuntimeIdentity() {
+  const sourceSha = execFileSync("git", ["rev-parse", "HEAD"], {
+    cwd: PROJECT_ROOT,
+    encoding: "utf8",
+  }).trim();
+  const dirty = execFileSync(
+    "git",
+    [
+      "status",
+      "--porcelain=v1",
+      "--untracked-files=all",
+      "--",
+      "src",
+      "scripts",
+      "edge",
+      "package.json",
+      "package-lock.json",
+      "pnpm-lock.yaml",
+      "bun.lockb",
+      "vite.config.ts",
+      "tsconfig.json",
+    ],
+    { cwd: PROJECT_ROOT, encoding: "utf8" },
+  ).trim();
+  return {
+    sourceSha,
+    sourceClean: dirty.length === 0,
+    kind: "local-git",
+    note: "Documentation, tests and evidence artifacts do not affect the replayed runtime and are excluded from the source-dirt check.",
+  };
+}
+
+/** Re-run current assembly/validators with captured text, through an in-memory native response. */
+export async function replayContentReport(report, { plan, arm, runtimeIdentity = undefined } = {}) {
+  const responses = extractContentResponses(report, { plan, arm });
+  // Tests may inject a labelled fixture identity. The CLI exposes no override.
+  const runtime = runtimeIdentity ?? localRuntimeIdentity();
+  if (!runtime.sourceClean || runtime.sourceSha !== plan.sourceSha)
+    throw new Error("Content replay requires clean runtime source at the frozen source SHA");
+  let currentResponse,
+    replayCount = 0;
+  return withEvaluationModules(
+    async (load) => {
+      const { revalidateContentComparisonPlan } = await load(
+        "/src/lib/ai/content-comparison-plan.server.ts",
+      );
+      revalidateContentComparisonPlan(plan, runtime.sourceSha, plan.provider);
+      const { runSyntheticEvaluationCase } = await load("/src/lib/ai/reading-evaluation.server.ts");
+      const rows = [];
+      for (const fixed of plan.caseManifest.cases) {
+        currentResponse = responses[fixed.id];
+        const result = await runSyntheticEvaluationCase(
+          fixed.id,
+          plan.bundles[arm],
+          plan.provider,
+          undefined,
+          { boundedQualification: true },
+          plan.caseSetId,
+        );
+        const original = report.cases.find((row) => row.id === fixed.id);
+        if (!isDeepStrictEqual(result.case.request, original.request))
+          throw new Error(
+            `Content replay request changed for ${fixed.id}; frozen prompts or input policy differ`,
+          );
+        rows.push(result.case);
+      }
+      if (replayCount !== 4)
+        throw new Error("Content replay did not consume exactly the four captured responses");
+      const differences = rows.flatMap((row, index) => {
+        const original = report.cases[index];
+        return row.diagnostics.outcome === original.diagnostics.outcome &&
+          row.diagnostics.code === original.diagnostics.code
+          ? []
+          : [
+              {
+                id: row.id,
+                source: { outcome: original.diagnostics.outcome, code: original.diagnostics.code },
+                replay: { outcome: row.diagnostics.outcome, code: row.diagnostics.code },
+              },
+            ];
+      });
+      return {
+        ...report,
+        source: "source-report-replay",
+        network: "blocked; native provider responses replayed in memory with fake credentials",
+        warning: WARNING,
+        replayRuntime: runtime,
+        sourceReportIdentity: {
+          pairHash: plan.hash,
+          arm,
+          sourceSha: report.sourceSha,
+          model: report.model,
+          runPlanHash: report.runPlanHash,
+          reportHash: hash(report),
+        },
+        cases: rows,
+        summary: { ...summarize(rows, replayCount), modelAttempts: 0 },
+        sourceComparison: {
+          cases: rows.length,
+          matchingOutcomes: rows.length - differences.length,
+          differences,
+        },
+        qualified: false,
+      };
+    },
+    (_request, { url }) => {
+      replayCount += 1;
+      if (replayCount > 4) throw new Error("Unexpected extra content replay request");
+      return url === ENTERPRISE_GATEWAY
+        ? Response.json({
+            candidates: [
+              {
+                content: { parts: [{ text: JSON.stringify(currentResponse) }] },
+                finishReason: "STOP",
+              },
+            ],
+            modelVersion: "gemini-3.8-flash",
+          })
+        : Response.json({
+            choices: [
+              { message: { content: JSON.stringify(currentResponse) }, finish_reason: "stop" },
+            ],
+            model: "google/gemini-3.8-flash",
+          });
+    },
+  );
+}
+
+/** Convert the UI download without discarding run state, reservations or uncertain captures. */
+export async function unpackContentEvidence(envelope) {
+  if (envelope?.version !== "content-pilot-evidence-1" || !envelope.baseline || !envelope.candidate)
+    throw new Error("Content evidence unpacking requires both downloaded pilot arms");
+  const plan = envelope.baseline.ledger?.sourcePlan?.contentComparison?.pair;
+  validateContentComparisonPlan(plan);
+  return withEvaluationModules(async (load) => {
+    const { combineReadingEvaluationResults } = await load(
+      "/src/lib/ai/reading-evaluation.shared.ts",
+    );
+    const reports = {},
+      ledgers = {};
+    for (const arm of ["baseline", "candidate"]) {
+      const capture = envelope[arm];
+      if (
+        capture.run?.status !== "complete" ||
+        capture.run.completed !== 4 ||
+        capture.run.total !== 4 ||
+        capture.results?.length !== 4 ||
+        capture.ledger?.entries?.length !== 4
+      )
+        throw new Error(
+          `Content evidence ${arm} is incomplete; no complete report can be manufactured`,
+        );
+      if (
+        capture.run.provider !== plan.provider ||
+        capture.run.contentComparison?.arm !== arm ||
+        capture.run.contentComparison?.pairHash !== plan.hash ||
+        capture.ledger.sourcePlan?.contentComparison?.arm !== arm ||
+        hash(capture.ledger.sourcePlan?.contentComparison?.pair) !== hash(plan)
+      )
+        throw new Error(`Content evidence ${arm} has mismatched run or pair identities`);
+      if (
+        capture.ledger.dollarCeilingMicros !== 5_000_000 ||
+        capture.ledger.reviewReserveMicros !== 0 ||
+        capture.ledger.campaignAttempts > 8
+      )
+        throw new Error(`Content evidence ${arm} does not retain the approved eight-call $5 scope`);
+      for (let index = 0; index < 4; index++) {
+        const entry = capture.ledger.entries[index],
+          result = capture.results[index];
+        if (
+          entry.position !== index ||
+          entry.caseId !== plan.caseManifest.cases[index].id ||
+          entry.capture !== "stored" ||
+          !isDeepStrictEqual(entry.raw, result)
+        )
+          throw new Error(
+            `Content evidence ${arm} has missing, foreign, reordered or uncertain ledger captures`,
+          );
+      }
+      const report = combineReadingEvaluationResults(capture.results);
+      validateContentReport(report, { plan, arm });
+      reports[arm] = report;
+      ledgers[arm] = structuredClone(capture.ledger);
+    }
+    if (envelope.candidate.run.campaignId !== envelope.baseline.run.id)
+      throw new Error("Content evidence arms do not belong to the same campaign");
+    return {
+      version: "content-pilot-unpacked-1",
+      plan,
+      rubric: freezeContentReviewRubric(plan),
+      reports,
+      ledgers,
+      rawEnvelope: structuredClone(envelope),
+    };
+  });
 }
 
 /** The shipped bundles with the identities a report records for them. */
@@ -622,6 +835,10 @@ function validateReport(report) {
 }
 
 export function compareReports(before, after) {
+  if (before?.contentComparison || after?.contentComparison)
+    throw new Error(
+      "Content comparisons require an explicit frozen content plan; use --compare-content",
+    );
   return compareReportPair(before, after);
 }
 
@@ -834,9 +1051,10 @@ export function compareNatalReports(
   };
 }
 
-async function readJsonFile(path) {
+async function readJsonFile(path, maxBytes = 2_000_000) {
   const bytes = await readFile(path);
-  if (bytes.length > 2_000_000) throw new Error("Evaluation JSON must be smaller than 2 MB");
+  if (bytes.length > maxBytes)
+    throw new Error(`Evaluation JSON must be smaller than ${maxBytes} bytes`);
   return {
     value: JSON.parse(bytes.toString("utf8")),
     sha256: createHash("sha256").update(bytes).digest("hex"),
@@ -852,12 +1070,17 @@ const HELP = `Offline synthetic reading evaluator (no network; fake gateway key)
   --bundle remains an alias for --bundle-source
   --write-responses candidate.json
   --compare before.json after.json --output comparison.json
+  --compare-content baseline.json candidate.json --content-plan frozen-pair.json --output comparison.json
+  --freeze-content-rubric frozen-pair.json --output review-rubric.json
+  --unpack-content-evidence content-pilot.json --output-dir NEW_DIR
+  --replay-content complete-report.json --content-plan frozen-pair.json --arm baseline|candidate --output replay.json
+  --extract-content-responses report.json --content-plan frozen-pair.json --arm baseline|candidate --output responses.json
   --compare-natal baseline.json candidate.json --before-identity identity.json --after-identity identity.json --output comparison.json
 `;
 
 export async function main(args) {
   const options = {};
-  const values = { "--compare": 2, "--compare-natal": 2 };
+  const values = { "--compare": 2, "--compare-natal": 2, "--compare-content": 2 };
   for (let i = 0; i < args.length; i += 1) {
     const flag = args[i];
     if (flag === "--help") {
@@ -871,6 +1094,14 @@ export async function main(args) {
         "--write-responses",
         "--compare",
         "--compare-natal",
+        "--compare-content",
+        "--freeze-content-rubric",
+        "--unpack-content-evidence",
+        "--output-dir",
+        "--replay-content",
+        "--content-plan",
+        "--extract-content-responses",
+        "--arm",
         "--bundle",
         "--bundle-source",
         "--extract-responses",
@@ -892,13 +1123,44 @@ export async function main(args) {
     "--write-responses",
     "--compare",
     "--compare-natal",
+    "--compare-content",
+    "--freeze-content-rubric",
+    "--unpack-content-evidence",
+    "--replay-content",
+    "--extract-content-responses",
     "--extract-responses",
   ].filter((flag) => flag in options);
   if (mode.length > 1)
     throw new Error(
       "Choose one mode: baseline, responses, write-responses, extract-responses, compare, or compare-natal",
     );
-  const comparing = "--compare" in options || "--compare-natal" in options;
+  const freezingContent = "--freeze-content-rubric" in options;
+  const unpackingContent = "--unpack-content-evidence" in options;
+  const replayingContent = "--replay-content" in options;
+  const contentMode =
+    "--compare-content" in options ||
+    "--extract-content-responses" in options ||
+    freezingContent ||
+    unpackingContent ||
+    replayingContent;
+  const comparing = "--compare" in options || "--compare-natal" in options || contentMode;
+  if (contentMode && !freezingContent && !unpackingContent && !options["--content-plan"])
+    throw new Error("Content comparison needs --content-plan with complete frozen bundles");
+  if (!contentMode && "--content-plan" in options)
+    throw new Error("--content-plan applies only to explicit content comparison modes");
+  if ((freezingContent || unpackingContent) && "--content-plan" in options)
+    throw new Error("--freeze-content-rubric already names its frozen plan");
+  if (
+    ("--extract-content-responses" in options || replayingContent) &&
+    (!options["--output"] || !["baseline", "candidate"].includes(options["--arm"]))
+  )
+    throw new Error("Content response extraction needs --output and --arm baseline|candidate");
+  if (!("--extract-content-responses" in options) && !replayingContent && "--arm" in options)
+    throw new Error("--arm applies only to content response extraction");
+  if (unpackingContent && (!options["--output-dir"] || options["--output"]))
+    throw new Error("Content evidence unpacking needs --output-dir NEW_DIR, not --output");
+  if (!unpackingContent && options["--output-dir"])
+    throw new Error("--output-dir applies only to evidence unpacking");
   if ("--bundle" in options && "--bundle-source" in options)
     throw new Error("Choose one bundle selector: --bundle-source or its --bundle alias");
   const bundleSource = options["--bundle-source"] ?? options["--bundle"];
@@ -936,7 +1198,44 @@ export async function main(args) {
     return;
   }
   let result;
-  if ("--compare" in options) {
+  if (unpackingContent) {
+    const unpacked = await unpackContentEvidence(
+      (await readJsonFile(options["--unpack-content-evidence"], 8_000_000)).value,
+    );
+    await mkdir(options["--output-dir"]);
+    for (const [name, artifact] of Object.entries({
+      "frozen-pair.json": unpacked.plan,
+      "review-rubric-reconstructed.json": unpacked.rubric,
+      "baseline-report.json": unpacked.reports.baseline,
+      "candidate-report.json": unpacked.reports.candidate,
+      "baseline-ledger.json": unpacked.ledgers.baseline,
+      "candidate-ledger.json": unpacked.ledgers.candidate,
+      "raw-envelope.json": unpacked.rawEnvelope,
+    }))
+      await writeFile(
+        resolve(options["--output-dir"], name),
+        `${JSON.stringify(artifact, null, 2)}\n`,
+        { flag: "wx" },
+      );
+    return;
+  } else if (replayingContent) {
+    result = await replayContentReport(await readJson(options["--replay-content"]), {
+      plan: await readJson(options["--content-plan"]),
+      arm: options["--arm"],
+    });
+  } else if (freezingContent) {
+    result = freezeContentReviewRubric(await readJson(options["--freeze-content-rubric"]));
+  } else if ("--compare-content" in options) {
+    const [before, after] = options["--compare-content"];
+    result = compareContentReports(await readJson(before), await readJson(after), {
+      plan: await readJson(options["--content-plan"]),
+    });
+  } else if ("--extract-content-responses" in options) {
+    result = extractContentResponses(await readJson(options["--extract-content-responses"]), {
+      plan: await readJson(options["--content-plan"]),
+      arm: options["--arm"],
+    });
+  } else if ("--compare" in options) {
     const [before, after] = options["--compare"];
     result = compareReports(await readJson(before), await readJson(after));
   } else if ("--compare-natal" in options) {

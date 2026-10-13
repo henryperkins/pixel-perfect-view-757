@@ -1,0 +1,671 @@
+{
+  "source": "Content releases.md attachment, 2026-10-13",
+  "attachmentSha256": "1c40246843c3ee2feeb16056d5b30548c02bb6ecc25d84418d787def50e95240",
+  "scope": "Exact cycle comparison from the supplied attachment. This is not a complete release bundle or current production evidence. Markdown wildcard escapes removed.",
+  "extractedCycles": [
+    {
+      "key": "conjunction:mercury:mercury",
+      "status": "unchanged",
+      "baseline": {
+        "key": "conjunction:mercury:mercury",
+        "mechanism": "A cycle of thought and communication resets with fresh curiosity. Mercury's conjunction with natal Mercury sharpens interest in new phrasing, questions, or ideas, bringing mental focus back to how you articulate what you mean.",
+        "question": "What topic or question is currently holding your attention?",
+        "themes": [
+          "expression"
+        ]
+      },
+      "candidate": {
+        "key": "conjunction:mercury:mercury",
+        "mechanism": "A cycle of thought and communication resets with fresh curiosity. Mercury's conjunction with natal Mercury sharpens interest in new phrasing, questions, or ideas, bringing mental focus back to how you articulate what you mean.",
+        "question": "What topic or question is currently holding your attention?",
+        "themes": [
+          "expression"
+        ]
+      }
+    },
+    {
+      "key": "hard:*:*",
+      "status": "changed",
+      "baseline": {
+        "key": "hard:*:*",
+        "mechanism": "A hard contact is forming between a moving body and a fixed point in your chart. Hard angles tend to coincide with noticing friction rather than with events.",
+        "question": "Where are you meeting more resistance than the task deserves?",
+        "themes": []
+      },
+      "candidate": {
+        "key": "hard:*:*",
+        "mechanism": "A hard aspect between transiting and natal bodies creates dynamic tension and structural challenge. This contact typically coincides with an impasse, conflict of interests, or a clear demand to resolve competing forces. A person might notice that automatic responses stall, necessitating conscious effort and adaptation.",
+        "question": "What specific point of tension is prompting you to adjust your approach?",
+        "themes": []
+      }
+    },
+    {
+      "key": "hard:jupiter:*",
+      "status": "added",
+      "baseline": null,
+      "candidate": {
+        "key": "hard:jupiter:*",
+        "mechanism": "A hard transit from Jupiter brings expansive pressure and exaggeration to the natal placement. This interaction often coincides with overestimation, restless appetite for growth, or difficulty setting proportional boundaries. A person might observe an urge to overcommit or an encounter with situations that challenge their current scope of perspective.",
+        "question": "Where might an impulse to expand benefit from clearer containment and realistic pacing?",
+        "themes": []
+      }
+    },
+    {
+      "key": "hard:jupiter:sun",
+      "status": "unchanged",
+      "baseline": {
+        "key": "hard:jupiter:sun",
+        "mechanism": "One possibility can gather several more before you have decided what the first one involves. Jupiter's hard contact with the Sun frames the difference between a larger idea of yourself and the space available to carry it. A project gaining extra branches or a simple plan turning into a long list are everyday versions of that tension.",
+        "question": "Which of your current options is genuinely larger, and which just feels larger?",
+        "themes": []
+      },
+      "candidate": {
+        "key": "hard:jupiter:sun",
+        "mechanism": "One possibility can gather several more before you have decided what the first one involves. Jupiter's hard contact with the Sun frames the difference between a larger idea of yourself and the space available to carry it. A project gaining extra branches or a simple plan turning into a long list are everyday versions of that tension.",
+        "question": "Which of your current options is genuinely larger, and which just feels larger?",
+        "themes": []
+      }
+    },
+    {
+      "key": "hard:mars:*",
+      "status": "added",
+      "baseline": null,
+      "candidate": {
+        "key": "hard:mars:*",
+        "mechanism": "A hard transit from Mars applies direct kinetic friction and urgency to the recipient natal point. This contact frequently coincides with sharp impatience, competition, or the surfacing of irritation where momentum feels blocked. A person might notice elevated drive alongside a tendency to act prematurely or react defensively.",
+        "question": "How can the current impulse toward immediate action be directed into a constructive task?",
+        "themes": []
+      }
+    },
+    {
+      "key": "hard:mars:mars",
+      "status": "unchanged",
+      "baseline": {
+        "key": "hard:mars:mars",
+        "mechanism": "Mars returning to hard contact with itself often marks the start or end of a working push.",
+        "question": "What did you start the last time you felt this?",
+        "themes": []
+      },
+      "candidate": {
+        "key": "hard:mars:mars",
+        "mechanism": "Mars returning to hard contact with itself often marks the start or end of a working push.",
+        "question": "What did you start the last time you felt this?",
+        "themes": []
+      }
+    },
+    {
+      "key": "hard:mars:sun",
+      "status": "unchanged",
+      "baseline": {
+        "key": "hard:mars:sun",
+        "mechanism": "The wish to act can run ahead of the time a task actually needs. Mars's hard contact with the Sun frames friction around pace and ownership: a draft revised before it has settled, or a reply composed before the point is clear. The scene is about how effort meets resistance.",
+        "question": "Where is the friction actually pointing?",
+        "themes": []
+      },
+      "candidate": {
+        "key": "hard:mars:sun",
+        "mechanism": "The wish to act can run ahead of the time a task actually needs. Mars's hard contact with the Sun frames friction around pace and ownership: a draft revised before it has settled, or a reply composed before the point is clear. The scene is about how effort meets resistance.",
+        "question": "Where is the friction actually pointing?",
+        "themes": []
+      }
+    },
+    {
+      "key": "hard:mercury:*",
+      "status": "added",
+      "baseline": null,
+      "candidate": {
+        "key": "hard:mercury:*",
+        "mechanism": "A hard transit from Mercury introduces informational overload, fast-paced exchanges, or cognitive friction to the natal point. This contact frequently coincides with misalignments in communication, analytical restlessness, or competing priorities. A person might notice that mental processing requires extra verification to prevent misunderstanding.",
+        "question": "Which communication or line of reasoning requires slower, more deliberate pacing?",
+        "themes": []
+      }
+    },
+    {
+      "key": "hard:mercury:mercury",
+      "status": "unchanged",
+      "baseline": {
+        "key": "hard:mercury:mercury",
+        "mechanism": "Several unfinished explanations can compete for the same small piece of attention. Mercury's hard contact with natal Mercury frames the gap between knowing what you mean and deciding how to say it. A half-written message or a note revised several times offers a concrete scene for that friction.",
+        "question": "What is worth saying carefully rather than quickly?",
+        "themes": []
+      },
+      "candidate": {
+        "key": "hard:mercury:mercury",
+        "mechanism": "Several unfinished explanations can compete for the same small piece of attention. Mercury's hard contact with natal Mercury frames the gap between knowing what you mean and deciding how to say it. A half-written message or a note revised several times offers a concrete scene for that friction.",
+        "question": "What is worth saying carefully rather than quickly?",
+        "themes": []
+      }
+    },
+    {
+      "key": "hard:moon:*",
+      "status": "added",
+      "baseline": null,
+      "candidate": {
+        "key": "hard:moon:*",
+        "mechanism": "A hard transit from the Moon stirs acute shifts in internal climate and responsiveness at the natal point. This brief configuration coincides with heightened sensitivity to surroundings, variable focus, or an urge to recalibrate comfort. A person may notice rapid emotional reactions to small environmental shifts.",
+        "question": "What immediate physical or personal boundary needs attention to restore balance?",
+        "themes": []
+      }
+    },
+    {
+      "key": "hard:moon:moon",
+      "status": "unchanged",
+      "baseline": {
+        "key": "hard:moon:moon",
+        "mechanism": "A brief Moon contact with natal Moon offers a frame for comparing an ordinary moment with your familiar rhythm. The scene might be the difference between choosing company and choosing a quiet hour, or between a familiar plan and the wish for some unplanned space. A single moment is enough for that comparison; it need not become a story about the whole day.",
+        "question": "How does today compare to your usual baseline?",
+        "themes": []
+      },
+      "candidate": {
+        "key": "hard:moon:moon",
+        "mechanism": "A brief Moon contact with natal Moon offers a frame for comparing an ordinary moment with your familiar rhythm. The scene might be the difference between choosing company and choosing a quiet hour, or between a familiar plan and the wish for some unplanned space. A single moment is enough for that comparison; it need not become a story about the whole day.",
+        "question": "How does today compare to your usual baseline?",
+        "themes": []
+      }
+    },
+    {
+      "key": "hard:neptune:*",
+      "status": "added",
+      "baseline": null,
+      "candidate": {
+        "key": "hard:neptune:*",
+        "mechanism": "A hard transit from Neptune softens boundaries and introduces ambiguity to the natal placement. This interaction frequently coincides with diffuse focus, misplaced assumptions, or difficulty measuring concrete details. A person might notice that certainty recedes, requiring patience while facts clarify.",
+        "question": "Where might vague assumptions be obscuring the verifiable facts of a situation?",
+        "themes": []
+      }
+    },
+    {
+      "key": "hard:neptune:sun",
+      "status": "unchanged",
+      "baseline": {
+        "key": "hard:neptune:sun",
+        "mechanism": "Neptune contacts blur outlines. Certainty is lower than usual, and that is information rather than a fault.",
+        "question": "What are you currently unsure about that you were sure about a year ago?",
+        "themes": []
+      },
+      "candidate": {
+        "key": "hard:neptune:sun",
+        "mechanism": "Neptune contacts blur outlines. Certainty is lower than usual, and that is information rather than a fault.",
+        "question": "What are you currently unsure about that you were sure about a year ago?",
+        "themes": []
+      }
+    },
+    {
+      "key": "hard:pluto:*",
+      "status": "added",
+      "baseline": null,
+      "candidate": {
+        "key": "hard:pluto:*",
+        "mechanism": "A hard transit from Pluto exposes underlying power dynamics, compulsive patterns, or structural vulnerabilities. This aspect tends to coincide with intense scrutiny, mandatory reform, and the end of outmoded strategies. A person might notice that superficial compromises no longer suffice under deep pressure to change.",
+        "question": "What dynamic or assumption is being stripped back to reveal its essential core?",
+        "themes": []
+      }
+    },
+    {
+      "key": "hard:pluto:sun",
+      "status": "unchanged",
+      "baseline": {
+        "key": "hard:pluto:sun",
+        "mechanism": "Pluto contacts are slow and structural; they tend to correspond to a change in what you are willing to negotiate over.",
+        "question": "What is no longer up for debate for you?",
+        "themes": []
+      },
+      "candidate": {
+        "key": "hard:pluto:sun",
+        "mechanism": "Pluto contacts are slow and structural; they tend to correspond to a change in what you are willing to negotiate over.",
+        "question": "What is no longer up for debate for you?",
+        "themes": []
+      }
+    },
+    {
+      "key": "hard:saturn:*",
+      "status": "added",
+      "baseline": null,
+      "candidate": {
+        "key": "hard:saturn:*",
+        "mechanism": "A hard transit from Saturn introduces structural friction or external demands to the targeted natal point. This configuration often coincides with heightened awareness of limitations, delays, or the need to consolidate effort. A person might notice that tasks require more discipline or that existing arrangements undergo scrutiny under pressure.",
+        "question": "Where are structural limits currently asking for deliberate adjustment rather than resistance?",
+        "themes": []
+      }
+    },
+    {
+      "key": "hard:saturn:moon",
+      "status": "unchanged",
+      "baseline": {
+        "key": "hard:saturn:moon",
+        "mechanism": "A small obligation can take up more room than its size suggests. Saturn's hard contact with the Moon frames the tension between something you feel responsible for and the amount of uninterrupted space you would prefer. The everyday scene might be a calendar left too full, or a quiet moment spent mentally keeping track of the next task.",
+        "question": "What kind of quiet are you actually needing?",
+        "themes": []
+      },
+      "candidate": {
+        "key": "hard:saturn:moon",
+        "mechanism": "A small obligation can take up more room than its size suggests. Saturn's hard contact with the Moon frames the tension between something you feel responsible for and the amount of uninterrupted space you would prefer. The everyday scene might be a calendar left too full, or a quiet moment spent mentally keeping track of the next task.",
+        "question": "What kind of quiet are you actually needing?",
+        "themes": []
+      }
+    },
+    {
+      "key": "hard:saturn:sun",
+      "status": "unchanged",
+      "baseline": {
+        "key": "hard:saturn:sun",
+        "mechanism": "An established role can feel heavier when the responsibilities attached to it become visible. Saturn's hard contact with the Sun offers a way to examine the fit between a description you use for yourself and the effort of living up to it. An old introduction or a task accepted by default is an ordinary place to notice that fit.",
+        "question": "What are you still doing out of habit rather than choice?",
+        "themes": []
+      },
+      "candidate": {
+        "key": "hard:saturn:sun",
+        "mechanism": "An established role can feel heavier when the responsibilities attached to it become visible. Saturn's hard contact with the Sun offers a way to examine the fit between a description you use for yourself and the effort of living up to it. An old introduction or a task accepted by default is an ordinary place to notice that fit.",
+        "question": "What are you still doing out of habit rather than choice?",
+        "themes": []
+      }
+    },
+    {
+      "key": "hard:sun:*",
+      "status": "added",
+      "baseline": null,
+      "candidate": {
+        "key": "hard:sun:*",
+        "mechanism": "A hard transit from the Sun casts acute focus on the natal placement, challenging core identity or direction. This contact often coincides with external encounters that demand a clearer definition of personal purpose. A person may notice moments of friction that reveal where autonomy or priorities need firmer expression.",
+        "question": "What central commitment requires your conscious and undivided attention today?",
+        "themes": []
+      }
+    },
+    {
+      "key": "hard:sun:sun",
+      "status": "unchanged",
+      "baseline": {
+        "key": "hard:sun:sun",
+        "mechanism": "Solar contacts to your own Sun mark the annual cycle turning over.",
+        "question": "What is different from this time last year?",
+        "themes": []
+      },
+      "candidate": {
+        "key": "hard:sun:sun",
+        "mechanism": "Solar contacts to your own Sun mark the annual cycle turning over.",
+        "question": "What is different from this time last year?",
+        "themes": []
+      }
+    },
+    {
+      "key": "hard:uranus:*",
+      "status": "added",
+      "baseline": null,
+      "candidate": {
+        "key": "hard:uranus:*",
+        "mechanism": "A hard transit from Uranus disrupts routine and demands sudden adaptability from the natal placement. This contact often coincides with unexpected operational shifts, restlessness with convention, or abrupt interruptions to established patterns. A person may notice an inclination to break away from stagnant expectations.",
+        "question": "Where is an unexpected interruption signaling a need for greater flexibility?",
+        "themes": []
+      }
+    },
+    {
+      "key": "hard:uranus:sun",
+      "status": "unchanged",
+      "baseline": {
+        "key": "hard:uranus:sun",
+        "mechanism": "Uranus contacts coincide with a reduced tolerance for arrangements that were already stale.",
+        "question": "What have you outgrown but not yet said out loud?",
+        "themes": []
+      },
+      "candidate": {
+        "key": "hard:uranus:sun",
+        "mechanism": "Uranus contacts coincide with a reduced tolerance for arrangements that were already stale.",
+        "question": "What have you outgrown but not yet said out loud?",
+        "themes": []
+      }
+    },
+    {
+      "key": "hard:venus:*",
+      "status": "added",
+      "baseline": null,
+      "candidate": {
+        "key": "hard:venus:*",
+        "mechanism": "A hard transit from Venus highlights discrepancies between relational preferences and present circumstances. This aspect often coincides with friction around taste, social negotiations, or imbalances in reciprocal agreements. A person might observe subtle tension between personal desire and collective expectations.",
+        "question": "What discrepancy in comfort or agreement is asking for honest reevaluation?",
+        "themes": []
+      }
+    },
+    {
+      "key": "hard:venus:venus",
+      "status": "unchanged",
+      "baseline": {
+        "key": "hard:venus:venus",
+        "mechanism": "A familiar choice can reveal a preference you have been overlooking. Venus's hard contact with natal Venus frames the gap between what you keep choosing and what still feels appealing. It might be visible in a song you skip, an object you keep without enjoying, or an invitation you are unsure you want to accept.",
+        "question": "What do you actually like, independent of what is expected?",
+        "themes": []
+      },
+      "candidate": {
+        "key": "hard:venus:venus",
+        "mechanism": "A familiar choice can reveal a preference you have been overlooking. Venus's hard contact with natal Venus frames the gap between what you keep choosing and what still feels appealing. It might be visible in a song you skip, an object you keep without enjoying, or an invitation you are unsure you want to accept.",
+        "question": "What do you actually like, independent of what is expected?",
+        "themes": []
+      }
+    },
+    {
+      "key": "opposition:venus:venus",
+      "status": "unchanged",
+      "baseline": {
+        "key": "opposition:venus:venus",
+        "mechanism": "Recognizing personal preferences can involve noticing a contrast with what others want or expect. Venus's opposition to natal Venus brings differences in taste and social ease into view, clarifying what you genuinely value in company and quiet.",
+        "question": "What preference becomes clearer when you compare your pace with others?",
+        "themes": [
+          "connection"
+        ]
+      },
+      "candidate": {
+        "key": "opposition:venus:venus",
+        "mechanism": "Recognizing personal preferences can involve noticing a contrast with what others want or expect. Venus's opposition to natal Venus brings differences in taste and social ease into view, clarifying what you genuinely value in company and quiet.",
+        "question": "What preference becomes clearer when you compare your pace with others?",
+        "themes": [
+          "connection"
+        ]
+      }
+    },
+    {
+      "key": "soft:*:*",
+      "status": "changed",
+      "baseline": {
+        "key": "soft:*:*",
+        "mechanism": "A supportive contact is in range. These tend to be unremarkable in the moment and only visible in hindsight as periods of lower friction.",
+        "question": "What has been easier than expected lately?",
+        "themes": []
+      },
+      "candidate": {
+        "key": "soft:*:*",
+        "mechanism": "A soft aspect between transiting and natal bodies establishes mutual receptivity and constructive integration. This contact usually coincides with steady cooperation between different functions and an absence of friction. A person may notice that circumstances yield readily to deliberate, thoughtful engagement.",
+        "question": "How can the present ease in this area be used to accomplish something durable?",
+        "themes": []
+      }
+    },
+    {
+      "key": "soft:jupiter:*",
+      "status": "added",
+      "baseline": null,
+      "candidate": {
+        "key": "soft:jupiter:*",
+        "mechanism": "A soft transit from Jupiter establishes an easing and supportive influence upon the natal placement. This configuration tends to coincide with opportunities for conceptual clarity, goodwill, and smoother cooperation. A person might notice a natural openness toward learning, collaboration, or broader perspectives.",
+        "question": "What area of development currently feels accessible enough to explore with confidence?",
+        "themes": []
+      }
+    },
+    {
+      "key": "soft:jupiter:sun",
+      "status": "unchanged",
+      "baseline": {
+        "key": "soft:jupiter:sun",
+        "mechanism": "An existing plan can look roomier without becoming a different plan. A supportive Jupiter contact with the Sun frames that sense of permission to explore one more option or describe an ambition more openly. The interesting detail is where curiosity fits alongside what is already underway.",
+        "question": "Where is the resistance unusually low right now?",
+        "themes": []
+      },
+      "candidate": {
+        "key": "soft:jupiter:sun",
+        "mechanism": "An existing plan can look roomier without becoming a different plan. A supportive Jupiter contact with the Sun frames that sense of permission to explore one more option or describe an ambition more openly. The interesting detail is where curiosity fits alongside what is already underway.",
+        "question": "Where is the resistance unusually low right now?",
+        "themes": []
+      }
+    },
+    {
+      "key": "soft:mars:*",
+      "status": "added",
+      "baseline": null,
+      "candidate": {
+        "key": "soft:mars:*",
+        "mechanism": "A soft transit from Mars delivers focused stamina and proactive coordination to the natal placement. This contact tends to coincide with efficient application of energy, clear initiative, and minimal inner conflict. A person may notice that projects move forward smoothly with steady assertiveness.",
+        "question": "Which practical objective is ready for a direct and measured application of effort?",
+        "themes": []
+      }
+    },
+    {
+      "key": "soft:mars:sun",
+      "status": "unchanged",
+      "baseline": {
+        "key": "soft:mars:sun",
+        "mechanism": "Direct effort has a simple shape when intention and action line up. A supportive Mars contact with the Sun frames the difference between circling a task and engaging with one clear part of it. An unfinished paragraph or a practical errand can provide a small, ordinary scene for that focus.",
+        "question": "Where does your effort have a clear place to go?",
+        "themes": []
+      },
+      "candidate": {
+        "key": "soft:mars:sun",
+        "mechanism": "Direct effort has a simple shape when intention and action line up. A supportive Mars contact with the Sun frames the difference between circling a task and engaging with one clear part of it. An unfinished paragraph or a practical errand can provide a small, ordinary scene for that focus.",
+        "question": "Where does your effort have a clear place to go?",
+        "themes": []
+      }
+    },
+    {
+      "key": "soft:mercury:*",
+      "status": "added",
+      "baseline": null,
+      "candidate": {
+        "key": "soft:mercury:*",
+        "mechanism": "A soft transit from Mercury promotes fluent articulation, practical comprehension, and mental flexibility. This contact typically coincides with efficient data handling, productive dialogue, and clear perception. A person might notice that ideas fit together readily and conversations achieve their aims.",
+        "question": "What idea or message is currently clear enough to articulate plainly to others?",
+        "themes": []
+      }
+    },
+    {
+      "key": "soft:mercury:mercury",
+      "status": "unchanged",
+      "baseline": {
+        "key": "soft:mercury:mercury",
+        "mechanism": "A thought can have a workable shape before it has a polished one. A supportive Mercury contact with natal Mercury frames the connection between an idea and the words, outline, or example that make it understandable. A rough note becoming a clear sentence is one possible scene.",
+        "question": "Which idea is taking a clearer shape for you?",
+        "themes": []
+      },
+      "candidate": {
+        "key": "soft:mercury:mercury",
+        "mechanism": "A thought can have a workable shape before it has a polished one. A supportive Mercury contact with natal Mercury frames the connection between an idea and the words, outline, or example that make it understandable. A rough note becoming a clear sentence is one possible scene.",
+        "question": "Which idea is taking a clearer shape for you?",
+        "themes": []
+      }
+    },
+    {
+      "key": "soft:moon:*",
+      "status": "added",
+      "baseline": null,
+      "candidate": {
+        "key": "soft:moon:*",
+        "mechanism": "A soft transit from the Moon facilitates emotional equilibrium, intuitive ease, and responsiveness. This alignment tends to coincide with supportive interactions, steady focus, and a receptive disposition. A person might notice that personal routines run smoothly with little deliberate effort.",
+        "question": "What supportive routine is currently keeping your internal focus steady?",
+        "themes": []
+      }
+    },
+    {
+      "key": "soft:neptune:*",
+      "status": "added",
+      "baseline": null,
+      "candidate": {
+        "key": "soft:neptune:*",
+        "mechanism": "A soft transit from Neptune allows intuitive synthesis, subtle perception, and creative fluidity at the natal point. This contact often coincides with increased contextual empathy, quiet reflection, and an ease with ambiguity. A person may notice that nonverbal cues and overarching patterns are easier to integrate.",
+        "question": "What subtle pattern or undercurrent are you noticing that words have not yet captured?",
+        "themes": []
+      }
+    },
+    {
+      "key": "soft:pluto:*",
+      "status": "added",
+      "baseline": null,
+      "candidate": {
+        "key": "soft:pluto:*",
+        "mechanism": "A soft transit from Pluto provides deep endurance, focused resolve, and steady renewal to the natal function. This alignment coincides with constructive restructuring, sustained concentration, and quiet influence. A person may notice an increased capacity to execute long-term adjustments without drawing resistance.",
+        "question": "Where can your concentrated resolve be applied to build lasting substance?",
+        "themes": []
+      }
+    },
+    {
+      "key": "soft:saturn:*",
+      "status": "added",
+      "baseline": null,
+      "candidate": {
+        "key": "soft:saturn:*",
+        "mechanism": "A soft transit from Saturn provides steady reinforcement and stabilizing support to the contacted natal function. This alignment typically coincides with an increased capacity for patience, orderly progress, and practical realism. A person may notice that sustained effort produces durable results without excessive strain.",
+        "question": "What ongoing habit or system could benefit from quiet, consistent reinforcement right now?",
+        "themes": []
+      }
+    },
+    {
+      "key": "soft:saturn:moon",
+      "status": "unchanged",
+      "baseline": {
+        "key": "soft:saturn:moon",
+        "mechanism": "A familiar routine can be a reference point when the day has many moving parts. A supportive Saturn contact with the Moon frames the comfort of a small arrangement that is predictable: a usual place, a familiar sequence, or enough room between commitments. This is a way to notice which forms of structure feel easy to inhabit.",
+        "question": "Which small arrangement feels comfortable to return to?",
+        "themes": []
+      },
+      "candidate": {
+        "key": "soft:saturn:moon",
+        "mechanism": "A familiar routine can be a reference point when the day has many moving parts. A supportive Saturn contact with the Moon frames the comfort of a small arrangement that is predictable: a usual place, a familiar sequence, or enough room between commitments. This is a way to notice which forms of structure feel easy to inhabit.",
+        "question": "Which small arrangement feels comfortable to return to?",
+        "themes": []
+      }
+    },
+    {
+      "key": "soft:saturn:sun",
+      "status": "unchanged",
+      "baseline": {
+        "key": "soft:saturn:sun",
+        "mechanism": "Consistency can have a quiet shape: returning to a project, keeping a modest promise, or making one part of a routine reliable. A supportive Saturn contact with the Sun frames the connection between that repeated effort and a role you want to keep. The emphasis is on what can be sustained at an ordinary pace.",
+        "question": "What would be worth making durable this month?",
+        "themes": []
+      },
+      "candidate": {
+        "key": "soft:saturn:sun",
+        "mechanism": "Consistency can have a quiet shape: returning to a project, keeping a modest promise, or making one part of a routine reliable. A supportive Saturn contact with the Sun frames the connection between that repeated effort and a role you want to keep. The emphasis is on what can be sustained at an ordinary pace.",
+        "question": "What would be worth making durable this month?",
+        "themes": []
+      }
+    },
+    {
+      "key": "soft:sun:*",
+      "status": "added",
+      "baseline": null,
+      "candidate": {
+        "key": "soft:sun:*",
+        "mechanism": "A soft transit from the Sun brings natural vitality, coherence, and steady reinforcement to the affected point. This alignment tends to coincide with a sense of alignment between intention and outer conduct. A person might notice that personal initiatives meet with quiet recognition and minimal resistance.",
+        "question": "How can your present sense of clarity best support ongoing responsibilities?",
+        "themes": []
+      }
+    },
+    {
+      "key": "soft:uranus:*",
+      "status": "added",
+      "baseline": null,
+      "candidate": {
+        "key": "soft:uranus:*",
+        "mechanism": "A soft transit from Uranus introduces inventive solutions, conceptual freshness, and gradual modernization to the natal point. This configuration tends to coincide with adaptive insights and an openness to nonstandard methods. A person might notice that adopting a novel technique improves day-to-day effectiveness.",
+        "question": "Which routine process could be streamlined by adopting a more contemporary approach?",
+        "themes": []
+      }
+    },
+    {
+      "key": "soft:venus:*",
+      "status": "added",
+      "baseline": null,
+      "candidate": {
+        "key": "soft:venus:*",
+        "mechanism": "A soft transit from Venus facilitates ease, social rapport, and cooperative tone at the affected natal point. This configuration usually coincides with smoother diplomatic exchanges and an appreciation for balance. A person may notice reduced friction when coordinating preferences with others.",
+        "question": "Where could an intentional gesture of balance or aesthetic simplicity bring immediate ease?",
+        "themes": []
+      }
+    },
+    {
+      "key": "soft:venus:venus",
+      "status": "unchanged",
+      "baseline": {
+        "key": "soft:venus:venus",
+        "mechanism": "Taste can become clearer in small choices that require little explanation. A supportive Venus contact with natal Venus frames the pleasure of recognising what appeals to you: a colour, a piece of music, or a way of spending an unclaimed hour.",
+        "question": "What small preference is easy for you to recognise?",
+        "themes": []
+      },
+      "candidate": {
+        "key": "soft:venus:venus",
+        "mechanism": "Taste can become clearer in small choices that require little explanation. A supportive Venus contact with natal Venus frames the pleasure of recognising what appeals to you: a colour, a piece of music, or a way of spending an unclaimed hour.",
+        "question": "What small preference is easy for you to recognise?",
+        "themes": []
+      }
+    },
+    {
+      "key": "square:saturn:sun",
+      "status": "unchanged",
+      "baseline": {
+        "key": "square:saturn:sun",
+        "mechanism": "An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+        "question": "What responsibility is currently asking for clearer boundaries?",
+        "themes": [
+          "structure",
+          "autonomy"
+        ]
+      },
+      "candidate": {
+        "key": "square:saturn:sun",
+        "mechanism": "An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+        "question": "What responsibility is currently asking for clearer boundaries?",
+        "themes": [
+          "structure",
+          "autonomy"
+        ]
+      }
+    },
+    {
+      "key": "trine:jupiter:mars",
+      "status": "unchanged",
+      "baseline": {
+        "key": "trine:jupiter:mars",
+        "mechanism": "Enthusiasm and practical initiative reinforce one another when an aim is well chosen. Jupiter's trine to Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening.",
+        "question": "Where does your initiative have room to expand?",
+        "themes": [
+          "expansion",
+          "initiative"
+        ]
+      },
+      "candidate": {
+        "key": "trine:jupiter:mars",
+        "mechanism": "Enthusiasm and practical initiative reinforce one another when an aim is well chosen. Jupiter's trine to Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening.",
+        "question": "Where does your initiative have room to expand?",
+        "themes": [
+          "expansion",
+          "initiative"
+        ]
+      }
+    },
+    {
+      "key": "trine:mars:sun",
+      "status": "unchanged",
+      "baseline": {
+        "key": "trine:mars:sun",
+        "mechanism": "Energy flows easily when action lines up with what matters to you. Mars's trine to the Sun frames direct engagement with an immediate task, reducing hesitation and allowing effort to produce tangible results.",
+        "question": "Where can you apply direct effort without second-guessing yourself?",
+        "themes": [
+          "initiative"
+        ]
+      },
+      "candidate": {
+        "key": "trine:mars:sun",
+        "mechanism": "Energy flows easily when action lines up with what matters to you. Mars's trine to the Sun frames direct engagement with an immediate task, reducing hesitation and allowing effort to produce tangible results.",
+        "question": "Where can you apply direct effort without second-guessing yourself?",
+        "themes": [
+          "initiative"
+        ]
+      }
+    },
+    {
+      "key": "trine:saturn:sun",
+      "status": "unchanged",
+      "baseline": {
+        "key": "trine:saturn:sun",
+        "mechanism": "Durable progress comes from small, dependable actions repeated without drama. Saturn's trine to the Sun frames the quiet satisfaction of upholding a commitment at an even pace, where patience stabilizes long-term direction.",
+        "question": "Which commitment feels worth sustaining at a steady pace?",
+        "themes": [
+          "structure"
+        ]
+      },
+      "candidate": {
+        "key": "trine:saturn:sun",
+        "mechanism": "Durable progress comes from small, dependable actions repeated without drama. Saturn's trine to the Sun frames the quiet satisfaction of upholding a commitment at an even pace, where patience stabilizes long-term direction.",
+        "question": "Which commitment feels worth sustaining at a steady pace?",
+        "themes": [
+          "structure"
+        ]
+      }
+    }
+  ]
+}

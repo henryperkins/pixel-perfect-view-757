@@ -39,6 +39,91 @@ function signedRequest(url, body) {
   });
 }
 
+for (const provider of ["lovable", "gemini-enterprise"]) {
+  test(`drafting: ${provider} receives the versioned reflective brief and retains separate validated fields`, async () => {
+    const language = await h.vite.ssrLoadModule("/src/lib/ai/language.server.ts");
+    const specs = [
+      "saturn",
+      "jupiter",
+      "mars",
+      "venus",
+      "mercury",
+      "sun",
+      "moon",
+      "uranus",
+      "neptune",
+      "pluto",
+      "*",
+    ].flatMap((body) =>
+      ["hard", "soft"].map((family) => ({
+        key: `${family}:${body}:*`,
+        family,
+        transitBody: body === "*" ? "any body" : body,
+        natalPoint: "any natal point",
+      })),
+    );
+    const accepted = {
+      key: "hard:saturn:*",
+      mechanism: " A weekly commitment can be compared with the time available to keep it. ",
+      question: " What, if anything, would you like to leave room for? ",
+    };
+    const payload = {
+      entries: [
+        accepted,
+        { key: "square:saturn:sun", mechanism: "Unrequested copy.", question: "What fits?" },
+        { key: "soft:saturn:*", mechanism: "", question: "What fits?" },
+      ],
+    };
+    let request;
+    if (provider === "lovable") {
+      h.setGateway((body) => {
+        request = body;
+        return Response.json({ choices: [{ message: { content: JSON.stringify(payload) } }] });
+      });
+    } else {
+      h.setGeminiEnterprise((body) => {
+        request = body;
+        return Response.json({
+          candidates: [{ content: { parts: [{ text: JSON.stringify(payload) }] } }],
+        });
+      });
+    }
+
+    const result = await language.generateBundleEntries(specs, provider);
+    assert.equal(result.promptVersion, "bundle-draft-v2");
+    assert.equal(result.promptVersion, language.BUNDLE_DRAFT_PROMPT_VERSION);
+    assert.deepEqual(result.entries, [
+      {
+        key: accepted.key,
+        mechanism: accepted.mechanism.trim(),
+        question: accepted.question.trim(),
+      },
+    ]);
+    assert.equal(result.dropped, 2);
+    assert.equal(h.gatewayRequests.length + h.geminiEnterpriseRequests.length, 1);
+    const prompt =
+      provider === "lovable"
+        ? request.messages.find((message) => message.role === "user").content
+        : request.contents[0].parts[0].text;
+    const schema =
+      provider === "lovable"
+        ? request.response_format.json_schema.schema
+        : request.generationConfig.responseJsonSchema;
+    assert.equal(prompt.split("\n").filter((line) => /^(hard|soft):/.test(line)).length, 22);
+    assert.match(prompt, /conditional.*reflection/i);
+    assert.match(prompt, /one concrete.*everyday comparison/i);
+    assert.match(prompt, /vary.*sentence structure/i);
+    assert.match(prompt, /no planetary causation/i);
+    assert.match(prompt, /unsupported frequency/i);
+    assert.match(prompt, /nothing.*does not fit/i);
+    assert.match(prompt, /commitment versus available capacity/i);
+    assert.match(prompt, /imagination with uncertainty left explicit/i);
+    assert.doesNotMatch(prompt, /what it tends to coincide with/i);
+    assert.deepEqual(schema.properties.entries.items.required, ["key", "mechanism", "question"]);
+    assert.equal(schema.properties.entries.items.additionalProperties, false);
+  });
+}
+
 test("lifecycle: admin activation and rollback record the actual pointer direction", async () => {
   const releases = [];
   for (const [version, created_at] of [
@@ -618,6 +703,7 @@ test("lifecycle: a complete draft reply rewrites family slots only, keeps review
   assert.equal(draftResult.dropped, 3);
 
   const [draft] = await h.app.listDrafts(h.records(), h.userA);
+  assert.equal(draft.notes.promptVersion, "bundle-draft-v2");
   assert.deepEqual(
     {
       requested: draft.notes.requested,
