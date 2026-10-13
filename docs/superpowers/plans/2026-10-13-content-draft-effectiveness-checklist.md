@@ -307,6 +307,18 @@ Execution: published source `9348a243e35b6af2ba1925a3265d0211f9a7bed4`, pair `80
 
 The new paired blinded editorial review was not run because the complete pair precondition is unsatisfied. The original failed editorial round remains unchanged. This repair round establishes no new candidate meaning in live prose; all 20 additions still need qualification under the repaired serving policy. Wider scope is proposed offline only, and no further generation is scheduled.
 
+## Task 17 — Diagnose the halted repair request offline
+
+**Scope:** The subsequent user **“Proceed.”** authorizes the proposed offline timeout investigation. It does not restart the halted campaign or supply a new numeric paid limit.
+
+- [x] Match the failed capture to published source `9348a24`, compare the original eight attempts at their own source, and preserve both campaign identities and all captures.
+- [x] Compare saved facts, schema, complete prepared requests, native serialization and frozen transport settings. Reproduce cancellation before headers, cancellation while reading the body, HTTP timeout, network error and malformed JSON using blocked-network fixtures; verify one fetch, no failover and full unknown-usage reservations.
+- [x] Document the timer hierarchy and uncertainty. The synthetic Workflow allows five minutes; its app call aborted at 60 seconds before headers. The provider's receipt, latency components, final result and charge remain unobserved. No root cause or serving repair is claimed.
+- [x] Prepare a concrete separate LOW/MEDIUM experiment proposal, its scope/cap, implementation prerequisites and review limits. Preserve the 24-call legacy experiment; leave new generation and serving-policy changes unapproved.
+- [ ] Verify the diagnostic probe, relevant transport/controller checks, preservation and an independent review. Record zero paid calls, retries, replacement outputs, publication, approval or activation.
+
+Evidence and next scope: [offline timeout diagnosis](../../reviews/content-draft-effectiveness/2026-10-13-timeout-diagnosis/README.md). All four saved repair requests match their prepared source and native adapter reconstruction; six boundary probes pass. The proposed experiment is **at most four attempts and a new $5 cap**, two baseline cases at LOW/MEDIUM. That cap can halt before complete pairs if usage is unknown. A new closed manifest is required; the existing thinking experiment freezes a different 24-observation shape. No new generation is scheduled, and Tasks 15–16 and the release gates remain open.
+
 ## Historical execution record
 
 Tasks 1–4 are the evaluation capability; Task 5 can proceed alongside them after the baseline is frozen. Task 6 is the local gate, Task 7 publishes that capability, Task 8 executes only the approved eight-call/$5 pilot, Task 9 records scoped review and remaining qualification/approval gates, and Task 10 changes serving content only after those gates close. The proposed editorial delta and its limitations are recorded in [editorial notes](../../reviews/content-draft-effectiveness/2026-10-13/editorial-notes.md) and the [publication decision](../../reviews/content-draft-effectiveness/2026-10-13/publication-decision.md).

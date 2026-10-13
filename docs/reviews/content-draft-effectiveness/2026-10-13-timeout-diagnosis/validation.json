@@ -1,0 +1,51 @@
+{
+  "version": "content-timeout-diagnosis-validation-1",
+  "sourceSha": "9348a243e35b6af2ba1925a3265d0211f9a7bed4",
+  "scope": "offline diagnosis and documentation; no application or Worker source changes",
+  "diagnosticProbe": {
+    "command": "node docs/reviews/content-draft-effectiveness/2026-10-13-timeout-diagnosis/diagnose.mjs",
+    "exitCode": 0,
+    "archivedAttemptsCompared": 12,
+    "savedRequestAndNativeWireMatches": 4,
+    "oneVariableControlChecks": 2,
+    "boundaryProbesPassed": 6,
+    "externalFetches": "blocked by records harness; fake provider keys"
+  },
+  "focusedTests": {
+    "command": "node --test tests/reading-admin-transport.test.mjs tests/reading-language.test.mjs tests/reading-evaluation-runs.test.mjs tests/edge-pattern-workflows.test.mjs",
+    "passed": 130,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 48239.835118,
+    "log": "/tmp/pattern-timeout-diagnosis-tests.log"
+  },
+  "artifactChecks": {
+    "nodeSyntax": "passed",
+    "repositoryEslint": "passed",
+    "scriptPrettierCheck": "passed",
+    "worktreeDiffCheck": "passed",
+    "sourceDiffAgainstPublishedSha": "empty for src, edge, d1, package.json, bun.lock and tests/helpers"
+  },
+  "preservation": {
+    "historicalEvidenceFiles": 104,
+    "protectedUnrelatedFiles": 4,
+    "hashAndModeMatches": true,
+    "changedFiles": [],
+    "snapshot": "Private state outside repository; secret file contents not exported"
+  },
+  "notRun": {
+    "applicationBuildAndTypecheck": "No application changes; the published implementation identity is preserved. Prior full-suite/build evidence belongs to the repair round.",
+    "newBrowserOrLiveChecks": "No changed member or admin flow. Existing publication and content-pointer evidence is historical, not reverified here.",
+    "workerdTimerParity": "Probes run in Node with shortened timers; no provider or deployed-runtime latency reproduction."
+  },
+  "independentReview": {
+    "status": "pending",
+    "record": "implementation-review.md"
+  },
+  "modelCalls": 0,
+  "retries": 0,
+  "replacementOutputs": 0,
+  "publication": false,
+  "contentApproval": false,
+  "contentActivation": false
+}

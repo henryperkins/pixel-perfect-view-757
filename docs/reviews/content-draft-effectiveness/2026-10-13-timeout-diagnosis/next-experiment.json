@@ -1,0 +1,67 @@
+{
+  "version": "content-latency-experiment-proposal-1",
+  "status": "offline-proposal-not-authorized",
+  "hypothesis": "Explicit LOW thinking may reduce time to completion relative to MEDIUM on the same prompt-15 synthetic facts; quality must be assessed separately.",
+  "servingChangeProposed": false,
+  "provider": "gemini-enterprise",
+  "model": "gemini-enterprise/gemini-3.8-flash",
+  "nativeProviderModel": "gemini-3.8-flash",
+  "baselineCanonicalHash": "44c05c8b0336dc778c2efdcbf0c28dc2091d33a96b91c352a2481123b7f7ccae",
+  "candidateIncluded": false,
+  "referenceSourceSha": "9348a243e35b6af2ba1925a3265d0211f9a7bed4",
+  "referenceCaseSetId": "draft-pilot-2",
+  "promptVersion": "daily-astro-body-15",
+  "validatorVersion": "daily-reference-10",
+  "reflectionVersion": "primary-reflection-1",
+  "deadlineMs": 60000,
+  "maxInputBytes": 65536,
+  "maxOutputTokens": 65536,
+  "onlyExperimentalVariable": "generationConfig.thinkingConfig.thinkingLevel",
+  "plannedOrder": [
+    { "position": 0, "caseId": "fallback-soft-neptune-mercury", "thinkingLevel": "LOW" },
+    { "position": 1, "caseId": "fallback-soft-saturn-mercury", "thinkingLevel": "MEDIUM" },
+    { "position": 2, "caseId": "fallback-soft-saturn-mercury", "thinkingLevel": "LOW" },
+    { "position": 3, "caseId": "fallback-soft-neptune-mercury", "thinkingLevel": "MEDIUM" }
+  ],
+  "proposedAttemptLimit": 4,
+  "proposedDollarCeilingCents": 500,
+  "reservationPerAttemptMicros": 2800000,
+  "worstCaseReservationForAllFourMicros": 11200000,
+  "budgetLimitation": "A $5 cap can stop this campaign before all four planned observations. Retain the full reservation for unknown usage; never bypass the next-attempt reservation guard to complete a pair.",
+  "stopPolicy": "Halt on unavailability, unknown capture, source/model identity drift, invalid usage or insufficient next-attempt reservation. Retain every validator rejection as an observation. No retries or substitutions.",
+  "measurements": [
+    "request/source/plan identities and explicit control",
+    "start, headers, body, abort and finish timestamps",
+    "reported model/response IDs, finish reason and full token usage",
+    "conservative accounting and availability disposition",
+    "validator outcome, exact source-to-output semantics and final reflection",
+    "neutral paired review only when a case has both complete level observations"
+  ],
+  "review": {
+    "freezeBeforeGeneration": true,
+    "bodyThresholds": "Preserve existing specificity/grounding/coherence and repetition thresholds; no substantive unsupported claims.",
+    "reflectionThresholds": "Primary source question must permit rejection or none; assembled prompt must contain one safe question.",
+    "freshBlindedReviewers": 2,
+    "humanApproval": false,
+    "partialPairMayPass": false
+  },
+  "implementationPrerequisites": [
+    "Create a separate versioned closed four-observation manifest; preserve the existing 24-call thinking experiment and both content-comparison versions.",
+    "Freeze per-position controls and exact baseline bytes/source identity in the durable campaign; prevent user overrides after freeze.",
+    "Enforce four total attempts, a separately authorized $5 cap, zero retries and full unknown-usage reservation.",
+    "Verify manifest, control propagation, source identities, safe-stop behavior and capture/report integrity offline; obtain an independent implementation review.",
+    "Publish and verify any required capability under its final source SHA; freeze that SHA and fresh rubric/manifest before generation.",
+    "Recheck authoritative source/account configuration and published rates; no credentials or private member data in captures."
+  ],
+  "interpretationLimits": [
+    "One observation per case/level does not establish latency reliability or a causal explanation for the historical timeout.",
+    "Two baseline cases do not qualify the draft's changed copy, all tone/depth combinations, or wider release content.",
+    "Successful LOW output does not authorize a serving-policy change, replacement repair outputs, human approval or activation.",
+    "No extra paid reviewer API budget is included."
+  ],
+  "scheduled": false,
+  "generationAuthorized": false,
+  "modelCalls": 0,
+  "retries": 0,
+  "replacementOutputs": 0
+}
