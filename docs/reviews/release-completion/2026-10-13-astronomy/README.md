@@ -1,6 +1,6 @@
 # Native astronomy and Timing release
 
-Code is merged and pushed on main at `a3631cba2c5735973a85e64224434fc525fc5d87`. The [live app](https://patterns.lakefrontdigital.io) serves deployment `7da1f6d5-b0ed-48c9-9027-ed723c2d8f04` from that commit. The separate [Swiss service](https://pattern-transit-calc.fly.dev/health) serves the same commit in Fly release 3. The Worker remains `144aebb1-748f-4601-8efe-e1e3fa75420f` at 100% traffic; active content remains 0.7.1 with its original checksum. [Publication receipt](publication.json) and [live release pointers](release-pointers.json) record these stages separately.
+The qualified code was merged and pushed on main at `a3631cba2c5735973a85e64224434fc525fc5d87`. The [live app](https://patterns.lakefrontdigital.io) was verified on deployment `7da1f6d5-b0ed-48c9-9027-ed723c2d8f04` from that commit. The separate [Swiss service](https://pattern-transit-calc.fly.dev/health) serves the same commit in Fly release 3. The Worker remains `144aebb1-748f-4601-8efe-e1e3fa75420f` at 100% traffic; active content remains 0.7.1 with its original checksum. [Publication receipt](publication.json) and [live release pointers](release-pointers.json) record these stages separately.
 
 The release adds native new/full Moons and global eclipse classes, consented current-location daylight framing, and future transit windows outside the reference day's orb. Member and natal prose remain on Lovable. No paid model calls were made, and the inactive writing candidate was not activated. Concurrent Lovable auth-email/payment configuration commits through `9c4ccd1` were preserved in the ordinary merge.
 
@@ -28,3 +28,9 @@ The 33 published JS/CSS files discovered through the actual HTML and dependency 
 The reference tool takes a separate code path through the same pinned Swiss ephemeris. These checks qualify numerical consistency with Swiss, not independently observed timing accuracy. Eclipse classifications are global native results, with no claim of local visibility.
 
 Generated Today Solar Your Context remains unchecked in production because no paid member generation was performed. Writing/repetition review tooling, paid qualification, human editorial sign-off, and live Google assistant/settings acceptance remain open. The [original 139-source registry and topology](../../../reference/source-registry-origin.json) were recovered unchanged, including 54 launch sources, but the full meaning-based crosswalk and additional original-MVP requirements remain open under Task 15. This release completes publication of the prepared code; it does not close every plan.
+
+## Subsequent main integration
+
+At 2026-10-13 08:09 UTC, the app identity endpoint returned HTTP 200 and source `167c5660b3ec582acb2bcdc5806aec8b98960e88`, deployment `24a48221-905e-4748-b2b8-8c41612fbc85`. This later Lovable publication retains all qualified application source; its only changes after `a3631cb` are three Stripe dependencies in `package.json` and `bun.lock`. The Swiss health endpoint returned HTTP 200 with release `a3631cb`. Full acceptance results above belong to the earlier qualified deployment; they were not rerun on this later dependency update.
+
+The release receipt was integrated with those concurrent commits using an ordinary merge and pushed as `ec87797b592510a1111373b557322ec20c94ec93`. That merge adds only documentation compared with `167c566`. Ongoing uncommitted membership/account work in the primary checkout was left untouched; `.env` retained its original hash.
