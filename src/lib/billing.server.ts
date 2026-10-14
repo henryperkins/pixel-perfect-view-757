@@ -91,6 +91,8 @@ export async function getMembership(userId: string, db = records()) {
       testMode: true,
       fullAccess: true,
       accessUntil: null,
+      paidThrough: null,
+      renewalPending: false,
       membership: null,
       trialEligible: true,
       hasCustomer: false,
@@ -182,6 +184,20 @@ async function allSubscriptions(stripe: Stripe, customerId: string) {
   return result;
 }
 
+/** Stripe receipts and Checkout use the customer's email, so it follows the account email. */
+async function matchCustomerEmail(stripe: Stripe, customerId: string, email: string) {
+  const current = await stripe.customers.retrieve(customerId);
+  if (!current.deleted && current.email !== email)
+    await stripe.customers.update(customerId, { email });
+}
+
+/** Called after an email change. Checkout and the portal correct any update this misses. */
+export async function syncBillingEmail(userId: string, email: string, db = records()) {
+  const customer = await customerFor(db, userId);
+  if (!customer || customer.deleting) return;
+  await matchCustomerEmail(await stripeClient(), customer.stripe_customer_id, email);
+}
+
 export async function startCheckout(
   userId: string,
   email: string,
@@ -204,7 +220,7 @@ export async function startCheckout(
         created.id,
       ]);
       customer = (await customerFor(db, userId))!;
-    }
+    } else await matchCustomerEmail(stripe, customer.stripe_customer_id, email);
     const subscriptions = await allSubscriptions(stripe, customer.stripe_customer_id);
     if (subscriptions.some((s) => !["canceled", "incomplete_expired"].includes(s.status)))
       throw new Error("You already have a membership. Manage it in Context & privacy.");
@@ -278,18 +294,18 @@ export async function startCheckout(
   });
 }
 
-export async function membershipPortal(userId: string, db = records()) {
+export async function membershipPortal(userId: string, email: string, db = records()) {
   await assertReady();
   const customer = await customerFor(db, userId);
   if (!customer || customer.deleting) throw new Error("There is no membership to manage.");
   const configuration = (await billingConfig()).portalConfigurationId;
   if (!configuration)
     throw new Error("Membership management is unavailable. Please try again later.");
+  const stripe = await stripeClient();
+  await matchCustomerEmail(stripe, customer.stripe_customer_id, email);
   return {
     url: (
-      await (
-        await stripeClient()
-      ).billingPortal.sessions.create({
+      await stripe.billingPortal.sessions.create({
         customer: customer.stripe_customer_id,
         configuration,
         return_url: `${appOrigin()}/privacy`,

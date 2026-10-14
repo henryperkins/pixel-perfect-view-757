@@ -279,5 +279,13 @@ export async function consumeAccountToken(
   } catch {
     throw new Error(invalidLink);
   }
+  if (token.purpose === "change" && token.new_email) {
+    // The login has already changed; Stripe failing here must not undo or block it.
+    try {
+      await (await import("./billing.server")).syncBillingEmail(token.user_id, token.new_email, db);
+    } catch {
+      console.warn("Pattern billing email update failed; checkout and the portal retry it.");
+    }
+  }
   return { ok: true, signInRequired: purpose === "reset" || token.purpose === "change" };
 }
