@@ -66,19 +66,27 @@ export function MembershipSettings() {
               Payments are in test mode. No real money is charged.
             </p>
           )}
-          {state.accessUntil && state.fullAccess && (
+          {state.renewalPending ? (
             <p className="mt-2 text-sm" role="status">
-              {state.membership?.cancelAtPeriodEnd
-                ? "Renewal is canceled. Full chapters stay available until "
-                : "Full-chapter access through "}
-              <time dateTime={state.accessUntil}>
-                {new Date(state.accessUntil).toLocaleString(undefined, {
-                  dateStyle: "long",
-                  timeStyle: "short",
-                })}
-              </time>
-              .{state.membership?.cancelAtPeriodEnd ? " Your membership will then end." : ""}
+              Stripe is processing your renewal payment. Full chapters stay available while it
+              completes.
             </p>
+          ) : (
+            state.paidThrough &&
+            state.fullAccess && (
+              <p className="mt-2 text-sm" role="status">
+                {state.membership?.cancelAtPeriodEnd
+                  ? "Renewal is canceled. Full chapters stay available until "
+                  : "Full-chapter access through "}
+                <time dateTime={state.paidThrough}>
+                  {new Date(state.paidThrough).toLocaleString(undefined, {
+                    dateStyle: "long",
+                    timeStyle: "short",
+                  })}
+                </time>
+                .{state.membership?.cancelAtPeriodEnd ? " Your membership will then end." : ""}
+              </p>
+            )
           )}
           {state.membership?.status === "past_due" && (
             <p role="alert" className="mt-3 text-sm">

@@ -1,8 +1,10 @@
 import assert from "node:assert/strict";
+import { createHash, randomBytes } from "node:crypto";
 import { before, beforeEach, after, test } from "node:test";
 import { createRecordsHarness } from "./helpers/records-harness.mjs";
 
-let h, billing, policy, account, auth, readers, originalFetch, sub, sessions, calls, failCancel;
+let h, billing, policy, account, auth, readers, security, originalFetch, sub, sessions, calls;
+let failCancel, stripeEmail, failEmailUpdate;
 const keys = [
   "STRIPE_SECRET_KEY",
   "STRIPE_WEBHOOK_SECRET",
@@ -20,6 +22,7 @@ before(async () => {
   account = await h.vite.ssrLoadModule("/src/lib/account-data.server.ts");
   auth = await h.vite.ssrLoadModule("/src/lib/auth.server.ts");
   readers = await h.vite.ssrLoadModule("/src/lib/mcp/readers.server.ts");
+  security = await h.vite.ssrLoadModule("/src/lib/account-security.server.ts");
   originalFetch = globalThis.fetch;
   globalThis.fetch = async (input, init = {}) => {
     const url = new URL(
@@ -30,7 +33,20 @@ before(async () => {
       body = new URLSearchParams(String(init.body ?? ""));
     calls.push({ path: url.pathname, method, body });
     const json = (value, status = 200) => Response.json(value, { status });
-    if (url.pathname === "/v1/customers") return json({ id: "cus_a", livemode: false });
+    if (url.pathname === "/v1/customers") {
+      stripeEmail = body.get("email");
+      return json({ id: "cus_a", livemode: false });
+    }
+    if (url.pathname === "/v1/customers/cus_a") {
+      if (method === "POST") {
+        if (failEmailUpdate)
+          return json({ error: { message: "Synthetic outage", type: "api_error" } }, 503);
+        stripeEmail = body.get("email");
+      }
+      return json({ id: "cus_a", object: "customer", email: stripeEmail, livemode: false });
+    }
+    if (url.pathname === "/v1/billing_portal/sessions")
+      return json({ id: "bps_a", url: "https://billing.stripe.com/p/session/test_a" });
     if (url.pathname.startsWith("/v1/prices/")) {
       const year = url.pathname.endsWith("price_year");
       return json({
@@ -91,6 +107,8 @@ beforeEach(async () => {
   sessions = [];
   calls = [];
   failCancel = false;
+  stripeEmail = null;
+  failEmailUpdate = false;
 });
 after(async () => {
   globalThis.fetch = originalFetch;
@@ -155,24 +173,64 @@ test("monthly and yearly checkout use configured prices, one trial and no duplic
   assert.ok(calls.some((c) => c.path.endsWith("/expire")));
 });
 
-test("trial and paid access expire exactly at their recorded end; failed payments cannot extend access", async () => {
+test("access ends at the trial or paid end, waits briefly for a pending renewal, and stops when payment fails", async () => {
+  const grace = policy.RENEWAL_GRACE_SECONDS,
+    row = () => h.sqlite.prepare("SELECT * FROM memberships").get(),
+    at = (rows, seconds) => policy.membershipAccess(rows, seconds * 1000);
   await customer();
   subscription("trialing");
   await billing.handleBillingEvent(event(), h.records());
   assert.equal((await billing.getMembership(h.userA, h.records())).fullAccess, true);
-  const trial = h.sqlite.prepare("SELECT * FROM memberships").get();
-  assert.equal(policy.membershipAccess([trial], trial.trial_end * 1000).fullAccess, false);
+  const trial = row(),
+    trialEnd = trial.trial_end;
+  assert.equal(at([{ ...trial, cancel_at_period_end: 1 }], trialEnd).fullAccess, false);
+  assert.equal(at([trial], trialEnd).renewalPending, true);
+  assert.equal(at([trial], trialEnd + grace).fullAccess, false);
+
+  // Stripe converts the trial, then drafts the first invoice for about an hour before charging it.
+  const firstEnd = trialEnd + 30 * 86400;
   sub.status = "active";
+  sub.items.data[0].current_period_end = firstEnd;
+  sub.latest_invoice.status = "draft";
+  await billing.handleBillingEvent(
+    event("evt_converted", "customer.subscription.updated"),
+    h.records(),
+  );
+  const converting = row();
+  assert.equal(converting.paid_until, 0);
+  const firstCharge = at([converting], trialEnd + 3600);
+  assert.equal(firstCharge.fullAccess, true);
+  assert.equal(firstCharge.renewalPending, true);
+  assert.equal(firstCharge.paidThrough, new Date(trialEnd * 1000).toISOString());
+  assert.equal(at([converting], trialEnd + grace).fullAccess, false);
+
+  sub.latest_invoice.status = "paid";
   await billing.handleBillingEvent(event("evt_paid"), h.records());
-  const paid = h.sqlite.prepare("SELECT * FROM memberships").get();
-  assert.equal(paid.paid_until, end);
+  const paid = row();
+  assert.equal(paid.paid_until, firstEnd);
+  assert.equal(at([paid], trialEnd + 3600).renewalPending, false);
+  assert.equal(
+    at([paid], firstEnd - 1).accessUntil,
+    new Date((firstEnd + grace) * 1000).toISOString(),
+  );
+
+  sub.items.data[0].current_period_end = firstEnd + 30 * 86400;
+  sub.latest_invoice.status = "draft";
+  await billing.handleBillingEvent(
+    event("evt_renewing", "customer.subscription.updated"),
+    h.records(),
+  );
+  const renewing = row();
+  assert.equal(renewing.paid_until, firstEnd);
+  assert.equal(at([renewing], firstEnd + 3600).renewalPending, true);
+
   sub.status = "past_due";
-  sub.items.data[0].current_period_end = end + 30 * 86400;
   sub.latest_invoice.status = "open";
   await billing.handleBillingEvent(event("evt_failed", "invoice.payment_failed"), h.records());
-  const failed = h.sqlite.prepare("SELECT * FROM memberships").get();
-  assert.equal(failed.paid_until, end);
-  assert.equal(policy.membershipAccess([failed], end * 1000).fullAccess, false);
+  const failed = row();
+  assert.equal(failed.paid_until, firstEnd);
+  assert.equal(at([failed], firstEnd).fullAccess, false);
+  assert.equal(at([failed], firstEnd + 3600).renewalPending, false);
 });
 
 test("cancel really updates Stripe, preserves current access, and ends access on termination", async () => {
@@ -228,6 +286,54 @@ test("checkout cannot grant access to a different account or create a second act
     /another account/,
   );
   assert.equal((await billing.getMembership(h.userB, h.records())).fullAccess, false);
+});
+
+test("checkout and the portal give Stripe the current account email", async () => {
+  await customer();
+  stripeEmail = "old@example.invalid";
+  const updates = () =>
+    calls.filter((c) => c.path === "/v1/customers/cus_a" && c.method === "POST").length;
+  await billing.startCheckout(h.userA, "new@example.invalid", "month", h.records());
+  assert.equal(stripeEmail, "new@example.invalid");
+  assert.equal(updates(), 1);
+  const portal = await billing.membershipPortal(h.userA, "new@example.invalid", h.records());
+  assert.match(portal.url, /^https:\/\/billing.stripe.com/);
+  assert.equal(updates(), 1);
+  await billing.membershipPortal(h.userA, "newer@example.invalid", h.records());
+  assert.equal(stripeEmail, "newer@example.invalid");
+});
+
+test("a confirmed email change reaches Stripe, and a Stripe outage cannot block it", async () => {
+  await customer();
+  stripeEmail = h.sqlite.prepare("SELECT email FROM users WHERE id=?").get(h.userA).email;
+  async function confirmChange(next) {
+    const raw = randomBytes(32).toString("hex"),
+      user = h.sqlite.prepare("SELECT email,password_hash FROM users WHERE id=?").get(h.userA);
+    h.sqlite
+      .prepare(
+        "INSERT INTO account_tokens(token_hash,user_id,purpose,email,new_email,password_hash,created_at,expires_at) VALUES(?,?,?,?,?,?,?,?)",
+      )
+      .run(
+        createHash("sha256").update(raw).digest("hex"),
+        h.userA,
+        "change",
+        user.email,
+        next,
+        user.password_hash,
+        Date.now(),
+        Date.now() + 60_000,
+      );
+    return security.consumeAccountToken(raw, "confirm", undefined, h.records());
+  }
+  await confirmChange("new@example.invalid");
+  assert.equal(stripeEmail, "new@example.invalid");
+  failEmailUpdate = true;
+  assert.equal((await confirmChange("later@example.invalid")).signInRequired, true);
+  assert.equal(
+    h.sqlite.prepare("SELECT email FROM users WHERE id=?").get(h.userA).email,
+    "later@example.invalid",
+  );
+  assert.equal(stripeEmail, "new@example.invalid");
 });
 
 test("billing lock prevents a concurrent checkout/deletion", async () => {
@@ -317,7 +423,8 @@ test("server chapter and assistant reads enforce membership, including saved ful
   assert.equal(paid.locked, false);
   assert.equal(paid.paragraphs.length, 3);
   assert.equal((await readers.readChapter(h.userA, "sun")).status, "available");
-  h.sqlite.prepare("UPDATE memberships SET paid_until=?").run(now - 1);
+  // Renewal was canceled and the paid period has ended.
+  h.sqlite.prepare("UPDATE memberships SET paid_until=?,cancel_at_period_end=1").run(now - 1);
   assert.equal((await h.app.getFeatureNarrative(h.records(), h.userA, "sun")).paragraphs.length, 1);
   assert.equal((await readers.readChapter(h.userA, "sun")).status, "unavailable");
 });

@@ -75,7 +75,10 @@ Constraints that future work must preserve:
   This release uses Stripe test payments only; no real money is charged.
   Full natal essays require active trial or paid access; the free plan keeps chapter
   openings. Canceling renewal retains access through the current trial or paid
-  period, then access ends. Deleting the account cancels the membership immediately.
+  period, then access ends. While Stripe collects a renewal, including the first
+  payment after the trial, access continues for up to 24 hours past the period end;
+  a failed payment ends it. Stripe's customer email follows the account email.
+  Deleting the account cancels the membership immediately.
 
 Undecided / not established: accounts beyond a single owner, notifications,
 localisation, native apps.

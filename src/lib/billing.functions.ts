@@ -21,7 +21,7 @@ export const startCheckout = createServerFn({ method: "POST" })
 export const openMembershipPortal = createServerFn({ method: "POST" })
   .middleware([requireAuth])
   .handler(async ({ context }) =>
-    (await import("./billing.server")).membershipPortal(context.userId, context.db),
+    (await import("./billing.server")).membershipPortal(context.userId, context.email, context.db),
   );
 export const cancelMembership = createServerFn({ method: "POST" })
   .middleware([requireAuth])

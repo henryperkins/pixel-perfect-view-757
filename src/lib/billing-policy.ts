@@ -17,18 +17,34 @@ export interface MembershipRow {
   updated_at: string;
 }
 
-/** A failed renewal never extends the period that was actually paid for. */
-export function accessEnd(row: MembershipRow): number {
+/** Stripe drafts each renewal invoice for about an hour before charging it; this adds margin. */
+export const RENEWAL_GRACE_SECONDS = 24 * 60 * 60;
+
+/** End of the trial or paid period. A failed renewal never extends it. */
+export function paidThrough(row: MembershipRow): number {
   if (row.status === "trialing") return row.trial_end;
-  if (["active", "past_due"].includes(row.status)) return row.paid_until;
+  // Until the first payment lands, a converted trial is covered only to its trial end.
+  if (["active", "past_due"].includes(row.status)) return Math.max(row.paid_until, row.trial_end);
   return 0;
 }
 
+/** A renewing membership keeps access while Stripe collects payment; a reported failure ends it. */
+export function accessEnd(row: MembershipRow): number {
+  const end = paidThrough(row);
+  return end && row.status !== "past_due" && !row.cancel_at_period_end
+    ? end + RENEWAL_GRACE_SECONDS
+    : end;
+}
+
 export function membershipAccess(rows: MembershipRow[], now = Date.now()) {
-  const expires = Math.max(0, ...rows.map(accessEnd));
+  const expires = Math.max(0, ...rows.map(accessEnd)),
+    paid = Math.max(0, ...rows.map(paidThrough));
+  const fullAccess = expires * 1000 > now;
   return {
-    fullAccess: expires * 1000 > now,
+    fullAccess,
     accessUntil: expires ? new Date(expires * 1000).toISOString() : null,
+    paidThrough: paid ? new Date(paid * 1000).toISOString() : null,
+    renewalPending: fullAccess && paid * 1000 <= now,
   };
 }
 
