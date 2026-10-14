@@ -135,6 +135,7 @@ export type EvaluationPlan = ReturnType<typeof createEvaluationPlan> & {
   };
   campaignPlans?: Record<QualificationProfile, ReturnType<typeof createEvaluationPlan>>;
   pilotPlans?: Record<EnterpriseThinkingLevel, ReturnType<typeof createEnterprisePilotPlan>>;
+  latencyProbe?: import("./latency-probe-plan.server").LatencyProbeDetails;
   metadata: ReturnType<typeof createEvaluationPlan>["metadata"] & {
     enterpriseThinking?: EnterpriseThinkingLevel;
     experimentVersion?: "enterprise-thinking-pilot-1";

@@ -85,7 +85,7 @@ function checkedSource(input: ContentComparisonSource): ContentComparisonSource 
   return { ...input };
 }
 
-function checkedBundle(raw: Record<string, unknown>): ContentBundle {
+export function checkedBundle(raw: Record<string, unknown>): ContentBundle {
   validateContentGraph(raw);
   if (typeof raw["version"] !== "string" || !raw["version"].trim())
     throw new Error("The content comparison source is missing its original bundle version.");

@@ -16,6 +16,7 @@ import type { DailyReflectionPlan } from "../content/daily-reflection";
 import type { DailyWritingQualityReport, DailyWritingRenderMode } from "./daily-writing-quality";
 import { QUALIFICATION_PROFILES, type QualificationProfile } from "./qualification-profiles";
 import type { AdminTransportTrace } from "./admin-transport";
+import { latencyProbePreviewSchema, latencyProbeRunSchema } from "./latency-probe";
 
 export { READING_EVAL_FIXTURE_VERSION };
 export const READING_EVALUATION_CATALOG = READING_EVAL_CASES.map((fixed) => ({
@@ -42,7 +43,7 @@ export const READING_EVALUATION_BUNDLE_SOURCES = [
   "writing-candidate",
 ] as const;
 export type ReadingEvaluationBundleSource =
-  (typeof READING_EVALUATION_BUNDLE_SOURCES)[number] | "content-comparison";
+  (typeof READING_EVALUATION_BUNDLE_SOURCES)[number] | "content-comparison" | "latency-probe";
 
 export const contentComparisonSourceSchema = z.discriminatedUnion("kind", [
   z.object({ kind: z.literal("draft"), draftId: z.string().min(1).max(80) }).strict(),
@@ -103,10 +104,12 @@ const legacyReadingEvaluationRunInputSchema = z
 export const readingEvaluationRunInputSchema = z.union([
   legacyReadingEvaluationRunInputSchema,
   contentComparisonRunSchema,
+  latencyProbeRunSchema,
 ]);
 export const readingEvaluationPreviewInputSchema = z.union([
   legacyReadingEvaluationRunInputSchema,
   contentComparisonPreviewSchema,
+  latencyProbePreviewSchema,
 ]);
 
 export const READING_EVALUATION_RUN_STATUSES = [
@@ -145,6 +148,10 @@ export interface ReadingEvaluationRun {
     pairHash: string;
     caseSetId: "draft-pilot-1" | "draft-pilot-2";
   };
+  latencyProbe?: {
+    version: "content-latency-probe-1";
+    positions: readonly { caseId: string; thinking: "LOW" | "MEDIUM" }[];
+  };
 }
 
 /** The next scheduled case comes from the persisted run, never an unrelated catalogue index. */
@@ -156,6 +163,8 @@ export function readingEvaluationCurrentCaseLabel(run: ReadingEvaluationRun | nu
 }
 
 export function readingEvaluationReportScope(run: ReadingEvaluationRun | null): string {
+  if (run?.latencyProbe)
+    return "Latency probe captures are four planned observations by position and thinking level; only a case with both complete levels supports paired review.";
   if (run?.enterpriseThinking)
     return "Pilot captures retain every repetition by position; download stored attempts for this experiment.";
   if (run?.status !== "complete")
@@ -204,7 +213,7 @@ export interface ReadingEvaluationMetadata {
   runPlanHash?: string;
   requestPolicyVersion?: string;
   enterpriseThinking?: "LOW" | "MEDIUM";
-  experimentVersion?: "enterprise-thinking-pilot-1";
+  experimentVersion?: "enterprise-thinking-pilot-1" | "content-latency-probe-1";
   fixtureVersion: string;
   caseSetHash: string;
   caseSetId?: import("./evaluation-case-sets").EvaluationCaseSetId;
