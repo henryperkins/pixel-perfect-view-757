@@ -4,13 +4,17 @@
 
 **Goal:** Correct the observed writing drift, qualify fresh hosted outputs through a documented blinded AI review process, and finish the release evidence without requiring a human prose reviewer.
 
-**Architecture:** Keep the production daily reading on its existing one-call, 20-second path. Select frozen content only within the admin synthetic evaluator; review exported synthetic prose outside the reader request. Complete the ordinary/synthesis correction first, then qualify natal lenses in a separate paired experiment before any catalogue activation.
+**Original architecture (2026-10-11):** Keep the production daily reading on its then-existing one-call, 20-second path. Select frozen content only within the admin synthetic evaluator; review exported synthetic prose outside the reader request. Complete the ordinary/synthesis correction first, then qualify natal lenses in a separate paired experiment before any catalogue activation. Later runtime identities and the approved release-scope replacement are recorded below.
 
 **Tech stack:** TanStack Start, React, TypeScript, Zod, Node test runner, Vite offline replay, Lovable's hosted language gateway, and the existing records service.
 
 **Spec:** This checklist supplements the [synthesis design](../specs/2026-10-11-daily-reading-synthesis-design.md), the [natal design](../specs/2026-10-11-daily-reading-natal-temperament-design.md), and [Reading evaluation](../../../READING-EVALUATION.md). Task 2 explicitly defines a new AI review lane because the existing documents require human judgments.
 
-**Status:** Checklist prepared on 2026-10-11. Future implementation, calls, review and release steps below remain unchecked. Creating this document does not implement them, certify writing, publish content, or deploy anything.
+**Status reconciled 2026-10-13:** Historical full qualification plan with delivered implementation and failed/partial writing evidence. The correction was published and its first blinded review failed; subsequent exhaustive natal rounds also failed or remained partial. The operator later approved a smaller natal/transit writing gate, which passed and supported joint `0.7.1` activation. Those scope changes do not turn the original failed rounds into passes. New schema-5/final-provider qualification remains open under release-completion Task 13.
+
+**Evidence and disposition:** The original completion record below is dated historical evidence, not today's production status. See the [approved replacement natal gate](../../reviews/daily-natal-lens/lightweight-readiness.md), [passing transit review](../../reviews/daily-transit-story/2026-10-12-prompt-recheck/README.md), [joint activation](../../reviews/daily-transit-story/2026-10-12-transit-runtime-fix/README.md), and [central closeout record](2026-10-12-release-completion-checklist.md#reconciled-status). Tasks 1–8 retain their historical failed-round/implementation procedures; exhaustive Task 9 review prerequisites were superseded for that joint release, and Task 10's source/activation outcome was delivered through the owned-service plan. The unchecked count is not an outstanding task count. This reconciliation adds no live checks or review verdicts.
+
+**Execution reference:** All 20-second/3.7/v5 inputs, version reservations, branch ownership and CLI-availability statements below describe the original frozen round. Future work uses [current provider, policy and fixture identities](2026-10-12-release-completion-checklist.md#current-execution-reference) and a newly authorized plan; never rewrite the identities of archived reports.
 
 ## Verified starting point
 
@@ -311,9 +315,9 @@ node --test tests/reading-natal-reliability.test.mjs tests/reading-natal-data.te
 
 **Acceptance:** Natal activation is supported by its own qualification, source/operational evidence and reversible content/code release path. A successful ordinary correction, Git push or hosted natal-free report cannot complete this task.
 
-## Completion record
+## Completion record — historical writing round
 
-Filled during execution on 2026-10-11 (UTC). Each outcome is reported separately.
+This original completion record and its later full-round natal result are preserved. Its pending/inactive/source-match entries describe those recorded rounds, before the approved lightweight review and joint activation linked above. Each historical outcome is reported separately.
 
 | Outcome                                         | Current status                                        | Evidence                                                                                                                                                                                                                                                                                |
 | ----------------------------------------------- | ----------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

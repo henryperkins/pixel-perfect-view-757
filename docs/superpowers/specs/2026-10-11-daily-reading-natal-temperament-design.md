@@ -1,6 +1,8 @@
 # Daily reading natal temperament design
 
-Status: local implementation candidate for recommendation 2, “Natal wiring as the personalizing filter,” continued on 2026-10-11 against the verified shared foundations. Local code, intercepted tests and component-browser evidence are recorded in the [validation record](../releases/2026-10-11-daily-natal-validation.md). Independent editorial approval, actual-model writing qualification, publication and deployment remain open. Revised the same day after an independent verification: see [Revision 2](#revision-2-verification-findings).
+**Status reconciled 2026-10-13:** Shipped in combined content `0.7.1` under the operator-approved lightweight writing gate. Implementation, targeted writing review and joint activation have evidence. The earlier exhaustive benchmark requirements were superseded for that release decision; failed and partial full runs remain historical results. No human approval or full benchmark pass is claimed.
+
+**Evidence and scope:** The [approved lightweight gate](../../reviews/daily-natal-lens/lightweight-readiness.md) replaces exhaustive paired inventories, two full reviewer passes and catalogue-wide review as release prerequisites, and explicitly makes a human-review program optional for that decision. Its [passing continuation](../../reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/README.md) and the later [joint activation receipt](../../reviews/daily-transit-story/2026-10-12-transit-runtime-fix/README.md) supersede the old inactive/local-only status. Production chart screening and timing were checked; natal selection on the same chart was local evidence, not a new live model-writing review. The later schema-5/final-provider qualification remains separate in the [central closeout record](../plans/2026-10-12-release-completion-checklist.md#reconciled-status). No new production check was performed for this reconciliation.
 
 The daily reading can offer one reviewed natal lens through which to consider its primary contact. A calculated placement is evidence for selecting an astrological interpretation; it does not establish the reader's temperament, feelings, life history, or psychological functioning.
 
@@ -12,7 +14,7 @@ This work adds a reviewed natal catalogue, a conservative birth-window screen, a
 
 The existing cycle ranking, strongest-three cap, threshold `> 0.02`, synthesis selection, headline, confidence, and locally assembled reflection question retain their roles. A quiet day does not turn into a natal personality report.
 
-## Verified starting points
+## Verified starting points — historical, 2026-10-11
 
 - `src/lib/astro/chart.ts` records positions, per-aspect service/in-app provenance, Placidus or fallback house assignments, and birth-time uncertainty. Accuracy values are `exact`, `near`, `hour`, and `unknown`, mapped to ±2, ±15, ±60, and ±720 minutes.
 - `exact` is a user-declared accuracy band, not verification of a birth certificate. `housesReliable` alone does not establish that a particular house or sign is stable.
@@ -235,7 +237,7 @@ Place the optional natal lens after the selected synthesis/primary meaning and b
 
 Create shared `natalLensWordingProblem(text: string): "certainty" | "clinical" | null` in `src/lib/content/natal-lens-policy.ts`, used by catalogue validation and daily candidate validation when `N1` is present. Bound the certainty check to phrases such as “you always,” “you never,” “you are fundamentally,” and “your innate nature”; clinical claims include “your nervous system,” “your attachment style,” and “your trauma response.” Retain existing safety checks. Test ordinary conditional prose so this does not become a blanket ban on direct address or the word “response.” Human review catches subtler stereotypes and certainty that lexical checks miss.
 
-The natal system-voice sentence and brief line appear only when `N1` is supplied, so a reading without a lens sends the pre-lens request byte for byte. Add bounded rejection codes `natal_coverage`, `natal_claim`, and reuse `dependencies` for missing parents. No lens is an ordinary reading state, not a gateway failure or a quiet-day skip. One model call, `google/gemini-3.7-flash`, strict body-only JSON, the existing daily `20_000` ms deadline, and separate natal-chapter/drafting behavior are retained.
+The natal system-voice sentence and brief line appear only when `N1` is supplied, so the lens addition itself leaves a no-lens request unchanged. Keep bounded rejection codes `natal_coverage`, `natal_claim`, and `dependencies` for missing parents. No lens is an ordinary reading state, not a gateway failure or a quiet-day skip. Preserve one model call, strict body-only JSON and a 60,000 ms daily deadline. Member readings and natal chapters follow [AGENTS.md](../../../AGENTS.md)'s configured-provider selection; admin drafting/evaluation selects independently. The original 3.7 model / 20,000 ms policy is historical. [Current identities](../plans/2026-10-12-release-completion-checklist.md#current-execution-reference) keep provider models and schema-specific prompts distinct.
 
 ## Saved evidence, privacy, and versions
 
@@ -249,11 +251,13 @@ Update owner evidence labels to “Published natal lens” / “Interpretive ref
 
 Owner exports include decrypted saved natal evidence. A row whose text, paragraphs or evidence cannot be read is exported with an `unreadable` marker and counted rather than failing the whole export; it is never reconstructed, and owner reads of it still fail closed. Account erasure deletes the evidence through the existing chart/reading tables and DEK removal, also deletes chapter essays (their clear feature keys can name placements), and clears the birth-derived fingerprint from retained `birth_profile.saved` audit events. Admin quality reporting can count `N1` citation IDs and bounded diagnostics but cannot decrypt, group by, or export natal mechanisms, rules, placements, or evidence. No new sensitive cohort segmentation or inferred temperament score.
 
-Current local implementation identities: built-in fallback `builtin-0.5.0` (no catalogue), inactive natal candidate `builtin-0.6.0`, natal plan `daily-natal-lens-2`, reliability `natal-reliability-1`, prompt `daily-astro-body-6`, validator `daily-reference-5`, fixed fixtures `synthetic-daily-5`. Diagnostics envelope version 1 and tolerant historic readers are retained. These identities have not been published or deployed by this continuation.
+Historical local identities on 2026-10-11 were built-in fallback `builtin-0.5.0` (no catalogue), inactive candidate `builtin-0.6.0`, natal plan `daily-natal-lens-2`, reliability `natal-reliability-1`, prompt 6 / validator 5 and `synthetic-daily-5`. The corrected standalone natal candidate is `builtin-0.6.1`; recorded active `0.7.1` includes its catalogue and transit chapters. The fallback remains natal-free. Diagnostics envelope version 1 and tolerant historical readers are retained; subsequent reports keep their own actual identities.
 
 The keyed daily cache identity includes the existing synthesis/interpretation policy, natal plan/reliability versions, canonical decrypted manifest or an explicit absence/unavailable state, prompt/validator/model, snapshot, effective copy, and existing consent/local context inputs. Do not use randomized ciphertext as a policy digest, expose low-entropy plain hashes, overwrite older rows, or detach their feedback. Upgrading a previously missing manifest or changing its qualified evidence refreshes Today even under the same birth fingerprint.
 
 ## Catalogue lifecycle and qualification
+
+**Qualification scope:** The matched version-5 experiment and exhaustive review described below are the original 2026-10-11 design. They were superseded as prerequisites for the `0.7.1` release by the approved lightweight gate linked above, which passed. Current general fixtures are `synthetic-daily-7` (50 cases); archived v5 reports retain their 28-case identity. Future catalogue/policy changes require the applicable newly frozen review scope. The later final-stack/human-approval work in release-completion Task 13 is open and is not a retroactive prerequisite for the shipped release.
 
 Use recommendation 1's shared validator/normalizer at load, drafting, inactive publication, signed ingest, activation, and rollback. Preserve the full natal catalogue when cycle copy is drafted. Existing cycle-draft slots must not rewrite or approve natal traits. A natal catalogue edit is explicitly reviewed copy under a new immutable content version; invalid graphs leave the active pointer intact. Previews show schema version, base/compound lens counts and coverage, not any user's natal origins.
 
@@ -309,7 +313,9 @@ and one pre-existing erasure gap was found. Each is now part of the contract abo
   drafts on the wrong catalogue.
 - **Erasure.** Chapter essays and retained audit fingerprints are now covered.
 
-## Addendum 2026-10-11: AI writing-review lane
+## Addendum 2026-10-11: AI writing-review lane — historical
+
+The following records the earlier lane. The 2026-10-12 approved lightweight gate superseded its exhaustive review prerequisites for the joint release, as described above. Human review was not completed and is not relabeled as completed.
 
 No human prose reviewer is available. Catalogue approval and lens writing
 qualification follow the AI review lane in

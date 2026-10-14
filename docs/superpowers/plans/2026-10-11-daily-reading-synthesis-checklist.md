@@ -10,7 +10,9 @@
 
 **Spec:** [Daily reading synthesis design](../specs/2026-10-11-daily-reading-synthesis-design.md).
 
-**Status:** Implementation resumed from `d7a77f6` on `feat/daily-reading-synthesis`. Tasks 1–6 and the local implementation, structural evaluation, checks, and candidate preparation in Tasks 7–8 are complete. Independent review findings were fixed and covered by regressions. Actual-model baseline/candidate writing qualification, blinded review, publication, activation, and deployment remain pending. No production records or external model traffic have been changed in this continuation. See the [local validation record](../releases/2026-10-11-daily-synthesis-validation.md).
+**Status reconciled 2026-10-13:** Implementation and publication are complete; recorded active content `0.7.1` includes the six-rule synthesis catalogue. The original full writing round failed. Later targeted reviews passed their combined-synthesis samples, without establishing a full synthesis benchmark or human approval. The expanded catalogue and final-stack review remain open under release-completion Tasks 12–14.
+
+**Evidence:** [Local implementation](../releases/2026-10-11-daily-synthesis-validation.md), [failed full review](../../reviews/daily-reading-writing/2026-10-11/writing-review.md), [targeted combined review](../../reviews/daily-transit-story/2026-10-12-prompt-recheck/README.md), [joint activation](../../reviews/daily-transit-story/2026-10-12-transit-runtime-fix/README.md), and [expanded matrix](../../reviews/daily-synthesis/README.md). The [central closeout record](2026-10-12-release-completion-checklist.md#reconciled-status) owns current actions. The original task checkboxes below are a historical execution ledger; an unticked procedural step is not by itself an outstanding implementation requirement. No new production checks were run for this reconciliation.
 
 ## Global constraints
 
@@ -19,7 +21,7 @@
 - “Section observers animate already-visible content once, never hide it; chapter panels retain visited content while collapsing.” Evidence additions must fit the existing accessible UI and motion behavior.
 - Preserve the existing top-three limit, importance threshold `> 0.02`, birth-time suppression, primary headline/confidence, local reflection assembly, and external-context privacy boundary.
 - Synthesis is published editorial interpretation, not astronomical measurement or an established personal state.
-- Keep the existing `google/gemini-3.7-flash` configuration, response schema, one-call policy, and `20_000` ms daily deadline.
+- Follow [AGENTS.md](../../../AGENTS.md)'s current member-provider selection and the [current execution reference](2026-10-12-release-completion-checklist.md#current-execution-reference): one call, no retry, 60,000 ms daily deadline and provider-specific Gemini 3.8 identities. Keep schema-specific response contracts; the original 3.7 / 20,000 ms settings in the execution ledger are historical.
 - Preserve historical readings, paragraph boundaries, feedback, and source identity. Do not silently rewrite published content or mix built-in rules into a legacy active release.
 - No schema migration is proposed: use existing bundle and `language_meta` JSON fields, with tolerant readers for historical rows.
 - Preserve unrelated work and Lovable-connected history. Never force-push or rewrite pushed commits. During implementation, stage explicit owned paths only.
@@ -162,6 +164,8 @@ assert.equal(independentPlan.synthesis, null);
 
 ## Task 7: Extend the fixed benchmark and qualify the writing
 
+**Reconciled disposition:** Fixture/evaluator implementation is complete. The original v3 comparison sequence below was followed by a matched v5 writing-correction round that failed. Current general fixtures are v7 (50 cases); historical reports keep their original identities. The later small combined review is limited evidence. New final-stack qualification belongs to release-completion Task 13, not a replay of this obsolete v3 setup.
+
 **Files:** Modify `src/lib/ai/reading-evaluation.fixtures.mjs` and `reading-evaluation.fixtures.d.mts` as needed, `reading-evaluation.server.ts`, `reading-evaluation.shared.ts`, `scripts/reading-eval-cases.mjs`, `scripts/evaluate-readings.mjs`, and `src/components/pattern/ReadingEvaluation.tsx`. Extend `tests/reading-eval.test.mjs`, `tests/reading-eval-fixtures.test.mjs`, `tests/reading-live-eval.test.mjs`, and `tests/reading-live-eval-auth.test.mjs`. Update `READING-EVALUATION.md`.
 
 **Interfaces:** Keep the fixed-case-ID-only evaluation boundary. Retain enriched facts and plan identity in reports; tolerate prior reports where new plan fields are absent. Add plan version to run-consistency checks and comparison metadata without preventing comparison between deliberately different policies on identical fixtures.
@@ -191,6 +195,8 @@ assert.equal(independentPlan.synthesis, null);
 
 ## Task 8: Finish documentation, checks, and a reviewable release candidate
 
+**Reconciled disposition:** Source and content delivery are recorded by the joint activation receipt above; the original unchecked publication procedure is retained as history. Full final-version writing qualification and applicable signed-in acceptance remain in release-completion Tasks 13–14.
+
 **Files:** Update `README.md`, `READING-INTEGRITY.md`, and `READING-EVALUATION.md` alongside the implementation. Keep these design/checklist documents accurate about remaining work.
 
 - [x] Document exact lookup precedence, supporting meanings, selected/independent/unmatched behavior, dependency limits, immutable content rules, skip reasons, and archived evidence behavior.
@@ -212,8 +218,7 @@ assert.equal(independentPlan.synthesis, null);
 
 ## Final acceptance checklist
 
-Checked items record local implementation and intercepted-model test coverage.
-Actual generated writing still requires the separate gate below.
+These original acceptance boxes record local implementation and intercepted-model coverage. Full generated-writing qualification below remains unpassed; the current status and scoped later review are recorded above.
 
 - [x] Published meanings are available for each selected supporting contact where copy exists.
 - [x] The strongest two eligible contacts receive at most one reviewed tension/reinforcement synthesis.

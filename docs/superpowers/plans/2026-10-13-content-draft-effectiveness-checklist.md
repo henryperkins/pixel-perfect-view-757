@@ -1,6 +1,6 @@
 # Content draft effectiveness and utilization implementation checklist
 
-> **For agentic workers:** Use `superpowers:executing-plans` or `superpowers:subagent-driven-development` when implementing this checklist. Check a box only after its stated evidence exists. Implementation is approved. The only authorized live comparison is an eight-call pilot with a $5 total generation cap; publication and activation retain their exact-content approval gates.
+> **For agentic workers:** Check a box only after its stated evidence exists. The original eight-attempt/$5 pilot completed; a separately authorized eight-attempt/$5 repair pilot halted after four baseline attempts. Those authorizations do not permit more calls or a restart. Publication and activation retain their exact-content approval gates. Use the latest status and Tasks 14–17 below when planning further work.
 
 **Goal:** Make the saved interpretation draft directly testable, improve its copy, demonstrate that the changed entries reach reading output, and activate only the exact qualified release.
 
@@ -12,11 +12,13 @@
 
 ## Evidence and status
 
-The original audit used local source `b7aca0e` on 2026-10-13. Implementation and the completed eight-attempt live pilot used published source `82efe38df4c5ee571d6c583de144498c93f596f1`. Current execution evidence is in the [manifest](../../reviews/content-draft-effectiveness/2026-10-13/manifest.json) and [pilot result](../../reviews/content-draft-effectiveness/2026-10-13/pilot/result.json); the initial findings below are retained as the problem statement, not current implementation claims.
+**Status reconciled 2026-10-13: unfinished release; repaired capability published, latest paired pilot halted.** The original audit used `b7aca0e`; the first completed eight-attempt pilot used published source `82efe38df4c5ee571d6c583de144498c93f596f1` and failed editorial qualification. The separately authorized repair campaign used published `9348a243e35b6af2ba1925a3265d0211f9a7bed4`: three baseline responses passed validation and Neptune timed out before headers; the candidate arm never started. The draft remains unapproved/inactive and the latest recorded active pointer is `0.7.1`.
+
+**Latest evidence:** [Repair publication and halted run](../../reviews/content-draft-effectiveness/2026-10-13-repair-pilot/README.md), [offline timeout diagnosis](../../reviews/content-draft-effectiveness/2026-10-13-timeout-diagnosis/README.md), and the [central closeout record](2026-10-12-release-completion-checklist.md#reconciled-status). The original [manifest](../../reviews/content-draft-effectiveness/2026-10-13/manifest.json), [pilot result](../../reviews/content-draft-effectiveness/2026-10-13/pilot/result.json) and findings below remain historical evidence. This reconciliation uses saved receipts, not a new production check.
 
 The user's replacement AGENTS instructions on 2026-10-13 resolve the earlier provider-policy conflict: member readings and natal chapters use an explicit `PATTERN_MEMBER_LANGUAGE_PROVIDER` selection when present, otherwise Gemini Enterprise when configured, otherwise Lovable. A failed request never retries through another provider; admin selection remains independent. Preserve that behavior. Earlier Lovable credit failures remain historical observations, not proof that the selected member provider is unavailable.
 
-The user rejected the proposed full-suite live run and approved **four paired cases, at most eight generation attempts, with a $5 total generation cap**. `draft-fallback-1` remains a 70-case offline regression suite. Only the fixed four-case `draft-pilot-1` can be used for the authorized paid pilot. No additional model smoke test, retry, replacement output, paid reviewer call or wider qualification is included in that approval.
+The original authorization was **four paired cases, at most eight generation attempts, with a $5 total generation cap**, using `draft-pilot-1`; the user rejected the proposed full-suite live run. The later repair authorization separately bound `draft-pilot-2` and the same numeric ceilings (Tasks 14–16). Both 70-case `draft-fallback-*` suites are offline coverage. Neither campaign permits further generation, retries, replacement outputs, paid reviewer calls or wider qualification. The four-observation LOW/MEDIUM proposal in Task 17 still needs new authorization and its own implemented manifest.
 
 | Finding                                                 | Evidence                                                                                                           | Required solution                                                                       |
 | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------- |
@@ -32,7 +34,7 @@ The user rejected the proposed full-suite live run and approved **four paired ca
 
 Original comparison identities: baseline `44c05c8b0336dc778c2efdcbf0c28dc2091d33a96b91c352a2481123b7f7ccae`; candidate `3638d096972ab2f47616edff0da91c15ea6bccd29424e26ed2bf10b2ae77a42e`. These identify the attached draft, not a future revision. The earlier temporary lookup artifacts are `/tmp/content-draft-reachability.mjs` and `/tmp/content-draft-reachability.json`; archive or reproduce them before relying on their continued availability. That probe extracted cycle fields, used default ancillary content, and measured selection only, not complete candidate rendering or production frequency.
 
-Current outcome: **pilot complete; editorial qualification failed; candidate inactive**. Read the [effectiveness result and remaining solutions](../../reviews/content-draft-effectiveness/2026-10-13/effectiveness-summary.md). No further paid calls are authorized.
+Original-round outcome: **pilot complete; editorial qualification failed; candidate inactive**. Its [effectiveness result](../../reviews/content-draft-effectiveness/2026-10-13/effectiveness-summary.md) remains unchanged. Latest outcome: **repair baseline halted, no candidate captures, no new paired writing review**. All 20 additions still need qualification under the repaired policy; no further paid calls are authorized.
 
 The subsequent local repair is recorded separately in [offline repair evidence](../../reviews/content-draft-effectiveness/2026-10-13-offline-repair/README.md). Tasks 11–13 implement the summary's concrete offline solutions; they do not replace the failed writing round or satisfy Tasks 8–10's remaining account, editorial, human-approval and release gates. All 58 original evidence files are preserved.
 
@@ -204,6 +206,8 @@ The unpacked `review-rubric-reconstructed.json` is not proof of pre-generation f
 
 ## Task 8 — Run the authorized eight-call member-provider pilot
 
+**Historical campaign:** This task records the original completed v1 pilot. The later repair preflight confirmed billing enabled and use of published pay-as-you-go pricing; neither round has reconciled invoiced charges. That later confirmation is not backdated into the original unchecked preflight item. Current accounting follow-up is in the central closeout record.
+
 **Owner:** Evaluation operator. **Depends on:** Tasks 5–7 and the confirmed Task 0 provider selection. **Inputs:** exact frozen pair, fixed four-case pilot manifest, source identity, $5 total generation cap and confirmed member-provider availability.
 
 - [x] Freeze the Task 9 review rubric, proposed voice/repetition threshold, reflection-review schema and packet-generation version before making any model call. Record their hashes alongside the comparison plan; do not choose pass criteria after seeing outputs.
@@ -220,6 +224,8 @@ Execution: all eight attempts completed; $0.879908 conservative accounting, no r
 
 ## Task 9 — Qualify writing and bind human approval
 
+**Current disposition:** The original body/final-reflection review failed. Offline repairs and matching-runtime replay subsequently passed their technical checks, but the repaired campaign produced no candidate arm and cannot support a new paired writing verdict. The original findings, open affected-key coverage and exact-content human approval remain distinct requirements.
+
 **Owner:** Independent reviewers and human editor. **Depends on:** Task 8. **Files:** versioned review packets, private assignment, reviewer results, adjudication and qualification summary in the evidence directory. The pilot can support a scoped review only; full affected-key qualification and exact-content human approval remain open gates. Additional paid review or generation needs separate authorization.
 
 - [x] Extend the existing packet preparation with the declared content-pair manifest. Include every captured model candidate, rejected candidate, distinct displayed/fallback body and reflection question, with supplied facts and tone/depth. Keep authorship, arm, acceptance and provider labels outside reviewer packets.
@@ -229,7 +235,7 @@ Execution: all eight attempts completed; $0.879908 conservative accounting, no r
 - [ ] Require no unresolved substantive findings or new failures in preserved specific-entry cases. Report paired improvements and regressions by changed key; length or higher validator acceptance alone cannot qualify the draft. If revisions are needed, save a new hash and preserve the failed round; no same-hash pass may be claimed for revised text.
 - [ ] Obtain actual human editorial approval of the exact baseline/candidate hashes and the observed outputs. Use the existing approval action only after that review. Check the broader release checklist for applicable open gates; a scoped content comparison does not close schema-5 four-arm, seven-day, Enterprise or other independent qualifications.
 
-Execution: two fresh reviewers and one fresh adjudicator completed the scoped assessment. Body and final-reflection qualification failed. Source questions pass 4/4; final prompts pass 2/4. Correct the documented composition issues and close remaining coverage/replay gates before asking for exact-content human approval.
+Original execution: two fresh reviewers and one fresh adjudicator completed the scoped assessment. Body and final-reflection qualification failed. Source questions passed 4/4; final prompts passed 2/4. Tasks 11–13 later corrected deterministic composition and completed archived-source workerd replay; they did not replace this failed writing result. Qualification of new repaired outputs and exact-content human approval remain open.
 
 **Done when:** The final candidate has complete affected-key evidence, passes the declared editorial gates, and has human approval bound to its exact bytes. Otherwise keep it inactive.
 
@@ -325,4 +331,4 @@ Tasks 1–4 are the evaluation capability; Task 5 can proceed alongside them aft
 
 At closeout record each status independently: implementation SHA; tests/typecheck/lint/build/browser results; application and Worker deployment identities; baseline/candidate/source-plan hashes; case-set identity and changed-key coverage; captured and uncertain attempts; reserved and reconciled cost; validator results; AI review; human approval; staged release/version mapping; active pointer and delivery state; member provenance/render evidence; prior-release preservation; rollback target; remaining gaps.
 
-Execution evidence: [manifest](../../reviews/content-draft-effectiveness/2026-10-13/manifest.json), [progress and validation](../../reviews/content-draft-effectiveness/2026-10-13/progress.md), [source editorial review](../../reviews/content-draft-effectiveness/2026-10-13/source-editorial-review.md), and [browser checks](../../reviews/content-draft-effectiveness/2026-10-13/browser/result.json). Checked tasks describe verified work. The authorized pilot completed 8/8 attempts with $0.879908 conservative accounting; human approval and content activation remain open. Strict Node response replay did not pass because one legacy floating-point fixture value differs from workerd; see the runtime diagnostic. The four live case plans and captures remain intact.
+Original execution evidence: [manifest](../../reviews/content-draft-effectiveness/2026-10-13/manifest.json), [progress and validation](../../reviews/content-draft-effectiveness/2026-10-13/progress.md), [source editorial review](../../reviews/content-draft-effectiveness/2026-10-13/source-editorial-review.md), and [browser checks](../../reviews/content-draft-effectiveness/2026-10-13/browser/result.json). That pilot completed 8/8 attempts with $0.879908 conservative accounting. Its strict Node replay failed on a legacy floating-point fixture difference; Tasks 4 and 11–13 subsequently reproduced all eight original outputs in their matching archived workerd runtime. Both observations remain preserved. The later repair pilot halted with $3.100932 accounted/reserved, including unknown-result reservation; neither total is an invoice. Latest qualification, approval and release gaps are recorded above and in the central closeout record.

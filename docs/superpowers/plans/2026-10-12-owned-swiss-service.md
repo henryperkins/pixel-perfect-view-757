@@ -10,6 +10,8 @@
 
 **Spec:** `docs/superpowers/specs/2026-10-11-daily-reading-transit-story-design.md`; approved feasibility at `docs/reviews/daily-transit-story/2026-10-12-owned-service-feasibility.md`.
 
+**Status reconciled 2026-10-13: complete.** All five tasks have implementation, numerical, deployment and application-connection evidence. The [runtime/activation receipt](../../reviews/daily-transit-story/2026-10-12-transit-runtime-fix/README.md) confirms combined `0.7.1` active in both pointers. Later lunation/solar/upcoming additions are covered by the [astronomy release](../../reviews/release-completion/2026-10-13-astronomy/README.md); their remaining registry/Today-context acceptance does not reopen this original service deliverable. See the [central closeout record](2026-10-12-release-completion-checklist.md#reconciled-status) for current follow-up ownership. This is receipt reconciliation, not a new live service check.
+
 ## Global Constraints
 
 - Preserve the existing `patternlike-calc` deployment and unrelated dirty primary checkout.

@@ -10,19 +10,21 @@
 
 **Spec:** [Daily reading natal temperament design](../specs/2026-10-11-daily-reading-natal-temperament-design.md).
 
-**Status:** Local implementation continued on 2026-10-11 after the user selected “Implement #2 locally.” Recommendation 1's shared foundation suite passed 34/34 first. Natal code, intercepted integration tests, offline v4 replay and component-browser checks are implemented; see the [validation record](../releases/2026-10-11-daily-natal-validation.md). Independent catalogue approval and actual-model writing qualification remain open. Publication, activation, deployment and commit steps have not been performed. Checked steps record completed local work; unchecked procedural/red-stage steps and external qualification are not retroactively claimed.
+**Status reconciled 2026-10-13:** Shipped in combined `0.7.1` under the approved lightweight writing gate. The operator's [scope replacement](../../reviews/daily-natal-lens/lightweight-readiness.md) passed after its [raw-draft continuation](../../reviews/daily-natal-lens/2026-10-12-raw-draft-continuation/README.md). [Joint activation](../../reviews/daily-transit-story/2026-10-12-transit-runtime-fix/README.md) subsequently connected the qualified Swiss service and enabled natal lenses/transit chapters. Full benchmark and human approval are not claimed; they were not prerequisites for that approved smaller writing decision.
+
+**How to read this checklist:** The original 2026-10-11 task boxes and [local validation](../releases/2026-10-11-daily-natal-validation.md) remain an execution ledger, including unrecorded initial-red/commit sequences and earlier failed/partial full reviews. Their unchecked count is not today's backlog. The exhaustive Task 8 writing gate and human-review prerequisite were superseded for `0.7.1`; the later schema-5/final-provider qualification is a separate open scope. See the [central closeout record](2026-10-12-release-completion-checklist.md#reconciled-status) for owners and next actions. Receipt reconciliation adds no fresh live-model or production verification.
 
 ## Global constraints
 
-- Scope is recommendation 2. Complete the [recommendation 1 checklist](2026-10-11-daily-reading-synthesis-checklist.md) first; reuse its schema, interpretation plan, fact graph, cache/evidence, and sixteen-case fixture contracts.
+- Scope is recommendation 2. Reuse recommendation 1's landed schema, interpretation plan, fact graph and cache/evidence. Its original sixteen-case fixtures are historical; use the applicable frozen manifest for new evaluation.
 - “Natal houses, angles and aspects come from the Swiss Ephemeris service response (Placidus); in-app math is only the degraded fallback and fills angle contacts the service omits.” Only qualified service origins can select a natal lens; in-app angle fill-ins cannot select one.
 - “Section observers animate already-visible content once, never hide it; chapter panels retain visited content while collapsing.” Extend existing evidence and Button patterns; retain reduced-motion and keyboard behavior.
 - “Natal essays use a dedicated reflection-question field validated independently from the essay, with a safe question fallback and versioned cache invalidation.” This daily feature must not change the natal essay/question contract.
 - A natal lens is a published astrological possibility, not verified temperament, a known personal state, biological wiring, diagnosis, or biography. Derived wording remains personal chart-derived information.
 - Preserve ranking, strongest-three selection, threshold `> 0.02`, suppression, synthesis policy, headline, confidence, and local reflection/wellness assembly. Unknown time omits natal lenses in this increment; ordinary transit readings continue.
-- Keep daily sign/house bans, strict two-to-four-paragraph body-only JSON, `google/gemini-3.7-flash`, one model call, and the `20_000` ms daily gateway deadline. Natal essays/drafting retain their separate brief and budget.
+- Keep daily sign/house bans, strict two-to-four-paragraph body-only JSON and one model call. Use [AGENTS.md](../../../AGENTS.md)'s member-provider selection and the current 60,000 ms daily deadline; the original 3.7 / 20,000 ms ledger values are historical. Natal essays/drafting retain their separate brief and budget.
 - Use existing JSON storage; no schema migration or new inferred-profile table. Encrypt manifests and personal lens evidence with the owner's existing DEK. Admin metrics retain IDs/codes only.
-- Reserve `builtin-0.6.0` (the inactive natal candidate; the built-in fallback stays `builtin-0.5.0`), `daily-natal-lens-2`, `natal-reliability-1`, `daily-astro-body-6`, `daily-reference-5`, and `synthetic-daily-5`; these are proposed future identities.
+- Original reservations were `builtin-0.6.0`, prompt 6 / validator 5 and fixtures v5. The corrected standalone candidate is `builtin-0.6.1`; combined active `0.7.1` contains its catalogue. The natal-free fallback remains `builtin-0.5.0`, with `daily-natal-lens-2` / `natal-reliability-1` still in use. Current prompts/providers/fixtures are in the [execution reference](2026-10-12-release-completion-checklist.md#current-execution-reference).
 - Preserve unrelated work, archived reading IDs/feedback, immutable releases, and Lovable-connected Git history. Stage owned files explicitly; never force-push or rewrite pushed commits.
 
 ## Review focus
@@ -89,6 +91,8 @@ Each condition has a test in its owning task.
 - [ ] Rerun the reliability suite. Record its guarantee as sampled screening, not continuous interval certification or psychological verification; commit explicit owned reliability/helper/test files.
 
 ## Task 3: Persist and load the reliability assessment without daily fan-out
+
+**Later contract:** Revision 2 below approved bounded Today re-screening for missing/stale/retryable assessments. Its six-hour backoff supersedes the original no-Today-resampling assertions in this task. The separately published legacy-anchor recovery is recorded in release-completion Task 7.
 
 **Files:** Modify `src/lib/pattern.server.ts`, `tests/helpers/records-harness.mjs`, and `tests/pattern-chapters.test.mjs`. Create `tests/reading-natal-snapshot.test.mjs`.
 
@@ -168,6 +172,8 @@ Each condition has a test in its owning task.
 
 ## Task 8: Qualify specificity and grounded natal integration
 
+**Superseded release gate:** The exhaustive paired v5 procedure below was replaced for the joint release by the approved lightweight gate linked in the status. That smaller gate passed; failed/partial full runs retain their failures and gaps. New schema-5 qualification is owned by release-completion Task 13 and must use its final frozen provider/content/policy identities.
+
 **Files:** Modify `src/lib/ai/reading-evaluation.fixtures.mjs`, `.d.mts`, `reading-evaluation.server.ts`, `reading-evaluation.shared.ts`, `scripts/reading-eval-cases.mjs`, `scripts/evaluate-readings.mjs`, `src/components/pattern/ReadingEvaluation.tsx`, and existing evaluation suites. Update `READING-EVALUATION.md`; save review artifacts under `docs/reviews/daily-natal-lens/` during implementation.
 
 **Interfaces:** Preserve fixed-case-ID-only evaluation and source/configuration hashes. Extend synthetic fixture data with optional synthetic `NatalWindowSample[]`; both offline and live synthetic runners derive the assessment through the same pure screen and pass it to assembly. Record plan/reliability identities without accepting arbitrary accounts, charts, prompts, or model overrides.
@@ -196,6 +202,8 @@ Each condition has a test in its owning task.
 - [ ] Rerun the focused evaluation suites after report changes; record automated structural results separately from manual judgments. Commit explicit fixture/evaluator/UI/docs files with the reviewed evidence.
 
 ## Task 9: Complete checks and prepare a reviewable release candidate
+
+**Delivered outcome:** The corrected catalogue and combined `0.7.1` release were published and activated after the approved targeted reviews and native qualification. The original schema-3 staging/commit sequence below is historical, not a request to publish another natal release. Broader final-stack review and reader-facing acceptance remain in the central closeout record.
 
 **Files:** Update `README.md`, `READING-INTEGRITY.md`, `READING-EVALUATION.md`, and this checklist/spec as implementation progresses. Reuse existing content-release/deployment workflows.
 
@@ -232,8 +240,7 @@ candidate; see the design's Revision 2 section and the validation record.
 
 ## Final acceptance checklist
 
-Checked acceptance items are locally verified structural/intercepted results.
-Independent copy approval and the actual-model writing judgment below remain open.
+These boxes preserve the original local structural/intercepted acceptance record. The two unticked writing assertions below are assessed for the shipped release by the later passing lightweight gate, rather than by a retroactively claimed full benchmark. Human approval remains unperformed and was not required for that scoped decision.
 
 - [ ] One reviewed natal lens changes the practical distinction in the primary reading without asserting a verified trait or inventing a lived event.
 - [x] Reliable personal-planet signs, service aspects, and exact-time Placidus house context follow the documented screen and source provenance.
@@ -246,7 +253,7 @@ Independent copy approval and the actual-model writing judgment below remain ope
 - [x] Local-context changes leave provider input unchanged; daily request count/budget and separate natal essay/question guards pass.
 - [ ] Actual synthetic model outputs and template fallbacks pass the documented blinded writing gate.
 
-## Checklist preparation evidence
+## Checklist preparation evidence — historical, 2026-10-11
 
 The original checklist preparation was documentation only. This continuation implemented and locally exercised the feature as recorded above and in the validation record. The first offline artifacts used the approved `/tmp/opencode/` directory; Revision 2 artifacts were regenerated in a temporary session directory with the same flags and ordered modes, and their identities are recorded in the validation record. Real Swiss requests, paid model evaluation, independent writing review, publication, deployment and live-production checks remain unperformed. The catalogue has an individual agent editorial record; that is not automatic independent approval.
 

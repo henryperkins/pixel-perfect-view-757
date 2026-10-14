@@ -10,7 +10,7 @@
 
 **Spec:** [Daily reading concrete writing design](../specs/2026-10-11-daily-reading-concrete-writing-design.md).
 
-**Status (2026-10-13):** Source implementation of Tasks 1–8 and Task 9's fixture/capture/diagnostic work is complete in the release-completion worktree. The inactive candidate has 81 interpretations, 110 positive directional syntheses and 191 writing frames. Final verification: 724 tests, 722 passed, two existing skips; typecheck, scoped ESLint, build and ten desktop/mobile fixture checks passed. [Implementation evidence](../../reviews/release-completion/2026-10-13-concrete-writing/README.md) records exact hashes and publication separately. Matched model qualification, complete synthesis-matrix decisions, seven-day review, actual human approval and live candidate activation remain open under [Tasks 12–14](2026-10-12-release-completion-checklist.md).
+**Status reconciled 2026-10-13:** Tasks 1–8 and Task 9's fixture/capture/diagnostic implementation are on main and published at source `78c9b53`, deployment `64812d27-6fd5-4710-8b97-c21dec23a72c`. The schema-5 candidate remains inactive with 81 interpretations, 110 positive directional syntheses and 191 frames. Its implementation verification recorded 724 tests (722 passed, two skips), typecheck, scoped lint, build and ten fixture browser checks; these are historical results for that source. [Implementation/publication evidence](../../reviews/release-completion/2026-10-13-concrete-writing/README.md) binds them. Matched model qualification, synthesis-matrix decisions, seven-day review, human approval and live candidate activation remain open under [Tasks 12–14 and the central closeout record](2026-10-12-release-completion-checklist.md#reconciled-status).
 
 The original plan was documentation prepared on 2026-10-11 at `d7a77f6`→`cc6a3cd`. Its old model/deadline/version/count assumptions are superseded below. Checkmarks record implemented behavior and passing final verification; they do not assert that a separate initial-red log was retained for every historical sequencing step.
 
@@ -18,13 +18,13 @@ The original plan was documentation prepared on 2026-10-11 at `d7a77f6`→`cc6a3
 
 - Scope is recommendation 4 as corrected by the user: one or two scenes per reading, complete edited voice examples, editorial checks separate from `safetyPass`, possible situations rather than invented events, and one focused question.
 - Reuse recommendation 1's landed interpretation/synthesis/content/evidence contracts. The version/fixture integration below assumes the app contracts of recommendations 2/3; their real source qualification remains separate. Missing natal/story data is a normal supported writing case.
-- Keep the existing primary, strongest-three selection, threshold `> 0.02`, suppression, source rules, model `google/gemini-3.8-flash`, one gateway call and `60_000` ms deadline. Do not choose a transit because it has a better scene.
+- Keep the existing primary, strongest-three selection, threshold `> 0.02`, suppression, source rules, one model call and `60_000` ms daily deadline. Select the member provider per [AGENTS.md](../../../AGENTS.md), preserving provider-specific model identity and no retry/failover; admin selection remains independent. Do not choose a transit because it has a better scene.
 - “Natal houses, angles and aspects come from the Swiss Ephemeris service response (Placidus); in-app math is only the degraded fallback and fills angle contacts the service omits.” This work adds no chart math or source substitution.
 - “Section observers animate already-visible content once, never hide it; chapter panels retain visited content while collapsing.” Preserve existing Buttons, global/reduced motion and paragraph/evidence focus behavior.
 - Preserve the natal essay's independently validated reflection-question field and safe fallback. The new compiler applies to daily reflections only.
 - The daily model returns only astronomical paragraphs. Wellness, the final reflection and recent reading text remain local; wellness edits leave provider payloads identical. Use existing consent checks and stress/sleep precedence without expanding `registry.ts` permissions.
 - Editorial warnings are not safety failures. Never add broad vocabulary bans to shared `safetyPass`; preserve its medical/financial/prediction behavior.
-- Candidate identities are schema 5 / `builtin-0.8.0`, writing/quality/reflection/example version 1, daily prompt 14 / validator 11, and `synthetic-daily-7` with 50 cases. Active schema 4 retains prompt 13 / validator 10. Numeric content activation awaits qualification; active production content stays 0.7.1.
+- Candidate identities are schema 5 / `builtin-0.8.0`, writing/quality/reflection/example version 1, prompt 14 / validator 11, and `synthetic-daily-7` with 50 cases. Subsequent schema-4 repairs use prompt 15 / validator 10, `primary-composition-1` and `primary-reflection-1`; their pilots do not qualify schema 5. The latest saved pointer receipt still reports active `0.7.1`. See the [current execution reference](2026-10-12-release-completion-checklist.md#current-execution-reference).
 - Preserve immutable reading IDs/feedback, active-content authority, legacy reads and unrelated dirty work. Stage owned paths explicitly; no rewriting pushed Lovable history. The user later approved the release-completion implementation, ordinary Git integration and publication. Paid campaign spending still requires the separately requested dollar ceiling; human approval and candidate activation gates remain binding.
 
 ## Review focus
@@ -178,6 +178,8 @@ The original plan was documentation prepared on 2026-10-11 at `d7a77f6`→`cc6a3
 
 ## Task 9: Qualify concrete language and focused questions
 
+**Current dependency:** The four-arm controller is published, but its original Lovable-only provider restriction and intended frozen prompt-13 baseline require reconciliation with current member selection and prompt-15 non-concrete execution. Release-completion Task 13 owns that alignment, protocol-v2/sequential-review tooling, budget and final source freeze. This checklist's implementation tests do not close those gates.
+
 **Files:** Modify `src/lib/ai/reading-evaluation.fixtures.mjs`, `.d.mts`, `reading-evaluation.server.ts`, `reading-evaluation.shared.ts`, `scripts/reading-eval-cases.mjs`, `scripts/evaluate-readings.mjs`, `src/components/pattern/ReadingEvaluation.tsx`, existing evaluation suites, `READING-EVALUATION.md` and `READING-INTEGRITY.md`. Save review artifacts under `docs/reviews/daily-concrete-writing/` during implementation.
 
 - [x] Write `writing_fixtures_use_production_planner_and_checker`, `synthetic_history_is_local_only`, `scene_capture_is_bounded`, and `mixed_writing_policy_reports_cannot_compare`.
@@ -194,6 +196,8 @@ The original plan was documentation prepared on 2026-10-11 at `d7a77f6`→`cc6a3
 - [ ] On a separately requested release, activate/deploy through existing workflows and verify framed/no-frame, wellness-local, template, cache/archive/export and rollback behavior. Record source commit, deployment, content activation and live-reading evidence separately.
 
 ## Final acceptance checklist
+
+The boxes below are whole-feature acceptance, including editorial and actual-output requirements. The completed implementation above is supported by its receipt; these remaining boxes do not mean that templates, storage or the checker still need initial implementation. Final qualification and activation remain open.
 
 - [ ] A ready reading develops `S1` or `I1` through one or two supported possible scenes; examples and supporting contacts cannot invent another subject.
 - [ ] All six complete voice examples are reviewed, source-bounded and valid for their tone/depth/paragraph contracts.

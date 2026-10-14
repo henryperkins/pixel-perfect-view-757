@@ -1,6 +1,8 @@
 # Daily reading synthesis design
 
-Status: design contract for recommendation 1, “Expand the interpretation library into a synthesis library.” Prepared against local `main` at `d7a77f6` on 2026-10-11; implementation now exists locally on `feat/daily-reading-synthesis`. Actual-model writing qualification and publication remain pending. The checklist and local validation record track current evidence.
+**Status reconciled 2026-10-13:** The synthesis implementation is on main and published; the six-rule catalogue is included in recorded active content `0.7.1`. The original full writing qualification failed, while later targeted natal/transit reviews passed their combined-synthesis samples. Those narrower results do not establish a full synthesis benchmark or human approval. The expanded schema-5 catalogue and final-stack qualification remain open under release-completion Tasks 12–14.
+
+**Evidence and scope:** See the [original writing result](../../reviews/daily-reading-writing/2026-10-11/writing-review.md), [targeted combined review](../../reviews/daily-transit-story/2026-10-12-prompt-recheck/README.md), [joint activation](../../reviews/daily-transit-story/2026-10-12-transit-runtime-fix/README.md), and [expanded matrix](../../reviews/daily-synthesis/README.md). The [central closeout record](../plans/2026-10-12-release-completion-checklist.md#reconciled-status) owns remaining work. Status is based on saved receipts and source inspection, not a new production check.
 
 The reading should explore one supported relationship between its strongest two eligible contacts when a reviewed relationship exists. Calculation, published interpretation, and the language model's wording remain distinguishable.
 
@@ -14,7 +16,7 @@ The reading should explore one supported relationship between its strongest two 
 
 Natal temperament, retrograde histories, wellness-derived external adaptation, ephemeris replacement, model upgrades, and global style changes are separate work. Existing chart ranking, eligibility threshold, suppression, headline, confidence, and local reflection assembly stay in their current roles.
 
-## Verified starting points
+## Verified starting points — historical, 2026-10-11
 
 - `src/lib/reading.server.ts` selects up to three eligible cycles but stores editorial meaning only for the primary cycle.
 - `src/lib/content/default-bundle.ts` looks up aspect-family keys; different hard aspects can share one entry.
@@ -216,7 +218,7 @@ Record `I1–I3` and `S1` in the content provenance lane only when actually used
 
 Display `S1` as “Published synthesis,” with its saved relationship and links to saved parent facts. Historical references lacking metadata retain their current display. Never reconstruct an archived synthesis from today's content bundle.
 
-Use `DAILY_READING_PLAN_VERSION = "daily-synthesis-1"`, `DAILY_PROMPT_VERSION = "daily-astro-body-5"`, `DAILY_VALIDATOR_VERSION = "daily-reference-4"`, and built-in bundle `builtin-0.5.0`. Include plan/prompt/validator/model identity in the daily idempotency digest in addition to current context and content version. Retain old rows, IDs, and feedback. Preserve the one-call 20,000 ms gateway policy and existing response schema.
+The original implementation used plan `daily-synthesis-1`, prompt `daily-astro-body-5`, validator `daily-reference-4`, built-in `builtin-0.5.0`, and a 20,000 ms deadline. These are historical identities. Current schema-4 serving uses prompt 15 / validator 10; schema-5 concrete writing uses prompt 14 / validator 11. Both use a 60,000 ms daily deadline and the provider selection defined in [AGENTS.md](../../../AGENTS.md); see the [current execution reference](../plans/2026-10-12-release-completion-checklist.md#current-execution-reference). Include the actual plan/prompt/validator/provider-model identity in the daily idempotency digest in addition to context and content version. Retain old rows, IDs, feedback, strict response contracts and the one-call/no-retry policy.
 
 Add closed diagnostics codes `dependencies`, `synthesis_coverage`, and `no_interpretation`. Keep diagnostics envelope version 1 and historical codes readable; extend valid skipped outcomes to `no_cycle` or `no_interpretation`. Label and count those skip reasons separately.
 
@@ -231,6 +233,8 @@ Draft generation overlays returned keys onto the full effective base bundle, ret
 The admin draft preview shows affected interpretation keys, theme tags, pair-rule relationship, and any removed rule keys. Validate its graph before publication. Previewing/publishing an inactive candidate must not silently activate it.
 
 ## Completion criteria
+
+**Scope reconciliation:** Implementation and source delivery are complete. The full writing/human-review requirement below remains an unmet original qualification criterion. The approved smaller joint-release reviews support only their recorded samples and release; they do not require reopening the shipped service or prove the later expanded catalogue. Remaining final-version review belongs to release-completion Tasks 12–14.
 
 Complete means source resolution, planning, templates, model input, validation, persistence, evidence display, content lifecycle, cache identity, and evaluation all implement this contract. Every structural check needs a meaningful test. Human review of actual generated synthetic candidates must separately confirm support and writing quality; validator acceptance alone is insufficient.
 

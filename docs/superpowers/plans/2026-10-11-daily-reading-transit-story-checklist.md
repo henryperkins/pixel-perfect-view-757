@@ -10,22 +10,22 @@
 
 **Spec:** [Daily reading transit story design](../specs/2026-10-11-daily-reading-transit-story-design.md).
 
-**Status:** Local app implementation and offline structural verification are complete in isolated branch `feat/daily-reading-transit-story` on `cc6a3cd` plus frozen prerequisites. Native Task 2 and actual-model Task 9 gates remain open. No source is configured or activated. [Current evidence](../../reviews/daily-transit-story/local-validation.md) records local checks and remaining gates; full plan completion is not claimed. Native numerical and actual-model writing remain required before activation.
+**Status reconciled 2026-10-13:** Shipped in combined `0.7.1` under the approved small writing gate. Native implementation/qualification/deployment are complete in the [owned-service plan](2026-10-12-owned-swiss-service.md). The [small writing review](../../reviews/daily-transit-story/2026-10-12-prompt-recheck/README.md) passed 15/15 items, and the [runtime/activation receipt](../../reviews/daily-transit-story/2026-10-12-transit-runtime-fix/README.md) records production chart/transit checks and both active pointers. Later [legacy-anchor recovery](../../reviews/release-completion/2026-10-12-birth-story/README.md) is also published.
 
-Local checks use synthetic service evidence and intercepted model responses. Checked implementation steps do not assert native accuracy or actual-model quality. Named test cases may be combined under equivalent descriptive test names; [local validation](../../reviews/daily-transit-story/local-validation.md) records exact commands and totals. The native service steps, blind scoring and publication gates remain unchecked.
+**How to read this checklist:** Original boxes preserve the 2026-10-11 local execution ledger and [local validation](../../reviews/daily-transit-story/local-validation.md). Native Task 2 was completed through the owned-service plan; the exhaustive Task 9 release prerequisite was replaced by the approved small review; delivery followed in Task 10's linked receipts. Unticked historical procedures do not mean the service is still disabled. Full matched writing/human review and member-path latency were not established by the small review. The [central closeout record](2026-10-12-release-completion-checklist.md#reconciled-status) owns later final-stack/acceptance work; this update uses saved evidence, not new production checks.
 
 ## Global constraints
 
-- Implement after the [recommendation 1 checklist](2026-10-11-daily-reading-synthesis-checklist.md) and [recommendation 2 checklist](2026-10-11-daily-reading-natal-temperament-checklist.md). Preserve their shared catalogue, dependency, uncertainty, cache and evidence contracts. A missing natal lens does not itself suppress a story.
+- Reuse the landed recommendation 1/2 catalogue, dependency, uncertainty, cache and evidence contracts. The approved joint-release writing gates govern that shipped scope. A missing natal lens does not itself suppress a story.
 - “Natal houses, angles and aspects come from the Swiss Ephemeris service response (Placidus); in-app math is only the degraded fallback and fills angle contacts the service omits.” Accept only explicitly qualified service anchors; no synthetic app angle qualifies.
 - “Section observers animate already-visible content once, never hide it; chapter panels retain visited content while collapsing.” Retain global/reduced motion, visited panels and existing Buttons. No fetch or replay on collapse.
 - Preserve the natal essay's independent reflection-question field/validation and safe fallback. This increment changes daily timing interpretation, not natal essays.
 - Scope new chronology to the already selected Jupiter/Saturn/Uranus/Neptune/Pluto primary. Preserve ranking, threshold `> 0.02`, suppression, strongest three, headline/confidence, synthesis/natal policy and local reflection/wellness assembly.
 - A sampled orb minimum is not a certified exact crossing. A reusable cycle key is not an episode ID. An episode is not necessarily three passes. A last calculated contact is not a promised resolution or known personal history.
-- The native service lives outside this checkout. Its proposed endpoint, actual frame/flags and numerical qualification are required deliverables, not existing capabilities. Unsupported/unavailable/partial results retain ordinary readings.
-- Keep daily sign/house bans, strict two-to-four-paragraph body JSON and limits, `google/gemini-3.7-flash`, one model call and independent `20_000` ms gateway deadline. Add at most one six-second episode request on an uncached eligible generation; no automatic retries.
+- The standalone native service is implemented in `services/swiss-ephemeris/` and deployed separately, with source/flags/numerical qualification recorded in the owned-service plan. Unsupported/unavailable/partial results retain ordinary readings.
+- Keep daily sign/house bans, strict two-to-four-paragraph body JSON and limits, one model call and the current independent 60,000 ms daily deadline. Provider selection follows [AGENTS.md](../../../AGENTS.md); original 3.7 / 20,000 ms task values are historical. Add at most one six-second episode request on an uncached eligible generation; no automatic retries.
 - Reuse three birth-save samples; no daily birth-data fan-out, extra profile table or app schema migration. Encrypt chart-derived story evidence and anchors. Keep personal chronology out of admin metrics/logs.
-- Reserve the spec's schema 4/content `builtin-0.7.0`, anchor/solver/story version 1, prompt 7/validator 6, and fixture version 5. These identities are implemented in the local candidate, not activated or deployed versions.
+- Original schema-4 reservations (`builtin-0.7.0`, prompt 7 / validator 6, fixtures v5) are historical. Corrected content is `builtin-0.7.1`, published as `0.7.1`; the small review used prompt 13 / validator 10 and fixtures v6 (38 cases). Current schema-4 serving is prompt 15 / validator 10 and the general suite is v7 (50 cases); see the [execution reference](2026-10-12-release-completion-checklist.md#current-execution-reference).
 - Preserve unrelated dirty work and archived IDs/feedback; stage explicit owned files. Never force-push or rewrite pushed Lovable-connected history. Completing this checklist document authorizes no application edits, commits, service deployment, activation or paid evaluations.
 
 ## Review focus
@@ -72,7 +72,9 @@ Each condition is pinned to tests in its owning tasks.
 
 ## Task 2: Deliver and qualify the native Swiss episode calculation
 
-**Files:** Implement the native service deliverable in its own repository, which is not present here. In this app create the contract/schema scaffold in `src/lib/astro/transit-episodes.ts`, the client in `transit-episodes.server.ts`, `tests/transit-episode-client.test.mjs`, `tests/fixtures/transit-episodes/`, `docs/reviews/daily-transit-story/source-qualification.md`, and `.env.example` with placeholder values only. The exact service repository/commit must be recorded before its work starts.
+**Completed through the owned-service plan:** The service now lives in `services/swiss-ephemeris/`. [Qualification/deployment evidence](../../reviews/daily-transit-story/2026-10-12-owned-swiss/README.md) records its engine, solver, 15 reference tracks, bounds and deployment; the runtime receipt above closes app connectivity. The original procedural boxes below are retained, including unrecorded initial-red ordering.
+
+**Files:** The original app work created the contract in `src/lib/astro/transit-episodes.ts`, client in `transit-episodes.server.ts`, `tests/transit-episode-client.test.mjs`, fixtures, source-qualification record and placeholder-only `.env.example`. The separately licensed native source and deployment now belong to `services/swiss-ephemeris/`.
 
 **Interfaces:** Implement the spec's proposed authenticated `POST /v1/transit-episodes` request/response. Export `TRANSIT_EPISODE_CONTRACT`, `TRANSIT_EPISODE_SOLVER_VERSION` and all pure request/scan/proof types from `transit-episodes.ts`; export `resolveTransitEpisodeScan(input): Promise<TransitEpisodeScanResult>` from the server module. Configure the separate endpoint URL and reviewed source ID; reuse `SWISS_EPHEMERIS_KEY`.
 
@@ -189,6 +191,8 @@ Each condition is pinned to tests in its owning tasks.
 
 ## Task 9: Qualify temporal coherence with fixed synthetic writing cases
 
+**Superseded release prerequisite:** The exhaustive comparison below was replaced for `0.7.1` by the approved small 15/15 review, without claiming a full benchmark or human review. The corrected transit suite became v6 (38 cases / at most 37 attempts); archived v5 36/35 captures stay historical. Current v7 has 50 cases / at most 49 attempts. New full-stack qualification belongs to release-completion Task 13.
+
 **Files:** Modify `src/lib/ai/reading-evaluation.fixtures.mjs`, `.d.mts`, `reading-evaluation.server.ts`, `reading-evaluation.shared.ts`, `scripts/reading-eval-cases.mjs`, `scripts/evaluate-readings.mjs`, `src/components/pattern/ReadingEvaluation.tsx`, existing evaluation suites and `READING-EVALUATION.md`. Save implementation reports under `docs/reviews/daily-transit-story/`.
 
 - [x] Write `arc_fixed_cases_use_production_validation_and_planner`, `arc_runner_reads_no_birth_records_or_swiss`, `arc_policy_change_stops_mixed_run`, and `version5_comparison_requires_identical_inputs`. Include source/solver/story/anchor versions and fixture hashes in consistency checks.
@@ -205,6 +209,8 @@ Each condition is pinned to tests in its owning tasks.
 
 ## Task 10: Complete checks and prepare a concrete release candidate
 
+**Delivered outcome:** Corrected `0.7.1` was staged, jointly activated and verified through the linked prompt-recheck and runtime receipts. Failed `0.7.0` remains inactive. Original procedure boxes are retained; the actual service/app/content identities are recorded separately in those receipts.
+
 **Files:** Update `README.md`, the existing privacy page at `src/routes/_authenticated/privacy.tsx`, `READING-EVALUATION.md`, source-qualification/writing review artifacts, and the implementation status of this plan/spec. Follow the existing immutable release workflow; do not add a parallel activation path.
 
 - [x] Document supported bodies, algorithm/window/episode distinctions, source/uncertainty requirements, chapter meanings, omitted-state behavior, privacy/cache/archive recovery and exact future-to-landed version identities.
@@ -216,6 +222,8 @@ Each condition is pinned to tests in its owning tasks.
 - [ ] Report source commit/remote parity, native service version, app deployment/traffic, content activation and live reading evidence separately. This checklist alone authorizes none of those release actions.
 
 ## Final acceptance checklist
+
+The original boxes below were not maintained after the local phase. The completed owned-service plan, approved small writing review and joint activation now supply the shipped-scope disposition. Later final-stack review and reader acceptance remain explicitly open in the central closeout record; no exhaustive benchmark or fresh current-provider review is inferred from activation.
 
 - [ ] Exact roots, stations and orb edges come from a qualified, coordinate-compatible native source with independently recorded numerical evidence.
 - [ ] A complete one/three/five/other-count episode has proven boundaries; ambiguous/incomplete scans never receive first/final/total claims.
