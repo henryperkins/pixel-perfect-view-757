@@ -1,0 +1,21 @@
+### Result
+{"engine":"webkit","table":{"client":240,"scroll":960,"first":230.390625,"columns":[{"text":"Body","width":230.390625,"computed":"230.390625px"},{"text":"Sign & degree","width":345.609375,"computed":"345.609375px"},{"text":"House","width":192,"computed":"192px"},{"text":"Motion","width":192,"computed":"192px"}],"tableWidth":960,"font":"26px"},"filters":{"height":685.5625,"position":"sticky","header":227,"nav":172.953125,"constrained":false}}
+### Ran Playwright code
+```js
+await (async page=>{
+ const result={engine:page.context().browser().browserType().name()};
+ await page.emulateMedia({reducedMotion:'reduce'});await page.setViewportSize({width:320,height:568});await page.goto('http://127.0.0.1:4200/pattern');await page.locator('#pattern-placements').waitFor();await page.evaluate(()=>document.fonts.ready);
+ await page.evaluate(()=>{document.documentElement.style.fontSize='32px';const p=structuredClone(window.mobileAudit.pattern);p.placements=Array.from({length:12},(_,i)=>({key:'body-'+i,label:['Sun','Moon','Mercury','Venus','Mars','Jupiter','Saturn','Uranus','Neptune','Pluto','North node','Chiron'][i],position:'Aries 5° 12′',house:i+1,retrograde:false}));window.auditQueryClient.setQueryData(['pattern',window.mobileAudit.state.ownerId],p)});
+ await page.locator('#pattern-placements > summary').click();await page.waitForTimeout(200);
+ result.table=await page.locator('.pattern-placement-table').evaluate(el=>({client:el.clientWidth,scroll:el.scrollWidth,first:el.querySelector('th').getBoundingClientRect().width,columns:[...el.querySelectorAll('thead th')].map(c=>({text:c.textContent,width:c.getBoundingClientRect().width,computed:getComputedStyle(c).width})),tableWidth:el.querySelector('table').getBoundingClientRect().width,font:getComputedStyle(el.querySelector('table')).fontSize}));
+ await page.locator('.pattern-placement-controls').evaluate(el=>el.scrollIntoView({block:'center',behavior:'instant'}));await page.screenshot({path:'/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-gestures-2026-10-14/'+result.engine+'-table-320-font32-initial.png'});
+ await page.goto('http://127.0.0.1:4200/timing');await page.locator('.timing-area-options').waitFor();await page.evaluate(()=>{document.documentElement.style.fontSize='32px'});await page.evaluate(()=>document.fonts.ready);await page.waitForTimeout(100);
+ result.filters=await page.locator('.timing-explorer-filters').evaluate(el=>({height:el.getBoundingClientRect().height,position:getComputedStyle(el).position,header:document.querySelector('.pattern-header').getBoundingClientRect().height,nav:document.querySelector('.mobile-journey').getBoundingClientRect().height,constrained:document.documentElement.hasAttribute('data-constrained-viewport')}));
+ await page.locator('.timing-area-options').evaluate(el=>el.scrollIntoView({block:'start',behavior:'instant'}));await page.screenshot({path:'/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-gestures-2026-10-14/'+result.engine+'-filters-320-font32-initial.png'});
+ return result;
+}
+)(page);
+```
+### Page
+- Page URL: http://127.0.0.1:4200/timing
+- Page Title: Pattern mobile fixture

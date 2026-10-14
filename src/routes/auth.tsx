@@ -6,6 +6,8 @@ import { Shell } from "@/components/pattern/Shell";
 import { signIn, signUp } from "@/lib/auth.shared";
 import { assistantReturnTo } from "@/lib/assistant-navigation";
 import { requestPasswordReset } from "@/lib/account-security.functions";
+import { useQueryClient } from "@tanstack/react-query";
+import { currentSession } from "@/lib/auth.shared";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/auth")({
@@ -32,6 +34,7 @@ export const Route = createFileRoute("/auth")({
 
 function AuthPage() {
   const navigate = useNavigate();
+  const qc = useQueryClient();
   const { next } = Route.useSearch();
   const [mode, setMode] = useState<"signin" | "signup" | "reset">("signin");
   const [message, setMessage] = useState("");
@@ -63,6 +66,7 @@ function AuthPage() {
       } else {
         await signIn({ data: { email, password } });
       }
+      await qc.fetchQuery({ queryKey: ["session"], queryFn: () => currentSession(), staleTime: 0 });
       if (next) window.location.assign(next);
       else void navigate({ to: "/" });
     } catch (err) {
@@ -91,12 +95,14 @@ function AuthPage() {
             <span className="technical text-muted-foreground">Email</span>
             <input
               type="email"
+              inputMode="email"
+              enterKeyHint="next"
               autoComplete="email"
               maxLength={200}
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 font-mono text-sm outline-none focus:border-ring"
+              className="pattern-mobile-field mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 font-mono text-sm outline-none focus:border-ring"
             />
           </label>
           {mode !== "reset" && (
@@ -104,13 +110,14 @@ function AuthPage() {
               <span className="technical text-muted-foreground">Password</span>
               <input
                 type="password"
+                enterKeyHint="done"
                 autoComplete={mode === "signup" ? "new-password" : "current-password"}
                 maxLength={200}
                 required
                 minLength={8}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 font-mono text-sm outline-none focus:border-ring"
+                className="pattern-mobile-field mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 font-mono text-sm outline-none focus:border-ring"
               />
             </label>
           )}

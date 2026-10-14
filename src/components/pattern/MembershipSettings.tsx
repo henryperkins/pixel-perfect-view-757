@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { useMembership } from "@/hooks/useMembership";
@@ -12,6 +12,13 @@ export function MembershipSettings() {
     [confirmCancel, setConfirmCancel] = useState(false),
     [error, setError] = useState("");
   const state = query.data;
+  const cancelTrigger = useRef<HTMLButtonElement>(null);
+  const heading = useRef<HTMLHeadingElement>(null);
+  const returnFocus = () =>
+    requestAnimationFrame(() => {
+      const target = cancelTrigger.current?.isConnected ? cancelTrigger.current : heading.current;
+      target?.focus();
+    });
   async function act(action: "portal" | "cancel" | "refresh") {
     setBusy(true);
     setError("");
@@ -25,6 +32,7 @@ export function MembershipSettings() {
           client.invalidateQueries({ queryKey: ["membership"] }),
           client.invalidateQueries({ queryKey: ["feature-narrative"] }),
         ]);
+        if (action === "cancel") returnFocus();
       }
     } catch (e) {
       setError(
@@ -36,7 +44,7 @@ export function MembershipSettings() {
   }
   return (
     <section className="mt-10 border-t border-rule pt-6" aria-labelledby="membership-heading">
-      <h2 id="membership-heading" className="text-xl">
+      <h2 ref={heading} tabIndex={-1} id="membership-heading" className="text-xl">
         Manage membership
       </h2>
       {query.isPending ? (
@@ -102,7 +110,12 @@ export function MembershipSettings() {
               </>
             )}
             {state.fullAccess && state.enabled && !state.membership?.cancelAtPeriodEnd && (
-              <Button variant="outline" disabled={busy} onClick={() => setConfirmCancel(true)}>
+              <Button
+                ref={cancelTrigger}
+                variant="outline"
+                disabled={busy}
+                onClick={() => setConfirmCancel(true)}
+              >
                 Cancel membership
               </Button>
             )}
@@ -121,7 +134,14 @@ export function MembershipSettings() {
                 <Button disabled={busy} onClick={() => act("cancel")}>
                   {busy ? "Canceling…" : "Confirm cancellation"}
                 </Button>
-                <Button variant="outline" disabled={busy} onClick={() => setConfirmCancel(false)}>
+                <Button
+                  variant="outline"
+                  disabled={busy}
+                  onClick={() => {
+                    setConfirmCancel(false);
+                    returnFocus();
+                  }}
+                >
                   Keep membership
                 </Button>
               </div>

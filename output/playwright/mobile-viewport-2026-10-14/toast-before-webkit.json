@@ -1,0 +1,201 @@
+{
+  "engine": "webkit",
+  "phase": "before",
+  "cases": [
+    {
+      "width": 320,
+      "height": 568,
+      "font": 16,
+      "nav": {
+        "top": 495.03125,
+        "bottom": 568,
+        "left": 0,
+        "right": 320,
+        "height": 72.96875
+      },
+      "navPosition": "fixed",
+      "toast": {
+        "top": 479,
+        "bottom": 552,
+        "left": 16,
+        "right": 304,
+        "height": 73
+      },
+      "toasterClass": "toaster group",
+      "navHits": [
+        {
+          "label": "Today",
+          "reachable": false
+        },
+        {
+          "label": "Your pattern",
+          "reachable": false
+        },
+        {
+          "label": "Timing",
+          "reachable": false
+        },
+        {
+          "label": "Journal",
+          "reachable": false
+        }
+      ]
+    },
+    {
+      "width": 360,
+      "height": 800,
+      "font": 16,
+      "nav": {
+        "top": 727.03125,
+        "bottom": 800,
+        "left": 0,
+        "right": 360,
+        "height": 72.96875
+      },
+      "navPosition": "fixed",
+      "toast": {
+        "top": 711,
+        "bottom": 784,
+        "left": 16,
+        "right": 344,
+        "height": 73
+      },
+      "toasterClass": "toaster group",
+      "navHits": [
+        {
+          "label": "Today",
+          "reachable": false
+        },
+        {
+          "label": "Your pattern",
+          "reachable": false
+        },
+        {
+          "label": "Timing",
+          "reachable": false
+        },
+        {
+          "label": "Journal",
+          "reachable": false
+        }
+      ]
+    },
+    {
+      "width": 667,
+      "height": 375,
+      "font": 16,
+      "nav": {
+        "top": 302.03125,
+        "bottom": 375,
+        "left": 0,
+        "right": 667,
+        "height": 72.96875
+      },
+      "navPosition": "fixed",
+      "toast": {
+        "top": 297.5,
+        "bottom": 351,
+        "left": 287,
+        "right": 643,
+        "height": 53.5
+      },
+      "toasterClass": "toaster group",
+      "navHits": [
+        {
+          "label": "Today",
+          "reachable": true
+        },
+        {
+          "label": "Your pattern",
+          "reachable": true
+        },
+        {
+          "label": "Timing",
+          "reachable": false
+        },
+        {
+          "label": "Journal",
+          "reachable": false
+        }
+      ]
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "font": 16,
+      "nav": {
+        "top": 317.03125,
+        "bottom": 390,
+        "left": 0,
+        "right": 844,
+        "height": 72.96875
+      },
+      "navPosition": "fixed",
+      "toast": {
+        "top": 312.5,
+        "bottom": 366,
+        "left": 464,
+        "right": 820,
+        "height": 53.5
+      },
+      "toasterClass": "toaster group",
+      "navHits": [
+        {
+          "label": "Today",
+          "reachable": true
+        },
+        {
+          "label": "Your pattern",
+          "reachable": true
+        },
+        {
+          "label": "Timing",
+          "reachable": false
+        },
+        {
+          "label": "Journal",
+          "reachable": false
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "height": 568,
+      "font": 32,
+      "nav": {
+        "top": 395.046875,
+        "bottom": 568,
+        "left": 0,
+        "right": 320,
+        "height": 172.953125
+      },
+      "navPosition": "fixed",
+      "toast": {
+        "top": 479,
+        "bottom": 552,
+        "left": 16,
+        "right": 304,
+        "height": 73
+      },
+      "toasterClass": "toaster group",
+      "navHits": [
+        {
+          "label": "Today",
+          "reachable": false
+        },
+        {
+          "label": "Your pattern",
+          "reachable": false
+        },
+        {
+          "label": "Timing",
+          "reachable": false
+        },
+        {
+          "label": "Journal",
+          "reachable": false
+        }
+      ]
+    }
+  ]
+}

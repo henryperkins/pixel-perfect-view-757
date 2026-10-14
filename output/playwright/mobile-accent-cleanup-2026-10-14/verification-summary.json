@@ -1,0 +1,32 @@
+{
+  "results": [
+    {
+      "report": "before-chromium",
+      "cases": 4,
+      "engine": "chromium",
+      "version": "155.0.8059.12",
+      "errors": []
+    },
+    {
+      "report": "after-chromium",
+      "cases": 10,
+      "engine": "chromium",
+      "version": "155.0.8059.12",
+      "errors": []
+    },
+    {
+      "report": "after-webkit",
+      "cases": 10,
+      "engine": "webkit",
+      "version": "26.6",
+      "errors": []
+    }
+  ],
+  "checks": [
+    "No document or card horizontal overflow",
+    "Symmetric one-pixel border and four-pixel radius on both journal surfaces",
+    "Journal controls remain at least 44px high",
+    "At matching Chromium viewports: copy, padding, background, controls and card width unchanged"
+  ],
+  "status": "passed"
+}

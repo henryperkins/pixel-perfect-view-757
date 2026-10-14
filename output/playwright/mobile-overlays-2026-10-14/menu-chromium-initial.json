@@ -1,0 +1,305 @@
+{
+  "engine": "chromium",
+  "version": "155.0.8059.12",
+  "evidence": "Render with synthetic services; desktop emulation, not Device",
+  "cases": [
+    {
+      "name": "Menu layout 320x568",
+      "pass": true,
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "closed": {
+        "position": "sticky",
+        "height": 83
+      },
+      "bounds": {
+        "rect": {
+          "x": 0,
+          "y": 80,
+          "width": 320,
+          "height": 465,
+          "top": 80,
+          "right": 320,
+          "bottom": 545,
+          "left": 0
+        },
+        "scrollHeight": 464,
+        "overflow": "contain",
+        "root": 320,
+        "width": 320,
+        "close": {
+          "x": 256,
+          "y": 18,
+          "width": 44,
+          "height": 44,
+          "top": 18,
+          "right": 300,
+          "bottom": 62,
+          "left": 256
+        }
+      },
+      "boundaryScroll": {
+        "before": 0,
+        "after": 0
+      }
+    },
+    {
+      "name": "Menu layout 360x800",
+      "pass": true,
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "closed": {
+        "position": "sticky",
+        "height": 83
+      },
+      "bounds": {
+        "rect": {
+          "x": 0,
+          "y": 80,
+          "width": 360,
+          "height": 465,
+          "top": 80,
+          "right": 360,
+          "bottom": 545,
+          "left": 0
+        },
+        "scrollHeight": 464,
+        "overflow": "contain",
+        "root": 360,
+        "width": 360,
+        "close": {
+          "x": 296,
+          "y": 18,
+          "width": 44,
+          "height": 44,
+          "top": 18,
+          "right": 340,
+          "bottom": 62,
+          "left": 296
+        }
+      },
+      "boundaryScroll": {
+        "before": 0,
+        "after": 0
+      }
+    },
+    {
+      "name": "Menu layout 440x956",
+      "pass": true,
+      "viewport": {
+        "width": 440,
+        "height": 956
+      },
+      "closed": {
+        "position": "sticky",
+        "height": 83
+      },
+      "bounds": {
+        "rect": {
+          "x": 0,
+          "y": 80,
+          "width": 440,
+          "height": 465,
+          "top": 80,
+          "right": 440,
+          "bottom": 545,
+          "left": 0
+        },
+        "scrollHeight": 464,
+        "overflow": "contain",
+        "root": 440,
+        "width": 440,
+        "close": {
+          "x": 376,
+          "y": 18,
+          "width": 44,
+          "height": 44,
+          "top": 18,
+          "right": 420,
+          "bottom": 62,
+          "left": 376
+        }
+      },
+      "boundaryScroll": {
+        "before": 0,
+        "after": 0
+      }
+    },
+    {
+      "name": "Menu layout 667x375",
+      "pass": true,
+      "viewport": {
+        "width": 667,
+        "height": 375
+      },
+      "closed": {
+        "position": "static",
+        "height": 83
+      },
+      "bounds": {
+        "rect": {
+          "x": 0,
+          "y": 80,
+          "width": 667,
+          "height": 291,
+          "top": 80,
+          "right": 667,
+          "bottom": 371,
+          "left": 0
+        },
+        "scrollHeight": 464,
+        "overflow": "contain",
+        "root": 667,
+        "width": 667,
+        "close": {
+          "x": 591,
+          "y": 18,
+          "width": 44,
+          "height": 44,
+          "top": 18,
+          "right": 635,
+          "bottom": 62,
+          "left": 591
+        }
+      },
+      "boundaryScroll": {
+        "before": 0,
+        "after": 0
+      }
+    },
+    {
+      "name": "Menu layout 844x390",
+      "pass": true,
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "closed": {
+        "position": "static",
+        "height": 83
+      },
+      "bounds": {
+        "rect": {
+          "x": 0,
+          "y": 80,
+          "width": 844,
+          "height": 306,
+          "top": 80,
+          "right": 844,
+          "bottom": 386,
+          "left": 0
+        },
+        "scrollHeight": 464,
+        "overflow": "contain",
+        "root": 844,
+        "width": 844,
+        "close": {
+          "x": 768,
+          "y": 18,
+          "width": 44,
+          "height": 44,
+          "top": 18,
+          "right": 812,
+          "bottom": 62,
+          "left": 768
+        }
+      },
+      "boundaryScroll": {
+        "before": 0,
+        "after": 0
+      }
+    },
+    {
+      "name": "Menu history: Back",
+      "pass": true,
+      "openedIndex": 2,
+      "closedIndex": 1,
+      "nextBack": "http://127.0.0.1:4199/journal"
+    },
+    {
+      "name": "Menu history: Close",
+      "pass": true,
+      "openedIndex": 2,
+      "closedIndex": 1,
+      "nextBack": "http://127.0.0.1:4199/journal"
+    },
+    {
+      "name": "Menu history: Escape",
+      "pass": true,
+      "openedIndex": 2,
+      "closedIndex": 1,
+      "nextBack": "http://127.0.0.1:4199/journal"
+    },
+    {
+      "name": "Menu history: current destination",
+      "pass": true,
+      "openedIndex": 2,
+      "closedIndex": 1,
+      "nextBack": "http://127.0.0.1:4199/journal"
+    },
+    {
+      "name": "Menu history: outside",
+      "pass": true,
+      "openedIndex": 2,
+      "closedIndex": 1,
+      "nextBack": "http://127.0.0.1:4199/journal"
+    },
+    {
+      "name": "Menu history: double Close",
+      "pass": true,
+      "openedIndex": 2,
+      "closedIndex": 1,
+      "nextBack": "http://127.0.0.1:4199/journal"
+    },
+    {
+      "name": "New destination replaces menu entry",
+      "pass": true,
+      "nextBack": "http://127.0.0.1:4199/journal"
+    },
+    {
+      "name": "Quick navigation also replaces open menu entry",
+      "pass": true,
+      "nextBack": "http://127.0.0.1:4199/"
+    },
+    {
+      "name": "Reload and Forward keep menu history coherent",
+      "pass": true,
+      "nextBack": "http://127.0.0.1:4199/journal"
+    },
+    {
+      "name": "Breakpoint change consumes hidden menu entry",
+      "pass": true,
+      "nextBack": "http://127.0.0.1:4199/journal"
+    },
+    {
+      "name": "Desktop More: Back",
+      "pass": true,
+      "nextBack": "http://127.0.0.1:4199/journal"
+    },
+    {
+      "name": "Desktop More: Escape",
+      "pass": true,
+      "nextBack": "http://127.0.0.1:4199/journal"
+    },
+    {
+      "name": "Desktop More: outside",
+      "pass": true,
+      "nextBack": "http://127.0.0.1:4199/journal"
+    },
+    {
+      "name": "Desktop More: current destination",
+      "pass": true,
+      "nextBack": "http://127.0.0.1:4199/journal"
+    },
+    {
+      "name": "Desktop More: new destination",
+      "pass": false,
+      "error": "TimeoutError: page.waitForURL: Timeout 7000ms exceeded.\n=========================== logs ===========================\nwaiting for navigation to \"**/plans\" until \"load\"\n============================================================"
+    }
+  ],
+  "pageErrors": []
+}

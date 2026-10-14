@@ -1,0 +1,534 @@
+{
+  "phase": "after",
+  "engine": "chromium",
+  "version": "155.0.8059.12",
+  "evidence": "Render: desktop engine with synthetic services",
+  "measurements": [
+    {
+      "surface": "today",
+      "viewport": {
+        "width": 320,
+        "height": 568,
+        "theme": "light"
+      },
+      "geometry": {
+        "documentWidth": 320,
+        "documentScrollWidth": 320,
+        "card": {
+          "x": 20,
+          "right": 300,
+          "width": 280,
+          "clientWidth": 278,
+          "scrollWidth": 278
+        },
+        "borderWidths": [
+          "1px",
+          "1px",
+          "1px",
+          "1px"
+        ],
+        "borderColors": [
+          "oklch(0.845 0.014 79)",
+          "oklch(0.845 0.014 79)",
+          "oklch(0.845 0.014 79)",
+          "oklch(0.845 0.014 79)"
+        ],
+        "corners": [
+          "4px",
+          "4px",
+          "4px",
+          "4px"
+        ],
+        "padding": [
+          "16px",
+          "16px",
+          "16px",
+          "16px"
+        ],
+        "background": "oklch(0.993 0.005 84.6)",
+        "text": "A walk after work\n\nOct 14, 2026\n\nI took a different route home and had time to think.\n\ngeneral",
+        "controls": []
+      },
+      "screenshot": "chromium-today-320x568-light-after.png"
+    },
+    {
+      "surface": "journal",
+      "viewport": {
+        "width": 320,
+        "height": 568,
+        "theme": "light"
+      },
+      "geometry": {
+        "documentWidth": 320,
+        "documentScrollWidth": 320,
+        "card": {
+          "x": 20,
+          "right": 300,
+          "width": 280,
+          "clientWidth": 278,
+          "scrollWidth": 278
+        },
+        "borderWidths": [
+          "1px",
+          "1px",
+          "1px",
+          "1px"
+        ],
+        "borderColors": [
+          "oklch(0.845 0.014 79)",
+          "oklch(0.845 0.014 79)",
+          "oklch(0.845 0.014 79)",
+          "oklch(0.845 0.014 79)"
+        ],
+        "corners": [
+          "4px",
+          "4px",
+          "4px",
+          "4px"
+        ],
+        "padding": [
+          "20px",
+          "20px",
+          "20px",
+          "20px"
+        ],
+        "background": "oklch(0.993 0.005 84.6)",
+        "text": "A walk after work\n\n2026-10-14\n\nI took a different route home and had time to think.\n\ngeneral\n\nEdit\nDelete",
+        "controls": [
+          {
+            "label": "Edit",
+            "width": 56.9375,
+            "height": 44
+          },
+          {
+            "label": "Delete",
+            "width": 94.96875,
+            "height": 44
+          }
+        ]
+      },
+      "screenshot": "chromium-journal-320x568-light-after.png"
+    },
+    {
+      "surface": "today",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "theme": "light"
+      },
+      "geometry": {
+        "documentWidth": 390,
+        "documentScrollWidth": 390,
+        "card": {
+          "x": 20,
+          "right": 370,
+          "width": 350,
+          "clientWidth": 348,
+          "scrollWidth": 348
+        },
+        "borderWidths": [
+          "1px",
+          "1px",
+          "1px",
+          "1px"
+        ],
+        "borderColors": [
+          "oklch(0.845 0.014 79)",
+          "oklch(0.845 0.014 79)",
+          "oklch(0.845 0.014 79)",
+          "oklch(0.845 0.014 79)"
+        ],
+        "corners": [
+          "4px",
+          "4px",
+          "4px",
+          "4px"
+        ],
+        "padding": [
+          "16px",
+          "16px",
+          "16px",
+          "16px"
+        ],
+        "background": "oklch(0.993 0.005 84.6)",
+        "text": "A walk after work\n\nOct 14, 2026\n\nI took a different route home and had time to think.\n\ngeneral",
+        "controls": []
+      },
+      "screenshot": "chromium-today-390x844-light-after.png"
+    },
+    {
+      "surface": "journal",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "theme": "light"
+      },
+      "geometry": {
+        "documentWidth": 390,
+        "documentScrollWidth": 390,
+        "card": {
+          "x": 20,
+          "right": 370,
+          "width": 350,
+          "clientWidth": 348,
+          "scrollWidth": 348
+        },
+        "borderWidths": [
+          "1px",
+          "1px",
+          "1px",
+          "1px"
+        ],
+        "borderColors": [
+          "oklch(0.845 0.014 79)",
+          "oklch(0.845 0.014 79)",
+          "oklch(0.845 0.014 79)",
+          "oklch(0.845 0.014 79)"
+        ],
+        "corners": [
+          "4px",
+          "4px",
+          "4px",
+          "4px"
+        ],
+        "padding": [
+          "20px",
+          "20px",
+          "20px",
+          "20px"
+        ],
+        "background": "oklch(0.993 0.005 84.6)",
+        "text": "A walk after work\n\n2026-10-14\n\nI took a different route home and had time to think.\n\ngeneral\n\nEdit\nDelete",
+        "controls": [
+          {
+            "label": "Edit",
+            "width": 56.9375,
+            "height": 44
+          },
+          {
+            "label": "Delete",
+            "width": 94.96875,
+            "height": 44
+          }
+        ]
+      },
+      "screenshot": "chromium-journal-390x844-light-after.png"
+    },
+    {
+      "surface": "today",
+      "viewport": {
+        "width": 667,
+        "height": 375,
+        "theme": "light"
+      },
+      "geometry": {
+        "documentWidth": 667,
+        "documentScrollWidth": 667,
+        "card": {
+          "x": 32,
+          "right": 635,
+          "width": 603,
+          "clientWidth": 601,
+          "scrollWidth": 601
+        },
+        "borderWidths": [
+          "1px",
+          "1px",
+          "1px",
+          "1px"
+        ],
+        "borderColors": [
+          "oklch(0.845 0.014 79)",
+          "oklch(0.845 0.014 79)",
+          "oklch(0.845 0.014 79)",
+          "oklch(0.845 0.014 79)"
+        ],
+        "corners": [
+          "4px",
+          "4px",
+          "4px",
+          "4px"
+        ],
+        "padding": [
+          "16px",
+          "16px",
+          "16px",
+          "16px"
+        ],
+        "background": "oklch(0.993 0.005 84.6)",
+        "text": "A walk after work\n\nOct 14, 2026\n\nI took a different route home and had time to think.\n\ngeneral",
+        "controls": []
+      },
+      "screenshot": "chromium-today-667x375-light-after.png"
+    },
+    {
+      "surface": "journal",
+      "viewport": {
+        "width": 667,
+        "height": 375,
+        "theme": "light"
+      },
+      "geometry": {
+        "documentWidth": 667,
+        "documentScrollWidth": 667,
+        "card": {
+          "x": 32,
+          "right": 635,
+          "width": 603,
+          "clientWidth": 601,
+          "scrollWidth": 601
+        },
+        "borderWidths": [
+          "1px",
+          "1px",
+          "1px",
+          "1px"
+        ],
+        "borderColors": [
+          "oklch(0.845 0.014 79)",
+          "oklch(0.845 0.014 79)",
+          "oklch(0.845 0.014 79)",
+          "oklch(0.845 0.014 79)"
+        ],
+        "corners": [
+          "4px",
+          "4px",
+          "4px",
+          "4px"
+        ],
+        "padding": [
+          "20px",
+          "20px",
+          "20px",
+          "20px"
+        ],
+        "background": "oklch(0.993 0.005 84.6)",
+        "text": "A walk after work\n\n2026-10-14\n\nI took a different route home and had time to think.\n\ngeneral\n\nEdit\nDelete",
+        "controls": [
+          {
+            "label": "Edit",
+            "width": 56.9375,
+            "height": 44
+          },
+          {
+            "label": "Delete",
+            "width": 94.96875,
+            "height": 44
+          }
+        ]
+      },
+      "screenshot": "chromium-journal-667x375-light-after.png"
+    },
+    {
+      "surface": "today",
+      "viewport": {
+        "width": 1280,
+        "height": 900,
+        "theme": "light"
+      },
+      "geometry": {
+        "documentWidth": 1280,
+        "documentScrollWidth": 1280,
+        "card": {
+          "x": 96,
+          "right": 832,
+          "width": 736,
+          "clientWidth": 734,
+          "scrollWidth": 734
+        },
+        "borderWidths": [
+          "1px",
+          "1px",
+          "1px",
+          "1px"
+        ],
+        "borderColors": [
+          "oklch(0.845 0.014 79)",
+          "oklch(0.845 0.014 79)",
+          "oklch(0.845 0.014 79)",
+          "oklch(0.845 0.014 79)"
+        ],
+        "corners": [
+          "4px",
+          "4px",
+          "4px",
+          "4px"
+        ],
+        "padding": [
+          "16px",
+          "16px",
+          "16px",
+          "16px"
+        ],
+        "background": "oklch(0.993 0.005 84.6)",
+        "text": "A walk after work\n\nOct 14, 2026\n\nI took a different route home and had time to think.\n\ngeneral",
+        "controls": []
+      },
+      "screenshot": "chromium-today-1280x900-light-after.png"
+    },
+    {
+      "surface": "journal",
+      "viewport": {
+        "width": 1280,
+        "height": 900,
+        "theme": "light"
+      },
+      "geometry": {
+        "documentWidth": 1280,
+        "documentScrollWidth": 1280,
+        "card": {
+          "x": 96,
+          "right": 888,
+          "width": 792,
+          "clientWidth": 790,
+          "scrollWidth": 790
+        },
+        "borderWidths": [
+          "1px",
+          "1px",
+          "1px",
+          "1px"
+        ],
+        "borderColors": [
+          "oklch(0.845 0.014 79)",
+          "oklch(0.845 0.014 79)",
+          "oklch(0.845 0.014 79)",
+          "oklch(0.845 0.014 79)"
+        ],
+        "corners": [
+          "4px",
+          "4px",
+          "4px",
+          "4px"
+        ],
+        "padding": [
+          "20px",
+          "20px",
+          "20px",
+          "20px"
+        ],
+        "background": "oklch(0.993 0.005 84.6)",
+        "text": "A walk after work\n\n2026-10-14\n\nI took a different route home and had time to think.\n\ngeneral\n\nEdit\nDelete",
+        "controls": [
+          {
+            "label": "Edit",
+            "width": 56.9375,
+            "height": 44
+          },
+          {
+            "label": "Delete",
+            "width": 94.96875,
+            "height": 44
+          }
+        ]
+      },
+      "screenshot": "chromium-journal-1280x900-light-after.png"
+    },
+    {
+      "surface": "today",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "theme": "dark"
+      },
+      "geometry": {
+        "documentWidth": 390,
+        "documentScrollWidth": 390,
+        "card": {
+          "x": 20,
+          "right": 370,
+          "width": 350,
+          "clientWidth": 348,
+          "scrollWidth": 348
+        },
+        "borderWidths": [
+          "1px",
+          "1px",
+          "1px",
+          "1px"
+        ],
+        "borderColors": [
+          "oklch(1 0 0 / 0.18)",
+          "oklch(1 0 0 / 0.18)",
+          "oklch(1 0 0 / 0.18)",
+          "oklch(1 0 0 / 0.18)"
+        ],
+        "corners": [
+          "4px",
+          "4px",
+          "4px",
+          "4px"
+        ],
+        "padding": [
+          "16px",
+          "16px",
+          "16px",
+          "16px"
+        ],
+        "background": "oklch(0.245 0.011 61.2)",
+        "text": "A walk after work\n\nOct 14, 2026\n\nI took a different route home and had time to think.\n\ngeneral",
+        "controls": []
+      },
+      "screenshot": "chromium-today-390x844-dark-after.png"
+    },
+    {
+      "surface": "journal",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "theme": "dark"
+      },
+      "geometry": {
+        "documentWidth": 390,
+        "documentScrollWidth": 390,
+        "card": {
+          "x": 20,
+          "right": 370,
+          "width": 350,
+          "clientWidth": 348,
+          "scrollWidth": 348
+        },
+        "borderWidths": [
+          "1px",
+          "1px",
+          "1px",
+          "1px"
+        ],
+        "borderColors": [
+          "oklch(1 0 0 / 0.18)",
+          "oklch(1 0 0 / 0.18)",
+          "oklch(1 0 0 / 0.18)",
+          "oklch(1 0 0 / 0.18)"
+        ],
+        "corners": [
+          "4px",
+          "4px",
+          "4px",
+          "4px"
+        ],
+        "padding": [
+          "20px",
+          "20px",
+          "20px",
+          "20px"
+        ],
+        "background": "oklch(0.245 0.011 61.2)",
+        "text": "A walk after work\n\n2026-10-14\n\nI took a different route home and had time to think.\n\ngeneral\n\nEdit\nDelete",
+        "controls": [
+          {
+            "label": "Edit",
+            "width": 56.9375,
+            "height": 44
+          },
+          {
+            "label": "Delete",
+            "width": 94.96875,
+            "height": 44
+          }
+        ]
+      },
+      "screenshot": "chromium-journal-390x844-dark-after.png"
+    }
+  ],
+  "errors": []
+}

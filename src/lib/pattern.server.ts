@@ -2654,6 +2654,49 @@ export async function listJournal(db: DB, userId: string) {
   };
 }
 
+function validateJournalOperation(clientMutationId: string) {
+  if (
+    !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
+      clientMutationId,
+    )
+  ) {
+    throw new Error("Invalid journal operation.");
+  }
+}
+
+async function ownedLifeEvent(db: DB, userId: string, id: string) {
+  const { data: row, error } = await db
+    .from<LifeEventRow>("life_events")
+    .select(
+      "id, occurred_on, domain, label_ct, body_ct, cycle_key, feature_key, created_at, updated_at, revision",
+    )
+    .eq("user_id", userId)
+    .eq("id", id)
+    .maybeSingle();
+  if (error) throw new Error("Your entry could not be checked. Please retry.");
+  if (!row) return null;
+  const dek = await getDek(db, userId);
+  return {
+    id: row.id,
+    occurred_on: row.occurred_on,
+    domain: row.domain,
+    label: await decryptField(dek, row.label_ct),
+    body: row.body_ct ? await decryptField(dek, row.body_ct) : null,
+    cycle_key: row.cycle_key ?? null,
+    feature_key: row.feature_key ?? null,
+    created_at: row.created_at ?? null,
+    updated_at: row.updated_at ?? null,
+    revision: row.revision,
+  };
+}
+
+export async function resolveLifeEventSubmission(db: DB, userId: string, clientMutationId: string) {
+  validateJournalOperation(clientMutationId);
+  const id = await fingerprint(["journal-create-v1", userId, clientMutationId]);
+  const entry = await ownedLifeEvent(db, userId, id);
+  return entry ? { state: "saved" as const, entry } : { state: "missing" as const };
+}
+
 export async function addLifeEvent(
   db: DB,
   userId: string,
@@ -2663,19 +2706,31 @@ export async function addLifeEvent(
   body: string | null = null,
   cycleKey: string | null = null,
   featureKey: string | null = null,
+  clientMutationId?: string,
 ) {
+  if (clientMutationId !== undefined) validateJournalOperation(clientMutationId);
+  const id = clientMutationId
+    ? await fingerprint(["journal-create-v1", userId, clientMutationId])
+    : crypto.randomUUID();
   const dek = await getDek(db, userId);
-  const { error } = await db.from("life_events").insert({
-    user_id: userId,
-    occurred_on: occurredOn,
-    domain,
-    label_ct: await encryptField(dek, label),
-    body_ct: body ? await encryptField(dek, body) : null,
-    cycle_key: cycleKey,
-    feature_key: featureKey,
-  });
-  if (error) throw new Error(error.message);
-  return { ok: true };
+  const createdAt = new Date().toISOString();
+  const inserted = await db.exec<{ id: string }>(
+    "INSERT INTO life_events(id,user_id,occurred_on,domain,label_ct,body_ct,cycle_key,feature_key,created_at) VALUES(?,?,?,?,?,?,?,?,?) ON CONFLICT(id) DO NOTHING RETURNING id",
+    [
+      id,
+      userId,
+      occurredOn,
+      domain,
+      await encryptField(dek, label),
+      body ? await encryptField(dek, body) : null,
+      cycleKey,
+      featureKey,
+      createdAt,
+    ],
+  );
+  const entry = await ownedLifeEvent(db, userId, id);
+  if (!entry) throw new Error("Your entry could not be confirmed. Check the save before retrying.");
+  return { ok: true, id, entry, replayed: inserted.length === 0 };
 }
 
 export async function updateLifeEvent(

@@ -1,0 +1,21 @@
+async page => {
+ const phase='after',out=[],engine=page.context().browser().browserType().name();
+ for(const [width,height,font] of [[320,568,16],[360,800,16],[667,375,16],[844,390,16],[320,568,32]]){
+  await page.setViewportSize({width,height});await page.goto('http://127.0.0.1:4199/');
+  const note=page.getByLabel('Reflection note · optional');await note.waitFor();
+  await page.evaluate(font=>document.documentElement.style.fontSize=font+'px',font);
+  await note.fill('Toast clearance '+Date.now());
+  const save=page.getByRole('button',{name:'Save check-in',exact:true});
+  await save.evaluate(el=>el.scrollIntoView({block:'center',behavior:'instant'}));await save.click();
+  await page.locator('[data-sonner-toast]').first().waitFor();await page.waitForTimeout(450);
+  await page.mouse.move(10,10);
+  const geometry=await page.evaluate(()=>{
+   const box=el=>{const r=el.getBoundingClientRect();return{top:r.top,bottom:r.bottom,left:r.left,right:r.right,height:r.height}};
+   const nav=document.querySelector('.mobile-journey'),toast=document.querySelector('[data-sonner-toast]');
+   return {nav:box(nav),navPosition:getComputedStyle(nav).position,toast:box(toast),toasterClass:document.querySelector('[data-sonner-toaster]').className,navHits:[...nav.querySelectorAll('a')].map(a=>{const r=a.getBoundingClientRect();const hit=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);return{label:a.textContent,reachable:a.contains(hit)}})};
+  });
+  out.push({width,height,font,...geometry});
+  if(width===360)await page.screenshot({path:'/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-viewport-2026-10-14/'+engine+'-toast-nav-'+phase+'.png'});
+ }
+ return{engine,phase,cases:out};
+}

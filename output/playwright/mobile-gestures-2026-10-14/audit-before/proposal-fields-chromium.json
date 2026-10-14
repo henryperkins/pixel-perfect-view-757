@@ -1,0 +1,94 @@
+{
+  "engine": "chromium",
+  "evidence": "Render: temporary in-page CSS only; not an implemented fix or a phone test",
+  "cases": [
+    {
+      "name": "Today reflection",
+      "interiorBefore": {
+        "documentY": 924,
+        "fieldY": 0,
+        "overscrollY": "contain"
+      },
+      "interiorAfter": {
+        "documentY": 924,
+        "fieldY": 200,
+        "overscrollY": "contain"
+      },
+      "bottomBefore": {
+        "documentY": 924,
+        "fieldY": 888,
+        "overscrollY": "contain"
+      },
+      "bottomAfter": {
+        "documentY": 924,
+        "fieldY": 888,
+        "overscrollY": "contain"
+      },
+      "outsideAfter": {
+        "documentY": 1124,
+        "fieldY": 888,
+        "overscrollY": "contain"
+      },
+      "passed": true
+    },
+    {
+      "name": "Journal new entry",
+      "interiorBefore": {
+        "documentY": 391,
+        "fieldY": 0,
+        "overscrollY": "contain"
+      },
+      "interiorAfter": {
+        "documentY": 391,
+        "fieldY": 200,
+        "overscrollY": "contain"
+      },
+      "bottomBefore": {
+        "documentY": 391,
+        "fieldY": 1156,
+        "overscrollY": "contain"
+      },
+      "bottomAfter": {
+        "documentY": 391,
+        "fieldY": 1156,
+        "overscrollY": "contain"
+      },
+      "outsideAfter": {
+        "documentY": 591,
+        "fieldY": 1156,
+        "overscrollY": "contain"
+      },
+      "passed": true
+    },
+    {
+      "name": "Journal editor",
+      "interiorBefore": {
+        "documentY": 1326,
+        "fieldY": 0,
+        "overscrollY": "contain"
+      },
+      "interiorAfter": {
+        "documentY": 1326,
+        "fieldY": 200,
+        "overscrollY": "contain"
+      },
+      "bottomBefore": {
+        "documentY": 1326,
+        "fieldY": 884,
+        "overscrollY": "contain"
+      },
+      "bottomAfter": {
+        "documentY": 1326,
+        "fieldY": 884,
+        "overscrollY": "contain"
+      },
+      "outsideAfter": {
+        "documentY": 1526,
+        "fieldY": 884,
+        "overscrollY": "contain"
+      },
+      "passed": true
+    }
+  ],
+  "errors": []
+}

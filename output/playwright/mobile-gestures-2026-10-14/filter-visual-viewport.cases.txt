@@ -1,0 +1,10 @@
+async page=>{
+ await page.setViewportSize({width:320,height:568});await page.emulateMedia({reducedMotion:'reduce'});await page.goto('http://127.0.0.1:4200/timing');await page.locator('.timing-area-options').waitFor();await page.evaluate(()=>document.fonts.ready);await page.evaluate(()=>document.documentElement.style.fontSize='32px');await page.waitForTimeout(150);
+ const result={cases:[]};
+ for(const label of ['Every area','Identity','Relationships','Work','Inner life','Structure']){
+  const b=page.locator('.timing-area-options').getByRole('button',{name:label,exact:true});await b.evaluate(el=>el.scrollIntoView({block:'center',behavior:'instant'}));await page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));
+  const state=()=>b.evaluate(el=>{const r=el.getBoundingClientRect(),vv=window.visualViewport;return{label:el.textContent,scrollY,viewport:{scale:vv.scale,offset:vv.offsetTop,height:vv.height,width:vv.width,pageTop:vv.pageTop},rect:r.toJSON(),hit:document.elementFromPoint(r.x+r.width/2,r.y+r.height/2)?.textContent,filterPosition:getComputedStyle(document.querySelector('.timing-explorer-filters')).position,active:document.activeElement?.textContent?.slice(0,60)}});
+  const before=await state();try{const point=await b.evaluate(el=>{const r=el.getBoundingClientRect(),v=window.visualViewport;return{x:r.x+r.width/2-(v?.offsetLeft??0),y:r.y+r.height/2-(v?.offsetTop??0)}});await page.touchscreen.tap(point.x,point.y);await page.waitForTimeout(100);if(await b.getAttribute('aria-pressed')!=='true')throw Error('Tap did not select '+label);result.cases.push({before,after:await state()})}catch(e){result.cases.push({before,after:await state(),error:String(e).slice(0,1200)});break}
+ }
+ await page.screenshot({path:'/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-gestures-2026-10-14/filter-visual-viewport-320-font32.png'});return result;
+}

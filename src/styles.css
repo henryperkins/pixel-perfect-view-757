@@ -213,10 +213,17 @@
 }
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 7rem;
+  scroll-padding-top: calc(var(--pattern-header-height, 7rem) + 8px);
+  scroll-padding-bottom: calc(var(--pattern-bottom-nav-height, 0px) + 12px);
 }
 body {
   letter-spacing: 0;
+}
+/* In-flow pages stay stable as browser toolbars expand and collapse. */
+.pattern-shell,
+.viewport-page {
+  min-height: 100vh;
+  min-height: 100svh;
 }
 :where(a, button, summary, input, select, textarea):focus-visible {
   outline: 2px solid var(--ring);
@@ -399,8 +406,15 @@ body {
 }
 .mobile-menu {
   animation: menu-enter 200ms var(--ease-flow);
-  max-height: calc(100dvh - 160px);
+  /* Leave room for the measured header, any fixed nav, and the progress rule. */
+  max-height: calc(
+    100vh - var(--pattern-header-bar-height, 80px) - var(--pattern-bottom-nav-height, 80px) - 4px
+  );
+  max-height: calc(
+    100svh - var(--pattern-header-bar-height, 80px) - var(--pattern-bottom-nav-height, 80px) - 4px
+  );
   overflow-y: auto;
+  overscroll-behavior-y: contain;
 }
 .mobile-journey {
   position: fixed;
@@ -429,7 +443,9 @@ body {
   min-height: 54px;
 }
 .mobile-journey .journey-link span {
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: center;
 }
 .reading-progress {
   appearance: none;
@@ -548,12 +564,16 @@ body {
 }
 .pattern-summary-details > summary {
   display: flex;
+  flex-wrap: wrap;
+  min-width: 0;
   min-height: 44px;
   align-items: center;
   gap: 10px;
 }
 .pattern-summary-title {
-  flex-shrink: 0;
+  flex: 1 1 12rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
   color: var(--primary);
   font-family: var(--font-serif);
   font-size: 1.125rem;
@@ -898,34 +918,32 @@ body {
   font-size: 0.75rem;
   color: var(--primary);
 }
-.pattern-placement-list {
-  margin-top: 20px;
-}
-.pattern-placement-list li {
+.pattern-placement-controls {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 4px 12px;
-  padding-block: 14px;
-  border-bottom: 1px solid var(--rule);
-  font-family: var(--font-mono);
-  font-size: 0.8125rem;
-  line-height: 1.7;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+.pattern-placement-controls button {
+  height: auto;
+  min-height: 48px;
+  min-width: 0;
+  white-space: normal;
   overflow-wrap: anywhere;
 }
-.pattern-placement-list li > span:nth-child(even) {
-  text-align: right;
-}
-.pattern-placement-list li > span:nth-child(n + 3) {
-  font-size: 0.75rem;
-  color: var(--muted-foreground);
-}
 .pattern-placement-table {
+  container-type: inline-size;
   margin-top: 20px;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
 }
 .pattern-placement-table table {
   width: 100%;
+  min-width: 30rem;
   table-layout: fixed;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   font-family: var(--font-mono);
   font-size: 0.8125rem;
   line-height: 1.7;
@@ -945,6 +963,21 @@ body {
 }
 .pattern-placement-table th:nth-child(1) {
   width: 24%;
+  position: sticky;
+  inset-inline-start: 0;
+  z-index: 1;
+  background: var(--background);
+}
+@container (width < 30rem) {
+  .pattern-placement-table th:nth-child(1) {
+    /* Resolve to a length: mixed percentages make fixed table layout redistribute this width. */
+    width: min(7.2rem, 40cqi);
+  }
+}
+@supports not (width: 1cqi) {
+  .pattern-placement-table th:nth-child(1) {
+    position: static;
+  }
 }
 .pattern-placement-table th:nth-child(2) {
   width: 36%;
@@ -1167,13 +1200,7 @@ body {
 }
 .window-card {
   border-radius: 6px;
-  border-left: 3px solid var(--accent);
-  transition:
-    border-color var(--motion-fast),
-    background-color var(--motion-fast);
-}
-.window-card:hover {
-  border-left-color: var(--primary);
+  transition: background-color var(--motion-fast);
 }
 .window-timeline {
   margin-block: 18px 6px;
@@ -1207,7 +1234,7 @@ body {
   min-width: 0;
 }
 .travel-intro h1 {
-  font-size: clamp(2.25rem, 4vw, 3.25rem);
+  font-size: clamp(2.25rem, 1.25rem + 2vw, 3.25rem);
   line-height: 1.15;
 }
 .travel-intro > p {
@@ -1249,7 +1276,7 @@ body {
   display: block;
   font-family: var(--font-serif);
   color: var(--primary);
-  font-size: clamp(1.625rem, 3.2vw, 2.375rem);
+  font-size: clamp(1.625rem, 1rem + 1.6vw, 2.375rem);
   line-height: 1.25;
 }
 .travel-date-display p {
@@ -1587,7 +1614,7 @@ body {
 }
 .timing-intro h1,
 .timing-loading h1 {
-  font-size: clamp(2.25rem, 4vw, 3.25rem);
+  font-size: clamp(2.25rem, 1.25rem + 2vw, 3.25rem);
   line-height: 1.15;
 }
 .timing-intro > p:not(.technical) {
@@ -1608,6 +1635,7 @@ body {
 .timing-area-options {
   position: relative;
   display: flex;
+  flex-wrap: wrap;
   gap: 6px;
   overflow-x: auto;
   padding: 5px;
@@ -2061,6 +2089,10 @@ body {
   text-align: right;
 }
 @media (max-width: 639px) {
+  .timing-explorer-filters {
+    position: static;
+    top: auto;
+  }
   .timing-phase-options {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -2168,11 +2200,10 @@ body {
   font-size: 1.25rem;
 }
 .journal-entry {
-  border: 0;
-  border-left: 2px solid var(--accent);
+  border: 1px solid var(--rule);
   background: var(--card);
   padding: 20px;
-  border-radius: 0 6px 6px 0;
+  border-radius: var(--radius);
 }
 .today-flow {
   display: grid;
@@ -2316,8 +2347,8 @@ body {
   font-size: 0.875rem;
 }
 .today-journal-previews > li {
-  border-left: 2px solid var(--accent);
-  border-radius: 0 6px 6px 0;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
   padding: 1rem;
   background: var(--card);
   overflow-wrap: anywhere;
@@ -2489,7 +2520,7 @@ body {
 }
 @media (max-width: 1023px) {
   .has-journey {
-    padding-bottom: calc(85px + env(safe-area-inset-bottom));
+    padding-bottom: calc(var(--pattern-bottom-nav-height, 85px) + 12px);
   }
 }
 @media (max-width: 767px) {
@@ -3167,4 +3198,133 @@ input.calculator-control {
   .timing-window:hover .timing-phase-mark {
     transform: none;
   }
+}
+
+/* Phone input legibility and focus clearance share Shell's measured surfaces. */
+.pattern-shell :where(input, select, textarea, button, a, summary, [tabindex]) {
+  scroll-margin-block: 8px;
+}
+.journal-entry,
+.journal-entry-editor,
+.draft-recovery {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.journal-delete-dialog {
+  position: fixed;
+  z-index: 81;
+  inset-inline: max(16px, env(safe-area-inset-left)) max(16px, env(safe-area-inset-right));
+  top: 50%;
+  transform: translateY(-50%);
+  margin-inline: auto;
+  max-width: 32rem;
+  max-height: calc(100vh - 32px);
+  max-height: calc(100dvh - 32px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-wrap: anywhere;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 16px;
+  background: var(--background);
+  box-shadow: var(--shadow-floating);
+}
+.journal-delete-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.journal-delete-header h2 {
+  min-width: 0;
+}
+.today-check-in-note textarea,
+.journal-compose textarea,
+.journal-entry-editor textarea {
+  overscroll-behavior-y: contain;
+}
+.journal-delete-body {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.journal-delete-body:focus-visible,
+.pattern-placement-table:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: -2px;
+}
+.journal-delete-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.journal-delete-actions button {
+  height: auto;
+  min-width: 0;
+  padding-inline: 12px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 1023px) {
+  .toaster[data-sonner-toaster][data-y-position="bottom"] {
+    bottom: calc(
+      max(var(--pattern-bottom-nav-height, 0px), env(safe-area-inset-bottom, 0px)) + 16px
+    );
+  }
+  .pattern-mobile-field {
+    font-size: 16px;
+    font-size: max(1rem, 16px);
+  }
+}
+@media (max-width: 1023px) and (max-height: 500px) {
+  .pattern-header:not([data-menu-open="true"]) {
+    position: static;
+  }
+  .timing-filters {
+    position: static;
+    top: auto;
+  }
+}
+html[data-constrained-viewport] .timing-filters {
+  position: static;
+  top: auto;
+}
+html[data-constrained-viewport] .mobile-journey {
+  position: static;
+}
+@media (prefers-reduced-motion: reduce) {
+  .journal-delete-dialog,
+  .journal-delete-overlay {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* Keep contextual recovery and settings actions inside their column with enlarged text. */
+.draft-recovery button,
+.privacy-main button,
+.privacy-main a.inline-flex {
+  max-width: 100%;
+  height: auto;
+  min-height: 44px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.journal-compose label,
+.privacy-main label,
+.pattern-mobile-field {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.today-reading h1 {
+  overflow-wrap: anywhere;
+}
+.today-check-in-save > button[type="submit"] {
+  min-height: 48px;
 }

@@ -1,0 +1,150 @@
+{
+  "engine": "chromium",
+  "evidence": "Render: temporary CSS proposal, not implemented",
+  "cases": [
+    {
+      "width": 320,
+      "before": {
+        "width": 290,
+        "scrollWidth": 290,
+        "height": 154,
+        "buttons": [
+          {
+            "label": "Every area",
+            "x": 5,
+            "y": 5,
+            "width": 99
+          },
+          {
+            "label": "Identity",
+            "x": 110,
+            "y": 5,
+            "width": 80
+          },
+          {
+            "label": "Relationships",
+            "x": 5,
+            "y": 55,
+            "width": 118
+          },
+          {
+            "label": "Work",
+            "x": 129,
+            "y": 55,
+            "width": 67
+          },
+          {
+            "label": "Inner life",
+            "x": 5,
+            "y": 105,
+            "width": 87
+          },
+          {
+            "label": "Structure",
+            "x": 98,
+            "y": 105,
+            "width": 91
+          }
+        ]
+      },
+      "selected": "true",
+      "scrollLeft": 0
+    },
+    {
+      "width": 360,
+      "before": {
+        "width": 330,
+        "scrollWidth": 330,
+        "height": 104,
+        "buttons": [
+          {
+            "label": "Every area",
+            "x": 5,
+            "y": 5,
+            "width": 99
+          },
+          {
+            "label": "Identity",
+            "x": 110,
+            "y": 5,
+            "width": 80
+          },
+          {
+            "label": "Relationships",
+            "x": 196,
+            "y": 5,
+            "width": 118
+          },
+          {
+            "label": "Work",
+            "x": 5,
+            "y": 55,
+            "width": 67
+          },
+          {
+            "label": "Inner life",
+            "x": 78,
+            "y": 55,
+            "width": 87
+          },
+          {
+            "label": "Structure",
+            "x": 171,
+            "y": 55,
+            "width": 91
+          }
+        ]
+      },
+      "selected": "true",
+      "scrollLeft": 0
+    },
+    {
+      "width": 440,
+      "before": {
+        "width": 410,
+        "scrollWidth": 410,
+        "height": 104,
+        "buttons": [
+          {
+            "label": "Every area",
+            "x": 5,
+            "y": 5,
+            "width": 99
+          },
+          {
+            "label": "Identity",
+            "x": 110,
+            "y": 5,
+            "width": 80
+          },
+          {
+            "label": "Relationships",
+            "x": 196,
+            "y": 5,
+            "width": 118
+          },
+          {
+            "label": "Work",
+            "x": 319,
+            "y": 5,
+            "width": 67
+          },
+          {
+            "label": "Inner life",
+            "x": 5,
+            "y": 55,
+            "width": 87
+          },
+          {
+            "label": "Structure",
+            "x": 98,
+            "y": 55,
+            "width": 91
+          }
+        ]
+      },
+      "selected": "true",
+      "scrollLeft": 0
+    }
+  ]
+}

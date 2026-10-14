@@ -1,0 +1,652 @@
+--- a/src/components/pattern/Shell.tsx
++++ b/src/components/pattern/Shell.tsx
+@@ -4,6 +4,7 @@
+ 
+ import { signOut } from "@/lib/auth.shared";
+ import { useAuth } from "@/hooks/useAuth";
++import { useNavigationMenu } from "@/hooks/useNavigationMenu";
+ import { Button } from "@/components/ui/button";
+ import { OrbitMark } from "@/components/pattern/OrbitMark";
+ import { Sun, Orbit, Waves, NotebookPen, ChevronDown, Menu, X } from "lucide-react";
+@@ -36,8 +37,6 @@
+ 
+ export function Shell({ children, signedIn = true }: { children: ReactNode; signedIn?: boolean }) {
+   const { isAdmin } = useAuth();
+-  const [menuOpen, setMenuOpen] = useState(false);
+-  const [moreOpen, setMoreOpen] = useState(false);
+   const { purgeAccountDrafts } = useMemberDraftLifecycle();
+   const leaveAccount = async () => {
+     await signOut();
+@@ -46,17 +45,20 @@
+     } catch {
+       /* The root retries local cleanup after redirect. */
+     }
+-    window.location.assign("/auth");
++    window.location.replace("/auth");
+   };
+   const [progress, setProgress] = useState(0);
+   const mainRef = useRef<HTMLElement>(null);
+   const headerRef = useRef<HTMLElement>(null);
+   const headerBarRef = useRef<HTMLDivElement>(null);
+-  const moreRef = useRef<HTMLDivElement>(null);
++  const moreTriggerRef = useRef<HTMLButtonElement>(null);
+   const mobileMenuRef = useRef<HTMLButtonElement>(null);
+   const desktopNavRef = useRef<HTMLElement>(null);
+   const mobileNavRef = useRef<HTMLElement>(null);
+   const pathname = useRouterState({ select: (s) => s.location.pathname });
++  const navigationMenu = useNavigationMenu(headerRef, mobileMenuRef, moreTriggerRef);
++  const menuOpen = navigationMenu.menu === "mobile";
++  const moreOpen = navigationMenu.menu === "more";
+ 
+   const navItems = isAdmin ? NAV : NAV.filter((item) => item.to !== "/content");
+   const secondaryNav = navItems.slice(4);
+@@ -138,10 +140,7 @@
+     };
+   }, [signedIn, pathname]);
+ 
+-  // Close the mobile menu whenever the route changes.
+   useEffect(() => {
+-    setMenuOpen(false);
+-    setMoreOpen(false);
+     setProgress(0);
+   }, [pathname]);
+ 
+@@ -214,29 +213,6 @@
+   }, [pathname, signedIn]);
+ 
+   useEffect(() => {
+-    const close = (event: MouseEvent) => {
+-      if (event.target instanceof Node && !moreRef.current?.contains(event.target))
+-        setMoreOpen(false);
+-    };
+-    const escape = (event: KeyboardEvent) => {
+-      if (event.key === "Escape") {
+-        if (moreRef.current?.querySelector("#more-navigation")) {
+-          moreRef.current.querySelector("button")?.focus();
+-        }
+-        if (document.getElementById("mobile-navigation")) mobileMenuRef.current?.focus();
+-        setMoreOpen(false);
+-        setMenuOpen(false);
+-      }
+-    };
+-    document.addEventListener("click", close);
+-    document.addEventListener("keydown", escape);
+-    return () => {
+-      document.removeEventListener("click", close);
+-      document.removeEventListener("keydown", escape);
+-    };
+-  }, []);
+-
+-  useEffect(() => {
+     const main = mainRef.current;
+     if (!main) return;
+     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+@@ -317,20 +293,17 @@
+   const secondaryPage = secondaryNav.find((item) => isActive(item.to));
+ 
+   return (
+-    <div className={`pattern-shell bg-background text-foreground ${signedIn ? "has-journey" : ""}`}>
+-      <a
+-        href="#main-content"
+-        className="skip-link"
+-        onClick={() => {
+-          setMenuOpen(false);
+-          setMoreOpen(false);
+-        }}
+-      >
++    <div
++      className={`pattern-shell bg-background text-foreground ${signedIn ? "has-journey" : ""}`}
++      onClickCapture={navigationMenu.onNavigateCapture}
++    >
++      <a href="#main-content" className="skip-link">
+         Skip to content
+       </a>
+       <header
+         ref={headerRef}
+-        className="sticky top-0 z-40 border-b border-rule bg-background/85 backdrop-blur-md"
++        data-menu-open={menuOpen}
++        className="pattern-header sticky top-0 z-40 border-b border-rule bg-background/85 backdrop-blur-md"
+       >
+         <div
+           ref={headerBarRef}
+@@ -368,8 +341,9 @@
+                   </Link>
+                 );
+               })}
+-              <div ref={moreRef} className="relative">
++              <div className="relative">
+                 <Button
++                  ref={moreTriggerRef}
+                   variant="ghost"
+                   size="sm"
+                   aria-expanded={moreOpen}
+@@ -380,7 +354,7 @@
+                       ? `More pages, current page: ${secondaryPage.label}`
+                       : "More pages"
+                   }
+-                  onClick={() => setMoreOpen((v) => !v)}
++                  onClick={() => navigationMenu.toggle("more")}
+                   className={`gap-2 ${secondaryPage ? "text-primary" : "text-muted-foreground"}`}
+                 >
+                   More <ChevronDown aria-hidden="true" className={moreOpen ? "rotate-180" : ""} />
+@@ -428,7 +402,7 @@
+                   type="button"
+                   aria-expanded={menuOpen}
+                   aria-label={menuOpen ? "Close menu" : "Open menu"}
+-                  onClick={() => setMenuOpen((v) => !v)}
++                  onClick={() => navigationMenu.toggle("mobile")}
+                   aria-controls="mobile-navigation"
+                   className="flex h-11 w-11 items-center justify-center rounded-md border border-input text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground lg:hidden"
+                 >
+--- a/src/components/pattern/JournalDeleteDialog.tsx
++++ b/src/components/pattern/JournalDeleteDialog.tsx
+@@ -1,4 +1,6 @@
+ import * as Primitive from "@radix-ui/react-alert-dialog";
++import { useEffect, useRef } from "react";
++import { X } from "lucide-react";
+ import {
+   AlertDialog,
+   AlertDialogPortal,
+@@ -25,6 +27,12 @@
+   onCancel: () => void;
+   onCloseAutoFocus: (event: Event) => void;
+ }) {
++  const cancelRef = useRef<HTMLButtonElement>(null);
++  useEffect(() => {
++    // Disabling the focused submit button otherwise leaves focus on the page.
++    if (open && (pending || error)) cancelRef.current?.focus({ preventScroll: true });
++  }, [open, pending, error]);
++
+   return (
+     <AlertDialog
+       open={open}
+@@ -34,29 +42,51 @@
+     >
+       <AlertDialogPortal>
+         <AlertDialogOverlay className="journal-delete-overlay z-[80]" />
+-        <Primitive.Content
+-          className="journal-delete-dialog"
+-          onCloseAutoFocus={onCloseAutoFocus}
+-          onEscapeKeyDown={(event) => {
+-            if (pending) event.preventDefault();
+-          }}
+-        >
+-          <AlertDialogTitle>Delete journal entry?</AlertDialogTitle>
+-          <AlertDialogDescription>
+-            This permanently deletes “{entry?.label}”. You can cancel to keep it.
+-          </AlertDialogDescription>
+-          {error && (
+-            <p role="alert" className="text-sm text-destructive">
+-              {error}
+-            </p>
+-          )}
+-          <div className="mt-4 flex flex-wrap gap-3">
++        <Primitive.Content className="journal-delete-dialog" onCloseAutoFocus={onCloseAutoFocus}>
++          <div className="journal-delete-header">
++            <AlertDialogTitle>Delete journal entry?</AlertDialogTitle>
++            <Button
++              type="button"
++              variant="ghost"
++              size="icon"
++              className="h-11 w-11 shrink-0"
++              aria-label="Close confirmation"
++              onClick={onCancel}
++            >
++              <X aria-hidden="true" />
++            </Button>
++          </div>
++          <div
++            className="journal-delete-body"
++            tabIndex={0}
++            role="region"
++            aria-label="Deletion details"
++          >
++            <AlertDialogDescription>
++              This permanently deletes “{entry?.label}”.{" "}
++              {pending
++                ? "Deletion is in progress. Closing this confirmation will not cancel it."
++                : "You can cancel to keep it."}
++            </AlertDialogDescription>
++            {error && (
++              <p role="alert" className="mt-3 text-sm text-destructive">
++                {error} You can try again or close this confirmation.
++              </p>
++            )}
++          </div>
++          <div className="journal-delete-actions">
+             <AlertDialogCancel asChild>
+-              <Button type="button" variant="outline" disabled={pending}>
+-                Cancel
++              <Button ref={cancelRef} type="button" variant="outline" className="min-h-11">
++                {pending ? "Close" : "Cancel"}
+               </Button>
+             </AlertDialogCancel>
+-            <Button type="button" variant="destructive" disabled={pending} onClick={onConfirm}>
++            <Button
++              type="button"
++              variant="destructive"
++              className="min-h-12"
++              disabled={pending}
++              onClick={onConfirm}
++            >
+               {pending ? "Deleting…" : "Delete entry"}
+             </Button>
+           </div>
+--- a/src/components/pattern/PatternChartDetails.tsx
++++ b/src/components/pattern/PatternChartDetails.tsx
+@@ -199,17 +199,15 @@
+             </p>
+           ) : (
+             <>
+-              <ul className="pattern-placement-list sm:hidden">
+-                {data.placements.map((placement) => (
+-                  <li key={placement.key}>
+-                    <span>{placement.label}</span>
+-                    <span>{placement.position}</span>
+-                    <span>{houseLabel(placement.house)}</span>
+-                    <span>{placement.retrograde ? "Rx" : "direct"}</span>
+-                  </li>
+-                ))}
+-              </ul>
+-              <div className="pattern-placement-table hidden sm:block">
++              <p className="mt-4 text-sm text-muted-foreground sm:hidden">
++                Scroll the table sideways to compare all columns.
++              </p>
++              <div
++                className="pattern-placement-table"
++                role="region"
++                aria-label="Scrollable natal placements"
++                tabIndex={0}
++              >
+                 <table>
+                   <caption className="sr-only">Calculated natal placements</caption>
+                   <thead>
+--- a/src/routes/_authenticated/journal.tsx
++++ b/src/routes/_authenticated/journal.tsx
+@@ -78,9 +78,29 @@
+   const router = useRouter();
+   const deleteTrigger = useRef<HTMLButtonElement | null>(null);
+   const openedDelete = useRef<string | null>(null);
+-  const closeDelete = () => {
+-    if (!router.state.location.search.deleteEntry) return;
+-    if (openedDelete.current === router.state.location.search.deleteEntry) router.history.back();
++  const closingDelete = useRef<string | null>(null);
++  const [dismissedDelete, setDismissedDelete] = useState<string | null>(null);
++  useEffect(() => {
++    closingDelete.current = null;
++    setDismissedDelete(null);
++  }, [deleteEntry]);
++  useEffect(
++    () =>
++      router.history.subscribe(({ location }) => {
++        if (new URLSearchParams(location.search).get("deleteEntry") !== deleteEntry)
++          setDismissedDelete(deleteEntry ?? null);
++      }),
++    [router, deleteEntry],
++  );
++  const closeDelete = (expectedId?: string) => {
++    const location = router.state.location;
++    const currentId = location.search.deleteEntry;
++    if (!currentId || (expectedId && currentId !== expectedId)) return;
++    const key = location.state.__TSR_key ?? location.href;
++    if (closingDelete.current === key) return;
++    closingDelete.current = key;
++    setDismissedDelete(currentId);
++    if (openedDelete.current === currentId) router.history.back();
+     else
+       void navigate({
+         search: (previous) => {
+@@ -88,6 +108,7 @@
+           return rest;
+         },
+         replace: true,
++        resetScroll: false,
+       });
+   };
+   const { session } = useAuth();
+@@ -252,7 +273,7 @@
+     onSuccess: async (_result, id) => {
+       await discardJournalDrafts(id);
+       toast.success("Entry deleted");
+-      closeDelete();
++      closeDelete(id);
+       await qc.invalidateQueries({ queryKey: ["journal"] });
+       requestAnimationFrame(() => {
+         // Back can dismiss an already-confirmed request before its trigger is removed.
+@@ -278,31 +299,42 @@
+     },
+   });
+   const entries = journal.data?.events ?? [];
++  const deleteOpen = Boolean(
++    deleteEntry &&
++    dismissedDelete !== deleteEntry &&
++    entries.some((entry) => entry.id === deleteEntry),
++  );
+ 
+   return (
+     <Shell>
+       <JournalDeleteDialog
+         entry={entries.find((entry) => entry.id === deleteEntry) ?? null}
+-        open={Boolean(deleteEntry && entries.some((entry) => entry.id === deleteEntry))}
++        open={deleteOpen}
+         pending={remove.isPending}
+         error={remove.error?.message ?? null}
+         onConfirm={() => {
+           if (deleteEntry && !remove.isPending) remove.mutate(deleteEntry);
+         }}
+-        onCancel={closeDelete}
++        onCancel={() => closeDelete()}
+         onCloseAutoFocus={(event) => {
+           event.preventDefault();
+           requestAnimationFrame(() => {
+-            const target = deleteTrigger.current?.isConnected
+-              ? deleteTrigger.current
+-              : entriesHeading.current;
++            const target =
++              deleteTrigger.current?.isConnected && !deleteTrigger.current.disabled
++                ? deleteTrigger.current
++                : entriesHeading.current;
+             if (target?.isConnected) target.focus();
+           });
+         }}
+       />
+-      {remove.isPending && !deleteEntry && (
++      {remove.isPending && !deleteOpen && (
+         <p role="status" className="text-sm">
+           Deleting entry…
++        </p>
++      )}
++      {remove.isError && !deleteOpen && (
++        <p role="alert" className="text-sm text-destructive">
++          Deletion wasn’t confirmed. {remove.error.message} Check your entries before trying again.
+         </p>
+       )}
+       <div className="grid animate-rise gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1fr)_16rem]">
+@@ -590,9 +622,12 @@
+                       onClick={(event) => {
+                         deleteTrigger.current = event.currentTarget;
+                         openedDelete.current = e.id;
++                        closingDelete.current = null;
++                        setDismissedDelete(null);
+                         remove.reset();
+                         void navigate({
+                           search: (previous) => ({ ...previous, deleteEntry: e.id }),
++                          resetScroll: false,
+                         });
+                       }}
+                       disabled={remove.isPending || editing?.id === e.id}
+--- a/src/styles.css
++++ b/src/styles.css
+@@ -414,6 +414,7 @@
+     100svh - var(--pattern-header-bar-height, 80px) - var(--pattern-bottom-nav-height, 80px) - 4px
+   );
+   overflow-y: auto;
++  overscroll-behavior-y: contain;
+ }
+ .mobile-journey {
+   position: fixed;
+@@ -917,34 +918,18 @@
+   font-size: 0.75rem;
+   color: var(--primary);
+ }
+-.pattern-placement-list {
+-  margin-top: 20px;
+-}
+-.pattern-placement-list li {
+-  display: grid;
+-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+-  gap: 4px 12px;
+-  padding-block: 14px;
+-  border-bottom: 1px solid var(--rule);
+-  font-family: var(--font-mono);
+-  font-size: 0.8125rem;
+-  line-height: 1.7;
+-  overflow-wrap: anywhere;
+-}
+-.pattern-placement-list li > span:nth-child(even) {
+-  text-align: right;
+-}
+-.pattern-placement-list li > span:nth-child(n + 3) {
+-  font-size: 0.75rem;
+-  color: var(--muted-foreground);
+-}
+ .pattern-placement-table {
+   margin-top: 20px;
++  max-width: 100%;
++  overflow-x: auto;
++  overscroll-behavior-x: contain;
+ }
+ .pattern-placement-table table {
+   width: 100%;
++  min-width: 30rem;
+   table-layout: fixed;
+-  border-collapse: collapse;
++  border-collapse: separate;
++  border-spacing: 0;
+   font-family: var(--font-mono);
+   font-size: 0.8125rem;
+   line-height: 1.7;
+@@ -964,6 +949,10 @@
+ }
+ .pattern-placement-table th:nth-child(1) {
+   width: 24%;
++  position: sticky;
++  inset-inline-start: 0;
++  z-index: 1;
++  background: var(--background);
+ }
+ .pattern-placement-table th:nth-child(2) {
+   width: 36%;
+@@ -3202,13 +3191,49 @@
+   max-width: 32rem;
+   max-height: calc(100vh - 32px);
+   max-height: calc(100dvh - 32px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+-  overflow-y: auto;
++  display: flex;
++  flex-direction: column;
++  gap: 16px;
+   overflow-wrap: anywhere;
+   border: 1px solid var(--rule);
+   border-radius: var(--radius);
+-  padding: 24px;
++  padding: 16px;
+   background: var(--background);
+   box-shadow: var(--shadow-floating);
++}
++.journal-delete-header {
++  display: flex;
++  align-items: start;
++  justify-content: space-between;
++  gap: 12px;
++  flex-shrink: 0;
++}
++.journal-delete-header h2 {
++  min-width: 0;
++}
++.journal-delete-body {
++  min-height: 0;
++  overflow-y: auto;
++  overscroll-behavior: contain;
++}
++.journal-delete-body:focus-visible,
++.pattern-placement-table:focus-visible {
++  outline: 2px solid var(--ring);
++  outline-offset: -2px;
++}
++.journal-delete-actions {
++  display: grid;
++  grid-template-columns: repeat(2, minmax(0, 1fr));
++  align-items: stretch;
++  gap: 12px;
++  flex-shrink: 0;
++}
++.journal-delete-actions button {
++  height: auto;
++  min-width: 0;
++  padding-inline: 12px;
++  white-space: normal;
++  overflow-wrap: anywhere;
+ }
+ @media (max-width: 1023px) {
+   .toaster[data-sonner-toaster][data-y-position="bottom"] {
+@@ -3222,6 +3247,9 @@
+   }
+ }
+ @media (max-width: 1023px) and (max-height: 500px) {
++  .pattern-header:not([data-menu-open="true"]) {
++    position: static;
++  }
+   .timing-filters {
+     position: static;
+     top: auto;
+--- a/src/hooks/useNavigationMenu.ts
++++ b/src/hooks/useNavigationMenu.ts
+@@ -0,0 +1,148 @@
++import {
++  useCallback,
++  useEffect,
++  useRef,
++  useSyncExternalStore,
++  type MouseEvent,
++  type RefObject,
++} from "react";
++import { useRouter, type HistoryLocation } from "@tanstack/react-router";
++
++type MenuKind = "mobile" | "more";
++
++declare module "@tanstack/react-router" {
++  interface HistoryState {
++    patternNavigationMenu?: { kind: MenuKind; href: string };
++  }
++}
++
++function menuAt(location: Pick<HistoryLocation, "href" | "state">) {
++  const menu = location.state.patternNavigationMenu;
++  return menu?.href === location.href ? menu : undefined;
++}
++
++/** One owned history entry per open disclosure, including reload and Forward. */
++export function useNavigationMenu(
++  header: RefObject<HTMLElement | null>,
++  mobileTrigger: RefObject<HTMLButtonElement | null>,
++  moreTrigger: RefObject<HTMLButtonElement | null>,
++) {
++  const router = useRouter();
++  // A disclosure must dismiss immediately even if a route's auth check is slow.
++  const location = useSyncExternalStore(
++    router.history.subscribe,
++    () => router.history.location,
++    () => router.history.location,
++  );
++  const menu = menuAt(location);
++  const closingKey = useRef<string | undefined>(undefined);
++  const restoreFocus = useRef(true);
++  const previousMenu = useRef(menu);
++  const focusTrigger = useCallback(
++    (kind: MenuKind) => {
++      const trigger = kind === "mobile" ? mobileTrigger.current : moreTrigger.current;
++      if (trigger?.isConnected && trigger.getClientRects().length)
++        trigger.focus({ preventScroll: true });
++    },
++    [mobileTrigger, moreTrigger],
++  );
++  const close = useCallback(
++    (focus = true) => {
++      const current = router.history.location;
++      const active = menuAt(current);
++      if (!active || closingKey.current === current.state.__TSR_key) return;
++      restoreFocus.current = focus;
++      closingKey.current = current.state.__TSR_key;
++      if (focus) focusTrigger(active.kind);
++      router.history.back();
++    },
++    [router, focusTrigger],
++  );
++  const toggle = (kind: MenuKind) => {
++    const current = router.history.location;
++    const active = menuAt(current);
++    if (active?.kind === kind) {
++      close();
++      return;
++    }
++    restoreFocus.current = true;
++    void router.navigate({
++      href: current.href,
++      state: { ...current.state, patternNavigationMenu: { kind, href: current.href } },
++      replace: Boolean(active),
++      resetScroll: false,
++    });
++  };
++
++  useEffect(() => {
++    const previous = previousMenu.current;
++    if (menu && !previous) restoreFocus.current = true;
++    if (previous && !menu && previous.href === location.href && restoreFocus.current)
++      focusTrigger(previous.kind);
++    previousMenu.current = menu;
++    if (closingKey.current !== location.state.__TSR_key) closingKey.current = undefined;
++  }, [menu, location.href, location.state.__TSR_key, focusTrigger]);
++
++  useEffect(() => {
++    const escape = (event: KeyboardEvent) => {
++      // A modal above this non-modal menu gets first refusal.
++      if (event.key === "Escape" && !event.defaultPrevented) close();
++    };
++    const outside = (event: globalThis.MouseEvent) => {
++      const active = menuAt(router.history.location);
++      const inside =
++        event.target instanceof Element &&
++        (active?.kind === "more"
++          ? event.target.closest('#more-navigation, [aria-controls="more-navigation"]')
++          : header.current?.contains(event.target));
++      if (!event.defaultPrevented && event.target instanceof Node && !inside) close(false);
++    };
++    const desktop = window.matchMedia("(min-width: 1024px)");
++    const breakpoint = () => {
++      const active = menuAt(router.history.location);
++      if (active && (active.kind === "mobile") === desktop.matches) close(false);
++    };
++    breakpoint();
++    window.addEventListener("keydown", escape);
++    document.addEventListener("click", outside);
++    desktop.addEventListener("change", breakpoint);
++    return () => {
++      window.removeEventListener("keydown", escape);
++      document.removeEventListener("click", outside);
++      desktop.removeEventListener("change", breakpoint);
++    };
++  }, [router, header, close]);
++
++  const onNavigateCapture = (event: MouseEvent<HTMLElement>) => {
++    const current = router.history.location;
++    if (
++      !menuAt(current) ||
++      event.defaultPrevented ||
++      event.button !== 0 ||
++      event.metaKey ||
++      event.ctrlKey ||
++      event.shiftKey ||
++      event.altKey ||
++      !(event.target instanceof Element)
++    )
++      return;
++    const link = event.target.closest<HTMLAnchorElement>("a[href]");
++    if (!link || link.hasAttribute("download") || (link.target && link.target !== "_self")) return;
++    const destination = new URL(link.href, window.location.href);
++    if (destination.origin !== window.location.origin) return;
++    const href = destination.pathname + destination.search + destination.hash;
++    event.preventDefault();
++    if (href === current.href || link.getAttribute("href") === "#main-content") {
++      close(link.getAttribute("href") !== "#main-content");
++      if (link.getAttribute("href") === "#main-content")
++        requestAnimationFrame(() => document.getElementById("main-content")?.focus());
++      return;
++    }
++    // Replace the menu entry with the destination; Back returns to the source page.
++    restoreFocus.current = false;
++    const { patternNavigationMenu: _menu, ...state } = current.state;
++    void router.navigate({ href, replace: true, state });
++  };
++
++  return { menu: menu?.kind, toggle, close, onNavigateCapture };
++}

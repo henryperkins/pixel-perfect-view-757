@@ -1,0 +1,885 @@
+{
+  "engine": "chromium",
+  "version": "155.0.8059.12",
+  "evidence": "Render: Chromium mobile emulation / desktop WebKit with touch support; no physical OS chrome or keyboard",
+  "cases": [
+    {
+      "name": "G01 stale mood focus after height and VisualViewport resize",
+      "pass": true,
+      "viewport": "360x800 -> 360x740 -> 360x800",
+      "before": 0,
+      "smaller": 0,
+      "expanded": 0
+    },
+    {
+      "name": "G01 stale note focus after height and VisualViewport resize",
+      "pass": true,
+      "viewport": "360x800 -> 360x740 -> 360x800",
+      "before": 0,
+      "smaller": 0,
+      "expanded": 0
+    },
+    {
+      "name": "G01 new focus still clears sticky navigation",
+      "pass": true,
+      "top": 628.671875,
+      "bottom": 718.671875,
+      "header": 83,
+      "nav": 727,
+      "scrollY": 653
+    },
+    {
+      "name": "G02 Today reflection boundaries 360x800",
+      "pass": true,
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "start": {
+        "documentY": 924,
+        "fieldY": 0
+      },
+      "interior": {
+        "documentY": 924,
+        "fieldY": 200
+      },
+      "bottom": {
+        "documentY": 924,
+        "fieldY": 888
+      },
+      "bottomAfter": {
+        "documentY": 924,
+        "fieldY": 888
+      },
+      "top": {
+        "documentY": 924,
+        "fieldY": 0
+      },
+      "topAfter": {
+        "documentY": 924,
+        "fieldY": 0
+      },
+      "outside": {
+        "documentY": 1124,
+        "fieldY": 0
+      }
+    },
+    {
+      "name": "G02 Journal compose boundaries 360x800",
+      "pass": true,
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "start": {
+        "documentY": 391,
+        "fieldY": 0
+      },
+      "interior": {
+        "documentY": 391,
+        "fieldY": 200
+      },
+      "bottom": {
+        "documentY": 391,
+        "fieldY": 1156
+      },
+      "bottomAfter": {
+        "documentY": 391,
+        "fieldY": 1156
+      },
+      "top": {
+        "documentY": 391,
+        "fieldY": 0
+      },
+      "topAfter": {
+        "documentY": 391,
+        "fieldY": 0
+      },
+      "outside": {
+        "documentY": 591,
+        "fieldY": 0
+      }
+    },
+    {
+      "name": "G02 Journal edit boundaries 360x800",
+      "pass": true,
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "start": {
+        "documentY": 1248,
+        "fieldY": 0
+      },
+      "interior": {
+        "documentY": 1248,
+        "fieldY": 200
+      },
+      "bottom": {
+        "documentY": 1248,
+        "fieldY": 884
+      },
+      "bottomAfter": {
+        "documentY": 1248,
+        "fieldY": 884
+      },
+      "top": {
+        "documentY": 1248,
+        "fieldY": 0
+      },
+      "topAfter": {
+        "documentY": 1248,
+        "fieldY": 0
+      },
+      "outside": {
+        "documentY": 1448,
+        "fieldY": 0
+      }
+    },
+    {
+      "name": "G02 Today reflection boundaries 667x375",
+      "pass": true,
+      "viewport": {
+        "width": 667,
+        "height": 375
+      },
+      "start": {
+        "documentY": 966,
+        "fieldY": 0
+      },
+      "interior": {
+        "documentY": 966,
+        "fieldY": 200
+      },
+      "bottom": {
+        "documentY": 966,
+        "fieldY": 845
+      },
+      "bottomAfter": {
+        "documentY": 966,
+        "fieldY": 845
+      },
+      "top": {
+        "documentY": 966,
+        "fieldY": 0
+      },
+      "topAfter": {
+        "documentY": 966,
+        "fieldY": 0
+      },
+      "outside": {
+        "documentY": 1166,
+        "fieldY": 0
+      }
+    },
+    {
+      "name": "G02 Journal compose boundaries 667x375",
+      "pass": true,
+      "viewport": {
+        "width": 667,
+        "height": 375
+      },
+      "start": {
+        "documentY": 490,
+        "fieldY": 0
+      },
+      "interior": {
+        "documentY": 490,
+        "fieldY": 200
+      },
+      "bottom": {
+        "documentY": 490,
+        "fieldY": 1156
+      },
+      "bottomAfter": {
+        "documentY": 490,
+        "fieldY": 1156
+      },
+      "top": {
+        "documentY": 490,
+        "fieldY": 0
+      },
+      "topAfter": {
+        "documentY": 490,
+        "fieldY": 0
+      },
+      "outside": {
+        "documentY": 690,
+        "fieldY": 0
+      }
+    },
+    {
+      "name": "G02 Journal edit boundaries 667x375",
+      "pass": true,
+      "viewport": {
+        "width": 667,
+        "height": 375
+      },
+      "start": {
+        "documentY": 1321,
+        "fieldY": 0
+      },
+      "interior": {
+        "documentY": 1321,
+        "fieldY": 200
+      },
+      "bottom": {
+        "documentY": 1321,
+        "fieldY": 884
+      },
+      "bottomAfter": {
+        "documentY": 1321,
+        "fieldY": 884
+      },
+      "top": {
+        "documentY": 1321,
+        "fieldY": 0
+      },
+      "topAfter": {
+        "documentY": 1321,
+        "fieldY": 0
+      },
+      "outside": {
+        "documentY": 1521,
+        "fieldY": 0
+      }
+    },
+    {
+      "name": "G03 all six filters by taps 320 font16",
+      "pass": true,
+      "viewport": {
+        "width": 320,
+        "height": 568,
+        "font": 16
+      },
+      "geometry": {
+        "client": 290,
+        "scroll": 290,
+        "rootWidth": 320,
+        "buttons": [
+          {
+            "text": "Every area",
+            "left": 5,
+            "right": 103.53125,
+            "width": 98.53125,
+            "height": 44
+          },
+          {
+            "text": "Identity",
+            "left": 109.53125,
+            "right": 189.578125,
+            "width": 80.046875,
+            "height": 44
+          },
+          {
+            "text": "Relationships",
+            "left": 5,
+            "right": 122.65625,
+            "width": 117.65625,
+            "height": 44
+          },
+          {
+            "text": "Work",
+            "left": 128.65625,
+            "right": 195.34375,
+            "width": 66.6875,
+            "height": 44
+          },
+          {
+            "text": "Inner life",
+            "left": 5,
+            "right": 92.484375,
+            "width": 87.484375,
+            "height": 44
+          },
+          {
+            "text": "Structure",
+            "left": 98.484375,
+            "right": 189.078125,
+            "width": 90.59375,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "name": "G03 all six filters by taps 360 font16",
+      "pass": true,
+      "viewport": {
+        "width": 360,
+        "height": 800,
+        "font": 16
+      },
+      "geometry": {
+        "client": 330,
+        "scroll": 330,
+        "rootWidth": 360,
+        "buttons": [
+          {
+            "text": "Every area",
+            "left": 5,
+            "right": 103.53125,
+            "width": 98.53125,
+            "height": 44
+          },
+          {
+            "text": "Identity",
+            "left": 109.53125,
+            "right": 189.578125,
+            "width": 80.046875,
+            "height": 44
+          },
+          {
+            "text": "Relationships",
+            "left": 195.578125,
+            "right": 313.234375,
+            "width": 117.65625,
+            "height": 44
+          },
+          {
+            "text": "Work",
+            "left": 5,
+            "right": 71.6875,
+            "width": 66.6875,
+            "height": 44
+          },
+          {
+            "text": "Inner life",
+            "left": 77.6875,
+            "right": 165.171875,
+            "width": 87.484375,
+            "height": 44
+          },
+          {
+            "text": "Structure",
+            "left": 171.171875,
+            "right": 261.765625,
+            "width": 90.59375,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "name": "G03 all six filters by taps 440 font16",
+      "pass": true,
+      "viewport": {
+        "width": 440,
+        "height": 956,
+        "font": 16
+      },
+      "geometry": {
+        "client": 410,
+        "scroll": 410,
+        "rootWidth": 440,
+        "buttons": [
+          {
+            "text": "Every area",
+            "left": 5,
+            "right": 103.53125,
+            "width": 98.53125,
+            "height": 44
+          },
+          {
+            "text": "Identity",
+            "left": 109.53125,
+            "right": 189.578125,
+            "width": 80.046875,
+            "height": 44
+          },
+          {
+            "text": "Relationships",
+            "left": 195.578125,
+            "right": 313.234375,
+            "width": 117.65625,
+            "height": 44
+          },
+          {
+            "text": "Work",
+            "left": 319.234375,
+            "right": 385.921875,
+            "width": 66.6875,
+            "height": 44
+          },
+          {
+            "text": "Inner life",
+            "left": 5,
+            "right": 92.484375,
+            "width": 87.484375,
+            "height": 44
+          },
+          {
+            "text": "Structure",
+            "left": 98.484375,
+            "right": 189.078125,
+            "width": 90.59375,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "name": "G03 all six filters by taps 667 font16",
+      "pass": true,
+      "viewport": {
+        "width": 667,
+        "height": 375,
+        "font": 16
+      },
+      "geometry": {
+        "client": 613,
+        "scroll": 613,
+        "rootWidth": 667,
+        "buttons": [
+          {
+            "text": "Every area",
+            "left": 5,
+            "right": 103.53125,
+            "width": 98.53125,
+            "height": 44
+          },
+          {
+            "text": "Identity",
+            "left": 109.53125,
+            "right": 189.578125,
+            "width": 80.046875,
+            "height": 44
+          },
+          {
+            "text": "Relationships",
+            "left": 195.578125,
+            "right": 313.234375,
+            "width": 117.65625,
+            "height": 44
+          },
+          {
+            "text": "Work",
+            "left": 319.234375,
+            "right": 385.921875,
+            "width": 66.6875,
+            "height": 44
+          },
+          {
+            "text": "Inner life",
+            "left": 391.921875,
+            "right": 479.40625,
+            "width": 87.484375,
+            "height": 44
+          },
+          {
+            "text": "Structure",
+            "left": 485.40625,
+            "right": 576,
+            "width": 90.59375,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "name": "G03 all six filters by taps 844 font16",
+      "pass": true,
+      "viewport": {
+        "width": 844,
+        "height": 390,
+        "font": 16
+      },
+      "geometry": {
+        "client": 790,
+        "scroll": 790,
+        "rootWidth": 844,
+        "buttons": [
+          {
+            "text": "Every area",
+            "left": 5,
+            "right": 103.53125,
+            "width": 98.53125,
+            "height": 44
+          },
+          {
+            "text": "Identity",
+            "left": 109.53125,
+            "right": 189.578125,
+            "width": 80.046875,
+            "height": 44
+          },
+          {
+            "text": "Relationships",
+            "left": 195.578125,
+            "right": 313.234375,
+            "width": 117.65625,
+            "height": 44
+          },
+          {
+            "text": "Work",
+            "left": 319.234375,
+            "right": 385.921875,
+            "width": 66.6875,
+            "height": 44
+          },
+          {
+            "text": "Inner life",
+            "left": 391.921875,
+            "right": 479.40625,
+            "width": 87.484375,
+            "height": 44
+          },
+          {
+            "text": "Structure",
+            "left": 485.40625,
+            "right": 576,
+            "width": 90.59375,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "name": "G03 all six filters by taps 1280 font16",
+      "pass": true,
+      "viewport": {
+        "width": 1280,
+        "height": 800,
+        "font": 16
+      },
+      "geometry": {
+        "client": 938,
+        "scroll": 938,
+        "rootWidth": 1280,
+        "buttons": [
+          {
+            "text": "Every area",
+            "left": 5,
+            "right": 103.53125,
+            "width": 98.53125,
+            "height": 44
+          },
+          {
+            "text": "Identity",
+            "left": 109.53125,
+            "right": 189.578125,
+            "width": 80.046875,
+            "height": 44
+          },
+          {
+            "text": "Relationships",
+            "left": 195.578125,
+            "right": 313.234375,
+            "width": 117.65625,
+            "height": 44
+          },
+          {
+            "text": "Work",
+            "left": 319.234375,
+            "right": 385.921875,
+            "width": 66.6875,
+            "height": 44
+          },
+          {
+            "text": "Inner life",
+            "left": 391.921875,
+            "right": 479.40625,
+            "width": 87.484375,
+            "height": 44
+          },
+          {
+            "text": "Structure",
+            "left": 485.40625,
+            "right": 576,
+            "width": 90.59375,
+            "height": 44
+          }
+        ]
+      }
+    },
+    {
+      "name": "G03 all six filters by taps 320 font32",
+      "pass": false,
+      "error": "TimeoutError: locator.tap: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.timing-area-options').getByRole('button', { name: 'Work', exact: true })\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" aria-pressed=\"false\" class=\"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2\">Work</button>\u001b[22m\n\u001b[2m  - attempting tap action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <button type=\"button\" aria-pressed=\"false\" class=\"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2\">Identity</button> intercepts pointer events\u001b[22m\n\u001b[2m  - retrying tap action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <button type=\"button\" aria-pressed=\"true\" class=\"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2\">Relationships</button> intercepts pointer events\u001b[22m\n\u001b[2m  - retrying tap action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 \u00d7 waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <button type=\"button\" aria-pressed=\"false\" class=\"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2\">Identity</button> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying tap action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    3 \u00d7 waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <button type=\"button\" aria-pressed=\"false\" class=\"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2\">Identity</button> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying tap action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <button type=\"button\" aria-pressed=\"true\" class=\"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2\">Relationships</button> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying tap action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div role=\"group\" data-motion-tone=\"ink\" data-motion-ready=\"true\" aria-label=\"Area of life\" class=\"timing-area-options motion-selection\">\u2026</div> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying tap action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <button type=\"button\" aria-pressed=\"false\" class=\"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2\">Identity</button> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying tap action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <button type=\"button\" aria-pressed=\"false\" class=\"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2\">Identity</button> intercepts pointer events\u001b[22m\n\u001b[2m  - retrying tap action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <button type=\"button\" aria-pressed=\"true\" class=\"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2\">Relationships</button> intercepts pointer events\u001b[22m\n\u001b[2m  - retrying tap action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <div role=\"group\" data-motion-tone=\"ink\" data-motion-ready=\"true\" aria-label=\"Area of life\" class=\"timing-area-options motion-selection\">\u2026</div> intercepts pointer events\u001b[22m\n\u001b[2m  - retrying tap action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n"
+    },
+    {
+      "name": "G03 all six filters by taps 844 font32",
+      "pass": true,
+      "viewport": {
+        "width": 844,
+        "height": 390,
+        "font": 32
+      },
+      "geometry": {
+        "client": 726,
+        "scroll": 726,
+        "rootWidth": 844,
+        "buttons": [
+          {
+            "text": "Every area",
+            "left": 5,
+            "right": 170.046875,
+            "width": 165.046875,
+            "height": 72
+          },
+          {
+            "text": "Identity",
+            "left": 176.046875,
+            "right": 304.140625,
+            "width": 128.09375,
+            "height": 72
+          },
+          {
+            "text": "Relationships",
+            "left": 310.140625,
+            "right": 513.453125,
+            "width": 203.3125,
+            "height": 72
+          },
+          {
+            "text": "Work",
+            "left": 519.453125,
+            "right": 620.828125,
+            "width": 101.375,
+            "height": 72
+          },
+          {
+            "text": "Inner life",
+            "left": 5,
+            "right": 147.984375,
+            "width": 142.984375,
+            "height": 72
+          },
+          {
+            "text": "Structure",
+            "left": 153.984375,
+            "right": 303.15625,
+            "width": 149.171875,
+            "height": 72
+          }
+        ]
+      }
+    },
+    {
+      "name": "G03 table taps, semantics and keyboard 320 font16",
+      "pass": true,
+      "viewport": {
+        "width": 320,
+        "height": 568,
+        "font": 16
+      },
+      "geometry": {
+        "client": 280,
+        "scroll": 480,
+        "rootWidth": 320,
+        "tableDisplay": "table",
+        "rowDisplay": "table-row",
+        "firstLeft": 20
+      },
+      "buttonGeometry": [
+        {
+          "width": 136,
+          "height": 58
+        },
+        {
+          "width": 136,
+          "height": 58
+        }
+      ],
+      "positions": [
+        0,
+        132,
+        200
+      ],
+      "keyboardScroll": 40,
+      "aria": "- region \"Scrollable natal placements\":\n  - table \"Calculated natal placements\":\n    - caption: Calculated natal placements\n    - rowgroup:\n      - row \"Body Sign & degree House Motion\":\n        - columnheader \"Body\"\n        - columnheader \"Sign & degree\"\n        - columnheader \"House\"\n        - columnheader \"Motion\"\n    - rowgroup:\n      - row \"Sun Aries 5\u00b0 12\u2032 house 1 Rx\":\n        - rowheader \"Sun\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 1\"\n        - cell \"Rx\"\n      - row \"Moon Taurus 15\u00b0 04\u2032 house 2 direct\":\n        - rowheader \"Moon\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 2\"\n        - cell \"direct\"\n      - row \"Mercury Gemini 20\u00b0 33\u2032 house 3 direct\":\n        - rowheader \"Mercury\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 3\"\n        - cell \"direct\"\n      - row \"Venus Aries 5\u00b0 12\u2032 house 4 Rx\":\n        - rowheader \"Venus\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 4\"\n        - cell \"Rx\"\n      - row \"Mars Taurus 15\u00b0 04\u2032 house 5 direct\":\n        - rowheader \"Mars\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 5\"\n        - cell \"direct\"\n      - row \"Jupiter Gemini 20\u00b0 33\u2032 house 6 direct\":\n        - rowheader \"Jupiter\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 6\"\n        - cell \"direct\"\n      - row \"Saturn Aries 5\u00b0 12\u2032 house 7 Rx\":\n        - rowheader \"Saturn\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 7\"\n        - cell \"Rx\"\n      - row \"Uranus Taurus 15\u00b0 04\u2032 house 8 direct\":\n        - rowheader \"Uranus\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 8\"\n        - cell \"direct\"\n      - row \"Neptune Gemini 20\u00b0 33\u2032 house 9 direct\":\n        - rowheader \"Neptune\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 9\"\n        - cell \"direct\"\n      - row \"Pluto Aries 5\u00b0 12\u2032 house 10 Rx\":\n        - rowheader \"Pluto\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 10\"\n        - cell \"Rx\"\n      - row \"North node Taurus 15\u00b0 04\u2032 house 11 direct\":\n        - rowheader \"North node\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 11\"\n        - cell \"direct\"\n      - row \"Chiron Gemini 20\u00b0 33\u2032 house 12 direct\":\n        - rowheader \"Chiron\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 12\"\n        - cell \"direct\""
+    },
+    {
+      "name": "G03 table taps, semantics and keyboard 360 font16",
+      "pass": true,
+      "viewport": {
+        "width": 360,
+        "height": 800,
+        "font": 16
+      },
+      "geometry": {
+        "client": 320,
+        "scroll": 480,
+        "rootWidth": 360,
+        "tableDisplay": "table",
+        "rowDisplay": "table-row",
+        "firstLeft": 20
+      },
+      "buttonGeometry": [
+        {
+          "width": 156,
+          "height": 48
+        },
+        {
+          "width": 156,
+          "height": 48
+        }
+      ],
+      "positions": [
+        0,
+        160
+      ],
+      "keyboardScroll": 40,
+      "aria": "- region \"Scrollable natal placements\":\n  - table \"Calculated natal placements\":\n    - caption: Calculated natal placements\n    - rowgroup:\n      - row \"Body Sign & degree House Motion\":\n        - columnheader \"Body\"\n        - columnheader \"Sign & degree\"\n        - columnheader \"House\"\n        - columnheader \"Motion\"\n    - rowgroup:\n      - row \"Sun Aries 5\u00b0 12\u2032 house 1 Rx\":\n        - rowheader \"Sun\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 1\"\n        - cell \"Rx\"\n      - row \"Moon Taurus 15\u00b0 04\u2032 house 2 direct\":\n        - rowheader \"Moon\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 2\"\n        - cell \"direct\"\n      - row \"Mercury Gemini 20\u00b0 33\u2032 house 3 direct\":\n        - rowheader \"Mercury\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 3\"\n        - cell \"direct\"\n      - row \"Venus Aries 5\u00b0 12\u2032 house 4 Rx\":\n        - rowheader \"Venus\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 4\"\n        - cell \"Rx\"\n      - row \"Mars Taurus 15\u00b0 04\u2032 house 5 direct\":\n        - rowheader \"Mars\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 5\"\n        - cell \"direct\"\n      - row \"Jupiter Gemini 20\u00b0 33\u2032 house 6 direct\":\n        - rowheader \"Jupiter\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 6\"\n        - cell \"direct\"\n      - row \"Saturn Aries 5\u00b0 12\u2032 house 7 Rx\":\n        - rowheader \"Saturn\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 7\"\n        - cell \"Rx\"\n      - row \"Uranus Taurus 15\u00b0 04\u2032 house 8 direct\":\n        - rowheader \"Uranus\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 8\"\n        - cell \"direct\"\n      - row \"Neptune Gemini 20\u00b0 33\u2032 house 9 direct\":\n        - rowheader \"Neptune\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 9\"\n        - cell \"direct\"\n      - row \"Pluto Aries 5\u00b0 12\u2032 house 10 Rx\":\n        - rowheader \"Pluto\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 10\"\n        - cell \"Rx\"\n      - row \"North node Taurus 15\u00b0 04\u2032 house 11 direct\":\n        - rowheader \"North node\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 11\"\n        - cell \"direct\"\n      - row \"Chiron Gemini 20\u00b0 33\u2032 house 12 direct\":\n        - rowheader \"Chiron\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 12\"\n        - cell \"direct\""
+    },
+    {
+      "name": "G03 table taps, semantics and keyboard 440 font16",
+      "pass": true,
+      "viewport": {
+        "width": 440,
+        "height": 956,
+        "font": 16
+      },
+      "geometry": {
+        "client": 400,
+        "scroll": 480,
+        "rootWidth": 440,
+        "tableDisplay": "table",
+        "rowDisplay": "table-row",
+        "firstLeft": 20
+      },
+      "buttonGeometry": [
+        {
+          "width": 196,
+          "height": 48
+        },
+        {
+          "width": 196,
+          "height": 48
+        }
+      ],
+      "positions": [
+        0,
+        80
+      ],
+      "keyboardScroll": 40,
+      "aria": "- region \"Scrollable natal placements\":\n  - table \"Calculated natal placements\":\n    - caption: Calculated natal placements\n    - rowgroup:\n      - row \"Body Sign & degree House Motion\":\n        - columnheader \"Body\"\n        - columnheader \"Sign & degree\"\n        - columnheader \"House\"\n        - columnheader \"Motion\"\n    - rowgroup:\n      - row \"Sun Aries 5\u00b0 12\u2032 house 1 Rx\":\n        - rowheader \"Sun\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 1\"\n        - cell \"Rx\"\n      - row \"Moon Taurus 15\u00b0 04\u2032 house 2 direct\":\n        - rowheader \"Moon\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 2\"\n        - cell \"direct\"\n      - row \"Mercury Gemini 20\u00b0 33\u2032 house 3 direct\":\n        - rowheader \"Mercury\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 3\"\n        - cell \"direct\"\n      - row \"Venus Aries 5\u00b0 12\u2032 house 4 Rx\":\n        - rowheader \"Venus\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 4\"\n        - cell \"Rx\"\n      - row \"Mars Taurus 15\u00b0 04\u2032 house 5 direct\":\n        - rowheader \"Mars\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 5\"\n        - cell \"direct\"\n      - row \"Jupiter Gemini 20\u00b0 33\u2032 house 6 direct\":\n        - rowheader \"Jupiter\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 6\"\n        - cell \"direct\"\n      - row \"Saturn Aries 5\u00b0 12\u2032 house 7 Rx\":\n        - rowheader \"Saturn\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 7\"\n        - cell \"Rx\"\n      - row \"Uranus Taurus 15\u00b0 04\u2032 house 8 direct\":\n        - rowheader \"Uranus\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 8\"\n        - cell \"direct\"\n      - row \"Neptune Gemini 20\u00b0 33\u2032 house 9 direct\":\n        - rowheader \"Neptune\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 9\"\n        - cell \"direct\"\n      - row \"Pluto Aries 5\u00b0 12\u2032 house 10 Rx\":\n        - rowheader \"Pluto\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 10\"\n        - cell \"Rx\"\n      - row \"North node Taurus 15\u00b0 04\u2032 house 11 direct\":\n        - rowheader \"North node\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 11\"\n        - cell \"direct\"\n      - row \"Chiron Gemini 20\u00b0 33\u2032 house 12 direct\":\n        - rowheader \"Chiron\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 12\"\n        - cell \"direct\""
+    },
+    {
+      "name": "G03 table taps, semantics and keyboard 667 font16",
+      "pass": true,
+      "viewport": {
+        "width": 667,
+        "height": 375,
+        "font": 16
+      },
+      "geometry": {
+        "client": 567,
+        "scroll": 567,
+        "rootWidth": 667,
+        "tableDisplay": "table",
+        "rowDisplay": "table-row",
+        "firstLeft": 68
+      },
+      "buttonGeometry": [],
+      "positions": [
+        0
+      ],
+      "keyboardScroll": 0,
+      "aria": "- region \"Scrollable natal placements\":\n  - table \"Calculated natal placements\":\n    - caption: Calculated natal placements\n    - rowgroup:\n      - row \"Body Sign & degree House Motion\":\n        - columnheader \"Body\"\n        - columnheader \"Sign & degree\"\n        - columnheader \"House\"\n        - columnheader \"Motion\"\n    - rowgroup:\n      - row \"Sun Aries 5\u00b0 12\u2032 house 1 Rx\":\n        - rowheader \"Sun\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 1\"\n        - cell \"Rx\"\n      - row \"Moon Taurus 15\u00b0 04\u2032 house 2 direct\":\n        - rowheader \"Moon\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 2\"\n        - cell \"direct\"\n      - row \"Mercury Gemini 20\u00b0 33\u2032 house 3 direct\":\n        - rowheader \"Mercury\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 3\"\n        - cell \"direct\"\n      - row \"Venus Aries 5\u00b0 12\u2032 house 4 Rx\":\n        - rowheader \"Venus\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 4\"\n        - cell \"Rx\"\n      - row \"Mars Taurus 15\u00b0 04\u2032 house 5 direct\":\n        - rowheader \"Mars\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 5\"\n        - cell \"direct\"\n      - row \"Jupiter Gemini 20\u00b0 33\u2032 house 6 direct\":\n        - rowheader \"Jupiter\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 6\"\n        - cell \"direct\"\n      - row \"Saturn Aries 5\u00b0 12\u2032 house 7 Rx\":\n        - rowheader \"Saturn\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 7\"\n        - cell \"Rx\"\n      - row \"Uranus Taurus 15\u00b0 04\u2032 house 8 direct\":\n        - rowheader \"Uranus\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 8\"\n        - cell \"direct\"\n      - row \"Neptune Gemini 20\u00b0 33\u2032 house 9 direct\":\n        - rowheader \"Neptune\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 9\"\n        - cell \"direct\"\n      - row \"Pluto Aries 5\u00b0 12\u2032 house 10 Rx\":\n        - rowheader \"Pluto\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 10\"\n        - cell \"Rx\"\n      - row \"North node Taurus 15\u00b0 04\u2032 house 11 direct\":\n        - rowheader \"North node\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 11\"\n        - cell \"direct\"\n      - row \"Chiron Gemini 20\u00b0 33\u2032 house 12 direct\":\n        - rowheader \"Chiron\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 12\"\n        - cell \"direct\""
+    },
+    {
+      "name": "G03 table taps, semantics and keyboard 844 font16",
+      "pass": true,
+      "viewport": {
+        "width": 844,
+        "height": 390,
+        "font": 16
+      },
+      "geometry": {
+        "client": 744,
+        "scroll": 744,
+        "rootWidth": 844,
+        "tableDisplay": "table",
+        "rowDisplay": "table-row",
+        "firstLeft": 68
+      },
+      "buttonGeometry": [],
+      "positions": [
+        0
+      ],
+      "keyboardScroll": 0,
+      "aria": "- region \"Scrollable natal placements\":\n  - table \"Calculated natal placements\":\n    - caption: Calculated natal placements\n    - rowgroup:\n      - row \"Body Sign & degree House Motion\":\n        - columnheader \"Body\"\n        - columnheader \"Sign & degree\"\n        - columnheader \"House\"\n        - columnheader \"Motion\"\n    - rowgroup:\n      - row \"Sun Aries 5\u00b0 12\u2032 house 1 Rx\":\n        - rowheader \"Sun\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 1\"\n        - cell \"Rx\"\n      - row \"Moon Taurus 15\u00b0 04\u2032 house 2 direct\":\n        - rowheader \"Moon\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 2\"\n        - cell \"direct\"\n      - row \"Mercury Gemini 20\u00b0 33\u2032 house 3 direct\":\n        - rowheader \"Mercury\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 3\"\n        - cell \"direct\"\n      - row \"Venus Aries 5\u00b0 12\u2032 house 4 Rx\":\n        - rowheader \"Venus\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 4\"\n        - cell \"Rx\"\n      - row \"Mars Taurus 15\u00b0 04\u2032 house 5 direct\":\n        - rowheader \"Mars\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 5\"\n        - cell \"direct\"\n      - row \"Jupiter Gemini 20\u00b0 33\u2032 house 6 direct\":\n        - rowheader \"Jupiter\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 6\"\n        - cell \"direct\"\n      - row \"Saturn Aries 5\u00b0 12\u2032 house 7 Rx\":\n        - rowheader \"Saturn\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 7\"\n        - cell \"Rx\"\n      - row \"Uranus Taurus 15\u00b0 04\u2032 house 8 direct\":\n        - rowheader \"Uranus\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 8\"\n        - cell \"direct\"\n      - row \"Neptune Gemini 20\u00b0 33\u2032 house 9 direct\":\n        - rowheader \"Neptune\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 9\"\n        - cell \"direct\"\n      - row \"Pluto Aries 5\u00b0 12\u2032 house 10 Rx\":\n        - rowheader \"Pluto\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 10\"\n        - cell \"Rx\"\n      - row \"North node Taurus 15\u00b0 04\u2032 house 11 direct\":\n        - rowheader \"North node\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 11\"\n        - cell \"direct\"\n      - row \"Chiron Gemini 20\u00b0 33\u2032 house 12 direct\":\n        - rowheader \"Chiron\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 12\"\n        - cell \"direct\""
+    },
+    {
+      "name": "G03 table taps, semantics and keyboard 1280 font16",
+      "pass": true,
+      "viewport": {
+        "width": 1280,
+        "height": 800,
+        "font": 16
+      },
+      "geometry": {
+        "client": 892,
+        "scroll": 892,
+        "rootWidth": 1280,
+        "tableDisplay": "table",
+        "rowDisplay": "table-row",
+        "firstLeft": 212
+      },
+      "buttonGeometry": [],
+      "positions": [
+        0
+      ],
+      "keyboardScroll": 0,
+      "aria": "- region \"Scrollable natal placements\":\n  - table \"Calculated natal placements\":\n    - caption: Calculated natal placements\n    - rowgroup:\n      - row \"Body Sign & degree House Motion\":\n        - columnheader \"Body\"\n        - columnheader \"Sign & degree\"\n        - columnheader \"House\"\n        - columnheader \"Motion\"\n    - rowgroup:\n      - row \"Sun Aries 5\u00b0 12\u2032 house 1 Rx\":\n        - rowheader \"Sun\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 1\"\n        - cell \"Rx\"\n      - row \"Moon Taurus 15\u00b0 04\u2032 house 2 direct\":\n        - rowheader \"Moon\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 2\"\n        - cell \"direct\"\n      - row \"Mercury Gemini 20\u00b0 33\u2032 house 3 direct\":\n        - rowheader \"Mercury\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 3\"\n        - cell \"direct\"\n      - row \"Venus Aries 5\u00b0 12\u2032 house 4 Rx\":\n        - rowheader \"Venus\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 4\"\n        - cell \"Rx\"\n      - row \"Mars Taurus 15\u00b0 04\u2032 house 5 direct\":\n        - rowheader \"Mars\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 5\"\n        - cell \"direct\"\n      - row \"Jupiter Gemini 20\u00b0 33\u2032 house 6 direct\":\n        - rowheader \"Jupiter\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 6\"\n        - cell \"direct\"\n      - row \"Saturn Aries 5\u00b0 12\u2032 house 7 Rx\":\n        - rowheader \"Saturn\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 7\"\n        - cell \"Rx\"\n      - row \"Uranus Taurus 15\u00b0 04\u2032 house 8 direct\":\n        - rowheader \"Uranus\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 8\"\n        - cell \"direct\"\n      - row \"Neptune Gemini 20\u00b0 33\u2032 house 9 direct\":\n        - rowheader \"Neptune\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 9\"\n        - cell \"direct\"\n      - row \"Pluto Aries 5\u00b0 12\u2032 house 10 Rx\":\n        - rowheader \"Pluto\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 10\"\n        - cell \"Rx\"\n      - row \"North node Taurus 15\u00b0 04\u2032 house 11 direct\":\n        - rowheader \"North node\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 11\"\n        - cell \"direct\"\n      - row \"Chiron Gemini 20\u00b0 33\u2032 house 12 direct\":\n        - rowheader \"Chiron\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 12\"\n        - cell \"direct\""
+    },
+    {
+      "name": "G03 table taps, semantics and keyboard 320 font32",
+      "pass": false,
+      "error": "Error: More never reaches final column"
+    },
+    {
+      "name": "G03 table taps, semantics and keyboard 844 font32",
+      "pass": true,
+      "viewport": {
+        "width": 844,
+        "height": 390,
+        "font": 32
+      },
+      "geometry": {
+        "client": 680,
+        "scroll": 960,
+        "rootWidth": 844,
+        "tableDisplay": "table",
+        "rowDisplay": "table-row",
+        "firstLeft": 100
+      },
+      "buttonGeometry": [
+        {
+          "width": 336,
+          "height": 74
+        },
+        {
+          "width": 336,
+          "height": 74
+        }
+      ],
+      "positions": [
+        0,
+        280
+      ],
+      "keyboardScroll": 40,
+      "aria": "- region \"Scrollable natal placements\":\n  - table \"Calculated natal placements\":\n    - caption: Calculated natal placements\n    - rowgroup:\n      - row \"Body Sign & degree House Motion\":\n        - columnheader \"Body\"\n        - columnheader \"Sign & degree\"\n        - columnheader \"House\"\n        - columnheader \"Motion\"\n    - rowgroup:\n      - row \"Sun Aries 5\u00b0 12\u2032 house 1 Rx\":\n        - rowheader \"Sun\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 1\"\n        - cell \"Rx\"\n      - row \"Moon Taurus 15\u00b0 04\u2032 house 2 direct\":\n        - rowheader \"Moon\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 2\"\n        - cell \"direct\"\n      - row \"Mercury Gemini 20\u00b0 33\u2032 house 3 direct\":\n        - rowheader \"Mercury\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 3\"\n        - cell \"direct\"\n      - row \"Venus Aries 5\u00b0 12\u2032 house 4 Rx\":\n        - rowheader \"Venus\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 4\"\n        - cell \"Rx\"\n      - row \"Mars Taurus 15\u00b0 04\u2032 house 5 direct\":\n        - rowheader \"Mars\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 5\"\n        - cell \"direct\"\n      - row \"Jupiter Gemini 20\u00b0 33\u2032 house 6 direct\":\n        - rowheader \"Jupiter\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 6\"\n        - cell \"direct\"\n      - row \"Saturn Aries 5\u00b0 12\u2032 house 7 Rx\":\n        - rowheader \"Saturn\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 7\"\n        - cell \"Rx\"\n      - row \"Uranus Taurus 15\u00b0 04\u2032 house 8 direct\":\n        - rowheader \"Uranus\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 8\"\n        - cell \"direct\"\n      - row \"Neptune Gemini 20\u00b0 33\u2032 house 9 direct\":\n        - rowheader \"Neptune\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 9\"\n        - cell \"direct\"\n      - row \"Pluto Aries 5\u00b0 12\u2032 house 10 Rx\":\n        - rowheader \"Pluto\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 10\"\n        - cell \"Rx\"\n      - row \"North node Taurus 15\u00b0 04\u2032 house 11 direct\":\n        - rowheader \"North node\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 11\"\n        - cell \"direct\"\n      - row \"Chiron Gemini 20\u00b0 33\u2032 house 12 direct\":\n        - rowheader \"Chiron\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 12\"\n        - cell \"direct\""
+    },
+    {
+      "name": "G03 late/empty data and ResizeObserver fallback",
+      "pass": true,
+      "lateData": true,
+      "emptyData": true,
+      "rotation": true,
+      "foldoutReopen": true
+    },
+    {
+      "name": "G03 normal-motion table paging stays inside table",
+      "pass": false,
+      "error": "Error: Smooth column paging changed page position"
+    }
+  ],
+  "pageErrors": [],
+  "root": {
+    "scrollingElement": "HTML",
+    "overscroll": "auto",
+    "touchAction": "auto"
+  }
+}

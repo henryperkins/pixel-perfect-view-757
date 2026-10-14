@@ -1,0 +1,8 @@
+{
+  "src/styles.css": "198a22366dea68e1de2d8384ecc561f433258a4c67c4f941e26ca582a69efea0",
+  "src/components/pattern/TodayJournal.tsx": "4e71724fdc899d601373d21eb5904ac42caf34886873ba79ad727c8fdc183f86",
+  "src/routes/_authenticated/journal.tsx": "f32ca5b735fc40c1b27becfa65383f70af53297f2cf3f9ff20220a634b76e686",
+  "scripts/mobile-ui-fixture.mjs": "fadd272454540f71e5a801d2547b62ea2583d562983332825196ca395e42e0c7",
+  "tests/helpers/mobile-ui/main.tsx": "16202e0c0a5bbb111cf8775e3a366f229b32abf22d5f45a1cc63bfe70d767523",
+  "tests/helpers/mobile-ui/services.ts": "3706a916cf9b0017b54b1d1db8cdad1a5dfb2c60032778620bf073d0b116fc0e"
+}

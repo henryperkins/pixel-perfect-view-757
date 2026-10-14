@@ -1,0 +1,42 @@
+--- a/src/styles.css
++++ b/src/styles.css
+@@ -1186,13 +1186,7 @@
+ }
+ .window-card {
+   border-radius: 6px;
+-  border-left: 3px solid var(--accent);
+-  transition:
+-    border-color var(--motion-fast),
+-    background-color var(--motion-fast);
+-}
+-.window-card:hover {
+-  border-left-color: var(--primary);
++  transition: background-color var(--motion-fast);
+ }
+ .window-timeline {
+   margin-block: 18px 6px;
+@@ -2187,11 +2181,10 @@
+   font-size: 1.25rem;
+ }
+ .journal-entry {
+-  border: 0;
+-  border-left: 2px solid var(--accent);
++  border: 1px solid var(--rule);
+   background: var(--card);
+   padding: 20px;
+-  border-radius: 0 6px 6px 0;
++  border-radius: var(--radius);
+ }
+ .today-flow {
+   display: grid;
+@@ -2335,8 +2328,8 @@
+   font-size: 0.875rem;
+ }
+ .today-journal-previews > li {
+-  border-left: 2px solid var(--accent);
+-  border-radius: 0 6px 6px 0;
++  border: 1px solid var(--rule);
++  border-radius: var(--radius);
+   padding: 1rem;
+   background: var(--card);
+   overflow-wrap: anywhere;

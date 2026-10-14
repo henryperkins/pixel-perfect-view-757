@@ -1,0 +1,142 @@
+{
+  "engine": "webkit",
+  "textStress": [
+    {
+      "path": "/",
+      "width": 320,
+      "height": 568,
+      "clientWidth": 320,
+      "scrollWidth": 320
+    },
+    {
+      "path": "/timing",
+      "width": 320,
+      "height": 568,
+      "clientWidth": 320,
+      "scrollWidth": 320
+    },
+    {
+      "path": "/time-travel",
+      "width": 320,
+      "height": 568,
+      "clientWidth": 320,
+      "scrollWidth": 320
+    },
+    {
+      "path": "/__audit/not-found",
+      "width": 320,
+      "height": 568,
+      "clientWidth": 320,
+      "scrollWidth": 320
+    },
+    {
+      "path": "/__audit/server-error",
+      "width": 320,
+      "height": 568,
+      "clientWidth": 320,
+      "scrollWidth": 320
+    },
+    {
+      "path": "/",
+      "width": 360,
+      "height": 800,
+      "clientWidth": 360,
+      "scrollWidth": 360
+    },
+    {
+      "path": "/timing",
+      "width": 360,
+      "height": 800,
+      "clientWidth": 360,
+      "scrollWidth": 360
+    },
+    {
+      "path": "/time-travel",
+      "width": 360,
+      "height": 800,
+      "clientWidth": 360,
+      "scrollWidth": 360
+    },
+    {
+      "path": "/__audit/not-found",
+      "width": 360,
+      "height": 800,
+      "clientWidth": 360,
+      "scrollWidth": 360
+    },
+    {
+      "path": "/__audit/server-error",
+      "width": 360,
+      "height": 800,
+      "clientWidth": 360,
+      "scrollWidth": 360
+    },
+    {
+      "path": "/",
+      "width": 667,
+      "height": 375,
+      "clientWidth": 667,
+      "scrollWidth": 667
+    },
+    {
+      "path": "/timing",
+      "width": 667,
+      "height": 375,
+      "clientWidth": 667,
+      "scrollWidth": 667
+    },
+    {
+      "path": "/time-travel",
+      "width": 667,
+      "height": 375,
+      "clientWidth": 667,
+      "scrollWidth": 667
+    },
+    {
+      "path": "/__audit/not-found",
+      "width": 667,
+      "height": 375,
+      "clientWidth": 667,
+      "scrollWidth": 667
+    },
+    {
+      "path": "/__audit/server-error",
+      "width": 667,
+      "height": 375,
+      "clientWidth": 667,
+      "scrollWidth": 667
+    }
+  ],
+  "menuEnd": [
+    {
+      "width": 320,
+      "height": 568,
+      "top": 452,
+      "bottom": 540,
+      "reachable": true,
+      "insideViewport": true
+    },
+    {
+      "width": 360,
+      "height": 800,
+      "top": 684,
+      "bottom": 772,
+      "reachable": true,
+      "insideViewport": true
+    },
+    {
+      "width": 667,
+      "height": 375,
+      "top": 259,
+      "bottom": 347,
+      "reachable": true,
+      "insideViewport": true
+    }
+  ],
+  "longText": {
+    "retained": true,
+    "clientWidth": 320,
+    "scrollWidth": 320,
+    "scroller": "HTML"
+  }
+}

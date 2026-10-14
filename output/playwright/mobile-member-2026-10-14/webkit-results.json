@@ -1,0 +1,1445 @@
+{
+  "store": [
+    {
+      "name": "first transaction commits",
+      "passed": true
+    },
+    {
+      "name": "other owner cannot read a draft",
+      "passed": true
+    },
+    {
+      "name": "reopen restores committed fields",
+      "passed": true
+    },
+    {
+      "name": "next revision commits",
+      "passed": true
+    },
+    {
+      "name": "stale writer cannot overwrite",
+      "passed": true
+    },
+    {
+      "name": "consent strips stored optional fields",
+      "passed": true
+    },
+    {
+      "name": "consent preserves note",
+      "passed": true
+    },
+    {
+      "name": "privacy rewriting preserves the content revision",
+      "passed": true
+    },
+    {
+      "name": "consent then two-tab editing preserves both versions",
+      "passed": true
+    },
+    {
+      "name": "discard tombstone rejects late writer",
+      "passed": true
+    },
+    {
+      "name": "logout fence rejects delayed writer",
+      "passed": true
+    },
+    {
+      "name": "purged account has no recoverable content",
+      "passed": true
+    },
+    {
+      "name": "new login uses a different generation",
+      "passed": true
+    },
+    {
+      "name": "expired drafts never restore",
+      "passed": true
+    },
+    {
+      "name": "browser key is non-extractable",
+      "passed": true
+    },
+    {
+      "name": "private sentinel is absent from raw IndexedDB records",
+      "passed": true
+    },
+    {
+      "name": "one damaged record does not block healthy recovery",
+      "passed": true
+    },
+    {
+      "name": "damaged ciphertext is retained for explicit cleanup",
+      "passed": true
+    },
+    {
+      "name": "consent strips active payload, baseline and pending submission",
+      "passed": true
+    },
+    {
+      "name": "discard during encryption rejects the pending write",
+      "passed": true
+    },
+    {
+      "name": "purge during encryption rejects the pending write",
+      "passed": true
+    }
+  ],
+  "review": {
+    "engine": "26.6",
+    "checks": [
+      {
+        "name": "Quick login refreshes cached anonymous session",
+        "passed": true
+      },
+      {
+        "name": "Blocked sessionStorage does not crash the root",
+        "passed": true
+      },
+      {
+        "name": "Today confirmed discard resets to saved values",
+        "passed": true
+      },
+      {
+        "name": "Clear device drafts reactivates the other tab",
+        "passed": true
+      },
+      {
+        "name": "Quota failure keeps usable memory and a truthful warning",
+        "passed": true
+      },
+      {
+        "name": "Blocked IndexedDB keeps the composer usable",
+        "passed": true
+      }
+    ]
+  },
+  "core": {
+    "version": "26.6",
+    "checks": [
+      {
+        "name": "Today draft survives navigation",
+        "passed": true
+      },
+      {
+        "name": "Today reload offers usable recovery",
+        "passed": true
+      },
+      {
+        "name": "Today account save clears acknowledged device draft",
+        "passed": true,
+        "note": "Phone reflection checkpoint"
+      },
+      {
+        "name": "Today slow save retains newer typing",
+        "passed": true
+      },
+      {
+        "name": "Journal reload restores all typed fields",
+        "passed": true
+      },
+      {
+        "name": "Pending journal fields are read-only",
+        "passed": true
+      },
+      {
+        "name": "Journal save clears acknowledged text",
+        "passed": true
+      },
+      {
+        "name": "Lost create response reconciles without duplicate",
+        "passed": true
+      },
+      {
+        "name": "Delete asks confirmation and starts on Cancel",
+        "passed": true
+      },
+      {
+        "name": "Back closes deletion and retains journal",
+        "passed": true
+      },
+      {
+        "name": "Back returns focus",
+        "passed": true
+      },
+      {
+        "name": "Editor cancel preserves draft",
+        "passed": true
+      },
+      {
+        "name": "Membership close restores focus",
+        "passed": true
+      },
+      {
+        "name": "Display name input purpose",
+        "passed": true
+      },
+      {
+        "name": "Birth date input purpose",
+        "passed": true
+      },
+      {
+        "name": "Accuracy exposes selected state",
+        "passed": true
+      },
+      {
+        "name": "Late Paris result cannot replace Berlin",
+        "passed": true
+      }
+    ]
+  },
+  "advanced": {
+    "version": "26.6",
+    "checks": [
+      {
+        "name": "Today lost acknowledgement keeps later text",
+        "passed": true
+      },
+      {
+        "name": "New day keeps previous draft dated and does not transplant it",
+        "passed": true
+      },
+      {
+        "name": "Account switch does not expose previous-account draft",
+        "passed": true
+      },
+      {
+        "name": "Missing journal save retries its original operation exactly once",
+        "passed": true
+      },
+      {
+        "name": "Editor retry preserves newer text and existing revision protection",
+        "passed": true
+      },
+      {
+        "name": "Deletion failure stays open; confirmed retry removes one entry",
+        "passed": true
+      },
+      {
+        "name": "Direct deletion URL closes without leaving Journal",
+        "passed": true
+      },
+      {
+        "name": "Birth edit ignores delayed lookup after a manual coordinate edit",
+        "passed": true
+      },
+      {
+        "name": "Focus fallback observes device purge without BroadcastChannel",
+        "passed": true
+      },
+      {
+        "name": "Back during confirmed delete keeps truthful status and returns focus after completion",
+        "passed": true
+      }
+    ]
+  },
+  "layout": {
+    "version": "26.6",
+    "layout": [
+      {
+        "route": "/",
+        "scale": 16,
+        "viewport": "320x568",
+        "client": 320,
+        "scroll": 320,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/",
+        "scale": 16,
+        "viewport": "360x800",
+        "client": 360,
+        "scroll": 360,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/",
+        "scale": 16,
+        "viewport": "390x844",
+        "client": 390,
+        "scroll": 390,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/",
+        "scale": 16,
+        "viewport": "440x956",
+        "client": 440,
+        "scroll": 440,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/",
+        "scale": 16,
+        "viewport": "667x375",
+        "client": 667,
+        "scroll": 667,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/",
+        "scale": 16,
+        "viewport": "844x390",
+        "client": 844,
+        "scroll": 844,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/",
+        "scale": 32,
+        "viewport": "320x568",
+        "client": 320,
+        "scroll": 320,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/",
+        "scale": 32,
+        "viewport": "390x844",
+        "client": 390,
+        "scroll": 390,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/",
+        "scale": 32,
+        "viewport": "667x375",
+        "client": 667,
+        "scroll": 667,
+        "navPosition": "static",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/journal",
+        "scale": 16,
+        "viewport": "320x568",
+        "client": 320,
+        "scroll": 320,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/journal",
+        "scale": 16,
+        "viewport": "360x800",
+        "client": 360,
+        "scroll": 360,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/journal",
+        "scale": 16,
+        "viewport": "390x844",
+        "client": 390,
+        "scroll": 390,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/journal",
+        "scale": 16,
+        "viewport": "440x956",
+        "client": 440,
+        "scroll": 440,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/journal",
+        "scale": 16,
+        "viewport": "667x375",
+        "client": 667,
+        "scroll": 667,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/journal",
+        "scale": 16,
+        "viewport": "844x390",
+        "client": 844,
+        "scroll": 844,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/journal",
+        "scale": 32,
+        "viewport": "320x568",
+        "client": 320,
+        "scroll": 320,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/journal",
+        "scale": 32,
+        "viewport": "390x844",
+        "client": 390,
+        "scroll": 390,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/journal",
+        "scale": 32,
+        "viewport": "667x375",
+        "client": 667,
+        "scroll": 667,
+        "navPosition": "static",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/auth",
+        "scale": 16,
+        "viewport": "320x568",
+        "client": 320,
+        "scroll": 320,
+        "navPosition": null,
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/auth",
+        "scale": 16,
+        "viewport": "360x800",
+        "client": 360,
+        "scroll": 360,
+        "navPosition": null,
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/auth",
+        "scale": 16,
+        "viewport": "390x844",
+        "client": 390,
+        "scroll": 390,
+        "navPosition": null,
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/auth",
+        "scale": 16,
+        "viewport": "440x956",
+        "client": 440,
+        "scroll": 440,
+        "navPosition": null,
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/auth",
+        "scale": 16,
+        "viewport": "667x375",
+        "client": 667,
+        "scroll": 667,
+        "navPosition": null,
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/auth",
+        "scale": 16,
+        "viewport": "844x390",
+        "client": 844,
+        "scroll": 844,
+        "navPosition": null,
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/auth",
+        "scale": 32,
+        "viewport": "320x568",
+        "client": 320,
+        "scroll": 320,
+        "navPosition": null,
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/auth",
+        "scale": 32,
+        "viewport": "390x844",
+        "client": 390,
+        "scroll": 390,
+        "navPosition": null,
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/auth",
+        "scale": 32,
+        "viewport": "667x375",
+        "client": 667,
+        "scroll": 667,
+        "navPosition": null,
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/onboarding",
+        "scale": 16,
+        "viewport": "320x568",
+        "client": 320,
+        "scroll": 320,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/onboarding",
+        "scale": 16,
+        "viewport": "360x800",
+        "client": 360,
+        "scroll": 360,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/onboarding",
+        "scale": 16,
+        "viewport": "390x844",
+        "client": 390,
+        "scroll": 390,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/onboarding",
+        "scale": 16,
+        "viewport": "440x956",
+        "client": 440,
+        "scroll": 440,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/onboarding",
+        "scale": 16,
+        "viewport": "667x375",
+        "client": 667,
+        "scroll": 667,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/onboarding",
+        "scale": 16,
+        "viewport": "844x390",
+        "client": 844,
+        "scroll": 844,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/onboarding",
+        "scale": 32,
+        "viewport": "320x568",
+        "client": 320,
+        "scroll": 320,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/onboarding",
+        "scale": 32,
+        "viewport": "390x844",
+        "client": 390,
+        "scroll": 390,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/onboarding",
+        "scale": 32,
+        "viewport": "667x375",
+        "client": 667,
+        "scroll": 667,
+        "navPosition": "static",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/timing",
+        "scale": 16,
+        "viewport": "320x568",
+        "client": 320,
+        "scroll": 320,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": "sticky"
+      },
+      {
+        "route": "/timing",
+        "scale": 16,
+        "viewport": "360x800",
+        "client": 360,
+        "scroll": 360,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": "sticky"
+      },
+      {
+        "route": "/timing",
+        "scale": 16,
+        "viewport": "390x844",
+        "client": 390,
+        "scroll": 390,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": "sticky"
+      },
+      {
+        "route": "/timing",
+        "scale": 16,
+        "viewport": "440x956",
+        "client": 440,
+        "scroll": 440,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": "sticky"
+      },
+      {
+        "route": "/timing",
+        "scale": 16,
+        "viewport": "667x375",
+        "client": 667,
+        "scroll": 667,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": "static"
+      },
+      {
+        "route": "/timing",
+        "scale": 16,
+        "viewport": "844x390",
+        "client": 844,
+        "scroll": 844,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": "static"
+      },
+      {
+        "route": "/timing",
+        "scale": 32,
+        "viewport": "320x568",
+        "client": 320,
+        "scroll": 320,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": "sticky"
+      },
+      {
+        "route": "/timing",
+        "scale": 32,
+        "viewport": "390x844",
+        "client": 390,
+        "scroll": 390,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": "sticky"
+      },
+      {
+        "route": "/timing",
+        "scale": 32,
+        "viewport": "667x375",
+        "client": 667,
+        "scroll": 667,
+        "navPosition": "static",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": "static"
+      },
+      {
+        "route": "/pattern",
+        "scale": 16,
+        "viewport": "320x568",
+        "client": 320,
+        "scroll": 320,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/pattern",
+        "scale": 16,
+        "viewport": "360x800",
+        "client": 360,
+        "scroll": 360,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/pattern",
+        "scale": 16,
+        "viewport": "390x844",
+        "client": 390,
+        "scroll": 390,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/pattern",
+        "scale": 16,
+        "viewport": "440x956",
+        "client": 440,
+        "scroll": 440,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/pattern",
+        "scale": 16,
+        "viewport": "667x375",
+        "client": 667,
+        "scroll": 667,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/pattern",
+        "scale": 16,
+        "viewport": "844x390",
+        "client": 844,
+        "scroll": 844,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/pattern",
+        "scale": 32,
+        "viewport": "320x568",
+        "client": 320,
+        "scroll": 320,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/pattern",
+        "scale": 32,
+        "viewport": "390x844",
+        "client": 390,
+        "scroll": 390,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/pattern",
+        "scale": 32,
+        "viewport": "667x375",
+        "client": 667,
+        "scroll": 667,
+        "navPosition": "static",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/privacy",
+        "scale": 16,
+        "viewport": "320x568",
+        "client": 320,
+        "scroll": 320,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/privacy",
+        "scale": 16,
+        "viewport": "360x800",
+        "client": 360,
+        "scroll": 360,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/privacy",
+        "scale": 16,
+        "viewport": "390x844",
+        "client": 390,
+        "scroll": 390,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/privacy",
+        "scale": 16,
+        "viewport": "440x956",
+        "client": 440,
+        "scroll": 440,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/privacy",
+        "scale": 16,
+        "viewport": "667x375",
+        "client": 667,
+        "scroll": 667,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/privacy",
+        "scale": 16,
+        "viewport": "844x390",
+        "client": 844,
+        "scroll": 844,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/privacy",
+        "scale": 32,
+        "viewport": "320x568",
+        "client": 320,
+        "scroll": 320,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/privacy",
+        "scale": 32,
+        "viewport": "390x844",
+        "client": 390,
+        "scroll": 390,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/privacy",
+        "scale": 32,
+        "viewport": "667x375",
+        "client": 667,
+        "scroll": 667,
+        "navPosition": "static",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/birth",
+        "scale": 16,
+        "viewport": "320x568",
+        "client": 320,
+        "scroll": 320,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/birth",
+        "scale": 16,
+        "viewport": "360x800",
+        "client": 360,
+        "scroll": 360,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/birth",
+        "scale": 16,
+        "viewport": "390x844",
+        "client": 390,
+        "scroll": 390,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/birth",
+        "scale": 16,
+        "viewport": "440x956",
+        "client": 440,
+        "scroll": 440,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/birth",
+        "scale": 16,
+        "viewport": "667x375",
+        "client": 667,
+        "scroll": 667,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/birth",
+        "scale": 16,
+        "viewport": "844x390",
+        "client": 844,
+        "scroll": 844,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/birth",
+        "scale": 32,
+        "viewport": "320x568",
+        "client": 320,
+        "scroll": 320,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/birth",
+        "scale": 32,
+        "viewport": "390x844",
+        "client": 390,
+        "scroll": 390,
+        "navPosition": "fixed",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      },
+      {
+        "route": "/birth",
+        "scale": 32,
+        "viewport": "667x375",
+        "client": 667,
+        "scroll": 667,
+        "navPosition": "static",
+        "navLabelOverlap": false,
+        "smallFields": [],
+        "timingFilterPosition": null
+      }
+    ],
+    "focus": [
+      {
+        "viewport": "390x844",
+        "label": "Check-in",
+        "top": 257,
+        "bottom": 301,
+        "clearTop": 83,
+        "clearBottom": 771.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "390x844",
+        "label": "Timing",
+        "top": 257,
+        "bottom": 301,
+        "clearTop": 83,
+        "clearBottom": 771.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "390x844",
+        "label": "Journal",
+        "top": 257,
+        "bottom": 301,
+        "clearTop": 83,
+        "clearBottom": 771.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "390x844",
+        "label": "Sources",
+        "top": 257,
+        "bottom": 301,
+        "clearTop": 83,
+        "clearBottom": 771.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "390x844",
+        "label": "Reading calculation",
+        "top": 650.078125,
+        "bottom": 694.078125,
+        "clearTop": 83,
+        "clearBottom": 771.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "390x844",
+        "label": "Mood: 1 of 5, Low",
+        "top": 715.671875,
+        "bottom": 763.671875,
+        "clearTop": 83,
+        "clearBottom": 771.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "390x844",
+        "label": "Energy: 1 of 5, Flat",
+        "top": 715.671875,
+        "bottom": 763.671875,
+        "clearTop": 83,
+        "clearBottom": 771.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "390x844",
+        "label": "Reflection note \u00b7 optional",
+        "top": 673.671875,
+        "bottom": 763.671875,
+        "clearTop": 83,
+        "clearBottom": 771.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "390x844",
+        "label": "Resume draft \u00b7 2026-10-14",
+        "top": 719.671875,
+        "bottom": 763.671875,
+        "clearTop": 83,
+        "clearBottom": 771.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "390x844",
+        "label": "How your check-in is used",
+        "top": 715.671875,
+        "bottom": 763.671875,
+        "clearTop": 83,
+        "clearBottom": 771.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "390x844",
+        "label": "All windows",
+        "top": 718.762451171875,
+        "bottom": 762.762451171875,
+        "clearTop": 83,
+        "clearBottom": 771.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "390x844",
+        "label": "Saturn pressing on your SunExact \u00b7 Exact today",
+        "top": 691.671875,
+        "bottom": 763.671875,
+        "clearTop": 83,
+        "clearBottom": 771.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "390x844",
+        "label": "Open journal",
+        "top": 718.7802734375,
+        "bottom": 762.7802734375,
+        "clearTop": 83,
+        "clearBottom": 771.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "390x844",
+        "label": "Read full entries in your journal",
+        "top": 744.171875,
+        "bottom": 763.171875,
+        "clearTop": 83,
+        "clearBottom": 771.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "390x844",
+        "label": "Sources behind this reading",
+        "top": 718.757080078125,
+        "bottom": 762.757080078125,
+        "clearTop": 83,
+        "clearBottom": 771.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "390x844",
+        "label": "Reading details",
+        "top": 719.671875,
+        "bottom": 763.671875,
+        "clearTop": 83,
+        "clearBottom": 771.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "390x844",
+        "label": "Yes",
+        "top": 718.777099609375,
+        "bottom": 762.777099609375,
+        "clearTop": 83,
+        "clearBottom": 771.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "390x844",
+        "label": "Unsure",
+        "top": 706.671875,
+        "bottom": 750.671875,
+        "clearTop": 83,
+        "clearBottom": 771.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "390x844",
+        "label": "No",
+        "top": 706.671875,
+        "bottom": 750.671875,
+        "clearTop": 83,
+        "clearBottom": 771.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "390x844",
+        "label": "How your response is used",
+        "top": 719.671875,
+        "bottom": 763.671875,
+        "clearTop": 83,
+        "clearBottom": 771.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "667x375",
+        "label": "Check-in",
+        "top": 250.5,
+        "bottom": 294.5,
+        "clearTop": 83,
+        "clearBottom": 302.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "667x375",
+        "label": "Timing",
+        "top": 238.5,
+        "bottom": 282.5,
+        "clearTop": 83,
+        "clearBottom": 302.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "667x375",
+        "label": "Journal",
+        "top": 238.5,
+        "bottom": 282.5,
+        "clearTop": 83,
+        "clearBottom": 302.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "667x375",
+        "label": "Sources",
+        "top": 238.5,
+        "bottom": 282.5,
+        "clearTop": 83,
+        "clearBottom": 302.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "667x375",
+        "label": "Reading calculation",
+        "top": 250.1875,
+        "bottom": 294.1875,
+        "clearTop": 83,
+        "clearBottom": 302.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "667x375",
+        "label": "Mood: 1 of 5, Low",
+        "top": 246.484375,
+        "bottom": 294.484375,
+        "clearTop": 83,
+        "clearBottom": 302.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "667x375",
+        "label": "Energy: 1 of 5, Flat",
+        "top": 246.484375,
+        "bottom": 294.484375,
+        "clearTop": 83,
+        "clearBottom": 302.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "667x375",
+        "label": "Reflection note \u00b7 optional",
+        "top": 208.484375,
+        "bottom": 295.015625,
+        "clearTop": 83,
+        "clearBottom": 302.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "667x375",
+        "label": "Resume draft \u00b7 2026-10-14",
+        "top": 251.015625,
+        "bottom": 295.015625,
+        "clearTop": 83,
+        "clearBottom": 302.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "667x375",
+        "label": "How your check-in is used",
+        "top": 247.015625,
+        "bottom": 295.015625,
+        "clearTop": 83,
+        "clearBottom": 302.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "667x375",
+        "label": "All windows",
+        "top": 249.093017578125,
+        "bottom": 293.093017578125,
+        "clearTop": 83,
+        "clearBottom": 302.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "667x375",
+        "label": "Saturn pressing on your SunExact \u00b7 Exact today",
+        "top": 222.015625,
+        "bottom": 294.015625,
+        "clearTop": 83,
+        "clearBottom": 302.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "667x375",
+        "label": "Open journal",
+        "top": 249.106201171875,
+        "bottom": 293.106201171875,
+        "clearTop": 83,
+        "clearBottom": 302.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "667x375",
+        "label": "Read full entries in your journal",
+        "top": 275.765625,
+        "bottom": 294.765625,
+        "clearTop": 83,
+        "clearBottom": 302.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "667x375",
+        "label": "Sources behind this reading",
+        "top": 249.377197265625,
+        "bottom": 293.377197265625,
+        "clearTop": 83,
+        "clearBottom": 302.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "667x375",
+        "label": "Reading details",
+        "top": 250.265625,
+        "bottom": 294.265625,
+        "clearTop": 83,
+        "clearBottom": 302.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "667x375",
+        "label": "Yes",
+        "top": 249.34814453125,
+        "bottom": 293.34814453125,
+        "clearTop": 83,
+        "clearBottom": 302.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "667x375",
+        "label": "Unsure",
+        "top": 238.265625,
+        "bottom": 282.265625,
+        "clearTop": 83,
+        "clearBottom": 302.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "667x375",
+        "label": "No",
+        "top": 238.265625,
+        "bottom": 282.265625,
+        "clearTop": 83,
+        "clearBottom": 302.03125,
+        "covered": false,
+        "partlyCovered": false
+      },
+      {
+        "viewport": "667x375",
+        "label": "How your response is used",
+        "top": 250.265625,
+        "bottom": 294.265625,
+        "clearTop": 83,
+        "clearBottom": 302.03125,
+        "covered": false,
+        "partlyCovered": false
+      }
+    ],
+    "note": "Desktop render evidence. Root font 32px is a stress test, not phone zoom.",
+    "longUrl": {
+      "scroll": 320,
+      "client": 320,
+      "textPreserved": true
+    },
+    "reducedMotion": {
+      "running": 0,
+      "scrollBehavior": "auto"
+    }
+  }
+}

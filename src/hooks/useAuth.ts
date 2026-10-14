@@ -1,25 +1,37 @@
-import { useCallback, useEffect, useState } from "react";
-
-import { currentSession, type SessionShape } from "@/lib/auth.shared";
-
+import { useCallback, useContext, useState } from "react";
+import { QueryClient, QueryClientContext, useQuery } from "@tanstack/react-query";
+import { currentSession } from "@/lib/auth.shared";
 export function useAuth() {
-  const [session, setSession] = useState<SessionShape>(null);
-  const [loading, setLoading] = useState(true);
-
+  const inherited = useContext(QueryClientContext);
+  const [standalone] = useState(() => inherited ?? new QueryClient());
+  const query = useQuery(
+    {
+      queryKey: ["session"],
+      queryFn: () => currentSession(),
+      retry: false,
+      staleTime: 15000,
+      refetchOnWindowFocus: "always",
+    },
+    inherited ?? standalone,
+  );
+  const session = query.data?.session ?? null;
+  const status = query.isPending
+    ? "loading"
+    : query.isError
+      ? "unavailable"
+      : session
+        ? "authenticated"
+        : "anonymous";
+  const { refetch } = query;
   const refresh = useCallback(async () => {
-    try {
-      const { session: next } = await currentSession();
-      setSession(next);
-    } catch {
-      setSession(null);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    void refresh();
-  }, [refresh]);
-
-  return { session, user: session, isAdmin: session?.isAdmin ?? false, loading, refresh };
+    await refetch();
+  }, [refetch]);
+  return {
+    session,
+    user: session,
+    isAdmin: session?.isAdmin ?? false,
+    loading: query.isPending,
+    status,
+    refresh,
+  };
 }

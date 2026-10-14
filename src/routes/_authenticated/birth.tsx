@@ -1,3 +1,4 @@
+import { usePlaceLookup } from "@/hooks/usePlaceLookup";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
@@ -48,7 +49,7 @@ function localTz() {
 }
 
 const inputClass =
-  "mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring";
+  "pattern-mobile-field mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring";
 
 function BirthSaveFeedback({ summary }: { summary: BirthChangeSummary }) {
   const labels = {
@@ -123,7 +124,19 @@ function BirthPage() {
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   const [timezone, setTimezone] = useState(localTz());
-  const [lookingUp, setLookingUp] = useState(false);
+  const placeLookup = usePlaceLookup({
+    fields: { placeLabel, latitude, longitude, timezone },
+    initialResolution: "saved",
+    onResolve: (fields) => {
+      setPlaceLabel(fields.placeLabel);
+      setLatitude(fields.latitude);
+      setLongitude(fields.longitude);
+      setTimezone(fields.timezone);
+    },
+  });
+  const lookingUp = placeLookup.pending;
+  const lookupPlace = placeLookup.lookup;
+
   const [hydrated, setHydrated] = useState(false);
   const [revision, setRevision] = useState<string | null>(null);
   const [changeSummary, setChangeSummary] = useState<BirthChangeSummary | null>(null);
@@ -183,45 +196,14 @@ function BirthPage() {
     setLongitude(String(saved.longitude));
     setTimezone(saved.timezone);
     setRevision(saved.revision);
+    placeLookup.invalidate("saved");
     setHydrated(true);
     setChangeSummary(null);
     submit.reset();
   }
 
-  async function lookupPlace() {
-    if (!placeLabel.trim()) return;
-    setLookingUp(true);
-    try {
-      const res = await fetch(
-        `https://geocoding-api.open-meteo.com/v1/search?count=1&name=${encodeURIComponent(placeLabel)}`,
-      );
-      const json = (await res.json()) as {
-        results?: {
-          latitude: number;
-          longitude: number;
-          timezone: string;
-          name: string;
-          country?: string;
-        }[];
-      };
-      const hit = json.results?.[0];
-      if (!hit) {
-        toast.error("No match. Enter coordinates manually.");
-        return;
-      }
-      setLatitude(hit.latitude.toFixed(4));
-      setLongitude(hit.longitude.toFixed(4));
-      if (hit.timezone) setTimezone(hit.timezone);
-      setPlaceLabel(hit.country ? `${hit.name}, ${hit.country}` : hit.name);
-      toast.success("Coordinates and zone resolved.");
-    } catch {
-      toast.error("Lookup failed. Enter coordinates manually.");
-    } finally {
-      setLookingUp(false);
-    }
-  }
-
   const ready =
+    placeLookup.ready &&
     birthDate !== "" &&
     placeLabel.trim() !== "" &&
     latitude !== "" &&
@@ -292,13 +274,20 @@ function BirthPage() {
                 className="mt-8 space-y-6"
                 onSubmit={(e) => {
                   e.preventDefault();
-                  submit.mutate();
+                  if (ready && !submit.isPending) submit.mutate();
                 }}
               >
+                {placeLookup.error && (
+                  <p role="alert" className="text-sm text-destructive">
+                    {placeLookup.error}
+                  </p>
+                )}
                 <label className="block">
                   <span className="technical text-muted-foreground">Birth date</span>
                   <input
                     type="date"
+                    enterKeyHint="next"
+                    autoComplete="bday"
                     required
                     value={birthDate}
                     onChange={(e) => setBirthDate(e.target.value)}
@@ -343,6 +332,7 @@ function BirthPage() {
                     <span className="technical text-muted-foreground">Birth time (local)</span>
                     <input
                       type="time"
+                      enterKeyHint="next"
                       value={birthTime}
                       onChange={(e) => setBirthTime(e.target.value)}
                       className={`${inputClass} font-mono`}
@@ -362,9 +352,14 @@ function BirthPage() {
                       <input
                         required
                         value={placeLabel}
-                        onChange={(e) => setPlaceLabel(e.target.value)}
+                        onChange={(e) => {
+                          placeLookup.invalidate();
+                          setPlaceLabel(e.target.value);
+                          setLatitude("");
+                          setLongitude("");
+                        }}
                         placeholder="City, country"
-                        className="w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
+                        className="pattern-mobile-field w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
                       />
                       <button
                         type="button"
@@ -381,24 +376,33 @@ function BirthPage() {
                       <span className="technical text-muted-foreground">Lat</span>
                       <input
                         value={latitude}
-                        onChange={(e) => setLatitude(e.target.value)}
-                        className="mt-1.5 w-full rounded-sm border border-input bg-card px-2 py-1.5 font-mono text-xs outline-none focus:border-ring"
+                        onChange={(e) => {
+                          placeLookup.invalidate("manual");
+                          setLatitude(e.target.value);
+                        }}
+                        className="pattern-mobile-field mt-1.5 w-full rounded-sm border border-input bg-card px-2 py-1.5 font-mono text-xs outline-none focus:border-ring"
                       />
                     </label>
                     <label className="block">
                       <span className="technical text-muted-foreground">Lon</span>
                       <input
                         value={longitude}
-                        onChange={(e) => setLongitude(e.target.value)}
-                        className="mt-1.5 w-full rounded-sm border border-input bg-card px-2 py-1.5 font-mono text-xs outline-none focus:border-ring"
+                        onChange={(e) => {
+                          placeLookup.invalidate("manual");
+                          setLongitude(e.target.value);
+                        }}
+                        className="pattern-mobile-field mt-1.5 w-full rounded-sm border border-input bg-card px-2 py-1.5 font-mono text-xs outline-none focus:border-ring"
                       />
                     </label>
                     <label className="col-span-2 block sm:col-span-1">
                       <span className="technical text-muted-foreground">Time zone</span>
                       <input
                         value={timezone}
-                        onChange={(e) => setTimezone(e.target.value)}
-                        className="mt-1.5 w-full rounded-sm border border-input bg-card px-2 py-1.5 font-mono text-xs outline-none focus:border-ring"
+                        onChange={(e) => {
+                          placeLookup.invalidate("manual");
+                          setTimezone(e.target.value);
+                        }}
+                        className="pattern-mobile-field mt-1.5 w-full rounded-sm border border-input bg-card px-2 py-1.5 font-mono text-xs outline-none focus:border-ring"
                       />
                     </label>
                   </div>

@@ -1,0 +1,1464 @@
+{
+  "engine": "chromium",
+  "version": "155.0.8059.12",
+  "evidence": "Render with synthetic services, not Device",
+  "cases": [
+    {
+      "name": "Dialog geometry 320x568 text 16",
+      "pass": true,
+      "test": {
+        "width": 320,
+        "height": 568,
+        "font": 16,
+        "long": false
+      },
+      "before": 1154,
+      "opened": {
+        "rect": {
+          "x": 16,
+          "y": 183,
+          "width": 288,
+          "height": 202,
+          "top": 183,
+          "right": 304,
+          "bottom": 385,
+          "left": 16
+        },
+        "body": {
+          "height": 40,
+          "scrollHeight": 40,
+          "overscroll": "contain"
+        },
+        "active": "Cancel",
+        "focusInside": true,
+        "scrollY": 1154,
+        "rootWidth": 320,
+        "viewportWidth": 320,
+        "controls": [
+          {
+            "label": "Close confirmation",
+            "disabled": false,
+            "rect": {
+              "x": 243,
+              "y": 200,
+              "width": 44,
+              "height": 44,
+              "top": 200,
+              "right": 287,
+              "bottom": 244,
+              "left": 243
+            },
+            "visible": true
+          },
+          {
+            "label": "Cancel",
+            "disabled": false,
+            "rect": {
+              "x": 33,
+              "y": 324,
+              "width": 96.796875,
+              "height": 44,
+              "top": 324,
+              "right": 129.796875,
+              "bottom": 368,
+              "left": 33
+            },
+            "visible": true
+          },
+          {
+            "label": "Delete entry",
+            "disabled": false,
+            "rect": {
+              "x": 141.796875,
+              "y": 316,
+              "width": 145.203125,
+              "height": 52,
+              "top": 316,
+              "right": 287,
+              "bottom": 368,
+              "left": 141.796875
+            },
+            "visible": true
+          }
+        ]
+      },
+      "atEnd": {
+        "rect": {
+          "x": 16,
+          "y": 183,
+          "width": 288,
+          "height": 202,
+          "top": 183,
+          "right": 304,
+          "bottom": 385,
+          "left": 16
+        },
+        "body": {
+          "height": 40,
+          "scrollHeight": 40,
+          "overscroll": "contain"
+        },
+        "active": "Delete entry",
+        "focusInside": true,
+        "scrollY": 1154,
+        "rootWidth": 320,
+        "viewportWidth": 320,
+        "controls": [
+          {
+            "label": "Close confirmation",
+            "disabled": false,
+            "rect": {
+              "x": 243,
+              "y": 200,
+              "width": 44,
+              "height": 44,
+              "top": 200,
+              "right": 287,
+              "bottom": 244,
+              "left": 243
+            },
+            "visible": true
+          },
+          {
+            "label": "Cancel",
+            "disabled": false,
+            "rect": {
+              "x": 33,
+              "y": 324,
+              "width": 96.796875,
+              "height": 44,
+              "top": 324,
+              "right": 129.796875,
+              "bottom": 368,
+              "left": 33
+            },
+            "visible": true
+          },
+          {
+            "label": "Delete entry",
+            "disabled": false,
+            "rect": {
+              "x": 141.796875,
+              "y": 316,
+              "width": 145.203125,
+              "height": 52,
+              "top": 316,
+              "right": 287,
+              "bottom": 368,
+              "left": 141.796875
+            },
+            "visible": true
+          }
+        ]
+      },
+      "focus": [
+        {
+          "label": "Delete entry",
+          "inside": true,
+          "visible": true
+        },
+        {
+          "label": "Close confirmation",
+          "inside": true,
+          "visible": true
+        },
+        {
+          "label": "Deletion details",
+          "inside": true,
+          "visible": true
+        },
+        {
+          "label": "Cancel",
+          "inside": true,
+          "visible": true
+        },
+        {
+          "label": "Delete entry",
+          "inside": true,
+          "visible": true
+        }
+      ],
+      "backdropWheel": {
+        "before": 1154,
+        "after": 1154
+      },
+      "restored": 1154
+    },
+    {
+      "name": "Dialog geometry 360x800 text 16",
+      "pass": true,
+      "test": {
+        "width": 360,
+        "height": 800,
+        "font": 16,
+        "long": false
+      },
+      "before": 1015,
+      "opened": {
+        "rect": {
+          "x": 16,
+          "y": 299,
+          "width": 328,
+          "height": 202,
+          "top": 299,
+          "right": 344,
+          "bottom": 501,
+          "left": 16
+        },
+        "body": {
+          "height": 40,
+          "scrollHeight": 40,
+          "overscroll": "contain"
+        },
+        "active": "Cancel",
+        "focusInside": true,
+        "scrollY": 1015,
+        "rootWidth": 360,
+        "viewportWidth": 360,
+        "controls": [
+          {
+            "label": "Close confirmation",
+            "disabled": false,
+            "rect": {
+              "x": 283,
+              "y": 316,
+              "width": 44,
+              "height": 44,
+              "top": 316,
+              "right": 327,
+              "bottom": 360,
+              "left": 283
+            },
+            "visible": true
+          },
+          {
+            "label": "Cancel",
+            "disabled": false,
+            "rect": {
+              "x": 33,
+              "y": 440,
+              "width": 112.796875,
+              "height": 44,
+              "top": 440,
+              "right": 145.796875,
+              "bottom": 484,
+              "left": 33
+            },
+            "visible": true
+          },
+          {
+            "label": "Delete entry",
+            "disabled": false,
+            "rect": {
+              "x": 157.796875,
+              "y": 432,
+              "width": 169.203125,
+              "height": 52,
+              "top": 432,
+              "right": 327,
+              "bottom": 484,
+              "left": 157.796875
+            },
+            "visible": true
+          }
+        ]
+      },
+      "atEnd": {
+        "rect": {
+          "x": 16,
+          "y": 299,
+          "width": 328,
+          "height": 202,
+          "top": 299,
+          "right": 344,
+          "bottom": 501,
+          "left": 16
+        },
+        "body": {
+          "height": 40,
+          "scrollHeight": 40,
+          "overscroll": "contain"
+        },
+        "active": "Delete entry",
+        "focusInside": true,
+        "scrollY": 1015,
+        "rootWidth": 360,
+        "viewportWidth": 360,
+        "controls": [
+          {
+            "label": "Close confirmation",
+            "disabled": false,
+            "rect": {
+              "x": 283,
+              "y": 316,
+              "width": 44,
+              "height": 44,
+              "top": 316,
+              "right": 327,
+              "bottom": 360,
+              "left": 283
+            },
+            "visible": true
+          },
+          {
+            "label": "Cancel",
+            "disabled": false,
+            "rect": {
+              "x": 33,
+              "y": 440,
+              "width": 112.796875,
+              "height": 44,
+              "top": 440,
+              "right": 145.796875,
+              "bottom": 484,
+              "left": 33
+            },
+            "visible": true
+          },
+          {
+            "label": "Delete entry",
+            "disabled": false,
+            "rect": {
+              "x": 157.796875,
+              "y": 432,
+              "width": 169.203125,
+              "height": 52,
+              "top": 432,
+              "right": 327,
+              "bottom": 484,
+              "left": 157.796875
+            },
+            "visible": true
+          }
+        ]
+      },
+      "focus": [
+        {
+          "label": "Delete entry",
+          "inside": true,
+          "visible": true
+        },
+        {
+          "label": "Close confirmation",
+          "inside": true,
+          "visible": true
+        },
+        {
+          "label": "Deletion details",
+          "inside": true,
+          "visible": true
+        },
+        {
+          "label": "Cancel",
+          "inside": true,
+          "visible": true
+        },
+        {
+          "label": "Delete entry",
+          "inside": true,
+          "visible": true
+        }
+      ],
+      "backdropWheel": {
+        "before": 1015,
+        "after": 1015
+      },
+      "restored": 1015
+    },
+    {
+      "name": "Dialog geometry 440x956 text 16",
+      "pass": true,
+      "test": {
+        "width": 440,
+        "height": 956,
+        "font": 16,
+        "long": false
+      },
+      "before": 887,
+      "opened": {
+        "rect": {
+          "x": 16,
+          "y": 377,
+          "width": 408,
+          "height": 202,
+          "top": 377,
+          "right": 424,
+          "bottom": 579,
+          "left": 16
+        },
+        "body": {
+          "height": 40,
+          "scrollHeight": 40,
+          "overscroll": "contain"
+        },
+        "active": "Cancel",
+        "focusInside": true,
+        "scrollY": 887,
+        "rootWidth": 440,
+        "viewportWidth": 440,
+        "controls": [
+          {
+            "label": "Close confirmation",
+            "disabled": false,
+            "rect": {
+              "x": 363,
+              "y": 394,
+              "width": 44,
+              "height": 44,
+              "top": 394,
+              "right": 407,
+              "bottom": 438,
+              "left": 363
+            },
+            "visible": true
+          },
+          {
+            "label": "Cancel",
+            "disabled": false,
+            "rect": {
+              "x": 33,
+              "y": 518,
+              "width": 144.796875,
+              "height": 44,
+              "top": 518,
+              "right": 177.796875,
+              "bottom": 562,
+              "left": 33
+            },
+            "visible": true
+          },
+          {
+            "label": "Delete entry",
+            "disabled": false,
+            "rect": {
+              "x": 189.796875,
+              "y": 510,
+              "width": 217.203125,
+              "height": 52,
+              "top": 510,
+              "right": 407,
+              "bottom": 562,
+              "left": 189.796875
+            },
+            "visible": true
+          }
+        ]
+      },
+      "atEnd": {
+        "rect": {
+          "x": 16,
+          "y": 377,
+          "width": 408,
+          "height": 202,
+          "top": 377,
+          "right": 424,
+          "bottom": 579,
+          "left": 16
+        },
+        "body": {
+          "height": 40,
+          "scrollHeight": 40,
+          "overscroll": "contain"
+        },
+        "active": "Delete entry",
+        "focusInside": true,
+        "scrollY": 887,
+        "rootWidth": 440,
+        "viewportWidth": 440,
+        "controls": [
+          {
+            "label": "Close confirmation",
+            "disabled": false,
+            "rect": {
+              "x": 363,
+              "y": 394,
+              "width": 44,
+              "height": 44,
+              "top": 394,
+              "right": 407,
+              "bottom": 438,
+              "left": 363
+            },
+            "visible": true
+          },
+          {
+            "label": "Cancel",
+            "disabled": false,
+            "rect": {
+              "x": 33,
+              "y": 518,
+              "width": 144.796875,
+              "height": 44,
+              "top": 518,
+              "right": 177.796875,
+              "bottom": 562,
+              "left": 33
+            },
+            "visible": true
+          },
+          {
+            "label": "Delete entry",
+            "disabled": false,
+            "rect": {
+              "x": 189.796875,
+              "y": 510,
+              "width": 217.203125,
+              "height": 52,
+              "top": 510,
+              "right": 407,
+              "bottom": 562,
+              "left": 189.796875
+            },
+            "visible": true
+          }
+        ]
+      },
+      "focus": [
+        {
+          "label": "Delete entry",
+          "inside": true,
+          "visible": true
+        },
+        {
+          "label": "Close confirmation",
+          "inside": true,
+          "visible": true
+        },
+        {
+          "label": "Deletion details",
+          "inside": true,
+          "visible": true
+        },
+        {
+          "label": "Cancel",
+          "inside": true,
+          "visible": true
+        },
+        {
+          "label": "Delete entry",
+          "inside": true,
+          "visible": true
+        }
+      ],
+      "backdropWheel": {
+        "before": 887,
+        "after": 887
+      },
+      "restored": 887
+    },
+    {
+      "name": "Dialog geometry 667x375 text 16",
+      "pass": true,
+      "test": {
+        "width": 667,
+        "height": 375,
+        "font": 16,
+        "long": true
+      },
+      "before": 1099,
+      "opened": {
+        "rect": {
+          "x": 77.5,
+          "y": 48.5,
+          "width": 512,
+          "height": 278,
+          "top": 48.5,
+          "right": 589.5,
+          "bottom": 326.5,
+          "left": 77.5
+        },
+        "body": {
+          "height": 120,
+          "scrollHeight": 120,
+          "overscroll": "contain"
+        },
+        "active": "Cancel",
+        "focusInside": true,
+        "scrollY": 1099,
+        "rootWidth": 667,
+        "viewportWidth": 667,
+        "controls": [
+          {
+            "label": "Close confirmation",
+            "disabled": false,
+            "rect": {
+              "x": 528.5,
+              "y": 65.5,
+              "width": 44,
+              "height": 44,
+              "top": 65.5,
+              "right": 572.5,
+              "bottom": 109.5,
+              "left": 528.5
+            },
+            "visible": true
+          },
+          {
+            "label": "Cancel",
+            "disabled": false,
+            "rect": {
+              "x": 94.5,
+              "y": 261.5,
+              "width": 186.390625,
+              "height": 48,
+              "top": 261.5,
+              "right": 280.890625,
+              "bottom": 309.5,
+              "left": 94.5
+            },
+            "visible": true
+          },
+          {
+            "label": "Delete entry",
+            "disabled": false,
+            "rect": {
+              "x": 292.890625,
+              "y": 261.5,
+              "width": 279.59375,
+              "height": 48,
+              "top": 261.5,
+              "right": 572.484375,
+              "bottom": 309.5,
+              "left": 292.890625
+            },
+            "visible": true
+          }
+        ]
+      },
+      "atEnd": {
+        "rect": {
+          "x": 77.5,
+          "y": 48.5,
+          "width": 512,
+          "height": 278,
+          "top": 48.5,
+          "right": 589.5,
+          "bottom": 326.5,
+          "left": 77.5
+        },
+        "body": {
+          "height": 120,
+          "scrollHeight": 120,
+          "overscroll": "contain"
+        },
+        "active": "Delete entry",
+        "focusInside": true,
+        "scrollY": 1099,
+        "rootWidth": 667,
+        "viewportWidth": 667,
+        "controls": [
+          {
+            "label": "Close confirmation",
+            "disabled": false,
+            "rect": {
+              "x": 528.5,
+              "y": 65.5,
+              "width": 44,
+              "height": 44,
+              "top": 65.5,
+              "right": 572.5,
+              "bottom": 109.5,
+              "left": 528.5
+            },
+            "visible": true
+          },
+          {
+            "label": "Cancel",
+            "disabled": false,
+            "rect": {
+              "x": 94.5,
+              "y": 261.5,
+              "width": 186.390625,
+              "height": 48,
+              "top": 261.5,
+              "right": 280.890625,
+              "bottom": 309.5,
+              "left": 94.5
+            },
+            "visible": true
+          },
+          {
+            "label": "Delete entry",
+            "disabled": false,
+            "rect": {
+              "x": 292.890625,
+              "y": 261.5,
+              "width": 279.59375,
+              "height": 48,
+              "top": 261.5,
+              "right": 572.484375,
+              "bottom": 309.5,
+              "left": 292.890625
+            },
+            "visible": true
+          }
+        ]
+      },
+      "focus": [
+        {
+          "label": "Delete entry",
+          "inside": true,
+          "visible": true
+        },
+        {
+          "label": "Close confirmation",
+          "inside": true,
+          "visible": true
+        },
+        {
+          "label": "Deletion details",
+          "inside": true,
+          "visible": true
+        },
+        {
+          "label": "Cancel",
+          "inside": true,
+          "visible": true
+        },
+        {
+          "label": "Delete entry",
+          "inside": true,
+          "visible": true
+        }
+      ],
+      "backdropWheel": {
+        "before": 1099,
+        "after": 1099
+      },
+      "restored": 1099
+    },
+    {
+      "name": "Dialog geometry 844x390 text 16",
+      "pass": true,
+      "test": {
+        "width": 844,
+        "height": 390,
+        "font": 16,
+        "long": true
+      },
+      "before": 1052,
+      "opened": {
+        "rect": {
+          "x": 166,
+          "y": 56,
+          "width": 512,
+          "height": 278,
+          "top": 56,
+          "right": 678,
+          "bottom": 334,
+          "left": 166
+        },
+        "body": {
+          "height": 120,
+          "scrollHeight": 120,
+          "overscroll": "contain"
+        },
+        "active": "Cancel",
+        "focusInside": true,
+        "scrollY": 1052,
+        "rootWidth": 844,
+        "viewportWidth": 844,
+        "controls": [
+          {
+            "label": "Close confirmation",
+            "disabled": false,
+            "rect": {
+              "x": 617,
+              "y": 73,
+              "width": 44,
+              "height": 44,
+              "top": 73,
+              "right": 661,
+              "bottom": 117,
+              "left": 617
+            },
+            "visible": true
+          },
+          {
+            "label": "Cancel",
+            "disabled": false,
+            "rect": {
+              "x": 183,
+              "y": 269,
+              "width": 186.390625,
+              "height": 48,
+              "top": 269,
+              "right": 369.390625,
+              "bottom": 317,
+              "left": 183
+            },
+            "visible": true
+          },
+          {
+            "label": "Delete entry",
+            "disabled": false,
+            "rect": {
+              "x": 381.390625,
+              "y": 269,
+              "width": 279.59375,
+              "height": 48,
+              "top": 269,
+              "right": 660.984375,
+              "bottom": 317,
+              "left": 381.390625
+            },
+            "visible": true
+          }
+        ]
+      },
+      "atEnd": {
+        "rect": {
+          "x": 166,
+          "y": 56,
+          "width": 512,
+          "height": 278,
+          "top": 56,
+          "right": 678,
+          "bottom": 334,
+          "left": 166
+        },
+        "body": {
+          "height": 120,
+          "scrollHeight": 120,
+          "overscroll": "contain"
+        },
+        "active": "Delete entry",
+        "focusInside": true,
+        "scrollY": 1052,
+        "rootWidth": 844,
+        "viewportWidth": 844,
+        "controls": [
+          {
+            "label": "Close confirmation",
+            "disabled": false,
+            "rect": {
+              "x": 617,
+              "y": 73,
+              "width": 44,
+              "height": 44,
+              "top": 73,
+              "right": 661,
+              "bottom": 117,
+              "left": 617
+            },
+            "visible": true
+          },
+          {
+            "label": "Cancel",
+            "disabled": false,
+            "rect": {
+              "x": 183,
+              "y": 269,
+              "width": 186.390625,
+              "height": 48,
+              "top": 269,
+              "right": 369.390625,
+              "bottom": 317,
+              "left": 183
+            },
+            "visible": true
+          },
+          {
+            "label": "Delete entry",
+            "disabled": false,
+            "rect": {
+              "x": 381.390625,
+              "y": 269,
+              "width": 279.59375,
+              "height": 48,
+              "top": 269,
+              "right": 660.984375,
+              "bottom": 317,
+              "left": 381.390625
+            },
+            "visible": true
+          }
+        ]
+      },
+      "focus": [
+        {
+          "label": "Delete entry",
+          "inside": true,
+          "visible": true
+        },
+        {
+          "label": "Close confirmation",
+          "inside": true,
+          "visible": true
+        },
+        {
+          "label": "Deletion details",
+          "inside": true,
+          "visible": true
+        },
+        {
+          "label": "Cancel",
+          "inside": true,
+          "visible": true
+        },
+        {
+          "label": "Delete entry",
+          "inside": true,
+          "visible": true
+        }
+      ],
+      "backdropWheel": {
+        "before": 1052,
+        "after": 1052
+      },
+      "restored": 1052
+    },
+    {
+      "name": "Dialog geometry 320x568 text 32",
+      "pass": true,
+      "test": {
+        "width": 320,
+        "height": 568,
+        "font": 32,
+        "long": true
+      },
+      "before": 11709,
+      "opened": {
+        "rect": {
+          "x": 16,
+          "y": 16,
+          "width": 288,
+          "height": 536,
+          "top": 16,
+          "right": 304,
+          "bottom": 552,
+          "left": 16
+        },
+        "body": {
+          "height": 92,
+          "scrollHeight": 1120,
+          "overscroll": "contain"
+        },
+        "active": "Cancel",
+        "focusInside": true,
+        "scrollY": 11709,
+        "rootWidth": 320,
+        "viewportWidth": 320,
+        "controls": [
+          {
+            "label": "Close confirmation",
+            "disabled": false,
+            "rect": {
+              "x": 199,
+              "y": 33,
+              "width": 88,
+              "height": 88,
+              "top": 33,
+              "right": 287,
+              "bottom": 121,
+              "left": 199
+            },
+            "visible": true
+          },
+          {
+            "label": "Cancel",
+            "disabled": false,
+            "rect": {
+              "x": 33,
+              "y": 341,
+              "width": 96.796875,
+              "height": 194,
+              "top": 341,
+              "right": 129.796875,
+              "bottom": 535,
+              "left": 33
+            },
+            "visible": true
+          },
+          {
+            "label": "Delete entry",
+            "disabled": false,
+            "rect": {
+              "x": 141.796875,
+              "y": 325,
+              "width": 145.203125,
+              "height": 210,
+              "top": 325,
+              "right": 287,
+              "bottom": 535,
+              "left": 141.796875
+            },
+            "visible": true
+          }
+        ]
+      },
+      "atEnd": {
+        "rect": {
+          "x": 16,
+          "y": 16,
+          "width": 288,
+          "height": 536,
+          "top": 16,
+          "right": 304,
+          "bottom": 552,
+          "left": 16
+        },
+        "body": {
+          "height": 92,
+          "scrollHeight": 1120,
+          "overscroll": "contain"
+        },
+        "active": "Delete entry",
+        "focusInside": true,
+        "scrollY": 11709,
+        "rootWidth": 320,
+        "viewportWidth": 320,
+        "controls": [
+          {
+            "label": "Close confirmation",
+            "disabled": false,
+            "rect": {
+              "x": 199,
+              "y": 33,
+              "width": 88,
+              "height": 88,
+              "top": 33,
+              "right": 287,
+              "bottom": 121,
+              "left": 199
+            },
+            "visible": true
+          },
+          {
+            "label": "Cancel",
+            "disabled": false,
+            "rect": {
+              "x": 33,
+              "y": 341,
+              "width": 96.796875,
+              "height": 194,
+              "top": 341,
+              "right": 129.796875,
+              "bottom": 535,
+              "left": 33
+            },
+            "visible": true
+          },
+          {
+            "label": "Delete entry",
+            "disabled": false,
+            "rect": {
+              "x": 141.796875,
+              "y": 325,
+              "width": 145.203125,
+              "height": 210,
+              "top": 325,
+              "right": 287,
+              "bottom": 535,
+              "left": 141.796875
+            },
+            "visible": true
+          }
+        ]
+      },
+      "focus": [
+        {
+          "label": "Delete entry",
+          "inside": true,
+          "visible": true
+        },
+        {
+          "label": "Close confirmation",
+          "inside": true,
+          "visible": true
+        },
+        {
+          "label": "Deletion details",
+          "inside": true,
+          "visible": true
+        },
+        {
+          "label": "Cancel",
+          "inside": true,
+          "visible": true
+        },
+        {
+          "label": "Delete entry",
+          "inside": true,
+          "visible": true
+        }
+      ],
+      "backdropWheel": {
+        "before": 11709,
+        "after": 11709
+      },
+      "restored": 11709
+    },
+    {
+      "name": "Dialog geometry 667x375 text 32",
+      "pass": true,
+      "test": {
+        "width": 667,
+        "height": 375,
+        "font": 32,
+        "long": true
+      },
+      "before": 2831,
+      "opened": {
+        "rect": {
+          "x": 16,
+          "y": 16,
+          "width": 635,
+          "height": 343,
+          "top": 16,
+          "right": 651,
+          "bottom": 359,
+          "left": 16
+        },
+        "body": {
+          "height": 93,
+          "scrollHeight": 440,
+          "overscroll": "contain"
+        },
+        "active": "Cancel",
+        "focusInside": true,
+        "scrollY": 2831,
+        "rootWidth": 667,
+        "viewportWidth": 667,
+        "controls": [
+          {
+            "label": "Close confirmation",
+            "disabled": false,
+            "rect": {
+              "x": 546,
+              "y": 33,
+              "width": 88,
+              "height": 88,
+              "top": 33,
+              "right": 634,
+              "bottom": 121,
+              "left": 546
+            },
+            "visible": true
+          },
+          {
+            "label": "Cancel",
+            "disabled": false,
+            "rect": {
+              "x": 33,
+              "y": 246,
+              "width": 235.59375,
+              "height": 96,
+              "top": 246,
+              "right": 268.59375,
+              "bottom": 342,
+              "left": 33
+            },
+            "visible": true
+          },
+          {
+            "label": "Delete entry",
+            "disabled": false,
+            "rect": {
+              "x": 280.59375,
+              "y": 246,
+              "width": 353.40625,
+              "height": 96,
+              "top": 246,
+              "right": 634,
+              "bottom": 342,
+              "left": 280.59375
+            },
+            "visible": true
+          }
+        ]
+      },
+      "atEnd": {
+        "rect": {
+          "x": 16,
+          "y": 16,
+          "width": 635,
+          "height": 343,
+          "top": 16,
+          "right": 651,
+          "bottom": 359,
+          "left": 16
+        },
+        "body": {
+          "height": 93,
+          "scrollHeight": 440,
+          "overscroll": "contain"
+        },
+        "active": "Delete entry",
+        "focusInside": true,
+        "scrollY": 2831,
+        "rootWidth": 667,
+        "viewportWidth": 667,
+        "controls": [
+          {
+            "label": "Close confirmation",
+            "disabled": false,
+            "rect": {
+              "x": 546,
+              "y": 33,
+              "width": 88,
+              "height": 88,
+              "top": 33,
+              "right": 634,
+              "bottom": 121,
+              "left": 546
+            },
+            "visible": true
+          },
+          {
+            "label": "Cancel",
+            "disabled": false,
+            "rect": {
+              "x": 33,
+              "y": 246,
+              "width": 235.59375,
+              "height": 96,
+              "top": 246,
+              "right": 268.59375,
+              "bottom": 342,
+              "left": 33
+            },
+            "visible": true
+          },
+          {
+            "label": "Delete entry",
+            "disabled": false,
+            "rect": {
+              "x": 280.59375,
+              "y": 246,
+              "width": 353.40625,
+              "height": 96,
+              "top": 246,
+              "right": 634,
+              "bottom": 342,
+              "left": 280.59375
+            },
+            "visible": true
+          }
+        ]
+      },
+      "focus": [
+        {
+          "label": "Delete entry",
+          "inside": true,
+          "visible": true
+        },
+        {
+          "label": "Close confirmation",
+          "inside": true,
+          "visible": true
+        },
+        {
+          "label": "Deletion details",
+          "inside": true,
+          "visible": true
+        },
+        {
+          "label": "Cancel",
+          "inside": true,
+          "visible": true
+        },
+        {
+          "label": "Delete entry",
+          "inside": true,
+          "visible": true
+        }
+      ],
+      "backdropWheel": {
+        "before": 2831,
+        "after": 2831
+      },
+      "restored": 2831
+    },
+    {
+      "name": "Dialog history Cancel",
+      "pass": true,
+      "nextBack": "http://127.0.0.1:4199/"
+    },
+    {
+      "name": "Dialog history header Close",
+      "pass": true,
+      "nextBack": "http://127.0.0.1:4199/"
+    },
+    {
+      "name": "Dialog history Back",
+      "pass": true,
+      "nextBack": "http://127.0.0.1:4199/"
+    },
+    {
+      "name": "Dialog history double Close",
+      "pass": true,
+      "nextBack": "http://127.0.0.1:4199/"
+    },
+    {
+      "name": "Dialog Forward remains dismissible",
+      "pass": true,
+      "url": "http://127.0.0.1:4199/journal"
+    },
+    {
+      "name": "Direct-link Cancel replaces query",
+      "pass": true,
+      "url": "http://127.0.0.1:4199/journal",
+      "active": "2 \u00b7 Entries (1)"
+    },
+    {
+      "name": "Delayed failure keeps visible focus and one request",
+      "pass": true,
+      "pending": {
+        "rect": {
+          "x": 16,
+          "y": 289,
+          "width": 328,
+          "height": 222,
+          "top": 289,
+          "right": 344,
+          "bottom": 511,
+          "left": 16
+        },
+        "body": {
+          "height": 60,
+          "scrollHeight": 60,
+          "overscroll": "contain"
+        },
+        "active": "Close",
+        "focusInside": true,
+        "scrollY": 1015,
+        "rootWidth": 360,
+        "viewportWidth": 360,
+        "controls": [
+          {
+            "label": "Close confirmation",
+            "disabled": false,
+            "rect": {
+              "x": 283,
+              "y": 306,
+              "width": 44,
+              "height": 44,
+              "top": 306,
+              "right": 327,
+              "bottom": 350,
+              "left": 283
+            },
+            "visible": true
+          },
+          {
+            "label": "Close",
+            "disabled": false,
+            "rect": {
+              "x": 33,
+              "y": 450,
+              "width": 112.796875,
+              "height": 44,
+              "top": 450,
+              "right": 145.796875,
+              "bottom": 494,
+              "left": 33
+            },
+            "visible": true
+          },
+          {
+            "label": "Deleting\u2026",
+            "disabled": true,
+            "rect": {
+              "x": 157.796875,
+              "y": 442,
+              "width": 169.203125,
+              "height": 52,
+              "top": 442,
+              "right": 327,
+              "bottom": 494,
+              "left": 157.796875
+            },
+            "visible": true
+          }
+        ]
+      },
+      "failed": {
+        "rect": {
+          "x": 16,
+          "y": 273,
+          "width": 328,
+          "height": 254,
+          "top": 273,
+          "right": 344,
+          "bottom": 527,
+          "left": 16
+        },
+        "body": {
+          "height": 92,
+          "scrollHeight": 92,
+          "overscroll": "contain"
+        },
+        "active": "Cancel",
+        "focusInside": true,
+        "scrollY": 1015,
+        "rootWidth": 360,
+        "viewportWidth": 360,
+        "controls": [
+          {
+            "label": "Close confirmation",
+            "disabled": false,
+            "rect": {
+              "x": 283,
+              "y": 290,
+              "width": 44,
+              "height": 44,
+              "top": 290,
+              "right": 327,
+              "bottom": 334,
+              "left": 283
+            },
+            "visible": true
+          },
+          {
+            "label": "Cancel",
+            "disabled": false,
+            "rect": {
+              "x": 33,
+              "y": 466,
+              "width": 112.796875,
+              "height": 44,
+              "top": 466,
+              "right": 145.796875,
+              "bottom": 510,
+              "left": 33
+            },
+            "visible": true
+          },
+          {
+            "label": "Delete entry",
+            "disabled": false,
+            "rect": {
+              "x": 157.796875,
+              "y": 458,
+              "width": 169.203125,
+              "height": 52,
+              "top": 458,
+              "right": 327,
+              "bottom": 510,
+              "left": 157.796875
+            },
+            "visible": true
+          }
+        ]
+      },
+      "calls": 1
+    },
+    {
+      "name": "Dismiss pending failure with Close",
+      "pass": false,
+      "error": "TimeoutError: locator.waitFor: Timeout 7000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('status').filter({ hasText: 'Deleting entry\u2026' }) to be visible\u001b[22m\n"
+    },
+    {
+      "name": "Dismiss pending failure with Escape",
+      "pass": false,
+      "error": "TimeoutError: locator.waitFor: Timeout 7000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('status').filter({ hasText: 'Deleting entry\u2026' }) to be visible\u001b[22m\n"
+    },
+    {
+      "name": "Dismiss pending success does not close a later menu",
+      "pass": true,
+      "calls": 1
+    }
+  ],
+  "pageErrors": []
+}

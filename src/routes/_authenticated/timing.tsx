@@ -216,17 +216,9 @@ function TimingPage() {
                     variant="ghost"
                     type="button"
                     aria-pressed={domain === key}
-                    onClick={(event) => {
+                    onClick={() => {
                       setDomain(key);
                       setRevealTarget(null);
-                      // Scroll the chip rail only, without jumping the page.
-                      const button = event.currentTarget;
-                      button.parentElement?.scrollTo({
-                        left: button.offsetLeft - 12,
-                        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
-                          ? "instant"
-                          : "smooth",
-                      });
                     }}
                   >
                     {label}

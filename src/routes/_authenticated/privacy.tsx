@@ -1,3 +1,4 @@
+import { useMemberDraftLifecycle } from "@/components/pattern/MemberDraftProvider";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
@@ -46,6 +47,7 @@ export const Route = createFileRoute("/_authenticated/privacy")({
 
 function PrivacyPage() {
   const { session } = useAuth();
+  const deviceDrafts = useMemberDraftLifecycle();
   const bootstrapFn = useServerFn(fetchBootstrap);
   const consentFn = useServerFn(updateConsent);
   const prefsFn = useServerFn(savePrefs);
@@ -82,7 +84,13 @@ function PrivacyPage() {
 
   const toggle = useMutation({
     mutationFn: (vars: { sourceId: string; granted: boolean }) => consentFn({ data: vars }),
-    onSuccess: async () => {
+    onSuccess: async (_result, vars) => {
+      if (vars.sourceId === "WEL01" || vars.sourceId === "WEL03") {
+        await deviceDrafts.invalidateConsentFields({
+          sleep: vars.sourceId === "WEL01" ? vars.granted : granted.has("WEL01"),
+          stress: vars.sourceId === "WEL03" ? vars.granted : granted.has("WEL03"),
+        });
+      }
       await clearPatternQueries(qc);
       await clearReadingContextQueries(qc);
       void qc.invalidateQueries({ queryKey: ["bootstrap"] });
@@ -158,6 +166,7 @@ function PrivacyPage() {
       await clearReadingContextQueries(qc);
       await qc.invalidateQueries({ queryKey: ["bootstrap"] });
       setPrefsReset((value) => value + 1);
+      await deviceDrafts.invalidateConsentFields({ sleep: false, stress: false });
       toast.success("Personalization reset. Your account, chart and journal are kept.");
     },
     onError: (e: Error) => toast.error(e.message),
@@ -168,6 +177,11 @@ function PrivacyPage() {
       await qc.cancelQueries();
       qc.clear();
       setPassword("");
+      try {
+        await deviceDrafts.purgeAccountDrafts();
+      } catch {
+        /* Root retries cleanup. */
+      }
       window.location.assign("/auth");
     },
   });
@@ -177,7 +191,7 @@ function PrivacyPage() {
   return (
     <Shell>
       <div className="grid animate-rise gap-10 lg:grid-cols-[minmax(0,1fr)_16rem]">
-        <div>
+        <div className="privacy-main min-w-0">
           <h1 className="text-3xl">Context &amp; privacy</h1>
           <p className="mt-3 max-w-2xl text-sm text-muted-foreground">
             This is the registry the reading engine actually enforces. A source can only be used for
@@ -205,6 +219,44 @@ function PrivacyPage() {
           ) : null}
 
           <MembershipSettings />
+          <section
+            className="mt-10 border-t border-rule pt-6"
+            aria-labelledby="device-drafts-heading"
+          >
+            <h2 id="device-drafts-heading" className="text-xl">
+              Drafts on this device
+            </h2>
+            <p className="mt-2 text-sm">
+              Unfinished check-ins and journal entries are encrypted in this browser. Drafts expire
+              after seven days without edits and are cleared when you sign out. Save an entry to
+              keep it in your account.
+            </p>
+            <details className="mt-3">
+              <summary className="min-h-11 cursor-pointer py-3">Clear device drafts</summary>
+              <p className="my-2 text-sm">
+                This removes unsaved drafts from this browser. Saved account entries are kept.
+              </p>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={async () => {
+                  try {
+                    await deviceDrafts.purgeAccountDrafts({ resume: true });
+                    toast.success("Device drafts cleared.");
+                  } catch {
+                    toast.error("Device drafts could not be cleared.");
+                  }
+                }}
+              >
+                Confirm clear device drafts
+              </Button>
+            </details>
+            {deviceDrafts.error && (
+              <p role="alert" className="mt-2 text-sm">
+                {deviceDrafts.error}
+              </p>
+            )}
+          </section>
           <AccountSecurity />
           <section className="mt-8 max-w-2xl" aria-labelledby="reading-language-privacy">
             <h2 id="reading-language-privacy" className="font-serif text-xl">
@@ -435,8 +487,9 @@ function PrivacyPage() {
                       defaultValue={profile?.display_name ?? ""}
                       id="display-name"
                       name="displayName"
+                      autoComplete="nickname"
                       maxLength={80}
-                      className="mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
+                      className="pattern-mobile-field mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
                     />
                   </label>
                   <label className="block">
@@ -445,7 +498,7 @@ function PrivacyPage() {
                       id="tone"
                       name="tone"
                       defaultValue={profile?.tone_pref ?? "plain"}
-                      className="mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
+                      className="pattern-mobile-field mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
                     >
                       <option value="plain">plain</option>
                       <option value="warm">warm</option>
@@ -458,7 +511,7 @@ function PrivacyPage() {
                       id="depth"
                       name="depth"
                       defaultValue={profile?.depth_pref ?? "standard"}
-                      className="mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
+                      className="pattern-mobile-field mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
                     >
                       <option value="standard">standard</option>
                       <option value="technical">technical</option>
@@ -469,7 +522,7 @@ function PrivacyPage() {
                     <select
                       name="domainPref"
                       defaultValue={profile.domain_pref ?? ""}
-                      className="mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
+                      className="pattern-mobile-field mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
                     >
                       <option value="">Every area</option>
                       {LIFE_DOMAINS.map((domain) => (
@@ -501,7 +554,7 @@ function PrivacyPage() {
                   type="date"
                   value={eventDate}
                   onChange={(e) => setEventDate(e.target.value)}
-                  className="mt-1.5 rounded-sm border border-input bg-card px-3 py-2 font-mono text-sm outline-none focus:border-ring"
+                  className="pattern-mobile-field mt-1.5 rounded-sm border border-input bg-card px-3 py-2 font-mono text-sm outline-none focus:border-ring"
                 />
               </label>
               <label className="block">
@@ -509,7 +562,7 @@ function PrivacyPage() {
                 <select
                   value={eventDomain}
                   onChange={(e) => setEventDomain(e.target.value)}
-                  className="mt-1.5 rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
+                  className="pattern-mobile-field mt-1.5 rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
                 >
                   {["identity", "relationships", "work", "inner-life", "structure"].map((d) => (
                     <option key={d} value={d}>
@@ -518,12 +571,12 @@ function PrivacyPage() {
                   ))}
                 </select>
               </label>
-              <label className="block flex-1">
+              <label className="block flex-1 basis-48">
                 <span className="technical text-muted-foreground">What happened</span>
                 <input
                   value={eventLabel}
                   onChange={(e) => setEventLabel(e.target.value)}
-                  className="mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
+                  className="pattern-mobile-field mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
                 />
               </label>
               <Button
@@ -609,7 +662,7 @@ function PrivacyPage() {
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
                     disabled={doDelete.isPending}
-                    className="mt-2 w-full rounded-sm border border-input bg-card px-3 py-2"
+                    className="pattern-mobile-field mt-2 w-full rounded-sm border border-input bg-card px-3 py-2"
                   />
                 </label>
                 {doDelete.error ? (

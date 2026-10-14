@@ -1,0 +1,281 @@
+{
+  "mode": "audit and fix",
+  "evidence": "Code and Render only; no physical phone or OS simulator",
+  "qualifiedRuns": true,
+  "note": "Cases are resolved by name from the last passing affected run. Original failed probes are retained. Chromium enlarged-text filter taps use VisualViewport-adjusted coordinates. Table cases were rerun after the final CSS correction.",
+  "engines": [
+    {
+      "engine": "chromium",
+      "uniqueCases": 27,
+      "passed": 27,
+      "cases": {
+        "G01 stale mood focus after height and VisualViewport resize": {
+          "pass": true,
+          "evidence": "gestures-chromium.json"
+        },
+        "G01 stale note focus after height and VisualViewport resize": {
+          "pass": true,
+          "evidence": "gestures-chromium.json"
+        },
+        "G01 new focus still clears sticky navigation": {
+          "pass": true,
+          "evidence": "gestures-chromium.json"
+        },
+        "G02 Today reflection boundaries 360x800": {
+          "pass": true,
+          "evidence": "gestures-chromium.json"
+        },
+        "G02 Journal compose boundaries 360x800": {
+          "pass": true,
+          "evidence": "gestures-chromium.json"
+        },
+        "G02 Journal edit boundaries 360x800": {
+          "pass": true,
+          "evidence": "gestures-chromium.json"
+        },
+        "G02 Today reflection boundaries 667x375": {
+          "pass": true,
+          "evidence": "gestures-chromium.json"
+        },
+        "G02 Journal compose boundaries 667x375": {
+          "pass": true,
+          "evidence": "gestures-chromium.json"
+        },
+        "G02 Journal edit boundaries 667x375": {
+          "pass": true,
+          "evidence": "gestures-chromium.json"
+        },
+        "G03 all six filters by taps 320 font16": {
+          "pass": true,
+          "evidence": "gestures-chromium.json"
+        },
+        "G03 all six filters by taps 360 font16": {
+          "pass": true,
+          "evidence": "gestures-chromium.json"
+        },
+        "G03 all six filters by taps 440 font16": {
+          "pass": true,
+          "evidence": "gestures-chromium.json"
+        },
+        "G03 all six filters by taps 667 font16": {
+          "pass": true,
+          "evidence": "gestures-chromium.json"
+        },
+        "G03 all six filters by taps 844 font16": {
+          "pass": true,
+          "evidence": "gestures-chromium.json"
+        },
+        "G03 all six filters by taps 1280 font16": {
+          "pass": true,
+          "evidence": "gestures-chromium.json"
+        },
+        "G03 all six filters by taps 320 font32": {
+          "pass": true,
+          "evidence": "filters-followup-chromium.json"
+        },
+        "G03 all six filters by taps 844 font32": {
+          "pass": true,
+          "evidence": "gestures-chromium.json"
+        },
+        "G03 table taps, semantics and keyboard 320 font16": {
+          "pass": true,
+          "evidence": "table-followup-chromium.json"
+        },
+        "G03 table taps, semantics and keyboard 360 font16": {
+          "pass": true,
+          "evidence": "table-followup-chromium.json"
+        },
+        "G03 table taps, semantics and keyboard 440 font16": {
+          "pass": true,
+          "evidence": "table-followup-chromium.json"
+        },
+        "G03 table taps, semantics and keyboard 667 font16": {
+          "pass": true,
+          "evidence": "table-followup-chromium.json"
+        },
+        "G03 table taps, semantics and keyboard 844 font16": {
+          "pass": true,
+          "evidence": "table-followup-chromium.json"
+        },
+        "G03 table taps, semantics and keyboard 1280 font16": {
+          "pass": true,
+          "evidence": "table-followup-chromium.json"
+        },
+        "G03 table taps, semantics and keyboard 320 font32": {
+          "pass": true,
+          "evidence": "table-followup-chromium.json"
+        },
+        "G03 table taps, semantics and keyboard 844 font32": {
+          "pass": true,
+          "evidence": "table-followup-chromium.json"
+        },
+        "G03 late/empty data and ResizeObserver fallback": {
+          "pass": true,
+          "evidence": "table-followup-chromium.json"
+        },
+        "G03 normal-motion table paging stays inside table": {
+          "pass": true,
+          "evidence": "table-followup-chromium.json"
+        }
+      }
+    },
+    {
+      "engine": "webkit",
+      "uniqueCases": 27,
+      "passed": 27,
+      "cases": {
+        "G01 stale mood focus after height and VisualViewport resize": {
+          "pass": true,
+          "evidence": "gestures-webkit.json"
+        },
+        "G01 stale note focus after height and VisualViewport resize": {
+          "pass": true,
+          "evidence": "gestures-webkit.json"
+        },
+        "G01 new focus still clears sticky navigation": {
+          "pass": true,
+          "evidence": "gestures-webkit.json"
+        },
+        "G02 Today reflection boundaries 360x800": {
+          "pass": true,
+          "evidence": "gestures-webkit.json"
+        },
+        "G02 Journal compose boundaries 360x800": {
+          "pass": true,
+          "evidence": "gestures-webkit.json"
+        },
+        "G02 Journal edit boundaries 360x800": {
+          "pass": true,
+          "evidence": "gestures-webkit.json"
+        },
+        "G02 Today reflection boundaries 667x375": {
+          "pass": true,
+          "evidence": "gestures-webkit.json"
+        },
+        "G02 Journal compose boundaries 667x375": {
+          "pass": true,
+          "evidence": "gestures-webkit.json"
+        },
+        "G02 Journal edit boundaries 667x375": {
+          "pass": true,
+          "evidence": "gestures-webkit.json"
+        },
+        "G03 all six filters by taps 320 font16": {
+          "pass": true,
+          "evidence": "gestures-webkit.json"
+        },
+        "G03 all six filters by taps 360 font16": {
+          "pass": true,
+          "evidence": "gestures-webkit.json"
+        },
+        "G03 all six filters by taps 440 font16": {
+          "pass": true,
+          "evidence": "gestures-webkit.json"
+        },
+        "G03 all six filters by taps 667 font16": {
+          "pass": true,
+          "evidence": "gestures-webkit.json"
+        },
+        "G03 all six filters by taps 844 font16": {
+          "pass": true,
+          "evidence": "gestures-webkit.json"
+        },
+        "G03 all six filters by taps 1280 font16": {
+          "pass": true,
+          "evidence": "gestures-webkit.json"
+        },
+        "G03 all six filters by taps 320 font32": {
+          "pass": true,
+          "evidence": "gestures-webkit.json"
+        },
+        "G03 all six filters by taps 844 font32": {
+          "pass": true,
+          "evidence": "gestures-webkit.json"
+        },
+        "G03 table taps, semantics and keyboard 320 font16": {
+          "pass": true,
+          "evidence": "table-followup-webkit.json"
+        },
+        "G03 table taps, semantics and keyboard 360 font16": {
+          "pass": true,
+          "evidence": "table-followup-webkit.json"
+        },
+        "G03 table taps, semantics and keyboard 440 font16": {
+          "pass": true,
+          "evidence": "table-followup-webkit.json"
+        },
+        "G03 table taps, semantics and keyboard 667 font16": {
+          "pass": true,
+          "evidence": "table-followup-webkit.json"
+        },
+        "G03 table taps, semantics and keyboard 844 font16": {
+          "pass": true,
+          "evidence": "table-followup-webkit.json"
+        },
+        "G03 table taps, semantics and keyboard 1280 font16": {
+          "pass": true,
+          "evidence": "table-followup-webkit.json"
+        },
+        "G03 table taps, semantics and keyboard 320 font32": {
+          "pass": true,
+          "evidence": "table-followup-webkit.json"
+        },
+        "G03 table taps, semantics and keyboard 844 font32": {
+          "pass": true,
+          "evidence": "table-followup-webkit.json"
+        },
+        "G03 late/empty data and ResizeObserver fallback": {
+          "pass": true,
+          "evidence": "table-followup-webkit.json"
+        },
+        "G03 normal-motion table paging stays inside table": {
+          "pass": true,
+          "evidence": "table-followup-webkit.json"
+        }
+      }
+    }
+  ],
+  "touch": {
+    "evidence": "touch-chromium.json",
+    "cases": 10,
+    "passed": 10
+  },
+  "journey": [
+    {
+      "evidence": "journey-chromium.json",
+      "checkpoints": 5,
+      "passed": 5
+    },
+    {
+      "evidence": "journey-webkit-final.json",
+      "checkpoints": 5,
+      "passed": 5
+    }
+  ],
+  "sourceChecks": {
+    "typescript": "passed",
+    "targetedEslint": "passed",
+    "npmTest": {
+      "total": 887,
+      "passed": 883,
+      "skipped": 4,
+      "failed": 0
+    },
+    "productionBuild": "passed",
+    "formatting": "passed",
+    "impeccable": "passed; no findings or new ignores",
+    "scopedDiffCheck": "passed"
+  },
+  "sourceSha256": {
+    "src/components/pattern/Shell.tsx": "94308516ea7523c78fae0c23053480880a76b2a17165429a848e9eb7078e636e",
+    "src/components/pattern/PatternChartDetails.tsx": "4159bed42afc1325b6add9152cfda3b4170be0ca5f299fa114cf2bb88f950898",
+    "src/routes/_authenticated/timing.tsx": "e63ee50dc2f8419db4ec261b06e287790f05c9d51539775d54469d4896d2deed",
+    "src/styles.css": "4e7161db005749cdce48ecd779f8f4bfd0ea014a288c280695c9ac536c7e2526"
+  },
+  "baselineGitHead": "e8eee400592848033df1e36d3fef6a123ad9b5c8",
+  "deviceTests": "not tested",
+  "LCP": "not measured",
+  "INP": "not measured",
+  "CLS": "not measured",
+  "preservation": "preservation.json"
+}

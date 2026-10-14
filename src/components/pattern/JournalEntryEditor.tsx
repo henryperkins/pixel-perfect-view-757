@@ -1,4 +1,8 @@
-import { useState } from "react";
+import { toast } from "sonner";
+import { useMemberDraft } from "./MemberDraftProvider";
+import { DraftRecoveryNotice } from "./DraftRecoveryNotice";
+import type { DraftValuesMap } from "@/lib/member-drafts";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 
 export interface EditableJournalEntry {
@@ -21,32 +25,96 @@ export function JournalEntryEditor({
   pending,
   onSave,
   onCancel,
+  onRefresh,
 }: {
   initialEntry: EditableJournalEntry;
   latestEntry: EditableJournalEntry | undefined;
   pending: boolean;
   onSave: (input: JournalEditInput) => Promise<unknown>;
   onCancel: () => void;
+  onRefresh: () => Promise<EditableJournalEntry | undefined>;
 }) {
-  const [label, setLabel] = useState(initialEntry.label);
-  const [body, setBody] = useState(initialEntry.body ?? "");
-  const [revision, setRevision] = useState(initialEntry.revision);
+  const initial = {
+    entryId: initialEntry.id,
+    label: initialEntry.label,
+    body: initialEntry.body ?? "",
+    expectedRevision: initialEntry.revision,
+  };
+  const [acknowledged, setAcknowledged] = useState<DraftValuesMap["journal-edit"] | null>(null);
+  const fallback = acknowledged ?? initial;
+  const recovery = useMemberDraft({
+    kind: "journal-edit",
+    entityKey: initialEntry.id,
+    values: fallback,
+    baseline: { values: fallback, version: String(fallback.expectedRevision) },
+  });
+  const values = recovery.draft?.values ?? fallback;
+  const { label, body, expectedRevision: revision } = values;
+  const recoveryRef = useRef(recovery);
+  recoveryRef.current = recovery;
+  const setLabel = (value: string) => recovery.update({ ...values, label: value });
+  const setBody = (value: string) => recovery.update({ ...values, body: value });
+  const setRevision = (value: number) => {
+    const current = recovery.current();
+    const next = { ...values, expectedRevision: value };
+    if (current?.submission)
+      recovery.reconcileAcknowledgement(
+        current.submission,
+        { ...next, label: latestEntry!.label, body: latestEntry!.body ?? "" },
+        String(value),
+      );
+    recovery.update(next);
+  };
   const [error, setError] = useState<string | null>(null);
+  const [retryVerified, setRetryVerified] = useState(false);
+  const [checking, setChecking] = useState(false);
   const changed = latestEntry && latestEntry.revision !== revision;
+  useEffect(() => {
+    const current = recoveryRef.current.current();
+    const attempt = current?.submission;
+    if (!attempt || !latestEntry || latestEntry.revision <= attempt.values.expectedRevision) return;
+    if (
+      latestEntry.label !== attempt.values.label.trim() ||
+      (latestEntry.body ?? "") !== attempt.values.body.trim()
+    )
+      return;
+    const canonical = { ...attempt.values, label: latestEntry.label, body: latestEntry.body ?? "" };
+    recoveryRef.current.reconcileAcknowledgement(attempt, canonical, String(latestEntry.revision));
+    setAcknowledged({ ...canonical, expectedRevision: latestEntry.revision });
+    setError(null);
+  }, [latestEntry]);
   return (
     <form
-      className="mt-4 space-y-4 rounded-sm border border-rule bg-evidence p-4"
+      className="journal-entry-editor mt-4 space-y-4 rounded-sm border border-rule bg-evidence p-4"
       aria-label="Edit journal entry"
       onSubmit={async (event) => {
         event.preventDefault();
+        if (pending || checking || (recovery.draft?.submission && !retryVerified)) return;
         setError(null);
         try {
+          const attempt = await recovery.checkpointSubmission(values);
           await onSave({
             id: initialEntry.id,
-            label: label.trim(),
-            body: body.trim() || null,
-            expectedRevision: revision,
+            label: attempt.values.label.trim(),
+            body: attempt.values.body.trim() || null,
+            expectedRevision: attempt.values.expectedRevision,
           });
+          const current = recovery.current();
+          if (
+            current &&
+            (current.values.label !== attempt.values.label ||
+              current.values.body !== attempt.values.body)
+          )
+            toast.info("Earlier changes saved. Your newer draft is kept for the next edit.");
+          recovery.reconcileAcknowledgement(
+            attempt,
+            {
+              ...attempt.values,
+              label: attempt.values.label.trim(),
+              body: attempt.values.body.trim(),
+            },
+            String(attempt.values.expectedRevision + 1),
+          );
         } catch (failure) {
           setError(
             failure instanceof Error
@@ -57,6 +125,37 @@ export function JournalEntryEditor({
       }}
     >
       <h3 className="text-sm font-medium">Edit entry</h3>
+      {recovery.draft?.submission && !pending && (
+        <div role="status" className="space-y-2 border border-rule p-3 text-sm">
+          <p>
+            Check the earlier save before retrying. Any text you added since then remains a separate
+            draft.
+          </p>
+          <Button
+            type="button"
+            variant="outline"
+            disabled={checking}
+            onClick={async () => {
+              setChecking(true);
+              setRetryVerified(false);
+              try {
+                const saved = await onRefresh();
+                const attempt = recovery.current()?.submission;
+                if (!saved)
+                  setError("This entry is unavailable. Your draft is kept so you can copy it.");
+                else if (attempt && saved.revision === attempt.values.expectedRevision)
+                  setRetryVerified(true);
+              } catch {
+                setError("The saved entry could not be checked. Your draft is kept.");
+              } finally {
+                setChecking(false);
+              }
+            }}
+          >
+            {checking ? "Checking…" : "Check save"}
+          </Button>
+        </div>
+      )}
       {changed ? (
         <div role="status" className="space-y-2 border border-rule p-3 text-sm">
           <p>
@@ -92,7 +191,7 @@ export function JournalEntryEditor({
           onChange={(event) => setLabel(event.target.value)}
           maxLength={400}
           readOnly={pending}
-          className="mt-1 w-full rounded-sm border border-input bg-background px-3 py-2 text-sm"
+          className="pattern-mobile-field mt-1 w-full rounded-sm border border-input bg-background px-3 py-2 text-sm"
         />
       </label>
       <label className="block">
@@ -103,7 +202,7 @@ export function JournalEntryEditor({
           maxLength={4000}
           rows={6}
           readOnly={pending}
-          className="mt-1 w-full rounded-sm border border-input bg-background px-3 py-2 text-sm leading-relaxed"
+          className="pattern-mobile-field mt-1 w-full rounded-sm border border-input bg-background px-3 py-2 text-sm leading-relaxed"
         />
       </label>
       <p className="text-xs text-muted-foreground">
@@ -114,12 +213,32 @@ export function JournalEntryEditor({
           {error}
         </p>
       ) : null}
+      <DraftRecoveryNotice
+        draft={recovery.draft}
+        candidates={recovery.recoveryCandidates.filter((d) => d.entityKey === initialEntry.id)}
+        durability={recovery.durability}
+        error={recovery.error}
+        onResume={recovery.resume}
+        onDiscard={recovery.discard}
+        entityKey={initialEntry.id}
+      />
       <div className="flex flex-wrap gap-3">
         <Button
           type="submit"
-          disabled={pending || !label.trim() || Boolean(changed) || !latestEntry}
+          disabled={
+            pending ||
+            checking ||
+            Boolean(recovery.draft?.submission && !retryVerified) ||
+            !label.trim() ||
+            Boolean(changed) ||
+            !latestEntry
+          }
         >
-          {pending ? "Saving…" : "Save changes"}
+          {pending
+            ? "Saving…"
+            : recovery.draft?.submission
+              ? "Retry earlier change"
+              : "Save changes"}
         </Button>
         <Button type="button" variant="outline" disabled={pending} onClick={onCancel}>
           Cancel

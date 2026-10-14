@@ -1,0 +1,77 @@
+async page => {
+  const engine=page.context().browser().browserType().name();
+  const result={engine,version:page.context().browser().version(),evidence:'Render with synthetic services; desktop emulation, not Device',cases:[],pageErrors:[]};
+  const base='http://127.0.0.1:4199',out='/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-overlays-2026-10-14/';
+  page.setDefaultTimeout(7000);
+  page.on('pageerror',e=>result.pageErrors.push(e.message));
+  await page.emulateMedia({reducedMotion:'reduce'});
+  const settle=()=>page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(()=>requestAnimationFrame(r)))));
+  const check=(condition,message)=>{if(!condition)throw Error(message)};
+  const run=async(name,fn)=>{try{result.cases.push({name,pass:true,...await fn()})}catch(e){result.cases.push({name,pass:false,error:String(e)})}};
+  const go=async(path,selector)=>{await page.goto(base+path);await page.locator(selector).first().waitFor();await page.evaluate(()=>document.fonts.ready);await settle()};
+  const open=async()=>{await page.getByRole('button',{name:'Open menu',exact:true}).click();await page.locator('#mobile-navigation').waitFor();await settle()};
+  const hidden=async()=>{await page.locator('#mobile-navigation').waitFor({state:'hidden'});await settle()};
+  const historySeed=async()=>{await page.setViewportSize({width:360,height:800});await go('/journal','.journal-entry');await page.getByRole('navigation',{name:'Quick navigation'}).getByRole('link',{name:'Today',exact:true}).click();await page.locator('.today-reading').waitFor();await settle()};
+  for(const viewport of [{width:320,height:568},{width:360,height:800},{width:440,height:956},{width:667,height:375},{width:844,height:390}]) await run('Menu layout '+viewport.width+'x'+viewport.height,async()=>{
+    await page.setViewportSize(viewport);await go('/','.today-reading');
+    const closed=await page.locator('header').evaluate(el=>({position:getComputedStyle(el).position,height:el.getBoundingClientRect().height}));
+    if(viewport.height<500){check(closed.position==='static','Landscape header is still sticky');await page.evaluate(()=>scrollTo(0,300));await settle();check((await page.locator('header').boundingBox()).y<0,'Landscape header does not scroll away');await page.evaluate(()=>scrollTo(0,0))}
+    await open();
+    const bounds=await page.locator('#mobile-navigation').evaluate(el=>({rect:el.getBoundingClientRect().toJSON(),scrollHeight:el.scrollHeight,overflow:getComputedStyle(el).overscrollBehaviorY,root:document.documentElement.scrollWidth,width:innerWidth,close:document.querySelector('[aria-label="Close menu"]').getBoundingClientRect().toJSON()}));
+    check(bounds.root<=viewport.width,'Page has horizontal overflow');check(bounds.close.top>=0&&bounds.close.bottom<=viewport.height,'Close menu is outside viewport');check(bounds.overflow==='contain','Menu chaining not contained');
+    await page.locator('#mobile-navigation').evaluate(el=>el.scrollTop=el.scrollHeight);await settle();
+    const before=await page.evaluate(()=>scrollY),box=await page.locator('#mobile-navigation').boundingBox();
+    await page.mouse.move(box.x+box.width/2,box.y+box.height-15);await page.mouse.wheel(0,500);await page.waitForTimeout(220);
+    const after=await page.evaluate(()=>scrollY);check(Math.abs(after-before)<2,'Menu boundary scroll moved page');
+    await page.screenshot({path:out+engine+'-menu-'+viewport.width+'x'+viewport.height+'.png',animations:'disabled'});
+    await page.keyboard.press('Escape');await hidden();check(await page.getByRole('button',{name:'Open menu',exact:true}).evaluate(el=>el===document.activeElement),'Escape did not restore trigger focus');
+    return {viewport,closed,bounds,boundaryScroll:{before,after}};
+  });
+  for(const method of ['Back','Close','Escape','current destination','outside','double Close']) await run('Menu history: '+method,async()=>{
+    await historySeed();await open();
+    const openedIndex=await page.evaluate(()=>history.state.__TSR_index);
+    if(method==='Back')await page.goBack();
+    else if(method==='Close')await page.getByRole('button',{name:'Close menu',exact:true}).click();
+    else if(method==='Escape')await page.keyboard.press('Escape');
+    else if(method==='current destination')await page.locator('#mobile-navigation').getByRole('link',{name:'Today',exact:true}).click();
+    else if(method==='outside')await page.locator('main').click({position:{x:6,y:6}});
+    else await page.getByRole('button',{name:'Close menu',exact:true}).evaluate(el=>{el.click();el.click()});
+    await hidden();check(new URL(page.url()).pathname==='/','Closing menu left source route');
+    const closedIndex=await page.evaluate(()=>history.state.__TSR_index);check(openedIndex-closedIndex===1,'Menu entry was not consumed once');
+    await page.goBack();await page.locator('.journal-entry').waitFor();check(new URL(page.url()).pathname==='/journal','Extra Back stop after dismissal');
+    return {openedIndex,closedIndex,nextBack:page.url()};
+  });
+  await run('New destination replaces menu entry',async()=>{
+    await historySeed();await open();await page.locator('#mobile-navigation').getByRole('link',{name:'Your pattern',exact:true}).click();await page.locator('#pattern-placements').waitFor();
+    check(await page.locator('#mobile-navigation').count()===0,'Menu retained on destination');await page.goBack();await page.locator('.today-reading').waitFor();check(await page.locator('#mobile-navigation').count()===0,'Back reopened replaced menu entry');await page.goBack();await page.locator('.journal-entry').waitFor();return {nextBack:page.url()};
+  });
+  await run('Quick navigation also replaces open menu entry',async()=>{
+    await historySeed();await open();await page.getByRole('navigation',{name:'Quick navigation'}).getByRole('link',{name:'Journal',exact:true}).click();await page.locator('.journal-entry').waitFor();await page.goBack();await page.locator('.today-reading').waitFor();check(await page.locator('#mobile-navigation').count()===0,'Quick nav left menu entry');return {nextBack:page.url()};
+  });
+  await run('Reload and Forward keep menu history coherent',async()=>{
+    await historySeed();await open();await page.reload();await page.locator('#mobile-navigation').waitFor();await page.keyboard.press('Escape');await hidden();await page.goForward();await page.locator('#mobile-navigation').waitFor();await page.keyboard.press('Escape');await hidden();await page.goBack();await page.locator('.journal-entry').waitFor();return {nextBack:page.url()};
+  });
+  await run('Breakpoint change consumes hidden menu entry',async()=>{
+    await historySeed();await open();await page.setViewportSize({width:1280,height:800});await hidden();await page.goBack();await page.locator('.journal-entry').waitFor();return {nextBack:page.url()};
+  });
+  for(const method of ['Back','Escape','outside','current destination','new destination']) await run('Desktop More: '+method,async()=>{
+    await page.setViewportSize({width:1280,height:800});await go('/journal','.journal-entry');await page.evaluate(()=>window.auditRouter.navigate({to:'/privacy'}));await page.getByRole('heading',{name:'Context & privacy',exact:true}).waitFor();
+    await page.getByRole('button',{name:/More pages/}).click();await page.locator('#more-navigation').waitFor();
+    if(method==='Back')await page.goBack();
+    else if(method==='Escape')await page.keyboard.press('Escape');
+    else if(method==='outside')await page.locator('main h1').click();
+    else await page.locator('#more-navigation').getByRole('link',{name:method==='current destination'?'Context & privacy':'Plans',exact:true}).click();
+    await page.locator('#more-navigation').waitFor({state:'hidden'});await settle();
+    if(method==='new destination'){await page.waitForURL(url=>url.pathname==='/plans');await page.goBack();await page.getByRole('heading',{name:'Context & privacy',exact:true}).waitFor()}
+    check(new URL(page.url()).pathname==='/privacy','More dismissal left source page');await page.goBack();await page.locator('.journal-entry').waitFor();return {nextBack:page.url()};
+  });
+  await run('Menu dismissal while route authentication is delayed',async()=>{
+    await page.setViewportSize({width:360,height:800});await go('/journal','.journal-entry');
+    await page.evaluate(()=>window.mobileAudit.state.delay=1500);
+    await page.getByRole('button',{name:'Open menu',exact:true}).click();await page.locator('#mobile-navigation').waitFor({timeout:750});
+    await page.keyboard.press('Escape');await page.locator('#mobile-navigation').waitFor({state:'hidden',timeout:750});
+    await page.evaluate(()=>window.mobileAudit.state.delay=0);await page.waitForTimeout(1600);
+    check(new URL(page.url()).pathname==='/journal','Dismissal left Journal');check(await page.locator('#mobile-navigation').count()===0,'Delayed route check reopened menu');return {url:page.url()};
+  });
+  return result;
+}

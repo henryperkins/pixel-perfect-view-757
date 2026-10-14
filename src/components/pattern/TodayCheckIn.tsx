@@ -1,9 +1,12 @@
+import { useMemberDraft, useMemberDraftLifecycle } from "./MemberDraftProvider";
+import { DraftRecoveryNotice } from "./DraftRecoveryNotice";
+import { sameDraftValues } from "@/lib/member-drafts";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { useEffect, useId, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { saveDailyCheckIn } from "@/lib/pattern.functions";
+import { fetchToday, saveDailyCheckIn } from "@/lib/pattern.functions";
 
 function BandPicker({
   label,
@@ -56,7 +59,7 @@ function BandPicker({
             />
             <span
               aria-hidden="true"
-              className="flex h-11 min-w-11 items-center justify-center rounded-md border border-input bg-card font-mono text-sm text-foreground transition-colors hover:bg-secondary peer-checked:border-primary peer-checked:bg-primary peer-checked:text-primary-foreground peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-background peer-disabled:cursor-not-allowed peer-disabled:opacity-50"
+              className="flex h-12 min-w-11 items-center justify-center rounded-md border border-input bg-card font-mono text-sm text-foreground transition-colors hover:bg-secondary peer-checked:border-primary peer-checked:bg-primary peer-checked:text-primary-foreground peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-background peer-disabled:cursor-not-allowed peer-disabled:opacity-50"
             >
               {band}
             </span>
@@ -124,11 +127,13 @@ function permittedCheckIn(values: CheckInDraft, wellness: TodayWellness): CheckI
 /** This form is scoped to an account and the server's current day. */
 export function TodayCheckIn({
   day,
+  timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC",
   accountId,
   wellness,
   disabled = false,
 }: {
   day: string;
+  timezone?: string;
   accountId: string;
   wellness: TodayWellness;
   disabled?: boolean;
@@ -146,6 +151,40 @@ export function TodayCheckIn({
       error: null as string | null,
     };
   });
+
+  const complete = useCallback(
+    (value: CheckInDraft) => ({ ...value, day, timezone }),
+    [day, timezone],
+  );
+  const recovery = useMemberDraft({
+    kind: "check-in",
+    entityKey: day,
+    values: complete(state.draft),
+    baseline: { values: complete(state.saved), version: state.savedAt },
+  });
+  const recoveryRef = useRef(recovery);
+  recoveryRef.current = recovery;
+  const { invalidateConsentFields } = useMemberDraftLifecycle();
+  const [review, setReview] = useState<CheckInDraft | null>(null);
+  const [checking, setChecking] = useState(false);
+  useEffect(() => {
+    void invalidateConsentFields({ sleep: wellness.sleepEnabled, stress: wellness.stressEnabled });
+  }, [wellness.sleepEnabled, wellness.stressEnabled, invalidateConsentFields]);
+  useEffect(() => {
+    const stored = recoveryRef.current.current();
+    if (!stored) return;
+    const canonical = permittedCheckIn(checkInDraft(wellness), wellness);
+    const next = permittedCheckIn(
+      stored.submission
+        ? stored.values
+        : reconcileCheckIn(stored.values, stored.baseline.values, canonical),
+      wellness,
+    );
+    recoveryRef.current.rebase(complete(next), {
+      values: complete(canonical),
+      version: wellness.savedAt,
+    });
+  }, [wellness, complete]);
 
   useEffect(() => {
     mounted.current = true;
@@ -180,9 +219,10 @@ export function TodayCheckIn({
     });
   }, [wellness]);
 
-  const draft = permittedCheckIn(state.draft, wellness);
+  const draft = permittedCheckIn(recovery.draft?.values ?? state.draft, wellness);
   const dirty = !sameCheckIn(draft, permittedCheckIn(state.saved, wellness));
   const edit = <K extends keyof CheckInDraft>(field: K, value: CheckInDraft[K]) => {
+    recovery.update(complete({ ...draft, [field]: value }));
     setState((previous) => ({
       ...previous,
       draft: { ...previous.draft, [field]: value },
@@ -190,21 +230,40 @@ export function TodayCheckIn({
   };
 
   const saveNote = useMutation({
-    mutationFn: (submitted: CheckInDraft) =>
-      checkIn({
-        data: { day, ...submitted, note: submitted.note.trim() || null },
-      }),
+    mutationFn: async (submitted: CheckInDraft) => {
+      const checkpoint = await recoveryRef.current.checkpointSubmission(complete(submitted));
+      const values = permittedCheckIn(checkpoint.values, wellness);
+      const res = await checkIn({ data: { day, ...values, note: values.note.trim() || null } });
+      return { res, checkpoint };
+    },
     onMutate: (submitted) => {
       pendingSave.current = submitted;
       setState((previous) => ({ ...previous, error: null }));
     },
-    onSuccess: (res, submitted) => {
+    onSuccess: ({ res, checkpoint }, submitted) => {
+      const liveDraft = recoveryRef.current.current()?.values ?? submitted;
+      const savedValues = checkInDraft(res.checkIn);
+      const acknowledged = {
+        ...checkpoint,
+        values: complete({
+          ...checkpoint.values,
+          note: checkpoint.values.note.trim(),
+          sleep: savedValues.sleep === null ? null : checkpoint.values.sleep,
+          stress: savedValues.stress === null ? null : checkpoint.values.stress,
+        }),
+      };
+      recoveryRef.current.reconcileAcknowledgement(
+        acknowledged,
+        complete(savedValues),
+        res.checkIn.savedAt,
+      );
+      setReview(null);
       void qc.invalidateQueries({ queryKey: ["today", accountId] });
       void qc.invalidateQueries({ queryKey: ["journal"] });
       if (!mounted.current) return;
       const saved = checkInDraft(res.checkIn);
       setState((previous) => {
-        const next = reconcileCheckIn(previous.draft, submitted, saved);
+        const next = reconcileCheckIn(liveDraft, submitted, saved);
         // Consent may have changed on the server while this request was in flight.
         if (submitted.sleep !== null && saved.sleep === null) next.sleep = null;
         if (submitted.stress !== null && saved.stress === null) next.stress = null;
@@ -250,7 +309,11 @@ export function TodayCheckIn({
           : "Not saved yet today";
 
   const formId = useId();
-  const canSave = !disabled && !saveNote.isPending && (dirty || Boolean(state.error));
+  const canSave =
+    !disabled &&
+    !saveNote.isPending &&
+    !recovery.draft?.submission &&
+    (dirty || Boolean(state.error));
 
   return (
     <form
@@ -267,6 +330,78 @@ export function TodayCheckIn({
       <p className="mt-1 text-sm text-muted-foreground">
         Choose what fits. Every field is optional.
       </p>
+      {recovery.draft?.submission && !saveNote.isPending && (
+        <div className="my-3 space-y-2 text-sm" role="status">
+          <p>A previous save has not been confirmed. Check the saved check-in before retrying.</p>
+          <Button
+            type="button"
+            variant="outline"
+            disabled={checking}
+            onClick={async () => {
+              setChecking(true);
+              try {
+                const latest = await fetchToday({ data: { timezone } });
+                if (latest.needsOnboarding || latest.day !== day)
+                  throw new Error("Return to this draft’s original day to review it.");
+                const saved = permittedCheckIn(checkInDraft(latest.wellness), latest.wellness);
+                const pending = recovery.current()?.submission;
+                if (
+                  pending &&
+                  sameDraftValues(
+                    { ...pending.values, note: pending.values.note.trim() },
+                    complete(saved),
+                  )
+                ) {
+                  recovery.reconcileAcknowledgement(
+                    { ...pending, values: { ...pending.values, note: pending.values.note.trim() } },
+                    complete(saved),
+                    latest.wellness.savedAt,
+                  );
+                  setState((previous) => ({
+                    ...previous,
+                    draft: saved,
+                    saved,
+                    savedAt: latest.wellness.savedAt,
+                    error: null,
+                  }));
+                } else {
+                  setReview(saved);
+                }
+              } catch {
+                setState((previous) => ({
+                  ...previous,
+                  error: "The saved check-in could not be checked. Your draft is kept.",
+                }));
+              } finally {
+                setChecking(false);
+              }
+            }}
+          >
+            {checking ? "Checking…" : "Check save"}
+          </Button>
+          {review && (
+            <div className="space-y-2 border border-rule p-3">
+              <p>
+                Saved check-in: mood {review.mood ?? "—"}, energy {review.energy ?? "—"}.{" "}
+                {review.note || "No reflection note saved."}
+              </p>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  const pending = recovery.current()?.submission;
+                  if (pending)
+                    recovery.reconcileAcknowledgement(pending, complete(review), state.savedAt);
+                  setState((previous) => ({ ...previous, saved: review, error: null }));
+                  setReview(null);
+                }}
+              >
+                Keep my draft and review before saving
+              </Button>
+            </div>
+          )}
+        </div>
+      )}
       <div className="mt-3 space-y-3">
         <BandPicker
           label="Mood"
@@ -319,11 +454,30 @@ export function TodayCheckIn({
           rows={3}
           maxLength={2000}
           placeholder="A few words about today…"
-          className="mt-2 w-full rounded-sm border border-input bg-card px-3 py-2 text-base outline-none focus:border-ring focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm"
+          className="pattern-mobile-field mt-2 w-full rounded-sm border border-input bg-card px-3 py-2 text-base outline-none focus:border-ring focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm"
         />
       </div>
+      <DraftRecoveryNotice
+        draft={recovery.draft}
+        candidates={recovery.recoveryCandidates}
+        durability={recovery.durability}
+        error={recovery.error}
+        onResume={recovery.resume}
+        onDiscard={async (id) => {
+          if (id === recovery.current()?.draftId) {
+            setState((previous) => ({ ...previous, draft: previous.saved, error: null }));
+            setReview(null);
+          }
+          await recovery.discard(id);
+        }}
+        entityKey={day}
+      />
       <div className="today-check-in-save mt-4 flex flex-wrap items-center gap-3">
-        <Button type="submit" disabled={!canSave} className="h-11 min-w-36 rounded-sm px-4 text-sm">
+        <Button
+          type="submit"
+          disabled={!canSave}
+          className="h-auto min-h-12 min-w-0 max-w-full whitespace-normal rounded-sm px-4 text-sm"
+        >
           {saveNote.isPending ? "Saving…" : state.error ? "Try saving again" : "Save check-in"}
         </Button>
         <span

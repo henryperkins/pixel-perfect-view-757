@@ -1,0 +1,205 @@
+{
+  "cases": [
+    {
+      "before": {
+        "label": "Every area",
+        "scrollY": 1086,
+        "viewport": {
+          "scale": 1,
+          "offset": 0,
+          "height": 568,
+          "width": 320,
+          "pageTop": 1086
+        },
+        "rect": {
+          "x": 40,
+          "y": 273.375,
+          "width": 165.046875,
+          "height": 72,
+          "top": 273.375,
+          "right": 205.046875,
+          "bottom": 345.375,
+          "left": 40
+        },
+        "hit": "Every area",
+        "filterPosition": "static",
+        "active": "Skip to contentPatternpersonal ephemerisTodayYour patternTim"
+      },
+      "after": {
+        "label": "Every area",
+        "scrollY": 1086,
+        "viewport": {
+          "scale": 1,
+          "offset": 0,
+          "height": 568,
+          "width": 320,
+          "pageTop": 1086
+        },
+        "rect": {
+          "x": 41.65046691894531,
+          "y": 274.0950012207031,
+          "width": 161.74594116210938,
+          "height": 70.55999755859375,
+          "top": 274.0950012207031,
+          "right": 203.3964080810547,
+          "bottom": 344.6549987792969,
+          "left": 41.65046691894531
+        },
+        "hit": "Every area",
+        "filterPosition": "static",
+        "active": "Every area"
+      }
+    },
+    {
+      "before": {
+        "label": "Identity",
+        "scrollY": 1164,
+        "viewport": {
+          "scale": 1,
+          "offset": 0,
+          "height": 568,
+          "width": 320,
+          "pageTop": 1164
+        },
+        "rect": {
+          "x": 40,
+          "y": 273.375,
+          "width": 128.09375,
+          "height": 72,
+          "top": 273.375,
+          "right": 168.09375,
+          "bottom": 345.375,
+          "left": 40
+        },
+        "hit": "Identity",
+        "filterPosition": "static",
+        "active": "Every area"
+      },
+      "after": {
+        "label": "Identity",
+        "scrollY": 1164,
+        "viewport": {
+          "scale": 1,
+          "offset": 0,
+          "height": 568,
+          "width": 320,
+          "pageTop": 1164
+        },
+        "rect": {
+          "x": 40,
+          "y": 273.375,
+          "width": 128.09375,
+          "height": 72,
+          "top": 273.375,
+          "right": 168.09375,
+          "bottom": 345.375,
+          "left": 40
+        },
+        "hit": "Identity",
+        "filterPosition": "static",
+        "active": "Identity"
+      }
+    },
+    {
+      "before": {
+        "label": "Relationships",
+        "scrollY": 1164,
+        "viewport": {
+          "scale": 1,
+          "offset": 78,
+          "height": 568,
+          "width": 320,
+          "pageTop": 1242
+        },
+        "rect": {
+          "x": 40,
+          "y": 351.375,
+          "width": 203.3125,
+          "height": 72,
+          "top": 351.375,
+          "right": 243.3125,
+          "bottom": 423.375,
+          "left": 40
+        },
+        "hit": "Relationships",
+        "filterPosition": "static",
+        "active": "Identity"
+      },
+      "after": {
+        "label": "Relationships",
+        "scrollY": 1164,
+        "viewport": {
+          "scale": 1,
+          "offset": 16,
+          "height": 568,
+          "width": 320,
+          "pageTop": 1180
+        },
+        "rect": {
+          "x": 40,
+          "y": 351.375,
+          "width": 203.3125,
+          "height": 72,
+          "top": 351.375,
+          "right": 243.3125,
+          "bottom": 423.375,
+          "left": 40
+        },
+        "hit": "Relationships",
+        "filterPosition": "static",
+        "active": "Relationships"
+      }
+    },
+    {
+      "before": {
+        "label": "Work",
+        "scrollY": 1164,
+        "viewport": {
+          "scale": 1,
+          "offset": 140,
+          "height": 568,
+          "width": 320,
+          "pageTop": 1304
+        },
+        "rect": {
+          "x": 40,
+          "y": 429.375,
+          "width": 101.375,
+          "height": 72,
+          "top": 429.375,
+          "right": 141.375,
+          "bottom": 501.375,
+          "left": 40
+        },
+        "hit": "Work",
+        "filterPosition": "static",
+        "active": "Relationships"
+      },
+      "after": {
+        "label": "Work",
+        "scrollY": 1186,
+        "viewport": {
+          "scale": 1,
+          "offset": 164,
+          "height": 568,
+          "width": 320,
+          "pageTop": 1350
+        },
+        "rect": {
+          "x": 40,
+          "y": 407.375,
+          "width": 101.375,
+          "height": 72,
+          "top": 407.375,
+          "right": 141.375,
+          "bottom": 479.375,
+          "left": 40
+        },
+        "hit": "Work",
+        "filterPosition": "static",
+        "active": "Relationships"
+      },
+      "error": "TimeoutError: locator.tap: Timeout 2000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.timing-area-options').getByRole('button', { name: 'Work', exact: true })\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" aria-pressed=\"false\" class=\"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2\">Work</button>\u001b[22m\n\u001b[2m  - attempting tap action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <button type=\"button\" aria-pressed=\"false\" class=\"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opa"
+    }
+  ]
+}

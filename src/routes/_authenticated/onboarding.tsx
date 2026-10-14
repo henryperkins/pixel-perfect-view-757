@@ -1,3 +1,4 @@
+import { usePlaceLookup } from "@/hooks/usePlaceLookup";
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
@@ -13,8 +14,7 @@ export const Route = createFileRoute("/_authenticated/onboarding")({
       { title: "Birth details — Pattern" },
       {
         name: "description",
-        content:
-          "Enter birth date, time accuracy and place so Pattern can calculate your chart.",
+        content: "Enter birth date, time accuracy and place so Pattern can calculate your chart.",
       },
       { property: "og:title", content: "Birth details — Pattern" },
       {
@@ -51,7 +51,18 @@ function Onboarding() {
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   const [timezone, setTimezone] = useState(localTz());
-  const [lookingUp, setLookingUp] = useState(false);
+  const placeLookup = usePlaceLookup({
+    fields: { placeLabel, latitude, longitude, timezone },
+
+    onResolve: (fields) => {
+      setPlaceLabel(fields.placeLabel);
+      setLatitude(fields.latitude);
+      setLongitude(fields.longitude);
+      setTimezone(fields.timezone);
+    },
+  });
+  const lookingUp = placeLookup.pending;
+  const lookupPlace = placeLookup.lookup;
 
   const submit = useMutation({
     mutationFn: () =>
@@ -73,59 +84,40 @@ function Onboarding() {
     onError: (e: Error) => toast.error(e.message),
   });
 
-  async function lookupPlace() {
-    if (!placeLabel.trim()) return;
-    setLookingUp(true);
-    try {
-      const res = await fetch(
-        `https://geocoding-api.open-meteo.com/v1/search?count=1&name=${encodeURIComponent(placeLabel)}`,
-      );
-      const json = (await res.json()) as {
-        results?: { latitude: number; longitude: number; timezone: string; name: string; country?: string }[];
-      };
-      const hit = json.results?.[0];
-      if (!hit) {
-        toast.error("No match. Enter coordinates manually.");
-        return;
-      }
-      setLatitude(hit.latitude.toFixed(4));
-      setLongitude(hit.longitude.toFixed(4));
-      if (hit.timezone) setTimezone(hit.timezone);
-      setPlaceLabel(hit.country ? `${hit.name}, ${hit.country}` : hit.name);
-      toast.success("Coordinates and zone resolved.");
-    } catch {
-      toast.error("Lookup failed. Enter coordinates manually.");
-    } finally {
-      setLookingUp(false);
-    }
-  }
-
-  const ready = birthDate && placeLabel && latitude !== "" && longitude !== "" && timezone;
+  const ready =
+    placeLookup.ready && birthDate && placeLabel && latitude !== "" && longitude !== "" && timezone;
 
   return (
     <Shell>
       <div className="mx-auto max-w-xl animate-rise">
         <h1 className="text-3xl">Birth details</h1>
         <p className="mt-3 text-sm text-muted-foreground">
-          Stored encrypted. Used only to compute positions, angles and cycles — never
-          shared with the editorial system.
+          Stored encrypted. Used only to compute positions, angles and cycles — never shared with
+          the editorial system.
         </p>
 
         <form
           className="mt-8 space-y-6"
           onSubmit={(e) => {
             e.preventDefault();
-            submit.mutate();
+            if (ready && !submit.isPending) submit.mutate();
           }}
         >
+          {placeLookup.error && (
+            <p role="alert" className="text-sm text-destructive">
+              {placeLookup.error}
+            </p>
+          )}
           <label className="block">
             <span className="technical text-muted-foreground">Birth date</span>
             <input
               type="date"
+              enterKeyHint="next"
+              autoComplete="bday"
               required
               value={birthDate}
               onChange={(e) => setBirthDate(e.target.value)}
-              className="mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 font-mono text-sm outline-none focus:border-ring"
+              className="pattern-mobile-field mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 font-mono text-sm outline-none focus:border-ring"
             />
           </label>
 
@@ -136,6 +128,7 @@ function Onboarding() {
                 <button
                   key={a.value}
                   type="button"
+                  aria-pressed={accuracy === a.value}
                   onClick={() => setAccuracy(a.value)}
                   className={`rounded-sm border px-3 py-2 text-left text-sm transition-colors ${
                     accuracy === a.value
@@ -155,15 +148,16 @@ function Onboarding() {
               <span className="technical text-muted-foreground">Birth time (local)</span>
               <input
                 type="time"
+                enterKeyHint="next"
                 value={birthTime}
                 onChange={(e) => setBirthTime(e.target.value)}
-                className="mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 font-mono text-sm outline-none focus:border-ring"
+                className="pattern-mobile-field mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 font-mono text-sm outline-none focus:border-ring"
               />
             </label>
           ) : (
             <p className="border-l-2 border-primary bg-evidence px-3 py-2 text-xs text-evidence-foreground">
-              With an unknown time, houses, ascendant, midheaven and fast Moon claims are
-              suppressed rather than guessed. Everything else still calculates.
+              With an unknown time, houses, ascendant, midheaven and fast Moon claims are suppressed
+              rather than guessed. Everything else still calculates.
             </p>
           )}
 
@@ -174,9 +168,14 @@ function Onboarding() {
                 <input
                   required
                   value={placeLabel}
-                  onChange={(e) => setPlaceLabel(e.target.value)}
+                  onChange={(e) => {
+                    placeLookup.invalidate();
+                    setPlaceLabel(e.target.value);
+                    setLatitude("");
+                    setLongitude("");
+                  }}
                   placeholder="City, country"
-                  className="w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
+                  className="pattern-mobile-field w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
                 />
                 <button
                   type="button"
@@ -193,24 +192,33 @@ function Onboarding() {
                 <span className="technical text-muted-foreground">Lat</span>
                 <input
                   value={latitude}
-                  onChange={(e) => setLatitude(e.target.value)}
-                  className="mt-1.5 w-full rounded-sm border border-input bg-card px-2 py-1.5 font-mono text-xs outline-none focus:border-ring"
+                  onChange={(e) => {
+                    placeLookup.invalidate("manual");
+                    setLatitude(e.target.value);
+                  }}
+                  className="pattern-mobile-field mt-1.5 w-full rounded-sm border border-input bg-card px-2 py-1.5 font-mono text-xs outline-none focus:border-ring"
                 />
               </label>
               <label className="block">
                 <span className="technical text-muted-foreground">Lon</span>
                 <input
                   value={longitude}
-                  onChange={(e) => setLongitude(e.target.value)}
-                  className="mt-1.5 w-full rounded-sm border border-input bg-card px-2 py-1.5 font-mono text-xs outline-none focus:border-ring"
+                  onChange={(e) => {
+                    placeLookup.invalidate("manual");
+                    setLongitude(e.target.value);
+                  }}
+                  className="pattern-mobile-field mt-1.5 w-full rounded-sm border border-input bg-card px-2 py-1.5 font-mono text-xs outline-none focus:border-ring"
                 />
               </label>
               <label className="block">
                 <span className="technical text-muted-foreground">Zone</span>
                 <input
                   value={timezone}
-                  onChange={(e) => setTimezone(e.target.value)}
-                  className="mt-1.5 w-full rounded-sm border border-input bg-card px-2 py-1.5 font-mono text-xs outline-none focus:border-ring"
+                  onChange={(e) => {
+                    placeLookup.invalidate("manual");
+                    setTimezone(e.target.value);
+                  }}
+                  className="pattern-mobile-field mt-1.5 w-full rounded-sm border border-input bg-card px-2 py-1.5 font-mono text-xs outline-none focus:border-ring"
                 />
               </label>
             </div>

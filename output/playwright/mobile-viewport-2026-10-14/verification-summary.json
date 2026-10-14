@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-14",
+  "baseCommit": "e8eee400592848033df1e36d3fef6a123ad9b5c8",
+  "source": "current working tree, synthetic services",
+  "evidence": "Render; no physical device or OS simulator",
+  "engines": {
+    "chromium": "155.0.8059.12",
+    "webkit": "26.6"
+  },
+  "perEngine": {
+    "normalRouteViewportCases": 72,
+    "textStressCases": 15,
+    "menuCases": 6,
+    "menuEndReachabilityCases": 3,
+    "dialogCases": 4,
+    "fluidTypeSamples": 9,
+    "toastCases": 5,
+    "navHitTargets": 20,
+    "longUrlEmailCases": 1,
+    "principalJourneySteps": 5
+  },
+  "checks": {
+    "build": "pass",
+    "typecheck": "pass",
+    "changedCodeLint": "pass",
+    "format": "pass",
+    "newDependencies": 0,
+    "ownedDiffCheck": "pass",
+    "repositoryDiffCheck": "pre-existing .env blank line at EOF; file hash unchanged",
+    "finalBrowserPageErrors": 0,
+    "resizeObserverWarnings": "none in final fixture log"
+  },
+  "notTested": [
+    "physical Safari toolbar layouts and colors",
+    "real safe-area insets",
+    "OS virtual keyboard",
+    "physical pinch zoom",
+    "standalone",
+    "VoiceOver/TalkBack"
+  ],
+  "metrics": {
+    "LCP": "not measured",
+    "INP": "not measured",
+    "CLS": "not measured"
+  },
+  "preservation": {
+    "baselineFiles": 1419,
+    "unchangedBaselineFiles": 1413,
+    "changedBaselineFiles": 6,
+    "unexpectedChanges": 0
+  }
+}

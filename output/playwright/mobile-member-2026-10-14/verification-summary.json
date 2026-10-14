@@ -1,0 +1,33 @@
+{
+  "baseCommit": "e8eee400592848033df1e36d3fef6a123ad9b5c8",
+  "date": "2026-10-14",
+  "unit": {
+    "total": 887,
+    "passed": 883,
+    "failed": 0,
+    "skipped": 4,
+    "durationMilliseconds": 56317.932003,
+    "command": "npm test"
+  },
+  "typescript": {
+    "command": "npx tsc --noEmit",
+    "passed": true
+  },
+  "build": {
+    "command": "npm run build",
+    "passed": true
+  },
+  "lint": {
+    "scope": "changed code",
+    "errors": 0,
+    "warnings": 2,
+    "warningRule": "react-refresh/only-export-components",
+    "warningFile": "src/components/pattern/MemberDraftProvider.tsx"
+  },
+  "browserEvidence": "Render; synthetic services; physical devices not tested",
+  "performance": {
+    "LCP": "not measured",
+    "INP": "not measured",
+    "CLS": "not measured"
+  }
+}

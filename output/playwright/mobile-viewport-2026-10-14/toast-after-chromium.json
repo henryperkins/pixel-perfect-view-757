@@ -1,0 +1,201 @@
+{
+  "engine": "chromium",
+  "phase": "after",
+  "cases": [
+    {
+      "width": 320,
+      "height": 568,
+      "font": 16,
+      "nav": {
+        "top": 495,
+        "bottom": 568,
+        "left": 0,
+        "right": 320,
+        "height": 73
+      },
+      "navPosition": "fixed",
+      "toast": {
+        "top": 406,
+        "bottom": 479,
+        "left": 16,
+        "right": 304,
+        "height": 73
+      },
+      "toasterClass": "toaster group",
+      "navHits": [
+        {
+          "label": "Today",
+          "reachable": true
+        },
+        {
+          "label": "Your pattern",
+          "reachable": true
+        },
+        {
+          "label": "Timing",
+          "reachable": true
+        },
+        {
+          "label": "Journal",
+          "reachable": true
+        }
+      ]
+    },
+    {
+      "width": 360,
+      "height": 800,
+      "font": 16,
+      "nav": {
+        "top": 727,
+        "bottom": 800,
+        "left": 0,
+        "right": 360,
+        "height": 73
+      },
+      "navPosition": "fixed",
+      "toast": {
+        "top": 638,
+        "bottom": 711,
+        "left": 16,
+        "right": 344,
+        "height": 73
+      },
+      "toasterClass": "toaster group",
+      "navHits": [
+        {
+          "label": "Today",
+          "reachable": true
+        },
+        {
+          "label": "Your pattern",
+          "reachable": true
+        },
+        {
+          "label": "Timing",
+          "reachable": true
+        },
+        {
+          "label": "Journal",
+          "reachable": true
+        }
+      ]
+    },
+    {
+      "width": 667,
+      "height": 375,
+      "font": 16,
+      "nav": {
+        "top": 302,
+        "bottom": 375,
+        "left": 0,
+        "right": 667,
+        "height": 73
+      },
+      "navPosition": "fixed",
+      "toast": {
+        "top": 232.5,
+        "bottom": 286,
+        "left": 287,
+        "right": 643,
+        "height": 53.5
+      },
+      "toasterClass": "toaster group",
+      "navHits": [
+        {
+          "label": "Today",
+          "reachable": true
+        },
+        {
+          "label": "Your pattern",
+          "reachable": true
+        },
+        {
+          "label": "Timing",
+          "reachable": true
+        },
+        {
+          "label": "Journal",
+          "reachable": true
+        }
+      ]
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "font": 16,
+      "nav": {
+        "top": 317,
+        "bottom": 390,
+        "left": 0,
+        "right": 844,
+        "height": 73
+      },
+      "navPosition": "fixed",
+      "toast": {
+        "top": 247.5,
+        "bottom": 301,
+        "left": 464,
+        "right": 820,
+        "height": 53.5
+      },
+      "toasterClass": "toaster group",
+      "navHits": [
+        {
+          "label": "Today",
+          "reachable": true
+        },
+        {
+          "label": "Your pattern",
+          "reachable": true
+        },
+        {
+          "label": "Timing",
+          "reachable": true
+        },
+        {
+          "label": "Journal",
+          "reachable": true
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "height": 568,
+      "font": 32,
+      "nav": {
+        "top": 395,
+        "bottom": 568,
+        "left": 0,
+        "right": 320,
+        "height": 173
+      },
+      "navPosition": "fixed",
+      "toast": {
+        "top": 306,
+        "bottom": 379,
+        "left": 16,
+        "right": 304,
+        "height": 73
+      },
+      "toasterClass": "toaster group",
+      "navHits": [
+        {
+          "label": "Today",
+          "reachable": true
+        },
+        {
+          "label": "Your pattern",
+          "reachable": true
+        },
+        {
+          "label": "Timing",
+          "reachable": true
+        },
+        {
+          "label": "Journal",
+          "reachable": true
+        }
+      ]
+    }
+  ]
+}

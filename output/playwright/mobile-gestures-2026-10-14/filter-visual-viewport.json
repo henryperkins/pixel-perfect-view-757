@@ -1,0 +1,304 @@
+{
+  "cases": [
+    {
+      "before": {
+        "label": "Every area",
+        "scrollY": 1086,
+        "viewport": {
+          "scale": 1,
+          "offset": 0,
+          "height": 568,
+          "width": 320,
+          "pageTop": 1086
+        },
+        "rect": {
+          "x": 40,
+          "y": 273.375,
+          "width": 165.046875,
+          "height": 72,
+          "top": 273.375,
+          "right": 205.046875,
+          "bottom": 345.375,
+          "left": 40
+        },
+        "hit": "Every area",
+        "filterPosition": "static",
+        "active": "Skip to contentPatternpersonal ephemerisTodayYour patternTim"
+      },
+      "after": {
+        "label": "Every area",
+        "scrollY": 1086,
+        "viewport": {
+          "scale": 1,
+          "offset": 0,
+          "height": 568,
+          "width": 320,
+          "pageTop": 1086
+        },
+        "rect": {
+          "x": 41.65046691894531,
+          "y": 274.0950012207031,
+          "width": 161.74594116210938,
+          "height": 70.55999755859375,
+          "top": 274.0950012207031,
+          "right": 203.3964080810547,
+          "bottom": 344.6549987792969,
+          "left": 41.65046691894531
+        },
+        "hit": "Every area",
+        "filterPosition": "static",
+        "active": "Every area"
+      }
+    },
+    {
+      "before": {
+        "label": "Identity",
+        "scrollY": 1164,
+        "viewport": {
+          "scale": 1,
+          "offset": 0,
+          "height": 568,
+          "width": 320,
+          "pageTop": 1164
+        },
+        "rect": {
+          "x": 40,
+          "y": 273.375,
+          "width": 128.09375,
+          "height": 72,
+          "top": 273.375,
+          "right": 168.09375,
+          "bottom": 345.375,
+          "left": 40
+        },
+        "hit": "Identity",
+        "filterPosition": "static",
+        "active": "Every area"
+      },
+      "after": {
+        "label": "Identity",
+        "scrollY": 1164,
+        "viewport": {
+          "scale": 1,
+          "offset": 0,
+          "height": 568,
+          "width": 320,
+          "pageTop": 1164
+        },
+        "rect": {
+          "x": 41.28093719482422,
+          "y": 274.0950012207031,
+          "width": 125.53186798095703,
+          "height": 70.55999755859375,
+          "top": 274.0950012207031,
+          "right": 166.81280517578125,
+          "bottom": 344.6549987792969,
+          "left": 41.28093719482422
+        },
+        "hit": "Identity",
+        "filterPosition": "static",
+        "active": "Identity"
+      }
+    },
+    {
+      "before": {
+        "label": "Relationships",
+        "scrollY": 1164,
+        "viewport": {
+          "scale": 1,
+          "offset": 62,
+          "height": 568,
+          "width": 320,
+          "pageTop": 1226
+        },
+        "rect": {
+          "x": 40,
+          "y": 351.375,
+          "width": 203.3125,
+          "height": 72,
+          "top": 351.375,
+          "right": 243.3125,
+          "bottom": 423.375,
+          "left": 40
+        },
+        "hit": "Relationships",
+        "filterPosition": "static",
+        "active": "Identity"
+      },
+      "after": {
+        "label": "Relationships",
+        "scrollY": 1164,
+        "viewport": {
+          "scale": 1,
+          "offset": 62,
+          "height": 568,
+          "width": 320,
+          "pageTop": 1226
+        },
+        "rect": {
+          "x": 42.03312683105469,
+          "y": 352.0950012207031,
+          "width": 199.24624633789062,
+          "height": 70.55999755859375,
+          "top": 352.0950012207031,
+          "right": 241.2793731689453,
+          "bottom": 422.6549987792969,
+          "left": 42.03312683105469
+        },
+        "hit": "Relationships",
+        "filterPosition": "static",
+        "active": "Relationships"
+      }
+    },
+    {
+      "before": {
+        "label": "Work",
+        "scrollY": 1164,
+        "viewport": {
+          "scale": 1,
+          "offset": 140,
+          "height": 568,
+          "width": 320,
+          "pageTop": 1304
+        },
+        "rect": {
+          "x": 40,
+          "y": 429.375,
+          "width": 101.375,
+          "height": 72,
+          "top": 429.375,
+          "right": 141.375,
+          "bottom": 501.375,
+          "left": 40
+        },
+        "hit": "Work",
+        "filterPosition": "static",
+        "active": "Relationships"
+      },
+      "after": {
+        "label": "Work",
+        "scrollY": 1164,
+        "viewport": {
+          "scale": 1,
+          "offset": 140,
+          "height": 568,
+          "width": 320,
+          "pageTop": 1304
+        },
+        "rect": {
+          "x": 41.01374816894531,
+          "y": 430.0950012207031,
+          "width": 99.34750366210938,
+          "height": 70.55999755859375,
+          "top": 430.0950012207031,
+          "right": 140.3612518310547,
+          "bottom": 500.6549987792969,
+          "left": 41.01374816894531
+        },
+        "hit": "Work",
+        "filterPosition": "static",
+        "active": "Work"
+      }
+    },
+    {
+      "before": {
+        "label": "Inner life",
+        "scrollY": 1218,
+        "viewport": {
+          "scale": 1,
+          "offset": 164,
+          "height": 568,
+          "width": 320,
+          "pageTop": 1382
+        },
+        "rect": {
+          "x": 40,
+          "y": 453.375,
+          "width": 142.984375,
+          "height": 72,
+          "top": 453.375,
+          "right": 182.984375,
+          "bottom": 525.375,
+          "left": 40
+        },
+        "hit": "Inner life",
+        "filterPosition": "static",
+        "active": "Work"
+      },
+      "after": {
+        "label": "Inner life",
+        "scrollY": 1218,
+        "viewport": {
+          "scale": 1,
+          "offset": 164,
+          "height": 568,
+          "width": 320,
+          "pageTop": 1382
+        },
+        "rect": {
+          "x": 41.429840087890625,
+          "y": 454.0950012207031,
+          "width": 140.12469482421875,
+          "height": 70.56002807617188,
+          "top": 454.0950012207031,
+          "right": 181.55453491210938,
+          "bottom": 524.655029296875,
+          "left": 41.429840087890625
+        },
+        "hit": "Inner life",
+        "filterPosition": "static",
+        "active": "Inner life"
+      }
+    },
+    {
+      "before": {
+        "label": "Structure",
+        "scrollY": 1296,
+        "viewport": {
+          "scale": 1,
+          "offset": 164,
+          "height": 568,
+          "width": 320,
+          "pageTop": 1460
+        },
+        "rect": {
+          "x": 40,
+          "y": 453.375,
+          "width": 149.171875,
+          "height": 72,
+          "top": 453.375,
+          "right": 189.171875,
+          "bottom": 525.375,
+          "left": 40
+        },
+        "hit": "Structure",
+        "filterPosition": "static",
+        "active": "Inner life"
+      },
+      "after": {
+        "label": "Structure",
+        "scrollY": 1296,
+        "viewport": {
+          "scale": 1,
+          "offset": 164,
+          "height": 568,
+          "width": 320,
+          "pageTop": 1460
+        },
+        "rect": {
+          "x": 41.49171447753906,
+          "y": 454.0950012207031,
+          "width": 146.18844604492188,
+          "height": 70.56002807617188,
+          "top": 454.0950012207031,
+          "right": 187.68016052246094,
+          "bottom": 524.655029296875,
+          "left": 41.49171447753906
+        },
+        "hit": "Structure",
+        "filterPosition": "static",
+        "active": "Structure"
+      }
+    }
+  ]
+}

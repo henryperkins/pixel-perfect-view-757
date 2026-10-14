@@ -1,0 +1,1 @@
+{"browser": {"browserName": "chromium", "launchOptions": {"executablePath": "/home/ubuntu/.cache/ms-playwright/chromium-1247/chrome-linux64/chrome"}, "contextOptions": {"viewport": {"width": 360, "height": 800}, "hasTouch": true, "isMobile": true, "deviceScaleFactor": 1}}}

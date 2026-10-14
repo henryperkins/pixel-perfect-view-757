@@ -1,0 +1,32 @@
+{
+  "engine": "webkit",
+  "version": "26.6",
+  "viewport": {
+    "width": 360,
+    "height": 800
+  },
+  "evidence": "Render with synthetic services",
+  "results": [
+    {
+      "step": "Read Today",
+      "visible": true
+    },
+    {
+      "step": "Enter check-in",
+      "mood": true,
+      "note": "Viewport audit reflection 1792006780578"
+    },
+    {
+      "step": "Save check-in",
+      "confirmed": true
+    },
+    {
+      "step": "Navigate to Journal",
+      "confirmed": true
+    },
+    {
+      "step": "Return to Today and reload",
+      "reflectionRetained": true
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 import { Field } from "@/components/pattern/Shell";
 import { Button } from "@/components/ui/button";
@@ -135,6 +135,62 @@ function PatternConnections({ data }: { data: PatternData }) {
 }
 
 export function PatternChartDetails({ data }: { data: PatternData }) {
+  const placementsId = useId();
+  const placementsRef = useRef<HTMLDivElement>(null);
+  const hasPlacements = data.placements.length > 0;
+  const [columns, setColumns] = useState({ overflowing: false, previous: false, more: false });
+
+  useEffect(() => {
+    const region = placementsRef.current;
+    if (!region) return;
+    const measure = () => {
+      const end = Math.max(0, region.scrollWidth - region.clientWidth);
+      const offset = Math.abs(region.scrollLeft);
+      const next = {
+        overflowing: region.clientWidth > 0 && end > 1,
+        previous: offset > 1,
+        more: offset < end - 1,
+      };
+      setColumns((current) =>
+        current.overflowing === next.overflowing &&
+        current.previous === next.previous &&
+        current.more === next.more
+          ? current
+          : next,
+      );
+    };
+    const observer = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(measure);
+    observer?.observe(region);
+    const table = region.querySelector("table");
+    if (table) observer?.observe(table);
+    const foldout = region.closest("details");
+    foldout?.addEventListener("toggle", measure);
+    region.addEventListener("scroll", measure, { passive: true });
+    window.addEventListener("resize", measure, { passive: true });
+    measure();
+    return () => {
+      observer?.disconnect();
+      foldout?.removeEventListener("toggle", measure);
+      region.removeEventListener("scroll", measure);
+      window.removeEventListener("resize", measure);
+    };
+  }, [hasPlacements]);
+
+  const scrollColumns = (direction: -1 | 1) => {
+    const region = placementsRef.current;
+    if (!region) return;
+    const pinnedWidth = region.querySelector("th")?.getBoundingClientRect().width ?? 0;
+    // Leave overlap in the unpinned area so paging cannot skip data behind the body column.
+    const step = Math.max(1, (region.clientWidth - pinnedWidth) * 0.8);
+    const inlineDirection = getComputedStyle(region).direction === "rtl" ? -1 : 1;
+    region.scrollBy({
+      left: direction * inlineDirection * step,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "instant"
+        : "smooth",
+    });
+  };
+
   const houseLabel = (house: number) =>
     !data.uncertainty.housesReliable ? "suppressed" : house ? `house ${house}` : "—";
 
@@ -199,17 +255,45 @@ export function PatternChartDetails({ data }: { data: PatternData }) {
             </p>
           ) : (
             <>
-              <ul className="pattern-placement-list sm:hidden">
-                {data.placements.map((placement) => (
-                  <li key={placement.key}>
-                    <span>{placement.label}</span>
-                    <span>{placement.position}</span>
-                    <span>{houseLabel(placement.house)}</span>
-                    <span>{placement.retrograde ? "Rx" : "direct"}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="pattern-placement-table hidden sm:block">
+              {columns.overflowing && (
+                <div className="mt-4">
+                  <p className="text-sm text-muted-foreground">
+                    Scroll sideways or use the column buttons to compare.
+                  </p>
+                  <div
+                    className="pattern-placement-controls"
+                    role="group"
+                    aria-label="Placement table columns"
+                  >
+                    <Button
+                      type="button"
+                      variant="outline"
+                      aria-controls={placementsId}
+                      disabled={!columns.previous}
+                      onClick={() => scrollColumns(-1)}
+                    >
+                      Previous columns
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      aria-controls={placementsId}
+                      disabled={!columns.more}
+                      onClick={() => scrollColumns(1)}
+                    >
+                      More columns
+                    </Button>
+                  </div>
+                </div>
+              )}
+              <div
+                id={placementsId}
+                ref={placementsRef}
+                className="pattern-placement-table"
+                role="region"
+                aria-label="Scrollable natal placements"
+                tabIndex={0}
+              >
                 <table>
                   <caption className="sr-only">Calculated natal placements</caption>
                   <thead>

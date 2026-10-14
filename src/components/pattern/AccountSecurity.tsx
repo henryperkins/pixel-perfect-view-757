@@ -1,3 +1,4 @@
+import { useMemberDraftLifecycle } from "./MemberDraftProvider";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
@@ -12,6 +13,7 @@ import { useAuth } from "@/hooks/useAuth";
 
 export function AccountSecurity() {
   const { session } = useAuth();
+  const { purgeAccountDrafts } = useMemberDraftLifecycle();
   const query = useQuery({
     queryKey: ["account-security", session?.userId],
     queryFn: () => fetchAccountSecurity(),
@@ -49,6 +51,11 @@ export function AccountSecurity() {
       } else {
         if (value !== repeat) throw new Error("Your new passwords do not match.");
         await changePassword({ data: { currentPassword: current, password: value } });
+        try {
+          await purgeAccountDrafts();
+        } catch {
+          /* Retried by the root after redirect. */
+        }
         window.location.assign("/auth");
       }
       setCurrent("");
@@ -142,8 +149,9 @@ export function AccountSecurity() {
               <label className="block text-sm">
                 Current password
                 <input
-                  className="mt-2 min-h-11 w-full rounded-sm border border-input bg-card px-3"
+                  className="pattern-mobile-field mt-2 min-h-11 w-full rounded-sm border border-input bg-card px-3"
                   type="password"
+                  enterKeyHint="done"
                   autoComplete="current-password"
                   required
                   maxLength={200}
@@ -154,7 +162,7 @@ export function AccountSecurity() {
               <label className="block text-sm">
                 New {mode}
                 <input
-                  className="mt-2 min-h-11 w-full rounded-sm border border-input bg-card px-3"
+                  className="pattern-mobile-field mt-2 min-h-11 w-full rounded-sm border border-input bg-card px-3"
                   type={mode === "email" ? "email" : "password"}
                   autoComplete={mode === "email" ? "email" : "new-password"}
                   required
@@ -168,8 +176,9 @@ export function AccountSecurity() {
                 <label className="block text-sm">
                   Repeat new password
                   <input
-                    className="mt-2 min-h-11 w-full rounded-sm border border-input bg-card px-3"
+                    className="pattern-mobile-field mt-2 min-h-11 w-full rounded-sm border border-input bg-card px-3"
                     type="password"
+                    enterKeyHint="done"
                     autoComplete="new-password"
                     required
                     minLength={8}

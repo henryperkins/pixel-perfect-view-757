@@ -1,0 +1,1 @@
+async (page) => { await page.goto('http://127.0.0.1:4198/journal');return await page.evaluate(async()=>{const m=await import('/tests/helpers/mobile-ui/draft-store-cases.ts?v='+Date.now());try{return await m.runDraftStoreCases()}catch(e){return {error:e.message}}}); }

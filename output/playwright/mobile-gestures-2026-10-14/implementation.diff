@@ -1,0 +1,223 @@
+--- before/src/components/pattern/PatternChartDetails.tsx
++++ after/src/components/pattern/PatternChartDetails.tsx
+@@ -1,5 +1,5 @@
+ import { Link } from "@tanstack/react-router";
+-import { useState } from "react";
++import { useEffect, useId, useRef, useState } from "react";
+ 
+ import { Field } from "@/components/pattern/Shell";
+ import { Button } from "@/components/ui/button";
+@@ -135,6 +135,62 @@
+ }
+ 
+ export function PatternChartDetails({ data }: { data: PatternData }) {
++  const placementsId = useId();
++  const placementsRef = useRef<HTMLDivElement>(null);
++  const hasPlacements = data.placements.length > 0;
++  const [columns, setColumns] = useState({ overflowing: false, previous: false, more: false });
++
++  useEffect(() => {
++    const region = placementsRef.current;
++    if (!region) return;
++    const measure = () => {
++      const end = Math.max(0, region.scrollWidth - region.clientWidth);
++      const offset = Math.abs(region.scrollLeft);
++      const next = {
++        overflowing: region.clientWidth > 0 && end > 1,
++        previous: offset > 1,
++        more: offset < end - 1,
++      };
++      setColumns((current) =>
++        current.overflowing === next.overflowing &&
++        current.previous === next.previous &&
++        current.more === next.more
++          ? current
++          : next,
++      );
++    };
++    const observer = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(measure);
++    observer?.observe(region);
++    const table = region.querySelector("table");
++    if (table) observer?.observe(table);
++    const foldout = region.closest("details");
++    foldout?.addEventListener("toggle", measure);
++    region.addEventListener("scroll", measure, { passive: true });
++    window.addEventListener("resize", measure, { passive: true });
++    measure();
++    return () => {
++      observer?.disconnect();
++      foldout?.removeEventListener("toggle", measure);
++      region.removeEventListener("scroll", measure);
++      window.removeEventListener("resize", measure);
++    };
++  }, [hasPlacements]);
++
++  const scrollColumns = (direction: -1 | 1) => {
++    const region = placementsRef.current;
++    if (!region) return;
++    const pinnedWidth = region.querySelector("th")?.getBoundingClientRect().width ?? 0;
++    // Leave overlap in the unpinned area so paging cannot skip data behind the body column.
++    const step = Math.max(1, (region.clientWidth - pinnedWidth) * 0.8);
++    const inlineDirection = getComputedStyle(region).direction === "rtl" ? -1 : 1;
++    region.scrollBy({
++      left: direction * inlineDirection * step,
++      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
++        ? "instant"
++        : "smooth",
++    });
++  };
++
+   const houseLabel = (house: number) =>
+     !data.uncertainty.housesReliable ? "suppressed" : house ? `house ${house}` : "—";
+ 
+@@ -199,10 +255,40 @@
+             </p>
+           ) : (
+             <>
+-              <p className="mt-4 text-sm text-muted-foreground sm:hidden">
+-                Scroll the table sideways to compare all columns.
+-              </p>
++              {columns.overflowing && (
++                <div className="mt-4">
++                  <p className="text-sm text-muted-foreground">
++                    Scroll sideways or use the column buttons to compare.
++                  </p>
++                  <div
++                    className="pattern-placement-controls"
++                    role="group"
++                    aria-label="Placement table columns"
++                  >
++                    <Button
++                      type="button"
++                      variant="outline"
++                      aria-controls={placementsId}
++                      disabled={!columns.previous}
++                      onClick={() => scrollColumns(-1)}
++                    >
++                      Previous columns
++                    </Button>
++                    <Button
++                      type="button"
++                      variant="outline"
++                      aria-controls={placementsId}
++                      disabled={!columns.more}
++                      onClick={() => scrollColumns(1)}
++                    >
++                      More columns
++                    </Button>
++                  </div>
++                </div>
++              )}
+               <div
++                id={placementsId}
++                ref={placementsRef}
+                 className="pattern-placement-table"
+                 role="region"
+                 aria-label="Scrollable natal placements"
+--- before/src/components/pattern/Shell.tsx
++++ after/src/components/pattern/Shell.tsx
+@@ -111,8 +111,9 @@
+       frame = requestAnimationFrame(revealFocus);
+     };
+     const resize = () => {
++      // Browser chrome can resize after the reader scrolls away from a focused control.
++      // Only a new focus action should reveal it again.
+       measure();
+-      focus();
+     };
+     const observer = new ResizeObserver(() => {
+       // The measured values can resize the menu; write outside observer delivery.
+--- before/src/routes/_authenticated/timing.tsx
++++ after/src/routes/_authenticated/timing.tsx
+@@ -216,17 +216,9 @@
+                     variant="ghost"
+                     type="button"
+                     aria-pressed={domain === key}
+-                    onClick={(event) => {
++                    onClick={() => {
+                       setDomain(key);
+                       setRevealTarget(null);
+-                      // Scroll the chip rail only, without jumping the page.
+-                      const button = event.currentTarget;
+-                      button.parentElement?.scrollTo({
+-                        left: button.offsetLeft - 12,
+-                        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+-                          ? "instant"
+-                          : "smooth",
+-                      });
+                     }}
+                   >
+                     {label}
+--- before/src/styles.css
++++ after/src/styles.css
+@@ -918,7 +918,21 @@
+   font-size: 0.75rem;
+   color: var(--primary);
+ }
++.pattern-placement-controls {
++  display: grid;
++  grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr));
++  gap: 8px;
++  margin-top: 12px;
++}
++.pattern-placement-controls button {
++  height: auto;
++  min-height: 48px;
++  min-width: 0;
++  white-space: normal;
++  overflow-wrap: anywhere;
++}
+ .pattern-placement-table {
++  container-type: inline-size;
+   margin-top: 20px;
+   max-width: 100%;
+   overflow-x: auto;
+@@ -953,6 +967,17 @@
+   inset-inline-start: 0;
+   z-index: 1;
+   background: var(--background);
++}
++@container (width < 30rem) {
++  .pattern-placement-table th:nth-child(1) {
++    /* Resolve to a length: mixed percentages make fixed table layout redistribute this width. */
++    width: min(7.2rem, 40cqi);
++  }
++}
++@supports not (width: 1cqi) {
++  .pattern-placement-table th:nth-child(1) {
++    position: static;
++  }
+ }
+ .pattern-placement-table th:nth-child(2) {
+   width: 36%;
+@@ -1610,6 +1635,7 @@
+ .timing-area-options {
+   position: relative;
+   display: flex;
++  flex-wrap: wrap;
+   gap: 6px;
+   overflow-x: auto;
+   padding: 5px;
+@@ -2063,6 +2089,10 @@
+   text-align: right;
+ }
+ @media (max-width: 639px) {
++  .timing-explorer-filters {
++    position: static;
++    top: auto;
++  }
+   .timing-phase-options {
+     display: grid;
+     grid-template-columns: repeat(4, minmax(0, 1fr));
+@@ -3211,6 +3241,11 @@
+ .journal-delete-header h2 {
+   min-width: 0;
+ }
++.today-check-in-note textarea,
++.journal-compose textarea,
++.journal-entry-editor textarea {
++  overscroll-behavior-y: contain;
++}
+ .journal-delete-body {
+   min-height: 0;
+   overflow-y: auto;

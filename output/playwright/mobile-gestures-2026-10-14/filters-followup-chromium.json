@@ -1,0 +1,71 @@
+{
+  "engine": "chromium",
+  "version": "155.0.8059.12",
+  "evidence": "Render: Chromium mobile emulation / desktop WebKit with touch support; no physical OS chrome or keyboard",
+  "cases": [
+    {
+      "name": "G03 all six filters by taps 320 font32",
+      "pass": true,
+      "viewport": {
+        "width": 320,
+        "height": 568,
+        "font": 32
+      },
+      "geometry": {
+        "client": 250,
+        "scroll": 250,
+        "rootWidth": 320,
+        "buttons": [
+          {
+            "text": "Every area",
+            "left": 5,
+            "right": 170.046875,
+            "width": 165.046875,
+            "height": 72
+          },
+          {
+            "text": "Identity",
+            "left": 5,
+            "right": 133.09375,
+            "width": 128.09375,
+            "height": 72
+          },
+          {
+            "text": "Relationships",
+            "left": 5,
+            "right": 208.3125,
+            "width": 203.3125,
+            "height": 72
+          },
+          {
+            "text": "Work",
+            "left": 5,
+            "right": 106.375,
+            "width": 101.375,
+            "height": 72
+          },
+          {
+            "text": "Inner life",
+            "left": 5,
+            "right": 147.984375,
+            "width": 142.984375,
+            "height": 72
+          },
+          {
+            "text": "Structure",
+            "left": 5,
+            "right": 154.171875,
+            "width": 149.171875,
+            "height": 72
+          }
+        ]
+      }
+    }
+  ],
+  "pageErrors": [],
+  "root": {
+    "scrollingElement": "HTML",
+    "overscroll": "auto",
+    "touchAction": "auto"
+  }
+}

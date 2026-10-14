@@ -1,0 +1,39 @@
+### Result
+{"engine":"chromium","version":"155.0.8059.12","viewport":{"width":360,"height":800},"evidence":"Render with synthetic services","results":[{"step":"Read Today","visible":true},{"step":"Enter check-in","mood":true,"note":"Gesture fix reflection 1792013952068"},{"step":"Save check-in","confirmed":true},{"step":"Navigate to Journal","confirmed":true},{"step":"Return to Today and reload","reflectionRetained":true}]}
+### Ran Playwright code
+```js
+await (async page => {
+ page.setDefaultTimeout(10000);
+ const reflection='Gesture fix reflection '+Date.now();
+ const engine=page.context().browser().browserType().name(),results=[];
+ const click=async locator=>{await locator.evaluate(el=>el.scrollIntoView({block:'center',behavior:'instant'}));await locator.click()};
+ await page.setViewportSize({width:360,height:800});
+ await page.goto('http://127.0.0.1:4200/');
+ await page.getByRole('heading',{name:'Leave room for an unhurried answer'}).waitFor();
+ await page.evaluate(()=>document.fonts.ready);
+ results.push({step:'Read Today',visible:await page.getByRole('heading',{name:'Leave room for an unhurried answer'}).isVisible()});
+ await page.screenshot({path:'/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-gestures-2026-10-14/'+engine+'-journey-today-360-after.png'});
+ await page.getByRole('link',{name:'Check-in',exact:true}).click();
+ const mood=page.getByRole('radio',{name:'Mood: 3 of 5, Steady'});
+ await click(mood.locator('..'));
+ const note=page.getByLabel('Reflection note · optional');
+ await note.fill(reflection);
+ await page.getByText('Draft saved on this device',{exact:true}).waitFor();
+ results.push({step:'Enter check-in',mood:await mood.isChecked(),note:await note.inputValue()});
+ await click(page.getByRole('button',{name:'Save check-in',exact:true}));
+ await page.locator('.today-check-in-save').getByRole('status').filter({hasText:/^Saved /}).waitFor();
+ results.push({step:'Save check-in',confirmed:true});
+ await page.getByRole('navigation',{name:'Quick navigation'}).getByRole('link',{name:'Journal',exact:true}).click();
+ await page.getByRole('heading',{name:'Journal',exact:true}).waitFor();
+ results.push({step:'Navigate to Journal',confirmed:true});
+ await page.getByRole('navigation',{name:'Quick navigation'}).getByRole('link',{name:'Today',exact:true}).click();
+ await note.waitFor();
+ await page.reload();
+ await note.waitFor();
+ results.push({step:'Return to Today and reload',reflectionRetained:await note.inputValue()===reflection});
+ return {engine,version:page.context().browser().version(),viewport:page.viewportSize(),evidence:'Render with synthetic services',results};
+}
+)(page);
+```
+### Events
+- New console entries: .playwright-cli/console-2026-10-14T21-38-24-060Z.log#L2-L3

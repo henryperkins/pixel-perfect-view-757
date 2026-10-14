@@ -286,6 +286,7 @@ export const addEvent = createServerFn({ method: "POST" })
   .inputValidator((d: unknown) =>
     z
       .object({
+        clientMutationId: z.string().uuid().optional(),
         occurredOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
         domain: z.string().min(1).max(40),
         label: z.string().min(1).max(400),
@@ -306,7 +307,16 @@ export const addEvent = createServerFn({ method: "POST" })
       data.body ?? null,
       data.cycleKey ?? null,
       data.featureKey ?? null,
+      data.clientMutationId,
     );
+  });
+
+export const fetchJournalSubmission = createServerFn({ method: "GET" })
+  .middleware([requireAuth])
+  .inputValidator((d: unknown) => z.object({ clientMutationId: z.string().uuid() }).parse(d))
+  .handler(async ({ data, context }) => {
+    const m = await import("./pattern.server");
+    return m.resolveLifeEventSubmission(context.db, context.userId, data.clientMutationId);
   });
 
 export const editEvent = createServerFn({ method: "POST" })

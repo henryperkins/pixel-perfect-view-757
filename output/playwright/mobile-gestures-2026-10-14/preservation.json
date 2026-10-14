@@ -1,0 +1,22 @@
+{
+  "baselineFiles": 1564,
+  "changedOwnedFiles": [
+    "src/components/pattern/PatternChartDetails.tsx",
+    "src/components/pattern/Shell.tsx",
+    "src/routes/_authenticated/timing.tsx",
+    "src/styles.css"
+  ],
+  "unchangedUnownedFiles": 1560,
+  "unexpectedChangedFiles": [],
+  "missingFiles": [],
+  "unexpectedNewFiles": [],
+  "recoveryArchive": "/tmp/pattern-gestures-fix-20261014-vvmi393r/owned-before.tar.gz",
+  "archiveVerifiedBeforeEditing": true,
+  "temporaryFixturePidsStopped": [
+    2927414
+  ],
+  "browserSessionsClosed": [
+    "gestures-fix-chromium",
+    "gestures-fix-webkit"
+  ]
+}

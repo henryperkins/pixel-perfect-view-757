@@ -1,8 +1,10 @@
+import { useMemberDraftLifecycle } from "./MemberDraftProvider";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import { signOut } from "@/lib/auth.shared";
 import { useAuth } from "@/hooks/useAuth";
+import { useNavigationMenu } from "@/hooks/useNavigationMenu";
 import { Button } from "@/components/ui/button";
 import { OrbitMark } from "@/components/pattern/OrbitMark";
 import { Sun, Orbit, Waves, NotebookPen, ChevronDown, Menu, X } from "lucide-react";
@@ -35,23 +37,111 @@ function navLinkClass(active: boolean) {
 
 export function Shell({ children, signedIn = true }: { children: ReactNode; signedIn?: boolean }) {
   const { isAdmin } = useAuth();
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [moreOpen, setMoreOpen] = useState(false);
+  const { purgeAccountDrafts } = useMemberDraftLifecycle();
+  const leaveAccount = async () => {
+    await signOut();
+    try {
+      await purgeAccountDrafts();
+    } catch {
+      /* The root retries local cleanup after redirect. */
+    }
+    window.location.replace("/auth");
+  };
   const [progress, setProgress] = useState(0);
   const mainRef = useRef<HTMLElement>(null);
-  const moreRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
+  const headerBarRef = useRef<HTMLDivElement>(null);
+  const moreTriggerRef = useRef<HTMLButtonElement>(null);
   const mobileMenuRef = useRef<HTMLButtonElement>(null);
   const desktopNavRef = useRef<HTMLElement>(null);
   const mobileNavRef = useRef<HTMLElement>(null);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const navigationMenu = useNavigationMenu(headerRef, mobileMenuRef, moreTriggerRef);
+  const menuOpen = navigationMenu.menu === "mobile";
+  const moreOpen = navigationMenu.menu === "more";
 
   const navItems = isAdmin ? NAV : NAV.filter((item) => item.to !== "/content");
   const secondaryNav = navItems.slice(4);
 
-  // Close the mobile menu whenever the route changes.
   useEffect(() => {
-    setMenuOpen(false);
-    setMoreOpen(false);
+    const root = document.documentElement;
+    let frame = 0;
+    let measureFrame = 0;
+    const measure = () => {
+      const headerBarHeight = headerBarRef.current?.getBoundingClientRect().height ?? 0;
+      const headerHeight = headerRef.current?.getBoundingClientRect().height ?? 0;
+      const nav = mobileNavRef.current;
+      const navHeight = nav?.getBoundingClientRect().height ?? 0;
+      const available = window.visualViewport?.height ?? window.innerHeight;
+      root.toggleAttribute("data-constrained-viewport", available - headerHeight - navHeight < 160);
+      const fixedHeight = nav && getComputedStyle(nav).position === "fixed" ? navHeight : 0;
+      root.style.setProperty("--pattern-header-height", `${headerHeight}px`);
+      root.style.setProperty("--pattern-header-bar-height", `${headerBarHeight}px`);
+      root.style.setProperty("--pattern-bottom-nav-height", `${fixedHeight}px`);
+    };
+    const revealFocus = () => {
+      const active = document.activeElement;
+      if (!(active instanceof HTMLElement) || !mainRef.current?.contains(active)) return;
+      const viewport = window.visualViewport;
+      if (viewport && viewport.scale !== 1) return;
+      const target = active.matches("input.sr-only") ? (active.closest("label") ?? active) : active;
+      const rect = target.getBoundingClientRect();
+      const header = headerRef.current?.getBoundingClientRect();
+      const nav = mobileNavRef.current;
+      const top = Math.max(viewport?.offsetTop ?? 0, header?.bottom ?? 0) + 8;
+      const bottom =
+        Math.min(
+          (viewport?.offsetTop ?? 0) + (viewport?.height ?? window.innerHeight),
+          nav && getComputedStyle(nav).position === "fixed"
+            ? nav.getBoundingClientRect().top
+            : Infinity,
+        ) - 8;
+      const delta =
+        rect.top < top
+          ? rect.top - top
+          : rect.bottom > bottom
+            ? rect.height > bottom - top
+              ? rect.top - top
+              : rect.bottom - bottom
+            : 0;
+      if (Math.abs(delta) > 1) window.scrollBy({ top: delta, behavior: "instant" });
+    };
+    const focus = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(revealFocus);
+    };
+    const resize = () => {
+      // Browser chrome can resize after the reader scrolls away from a focused control.
+      // Only a new focus action should reveal it again.
+      measure();
+    };
+    const observer = new ResizeObserver(() => {
+      // The measured values can resize the menu; write outside observer delivery.
+      cancelAnimationFrame(measureFrame);
+      measureFrame = requestAnimationFrame(measure);
+    });
+    if (headerRef.current) observer.observe(headerRef.current);
+    if (headerBarRef.current) observer.observe(headerBarRef.current);
+    if (mobileNavRef.current) observer.observe(mobileNavRef.current);
+    measure();
+    document.addEventListener("focusin", focus);
+    window.addEventListener("resize", resize);
+    window.visualViewport?.addEventListener("resize", resize);
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(frame);
+      cancelAnimationFrame(measureFrame);
+      document.removeEventListener("focusin", focus);
+      window.removeEventListener("resize", resize);
+      window.visualViewport?.removeEventListener("resize", resize);
+      root.style.removeProperty("--pattern-header-height");
+      root.style.removeProperty("--pattern-header-bar-height");
+      root.style.removeProperty("--pattern-bottom-nav-height");
+      root.removeAttribute("data-constrained-viewport");
+    };
+  }, [signedIn, pathname]);
+
+  useEffect(() => {
     setProgress(0);
   }, [pathname]);
 
@@ -122,29 +212,6 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
       reduced.removeEventListener("change", stopMotion);
     };
   }, [pathname, signedIn]);
-
-  useEffect(() => {
-    const close = (event: MouseEvent) => {
-      if (event.target instanceof Node && !moreRef.current?.contains(event.target))
-        setMoreOpen(false);
-    };
-    const escape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        if (moreRef.current?.querySelector("#more-navigation")) {
-          moreRef.current.querySelector("button")?.focus();
-        }
-        if (document.getElementById("mobile-navigation")) mobileMenuRef.current?.focus();
-        setMoreOpen(false);
-        setMenuOpen(false);
-      }
-    };
-    document.addEventListener("click", close);
-    document.addEventListener("keydown", escape);
-    return () => {
-      document.removeEventListener("click", close);
-      document.removeEventListener("keydown", escape);
-    };
-  }, []);
 
   useEffect(() => {
     const main = mainRef.current;
@@ -228,26 +295,27 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
 
   return (
     <div
-      className={`pattern-shell min-h-screen bg-background text-foreground ${signedIn ? "has-journey" : ""}`}
+      className={`pattern-shell bg-background text-foreground ${signedIn ? "has-journey" : ""}`}
+      onClickCapture={navigationMenu.onNavigateCapture}
     >
-      <a
-        href="#main-content"
-        className="skip-link"
-        onClick={() => {
-          setMenuOpen(false);
-          setMoreOpen(false);
-        }}
-      >
+      <a href="#main-content" className="skip-link">
         Skip to content
       </a>
-      <header className="sticky top-0 z-40 border-b border-rule bg-background/85 backdrop-blur-md">
-        <div className="mx-auto grid h-20 max-w-6xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-5 sm:flex sm:gap-4 sm:px-8">
+      <header
+        ref={headerRef}
+        data-menu-open={menuOpen}
+        className="pattern-header sticky top-0 z-40 border-b border-rule bg-background/85 backdrop-blur-md"
+      >
+        <div
+          ref={headerBarRef}
+          className="mx-auto flex min-h-20 max-w-6xl flex-wrap items-center gap-3 px-5 py-3 sm:gap-4 sm:px-8"
+        >
           <Link
             to="/"
             className="brand-link flex min-w-0 shrink-0 items-center gap-2 font-serif text-2xl text-primary"
           >
             <OrbitMark />
-            Pattern
+            <span className="min-w-0 [overflow-wrap:anywhere]">Pattern</span>
             <span className="hidden font-sans text-xs text-muted-foreground xl:inline">
               personal ephemeris
             </span>
@@ -274,8 +342,9 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
                   </Link>
                 );
               })}
-              <div ref={moreRef} className="relative">
+              <div className="relative">
                 <Button
+                  ref={moreTriggerRef}
                   variant="ghost"
                   size="sm"
                   aria-expanded={moreOpen}
@@ -286,7 +355,7 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
                       ? `More pages, current page: ${secondaryPage.label}`
                       : "More pages"
                   }
-                  onClick={() => setMoreOpen((v) => !v)}
+                  onClick={() => navigationMenu.toggle("more")}
                   className={`gap-2 ${secondaryPage ? "text-primary" : "text-muted-foreground"}`}
                 >
                   More <ChevronDown aria-hidden="true" className={moreOpen ? "rotate-180" : ""} />
@@ -321,9 +390,7 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
                   size="sm"
                   type="button"
                   onClick={() => {
-                    void signOut().then(() => {
-                      window.location.assign("/auth");
-                    });
+                    void leaveAccount();
                   }}
                   className="hidden text-muted-foreground lg:inline-flex"
                 >
@@ -336,7 +403,7 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
                   type="button"
                   aria-expanded={menuOpen}
                   aria-label={menuOpen ? "Close menu" : "Open menu"}
-                  onClick={() => setMenuOpen((v) => !v)}
+                  onClick={() => navigationMenu.toggle("mobile")}
                   aria-controls="mobile-navigation"
                   className="flex h-11 w-11 items-center justify-center rounded-md border border-input text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground lg:hidden"
                 >
@@ -382,9 +449,7 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
                   variant="ghost"
                   type="button"
                   onClick={() => {
-                    void signOut().then(() => {
-                      window.location.assign("/auth");
-                    });
+                    void leaveAccount();
                   }}
                   className="h-auto w-full justify-start py-3 text-sm text-muted-foreground"
                 >

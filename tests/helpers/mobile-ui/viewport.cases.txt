@@ -1,0 +1,49 @@
+async page => {
+ const phase='after';
+ const runtimeErrors=[];const onError=error=>runtimeErrors.push(String(error));page.on('pageerror',onError);
+ const engine=page.context().browser().browserType().name(),base='http://127.0.0.1:4199';
+ const artifact='/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-viewport-2026-10-14/';
+ page.setDefaultTimeout(10000);
+ const results={engine,version:page.context().browser().version(),phase,cases:[],menus:[],overlays:[],fonts:[]};
+ const measure=()=>{
+  const root=document.documentElement;
+  const box=el=>{if(!el)return null;const r=el.getBoundingClientRect(),s=getComputedStyle(el);return {width:r.width,height:r.height,top:r.top,bottom:r.bottom,left:r.left,right:r.right,minHeight:s.minHeight,maxHeight:s.maxHeight,boxSizing:s.boxSizing,overflowX:s.overflowX,overflowY:s.overflowY,position:s.position}};
+  return {clientWidth:root.clientWidth,scrollWidth:root.scrollWidth,scrollHeight:root.scrollHeight,viewportHeight:innerHeight,scroller:document.scrollingElement.tagName,root:box(root),body:box(document.body),shell:box(document.querySelector('.pattern-shell')),card:box(document.querySelector('.card')),header:box(document.querySelector('header')),nav:box(document.querySelector('.mobile-journey')),main:box(document.querySelector('main')),horizontalOutliers:[...document.querySelectorAll('body *')].filter(el=>{const r=el.getBoundingClientRect();return r.width&&r.right>root.clientWidth+1&&getComputedStyle(el).visibility!=='hidden'}).slice(0,12).map(el=>({tag:el.tagName,classes:el.className,box:box(el)})),nestedScrollers:[...document.querySelectorAll('body *')].filter(el=>/(auto|scroll|hidden)/.test(getComputedStyle(el).overflowY)&&el.scrollHeight>el.clientHeight+1).map(el=>({tag:el.tagName,classes:el.className,clientHeight:el.clientHeight,scrollHeight:el.scrollHeight})),meta:document.querySelector('meta[name=viewport]')?.content};
+ };
+ for(const [width,height] of [[320,568],[360,800],[390,844],[440,956],[667,375],[844,390]]) {
+  await page.setViewportSize({width,height});
+  for(const path of ['/','/journal','/auth','/onboarding','/timing','/pattern','/privacy','/birth','/plans','/time-travel','/__audit/not-found','/__audit/server-error']) {
+   await page.goto(base+path);await page.locator('h1').first().waitFor();
+   await page.evaluate(()=>document.fonts.ready);await page.waitForTimeout(350);
+   results.cases.push({path,viewport:{width,height},...await page.evaluate(measure)});
+   if(width===320&&path==='/__audit/server-error') await page.screenshot({path:artifact+engine+'-server-error-320-'+phase+'.png',fullPage:true});
+  }
+ }
+ for(const [width,height,font] of [[320,568,16],[360,800,16],[667,375,16],[844,390,16],[320,568,32],[667,375,32]]){
+  await page.setViewportSize({width,height});await page.goto(base+'/');
+  await page.getByRole('button',{name:'Open menu'}).waitFor();
+  await page.evaluate(font=>document.documentElement.style.fontSize=font+'px',font);
+  await page.getByRole('button',{name:'Open menu'}).click();await page.waitForTimeout(350);
+  results.menus.push({width,height,font,...await page.evaluate(measure),menu:await page.locator('.mobile-menu').evaluate(el=>({clientHeight:el.clientHeight,scrollHeight:el.scrollHeight,top:el.getBoundingClientRect().top,bottom:el.getBoundingClientRect().bottom,maxHeight:getComputedStyle(el).maxHeight}))});
+  if(font===32&&width===667)await page.screenshot({path:artifact+engine+'-menu-landscape-text-'+phase+'.png'});
+ }
+ for(const [width,height,font] of [[320,568,16],[667,375,16],[320,568,32],[667,375,32]]){
+  await page.setViewportSize({width,height});await page.goto(base+'/journal');
+  await page.evaluate(font=>document.documentElement.style.fontSize=font+'px',font);
+  const del=page.locator('.journal-entry').first().getByRole('button',{name:'Delete',exact:true});
+  await del.evaluate(el=>el.scrollIntoView({block:'center',behavior:'instant'}));await del.click();
+  await page.getByRole('alertdialog').waitFor();await page.waitForTimeout(300);
+  const dialog=await page.getByRole('alertdialog').evaluate(el=>{const r=el.getBoundingClientRect();return{left:r.left,right:r.right,top:r.top,bottom:r.bottom,clientHeight:el.clientHeight,scrollHeight:el.scrollHeight,maxHeight:getComputedStyle(el).maxHeight}});
+  results.overlays.push({width,height,font,...await page.evaluate(measure),dialog});
+  if(width===667&&font===32)await page.screenshot({path:artifact+engine+'-delete-landscape-text-'+phase+'.png'});
+ }
+ for(const [width,height] of [[360,800],[844,390],[1000,600]]){
+  await page.setViewportSize({width,height});await page.goto(base+'/time-travel');await page.locator('.travel-intro h1').waitFor();
+  for(const font of [16,20,32]){
+   await page.evaluate(font=>document.documentElement.style.fontSize=font+'px',font);await page.waitForTimeout(100);
+   results.fonts.push({width,height,rootFont:font,...await page.evaluate(()=>({heading:getComputedStyle(document.querySelector('.travel-intro h1')).fontSize,date:getComputedStyle(document.querySelector('.travel-date-display time')).fontSize,clientWidth:document.documentElement.clientWidth,scrollWidth:document.documentElement.scrollWidth}))});
+  }
+ }
+ page.off('pageerror',onError);
+ return {...results,runtimeErrors};
+}

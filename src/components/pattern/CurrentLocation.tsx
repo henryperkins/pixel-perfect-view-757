@@ -94,7 +94,7 @@ export function CurrentLocation({
         <label className="grid gap-2 text-sm">
           Latitude (whole degrees; north positive)
           <input
-            className="min-h-11 rounded border border-input bg-background px-3"
+            className="pattern-mobile-field min-h-11 rounded border border-input bg-background px-3"
             name="latitude"
             type="number"
             min={-90}
@@ -108,7 +108,7 @@ export function CurrentLocation({
         <label className="grid gap-2 text-sm">
           Longitude (whole degrees; east positive)
           <input
-            className="min-h-11 rounded border border-input bg-background px-3"
+            className="pattern-mobile-field min-h-11 rounded border border-input bg-background px-3"
             name="longitude"
             type="number"
             min={-180}
@@ -122,7 +122,7 @@ export function CurrentLocation({
         <label className="grid gap-2 text-sm sm:col-span-2">
           Location timezone
           <input
-            className="min-h-11 rounded border border-input bg-background px-3"
+            className="pattern-mobile-field min-h-11 rounded border border-input bg-background px-3"
             name="timeZone"
             maxLength={80}
             required

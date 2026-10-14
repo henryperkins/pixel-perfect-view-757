@@ -1,0 +1,169 @@
+{
+  "engine": "webkit",
+  "version": "26.6",
+  "evidence": "Render accessibility tree, not VoiceOver/TalkBack",
+  "cases": [
+    {
+      "test": {
+        "width": 320,
+        "height": 568,
+        "font": 16
+      },
+      "pass": true,
+      "before": {
+        "rootWidth": 320,
+        "client": 280,
+        "scroll": 480,
+        "tableDisplay": "table",
+        "rowDisplay": "table-row",
+        "firstLeft": 20,
+        "position": "sticky"
+      },
+      "after": {
+        "left": 200,
+        "firstLeft": 20
+      },
+      "keyboardScroll": 42,
+      "aria": "- group:\n  - text: \u2212 Where your bodies sit 12 placements\n  - paragraph: Where each body sat at the moment of your birth. \u201cRx\u201d means it appeared to move backwards from Earth. Houses are suppressed because your birth time isn't precise enough to place them honestly.\n  - paragraph: Scroll the table sideways to compare all columns.\n  - region \"Scrollable natal placements\":\n    - table \"Calculated natal placements\":\n      - caption: Calculated natal placements\n      - rowgroup:\n        - row \"Body Sign & degree House Motion\":\n          - columnheader \"Body\"\n          - columnheader \"Sign & degree\"\n          - columnheader \"House\"\n          - columnheader \"Motion\"\n      - rowgroup:\n        - row \"Sun Aries 5\u00b0 12\u2032 suppressed Rx\":\n          - rowheader \"Sun\"\n          - cell \"Aries 5\u00b0 12\u2032\"\n          - cell \"suppressed\"\n          - cell \"Rx\"\n        - row \"Moon Taurus 15\u00b0 04\u2032 suppressed direct\":\n          - rowheader \"Moon\"\n          - cell \"Taurus 15\u00b0 04\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Mercury Gemini 20\u00b0 33\u2032 suppressed direct\":\n          - rowheader \"Mercury\"\n          - cell \"Gemini 20\u00b0 33\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Venus Aries 5\u00b0 12\u2032 suppressed Rx\":\n          - rowheader \"Venus\"\n          - cell \"Aries 5\u00b0 12\u2032\"\n          - cell \"suppressed\"\n          - cell \"Rx\"\n        - row \"Mars Taurus 15\u00b0 04\u2032 suppressed direct\":\n          - rowheader \"Mars\"\n          - cell \"Taurus 15\u00b0 04\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Jupiter Gemini 20\u00b0 33\u2032 suppressed direct\":\n          - rowheader \"Jupiter\"\n          - cell \"Gemini 20\u00b0 33\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Saturn Aries 5\u00b0 12\u2032 suppressed Rx\":\n          - rowheader \"Saturn\"\n          - cell \"Aries 5\u00b0 12\u2032\"\n          - cell \"suppressed\"\n          - cell \"Rx\"\n        - row \"Uranus Taurus 15\u00b0 04\u2032 suppressed direct\":\n          - rowheader \"Uranus\"\n          - cell \"Taurus 15\u00b0 04\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Neptune Gemini 20\u00b0 33\u2032 suppressed direct\":\n          - rowheader \"Neptune\"\n          - cell \"Gemini 20\u00b0 33\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Pluto Aries 5\u00b0 12\u2032 suppressed Rx\":\n          - rowheader \"Pluto\"\n          - cell \"Aries 5\u00b0 12\u2032\"\n          - cell \"suppressed\"\n          - cell \"Rx\"\n        - row \"North node Taurus 15\u00b0 04\u2032 suppressed direct\":\n          - rowheader \"North node\"\n          - cell \"Taurus 15\u00b0 04\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Chiron Gemini 20\u00b0 33\u2032 suppressed direct\":\n          - rowheader \"Chiron\"\n          - cell \"Gemini 20\u00b0 33\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\""
+    },
+    {
+      "test": {
+        "width": 360,
+        "height": 800,
+        "font": 16
+      },
+      "pass": true,
+      "before": {
+        "rootWidth": 360,
+        "client": 320,
+        "scroll": 480,
+        "tableDisplay": "table",
+        "rowDisplay": "table-row",
+        "firstLeft": 20,
+        "position": "sticky"
+      },
+      "after": {
+        "left": 160,
+        "firstLeft": 20
+      },
+      "keyboardScroll": 46,
+      "aria": "- group:\n  - text: \u2212 Where your bodies sit 12 placements\n  - paragraph: Where each body sat at the moment of your birth. \u201cRx\u201d means it appeared to move backwards from Earth. Houses are suppressed because your birth time isn't precise enough to place them honestly.\n  - paragraph: Scroll the table sideways to compare all columns.\n  - region \"Scrollable natal placements\":\n    - table \"Calculated natal placements\":\n      - caption: Calculated natal placements\n      - rowgroup:\n        - row \"Body Sign & degree House Motion\":\n          - columnheader \"Body\"\n          - columnheader \"Sign & degree\"\n          - columnheader \"House\"\n          - columnheader \"Motion\"\n      - rowgroup:\n        - row \"Sun Aries 5\u00b0 12\u2032 suppressed Rx\":\n          - rowheader \"Sun\"\n          - cell \"Aries 5\u00b0 12\u2032\"\n          - cell \"suppressed\"\n          - cell \"Rx\"\n        - row \"Moon Taurus 15\u00b0 04\u2032 suppressed direct\":\n          - rowheader \"Moon\"\n          - cell \"Taurus 15\u00b0 04\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Mercury Gemini 20\u00b0 33\u2032 suppressed direct\":\n          - rowheader \"Mercury\"\n          - cell \"Gemini 20\u00b0 33\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Venus Aries 5\u00b0 12\u2032 suppressed Rx\":\n          - rowheader \"Venus\"\n          - cell \"Aries 5\u00b0 12\u2032\"\n          - cell \"suppressed\"\n          - cell \"Rx\"\n        - row \"Mars Taurus 15\u00b0 04\u2032 suppressed direct\":\n          - rowheader \"Mars\"\n          - cell \"Taurus 15\u00b0 04\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Jupiter Gemini 20\u00b0 33\u2032 suppressed direct\":\n          - rowheader \"Jupiter\"\n          - cell \"Gemini 20\u00b0 33\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Saturn Aries 5\u00b0 12\u2032 suppressed Rx\":\n          - rowheader \"Saturn\"\n          - cell \"Aries 5\u00b0 12\u2032\"\n          - cell \"suppressed\"\n          - cell \"Rx\"\n        - row \"Uranus Taurus 15\u00b0 04\u2032 suppressed direct\":\n          - rowheader \"Uranus\"\n          - cell \"Taurus 15\u00b0 04\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Neptune Gemini 20\u00b0 33\u2032 suppressed direct\":\n          - rowheader \"Neptune\"\n          - cell \"Gemini 20\u00b0 33\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Pluto Aries 5\u00b0 12\u2032 suppressed Rx\":\n          - rowheader \"Pluto\"\n          - cell \"Aries 5\u00b0 12\u2032\"\n          - cell \"suppressed\"\n          - cell \"Rx\"\n        - row \"North node Taurus 15\u00b0 04\u2032 suppressed direct\":\n          - rowheader \"North node\"\n          - cell \"Taurus 15\u00b0 04\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Chiron Gemini 20\u00b0 33\u2032 suppressed direct\":\n          - rowheader \"Chiron\"\n          - cell \"Gemini 20\u00b0 33\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\""
+    },
+    {
+      "test": {
+        "width": 440,
+        "height": 956,
+        "font": 16
+      },
+      "pass": true,
+      "before": {
+        "rootWidth": 440,
+        "client": 400,
+        "scroll": 480,
+        "tableDisplay": "table",
+        "rowDisplay": "table-row",
+        "firstLeft": 20,
+        "position": "sticky"
+      },
+      "after": {
+        "left": 80,
+        "firstLeft": 20
+      },
+      "keyboardScroll": 54,
+      "aria": "- group:\n  - text: \u2212 Where your bodies sit 12 placements\n  - paragraph: Where each body sat at the moment of your birth. \u201cRx\u201d means it appeared to move backwards from Earth. Houses are suppressed because your birth time isn't precise enough to place them honestly.\n  - paragraph: Scroll the table sideways to compare all columns.\n  - region \"Scrollable natal placements\":\n    - table \"Calculated natal placements\":\n      - caption: Calculated natal placements\n      - rowgroup:\n        - row \"Body Sign & degree House Motion\":\n          - columnheader \"Body\"\n          - columnheader \"Sign & degree\"\n          - columnheader \"House\"\n          - columnheader \"Motion\"\n      - rowgroup:\n        - row \"Sun Aries 5\u00b0 12\u2032 suppressed Rx\":\n          - rowheader \"Sun\"\n          - cell \"Aries 5\u00b0 12\u2032\"\n          - cell \"suppressed\"\n          - cell \"Rx\"\n        - row \"Moon Taurus 15\u00b0 04\u2032 suppressed direct\":\n          - rowheader \"Moon\"\n          - cell \"Taurus 15\u00b0 04\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Mercury Gemini 20\u00b0 33\u2032 suppressed direct\":\n          - rowheader \"Mercury\"\n          - cell \"Gemini 20\u00b0 33\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Venus Aries 5\u00b0 12\u2032 suppressed Rx\":\n          - rowheader \"Venus\"\n          - cell \"Aries 5\u00b0 12\u2032\"\n          - cell \"suppressed\"\n          - cell \"Rx\"\n        - row \"Mars Taurus 15\u00b0 04\u2032 suppressed direct\":\n          - rowheader \"Mars\"\n          - cell \"Taurus 15\u00b0 04\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Jupiter Gemini 20\u00b0 33\u2032 suppressed direct\":\n          - rowheader \"Jupiter\"\n          - cell \"Gemini 20\u00b0 33\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Saturn Aries 5\u00b0 12\u2032 suppressed Rx\":\n          - rowheader \"Saturn\"\n          - cell \"Aries 5\u00b0 12\u2032\"\n          - cell \"suppressed\"\n          - cell \"Rx\"\n        - row \"Uranus Taurus 15\u00b0 04\u2032 suppressed direct\":\n          - rowheader \"Uranus\"\n          - cell \"Taurus 15\u00b0 04\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Neptune Gemini 20\u00b0 33\u2032 suppressed direct\":\n          - rowheader \"Neptune\"\n          - cell \"Gemini 20\u00b0 33\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Pluto Aries 5\u00b0 12\u2032 suppressed Rx\":\n          - rowheader \"Pluto\"\n          - cell \"Aries 5\u00b0 12\u2032\"\n          - cell \"suppressed\"\n          - cell \"Rx\"\n        - row \"North node Taurus 15\u00b0 04\u2032 suppressed direct\":\n          - rowheader \"North node\"\n          - cell \"Taurus 15\u00b0 04\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Chiron Gemini 20\u00b0 33\u2032 suppressed direct\":\n          - rowheader \"Chiron\"\n          - cell \"Gemini 20\u00b0 33\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\""
+    },
+    {
+      "test": {
+        "width": 667,
+        "height": 375,
+        "font": 16
+      },
+      "pass": true,
+      "before": {
+        "rootWidth": 667,
+        "client": 567,
+        "scroll": 567,
+        "tableDisplay": "table",
+        "rowDisplay": "table-row",
+        "firstLeft": 68,
+        "position": "sticky"
+      },
+      "after": {
+        "left": 0,
+        "firstLeft": 68
+      },
+      "keyboardScroll": 0,
+      "aria": "- group:\n  - text: \u2212 Where your bodies sit 12 placements\n  - paragraph: Where each body sat at the moment of your birth. \u201cRx\u201d means it appeared to move backwards from Earth. Houses are suppressed because your birth time isn't precise enough to place them honestly.\n  - region \"Scrollable natal placements\":\n    - table \"Calculated natal placements\":\n      - caption: Calculated natal placements\n      - rowgroup:\n        - row \"Body Sign & degree House Motion\":\n          - columnheader \"Body\"\n          - columnheader \"Sign & degree\"\n          - columnheader \"House\"\n          - columnheader \"Motion\"\n      - rowgroup:\n        - row \"Sun Aries 5\u00b0 12\u2032 suppressed Rx\":\n          - rowheader \"Sun\"\n          - cell \"Aries 5\u00b0 12\u2032\"\n          - cell \"suppressed\"\n          - cell \"Rx\"\n        - row \"Moon Taurus 15\u00b0 04\u2032 suppressed direct\":\n          - rowheader \"Moon\"\n          - cell \"Taurus 15\u00b0 04\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Mercury Gemini 20\u00b0 33\u2032 suppressed direct\":\n          - rowheader \"Mercury\"\n          - cell \"Gemini 20\u00b0 33\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Venus Aries 5\u00b0 12\u2032 suppressed Rx\":\n          - rowheader \"Venus\"\n          - cell \"Aries 5\u00b0 12\u2032\"\n          - cell \"suppressed\"\n          - cell \"Rx\"\n        - row \"Mars Taurus 15\u00b0 04\u2032 suppressed direct\":\n          - rowheader \"Mars\"\n          - cell \"Taurus 15\u00b0 04\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Jupiter Gemini 20\u00b0 33\u2032 suppressed direct\":\n          - rowheader \"Jupiter\"\n          - cell \"Gemini 20\u00b0 33\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Saturn Aries 5\u00b0 12\u2032 suppressed Rx\":\n          - rowheader \"Saturn\"\n          - cell \"Aries 5\u00b0 12\u2032\"\n          - cell \"suppressed\"\n          - cell \"Rx\"\n        - row \"Uranus Taurus 15\u00b0 04\u2032 suppressed direct\":\n          - rowheader \"Uranus\"\n          - cell \"Taurus 15\u00b0 04\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Neptune Gemini 20\u00b0 33\u2032 suppressed direct\":\n          - rowheader \"Neptune\"\n          - cell \"Gemini 20\u00b0 33\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Pluto Aries 5\u00b0 12\u2032 suppressed Rx\":\n          - rowheader \"Pluto\"\n          - cell \"Aries 5\u00b0 12\u2032\"\n          - cell \"suppressed\"\n          - cell \"Rx\"\n        - row \"North node Taurus 15\u00b0 04\u2032 suppressed direct\":\n          - rowheader \"North node\"\n          - cell \"Taurus 15\u00b0 04\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Chiron Gemini 20\u00b0 33\u2032 suppressed direct\":\n          - rowheader \"Chiron\"\n          - cell \"Gemini 20\u00b0 33\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\""
+    },
+    {
+      "test": {
+        "width": 844,
+        "height": 390,
+        "font": 16
+      },
+      "pass": true,
+      "before": {
+        "rootWidth": 844,
+        "client": 744,
+        "scroll": 744,
+        "tableDisplay": "table",
+        "rowDisplay": "table-row",
+        "firstLeft": 68,
+        "position": "sticky"
+      },
+      "after": {
+        "left": 0,
+        "firstLeft": 68
+      },
+      "keyboardScroll": 0,
+      "aria": "- group:\n  - text: \u2212 Where your bodies sit 12 placements\n  - paragraph: Where each body sat at the moment of your birth. \u201cRx\u201d means it appeared to move backwards from Earth. Houses are suppressed because your birth time isn't precise enough to place them honestly.\n  - region \"Scrollable natal placements\":\n    - table \"Calculated natal placements\":\n      - caption: Calculated natal placements\n      - rowgroup:\n        - row \"Body Sign & degree House Motion\":\n          - columnheader \"Body\"\n          - columnheader \"Sign & degree\"\n          - columnheader \"House\"\n          - columnheader \"Motion\"\n      - rowgroup:\n        - row \"Sun Aries 5\u00b0 12\u2032 suppressed Rx\":\n          - rowheader \"Sun\"\n          - cell \"Aries 5\u00b0 12\u2032\"\n          - cell \"suppressed\"\n          - cell \"Rx\"\n        - row \"Moon Taurus 15\u00b0 04\u2032 suppressed direct\":\n          - rowheader \"Moon\"\n          - cell \"Taurus 15\u00b0 04\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Mercury Gemini 20\u00b0 33\u2032 suppressed direct\":\n          - rowheader \"Mercury\"\n          - cell \"Gemini 20\u00b0 33\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Venus Aries 5\u00b0 12\u2032 suppressed Rx\":\n          - rowheader \"Venus\"\n          - cell \"Aries 5\u00b0 12\u2032\"\n          - cell \"suppressed\"\n          - cell \"Rx\"\n        - row \"Mars Taurus 15\u00b0 04\u2032 suppressed direct\":\n          - rowheader \"Mars\"\n          - cell \"Taurus 15\u00b0 04\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Jupiter Gemini 20\u00b0 33\u2032 suppressed direct\":\n          - rowheader \"Jupiter\"\n          - cell \"Gemini 20\u00b0 33\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Saturn Aries 5\u00b0 12\u2032 suppressed Rx\":\n          - rowheader \"Saturn\"\n          - cell \"Aries 5\u00b0 12\u2032\"\n          - cell \"suppressed\"\n          - cell \"Rx\"\n        - row \"Uranus Taurus 15\u00b0 04\u2032 suppressed direct\":\n          - rowheader \"Uranus\"\n          - cell \"Taurus 15\u00b0 04\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Neptune Gemini 20\u00b0 33\u2032 suppressed direct\":\n          - rowheader \"Neptune\"\n          - cell \"Gemini 20\u00b0 33\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Pluto Aries 5\u00b0 12\u2032 suppressed Rx\":\n          - rowheader \"Pluto\"\n          - cell \"Aries 5\u00b0 12\u2032\"\n          - cell \"suppressed\"\n          - cell \"Rx\"\n        - row \"North node Taurus 15\u00b0 04\u2032 suppressed direct\":\n          - rowheader \"North node\"\n          - cell \"Taurus 15\u00b0 04\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Chiron Gemini 20\u00b0 33\u2032 suppressed direct\":\n          - rowheader \"Chiron\"\n          - cell \"Gemini 20\u00b0 33\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\""
+    },
+    {
+      "test": {
+        "width": 1280,
+        "height": 800,
+        "font": 16
+      },
+      "pass": true,
+      "before": {
+        "rootWidth": 1280,
+        "client": 892,
+        "scroll": 892,
+        "tableDisplay": "table",
+        "rowDisplay": "table-row",
+        "firstLeft": 212,
+        "position": "sticky"
+      },
+      "after": {
+        "left": 0,
+        "firstLeft": 212
+      },
+      "keyboardScroll": 0,
+      "aria": "- group:\n  - text: \u2212 Where your bodies sit 12 placements\n  - paragraph: Where each body sat at the moment of your birth. \u201cRx\u201d means it appeared to move backwards from Earth. Houses are suppressed because your birth time isn't precise enough to place them honestly.\n  - region \"Scrollable natal placements\":\n    - table \"Calculated natal placements\":\n      - caption: Calculated natal placements\n      - rowgroup:\n        - row \"Body Sign & degree House Motion\":\n          - columnheader \"Body\"\n          - columnheader \"Sign & degree\"\n          - columnheader \"House\"\n          - columnheader \"Motion\"\n      - rowgroup:\n        - row \"Sun Aries 5\u00b0 12\u2032 suppressed Rx\":\n          - rowheader \"Sun\"\n          - cell \"Aries 5\u00b0 12\u2032\"\n          - cell \"suppressed\"\n          - cell \"Rx\"\n        - row \"Moon Taurus 15\u00b0 04\u2032 suppressed direct\":\n          - rowheader \"Moon\"\n          - cell \"Taurus 15\u00b0 04\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Mercury Gemini 20\u00b0 33\u2032 suppressed direct\":\n          - rowheader \"Mercury\"\n          - cell \"Gemini 20\u00b0 33\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Venus Aries 5\u00b0 12\u2032 suppressed Rx\":\n          - rowheader \"Venus\"\n          - cell \"Aries 5\u00b0 12\u2032\"\n          - cell \"suppressed\"\n          - cell \"Rx\"\n        - row \"Mars Taurus 15\u00b0 04\u2032 suppressed direct\":\n          - rowheader \"Mars\"\n          - cell \"Taurus 15\u00b0 04\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Jupiter Gemini 20\u00b0 33\u2032 suppressed direct\":\n          - rowheader \"Jupiter\"\n          - cell \"Gemini 20\u00b0 33\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Saturn Aries 5\u00b0 12\u2032 suppressed Rx\":\n          - rowheader \"Saturn\"\n          - cell \"Aries 5\u00b0 12\u2032\"\n          - cell \"suppressed\"\n          - cell \"Rx\"\n        - row \"Uranus Taurus 15\u00b0 04\u2032 suppressed direct\":\n          - rowheader \"Uranus\"\n          - cell \"Taurus 15\u00b0 04\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Neptune Gemini 20\u00b0 33\u2032 suppressed direct\":\n          - rowheader \"Neptune\"\n          - cell \"Gemini 20\u00b0 33\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Pluto Aries 5\u00b0 12\u2032 suppressed Rx\":\n          - rowheader \"Pluto\"\n          - cell \"Aries 5\u00b0 12\u2032\"\n          - cell \"suppressed\"\n          - cell \"Rx\"\n        - row \"North node Taurus 15\u00b0 04\u2032 suppressed direct\":\n          - rowheader \"North node\"\n          - cell \"Taurus 15\u00b0 04\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Chiron Gemini 20\u00b0 33\u2032 suppressed direct\":\n          - rowheader \"Chiron\"\n          - cell \"Gemini 20\u00b0 33\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\""
+    },
+    {
+      "test": {
+        "width": 320,
+        "height": 568,
+        "font": 32
+      },
+      "pass": true,
+      "before": {
+        "rootWidth": 320,
+        "client": 240,
+        "scroll": 960,
+        "tableDisplay": "table",
+        "rowDisplay": "table-row",
+        "firstLeft": 40,
+        "position": "sticky"
+      },
+      "after": {
+        "left": 720,
+        "firstLeft": 40
+      },
+      "keyboardScroll": 38,
+      "aria": "- group:\n  - text: \u2212 Where your bodies sit 12 placements\n  - paragraph: Where each body sat at the moment of your birth. \u201cRx\u201d means it appeared to move backwards from Earth. Houses are suppressed because your birth time isn't precise enough to place them honestly.\n  - paragraph: Scroll the table sideways to compare all columns.\n  - region \"Scrollable natal placements\":\n    - table \"Calculated natal placements\":\n      - caption: Calculated natal placements\n      - rowgroup:\n        - row \"Body Sign & degree House Motion\":\n          - columnheader \"Body\"\n          - columnheader \"Sign & degree\"\n          - columnheader \"House\"\n          - columnheader \"Motion\"\n      - rowgroup:\n        - row \"Sun Aries 5\u00b0 12\u2032 suppressed Rx\":\n          - rowheader \"Sun\"\n          - cell \"Aries 5\u00b0 12\u2032\"\n          - cell \"suppressed\"\n          - cell \"Rx\"\n        - row \"Moon Taurus 15\u00b0 04\u2032 suppressed direct\":\n          - rowheader \"Moon\"\n          - cell \"Taurus 15\u00b0 04\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Mercury Gemini 20\u00b0 33\u2032 suppressed direct\":\n          - rowheader \"Mercury\"\n          - cell \"Gemini 20\u00b0 33\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Venus Aries 5\u00b0 12\u2032 suppressed Rx\":\n          - rowheader \"Venus\"\n          - cell \"Aries 5\u00b0 12\u2032\"\n          - cell \"suppressed\"\n          - cell \"Rx\"\n        - row \"Mars Taurus 15\u00b0 04\u2032 suppressed direct\":\n          - rowheader \"Mars\"\n          - cell \"Taurus 15\u00b0 04\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Jupiter Gemini 20\u00b0 33\u2032 suppressed direct\":\n          - rowheader \"Jupiter\"\n          - cell \"Gemini 20\u00b0 33\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Saturn Aries 5\u00b0 12\u2032 suppressed Rx\":\n          - rowheader \"Saturn\"\n          - cell \"Aries 5\u00b0 12\u2032\"\n          - cell \"suppressed\"\n          - cell \"Rx\"\n        - row \"Uranus Taurus 15\u00b0 04\u2032 suppressed direct\":\n          - rowheader \"Uranus\"\n          - cell \"Taurus 15\u00b0 04\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Neptune Gemini 20\u00b0 33\u2032 suppressed direct\":\n          - rowheader \"Neptune\"\n          - cell \"Gemini 20\u00b0 33\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Pluto Aries 5\u00b0 12\u2032 suppressed Rx\":\n          - rowheader \"Pluto\"\n          - cell \"Aries 5\u00b0 12\u2032\"\n          - cell \"suppressed\"\n          - cell \"Rx\"\n        - row \"North node Taurus 15\u00b0 04\u2032 suppressed direct\":\n          - rowheader \"North node\"\n          - cell \"Taurus 15\u00b0 04\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\"\n        - row \"Chiron Gemini 20\u00b0 33\u2032 suppressed direct\":\n          - rowheader \"Chiron\"\n          - cell \"Gemini 20\u00b0 33\u2032\"\n          - cell \"suppressed\"\n          - cell \"direct\""
+    }
+  ],
+  "pageErrors": []
+}

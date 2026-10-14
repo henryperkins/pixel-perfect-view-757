@@ -1,0 +1,2015 @@
+{
+  "engine": "webkit",
+  "version": "26.6",
+  "evidence": "Render: desktop WebKit at phone widths; wheel/mouse proxy, not iOS Device",
+  "rails": [
+    {
+      "name": "Timing area rail",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "initial": {
+        "tag": "DIV",
+        "rect": {
+          "x": 15,
+          "y": 260.0625,
+          "width": 290,
+          "height": 54,
+          "top": 260.0625,
+          "right": 305,
+          "bottom": 314.0625,
+          "left": 15
+        },
+        "scrollWidth": 581,
+        "clientWidth": 290,
+        "scrollHeight": 54,
+        "clientHeight": 54,
+        "scrollLeft": 0,
+        "scrollTop": 0,
+        "touchAction": "auto",
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "overscrollX": "contain",
+        "overscrollY": "auto",
+        "scrollSnap": "none",
+        "scrollbar": "thin",
+        "scrollbarDisplay": "inline",
+        "tabindex": null,
+        "rootWidth": 320,
+        "scrollY": 218,
+        "buttons": [
+          {
+            "label": "Every area",
+            "rect": {
+              "x": 20,
+              "y": 265.0625,
+              "width": 98.53125,
+              "height": 44,
+              "top": 265.0625,
+              "right": 118.53125,
+              "bottom": 309.0625,
+              "left": 20
+            },
+            "visibleWidth": 98.53125
+          },
+          {
+            "label": "Identity",
+            "rect": {
+              "x": 124.53125,
+              "y": 265.0625,
+              "width": 80.046875,
+              "height": 44,
+              "top": 265.0625,
+              "right": 204.578125,
+              "bottom": 309.0625,
+              "left": 124.53125
+            },
+            "visibleWidth": 80.046875
+          },
+          {
+            "label": "Relationships",
+            "rect": {
+              "x": 210.578125,
+              "y": 265.0625,
+              "width": 117.65625,
+              "height": 44,
+              "top": 265.0625,
+              "right": 328.234375,
+              "bottom": 309.0625,
+              "left": 210.578125
+            },
+            "visibleWidth": 94.421875
+          },
+          {
+            "label": "Work",
+            "rect": {
+              "x": 334.234375,
+              "y": 265.0625,
+              "width": 66.6875,
+              "height": 44,
+              "top": 265.0625,
+              "right": 400.921875,
+              "bottom": 309.0625,
+              "left": 334.234375
+            },
+            "visibleWidth": 0
+          },
+          {
+            "label": "Inner life",
+            "rect": {
+              "x": 406.921875,
+              "y": 265.0625,
+              "width": 87.484375,
+              "height": 44,
+              "top": 265.0625,
+              "right": 494.40625,
+              "bottom": 309.0625,
+              "left": 406.921875
+            },
+            "visibleWidth": 0
+          },
+          {
+            "label": "Structure",
+            "rect": {
+              "x": 500.40625,
+              "y": 265.0625,
+              "width": 90.59375,
+              "height": 44,
+              "top": 265.0625,
+              "right": 591,
+              "bottom": 309.0625,
+              "left": 500.40625
+            },
+            "visibleWidth": 0
+          }
+        ]
+      },
+      "after": {
+        "tag": "DIV",
+        "rect": {
+          "x": 15,
+          "y": 260.0625,
+          "width": 290,
+          "height": 54,
+          "top": 260.0625,
+          "right": 305,
+          "bottom": 314.0625,
+          "left": 15
+        },
+        "scrollWidth": 581,
+        "clientWidth": 290,
+        "scrollHeight": 54,
+        "clientHeight": 54,
+        "scrollLeft": 291,
+        "scrollTop": 0,
+        "touchAction": "auto",
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "overscrollX": "contain",
+        "overscrollY": "auto",
+        "scrollSnap": "none",
+        "scrollbar": "thin",
+        "scrollbarDisplay": "inline",
+        "tabindex": null,
+        "rootWidth": 320,
+        "scrollY": 218,
+        "buttons": [
+          {
+            "label": "Every area",
+            "rect": {
+              "x": -271,
+              "y": 265.0625,
+              "width": 98.53125,
+              "height": 44,
+              "top": 265.0625,
+              "right": -172.46875,
+              "bottom": 309.0625,
+              "left": -271
+            },
+            "visibleWidth": 0
+          },
+          {
+            "label": "Identity",
+            "rect": {
+              "x": -166.46875,
+              "y": 265.0625,
+              "width": 80.046875,
+              "height": 44,
+              "top": 265.0625,
+              "right": -86.421875,
+              "bottom": 309.0625,
+              "left": -166.46875
+            },
+            "visibleWidth": 0
+          },
+          {
+            "label": "Relationships",
+            "rect": {
+              "x": -80.421875,
+              "y": 265.0625,
+              "width": 117.65625,
+              "height": 44,
+              "top": 265.0625,
+              "right": 37.234375,
+              "bottom": 309.0625,
+              "left": -80.421875
+            },
+            "visibleWidth": 22.234375
+          },
+          {
+            "label": "Work",
+            "rect": {
+              "x": 43.234375,
+              "y": 265.0625,
+              "width": 66.6875,
+              "height": 44,
+              "top": 265.0625,
+              "right": 109.921875,
+              "bottom": 309.0625,
+              "left": 43.234375
+            },
+            "visibleWidth": 66.6875
+          },
+          {
+            "label": "Inner life",
+            "rect": {
+              "x": 115.921875,
+              "y": 265.0625,
+              "width": 87.484375,
+              "height": 44,
+              "top": 265.0625,
+              "right": 203.40625,
+              "bottom": 309.0625,
+              "left": 115.921875
+            },
+            "visibleWidth": 87.484375
+          },
+          {
+            "label": "Structure",
+            "rect": {
+              "x": 209.40625,
+              "y": 265.0625,
+              "width": 90.59375,
+              "height": 44,
+              "top": 265.0625,
+              "right": 300,
+              "bottom": 309.0625,
+              "left": 209.40625
+            },
+            "visibleWidth": 90.59375
+          }
+        ]
+      },
+      "before": 218
+    },
+    {
+      "name": "Placements",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "initial": {
+        "tag": "DIV",
+        "rect": {
+          "x": 20,
+          "y": -18.890625,
+          "width": 280,
+          "height": 610.515625,
+          "top": -18.890625,
+          "right": 300,
+          "bottom": 591.625,
+          "left": 20
+        },
+        "scrollWidth": 480,
+        "clientWidth": 280,
+        "scrollHeight": 611,
+        "clientHeight": 611,
+        "scrollLeft": 0,
+        "scrollTop": 0,
+        "touchAction": "auto",
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "overscrollX": "contain",
+        "overscrollY": "auto",
+        "scrollSnap": "none",
+        "scrollbar": "auto",
+        "scrollbarDisplay": "inline",
+        "tabindex": "0",
+        "rootWidth": 320,
+        "scrollY": 2328,
+        "buttons": []
+      },
+      "end": {
+        "tag": "DIV",
+        "rect": {
+          "x": 20,
+          "y": -18.890625,
+          "width": 280,
+          "height": 610.515625,
+          "top": -18.890625,
+          "right": 300,
+          "bottom": 591.625,
+          "left": 20
+        },
+        "scrollWidth": 480,
+        "clientWidth": 280,
+        "scrollHeight": 611,
+        "clientHeight": 611,
+        "scrollLeft": 200,
+        "scrollTop": 0,
+        "touchAction": "auto",
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "overscrollX": "contain",
+        "overscrollY": "auto",
+        "scrollSnap": "none",
+        "scrollbar": "auto",
+        "scrollbarDisplay": "inline",
+        "tabindex": "0",
+        "rootWidth": 320,
+        "scrollY": 2328,
+        "buttons": []
+      },
+      "tableAria": "- region \"Scrollable natal placements\":\n  - table \"Calculated natal placements\":\n    - caption: Calculated natal placements\n    - rowgroup:\n      - row \"Body Sign & degree House Motion\":\n        - columnheader \"Body\"\n        - columnheader \"Sign & degree\"\n        - columnheader \"House\"\n        - columnheader \"Motion\"\n    - rowgroup:\n      - row \"Sun Aries 5\u00b0 12\u2032 suppressed Rx\":\n        - rowheader \"Sun\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"Rx\"\n      - row \"Moon Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Moon\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Mercury Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Mercury\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Venus Aries 5\u00b0 12\u2032 suppressed Rx\":\n        - rowheader \"Venus\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"Rx\"\n      - row \"Mars Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Mars\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Jupiter Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Jupiter\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Saturn Aries 5\u00b0 12\u2032 suppressed Rx\":\n        - rowheader \"Saturn\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"Rx\"\n      - row \"Uranus Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Uranus\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Neptune Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Neptune\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Pluto Aries 5\u00b0 12\u2032 suppressed Rx\":\n        - rowheader \"Pluto\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"Rx\"\n      - row \"North node Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"North node\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Chiron Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Chiron\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\""
+    },
+    {
+      "name": "Timing area rail",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "initial": {
+        "tag": "DIV",
+        "rect": {
+          "x": 15,
+          "y": 376.0625,
+          "width": 330,
+          "height": 54,
+          "top": 376.0625,
+          "right": 345,
+          "bottom": 430.0625,
+          "left": 15
+        },
+        "scrollWidth": 581,
+        "clientWidth": 330,
+        "scrollHeight": 54,
+        "clientHeight": 54,
+        "scrollLeft": 0,
+        "scrollTop": 0,
+        "touchAction": "auto",
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "overscrollX": "contain",
+        "overscrollY": "auto",
+        "scrollSnap": "none",
+        "scrollbar": "thin",
+        "scrollbarDisplay": "inline",
+        "tabindex": null,
+        "rootWidth": 360,
+        "scrollY": 102,
+        "buttons": [
+          {
+            "label": "Every area",
+            "rect": {
+              "x": 20,
+              "y": 381.0625,
+              "width": 98.53125,
+              "height": 44,
+              "top": 381.0625,
+              "right": 118.53125,
+              "bottom": 425.0625,
+              "left": 20
+            },
+            "visibleWidth": 98.53125
+          },
+          {
+            "label": "Identity",
+            "rect": {
+              "x": 124.53125,
+              "y": 381.0625,
+              "width": 80.046875,
+              "height": 44,
+              "top": 381.0625,
+              "right": 204.578125,
+              "bottom": 425.0625,
+              "left": 124.53125
+            },
+            "visibleWidth": 80.046875
+          },
+          {
+            "label": "Relationships",
+            "rect": {
+              "x": 210.578125,
+              "y": 381.0625,
+              "width": 117.65625,
+              "height": 44,
+              "top": 381.0625,
+              "right": 328.234375,
+              "bottom": 425.0625,
+              "left": 210.578125
+            },
+            "visibleWidth": 117.65625
+          },
+          {
+            "label": "Work",
+            "rect": {
+              "x": 334.234375,
+              "y": 381.0625,
+              "width": 66.6875,
+              "height": 44,
+              "top": 381.0625,
+              "right": 400.921875,
+              "bottom": 425.0625,
+              "left": 334.234375
+            },
+            "visibleWidth": 10.765625
+          },
+          {
+            "label": "Inner life",
+            "rect": {
+              "x": 406.921875,
+              "y": 381.0625,
+              "width": 87.484375,
+              "height": 44,
+              "top": 381.0625,
+              "right": 494.40625,
+              "bottom": 425.0625,
+              "left": 406.921875
+            },
+            "visibleWidth": 0
+          },
+          {
+            "label": "Structure",
+            "rect": {
+              "x": 500.40625,
+              "y": 381.0625,
+              "width": 90.59375,
+              "height": 44,
+              "top": 381.0625,
+              "right": 591,
+              "bottom": 425.0625,
+              "left": 500.40625
+            },
+            "visibleWidth": 0
+          }
+        ]
+      },
+      "after": {
+        "tag": "DIV",
+        "rect": {
+          "x": 15,
+          "y": 376.0625,
+          "width": 330,
+          "height": 54,
+          "top": 376.0625,
+          "right": 345,
+          "bottom": 430.0625,
+          "left": 15
+        },
+        "scrollWidth": 581,
+        "clientWidth": 330,
+        "scrollHeight": 54,
+        "clientHeight": 54,
+        "scrollLeft": 251,
+        "scrollTop": 0,
+        "touchAction": "auto",
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "overscrollX": "contain",
+        "overscrollY": "auto",
+        "scrollSnap": "none",
+        "scrollbar": "thin",
+        "scrollbarDisplay": "inline",
+        "tabindex": null,
+        "rootWidth": 360,
+        "scrollY": 102,
+        "buttons": [
+          {
+            "label": "Every area",
+            "rect": {
+              "x": -231,
+              "y": 381.0625,
+              "width": 98.53125,
+              "height": 44,
+              "top": 381.0625,
+              "right": -132.46875,
+              "bottom": 425.0625,
+              "left": -231
+            },
+            "visibleWidth": 0
+          },
+          {
+            "label": "Identity",
+            "rect": {
+              "x": -126.46875,
+              "y": 381.0625,
+              "width": 80.046875,
+              "height": 44,
+              "top": 381.0625,
+              "right": -46.421875,
+              "bottom": 425.0625,
+              "left": -126.46875
+            },
+            "visibleWidth": 0
+          },
+          {
+            "label": "Relationships",
+            "rect": {
+              "x": -40.421875,
+              "y": 381.0625,
+              "width": 117.65625,
+              "height": 44,
+              "top": 381.0625,
+              "right": 77.234375,
+              "bottom": 425.0625,
+              "left": -40.421875
+            },
+            "visibleWidth": 62.234375
+          },
+          {
+            "label": "Work",
+            "rect": {
+              "x": 83.234375,
+              "y": 381.0625,
+              "width": 66.6875,
+              "height": 44,
+              "top": 381.0625,
+              "right": 149.921875,
+              "bottom": 425.0625,
+              "left": 83.234375
+            },
+            "visibleWidth": 66.6875
+          },
+          {
+            "label": "Inner life",
+            "rect": {
+              "x": 155.921875,
+              "y": 381.0625,
+              "width": 87.484375,
+              "height": 44,
+              "top": 381.0625,
+              "right": 243.40625,
+              "bottom": 425.0625,
+              "left": 155.921875
+            },
+            "visibleWidth": 87.484375
+          },
+          {
+            "label": "Structure",
+            "rect": {
+              "x": 249.40625,
+              "y": 381.0625,
+              "width": 90.59375,
+              "height": 44,
+              "top": 381.0625,
+              "right": 340,
+              "bottom": 425.0625,
+              "left": 249.40625
+            },
+            "visibleWidth": 90.59375
+          }
+        ]
+      },
+      "before": 102
+    },
+    {
+      "name": "Placements",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "initial": {
+        "tag": "DIV",
+        "rect": {
+          "x": 20,
+          "y": 96.59375,
+          "width": 320,
+          "height": 610.515625,
+          "top": 96.59375,
+          "right": 340,
+          "bottom": 707.109375,
+          "left": 20
+        },
+        "scrollWidth": 480,
+        "clientWidth": 320,
+        "scrollHeight": 611,
+        "clientHeight": 611,
+        "scrollLeft": 0,
+        "scrollTop": 0,
+        "touchAction": "auto",
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "overscrollX": "contain",
+        "overscrollY": "auto",
+        "scrollSnap": "none",
+        "scrollbar": "auto",
+        "scrollbarDisplay": "inline",
+        "tabindex": "0",
+        "rootWidth": 360,
+        "scrollY": 2022,
+        "buttons": []
+      },
+      "end": {
+        "tag": "DIV",
+        "rect": {
+          "x": 20,
+          "y": 96.59375,
+          "width": 320,
+          "height": 610.515625,
+          "top": 96.59375,
+          "right": 340,
+          "bottom": 707.109375,
+          "left": 20
+        },
+        "scrollWidth": 480,
+        "clientWidth": 320,
+        "scrollHeight": 611,
+        "clientHeight": 611,
+        "scrollLeft": 160,
+        "scrollTop": 0,
+        "touchAction": "auto",
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "overscrollX": "contain",
+        "overscrollY": "auto",
+        "scrollSnap": "none",
+        "scrollbar": "auto",
+        "scrollbarDisplay": "inline",
+        "tabindex": "0",
+        "rootWidth": 360,
+        "scrollY": 2022,
+        "buttons": []
+      },
+      "tableAria": "- region \"Scrollable natal placements\":\n  - table \"Calculated natal placements\":\n    - caption: Calculated natal placements\n    - rowgroup:\n      - row \"Body Sign & degree House Motion\":\n        - columnheader \"Body\"\n        - columnheader \"Sign & degree\"\n        - columnheader \"House\"\n        - columnheader \"Motion\"\n    - rowgroup:\n      - row \"Sun Aries 5\u00b0 12\u2032 suppressed Rx\":\n        - rowheader \"Sun\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"Rx\"\n      - row \"Moon Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Moon\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Mercury Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Mercury\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Venus Aries 5\u00b0 12\u2032 suppressed Rx\":\n        - rowheader \"Venus\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"Rx\"\n      - row \"Mars Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Mars\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Jupiter Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Jupiter\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Saturn Aries 5\u00b0 12\u2032 suppressed Rx\":\n        - rowheader \"Saturn\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"Rx\"\n      - row \"Uranus Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Uranus\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Neptune Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Neptune\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Pluto Aries 5\u00b0 12\u2032 suppressed Rx\":\n        - rowheader \"Pluto\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"Rx\"\n      - row \"North node Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"North node\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Chiron Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Chiron\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\""
+    },
+    {
+      "name": "Timing area rail",
+      "viewport": {
+        "width": 440,
+        "height": 956
+      },
+      "initial": {
+        "tag": "DIV",
+        "rect": {
+          "x": 15,
+          "y": 377.671875,
+          "width": 410,
+          "height": 54,
+          "top": 377.671875,
+          "right": 425,
+          "bottom": 431.671875,
+          "left": 15
+        },
+        "scrollWidth": 581,
+        "clientWidth": 410,
+        "scrollHeight": 54,
+        "clientHeight": 54,
+        "scrollLeft": 0,
+        "scrollTop": 0,
+        "touchAction": "auto",
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "overscrollX": "contain",
+        "overscrollY": "auto",
+        "scrollSnap": "none",
+        "scrollbar": "thin",
+        "scrollbarDisplay": "inline",
+        "tabindex": null,
+        "rootWidth": 440,
+        "scrollY": 0,
+        "buttons": [
+          {
+            "label": "Every area",
+            "rect": {
+              "x": 20,
+              "y": 382.671875,
+              "width": 98.53125,
+              "height": 44,
+              "top": 382.671875,
+              "right": 118.53125,
+              "bottom": 426.671875,
+              "left": 20
+            },
+            "visibleWidth": 98.53125
+          },
+          {
+            "label": "Identity",
+            "rect": {
+              "x": 124.53125,
+              "y": 382.671875,
+              "width": 80.046875,
+              "height": 44,
+              "top": 382.671875,
+              "right": 204.578125,
+              "bottom": 426.671875,
+              "left": 124.53125
+            },
+            "visibleWidth": 80.046875
+          },
+          {
+            "label": "Relationships",
+            "rect": {
+              "x": 210.578125,
+              "y": 382.671875,
+              "width": 117.65625,
+              "height": 44,
+              "top": 382.671875,
+              "right": 328.234375,
+              "bottom": 426.671875,
+              "left": 210.578125
+            },
+            "visibleWidth": 117.65625
+          },
+          {
+            "label": "Work",
+            "rect": {
+              "x": 334.234375,
+              "y": 382.671875,
+              "width": 66.6875,
+              "height": 44,
+              "top": 382.671875,
+              "right": 400.921875,
+              "bottom": 426.671875,
+              "left": 334.234375
+            },
+            "visibleWidth": 66.6875
+          },
+          {
+            "label": "Inner life",
+            "rect": {
+              "x": 406.921875,
+              "y": 382.671875,
+              "width": 87.484375,
+              "height": 44,
+              "top": 382.671875,
+              "right": 494.40625,
+              "bottom": 426.671875,
+              "left": 406.921875
+            },
+            "visibleWidth": 18.078125
+          },
+          {
+            "label": "Structure",
+            "rect": {
+              "x": 500.40625,
+              "y": 382.671875,
+              "width": 90.59375,
+              "height": 44,
+              "top": 382.671875,
+              "right": 591,
+              "bottom": 426.671875,
+              "left": 500.40625
+            },
+            "visibleWidth": 0
+          }
+        ]
+      },
+      "after": {
+        "tag": "DIV",
+        "rect": {
+          "x": 15,
+          "y": 377.671875,
+          "width": 410,
+          "height": 54,
+          "top": 377.671875,
+          "right": 425,
+          "bottom": 431.671875,
+          "left": 15
+        },
+        "scrollWidth": 581,
+        "clientWidth": 410,
+        "scrollHeight": 54,
+        "clientHeight": 54,
+        "scrollLeft": 171,
+        "scrollTop": 0,
+        "touchAction": "auto",
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "overscrollX": "contain",
+        "overscrollY": "auto",
+        "scrollSnap": "none",
+        "scrollbar": "thin",
+        "scrollbarDisplay": "inline",
+        "tabindex": null,
+        "rootWidth": 440,
+        "scrollY": 0,
+        "buttons": [
+          {
+            "label": "Every area",
+            "rect": {
+              "x": -151,
+              "y": 382.671875,
+              "width": 98.53125,
+              "height": 44,
+              "top": 382.671875,
+              "right": -52.46875,
+              "bottom": 426.671875,
+              "left": -151
+            },
+            "visibleWidth": 0
+          },
+          {
+            "label": "Identity",
+            "rect": {
+              "x": -46.46875,
+              "y": 382.671875,
+              "width": 80.046875,
+              "height": 44,
+              "top": 382.671875,
+              "right": 33.578125,
+              "bottom": 426.671875,
+              "left": -46.46875
+            },
+            "visibleWidth": 18.578125
+          },
+          {
+            "label": "Relationships",
+            "rect": {
+              "x": 39.578125,
+              "y": 382.671875,
+              "width": 117.65625,
+              "height": 44,
+              "top": 382.671875,
+              "right": 157.234375,
+              "bottom": 426.671875,
+              "left": 39.578125
+            },
+            "visibleWidth": 117.65625
+          },
+          {
+            "label": "Work",
+            "rect": {
+              "x": 163.234375,
+              "y": 382.671875,
+              "width": 66.6875,
+              "height": 44,
+              "top": 382.671875,
+              "right": 229.921875,
+              "bottom": 426.671875,
+              "left": 163.234375
+            },
+            "visibleWidth": 66.6875
+          },
+          {
+            "label": "Inner life",
+            "rect": {
+              "x": 235.921875,
+              "y": 382.671875,
+              "width": 87.484375,
+              "height": 44,
+              "top": 382.671875,
+              "right": 323.40625,
+              "bottom": 426.671875,
+              "left": 235.921875
+            },
+            "visibleWidth": 87.484375
+          },
+          {
+            "label": "Structure",
+            "rect": {
+              "x": 329.40625,
+              "y": 382.671875,
+              "width": 90.59375,
+              "height": 44,
+              "top": 382.671875,
+              "right": 420,
+              "bottom": 426.671875,
+              "left": 329.40625
+            },
+            "visibleWidth": 90.59375
+          }
+        ]
+      },
+      "before": 0
+    },
+    {
+      "name": "Placements",
+      "viewport": {
+        "width": 440,
+        "height": 956
+      },
+      "initial": {
+        "tag": "DIV",
+        "rect": {
+          "x": 20,
+          "y": 174.921875,
+          "width": 400,
+          "height": 610.515625,
+          "top": 174.921875,
+          "right": 420,
+          "bottom": 785.4375,
+          "left": 20
+        },
+        "scrollWidth": 480,
+        "clientWidth": 400,
+        "scrollHeight": 611,
+        "clientHeight": 611,
+        "scrollLeft": 0,
+        "scrollTop": 0,
+        "touchAction": "auto",
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "overscrollX": "contain",
+        "overscrollY": "auto",
+        "scrollSnap": "none",
+        "scrollbar": "auto",
+        "scrollbarDisplay": "inline",
+        "tabindex": "0",
+        "rootWidth": 440,
+        "scrollY": 1744,
+        "buttons": []
+      },
+      "end": {
+        "tag": "DIV",
+        "rect": {
+          "x": 20,
+          "y": 174.921875,
+          "width": 400,
+          "height": 610.515625,
+          "top": 174.921875,
+          "right": 420,
+          "bottom": 785.4375,
+          "left": 20
+        },
+        "scrollWidth": 480,
+        "clientWidth": 400,
+        "scrollHeight": 611,
+        "clientHeight": 611,
+        "scrollLeft": 80,
+        "scrollTop": 0,
+        "touchAction": "auto",
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "overscrollX": "contain",
+        "overscrollY": "auto",
+        "scrollSnap": "none",
+        "scrollbar": "auto",
+        "scrollbarDisplay": "inline",
+        "tabindex": "0",
+        "rootWidth": 440,
+        "scrollY": 1744,
+        "buttons": []
+      },
+      "tableAria": "- region \"Scrollable natal placements\":\n  - table \"Calculated natal placements\":\n    - caption: Calculated natal placements\n    - rowgroup:\n      - row \"Body Sign & degree House Motion\":\n        - columnheader \"Body\"\n        - columnheader \"Sign & degree\"\n        - columnheader \"House\"\n        - columnheader \"Motion\"\n    - rowgroup:\n      - row \"Sun Aries 5\u00b0 12\u2032 suppressed Rx\":\n        - rowheader \"Sun\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"Rx\"\n      - row \"Moon Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Moon\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Mercury Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Mercury\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Venus Aries 5\u00b0 12\u2032 suppressed Rx\":\n        - rowheader \"Venus\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"Rx\"\n      - row \"Mars Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Mars\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Jupiter Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Jupiter\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Saturn Aries 5\u00b0 12\u2032 suppressed Rx\":\n        - rowheader \"Saturn\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"Rx\"\n      - row \"Uranus Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Uranus\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Neptune Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Neptune\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Pluto Aries 5\u00b0 12\u2032 suppressed Rx\":\n        - rowheader \"Pluto\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"Rx\"\n      - row \"North node Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"North node\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Chiron Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Chiron\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\""
+    },
+    {
+      "name": "Timing area rail",
+      "viewport": {
+        "width": 667,
+        "height": 375
+      },
+      "initial": {
+        "tag": "DIV",
+        "rect": {
+          "x": 27,
+          "y": 162.671875,
+          "width": 613,
+          "height": 54,
+          "top": 162.671875,
+          "right": 640,
+          "bottom": 216.671875,
+          "left": 27
+        },
+        "scrollWidth": 613,
+        "clientWidth": 613,
+        "scrollHeight": 54,
+        "clientHeight": 54,
+        "scrollLeft": 0,
+        "scrollTop": 0,
+        "touchAction": "auto",
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "overscrollX": "contain",
+        "overscrollY": "auto",
+        "scrollSnap": "none",
+        "scrollbar": "thin",
+        "scrollbarDisplay": "inline",
+        "tabindex": null,
+        "rootWidth": 667,
+        "scrollY": 231,
+        "buttons": [
+          {
+            "label": "Every area",
+            "rect": {
+              "x": 32,
+              "y": 167.671875,
+              "width": 98.53125,
+              "height": 44,
+              "top": 167.671875,
+              "right": 130.53125,
+              "bottom": 211.671875,
+              "left": 32
+            },
+            "visibleWidth": 98.53125
+          },
+          {
+            "label": "Identity",
+            "rect": {
+              "x": 136.53125,
+              "y": 167.671875,
+              "width": 80.046875,
+              "height": 44,
+              "top": 167.671875,
+              "right": 216.578125,
+              "bottom": 211.671875,
+              "left": 136.53125
+            },
+            "visibleWidth": 80.046875
+          },
+          {
+            "label": "Relationships",
+            "rect": {
+              "x": 222.578125,
+              "y": 167.671875,
+              "width": 117.65625,
+              "height": 44,
+              "top": 167.671875,
+              "right": 340.234375,
+              "bottom": 211.671875,
+              "left": 222.578125
+            },
+            "visibleWidth": 117.65625
+          },
+          {
+            "label": "Work",
+            "rect": {
+              "x": 346.234375,
+              "y": 167.671875,
+              "width": 66.6875,
+              "height": 44,
+              "top": 167.671875,
+              "right": 412.921875,
+              "bottom": 211.671875,
+              "left": 346.234375
+            },
+            "visibleWidth": 66.6875
+          },
+          {
+            "label": "Inner life",
+            "rect": {
+              "x": 418.921875,
+              "y": 167.671875,
+              "width": 87.484375,
+              "height": 44,
+              "top": 167.671875,
+              "right": 506.40625,
+              "bottom": 211.671875,
+              "left": 418.921875
+            },
+            "visibleWidth": 87.484375
+          },
+          {
+            "label": "Structure",
+            "rect": {
+              "x": 512.40625,
+              "y": 167.671875,
+              "width": 90.59375,
+              "height": 44,
+              "top": 167.671875,
+              "right": 603,
+              "bottom": 211.671875,
+              "left": 512.40625
+            },
+            "visibleWidth": 90.59375
+          }
+        ]
+      },
+      "after": {
+        "tag": "DIV",
+        "rect": {
+          "x": 27,
+          "y": 162.671875,
+          "width": 613,
+          "height": 54,
+          "top": 162.671875,
+          "right": 640,
+          "bottom": 216.671875,
+          "left": 27
+        },
+        "scrollWidth": 613,
+        "clientWidth": 613,
+        "scrollHeight": 54,
+        "clientHeight": 54,
+        "scrollLeft": 0,
+        "scrollTop": 0,
+        "touchAction": "auto",
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "overscrollX": "contain",
+        "overscrollY": "auto",
+        "scrollSnap": "none",
+        "scrollbar": "thin",
+        "scrollbarDisplay": "inline",
+        "tabindex": null,
+        "rootWidth": 667,
+        "scrollY": 231,
+        "buttons": [
+          {
+            "label": "Every area",
+            "rect": {
+              "x": 32,
+              "y": 167.671875,
+              "width": 98.53125,
+              "height": 44,
+              "top": 167.671875,
+              "right": 130.53125,
+              "bottom": 211.671875,
+              "left": 32
+            },
+            "visibleWidth": 98.53125
+          },
+          {
+            "label": "Identity",
+            "rect": {
+              "x": 136.53125,
+              "y": 167.671875,
+              "width": 80.046875,
+              "height": 44,
+              "top": 167.671875,
+              "right": 216.578125,
+              "bottom": 211.671875,
+              "left": 136.53125
+            },
+            "visibleWidth": 80.046875
+          },
+          {
+            "label": "Relationships",
+            "rect": {
+              "x": 222.578125,
+              "y": 167.671875,
+              "width": 117.65625,
+              "height": 44,
+              "top": 167.671875,
+              "right": 340.234375,
+              "bottom": 211.671875,
+              "left": 222.578125
+            },
+            "visibleWidth": 117.65625
+          },
+          {
+            "label": "Work",
+            "rect": {
+              "x": 346.234375,
+              "y": 167.671875,
+              "width": 66.6875,
+              "height": 44,
+              "top": 167.671875,
+              "right": 412.921875,
+              "bottom": 211.671875,
+              "left": 346.234375
+            },
+            "visibleWidth": 66.6875
+          },
+          {
+            "label": "Inner life",
+            "rect": {
+              "x": 418.921875,
+              "y": 167.671875,
+              "width": 87.484375,
+              "height": 44,
+              "top": 167.671875,
+              "right": 506.40625,
+              "bottom": 211.671875,
+              "left": 418.921875
+            },
+            "visibleWidth": 87.484375
+          },
+          {
+            "label": "Structure",
+            "rect": {
+              "x": 512.40625,
+              "y": 167.671875,
+              "width": 90.59375,
+              "height": 44,
+              "top": 167.671875,
+              "right": 603,
+              "bottom": 211.671875,
+              "left": 512.40625
+            },
+            "visibleWidth": 90.59375
+          }
+        ]
+      },
+      "before": 231
+    },
+    {
+      "name": "Placements",
+      "viewport": {
+        "width": 667,
+        "height": 375
+      },
+      "initial": {
+        "tag": "DIV",
+        "rect": {
+          "x": 68,
+          "y": -115.390625,
+          "width": 567,
+          "height": 610.515625,
+          "top": -115.390625,
+          "right": 635,
+          "bottom": 495.125,
+          "left": 68
+        },
+        "scrollWidth": 567,
+        "clientWidth": 567,
+        "scrollHeight": 611,
+        "clientHeight": 611,
+        "scrollLeft": 0,
+        "scrollTop": 0,
+        "touchAction": "auto",
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "overscrollX": "contain",
+        "overscrollY": "auto",
+        "scrollSnap": "none",
+        "scrollbar": "auto",
+        "scrollbarDisplay": "inline",
+        "tabindex": "0",
+        "rootWidth": 667,
+        "scrollY": 1887,
+        "buttons": []
+      },
+      "end": {
+        "tag": "DIV",
+        "rect": {
+          "x": 68,
+          "y": -115.390625,
+          "width": 567,
+          "height": 610.515625,
+          "top": -115.390625,
+          "right": 635,
+          "bottom": 495.125,
+          "left": 68
+        },
+        "scrollWidth": 567,
+        "clientWidth": 567,
+        "scrollHeight": 611,
+        "clientHeight": 611,
+        "scrollLeft": 0,
+        "scrollTop": 0,
+        "touchAction": "auto",
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "overscrollX": "contain",
+        "overscrollY": "auto",
+        "scrollSnap": "none",
+        "scrollbar": "auto",
+        "scrollbarDisplay": "inline",
+        "tabindex": "0",
+        "rootWidth": 667,
+        "scrollY": 1887,
+        "buttons": []
+      },
+      "tableAria": "- region \"Scrollable natal placements\":\n  - table \"Calculated natal placements\":\n    - caption: Calculated natal placements\n    - rowgroup:\n      - row \"Body Sign & degree House Motion\":\n        - columnheader \"Body\"\n        - columnheader \"Sign & degree\"\n        - columnheader \"House\"\n        - columnheader \"Motion\"\n    - rowgroup:\n      - row \"Sun Aries 5\u00b0 12\u2032 suppressed Rx\":\n        - rowheader \"Sun\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"Rx\"\n      - row \"Moon Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Moon\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Mercury Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Mercury\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Venus Aries 5\u00b0 12\u2032 suppressed Rx\":\n        - rowheader \"Venus\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"Rx\"\n      - row \"Mars Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Mars\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Jupiter Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Jupiter\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Saturn Aries 5\u00b0 12\u2032 suppressed Rx\":\n        - rowheader \"Saturn\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"Rx\"\n      - row \"Uranus Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Uranus\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Neptune Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Neptune\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Pluto Aries 5\u00b0 12\u2032 suppressed Rx\":\n        - rowheader \"Pluto\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"Rx\"\n      - row \"North node Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"North node\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Chiron Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Chiron\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\""
+    },
+    {
+      "name": "Timing area rail",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "initial": {
+        "tag": "DIV",
+        "rect": {
+          "x": 27,
+          "y": 170.796875,
+          "width": 790,
+          "height": 54,
+          "top": 170.796875,
+          "right": 817,
+          "bottom": 224.796875,
+          "left": 27
+        },
+        "scrollWidth": 790,
+        "clientWidth": 790,
+        "scrollHeight": 54,
+        "clientHeight": 54,
+        "scrollLeft": 0,
+        "scrollTop": 0,
+        "touchAction": "auto",
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "overscrollX": "contain",
+        "overscrollY": "auto",
+        "scrollSnap": "none",
+        "scrollbar": "thin",
+        "scrollbarDisplay": "inline",
+        "tabindex": null,
+        "rootWidth": 844,
+        "scrollY": 195,
+        "buttons": [
+          {
+            "label": "Every area",
+            "rect": {
+              "x": 32,
+              "y": 175.796875,
+              "width": 98.53125,
+              "height": 44,
+              "top": 175.796875,
+              "right": 130.53125,
+              "bottom": 219.796875,
+              "left": 32
+            },
+            "visibleWidth": 98.53125
+          },
+          {
+            "label": "Identity",
+            "rect": {
+              "x": 136.53125,
+              "y": 175.796875,
+              "width": 80.046875,
+              "height": 44,
+              "top": 175.796875,
+              "right": 216.578125,
+              "bottom": 219.796875,
+              "left": 136.53125
+            },
+            "visibleWidth": 80.046875
+          },
+          {
+            "label": "Relationships",
+            "rect": {
+              "x": 222.578125,
+              "y": 175.796875,
+              "width": 117.65625,
+              "height": 44,
+              "top": 175.796875,
+              "right": 340.234375,
+              "bottom": 219.796875,
+              "left": 222.578125
+            },
+            "visibleWidth": 117.65625
+          },
+          {
+            "label": "Work",
+            "rect": {
+              "x": 346.234375,
+              "y": 175.796875,
+              "width": 66.6875,
+              "height": 44,
+              "top": 175.796875,
+              "right": 412.921875,
+              "bottom": 219.796875,
+              "left": 346.234375
+            },
+            "visibleWidth": 66.6875
+          },
+          {
+            "label": "Inner life",
+            "rect": {
+              "x": 418.921875,
+              "y": 175.796875,
+              "width": 87.484375,
+              "height": 44,
+              "top": 175.796875,
+              "right": 506.40625,
+              "bottom": 219.796875,
+              "left": 418.921875
+            },
+            "visibleWidth": 87.484375
+          },
+          {
+            "label": "Structure",
+            "rect": {
+              "x": 512.40625,
+              "y": 175.796875,
+              "width": 90.59375,
+              "height": 44,
+              "top": 175.796875,
+              "right": 603,
+              "bottom": 219.796875,
+              "left": 512.40625
+            },
+            "visibleWidth": 90.59375
+          }
+        ]
+      },
+      "after": {
+        "tag": "DIV",
+        "rect": {
+          "x": 27,
+          "y": 170.796875,
+          "width": 790,
+          "height": 54,
+          "top": 170.796875,
+          "right": 817,
+          "bottom": 224.796875,
+          "left": 27
+        },
+        "scrollWidth": 790,
+        "clientWidth": 790,
+        "scrollHeight": 54,
+        "clientHeight": 54,
+        "scrollLeft": 0,
+        "scrollTop": 0,
+        "touchAction": "auto",
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "overscrollX": "contain",
+        "overscrollY": "auto",
+        "scrollSnap": "none",
+        "scrollbar": "thin",
+        "scrollbarDisplay": "inline",
+        "tabindex": null,
+        "rootWidth": 844,
+        "scrollY": 195,
+        "buttons": [
+          {
+            "label": "Every area",
+            "rect": {
+              "x": 32,
+              "y": 175.796875,
+              "width": 98.53125,
+              "height": 44,
+              "top": 175.796875,
+              "right": 130.53125,
+              "bottom": 219.796875,
+              "left": 32
+            },
+            "visibleWidth": 98.53125
+          },
+          {
+            "label": "Identity",
+            "rect": {
+              "x": 136.53125,
+              "y": 175.796875,
+              "width": 80.046875,
+              "height": 44,
+              "top": 175.796875,
+              "right": 216.578125,
+              "bottom": 219.796875,
+              "left": 136.53125
+            },
+            "visibleWidth": 80.046875
+          },
+          {
+            "label": "Relationships",
+            "rect": {
+              "x": 222.578125,
+              "y": 175.796875,
+              "width": 117.65625,
+              "height": 44,
+              "top": 175.796875,
+              "right": 340.234375,
+              "bottom": 219.796875,
+              "left": 222.578125
+            },
+            "visibleWidth": 117.65625
+          },
+          {
+            "label": "Work",
+            "rect": {
+              "x": 346.234375,
+              "y": 175.796875,
+              "width": 66.6875,
+              "height": 44,
+              "top": 175.796875,
+              "right": 412.921875,
+              "bottom": 219.796875,
+              "left": 346.234375
+            },
+            "visibleWidth": 66.6875
+          },
+          {
+            "label": "Inner life",
+            "rect": {
+              "x": 418.921875,
+              "y": 175.796875,
+              "width": 87.484375,
+              "height": 44,
+              "top": 175.796875,
+              "right": 506.40625,
+              "bottom": 219.796875,
+              "left": 418.921875
+            },
+            "visibleWidth": 87.484375
+          },
+          {
+            "label": "Structure",
+            "rect": {
+              "x": 512.40625,
+              "y": 175.796875,
+              "width": 90.59375,
+              "height": 44,
+              "top": 175.796875,
+              "right": 603,
+              "bottom": 219.796875,
+              "left": 512.40625
+            },
+            "visibleWidth": 90.59375
+          }
+        ]
+      },
+      "before": 195
+    },
+    {
+      "name": "Placements",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "initial": {
+        "tag": "DIV",
+        "rect": {
+          "x": 68,
+          "y": -108.078125,
+          "width": 744,
+          "height": 610.515625,
+          "top": -108.078125,
+          "right": 812,
+          "bottom": 502.4375,
+          "left": 68
+        },
+        "scrollWidth": 744,
+        "clientWidth": 744,
+        "scrollHeight": 611,
+        "clientHeight": 611,
+        "scrollLeft": 0,
+        "scrollTop": 0,
+        "touchAction": "auto",
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "overscrollX": "contain",
+        "overscrollY": "auto",
+        "scrollSnap": "none",
+        "scrollbar": "auto",
+        "scrollbarDisplay": "inline",
+        "tabindex": "0",
+        "rootWidth": 844,
+        "scrollY": 1821,
+        "buttons": []
+      },
+      "end": {
+        "tag": "DIV",
+        "rect": {
+          "x": 68,
+          "y": -108.078125,
+          "width": 744,
+          "height": 610.515625,
+          "top": -108.078125,
+          "right": 812,
+          "bottom": 502.4375,
+          "left": 68
+        },
+        "scrollWidth": 744,
+        "clientWidth": 744,
+        "scrollHeight": 611,
+        "clientHeight": 611,
+        "scrollLeft": 0,
+        "scrollTop": 0,
+        "touchAction": "auto",
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "overscrollX": "contain",
+        "overscrollY": "auto",
+        "scrollSnap": "none",
+        "scrollbar": "auto",
+        "scrollbarDisplay": "inline",
+        "tabindex": "0",
+        "rootWidth": 844,
+        "scrollY": 1821,
+        "buttons": []
+      },
+      "tableAria": "- region \"Scrollable natal placements\":\n  - table \"Calculated natal placements\":\n    - caption: Calculated natal placements\n    - rowgroup:\n      - row \"Body Sign & degree House Motion\":\n        - columnheader \"Body\"\n        - columnheader \"Sign & degree\"\n        - columnheader \"House\"\n        - columnheader \"Motion\"\n    - rowgroup:\n      - row \"Sun Aries 5\u00b0 12\u2032 suppressed Rx\":\n        - rowheader \"Sun\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"Rx\"\n      - row \"Moon Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Moon\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Mercury Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Mercury\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Venus Aries 5\u00b0 12\u2032 suppressed Rx\":\n        - rowheader \"Venus\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"Rx\"\n      - row \"Mars Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Mars\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Jupiter Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Jupiter\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Saturn Aries 5\u00b0 12\u2032 suppressed Rx\":\n        - rowheader \"Saturn\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"Rx\"\n      - row \"Uranus Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Uranus\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Neptune Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Neptune\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Pluto Aries 5\u00b0 12\u2032 suppressed Rx\":\n        - rowheader \"Pluto\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"Rx\"\n      - row \"North node Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"North node\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\"\n      - row \"Chiron Aries 5\u00b0 12\u2032 suppressed direct\":\n        - rowheader \"Chiron\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"suppressed\"\n        - cell \"direct\""
+    }
+  ],
+  "fields": [
+    {
+      "field": {
+        "name": "Today reflection",
+        "path": "/",
+        "ready": ".today-reading",
+        "selector": ".today-check-in-note textarea"
+      },
+      "before": {
+        "tag": "TEXTAREA",
+        "rect": {
+          "x": 37,
+          "y": 357.671875,
+          "width": 286,
+          "height": 90,
+          "top": 357.671875,
+          "right": 323,
+          "bottom": 447.671875,
+          "left": 37
+        },
+        "scrollWidth": 284,
+        "clientWidth": 284,
+        "scrollHeight": 976,
+        "clientHeight": 88,
+        "scrollLeft": 0,
+        "scrollTop": 888,
+        "touchAction": "auto",
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "overscrollX": "auto",
+        "overscrollY": "auto",
+        "scrollSnap": "none",
+        "scrollbar": "auto",
+        "scrollbarDisplay": "inline",
+        "tabindex": null,
+        "rootWidth": 360,
+        "scrollY": 924,
+        "buttons": []
+      },
+      "after": {
+        "tag": "TEXTAREA",
+        "rect": {
+          "x": 37,
+          "y": -42.328125,
+          "width": 286,
+          "height": 90,
+          "top": -42.328125,
+          "right": 323,
+          "bottom": 47.671875,
+          "left": 37
+        },
+        "scrollWidth": 284,
+        "clientWidth": 284,
+        "scrollHeight": 976,
+        "clientHeight": 88,
+        "scrollLeft": 0,
+        "scrollTop": 888,
+        "touchAction": "auto",
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "overscrollX": "auto",
+        "overscrollY": "auto",
+        "scrollSnap": "none",
+        "scrollbar": "auto",
+        "scrollbarDisplay": "inline",
+        "tabindex": null,
+        "rootWidth": 360,
+        "scrollY": 1324,
+        "buttons": []
+      }
+    },
+    {
+      "field": {
+        "name": "Journal new entry",
+        "path": "/journal",
+        "ready": ".journal-entry",
+        "selector": ".journal-compose textarea"
+      },
+      "before": {
+        "tag": "TEXTAREA",
+        "rect": {
+          "x": 20,
+          "y": 292.3125,
+          "width": 320,
+          "height": 221,
+          "top": 292.3125,
+          "right": 340,
+          "bottom": 513.3125,
+          "left": 20
+        },
+        "scrollWidth": 320,
+        "clientWidth": 320,
+        "scrollHeight": 1376,
+        "clientHeight": 220,
+        "scrollLeft": 0,
+        "scrollTop": 1156,
+        "touchAction": "auto",
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "overscrollX": "auto",
+        "overscrollY": "auto",
+        "scrollSnap": "none",
+        "scrollbar": "auto",
+        "scrollbarDisplay": "inline",
+        "tabindex": null,
+        "rootWidth": 360,
+        "scrollY": 397,
+        "buttons": []
+      },
+      "after": {
+        "tag": "TEXTAREA",
+        "rect": {
+          "x": 20,
+          "y": -107.6875,
+          "width": 320,
+          "height": 221,
+          "top": -107.6875,
+          "right": 340,
+          "bottom": 113.3125,
+          "left": 20
+        },
+        "scrollWidth": 320,
+        "clientWidth": 320,
+        "scrollHeight": 1376,
+        "clientHeight": 220,
+        "scrollLeft": 0,
+        "scrollTop": 1156,
+        "touchAction": "auto",
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "overscrollX": "auto",
+        "overscrollY": "auto",
+        "scrollSnap": "none",
+        "scrollbar": "auto",
+        "scrollbarDisplay": "inline",
+        "tabindex": null,
+        "rootWidth": 360,
+        "scrollY": 797,
+        "buttons": []
+      }
+    },
+    {
+      "field": {
+        "name": "Journal editor",
+        "path": "/journal",
+        "ready": ".journal-entry",
+        "selector": ".journal-entry-editor textarea",
+        "edit": true
+      },
+      "before": {
+        "tag": "TEXTAREA",
+        "rect": {
+          "x": 37,
+          "y": 315.8125,
+          "width": 286,
+          "height": 174,
+          "top": 315.8125,
+          "right": 323,
+          "bottom": 489.8125,
+          "left": 37
+        },
+        "scrollWidth": 284,
+        "clientWidth": 284,
+        "scrollHeight": 1056,
+        "clientHeight": 172,
+        "scrollLeft": 0,
+        "scrollTop": 884,
+        "touchAction": "auto",
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "overscrollX": "auto",
+        "overscrollY": "auto",
+        "scrollSnap": "none",
+        "scrollbar": "auto",
+        "scrollbarDisplay": "inline",
+        "tabindex": null,
+        "rootWidth": 360,
+        "scrollY": 1266,
+        "buttons": []
+      },
+      "after": {
+        "tag": "TEXTAREA",
+        "rect": {
+          "x": 37,
+          "y": -84.1875,
+          "width": 286,
+          "height": 174,
+          "top": -84.1875,
+          "right": 323,
+          "bottom": 89.8125,
+          "left": 37
+        },
+        "scrollWidth": 284,
+        "clientWidth": 284,
+        "scrollHeight": 1056,
+        "clientHeight": 172,
+        "scrollLeft": 0,
+        "scrollTop": 884,
+        "touchAction": "auto",
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "overscrollX": "auto",
+        "overscrollY": "auto",
+        "scrollSnap": "none",
+        "scrollbar": "auto",
+        "scrollbarDisplay": "inline",
+        "tabindex": null,
+        "rootWidth": 360,
+        "scrollY": 1666,
+        "buttons": []
+      }
+    }
+  ],
+  "boundaries": [
+    {
+      "name": "Mobile menu bottom",
+      "before": {
+        "tag": "NAV",
+        "rect": {
+          "x": 0,
+          "y": 80,
+          "width": 667,
+          "height": 291,
+          "top": 80,
+          "right": 667,
+          "bottom": 371,
+          "left": 0
+        },
+        "scrollWidth": 667,
+        "clientWidth": 667,
+        "scrollHeight": 464,
+        "clientHeight": 290,
+        "scrollLeft": 0,
+        "scrollTop": 174,
+        "touchAction": "auto",
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "overscrollX": "auto",
+        "overscrollY": "contain",
+        "scrollSnap": "none",
+        "scrollbar": "auto",
+        "scrollbarDisplay": "inline",
+        "tabindex": null,
+        "rootWidth": 667,
+        "scrollY": 0,
+        "buttons": [
+          {
+            "label": "Sign out",
+            "rect": {
+              "x": 24,
+              "y": 315,
+              "width": 619,
+              "height": 44,
+              "top": 315,
+              "right": 643,
+              "bottom": 359,
+              "left": 24
+            },
+            "visibleWidth": 619
+          }
+        ]
+      },
+      "after": {
+        "tag": "NAV",
+        "rect": {
+          "x": 0,
+          "y": 80,
+          "width": 667,
+          "height": 291,
+          "top": 80,
+          "right": 667,
+          "bottom": 371,
+          "left": 0
+        },
+        "scrollWidth": 667,
+        "clientWidth": 667,
+        "scrollHeight": 464,
+        "clientHeight": 290,
+        "scrollLeft": 0,
+        "scrollTop": 174,
+        "touchAction": "auto",
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "overscrollX": "auto",
+        "overscrollY": "contain",
+        "scrollSnap": "none",
+        "scrollbar": "auto",
+        "scrollbarDisplay": "inline",
+        "tabindex": null,
+        "rootWidth": 667,
+        "scrollY": 0,
+        "buttons": [
+          {
+            "label": "Sign out",
+            "rect": {
+              "x": 24,
+              "y": 315,
+              "width": 619,
+              "height": 44,
+              "top": 315,
+              "right": 643,
+              "bottom": 359,
+              "left": 24
+            },
+            "visibleWidth": 619
+          }
+        ]
+      }
+    },
+    {
+      "name": "Dialog details bottom",
+      "before": {
+        "tag": "DIV",
+        "rect": {
+          "x": 33,
+          "y": 217,
+          "width": 254,
+          "height": 190,
+          "top": 217,
+          "right": 287,
+          "bottom": 407,
+          "left": 33
+        },
+        "scrollWidth": 254,
+        "clientWidth": 254,
+        "scrollHeight": 920,
+        "clientHeight": 190,
+        "scrollLeft": 0,
+        "scrollTop": 730,
+        "touchAction": "auto",
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "overscrollX": "contain",
+        "overscrollY": "contain",
+        "scrollSnap": "none",
+        "scrollbar": "auto",
+        "scrollbarDisplay": "inline",
+        "tabindex": "0",
+        "rootWidth": 320,
+        "scrollY": 11228,
+        "buttons": []
+      },
+      "after": {
+        "tag": "DIV",
+        "rect": {
+          "x": 33,
+          "y": 217,
+          "width": 254,
+          "height": 190,
+          "top": 217,
+          "right": 287,
+          "bottom": 407,
+          "left": 33
+        },
+        "scrollWidth": 254,
+        "clientWidth": 254,
+        "scrollHeight": 920,
+        "clientHeight": 190,
+        "scrollLeft": 0,
+        "scrollTop": 730,
+        "touchAction": "auto",
+        "overflowX": "auto",
+        "overflowY": "auto",
+        "overscrollX": "contain",
+        "overscrollY": "contain",
+        "scrollSnap": "none",
+        "scrollbar": "auto",
+        "scrollbarDisplay": "inline",
+        "tabindex": "0",
+        "rootWidth": 320,
+        "scrollY": 11228,
+        "buttons": []
+      }
+    }
+  ],
+  "resize": [
+    {
+      "method": "tap mood",
+      "focused": {
+        "tag": "INPUT",
+        "text": "",
+        "name": "Mood: 3 of 5, Steady",
+        "scrollY": 703
+      },
+      "beforeResize": {
+        "scrollY": 0,
+        "tag": "INPUT",
+        "rect": {
+          "x": 152,
+          "y": 1080.671875,
+          "width": 1,
+          "height": 44,
+          "top": 1080.671875,
+          "right": 153,
+          "bottom": 1124.671875,
+          "left": 152
+        }
+      },
+      "afterResize": {
+        "scrollY": 470,
+        "tag": "INPUT",
+        "rect": {
+          "x": 152,
+          "y": 610.671875,
+          "width": 1,
+          "height": 44,
+          "top": 610.671875,
+          "right": 153,
+          "bottom": 654.671875,
+          "left": 152
+        }
+      }
+    },
+    {
+      "method": "focus Save",
+      "focused": {
+        "tag": "BODY",
+        "text": "Skip to contentPatternpersonal ephemerisTodayYour patternTimingJournalMore Sign outToday \u00b7 Oct 14, 2",
+        "name": null,
+        "scrollY": 1232
+      },
+      "beforeResize": {
+        "scrollY": 332,
+        "tag": "BODY",
+        "rect": {
+          "x": 0,
+          "y": -332,
+          "width": 360,
+          "height": 3061.140625,
+          "top": -332,
+          "right": 360,
+          "bottom": 2729.140625,
+          "left": 0
+        }
+      },
+      "afterResize": {
+        "scrollY": 332,
+        "tag": "BODY",
+        "rect": {
+          "x": 0,
+          "y": -332,
+          "width": 360,
+          "height": 3061.140625,
+          "top": -332,
+          "right": 360,
+          "bottom": 2729.140625,
+          "left": 0
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "root": {
+    "scrollingElement": "HTML",
+    "overscroll": "auto",
+    "touchAction": "auto",
+    "snap": "none"
+  }
+}

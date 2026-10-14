@@ -1,0 +1,13 @@
+{
+  "baselineFiles": 1544,
+  "changedExisting": [
+    "src/components/pattern/JournalDeleteDialog.tsx",
+    "src/components/pattern/PatternChartDetails.tsx",
+    "src/components/pattern/Shell.tsx",
+    "src/routes/_authenticated/journal.tsx",
+    "src/styles.css"
+  ],
+  "missing": [],
+  "unexpectedChanges": [],
+  "envUnchanged": true
+}

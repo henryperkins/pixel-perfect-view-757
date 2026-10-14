@@ -1,0 +1,182 @@
+--- a/src/components/pattern/Shell.tsx
++++ b/src/components/pattern/Shell.tsx
+@@ -51,6 +51,7 @@
+   const [progress, setProgress] = useState(0);
+   const mainRef = useRef<HTMLElement>(null);
+   const headerRef = useRef<HTMLElement>(null);
++  const headerBarRef = useRef<HTMLDivElement>(null);
+   const moreRef = useRef<HTMLDivElement>(null);
+   const mobileMenuRef = useRef<HTMLButtonElement>(null);
+   const desktopNavRef = useRef<HTMLElement>(null);
+@@ -63,7 +64,9 @@
+   useEffect(() => {
+     const root = document.documentElement;
+     let frame = 0;
++    let measureFrame = 0;
+     const measure = () => {
++      const headerBarHeight = headerBarRef.current?.getBoundingClientRect().height ?? 0;
+       const headerHeight = headerRef.current?.getBoundingClientRect().height ?? 0;
+       const nav = mobileNavRef.current;
+       const navHeight = nav?.getBoundingClientRect().height ?? 0;
+@@ -71,6 +74,7 @@
+       root.toggleAttribute("data-constrained-viewport", available - headerHeight - navHeight < 160);
+       const fixedHeight = nav && getComputedStyle(nav).position === "fixed" ? navHeight : 0;
+       root.style.setProperty("--pattern-header-height", `${headerHeight}px`);
++      root.style.setProperty("--pattern-header-bar-height", `${headerBarHeight}px`);
+       root.style.setProperty("--pattern-bottom-nav-height", `${fixedHeight}px`);
+     };
+     const revealFocus = () => {
+@@ -108,8 +112,13 @@
+       measure();
+       focus();
+     };
+-    const observer = new ResizeObserver(measure);
++    const observer = new ResizeObserver(() => {
++      // The measured values can resize the menu; write outside observer delivery.
++      cancelAnimationFrame(measureFrame);
++      measureFrame = requestAnimationFrame(measure);
++    });
+     if (headerRef.current) observer.observe(headerRef.current);
++    if (headerBarRef.current) observer.observe(headerBarRef.current);
+     if (mobileNavRef.current) observer.observe(mobileNavRef.current);
+     measure();
+     document.addEventListener("focusin", focus);
+@@ -118,10 +127,12 @@
+     return () => {
+       observer.disconnect();
+       cancelAnimationFrame(frame);
++      cancelAnimationFrame(measureFrame);
+       document.removeEventListener("focusin", focus);
+       window.removeEventListener("resize", resize);
+       window.visualViewport?.removeEventListener("resize", resize);
+       root.style.removeProperty("--pattern-header-height");
++      root.style.removeProperty("--pattern-header-bar-height");
+       root.style.removeProperty("--pattern-bottom-nav-height");
+       root.removeAttribute("data-constrained-viewport");
+     };
+@@ -306,9 +317,7 @@
+   const secondaryPage = secondaryNav.find((item) => isActive(item.to));
+ 
+   return (
+-    <div
+-      className={`pattern-shell min-h-screen bg-background text-foreground ${signedIn ? "has-journey" : ""}`}
+-    >
++    <div className={`pattern-shell bg-background text-foreground ${signedIn ? "has-journey" : ""}`}>
+       <a
+         href="#main-content"
+         className="skip-link"
+@@ -323,7 +332,10 @@
+         ref={headerRef}
+         className="sticky top-0 z-40 border-b border-rule bg-background/85 backdrop-blur-md"
+       >
+-        <div className="mx-auto flex min-h-20 max-w-6xl flex-wrap items-center gap-3 px-5 py-3 sm:gap-4 sm:px-8">
++        <div
++          ref={headerBarRef}
++          className="mx-auto flex min-h-20 max-w-6xl flex-wrap items-center gap-3 px-5 py-3 sm:gap-4 sm:px-8"
++        >
+           <Link
+             to="/"
+             className="brand-link flex min-w-0 shrink-0 items-center gap-2 font-serif text-2xl text-primary"
+--- a/src/routes/__root.tsx
++++ b/src/routes/__root.tsx
+@@ -18,7 +18,7 @@
+ 
+ function NotFoundComponent() {
+   return (
+-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
++    <div className="viewport-page flex items-center justify-center bg-background px-4">
+       <div className="max-w-md text-center">
+         <h1 className="text-7xl font-bold text-foreground">404</h1>
+         <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
+@@ -46,7 +46,7 @@
+   }, [error]);
+ 
+   return (
+-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
++    <div className="viewport-page flex items-center justify-center bg-background px-4">
+       <div className="max-w-md text-center">
+         <h1 className="text-xl font-semibold tracking-tight text-foreground">
+           This page didn't load
+--- a/src/styles.css
++++ b/src/styles.css
+@@ -219,6 +219,12 @@
+ body {
+   letter-spacing: 0;
+ }
++/* In-flow pages stay stable as browser toolbars expand and collapse. */
++.pattern-shell,
++.viewport-page {
++  min-height: 100vh;
++  min-height: 100svh;
++}
+ :where(a, button, summary, input, select, textarea):focus-visible {
+   outline: 2px solid var(--ring);
+   outline-offset: 4px;
+@@ -400,7 +406,13 @@
+ }
+ .mobile-menu {
+   animation: menu-enter 200ms var(--ease-flow);
+-  max-height: calc(100dvh - 160px);
++  /* Leave room for the measured header, any fixed nav, and the progress rule. */
++  max-height: calc(
++    100vh - var(--pattern-header-bar-height, 80px) - var(--pattern-bottom-nav-height, 80px) - 4px
++  );
++  max-height: calc(
++    100svh - var(--pattern-header-bar-height, 80px) - var(--pattern-bottom-nav-height, 80px) - 4px
++  );
+   overflow-y: auto;
+ }
+ .mobile-journey {
+@@ -1214,7 +1226,7 @@
+   min-width: 0;
+ }
+ .travel-intro h1 {
+-  font-size: clamp(2.25rem, 4vw, 3.25rem);
++  font-size: clamp(2.25rem, 1.25rem + 2vw, 3.25rem);
+   line-height: 1.15;
+ }
+ .travel-intro > p {
+@@ -1256,7 +1268,7 @@
+   display: block;
+   font-family: var(--font-serif);
+   color: var(--primary);
+-  font-size: clamp(1.625rem, 3.2vw, 2.375rem);
++  font-size: clamp(1.625rem, 1rem + 1.6vw, 2.375rem);
+   line-height: 1.25;
+ }
+ .travel-date-display p {
+@@ -1594,7 +1606,7 @@
+ }
+ .timing-intro h1,
+ .timing-loading h1 {
+-  font-size: clamp(2.25rem, 4vw, 3.25rem);
++  font-size: clamp(2.25rem, 1.25rem + 2vw, 3.25rem);
+   line-height: 1.15;
+ }
+ .timing-intro > p:not(.technical) {
+@@ -3206,6 +3218,11 @@
+   box-shadow: var(--shadow-floating);
+ }
+ @media (max-width: 1023px) {
++  .toaster[data-sonner-toaster][data-y-position="bottom"] {
++    bottom: calc(
++      max(var(--pattern-bottom-nav-height, 0px), env(safe-area-inset-bottom, 0px)) + 16px
++    );
++  }
+   .pattern-mobile-field {
+     font-size: 16px;
+     font-size: max(1rem, 16px);
+--- a/src/lib/error-page.ts
++++ b/src/lib/error-page.ts
+@@ -6,8 +6,9 @@
+     <title>This page didn't load</title>
+     <meta name="viewport" content="width=device-width, initial-scale=1" />
+     <style>
+-      body { font: 15px/1.5 system-ui, -apple-system, sans-serif; background: #fafafa; color: #111; display: grid; place-items: center; min-height: 100vh; margin: 0; padding: 1.5rem; }
+-      .card { max-width: 28rem; width: 100%; text-align: center; padding: 2rem; }
++      *, *::before, *::after { box-sizing: border-box; }
++      body { font: 15px/1.5 system-ui, -apple-system, sans-serif; background: #fafafa; color: #111; display: grid; place-items: center; min-height: 100vh; min-height: 100svh; margin: 0; padding: 1.5rem; }
++      .card { min-width: 0; max-width: 28rem; width: 100%; text-align: center; padding: 2rem; overflow-wrap: anywhere; }
+       h1 { font-size: 1.25rem; margin: 0 0 0.5rem; }
+       p { color: #4b5563; margin: 0 0 1.5rem; }
+       .actions { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; }

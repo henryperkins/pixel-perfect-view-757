@@ -315,6 +315,7 @@ function TodayContent({
           <TodayCheckIn
             key={`${accountId}:${data.day}`}
             day={data.day}
+            timezone={data.timezone}
             accountId={accountId}
             wellness={data.wellness}
             disabled={staleDay}

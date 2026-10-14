@@ -1,0 +1,67 @@
+{
+  "chromium": {
+    "journey": {
+      "count": 5,
+      "failed": [],
+      "pageErrors": []
+    },
+    "menu": {
+      "count": 21,
+      "failed": [],
+      "pageErrors": []
+    },
+    "dialog": {
+      "count": 17,
+      "failed": [],
+      "pageErrors": []
+    },
+    "dense": {
+      "count": 7,
+      "failed": [],
+      "pageErrors": []
+    }
+  },
+  "webkit": {
+    "journey": {
+      "count": 5,
+      "failed": [],
+      "pageErrors": []
+    },
+    "menu": {
+      "count": 21,
+      "failed": [],
+      "pageErrors": []
+    },
+    "dialog": {
+      "count": 17,
+      "failed": [],
+      "pageErrors": []
+    },
+    "dense": {
+      "count": 7,
+      "failed": [],
+      "pageErrors": []
+    }
+  },
+  "checks": {
+    "typescript": "passed",
+    "targetedEslint": "passed",
+    "prettier": "passed",
+    "scopedDiffCheck": "passed",
+    "productionBuild": "passed with existing dependency directive warnings",
+    "nodeTests": {
+      "total": 887,
+      "passed": 883,
+      "skipped": 4,
+      "failed": 0
+    },
+    "designDetector": {
+      "findings": 0,
+      "suppressionsAdded": 0
+    },
+    "physicalDeviceTesting": "not performed",
+    "lcp": "not measured",
+    "inp": "not measured",
+    "cls": "not measured"
+  }
+}

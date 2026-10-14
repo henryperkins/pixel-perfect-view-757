@@ -1,0 +1,103 @@
+async page => {
+  const engine = page.context().browser().browserType().name();
+  const out = '/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-gestures-2026-10-14/';
+  const result = {engine,version:page.context().browser().version(),evidence:'Render: Chromium mobile emulation / desktop WebKit with touch support; no physical OS chrome or keyboard',cases:[],pageErrors:[]};
+  page.setDefaultTimeout(8000);
+  page.on('pageerror',e=>result.pageErrors.push(e.message));
+  await page.emulateMedia({reducedMotion:'reduce'});
+  const check=(value,message)=>{if(!value)throw Error(message)};
+  const settle=()=>page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(()=>requestAnimationFrame(r)))));
+  const run=async(name,fn)=>{if(!name.startsWith('G03 table')&&!name.startsWith('G03 late')&&!name.startsWith('G03 normal'))return;try{result.cases.push({name,pass:true,...await fn()})}catch(e){result.cases.push({name,pass:false,error:String(e)})}};
+  const go=async(path,selector)=>{await page.goto('http://127.0.0.1:4200'+path);await page.locator(selector).first().waitFor();await page.evaluate(()=>document.fonts.ready);await settle()};
+  const center=async loc=>{await loc.evaluate(el=>el.scrollIntoView({block:'center',behavior:'instant'}));await settle()};
+  const setPlacements=async(count=12)=>{await page.evaluate(count=>{const p=structuredClone(window.mobileAudit.pattern);p.uncertainty.housesReliable=true;p.placements=Array.from({length:count},(_,i)=>({key:'body-'+i,label:['Sun','Moon','Mercury','Venus','Mars','Jupiter','Saturn','Uranus','Neptune','Pluto','North node','Chiron'][i],position:['Aries 5° 12′','Taurus 15° 04′','Gemini 20° 33′'][i%3],house:i+1,retrograde:i%3===0}));window.auditQueryClient.setQueryData(['pattern',window.mobileAudit.state.ownerId],p)},count);await settle()};
+  for(const kind of ['mood','note'])await run('G01 stale '+kind+' focus after height and VisualViewport resize',async()=>{
+    await page.setViewportSize({width:360,height:800});await go('/','.today-reading');
+    const target=kind==='mood'?page.getByRole('radio',{name:'Mood: 3 of 5, Steady'}).locator('..'):page.locator('.today-check-in-note textarea');
+    await center(target);if(kind==='mood')await target.tap();else await target.fill('Keep this reflection while the viewport changes.');await settle();
+    check(await page.evaluate(()=>['INPUT','TEXTAREA'].includes(document.activeElement.tagName)),'Control did not retain focus');
+    await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));await settle();const before=await page.evaluate(()=>scrollY);
+    await page.setViewportSize({width:360,height:740});await settle();const smaller=await page.evaluate(()=>scrollY);
+    await page.setViewportSize({width:360,height:800});await settle();
+    await page.evaluate(()=>window.visualViewport?.dispatchEvent(new Event('resize')));await settle();const expanded=await page.evaluate(()=>scrollY);
+    check(Math.abs(smaller-before)<2&&Math.abs(expanded-before)<2,'Resize moved the document to stale focus');
+    return{viewport:'360x800 -> 360x740 -> 360x800',before,smaller,expanded};
+  });
+  await run('G01 new focus still clears sticky navigation',async()=>{
+    await go('/','.today-reading');const note=page.locator('.today-check-in-note textarea');
+    await page.evaluate(()=>{document.activeElement?.blur();window.scrollTo({top:0,behavior:'instant'})});
+    await note.evaluate(el=>el.focus({preventScroll:true}));await settle();
+    const state=await note.evaluate(el=>{const r=el.getBoundingClientRect(),h=document.querySelector('.pattern-header').getBoundingClientRect(),n=document.querySelector('.mobile-journey').getBoundingClientRect();return{top:r.top,bottom:r.bottom,header:h.bottom,nav:n.top,scrollY}});
+    check(state.top>=state.header+7&&state.bottom<=state.nav-7,'Newly focused textarea remains obscured');return state;
+  });
+  for(const viewport of [{width:360,height:800},{width:667,height:375}])for(const field of [
+    {name:'Today reflection',path:'/',ready:'.today-reading',selector:'.today-check-in-note textarea'},
+    {name:'Journal compose',path:'/journal',ready:'.journal-entry',selector:'.journal-compose textarea'},
+    {name:'Journal edit',path:'/journal',ready:'.journal-entry',selector:'.journal-entry-editor textarea',edit:true},
+  ])await run('G02 '+field.name+' boundaries '+viewport.width+'x'+viewport.height,async()=>{
+    await page.setViewportSize(viewport);await go(field.path,field.ready);
+    if(field.edit){const edit=page.locator('.journal-entry').first().getByRole('button',{name:'Edit',exact:true});await center(edit);await edit.click()}
+    const loc=page.locator(field.selector),value=Array.from({length:40},(_,i)=>'Line '+i+': an ordinary reflection.').join('\n');
+    await loc.fill(value);await center(loc);await loc.evaluate(el=>el.scrollTop=0);await settle();
+    const state=()=>loc.evaluate(el=>({documentY:scrollY,fieldY:el.scrollTop}));
+    const box=await loc.boundingBox();await page.mouse.move(box.x+box.width/2,box.y+box.height/2);
+    const start=await state();await page.mouse.wheel(0,200);await page.waitForTimeout(220);const interior=await state();
+    check(interior.fieldY>start.fieldY&&Math.abs(interior.documentY-start.documentY)<2,'Interior field scroll moved the page');
+    await loc.evaluate(el=>el.scrollTop=el.scrollHeight);await settle();const bottom=await state();await page.mouse.wheel(0,400);await page.waitForTimeout(220);const bottomAfter=await state();
+    check(Math.abs(bottomAfter.documentY-bottom.documentY)<2,'Bottom boundary chained to page');
+    await loc.evaluate(el=>el.scrollTop=0);await settle();const top=await state();await page.mouse.wheel(0,-400);await page.waitForTimeout(220);const topAfter=await state();
+    check(Math.abs(topAfter.documentY-top.documentY)<2,'Top boundary chained to page');
+    await page.mouse.move(5,viewport.height/2);await page.mouse.wheel(0,200);await page.waitForTimeout(220);const outside=await state();
+    check(outside.documentY>topAfter.documentY,'Document cannot scroll outside the field');check(await loc.inputValue()===value,'Field input changed');
+    return{viewport,start,interior,bottom,bottomAfter,top,topAfter,outside};
+  });
+  const viewports=[{width:320,height:568,font:16},{width:360,height:800,font:16},{width:440,height:956,font:16},{width:667,height:375,font:16},{width:844,height:390,font:16},{width:1280,height:800,font:16},{width:320,height:568,font:32},{width:844,height:390,font:32}];
+  for(const viewport of viewports)await run('G03 all six filters by taps '+viewport.width+' font'+viewport.font,async()=>{
+    await page.setViewportSize({width:viewport.width,height:viewport.height});await go('/timing','.timing-area-options');await page.evaluate(font=>document.documentElement.style.fontSize=font+'px',viewport.font);await settle();
+    const rail=page.locator('.timing-area-options');const geometry=await rail.evaluate(el=>{const r=el.getBoundingClientRect();return{client:el.clientWidth,scroll:el.scrollWidth,rootWidth:document.documentElement.scrollWidth,buttons:[...el.querySelectorAll('button')].map(b=>{const br=b.getBoundingClientRect();return{text:b.textContent,left:br.left-r.left,right:br.right-r.left,width:br.width,height:br.height}})}});
+    check(geometry.scroll<=geometry.client+1&&geometry.rootWidth<=viewport.width,'Filters overflow horizontally');
+    for(const label of ['Every area','Identity','Relationships','Work','Inner life','Structure']){const b=rail.getByRole('button',{name:label,exact:true});await center(b);const point=await b.evaluate(el=>{const r=el.getBoundingClientRect(),v=window.visualViewport;return{x:r.x+r.width/2-(v?.offsetLeft??0),y:r.y+r.height/2-(v?.offsetTop??0)}});await page.touchscreen.tap(point.x,point.y);await settle();check(await b.getAttribute('aria-pressed')==='true','Cannot select '+label)}
+    await page.screenshot({path:out+engine+'-filters-'+viewport.width+'-font'+viewport.font+'.png',animations:'disabled'});return{viewport,geometry};
+  });
+  for(const viewport of viewports)await run('G03 table taps, semantics and keyboard '+viewport.width+' font'+viewport.font,async()=>{
+    await page.setViewportSize({width:viewport.width,height:viewport.height});await go('/pattern','#pattern-placements');await page.evaluate(font=>document.documentElement.style.fontSize=font+'px',viewport.font);await setPlacements();
+    const summary=page.locator('#pattern-placements > summary');await center(summary);await summary.click();await settle();
+    const region=page.getByRole('region',{name:'Scrollable natal placements'}),more=page.getByRole('button',{name:'More columns',exact:true}),previous=page.getByRole('button',{name:'Previous columns',exact:true});
+    const geometry=await region.evaluate(el=>({client:el.clientWidth,scroll:el.scrollWidth,rootWidth:document.documentElement.scrollWidth,tableDisplay:getComputedStyle(el.querySelector('table')).display,rowDisplay:getComputedStyle(el.querySelector('tr')).display,firstLeft:el.querySelector('tbody th').getBoundingClientRect().left,pinnedWidth:el.querySelector('th').getBoundingClientRect().width}));
+    check(geometry.rootWidth<=viewport.width,'Table causes document overflow');check(geometry.tableDisplay==='table'&&geometry.rowDisplay==='table-row','Table semantics/layout changed');
+    const aria=await region.ariaSnapshot();check(aria.includes('columnheader "Sign & degree"')&&aria.includes('rowheader "Sun"'),'Table headers absent from accessibility tree');
+    const positions=[0];let keyboardScroll=0,buttonGeometry=[];
+    if(geometry.scroll>geometry.client+1){check(geometry.client-geometry.pinnedWidth>=geometry.client*0.6-1,'Sticky labels leave too little width for data');
+      await more.waitFor();check(await previous.isDisabled(),'Previous not disabled at start');check(await more.getAttribute('aria-controls')===await region.getAttribute('id'),'Buttons do not control this region');
+      buttonGeometry=await page.locator('.pattern-placement-controls button').evaluateAll(bs=>bs.map(b=>{const r=b.getBoundingClientRect();return{width:r.width,height:r.height}}));check(buttonGeometry.every(b=>b.width>=44&&b.height>=48),'Column tap controls too small');
+      while(!await more.isDisabled()){
+        check(positions.length<80,'More never reaches final column');await center(more);await more.focus();await settle();const documentBefore=await page.evaluate(()=>scrollY);
+        const visible=await region.evaluate(el=>el.clientWidth-el.querySelector('th').getBoundingClientRect().width);
+        await more.tap();await settle();const x=await region.evaluate(el=>el.scrollLeft),documentAfter=await page.evaluate(()=>scrollY);
+        check(x>positions.at(-1)+0.1,'More did not advance');check(x-positions.at(-1)<=visible+2,'Column paging skips content behind sticky header');check(Math.abs(documentAfter-documentBefore)<2,'Paging moved document');positions.push(x);
+      }
+      const firstLeft=await region.locator('tbody th').first().evaluate(el=>el.getBoundingClientRect().left);check(Math.abs(firstLeft-geometry.firstLeft)<2,'Sticky row header moved');
+      let backs=0;while(!await previous.isDisabled()){check(backs++<80,'Previous never reaches start');await center(previous);await previous.tap();await settle()}
+      check(Math.abs(await region.evaluate(el=>el.scrollLeft))<2,'Previous did not return to start');
+      await center(region);await region.focus();await page.keyboard.press('ArrowRight');await page.waitForTimeout(180);keyboardScroll=await region.evaluate(el=>el.scrollLeft);check(keyboardScroll>0,'Keyboard cannot scroll table');
+      await region.evaluate(el=>el.scrollLeft=0);await center(page.locator('.pattern-placement-controls'));
+    }else check(await more.count()===0,'Controls remain visible without overflow');
+    await page.screenshot({path:out+engine+'-table-'+viewport.width+'-font'+viewport.font+'.png',animations:'disabled'});return{viewport,geometry,buttonGeometry,positions,keyboardScroll,aria};
+  });
+  await run('G03 late/empty data and ResizeObserver fallback',async()=>{
+    await page.setViewportSize({width:360,height:800});await go('/pattern','#pattern-placements');await page.evaluate(()=>{window.savedResizeObserver=window.ResizeObserver;window.ResizeObserver=undefined});
+    try{
+      await setPlacements();const summary=page.locator('#pattern-placements > summary');await center(summary);await summary.click();await settle();await page.getByRole('button',{name:'More columns',exact:true}).waitFor();
+      await page.setViewportSize({width:844,height:390});await settle();check(await page.getByRole('button',{name:'More columns',exact:true}).count()===0,'Fallback resize did not hide controls');
+      await page.setViewportSize({width:360,height:800});await settle();await page.getByRole('button',{name:'More columns',exact:true}).waitFor();
+      await setPlacements(0);check(await page.getByRole('region',{name:'Scrollable natal placements'}).count()===0,'Empty table remains');await setPlacements();await page.getByRole('button',{name:'More columns',exact:true}).waitFor();
+      await center(summary);await summary.click();await settle();await summary.click();await settle();await page.getByRole('button',{name:'More columns',exact:true}).waitFor();return{lateData:true,emptyData:true,rotation:true,foldoutReopen:true};
+    }finally{await page.evaluate(()=>{window.ResizeObserver=window.savedResizeObserver;delete window.savedResizeObserver})}
+  });
+  await run('G03 normal-motion table paging stays inside table',async()=>{
+    await page.setViewportSize({width:360,height:800});await go('/pattern','#pattern-placements');await setPlacements();const summary=page.locator('#pattern-placements > summary');await center(summary);await summary.click();await page.emulateMedia({reducedMotion:'no-preference'});await page.waitForTimeout(800);await settle();
+    const more=page.getByRole('button',{name:'More columns',exact:true}),region=page.locator('.pattern-placement-table');await center(more);await more.focus();await settle();const before=await page.evaluate(()=>scrollY);await more.tap();await page.waitForTimeout(600);const after=await page.evaluate(()=>scrollY),x=await region.evaluate(el=>el.scrollLeft);check(x>0&&Math.abs(after-before)<2,'Smooth column paging changed page position: '+JSON.stringify({before,after,x}));await page.emulateMedia({reducedMotion:'reduce'});return{before,after,x};
+  });
+  result.root=await page.evaluate(()=>({scrollingElement:document.scrollingElement.tagName,overscroll:getComputedStyle(document.documentElement).overscrollBehavior,touchAction:getComputedStyle(document.documentElement).touchAction}));
+  return result;
+}

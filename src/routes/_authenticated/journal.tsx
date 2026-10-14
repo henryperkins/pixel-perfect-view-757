@@ -1,5 +1,15 @@
+import { JournalDeleteDialog } from "@/components/pattern/JournalDeleteDialog";
+import { useMemberDraft, useMemberDraftLifecycle } from "@/components/pattern/MemberDraftProvider";
+import { DraftRecoveryNotice } from "@/components/pattern/DraftRecoveryNotice";
+import {
+  canonicalJournalValues,
+  createJournalSubmission,
+  journalPayload,
+  reconcileJournalSubmission,
+} from "@/lib/journal-submit";
+import type { DraftValuesMap } from "@/lib/member-drafts";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -18,17 +28,27 @@ import {
   addEvent,
   editEvent,
   fetchJournal,
+  fetchJournalSubmission,
   fetchPattern,
   fetchToday,
   removeEvent,
 } from "@/lib/pattern.functions";
 
 export const Route = createFileRoute("/_authenticated/journal")({
-  validateSearch: (search: Record<string, unknown>): { chapter?: string } => {
-    const chapter = search["chapter"];
-    return typeof chapter === "string" && chapter.length > 0 && chapter.length <= 120
-      ? { chapter }
-      : {};
+  validateSearch: (search: Record<string, unknown>): { chapter?: string; deleteEntry?: string } => {
+    const result: { chapter?: string; deleteEntry?: string } = {};
+    if (
+      typeof search["chapter"] === "string" &&
+      search["chapter"].length > 0 &&
+      search["chapter"].length <= 120
+    )
+      result.chapter = search["chapter"];
+    if (
+      typeof search["deleteEntry"] === "string" &&
+      /^[a-zA-Z0-9_-]{1,120}$/.test(search["deleteEntry"])
+    )
+      result.deleteEntry = search["deleteEntry"];
+    return result;
   },
   head: () => ({
     meta: [
@@ -53,8 +73,46 @@ export const Route = createFileRoute("/_authenticated/journal")({
 const DOMAINS = ["general", "work", "relationships", "health", "money"] as const;
 
 function JournalPage() {
-  const { chapter } = Route.useSearch();
+  const { chapter, deleteEntry } = Route.useSearch();
+  const navigate = Route.useNavigate();
+  const router = useRouter();
+  const deleteTrigger = useRef<HTMLButtonElement | null>(null);
+  const openedDelete = useRef<string | null>(null);
+  const closingDelete = useRef<string | null>(null);
+  const [dismissedDelete, setDismissedDelete] = useState<string | null>(null);
+  useEffect(() => {
+    closingDelete.current = null;
+    setDismissedDelete(null);
+  }, [deleteEntry]);
+  useEffect(
+    () =>
+      router.history.subscribe(({ location }) => {
+        if (new URLSearchParams(location.search).get("deleteEntry") !== deleteEntry)
+          setDismissedDelete(deleteEntry ?? null);
+      }),
+    [router, deleteEntry],
+  );
+  const closeDelete = (expectedId?: string) => {
+    const location = router.state.location;
+    const currentId = location.search.deleteEntry;
+    if (!currentId || (expectedId && currentId !== expectedId)) return;
+    const key = location.state.__TSR_key ?? location.href;
+    if (closingDelete.current === key) return;
+    closingDelete.current = key;
+    setDismissedDelete(currentId);
+    if (openedDelete.current === currentId) router.history.back();
+    else
+      void navigate({
+        search: (previous) => {
+          const { deleteEntry: _removed, ...rest } = previous;
+          return rest;
+        },
+        replace: true,
+        resetScroll: false,
+      });
+  };
   const { session } = useAuth();
+  const { discardJournalDrafts } = useMemberDraftLifecycle();
   const calendar = useCalendarRefresh();
   const journalFn = useServerFn(fetchJournal);
   const todayFn = useServerFn(fetchToday);
@@ -84,13 +142,36 @@ function JournalPage() {
 
   const prettyKey = (key: string) => key.replace(/[_-]+/g, " ");
 
-  const [dateOverride, setOccurredOn] = useState<string | null>(null);
-  const occurredOn = dateOverride ?? (day.data && !day.data.needsOnboarding ? day.data.day : "");
-  const [domain, setDomain] = useState<string>("general");
-  const [label, setLabel] = useState("");
-  const [body, setBody] = useState("");
-  const [cycleKey, setCycleKey] = useState("");
-  const [featureKey, setFeatureKey] = useState(chapter ?? "");
+  const [defaults, setDefaults] = useState<DraftValuesMap["journal-new"] | null>(null);
+  const initialValues = defaults ?? {
+    occurredOn: day.data && !day.data.needsOnboarding ? day.data.day : "",
+    domain: "general",
+    label: "",
+    body: "",
+    cycleKey: "",
+    featureKey: chapter ?? "",
+  };
+  const recovery = useMemberDraft({
+    kind: "journal-new",
+    entityKey: "new",
+    values: initialValues,
+    baseline: { values: initialValues, version: null },
+  });
+  const values = recovery.draft?.values ?? initialValues;
+  const { occurredOn, domain, label, body, cycleKey, featureKey } = values;
+  const change = <K extends keyof DraftValuesMap["journal-new"]>(
+    key: K,
+    value: DraftValuesMap["journal-new"][K],
+  ) => recovery.update({ ...(recovery.current()?.values ?? initialValues), [key]: value });
+  const setOccurredOn = (value: string) => change("occurredOn", value);
+  const setDomain = (value: string) => change("domain", value);
+  const setLabel = (value: string) => change("label", value);
+  const setBody = (value: string) => change("body", value);
+  const setCycleKey = (value: string) => change("cycleKey", value);
+  const setFeatureKey = (value: string) => change("featureKey", value);
+  const [checkingSave, setCheckingSave] = useState(false);
+  const [missingSave, setMissingSave] = useState(false);
+  const [saveDifference, setSaveDifference] = useState(false);
   const [editing, setEditing] = useState<EditableJournalEntry | null>(null);
   const editTrigger = useRef<HTMLButtonElement | null>(null);
   const entriesHeading = useRef<HTMLHeadingElement | null>(null);
@@ -106,7 +187,15 @@ function JournalPage() {
 
   // A new chapter link updates only the attachment. Subsequent query refreshes
   // must not overwrite the reader's manual selection or their entry draft.
-  useEffect(() => setFeatureKey(chapter ?? ""), [chapter]);
+  const lastChapter = useRef(chapter);
+  const chapterDraft = useRef(recovery);
+  chapterDraft.current = recovery;
+  useEffect(() => {
+    const current = chapterDraft.current.current();
+    if (chapter && chapter !== lastChapter.current && current)
+      chapterDraft.current.update({ ...current.values, featureKey: chapter });
+    lastChapter.current = chapter;
+  }, [chapter]);
 
   const cycles = day.data && !day.data.needsOnboarding ? day.data.cycles.slice(0, 8) : [];
   const features = pattern.data && !pattern.data.needsOnboarding ? pattern.data.features : [];
@@ -114,38 +203,82 @@ function JournalPage() {
     Boolean(featureKey) && !features.some((f) => f.feature_key === featureKey);
 
   const save = useMutation({
-    mutationFn: () => {
-      // Check again when saving: a recalculated chart may have removed the
-      // chapter after the link was opened or a manual selection was made.
-      if (chapterUnavailable) {
+    mutationFn: async () => {
+      if (chapterUnavailable)
         throw new Error("Choose an available chapter or select No chapter before saving.");
-      }
-      return addFn({
-        data: {
-          occurredOn,
-          domain,
-          label: label.trim(),
-          body: body.trim() ? body.trim() : null,
-          cycleKey: cycleKey || null,
-          featureKey: featureKey || null,
-        },
+      const current = recovery.current() ?? recovery.update(values);
+      const seed = createJournalSubmission(current, crypto.randomUUID());
+      const submission = await recovery.checkpointSubmission(seed.values, seed.operationId);
+      const result = await addFn({
+        data: { ...journalPayload(submission.values), clientMutationId: submission.operationId },
       });
+      return { result, submission };
     },
-    onSuccess: async () => {
-      setLabel("");
-      setBody("");
-      toast.success("Entry saved");
+    onSuccess: async ({ result, submission }) => {
+      const current = recovery.current();
+      if (!current) return;
+      const outcome = reconcileJournalSubmission(current, submission, result.entry);
+      recovery.reconcileAcknowledgement(
+        submission,
+        canonicalJournalValues(result.entry),
+        String(result.entry.revision),
+      );
+      setDefaults({ ...submission.values, label: "", body: "" });
+      setMissingSave(false);
+      setSaveDifference(outcome.kind === "different-server-value");
+      toast.success(
+        outcome.kind === "acknowledged"
+          ? "Entry saved"
+          : "Earlier entry saved. Your current draft is kept.",
+      );
       await qc.invalidateQueries({ queryKey: ["journal"] });
       await qc.invalidateQueries({ queryKey: ["today"] });
     },
     onError: (e: Error) => toast.error(e.message),
   });
+  const checkSave = async () => {
+    const pending = recovery.current()?.submission;
+    if (!pending) return;
+    setCheckingSave(true);
+    try {
+      const result = await fetchJournalSubmission({
+        data: { clientMutationId: pending.operationId },
+      });
+      if (result.state === "missing") {
+        setMissingSave(true);
+        return;
+      }
+      const current = recovery.current();
+      if (!current) return;
+      const outcome = reconcileJournalSubmission(current, pending, result.entry);
+      recovery.reconcileAcknowledgement(
+        pending,
+        canonicalJournalValues(result.entry),
+        String(result.entry.revision),
+      );
+      setDefaults({ ...pending.values, label: "", body: "" });
+      setSaveDifference(outcome.kind === "different-server-value");
+      setMissingSave(false);
+      toast.success("Earlier save found. Any newer draft text is kept.");
+      await qc.invalidateQueries({ queryKey: ["journal"] });
+    } catch {
+      toast.error("The save could not be checked. Your draft is kept.");
+    } finally {
+      setCheckingSave(false);
+    }
+  };
 
   const remove = useMutation({
     mutationFn: (id: string) => removeFn({ data: { id } }),
-    onSuccess: async () => {
+    onSuccess: async (_result, id) => {
+      await discardJournalDrafts(id);
       toast.success("Entry deleted");
+      closeDelete(id);
       await qc.invalidateQueries({ queryKey: ["journal"] });
+      requestAnimationFrame(() => {
+        // Back can dismiss an already-confirmed request before its trigger is removed.
+        if (document.activeElement === document.body) entriesHeading.current?.focus();
+      });
       await qc.invalidateQueries({ queryKey: ["today"] });
     },
     onError: (e: Error) => toast.error(e.message),
@@ -166,9 +299,44 @@ function JournalPage() {
     },
   });
   const entries = journal.data?.events ?? [];
+  const deleteOpen = Boolean(
+    deleteEntry &&
+    dismissedDelete !== deleteEntry &&
+    entries.some((entry) => entry.id === deleteEntry),
+  );
 
   return (
     <Shell>
+      <JournalDeleteDialog
+        entry={entries.find((entry) => entry.id === deleteEntry) ?? null}
+        open={deleteOpen}
+        pending={remove.isPending}
+        error={remove.error?.message ?? null}
+        onConfirm={() => {
+          if (deleteEntry && !remove.isPending) remove.mutate(deleteEntry);
+        }}
+        onCancel={() => closeDelete()}
+        onCloseAutoFocus={(event) => {
+          event.preventDefault();
+          requestAnimationFrame(() => {
+            const target =
+              deleteTrigger.current?.isConnected && !deleteTrigger.current.disabled
+                ? deleteTrigger.current
+                : entriesHeading.current;
+            if (target?.isConnected) target.focus();
+          });
+        }}
+      />
+      {remove.isPending && !deleteOpen && (
+        <p role="status" className="text-sm">
+          Deleting entry…
+        </p>
+      )}
+      {remove.isError && !deleteOpen && (
+        <p role="alert" className="text-sm text-destructive">
+          Deletion wasn’t confirmed. {remove.error.message} Check your entries before trying again.
+        </p>
+      )}
       <div className="grid animate-rise gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1fr)_16rem]">
         <div className="min-w-0">
           <h1 className="text-2xl sm:text-3xl">Journal</h1>
@@ -191,26 +359,57 @@ function JournalPage() {
                   toast.error("Give the entry a short title first.");
                   return;
                 }
-                save.mutate();
+                if (!save.isPending && !checkingSave && !recovery.draft?.submission) save.mutate();
               }}
             >
+              {recovery.draft?.submission && !save.isPending && (
+                <div role="status" className="space-y-2 border border-rule p-3 text-sm">
+                  <p>A previous save has not been confirmed. Check it before retrying.</p>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    disabled={checkingSave}
+                    onClick={() => void checkSave()}
+                  >
+                    {checkingSave ? "Checking…" : "Check save"}
+                  </Button>
+                  {missingSave && (
+                    <Button
+                      type="button"
+                      variant="outline"
+                      disabled={save.isPending}
+                      onClick={() => save.mutate()}
+                    >
+                      Retry earlier save
+                    </Button>
+                  )}
+                </div>
+              )}
+              {saveDifference && (
+                <p role="status" className="text-sm">
+                  The saved entry differs from the earlier submission. Review the entry below; your
+                  draft is kept for a separate save.
+                </p>
+              )}
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="block">
                   <span className="technical text-muted-foreground">Date</span>
                   <input
                     type="date"
+                    readOnly={save.isPending || checkingSave}
                     value={occurredOn}
                     required
                     onChange={(e) => setOccurredOn(e.target.value)}
-                    className="mt-1 w-full rounded-sm border border-input bg-background px-3 py-2 font-mono text-xs"
+                    className="pattern-mobile-field mt-1 w-full rounded-sm border border-input bg-background px-3 py-2 font-mono text-xs"
                   />
                 </label>
                 <label className="block">
                   <span className="technical text-muted-foreground">Area of life</span>
                   <select
+                    disabled={save.isPending || checkingSave}
                     value={domain}
                     onChange={(e) => setDomain(e.target.value)}
-                    className="mt-1 w-full rounded-sm border border-input bg-background px-3 py-2 text-sm"
+                    className="pattern-mobile-field mt-1 w-full rounded-sm border border-input bg-background px-3 py-2 text-sm"
                   >
                     {DOMAINS.map((d) => (
                       <option key={d} value={d}>
@@ -224,23 +423,25 @@ function JournalPage() {
               <label className="block">
                 <span className="technical text-muted-foreground">Title</span>
                 <input
+                  readOnly={save.isPending || checkingSave}
                   value={label}
                   onChange={(e) => setLabel(e.target.value)}
                   maxLength={400}
                   placeholder="What happened, in a line"
-                  className="mt-1 w-full rounded-sm border border-input bg-background px-3 py-2 text-sm"
+                  className="pattern-mobile-field mt-1 w-full rounded-sm border border-input bg-background px-3 py-2 text-sm"
                 />
               </label>
 
               <label className="block">
                 <span className="technical text-muted-foreground">Entry</span>
                 <textarea
+                  readOnly={save.isPending || checkingSave}
                   value={body}
                   onChange={(e) => setBody(e.target.value)}
                   rows={6}
                   maxLength={4000}
                   placeholder="Optional longer note — stored encrypted"
-                  className="mt-1 w-full rounded-sm border border-input bg-background px-3 py-2 text-sm leading-relaxed"
+                  className="pattern-mobile-field mt-1 w-full rounded-sm border border-input bg-background px-3 py-2 text-sm leading-relaxed"
                 />
               </label>
 
@@ -248,9 +449,10 @@ function JournalPage() {
                 <label className="block">
                   <span className="technical text-muted-foreground">Attach a timing window</span>
                   <select
+                    disabled={save.isPending || checkingSave}
                     value={cycleKey}
                     onChange={(e) => setCycleKey(e.target.value)}
-                    className="mt-1 w-full rounded-sm border border-input bg-background px-3 py-2 text-sm"
+                    className="pattern-mobile-field mt-1 w-full rounded-sm border border-input bg-background px-3 py-2 text-sm"
                   >
                     <option value="">No window</option>
                     {cycles.map((c) => (
@@ -268,10 +470,11 @@ function JournalPage() {
                 <label className="block">
                   <span className="technical text-muted-foreground">Attach a chapter</span>
                   <select
+                    disabled={save.isPending || checkingSave}
                     value={featureKey}
                     onChange={(e) => setFeatureKey(e.target.value)}
                     aria-describedby={chapterUnavailable ? "chapter-attachment-status" : undefined}
-                    className="mt-1 w-full rounded-sm border border-input bg-background px-3 py-2 text-sm"
+                    className="pattern-mobile-field mt-1 w-full rounded-sm border border-input bg-background px-3 py-2 text-sm"
                   >
                     <option value="">No chapter</option>
                     {chapterUnavailable ? (
@@ -301,9 +504,24 @@ function JournalPage() {
                 </label>
               </div>
 
+              <DraftRecoveryNotice
+                draft={recovery.draft}
+                candidates={recovery.recoveryCandidates}
+                durability={recovery.durability}
+                error={recovery.error}
+                onResume={recovery.resume}
+                onDiscard={recovery.discard}
+                entityKey="new"
+              />
               <Button
                 type="submit"
-                disabled={save.isPending || !occurredOn || chapterUnavailable}
+                disabled={
+                  save.isPending ||
+                  checkingSave ||
+                  Boolean(recovery.draft?.submission) ||
+                  !occurredOn ||
+                  chapterUnavailable
+                }
                 className="rounded-sm bg-primary px-4 py-2 text-sm text-primary-foreground disabled:opacity-60"
               >
                 <Save aria-hidden="true" />
@@ -328,6 +546,11 @@ function JournalPage() {
                 latestEntry={entries.find((entry) => entry.id === editing.id)}
                 pending={edit.isPending}
                 onSave={(input) => edit.mutateAsync(input)}
+                onRefresh={async () => {
+                  const result = await journal.refetch();
+                  if (result.error) throw result.error;
+                  return result.data?.events.find((entry) => entry.id === editing.id);
+                }}
                 onCancel={closeEditor}
               />
             ) : null}
@@ -396,7 +619,17 @@ function JournalPage() {
                     <Button
                       variant="ghost"
                       type="button"
-                      onClick={() => remove.mutate(e.id)}
+                      onClick={(event) => {
+                        deleteTrigger.current = event.currentTarget;
+                        openedDelete.current = e.id;
+                        closingDelete.current = null;
+                        setDismissedDelete(null);
+                        remove.reset();
+                        void navigate({
+                          search: (previous) => ({ ...previous, deleteEntry: e.id }),
+                          resetScroll: false,
+                        });
+                      }}
                       disabled={remove.isPending || editing?.id === e.id}
                       className="mt-3 technical text-muted-foreground transition-colors hover:text-destructive"
                     >

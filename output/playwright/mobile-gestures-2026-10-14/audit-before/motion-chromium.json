@@ -1,0 +1,745 @@
+{
+  "engine": "chromium",
+  "evidence": "Render: desktop engine; no physical toolbar or keyboard",
+  "motion": [
+    {
+      "reducedMotion": "no-preference",
+      "rootScrollBehavior": "smooth",
+      "samples": [
+        {
+          "scrollY": 200,
+          "reading": {
+            "opacity": "1",
+            "visibility": "visible"
+          },
+          "animations": [
+            {
+              "name": "orbit-turn",
+              "target": "orbit-satellite",
+              "keyframes": [
+                {
+                  "transform": "none"
+                },
+                {
+                  "transform": "rotate(360deg)"
+                }
+              ],
+              "playState": "running"
+            },
+            {
+              "name": null,
+              "target": "today-section",
+              "keyframes": [
+                {
+                  "opacity": "0.65",
+                  "transform": "translateY(10px)"
+                },
+                {
+                  "opacity": "1",
+                  "transform": "none"
+                }
+              ],
+              "playState": "running"
+            }
+          ],
+          "progress": 8.84564352056612
+        },
+        {
+          "scrollY": 450,
+          "reading": {
+            "opacity": "1",
+            "visibility": "visible"
+          },
+          "animations": [
+            {
+              "name": "orbit-turn",
+              "target": "orbit-satellite",
+              "keyframes": [
+                {
+                  "transform": "none"
+                },
+                {
+                  "transform": "rotate(360deg)"
+                }
+              ],
+              "playState": "running"
+            }
+          ],
+          "progress": 19.902697921273774
+        },
+        {
+          "scrollY": 750,
+          "reading": {
+            "opacity": "1",
+            "visibility": "visible"
+          },
+          "animations": [
+            {
+              "name": "orbit-turn",
+              "target": "orbit-satellite",
+              "keyframes": [
+                {
+                  "transform": "none"
+                },
+                {
+                  "transform": "rotate(360deg)"
+                }
+              ],
+              "playState": "running"
+            }
+          ],
+          "progress": 33.171163202122955
+        }
+      ]
+    },
+    {
+      "reducedMotion": "reduce",
+      "rootScrollBehavior": "auto",
+      "samples": [
+        {
+          "scrollY": 200,
+          "reading": {
+            "opacity": "1",
+            "visibility": "visible"
+          },
+          "animations": [],
+          "progress": 8.84564352056612
+        },
+        {
+          "scrollY": 450,
+          "reading": {
+            "opacity": "1",
+            "visibility": "visible"
+          },
+          "animations": [],
+          "progress": 19.902697921273774
+        },
+        {
+          "scrollY": 750,
+          "reading": {
+            "opacity": "1",
+            "visibility": "visible"
+          },
+          "animations": [],
+          "progress": 33.171163202122955
+        }
+      ]
+    }
+  ],
+  "listeners": [
+    {
+      "state": "Today no-preference",
+      "registrations": [
+        {
+          "type": "scroll",
+          "target": "document",
+          "capture": true,
+          "stack": [
+            "    at setupScrollRestoration (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@tanstack_react-router.js?v=84881c56:1207:12)",
+            "    at RouterCore.update (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@tanstack_react-router.js?v=84881c56:2113:26)",
+            "    at new RouterCore (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@tanstack_react-router.js?v=84881c56:2590:8)"
+          ]
+        },
+        {
+          "type": "pointerdown",
+          "target": "DIV#root",
+          "capture": false,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:222)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:85"
+          ]
+        },
+        {
+          "type": "pointerdown",
+          "target": "DIV#root",
+          "capture": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:25)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:146"
+          ]
+        },
+        {
+          "type": "pointermove",
+          "target": "DIV#root",
+          "capture": false,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:222)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:85"
+          ]
+        },
+        {
+          "type": "pointermove",
+          "target": "DIV#root",
+          "capture": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:25)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:146"
+          ]
+        },
+        {
+          "type": "touchstart",
+          "target": "DIV#root",
+          "passive": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:125)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:85"
+          ]
+        },
+        {
+          "type": "touchstart",
+          "target": "DIV#root",
+          "passive": true,
+          "capture": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9974:74)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:146"
+          ]
+        },
+        {
+          "type": "scroll",
+          "target": "DIV#root",
+          "capture": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:25)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:146"
+          ]
+        },
+        {
+          "type": "touchmove",
+          "target": "DIV#root",
+          "passive": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:125)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:85"
+          ]
+        },
+        {
+          "type": "touchmove",
+          "target": "DIV#root",
+          "passive": true,
+          "capture": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9974:74)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:146"
+          ]
+        },
+        {
+          "type": "wheel",
+          "target": "DIV#root",
+          "passive": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:125)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:85"
+          ]
+        },
+        {
+          "type": "wheel",
+          "target": "DIV#root",
+          "passive": true,
+          "capture": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9974:74)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:146"
+          ]
+        },
+        {
+          "type": "scroll",
+          "target": "window",
+          "passive": true,
+          "stack": [
+            "    at http://127.0.0.1:4200/src/components/pattern/Shell.tsx:264:10",
+            "    at Object.react_stack_bottom_frame (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:14178:13)",
+            "    at runWithFiberInDEV (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:944:66)"
+          ]
+        }
+      ]
+    },
+    {
+      "state": "Today reduce",
+      "registrations": [
+        {
+          "type": "scroll",
+          "target": "document",
+          "capture": true,
+          "stack": [
+            "    at setupScrollRestoration (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@tanstack_react-router.js?v=84881c56:1207:12)",
+            "    at RouterCore.update (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@tanstack_react-router.js?v=84881c56:2113:26)",
+            "    at new RouterCore (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@tanstack_react-router.js?v=84881c56:2590:8)"
+          ]
+        },
+        {
+          "type": "pointerdown",
+          "target": "DIV#root",
+          "capture": false,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:222)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:85"
+          ]
+        },
+        {
+          "type": "pointerdown",
+          "target": "DIV#root",
+          "capture": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:25)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:146"
+          ]
+        },
+        {
+          "type": "pointermove",
+          "target": "DIV#root",
+          "capture": false,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:222)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:85"
+          ]
+        },
+        {
+          "type": "pointermove",
+          "target": "DIV#root",
+          "capture": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:25)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:146"
+          ]
+        },
+        {
+          "type": "touchstart",
+          "target": "DIV#root",
+          "passive": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:125)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:85"
+          ]
+        },
+        {
+          "type": "touchstart",
+          "target": "DIV#root",
+          "passive": true,
+          "capture": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9974:74)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:146"
+          ]
+        },
+        {
+          "type": "scroll",
+          "target": "DIV#root",
+          "capture": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:25)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:146"
+          ]
+        },
+        {
+          "type": "touchmove",
+          "target": "DIV#root",
+          "passive": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:125)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:85"
+          ]
+        },
+        {
+          "type": "touchmove",
+          "target": "DIV#root",
+          "passive": true,
+          "capture": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9974:74)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:146"
+          ]
+        },
+        {
+          "type": "wheel",
+          "target": "DIV#root",
+          "passive": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:125)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:85"
+          ]
+        },
+        {
+          "type": "wheel",
+          "target": "DIV#root",
+          "passive": true,
+          "capture": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9974:74)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:146"
+          ]
+        },
+        {
+          "type": "scroll",
+          "target": "window",
+          "passive": true,
+          "stack": [
+            "    at http://127.0.0.1:4200/src/components/pattern/Shell.tsx:264:10",
+            "    at Object.react_stack_bottom_frame (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:14178:13)",
+            "    at runWithFiberInDEV (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:944:66)"
+          ]
+        }
+      ]
+    },
+    {
+      "state": "Deletion modal",
+      "registrations": [
+        {
+          "type": "scroll",
+          "target": "document",
+          "capture": true,
+          "stack": [
+            "    at setupScrollRestoration (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@tanstack_react-router.js?v=84881c56:1207:12)",
+            "    at RouterCore.update (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@tanstack_react-router.js?v=84881c56:2113:26)",
+            "    at new RouterCore (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@tanstack_react-router.js?v=84881c56:2590:8)"
+          ]
+        },
+        {
+          "type": "pointerdown",
+          "target": "DIV#root",
+          "capture": false,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:222)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:85"
+          ]
+        },
+        {
+          "type": "pointerdown",
+          "target": "DIV#root",
+          "capture": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:25)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:146"
+          ]
+        },
+        {
+          "type": "pointermove",
+          "target": "DIV#root",
+          "capture": false,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:222)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:85"
+          ]
+        },
+        {
+          "type": "pointermove",
+          "target": "DIV#root",
+          "capture": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:25)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:146"
+          ]
+        },
+        {
+          "type": "touchstart",
+          "target": "DIV#root",
+          "passive": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:125)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:85"
+          ]
+        },
+        {
+          "type": "touchstart",
+          "target": "DIV#root",
+          "passive": true,
+          "capture": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9974:74)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:146"
+          ]
+        },
+        {
+          "type": "scroll",
+          "target": "DIV#root",
+          "capture": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:25)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:146"
+          ]
+        },
+        {
+          "type": "touchmove",
+          "target": "DIV#root",
+          "passive": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:125)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:85"
+          ]
+        },
+        {
+          "type": "touchmove",
+          "target": "DIV#root",
+          "passive": true,
+          "capture": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9974:74)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:146"
+          ]
+        },
+        {
+          "type": "wheel",
+          "target": "DIV#root",
+          "passive": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:125)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:85"
+          ]
+        },
+        {
+          "type": "wheel",
+          "target": "DIV#root",
+          "passive": true,
+          "capture": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9974:74)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:146"
+          ]
+        },
+        {
+          "type": "scroll",
+          "target": "window",
+          "passive": true,
+          "stack": [
+            "    at http://127.0.0.1:4200/src/components/pattern/Shell.tsx:264:10",
+            "    at Object.react_stack_bottom_frame (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:14178:13)",
+            "    at runWithFiberInDEV (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:944:66)"
+          ]
+        },
+        {
+          "type": "pointerdown",
+          "target": "window",
+          "passive": false,
+          "capture": true,
+          "stack": [
+            "    at addHitTargetInterceptorListeners (<anonymous>:8177:21)",
+            "    at InjectedScript._setupHitTargetInterceptors (<anonymous>:8179:5)",
+            "    at new InjectedScript (<anonymous>:7085:10)"
+          ]
+        },
+        {
+          "type": "touchstart",
+          "target": "window",
+          "passive": false,
+          "capture": true,
+          "stack": [
+            "    at addHitTargetInterceptorListeners (<anonymous>:8177:21)",
+            "    at InjectedScript._setupHitTargetInterceptors (<anonymous>:8179:5)",
+            "    at new InjectedScript (<anonymous>:7085:10)"
+          ]
+        },
+        {
+          "type": "pointerdown",
+          "target": "BODY",
+          "capture": false,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:222)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:85"
+          ]
+        },
+        {
+          "type": "pointerdown",
+          "target": "BODY",
+          "capture": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:25)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:146"
+          ]
+        },
+        {
+          "type": "pointermove",
+          "target": "BODY",
+          "capture": false,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:222)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:85"
+          ]
+        },
+        {
+          "type": "pointermove",
+          "target": "BODY",
+          "capture": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:25)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:146"
+          ]
+        },
+        {
+          "type": "touchstart",
+          "target": "BODY",
+          "passive": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:125)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:85"
+          ]
+        },
+        {
+          "type": "touchstart",
+          "target": "BODY",
+          "passive": true,
+          "capture": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9974:74)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:146"
+          ]
+        },
+        {
+          "type": "scroll",
+          "target": "BODY",
+          "capture": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:25)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:146"
+          ]
+        },
+        {
+          "type": "touchmove",
+          "target": "BODY",
+          "passive": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:125)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:85"
+          ]
+        },
+        {
+          "type": "touchmove",
+          "target": "BODY",
+          "passive": true,
+          "capture": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9974:74)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:146"
+          ]
+        },
+        {
+          "type": "wheel",
+          "target": "BODY",
+          "passive": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9977:125)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:85"
+          ]
+        },
+        {
+          "type": "wheel",
+          "target": "BODY",
+          "passive": true,
+          "capture": true,
+          "stack": [
+            "    at addTrappedEventListener (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9974:74)",
+            "    at listenToNativeEvent (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9949:4)",
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:9955:146"
+          ]
+        },
+        {
+          "type": "wheel",
+          "target": "document",
+          "passive": false,
+          "stack": [
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1881:12",
+            "    at Object.react_stack_bottom_frame (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:14178:13)",
+            "    at runWithFiberInDEV (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:944:66)"
+          ]
+        },
+        {
+          "type": "touchmove",
+          "target": "document",
+          "passive": false,
+          "stack": [
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1882:12",
+            "    at Object.react_stack_bottom_frame (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:14178:13)",
+            "    at runWithFiberInDEV (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:944:66)"
+          ]
+        },
+        {
+          "type": "touchstart",
+          "target": "document",
+          "passive": false,
+          "stack": [
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1883:12",
+            "    at Object.react_stack_bottom_frame (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:14178:13)",
+            "    at runWithFiberInDEV (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:944:66)"
+          ]
+        },
+        {
+          "type": "touchstart",
+          "target": "document",
+          "capture": true,
+          "stack": [
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:704:18",
+            "    at Object.react_stack_bottom_frame (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:14178:13)",
+            "    at runWithFiberInDEV (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:944:66)"
+          ]
+        },
+        {
+          "type": "touchstart",
+          "target": "document",
+          "stack": [
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:705:18",
+            "    at Object.react_stack_bottom_frame (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:14178:13)",
+            "    at runWithFiberInDEV (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/react-dom_client.js?v=84881c56:944:66)"
+          ]
+        },
+        {
+          "type": "pointerdown",
+          "target": "document",
+          "stack": [
+            "    at http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:708:18"
+          ]
+        }
+      ],
+      "scrollLock": {
+        "html": "visible",
+        "body": "hidden"
+      }
+    }
+  ],
+  "errors": [],
+  "withoutIntersectionObserver": {
+    "readingVisible": true,
+    "checkInAvailable": true
+  }
+}

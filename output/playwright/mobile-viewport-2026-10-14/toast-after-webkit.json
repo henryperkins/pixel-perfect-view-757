@@ -1,0 +1,201 @@
+{
+  "engine": "webkit",
+  "phase": "after",
+  "cases": [
+    {
+      "width": 320,
+      "height": 568,
+      "font": 16,
+      "nav": {
+        "top": 495.03125,
+        "bottom": 568,
+        "left": 0,
+        "right": 320,
+        "height": 72.96875
+      },
+      "navPosition": "fixed",
+      "toast": {
+        "top": 406.03125,
+        "bottom": 479.03125,
+        "left": 16,
+        "right": 304,
+        "height": 73
+      },
+      "toasterClass": "toaster group",
+      "navHits": [
+        {
+          "label": "Today",
+          "reachable": true
+        },
+        {
+          "label": "Your pattern",
+          "reachable": true
+        },
+        {
+          "label": "Timing",
+          "reachable": true
+        },
+        {
+          "label": "Journal",
+          "reachable": true
+        }
+      ]
+    },
+    {
+      "width": 360,
+      "height": 800,
+      "font": 16,
+      "nav": {
+        "top": 727.03125,
+        "bottom": 800,
+        "left": 0,
+        "right": 360,
+        "height": 72.96875
+      },
+      "navPosition": "fixed",
+      "toast": {
+        "top": 638.03125,
+        "bottom": 711.03125,
+        "left": 16,
+        "right": 344,
+        "height": 73
+      },
+      "toasterClass": "toaster group",
+      "navHits": [
+        {
+          "label": "Today",
+          "reachable": true
+        },
+        {
+          "label": "Your pattern",
+          "reachable": true
+        },
+        {
+          "label": "Timing",
+          "reachable": true
+        },
+        {
+          "label": "Journal",
+          "reachable": true
+        }
+      ]
+    },
+    {
+      "width": 667,
+      "height": 375,
+      "font": 16,
+      "nav": {
+        "top": 302.03125,
+        "bottom": 375,
+        "left": 0,
+        "right": 667,
+        "height": 72.96875
+      },
+      "navPosition": "fixed",
+      "toast": {
+        "top": 232.53125,
+        "bottom": 286.03125,
+        "left": 287,
+        "right": 643,
+        "height": 53.5
+      },
+      "toasterClass": "toaster group",
+      "navHits": [
+        {
+          "label": "Today",
+          "reachable": true
+        },
+        {
+          "label": "Your pattern",
+          "reachable": true
+        },
+        {
+          "label": "Timing",
+          "reachable": true
+        },
+        {
+          "label": "Journal",
+          "reachable": true
+        }
+      ]
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "font": 16,
+      "nav": {
+        "top": 317.03125,
+        "bottom": 390,
+        "left": 0,
+        "right": 844,
+        "height": 72.96875
+      },
+      "navPosition": "fixed",
+      "toast": {
+        "top": 247.53125,
+        "bottom": 301.03125,
+        "left": 464,
+        "right": 820,
+        "height": 53.5
+      },
+      "toasterClass": "toaster group",
+      "navHits": [
+        {
+          "label": "Today",
+          "reachable": true
+        },
+        {
+          "label": "Your pattern",
+          "reachable": true
+        },
+        {
+          "label": "Timing",
+          "reachable": true
+        },
+        {
+          "label": "Journal",
+          "reachable": true
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "height": 568,
+      "font": 32,
+      "nav": {
+        "top": 395.046875,
+        "bottom": 568,
+        "left": 0,
+        "right": 320,
+        "height": 172.953125
+      },
+      "navPosition": "fixed",
+      "toast": {
+        "top": 306.046875,
+        "bottom": 379.046875,
+        "left": 16,
+        "right": 304,
+        "height": 73
+      },
+      "toasterClass": "toaster group",
+      "navHits": [
+        {
+          "label": "Today",
+          "reachable": true
+        },
+        {
+          "label": "Your pattern",
+          "reachable": true
+        },
+        {
+          "label": "Timing",
+          "reachable": true
+        },
+        {
+          "label": "Journal",
+          "reachable": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "src/components/pattern/Shell.tsx": "31bccf87df4dd0cfccd68a23c94338fb5f0e6c95695ecdd75b29cf9a47d8df97",
+  "src/components/pattern/JournalDeleteDialog.tsx": "cdf21401a76ddbd4411eb2cefe37f672cadb8ce93b3f366f1b68bd9c1bb6c695",
+  "src/components/pattern/PatternChartDetails.tsx": "687c33ea1bf2b5a0247e2185892bd92de483e5c1357bdd02ba0e3e5ac2762119",
+  "src/routes/_authenticated/journal.tsx": "e02a54172833478ae8eda708213573f0c3138d0da2cd12c1edf45cf7dab6c25e",
+  "src/styles.css": "e40ed8f441886c13777fe62a479589b9fa211e718a93b3186f3145f669790132",
+  "src/hooks/useNavigationMenu.ts": "0cdfaa66d58785160cf8890de6a184e7d8b239c75369251c0e5c6425d97840dc"
+}

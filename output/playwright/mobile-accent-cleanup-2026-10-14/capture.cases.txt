@@ -1,0 +1,54 @@
+async page => {
+  const phase = 'after';
+  const engine = page.context().browser().browserType().name();
+  const output = '/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-accent-cleanup-2026-10-14/';
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  page.setDefaultTimeout(10000);
+  await page.emulateMedia({reducedMotion:'reduce'});
+  const cases = phase === 'before'
+    ? [{width:390,height:844,theme:'light'},{width:390,height:844,theme:'dark'}]
+    : [{width:320,height:568,theme:'light'},{width:390,height:844,theme:'light'},
+       {width:667,height:375,theme:'light'},{width:1280,height:900,theme:'light'},
+       {width:390,height:844,theme:'dark'}];
+  const measurements = [];
+  for (const viewport of cases) {
+    await page.setViewportSize({width:viewport.width,height:viewport.height});
+    for (const surface of [
+      {name:'today',path:'/',selector:'.today-journal-previews > li'},
+      {name:'journal',path:'/journal',selector:'.journal-entry'}
+    ]) {
+      await page.goto('http://127.0.0.1:4199'+surface.path);
+      const target = page.locator(surface.selector).first();
+      await target.waitFor();
+      await page.evaluate(async theme => {
+        await document.fonts.ready;
+        document.documentElement.classList.toggle('dark',theme==='dark');
+      },viewport.theme);
+      await target.evaluate(el=>el.scrollIntoView({block:'center',behavior:'instant'}));
+      await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+      const geometry = await target.evaluate(el=>{
+        const style=getComputedStyle(el), rect=el.getBoundingClientRect();
+        const root=document.documentElement;
+        return {
+          documentWidth:root.clientWidth,documentScrollWidth:root.scrollWidth,
+          card:{x:rect.x,right:rect.right,width:rect.width,clientWidth:el.clientWidth,scrollWidth:el.scrollWidth},
+          borderWidths:['Top','Right','Bottom','Left'].map(side=>style['border'+side+'Width']),
+          borderColors:['Top','Right','Bottom','Left'].map(side=>style['border'+side+'Color']),
+          corners:['TopLeft','TopRight','BottomRight','BottomLeft'].map(side=>style['border'+side+'Radius']),
+          padding:[style.paddingTop,style.paddingRight,style.paddingBottom,style.paddingLeft],
+          background:style.backgroundColor,
+          text:el.innerText,
+          controls:[...el.querySelectorAll('button,a')].map(control=>{
+            const box=control.getBoundingClientRect();
+            return {label:control.textContent.trim(),width:box.width,height:box.height};
+          })
+        };
+      });
+      const screenshot=engine+'-'+surface.name+'-'+viewport.width+'x'+viewport.height+'-'+viewport.theme+'-'+phase+'.png';
+      await page.screenshot({path:output+screenshot,animations:'disabled'});
+      measurements.push({surface:surface.name,viewport,geometry,screenshot});
+    }
+  }
+  return {phase,engine,version:page.context().browser().version(),evidence:'Render: desktop engine with synthetic services',measurements,errors};
+}

@@ -1,0 +1,16 @@
+{
+  "src/styles.css": "712a753d6a5bda005fd4b05b93c2b3525e06644100c9fd38988e78aa6df5c674",
+  "src/components/pattern/Shell.tsx": "ba6d637c6b21c161aa8c270c16666d851f64816477f528d0cafce95e94efe9ac",
+  "src/routes/__root.tsx": "f5bb27fd3043ab28a5b790b575e2c2295b080657977de6e575c9e7cfeeaee5e3",
+  "src/lib/error-page.ts": "e633fd9b8037423fe5d7487a5ba8691c25034248a5f748cc4a483aad512e5d23",
+  "src/components/ui/sonner.tsx": "3ad40f66c339e799b1a57c00e10b4627294c7d580d99d8a48ae0d8d4c13cf931",
+  "src/components/pattern/TodayCheckIn.tsx": "4ae2990062c01c03216feab598e73b69e57790a118117f65265797539173a434",
+  "src/components/pattern/JournalDeleteDialog.tsx": "13bd1f6a409d731efce2ef99abbdb94af0c923944113a1a7fee1bb9578936a82",
+  "scripts/mobile-ui-fixture.mjs": "fadd272454540f71e5a801d2547b62ea2583d562983332825196ca395e42e0c7",
+  "tests/helpers/mobile-ui/main.tsx": "16202e0c0a5bbb111cf8775e3a366f229b32abf22d5f45a1cc63bfe70d767523",
+  "tests/helpers/mobile-ui/services.ts": "3706a916cf9b0017b54b1d1db8cdad1a5dfb2c60032778620bf073d0b116fc0e",
+  "tests/helpers/mobile-ui/viewport.cases.txt": "bf77849afeb8c5e8f8b48328c5d8647330b2c3f89cbcf39e39febd5482bd4cd7",
+  "tests/helpers/mobile-ui/viewport-toasts.cases.txt": "8a5d05d5e0a28ba641b931a83ef1759174b00f33ba989af96cb502eae5c1a511",
+  "tests/helpers/mobile-ui/viewport-edges.cases.txt": "a6a89f1e5f7a92272b146f390e6e9d28b8cae035cbd78898694ffbe2cea805cc",
+  "tests/helpers/mobile-ui/viewport-journey.cases.txt": "d3b08614cce2d302e027040c8a05dea6ccb7ec53a814119815c8538784928870"
+}

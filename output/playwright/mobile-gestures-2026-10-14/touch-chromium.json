@@ -1,0 +1,462 @@
+{
+  "engine": "chromium",
+  "evidence": "Render: Chromium CDP touch injection in desktop mobile emulation; no OS edge navigation or real keyboard",
+  "cases": [
+    {
+      "name": "Wrapped filters need no horizontal pan",
+      "before": {
+        "scrollY": 127,
+        "x": 0,
+        "y": 0,
+        "maxY": 0,
+        "maxX": 0,
+        "active": "BODY",
+        "cancellations": []
+      },
+      "after": {
+        "scrollY": 127,
+        "x": 0,
+        "y": 0,
+        "maxY": 0,
+        "maxX": 0,
+        "active": "BODY",
+        "cancellations": []
+      },
+      "pass": true
+    },
+    {
+      "name": "Vertical page pan starting on horizontal rail",
+      "before": {
+        "scrollY": 127,
+        "x": 0,
+        "y": 0,
+        "maxY": 0,
+        "maxX": 0,
+        "active": "BODY",
+        "cancellations": []
+      },
+      "after": {
+        "scrollY": 0,
+        "x": 0,
+        "y": 0,
+        "maxY": 0,
+        "maxX": 0,
+        "active": "BODY",
+        "cancellations": []
+      },
+      "pass": true
+    },
+    {
+      "name": "Native horizontal table pan",
+      "before": {
+        "scrollY": 2101,
+        "x": 0,
+        "y": 0,
+        "maxY": 0,
+        "maxX": 160,
+        "active": "SUMMARY",
+        "cancellations": []
+      },
+      "after": {
+        "scrollY": 2101,
+        "x": 160,
+        "y": 0,
+        "maxY": 0,
+        "maxX": 160,
+        "active": "SUMMARY",
+        "cancellations": []
+      },
+      "pass": true
+    },
+    {
+      "name": "Vertical page pan starting on table",
+      "before": {
+        "scrollY": 2101,
+        "x": 160,
+        "y": 0,
+        "maxY": 0,
+        "maxX": 160,
+        "active": "SUMMARY",
+        "cancellations": []
+      },
+      "after": {
+        "scrollY": 2286,
+        "x": 160,
+        "y": 0,
+        "maxY": 0,
+        "maxX": 160,
+        "active": "SUMMARY",
+        "cancellations": []
+      },
+      "pass": true
+    },
+    {
+      "name": "Touch at reflection field bottom",
+      "before": {
+        "scrollY": 924,
+        "x": 0,
+        "y": 888,
+        "maxY": 888,
+        "maxX": 0,
+        "active": "TEXTAREA",
+        "cancellations": []
+      },
+      "after": {
+        "scrollY": 924,
+        "x": 0,
+        "y": 888,
+        "maxY": 888,
+        "maxX": 0,
+        "active": "TEXTAREA",
+        "cancellations": []
+      },
+      "pass": true
+    },
+    {
+      "name": "Touch at menu bottom",
+      "before": {
+        "scrollY": 0,
+        "x": 0,
+        "y": 174,
+        "maxY": 174,
+        "maxX": 0,
+        "active": "BUTTON",
+        "cancellations": []
+      },
+      "after": {
+        "scrollY": 0,
+        "x": 0,
+        "y": 174,
+        "maxY": 174,
+        "maxX": 0,
+        "active": "BUTTON",
+        "cancellations": []
+      },
+      "pass": true
+    },
+    {
+      "name": "Touch at menu top",
+      "before": {
+        "scrollY": 0,
+        "x": 0,
+        "y": 0,
+        "maxY": 174,
+        "maxX": 0,
+        "active": "BUTTON",
+        "cancellations": []
+      },
+      "after": {
+        "scrollY": 0,
+        "x": 0,
+        "y": 0,
+        "maxY": 174,
+        "maxX": 0,
+        "active": "BUTTON",
+        "cancellations": []
+      },
+      "pass": true
+    },
+    {
+      "name": "Touch scroll inside modal details",
+      "before": {
+        "scrollY": 12219,
+        "x": 0,
+        "y": 0,
+        "maxY": 730,
+        "maxX": 0,
+        "active": "BUTTON",
+        "cancellations": []
+      },
+      "after": {
+        "scrollY": 12219,
+        "x": 0,
+        "y": 85,
+        "maxY": 730,
+        "maxX": 0,
+        "active": "BUTTON",
+        "cancellations": []
+      },
+      "pass": true
+    },
+    {
+      "name": "Touch at modal details bottom",
+      "before": {
+        "scrollY": 12219,
+        "x": 0,
+        "y": 730,
+        "maxY": 730,
+        "maxX": 0,
+        "active": "BUTTON",
+        "cancellations": []
+      },
+      "after": {
+        "scrollY": 12219,
+        "x": 0,
+        "y": 730,
+        "maxY": 730,
+        "maxX": 0,
+        "active": "BUTTON",
+        "cancellations": [
+          {
+            "type": "touchmove",
+            "target": "text-sm text-muted-foreground",
+            "stack": [
+              "    at Event.preventDefault (<anonymous>:2:311)",
+              "    at HTMLDocument.<anonymous> (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1845:33)"
+            ]
+          },
+          {
+            "type": "touchmove",
+            "target": "text-sm text-muted-foreground",
+            "stack": [
+              "    at Event.preventDefault (<anonymous>:2:311)",
+              "    at HTMLDocument.<anonymous> (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1845:33)"
+            ]
+          },
+          {
+            "type": "touchmove",
+            "target": "text-sm text-muted-foreground",
+            "stack": [
+              "    at Event.preventDefault (<anonymous>:2:311)",
+              "    at HTMLDocument.<anonymous> (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1845:33)"
+            ]
+          },
+          {
+            "type": "touchmove",
+            "target": "text-sm text-muted-foreground",
+            "stack": [
+              "    at Event.preventDefault (<anonymous>:2:311)",
+              "    at HTMLDocument.<anonymous> (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1845:33)"
+            ]
+          },
+          {
+            "type": "touchmove",
+            "target": "text-sm text-muted-foreground",
+            "stack": [
+              "    at Event.preventDefault (<anonymous>:2:311)",
+              "    at HTMLDocument.<anonymous> (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1845:33)"
+            ]
+          },
+          {
+            "type": "touchmove",
+            "target": "text-sm text-muted-foreground",
+            "stack": [
+              "    at Event.preventDefault (<anonymous>:2:311)",
+              "    at HTMLDocument.<anonymous> (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1845:33)"
+            ]
+          },
+          {
+            "type": "touchmove",
+            "target": "text-sm text-muted-foreground",
+            "stack": [
+              "    at Event.preventDefault (<anonymous>:2:311)",
+              "    at HTMLDocument.<anonymous> (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1845:33)"
+            ]
+          }
+        ]
+      },
+      "pass": true
+    },
+    {
+      "name": "Touch on modal backdrop",
+      "before": {
+        "scrollY": 12219,
+        "x": 0,
+        "y": 730,
+        "maxY": 730,
+        "maxX": 0,
+        "active": "BUTTON",
+        "cancellations": [
+          {
+            "type": "touchmove",
+            "target": "text-sm text-muted-foreground",
+            "stack": [
+              "    at Event.preventDefault (<anonymous>:2:311)",
+              "    at HTMLDocument.<anonymous> (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1845:33)"
+            ]
+          },
+          {
+            "type": "touchmove",
+            "target": "text-sm text-muted-foreground",
+            "stack": [
+              "    at Event.preventDefault (<anonymous>:2:311)",
+              "    at HTMLDocument.<anonymous> (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1845:33)"
+            ]
+          },
+          {
+            "type": "touchmove",
+            "target": "text-sm text-muted-foreground",
+            "stack": [
+              "    at Event.preventDefault (<anonymous>:2:311)",
+              "    at HTMLDocument.<anonymous> (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1845:33)"
+            ]
+          },
+          {
+            "type": "touchmove",
+            "target": "text-sm text-muted-foreground",
+            "stack": [
+              "    at Event.preventDefault (<anonymous>:2:311)",
+              "    at HTMLDocument.<anonymous> (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1845:33)"
+            ]
+          },
+          {
+            "type": "touchmove",
+            "target": "text-sm text-muted-foreground",
+            "stack": [
+              "    at Event.preventDefault (<anonymous>:2:311)",
+              "    at HTMLDocument.<anonymous> (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1845:33)"
+            ]
+          },
+          {
+            "type": "touchmove",
+            "target": "text-sm text-muted-foreground",
+            "stack": [
+              "    at Event.preventDefault (<anonymous>:2:311)",
+              "    at HTMLDocument.<anonymous> (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1845:33)"
+            ]
+          },
+          {
+            "type": "touchmove",
+            "target": "text-sm text-muted-foreground",
+            "stack": [
+              "    at Event.preventDefault (<anonymous>:2:311)",
+              "    at HTMLDocument.<anonymous> (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1845:33)"
+            ]
+          }
+        ]
+      },
+      "after": {
+        "scrollY": 12219,
+        "x": 0,
+        "y": 730,
+        "maxY": 730,
+        "maxX": 0,
+        "active": "BUTTON",
+        "cancellations": [
+          {
+            "type": "touchmove",
+            "target": "text-sm text-muted-foreground",
+            "stack": [
+              "    at Event.preventDefault (<anonymous>:2:311)",
+              "    at HTMLDocument.<anonymous> (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1845:33)"
+            ]
+          },
+          {
+            "type": "touchmove",
+            "target": "text-sm text-muted-foreground",
+            "stack": [
+              "    at Event.preventDefault (<anonymous>:2:311)",
+              "    at HTMLDocument.<anonymous> (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1845:33)"
+            ]
+          },
+          {
+            "type": "touchmove",
+            "target": "text-sm text-muted-foreground",
+            "stack": [
+              "    at Event.preventDefault (<anonymous>:2:311)",
+              "    at HTMLDocument.<anonymous> (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1845:33)"
+            ]
+          },
+          {
+            "type": "touchmove",
+            "target": "text-sm text-muted-foreground",
+            "stack": [
+              "    at Event.preventDefault (<anonymous>:2:311)",
+              "    at HTMLDocument.<anonymous> (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1845:33)"
+            ]
+          },
+          {
+            "type": "touchmove",
+            "target": "text-sm text-muted-foreground",
+            "stack": [
+              "    at Event.preventDefault (<anonymous>:2:311)",
+              "    at HTMLDocument.<anonymous> (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1845:33)"
+            ]
+          },
+          {
+            "type": "touchmove",
+            "target": "text-sm text-muted-foreground",
+            "stack": [
+              "    at Event.preventDefault (<anonymous>:2:311)",
+              "    at HTMLDocument.<anonymous> (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1845:33)"
+            ]
+          },
+          {
+            "type": "touchmove",
+            "target": "text-sm text-muted-foreground",
+            "stack": [
+              "    at Event.preventDefault (<anonymous>:2:311)",
+              "    at HTMLDocument.<anonymous> (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1845:33)"
+            ]
+          },
+          {
+            "type": "touchmove",
+            "target": "fixed inset-0 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 journal-delete-overlay z-[80]",
+            "stack": [
+              "    at Event.preventDefault (<anonymous>:2:311)",
+              "    at HTMLDocument.<anonymous> (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1837:32)"
+            ]
+          },
+          {
+            "type": "touchmove",
+            "target": "fixed inset-0 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 journal-delete-overlay z-[80]",
+            "stack": [
+              "    at Event.preventDefault (<anonymous>:2:311)",
+              "    at HTMLDocument.<anonymous> (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1837:32)"
+            ]
+          },
+          {
+            "type": "touchmove",
+            "target": "fixed inset-0 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 journal-delete-overlay z-[80]",
+            "stack": [
+              "    at Event.preventDefault (<anonymous>:2:311)",
+              "    at HTMLDocument.<anonymous> (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1837:32)"
+            ]
+          },
+          {
+            "type": "touchmove",
+            "target": "fixed inset-0 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 journal-delete-overlay z-[80]",
+            "stack": [
+              "    at Event.preventDefault (<anonymous>:2:311)",
+              "    at HTMLDocument.<anonymous> (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1837:32)"
+            ]
+          },
+          {
+            "type": "touchmove",
+            "target": "fixed inset-0 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 journal-delete-overlay z-[80]",
+            "stack": [
+              "    at Event.preventDefault (<anonymous>:2:311)",
+              "    at HTMLDocument.<anonymous> (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1837:32)"
+            ]
+          },
+          {
+            "type": "touchmove",
+            "target": "fixed inset-0 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 journal-delete-overlay z-[80]",
+            "stack": [
+              "    at Event.preventDefault (<anonymous>:2:311)",
+              "    at HTMLDocument.<anonymous> (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1837:32)"
+            ]
+          },
+          {
+            "type": "touchmove",
+            "target": "fixed inset-0 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 journal-delete-overlay z-[80]",
+            "stack": [
+              "    at Event.preventDefault (<anonymous>:2:311)",
+              "    at HTMLDocument.<anonymous> (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1837:32)"
+            ]
+          },
+          {
+            "type": "touchmove",
+            "target": "fixed inset-0 bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 journal-delete-overlay z-[80]",
+            "stack": [
+              "    at Event.preventDefault (<anonymous>:2:311)",
+              "    at HTMLDocument.<anonymous> (http://127.0.0.1:4200/.playwright-cli/vite-cache/deps/@radix-ui_react-alert-dialog.js?v=84881c56:1837:32)"
+            ]
+          }
+        ]
+      },
+      "pass": true
+    }
+  ],
+  "errors": []
+}

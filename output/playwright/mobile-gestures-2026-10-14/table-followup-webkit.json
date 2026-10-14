@@ -1,0 +1,277 @@
+{
+  "engine": "webkit",
+  "version": "26.6",
+  "evidence": "Render: Chromium mobile emulation / desktop WebKit with touch support; no physical OS chrome or keyboard",
+  "cases": [
+    {
+      "name": "G03 table taps, semantics and keyboard 320 font16",
+      "pass": true,
+      "viewport": {
+        "width": 320,
+        "height": 568,
+        "font": 16
+      },
+      "geometry": {
+        "client": 280,
+        "scroll": 480,
+        "rootWidth": 320,
+        "tableDisplay": "table",
+        "rowDisplay": "table-row",
+        "firstLeft": 20,
+        "pinnedWidth": 112
+      },
+      "buttonGeometry": [
+        {
+          "width": 136,
+          "height": 58
+        },
+        {
+          "width": 136,
+          "height": 58
+        }
+      ],
+      "positions": [
+        0,
+        134,
+        200
+      ],
+      "keyboardScroll": 42,
+      "aria": "- region \"Scrollable natal placements\":\n  - table \"Calculated natal placements\":\n    - caption: Calculated natal placements\n    - rowgroup:\n      - row \"Body Sign & degree House Motion\":\n        - columnheader \"Body\"\n        - columnheader \"Sign & degree\"\n        - columnheader \"House\"\n        - columnheader \"Motion\"\n    - rowgroup:\n      - row \"Sun Aries 5\u00b0 12\u2032 house 1 Rx\":\n        - rowheader \"Sun\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 1\"\n        - cell \"Rx\"\n      - row \"Moon Taurus 15\u00b0 04\u2032 house 2 direct\":\n        - rowheader \"Moon\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 2\"\n        - cell \"direct\"\n      - row \"Mercury Gemini 20\u00b0 33\u2032 house 3 direct\":\n        - rowheader \"Mercury\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 3\"\n        - cell \"direct\"\n      - row \"Venus Aries 5\u00b0 12\u2032 house 4 Rx\":\n        - rowheader \"Venus\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 4\"\n        - cell \"Rx\"\n      - row \"Mars Taurus 15\u00b0 04\u2032 house 5 direct\":\n        - rowheader \"Mars\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 5\"\n        - cell \"direct\"\n      - row \"Jupiter Gemini 20\u00b0 33\u2032 house 6 direct\":\n        - rowheader \"Jupiter\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 6\"\n        - cell \"direct\"\n      - row \"Saturn Aries 5\u00b0 12\u2032 house 7 Rx\":\n        - rowheader \"Saturn\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 7\"\n        - cell \"Rx\"\n      - row \"Uranus Taurus 15\u00b0 04\u2032 house 8 direct\":\n        - rowheader \"Uranus\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 8\"\n        - cell \"direct\"\n      - row \"Neptune Gemini 20\u00b0 33\u2032 house 9 direct\":\n        - rowheader \"Neptune\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 9\"\n        - cell \"direct\"\n      - row \"Pluto Aries 5\u00b0 12\u2032 house 10 Rx\":\n        - rowheader \"Pluto\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 10\"\n        - cell \"Rx\"\n      - row \"North node Taurus 15\u00b0 04\u2032 house 11 direct\":\n        - rowheader \"North node\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 11\"\n        - cell \"direct\"\n      - row \"Chiron Gemini 20\u00b0 33\u2032 house 12 direct\":\n        - rowheader \"Chiron\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 12\"\n        - cell \"direct\""
+    },
+    {
+      "name": "G03 table taps, semantics and keyboard 360 font16",
+      "pass": true,
+      "viewport": {
+        "width": 360,
+        "height": 800,
+        "font": 16
+      },
+      "geometry": {
+        "client": 320,
+        "scroll": 480,
+        "rootWidth": 360,
+        "tableDisplay": "table",
+        "rowDisplay": "table-row",
+        "firstLeft": 20,
+        "pinnedWidth": 115.1875
+      },
+      "buttonGeometry": [
+        {
+          "width": 156,
+          "height": 48
+        },
+        {
+          "width": 156,
+          "height": 48
+        }
+      ],
+      "positions": [
+        0,
+        160
+      ],
+      "keyboardScroll": 46,
+      "aria": "- region \"Scrollable natal placements\":\n  - table \"Calculated natal placements\":\n    - caption: Calculated natal placements\n    - rowgroup:\n      - row \"Body Sign & degree House Motion\":\n        - columnheader \"Body\"\n        - columnheader \"Sign & degree\"\n        - columnheader \"House\"\n        - columnheader \"Motion\"\n    - rowgroup:\n      - row \"Sun Aries 5\u00b0 12\u2032 house 1 Rx\":\n        - rowheader \"Sun\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 1\"\n        - cell \"Rx\"\n      - row \"Moon Taurus 15\u00b0 04\u2032 house 2 direct\":\n        - rowheader \"Moon\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 2\"\n        - cell \"direct\"\n      - row \"Mercury Gemini 20\u00b0 33\u2032 house 3 direct\":\n        - rowheader \"Mercury\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 3\"\n        - cell \"direct\"\n      - row \"Venus Aries 5\u00b0 12\u2032 house 4 Rx\":\n        - rowheader \"Venus\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 4\"\n        - cell \"Rx\"\n      - row \"Mars Taurus 15\u00b0 04\u2032 house 5 direct\":\n        - rowheader \"Mars\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 5\"\n        - cell \"direct\"\n      - row \"Jupiter Gemini 20\u00b0 33\u2032 house 6 direct\":\n        - rowheader \"Jupiter\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 6\"\n        - cell \"direct\"\n      - row \"Saturn Aries 5\u00b0 12\u2032 house 7 Rx\":\n        - rowheader \"Saturn\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 7\"\n        - cell \"Rx\"\n      - row \"Uranus Taurus 15\u00b0 04\u2032 house 8 direct\":\n        - rowheader \"Uranus\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 8\"\n        - cell \"direct\"\n      - row \"Neptune Gemini 20\u00b0 33\u2032 house 9 direct\":\n        - rowheader \"Neptune\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 9\"\n        - cell \"direct\"\n      - row \"Pluto Aries 5\u00b0 12\u2032 house 10 Rx\":\n        - rowheader \"Pluto\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 10\"\n        - cell \"Rx\"\n      - row \"North node Taurus 15\u00b0 04\u2032 house 11 direct\":\n        - rowheader \"North node\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 11\"\n        - cell \"direct\"\n      - row \"Chiron Gemini 20\u00b0 33\u2032 house 12 direct\":\n        - rowheader \"Chiron\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 12\"\n        - cell \"direct\""
+    },
+    {
+      "name": "G03 table taps, semantics and keyboard 440 font16",
+      "pass": true,
+      "viewport": {
+        "width": 440,
+        "height": 956,
+        "font": 16
+      },
+      "geometry": {
+        "client": 400,
+        "scroll": 480,
+        "rootWidth": 440,
+        "tableDisplay": "table",
+        "rowDisplay": "table-row",
+        "firstLeft": 20,
+        "pinnedWidth": 115.1875
+      },
+      "buttonGeometry": [
+        {
+          "width": 196,
+          "height": 48
+        },
+        {
+          "width": 196,
+          "height": 48
+        }
+      ],
+      "positions": [
+        0,
+        80
+      ],
+      "keyboardScroll": 54,
+      "aria": "- region \"Scrollable natal placements\":\n  - table \"Calculated natal placements\":\n    - caption: Calculated natal placements\n    - rowgroup:\n      - row \"Body Sign & degree House Motion\":\n        - columnheader \"Body\"\n        - columnheader \"Sign & degree\"\n        - columnheader \"House\"\n        - columnheader \"Motion\"\n    - rowgroup:\n      - row \"Sun Aries 5\u00b0 12\u2032 house 1 Rx\":\n        - rowheader \"Sun\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 1\"\n        - cell \"Rx\"\n      - row \"Moon Taurus 15\u00b0 04\u2032 house 2 direct\":\n        - rowheader \"Moon\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 2\"\n        - cell \"direct\"\n      - row \"Mercury Gemini 20\u00b0 33\u2032 house 3 direct\":\n        - rowheader \"Mercury\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 3\"\n        - cell \"direct\"\n      - row \"Venus Aries 5\u00b0 12\u2032 house 4 Rx\":\n        - rowheader \"Venus\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 4\"\n        - cell \"Rx\"\n      - row \"Mars Taurus 15\u00b0 04\u2032 house 5 direct\":\n        - rowheader \"Mars\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 5\"\n        - cell \"direct\"\n      - row \"Jupiter Gemini 20\u00b0 33\u2032 house 6 direct\":\n        - rowheader \"Jupiter\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 6\"\n        - cell \"direct\"\n      - row \"Saturn Aries 5\u00b0 12\u2032 house 7 Rx\":\n        - rowheader \"Saturn\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 7\"\n        - cell \"Rx\"\n      - row \"Uranus Taurus 15\u00b0 04\u2032 house 8 direct\":\n        - rowheader \"Uranus\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 8\"\n        - cell \"direct\"\n      - row \"Neptune Gemini 20\u00b0 33\u2032 house 9 direct\":\n        - rowheader \"Neptune\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 9\"\n        - cell \"direct\"\n      - row \"Pluto Aries 5\u00b0 12\u2032 house 10 Rx\":\n        - rowheader \"Pluto\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 10\"\n        - cell \"Rx\"\n      - row \"North node Taurus 15\u00b0 04\u2032 house 11 direct\":\n        - rowheader \"North node\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 11\"\n        - cell \"direct\"\n      - row \"Chiron Gemini 20\u00b0 33\u2032 house 12 direct\":\n        - rowheader \"Chiron\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 12\"\n        - cell \"direct\""
+    },
+    {
+      "name": "G03 table taps, semantics and keyboard 667 font16",
+      "pass": true,
+      "viewport": {
+        "width": 667,
+        "height": 375,
+        "font": 16
+      },
+      "geometry": {
+        "client": 567,
+        "scroll": 567,
+        "rootWidth": 667,
+        "tableDisplay": "table",
+        "rowDisplay": "table-row",
+        "firstLeft": 68,
+        "pinnedWidth": 136.078125
+      },
+      "buttonGeometry": [],
+      "positions": [
+        0
+      ],
+      "keyboardScroll": 0,
+      "aria": "- region \"Scrollable natal placements\":\n  - table \"Calculated natal placements\":\n    - caption: Calculated natal placements\n    - rowgroup:\n      - row \"Body Sign & degree House Motion\":\n        - columnheader \"Body\"\n        - columnheader \"Sign & degree\"\n        - columnheader \"House\"\n        - columnheader \"Motion\"\n    - rowgroup:\n      - row \"Sun Aries 5\u00b0 12\u2032 house 1 Rx\":\n        - rowheader \"Sun\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 1\"\n        - cell \"Rx\"\n      - row \"Moon Taurus 15\u00b0 04\u2032 house 2 direct\":\n        - rowheader \"Moon\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 2\"\n        - cell \"direct\"\n      - row \"Mercury Gemini 20\u00b0 33\u2032 house 3 direct\":\n        - rowheader \"Mercury\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 3\"\n        - cell \"direct\"\n      - row \"Venus Aries 5\u00b0 12\u2032 house 4 Rx\":\n        - rowheader \"Venus\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 4\"\n        - cell \"Rx\"\n      - row \"Mars Taurus 15\u00b0 04\u2032 house 5 direct\":\n        - rowheader \"Mars\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 5\"\n        - cell \"direct\"\n      - row \"Jupiter Gemini 20\u00b0 33\u2032 house 6 direct\":\n        - rowheader \"Jupiter\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 6\"\n        - cell \"direct\"\n      - row \"Saturn Aries 5\u00b0 12\u2032 house 7 Rx\":\n        - rowheader \"Saturn\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 7\"\n        - cell \"Rx\"\n      - row \"Uranus Taurus 15\u00b0 04\u2032 house 8 direct\":\n        - rowheader \"Uranus\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 8\"\n        - cell \"direct\"\n      - row \"Neptune Gemini 20\u00b0 33\u2032 house 9 direct\":\n        - rowheader \"Neptune\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 9\"\n        - cell \"direct\"\n      - row \"Pluto Aries 5\u00b0 12\u2032 house 10 Rx\":\n        - rowheader \"Pluto\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 10\"\n        - cell \"Rx\"\n      - row \"North node Taurus 15\u00b0 04\u2032 house 11 direct\":\n        - rowheader \"North node\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 11\"\n        - cell \"direct\"\n      - row \"Chiron Gemini 20\u00b0 33\u2032 house 12 direct\":\n        - rowheader \"Chiron\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 12\"\n        - cell \"direct\""
+    },
+    {
+      "name": "G03 table taps, semantics and keyboard 844 font16",
+      "pass": true,
+      "viewport": {
+        "width": 844,
+        "height": 390,
+        "font": 16
+      },
+      "geometry": {
+        "client": 744,
+        "scroll": 744,
+        "rootWidth": 844,
+        "tableDisplay": "table",
+        "rowDisplay": "table-row",
+        "firstLeft": 68,
+        "pinnedWidth": 178.546875
+      },
+      "buttonGeometry": [],
+      "positions": [
+        0
+      ],
+      "keyboardScroll": 0,
+      "aria": "- region \"Scrollable natal placements\":\n  - table \"Calculated natal placements\":\n    - caption: Calculated natal placements\n    - rowgroup:\n      - row \"Body Sign & degree House Motion\":\n        - columnheader \"Body\"\n        - columnheader \"Sign & degree\"\n        - columnheader \"House\"\n        - columnheader \"Motion\"\n    - rowgroup:\n      - row \"Sun Aries 5\u00b0 12\u2032 house 1 Rx\":\n        - rowheader \"Sun\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 1\"\n        - cell \"Rx\"\n      - row \"Moon Taurus 15\u00b0 04\u2032 house 2 direct\":\n        - rowheader \"Moon\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 2\"\n        - cell \"direct\"\n      - row \"Mercury Gemini 20\u00b0 33\u2032 house 3 direct\":\n        - rowheader \"Mercury\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 3\"\n        - cell \"direct\"\n      - row \"Venus Aries 5\u00b0 12\u2032 house 4 Rx\":\n        - rowheader \"Venus\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 4\"\n        - cell \"Rx\"\n      - row \"Mars Taurus 15\u00b0 04\u2032 house 5 direct\":\n        - rowheader \"Mars\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 5\"\n        - cell \"direct\"\n      - row \"Jupiter Gemini 20\u00b0 33\u2032 house 6 direct\":\n        - rowheader \"Jupiter\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 6\"\n        - cell \"direct\"\n      - row \"Saturn Aries 5\u00b0 12\u2032 house 7 Rx\":\n        - rowheader \"Saturn\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 7\"\n        - cell \"Rx\"\n      - row \"Uranus Taurus 15\u00b0 04\u2032 house 8 direct\":\n        - rowheader \"Uranus\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 8\"\n        - cell \"direct\"\n      - row \"Neptune Gemini 20\u00b0 33\u2032 house 9 direct\":\n        - rowheader \"Neptune\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 9\"\n        - cell \"direct\"\n      - row \"Pluto Aries 5\u00b0 12\u2032 house 10 Rx\":\n        - rowheader \"Pluto\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 10\"\n        - cell \"Rx\"\n      - row \"North node Taurus 15\u00b0 04\u2032 house 11 direct\":\n        - rowheader \"North node\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 11\"\n        - cell \"direct\"\n      - row \"Chiron Gemini 20\u00b0 33\u2032 house 12 direct\":\n        - rowheader \"Chiron\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 12\"\n        - cell \"direct\""
+    },
+    {
+      "name": "G03 table taps, semantics and keyboard 1280 font16",
+      "pass": true,
+      "viewport": {
+        "width": 1280,
+        "height": 800,
+        "font": 16
+      },
+      "geometry": {
+        "client": 892,
+        "scroll": 892,
+        "rootWidth": 1280,
+        "tableDisplay": "table",
+        "rowDisplay": "table-row",
+        "firstLeft": 212,
+        "pinnedWidth": 214.078125
+      },
+      "buttonGeometry": [],
+      "positions": [
+        0
+      ],
+      "keyboardScroll": 0,
+      "aria": "- region \"Scrollable natal placements\":\n  - table \"Calculated natal placements\":\n    - caption: Calculated natal placements\n    - rowgroup:\n      - row \"Body Sign & degree House Motion\":\n        - columnheader \"Body\"\n        - columnheader \"Sign & degree\"\n        - columnheader \"House\"\n        - columnheader \"Motion\"\n    - rowgroup:\n      - row \"Sun Aries 5\u00b0 12\u2032 house 1 Rx\":\n        - rowheader \"Sun\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 1\"\n        - cell \"Rx\"\n      - row \"Moon Taurus 15\u00b0 04\u2032 house 2 direct\":\n        - rowheader \"Moon\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 2\"\n        - cell \"direct\"\n      - row \"Mercury Gemini 20\u00b0 33\u2032 house 3 direct\":\n        - rowheader \"Mercury\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 3\"\n        - cell \"direct\"\n      - row \"Venus Aries 5\u00b0 12\u2032 house 4 Rx\":\n        - rowheader \"Venus\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 4\"\n        - cell \"Rx\"\n      - row \"Mars Taurus 15\u00b0 04\u2032 house 5 direct\":\n        - rowheader \"Mars\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 5\"\n        - cell \"direct\"\n      - row \"Jupiter Gemini 20\u00b0 33\u2032 house 6 direct\":\n        - rowheader \"Jupiter\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 6\"\n        - cell \"direct\"\n      - row \"Saturn Aries 5\u00b0 12\u2032 house 7 Rx\":\n        - rowheader \"Saturn\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 7\"\n        - cell \"Rx\"\n      - row \"Uranus Taurus 15\u00b0 04\u2032 house 8 direct\":\n        - rowheader \"Uranus\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 8\"\n        - cell \"direct\"\n      - row \"Neptune Gemini 20\u00b0 33\u2032 house 9 direct\":\n        - rowheader \"Neptune\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 9\"\n        - cell \"direct\"\n      - row \"Pluto Aries 5\u00b0 12\u2032 house 10 Rx\":\n        - rowheader \"Pluto\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 10\"\n        - cell \"Rx\"\n      - row \"North node Taurus 15\u00b0 04\u2032 house 11 direct\":\n        - rowheader \"North node\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 11\"\n        - cell \"direct\"\n      - row \"Chiron Gemini 20\u00b0 33\u2032 house 12 direct\":\n        - rowheader \"Chiron\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 12\"\n        - cell \"direct\""
+    },
+    {
+      "name": "G03 table taps, semantics and keyboard 320 font32",
+      "pass": true,
+      "viewport": {
+        "width": 320,
+        "height": 568,
+        "font": 32
+      },
+      "geometry": {
+        "client": 240,
+        "scroll": 960,
+        "rootWidth": 320,
+        "tableDisplay": "table",
+        "rowDisplay": "table-row",
+        "firstLeft": 40,
+        "pinnedWidth": 96
+      },
+      "buttonGeometry": [
+        {
+          "width": 240,
+          "height": 114
+        },
+        {
+          "width": 240,
+          "height": 114
+        }
+      ],
+      "positions": [
+        0,
+        115,
+        230,
+        345,
+        460,
+        575,
+        690,
+        720
+      ],
+      "keyboardScroll": 38,
+      "aria": "- region \"Scrollable natal placements\":\n  - table \"Calculated natal placements\":\n    - caption: Calculated natal placements\n    - rowgroup:\n      - row \"Body Sign & degree House Motion\":\n        - columnheader \"Body\"\n        - columnheader \"Sign & degree\"\n        - columnheader \"House\"\n        - columnheader \"Motion\"\n    - rowgroup:\n      - row \"Sun Aries 5\u00b0 12\u2032 house 1 Rx\":\n        - rowheader \"Sun\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 1\"\n        - cell \"Rx\"\n      - row \"Moon Taurus 15\u00b0 04\u2032 house 2 direct\":\n        - rowheader \"Moon\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 2\"\n        - cell \"direct\"\n      - row \"Mercury Gemini 20\u00b0 33\u2032 house 3 direct\":\n        - rowheader \"Mercury\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 3\"\n        - cell \"direct\"\n      - row \"Venus Aries 5\u00b0 12\u2032 house 4 Rx\":\n        - rowheader \"Venus\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 4\"\n        - cell \"Rx\"\n      - row \"Mars Taurus 15\u00b0 04\u2032 house 5 direct\":\n        - rowheader \"Mars\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 5\"\n        - cell \"direct\"\n      - row \"Jupiter Gemini 20\u00b0 33\u2032 house 6 direct\":\n        - rowheader \"Jupiter\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 6\"\n        - cell \"direct\"\n      - row \"Saturn Aries 5\u00b0 12\u2032 house 7 Rx\":\n        - rowheader \"Saturn\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 7\"\n        - cell \"Rx\"\n      - row \"Uranus Taurus 15\u00b0 04\u2032 house 8 direct\":\n        - rowheader \"Uranus\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 8\"\n        - cell \"direct\"\n      - row \"Neptune Gemini 20\u00b0 33\u2032 house 9 direct\":\n        - rowheader \"Neptune\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 9\"\n        - cell \"direct\"\n      - row \"Pluto Aries 5\u00b0 12\u2032 house 10 Rx\":\n        - rowheader \"Pluto\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 10\"\n        - cell \"Rx\"\n      - row \"North node Taurus 15\u00b0 04\u2032 house 11 direct\":\n        - rowheader \"North node\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 11\"\n        - cell \"direct\"\n      - row \"Chiron Gemini 20\u00b0 33\u2032 house 12 direct\":\n        - rowheader \"Chiron\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 12\"\n        - cell \"direct\""
+    },
+    {
+      "name": "G03 table taps, semantics and keyboard 844 font32",
+      "pass": true,
+      "viewport": {
+        "width": 844,
+        "height": 390,
+        "font": 32
+      },
+      "geometry": {
+        "client": 680,
+        "scroll": 960,
+        "rootWidth": 844,
+        "tableDisplay": "table",
+        "rowDisplay": "table-row",
+        "firstLeft": 100,
+        "pinnedWidth": 230.390625
+      },
+      "buttonGeometry": [
+        {
+          "width": 336,
+          "height": 74
+        },
+        {
+          "width": 336,
+          "height": 74
+        }
+      ],
+      "positions": [
+        0,
+        280
+      ],
+      "keyboardScroll": 77,
+      "aria": "- region \"Scrollable natal placements\":\n  - table \"Calculated natal placements\":\n    - caption: Calculated natal placements\n    - rowgroup:\n      - row \"Body Sign & degree House Motion\":\n        - columnheader \"Body\"\n        - columnheader \"Sign & degree\"\n        - columnheader \"House\"\n        - columnheader \"Motion\"\n    - rowgroup:\n      - row \"Sun Aries 5\u00b0 12\u2032 house 1 Rx\":\n        - rowheader \"Sun\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 1\"\n        - cell \"Rx\"\n      - row \"Moon Taurus 15\u00b0 04\u2032 house 2 direct\":\n        - rowheader \"Moon\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 2\"\n        - cell \"direct\"\n      - row \"Mercury Gemini 20\u00b0 33\u2032 house 3 direct\":\n        - rowheader \"Mercury\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 3\"\n        - cell \"direct\"\n      - row \"Venus Aries 5\u00b0 12\u2032 house 4 Rx\":\n        - rowheader \"Venus\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 4\"\n        - cell \"Rx\"\n      - row \"Mars Taurus 15\u00b0 04\u2032 house 5 direct\":\n        - rowheader \"Mars\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 5\"\n        - cell \"direct\"\n      - row \"Jupiter Gemini 20\u00b0 33\u2032 house 6 direct\":\n        - rowheader \"Jupiter\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 6\"\n        - cell \"direct\"\n      - row \"Saturn Aries 5\u00b0 12\u2032 house 7 Rx\":\n        - rowheader \"Saturn\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 7\"\n        - cell \"Rx\"\n      - row \"Uranus Taurus 15\u00b0 04\u2032 house 8 direct\":\n        - rowheader \"Uranus\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 8\"\n        - cell \"direct\"\n      - row \"Neptune Gemini 20\u00b0 33\u2032 house 9 direct\":\n        - rowheader \"Neptune\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 9\"\n        - cell \"direct\"\n      - row \"Pluto Aries 5\u00b0 12\u2032 house 10 Rx\":\n        - rowheader \"Pluto\"\n        - cell \"Aries 5\u00b0 12\u2032\"\n        - cell \"house 10\"\n        - cell \"Rx\"\n      - row \"North node Taurus 15\u00b0 04\u2032 house 11 direct\":\n        - rowheader \"North node\"\n        - cell \"Taurus 15\u00b0 04\u2032\"\n        - cell \"house 11\"\n        - cell \"direct\"\n      - row \"Chiron Gemini 20\u00b0 33\u2032 house 12 direct\":\n        - rowheader \"Chiron\"\n        - cell \"Gemini 20\u00b0 33\u2032\"\n        - cell \"house 12\"\n        - cell \"direct\""
+    },
+    {
+      "name": "G03 late/empty data and ResizeObserver fallback",
+      "pass": true,
+      "lateData": true,
+      "emptyData": true,
+      "rotation": true,
+      "foldoutReopen": true
+    },
+    {
+      "name": "G03 normal-motion table paging stays inside table",
+      "pass": true,
+      "before": 1752,
+      "after": 1752,
+      "x": 160
+    }
+  ],
+  "pageErrors": [],
+  "root": {
+    "scrollingElement": "HTML",
+    "overscroll": "auto",
+    "touchAction": "auto"
+  }
+}

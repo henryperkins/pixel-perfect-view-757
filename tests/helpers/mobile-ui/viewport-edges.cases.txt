@@ -1,0 +1,22 @@
+async page => {
+ const out={textStress:[],menuEnd:[],longText:null},engine=page.context().browser().browserType().name();
+ page.setDefaultTimeout(10000);
+ for(const [width,height] of [[320,568],[360,800],[667,375]]){
+  await page.setViewportSize({width,height});
+  for(const path of ['/','/timing','/time-travel','/__audit/not-found','/__audit/server-error']){
+   await page.goto('http://127.0.0.1:4199'+path);await page.locator('h1').first().waitFor();await page.evaluate(()=>{document.documentElement.style.fontSize='32px'});await page.waitForTimeout(250);
+   out.textStress.push({path,width,height,...await page.evaluate(()=>({clientWidth:document.documentElement.clientWidth,scrollWidth:document.documentElement.scrollWidth}))});
+  }
+  await page.goto('http://127.0.0.1:4199/');await page.getByRole('button',{name:'Open menu'}).waitFor();await page.evaluate(()=>document.documentElement.style.fontSize='32px');
+  await page.getByRole('button',{name:'Open menu'}).click();await page.waitForTimeout(300);
+  await page.locator('.mobile-menu').evaluate(el=>el.scrollTop=el.scrollHeight);await page.waitForTimeout(100);
+  out.menuEnd.push({width,height,...await page.locator('.mobile-menu').getByRole('button',{name:'Sign out'}).evaluate(el=>{const r=el.getBoundingClientRect(),hit=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2);return{top:r.top,bottom:r.bottom,reachable:el.contains(hit),insideViewport:r.top>=0&&r.bottom<=innerHeight}})});
+  if(width===320)await page.screenshot({path:'/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-viewport-2026-10-14/'+engine+'-menu-end-320-text-after.png'});
+ }
+ await page.setViewportSize({width:320,height:568});await page.goto('http://127.0.0.1:4199/journal');await page.locator('.journal-entry').first().waitFor();
+ const longText='https://example.invalid/'+ 'unbroken'.repeat(70)+' '+ 'email'.repeat(70)+'@example.invalid';
+ await page.evaluate(async text=>{window.mobileAudit.state.events[0].body=text;await window.auditQueryClient.invalidateQueries({queryKey:['journal']})},longText);
+ await page.getByText(longText,{exact:true}).waitFor();
+ out.longText=await page.evaluate(text=>({retained:document.body.textContent.includes(text),clientWidth:document.documentElement.clientWidth,scrollWidth:document.documentElement.scrollWidth,scroller:document.scrollingElement.tagName}),longText);
+ return {engine,...out};
+}
