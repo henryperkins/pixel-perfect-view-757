@@ -4,7 +4,7 @@ import { before, beforeEach, after, test } from "node:test";
 import { createRecordsHarness } from "./helpers/records-harness.mjs";
 
 let h, billing, policy, account, auth, readers, security, originalFetch, sub, sessions, calls;
-let failCancel, stripeEmail, failEmailUpdate;
+let failCancel, stripeEmail, failEmailUpdate, customerRetrieveGate, customerUpdateGate;
 const keys = [
   "STRIPE_SECRET_KEY",
   "STRIPE_WEBHOOK_SECRET",
@@ -38,6 +38,13 @@ before(async () => {
       return json({ id: "cus_a", livemode: false });
     }
     if (url.pathname === "/v1/customers/cus_a") {
+      const gate = method === "POST" ? customerUpdateGate : customerRetrieveGate;
+      if (gate) {
+        if (method === "POST") customerUpdateGate = null;
+        else customerRetrieveGate = null;
+        gate.entered();
+        await gate.release;
+      }
       if (method === "POST") {
         if (failEmailUpdate)
           return json({ error: { message: "Synthetic outage", type: "api_error" } }, 503);
@@ -109,6 +116,8 @@ beforeEach(async () => {
   failCancel = false;
   stripeEmail = null;
   failEmailUpdate = false;
+  customerRetrieveGate = null;
+  customerUpdateGate = null;
 });
 after(async () => {
   globalThis.fetch = originalFetch;
@@ -125,6 +134,35 @@ async function customer() {
       h.userA,
       "cus_a",
     ]);
+}
+async function confirmChange(next) {
+  const raw = randomBytes(32).toString("hex"),
+    user = h.sqlite.prepare("SELECT email,password_hash FROM users WHERE id=?").get(h.userA);
+  h.sqlite
+    .prepare(
+      "INSERT INTO account_tokens(token_hash,user_id,purpose,email,new_email,password_hash,created_at,expires_at) VALUES(?,?,?,?,?,?,?,?)",
+    )
+    .run(
+      createHash("sha256").update(raw).digest("hex"),
+      h.userA,
+      "change",
+      user.email,
+      next,
+      user.password_hash,
+      Date.now(),
+      Date.now() + 60_000,
+    );
+  return security.consumeAccountToken(raw, "confirm", undefined, h.records());
+}
+function deferredCustomerRequest() {
+  let entered, unblock;
+  const started = new Promise((resolve) => {
+    entered = resolve;
+  });
+  const release = new Promise((resolve) => {
+    unblock = resolve;
+  });
+  return { entered, release, started, unblock };
 }
 function subscription(status = "active") {
   sub = {
@@ -288,43 +326,26 @@ test("checkout cannot grant access to a different account or create a second act
   assert.equal((await billing.getMembership(h.userB, h.records())).fullAccess, false);
 });
 
-test("checkout and the portal give Stripe the current account email", async () => {
+test("checkout and the portal use the stored account email when the caller email is stale", async () => {
   await customer();
   stripeEmail = "old@example.invalid";
+  h.sqlite.prepare("UPDATE users SET email=? WHERE id=?").run("new@example.invalid", h.userA);
   const updates = () =>
     calls.filter((c) => c.path === "/v1/customers/cus_a" && c.method === "POST").length;
-  await billing.startCheckout(h.userA, "new@example.invalid", "month", h.records());
+  await billing.startCheckout(h.userA, "old@example.invalid", "month", h.records());
   assert.equal(stripeEmail, "new@example.invalid");
   assert.equal(updates(), 1);
   const portal = await billing.membershipPortal(h.userA, "new@example.invalid", h.records());
   assert.match(portal.url, /^https:\/\/billing.stripe.com/);
   assert.equal(updates(), 1);
-  await billing.membershipPortal(h.userA, "newer@example.invalid", h.records());
+  h.sqlite.prepare("UPDATE users SET email=? WHERE id=?").run("newer@example.invalid", h.userA);
+  await billing.membershipPortal(h.userA, "new@example.invalid", h.records());
   assert.equal(stripeEmail, "newer@example.invalid");
 });
 
 test("a confirmed email change reaches Stripe, and a Stripe outage cannot block it", async () => {
   await customer();
   stripeEmail = h.sqlite.prepare("SELECT email FROM users WHERE id=?").get(h.userA).email;
-  async function confirmChange(next) {
-    const raw = randomBytes(32).toString("hex"),
-      user = h.sqlite.prepare("SELECT email,password_hash FROM users WHERE id=?").get(h.userA);
-    h.sqlite
-      .prepare(
-        "INSERT INTO account_tokens(token_hash,user_id,purpose,email,new_email,password_hash,created_at,expires_at) VALUES(?,?,?,?,?,?,?,?)",
-      )
-      .run(
-        createHash("sha256").update(raw).digest("hex"),
-        h.userA,
-        "change",
-        user.email,
-        next,
-        user.password_hash,
-        Date.now(),
-        Date.now() + 60_000,
-      );
-    return security.consumeAccountToken(raw, "confirm", undefined, h.records());
-  }
   await confirmChange("new@example.invalid");
   assert.equal(stripeEmail, "new@example.invalid");
   failEmailUpdate = true;
@@ -334,6 +355,41 @@ test("a confirmed email change reaches Stripe, and a Stripe outage cannot block 
     "later@example.invalid",
   );
   assert.equal(stripeEmail, "new@example.invalid");
+});
+
+test("a portal request paused during retrieval cannot rewind a confirmed account email", async () => {
+  await customer();
+  const old = h.sqlite.prepare("SELECT email FROM users WHERE id=?").get(h.userA).email;
+  stripeEmail = old;
+  const gate = deferredCustomerRequest();
+  customerRetrieveGate = gate;
+  const opening = billing.membershipPortal(h.userA, old, h.records());
+  try {
+    await gate.started;
+    assert.equal((await confirmChange("confirmed@example.invalid")).signInRequired, true);
+  } finally {
+    gate.unblock();
+  }
+  await opening;
+  assert.equal(stripeEmail, "confirmed@example.invalid");
+  assert.equal(h.sqlite.prepare("SELECT COUNT(*) n FROM billing_locks").get().n, 0);
+});
+
+test("a confirmation during a customer update is reconciled before the portal succeeds", async () => {
+  await customer();
+  const old = h.sqlite.prepare("SELECT email FROM users WHERE id=?").get(h.userA).email;
+  stripeEmail = "outdated@example.invalid";
+  const gate = deferredCustomerRequest();
+  customerUpdateGate = gate;
+  const opening = billing.membershipPortal(h.userA, old, h.records());
+  try {
+    await gate.started;
+    assert.equal((await confirmChange("confirmed@example.invalid")).signInRequired, true);
+  } finally {
+    gate.unblock();
+  }
+  await opening;
+  assert.equal(stripeEmail, "confirmed@example.invalid");
 });
 
 test("billing lock prevents a concurrent checkout/deletion", async () => {

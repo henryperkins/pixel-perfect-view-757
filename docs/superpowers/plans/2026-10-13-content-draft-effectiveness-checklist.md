@@ -315,6 +315,8 @@ The new paired blinded editorial review was not run because the complete pair pr
 
 ## Task 17 — Diagnose the halted repair request offline
 
+**Integration update — 2026-10-14:** The separately versioned [four-observation manifest](../../../src/lib/ai/latency-probe.ts), plan builder, server controller and admin controls are implemented, with offline identity, reservation, halt and Start-replay checks. The historical prerequisite below has been satisfied in source. Published-source verification and a fresh authorized experiment freeze are still required before generation; the halted repair, unknown reservation and failed editorial verdict remain preserved.
+
 **Scope:** The subsequent user **“Proceed.”** authorizes the proposed offline timeout investigation. It does not restart the halted campaign or supply a new numeric paid limit.
 
 - [x] Match the failed capture to published source `9348a24`, compare the original eight attempts at their own source, and preserve both campaign identities and all captures.

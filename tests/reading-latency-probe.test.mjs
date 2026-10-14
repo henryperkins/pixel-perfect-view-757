@@ -203,10 +203,7 @@ test("preview and start require the member Enterprise provider and admin authori
     /member|Enterprise/i,
   );
   process.env.PATTERN_MEMBER_LANGUAGE_PROVIDER = "gemini-enterprise";
-  await assert.rejects(
-    runs.previewEvaluationPlan(h.records(), h.userB, settings),
-    /admin/i,
-  );
+  await assert.rejects(runs.previewEvaluationPlan(h.records(), h.userB, settings), /admin/i);
   assert.equal(h.evaluationStarts.length, 0);
 });
 
@@ -290,18 +287,78 @@ test("start freezes the run with server-fixed $5/four-attempt bounds", async () 
       "SELECT dollar_ceiling_micros, review_reserve_micros, campaign_attempt_limit, arm_key, enterprise_thinking, qualification_profile FROM evaluation_runs WHERE id=?",
     )
     .get(run.id);
-  assert.deepEqual({ ...columns }, {
-    dollar_ceiling_micros: 5_000_000,
-    review_reserve_micros: 0,
-    campaign_attempt_limit: 4,
-    arm_key: "latency-probe",
-    enterprise_thinking: null,
-    qualification_profile: null,
-  });
+  assert.deepEqual(
+    { ...columns },
+    {
+      dollar_ceiling_micros: 5_000_000,
+      review_reserve_micros: 0,
+      campaign_attempt_limit: 4,
+      arm_key: "latency-probe",
+      enterprise_thinking: null,
+      qualification_profile: null,
+    },
+  );
   assert.equal(h.evaluationStarts.length, 1);
   assert.equal(h.evaluationStarts[0].total, 4);
   assert.equal(h.evaluationStarts[0].enterpriseThinking, undefined);
   await assert.rejects(begin(settings), /already running/i);
+});
+
+test("a halted unknown probe cannot be restarted with a fresh reservation ledger", async () => {
+  const settings = await draft();
+  const preview = await runs.previewEvaluationPlan(h.records(), h.userA, settings);
+  h.setGeminiEnterprise(() => {
+    throw Object.assign(new Error("fixture timeout"), { name: "TimeoutError" });
+  });
+  const run = await begin(settings);
+  await step(run, 0);
+  assert.equal(
+    h.sqlite.prepare("SELECT status FROM evaluation_runs WHERE id=?").get(run.id).status,
+    "halted",
+  );
+  assert.equal(
+    h.sqlite.prepare("SELECT SUM(reserved_micros) n FROM evaluation_results").get().n,
+    2_800_000,
+  );
+  await assert.rejects(
+    runs.startEvaluationRun(
+      h.records(),
+      h.userA,
+      { ...settings, expectedPlanHash: preview.hash },
+      ORIGIN,
+    ),
+    /already started|retained/i,
+  );
+  assert.equal(h.sqlite.prepare("SELECT COUNT(*) n FROM evaluation_runs").get().n, 1);
+  assert.equal(h.evaluationStarts.length, 1);
+  assert.equal(h.geminiEnterpriseRequests.length, 1);
+  assert.equal(
+    h.sqlite.prepare("SELECT SUM(reserved_micros) n FROM evaluation_results").get().n,
+    2_800_000,
+  );
+});
+
+test("terminal and stale probe records still prevent starting another copy of the experiment", async () => {
+  for (const status of [
+    "complete",
+    "halted",
+    "stopped",
+    "error",
+    "queued",
+    "running",
+    "stopping",
+  ]) {
+    await h.reset();
+    process.env.PATTERN_MEMBER_LANGUAGE_PROVIDER = "gemini-enterprise";
+    const settings = await draft();
+    const run = await begin(settings);
+    h.sqlite
+      .prepare("UPDATE evaluation_runs SET status=?,updated_at=? WHERE id=?")
+      .run(status, "2000-01-01T00:00:00.000Z", run.id);
+    await assert.rejects(begin(settings), /already started|retained/i, status);
+    assert.equal(h.sqlite.prepare("SELECT COUNT(*) n FROM evaluation_runs").get().n, 1, status);
+    assert.equal(h.evaluationStarts.length, 1, status);
+  }
 });
 
 test("four signed steps apply the frozen per-position thinking once each and complete", async () => {
@@ -332,10 +389,7 @@ test("four signed steps apply the frozen per-position thinking once each and com
     assert.equal(result.metadata.caseSetId, "draft-pilot-2");
     assert.equal(result.metadata.experimentVersion, "content-latency-probe-1");
     assert.equal(result.metadata.runPlanHash, capture.ledger.sourcePlan.hash);
-    assert.equal(
-      result.case.transport.thinkingLevel,
-      ["LOW", "MEDIUM", "LOW", "MEDIUM"][index],
-    );
+    assert.equal(result.case.transport.thinkingLevel, ["LOW", "MEDIUM", "LOW", "MEDIUM"][index]);
     assert.equal(result.case.transport.deadlineMs, 60_000);
   }
   // A replayed step settles from storage; it never requests the provider again.

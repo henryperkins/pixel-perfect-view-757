@@ -524,7 +524,7 @@ async function startContentComparisonRun(
   );
 }
 
-/** The probe freezes four planned observations; its cap is server-fixed, never client input. */
+/** One retained campaign per admin and manifest version; neither status nor source drift resets it. */
 async function startLatencyProbeRun(
   db: DBClient,
   userId: string,
@@ -549,7 +549,7 @@ async function startLatencyProbeRun(
   const result = await db.batch([
     ...guards,
     {
-      sql: "INSERT INTO evaluation_runs(id,user_id,status,provider,bundle_source,case_ids,completed,plan,campaign_id,attempt_limit,dollar_ceiling_micros,review_reserve_micros,created_at,updated_at,arm_key,campaign_attempt_limit) SELECT ?,?,'queued',?,'latency-probe',?,0,?,?,4,?,?,?,?,'latency-probe',4 WHERE NOT EXISTS(SELECT 1 FROM evaluation_runs WHERE user_id=? AND status IN ('queued','running','stopping') AND julianday(updated_at)>julianday(?)) RETURNING id",
+      sql: "INSERT INTO evaluation_runs(id,user_id,status,provider,bundle_source,case_ids,completed,plan,campaign_id,attempt_limit,dollar_ceiling_micros,review_reserve_micros,created_at,updated_at,arm_key,campaign_attempt_limit) SELECT ?,?,'queued',?,'latency-probe',?,0,?,?,4,?,?,?,?,'latency-probe',4 WHERE NOT EXISTS(SELECT 1 FROM evaluation_runs WHERE user_id=? AND status IN ('queued','running','stopping') AND julianday(updated_at)>julianday(?)) AND NOT EXISTS(SELECT 1 FROM evaluation_runs WHERE user_id=? AND bundle_source='latency-probe' AND json_extract(plan,'$.latencyProbe.version')=?) RETURNING id",
       params: [
         runId,
         userId,
@@ -563,11 +563,15 @@ async function startLatencyProbeRun(
         now,
         userId,
         cutoff,
+        userId,
+        LATENCY_PROBE_VERSION,
       ],
     },
   ]);
   if (!result.at(-1)?.results.length)
-    throw Error("An evaluation is already running; the probe cannot start alongside it.");
+    throw Error(
+      "An evaluation is already running or this latency probe campaign has already started; its records are retained.",
+    );
   const { data: created, error } = await db
     .from<RunRow>("evaluation_runs")
     .select(RUN_COLUMNS)
