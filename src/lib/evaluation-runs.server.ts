@@ -63,6 +63,20 @@ import {
   contentComparisonArmPlan,
   revalidateContentComparisonPlan,
 } from "./ai/content-comparison-plan.server";
+import {
+  createLatencyProbePlan,
+  revalidateLatencyProbePlan,
+  resolveLatencyProbeSource,
+  type LatencyProbePlan,
+} from "./ai/latency-probe-plan.server";
+import {
+  LATENCY_PROBE_CASE_SET_ID,
+  LATENCY_PROBE_DOLLAR_CEILING_MICROS,
+  LATENCY_PROBE_PROVIDER,
+  LATENCY_PROBE_RESERVATION_MICROS,
+  LATENCY_PROBE_VERSION,
+  type LatencyProbeSettings,
+} from "./ai/latency-probe";
 
 const HALT_CODES = new Set(["not_configured", "auth", "credit", "rate_limit"]);
 const jsonValue = (x: unknown): EvaluationJsonValue => JSON.parse(JSON.stringify(x));
@@ -75,6 +89,22 @@ export async function previewEvaluationPlan(
   await requireAdmin(db, userId);
   readingEvaluationPreviewInputSchema.parse(settings);
   if ("mode" in settings) {
+    if (settings.mode === "latency-probe") {
+      if (memberLanguageProvider() !== LATENCY_PROBE_PROVIDER)
+        throw Error("The latency probe requires the member Gemini Enterprise provider.");
+      const { baseline, baselineIdentity } = await resolveLatencyProbeSource(
+        db,
+        userId,
+        settings.source,
+      );
+      const plan = createLatencyProbePlan(baseline, baselineIdentity, evaluationSourceSha());
+      return {
+        hash: plan.hash,
+        attemptLimit: plan.attemptLimit,
+        sourceSha: plan.sourceSha,
+        plans: jsonValue(plan),
+      };
+    }
     const { pair } = await comparisonPair(db, userId, settings);
     return {
       hash: contentComparisonArmPlan(pair, settings.arm).hash,
@@ -183,6 +213,16 @@ function view(row: RunRow): ReadingEvaluationRun {
           qualificationProfile: row.qualification_profile,
           campaignId: row.campaign_id!,
           attemptLimit: row.attempt_limit!,
+        }
+      : {}),
+    ...(row.plan?.latencyProbe
+      ? {
+          campaignId: row.campaign_id!,
+          attemptLimit: row.attempt_limit!,
+          latencyProbe: {
+            version: row.plan.latencyProbe.version,
+            positions: row.plan.latencyProbe.positions,
+          },
         }
       : {}),
   };
@@ -484,6 +524,74 @@ async function startContentComparisonRun(
   );
 }
 
+/** The probe freezes four planned observations; its cap is server-fixed, never client input. */
+async function startLatencyProbeRun(
+  db: DBClient,
+  userId: string,
+  settings: LatencyProbeSettings,
+  origin: string,
+) {
+  if (memberLanguageProvider() !== LATENCY_PROBE_PROVIDER)
+    throw Error("The latency probe runs only while the member provider is Gemini Enterprise.");
+  const { baseline, baselineIdentity, guards } = await resolveLatencyProbeSource(
+    db,
+    userId,
+    settings.source,
+  );
+  const plan = createLatencyProbePlan(baseline, baselineIdentity, evaluationSourceSha());
+  if (plan.hash !== settings.expectedPlanHash)
+    throw Error("The reviewed latency probe plan changed. Prepare a new dry plan.");
+  if (Buffer.byteLength(JSON.stringify(plan)) > 1_900_000)
+    throw Error("Frozen probe exceeds the database row size.");
+  const runId = crypto.randomUUID();
+  const now = new Date().toISOString();
+  const cutoff = new Date(Date.now() - READING_EVALUATION_STALL_MS).toISOString();
+  const result = await db.batch([
+    ...guards,
+    {
+      sql: "INSERT INTO evaluation_runs(id,user_id,status,provider,bundle_source,case_ids,completed,plan,campaign_id,attempt_limit,dollar_ceiling_micros,review_reserve_micros,created_at,updated_at,arm_key,campaign_attempt_limit) SELECT ?,?,'queued',?,'latency-probe',?,0,?,?,4,?,?,?,?,'latency-probe',4 WHERE NOT EXISTS(SELECT 1 FROM evaluation_runs WHERE user_id=? AND status IN ('queued','running','stopping') AND julianday(updated_at)>julianday(?)) RETURNING id",
+      params: [
+        runId,
+        userId,
+        LATENCY_PROBE_PROVIDER,
+        JSON.stringify(plan.cases.map((planned) => planned.id)),
+        JSON.stringify(plan),
+        runId,
+        LATENCY_PROBE_DOLLAR_CEILING_MICROS,
+        0,
+        now,
+        now,
+        userId,
+        cutoff,
+      ],
+    },
+  ]);
+  if (!result.at(-1)?.results.length)
+    throw Error("An evaluation is already running; the probe cannot start alongside it.");
+  const { data: created, error } = await db
+    .from<RunRow>("evaluation_runs")
+    .select(RUN_COLUMNS)
+    .eq("id", runId)
+    .single();
+  if (error || !created) throw Error(error?.message ?? "Probe run could not be read.");
+  const base = (process.env["PATTERN_APP_URL"] || origin).replace(/\/$/, "");
+  const started = await startEvaluationWorkflow({
+    runId,
+    total: plan.cases.length,
+    callback: `${base}/api/public/evaluation-step`,
+    planHash: plan.hash,
+  });
+  if (!started?.ok) {
+    const message =
+      "Workflow dispatch could not be confirmed. No retry was made; the campaign is retained.";
+    await updateRun(db, runId, { status: "error", message });
+    throw Error(message);
+  }
+  return view(
+    (await updateRun(db, runId, { workflow_instance_id: started.instanceId })) ?? created,
+  );
+}
+
 /** Starts a run that continues on the edge plane until it completes, stops or halts. */
 export async function startEvaluationRun(
   db: DBClient,
@@ -494,6 +602,8 @@ export async function startEvaluationRun(
   await requireAdmin(db, userId);
   if ("mode" in settings) {
     readingEvaluationRunInputSchema.parse(settings);
+    if (settings.mode === "latency-probe")
+      return startLatencyProbeRun(db, userId, settings, origin);
     return startContentComparisonRun(db, userId, settings, origin);
   }
 
@@ -774,7 +884,8 @@ async function caseDisposition(
     return { ...base, status: "error", message: "The captured case has invalid diagnostics." };
   if (
     HALT_CODES.has(diagnostics.code) ||
-    (run.plan?.contentComparison && diagnostics.outcome === "unavailable")
+    ((run.plan?.contentComparison || run.plan?.latencyProbe) &&
+      diagnostics.outcome === "unavailable")
   )
     return {
       ...base,
@@ -799,6 +910,18 @@ async function caseDisposition(
             first.result.case.transport.actualModel !== result.case.transport.actualModel)
         )
           throw Error("Mixed pilot configuration.");
+      } else if (run.plan?.latencyProbe) {
+        // The probe intentionally varies its thinking control per frozen position;
+        // every other run-scoped metadata identity must still match exactly.
+        const consistency = (capture: ReadingEvaluationCaseResult) => {
+          const { enterpriseThinking: _level, ...rest } = capture.metadata;
+          return rest;
+        };
+        if (
+          !first ||
+          JSON.stringify(consistency(first.result)) !== JSON.stringify(consistency(result))
+        )
+          throw Error("Mixed probe configuration.");
       } else
         combineReadingEvaluationResults(first ? [first.result, result] : [result], {
           partial: true,
@@ -826,7 +949,7 @@ async function caseDisposition(
     if (known.some((row) => row.actual !== actual))
       return {
         ...base,
-        status: run.plan?.contentComparison ? "halted" : "error",
+        status: run.plan?.contentComparison || run.plan?.latencyProbe ? "halted" : "error",
         message:
           "The reported model identity changed during this run or its comparison campaign. This capture is retained; remaining cases were not requested.",
       };
@@ -838,8 +961,23 @@ async function caseDisposition(
       message:
         "The reported model differs from the frozen configuration. This capture is retained.",
     };
+  if (run.plan?.latencyProbe && diagnostics.attempted) {
+    const expected = (run.plan.cases[position] as { thinking?: string } | undefined)?.thinking;
+    const recorded = (result.metadata as { enterpriseThinking?: string } | undefined)
+      ?.enterpriseThinking;
+    if (result.case.transport?.thinkingLevel !== expected || !recorded || recorded !== expected)
+      return {
+        ...base,
+        status: "error",
+        message:
+          "The recorded thinking control differs from the frozen probe position. This capture is retained.",
+      };
+  }
   if (
-    (run.qualification_profile || run.enterprise_thinking || run.plan?.contentComparison) &&
+    (run.qualification_profile ||
+      run.enterprise_thinking ||
+      run.plan?.contentComparison ||
+      run.plan?.latencyProbe) &&
     diagnostics.attempted
   ) {
     const issue = qualificationTransportIssue(result.case.transport ?? undefined);
@@ -987,7 +1125,13 @@ export async function evaluationStep(
   let capturedBundle: import("./content/default-bundle").ContentBundle;
   let currentPlan: EvaluationPlan;
   try {
-    if (run.plan.contentComparison) {
+    if (run.plan.latencyProbe) {
+      if (memberLanguageProvider() !== LATENCY_PROBE_PROVIDER)
+        throw Error("The member provider changed during the latency probe.");
+      const probe = revalidateLatencyProbePlan(run.plan as LatencyProbePlan, evaluationSourceSha());
+      currentPlan = probe;
+      capturedBundle = probe.latencyProbe.baseline;
+    } else if (run.plan.contentComparison) {
       const pair = revalidateContentComparisonPlan(
         run.plan.contentComparison.pair,
         evaluationSourceSha(),
@@ -1030,9 +1174,14 @@ export async function evaluationStep(
   // Reserve a conservative amount before transport. Unknown billing keeps its
   // full reservation; billing estimates never masquerade as an invoice.
   const reservedMicros =
-    (run.qualification_profile || run.enterprise_thinking || run.plan?.contentComparison) &&
+    (run.qualification_profile ||
+      run.enterprise_thinking ||
+      run.plan?.contentComparison ||
+      run.plan?.latencyProbe) &&
     planned.expectsModel
-      ? 2_800_000
+      ? run.plan?.latencyProbe
+        ? LATENCY_PROBE_RESERVATION_MICROS
+        : 2_800_000
       : 0;
   const [claimed] = await db.exec<{ id: string }>(
     "INSERT INTO evaluation_results(id,run_id,position,case_id,result,reserved_micros,attempted) SELECT ?,?,?,?,?,?,? WHERE EXISTS(SELECT 1 FROM evaluation_runs r WHERE r.id=? AND r.completed=? AND r.status IN ('queued','running') AND EXISTS(SELECT 1 FROM user_roles WHERE user_id=r.user_id AND role='admin') AND (SELECT COALESCE(SUM(e.attempted),0) FROM evaluation_results e WHERE e.run_id=r.id)+?<=r.attempt_limit AND (r.campaign_id IS NULL OR ((SELECT COALESCE(SUM(e.attempted),0) FROM evaluation_results e JOIN evaluation_runs a ON a.id=e.run_id WHERE a.campaign_id=r.campaign_id)+?<=r.campaign_attempt_limit AND (SELECT COALESCE(SUM(e.reserved_micros),0) FROM evaluation_results e JOIN evaluation_runs a ON a.id=e.run_id WHERE a.campaign_id=r.campaign_id)+?<=r.dollar_ceiling_micros-r.review_reserve_micros))) ON CONFLICT(run_id,position) DO NOTHING RETURNING id",
@@ -1097,6 +1246,13 @@ export async function evaluationStep(
       {
         ...(run.qualification_profile ? { profile: run.qualification_profile } : {}),
         ...(run.enterprise_thinking ? { enterpriseThinking: run.enterprise_thinking } : {}),
+        ...(run.plan.latencyProbe
+          ? {
+              enterpriseThinking: (planned as { thinking?: "LOW" | "MEDIUM" }).thinking,
+              boundedQualification: true,
+              caseSetId: LATENCY_PROBE_CASE_SET_ID,
+            }
+          : {}),
         ...(run.plan.contentComparison
           ? {
               boundedQualification: true,
@@ -1141,13 +1297,20 @@ export async function evaluationStep(
     return { next: false };
   }
 
+  // Probe captures belong to the latency experiment, not to the 24-call thinking
+  // pilot whose shared transport stamps this identity when a thinking control is set.
+  if (run.plan.latencyProbe) result.metadata.experimentVersion = LATENCY_PROBE_VERSION;
+
   const { data: saved, error: insertError } = await db
     .from("evaluation_results")
     .update({
       result: { ...result, controller: await caseDisposition(db, run, result, step.position) },
       attempted: diagnostics.attempted ? 1 : 0,
       reserved_micros:
-        run.qualification_profile || run.enterprise_thinking || run.plan?.contentComparison
+        run.qualification_profile ||
+        run.enterprise_thinking ||
+        run.plan?.contentComparison ||
+        run.plan?.latencyProbe
           ? qualificationReservationMicros(
               result.case.transport ?? undefined,
               diagnostics.attempted,

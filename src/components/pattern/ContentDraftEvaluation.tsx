@@ -513,7 +513,390 @@ export function ContentDraftEvaluation({
   disabled?: boolean;
 }) {
   return (
-    <ContentComparisonEvaluation key={draftId} source={{ kind: "draft", draftId }} {...props} />
+    <>
+      <ContentComparisonEvaluation key={draftId} source={{ kind: "draft", draftId }} {...props} />
+      <ContentLatencyProbe
+        key={`probe:${draftId}`}
+        draftId={draftId}
+        userId={props.userId}
+        memberProvider={props.memberProvider}
+        disabled={Boolean(props.disabled)}
+      />
+    </>
+  );
+}
+
+/** The closed four-observation LOW/MEDIUM latency probe over the frozen draft baseline. */
+function ContentLatencyProbe({
+  draftId,
+  userId,
+  memberProvider,
+  disabled = false,
+}: {
+  draftId: string;
+  userId: string;
+  memberProvider?: LanguageProvider | undefined;
+  disabled?: boolean;
+}) {
+  const preview = useServerFn(previewReadingEvaluationPlan);
+  const start = useServerFn(startReadingEvaluationRun);
+  const fetchRun = useServerFn(fetchReadingEvaluationRun);
+  const stopRun = useServerFn(stopReadingEvaluationRun);
+  const fetchRef = useRef(fetchRun);
+  fetchRef.current = fetchRun;
+  const readGeneration = useRef(0);
+  const storageKey = `pattern-latency-probe:${userId}:${draftId}`;
+  const [open, setOpen] = useState(false);
+  const [visited, setVisited] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const [pending, setPending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [capture, setCapture] = useState<RunCapture | null>(null);
+  const [prepared, setPrepared] = useState<{ hash: string; plan: unknown } | null>(null);
+  const run = capture?.run;
+  const active = Boolean(run && readingEvaluationRunActive(run.status));
+  const busy = pending || disabled;
+  const providerReady = memberProvider === "gemini-enterprise";
+
+  const refresh = useCallback(
+    async (runId?: string) => {
+      const generation = ++readGeneration.current;
+      const next = await fetchRef.current({ data: runId ? { runId } : {} });
+      if (generation !== readGeneration.current) return;
+      if (next.run?.latencyProbe) {
+        setCapture(next);
+        try {
+          localStorage.setItem(storageKey, next.run.id);
+        } catch {
+          // The server still holds the run when browser storage is unavailable.
+        }
+      } else if (runId) {
+        throw Error("The saved latency probe could not be recovered.");
+      }
+    },
+    [storageKey],
+  );
+
+  useEffect(
+    () => () => {
+      readGeneration.current += 1;
+    },
+    [],
+  );
+
+  useEffect(() => {
+    if (!visited) return;
+    let stored: string | undefined;
+    try {
+      stored = localStorage.getItem(storageKey) ?? undefined;
+    } catch {
+      // Fall back to the server's latest run without starting another one.
+    }
+    refresh(stored)
+      .then(() => setLoaded(true))
+      .catch((failure: unknown) =>
+        setError(failure instanceof Error ? failure.message : "Probe recovery failed."),
+      );
+  }, [visited, storageKey, refresh]);
+
+  useEffect(() => {
+    if (!active || !run?.id) return;
+    const runId = run.id;
+    let cancelled = false;
+    let timer: ReturnType<typeof setTimeout>;
+    async function poll() {
+      try {
+        await refresh(runId);
+      } catch {
+        if (!cancelled)
+          setError("The probe continues on the server; status could not be refreshed.");
+      } finally {
+        if (!cancelled) timer = setTimeout(() => void poll(), 4000);
+      }
+    }
+    timer = setTimeout(() => void poll(), 4000);
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, [active, run?.id, refresh]);
+
+  async function prepare() {
+    setPending(true);
+    setPrepared(null);
+    setError(null);
+    try {
+      const result = await preview({
+        data: { mode: "latency-probe", source: { kind: "draft", draftId } },
+      });
+      setPrepared({ hash: result.hash, plan: result.plans });
+    } catch (failure) {
+      setError(
+        failure instanceof Error ? failure.message : "The latency probe could not be prepared.",
+      );
+    } finally {
+      setPending(false);
+    }
+  }
+
+  async function startProbe() {
+    if (!prepared) return;
+    readGeneration.current += 1;
+    setPending(true);
+    setError(null);
+    try {
+      const started = await start({
+        data: {
+          mode: "latency-probe",
+          source: { kind: "draft", draftId },
+          expectedPlanHash: prepared.hash,
+        },
+      });
+      try {
+        localStorage.setItem(storageKey, started.id);
+      } catch {
+        // Read-only server recovery remains available.
+      }
+      setCapture({ run: started, results: [], ledger: null });
+      setPrepared(null);
+      await refresh(started.id);
+    } catch (failure) {
+      setPrepared(null);
+      setError(
+        failure instanceof Error
+          ? failure.message
+          : "The probe start could not be confirmed. Reload its status before proceeding.",
+      );
+      // A lost acknowledgement may still have created a run. Recover; never retry the start.
+      try {
+        await refresh();
+      } catch {
+        setLoaded(false);
+      }
+    } finally {
+      setPending(false);
+    }
+  }
+
+  async function reload() {
+    setPending(true);
+    setError(null);
+    try {
+      let stored: string | undefined;
+      try {
+        stored = localStorage.getItem(storageKey) ?? undefined;
+      } catch {
+        // Without browser storage, use the server's latest run.
+      }
+      await refresh(run?.id ?? stored);
+      setLoaded(true);
+    } catch (failure) {
+      setError(failure instanceof Error ? failure.message : "Probe status is unavailable.");
+    } finally {
+      setPending(false);
+    }
+  }
+
+  async function stop() {
+    if (!run) return;
+    setPending(true);
+    setError(null);
+    try {
+      await stopRun({ data: { runId: run.id } });
+      await refresh(run.id);
+    } catch {
+      setError(
+        "The stop could not be confirmed. Refresh the status; the server may still be running.",
+      );
+    } finally {
+      setPending(false);
+    }
+  }
+
+  async function downloadEvidence() {
+    if (!capture?.run) return;
+    setPending(true);
+    setError(null);
+    try {
+      const latest = await fetchRun({ data: { runId: capture.run.id } });
+      downloadJson(
+        { version: "content-latency-probe-evidence-1", probe: latest },
+        `latency-probe-${capture.run.id}.json`,
+      );
+    } catch (failure) {
+      setError(failure instanceof Error ? failure.message : "Probe evidence could not download.");
+    } finally {
+      setPending(false);
+    }
+  }
+
+  const panelId = `latency-probe-${draftId}`;
+  const positions = run?.latencyProbe?.positions ?? [];
+  return (
+    <div className="w-full min-w-0 border-t border-rule pt-4">
+      <Button
+        className="min-h-11 h-auto whitespace-normal"
+        type="button"
+        variant="outline"
+        size="sm"
+        aria-expanded={open}
+        aria-controls={panelId}
+        onClick={() => {
+          setVisited(true);
+          setOpen(!open);
+        }}
+      >
+        {open ? "Close latency probe" : "Latency probe (LOW / MEDIUM)"}
+      </Button>
+      <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+        Four planned observations of the frozen baseline: Neptune and Saturn, each once at LOW and
+        MEDIUM thinking, at most four calls under a $5 generation cap. The candidate is not
+        included; this diagnoses latency and is not content qualification.
+      </p>
+      {visited ? (
+        <section
+          id={panelId}
+          hidden={!open}
+          aria-label="Baseline latency probe"
+          className="mt-5 min-w-0 space-y-4"
+        >
+          {!providerReady ? (
+            <p className="text-sm" role="note">
+              The probe runs only while the member provider is Gemini Enterprise.
+            </p>
+          ) : null}
+          {error ? (
+            <p role="alert" className="text-sm text-destructive [overflow-wrap:anywhere]">
+              {error}
+            </p>
+          ) : null}
+          {!loaded && !error ? (
+            <p aria-busy="true" className="text-sm">
+              Checking for a saved probe…
+            </p>
+          ) : null}
+          {run ? (
+            <div className="space-y-2 text-sm" role="status" aria-live="polite">
+              <p>
+                Probe: {run.status} · {run.completed}/{run.total} observations captured.
+              </p>
+              <p className="text-xs [overflow-wrap:anywhere]">Campaign: {run.campaignId}</p>
+              {run.message ? (
+                <p className="text-xs [overflow-wrap:anywhere]">{run.message}</p>
+              ) : null}
+              {capture?.ledger ? (
+                <p className="text-xs text-muted-foreground">
+                  {capture.ledger.campaignAttempts}/4 attempts · $
+                  {(capture.ledger.campaignReservedMicros / 1_000_000).toFixed(2)}{" "}
+                  reserved/accounted against $5. Estimates are not invoices; uncertain captures
+                  retain their reservation. A cap can stop the probe before complete pairs exist.
+                </p>
+              ) : null}
+              <p className="text-xs text-muted-foreground">
+                The Workflow continues if this page closes. Reopening restores its recorded status.
+              </p>
+            </div>
+          ) : null}
+          <div className="flex flex-wrap gap-2">
+            {!run && providerReady ? (
+              <Button
+                className="min-h-11 h-auto whitespace-normal"
+                type="button"
+                variant="outline"
+                size="sm"
+                disabled={busy || !loaded}
+                onClick={() => void prepare()}
+              >
+                Prepare four-observation probe
+              </Button>
+            ) : null}
+            {prepared ? (
+              <>
+                <Button
+                  className="min-h-11 h-auto whitespace-normal"
+                  type="button"
+                  size="sm"
+                  disabled={busy || active}
+                  onClick={() => void startProbe()}
+                >
+                  Start probe · $5 cap
+                </Button>
+                <Button
+                  className="min-h-11 h-auto whitespace-normal"
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => downloadJson(prepared.plan, `latency-probe-plan.json`)}
+                >
+                  Download frozen probe plan
+                </Button>
+              </>
+            ) : null}
+            <Button
+              className="min-h-11 h-auto whitespace-normal"
+              type="button"
+              variant="outline"
+              size="sm"
+              disabled={pending}
+              onClick={() => void reload()}
+            >
+              Refresh probe status
+            </Button>
+            {run ? (
+              <Button
+                className="min-h-11 h-auto whitespace-normal"
+                type="button"
+                variant="outline"
+                size="sm"
+                disabled={pending}
+                onClick={() => void downloadEvidence()}
+              >
+                Download probe evidence
+              </Button>
+            ) : null}
+            {active ? (
+              <Button
+                className="min-h-11 h-auto whitespace-normal"
+                type="button"
+                variant="outline"
+                size="sm"
+                disabled={pending}
+                onClick={() => void stop()}
+              >
+                Stop after current case
+              </Button>
+            ) : null}
+          </div>
+          {capture?.results.length ? (
+            <div className="space-y-3">
+              {capture.results.map(({ case: row }, index) => (
+                <details
+                  key={`${row.id}-${index}`}
+                  className="min-w-0 rounded border border-rule p-3"
+                >
+                  <summary className="cursor-pointer text-sm [overflow-wrap:anywhere]">
+                    {row.id} · {positions[index]?.thinking ?? "unrecorded"} ·{" "}
+                    {row.diagnostics.outcome}
+                  </summary>
+                  <p className="mt-3 text-xs text-muted-foreground [overflow-wrap:anywhere]">
+                    Duration:{" "}
+                    {row.diagnostics.durationMs === null
+                      ? "unrecorded"
+                      : `${(row.diagnostics.durationMs / 1000).toFixed(1)}s`}{" "}
+                    against a 60s deadline. Transport thinking:{" "}
+                    {row.transport?.thinkingLevel ?? "unrecorded"}.
+                  </p>
+                  <p className="mt-3 whitespace-pre-wrap text-sm [overflow-wrap:anywhere]">
+                    {row.output.body}
+                  </p>
+                  <p className="mt-3 text-sm [overflow-wrap:anywhere]">{row.output.prompt}</p>
+                </details>
+              ))}
+            </div>
+          ) : null}
+        </section>
+      ) : null}
+    </div>
   );
 }
 
