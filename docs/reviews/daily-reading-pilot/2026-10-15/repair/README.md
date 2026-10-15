@@ -40,4 +40,6 @@ Read-only production checks confirm that the old Workflow remains `errored`, its
 
 The full signed app-to-Worker recovery round trip was not exercised live: the shared secret is unavailable locally, and the preserved run is already terminal. Regression tests cover that path. No historical run was reopened and no production test run was created to exercise it. Source identity and Worker publication do not establish fresh writing quality.
 
+Following the user's subsequent request, the [production end-to-end exercise](production-e2e/README.md) passed using isolated temporary fixtures and the actual signed lookup of the existing failed Workflow. Recovery, Stop, late-capture refresh/export, accounting, ownership, and access revocation were verified. All temporary records were removed; the original pilot and active content were unchanged. The paragraph above and publication receipt retain the evidence boundary at publication time.
+
 A future pilot requires a new reviewed frozen campaign identity and plan under the revised policy. The interrupted campaign and its spent attempt remain preserved; do not resume it or silently reset its allowance. Fresh generated-writing quality and human editorial approval remain open.

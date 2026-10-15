@@ -1,0 +1,110 @@
+[
+  {
+    "url": "/_serverFn/baf07e663343ede54faa92debf066e7a3677121f51894e06c0e75d10a7dbf2b2",
+    "method": "GET",
+    "status": 200,
+    "function": "auth or read-only bootstrap"
+  },
+  {
+    "url": "/_serverFn/baf07e663343ede54faa92debf066e7a3677121f51894e06c0e75d10a7dbf2b2",
+    "method": "GET",
+    "status": 200,
+    "function": "auth or read-only bootstrap"
+  },
+  {
+    "url": "/_serverFn/19ccb95dcf1d4c25d8cb05e90662bb27bd8da1f513462153b537de20acd6a733",
+    "method": "GET",
+    "status": 200,
+    "function": "fetchReleases"
+  },
+  {
+    "url": "/_serverFn/7a7b16ecbdeef1e66368f93df1619c0768224a71dfffc9ff393af78e8b3b6449",
+    "method": "GET",
+    "status": 200,
+    "function": "fetchEdgePlane"
+  },
+  {
+    "url": "/_serverFn/319dcd6f1e0027f3358ad1262874e4b772e8efeed79a74d14f9b650e98b25cca",
+    "method": "GET",
+    "status": 200,
+    "function": "fetchLanguageProviders"
+  },
+  {
+    "url": "/_serverFn/b31d833948bbbcbe36763d7fd138590ca6716006170d3cf10d0d86d12aacb090",
+    "method": "GET",
+    "status": 200,
+    "function": "fetchContentDrafts"
+  },
+  {
+    "url": "/_serverFn/7014c347561563d91d4a7cd20718788ca883a82c208bc8bf7decbd85640d2931",
+    "method": "GET",
+    "status": 200,
+    "function": "fetchReadingQuality"
+  },
+  {
+    "url": "/_serverFn/4800efd430814615b1ecff7436967c152710cfa9ecace36192b29ea500625c5d",
+    "method": "POST",
+    "status": 200,
+    "function": "fetchReadingEvaluationRun"
+  },
+  {
+    "url": "/_serverFn/4800efd430814615b1ecff7436967c152710cfa9ecace36192b29ea500625c5d",
+    "method": "POST",
+    "status": 200,
+    "function": "fetchReadingEvaluationRun"
+  },
+  {
+    "url": "/_serverFn/4800efd430814615b1ecff7436967c152710cfa9ecace36192b29ea500625c5d",
+    "method": "POST",
+    "status": 200,
+    "function": "fetchReadingEvaluationRun"
+  },
+  {
+    "url": "/_serverFn/4800efd430814615b1ecff7436967c152710cfa9ecace36192b29ea500625c5d",
+    "method": "POST",
+    "status": 200,
+    "function": "fetchReadingEvaluationRun"
+  },
+  {
+    "url": "/_serverFn/4800efd430814615b1ecff7436967c152710cfa9ecace36192b29ea500625c5d",
+    "method": "POST",
+    "status": 200,
+    "function": "fetchReadingEvaluationRun"
+  },
+  {
+    "url": "/_serverFn/8b69cc6a64f76d0a8c58560df8984721f7ec2408d1e3b12130ba708a0b2bf3eb",
+    "method": "POST",
+    "status": 200,
+    "function": "stopReadingEvaluationRun"
+  },
+  {
+    "url": "/_serverFn/4800efd430814615b1ecff7436967c152710cfa9ecace36192b29ea500625c5d",
+    "method": "POST",
+    "status": 200,
+    "function": "fetchReadingEvaluationRun"
+  },
+  {
+    "url": "/_serverFn/4800efd430814615b1ecff7436967c152710cfa9ecace36192b29ea500625c5d",
+    "method": "POST",
+    "status": 200,
+    "function": "fetchReadingEvaluationRun"
+  },
+  {
+    "url": "/_serverFn/4800efd430814615b1ecff7436967c152710cfa9ecace36192b29ea500625c5d",
+    "method": "POST",
+    "status": 200,
+    "function": "fetchReadingEvaluationRun"
+  },
+  {
+    "url": "/_serverFn/4800efd430814615b1ecff7436967c152710cfa9ecace36192b29ea500625c5d",
+    "method": "POST",
+    "status": 200,
+    "function": "fetchReadingEvaluationRun"
+  },
+  {
+    "url": "/_serverFn/4800efd430814615b1ecff7436967c152710cfa9ecace36192b29ea500625c5d",
+    "method": "POST",
+    "status": 200,
+    "function": "fetchReadingEvaluationRun"
+  }
+]

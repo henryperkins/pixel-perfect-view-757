@@ -1,0 +1,280 @@
+{
+  "version": "production-workflow-recovery-e2e-1",
+  "checkedAt": "2026-10-15T20:08:40.794445+00:00",
+  "productionOrigin": "https://patterns.lakefrontdigital.io",
+  "sourceIdentity": {
+    "sourceSha": "be9d7237e7c93423a6f6ec92326c6236cb08352d",
+    "requestPolicyVersion": "synthetic-facts-local-context-1",
+    "fixtureVersion": "synthetic-daily-7"
+  },
+  "workerVersion": "34dfd849-82d8-4cb8-8f0b-27f2162983da",
+  "workflowInstance": "a7b75991-14eb-422e-b892-3a6cfd9ca596",
+  "fixtureRunIds": [
+    "6768c115-65b1-4e18-9381-4485c63cbdac",
+    "d4eb581f-26e6-43be-932b-6896d212a597"
+  ],
+  "scenario": "Two isolated owned database fixtures reference the existing errored Workflow. No Workflow was dispatched. Initial app reads and Stop perform the real signed production lookup. Late persistence is simulated with a copied historical response.",
+  "initialExport": {
+    "run": {
+      "id": "6768c115-65b1-4e18-9381-4485c63cbdac",
+      "status": "error",
+      "provider": "gemini-enterprise",
+      "bundleSource": "editorial-pilot",
+      "total": 9,
+      "caseIds": [
+        "writing-reply-scene",
+        "venus-opposition-venus",
+        "synthesis-tension",
+        "jupiter-trine-sun-technical",
+        "fallback-hard-neptune-mercury",
+        "quiet-threshold",
+        "editorial-quiet-2026-10-12",
+        "editorial-quiet-2026-10-13",
+        "editorial-quiet-2026-10-14"
+      ],
+      "completed": 0,
+      "message": "The Workflow is errored. Stored captures and reserved attempts are retained. An in-flight response may still be saved; no retry or remaining case was requested by recovery.",
+      "createdAt": "2026-10-15T20:00:42.976Z",
+      "updatedAt": "2026-10-15T20:01:36.764Z",
+      "campaignId": "c98694c4-3c76-4c48-b2e3-0f297224d4c6",
+      "attemptLimit": 5,
+      "editorialPilot": {
+        "version": "daily-editorial-pilot-1",
+        "quietDates": [
+          "2026-10-11",
+          "2026-10-12",
+          "2026-10-13",
+          "2026-10-14"
+        ]
+      }
+    },
+    "ledger": {
+      "version": "evaluation-ledger-1",
+      "costStatus": "reservation-estimates-not-invoices",
+      "dollarCeilingMicros": 5000000,
+      "reviewReserveMicros": 0,
+      "campaignAttempts": 1,
+      "campaignReservedMicros": 47400
+    },
+    "entries": [
+      {
+        "position": 0,
+        "caseId": "writing-reply-scene",
+        "attempted": true,
+        "reservedMicros": 47400,
+        "capture": "uncertain",
+        "rawSha256": "f39d0cda02bc51cafe41d0ec6abcc29ff1343dc309b24bcbf27c834f710ba73f"
+      }
+    ]
+  },
+  "editorialLateExport": {
+    "run": {
+      "id": "6768c115-65b1-4e18-9381-4485c63cbdac",
+      "status": "error",
+      "provider": "gemini-enterprise",
+      "bundleSource": "editorial-pilot",
+      "total": 9,
+      "caseIds": [
+        "writing-reply-scene",
+        "venus-opposition-venus",
+        "synthesis-tension",
+        "jupiter-trine-sun-technical",
+        "fallback-hard-neptune-mercury",
+        "quiet-threshold",
+        "editorial-quiet-2026-10-12",
+        "editorial-quiet-2026-10-13",
+        "editorial-quiet-2026-10-14"
+      ],
+      "completed": 1,
+      "message": "The Workflow is errored. Stored captures and reserved attempts are retained. An in-flight response may still be saved; no retry or remaining case was requested by recovery.",
+      "createdAt": "2026-10-15T20:00:42.976Z",
+      "updatedAt": "2026-10-15T20:03:15.391Z",
+      "campaignId": "c98694c4-3c76-4c48-b2e3-0f297224d4c6",
+      "attemptLimit": 5,
+      "editorialPilot": {
+        "version": "daily-editorial-pilot-1",
+        "quietDates": [
+          "2026-10-11",
+          "2026-10-12",
+          "2026-10-13",
+          "2026-10-14"
+        ]
+      }
+    },
+    "ledger": {
+      "version": "evaluation-ledger-1",
+      "costStatus": "reservation-estimates-not-invoices",
+      "dollarCeilingMicros": 5000000,
+      "reviewReserveMicros": 0,
+      "campaignAttempts": 1,
+      "campaignReservedMicros": 47400
+    },
+    "entries": [
+      {
+        "position": 0,
+        "caseId": "writing-reply-scene",
+        "attempted": true,
+        "reservedMicros": 47400,
+        "capture": "stored",
+        "rawSha256": "163601b76909b9cdf5cd76451d37144b184df03eeb12e8e623df7ed08b2af159"
+      }
+    ]
+  },
+  "generalLateExport": {
+    "run": {
+      "id": "6768c115-65b1-4e18-9381-4485c63cbdac",
+      "status": "error",
+      "provider": "gemini-enterprise",
+      "bundleSource": "editorial-pilot",
+      "total": 9,
+      "caseIds": [
+        "writing-reply-scene",
+        "venus-opposition-venus",
+        "synthesis-tension",
+        "jupiter-trine-sun-technical",
+        "fallback-hard-neptune-mercury",
+        "quiet-threshold",
+        "editorial-quiet-2026-10-12",
+        "editorial-quiet-2026-10-13",
+        "editorial-quiet-2026-10-14"
+      ],
+      "completed": 1,
+      "message": "The Workflow is errored. Stored captures and reserved attempts are retained. An in-flight response may still be saved; no retry or remaining case was requested by recovery.",
+      "createdAt": "2026-10-15T20:00:42.976Z",
+      "updatedAt": "2026-10-15T20:03:15.391Z",
+      "campaignId": "c98694c4-3c76-4c48-b2e3-0f297224d4c6",
+      "attemptLimit": 5,
+      "editorialPilot": {
+        "version": "daily-editorial-pilot-1",
+        "quietDates": [
+          "2026-10-11",
+          "2026-10-12",
+          "2026-10-13",
+          "2026-10-14"
+        ]
+      }
+    },
+    "ledger": {
+      "version": "evaluation-ledger-1",
+      "costStatus": "reservation-estimates-not-invoices",
+      "dollarCeilingMicros": 5000000,
+      "reviewReserveMicros": 0,
+      "campaignAttempts": 1,
+      "campaignReservedMicros": 47400
+    },
+    "entries": [
+      {
+        "position": 0,
+        "caseId": "writing-reply-scene",
+        "attempted": true,
+        "reservedMicros": 47400,
+        "capture": "stored",
+        "rawSha256": "163601b76909b9cdf5cd76451d37144b184df03eeb12e8e623df7ed08b2af159"
+      }
+    ]
+  },
+  "rpcChecks": {
+    "stop": {
+      "id": "d4eb581f-26e6-43be-932b-6896d212a597",
+      "status": "error",
+      "completed": 0,
+      "message": "The Workflow is errored. Stored captures and reserved attempts are retained. An in-flight response may still be saved; no retry or remaining case was requested by recovery."
+    },
+    "repeat": {
+      "status": "error",
+      "completed": 1,
+      "updatedAtUnchanged": true,
+      "messageUnchanged": true,
+      "attempts": 1,
+      "reservedMicros": 47400,
+      "results": 1
+    },
+    "foreign": {
+      "run": null,
+      "results": [],
+      "ledger": null
+    }
+  },
+  "roleRevocation": {
+    "rejected": true,
+    "message": "Only admins can run a synthetic reading evaluation."
+  },
+  "sessionRevocation": {
+    "rejected": true,
+    "message": "Unauthorized: no active session"
+  },
+  "browserFunctionCounts": {
+    "auth or read-only bootstrap": 2,
+    "fetchReleases": 1,
+    "fetchEdgePlane": 1,
+    "fetchLanguageProviders": 1,
+    "fetchContentDrafts": 1,
+    "fetchReadingQuality": 1,
+    "fetchReadingEvaluationRun": 10,
+    "stopReadingEvaluationRun": 1
+  },
+  "workerStatusLog": [
+    "Connected to pattern-workflows, waiting for logs...",
+    "POST https://pattern-workflows.lfd.workers.dev/evaluations/status - Ok @ 10/15/2026, 8:05:00 PM"
+  ],
+  "cleanup": {
+    "users": 0,
+    "sessions": 0,
+    "roles": 0,
+    "runs": 0,
+    "results": 0
+  },
+  "historicalRunAndResultsSha256": {
+    "before": "8d5cc77f4c7b74cd9d655c8347e12699f15d43d73d1809cb5821897ac702697d",
+    "after": "8d5cc77f4c7b74cd9d655c8347e12699f15d43d73d1809cb5821897ac702697d"
+  },
+  "historicalWorkflowStatus": {
+    "before": "errored",
+    "after": "errored"
+  },
+  "activeRelease": [
+    {
+      "id": "edcc53cf-d19a-415b-a8a2-a66040846b1d",
+      "version": "0.7.1",
+      "checksum": "20b793acda524da945b07ec32b2ed795f31e273c533ff6b4e9c4f96ef821eeac"
+    }
+  ],
+  "globalCountsBefore": [
+    [
+      {
+        "count": 10
+      }
+    ],
+    [
+      {
+        "count": 150,
+        "attempts": 17,
+        "reserved": 4377382
+      }
+    ]
+  ],
+  "globalCountsAfter": [
+    [
+      {
+        "count": 10
+      }
+    ],
+    [
+      {
+        "count": 150,
+        "attempts": 17,
+        "reserved": 4377382
+      }
+    ]
+  ],
+  "newModelRequests": 0,
+  "workflowDispatches": 0,
+  "modelRetries": 0,
+  "contentActivations": 0,
+  "browserClosed": true,
+  "limitations": [
+    "Late persistence used a copy of the historical capture; no new provider response or revised editorial writing was generated.",
+    "The actual errored Workflow branch was exercised; terminated Workflow and concurrency races remain covered by regression tests.",
+    "The initial JSON Worker tail yielded an incomplete metadata sample; the later separate Stop request is confirmed by the sanitized live request summary and persisted recovery result."
+  ]
+}
