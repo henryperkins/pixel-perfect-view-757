@@ -1,0 +1,196 @@
+{
+  "version": "editorial-source-workflow-repair-publication-1",
+  "checkedAt": "2026-10-15T18:47:39.846Z",
+  "runtimeCommit": "be9d7237e7c93423a6f6ec92326c6236cb08352d",
+  "app": {
+    "projectId": "16964b03-ff4a-4ee1-b4a5-76757e94bec3",
+    "deploymentId": "3ed25717-14c4-46b5-be77-bf0193278d75",
+    "publicIdentities": [
+      {
+        "url": "https://patterns.lakefrontdigital.io/api/public/evaluation-identity",
+        "status": 200,
+        "body": {
+          "sourceSha": "be9d7237e7c93423a6f6ec92326c6236cb08352d",
+          "requestPolicyVersion": "synthetic-facts-local-context-1",
+          "fixtureVersion": "synthetic-daily-7"
+        }
+      },
+      {
+        "url": "https://pixel-perfect-view-757.lovable.app/api/public/evaluation-identity",
+        "status": 200,
+        "body": {
+          "sourceSha": "be9d7237e7c93423a6f6ec92326c6236cb08352d",
+          "requestPolicyVersion": "synthetic-facts-local-context-1",
+          "fixtureVersion": "synthetic-daily-7"
+        }
+      }
+    ]
+  },
+  "worker": {
+    "name": "pattern-workflows",
+    "deployment": {
+      "id": "f231a8bb-f325-43db-8fdf-458183fe4d8d",
+      "source": "wrangler",
+      "strategy": "percentage",
+      "annotations": {
+        "workers/triggered_by": "deployment"
+      },
+      "versions": [
+        {
+          "version_id": "34dfd849-82d8-4cb8-8f0b-27f2162983da",
+          "percentage": 100
+        }
+      ],
+      "created_on": "2026-10-15T18:45:12.533872Z"
+    },
+    "previousVersionId": "83d0842f-9898-4402-83cd-cd3d5b003440",
+    "settings": {
+      "success": true,
+      "bindings": [
+        {
+          "bucket_name": "pattern-artifacts",
+          "name": "ARTIFACTS",
+          "type": "r2_bucket"
+        },
+        {
+          "class_name": "SyntheticEvaluationWorkflow",
+          "name": "EVALUATIONS",
+          "type": "workflow",
+          "workflow_name": "synthetic-evaluation"
+        },
+        {
+          "class_name": "NightlyReadingWorkflow",
+          "name": "NIGHTLY",
+          "type": "workflow",
+          "workflow_name": "nightly-reading"
+        },
+        {
+          "name": "PATTERN_APP_URL",
+          "text": "https://patterns.lakefrontdigital.io",
+          "type": "plain_text"
+        },
+        {
+          "name": "PATTERN_MEMBERSHIPS_ENABLED",
+          "type": "secret_text"
+        },
+        {
+          "name": "PATTERN_WORKFLOW_SECRET",
+          "type": "secret_text"
+        },
+        {
+          "database_id": "9054f856-4e28-48c0-8f6f-d02f479466fb",
+          "id": "9054f856-4e28-48c0-8f6f-d02f479466fb",
+          "name": "RECORDS",
+          "type": "d1"
+        },
+        {
+          "class_name": "RetentionWorkflow",
+          "name": "RETENTION",
+          "type": "workflow",
+          "workflow_name": "context-retention"
+        },
+        {
+          "name": "STRIPE_MONTHLY_PRICE_ID",
+          "type": "secret_text"
+        },
+        {
+          "name": "STRIPE_PORTAL_CONFIGURATION_ID",
+          "type": "secret_text"
+        },
+        {
+          "name": "STRIPE_SECRET_KEY",
+          "type": "secret_text"
+        },
+        {
+          "name": "STRIPE_WEBHOOK_SECRET",
+          "type": "secret_text"
+        },
+        {
+          "name": "STRIPE_YEARLY_PRICE_ID",
+          "type": "secret_text"
+        }
+      ],
+      "compatibility_date": "2026-01-01",
+      "compatibility_flags": [
+        "nodejs_compat"
+      ]
+    },
+    "method": "Wrangler 4.149.0 deploy --keep-vars from a verified copy outside the app tree",
+    "deployedModuleIdentity": [
+      {
+        "name": "worker.js",
+        "sha256": "0e2d404c30eed80a1ba5d654494260d070525fc6b4744d4c5d0bb2184c885bdb",
+        "size": 39103,
+        "matchesVerifiedBuild": true
+      }
+    ],
+    "unsignedStatusRequest": {
+      "url": "https://pattern-workflows.lfd.workers.dev/evaluations/status",
+      "status": 401,
+      "body": "Invalid signature"
+    }
+  },
+  "historicalWorkflow": {
+    "success": true,
+    "status": "errored",
+    "versionId": "67b1dfdb-7e88-4a25-ab30-223c610c76e9",
+    "errors": []
+  },
+  "records": [
+    {
+      "results": [
+        {
+          "id": "edcc53cf-d19a-415b-a8a2-a66040846b1d",
+          "version": "0.7.1",
+          "checksum": "20b793acda524da945b07ec32b2ed795f31e273c533ff6b4e9c4f96ef821eeac"
+        }
+      ],
+      "success": true,
+      "rowsWritten": 0
+    },
+    {
+      "results": [
+        {
+          "id": "a7b75991-14eb-422e-b892-3a6cfd9ca596",
+          "status": "error",
+          "completed": 1,
+          "workflow_instance_id": "a7b75991-14eb-422e-b892-3a6cfd9ca596"
+        }
+      ],
+      "success": true,
+      "rowsWritten": 0
+    },
+    {
+      "results": [
+        {
+          "results": 1,
+          "attempts": 1,
+          "reserved_micros": 47400
+        }
+      ],
+      "success": true,
+      "rowsWritten": 0
+    },
+    {
+      "results": [
+        {
+          "runs": 10
+        }
+      ],
+      "success": true,
+      "rowsWritten": 0
+    }
+  ],
+  "checks": {
+    "runtimeHashesMatchLocalVerification": true,
+    "historicalEvidenceHashesVerified": 14,
+    "environmentFileUnchanged": true,
+    "newPilots": 0,
+    "newModelRequests": 0,
+    "contentActivated": false,
+    "productionDataWrites": 0,
+    "signedStatusEndpointRoundTrip": false,
+    "liveWorkerSecretNamesAndResourceBindingsPreserved": true
+  },
+  "limitation": "Public app identity, deployed Worker bundle, unsigned rejection, Cloudflare Workflow status, and D1 state were verified live. The full signed app-to-Worker recovery round trip was not exercised live because the shared secret is not available locally and the preserved run is already terminal. Regression tests cover that path; no run was reopened or synthetic production run created to test it."
+}

@@ -32,6 +32,12 @@ The Workers API was checked against [Cloudflare's official documentation](https:
 
 ## Publication boundary
 
-These repairs are locally verified, not deployed. The app and the separately deployed `pattern-workflows` Worker both need publication before live recovery is available. The Worker dry run used a copy outside the app tree, as required by project guidance. No content activation or new pilot occurred.
+The user subsequently approved publication. Runtime commit `be9d7237e7c93423a6f6ec92326c6236cb08352d` was committed and pushed to `main` without rewriting history. Both production app domains now return that exact SHA from `/api/public/evaluation-identity`; Lovable deployment is `3ed25717-14c4-46b5-be77-bf0193278d75`.
+
+The separately deployed `pattern-workflows` Worker was published first with Wrangler 4.149.0 from the verified copy outside the app tree, using `--keep-vars`. Version `34dfd849-82d8-4cb8-8f0b-27f2162983da` serves 100% of traffic. Downloaded deployed code exactly matches the verified bundle; existing secret names and resource bindings are preserved. An unsigned status request returns HTTP 401. Publication receipts are in [publication.json](publication.json); [verification.json](verification.json) remains the unchanged prepublication record.
+
+Read-only production checks confirm that the old Workflow remains `errored`, its application run remains `error` with one captured response and one spent attempt, and the active content release remains `0.7.1`. No new pilot, model request, content activation, or production data write occurred during this publication.
+
+The full signed app-to-Worker recovery round trip was not exercised live: the shared secret is unavailable locally, and the preserved run is already terminal. Regression tests cover that path. No historical run was reopened and no production test run was created to exercise it. Source identity and Worker publication do not establish fresh writing quality.
 
 A future pilot requires a new reviewed frozen campaign identity and plan under the revised policy. The interrupted campaign and its spent attempt remain preserved; do not resume it or silently reset its allowance. Fresh generated-writing quality and human editorial approval remain open.
