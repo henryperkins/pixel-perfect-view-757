@@ -171,6 +171,140 @@ async function mockGeneration(input, raw) {
   }
 }
 
+// Exact first provider response from the 2026-10-15 pilot. The regression below
+// checks the observable source leak and technical clutter, not semantic quality.
+const capturedReply = {
+  paragraphs: [
+    {
+      text: "A cycle of thought and communication resets with fresh curiosity as transiting Mercury separates from a conjunction with natal Mercury. Like a messenger rereading the original note before handing it over, attention returns to whether fresh phrasing can carry the original point. The current orb is 0.42 degrees.",
+      facts: ["C1", "I1"],
+      scenes: [],
+    },
+    {
+      text: "In a work reply, a clear question can slip into a tentative suggestion, or a reservation may end up buried behind explanations until your position feels missing. Making a sentence kinder and making its meaning smaller are distinct things, since a revised draft can lose its central point while becoming more agreeable. Writing that point in a plain sentence apart from the reply can help you hear the distinction and keep the thought available while choosing the final wording.",
+      facts: ["C1", "I1"],
+      scenes: [],
+    },
+  ],
+};
+
+test("editorial requests keep source bindings while excluding all legacy writing prose from the provider boundary", async () => {
+  for (const id of caseIds.slice(0, 5)) {
+    const p = prepared(id);
+    const before = structuredClone(p.input);
+    const { request } = await mockGeneration(p.input, {
+      paragraphs: p.input.writing.template.paragraphs,
+    });
+    const prompt = request.messages.find((message) => message.role === "user").content;
+    for (const fact of p.facts) {
+      assert.ok(!prompt.includes(fact.statement), `${id}: leaked ${fact.id} audit prose`);
+      if (/^(?:I[1-3]|S1)$/.test(fact.id)) {
+        const mechanism = fact.statement.replace(/^Published .*?: /, "");
+        // The new Neptune source deliberately shares its approved meaning with
+        // writingMaterial. Only legacy-only prose must disappear.
+        if (
+          !Object.values(p.input.writing.plan.editorial.entry.writingMaterial).includes(mechanism)
+        )
+          assert.ok(!prompt.includes(mechanism), `${id}: leaked ${fact.id} meaning`);
+      }
+    }
+    assert.doesNotMatch(prompt, /0\.42|2026-10-10|\bD1\b|\bP1\b|\bT1\b|\bN1\b|\bA1\b/);
+    const referenceLine = prompt.split("\n").find((line) => line.startsWith('{"references":'));
+    assert.ok(referenceLine, `${id}: missing structural source references`);
+    const { references } = JSON.parse(referenceLine);
+    assert.deepEqual(
+      references.map((ref) => ref.id),
+      p.input.writing.plan.editorial.requiredFacts,
+    );
+    for (const ref of references) {
+      const fact = p.facts.find((item) => item.id === ref.id);
+      if (fact.cycle) {
+        assert.deepEqual(ref, {
+          id: fact.id,
+          kind: "calculation",
+          cycleKey: `${fact.cycle.transitBody}_${fact.cycle.aspect}_${fact.cycle.natalPoint}`,
+          cycle: {
+            transitBody: fact.cycle.transitBody,
+            natalPoint: fact.cycle.natalPoint,
+            aspect: fact.cycle.aspect,
+          },
+        });
+      } else {
+        assert.deepEqual(ref, {
+          id: fact.id,
+          kind: fact.kind,
+          sourceKey: fact.sourceKey,
+          releaseVersion: fact.releaseVersion,
+          dependsOn: fact.dependsOn,
+        });
+      }
+    }
+    for (const material of Object.values(p.input.writing.plan.editorial.entry.writingMaterial))
+      if (material) assert.ok(prompt.includes(material), `${id}: lost selected writing material`);
+    assert.deepEqual(p.input, before, `${id}: provider projection mutated full audit evidence`);
+  }
+});
+
+test("the captured orb-heavy reply falls back with a style diagnostic, while legacy requests retain their source prose and numeric detail", async () => {
+  const p = prepared("writing-reply-scene");
+  const result = await mockGeneration(p.input, capturedReply);
+  assert.equal(result.prose.meta.mode, "template");
+  assert.equal(result.prose.meta.diagnostics.code, "editorial_detail");
+  assert.equal(result.prose.body, p.assembled.astroBody);
+  assert.equal(result.requests.length, 1);
+  assert.ok(
+    !JSON.stringify(result.request).includes(
+      "A cycle of thought and communication resets with fresh curiosity",
+    ),
+  );
+
+  const legacy = structuredClone(p.input);
+  delete legacy.writing;
+  const previous = await mockGeneration(legacy, capturedReply);
+  assert.equal(previous.prose.meta.mode, "model");
+  assert.equal(previous.prose.meta.diagnostics.code, "accepted");
+  assert.equal(previous.prose.meta.diagnostics.promptVersion, language.DAILY_PROMPT_VERSION);
+  const legacyPrompt = previous.request.messages.find((message) => message.role === "user").content;
+  for (const fact of p.facts) assert.ok(legacyPrompt.includes(fact.statement));
+});
+
+test("editorial bodies exclude source timing and unselected framing citations without rejecting ordinary waiting", async () => {
+  const p = prepared("writing-reply-scene");
+  for (const text of [
+    "The calculated exact date is 2026-10-10.",
+    "Mercury's conjunction with natal Mercury is separating.",
+    "The aspect was exact yesterday.",
+    "This reading falls in the middle part of the calculated window.",
+  ]) {
+    const raw = structuredClone({ paragraphs: p.input.writing.template.paragraphs });
+    raw.paragraphs[0].text = text;
+    const result = await mockGeneration(p.input, raw);
+    assert.equal(result.prose.meta.mode, "template", text);
+    assert.equal(result.prose.meta.diagnostics.code, "editorial_detail", text);
+  }
+  const extra = structuredClone({ paragraphs: p.input.writing.template.paragraphs });
+  extra.paragraphs[0].facts.push("D1");
+  const rejected = await mockGeneration(p.input, extra);
+  assert.equal(rejected.prose.meta.diagnostics.code, "id");
+  const ordinary = structuredClone({ paragraphs: p.input.writing.template.paragraphs });
+  ordinary.paragraphs[0].text = "A sentence can wait while its wording changes.";
+  assert.equal((await mockGeneration(p.input, ordinary)).prose.meta.mode, "model");
+});
+
+for (const text of [
+  "Neptune's square to natal Mercury is an image for separating an impression from the story that forms around it.",
+  "A degree of uncertainty can remain between an impression and the story formed around it.",
+  "Applying Neptune's image of blurring to an impression can leave the story about another person's intentions open.",
+])
+  test(`editorial style accepts ordinary meaning: ${text}`, async () => {
+    const p = prepared("fallback-hard-neptune-mercury");
+    const raw = structuredClone({ paragraphs: p.input.writing.template.paragraphs });
+    raw.paragraphs[0].text = text;
+    const result = await mockGeneration(p.input, raw);
+    assert.equal(result.prose.meta.mode, "model", `${text}: ${result.prose.meta.diagnostics.code}`);
+    assert.equal(result.requests.length, 1);
+  });
+
 test("the six selected sources reach exact fallback/headline/reflection and accept supported optional direction", async () => {
   for (const id of caseIds) {
     const p = prepared(id),

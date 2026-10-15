@@ -25,7 +25,12 @@ function config() {
   return { url: url.replace(/\/$/, ""), secret };
 }
 
-async function call<T>(method: "GET" | "POST", path: string, body?: unknown): Promise<T | null> {
+async function call<T>(
+  method: "GET" | "POST",
+  path: string,
+  body?: unknown,
+  readDeadlineMs?: number,
+): Promise<T | null> {
   const cfg = config();
   if (!cfg) return null;
 
@@ -43,6 +48,9 @@ async function call<T>(method: "GET" | "POST", path: string, body?: unknown): Pr
         ...(method === "POST" ? { "content-type": "application/json" } : {}),
       },
       ...(method === "POST" ? { body: raw } : {}),
+      ...(readDeadlineMs
+        ? { signal: AbortSignal.timeout(readDeadlineMs), cache: "no-store" as const }
+        : {}),
     });
 
     if (!res.ok) {
@@ -104,6 +112,19 @@ export async function startEvaluationWorkflow(params: {
   enterpriseThinking?: import("./ai/admin-transport").EnterpriseThinkingLevel;
 }) {
   return call<{ ok: boolean; instanceId: string }>("POST", "/evaluations", params);
+}
+
+/** Reads one existing instance; it never creates, resumes, or restarts a Workflow. */
+export async function readEvaluationWorkflowStatus(instanceId: string): Promise<string | null> {
+  const data = await call<{ ok: boolean; instanceId: string; status: string }>(
+    "POST",
+    "/evaluations/status",
+    { instanceId },
+    5_000,
+  );
+  return data?.ok === true && data.instanceId === instanceId && typeof data.status === "string"
+    ? data.status
+    : null;
 }
 
 /** Reads the durable run ledger plus the mirrored pointer state. */

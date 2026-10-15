@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { before, after, beforeEach, test } from "node:test";
+import { readFile } from "node:fs/promises";
 import { createRecordsHarness } from "./helpers/records-harness.mjs";
 
 let h, shared, runs;
@@ -89,6 +90,30 @@ test("preview fixes the six reviewed scenarios and four quiet dates without disp
   assert.equal(h.gatewayRequests.length + h.geminiEnterpriseRequests.length, 0);
   assert.equal(h.releasePublications.length, 0);
   assert.equal(h.sqlite.prepare("SELECT count(*) n FROM evaluation_runs").get().n, 0);
+});
+
+test("the changed editorial policy cannot resume the historical frozen pilot even with the same source SHA", async () => {
+  const historical = JSON.parse(
+    await readFile(
+      new URL("../docs/reviews/daily-reading-pilot/2026-10-15/live/plan.json", import.meta.url),
+      "utf8",
+    ),
+  );
+  const { createEditorialPilotPlan, revalidateEditorialPilotPlan } = await h.vite.ssrLoadModule(
+    "/src/lib/ai/editorial-pilot-plan.server.ts",
+  );
+  const current = createEditorialPilotPlan(historical.sourceSha, "gemini-enterprise");
+  assert.equal(historical.hash, "a12441bd3778229bd8f746e39be2cb5bb67f3a730ff2d92108d1929b043d36fd");
+  assert.notEqual(current.hash, historical.hash);
+  assert.equal(current.editorialPilot.candidateHash, historical.editorialPilot.candidateHash);
+  assert.throws(
+    () => revalidateEditorialPilotPlan(historical, historical.sourceSha, "gemini-enterprise"),
+    /runtime, candidate, fixture or policy changed/,
+  );
+  assert.equal(
+    h.evaluationStarts.length + h.gatewayRequests.length + h.geminiEnterpriseRequests.length,
+    0,
+  );
 });
 
 const ORIGIN = "https://pattern.example.test";
@@ -182,9 +207,9 @@ test("the signed run captures nine outputs with only five model attempts and no 
   assert.equal(capture.results.length, 9);
   assert.equal(capture.ledger.campaignAttempts, 5);
   assert.equal(capture.ledger.dollarCeilingMicros, 5_000_000);
-  assert.equal(capture.ledger.sourcePlan.metadata.promptVersion, "daily-editorial-body-1");
-  assert.equal(capture.ledger.sourcePlan.metadata.validatorVersion, "daily-editorial-reference-1");
-  assert.equal(capture.ledger.sourcePlan.metadata.voiceExamplesVersion, "daily-editorial-voice-1");
+  assert.equal(capture.ledger.sourcePlan.metadata.promptVersion, "daily-editorial-body-2");
+  assert.equal(capture.ledger.sourcePlan.metadata.validatorVersion, "daily-editorial-reference-2");
+  assert.equal(capture.ledger.sourcePlan.metadata.voiceExamplesVersion, "daily-editorial-voice-2");
   for (const result of capture.results) {
     for (const field of [
       "promptVersion",

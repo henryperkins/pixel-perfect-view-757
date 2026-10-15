@@ -50,7 +50,7 @@ import {
   qualificationTransportIssue,
   type EnterpriseThinkingLevel,
 } from "./ai/admin-transport";
-import { startEvaluationWorkflow } from "./workflows.server";
+import { readEvaluationWorkflowStatus, startEvaluationWorkflow } from "./workflows.server";
 
 import {
   resolveContentComparisonSource,
@@ -906,6 +906,24 @@ export async function startEvaluationRun(
   );
 }
 
+/** Reconcile only confirmed terminal scheduling failure; age or missing status is not evidence. */
+async function recoverFailedWorkflow(db: DBClient, run: RunRow): Promise<RunRow> {
+  if (!readingEvaluationRunActive(run.status) || !run.workflow_instance_id) return run;
+  const status = await readEvaluationWorkflowStatus(run.workflow_instance_id);
+  if (status !== "errored" && status !== "terminated") return run;
+  const [capture] = await db.exec<{ completed: number }>(
+    "SELECT COUNT(*) completed FROM evaluation_results WHERE run_id=? AND json_valid(result) AND json_extract(result,'$.kind') IS NULL AND json_extract(result,'$.case.id')=case_id",
+    [run.id],
+  );
+  return (
+    (await updateRun(db, run.id, {
+      status: status === "errored" ? "error" : "stopped",
+      completed: capture?.completed ?? 0,
+      message: `The Workflow is ${status}. Stored captures and reserved attempts are retained. An in-flight response may still be saved; no retry or remaining case was requested by recovery.`,
+    })) ?? run
+  );
+}
+
 /** The admin's latest run (or one named run) plus results from position `after` on. */
 export async function readEvaluationRun(
   db: DBClient,
@@ -929,6 +947,7 @@ export async function readEvaluationRun(
     run = data;
   } else run = await latestRun(db, userId);
   if (!run) return { run: null, results: [], ledger: null };
+  run = await recoverFailedWorkflow(db, run);
   const { data: rows, error } = await db
     .from<{
       position: number;
@@ -942,6 +961,16 @@ export async function readEvaluationRun(
     .order("position")
     .limit(run.case_ids.length);
   if (error) throw new Error(error.message);
+  // A capture can persist after recovery, even if its progress write is lost.
+  // Only terminal progress is repaired here: an active capture's disposition
+  // must still settle before any subsequent signed step can advance.
+  if (!readingEvaluationRunActive(run.status)) {
+    const captured = (rows ?? []).filter(
+      (row) => !("kind" in row.result) && row.result.case.id === row.case_id,
+    ).length;
+    if (captured > run.completed)
+      run = (await updateRun(db, run.id, { completed: captured })) ?? run;
+  }
   const [totals] = await db.exec<{ attempts: number; reserved: number }>(
     "SELECT COALESCE(SUM(CASE WHEN r.plan IS NULL AND json_valid(e.result) AND json_extract(e.result,'$.case.diagnostics.attempted')=1 THEN 1 ELSE e.attempted END),0) attempts, COALESCE(SUM(e.reserved_micros),0) reserved FROM evaluation_results e JOIN evaluation_runs r ON r.id=e.run_id WHERE r.user_id=? AND (r.id=? OR (? IS NOT NULL AND r.campaign_id=?))",
     [userId, run.id, run.campaign_id, run.campaign_id],
@@ -1111,7 +1140,9 @@ async function settleCapturedCase(
     .eq("id", run.id)
     .maybeSingle();
   if (error) throw Error(error.message);
-  if (!latest || !readingEvaluationRunActive(latest.status)) return { next: false };
+  if (!latest) return { next: false };
+  // Recovery can finish before an already-reserved provider call returns. The
+  // capture still counts; updateRun preserves terminal status and its message.
   const settled = await updateRun(db, run.id, {
     status: latest.status === "stopping" ? "stopped" : disposition.status,
     completed: position + 1,
@@ -1135,8 +1166,11 @@ export async function stopEvaluationRun(
     .maybeSingle();
   if (error) throw new Error(error.message);
   if (!run) throw new Error("Unknown synthetic evaluation run.");
-  if (run.status !== "queued" && run.status !== "running") return view(run);
-  return view((await updateRun(db, run.id, { status: "stopping" })) ?? run);
+  const stopping =
+    run.status === "queued" || run.status === "running"
+      ? ((await updateRun(db, run.id, { status: "stopping" })) ?? run)
+      : run;
+  return view(await recoverFailedWorkflow(db, stopping));
 }
 
 /**

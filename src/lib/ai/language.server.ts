@@ -15,7 +15,14 @@
  */
 import { safetyPass } from "../content/default-bundle";
 import { normalizeDepth, normalizeTone } from "../reading.server";
-import { assertDailyFactGraph, dailyFactBlock, factBlock, factIds, type FactAtom } from "./facts";
+import {
+  assertDailyFactGraph,
+  dailyFactBlock,
+  dailyEditorialReferences,
+  factBlock,
+  factIds,
+  type FactAtom,
+} from "./facts";
 import { storyParagraphProblem, storyCoverageProblem } from "./transit-story-facts";
 import {
   dailySystemVoice,
@@ -530,6 +537,23 @@ function dailyTimingProblem(sentences: string[]): DailyProblem | null {
   return null;
 }
 
+/** A bounded style guard, not a claim that supplied technical details are false. */
+function editorialDetailProblem(sentences: string[]): boolean {
+  const contact = `(?:${BODY_NAMES}|${ASPECT_NAMES}|contact|aspect)`;
+  // Phase words must describe a contact directly. A sentence can name Neptune
+  // while separating an impression from a story without reporting a phase.
+  const contactPhase = new RegExp(
+    `\\b${contact}\\s+(?:is|was|remains?|becomes?|became)\\s+(?:currently\\s+)?(?:applying|separating|exact|approaching\\s+exactness)\\b|\\b${contact}\\s+(?:separates|applies)\\s+(?:from|to)\\b|\\b(?:applying|separating|exact)\\s+(?:${ASPECT_NAMES}|contact|aspect)\\b|\\b(?:applying|separating)\\s+phase\\b|\\bphase\\s*[:=]?\\s*(?:applying|separating)\\b`,
+    "i",
+  );
+  return sentences.some(
+    (sentence) =>
+      /\borbs?\b|\b\d+(?:\.\d+)?\s*-?\s*(?:°|degrees?\b)|\b\d{4}-\d{2}-\d{2}\b|\bcalculated\s+window\b|\bexact\s+(?:date|pass|timing)\b/i.test(
+        sentence,
+      ) || contactPhase.test(sentence),
+  );
+}
+
 /** Observed source-specific contradictions only; this is not a semantic verifier. */
 function dailyEditorialProblem(sentences: string[], cited: FactAtom[]): DailyProblem | null {
   const text = sentences.join(" ");
@@ -705,7 +729,22 @@ function dailyDraft(
   const paragraphs = (raw as { paragraphs: unknown[] }).paragraphs;
   if (paragraphs.length < (template ? 1 : 2) || paragraphs.length > 4)
     return rejection("count", "draft must contain two to four paragraphs");
-  const byId = new Map(input.facts.map((f) => [f.id, f]));
+  const editorial = input.writing?.plan.editorial;
+  const validationFacts = editorial
+    ? input.facts
+        .filter((fact) => editorial.requiredFacts.includes(fact.id))
+        .map((fact) => ({
+          ...fact,
+          statement: fact.cycle
+            ? fact.statement
+            : fact.id === input.writing!.plan.theme?.factId
+              ? Object.values(editorial.entry.writingMaterial)
+                  .filter((value): value is string => typeof value === "string")
+                  .join(" ")
+              : "",
+        }))
+    : input.facts;
+  const byId = new Map(validationFacts.map((f) => [f.id, f]));
   const kept: string[] = [],
     citations: Citation[] = [];
   const writingParagraphs: DailyWritingParagraph[] = [];
@@ -745,6 +784,11 @@ function dailyDraft(
       return rejectParagraph("length", "draft exceeds the daily length limit");
     if (safetyPass(text).flagged.length)
       return rejectParagraph("safety", "draft failed the language safety check");
+    if (editorial && editorialDetailProblem(sentences))
+      return rejectParagraph(
+        "editorial_detail",
+        "draft includes technical detail outside the warm/standard editorial body style",
+      );
     if (
       input.writing?.plan.editorial &&
       sentences.some((sentence) =>
@@ -789,7 +833,7 @@ function dailyDraft(
       return rejectParagraph("dependencies", "draft omitted published synthesis parent references");
     if (ids.includes("N1") && !["C1", "I1"].every((id) => ids.includes(id)))
       return rejectParagraph("dependencies", "draft omitted natal lens parent references");
-    const storyProblem = storyParagraphProblem(text, ids, input.facts);
+    const storyProblem = storyParagraphProblem(text, ids, validationFacts);
     if (storyProblem) return rejectParagraph(storyProblem, "draft failed calculated story checks");
     const problem =
       dailyReferenceProblem(
@@ -818,7 +862,7 @@ function dailyDraft(
     );
   if (byId.has("N1") && !citations.slice(0, 2).some((c) => c.facts.includes("N1")))
     return rejection("natal_coverage", "draft omitted natal lens from its first two paragraphs");
-  const storyCoverage = storyCoverageProblem(kept, citations, input.facts);
+  const storyCoverage = storyCoverageProblem(kept, citations, validationFacts);
   if (storyCoverage)
     return rejection(storyCoverage, "draft omitted the supplied chronology or chapter");
   return { body: kept.join("\n\n"), paragraphs: kept, citations, writingParagraphs };
@@ -884,7 +928,7 @@ async function generateDailyProse(
     paragraph: number | null = null,
   ) => dailyDiagnostics(model, outcome, code, started, paragraph, concrete, !!editorial);
   const quality = (paragraphs: DailyWritingParagraph[], renderMode: DailyWritingRenderMode) => {
-    const sources = input.facts
+    const sources = (editorial ? [] : input.facts)
       .filter((fact) => /^(I[123]|S1|N1|P2)$/.test(fact.id))
       .map((fact) =>
         fact.statement
@@ -977,13 +1021,15 @@ async function generateDailyProse(
     "C1",
     ...["P1", "T1"].filter((id) => input.facts.some((fact) => fact.id === id)),
   ];
-  const hasNatalLens = input.facts.some((fact) => fact.id === "N1");
+  const hasNatalLens = !editorial && input.facts.some((fact) => fact.id === "N1");
   const prompt = [
     editorial
       ? dailyEditorialVoice()
       : dailyVoice(normalizeTone(input.tone), normalizeDepth(input.depth), concrete),
-    "Facts:",
-    dailyFactBlock(input.facts),
+    editorial ? "Structural source references; no draftable prose:" : "Facts:",
+    editorial
+      ? JSON.stringify(dailyEditorialReferences(input.facts, editorial.requiredFacts))
+      : dailyFactBlock(input.facts),
     ...(input.writing
       ? [
           "Source-bound writing brief:",
@@ -995,10 +1041,12 @@ async function generateDailyProse(
       : []),
     "",
     editorial
-      ? "Write only the body of today's reading from the exact selected editorial material and its source facts. Optional domain or phase copy must add a supported distinction to the same thought."
+      ? "Write only the body of today's reading. The selected writingMaterial is the sole source of draftable meaning; the structural references identify its source and contact geometry only."
       : "Rewrite only the astronomical body of today's reading, using the supplied published interpretation, domain and phase wording.",
     "Keep each paragraph under 200 words and the whole body under 700 words.",
-    "The first paragraph must concern the strongest eligible cycle and cite C1 and I1. D1, P1 and T1 are optional: cite them in any paragraph that uses their domain, phase or timing claims, and leave them out when unused.",
+    editorial
+      ? "The first paragraph must concern the selected meaning and cite C1 and I1. Cite only the IDs in the structural source references; each paragraph includes every required source and parent ID."
+      : "The first paragraph must concern the strongest eligible cycle and cite C1 and I1. D1, P1 and T1 are optional: cite them in any paragraph that uses their domain, phase or timing claims, and leave them out when unused.",
     ...(!concrete
       ? [
           "Citations belong in the facts arrays, not in explanatory prose. Let a supported everyday meaning stand without repeatedly explaining that it frames or offers a way to read the planet contact. Name the contact only when it adds useful context or identifies a technical measurement; avoid restating it in each paragraph. Omit optional shared phase prose when it adds no distinction specific to this reading.",
@@ -1008,26 +1056,40 @@ async function generateDailyProse(
       : []),
     input.facts.some((f) => f.id === "S1")
       ? editorial
-        ? 'Develop the selected S1 relationship within paragraph 1 or 2. The two supplied meanings can be joined through the selected imagery without a planet-keyword list or fixed order of contact names. Keep their distinct roles and conditions. Every paragraph using the relationship, its imagery or direction must cite ["S1", "C1", "I1", "C2", "I2"]. A supported possibility stays a possibility; "can increase" cannot become "increases". The relationship is editorial meaning, not a measured personal state.'
+        ? 'Develop the selected writingMaterial relationship within paragraph 1 or 2. Join its distinct roles through the selected imagery without a planet-keyword list or fixed order of contact names. Preserve its conditions. Every paragraph using the relationship, its imagery or direction must cite ["S1", "C1", "I1", "C2", "I2"]. A supported possibility stays a possibility; "can increase" cannot become "increases". The relationship is editorial meaning, not a measured personal state.'
         : 'Develop the supplied published relationship in paragraph 1 or 2. Present I1 and its contact first, then I2 and its contact, before stating the S1 relationship they support. These parent meanings may span the first two paragraphs; avoid repeating them merely to put them beside S1. Mark the move into the supplied relationship clearly, so a phrase such as "that tension" has a clear antecedent. Every paragraph using S1 must explicitly cite all five IDs: "facts": ["S1", "C1", "I1", "C2", "I2"]. The relationship is editorial interpretation, not an established personal state. Keep its qualifications: "can increase" stays "can increase", not "increases". For a reinforcement relationship, give the two joined meanings distinct paragraph functions, as S1 relates them, instead of restating one idea in both paragraphs; then add only supported useful detail and stop. Clear published wording may be kept, and no new scene is needed for variety.'
-      : "Keep C1 as the primary focus. No S1 is supplied: do not invent a joint relationship or premise. I2 and I3 may offer separately supported context without connecting the contacts into a new story.",
+      : editorial
+        ? "Keep the selected meaning and its C1 contact as the focus. No synthesis relationship is supplied; do not invent a joint relationship or premise."
+        : "Keep C1 as the primary focus. No S1 is supplied: do not invent a joint relationship or premise. I2 and I3 may offer separately supported context without connecting the contacts into a new story.",
     ...(hasNatalLens
       ? [
           'Apply the supplied N1 possibility to a specific I1 scene with one practical distinction in paragraph 1 or 2. Choose one supported task, obligation or choice and keep it as the subject of both meanings. If N1 introduces a concrete example, explicitly place that same example inside I1\'s scene as a possibility; do not jump from a quiet moment or demanding role to an unrelated reply or project. Develop N1\'s distinction on that shared example, keeping its sentences in their published order where practical. Identify what changes in considering that same obligation, task or choice; do not simply append N1 verbatim or connect two summaries with a generic bridge. Keep every scene and source condition intact. Every paragraph using it must cite ["N1", "C1", "I1"]. Keep it conditional and recognizable or rejectable, never a confirmed identity, biological explanation or lived event. N1 and S1 may share a paragraph with all parents, but S1 supplies its own relationship: the N1 distinction must not be made to cause or establish it. Do not add a personality section. N1 does not authorize a natal body, sign, house, aspect or other geometry.',
         ]
       : []),
-    ...(input.facts.some((f) => f.id === "A1")
+    ...(!editorial && input.facts.some((f) => f.id === "A1")
       ? [
           "Copy A1's chronology sentence unchanged exactly once in paragraph 1 or 2, citing C1/A1. Connect P2's conditional practical meaning to I1 in paragraph 1 or 2, citing C1/I1/A1/P2. Keep this integration within the existing four-sentence paragraph limit; do not add a separate essay. Only the unchanged chronology sentence may use A1 dates. Do not add counts, pass ordinals, station dates, life history or promises of closure.",
         ]
       : []),
     "Cite the supplied IDs each paragraph rests on. This is reference coverage, not permission to invent astronomical facts.",
-    "Any paragraph naming a planet, aspect, orb or ISO exact date must cite the matching calculated cycle ID (C1, C2 or C3), even when it repeats a number from T1. Editorial IDs I1, I2, I3, S1, D1, P1 and T1 cannot replace that cycle citation.",
-    `For a paragraph using the strongest cycle's supplied phase and timing wording, include its cycle alongside the relevant editorial references: "facts": [${timingCitationIds.map((id) => JSON.stringify(id)).join(", ")}]. Cite only IDs and values supplied above.`,
+    editorial
+      ? "Any paragraph naming a planet or aspect must cite its supplied calculated cycle ID. Source IDs cannot replace that cycle citation."
+      : "Any paragraph naming a planet, aspect, orb or ISO exact date must cite the matching calculated cycle ID (C1, C2 or C3), even when it repeats a number from T1. Editorial IDs I1, I2, I3, S1, D1, P1 and T1 cannot replace that cycle citation.",
+    ...(!editorial
+      ? [
+          `For a paragraph using the strongest cycle's supplied phase and timing wording, include its cycle alongside the relevant editorial references: "facts": [${timingCitationIds.map((id) => JSON.stringify(id)).join(", ")}]. Cite only IDs and values supplied above.`,
+        ]
+      : []),
     "Do not write a headline, reflection question, local-time context or wellbeing framing; those are provided separately.",
-    "Do not introduce sign or individual house placements. Quote orb degrees as digit literals and ISO dates only when present in a cycle cited by that paragraph.",
+    editorial
+      ? "Do not introduce sign or individual house placements. Do not write orb, degree, exact date, phase or calculated timing details in this warm/standard body."
+      : "Do not introduce sign or individual house placements. Quote orb degrees as digit literals and ISO dates only when present in a cycle cited by that paragraph.",
     "C1-C3 describe a transiting body contacting a natal point, not two bodies in the current sky. Preserve those roles whenever naming the geometry: explicitly name the target as natal if describing the contact as occurring in the sky. A source's subjective 'feels like yours' stays subjective; do not turn it into an objective task allocation.",
-    "An orb is the angular deviation from the named aspect measured at this reading's calculation time; the calculated exact date is a separate calendar estimate. Window position describes THIS READING, never the future or past exact date. Put the current orb, this reading's window position, and any exact date or relative exact timing in separate sentences. Never attach a current measurement or window position to the exact pass. Do not infer an exact date from the phase label when the facts say no exact date was found.",
+    ...(!editorial
+      ? [
+          "An orb is the angular deviation from the named aspect measured at this reading's calculation time; the calculated exact date is a separate calendar estimate. Window position describes THIS READING, never the future or past exact date. Put the current orb, this reading's window position, and any exact date or relative exact timing in separate sentences. Never attach a current measurement or window position to the exact pass. Do not infer an exact date from the phase label when the facts say no exact date was found.",
+        ]
+      : []),
     input.suppression.angles
       ? "Angle claims are suppressed: do not mention Ascendant, rising sign (including shorthand such as 'your rising'), Midheaven or other angles."
       : "",

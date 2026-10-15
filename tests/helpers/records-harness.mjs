@@ -44,6 +44,7 @@ export async function createRecordsHarness({ plugins = [] } = {}) {
   const gatewayRequests = [];
   const geminiEnterpriseRequests = [];
   const evaluationStarts = [];
+  const evaluationStatusReads = [];
   const releasePublications = [];
   const swissRequests = [];
   const episodeRequests = [];
@@ -55,6 +56,7 @@ export async function createRecordsHarness({ plugins = [] } = {}) {
   let gatewayHandler = null;
   let geminiEnterpriseHandler = null;
   let evaluationPlane = null;
+  let evaluationStatusHandler = null;
   let releasePublicationHandler = null;
   let swissHandler = null;
   let fault = null;
@@ -107,6 +109,19 @@ export async function createRecordsHarness({ plugins = [] } = {}) {
       return geminiEnterpriseHandler(body, init);
     }
     const workflowBase = process.env.PATTERN_WORKFLOW_URL;
+    if (workflowBase && url === `${workflowBase}/evaluations/status`) {
+      const raw = String(init.body);
+      assert.equal(init.method, "POST");
+      assert.equal(
+        new Headers(init.headers).get("x-pattern-signature"),
+        createHmac("sha256", secret).update(raw).digest("hex"),
+      );
+      const body = JSON.parse(raw);
+      evaluationStatusReads.push(body);
+      return evaluationStatusHandler
+        ? evaluationStatusHandler(body, init)
+        : Response.json({ ok: true, instanceId: body.instanceId, status: "running" });
+    }
     if (workflowBase && url === `${workflowBase}/release-publication`) {
       const body = JSON.parse(String(init.body));
       releasePublications.push(body);
@@ -226,6 +241,8 @@ export async function createRecordsHarness({ plugins = [] } = {}) {
       gatewayRequests.length = 0;
       geminiEnterpriseRequests.length = 0;
       evaluationStarts.length = 0;
+      evaluationStatusReads.length = 0;
+      evaluationStatusHandler = null;
       releasePublications.length = 0;
       releasePublicationHandler = null;
       swissRequests.length = 0;
@@ -342,6 +359,7 @@ export async function createRecordsHarness({ plugins = [] } = {}) {
       gatewayRequests,
       geminiEnterpriseRequests,
       evaluationStarts,
+      evaluationStatusReads,
       releasePublications,
       swissRequests,
       episodeRequests,
@@ -377,6 +395,9 @@ export async function createRecordsHarness({ plugins = [] } = {}) {
       },
       setEvaluationPlane(handler) {
         evaluationPlane = handler;
+      },
+      setEvaluationStatus(handler) {
+        evaluationStatusHandler = handler;
       },
       setReleasePublicationHandler(handler) {
         releasePublicationHandler = handler;

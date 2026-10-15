@@ -414,6 +414,35 @@ export default {
       return Response.json({ ok: true, instanceId: instance.id, status: await instance.status() });
     }
 
+    // POST binds the requested instance ID to the HMAC. This is a status read,
+    // with no create, retry, restart, resume, or callback operation.
+    if (request.method === "POST" && url.pathname === "/evaluations/status") {
+      let input;
+      try {
+        input = JSON.parse(raw);
+      } catch {
+        return new Response("Invalid status request", { status: 400 });
+      }
+      if (
+        typeof input?.instanceId !== "string" ||
+        !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(input.instanceId)
+      )
+        return new Response("Invalid evaluation instance", { status: 400 });
+      try {
+        const instance = await env.EVALUATIONS.get(input.instanceId);
+        const result = await instance.status();
+        return Response.json(
+          { ok: true, instanceId: instance.id, status: result.status },
+          { headers: { "Cache-Control": "no-store" } },
+        );
+      } catch {
+        return new Response("Workflow status unavailable", {
+          status: 503,
+          headers: { "Cache-Control": "no-store" },
+        });
+      }
+    }
+
     if (request.method === "POST" && url.pathname === "/evaluations") {
       const { runId, total, callback, planHash, qualificationProfile, enterpriseThinking } = raw
         ? JSON.parse(raw)

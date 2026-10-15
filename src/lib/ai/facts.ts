@@ -212,6 +212,37 @@ export function dailyFactBlock(facts: FactAtom[]): string {
   ].join("\n");
 }
 
+/**
+ * Editorial writers receive source identity and contact geometry, not the
+ * legacy prose attached to those sources. Full facts remain in the audit and
+ * validation input. Orb, timing, phase and unrelated framing are not body copy
+ * in this warm/standard policy.
+ */
+export function dailyEditorialReferences(facts: FactAtom[], requiredFacts: string[]) {
+  return {
+    references: requiredFacts.map((id) => {
+      const fact = facts.find((item) => item.id === id);
+      if (!fact || !/^(?:C[1-3]|I[1-3]|S1)$/.test(id)) throw new InvalidDailyFactGraph();
+      if (fact.cycle) {
+        const { transitBody, natalPoint, aspect } = fact.cycle;
+        return {
+          id,
+          kind: fact.kind,
+          cycleKey: `${transitBody}_${aspect}_${natalPoint}`,
+          cycle: { transitBody, natalPoint, aspect },
+        };
+      }
+      return {
+        id,
+        kind: fact.kind,
+        sourceKey: fact.sourceKey,
+        releaseVersion: fact.releaseVersion,
+        dependsOn: [...(fact.dependsOn ?? [])],
+      };
+    }),
+  };
+}
+
 export class InvalidDailyFactGraph extends Error {
   constructor() {
     super("Invalid daily fact graph");

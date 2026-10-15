@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { Button } from "@/components/ui/button";
+import { EvaluationCaptureNotice } from "./EvaluationCaptureNotice";
 import { LANGUAGE_PROVIDER_LABELS, type LanguageProvider } from "@/lib/ai/diagnostics";
 import { readingEvaluationRunActive } from "@/lib/ai/reading-evaluation.shared";
 import type { FrozenContentComparisonPlan } from "@/lib/ai/content-comparison-plan.server";
@@ -395,6 +396,7 @@ export function ContentComparisonEvaluation({
               {run.message ? (
                 <p className="text-xs [overflow-wrap:anywhere]">{run.message}</p>
               ) : null}
+              <EvaluationCaptureNotice run={run} ledger={capture?.ledger} />
               {capture?.ledger ? (
                 <p className="text-xs text-muted-foreground">
                   {capture.ledger.campaignAttempts}/8 attempts · $
@@ -784,6 +786,7 @@ function ContentLatencyProbe({
               {run.message ? (
                 <p className="text-xs [overflow-wrap:anywhere]">{run.message}</p>
               ) : null}
+              <EvaluationCaptureNotice run={run} ledger={capture?.ledger} />
               {capture?.ledger ? (
                 <p className="text-xs text-muted-foreground">
                   {capture.ledger.campaignAttempts}/4 attempts · $

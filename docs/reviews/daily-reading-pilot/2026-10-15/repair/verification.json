@@ -1,0 +1,79 @@
+{
+  "version": "editorial-source-workflow-repair-verification-1",
+  "checkedAt": "2026-10-15T16:42:55.656167+00:00",
+  "baseCommit": "520402ce752ea7e27884abc203d630ce2347eb09",
+  "state": "locally verified working tree; not committed or deployed",
+  "policy": {
+    "prompt": "daily-editorial-body-2",
+    "validator": "daily-editorial-reference-2",
+    "voice": "daily-editorial-voice-2"
+  },
+  "tests": {
+    "command": "npm test",
+    "total": 958,
+    "passed": 954,
+    "skipped": 4,
+    "failed": 0
+  },
+  "typecheck": "passed",
+  "scopedESLint": "passed",
+  "productionAppBuild": "passed",
+  "workerDryRun": {
+    "passed": true,
+    "version": "4.149.0",
+    "location": "copy outside app tree",
+    "bindingsChanged": false
+  },
+  "browser": {
+    "environment": "cached Chromium; actual components with synthetic server functions on localhost",
+    "editorial": {
+      "readCalls": 4,
+      "startCalls": 0,
+      "stopCalls": 0,
+      "previewCalls": 0,
+      "lateCaptureRecovered": true,
+      "terminalStatusPreserved": true,
+      "freshExportVerified": true
+    },
+    "general": {
+      "readCalls": 3,
+      "startCalls": 0,
+      "stopCalls": 0,
+      "previewCalls": 0,
+      "downloadFetchedLateCapture": true,
+      "terminalStatusPreserved": true
+    },
+    "fixtureSource": "historical synthetic capture; not a new policy-2 model output",
+    "sessionsClosed": true
+  },
+  "independentReview": {
+    "importantFindings": 1,
+    "fixed": "phase and degree style-check false positives; three RED to GREEN positive regressions",
+    "remainingImportantFindings": 0,
+    "limitation": "A download competing with an active refresh refuses stale export; repeat after the read completes."
+  },
+  "historicalEvidenceHashesVerified": 14,
+  "environmentFileUnchanged": true,
+  "newModelRequests": 0,
+  "newPilots": 0,
+  "deployed": false,
+  "activated": false,
+  "sourceFileSha256": {
+    "edge/pattern-workflows/worker.mjs": "5389b7dcf39b6f1b8a62c4f32d3a62758e24e0591f23020ac90781122dca9449",
+    "src/components/pattern/ContentDraftEvaluation.tsx": "fca6209f2989f5438602cedd3d84e9e473be4d5c0cba4d161660731684ab646e",
+    "src/components/pattern/EditorialPilotEvaluation.tsx": "ab8bea039e9ec4e08aaae99875c2099eec700bd3e11df0b2056203a6b87d6a08",
+    "src/components/pattern/EvaluationCaptureNotice.tsx": "3f1142aefd9541a04c300127a3a082a0a0a13feb82347cbe111f495e5ce380ef",
+    "src/components/pattern/ReadingEvaluation.tsx": "051282d0f9eba47a0f843a71a2cc6e2b395c4f9515c16142a0212cd8e52f96d3",
+    "src/lib/ai/daily-voice.ts": "2211a21ece951796410924a94d463319f15a6851a9b3401cae0b77509ae3f41c",
+    "src/lib/ai/diagnostics.ts": "04e0493f42262dd3d10a3b5524d356a87095758b9bdcb302edac2d70f09f5c27",
+    "src/lib/ai/facts.ts": "c8d5f44d414c0046e92fccad7b4c4326db10216a1d53763e02e8c0ab5793ede9",
+    "src/lib/ai/language.server.ts": "15fa2308574074775601249a2d6a17179fbeeeeb8d271ada126438096a31c53c",
+    "src/lib/evaluation-runs.server.ts": "a97f392d21362fdb4ded011e0a570a43035d334e98e5a3a0f706aebf7211207b",
+    "src/lib/workflows.server.ts": "0be32720f3d2d929839b6170ae0e61e80fc7af9a8b44abd0a7237edd5e88bc44",
+    "tests/edge-pattern-workflows.test.mjs": "14f81ec0f7349561869a786a269b5cc4770915dc737222d78d75af57e44aed48",
+    "tests/helpers/records-harness.mjs": "58d313309ca3a28916a681db61d80ab7b2a3ddfa0b312ea6970d8dd462af24b1",
+    "tests/reading-editorial-pilot.test.mjs": "720fd9d0376f6837e0a382b5d380823650d1893409f8d6bebc9f2c617548ef43",
+    "tests/reading-editorial-writing.test.mjs": "08f648cd4171a8df8e02ab67f0a9d8f7c0d86f6a05073f6dd4ba808eaff2d26a",
+    "tests/reading-evaluation-runs.test.mjs": "583b1d98650ff6663ff885dffaf19c350e6dd12d8c53c2ce0c2b18374d5937cb"
+  }
+}

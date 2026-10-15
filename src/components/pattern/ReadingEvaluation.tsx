@@ -6,6 +6,7 @@ import {
   type LanguageProviderStatus,
 } from "@/components/pattern/LanguageProviderChoice";
 import { Button } from "@/components/ui/button";
+import { EvaluationCaptureNotice } from "./EvaluationCaptureNotice";
 import { diagnosticLabel, type LanguageProvider } from "@/lib/ai/diagnostics";
 import {
   combineReadingEvaluationResults,
@@ -354,6 +355,7 @@ export function ReadingEvaluation({
       setResults(next);
       setLedger(data.ledger);
       setNow(Date.now());
+      return { ...data, results: next };
     } finally {
       polling.current = false;
     }
@@ -475,10 +477,22 @@ export function ReadingEvaluation({
     }
   }
 
-  function download() {
+  async function download(stored = false) {
     setDownloadError(null);
+    setPending(true);
     try {
-      const report = combineReadingEvaluationResults(results, { partial: !complete });
+      const latest = await refresh(run?.id);
+      if (!latest?.run) throw Error("Saved evaluation is unavailable.");
+      if (stored) {
+        saveJson(
+          { run: latest.run, ledger: latest.ledger },
+          `evaluation-stored-attempts-${latest.run.id}.json`,
+        );
+        return;
+      }
+      const report = combineReadingEvaluationResults(latest.results, {
+        partial: latest.run.status !== "complete",
+      });
       const blob = new Blob([serializeReadingEvaluationReport(report)], {
         type: "application/json",
       });
@@ -490,8 +504,10 @@ export function ReadingEvaluation({
       setTimeout(() => URL.revokeObjectURL(url), 1000);
     } catch {
       setDownloadError(
-        "These captures cannot form one full-suite report. Download stored attempts to retain every outcome and source plan.",
+        "The saved captures could not be refreshed or combined. Refresh saved status or download stored attempts to retain every outcome and source plan.",
       );
+    } finally {
+      setPending(false);
     }
   }
 
@@ -739,7 +755,8 @@ export function ReadingEvaluation({
             type="button"
             variant="outline"
             className="min-h-11 whitespace-normal"
-            onClick={() => saveJson({ run, ledger }, `evaluation-stored-attempts-${run?.id}.json`)}
+            disabled={pending}
+            onClick={() => void download(true)}
           >
             Download stored attempts
           </Button>
@@ -748,13 +765,30 @@ export function ReadingEvaluation({
           <Button
             type="button"
             variant="outline"
-            onClick={download}
+            disabled={pending}
+            onClick={() => void download()}
             className="min-h-11 whitespace-normal"
           >
             {complete ? "Download report" : "Download partial report"}
           </Button>
         ) : null}
+        {run ? (
+          <Button
+            type="button"
+            variant="outline"
+            disabled={pending}
+            onClick={() => {
+              setMessage(null);
+              void refresh(run.id).catch(() =>
+                setMessage("The saved status could not be refreshed. No new request was made."),
+              );
+            }}
+          >
+            Refresh saved status
+          </Button>
+        ) : null}
       </div>
+      <EvaluationCaptureNotice run={run} ledger={ledger} />
       <p
         role="status"
         aria-live="polite"

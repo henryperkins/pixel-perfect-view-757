@@ -391,7 +391,188 @@ test("a late captured case preserves an externally stopped run and cannot advanc
   finish();
   assert.deepEqual(await pending, { next: false });
   assert.equal((await current(run.id)).run.status, "error");
+  assert.equal((await current(run.id)).run.completed, 1);
   assert.equal((await current(run.id)).results.length, 1);
+});
+
+test("reading a failed Workflow retains its captures and closes the run without redispatch", async () => {
+  await makeAdmin();
+  gatewayAnswers();
+  const run = await runs.startEvaluationRun(h.records(), h.userA, BUILTIN, ORIGIN);
+  await step(run.id, 0);
+  // The stored response outlived a lost progress write.
+  h.sqlite.prepare("UPDATE evaluation_runs SET completed=0 WHERE id=?").run(run.id);
+  h.setEvaluationStatus(({ instanceId }) =>
+    Response.json({ ok: true, instanceId, status: "errored" }),
+  );
+  const recovered = await current(run.id);
+  assert.equal(recovered.run.status, "error");
+  assert.equal(recovered.run.completed, 1);
+  assert.match(recovered.run.message, /Workflow.*errored/);
+  assert.equal(recovered.results.length, 1);
+  assert.equal(recovered.ledger.campaignAttempts, 1);
+  const repeats = await Promise.all([current(run.id), current(run.id)]);
+  assert.ok(repeats.every(({ run: r }) => r.status === "error" && r.completed === 1));
+  assert.equal(await step(run.id, 1), false);
+  assert.equal(h.gatewayRequests.length, 1);
+  assert.equal(h.evaluationStarts.length, 1);
+  assert.deepEqual(h.evaluationStatusReads, [{ instanceId: run.id }]);
+});
+
+test("a response saved after Workflow recovery advances capture count without reopening the run", async () => {
+  await makeAdmin();
+  let entered, finish;
+  const entering = new Promise((resolve) => (entered = resolve));
+  const gate = new Promise((resolve) => (finish = resolve));
+  h.setGateway(async () => {
+    entered();
+    await gate;
+    return Response.json({
+      choices: [
+        {
+          message: {
+            content: JSON.stringify(BASELINE_RESPONSES[READING_EVAL_CASES[0].id]),
+          },
+        },
+      ],
+    });
+  });
+  const run = await runs.startEvaluationRun(h.records(), h.userA, BUILTIN, ORIGIN);
+  const pending = runs.evaluationStep(h.records(), frozenStep(run.id, 0));
+  await entering;
+  h.setEvaluationStatus(({ instanceId }) =>
+    Response.json({ ok: true, instanceId, status: "errored" }),
+  );
+  const recovery = await current(run.id);
+  finish();
+  assert.deepEqual(await pending, { next: false });
+  assert.equal(recovery.run.status, "error");
+  assert.equal(recovery.run.completed, 0);
+  assert.equal(recovery.ledger.entries[0].capture, "uncertain");
+  const captured = await current(run.id);
+  assert.equal(captured.run.status, "error");
+  assert.equal(captured.run.message, recovery.run.message);
+  assert.equal(captured.run.completed, 1);
+  assert.equal(captured.ledger.entries[0].capture, "stored");
+  assert.equal(captured.ledger.campaignAttempts, 1);
+  assert.equal(await step(run.id, 1), false);
+  assert.equal(h.gatewayRequests.length, 1);
+});
+
+test("Stop settles an already terminated Workflow without waiting for another signed step", async () => {
+  await makeAdmin();
+  const run = await runs.startEvaluationRun(h.records(), h.userA, BUILTIN, ORIGIN);
+  h.setEvaluationStatus(({ instanceId }) =>
+    Response.json({ ok: true, instanceId, status: "terminated" }),
+  );
+  assert.equal((await runs.stopEvaluationRun(h.records(), h.userA, run.id)).status, "stopped");
+  assert.equal((await current(run.id)).run.status, "stopped");
+  assert.equal(h.gatewayRequests.length, 0);
+  assert.equal(h.evaluationStarts.length, 1);
+});
+
+test("a terminal run recovers capture progress after its late response progress write was lost", async () => {
+  await makeAdmin();
+  let entered, finish;
+  const entering = new Promise((resolve) => (entered = resolve));
+  const gate = new Promise((resolve) => (finish = resolve));
+  h.setGateway(async () => {
+    entered();
+    await gate;
+    return Response.json({
+      choices: [
+        {
+          message: {
+            content: JSON.stringify(BASELINE_RESPONSES[READING_EVAL_CASES[0].id]),
+          },
+        },
+      ],
+    });
+  });
+  const run = await runs.startEvaluationRun(h.records(), h.userA, BUILTIN, ORIGIN);
+  const pending = runs.evaluationStep(h.records(), frozenStep(run.id, 0));
+  await entering;
+  h.setEvaluationStatus(({ instanceId }) =>
+    Response.json({ ok: true, instanceId, status: "errored" }),
+  );
+  const recovered = await current(run.id);
+  h.setFault({ matches: (sql) => /^update\s+"?evaluation_runs\b/i.test(sql) });
+  finish();
+  await pending.catch(() => {});
+  h.setFault(null);
+  const stored = h.sqlite.prepare("SELECT completed FROM evaluation_runs WHERE id=?").get(run.id);
+  assert.equal(stored.completed, 0);
+  const captured = await current(run.id);
+  assert.equal(captured.run.completed, 1);
+  assert.equal(captured.run.status, "error");
+  assert.equal(captured.run.message, recovered.run.message);
+  assert.equal(captured.results.length, 1);
+  assert.equal(captured.ledger.campaignAttempts, 1);
+  h.requests.length = 0;
+  await current(run.id);
+  assert.equal(h.evaluationStatusReads.length, 1, "terminal refresh uses only stored evidence");
+  assert.equal(h.requests.filter(({ sql }) => /^update\s+"?evaluation_runs\b/i.test(sql)).length, 0);
+  assert.equal(h.gatewayRequests.length, 1);
+});
+
+test("Workflow recovery cannot inspect another admin's run or override a concurrently terminal result", async () => {
+  await makeAdmin();
+  await makeAdmin(h.userB);
+  const run = await runs.startEvaluationRun(h.records(), h.userA, BUILTIN, ORIGIN);
+  h.setEvaluationStatus(({ instanceId }) => {
+    h.sqlite
+      .prepare(
+        "UPDATE evaluation_runs SET status='halted',message='Original disposition' WHERE id=?",
+      )
+      .run(run.id);
+    return Response.json({ ok: true, instanceId, status: "errored" });
+  });
+  assert.equal((await runs.readEvaluationRun(h.records(), h.userB, { runId: run.id })).run, null);
+  assert.equal(h.evaluationStatusReads.length, 0);
+  const state = await current(run.id);
+  assert.equal(state.run.status, "halted");
+  assert.equal(state.run.message, "Original disposition");
+  assert.equal(h.gatewayRequests.length, 0);
+});
+
+test("old or unconfirmed Workflow states never become failure evidence", async () => {
+  await makeAdmin();
+  const run = await runs.startEvaluationRun(h.records(), h.userA, BUILTIN, ORIGIN);
+  h.sqlite
+    .prepare("UPDATE evaluation_runs SET updated_at='2000-01-01T00:00:00.000Z' WHERE id=?")
+    .run(run.id);
+  for (const handler of [
+    ({ instanceId }) => Response.json({ ok: true, instanceId, status: "unknown" }),
+    ({ instanceId }) => Response.json({ ok: true, instanceId, status: "waiting" }),
+    ({ instanceId }) => Response.json({ ok: true, instanceId, status: "paused" }),
+    () => Response.json({ ok: true, instanceId: crypto.randomUUID(), status: "errored" }),
+    ({ instanceId }) => Response.json({ ok: false, instanceId, status: "errored" }),
+    () => new Response("Old Worker", { status: 404 }),
+    () => {
+      throw new Error("Status service unavailable");
+    },
+  ]) {
+    h.setEvaluationStatus(handler);
+    const state = await current(run.id);
+    assert.equal(state.run.status, "queued");
+    assert.equal(state.run.completed, 0);
+    assert.equal(state.run.message, null);
+  }
+  assert.equal(h.gatewayRequests.length, 0);
+  assert.equal(h.evaluationStarts.length, 1);
+});
+
+test("Workflow status reads use an abort deadline and disable caching", async () => {
+  await makeAdmin();
+  const run = await runs.startEvaluationRun(h.records(), h.userA, BUILTIN, ORIGIN);
+  let request;
+  h.setEvaluationStatus(({ instanceId }, init) => {
+    request = init;
+    return Response.json({ ok: true, instanceId, status: "running" });
+  });
+  await current(run.id);
+  assert.equal(request?.cache, "no-store");
+  assert.ok(request.signal instanceof AbortSignal);
 });
 
 test("qualification starts require a closed profile and explicit campaign budget; each frozen arm can start only once", async () => {

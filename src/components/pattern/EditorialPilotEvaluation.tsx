@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { Button } from "@/components/ui/button";
 import { EvaluationCase } from "./ReadingEvaluation";
+import { EvaluationCaptureNotice } from "./EvaluationCaptureNotice";
 import { LANGUAGE_PROVIDER_LABELS } from "@/lib/ai/diagnostics";
 import { EDITORIAL_PILOT_VERSION } from "@/lib/ai/editorial-pilot";
 import type { EditorialPilotPlan } from "@/lib/ai/editorial-pilot-plan.server";
@@ -286,6 +287,7 @@ export function EditorialPilotEvaluation({ userId }: { userId: string }) {
               ? "A start was attempted; recover its status before any further action."
               : "No saved pilot is loaded. Preview its frozen plan before starting."}
       </p>
+      <EvaluationCaptureNotice run={run} ledger={capture?.ledger} />
       {run ? (
         <p className="mt-2 font-mono text-xs [overflow-wrap:anywhere]">Run ID: {run.id}</p>
       ) : (

@@ -282,6 +282,54 @@ test("/evaluations starts one Workflow per run, only for the signed app step cal
   assert.equal(created.length, 1);
 });
 
+test("signed Workflow status lookup only reads its named existing instance and omits payloads", async () => {
+  const instanceId = "0b6f6a1e-6d1c-4d0f-9f5e-1f6b8c2d3e4a";
+  const lookedUp = [];
+  const env = {
+    PATTERN_WORKFLOW_SECRET: SECRET,
+    EVALUATIONS: {
+      async get(id) {
+        lookedUp.push(id);
+        return {
+          id,
+          async status() {
+            return {
+              status: "errored",
+              error: { message: "private debug detail" },
+              output: "private output",
+            };
+          },
+        };
+      },
+      async create() {
+        assert.fail("Status must never create a Workflow");
+      },
+    },
+  };
+  const raw = JSON.stringify({ instanceId });
+  const request = (body = raw, signature = sign(body)) =>
+    new Request("https://worker.example.test/evaluations/status", {
+      method: "POST",
+      body,
+      headers: { "x-pattern-signature": signature },
+    });
+  assert.equal((await worker.default.fetch(request(raw, "0".repeat(64)), env)).status, 401);
+  for (const bad of ["not json", JSON.stringify({ instanceId: "../private" }), JSON.stringify({})])
+    assert.equal((await worker.default.fetch(request(bad), env)).status, 400);
+  assert.deepEqual(lookedUp, []);
+  const response = await worker.default.fetch(request(), env);
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get("cache-control"), "no-store");
+  assert.deepEqual(await response.json(), { ok: true, instanceId, status: "errored" });
+  assert.deepEqual(lookedUp, [instanceId]);
+  env.EVALUATIONS.get = async () => {
+    throw new Error("private service error");
+  };
+  const unavailable = await worker.default.fetch(request(), env);
+  assert.equal(unavailable.status, 503);
+  assert.doesNotMatch(await unavailable.text(), /private/);
+});
+
 test("the evaluation Workflow carries the immutable plan and closed profile in every signed step", async () => {
   const savedFetch = globalThis.fetch,
     calls = [];
