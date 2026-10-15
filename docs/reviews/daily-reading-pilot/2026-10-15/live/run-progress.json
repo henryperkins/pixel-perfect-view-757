@@ -1,0 +1,13 @@
+{
+  "startedAt": "2026-10-15T07:21:14Z",
+  "runId": "a7b75991-14eb-422e-b892-3a6cfd9ca596",
+  "syntheticOperatorUserId": "23a2efdc-96cb-4d6f-8c33-0a5c29cdb0fd",
+  "sourceSha": "c4847a6674fc918609b3d234f3326e61f29e9072",
+  "planHash": "a12441bd3778229bd8f746e39be2cb5bb67f3a730ff2d92108d1929b043d36fd",
+  "startInvocations": 1,
+  "status": "error",
+  "cleanup": "Temporary operator role and session revoked; disabled user retained to preserve evaluation records.",
+  "closedAt": "2026-10-15T07:31:31.416Z",
+  "completed": 1,
+  "total": 9
+}

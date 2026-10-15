@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-10-15T07:20:45.535Z",
+  "sourceSha": "c4847a6674fc918609b3d234f3326e61f29e9072",
+  "planHash": "a12441bd3778229bd8f746e39be2cb5bb67f3a730ff2d92108d1929b043d36fd",
+  "candidateHash": "ac78d4b47d8b0930f2b2d6d560948869284bbc032834a1c195d061a7a1f29cb4",
+  "provider": "gemini-enterprise",
+  "model": "gemini-enterprise/gemini-3.8-flash",
+  "attemptLimit": 5,
+  "dollarCeilingMicros": 5000000,
+  "caseCount": 9,
+  "expectedModelRequests": 5,
+  "quietOutputs": 4,
+  "started": false
+}

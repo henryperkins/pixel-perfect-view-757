@@ -1,0 +1,56 @@
+{
+  "success": true,
+  "status": 200,
+  "result": {
+    "params": {
+      "runId": "a7b75991-14eb-422e-b892-3a6cfd9ca596",
+      "total": 9,
+      "callback": "https://patterns.lakefrontdigital.io/api/public/evaluation-step",
+      "planHash": "a12441bd3778229bd8f746e39be2cb5bb67f3a730ff2d92108d1929b043d36fd"
+    },
+    "trigger": {
+      "source": "binding"
+    },
+    "versionId": "67b1dfdb-7e88-4a25-ab30-223c610c76e9",
+    "queued": "2026-10-15T07:21:13.328Z",
+    "start": "2026-10-15T07:21:16.944Z",
+    "end": "2026-10-15T07:21:30.684Z",
+    "success": false,
+    "error": {
+      "message": "WorkflowInternalError: Attempt failed due to internal workflows error",
+      "name": "Error"
+    },
+    "rollback": null,
+    "status": "errored",
+    "step_count": 1,
+    "steps": [
+      {
+        "name": "case 0-1",
+        "start": "2026-10-15T07:21:16.976Z",
+        "end": "2026-10-15T07:21:30.684Z",
+        "attempts": [
+          {
+            "start": "2026-10-15T07:21:16.976Z",
+            "end": "2026-10-15T07:21:30.684Z",
+            "success": false,
+            "error": {
+              "name": "WorkflowInternalError",
+              "message": "Attempt failed due to internal workflows error"
+            }
+          }
+        ],
+        "config": {
+          "retries": {
+            "limit": 0,
+            "delay": "1 second",
+            "backoff": "exponential"
+          },
+          "timeout": "5 minutes"
+        },
+        "output": null,
+        "success": false,
+        "type": "step"
+      }
+    ]
+  }
+}

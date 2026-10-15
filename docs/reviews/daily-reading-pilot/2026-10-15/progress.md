@@ -47,3 +47,9 @@ The current build is uncommitted. `scripts/build-source-identity.mjs` deliberate
 ## Release authorization — 2026-10-15
 
 The user approved committing and deploying this implementation, followed by the already-authorized bounded pilot. Pre-commit verification found local `main`, `origin/main`, and Lovable synchronized at `8f7caa9f80adcb513b0ebcd1149ea23eb5a9f445`; the candidate remains inactive. Commit scope includes the implementation, its four focused test files, preparation script, current review artifacts, and the five historical source files required for reproduction. Unrelated environment, tool, session, and browser-output files are excluded. Hosted receipts and captured results will be recorded separately after the commit.
+
+## Hosted execution and closeout — 2026-10-15
+
+Implementation commit `c4847a6674fc918609b3d234f3326e61f29e9072` was pushed, deployed, and verified through the authenticated plan preview. The authorized campaign started once and captured one accepted model body. Cloudflare recorded an internal Workflow error before scheduling position 1, leaving eight outputs uncaptured. No retry or replacement run occurred. The app run was stopped and administratively closed with status `error`; the final export preserves the original result and cost ledger unchanged. Temporary operator access was revoked and the browser redirected to sign-in.
+
+The pilot is incomplete. The one body still leads with technical interpretation language; independent AI editorial review recommends revision. Active content remains unchanged at `0.7.1`; the candidate is inactive and human approval remains pending. [Live report and exact evidence](live/README.md) supersede the earlier zero-request status for hosted execution, while preserving the offline preparation as its own evidence.

@@ -1,0 +1,161 @@
+{
+  "result": [
+    {
+      "results": [],
+      "success": true,
+      "meta": {
+        "served_by": "v3-prod",
+        "served_by_region": "WEUR",
+        "served_by_colo": "LHR",
+        "served_by_primary": true,
+        "timings": {
+          "sql_duration_ms": 0.3036
+        },
+        "duration": 0.3036,
+        "changes": 1,
+        "last_row_id": 0,
+        "changed_db": true,
+        "size_after": 5271552,
+        "rows_read": 3,
+        "rows_written": 1,
+        "total_attempts": 1
+      }
+    },
+    {
+      "results": [],
+      "success": true,
+      "meta": {
+        "served_by": "v3-prod",
+        "served_by_region": "WEUR",
+        "served_by_colo": "LHR",
+        "served_by_primary": true,
+        "timings": {
+          "sql_duration_ms": 0.1457
+        },
+        "duration": 0.1457,
+        "changes": 1,
+        "last_row_id": 0,
+        "changed_db": true,
+        "size_after": 5271552,
+        "rows_read": 3,
+        "rows_written": 1,
+        "total_attempts": 1
+      }
+    },
+    {
+      "results": [
+        {
+          "id": "23a2efdc-96cb-4d6f-8c33-0a5c29cdb0fd",
+          "password_disabled": 1,
+          "role_count": 0,
+          "session_count": 0
+        }
+      ],
+      "success": true,
+      "meta": {
+        "served_by": "v3-prod",
+        "served_by_region": "WEUR",
+        "served_by_colo": "LHR",
+        "served_by_primary": true,
+        "timings": {
+          "sql_duration_ms": 0.1982
+        },
+        "duration": 0.1982,
+        "changes": 0,
+        "last_row_id": 0,
+        "changed_db": false,
+        "size_after": 5271552,
+        "rows_read": 1,
+        "rows_written": 0,
+        "total_attempts": 1
+      }
+    },
+    {
+      "results": [
+        {
+          "id": "a7b75991-14eb-422e-b892-3a6cfd9ca596",
+          "status": "error",
+          "completed": 1,
+          "total": 9
+        }
+      ],
+      "success": true,
+      "meta": {
+        "served_by": "v3-prod",
+        "served_by_region": "WEUR",
+        "served_by_colo": "LHR",
+        "served_by_primary": true,
+        "timings": {
+          "sql_duration_ms": 0.1693
+        },
+        "duration": 0.1693,
+        "changes": 0,
+        "last_row_id": 0,
+        "changed_db": false,
+        "size_after": 5271552,
+        "rows_read": 1,
+        "rows_written": 0,
+        "total_attempts": 1
+      }
+    },
+    {
+      "results": [
+        {
+          "retained_results": 1,
+          "attempts": 1,
+          "reserved_micros": 47400
+        }
+      ],
+      "success": true,
+      "meta": {
+        "served_by": "v3-prod",
+        "served_by_region": "WEUR",
+        "served_by_colo": "LHR",
+        "served_by_primary": true,
+        "timings": {
+          "sql_duration_ms": 0.2246
+        },
+        "duration": 0.2246,
+        "changes": 0,
+        "last_row_id": 0,
+        "changed_db": false,
+        "size_after": 5271552,
+        "rows_read": 2,
+        "rows_written": 0,
+        "total_attempts": 1
+      }
+    },
+    {
+      "results": [
+        {
+          "id": "edcc53cf-d19a-415b-a8a2-a66040846b1d",
+          "version": "0.7.1",
+          "checksum": "20b793acda524da945b07ec32b2ed795f31e273c533ff6b4e9c4f96ef821eeac",
+          "is_active": 1
+        }
+      ],
+      "success": true,
+      "meta": {
+        "served_by": "v3-prod",
+        "served_by_region": "WEUR",
+        "served_by_colo": "LHR",
+        "served_by_primary": true,
+        "timings": {
+          "sql_duration_ms": 0.157
+        },
+        "duration": 0.157,
+        "changes": 0,
+        "last_row_id": 0,
+        "changed_db": false,
+        "size_after": 5271552,
+        "rows_read": 5,
+        "rows_written": 0,
+        "total_attempts": 1
+      }
+    }
+  ],
+  "errors": [],
+  "messages": [],
+  "success": true,
+  "status": 200
+}

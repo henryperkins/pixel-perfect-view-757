@@ -1,0 +1,14 @@
+{
+  "commit": "c4847a6674fc918609b3d234f3326e61f29e9072",
+  "projectId": "16964b03-ff4a-4ee1-b4a5-76757e94bec3",
+  "deploymentId": "49e2d6dc-3d0a-47bf-9daf-aca563bb7db0",
+  "canonicalURL": "https://patterns.lakefrontdigital.io",
+  "publishedURL": "https://pixel-perfect-view-757.lovable.app",
+  "liveSourceVerifiedAt": "2026-10-15T07:22:00.259Z",
+  "proof": "Authenticated deployed preview reports the exact committed source SHA and expected candidate hash; public content module exposes the new pilot controls.",
+  "workerChanged": false,
+  "activeContentBefore": {
+    "version": "0.7.1",
+    "checksum": "20b793acda524da945b07ec32b2ed795f31e273c533ff6b4e9c4f96ef821eeac"
+  }
+}

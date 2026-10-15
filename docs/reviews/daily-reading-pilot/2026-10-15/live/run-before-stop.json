@@ -1,0 +1,67 @@
+{
+  "result": [
+    {
+      "results": [
+        {
+          "id": "a7b75991-14eb-422e-b892-3a6cfd9ca596",
+          "status": "running",
+          "completed": 1,
+          "message": null,
+          "workflow_instance_id": "a7b75991-14eb-422e-b892-3a6cfd9ca596",
+          "updated_at": "2026-10-15T07:21:34.449Z"
+        }
+      ],
+      "success": true,
+      "meta": {
+        "served_by": "v3-prod",
+        "served_by_region": "WEUR",
+        "served_by_colo": "LHR",
+        "served_by_primary": true,
+        "timings": {
+          "sql_duration_ms": 0.402
+        },
+        "duration": 0.402,
+        "changes": 0,
+        "last_row_id": 150,
+        "changed_db": false,
+        "size_after": 5271552,
+        "rows_read": 1,
+        "rows_written": 0,
+        "total_attempts": 1
+      }
+    },
+    {
+      "results": [
+        {
+          "position": 0,
+          "case_id": "writing-reply-scene",
+          "attempted": 1,
+          "reserved_micros": 47400,
+          "created_at": "2026-10-15 07:21:18"
+        }
+      ],
+      "success": true,
+      "meta": {
+        "served_by": "v3-prod",
+        "served_by_region": "WEUR",
+        "served_by_colo": "LHR",
+        "served_by_primary": true,
+        "timings": {
+          "sql_duration_ms": 0.2203
+        },
+        "duration": 0.2203,
+        "changes": 0,
+        "last_row_id": 150,
+        "changed_db": false,
+        "size_after": 5271552,
+        "rows_read": 2,
+        "rows_written": 0,
+        "total_attempts": 1
+      }
+    }
+  ],
+  "errors": [],
+  "messages": [],
+  "success": true,
+  "status": 200
+}
