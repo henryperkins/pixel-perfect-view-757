@@ -17,7 +17,16 @@ import { safetyPass } from "../content/default-bundle";
 import { normalizeDepth, normalizeTone } from "../reading.server";
 import { assertDailyFactGraph, dailyFactBlock, factBlock, factIds, type FactAtom } from "./facts";
 import { storyParagraphProblem, storyCoverageProblem } from "./transit-story-facts";
-import { dailySystemVoice, dailyVoice, DAILY_VOICE_EXAMPLES } from "./daily-voice";
+import {
+  dailySystemVoice,
+  dailyVoice,
+  DAILY_VOICE_EXAMPLES,
+  dailyEditorialSystemVoice,
+  dailyEditorialVoice,
+  EDITORIAL_DAILY_VOICE_EXAMPLE,
+  EDITORIAL_DAILY_PROMPT_VERSION,
+  EDITORIAL_DAILY_VALIDATOR_VERSION,
+} from "./daily-voice";
 import {
   assertDailyWritingBrief,
   toDailyWritingBrief,
@@ -407,7 +416,7 @@ export interface ReadingProseInput {
   suppression: { angles: boolean; houses: boolean };
   /** Only the astronomical body is rewritten. Headline and reflection stay deterministic. */
   fallback: { headline: string; body: string; prompt: string };
-  /** Presence is the schema-5 policy gate; recent text is consumed locally only. */
+  /** Presence opts into a versioned writing plan; recent text is consumed locally only. */
   writing?: {
     plan: DailyWritingPlan;
     template: DailyWritingTemplate;
@@ -736,9 +745,46 @@ function dailyDraft(
       return rejectParagraph("length", "draft exceeds the daily length limit");
     if (safetyPass(text).flagged.length)
       return rejectParagraph("safety", "draft failed the language safety check");
+    if (
+      input.writing?.plan.editorial &&
+      sentences.some((sentence) =>
+        sentence.split(/[,;]|\b(?:but|and then)\b/i).some((clause) => {
+          const event =
+            /\byou\s+(?:ignored|accepted|missed|avoided|sent|wrote|cancelled|canceled|declined|agreed|finished|forgot|rejected|attended)\b/i.exec(
+              clause,
+            );
+          return (
+            !!event &&
+            /\b(?:this morning|yesterday|earlier today)\b/i.test(clause) &&
+            !/\b(?:if|when|unless|suppose|perhaps|maybe)\b/i.test(clause.slice(0, event.index))
+          );
+        }),
+      )
+    )
+      return rejectParagraph("editorial_claim", "draft asserts an unsupplied personal event");
     if (byId.has("N1") && natalLensWordingProblem(text))
       return rejectParagraph("natal_claim", "draft asserts natal certainty or a clinical claim");
     const ids = [...new Set(p.facts as string[])];
+    if (input.writing?.plan.editorial?.requiredFacts.some((id) => !ids.includes(id)))
+      return rejectParagraph(
+        "dependencies",
+        "draft omitted the selected editorial source or its parent references",
+      );
+    if (
+      input.writing?.plan.editorial &&
+      dropsSourceModality(sentences, [
+        {
+          id: input.writing.plan.theme?.factId ?? "I1",
+          statement: Object.values(input.writing.plan.editorial.entry.writingMaterial)
+            .filter((value): value is string => typeof value === "string")
+            .join(" "),
+        },
+      ])
+    )
+      return rejectParagraph(
+        "editorial_claim",
+        "draft drops a qualifier from selected editorial material",
+      );
     if (ids.includes("S1") && !byId.get("S1")!.dependsOn!.every((id) => ids.includes(id)))
       return rejectParagraph("dependencies", "draft omitted published synthesis parent references");
     if (ids.includes("N1") && !["C1", "I1"].every((id) => ids.includes(id)))
@@ -747,7 +793,9 @@ function dailyDraft(
     if (storyProblem) return rejectParagraph(storyProblem, "draft failed calculated story checks");
     const problem =
       dailyReferenceProblem(
-        text,
+        input.writing?.plan.editorial
+          ? text.replace(new RegExp(`\\b(${BODY_NAMES})['’]s\\b`, "gi"), "$1")
+          : text,
         ids.map((id) => byId.get(id)!),
         input.suppression,
       ) ??
@@ -783,11 +831,20 @@ function dailyDiagnostics(
   started: number | null,
   paragraph: number | null = null,
   concrete = false,
+  editorial = false,
 ): DailyDiagnostics {
   return {
     version: DAILY_DIAGNOSTICS_VERSION,
-    promptVersion: concrete ? CONCRETE_DAILY_PROMPT_VERSION : DAILY_PROMPT_VERSION,
-    validatorVersion: concrete ? CONCRETE_DAILY_VALIDATOR_VERSION : DAILY_VALIDATOR_VERSION,
+    promptVersion: editorial
+      ? EDITORIAL_DAILY_PROMPT_VERSION
+      : concrete
+        ? CONCRETE_DAILY_PROMPT_VERSION
+        : DAILY_PROMPT_VERSION,
+    validatorVersion: editorial
+      ? EDITORIAL_DAILY_VALIDATOR_VERSION
+      : concrete
+        ? CONCRETE_DAILY_VALIDATOR_VERSION
+        : DAILY_VALIDATOR_VERSION,
     model,
     gatewayTimeoutMs: DAILY_GATEWAY_TIMEOUT_MS,
     outcome,
@@ -811,6 +868,9 @@ async function generateDailyProse(
   const model = languageModel(provider);
   assertDailyFactGraph(input.facts);
   const concrete = !!input.writing;
+  const editorial = input.writing?.plan.editorial;
+  if (editorial && (input.tone !== "warm" || input.depth !== "standard"))
+    throw Error("Editorial writing policy is limited to its selected warm/standard scope.");
   if (input.writing)
     assertDailyWritingBrief(
       toDailyWritingBrief(input.writing.plan),
@@ -822,7 +882,7 @@ async function generateDailyProse(
     code: DailyDiagnostics["code"],
     started: number | null,
     paragraph: number | null = null,
-  ) => dailyDiagnostics(model, outcome, code, started, paragraph, concrete);
+  ) => dailyDiagnostics(model, outcome, code, started, paragraph, concrete, !!editorial);
   const quality = (paragraphs: DailyWritingParagraph[], renderMode: DailyWritingRenderMode) => {
     const sources = input.facts
       .filter((fact) => /^(I[123]|S1|N1|P2)$/.test(fact.id))
@@ -845,8 +905,15 @@ async function generateDailyProse(
       sourceTexts: [
         ...sources,
         ...input.writing!.plan.scenes.flatMap((scene) => [scene.situation, scene.focus]),
+        ...(editorial
+          ? Object.values(editorial.entry.writingMaterial).filter(
+              (text): text is string => typeof text === "string",
+            )
+          : []),
       ],
-      example: DAILY_VOICE_EXAMPLES[normalizeTone(input.tone)][normalizeDepth(input.depth)],
+      example: editorial
+        ? EDITORIAL_DAILY_VOICE_EXAMPLE
+        : DAILY_VOICE_EXAMPLES[normalizeTone(input.tone)][normalizeDepth(input.depth)],
     });
   };
   const sceneUse = (paragraphs: DailyWritingParagraph[]) =>
@@ -912,18 +979,24 @@ async function generateDailyProse(
   ];
   const hasNatalLens = input.facts.some((fact) => fact.id === "N1");
   const prompt = [
-    dailyVoice(normalizeTone(input.tone), normalizeDepth(input.depth), concrete),
+    editorial
+      ? dailyEditorialVoice()
+      : dailyVoice(normalizeTone(input.tone), normalizeDepth(input.depth), concrete),
     "Facts:",
     dailyFactBlock(input.facts),
     ...(input.writing
       ? [
           "Source-bound writing brief:",
           JSON.stringify(toDailyWritingBrief(input.writing.plan)),
-          "Develop one central thread through one or two supplied possible illustrations only. Declare scenes separately from facts, once per scene across the body; every scene paragraph cites the central source and all required parents. Do not introduce a third setting for a supporting cycle, natal lens or transit chapter. An unfinished reply is a comparison, not the reply you avoided this morning. Never borrow a demonstration's subject or EX-* identifiers. No-frame cases declare empty scenes. Keep each condition attached to the claim it qualifies.",
+          editorial
+            ? "The editorial writingMaterial contains this reading's permitted meaning, scene, imagery and optional direction. Its constraints are separate controls and must not appear as policy explanations in the prose. Develop one central thread using this selected material only. Declare empty scenes arrays: this editorial scene is not a schema-5 SC reference. Cite the central source and all required parents for its meaning, imagery and direction. Do not introduce another setting or borrow a demonstration's subject. Keep each condition attached to its own claim."
+            : "Develop one central thread through one or two supplied possible illustrations only. Declare scenes separately from facts, once per scene across the body; every scene paragraph cites the central source and all required parents. Do not introduce a third setting for a supporting cycle, natal lens or transit chapter. An unfinished reply is a comparison, not the reply you avoided this morning. Never borrow a demonstration's subject or EX-* identifiers. No-frame cases declare empty scenes. Keep each condition attached to the claim it qualifies.",
         ]
       : []),
     "",
-    "Rewrite only the astronomical body of today's reading, using the supplied published interpretation, domain and phase wording.",
+    editorial
+      ? "Write only the body of today's reading from the exact selected editorial material and its source facts. Optional domain or phase copy must add a supported distinction to the same thought."
+      : "Rewrite only the astronomical body of today's reading, using the supplied published interpretation, domain and phase wording.",
     "Keep each paragraph under 200 words and the whole body under 700 words.",
     "The first paragraph must concern the strongest eligible cycle and cite C1 and I1. D1, P1 and T1 are optional: cite them in any paragraph that uses their domain, phase or timing claims, and leave them out when unused.",
     ...(!concrete
@@ -934,7 +1007,9 @@ async function generateDailyProse(
         ]
       : []),
     input.facts.some((f) => f.id === "S1")
-      ? 'Develop the supplied published relationship in paragraph 1 or 2. Present I1 and its contact first, then I2 and its contact, before stating the S1 relationship they support. These parent meanings may span the first two paragraphs; avoid repeating them merely to put them beside S1. Mark the move into the supplied relationship clearly, so a phrase such as "that tension" has a clear antecedent. Every paragraph using S1 must explicitly cite all five IDs: "facts": ["S1", "C1", "I1", "C2", "I2"]. The relationship is editorial interpretation, not an established personal state. Keep its qualifications: "can increase" stays "can increase", not "increases". For a reinforcement relationship, give the two joined meanings distinct paragraph functions, as S1 relates them, instead of restating one idea in both paragraphs; then add only supported useful detail and stop. Clear published wording may be kept, and no new scene is needed for variety.'
+      ? editorial
+        ? 'Develop the selected S1 relationship within paragraph 1 or 2. The two supplied meanings can be joined through the selected imagery without a planet-keyword list or fixed order of contact names. Keep their distinct roles and conditions. Every paragraph using the relationship, its imagery or direction must cite ["S1", "C1", "I1", "C2", "I2"]. A supported possibility stays a possibility; "can increase" cannot become "increases". The relationship is editorial meaning, not a measured personal state.'
+        : 'Develop the supplied published relationship in paragraph 1 or 2. Present I1 and its contact first, then I2 and its contact, before stating the S1 relationship they support. These parent meanings may span the first two paragraphs; avoid repeating them merely to put them beside S1. Mark the move into the supplied relationship clearly, so a phrase such as "that tension" has a clear antecedent. Every paragraph using S1 must explicitly cite all five IDs: "facts": ["S1", "C1", "I1", "C2", "I2"]. The relationship is editorial interpretation, not an established personal state. Keep its qualifications: "can increase" stays "can increase", not "increases". For a reinforcement relationship, give the two joined meanings distinct paragraph functions, as S1 relates them, instead of restating one idea in both paragraphs; then add only supported useful detail and stop. Clear published wording may be kept, and no new scene is needed for variety.'
       : "Keep C1 as the primary focus. No S1 is supplied: do not invent a joint relationship or premise. I2 and I3 may offer separately supported context without connecting the contacts into a new story.",
     ...(hasNatalLens
       ? [
@@ -971,7 +1046,9 @@ async function generateDailyProse(
       {
         timeoutMs: DAILY_GATEWAY_TIMEOUT_MS,
         observation,
-        system: dailySystemVoice(hasNatalLens),
+        system: editorial
+          ? dailyEditorialSystemVoice(hasNatalLens)
+          : dailySystemVoice(hasNatalLens),
         provider,
         control,
       },

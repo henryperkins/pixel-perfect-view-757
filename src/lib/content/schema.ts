@@ -6,6 +6,7 @@ import { natalLensWordingProblem, natalMechanismHasTechnicalClaim } from "./nata
 import { completeDailySentences, type DailyWritingFrame } from "./daily-writing";
 import { dailyQuestionProblem } from "./daily-reflection";
 import { dailyWritingReferenceClaim } from "./daily-writing-policy";
+import { validateDailyEditorialCatalogue, type DailyEditorialCatalogue } from "./daily-editorial";
 
 import { NATAL_PERSONAL_BODIES, NATAL_BODY_ROLE, type NatalLensRule } from "./natal-lens-types";
 export * from "./natal-lens-types";
@@ -29,7 +30,13 @@ function validateNatalCatalogue(value: unknown, schemaVersion: number | undefine
   if (value === undefined) return;
   if (!Array.isArray(value) || value.length > 2000)
     throw new Error("Invalid natalLenses catalogue bounds");
-  if (value.length && schemaVersion !== 3 && schemaVersion !== 4 && schemaVersion !== 5)
+  if (
+    value.length &&
+    schemaVersion !== 3 &&
+    schemaVersion !== 4 &&
+    schemaVersion !== 5 &&
+    schemaVersion !== 6
+  )
     throw new Error("natalLenses require schemaVersion 3");
   const keys = new Set<string>(),
     selectors = new Set<string>();
@@ -153,6 +160,7 @@ interface RawContentBundle {
   natalLenses?: unknown[];
   transitChapters?: unknown[];
   dailyWritingFrames?: unknown;
+  dailyEditorial?: unknown;
   natal?: Record<string, string>;
   phases?: Record<string, string>;
   domains?: Record<string, unknown>;
@@ -173,7 +181,8 @@ export function validateContentGraph(raw: unknown): void {
     bundle.schemaVersion !== 2 &&
     bundle.schemaVersion !== 3 &&
     bundle.schemaVersion !== 4 &&
-    bundle.schemaVersion !== 5
+    bundle.schemaVersion !== 5 &&
+    bundle.schemaVersion !== 6
   ) {
     throw new Error(`Unsupported schemaVersion: ${bundle.schemaVersion}`);
   }
@@ -198,7 +207,8 @@ export function validateContentGraph(raw: unknown): void {
     bundle.schemaVersion !== 2 &&
     bundle.schemaVersion !== 3 &&
     bundle.schemaVersion !== 4 &&
-    bundle.schemaVersion !== 5
+    bundle.schemaVersion !== 5 &&
+    bundle.schemaVersion !== 6
   ) {
     throw new Error("Theme annotations and synthesisRules require schemaVersion 2");
   }
@@ -381,13 +391,18 @@ export function validateContentGraph(raw: unknown): void {
     }
   }
   validateDailyWritingFrames(bundle);
+  validateDailyEditorialCatalogue(bundle.dailyEditorial, bundle as ContentBundle);
 }
 
 /** Frames carry editorial examples, never selectors for private/member facts. */
 export function validateDailyWritingFrames(bundle: RawContentBundle) {
   const value = bundle.dailyWritingFrames;
   if (value === undefined) return;
-  if (!Array.isArray(value) || value.length > 2000 || (value.length && bundle.schemaVersion !== 5))
+  if (
+    !Array.isArray(value) ||
+    value.length > 2000 ||
+    (value.length && bundle.schemaVersion !== 5 && bundle.schemaVersion !== 6)
+  )
     throw Error("Invalid daily writing frame catalogue or schema version.");
   const keys = new Set<string>(),
     bindings = new Set<string>();
@@ -507,16 +522,18 @@ export function normalizeContentBundle(
   const domains = { ...defaults.domains, ...((rawObj.domains as ContentBundle["domains"]) || {}) };
 
   const hasAnnotatedThemes = cycles.some((c) => c.themes && c.themes.length > 0);
-  const schemaVersion: 2 | 3 | 4 | 5 | undefined =
-    rawObj.schemaVersion === 5
-      ? 5
-      : rawObj.schemaVersion === 4
-        ? 4
-        : rawObj.schemaVersion === 3
-          ? 3
-          : rawObj.schemaVersion === 2 || synthesisRules.length > 0 || hasAnnotatedThemes
-            ? 2
-            : undefined;
+  const schemaVersion: 2 | 3 | 4 | 5 | 6 | undefined =
+    rawObj.schemaVersion === 6
+      ? 6
+      : rawObj.schemaVersion === 5
+        ? 5
+        : rawObj.schemaVersion === 4
+          ? 4
+          : rawObj.schemaVersion === 3
+            ? 3
+            : rawObj.schemaVersion === 2 || synthesisRules.length > 0 || hasAnnotatedThemes
+              ? 2
+              : undefined;
 
   const bundle: ContentBundle = {
     version,
@@ -525,6 +542,9 @@ export function normalizeContentBundle(
     phases,
     domains,
     synthesisRules,
+    ...(rawObj.dailyEditorial !== undefined
+      ? { dailyEditorial: structuredClone(rawObj.dailyEditorial) as DailyEditorialCatalogue }
+      : {}),
     dailyWritingFrames: Array.isArray(rawObj.dailyWritingFrames)
       ? (structuredClone(rawObj.dailyWritingFrames) as DailyWritingFrame[])
       : [],
@@ -582,7 +602,7 @@ export function validateTransitCatalogue(value: unknown, schemaVersion: number |
   if (
     !Array.isArray(value) ||
     value.length > 5 ||
-    (value.length > 0 && schemaVersion !== 4 && schemaVersion !== 5)
+    (value.length > 0 && schemaVersion !== 4 && schemaVersion !== 5 && schemaVersion !== 6)
   )
     throw new Error("Invalid transit chapter catalogue");
   const keys = new Set<string>(),

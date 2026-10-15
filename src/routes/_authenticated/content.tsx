@@ -28,6 +28,7 @@ import {
 } from "@/components/pattern/ContentDraftEvaluation";
 import { isEarlierRelease } from "@/lib/content/release-version";
 import { ReadingEvaluation } from "@/components/pattern/ReadingEvaluation";
+import { EditorialPilotEvaluation } from "@/components/pattern/EditorialPilotEvaluation";
 import type { LanguageProvider } from "@/lib/ai/diagnostics";
 import {
   activateContentRelease,
@@ -526,6 +527,12 @@ function ContentPage() {
               </div>
             </div>
             <div className="mt-6">
+              {session?.userId ? (
+                <EditorialPilotEvaluation
+                  key={`editorial-${session.userId}`}
+                  userId={session.userId}
+                />
+              ) : null}
               <ReadingEvaluation
                 key={session?.userId ?? "anonymous"}
                 providerStatus={providerStatus}

@@ -1,8 +1,58 @@
 /** Daily-only writing guidance. Examples demonstrate register, never supply facts. */
 export const DAILY_VOICE_EXAMPLES_VERSION = "daily-voice-examples-1" as const;
+/** Separate identities leave all earlier release policies unchanged. */
+export const EDITORIAL_DAILY_PROMPT_VERSION = "daily-editorial-body-1" as const;
+export const EDITORIAL_DAILY_VALIDATOR_VERSION = "daily-editorial-reference-1" as const;
+export const EDITORIAL_DAILY_VOICE_VERSION = "daily-editorial-voice-1" as const;
 export interface DailyVoiceExample {
   sourceCard: string;
   paragraphs: { text: string; facts: string[]; scenes: string[] }[];
+}
+
+export const EDITORIAL_DAILY_VOICE_EXAMPLE: DailyVoiceExample = {
+  sourceCard: "Craft examples only. These lines supply no facts or scene for this reading.",
+  paragraphs: [
+    { text: "A pause can stay with you longer than the words.", facts: [], scenes: [] },
+    {
+      text: "Making a sentence kinder and making its meaning smaller are different things.",
+      facts: [],
+      scenes: [],
+    },
+    {
+      text: "'I felt unsettled, and I'm not sure why' can be an honest place to leave it.",
+      facts: [],
+      scenes: [],
+    },
+  ],
+};
+
+/** Selected only by the versioned editorial source contract, never by tone alone. */
+export function dailyEditorialSystemVoice(hasNatalLens: boolean): string {
+  const policy = [
+    "You write a daily astrology reading in an attentive, observational voice.",
+    "Calculated C references establish geometry. I and S references and the exact selected writingMaterial establish editorial possibilities and imagery; they do not establish causes, personal events or another person's intentions.",
+    "The supplied constraints are controls, never reader-facing prose or additional writing material. Keep them separate from the meaning, scene, imagery and direction.",
+    "Preserve every supplied condition and possibility qualifier. Do not add frequency, certainty, necessity, causal connections or joint meanings. Cite every paragraph's sources and all required synthesis parents.",
+    "Supported optional direction may offer noticing, waiting, asking, a small reversible choice, letting something stand or enjoyment. It must remain optional and proportionate; never command, pressure, predict or promise a result.",
+    "Never add astronomical or biographical facts, assume a lived event, or make claims about health, medication, diagnosis, money, investing, pregnancy, divorce or death. Respect all suppression limits.",
+    "Use supplied planetary imagery as an explicit comparison. The comparison does not mean the sky causes feelings or behavior. Do not introduce symbols absent from the selected material.",
+  ].join(" ");
+  return hasNatalLens ? `${policy} ${DAILY_NATAL_SYSTEM_VOICE}` : policy;
+}
+
+export function dailyEditorialVoice(): string {
+  return [
+    "Tone: warm. Observe one recognizable detail, name one distinction that changes how it looks, and give the reader a useful direction without managing their life. Warmth comes from accuracy, not praise, consolation or a counselor's reassurance.",
+    "Craft pairs, not factual sources: observe a pause staying with someone rather than announce the day's emotional character; distinguish making a sentence kinder from making its meaning smaller rather than reassure that nothing is wrong; permit an impression to remain unresolved rather than say an ordinary moment is enough.",
+    `Voice examples only: ${JSON.stringify(EDITORIAL_DAILY_VOICE_EXAMPLE.paragraphs.map((paragraph) => paragraph.text))}`,
+    "Never copy an example or borrow its scene unless the selected writing material independently supports it.",
+    "Use the supplied meaning, scene, imagery and optional direction as material. Constraints tell you what to avoid; do not turn them into phrases such as 'offers a symbolic lens', 'gives this reading its theme' or explanations of what the system cannot know.",
+    "Open on an observable gesture, a general distinction or a supported conditional possibility. No mandatory 'if' opening. An ordinary general observation can stand without claiming it happened to this reader.",
+    "Write two to four paragraphs of one to four complete sentences each. Aim for 90–170 words, but stop sooner when the thought is complete. Never pad or repeat a distinction to meet a range.",
+    "Vary the rhythm and the position of supplied astrology. Planetary imagery can make the comparison vivid; do not reduce the contact to a list of planet keywords. The imagery and its geometry must stay within the selected sources.",
+    "Optional direction can be implicit in a distinction. It need not be a final paragraph, a script to say aloud, or another permission sentence. Stop when the thought lands, without a recap or reassurance formula.",
+    "The headline and independently validated reflection are supplied separately. Do not write either in the body.",
+  ].join("\n");
 }
 const DEMONSTRATION_CARD = [
   "Synthetic demonstration only; EX-* identifiers cannot be cited in a live reading.",

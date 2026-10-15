@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { createHash } from "node:crypto";
 import { decryptJson } from "../crypto.server";
 import { validateDailyWritingFrames } from "./schema";
 import {
@@ -24,6 +25,24 @@ import {
 import type { FactAtom } from "../ai/facts";
 import { isPermitted } from "../registry";
 import { civilContextExpiry } from "../retention.server";
+import { validateDailyEditorialCatalogue, type DailyEditorialSelection } from "./daily-editorial";
+import type { ContentBundle } from "./default-bundle";
+
+const canonicalEditorial = (value: unknown): unknown =>
+  Array.isArray(value)
+    ? value.map(canonicalEditorial)
+    : value && typeof value === "object"
+      ? Object.fromEntries(
+          Object.entries(value)
+            .sort(([a], [b]) => a.localeCompare(b))
+            .map(([key, item]) => [key, canonicalEditorial(item)]),
+        )
+      : value;
+/** Public source-copy identity, not a digest of member/private context. */
+export const dailyEditorialDigest = (selection: DailyEditorialSelection): string =>
+  createHash("sha256")
+    .update(JSON.stringify(canonicalEditorial(selection)))
+    .digest("hex");
 
 export interface SavedDailyWriting {
   version: 1;
@@ -123,6 +142,52 @@ const frameSchema = z
       .strict(),
   })
   .strict();
+const editorialEntrySchema = z
+  .object({
+    key,
+    writingMaterial: z
+      .object({
+        meaning: z.string().min(1).max(2000),
+        scene: z.string().min(1).max(2000),
+        imagery: z.string().min(1).max(2000).nullable(),
+        direction: z.string().min(1).max(2000),
+        reflection: z.string().min(1).max(2000),
+      })
+      .strict(),
+    constraints: z.array(z.string().min(1).max(1000)).min(1).max(16),
+    headline: z.string().min(1).max(140),
+    reflection: z.string().min(1).max(220),
+    fallbackParagraphs: z.array(z.string().min(1).max(1600)).min(2).max(4),
+  })
+  .strict();
+const editorialSelectionSchema = z.discriminatedUnion("mode", [
+  z
+    .object({
+      version: z.literal("daily-editorial-1"),
+      releaseVersion: z.string().min(1).max(80),
+      mode: z.literal("contact"),
+      requiredFacts: z
+        .array(z.enum(["C1", "I1", "C2", "I2", "S1"]))
+        .min(2)
+        .max(5),
+      entry: editorialEntrySchema
+        .extend({
+          source: z.object({ kind: z.enum(["interpretation", "synthesis"]), key }).strict(),
+          cycleKeys: z.array(key).min(1).max(2),
+        })
+        .strict(),
+    })
+    .strict(),
+  z
+    .object({
+      version: z.literal("daily-editorial-1"),
+      releaseVersion: z.string().min(1).max(80),
+      mode: z.literal("quiet"),
+      requiredFacts: z.array(z.never()).max(0),
+      entry: editorialEntrySchema,
+    })
+    .strict(),
+]);
 const planSchema = z
   .object({
     version: z.literal(DAILY_WRITING_PLAN_VERSION),
@@ -153,6 +218,7 @@ const planSchema = z
           .strict(),
       )
       .max(2),
+    editorial: editorialSelectionSchema.optional(),
   })
   .strict();
 const envelopeSchema = z
@@ -178,7 +244,14 @@ const envelopeSchema = z
         question: z.string().min(1).max(220),
         themeFactId: z.enum(["I1", "S1"]).nullable(),
         frameKey: z.string().min(1).max(100).nullable(),
-        variant: z.enum(["standard", "high_stress", "low_sleep", "legacy", "fallback"]),
+        variant: z.enum([
+          "standard",
+          "high_stress",
+          "low_sleep",
+          "legacy",
+          "fallback",
+          "editorial",
+        ]),
         localSource: z.enum(["WEL-03", "WEL-01"]).nullable(),
       })
       .strict(),
@@ -197,6 +270,8 @@ export interface WritingRowBinding {
   release_version: string | null;
   primary_cycle_key: string | null;
   language_meta: unknown;
+  headline?: string;
+  language_mode?: string | null;
 }
 export function validateSavedDailyWriting(
   value: unknown,
@@ -236,6 +311,76 @@ export function validateSavedDailyWriting(
       .replace(/^Published (?:tension|reinforcement) synthesis [^\n]+ \(parents: [^)]+\): /, "")
       .replace(/^Published interpretation [^\n]+?: /, "");
   assertDailyWritingBrief(toDailyWritingBrief(plan), plan, facts);
+  if (plan.editorial) {
+    const selected = plan.editorial;
+    if (
+      meta["dailyEditorialDigest"] !== dailyEditorialDigest(selected) ||
+      row.headline !== selected.entry.headline ||
+      !["model", "template"].includes(row.language_mode ?? "")
+    )
+      throw Error("Saved editorial source digest or headline differs from its reading.");
+    const first = facts.find((fact) => fact.id === "I1");
+    const second = facts.find((fact) => fact.id === "I2");
+    const synthesis = facts.find((fact) => fact.id === "S1");
+    const sourceBundle: ContentBundle = {
+      version: plan.releaseVersion,
+      schemaVersion: 6,
+      natal: {},
+      phases: {},
+      domains: {},
+      cycles: facts
+        .filter((fact) => /^I[123]$/.test(fact.id))
+        .map((fact) => ({
+          key: fact.sourceKey!,
+          mechanism: published(fact),
+          question: selected.entry.reflection,
+        })),
+      synthesisRules: synthesis
+        ? [
+            {
+              key: synthesis.sourceKey!,
+              relationship: plan.theme!.relationship!,
+              mechanism: published(synthesis),
+              primary: { interpretationKey: first!.sourceKey!, theme: "structure" },
+              supporting: { interpretationKey: second!.sourceKey!, theme: "expansion" },
+            },
+          ]
+        : [],
+    };
+    validateDailyEditorialCatalogue(
+      {
+        version: selected.version,
+        frames: selected.mode === "contact" ? [selected.entry] : [],
+        quiet: selected.mode === "quiet" ? [selected.entry] : [],
+      },
+      sourceBundle,
+    );
+    if (
+      selected.mode === "contact"
+        ? paragraphs
+            .slice(0, saved.astroParagraphCount)
+            .some((_, index) =>
+              selected.requiredFacts.some(
+                (id) => !citations.find((item) => item.paragraph === index + 1)?.facts.includes(id),
+              ),
+            )
+        : citations.some((item) => item.paragraph <= saved.astroParagraphCount && item.facts.length)
+    )
+      throw Error("Saved editorial paragraph lost its selected source or parent references.");
+    if (
+      row.language_mode === "template" &&
+      (JSON.stringify(paragraphs.slice(0, saved.astroParagraphCount)) !==
+        JSON.stringify(selected.entry.fallbackParagraphs) ||
+        (selected.mode === "contact" &&
+          selected.entry.fallbackParagraphs.some(
+            (_, index) =>
+              citations.find((item) => item.paragraph === index + 1)?.facts.join("|") !==
+              selected.requiredFacts.join("|"),
+          )))
+    )
+      throw Error("Saved editorial fallback differs from its exact selected source.");
+  } else if (meta["dailyEditorialDigest"] !== undefined)
+    throw Error("Saved editorial digest has no matching source selection.");
   const theme = plan.theme;
   if (
     (plan.status === "no_primary") !== (theme === null) ||
@@ -320,9 +465,14 @@ export function validateSavedDailyWriting(
   if (
     dailyQuestionProblem(reflection.question) ||
     reflection.themeFactId !== (theme?.factId ?? null) ||
-    reflection.frameKey !== (plan.frame?.key ?? null)
+    reflection.frameKey !== (plan.editorial?.entry.key ?? plan.frame?.key ?? null)
   )
     throw Error("Invalid saved source reflection.");
+  if (
+    (reflection.variant === "editorial") !== !!plan.editorial ||
+    (plan.editorial && reflection.question !== plan.editorial.entry.reflection)
+  )
+    throw Error("Saved editorial reflection differs from its source selection.");
   if (reflection.variant === "legacy") {
     if (
       plan.status !== "no_frame" ||
@@ -414,6 +564,8 @@ export async function readSavedDailyWriting(
     return { status: "unavailable", reason: unavailable.reason as "expired" | "revoked" };
   }
   const present = Object.hasOwn(meta, "daily_writing_ct");
+  if (!present && meta["dailyEditorialDigest"] !== undefined)
+    throw Error("Saved editorial source identity is missing its writing evidence.");
   if (!present && meta["dailyWritingStatus"] === undefined) return null;
   const retention = meta["dailyWritingRetention"] as
     { sourceIds?: unknown; expiresAt?: unknown } | undefined;

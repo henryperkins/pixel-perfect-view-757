@@ -1,0 +1,75 @@
+{
+  "version": "editorial-target-drafts-1",
+  "authorship": "Original assistant-authored editorial exploration; no provider requests",
+  "provider": "none",
+  "cases": [
+    {
+      "id": "writing-reply-scene",
+      "revision": 3,
+      "headline": "When the point gets edited out",
+      "paragraphs": [
+        "If you've rewritten a work message until every sentence sounds agreeable, the point you wanted to make may have become harder to find. Perhaps the question has become a suggestion, or an important reservation is buried under explanations. In that kind of draft, it can feel as though your own position has gone missing.",
+        "Making a sentence kinder and making its meaning smaller are different things. Writing the central point once, in the words you would use out loud, can help you hear the difference. That sentence can sit beside the reply while you work on its wording.",
+        "Mercury meeting your natal Mercury is like a messenger rereading the original note before handing it over. The wording is open to revision; the point can remain legible."
+      ],
+      "prompt": "When is directness the kinder choice?",
+      "lengthException": "126 words: the human review requested removal of scaffolding, repeated examples, and redundant reassurance. The complete observation, distinction, astrology, direction, and separate reflection are retained without padding."
+    },
+    {
+      "id": "venus-opposition-venus",
+      "revision": 4,
+      "headline": "A different plan, the same company",
+      "paragraphs": [
+        "Wanting to see someone and wanting a different kind of evening can both be true. An invitation to go dancing can leave a reply hovering at 'I'd love to' when a walk is what appeals. The tender part can be the fear that a different preference will sound like less affection.",
+        "Venus opposite your natal Venus is an invitation with two versions of the evening written on it. One question to ask is which part of the plan matters most to each of you. The wish to meet can stay in the conversation while the plan changes."
+      ],
+      "prompt": "What makes a counterproposal feel like an invitation to you?",
+      "lengthException": "97 words: the human review requested removal of scaffolding, repeated examples, and redundant reassurance. The complete observation, distinction, astrology, direction, and separate reflection are retained without padding."
+    },
+    {
+      "id": "synthesis-tension",
+      "revision": 5,
+      "headline": "When enthusiasm becomes a promise",
+      "paragraphs": [
+        "If you're excited about a project, 'I can do this much' may feel like too little enthusiasm for an idea you care about. In that situation, promising more can become a way of trying to show how much the project matters.",
+        "Jupiter's trine to your natal Mars is a lengthening stride; Saturn's square to your natal Sun is the pack that comes along. A faster pace doesn't make the pack lighter.",
+        "Before adding another piece, there is something to notice: whether you want to do that work or want the promise to show how much you care. The size of the promise doesn't have to do all the talking."
+      ],
+      "prompt": "What would taking an idea seriously look like at a scale you can manage?",
+      "lengthException": "109 words: the human review requested removal of scaffolding, repeated examples, and redundant reassurance. The complete observation, distinction, astrology, direction, and separate reflection are retained without padding."
+    },
+    {
+      "id": "jupiter-trine-sun-technical",
+      "revision": 4,
+      "headline": "What 'just' leaves out",
+      "paragraphs": [
+        "Lighting up about an interest, then calling it 'just a hobby,' can happen in the same breath. The qualification comes after the enthusiasm, but it gets the last word. Jupiter's trine to your natal Sun is a wider frame around a familiar self-portrait.",
+        "An interest can belong to the way you describe yourself while it is unfinished, private, or pursued in fits and starts. The detail worth catching is whether you reach for 'just' before anyone has questioned it. Dropping that word once can leave the interest standing without an explanation of how good you are at it."
+      ],
+      "prompt": "What draws you to someone else's interests before you know how skilled they are?",
+      "lengthException": "98 words: the human review requested removal of scaffolding, repeated examples, and redundant reassurance. The complete observation, distinction, astrology, direction, and separate reflection are retained without padding."
+    },
+    {
+      "id": "fallback-hard-neptune-mercury",
+      "revision": 4,
+      "headline": "Before a feeling becomes a verdict",
+      "paragraphs": [
+        "After a conversation, a pause or a shift in tone can stay with you longer than the words. If that happens, you might find yourself going over what was said, adding an explanation to the memory.",
+        "A feeling can deserve your attention while leaving another person's intentions unknown. Neptune blurs; Mercury names. A square between Neptune and your natal Mercury is a fair picture of the gap between an impression and the story that forms around it.",
+        "An impression can stay an impression for a while. 'I felt unsettled, and I'm not sure why' can be an honest place to leave it."
+      ],
+      "prompt": "When you're the one who goes quiet, what's usually behind it?",
+      "lengthException": "102 words: the human review requested removal of scaffolding, repeated examples, and redundant reassurance. The complete observation, distinction, astrology, direction, and separate reflection are retained without padding."
+    },
+    {
+      "id": "quiet-threshold",
+      "revision": 4,
+      "headline": "A detail without a message",
+      "paragraphs": [
+        "A bright thread in a dark coat can catch your eye before you know why. Looking for a message can turn the color into a clue, something that points beyond the cloth.",
+        "There is also the second look that asks nothing of it. Just the thread, the cloth around it, a stitch that doesn't quite match. Something can be worth noticing without becoming a message."
+      ],
+      "prompt": "What do you miss when you're looking for an answer?"
+    }
+  ]
+}

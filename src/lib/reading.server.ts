@@ -52,6 +52,8 @@ function arcParagraph(c: CycleInstance, technical: boolean, primaryComposition =
 import { assertUse, isPermitted, type AllowedUse } from "./registry";
 
 export interface ReadingContext {
+  /** Explicit civil day for the optional editorial quiet repertoire. */
+  day?: string;
   granted: Set<string>;
   tone: string;
   depth: string;
@@ -176,7 +178,7 @@ export function assembleReading(
   storyCalculation: DailyTransitCalculation | null = null,
 ): AssembledReading {
   const provenance: ProvenanceEntry[] = [];
-  const primaryComposition = bundle.schemaVersion === 4;
+  const primaryComposition = bundle.schemaVersion === 4 || bundle.schemaVersion === 6;
 
   record(provenance, ctx, "calculation", "AST-05", "calculation", "Planetary ephemeris", {
     engine: chart.engine,
@@ -192,7 +194,7 @@ export function assembleReading(
 
   const ranked = eligibleReadingCycles(chart, cycles);
   const interpretationPlan = resolveInterpretationPlan(bundle, ranked);
-  const writingPlan = resolveDailyWritingPlan(bundle, interpretationPlan);
+  const writingPlan = resolveDailyWritingPlan(bundle, interpretationPlan, ctx);
   const primary = ranked[0] ?? null;
   const natalLensPlan = resolveDailyNatalLens(
     bundle,
@@ -488,11 +490,11 @@ export function assembleReading(
   }
 
   const writingTemplate =
-    bundle.schemaVersion === 5
+    bundle.schemaVersion === 5 || writingPlan.editorial
       ? composeDailyWritingTemplate(writingPlan, natalLensPlan, transitStoryPlan)
       : null;
   const reflectionPlan =
-    bundle.schemaVersion === 5
+    bundle.schemaVersion === 5 || writingPlan.editorial
       ? resolveDailyReflection(
           writingPlan,
           primary
@@ -503,6 +505,7 @@ export function assembleReading(
         )
       : null;
   if (reflectionPlan) prompt = reflectionPlan.question;
+  if (writingPlan.editorial) headline = writingPlan.editorial.entry.headline;
   if (reflectionPlan?.localSource)
     record(
       provenance,

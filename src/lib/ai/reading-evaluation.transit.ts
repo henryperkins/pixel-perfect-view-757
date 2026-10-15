@@ -32,7 +32,11 @@ export const TRANSIT_EVALUATION_METADATA = {
 
 /** Never reinterpret a historical catalogue hash. New identities hash only their canonical cases. */
 export function transitEvaluationMetadata(caseSetId: EvaluationCaseSetId = "synthetic-daily-7") {
-  if (caseSetId !== "draft-fallback-2" && caseSetId !== "draft-pilot-2")
+  if (
+    caseSetId !== "draft-fallback-2" &&
+    caseSetId !== "draft-pilot-2" &&
+    caseSetId !== "daily-editorial-1"
+  )
     return TRANSIT_EVALUATION_METADATA;
   return {
     ...TRANSIT_EVALUATION_METADATA,

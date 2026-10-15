@@ -1,0 +1,68 @@
+{
+  "version": "daily-editorial-pilot-preparation-1",
+  "candidateVersion": "0.9.0-editorial-pilot.1",
+  "candidateHash": "ac78d4b47d8b0930f2b2d6d560948869284bbc032834a1c195d061a7a1f29cb4",
+  "baseline": {
+    "sourcePath": "docs/reviews/content-draft-effectiveness/2026-10-13/pilot/frozen-pair.json",
+    "selector": "bundles.baseline",
+    "sha256": "300173610977707a1852f4e5898d8e27a2e0d4b932ab3fc4db398eda7efbdad8"
+  },
+  "sourceFileHashes": {
+    "scripts/prepare-editorial-pilot.mjs": "72673fc8c3bce5f53acff929bc1329e1bfc74ca4b10c5f2a15cfacd00497ae3d",
+    "src/lib/content/editorial-candidate-bundle.ts": "78c5b82cf3c4d0f296f7001385439c4094ea030b3c3e16687dfc4cd9176fff01",
+    "src/lib/content/editorial-candidate-data.json": "5d3bd26122cd1d3f3446abf96670fea43fecddd8de2a2b94e70da52e83564752",
+    "src/lib/content/daily-editorial.ts": "d10340c276e5ed8aee5101b30a720a716ad4c25501e331aa9defbbedc41284b4",
+    "src/lib/content/daily-writing.ts": "b01e0d9b5034bce1dc32ed4f19fb5ed31875a20f3eee2d026b83055890af6d21",
+    "src/lib/content/daily-writing-template.ts": "4629d39a152f01cca91ae433b8ac0c50720fa724048265e143a66255bc4b8eed",
+    "src/lib/content/daily-reflection.ts": "a4ce0ee3f3a623848f4fda6906961a9244ead7499d701bd80d43c7e7e705ef7a",
+    "src/lib/content/default-bundle.ts": "62c6ce6d7e31bad0c4b12b1f11eeb158b2ba6462b097e90733f9c6dc7b9f9a46",
+    "src/lib/content/schema.ts": "f22355a95829bc53d6ced3535a9db73d708e90cedb7ad9a09adc8adaa264420e",
+    "src/lib/reading.server.ts": "5173f1ee5a050451d8f7720af3032aa84c7c444f6b8b032aceb31beb1d4bae2b",
+    "src/lib/ai/facts.ts": "f5f71ee9868024db562a756d240886fd787ddf132a70b349eefdc0b199a6478d",
+    "docs/reviews/daily-reading-editorial/2026-10-15/drafts.json": "71310b22a3b8bfb5de888311246036727f76d3ddb97c37ca25e261d17a6f7565",
+    "docs/reviews/daily-reading-editorial/2026-10-15/source-proposals.json": "9d317ae93e0cbeb9c5b91f1a0fd704a798d7b975477bad419b404dae2649aaed",
+    "docs/reviews/daily-reading-editorial/2026-10-15/quiet-variation-plan.md": "c6b4e5307f760640f34888e14168567cbb0cd9065bb0a002df89c731a3711a85"
+  },
+  "artifacts": {
+    "candidate.json": "8b5b79fbd905a5152dfdd46a14fed03867f23bd8f07c745b9e6ebbf573135849",
+    "preview.json": "d9a201cbc1a843c2a7002934c98551c1b4ca12e7014328ffce387a3340119a15",
+    "preview.md": "615f462bce80a3a9dc1bd98d9a64fcb41eb254296c1f5d68dd6115709a4e27b6",
+    "quiet-preview.md": "1e335185e9ec7aee509523275a7b2e0cad0ad86f45a6a0cb2d2ced241d5616d7"
+  },
+  "scope": {
+    "tone": "warm",
+    "depth": "standard",
+    "caseIds": [
+      "writing-reply-scene",
+      "venus-opposition-venus",
+      "synthesis-tension",
+      "jupiter-trine-sun-technical",
+      "fallback-hard-neptune-mercury",
+      "quiet-threshold"
+    ],
+    "natalReliability": null,
+    "transitCalculation": null
+  },
+  "changedExistingInterpretations": [],
+  "changedExistingSynthesisRules": [],
+  "addedInterpretations": [
+    "square:neptune:mercury"
+  ],
+  "preservedBaseline": "All existing interpretations, synthesis rules, natal lenses, transit copy, phases, domains and natal copy remain byte-identical as JSON values.",
+  "sourceMigration": {
+    "caseId": "fallback-hard-neptune-mercury",
+    "before": "hard:*:*",
+    "after": "square:neptune:mercury"
+  },
+  "quiet": {
+    "entryCount": 4,
+    "newlyAuthoredProvisionalCount": 3,
+    "humanApproved": false
+  },
+  "provider": "none",
+  "networkAttempts": 0,
+  "published": false,
+  "activated": false,
+  "generatedModelReadings": 0,
+  "editorialQualification": "pending real-model writing and human review"
+}

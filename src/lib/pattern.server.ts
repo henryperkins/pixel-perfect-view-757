@@ -8,6 +8,7 @@ import { composeDailyWritingTemplate } from "./content/daily-writing-template";
 import {
   readSavedDailyWriting,
   validateSavedDailyWriting,
+  dailyEditorialDigest,
   type SavedDailyWriting,
   type SavedWritingState,
 } from "./content/daily-writing-storage.server";
@@ -17,7 +18,12 @@ import {
   DAILY_WRITING_QUALITY_VERSION,
   type RecentDailyWritingHistory,
 } from "./ai/daily-writing-quality";
-import { DAILY_VOICE_EXAMPLES_VERSION } from "./ai/daily-voice";
+import {
+  DAILY_VOICE_EXAMPLES_VERSION,
+  EDITORIAL_DAILY_PROMPT_VERSION,
+  EDITORIAL_DAILY_VALIDATOR_VERSION,
+  EDITORIAL_DAILY_VOICE_VERSION,
+} from "./ai/daily-voice";
 import { CONCRETE_DAILY_PROMPT_VERSION, CONCRETE_DAILY_VALIDATOR_VERSION } from "./ai/diagnostics";
 import { type DailyTransitCalculation } from "./astro/transit-episodes";
 import { DAILY_TRANSIT_STORY_VERSION } from "./content/transit-story";
@@ -1125,6 +1131,7 @@ export async function readingLanguage(
     language_meta: JsonValue;
     release_version: string | null;
     primary_cycle_key: string | null;
+    headline?: string;
   },
   dek: CryptoKey,
   privacy: { granted: Set<string>; now: Date } = { granted: new Set(), now: new Date() },
@@ -1442,6 +1449,7 @@ async function getTodayReading(
   };
 
   const ctx: ReadingContext = {
+    ...(bundle.dailyEditorial ? { day } : {}),
     granted,
     tone: isPermitted("USR-01", "external_language", granted)
       ? normalizeTone(profile.tone_pref ?? "plain")
@@ -1519,6 +1527,19 @@ async function getTodayReading(
             frames: bundle.dailyWritingFrames ?? [],
             sources: bundle.cycles,
             synthesis: bundle.synthesisRules ?? [],
+          },
+        }
+      : {}),
+    ...(bundle.schemaVersion === 6 &&
+    bundle.dailyEditorial &&
+    ctx.tone === "warm" &&
+    ctx.depth === "standard"
+      ? {
+          editorialPolicy: {
+            prompt: EDITORIAL_DAILY_PROMPT_VERSION,
+            validator: EDITORIAL_DAILY_VALIDATOR_VERSION,
+            voice: EDITORIAL_DAILY_VOICE_VERSION,
+            catalogue: bundle.dailyEditorial,
           },
         }
       : {}),
@@ -1908,7 +1929,14 @@ async function getTodayReading(
         snapshot_id: snapRow.id,
         release_version: assembled.release_version,
         primary_cycle_key: assembled.primary_cycle_key,
-        language_meta: { astroParagraphCount: prose.paragraphs.length },
+        headline: prose.headline,
+        language_mode: prose.meta.mode,
+        language_meta: {
+          astroParagraphCount: prose.paragraphs.length,
+          ...(dailyWriting.plan.editorial
+            ? { dailyEditorialDigest: dailyEditorialDigest(dailyWriting.plan.editorial) }
+            : {}),
+        },
       },
       suppliedFacts,
       prose.paragraphs,
@@ -1947,6 +1975,9 @@ async function getTodayReading(
           ? {
               daily_writing_ct: await encryptJson(dek, dailyWriting),
               dailyWritingStatus: "saved",
+              ...(dailyWriting.plan.editorial
+                ? { dailyEditorialDigest: dailyEditorialDigest(dailyWriting.plan.editorial) }
+                : {}),
               ...(dailyWriting.reflection.localSource
                 ? {
                     dailyWritingRetention: {
@@ -2153,7 +2184,7 @@ export async function loadRecentDailyWritingBodies(
     const { data, error } = await db
       .from<ExistingReadingRow>("daily_readings")
       .select(
-        "id,snapshot_id,reading_date,release_version,primary_cycle_key,language_mode,language_model,language_meta,body_ct,context_version,local_context_ct,local_context_sources,local_context_expires_at,mixed_context_expires_at,retention_state,created_at",
+        "id,snapshot_id,reading_date,headline,release_version,primary_cycle_key,language_mode,language_model,language_meta,body_ct,context_version,local_context_ct,local_context_sources,local_context_expires_at,mixed_context_expires_at,retention_state,created_at",
       )
       .eq("user_id", userId)
       .eq("snapshot_id", snapshotId)

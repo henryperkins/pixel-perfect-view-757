@@ -74,17 +74,19 @@ function outcomeLabel(row: ReadingEvaluationCaseRow): string {
           : "Skipped before a model call";
 }
 
-function EvaluationCase({
+export function EvaluationCase({
   result,
   position,
+  idPrefix = "synthetic-evaluation",
 }: {
   result: ReadingEvaluationCaseResult;
   position: number;
+  idPrefix?: string;
 }) {
   const [expanded, setExpanded] = useState(false);
   const row = result.case;
   const label = READING_EVALUATION_CATALOG.find((fixed) => fixed.id === row.id)?.label ?? row.id;
-  const panelId = `synthetic-evaluation-${row.id}-${position}`;
+  const panelId = `${idPrefix}-${row.id}-${position}`;
   return (
     <article className="min-w-0 rounded-md border border-rule bg-card">
       <Button

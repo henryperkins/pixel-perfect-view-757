@@ -17,6 +17,7 @@ import type { DailyWritingQualityReport, DailyWritingRenderMode } from "./daily-
 import { QUALIFICATION_PROFILES, type QualificationProfile } from "./qualification-profiles";
 import type { AdminTransportTrace } from "./admin-transport";
 import { latencyProbePreviewSchema, latencyProbeRunSchema } from "./latency-probe";
+import { editorialPilotPreviewSchema, editorialPilotRunSchema } from "./editorial-pilot";
 
 export { READING_EVAL_FIXTURE_VERSION };
 export const READING_EVALUATION_CATALOG = READING_EVAL_CASES.map((fixed) => ({
@@ -43,7 +44,10 @@ export const READING_EVALUATION_BUNDLE_SOURCES = [
   "writing-candidate",
 ] as const;
 export type ReadingEvaluationBundleSource =
-  (typeof READING_EVALUATION_BUNDLE_SOURCES)[number] | "content-comparison" | "latency-probe";
+  | (typeof READING_EVALUATION_BUNDLE_SOURCES)[number]
+  | "content-comparison"
+  | "latency-probe"
+  | "editorial-pilot";
 
 export const contentComparisonSourceSchema = z.discriminatedUnion("kind", [
   z.object({ kind: z.literal("draft"), draftId: z.string().min(1).max(80) }).strict(),
@@ -102,11 +106,13 @@ const legacyReadingEvaluationRunInputSchema = z
   .strict();
 
 export const readingEvaluationRunInputSchema = z.union([
+  editorialPilotRunSchema,
   legacyReadingEvaluationRunInputSchema,
   contentComparisonRunSchema,
   latencyProbeRunSchema,
 ]);
 export const readingEvaluationPreviewInputSchema = z.union([
+  editorialPilotPreviewSchema,
   legacyReadingEvaluationRunInputSchema,
   contentComparisonPreviewSchema,
   latencyProbePreviewSchema,
@@ -142,6 +148,7 @@ export interface ReadingEvaluationRun {
   qualificationProfile?: QualificationProfile;
   campaignId?: string;
   attemptLimit?: number;
+  editorialPilot?: { version: "daily-editorial-pilot-1"; quietDates: string[] };
   enterpriseThinking?: "LOW" | "MEDIUM";
   contentComparison?: {
     arm: "baseline" | "candidate";
@@ -163,6 +170,8 @@ export function readingEvaluationCurrentCaseLabel(run: ReadingEvaluationRun | nu
 }
 
 export function readingEvaluationReportScope(run: ReadingEvaluationRun | null): string {
+  if (run?.editorialPilot)
+    return "Candidate-only editorial pilot: six scenarios and a four-date quiet sequence, at most five model attempts. Quiet outputs are deterministic; this is not a consecutive-day model test.";
   if (run?.latencyProbe)
     return "Latency probe captures are four planned observations by position and thinking level; only a case with both complete levels supports paired review.";
   if (run?.enterpriseThinking)
@@ -213,7 +222,8 @@ export interface ReadingEvaluationMetadata {
   runPlanHash?: string;
   requestPolicyVersion?: string;
   enterpriseThinking?: "LOW" | "MEDIUM";
-  experimentVersion?: "enterprise-thinking-pilot-1" | "content-latency-probe-1";
+  experimentVersion?:
+    "enterprise-thinking-pilot-1" | "content-latency-probe-1" | "daily-editorial-pilot-1";
   fixtureVersion: string;
   caseSetHash: string;
   caseSetId?: import("./evaluation-case-sets").EvaluationCaseSetId;
@@ -375,6 +385,7 @@ export function combineReadingEvaluationResults(
 ): ReadingEvaluationReport {
   const first = results[0];
   if (!first) throw new Error("No synthetic evaluation results to combine");
+  const editorialPilot = first.metadata.caseSetId === "daily-editorial-1";
   const metadataFields = [
     "reportVersion",
     "qualificationProfile",
@@ -456,7 +467,11 @@ export function combineReadingEvaluationResults(
   const seen = new Set<string>();
   for (const result of results) {
     if (
-      metadataFields.some((field) => first.metadata[field] !== result.metadata[field]) ||
+      metadataFields.some(
+        (field) =>
+          !(editorialPilot && field === "network") &&
+          first.metadata[field] !== result.metadata[field],
+      ) ||
       JSON.stringify(first.metadata.contentComparison) !==
         JSON.stringify(result.metadata.contentComparison)
     )
@@ -477,11 +492,19 @@ export function combineReadingEvaluationResults(
   const cases = catalog.flatMap((fixed) =>
     results.filter((result) => result.case.id === fixed.id).map((result) => result.case),
   );
+  const summary = summarizeReadingEvaluation(cases);
   return {
     ...first.metadata,
+    ...(editorialPilot
+      ? {
+          network: `${summary.modelAttempts} provider requests attempted; ${cases.filter((item) => item.writingPlan?.editorial?.mode === "quiet").length} authored quiet outputs; fixed synthetic facts only.`,
+          warning:
+            "Candidate-only synthetic outputs. Inspect each case's diagnostics and output mode: quiet outputs are authored copy, and fallback templates are not model writing. These captures do not establish member acceptance or editorial quality.",
+        }
+      : {}),
     partial: partial || seen.size !== expected.size,
     expectedCases: expected.size,
-    summary: summarizeReadingEvaluation(cases),
+    summary,
     cases,
   };
 }

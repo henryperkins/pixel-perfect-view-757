@@ -1,6 +1,11 @@
 import type { ContentBundle } from "./default-bundle";
 import type { DailyInterpretationPlan } from "./synthesis";
 import type { FactAtom } from "../ai/facts";
+import {
+  resolveDailyEditorial,
+  toDailyEditorialBrief,
+  type DailyEditorialSelection,
+} from "./daily-editorial";
 
 export const DAILY_WRITING_PLAN_VERSION = "daily-concrete-writing-1" as const;
 export interface DailyScene {
@@ -29,11 +34,14 @@ export interface DailyWritingPlan {
   frame: DailyWritingFrame | null;
   scenes: (DailyScene & { id: "SC1" | "SC2" })[];
   templateSources: { factId: "I1" | "S1"; sourceKey: string; sentences: string[] }[];
+  /** Present only for a matching, explicitly opted-in editorial candidate. */
+  editorial?: DailyEditorialSelection;
 }
 export interface DailyWritingBrief {
   themeFactId: "I1" | "S1" | null;
   requiredFacts: string[];
   scenes: { id: "SC1" | "SC2"; situation: string; focus: string; cues: DailyScene["cues"] }[];
+  editorial?: ReturnType<typeof toDailyEditorialBrief>;
 }
 
 export function completeDailySentences(text: string): string[] {
@@ -46,12 +54,15 @@ export function completeDailySentences(text: string): string[] {
 export function resolveDailyWritingPlan(
   bundle: ContentBundle & { dailyWritingFrames?: DailyWritingFrame[] },
   interpretation: DailyInterpretationPlan,
+  context?: { day?: string; tone: string; depth: string },
 ): DailyWritingPlan {
   if (interpretation.releaseVersion !== bundle.version)
     throw Error("Writing source release does not match the interpretation plan.");
   const primary = interpretation.interpretations.find((item) => item.index === 1);
   const synthesis = interpretation.synthesis;
-  const frames = bundle.dailyWritingFrames ?? [];
+  const editorial = context ? resolveDailyEditorial(bundle, interpretation, context) : null;
+  // Editorial scenes have their own source contract; they are not schema-5 SC examples.
+  const frames = editorial ? [] : (bundle.dailyWritingFrames ?? []);
   const compact = (kind: "interpretation" | "synthesis", key: string, mechanism: string) => {
     const ownFrame = frames.find((item) => item.source.kind === kind && item.source.key === key);
     const sentences = completeDailySentences(mechanism);
@@ -66,6 +77,7 @@ export function resolveDailyWritingPlan(
       frame: null,
       scenes: [],
       templateSources: [],
+      ...(editorial ? { editorial } : {}),
     };
   const factId = synthesis ? "S1" : "I1";
   const sourceKey = synthesis?.ruleKey ?? primary.interpretationKey;
@@ -107,6 +119,7 @@ export function resolveDailyWritingPlan(
           ]
         : []),
     ],
+    ...(editorial ? { editorial } : {}),
   };
 }
 
@@ -121,6 +134,7 @@ export function toDailyWritingBrief(plan: DailyWritingPlan): DailyWritingBrief {
       focus,
       cues: structuredClone(cues),
     })),
+    ...(plan.editorial ? { editorial: toDailyEditorialBrief(plan.editorial) } : {}),
   };
 }
 
@@ -131,6 +145,32 @@ export function assertDailyWritingBrief(
 ) {
   if (JSON.stringify(brief) !== JSON.stringify(toDailyWritingBrief(plan)))
     throw Error("Writing brief differs from its exact selected scene plan.");
+  if (plan.editorial) {
+    const editorial = plan.editorial;
+    if (
+      editorial.releaseVersion !== plan.releaseVersion ||
+      editorial.mode !== (plan.theme ? "contact" : "quiet") ||
+      editorial.requiredFacts.join("|") !== (plan.theme?.requiredFacts ?? []).join("|") ||
+      plan.frame ||
+      plan.scenes.length
+    )
+      throw Error("Editorial writing selection differs from its exact selected source plan.");
+    if (editorial.mode === "contact") {
+      const entry = editorial.entry;
+      if (
+        !("source" in entry) ||
+        entry.source.key !== plan.theme?.sourceKey ||
+        entry.source.kind !== (plan.theme?.factId === "S1" ? "synthesis" : "interpretation") ||
+        entry.cycleKeys.length !== (plan.theme?.factId === "S1" ? 2 : 1) ||
+        entry.cycleKeys.some((key, index) => {
+          const cycle = facts.find((fact) => fact.id === `C${index + 1}`)?.cycle;
+          return !cycle || key !== `${cycle.transitBody}_${cycle.aspect}_${cycle.natalPoint}`;
+        })
+      )
+        throw Error("Editorial writing source or calculated contact differs from saved facts.");
+    } else if ("source" in editorial.entry || "cycleKeys" in editorial.entry)
+      throw Error("Quiet editorial writing contains an interpretation source.");
+  }
   if (!plan.theme) {
     if (plan.scenes.length || facts.some((fact) => fact.id === "I1" || fact.id === "S1"))
       throw Error("Quiet writing plan contains a source or scene.");

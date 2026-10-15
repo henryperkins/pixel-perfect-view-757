@@ -16,6 +16,16 @@ export function composeDailyWritingTemplate(
   story: DailyTransitStoryPlan,
   minimal = false,
 ): DailyWritingTemplate {
+  if (plan.editorial)
+    return {
+      paragraphs: plan.editorial.entry.fallbackParagraphs.map((text) => ({
+        text,
+        facts: [...plan.editorial!.requiredFacts],
+        scenes: [],
+      })),
+      renderMode: plan.editorial.mode === "quiet" ? "quiet" : "unframed",
+      reason: null,
+    };
   if (!plan.theme)
     return {
       paragraphs: [

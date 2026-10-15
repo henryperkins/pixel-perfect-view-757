@@ -77,6 +77,17 @@ import {
   LATENCY_PROBE_VERSION,
   type LatencyProbeSettings,
 } from "./ai/latency-probe";
+import {
+  createEditorialPilotPlan,
+  revalidateEditorialPilotPlan,
+} from "./ai/editorial-pilot-plan.server";
+import {
+  EDITORIAL_PILOT_VERSION,
+  EDITORIAL_PILOT_CASE_SET_ID,
+  EDITORIAL_PILOT_ATTEMPT_LIMIT,
+  EDITORIAL_PILOT_DOLLAR_CEILING_MICROS,
+  type EditorialPilotSettings,
+} from "./ai/editorial-pilot";
 
 const HALT_CODES = new Set(["not_configured", "auth", "credit", "rate_limit"]);
 const jsonValue = (x: unknown): EvaluationJsonValue => JSON.parse(JSON.stringify(x));
@@ -89,6 +100,15 @@ export async function previewEvaluationPlan(
   await requireAdmin(db, userId);
   readingEvaluationPreviewInputSchema.parse(settings);
   if ("mode" in settings) {
+    if (settings.mode === "editorial-pilot") {
+      const plan = createEditorialPilotPlan(evaluationSourceSha(), memberLanguageProvider());
+      return {
+        hash: plan.hash,
+        attemptLimit: plan.attemptLimit,
+        sourceSha: plan.sourceSha,
+        plans: jsonValue(plan),
+      };
+    }
     if (settings.mode === "latency-probe") {
       if (memberLanguageProvider() !== LATENCY_PROBE_PROVIDER)
         throw Error("The latency probe requires the member Gemini Enterprise provider.");
@@ -190,6 +210,18 @@ function view(row: RunRow): ReadingEvaluationRun {
     message: row.message,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
+    ...(row.plan?.editorialPilot
+      ? {
+          campaignId: row.campaign_id!,
+          attemptLimit: row.attempt_limit!,
+          editorialPilot: {
+            version: row.plan.editorialPilot.version,
+            quietDates: row.plan.editorialPilot.caseManifest.cases
+              .slice(5)
+              .map((fixed) => fixed.config.day),
+          },
+        }
+      : {}),
     ...(row.plan?.contentComparison
       ? {
           campaignId: row.campaign_id!,
@@ -596,6 +628,71 @@ async function startLatencyProbeRun(
   );
 }
 
+/** Candidate only; one retained campaign per operator and pilot version, including failed dispatches. */
+async function startEditorialPilotRun(
+  db: DBClient,
+  userId: string,
+  settings: EditorialPilotSettings,
+  origin: string,
+) {
+  const provider = memberLanguageProvider();
+  const plan = createEditorialPilotPlan(evaluationSourceSha(), provider);
+  if (plan.hash !== settings.expectedPlanHash)
+    throw Error("The reviewed editorial pilot plan changed. Prepare a new dry plan.");
+  const runId = crypto.randomUUID();
+  const now = new Date().toISOString();
+  const cutoff = new Date(Date.now() - READING_EVALUATION_STALL_MS).toISOString();
+  const result = await db.batch([
+    draftAdminGuard(userId),
+    {
+      sql: "INSERT INTO evaluation_runs(id,user_id,status,provider,bundle_source,case_ids,completed,plan,campaign_id,attempt_limit,dollar_ceiling_micros,review_reserve_micros,created_at,updated_at,arm_key,campaign_attempt_limit) SELECT ?,?,'queued',?,'editorial-pilot',?,0,?,?,?,?,0,?,?,'editorial-pilot',? WHERE NOT EXISTS(SELECT 1 FROM evaluation_runs WHERE user_id=? AND status IN ('queued','running','stopping') AND julianday(updated_at)>julianday(?)) AND NOT EXISTS(SELECT 1 FROM evaluation_runs WHERE user_id=? AND bundle_source='editorial-pilot' AND json_extract(plan,'$.editorialPilot.version')=?) RETURNING id",
+      params: [
+        runId,
+        userId,
+        provider,
+        JSON.stringify(plan.cases.map((item) => item.id)),
+        JSON.stringify(plan),
+        runId,
+        EDITORIAL_PILOT_ATTEMPT_LIMIT,
+        EDITORIAL_PILOT_DOLLAR_CEILING_MICROS,
+        now,
+        now,
+        EDITORIAL_PILOT_ATTEMPT_LIMIT,
+        userId,
+        cutoff,
+        userId,
+        EDITORIAL_PILOT_VERSION,
+      ],
+    },
+  ]);
+  if (!result.at(-1)?.results.length)
+    throw Error(
+      "An evaluation is already running or this editorial pilot already started; its records are retained.",
+    );
+  const { data: created, error } = await db
+    .from<RunRow>("evaluation_runs")
+    .select(RUN_COLUMNS)
+    .eq("id", runId)
+    .single();
+  if (error || !created) throw Error(error?.message ?? "Editorial pilot run could not be read.");
+  const base = (process.env["PATTERN_APP_URL"] || origin).replace(/\/$/, "");
+  const started = await startEvaluationWorkflow({
+    runId,
+    total: plan.cases.length,
+    callback: `${base}/api/public/evaluation-step`,
+    planHash: plan.hash,
+  });
+  if (!started?.ok) {
+    const message =
+      "Workflow dispatch could not be confirmed. No retry was made; the editorial pilot campaign is retained.";
+    await updateRun(db, runId, { status: "error", message });
+    throw Error(message);
+  }
+  return view(
+    (await updateRun(db, runId, { workflow_instance_id: started.instanceId })) ?? created,
+  );
+}
+
 /** Starts a run that continues on the edge plane until it completes, stops or halts. */
 export async function startEvaluationRun(
   db: DBClient,
@@ -606,6 +703,8 @@ export async function startEvaluationRun(
   await requireAdmin(db, userId);
   if ("mode" in settings) {
     readingEvaluationRunInputSchema.parse(settings);
+    if (settings.mode === "editorial-pilot")
+      return startEditorialPilotRun(db, userId, settings, origin);
     if (settings.mode === "latency-probe")
       return startLatencyProbeRun(db, userId, settings, origin);
     return startContentComparisonRun(db, userId, settings, origin);
@@ -888,7 +987,7 @@ async function caseDisposition(
     return { ...base, status: "error", message: "The captured case has invalid diagnostics." };
   if (
     HALT_CODES.has(diagnostics.code) ||
-    ((run.plan?.contentComparison || run.plan?.latencyProbe) &&
+    ((run.plan?.contentComparison || run.plan?.latencyProbe || run.plan?.editorialPilot) &&
       diagnostics.outcome === "unavailable")
   )
     return {
@@ -953,7 +1052,10 @@ async function caseDisposition(
     if (known.some((row) => row.actual !== actual))
       return {
         ...base,
-        status: run.plan?.contentComparison || run.plan?.latencyProbe ? "halted" : "error",
+        status:
+          run.plan?.contentComparison || run.plan?.latencyProbe || run.plan?.editorialPilot
+            ? "halted"
+            : "error",
         message:
           "The reported model identity changed during this run or its comparison campaign. This capture is retained; remaining cases were not requested.",
       };
@@ -981,6 +1083,7 @@ async function caseDisposition(
     (run.qualification_profile ||
       run.enterprise_thinking ||
       run.plan?.contentComparison ||
+      run.plan?.editorialPilot ||
       run.plan?.latencyProbe) &&
     diagnostics.attempted
   ) {
@@ -1129,7 +1232,15 @@ export async function evaluationStep(
   let capturedBundle: import("./content/default-bundle").ContentBundle;
   let currentPlan: EvaluationPlan;
   try {
-    if (run.plan.latencyProbe) {
+    if (run.plan.editorialPilot) {
+      const pilot = revalidateEditorialPilotPlan(
+        run.plan,
+        evaluationSourceSha(),
+        memberLanguageProvider(),
+      );
+      currentPlan = pilot;
+      capturedBundle = pilot.editorialPilot.candidate;
+    } else if (run.plan.latencyProbe) {
       if (memberLanguageProvider() !== LATENCY_PROBE_PROVIDER)
         throw Error("The member provider changed during the latency probe.");
       const probe = revalidateLatencyProbePlan(run.plan as LatencyProbePlan, evaluationSourceSha());
@@ -1181,6 +1292,7 @@ export async function evaluationStep(
     (run.qualification_profile ||
       run.enterprise_thinking ||
       run.plan?.contentComparison ||
+      run.plan?.editorialPilot ||
       run.plan?.latencyProbe) &&
     planned.expectsModel
       ? run.plan?.latencyProbe
@@ -1250,6 +1362,9 @@ export async function evaluationStep(
       {
         ...(run.qualification_profile ? { profile: run.qualification_profile } : {}),
         ...(run.enterprise_thinking ? { enterpriseThinking: run.enterprise_thinking } : {}),
+        ...(run.plan.editorialPilot
+          ? { boundedQualification: true, caseSetId: EDITORIAL_PILOT_CASE_SET_ID }
+          : {}),
         ...(run.plan.latencyProbe
           ? {
               enterpriseThinking: (planned as { thinking?: "LOW" | "MEDIUM" }).thinking,
@@ -1304,6 +1419,7 @@ export async function evaluationStep(
   // Probe captures belong to the latency experiment, not to the 24-call thinking
   // pilot whose shared transport stamps this identity when a thinking control is set.
   if (run.plan.latencyProbe) result.metadata.experimentVersion = LATENCY_PROBE_VERSION;
+  if (run.plan.editorialPilot) result.metadata.experimentVersion = EDITORIAL_PILOT_VERSION;
 
   const { data: saved, error: insertError } = await db
     .from("evaluation_results")
@@ -1314,6 +1430,7 @@ export async function evaluationStep(
         run.qualification_profile ||
         run.enterprise_thinking ||
         run.plan?.contentComparison ||
+        run.plan?.editorialPilot ||
         run.plan?.latencyProbe
           ? qualificationReservationMicros(
               result.case.transport ?? undefined,

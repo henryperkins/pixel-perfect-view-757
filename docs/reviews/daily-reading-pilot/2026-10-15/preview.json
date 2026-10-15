@@ -1,0 +1,550 @@
+{
+  "version": "daily-editorial-offline-preview-1",
+  "candidateVersion": "0.9.0-editorial-pilot.1",
+  "candidateHash": "ac78d4b47d8b0930f2b2d6d560948869284bbc032834a1c195d061a7a1f29cb4",
+  "provider": "none",
+  "mode": "offline_application_assembly",
+  "evidenceLimit": "Authored source and fallback wiring only; no model generation, human approval, publication, activation, or member-use evidence.",
+  "cases": [
+    {
+      "id": "writing-reply-scene",
+      "inputHash": "6f27cc3b2bf5b53df3b3eb8216becfc6141715a8321011dcfb2390c3bc838b9a",
+      "baselineEffectiveInputHash": "6d304d71b71642c694f627997520bb3db3b1157c095ff400e65f21089e2851ad",
+      "originalFixtureHash": "e6740d91eb6b2f023e96813486032d12be50425bbc427d2ef17a9a37034a4818",
+      "benchmarkRevision": 3,
+      "sourceKeys": [
+        "conjunction:mercury:mercury"
+      ],
+      "primaryCycleKey": "mercury_conjunction_mercury",
+      "editorialKey": "editorial-writing-reply-scene",
+      "interpretationPlan": {
+        "interpretations": [
+          {
+            "index": 1,
+            "cycleKey": "mercury_conjunction_mercury",
+            "interpretationKey": "conjunction:mercury:mercury",
+            "mechanism": "A cycle of thought and communication resets with fresh curiosity. Mercury's conjunction with natal Mercury sharpens interest in new phrasing, questions, or ideas, bringing mental focus back to how you articulate what you mean.",
+            "themes": [
+              "expression"
+            ]
+          }
+        ],
+        "synthesis": null,
+        "pairStatus": "insufficient",
+        "pairRuleKey": null,
+        "releaseVersion": "0.9.0-editorial-pilot.1"
+      },
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting mercury conjunction natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase separating. domain work. Calculated exact date: 2026-10-10.",
+          "cycle": {
+            "transitBody": "mercury",
+            "natalPoint": "mercury",
+            "aspect": "conjunction",
+            "orb": 0.42,
+            "exactDate": "2026-10-10"
+          }
+        },
+        {
+          "id": "I1",
+          "statement": "Published interpretation conjunction:mercury:mercury: A cycle of thought and communication resets with fresh curiosity. Mercury's conjunction with natal Mercury sharpens interest in new phrasing, questions, or ideas, bringing mental focus back to how you articulate what you mean.",
+          "kind": "interpretation",
+          "dependsOn": [
+            "C1"
+          ],
+          "sourceKey": "conjunction:mercury:mercury",
+          "releaseVersion": "0.9.0-editorial-pilot.1"
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for work and output: Pace, scope, and the part of a task that feels like yours are separate pieces of working on something. An unfinished list or a draft with competing aims can be a place to notice friction between those pieces."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: If any felt pressure has eased, a response may still be useful."
+        },
+        {
+          "id": "T1",
+          "statement": "Timing: exact yesterday. This reading falls in the middle part of the calculated window."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+        }
+      ],
+      "reading": {
+        "headline": "When the point gets edited out",
+        "body": "If you've rewritten a work message until every sentence sounds agreeable, the point you wanted to make may have become harder to find. Perhaps the question has become a suggestion, or an important reservation is buried under explanations. In that kind of draft, it can feel as though your own position has gone missing.\n\nMaking a sentence kinder and making its meaning smaller are different things. Writing the central point once, in the words you would use out loud, can help you hear the difference. That sentence can sit beside the reply while you work on its wording.\n\nMercury meeting your natal Mercury is like a messenger rereading the original note before handing it over. The wording is open to revision; the point can remain legible.",
+        "prompt": "When is directness the kinder choice?"
+      },
+      "outputKind": "application_assembled_editorial_fallback",
+      "provider": "none",
+      "humanReviewed": false
+    },
+    {
+      "id": "venus-opposition-venus",
+      "inputHash": "0911c41f406a87ce2c74e1618319e8a907829e7f29ab4ded38cafe2c64fa4dd3",
+      "baselineEffectiveInputHash": "2ec4c4a9944f6dae1934120ead04c1225e5e1f3423cc0c8764cbad3828766b90",
+      "originalFixtureHash": "2561b43176c3ef5d795dfe804e9653aba97a655d5136a889ddd5725e597a144d",
+      "benchmarkRevision": 4,
+      "sourceKeys": [
+        "opposition:venus:venus"
+      ],
+      "primaryCycleKey": "venus_opposition_venus",
+      "editorialKey": "editorial-venus-opposition-venus",
+      "interpretationPlan": {
+        "interpretations": [
+          {
+            "index": 1,
+            "cycleKey": "venus_opposition_venus",
+            "interpretationKey": "opposition:venus:venus",
+            "mechanism": "Recognizing personal preferences can involve noticing a contrast with what others want or expect. Venus's opposition to natal Venus brings differences in taste and social ease into view, clarifying what you genuinely value in company and quiet.",
+            "themes": [
+              "connection"
+            ]
+          }
+        ],
+        "synthesis": null,
+        "pairStatus": "insufficient",
+        "pairRuleKey": null,
+        "releaseVersion": "0.9.0-editorial-pilot.1"
+      },
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting venus opposition natal venus. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain relationships. Calculated exact date: 2026-10-14.",
+          "cycle": {
+            "transitBody": "venus",
+            "natalPoint": "venus",
+            "aspect": "opposition",
+            "orb": 0.42,
+            "exactDate": "2026-10-14"
+          }
+        },
+        {
+          "id": "I1",
+          "statement": "Published interpretation opposition:venus:venus: Recognizing personal preferences can involve noticing a contrast with what others want or expect. Venus's opposition to natal Venus brings differences in taste and social ease into view, clarifying what you genuinely value in company and quiet.",
+          "kind": "interpretation",
+          "dependsOn": [
+            "C1"
+          ],
+          "sourceKey": "opposition:venus:venus",
+          "releaseVersion": "0.9.0-editorial-pilot.1"
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for relationships and affection: Closeness, personal preference, and what you choose to express do not always line up neatly. A reply left unfinished or a plan you feel uncertain about can be a scene for that tension."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+        },
+        {
+          "id": "T1",
+          "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+        }
+      ],
+      "reading": {
+        "headline": "A different plan, the same company",
+        "body": "Wanting to see someone and wanting a different kind of evening can both be true. An invitation to go dancing can leave a reply hovering at 'I'd love to' when a walk is what appeals. The tender part can be the fear that a different preference will sound like less affection.\n\nVenus opposite your natal Venus is an invitation with two versions of the evening written on it. One question to ask is which part of the plan matters most to each of you. The wish to meet can stay in the conversation while the plan changes.",
+        "prompt": "What makes a counterproposal feel like an invitation to you?"
+      },
+      "outputKind": "application_assembled_editorial_fallback",
+      "provider": "none",
+      "humanReviewed": false
+    },
+    {
+      "id": "synthesis-tension",
+      "inputHash": "90fc8c21e90cfe0b4e04d0855d86dbad75417a4f5e5b4f43523ddc6c1afe7cc4",
+      "baselineEffectiveInputHash": "d24a52c95dd884f2cc431bfbf70ab9300adfc7a31c7b17095e8c987782453950",
+      "originalFixtureHash": "3fdf4b643c088fcf8cb3578c3229f054fee194a191306b8ba8e4203107d8c455",
+      "benchmarkRevision": 5,
+      "sourceKeys": [
+        "square:saturn:sun",
+        "trine:jupiter:mars",
+        "square:saturn:sun_tension_trine:jupiter:mars"
+      ],
+      "primaryCycleKey": "saturn_square_sun",
+      "editorialKey": "editorial-synthesis-tension",
+      "interpretationPlan": {
+        "interpretations": [
+          {
+            "index": 1,
+            "cycleKey": "saturn_square_sun",
+            "interpretationKey": "square:saturn:sun",
+            "mechanism": "An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+            "themes": [
+              "structure",
+              "autonomy"
+            ]
+          },
+          {
+            "index": 2,
+            "cycleKey": "jupiter_trine_mars",
+            "interpretationKey": "trine:jupiter:mars",
+            "mechanism": "Enthusiasm and practical initiative reinforce one another when an aim is well chosen. Jupiter's trine to Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening.",
+            "themes": [
+              "expansion",
+              "initiative"
+            ]
+          }
+        ],
+        "synthesis": {
+          "ruleKey": "square:saturn:sun_tension_trine:jupiter:mars",
+          "relationship": "tension",
+          "mechanism": "Giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.",
+          "dependsOn": [
+            "C1",
+            "I1",
+            "C2",
+            "I2"
+          ],
+          "releaseVersion": "0.9.0-editorial-pilot.1"
+        },
+        "pairStatus": "selected",
+        "pairRuleKey": "square:saturn:sun_tension_trine:jupiter:mars",
+        "releaseVersion": "0.9.0-editorial-pilot.1"
+      },
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain identity. Calculated exact date: 2026-10-14.",
+          "cycle": {
+            "transitBody": "saturn",
+            "natalPoint": "sun",
+            "aspect": "square",
+            "orb": 0.42,
+            "exactDate": "2026-10-14"
+          }
+        },
+        {
+          "id": "C2",
+          "kind": "calculation",
+          "statement": "transiting jupiter trine natal mars. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain identity. Calculated exact date: 2026-10-14.",
+          "cycle": {
+            "transitBody": "jupiter",
+            "natalPoint": "mars",
+            "aspect": "trine",
+            "orb": 0.42,
+            "exactDate": "2026-10-14"
+          }
+        },
+        {
+          "id": "I1",
+          "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+          "kind": "interpretation",
+          "dependsOn": [
+            "C1"
+          ],
+          "sourceKey": "square:saturn:sun",
+          "releaseVersion": "0.9.0-editorial-pilot.1"
+        },
+        {
+          "id": "I2",
+          "statement": "Published interpretation trine:jupiter:mars: Enthusiasm and practical initiative reinforce one another when an aim is well chosen. Jupiter's trine to Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening.",
+          "kind": "interpretation",
+          "dependsOn": [
+            "C2"
+          ],
+          "sourceKey": "trine:jupiter:mars",
+          "releaseVersion": "0.9.0-editorial-pilot.1"
+        },
+        {
+          "id": "S1",
+          "statement": "Published tension synthesis square:saturn:sun_tension_trine:jupiter:mars (parents: C1, I1, C2, I2): Giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.",
+          "kind": "synthesis",
+          "dependsOn": [
+            "C1",
+            "I1",
+            "C2",
+            "I2"
+          ],
+          "sourceKey": "square:saturn:sun_tension_trine:jupiter:mars",
+          "releaseVersion": "0.9.0-editorial-pilot.1"
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+        },
+        {
+          "id": "T1",
+          "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+        }
+      ],
+      "reading": {
+        "headline": "When enthusiasm becomes a promise",
+        "body": "If you're excited about a project, 'I can do this much' may feel like too little enthusiasm for an idea you care about. In that situation, promising more can become a way of trying to show how much the project matters.\n\nJupiter's trine to your natal Mars is a lengthening stride; Saturn's square to your natal Sun is the pack that comes along. A faster pace doesn't make the pack lighter.\n\nBefore adding another piece, there is something to notice: whether you want to do that work or want the promise to show how much you care. The size of the promise doesn't have to do all the talking.",
+        "prompt": "What would taking an idea seriously look like at a scale you can manage?"
+      },
+      "outputKind": "application_assembled_editorial_fallback",
+      "provider": "none",
+      "humanReviewed": false
+    },
+    {
+      "id": "jupiter-trine-sun-technical",
+      "inputHash": "10f0bd79d995a7a3ada7066508492f760d56b7d64a765d2b844f1eb4f304aa9e",
+      "baselineEffectiveInputHash": "29289df4c55e9dbc44911be1ab1b3cd439141b3c8ee8635c938e2dc357b3e357",
+      "originalFixtureHash": "3ebf638c593ba318448e4bd4d0553a3897be509d9b84e3e6377e8a8738c509ee",
+      "benchmarkRevision": 4,
+      "sourceKeys": [
+        "soft:jupiter:sun"
+      ],
+      "primaryCycleKey": "jupiter_trine_sun",
+      "editorialKey": "editorial-jupiter-trine-sun-technical",
+      "interpretationPlan": {
+        "interpretations": [
+          {
+            "index": 1,
+            "cycleKey": "jupiter_trine_sun",
+            "interpretationKey": "soft:jupiter:sun",
+            "mechanism": "An existing plan can look roomier without becoming a different plan. A supportive Jupiter contact with the Sun frames that sense of permission to explore one more option or describe an ambition more openly. The interesting detail is where curiosity fits alongside what is already underway.",
+            "themes": []
+          }
+        ],
+        "synthesis": null,
+        "pairStatus": "insufficient",
+        "pairRuleKey": null,
+        "releaseVersion": "0.9.0-editorial-pilot.1"
+      },
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting jupiter trine natal sun. Current orb at the reading's calculation time: 0.42 degrees. phase exact. domain identity. Calculated exact date: 2026-10-11.",
+          "cycle": {
+            "transitBody": "jupiter",
+            "natalPoint": "sun",
+            "aspect": "trine",
+            "orb": 0.42,
+            "exactDate": "2026-10-11"
+          }
+        },
+        {
+          "id": "I1",
+          "statement": "Published interpretation soft:jupiter:sun: An existing plan can look roomier without becoming a different plan. A supportive Jupiter contact with the Sun frames that sense of permission to explore one more option or describe an ambition more openly. The interesting detail is where curiosity fits alongside what is already underway.",
+          "kind": "interpretation",
+          "dependsOn": [
+            "C1"
+          ],
+          "sourceKey": "soft:jupiter:sun",
+          "releaseVersion": "0.9.0-editorial-pilot.1"
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for identity and direction: A description of yourself can feel useful when it fits what you actually return to. A familiar project or an interest you can name plainly can offer a scene for that fit."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: If a demand feels immediate, one clearly described choice can offer a place to begin."
+        },
+        {
+          "id": "T1",
+          "statement": "Timing: exact today. This reading falls in the middle part of the calculated window."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+        }
+      ],
+      "reading": {
+        "headline": "What 'just' leaves out",
+        "body": "Lighting up about an interest, then calling it 'just a hobby,' can happen in the same breath. The qualification comes after the enthusiasm, but it gets the last word. Jupiter's trine to your natal Sun is a wider frame around a familiar self-portrait.\n\nAn interest can belong to the way you describe yourself while it is unfinished, private, or pursued in fits and starts. The detail worth catching is whether you reach for 'just' before anyone has questioned it. Dropping that word once can leave the interest standing without an explanation of how good you are at it.",
+        "prompt": "What draws you to someone else's interests before you know how skilled they are?"
+      },
+      "outputKind": "application_assembled_editorial_fallback",
+      "provider": "none",
+      "humanReviewed": false
+    },
+    {
+      "id": "fallback-hard-neptune-mercury",
+      "inputHash": "340ce9067ea1a4b88f9bf2ad70c3e3608fa4987993f0d68a3417d43d2855e5b7",
+      "baselineEffectiveInputHash": "ce4b8617763cddece7e03a38c6f10887a722fb9dc0abc23ca2eff742e982f5f6",
+      "originalFixtureHash": "aedf46d487553e6b991dbea42a58cce00c324fa5514c32976ea8e8a4ec97e91f",
+      "benchmarkRevision": 4,
+      "sourceKeys": [
+        "square:neptune:mercury"
+      ],
+      "primaryCycleKey": "neptune_square_mercury",
+      "editorialKey": "editorial-fallback-hard-neptune-mercury",
+      "interpretationPlan": {
+        "interpretations": [
+          {
+            "index": 1,
+            "cycleKey": "neptune_square_mercury",
+            "interpretationKey": "square:neptune:mercury",
+            "mechanism": "A pause or shift in tone can linger after a conversation. An impression and the story formed around it are different. A feeling can deserve attention while another person's intentions remain unknown.",
+            "themes": [
+              "uncertainty",
+              "expression"
+            ]
+          }
+        ],
+        "synthesis": null,
+        "pairStatus": "insufficient",
+        "pairRuleKey": null,
+        "releaseVersion": "0.9.0-editorial-pilot.1"
+      },
+      "facts": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting neptune square natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain inner-life. Calculated exact date: 2026-10-14.",
+          "cycle": {
+            "transitBody": "neptune",
+            "natalPoint": "mercury",
+            "aspect": "square",
+            "orb": 0.42,
+            "exactDate": "2026-10-14"
+          }
+        },
+        {
+          "id": "I1",
+          "statement": "Published interpretation square:neptune:mercury: A pause or shift in tone can linger after a conversation. An impression and the story formed around it are different. A feeling can deserve attention while another person's intentions remain unknown.",
+          "kind": "interpretation",
+          "dependsOn": [
+            "C1"
+          ],
+          "sourceKey": "square:neptune:mercury",
+          "releaseVersion": "0.9.0-editorial-pilot.1"
+        },
+        {
+          "id": "D1",
+          "statement": "Published framing for inner life and rest: An unclaimed hour can still be mentally full of unfinished tasks. A full calendar or an obligation that follows you into a quiet moment can offer a scene for tension around the amount of private space you prefer."
+        },
+        {
+          "id": "P1",
+          "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+        },
+        {
+          "id": "T1",
+          "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+        },
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+        }
+      ],
+      "reading": {
+        "headline": "Before a feeling becomes a verdict",
+        "body": "After a conversation, a pause or a shift in tone can stay with you longer than the words. If that happens, you might find yourself going over what was said, adding an explanation to the memory.\n\nA feeling can deserve your attention while leaving another person's intentions unknown. Neptune blurs; Mercury names. A square between Neptune and your natal Mercury is a fair picture of the gap between an impression and the story that forms around it.\n\nAn impression can stay an impression for a while. 'I felt unsettled, and I'm not sure why' can be an honest place to leave it.",
+        "prompt": "When you're the one who goes quiet, what's usually behind it?"
+      },
+      "outputKind": "application_assembled_editorial_fallback",
+      "provider": "none",
+      "humanReviewed": false
+    },
+    {
+      "id": "quiet-threshold",
+      "inputHash": "6a084a6a1da0623cfd9cb6dec0ef93da64144ecb9f3d42204e13d677576c4775",
+      "baselineEffectiveInputHash": "031e550e1f4117a11f4d7097f90f29aab2a00acb55c74c1d6bd9ea7075834fc5",
+      "originalFixtureHash": "bfdfbb5382449b33e3a182b6e21977b4c0c9ed332a5bd1e7c70c2c185e673471",
+      "benchmarkRevision": 4,
+      "sourceKeys": [],
+      "primaryCycleKey": null,
+      "editorialKey": "quiet-detail-without-message",
+      "interpretationPlan": {
+        "interpretations": [],
+        "synthesis": null,
+        "pairStatus": "insufficient",
+        "pairRuleKey": null,
+        "releaseVersion": "0.9.0-editorial-pilot.1"
+      },
+      "facts": [
+        {
+          "id": "E1",
+          "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+        },
+        {
+          "id": "U1",
+          "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+        }
+      ],
+      "reading": {
+        "headline": "A detail without a message",
+        "body": "A bright thread in a dark coat can catch your eye before you know why. Looking for a message can turn the color into a clue, something that points beyond the cloth.\n\nThere is also the second look that asks nothing of it. Just the thread, the cloth around it, a stitch that doesn't quite match. Something can be worth noticing without becoming a message.",
+        "prompt": "What do you miss when you're looking for an answer?"
+      },
+      "outputKind": "application_assembled_editorial_fallback",
+      "provider": "none",
+      "humanReviewed": false
+    }
+  ],
+  "quietEntries": [
+    {
+      "key": "quiet-detail-without-message",
+      "status": "working_benchmark_not_human_approved",
+      "headline": "A detail without a message",
+      "body": "A bright thread in a dark coat can catch your eye before you know why. Looking for a message can turn the color into a clue, something that points beyond the cloth.\n\nThere is also the second look that asks nothing of it. Just the thread, the cloth around it, a stitch that doesn't quite match. Something can be worth noticing without becoming a message.",
+      "prompt": "What do you miss when you're looking for an answer?",
+      "sourceKeys": [],
+      "imagery": null,
+      "humanReviewed": false
+    },
+    {
+      "key": "quiet-pause-before-activity",
+      "status": "new_provisional_editorial_observation",
+      "headline": "Before the next thing begins",
+      "body": "A kettle takes a few minutes. A hand can reach for a phone before there is anything in particular to look up. The interval between one task and the next has acquired a task of its own.\n\nThat small gap can stay unassigned for a moment. The kettle is still heating; whatever comes next has not quite begun.",
+      "prompt": "What makes a pause feel as though it needs filling?",
+      "sourceKeys": [],
+      "imagery": null,
+      "humanReviewed": false
+    },
+    {
+      "key": "quiet-detail-before-example",
+      "status": "new_provisional_editorial_observation",
+      "headline": "The part you have not heard",
+      "body": "Someone begins describing a problem, and a similar experience comes to mind. The example is ready before the other person has finished. Recognizing the outline can make the rest seem familiar, even while a detail is still arriving.\n\nA question about that detail can take the conversation somewhere the example might have missed. Having something relevant to say and having heard the full story are different things. The example can wait until there is a clearer sense of what it belongs beside.",
+      "prompt": "When has an unfamiliar detail changed a familiar story for you?",
+      "sourceKeys": [],
+      "imagery": null,
+      "humanReviewed": false
+    },
+    {
+      "key": "quiet-experience-without-record",
+      "status": "new_provisional_editorial_observation",
+      "headline": "After the title has gone",
+      "body": "A song ends before its title can be found. The screen has moved on, but a small phrase of melody remains. Looking it up is one possibility. Following the tune for another moment is another.\n\nThe name would make the song easier to find again; it would not be the part that first caught your ear. For now, there may be just those few notes. They can belong to the moment without becoming something to save.",
+      "prompt": "Which part of an experience tends to stay with you without a record?",
+      "sourceKeys": [],
+      "imagery": null,
+      "humanReviewed": false
+    }
+  ]
+}

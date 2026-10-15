@@ -1,0 +1,213 @@
+{
+  "version": "editorial-source-separation-proposal-1",
+  "status": "documentation_only_not_runtime_schema",
+  "use": {
+    "writingMaterial": "Only this block supplies prose meaning and imagery for the writer to develop.",
+    "constraints": "Generation and review controls, never text to paraphrase into a reading.",
+    "evidence": "Source-review provenance and rationale, never reader-facing prose.",
+    "implementation": "No application source, prompt input, content schema, or validator is changed by this document. A later implementation must enforce these boundaries."
+  },
+  "cases": [
+    {
+      "id": "writing-reply-scene",
+      "selectedSourceKeys": [
+        "conjunction:mercury:mercury"
+      ],
+      "proposedTarget": "writing frame for conjunction:mercury:mercury",
+      "writingMaterial": {
+        "meaning": "Making a sentence kinder and making its meaning smaller are different things. A revised message can lose its central point while becoming more agreeable.",
+        "scene": "A question becomes a suggestion, or a reservation is buried behind explanations in a work reply. In that kind of draft, the writer's position may feel missing.",
+        "imagery": "Mercury as messenger at its return to natal Mercury: the messenger rereads the original note before handing it over. Fresh phrasing can carry the original point.",
+        "direction": "Writing the central point in a plain sentence apart from the reply can help the writer hear the difference between kindness and diminished meaning and keep the point available while choosing the final wording.",
+        "reflection": "Directness and kindness can sometimes support one another; clear expression can itself be considerate."
+      },
+      "constraints": [
+        "The message and editing are possible scenes, not supplied events or a personality diagnosis.",
+        "The messenger is an image, not a physical being or a claim that Mercury alters the reader's thinking.",
+        "No reception, successful outcome, or obligation to send is established. Do not narrate this limitation in the body."
+      ],
+      "evidence": {
+        "existing": {
+          "meaning": "I1 fresh phrasing/articulation; D1 work/drafts",
+          "geometry": "C1 Mercury conjunct natal Mercury, separating; exact 2026-10-10"
+        },
+        "proposed": [
+          "Kindness versus diminishing the point",
+          "Possible felt absence from a draft",
+          "Mercury as messenger rereading a note",
+          "Plain-sentence response",
+          "Kindness through directness reflection"
+        ],
+        "rationale": "A return to articulation and fresh phrasing supplies the bridge to revisiting an original point. Messenger imagery develops the same activity; it is new authored symbolism, not a baseline fact."
+      }
+    },
+    {
+      "id": "venus-opposition-venus",
+      "selectedSourceKeys": [
+        "opposition:venus:venus"
+      ],
+      "proposedTarget": "writing frame for opposition:venus:venus",
+      "writingMaterial": {
+        "meaning": "Wanting someone's company and wanting a different kind of evening can coexist. A possible difficulty in stating a preference is the fear that it will sound like less affection.",
+        "scene": "An invitation to go dancing can leave a reply hovering at 'I'd love to' when a walk is what appeals. A walk instead of dancing is a concrete alternative.",
+        "imagery": "Venus opposite natal Venus as one invitation with two versions of the evening written on it. Contrasting preferences can belong to the same wish to meet.",
+        "direction": "Ask which part of an evening matters to each person, or make a concrete alternative that retains the wish to meet.",
+        "reflection": "A counterproposal can be considered from the receiving side: what makes it feel like continued interest in meeting."
+      },
+      "constraints": [
+        "No invitation, reader fear, partner preference, reaction, relationship condition, or compatibility is established.",
+        "The invitation with two versions is imagery for contrasting preferences, not an asserted event or agreement.",
+        "Do not reassure that the relationship is fine, predict agreement, or copy agency disclaimers into the reading.",
+        "Develop one response; the alternatives are a repertoire, not a checklist."
+      ],
+      "evidence": {
+        "existing": {
+          "meaning": "I1 differences in taste and company/quiet; D1 closeness, preference, expression",
+          "geometry": "C1 Venus opposite natal Venus, approaching; exact 2026-10-14"
+        },
+        "proposed": [
+          "Fear of being heard as less affectionate",
+          "Dancing/walking reply scene",
+          "One-invitation, two-versions imagery",
+          "Concrete alternative or question about what matters",
+          "Reflection on receiving a counterproposal as an invitation"
+        ],
+        "rationale": "The saved opposition contrasts preferences within affinity. The proposal gives that contrast an observable scene and possible emotional stake without assigning another person's motive."
+      }
+    },
+    {
+      "id": "synthesis-tension",
+      "selectedSourceKeys": [
+        "square:saturn:sun",
+        "trine:jupiter:mars",
+        "square:saturn:sun_tension_trine:jupiter:mars"
+      ],
+      "proposedTarget": "writing frame for square:saturn:sun_tension_trine:jupiter:mars",
+      "writingMaterial": {
+        "meaning": "When an idea matters, a smaller commitment can seem to understate enthusiasm. Promising more may become a way of trying to show how much one cares. Enthusiasm and the scope of a promise can be expressed separately.",
+        "scene": "Being excited about a project and finding that 'I can do this much' sounds smaller than the interest behind it.",
+        "imagery": "Jupiter's trine to natal Mars as a lengthening stride; Saturn's square to natal Sun as the pack that comes along. A faster pace does not make the pack lighter.",
+        "direction": "Before adding a piece of work, distinguish wanting that work from wanting the promise to express enthusiasm. The size of a commitment need not carry all the expression of interest.",
+        "reflection": "Taking an idea seriously can be considered at a manageable scale."
+      },
+      "constraints": [
+        "Preserve both parents C1/I1 and C2/I2 and the exact selected tension synthesis.",
+        "Saved S1 says expansion can increase the structure needed; do not turn this into an invariant rule for every ambition.",
+        "Stride and pack are imagery, not predicted energy, burden, bodily experience, or a causal effect on the reader.",
+        "No project, workload, overcommitment, motive, success, or future feasibility is established."
+      ],
+      "evidence": {
+        "existing": {
+          "meaning": "I1 obligations/capacity; I2 enthusiasm/initiative; S1 more scope can increase required structure",
+          "geometry": "C1 Saturn square natal Sun and C2 Jupiter trine natal Mars, both approaching; exact 2026-10-14"
+        },
+        "proposed": [
+          "Commitment as a possible expression of caring",
+          "Stride-and-pack image",
+          "Noticing the difference between wanting work and wanting a promise to communicate enthusiasm"
+        ],
+        "rationale": "The existing synthesis connects scope and capacity. The image retains both sides and the response examines the possible emotional reason for enlarging a commitment."
+      }
+    },
+    {
+      "id": "jupiter-trine-sun-technical",
+      "selectedSourceKeys": [
+        "soft:jupiter:sun"
+      ],
+      "proposedTarget": "writing frame for soft:jupiter:sun",
+      "writingMaterial": {
+        "meaning": "Lighting up about an interest and then calling it 'just a hobby' puts a qualification after the enthusiasm. Enjoyment can be a reason for an interest to belong in one's self-description before it becomes an achievement.",
+        "scene": "The shift from speaking with animation about an interest to shrinking it with 'just'.",
+        "imagery": "Jupiter's trine to natal Sun as a wider frame around a familiar self-portrait: an existing interest is included without becoming a different person.",
+        "direction": "Dropping 'just' once can leave the interest stated without a ranking of how accomplished or important it is.",
+        "reflection": "An interest can draw another person's attention before its holder's level of skill is known."
+      },
+      "constraints": [
+        "This is a bounded proposed self-description interpretation, not established low confidence or a global self-worth judgment.",
+        "No actual hobby, habit of minimizing, skill, talent, entitlement, identity change, or recognition is known.",
+        "The wider frame is imagery, not a transit causing personal growth.",
+        "Both sides retain the disclosed warm/standard override of the original technical fixture.",
+        "The scene can use any interest; do not narrow the whole reading to an invented hobby."
+      ],
+      "evidence": {
+        "existing": {
+          "meaning": "I1 permission to explore or express ambition; D1 recurring interests in self-description",
+          "geometry": "C1 Jupiter trine natal Sun, exact 2026-10-11"
+        },
+        "proposed": [
+          "Qualification following enthusiasm",
+          "An interest counting before achievement",
+          "Wider self-portrait frame",
+          "Removing 'just' and considering another person's interests"
+        ],
+        "rationale": "The saved expansion/permission and identity themes connect to a recurring interest. The image expands the account of an existing self without diagnosing a deficit."
+      }
+    },
+    {
+      "id": "fallback-hard-neptune-mercury",
+      "selectedSourceKeys": [
+        "hard:*:*"
+      ],
+      "proposedTarget": "new square:neptune:mercury interpretation and writing frame",
+      "writingMaterial": {
+        "meaning": "A pause or shift in tone can linger after a conversation. An impression and the story formed around it are different. A feeling can deserve attention while another person's intentions remain unknown.",
+        "scene": "Returning to a remembered exchange and noticing an explanation being added to the memory.",
+        "imagery": "Neptune blurs; Mercury names. A square between Neptune and natal Mercury pictures the gap between an impression and the story that forms around it.",
+        "direction": "An impression can remain an impression for a while. 'I felt unsettled, and I'm not sure why' can be an honest place to leave it.",
+        "reflection": "Remembering one's own reasons for going quiet can broaden perspective on the unknown meaning of someone else's silence."
+      },
+      "constraints": [
+        "All Neptune/Mercury meaning and imagery here are newly proposed. Selected hard:*:* supplies only generic friction; never credit it or hard:neptune:sun for this meaning.",
+        "Symbolic verbs describe an image, not a planet blurring the reader's judgment or causing confusion.",
+        "No actual exchange, motive, deception, impaired judgment, memory accuracy, or outcome is known.",
+        "The reflection opens another perspective; one's own reason for silence is not evidence of another person's reason.",
+        "Emotional uncertainty is never derived from birth-time uncertainty; recorded birth accuracy is unchanged."
+      ],
+      "evidence": {
+        "existing": {
+          "meaning": "I1 hard:*:* is generic friction only; D1 inner life/private space does not supply the new symbolism",
+          "geometry": "C1 Neptune square natal Mercury, approaching; exact 2026-10-14"
+        },
+        "proposed": [
+          "Impression versus story",
+          "Lingering pause/tone scene",
+          "Neptune blurs and Mercury names imagery proposed by the user",
+          "Leaving an impression unresolved",
+          "Perspective-taking reflection about one's own silence"
+        ],
+        "rationale": "The proposed symbolism contrasts impression and articulation in a square. It must become a reviewed contact-specific source; it is not a renamed wildcard or astronomical evidence of the reader's state."
+      }
+    },
+    {
+      "id": "quiet-threshold",
+      "selectedSourceKeys": [],
+      "proposedTarget": "quiet editorial observation, without an interpretation key",
+      "writingMaterial": {
+        "meaning": "A detail can catch attention before it carries meaning. Noticing and searching for a message are different ways of looking.",
+        "scene": "A bright thread in a dark coat; its cloth and a stitch that does not quite match. One ordinary visual detail can hold a second look.",
+        "imagery": null,
+        "direction": "A second look can leave the detail as a detail, without making it stand for a message.",
+        "reflection": "Searching for an answer can focus attention on clues and leave other details outside the search."
+      },
+      "constraints": [
+        "No selected contact, interpretation, synthesis, or hidden cosmic explanation is introduced.",
+        "Do not announce the selection system in the reading or describe the day's emotional character to demonstrate openness.",
+        "The coat/thread is an ordinary possible scene, not a known possession or event.",
+        "Do not deny that a reader may find personal meaning; no message is required, but one is not ruled out.",
+        "Do not confine quiet-day direction to enjoyment, promise calm, invent urgency, or describe an editorial variation as date-specific astrology."
+      ],
+      "evidence": {
+        "existing": {
+          "selection": "Null primary; no selected interpretation or synthesis. No reader-specific quiet-day meaning is supplied."
+        },
+        "proposed": [
+          "Observation without a message",
+          "Thread/coat scene",
+          "A second look without interpretation",
+          "Reflection on selective attention"
+        ],
+        "rationale": "This is an editorial observation for an absent selected signal, not astrological interpretation. A quiet catalogue can offer other distinct observations transparently as editorial choices."
+      }
+    }
+  ]
+}

@@ -16,6 +16,7 @@ import type { TransitChapterCopy } from "./transit-story-catalogue";
 import type { SynthesisRule, ThemeTag } from "./schema";
 import type { NatalLensRule } from "./schema";
 import type { DailyWritingFrame } from "./daily-writing";
+import type { DailyEditorialCatalogue } from "./daily-editorial";
 
 export interface Interpretation {
   /** matches `${aspect}:${transitBody}:${natalPoint}`, `${aspectFamily}:${transitBody}:${natalPoint}`, or a wildcard */
@@ -38,8 +39,9 @@ export interface DomainInterpretation {
 
 export interface ContentBundle {
   version: string;
-  schemaVersion?: 2 | 3 | 4 | 5;
+  schemaVersion?: 2 | 3 | 4 | 5 | 6;
   dailyWritingFrames?: DailyWritingFrame[];
+  dailyEditorial?: DailyEditorialCatalogue;
   transitChapters?: TransitChapterCopy[];
   cycles: Interpretation[];
   natal: Record<string, string>;

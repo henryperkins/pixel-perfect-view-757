@@ -24,7 +24,12 @@ import { DAILY_WRITING_PLAN_VERSION } from "../content/daily-writing";
 import { DAILY_REFLECTION_VERSION } from "../content/daily-reflection";
 import { PRIMARY_REFLECTION_VERSION } from "../content/primary-composition";
 import { DAILY_WRITING_QUALITY_VERSION } from "./daily-writing-quality";
-import { DAILY_VOICE_EXAMPLES_VERSION } from "./daily-voice";
+import {
+  DAILY_VOICE_EXAMPLES_VERSION,
+  EDITORIAL_DAILY_PROMPT_VERSION,
+  EDITORIAL_DAILY_VALIDATOR_VERSION,
+  EDITORIAL_DAILY_VOICE_VERSION,
+} from "./daily-voice";
 import { assertSyntheticTransportControl, type EnterpriseThinkingLevel } from "./admin-transport";
 
 declare const __PATTERN_SOURCE_SHA__: string | null;
@@ -42,7 +47,10 @@ export function createEvaluationPlan(
   caseSetId: EvaluationCaseSetId = "synthetic-daily-7",
 ) {
   const bounded =
-    Boolean(profile) || caseSetId === "draft-pilot-1" || caseSetId === "draft-pilot-2";
+    Boolean(profile) ||
+    caseSetId === "draft-pilot-1" ||
+    caseSetId === "draft-pilot-2" ||
+    caseSetId === "daily-editorial-1";
   if (bounded && (!sourceSha || !/^[a-f0-9]{40}$/.test(sourceSha)))
     throw Error("Qualification requires the exact built source SHA.");
   if (profile && caseSetId !== "synthetic-daily-7")
@@ -51,7 +59,6 @@ export function createEvaluationPlan(
   if (hash(manifest.cases) !== manifest.caseSetHash)
     throw Error("The fixed evaluation case set failed its integrity check.");
   const policy = profile ? qualificationPolicy(profile) : null;
-  const concrete = policy ? policy.writing : bundle.schemaVersion === 5;
   const cases = manifest.cases.map((fixed) => {
     const prepared = prepareSyntheticEvaluationCase(fixed.id, bundle, profile, caseSetId);
     const dry = {
@@ -76,6 +83,8 @@ export function createEvaluationPlan(
     };
     return { ...dry, planHash: hash(dry) };
   });
+  const editorial = cases.length > 0 && cases.every((item) => !!item.writingPlan.editorial);
+  const concrete = policy ? policy.writing : bundle.schemaVersion === 5 || editorial;
   const transitMetadata = transitEvaluationMetadata(caseSetId);
   const metadata = {
     sourceSha,
@@ -92,8 +101,16 @@ export function createEvaluationPlan(
     bundleHash: hash(bundle),
     qualificationProfile: profile ?? null,
     qualificationPolicyVersion: policy?.version ?? null,
-    promptVersion: concrete ? CONCRETE_DAILY_PROMPT_VERSION : DAILY_PROMPT_VERSION,
-    validatorVersion: concrete ? CONCRETE_DAILY_VALIDATOR_VERSION : DAILY_VALIDATOR_VERSION,
+    promptVersion: editorial
+      ? EDITORIAL_DAILY_PROMPT_VERSION
+      : concrete
+        ? CONCRETE_DAILY_PROMPT_VERSION
+        : DAILY_PROMPT_VERSION,
+    validatorVersion: editorial
+      ? EDITORIAL_DAILY_VALIDATOR_VERSION
+      : concrete
+        ? CONCRETE_DAILY_VALIDATOR_VERSION
+        : DAILY_VALIDATOR_VERSION,
     model: languageModel(provider),
     gatewayTimeoutMs: DAILY_GATEWAY_TIMEOUT_MS,
     requestPolicyVersion: EVALUATION_REQUEST_POLICY_VERSION,
@@ -108,7 +125,11 @@ export function createEvaluationPlan(
       : bundle.schemaVersion === 4
         ? PRIMARY_REFLECTION_VERSION
         : null,
-    voiceExamplesVersion: concrete ? DAILY_VOICE_EXAMPLES_VERSION : null,
+    voiceExamplesVersion: editorial
+      ? EDITORIAL_DAILY_VOICE_VERSION
+      : concrete
+        ? DAILY_VOICE_EXAMPLES_VERSION
+        : null,
     maxOutputTokens: bounded ? 65536 : null,
     maxInputBytes: bounded ? 65536 : null,
   };
@@ -136,6 +157,7 @@ export type EvaluationPlan = ReturnType<typeof createEvaluationPlan> & {
   campaignPlans?: Record<QualificationProfile, ReturnType<typeof createEvaluationPlan>>;
   pilotPlans?: Record<EnterpriseThinkingLevel, ReturnType<typeof createEnterprisePilotPlan>>;
   latencyProbe?: import("./latency-probe-plan.server").LatencyProbeDetails;
+  editorialPilot?: import("./editorial-pilot-plan.server").EditorialPilotDetails;
   metadata: ReturnType<typeof createEvaluationPlan>["metadata"] & {
     enterpriseThinking?: EnterpriseThinkingLevel;
     experimentVersion?: "enterprise-thinking-pilot-1";

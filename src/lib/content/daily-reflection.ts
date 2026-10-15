@@ -10,7 +10,7 @@ export interface DailyReflectionPlan {
   question: string;
   themeFactId: "I1" | "S1" | null;
   frameKey: string | null;
-  variant: "standard" | "high_stress" | "low_sleep" | "legacy" | "fallback";
+  variant: "standard" | "high_stress" | "low_sleep" | "legacy" | "fallback" | "editorial";
   localSource: "WEL-03" | "WEL-01" | null;
 }
 
@@ -48,6 +48,17 @@ export function resolveDailyReflection(
     themeFactId: plan.theme?.factId ?? null,
     frameKey: plan.frame?.key ?? null,
   };
+  if (plan.editorial) {
+    if (dailyQuestionProblem(plan.editorial.entry.reflection))
+      throw Error("Selected editorial reflection failed independent validation.");
+    return {
+      ...base,
+      question: plan.editorial.entry.reflection,
+      frameKey: plan.editorial.entry.key,
+      variant: "editorial",
+      localSource: null,
+    };
+  }
   const reflection = plan.frame?.reflection;
   if (reflection && !dailyQuestionProblem(reflection.standard)) {
     if (isPermitted("WEL-03", "reflection_prompt", ctx.granted) && (ctx.wellness?.stress ?? 0) >= 4)

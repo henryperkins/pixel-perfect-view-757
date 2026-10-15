@@ -29,7 +29,7 @@ import { DAILY_WRITING_PLAN_VERSION } from "../content/daily-writing";
 import { DAILY_REFLECTION_VERSION } from "../content/daily-reflection";
 import { PRIMARY_REFLECTION_VERSION } from "../content/primary-composition";
 import { DAILY_WRITING_QUALITY_VERSION } from "./daily-writing-quality";
-import { DAILY_VOICE_EXAMPLES_VERSION } from "./daily-voice";
+import { DAILY_VOICE_EXAMPLES_VERSION, EDITORIAL_DAILY_VOICE_VERSION } from "./daily-voice";
 import { getEvaluationCaseSet, type EvaluationCaseSetId } from "./evaluation-case-sets";
 import {
   qualificationBundle,
@@ -76,6 +76,7 @@ export function prepareSyntheticEvaluationCase(
       localBucket: null,
       checkIn: null,
       wellness: null,
+      ...(manifest.id === "daily-editorial-1" ? { day: fixed.config.day } : {}),
     },
     effectiveBundle,
     natalReliability,
@@ -95,6 +96,7 @@ export function prepareSyntheticEvaluationCase(
         localBucket: null,
         checkIn: null,
         wellness: null,
+        ...(manifest.id === "daily-editorial-1" ? { day: fixed.config.day } : {}),
       },
       effectiveBundle,
       natalReliability,
@@ -161,6 +163,15 @@ export async function runSyntheticEvaluationCase(
   });
   const { prose } = observed;
   if (!prose.meta.diagnostics) throw new Error("Synthetic evaluation requires daily diagnostics");
+  const editorialPilot = manifest.id === "daily-editorial-1";
+  const editorialOutput =
+    assembled.writingPlan.editorial?.mode === "quiet"
+      ? "Authored quiet-day copy selected by local date; no model request."
+      : prose.meta.mode === "model"
+        ? "Actual model-generated output for a fixed synthetic plan."
+        : prose.meta.diagnostics.attempted
+          ? "A model request was attempted; the displayed output uses authored candidate fallback copy."
+          : "Authored candidate fallback copy; no model request.";
   return {
     metadata: {
       reportVersion: 1,
@@ -191,7 +202,9 @@ export async function runSyntheticEvaluationCase(
             writingPlanVersion: DAILY_WRITING_PLAN_VERSION,
             writingQualityVersion: DAILY_WRITING_QUALITY_VERSION,
             reflectionVersion: DAILY_REFLECTION_VERSION,
-            voiceExamplesVersion: DAILY_VOICE_EXAMPLES_VERSION,
+            voiceExamplesVersion: assembled.writingPlan.editorial
+              ? EDITORIAL_DAILY_VOICE_VERSION
+              : DAILY_VOICE_EXAMPLES_VERSION,
           }
         : bundle.schemaVersion === 4
           ? { reflectionVersion: PRIMARY_REFLECTION_VERSION }
@@ -199,12 +212,16 @@ export async function runSyntheticEvaluationCase(
       model: languageModel(provider),
       gatewayTimeoutMs: DAILY_GATEWAY_TIMEOUT_MS,
       source: "live-synthetic",
-      network:
-        provider === "gemini-enterprise"
+      network: editorialPilot
+        ? prose.meta.diagnostics.attempted
+          ? `${provider === "gemini-enterprise" ? "Gemini Enterprise Agent Platform" : "Language gateway"} request attempted; fixed synthetic facts only`
+          : "No provider request; deterministic candidate output."
+        : provider === "gemini-enterprise"
           ? "Live Gemini Enterprise Agent Platform; fixed synthetic facts only"
           : "Live language gateway; fixed synthetic facts only",
-      warning:
-        "Actual model outputs for synthetic plans. This run does not establish production-user acceptance, semantic grounding, or writing quality. Manual scores remain blank.",
+      warning: editorialPilot
+        ? `${editorialOutput} This capture does not establish member acceptance, semantic grounding, or writing quality. Manual scores remain blank.`
+        : "Actual model outputs for synthetic plans. This run does not establish production-user acceptance, semantic grounding, or writing quality. Manual scores remain blank.",
     },
     case: {
       transport: observed.transport,
