@@ -17,7 +17,7 @@ The budget was at most five model attempts and $5, plus four deterministic quiet
 
 The provider request started at 07:21:18.558 UTC. Cloudflare recorded `WorkflowInternalError: Attempt failed due to internal workflows error` at 07:21:30.684, ending its first step (`case 0-1`). The already-started Gemini response finished successfully at 07:21:34.005: HTTP 200, finish reason STOP, 15,447 ms, response ID `7n7QatHuKomKl7oP9Kao0Qg`. The application persisted and accepted it. There was no reservation or request for position 1.
 
-This establishes a Workflow scheduling failure and a successful first provider response. It does not establish the underlying cause of Cloudflare's internal error. No Workflow restart, evaluation-step replay, replacement campaign, provider retry, or provider switch occurred.
+This establishes an internal Workflow failure and a successful first provider response. It does not establish the underlying cause of Cloudflare's internal error. No Workflow restart, evaluation-step replay, replacement campaign, provider retry, or provider switch occurred.
 
 ## Closeout
 

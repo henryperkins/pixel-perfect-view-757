@@ -25,7 +25,7 @@
   "humanReviewCompleted": false,
   "editorialQualification": "incomplete; one captured model body requires revision",
   "artifactSha256": {
-    "README.md": "98a18d5e08f228ba7020d0dba78cd9880ae2af0a4d656d9f604d081780fec4fc",
+    "README.md": "d53fa21c9187febfa2e2f66fedf9376e82195e51fbef3d27144adc13753dcd8d",
     "captured-evidence-before-stop.json": "68eef3e2897caed77e9c7042a34b5968e61042297069edf0e501b584882d4b64",
     "captured-evidence.json": "c54c9d85dec954d08d5124e1785f33298bc4fed4f29c55f4feb30d32f41fa79d",
     "captured-reading.md": "ae4cd8e7300cbbefa783fc7fb20a06ecfb2134a84f0aae0380c817dfb26712a3",
