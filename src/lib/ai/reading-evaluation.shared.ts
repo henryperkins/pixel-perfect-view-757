@@ -153,7 +153,10 @@ export interface ReadingEvaluationRun {
   campaignId?: string;
   attemptLimit?: number;
   editorialPilot?: { version: "daily-editorial-pilot-1"; quietDates: string[] };
-  contextPilot?: { version: "daily-context-pilot-1"; benchmarkHash: string };
+  contextPilot?: {
+    version: "daily-context-pilot-1" | "daily-context-pilot-2";
+    benchmarkHash: string;
+  };
   enterpriseThinking?: "LOW" | "MEDIUM";
   contentComparison?: {
     arm: "baseline" | "candidate";
@@ -233,7 +236,8 @@ export interface ReadingEvaluationMetadata {
     | "enterprise-thinking-pilot-1"
     | "content-latency-probe-1"
     | "daily-editorial-pilot-1"
-    | "daily-context-pilot-1";
+    | "daily-context-pilot-1"
+    | "daily-context-pilot-2";
   fixtureVersion: string;
   caseSetHash: string;
   caseSetId?: import("./evaluation-case-sets").EvaluationCaseSetId;

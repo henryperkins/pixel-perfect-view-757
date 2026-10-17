@@ -1,0 +1,658 @@
+{
+  "version": "daily-context-material-2",
+  "cards": [
+    {
+      "factId": "I1",
+      "sourceKey": "square:saturn:sun",
+      "releaseVersion": "0.9.0",
+      "sourceMeaning": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+      "dependsOn": [
+        "C1"
+      ],
+      "meaning": "An established responsibility can ask for more deliberate effort. Where its expectations exceed the capacity available, its boundary may need to become clearer.",
+      "sceneDetails": [
+        "One afternoon set aside for a familiar responsibility.",
+        "An extra check or another version added beside the original task.",
+        "The same task moved into a later calendar opening without changing what it includes."
+      ],
+      "practicalDistinction": "Fitting the task into a time slot is different from deciding how much belongs inside the commitment.",
+      "optionalDirections": [
+        "Notice whether an apparently small addition changes the size of the original agreement.",
+        "Leave one addition outside the commitment, if the existing work already fills the hours available.",
+        "Make the boundary visible by naming the part that fits within the time available."
+      ],
+      "requiredConditions": [
+        "The responsibility asking more effort is an interpretive possibility, not an established condition of the reader today.",
+        "Any actual mismatch between expectations and capacity must remain conditional.",
+        "Follow-up references to the task, added scope or boundary must remain inside the possible scene."
+      ],
+      "limitations": [
+        "Do not add a recent onset, an actual overloaded afternoon, unsustainable effort or a known change in capacity.",
+        "Do not turn the optional boundary into a command to refuse work or a judgment about the reader's discipline.",
+        "Calendar and task details are authored benchmark illustrations, not calculation facts."
+      ],
+      "illustrationStatus": "possible situation, not known member life",
+      "reviewStatus": "authored material for independent review",
+      "sourceFact": {
+        "id": "I1",
+        "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+        "kind": "interpretation",
+        "dependsOn": [
+          "C1"
+        ],
+        "sourceKey": "square:saturn:sun",
+        "releaseVersion": "0.9.0"
+      },
+      "reviewSupport": [
+        {
+          "field": "meaning",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "contact-only",
+          "paragraph": 1,
+          "paragraphIndex": 0,
+          "sourceFactIds": [
+            "C1",
+            "I1"
+          ],
+          "basis": "exact source meaning with benchmark application"
+        },
+        {
+          "field": "sceneDetails[0]",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "contact-only",
+          "paragraph": 1,
+          "paragraphIndex": 0,
+          "sourceFactIds": [
+            "C1",
+            "I1"
+          ],
+          "basis": "reviewed benchmark illustration"
+        },
+        {
+          "field": "sceneDetails[1]",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "contact-only",
+          "paragraph": 3,
+          "paragraphIndex": 2,
+          "sourceFactIds": [
+            "C1",
+            "I1"
+          ],
+          "basis": "reviewed benchmark illustration"
+        },
+        {
+          "field": "sceneDetails[2]",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "contact-only",
+          "paragraph": 1,
+          "paragraphIndex": 0,
+          "sourceFactIds": [
+            "C1",
+            "I1"
+          ],
+          "basis": "reviewed benchmark illustration"
+        },
+        {
+          "field": "practicalDistinction",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "contact-only",
+          "paragraph": 2,
+          "paragraphIndex": 1,
+          "sourceFactIds": [
+            "C1",
+            "I1"
+          ],
+          "basis": "reviewed benchmark illustration"
+        },
+        {
+          "field": "optionalDirections[0]",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "contact-only",
+          "paragraph": 3,
+          "paragraphIndex": 2,
+          "sourceFactIds": [
+            "C1",
+            "I1"
+          ],
+          "basis": "reviewed benchmark illustration"
+        },
+        {
+          "field": "optionalDirections[1]",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "contact-only",
+          "paragraph": 3,
+          "paragraphIndex": 2,
+          "sourceFactIds": [
+            "C1",
+            "I1"
+          ],
+          "basis": "reviewed benchmark illustration"
+        },
+        {
+          "field": "optionalDirections[2]",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "contact-only",
+          "paragraph": 2,
+          "paragraphIndex": 1,
+          "sourceFactIds": [
+            "C1",
+            "I1"
+          ],
+          "basis": "reviewed benchmark illustration"
+        }
+      ]
+    },
+    {
+      "factId": "N1",
+      "sourceKey": "nl-sun-03",
+      "releaseVersion": "0.9.0",
+      "sourceMeaning": "Published natal lens, an interpretive possibility: Following more than one line of curiosity can help a direction take shape. If several possible projects compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages.",
+      "dependsOn": [
+        "C1",
+        "I1"
+      ],
+      "meaning": "Several lines of curiosity may help a direction emerge. Exploring possible projects and choosing one to pursue can be separate stages.",
+      "sceneDetails": [
+        "A page of notes for one idea beside a tab open for another.",
+        "One possible project kept as a note beside the project selected for the afternoon."
+      ],
+      "practicalDistinction": "An interest being explored has not yet become a promise to give it the same afternoon's hours.",
+      "optionalDirections": [
+        "Sample possible directions before deciding which one becomes the commitment.",
+        "Keep another possibility in the notes without assigning it the chosen project's time."
+      ],
+      "requiredConditions": [
+        "This natal lens is an interpretive possibility, not a fixed personality claim.",
+        "The multiple-project scene applies only if several possibilities are competing for the same time.",
+        "Keep the distinction between exploration and commitment visible in the shared project scene."
+      ],
+      "limitations": [
+        "Do not call the reader distracted, indecisive, scattered or unable to finish.",
+        "Do not imply that all interests must become projects or that choosing one means abandoning the others.",
+        "The notes and tab are possible illustrations, not observed behavior."
+      ],
+      "illustrationStatus": "possible situation, not known member life",
+      "reviewStatus": "authored material for independent review",
+      "sourceFact": {
+        "id": "N1",
+        "kind": "temperament",
+        "statement": "Published natal lens, an interpretive possibility: Following more than one line of curiosity can help a direction take shape. If several possible projects compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages.",
+        "dependsOn": [
+          "C1",
+          "I1"
+        ],
+        "sourceKey": "nl-sun-03",
+        "releaseVersion": "0.9.0",
+        "natalEvidenceId": "NL1"
+      },
+      "reviewSupport": [
+        {
+          "field": "meaning",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "natal-only",
+          "paragraph": 2,
+          "paragraphIndex": 1,
+          "sourceFactIds": [
+            "C1",
+            "I1",
+            "N1"
+          ],
+          "basis": "exact source meaning with benchmark application"
+        },
+        {
+          "field": "sceneDetails[0]",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "natal-only",
+          "paragraph": 1,
+          "paragraphIndex": 0,
+          "sourceFactIds": [
+            "C1",
+            "I1"
+          ],
+          "basis": "reviewed benchmark illustration"
+        },
+        {
+          "field": "sceneDetails[1]",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "natal-only",
+          "paragraph": 3,
+          "paragraphIndex": 2,
+          "sourceFactIds": [
+            "C1",
+            "I1",
+            "N1"
+          ],
+          "basis": "reviewed benchmark illustration"
+        },
+        {
+          "field": "practicalDistinction",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "natal-only",
+          "paragraph": 2,
+          "paragraphIndex": 1,
+          "sourceFactIds": [
+            "C1",
+            "I1",
+            "N1"
+          ],
+          "basis": "reviewed benchmark illustration"
+        },
+        {
+          "field": "optionalDirections[0]",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "natal-only",
+          "paragraph": 2,
+          "paragraphIndex": 1,
+          "sourceFactIds": [
+            "C1",
+            "I1",
+            "N1"
+          ],
+          "basis": "reviewed benchmark illustration"
+        },
+        {
+          "field": "optionalDirections[1]",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "natal-only",
+          "paragraph": 3,
+          "paragraphIndex": 2,
+          "sourceFactIds": [
+            "C1",
+            "I1",
+            "N1"
+          ],
+          "basis": "reviewed benchmark illustration"
+        }
+      ]
+    },
+    {
+      "factId": "P2",
+      "sourceKey": "chapter-return-1",
+      "releaseVersion": "0.9.0",
+      "sourceMeaning": "Published transit chapter: If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.",
+      "dependsOn": [
+        "C1",
+        "I1",
+        "A1"
+      ],
+      "meaning": "If an earlier way of handling the responsibility no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.",
+      "sceneDetails": [
+        "A task put into a different calendar opening while its contents stay the same.",
+        "A defined stopping point for what belongs inside this afternoon's commitment."
+      ],
+      "practicalDistinction": "Moving a task to a later slot does not change its size; adjusting what is included or where it stops can change the method or boundary.",
+      "optionalDirections": [
+        "If the earlier method no longer fits, change one part of the task's method or boundary.",
+        "Make a stopping point visible before an extra check or version enters the agreement."
+      ],
+      "requiredConditions": [
+        "Preserve the condition that an earlier way must no longer fit before offering an adjustment as a return-chapter application.",
+        "A calculated return does not establish that a life situation recurred or that a previous attempt failed.",
+        "Use any chronology only from A1 exactly, with C1 and I1 as parents."
+      ],
+      "limitations": [
+        "Do not tell the reader they have been here before or have already failed with this method.",
+        "Do not turn a smaller adjustment into a recommendation for a wholesale restart.",
+        "Calendar, task-size and stopping-point details are authored benchmark illustrations."
+      ],
+      "illustrationStatus": "possible situation, not known member life",
+      "reviewStatus": "authored material for independent review",
+      "sourceFact": {
+        "id": "P2",
+        "kind": "interpretation",
+        "dependsOn": [
+          "C1",
+          "I1",
+          "A1"
+        ],
+        "sourceKey": "chapter-return-1",
+        "releaseVersion": "0.9.0",
+        "statement": "Published transit chapter: If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.",
+        "storyChapter": "return"
+      },
+      "reviewSupport": [
+        {
+          "field": "meaning",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "transit-only",
+          "paragraph": 2,
+          "paragraphIndex": 1,
+          "sourceFactIds": [
+            "C1",
+            "I1",
+            "A1",
+            "P2"
+          ],
+          "basis": "exact source meaning with benchmark application"
+        },
+        {
+          "field": "sceneDetails[0]",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "transit-only",
+          "paragraph": 1,
+          "paragraphIndex": 0,
+          "sourceFactIds": [
+            "C1",
+            "I1"
+          ],
+          "basis": "reviewed benchmark illustration"
+        },
+        {
+          "field": "sceneDetails[1]",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "transit-only",
+          "paragraph": 3,
+          "paragraphIndex": 2,
+          "sourceFactIds": [
+            "C1",
+            "I1"
+          ],
+          "basis": "reviewed task-boundary illustration applied conditionally within the chapter"
+        },
+        {
+          "field": "practicalDistinction",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "transit-only",
+          "paragraph": 2,
+          "paragraphIndex": 1,
+          "sourceFactIds": [
+            "C1",
+            "I1",
+            "A1",
+            "P2"
+          ],
+          "basis": "reviewed benchmark illustration"
+        },
+        {
+          "field": "optionalDirections[0]",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "transit-only",
+          "paragraph": 2,
+          "paragraphIndex": 1,
+          "sourceFactIds": [
+            "C1",
+            "I1",
+            "A1",
+            "P2"
+          ],
+          "basis": "reviewed benchmark illustration"
+        },
+        {
+          "field": "optionalDirections[1]",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "transit-only",
+          "paragraph": 3,
+          "paragraphIndex": 2,
+          "sourceFactIds": [
+            "C1",
+            "I1"
+          ],
+          "basis": "reviewed benchmark illustration"
+        }
+      ]
+    },
+    {
+      "factId": "I2",
+      "sourceKey": "trine:jupiter:mars",
+      "releaseVersion": "0.9.0",
+      "sourceMeaning": "Published interpretation trine:jupiter:mars: Enthusiasm and practical initiative reinforce one another when an aim is well chosen. Jupiter's trine to Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening.",
+      "dependsOn": [
+        "C2"
+      ],
+      "meaning": "When an aim is well chosen, enthusiasm and practical initiative can reinforce each other, making a larger piece of work or an emerging opening easier to take up.",
+      "sceneDetails": [
+        "A page of notes beginning to become an outline.",
+        "Another piece of the same project starting to look appealing."
+      ],
+      "practicalDistinction": "A well-chosen aim can bring enthusiasm and a practical start together; ease in taking up a piece is not a guarantee about its result.",
+      "optionalDirections": [
+        "Notice the moment an appealing next piece begins to look like something to take on."
+      ],
+      "requiredConditions": [
+        "Preserve the well-chosen-aim condition; do not assert that the reader's current aim is well chosen.",
+        "Ease is an interpretive possibility, not a promise of success or an actual opportunity arriving."
+      ],
+      "limitations": [
+        "Do not guarantee motivation, success, luck, a reward or an opportunity.",
+        "Do not turn initiative into an instruction to accept more work.",
+        "The notes, outline and appealing addition are authored benchmark illustrations."
+      ],
+      "illustrationStatus": "possible situation, not known member life",
+      "reviewStatus": "authored material for independent review",
+      "sourceFact": {
+        "id": "I2",
+        "statement": "Published interpretation trine:jupiter:mars: Enthusiasm and practical initiative reinforce one another when an aim is well chosen. Jupiter's trine to Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening.",
+        "kind": "interpretation",
+        "dependsOn": [
+          "C2"
+        ],
+        "sourceKey": "trine:jupiter:mars",
+        "releaseVersion": "0.9.0"
+      },
+      "reviewSupport": [
+        {
+          "field": "meaning",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "synthesis-natal-and-transit",
+          "paragraph": 1,
+          "paragraphIndex": 0,
+          "sourceFactIds": [
+            "C1",
+            "I1",
+            "C2",
+            "I2",
+            "S1",
+            "N1"
+          ],
+          "basis": "exact source meaning with benchmark application"
+        },
+        {
+          "field": "sceneDetails[0]",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "synthesis-natal-and-transit",
+          "paragraph": 1,
+          "paragraphIndex": 0,
+          "sourceFactIds": [
+            "C1",
+            "I1",
+            "C2",
+            "I2",
+            "S1",
+            "N1"
+          ],
+          "basis": "reviewed benchmark illustration"
+        },
+        {
+          "field": "sceneDetails[1]",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "synthesis-natal-and-transit",
+          "paragraph": 1,
+          "paragraphIndex": 0,
+          "sourceFactIds": [
+            "C1",
+            "I1",
+            "C2",
+            "I2",
+            "S1",
+            "N1"
+          ],
+          "basis": "reviewed benchmark illustration"
+        },
+        {
+          "field": "practicalDistinction",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "synthesis-natal-and-transit",
+          "paragraph": 2,
+          "paragraphIndex": 1,
+          "sourceFactIds": [
+            "C1",
+            "I1",
+            "C2",
+            "I2",
+            "S1",
+            "A1",
+            "P2"
+          ],
+          "basis": "reviewed benchmark application; card retains only its own source distinction"
+        },
+        {
+          "field": "optionalDirections[0]",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "synthesis-natal-and-transit",
+          "paragraph": 1,
+          "paragraphIndex": 0,
+          "sourceFactIds": [
+            "C1",
+            "I1",
+            "C2",
+            "I2",
+            "S1",
+            "N1"
+          ],
+          "basis": "reviewed benchmark illustration"
+        }
+      ]
+    },
+    {
+      "factId": "S1",
+      "sourceKey": "square:saturn:sun_tension_trine:jupiter:mars",
+      "releaseVersion": "0.9.0",
+      "sourceMeaning": "Published tension synthesis square:saturn:sun_tension_trine:jupiter:mars (parents: C1, I1, C2, I2): Giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.",
+      "dependsOn": [
+        "C1",
+        "I1",
+        "C2",
+        "I2"
+      ],
+      "meaning": "Giving a plan more scope can increase the structure needed to carry it. A possible task growing beyond its agreed limits makes that tension visible.",
+      "sceneDetails": [
+        "An appealing extra piece added to the same project.",
+        "One more check or another version enlarging the same proposed task."
+      ],
+      "practicalDistinction": "Ease in beginning more work is different from having enough structure to carry the expanded commitment.",
+      "optionalDirections": [
+        "Notice whether an appealing addition changes the amount the original agreement includes.",
+        "Consider the structure a larger piece would need before adding it to the same agreement."
+      ],
+      "requiredConditions": [
+        "Use only with C1, I1, C2 and I2; preserve both contact interpretations and the combined tension.",
+        "Added scope and limits being exceeded must remain possible, not assumed facts about the reader's project."
+      ],
+      "limitations": [
+        "Do not imply all growth is overcommitment or that a larger plan must be refused.",
+        "Do not promise that a boundary will produce success or reduce strain.",
+        "The project, notes and proposed addition are authored benchmark illustrations."
+      ],
+      "illustrationStatus": "possible situation, not known member life",
+      "reviewStatus": "authored material for independent review",
+      "sourceFact": {
+        "id": "S1",
+        "statement": "Published tension synthesis square:saturn:sun_tension_trine:jupiter:mars (parents: C1, I1, C2, I2): Giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.",
+        "kind": "synthesis",
+        "dependsOn": [
+          "C1",
+          "I1",
+          "C2",
+          "I2"
+        ],
+        "sourceKey": "square:saturn:sun_tension_trine:jupiter:mars",
+        "releaseVersion": "0.9.0"
+      },
+      "reviewSupport": [
+        {
+          "field": "meaning",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "synthesis-natal-and-transit",
+          "paragraph": 1,
+          "paragraphIndex": 0,
+          "sourceFactIds": [
+            "C1",
+            "I1",
+            "C2",
+            "I2",
+            "S1",
+            "N1"
+          ],
+          "basis": "exact source meaning with benchmark application"
+        },
+        {
+          "field": "sceneDetails[0]",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "synthesis-natal-and-transit",
+          "paragraph": 1,
+          "paragraphIndex": 0,
+          "sourceFactIds": [
+            "C1",
+            "I1",
+            "C2",
+            "I2",
+            "S1",
+            "N1"
+          ],
+          "basis": "reviewed benchmark illustration"
+        },
+        {
+          "field": "sceneDetails[1]",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "contact-only",
+          "paragraph": 3,
+          "paragraphIndex": 2,
+          "sourceFactIds": [
+            "C1",
+            "I1"
+          ],
+          "basis": "reviewed primary-task illustration applied within the synthesis scene"
+        },
+        {
+          "field": "practicalDistinction",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "synthesis-natal-and-transit",
+          "paragraph": 2,
+          "paragraphIndex": 1,
+          "sourceFactIds": [
+            "C1",
+            "I1",
+            "C2",
+            "I2",
+            "S1",
+            "A1",
+            "P2"
+          ],
+          "basis": "reviewed benchmark illustration"
+        },
+        {
+          "field": "optionalDirections[0]",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "synthesis-natal-and-transit",
+          "paragraph": 3,
+          "paragraphIndex": 2,
+          "sourceFactIds": [
+            "C1",
+            "I1",
+            "C2",
+            "I2",
+            "S1",
+            "N1"
+          ],
+          "basis": "reviewed benchmark application; card retains only its own source distinction"
+        },
+        {
+          "field": "optionalDirections[1]",
+          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+          "benchmarkCase": "synthesis-natal-and-transit",
+          "paragraph": 3,
+          "paragraphIndex": 2,
+          "sourceFactIds": [
+            "C1",
+            "I1",
+            "C2",
+            "I2",
+            "S1",
+            "N1"
+          ],
+          "basis": "reviewed benchmark application; card retains only its own source distinction"
+        }
+      ]
+    }
+  ]
+}

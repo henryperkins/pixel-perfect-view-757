@@ -183,7 +183,8 @@ export type EvaluationPlan = ReturnType<typeof createEvaluationPlan> & {
   contextPilot?: import("./context-pilot-plan.server").ContextPilotDetails;
   metadata: ReturnType<typeof createEvaluationPlan>["metadata"] & {
     enterpriseThinking?: EnterpriseThinkingLevel;
-    experimentVersion?: "enterprise-thinking-pilot-1" | "daily-context-pilot-1";
+    experimentVersion?:
+      "enterprise-thinking-pilot-1" | "daily-context-pilot-1" | "daily-context-pilot-2";
   };
 };
 export const ENTERPRISE_PILOT_CASES = [

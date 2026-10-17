@@ -1,0 +1,178 @@
+{
+  "schemaVersion": "material-source-review-1",
+  "reviewType": "independent-ai-source-and-editorial-material-review",
+  "reviewDate": "2026-10-17",
+  "materialVersion": "daily-context-material-2",
+  "materialSha256": "be7c09a59c536ea963e128770f61b5d1af4dbb7bccebe6ac771efd4b52108a21",
+  "status": "pass",
+  "eligibleForBoundedProviderPilotOnThisReview": true,
+  "blockingFindings": 0,
+  "unresolvedFindings": 0,
+  "humanApproval": false,
+  "providerRequests": 0,
+  "networkRequests": 0,
+  "inputs": [
+    {
+      "path": "src/lib/ai/context-writing-material.json",
+      "sha256": "be7c09a59c536ea963e128770f61b5d1af4dbb7bccebe6ac771efd4b52108a21",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+      "sha256": "825c877dbb88d5d20d39a12abfd67cea01781506250db93d44ae7c9885b35024",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-readings.md",
+      "sha256": "75258c2eabec3625cd49b72374c3fcdc4b2d2d769bd6b383403a77b4a6e6ebf2",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "docs/reviews/daily-reading-release/2026-10-17/bundle.json",
+      "sha256": "a77eb43eba5aa9c140b514ef56c987167bea1eb905abfa68dcceabe2da35c6f3",
+      "hashMode": "exact-file-bytes"
+    }
+  ],
+  "sourceBundleCanonicalSha256": "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f",
+  "scope": "All five material cards, their sourceFact bindings, exact immutable benchmark paragraphs, original release 0.9.0 source snapshot, source-condition preservation, and usefulness to an observant writer. No runtime/provider behavior or publication was qualified.",
+  "projectionAssumption": "Per supplied contract, only meaning, sceneDetails, practicalDistinction, optionalDirections and requiredFacts reach the provider; requiredConditions enter controls. sourceFact, sourceMeaning and reviewSupport are local audit material. This review does not itself certify the runtime projection.",
+  "checks": {
+    "cardCount": 5,
+    "reviewSupportRowsChecked": 31,
+    "sourceFactMatchesEveryBenchmarkOccurrence": true,
+    "sourceMechanismsMatchOriginalSnapshot": true,
+    "exactParentListsMatch": true,
+    "reviewSupportParagraphIndexesAndCitationListsMatch": true,
+    "fullBenchmarkParagraphCopyCount": 0
+  },
+  "resolvedAuditNotes": [
+    {
+      "factId": "P2",
+      "field": "reviewSupport for sceneDetails[1]",
+      "status": "resolved-in-reviewed-input",
+      "resolution": "Points to transit-only paragraph 3 (C1/I1), directly supporting the stopping point without an unnecessary N1-bearing paragraph."
+    },
+    {
+      "factId": "S1",
+      "field": "reviewSupport for sceneDetails[1]",
+      "status": "resolved-in-reviewed-input",
+      "resolution": "Points to contact-only paragraph 3 (C1/I1), directly supporting checks/versions within the synthesis parent closure."
+    }
+  ],
+  "cards": [
+    {
+      "factId": "I1",
+      "status": "pass",
+      "allowedParents": [
+        "C1"
+      ],
+      "sourceFactExactMatch": true,
+      "sourceMeaningSupportedByOriginalSnapshot": true,
+      "fullBenchmarkParagraphCopied": false,
+      "findings": [],
+      "recommendedLineEdits": [],
+      "fieldReview": {
+        "meaning": "Preserves familiar responsibility, increased effort as a possibility, and the expectations/capacity boundary. It adds no cause, onset, diagnosed overload, or known member circumstance.",
+        "sceneDetails": "The afternoon and rescheduled task come from contact-only paragraph 1; the extra check/version comes from paragraph 3. These are possible scenes supported by I1/C1, not claimed calculation facts.",
+        "practicalDistinction": "Task size versus calendar placement is the concrete application in contact-only paragraph 2 and remains within responsibility/boundary meaning.",
+        "optionalDirections": "All three choices are grounded in contact-only paragraphs 2-3. Leaving an addition outside is conditioned on existing work filling the hours; the card supplies optional material rather than a mandatory refusal.",
+        "sourceConditions": "Controls preserve possibility, conditional expectation/capacity mismatch, and conditional follow-up references. No new success or discipline claim.",
+        "usefulness": "Offers visible actions, a calendar, and a specific addition; a writer can develop a scene without inventing the reader's life."
+      }
+    },
+    {
+      "factId": "N1",
+      "status": "pass",
+      "allowedParents": [
+        "C1",
+        "I1"
+      ],
+      "sourceFactExactMatch": true,
+      "sourceMeaningSupportedByOriginalSnapshot": true,
+      "fullBenchmarkParagraphCopied": false,
+      "findings": [],
+      "recommendedLineEdits": [],
+      "fieldReview": {
+        "meaning": "Preserves curiosity as a way a direction may emerge and separates sampling from choosing. No fixed personality label or obligation to pursue every idea.",
+        "sceneDetails": "Notes/tab imagery is present in natal-only paragraph 1 and the retained idea beside a chosen project in paragraph 3. The first pointer is illustration provenance; it does not claim that C1/I1 alone establish N1's curiosity meaning.",
+        "practicalDistinction": "Exploration versus promising the same afternoon's time is the natal-only paragraph 2 application of N1.",
+        "optionalDirections": "Sampling before committing and keeping the alternative in notes come from natal-only paragraphs 2-3; no synthesis structure/ease tension or transit recurrence is imported.",
+        "sourceConditions": "Controls retain interpretive possibility, the condition that several possibilities compete for the same time, and the exploration/commitment distinction.",
+        "usefulness": "The note and tab make curiosity observable. The retained alternative gives the writer a practical choice with no personality diagnosis."
+      }
+    },
+    {
+      "factId": "P2",
+      "status": "pass",
+      "allowedParents": [
+        "C1",
+        "I1",
+        "A1"
+      ],
+      "sourceFactExactMatch": true,
+      "sourceMeaningSupportedByOriginalSnapshot": true,
+      "fullBenchmarkParagraphCopied": false,
+      "findings": [],
+      "recommendedLineEdits": [],
+      "fieldReview": {
+        "meaning": "Retains the exact earlier-method-no-longer-fits condition and the smaller adjustment to a method or boundary. It supplies no biography about previous attempts.",
+        "sceneDetails": "The moved calendar task is supported by transit-only paragraph 1. The stopping point is directly supported by transit-only paragraph 3 with C1/I1; no N1 meaning is needed.",
+        "practicalDistinction": "Changing task scope or a stopping point versus moving the unchanged task is the transit-only paragraph 2 application and stays within P2 plus C1/I1.",
+        "optionalDirections": "One change is explicitly conditional on the earlier method no longer fitting. The stopping-point/check/version suggestion uses the primary-task scene from transit-only paragraph 3, not a claim that life has repeated.",
+        "sourceConditions": "Controls preserve the prior-method condition, prohibit inferring life recurrence or failure from the calculated return, and reserve chronology to A1 exactly with C1/I1.",
+        "usefulness": "Gives the writer a specific small adjustment and the observable edge of an agreement. It does not add transit chronology or a narrative of failure."
+      }
+    },
+    {
+      "factId": "I2",
+      "status": "pass",
+      "allowedParents": [
+        "C2"
+      ],
+      "sourceFactExactMatch": true,
+      "sourceMeaningSupportedByOriginalSnapshot": true,
+      "fullBenchmarkParagraphCopied": false,
+      "findings": [],
+      "recommendedLineEdits": [],
+      "fieldReview": {
+        "meaning": "Preserves the well-chosen-aim condition, enthusiasm/practical initiative, and possible ease taking up a larger piece or opening. C2 is its only parent.",
+        "sceneDetails": "The notes becoming an outline and an appealing next piece are directly in synthesis-natal-and-transit paragraph 1. They instantiate I2's ease/initiative meaning without borrowing S1's carrying structure or N1's several-interest distinction.",
+        "practicalDistinction": "Enthusiasm plus a practical start is supported by I2. The absence of a result guarantee is a source-scope limit, not a borrowed synthesis claim. The card does not equate ease with capacity to carry expanded work.",
+        "optionalDirections": "Noticing an appealing next piece is supported by the same paragraph 1 illustration and the original emerging-opening/larger-work source. No command to expand scope.",
+        "sourceConditions": "Both meaning and controls retain the well-chosen-aim condition. Controls prohibit treating ease as actual opportunity or promised success.",
+        "usefulness": "Offers a tangible transition from notes to outline and the attraction of a next piece. It leaves structure/capacity judgments to cards whose parents support them."
+      }
+    },
+    {
+      "factId": "S1",
+      "status": "pass",
+      "allowedParents": [
+        "C1",
+        "I1",
+        "C2",
+        "I2"
+      ],
+      "sourceFactExactMatch": true,
+      "sourceMeaningSupportedByOriginalSnapshot": true,
+      "fullBenchmarkParagraphCopied": false,
+      "findings": [],
+      "recommendedLineEdits": [],
+      "fieldReview": {
+        "meaning": "Preserves that more scope can require more carrying structure and that possible ambitions beyond agreed limits illustrate the tension. All four parents remain required.",
+        "sceneDetails": "The appealing extra piece comes from synthesis-natal-and-transit paragraph 1. Check/version particulars are directly supported by contact-only paragraph 3, whose C1/I1 parents are present in S1. Neither scene borrows N1's curiosity meaning.",
+        "practicalDistinction": "Ease beginning more work versus enough structure to carry the expanded commitment is supported by synthesis-natal-and-transit paragraph 2 and the original S1 mechanism with I1/I2 parents.",
+        "optionalDirections": "Checking what an addition changes and considering the structure it needs are supported by the synthesis benchmark application and original S1 meaning; exploration-versus-commitment as a natal distinction is not imported.",
+        "sourceConditions": "Controls require C1/I1/C2/I2 and keep growing scope or exceeded limits hypothetical. The text does not imply all growth is overcommitment or promise a boundary will work.",
+        "usefulness": "Makes the two-contact tension observable in the same proposed task. It gives the writer a comparison and choice beyond naming astrological themes."
+      }
+    }
+  ],
+  "findings": [],
+  "recommendedLineEdits": [],
+  "limitations": [
+    "This AI review is not human editorial approval. Benchmark metadata still records offline authored candidates and humanReviewed=false.",
+    "The pass applies only to the exact material bytes and the five bounded source bindings; it does not qualify generated outputs, other sources, consecutive days, or publication/activation.",
+    "Benchmarks supply possible scenes and editorial applications, not facts about a member's life.",
+    "Provider output must still preserve every applicable source condition and parent scope."
+  ]
+}

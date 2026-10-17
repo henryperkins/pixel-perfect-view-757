@@ -94,12 +94,12 @@ test("context plan pins one provider, five attempts, source identity and a five-
     "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f",
   );
   assert.deepEqual(plan.contextPilot.benchmarks, packet);
-  assert.equal(plan.metadata.promptVersion, "daily-context-body-1");
-  assert.equal(plan.metadata.validatorVersion, "daily-context-reference-1");
-  assert.equal(plan.metadata.voiceExamplesVersion, "daily-context-voice-1");
+  assert.equal(plan.metadata.promptVersion, "daily-context-body-2");
+  assert.equal(plan.metadata.validatorVersion, "daily-context-reference-2");
+  assert.equal(plan.metadata.voiceExamplesVersion, "daily-context-voice-2");
   assert.equal(plan.metadata.gatewayTimeoutMs, 60_000);
   assert.equal(plan.metadata.maxOutputTokens, 65_536);
-  assert.equal(plan.cases[3].writingBrief.version, "daily-context-brief-1");
+  assert.equal(plan.cases[3].writingBrief.version, "daily-context-brief-2");
   assert.equal(
     revalidateContextPilotPlan(plan, "b".repeat(40), "gemini-enterprise").hash,
     plan.hash,
@@ -108,6 +108,46 @@ test("context plan pins one provider, five attempts, source identity and a five-
     h.gatewayRequests.length + h.geminiEnterpriseRequests.length + h.swissRequests.length,
     0,
   );
+});
+
+// Without the independent material pin, source prose can drift under an unchanged benchmark hash.
+test("second context campaign freezes the exact reviewed material independently of unchanged benchmarks", async () => {
+  const { createContextPilotPlan, revalidateContextPilotPlan } = await pilot();
+  const plan = createContextPilotPlan("b".repeat(40), "gemini-enterprise");
+  assert.equal(plan.contextPilot.version, "daily-context-pilot-2");
+  const bytes = await readFile(
+    new URL("../src/lib/ai/context-writing-material.json", import.meta.url),
+  );
+  assert.equal(plan.contextPilot.materialHash, createHash("sha256").update(bytes).digest("hex"));
+  assert.deepEqual(plan.contextPilot.materials, JSON.parse(bytes));
+  assert.equal(plan.contextPilot.materialVersion, "daily-context-material-2");
+  assert.equal(
+    plan.contextPilot.benchmarkHash,
+    "825c877dbb88d5d20d39a12abfd67cea01781506250db93d44ae7c9885b35024",
+  );
+  assert.equal(
+    plan.contextPilot.caseManifest.caseSetHash,
+    "93855b484ef95b1b950fc229633d4467215ff0cd2c6d6ce1eb1445ba3375f5c4",
+  );
+  const changed = structuredClone(plan);
+  changed.contextPilot.materials.cards[0].practicalDistinction = "Unreviewed new direction.";
+  assert.throws(
+    () => revalidateContextPilotPlan(changed, "b".repeat(40), "gemini-enterprise"),
+    /integrity/,
+  );
+  const { hash: _previous, ...changedPayload } = changed;
+  changed.hash = digest(changedPayload);
+  assert.throws(
+    () => revalidateContextPilotPlan(changed, "b".repeat(40), "gemini-enterprise"),
+    /runtime, candidate, fixture or policy/,
+  );
+  const historical = structuredClone(plan);
+  historical.contextPilot.version = "daily-context-pilot-1";
+  assert.throws(
+    () => revalidateContextPilotPlan(historical, "b".repeat(40), "gemini-enterprise"),
+    /source or provider/,
+  );
+  assert.equal(h.gatewayRequests.length + h.geminiEnterpriseRequests.length, 0);
 });
 
 test("context plan refuses missing source identity, another provider and stored source or benchmark drift", async () => {
@@ -212,9 +252,9 @@ test("server synthetic runner requests the candidate voice and captures its sele
       `${benchmark.id}: ${result.case.diagnostics.code}`,
     );
     assert.deepEqual(ordered(result.case.facts), ordered(benchmark.selectedSources));
-    assert.equal(result.metadata.promptVersion, "daily-context-body-1");
-    assert.equal(result.metadata.validatorVersion, "daily-context-reference-1");
-    assert.equal(result.metadata.voiceExamplesVersion, "daily-context-voice-1");
+    assert.equal(result.metadata.promptVersion, "daily-context-body-2");
+    assert.equal(result.metadata.validatorVersion, "daily-context-reference-2");
+    assert.equal(result.metadata.voiceExamplesVersion, "daily-context-voice-2");
     assert.ok(result.case.request);
     assert.equal(result.case.output.headline, benchmark.headline);
     assert.equal(result.case.output.prompt, benchmark.reflection);

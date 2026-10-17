@@ -719,6 +719,25 @@ function dailyReferenceProblem(
   return null;
 }
 
+/**
+ * Known context-pilot regression only: the supplied role-pressure meaning does
+ * not establish this recent change in a reader's life. A conditional must be
+ * in the same clause; a modal in an earlier sentence cannot qualify it. This
+ * lexical guard does not establish semantic support for other personal claims.
+ */
+function contextRecentOnsetClaim(sentences: string[]): boolean {
+  return sentences.some((sentence) => {
+    const claim = /\bexpectations have begun to outpace your available capacity\b/i.exec(sentence);
+    if (!claim) return false;
+    const prefix =
+      sentence
+        .slice(0, claim.index)
+        .split(/[,;:]|\b(?:but|and then)\b/i)
+        .at(-1) ?? "";
+    return !/\b(?:if|when|unless|suppose|perhaps|maybe)\b/i.test(prefix);
+  });
+}
+
 function dailyDraft(
   raw: unknown,
   input: ReadingProseInput,
@@ -827,6 +846,11 @@ function dailyDraft(
       )
     )
       return rejectParagraph("editorial_claim", "draft asserts an unsupplied personal event");
+    if (contextCandidate && contextRecentOnsetClaim(sentences))
+      return rejectParagraph(
+        "editorial_claim",
+        "draft asserts the context pilot's unsupported recent-onset claim",
+      );
     if (byId.has("N1") && natalLensWordingProblem(text))
       return rejectParagraph("natal_claim", "draft asserts natal certainty or a clinical claim");
     const ids = [...new Set(p.facts as string[])];

@@ -5,8 +5,8 @@ import { createRecordsHarness } from "./helpers/records-harness.mjs";
 let h, candidate, prepare, brief;
 before(async () => {
   h = await createRecordsHarness();
-  ({ EDITORIAL_CANDIDATE_BUNDLE: candidate } = await h.vite.ssrLoadModule(
-    "/src/lib/content/editorial-candidate-bundle.ts",
+  ({ default: candidate } = await h.vite.ssrLoadModule(
+    "/src/lib/content/context-pilot-bundle.json",
   ));
   ({ prepareSyntheticEvaluationCase: prepare } = await h.vite.ssrLoadModule(
     "/src/lib/ai/reading-evaluation.server.ts",
@@ -63,7 +63,12 @@ test("source-bound material preserves complete meaning while structural referenc
     assert.equal(entry.releaseVersion, fact.releaseVersion);
     assert.ok(entry.meaning.length > 20);
     assert.ok(!entry.meaning.startsWith("Published "));
-    assert.ok(fact.statement.endsWith(entry.meaning), "meaning must be an exact source suffix");
+    assert.ok(entry.sceneDetails.length > 0, "reviewed details must supplement the meaning");
+    assert.ok(entry.practicalDistinction.length > 20);
+    assert.ok(
+      !fact.statement.endsWith(entry.meaning),
+      "legacy prose must not compete with reviewed material",
+    );
   }
   assert.deepEqual(result.material.find((entry) => entry.factId === "S1").requiredFacts, [
     "S1",
@@ -205,13 +210,12 @@ test("all tone and depth preferences share the observational policy without a wa
   assert.match(brief.dailyContextSystemVoice(true), /N1/);
 });
 
-test("removing a source prefix once never edits repeated words within curated meaning", () => {
+test("changing a source meaning cannot silently reuse reviewed material", () => {
   const { facts } = prepared();
   const primary = facts.find((fact) => fact.id === "I1");
   primary.statement = `Published interpretation ${primary.sourceKey}: The words Published interpretation belong to this exact supplied distinction.`;
-  const result = brief.toDailyContextBrief(facts, "warm", "standard");
-  assert.equal(
-    result.material.find((entry) => entry.factId === "I1").meaning,
-    "The words Published interpretation belong to this exact supplied distinction.",
+  assert.throws(
+    () => brief.toDailyContextBrief(facts, "warm", "standard"),
+    /reviewed context material/,
   );
 });

@@ -1,0 +1,53 @@
+{
+  "version": "daily-context-material-pilot-preflight-2",
+  "at": "2026-10-17T08:46:02.474069+00:00",
+  "baseSourceSha": "3de2393149c5b086efab31dd5c3183702b4f4138",
+  "provider": "gemini-enterprise",
+  "model": "gemini-3.8-flash",
+  "maximumAttempts": 5,
+  "maximumRetries": 0,
+  "ceilingMicros": 5000000,
+  "reservationMicros": 2800000,
+  "deadlineMs": 60000,
+  "maxInputBytes": 65536,
+  "maxOutputTokens": 65536,
+  "caseSetId": "daily-context-1",
+  "caseSetHash": "93855b484ef95b1b950fc229633d4467215ff0cd2c6d6ce1eb1445ba3375f5c4",
+  "benchmarkBytesSha256": "825c877dbb88d5d20d39a12abfd67cea01781506250db93d44ae7c9885b35024",
+  "materialVersion": "daily-context-material-2",
+  "materialBytesSha256": "be7c09a59c536ea963e128770f61b5d1af4dbb7bccebe6ac771efd4b52108a21",
+  "materialSourceReview": "material-source-review.json",
+  "candidateCanonicalChecksum": "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f",
+  "verification": {
+    "baselineContextTests": 45,
+    "materialRed": {
+      "failed": 2,
+      "reason": "reviewed material fields absent; changed source allowed"
+    },
+    "onsetGuardRed": "exact first-pilot unsupported body previously accepted",
+    "historicalCampaignRed": "v1 prevented separately authorized v2 campaign",
+    "fullSuite": {
+      "command": "node --test --test-concurrency=4 tests/*.test.mjs",
+      "total": 1030,
+      "passed": 1026,
+      "failed": 0,
+      "skipped": 4,
+      "durationMs": 68209.404465,
+      "log": "/tmp/pattern-context-material-pilot-20261017/full-tests.log"
+    },
+    "typecheckExitCode": 0,
+    "scopedLintExitCode": 0,
+    "buildExitCode": 0,
+    "offlineValidation": "offline-validation/manifest.json",
+    "offlineCases": 5,
+    "interceptedGatewayRequests": 10,
+    "liveProviderRequests": 0,
+    "sourceMaterialReview": "pass",
+    "environmentPreserved": true,
+    "independentCodeReview": "independent-implementation-review.md",
+    "independentFocusedTestsPassed": 39
+  },
+  "memberWriterActivated": false,
+  "workerChanged": false,
+  "liveProviderAttemptsAtPreflight": 0
+}

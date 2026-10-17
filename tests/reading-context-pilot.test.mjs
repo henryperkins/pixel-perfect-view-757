@@ -151,7 +151,7 @@ test("preview freezes five exact context benchmarks and never dispatches or publ
   );
   assert.equal(prepared.attemptLimit, 5);
   assert.equal(prepared.plans.contextPilot.provider, "gemini-enterprise");
-  assert.equal(prepared.plans.contextPilot.version, "daily-context-pilot-1");
+  assert.equal(prepared.plans.contextPilot.version, "daily-context-pilot-2");
   assert.equal(prepared.plans.contextPilot.dollarCeilingMicros, 5_000_000);
   assert.equal(prepared.plans.contextPilot.reviewReserveMicros, 0);
   assert.ok(prepared.plans.cases.every((item) => item.expectsModel));
@@ -170,7 +170,7 @@ test("signed workflow captures five distinct context outputs with no member or r
   const firstQuery = h.requests.length;
   assert.equal(run.provider, "gemini-enterprise");
   assert.equal(run.total, 5);
-  assert.equal(run.contextPilot.version, "daily-context-pilot-1");
+  assert.equal(run.contextPilot.version, "daily-context-pilot-2");
   assert.equal(h.evaluationStarts.length, 1);
   assert.equal(h.evaluationStarts[0].callback, `${ORIGIN}/api/public/evaluation-step`);
   for (let position = 0; position < 5; position++)
@@ -192,10 +192,10 @@ test("signed workflow captures five distinct context outputs with no member or r
     );
     assert.equal(result.case.candidate.captureLossless, true);
     assert.equal(result.case.candidate.truncated, false);
-    assert.equal(result.metadata.experimentVersion, "daily-context-pilot-1");
+    assert.equal(result.metadata.experimentVersion, "daily-context-pilot-2");
     assert.equal(result.metadata.runPlanHash, saved.ledger.sourcePlan.hash);
     assert.equal(result.metadata.bundleSource, "context-pilot");
-    assert.equal(result.case.diagnostics.promptVersion, "daily-context-body-1");
+    assert.equal(result.case.diagnostics.promptVersion, "daily-context-body-2");
     assert.equal(result.case.transport.maxOutputTokens, 65536);
     assert.equal(result.case.transport.deadlineMs, 60000);
     assert.equal(h.geminiEnterpriseRequests[index].generationConfig.maxOutputTokens, 65536);
@@ -402,6 +402,26 @@ test("failed Workflow dispatch retains this version's campaign and blocks anothe
   await assert.rejects(() => begin(), /already/);
   assert.equal(h.evaluationStarts.length, 1);
   assert.equal(h.sqlite.prepare("SELECT status FROM evaluation_runs").get().status, "error");
+  assert.equal(h.geminiEnterpriseRequests.length + h.gatewayRequests.length, 0);
+});
+
+// A retained v1 row must neither consume v2's allowance nor be rewritten to obtain it.
+test("a historical context campaign remains readable while the second version gets one separate allowance", async () => {
+  provider();
+  const historical = await begin();
+  const oldPlan = JSON.parse(stored(historical.id).plan);
+  oldPlan.contextPilot.version = "daily-context-pilot-1";
+  h.sqlite
+    .prepare("UPDATE evaluation_runs SET status='complete', plan=? WHERE id=?")
+    .run(JSON.stringify(oldPlan), historical.id);
+  const before = stored(historical.id);
+  const current = await begin();
+  assert.notEqual(current.id, historical.id);
+  assert.equal(current.contextPilot.version, "daily-context-pilot-2");
+  assert.deepEqual(stored(historical.id), before);
+  assert.equal((await capture(historical)).run.contextPilot.version, "daily-context-pilot-1");
+  await assert.rejects(() => begin(), /already/);
+  assert.equal(h.sqlite.prepare("SELECT count(*) n FROM evaluation_runs").get().n, 2);
   assert.equal(h.geminiEnterpriseRequests.length + h.gatewayRequests.length, 0);
 });
 

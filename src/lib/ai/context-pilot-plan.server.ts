@@ -2,6 +2,7 @@
 import { createHash } from "node:crypto";
 import bundleData from "../content/context-pilot-bundle.json";
 import benchmarkBytes from "./context-writing-benchmarks.json?raw";
+import materialBytes from "./context-writing-material.json?raw";
 import type { ContentBundle } from "../content/default-bundle";
 import { canonicalContentJson } from "../content/draft-comparison";
 import { validateContentGraph } from "../content/schema";
@@ -12,6 +13,7 @@ import {
   CONTEXT_WRITING_BENCHMARKS,
 } from "./reading-evaluation.context.fixtures";
 import { createEvaluationPlan, type EvaluationPlan } from "./qualification-plan.server";
+import { CONTEXT_DAILY_MATERIAL_VERSION } from "./daily-context-writing";
 import {
   CONTEXT_PILOT_VERSION,
   CONTEXT_PILOT_CASE_SET_ID,
@@ -28,6 +30,7 @@ const sourceGraph = (facts: { id: string }[]) =>
   canonicalContentJson([...facts].sort((a, b) => a.id.localeCompare(b.id)));
 const EXPECTED_BENCHMARK_HASH = "825c877dbb88d5d20d39a12abfd67cea01781506250db93d44ae7c9885b35024";
 const EXPECTED_BUNDLE_HASH = "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f";
+const EXPECTED_MATERIAL_HASH = "be7c09a59c536ea963e128770f61b5d1af4dbb7bccebe6ac771efd4b52108a21";
 const CASE_IDS = [
   "contact-only",
   "natal-only",
@@ -44,11 +47,20 @@ export function createContextPilotPlan(sourceSha: string | null, provider: Langu
   const candidate = structuredClone(bundleData) as unknown as ContentBundle;
   validateContentGraph(candidate);
   const benchmarkHash = createHash("sha256").update(benchmarkBytes).digest("hex");
+  const materialHash = createHash("sha256").update(materialBytes).digest("hex");
+  const materials = JSON.parse(materialBytes) as {
+    version: string;
+    cards: Record<string, unknown>[];
+  };
   if (
     benchmarkHash !== EXPECTED_BENCHMARK_HASH ||
-    canonicalHash(candidate) !== EXPECTED_BUNDLE_HASH
+    canonicalHash(candidate) !== EXPECTED_BUNDLE_HASH ||
+    materialHash !== EXPECTED_MATERIAL_HASH ||
+    materials.version !== CONTEXT_DAILY_MATERIAL_VERSION ||
+    !Array.isArray(materials.cards) ||
+    !materials.cards.length
   )
-    throw Error("The frozen reviewed context benchmarks or source bundle changed.");
+    throw Error("The frozen reviewed context benchmarks, source bundle or material changed.");
   const benchmarks = structuredClone(CONTEXT_WRITING_BENCHMARKS);
   const originalFixtures = CONTEXT_SOURCE_FIXTURES.map((fixture, index) => {
     if (hash(fixture) !== benchmarks.cases[index]?.fixture.baseSha256)
@@ -78,6 +90,9 @@ export function createContextPilotPlan(sourceSha: string | null, provider: Langu
     candidateCanonicalHash: canonicalHash(candidate),
     benchmarks,
     benchmarkHash,
+    materialHash,
+    materialVersion: materials.version,
+    materials,
     originalFixtures,
     dollarCeilingMicros: CONTEXT_PILOT_DOLLAR_CEILING_MICROS,
     reviewReserveMicros: 0,
