@@ -94,12 +94,12 @@ test("context plan pins one provider, five attempts, source identity and a five-
     "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f",
   );
   assert.deepEqual(plan.contextPilot.benchmarks, packet);
-  assert.equal(plan.metadata.promptVersion, "daily-context-body-2");
-  assert.equal(plan.metadata.validatorVersion, "daily-context-reference-2");
-  assert.equal(plan.metadata.voiceExamplesVersion, "daily-context-voice-2");
+  assert.equal(plan.metadata.promptVersion, "daily-context-body-3");
+  assert.equal(plan.metadata.validatorVersion, "daily-context-reference-3");
+  assert.equal(plan.metadata.voiceExamplesVersion, "daily-context-voice-3");
   assert.equal(plan.metadata.gatewayTimeoutMs, 60_000);
   assert.equal(plan.metadata.maxOutputTokens, 65_536);
-  assert.equal(plan.cases[3].writingBrief.version, "daily-context-brief-2");
+  assert.equal(plan.cases[3].writingBrief.version, "daily-context-brief-3");
   assert.equal(
     revalidateContextPilotPlan(plan, "b".repeat(40), "gemini-enterprise").hash,
     plan.hash,
@@ -120,7 +120,7 @@ test("second context campaign freezes the exact reviewed material independently 
   );
   assert.equal(plan.contextPilot.materialHash, createHash("sha256").update(bytes).digest("hex"));
   assert.deepEqual(plan.contextPilot.materials, JSON.parse(bytes));
-  assert.equal(plan.contextPilot.materialVersion, "daily-context-material-2");
+  assert.equal(plan.contextPilot.materialVersion, "daily-context-material-3");
   assert.equal(
     plan.contextPilot.benchmarkHash,
     "825c877dbb88d5d20d39a12abfd67cea01781506250db93d44ae7c9885b35024",
@@ -252,9 +252,9 @@ test("server synthetic runner requests the candidate voice and captures its sele
       `${benchmark.id}: ${result.case.diagnostics.code}`,
     );
     assert.deepEqual(ordered(result.case.facts), ordered(benchmark.selectedSources));
-    assert.equal(result.metadata.promptVersion, "daily-context-body-2");
-    assert.equal(result.metadata.validatorVersion, "daily-context-reference-2");
-    assert.equal(result.metadata.voiceExamplesVersion, "daily-context-voice-2");
+    assert.equal(result.metadata.promptVersion, "daily-context-body-3");
+    assert.equal(result.metadata.validatorVersion, "daily-context-reference-3");
+    assert.equal(result.metadata.voiceExamplesVersion, "daily-context-voice-3");
     assert.ok(result.case.request);
     assert.equal(result.case.output.headline, benchmark.headline);
     assert.equal(result.case.output.prompt, benchmark.reflection);

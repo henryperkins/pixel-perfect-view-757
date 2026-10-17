@@ -2,11 +2,11 @@
 import { assertDailyFactGraph, InvalidDailyFactGraph, type FactAtom } from "./facts";
 import reviewedMaterial from "./context-writing-material.json";
 
-export const CONTEXT_DAILY_PROMPT_VERSION = "daily-context-body-2" as const;
-export const CONTEXT_DAILY_VALIDATOR_VERSION = "daily-context-reference-2" as const;
-export const CONTEXT_DAILY_VOICE_VERSION = "daily-context-voice-2" as const;
-export const CONTEXT_DAILY_BRIEF_VERSION = "daily-context-brief-2" as const;
-export const CONTEXT_DAILY_MATERIAL_VERSION = "daily-context-material-2" as const;
+export const CONTEXT_DAILY_PROMPT_VERSION = "daily-context-body-3" as const;
+export const CONTEXT_DAILY_VALIDATOR_VERSION = "daily-context-reference-3" as const;
+export const CONTEXT_DAILY_VOICE_VERSION = "daily-context-voice-3" as const;
+export const CONTEXT_DAILY_BRIEF_VERSION = "daily-context-brief-3" as const;
+export const CONTEXT_DAILY_MATERIAL_VERSION = "daily-context-material-3" as const;
 
 type ContextTone = "plain" | "warm" | "clinical";
 type ContextDepth = "standard" | "technical";
@@ -80,7 +80,6 @@ export interface DailyContextMaterial {
   factId: string;
   sourceKey: string;
   releaseVersion: string;
-  meaning: string;
   sceneDetails: string[];
   practicalDistinction: string;
   optionalDirections: string[];
@@ -145,7 +144,6 @@ export function toDailyContextBrief(facts: FactAtom[], tone: string, depth: stri
     factId: fact.id,
     sourceKey: fact.sourceKey!,
     releaseVersion: fact.releaseVersion!,
-    meaning: card.meaning,
     sceneDetails: [...card.sceneDetails],
     practicalDistinction: card.practicalDistinction,
     optionalDirections: [...card.optionalDirections],
@@ -178,6 +176,16 @@ export function toDailyContextBrief(facts: FactAtom[], tone: string, depth: stri
     references,
     controls: {
       voiceVersion: CONTEXT_DAILY_VOICE_VERSION,
+      draftFrom: ["sceneDetails", "practicalDistinction", "optionalDirections"],
+      editingPrinciples: reviewedMaterial.voiceEdits.principles.map(({ id, instruction }) => ({
+        id,
+        instruction,
+      })),
+      sourceMeanings: reviewed.map(({ fact, card }) => ({
+        factId: fact.id,
+        meaning: card.meaning,
+        requiredFacts: requiredParents(fact, byId),
+      })),
       tone: normalizedTone,
       depth: normalizedDepth,
       requiredMeaningFacts: material.map((entry) => entry.factId),
@@ -196,8 +204,8 @@ export function toDailyContextBrief(facts: FactAtom[], tone: string, depth: stri
 export function dailyContextSystemVoice(hasNatal: boolean): string {
   return [
     "You write a daily astrology reading in an attentive, observational voice. Notice a recognizable detail, develop one useful distinction, and let that distinction give the reader proportionate direction.",
-    "Supplied material meanings, scene details, practical distinctions and optional directions are the writing material. They authorize possible illustrations, never known events. Structural references identify sources and parents; calculated references establish geometry and exact supplied chronology. Neither establishes personal events, causes, temperament or another person's intentions.",
-    "Keep every source condition in controls.sourceConditions attached to its own claim. Do not add frequency, necessity, certainty or a relationship beyond the supplied practical distinctions. A possibility in one sentence does not make a later personal assertion conditional. Each paragraph cites every source used and all its required parent facts. A synthesis keeps its distinct parent meanings, rather than reducing planets to a keyword list.",
+    "Draft from material.sceneDetails, practicalDistinction and optionalDirections. The sourceMeanings and sourceConditions in controls constrain what each illustration can mean; preserve them without restating their abstract summaries as prose. Material authorizes possible illustrations, never known events. Structural references identify sources and parents; calculated references establish geometry and exact supplied chronology. Neither establishes personal events, causes, temperament or another person's intentions.",
+    "Keep every source condition in controls.sourceConditions attached to its own claim. Preserve source possibility words such as can, may and could on the claim they qualify, including across intervening adverbs. Do not add speed, ease, frequency, necessity, certainty or a relationship beyond the supplied source meaning. A modal in an unrelated clause does not qualify another claim. A clear immediate reference may continue the same hypothetical scene; it never establishes a personal event. Each paragraph cites every source used and all its required parent facts. A synthesis keeps its distinct parent meanings, rather than reducing planets to a keyword list.",
     "Direction may be noticing, waiting, asking, a small reversible choice, leaving something unresolved or enjoying a supported moment. It remains optional; never pressure, predict, promise a result or turn a possibility into a personal prescription.",
     "Controls and source labels are separate from writing material. Do not narrate the rules, source selection, model, calculation system or limits as body prose. Respect supplied suppression limits and never invent astronomical, biographical or health claims.",
     ...(hasNatal
@@ -227,7 +235,7 @@ export function dailyContextVoice(tone: string, depth: string): string {
         : "Keep human meaning in the foreground. Omit optional orb values, degree measurements, phase and exact-date detail. When A1 is supplied, its immutable chronology sentence is required even at standard depth."
     }`,
     "Choose a few supplied scene details to develop one central situation through the primary practical distinction. These are building blocks, not paragraphs to concatenate. Let selected synthesis, natal and transit distinctions change what can be noticed or chosen within that same situation. Do not append separate mini-readings or invent a new setting for each source. A possible illustration must remain possible.",
-    "Open on a supported recognizable gesture, general distinction or conditional possibility. An if opening is optional. Vary paragraph count, sentence rhythm and the position of astrology; no fixed three-paragraph formula, mandatory script or closing permission sentence. Aim for 90–190 words, or a little more when required chronology and technical detail need it; stop when the thought is complete.",
+    "Open on a supported visible detail, recognizable gesture or plain distinction. Develop a concrete consequence before naming another abstraction. Cut a following sentence when it merely explains the same point again. Apply controls.editingPrinciples as editing moves, never as body prose. An if opening is optional. Vary paragraph count, sentence rhythm and the position of astrology; no fixed three-paragraph formula, mandatory script or closing permission sentence. Use only the words the thought needs; required chronology and technical detail may need more space.",
     "Integrate any selected N1 and P2 meaning within the first two paragraphs, each with its full source parents. Preserve natal conditionality. P2 contributes its supplied chapter distinction to the same scene; it authorizes no account of previous personal events, resolution or closure.",
     "If A1 is supplied, include its chronologySentence unchanged exactly once in paragraph 1 or 2, citing A1 and C1. Cite P2, C1, I1 and A1 together for chapter meaning. Do not paraphrase chronology, repeat it, add dates or reinterpret a calculated pass as an event in the reader's life.",
     "Planetary imagery can clarify a distinction only when supplied by material. Avoid a list of planet keywords. Do not explain that a contact offers a symbolic lens or gives this reading its theme; let supported meaning stand in ordinary language.",

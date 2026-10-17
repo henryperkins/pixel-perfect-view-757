@@ -1,0 +1,256 @@
+{
+  "version": "authored-voice-revision-3",
+  "cases": [
+    {
+      "id": "contact-only",
+      "headline": "The task that will not fit",
+      "reflection": "When does an addition begin to change what you originally agreed to do?",
+      "paragraphs": [
+        {
+          "text": "An extra check can look small beside a familiar task. Saturn's square to your natal Sun is a picture of expectations pressing against the capacity to meet them.",
+          "facts": [
+            "C1",
+            "I1"
+          ],
+          "scenes": []
+        },
+        {
+          "text": "If the original work already fills the afternoon, moving the task to a later calendar opening may leave the check attached. In that case, the extra check could be left out.",
+          "facts": [
+            "C1",
+            "I1"
+          ],
+          "scenes": []
+        }
+      ],
+      "sourceHash": "9d9512094268684f5ebeef23fcdde6d1bc07d7750c94c034bae4e61121a2e656",
+      "selectedSources": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.00 degrees. phase exact. domain identity. Calculated exact date: 2026-12-17.",
+          "cycle": {
+            "transitBody": "saturn",
+            "natalPoint": "sun",
+            "aspect": "square",
+            "orb": 0,
+            "exactDate": "2026-12-17"
+          }
+        },
+        {
+          "id": "I1",
+          "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+          "kind": "interpretation",
+          "dependsOn": [
+            "C1"
+          ],
+          "sourceKey": "square:saturn:sun",
+          "releaseVersion": "0.9.0"
+        }
+      ]
+    },
+    {
+      "id": "natal-only",
+      "headline": "An idea is not yet a promise",
+      "reflection": "What helps you recognize an interest you want to explore before deciding whether to commit?",
+      "paragraphs": [
+        {
+          "text": "An extra check can look small beside a familiar task. If the original work already fills the afternoon, the check still needs some of the same hours. Saturn's square to your natal Sun is a picture of expectations pressing against the capacity to meet them.",
+          "facts": [
+            "C1",
+            "I1"
+          ],
+          "scenes": []
+        },
+        {
+          "text": "If several projects compete for that afternoon, a page of notes for one idea can sit beside a tab open for another. Following a few lines of curiosity may help one direction take shape. A note can hold the second idea without promising it the afternoon.",
+          "facts": [
+            "C1",
+            "I1",
+            "N1"
+          ],
+          "scenes": []
+        }
+      ],
+      "sourceHash": "5b34230d36b51e40b99391ca590d22f9f154d819ae3c1aaa0d9344bff0f126b8",
+      "selectedSources": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.00 degrees. phase exact. domain identity. Calculated exact date: 2026-12-17.",
+          "cycle": {
+            "transitBody": "saturn",
+            "natalPoint": "sun",
+            "aspect": "square",
+            "orb": 0,
+            "exactDate": "2026-12-17"
+          }
+        },
+        {
+          "id": "I1",
+          "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+          "kind": "interpretation",
+          "dependsOn": [
+            "C1"
+          ],
+          "sourceKey": "square:saturn:sun",
+          "releaseVersion": "0.9.0"
+        },
+        {
+          "id": "N1",
+          "kind": "temperament",
+          "statement": "Published natal lens, an interpretive possibility: Following more than one line of curiosity can help a direction take shape. If several possible projects compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages.",
+          "dependsOn": [
+            "C1",
+            "I1"
+          ],
+          "sourceKey": "nl-sun-03",
+          "releaseVersion": "0.9.0",
+          "natalEvidenceId": "NL1"
+        }
+      ]
+    }
+  ],
+  "audit": [
+    {
+      "caseId": "contact-only",
+      "beforeAfter": [
+        {
+          "before": "You might set aside an afternoon for a familiar responsibility, only to notice that an established commitment can ask for more deliberate effort. If an extra check or another version is added beside the original task, its expectations may quickly exceed the capacity you actually have available.",
+          "after": "An extra check can look small beside a familiar task. Saturn's square to your natal Sun is a picture of expectations pressing against the capacity to meet them.",
+          "sourceIds": [
+            "C1",
+            "I1"
+          ],
+          "change": "Lead with the reviewed extra check, then retain the exact approved astrology sentence before developing the calendar consequence; remove quickly and the formal responsibility/commitment restatement."
+        },
+        {
+          "before": "Moving that same task into a later calendar opening doesn't change what it includes, since fitting work into a time slot is very different from deciding how much belongs inside the commitment itself. If the existing work already fills the hours on hand, you can make the boundary visible by naming the specific part that fits and leaving an addition outside of it.",
+          "after": "If the original work already fills the afternoon, moving the task to a later calendar opening may leave the check attached. In that case, the extra check could be left out.",
+          "sourceIds": [
+            "C1",
+            "I1"
+          ],
+          "change": "State the capacity condition once, keep the calendar consequence possible, and use In that case to hold the optional extra-check exclusion inside the same hypothetical. End on the tangible check instead of an abstract agreement."
+        }
+      ],
+      "qualifierNotes": [
+        "The opening is a general possible observation (can), not an asserted event in the reader's day.",
+        "The exact benchmark Saturn-square-Sun sentence retains approved interpretive imagery without asserting a known capacity mismatch.",
+        "If the original work already fills the afternoon immediately controls the possible calendar consequence (may leave).",
+        "In that case refers to the immediately preceding if-clause and carries the capacity condition into the optional extra-check exclusion (could be left out). No known full afternoon is asserted.",
+        "The extra check is the same optional addition within the possible task; leaving it out does not promise successful completion or require refusing other work."
+      ],
+      "wordCount": 59
+    },
+    {
+      "caseId": "natal-only",
+      "beforeAfter": [
+        {
+          "before": "If an established responsibility asks for more deliberate effort today, an extra check or another version can easily slip beside the original task. Fitting that familiar work into an open time slot is quite different from deciding how much actually belongs inside the commitment, especially wherever expectations might exceed your available capacity.",
+          "after": "An extra check can look small beside a familiar task. If the original work already fills the afternoon, the check still needs some of the same hours. Saturn's square to your natal Sun is a picture of expectations pressing against the capacity to meet them.",
+          "sourceIds": [
+            "C1",
+            "I1"
+          ],
+          "change": "Replace formal responsibility/commitment restatement with the reviewed extra check and its conditional cost. Remove easily and retain the exact approved Saturn-square-Sun sentence without new imagery."
+        },
+        {
+          "before": "If several ideas happen to compete for the same afternoon, you might keep a page of notes for one curiosity beside the project you've already selected. Exploring an interesting line of thought doesn't have to become a promise to give it those same hours, so you can let the extra possibility stay in the notes while keeping your primary boundary visible.",
+          "after": "If several projects compete for that afternoon, a page of notes for one idea can sit beside a tab open for another. Following a few lines of curiosity may help one direction take shape. A note can hold the second idea without promising it the afternoon.",
+          "sourceIds": [
+            "C1",
+            "I1",
+            "N1"
+          ],
+          "change": "Keep the competing-project condition adjacent to the notes and tab. Retain the possible curiosity-to-direction meaning, then let the note carry exploration versus promise without coaching or an abstract closing boundary."
+        }
+      ],
+      "qualifierNotes": [
+        "No stable temperament, scatteredness or actual competing interests are asserted.",
+        "If several projects compete for that afternoon controls the multi-project illustration.",
+        "Following curiosity may help: no guaranteed clarity or requirement to explore every idea.",
+        "The final note can hold an idea; it does not establish that the reader has chosen a project or promise an outcome."
+      ],
+      "wordCount": 91
+    }
+  ],
+  "editingPrinciples": [
+    {
+      "id": "visible-detail-first",
+      "principle": "Move a reviewed visible object or gesture before its abstract explanation. Use its concrete consequence once; do not paraphrase the same distinction in a second formal sentence.",
+      "sourceIds": [
+        "C1",
+        "I1"
+      ],
+      "examples": [
+        "An extra check can look small beside a familiar task."
+      ],
+      "scope": "Transfer the editing move, not this setting, to other selected meanings."
+    },
+    {
+      "id": "claim-local-condition",
+      "principle": "Put if, can or may on the claim it limits. A conditional scene in one sentence does not license a new definite claim about the reader later. Repeat a short condition where paragraph distance could lose its scope.",
+      "sourceIds": [
+        "I1",
+        "N1"
+      ],
+      "examples": [
+        "If the original work already fills those hours, one addition could stay outside the agreement.",
+        "If several projects compete for that afternoon, a page of notes for one idea can sit beside a tab open for another."
+      ],
+      "scope": "Keep source-specific conditions, including any earlier-method or well-chosen-aim precondition, attached in other contexts."
+    },
+    {
+      "id": "preserve-strength",
+      "principle": "Do not add speed, ease, frequency or necessity while shortening. Removing quickly or easily is insufficient if can or may also disappears.",
+      "sourceIds": [
+        "I1",
+        "N1"
+      ],
+      "examples": [
+        "Following a few lines of curiosity may help one direction take shape."
+      ],
+      "scope": "Modal preservation is semantic, not a blanket requirement to hedge calculation facts or definitions."
+    },
+    {
+      "id": "object-carries-direction",
+      "principle": "Prefer a supported object or small choice that makes the distinction visible to a counselor verb, supplied script or recap. End when that choice is legible.",
+      "sourceIds": [
+        "C1",
+        "I1",
+        "N1"
+      ],
+      "examples": [
+        "A note can hold the second idea without promising it the afternoon."
+      ],
+      "scope": "The direction remains optional and inside the possible scene; do not imply the choice will resolve the reader's life."
+    },
+    {
+      "id": "separate-voice-and-meaning",
+      "principle": "Teach short editing moves separately from source-bound material. Full revised bodies remain review artifacts, not prompt material, benchmark replacements or evidence of generated quality.",
+      "sourceIds": [
+        "C1",
+        "I1",
+        "N1"
+      ],
+      "examples": [],
+      "scope": "Any factual or interpretive example in a provider prompt must remain bound to its exact selected source and full parent closure."
+    }
+  ],
+  "provenance": {
+    "status": "Second authored draft after independent reader and source review of the first draft; natal-only is unchanged. Contact-only close awaits independent re-review. Not provider output or member activation.",
+    "benchmarkJsonSha256": "825c877dbb88d5d20d39a12abfd67cea01781506250db93d44ae7c9885b35024",
+    "benchmarkReadingsSha256": "75258c2eabec3625cd49b72374c3fcdc4b2d2d769bd6b383403a77b4a6e6ebf2",
+    "materialSha256": "be7c09a59c536ea963e128770f61b5d1af4dbb7bccebe6ac771efd4b52108a21",
+    "unchangedFields": [
+      "headline",
+      "reflection",
+      "sourceHash",
+      "selectedSources"
+    ],
+    "constraint": "Full bodies are not to be supplied to the provider or substituted for immutable benchmarks.",
+    "previousDraftSha256": "39f9748a0854be372a537eee78248764aed9e9785ef79890e15526596175ba11",
+    "revision": "Contact-only paragraph flow and close only: move retained astrology before the conditional practical development, state the capacity condition once, and end on the optional extra check."
+  }
+}

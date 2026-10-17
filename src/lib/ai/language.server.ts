@@ -67,6 +67,7 @@ import {
   type SyntheticTransportControl,
 } from "./admin-transport";
 import { dropsSourceModality } from "./daily-modality";
+import { dailyContextClaimProblem } from "./daily-context-claims";
 import { natalLensWordingProblem } from "../content/natal-lens-policy";
 import type {
   EvaluationJsonValue,
@@ -878,6 +879,13 @@ function dailyDraft(
       return rejectParagraph("dependencies", "draft omitted published synthesis parent references");
     if (ids.includes("N1") && !["C1", "I1"].every((id) => ids.includes(id)))
       return rejectParagraph("dependencies", "draft omitted natal lens parent references");
+    if (contextCandidate) {
+      const claimProblem = dailyContextClaimProblem(
+        sentences,
+        ids.map((id) => byId.get(id)!),
+      );
+      if (claimProblem) return rejectParagraph("editorial_claim", claimProblem);
+    }
     const storyProblem = storyParagraphProblem(text, ids, validationFacts);
     if (storyProblem) return rejectParagraph(storyProblem, "draft failed calculated story checks");
     const problem =
@@ -1188,7 +1196,7 @@ async function generateDailyProse(
   const prompt = contextBrief
     ? [
         dailyContextVoice(input.tone, input.depth),
-        "One source-bound writing brief; material meanings are the sole draftable sources:",
+        "One source-bound writing brief; draft from its scene details, practical distinctions and optional directions. Source meanings and conditions in controls constrain the writing:",
         JSON.stringify(contextBrief),
         "Write only the body. The first paragraph concerns the primary contact and cites C1/I1. Use two to four paragraphs of one to four complete sentences each, each under 200 words, at most 700 words total. Declare empty scenes arrays; this brief supplies no SC identifiers.",
         "Integrate every selected meaning in paragraph 1 or 2. S1 cites S1/C1/I1/C2/I2; N1 cites N1/C1/I1; chapter P2 cites P2/C1/I1/A1. Preserve each source's conditions. Copy A1 chronology unchanged exactly once in the first two paragraphs, citing A1/C1.",

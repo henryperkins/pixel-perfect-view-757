@@ -1,0 +1,134 @@
+{
+  "version": "daily-context-voice-qualifier-verification-3",
+  "completedAt": "2026-10-17T09:15:32.856984+00:00",
+  "baseSourceSha": "84950d0f9212c2aa1295538d44183ac737e0ed74",
+  "identity": "Exact source-file hashes identify the uncommitted implementation tested; this base SHA alone does not identify the revision.",
+  "status": "offline-verified-inactive-candidate",
+  "versions": {
+    "prompt": "daily-context-body-3",
+    "validator": "daily-context-reference-3",
+    "voice": "daily-context-voice-3",
+    "brief": "daily-context-brief-3",
+    "material": "daily-context-material-3",
+    "campaignPolicy": "daily-context-pilot-2"
+  },
+  "checks": [
+    {
+      "command": "node --test --test-concurrency=4 tests/*.test.mjs",
+      "exitCode": 0,
+      "tests": 1055,
+      "passed": 1051,
+      "failed": 0,
+      "skipped": 4,
+      "skipReasons": [
+        "Two standalone Swiss service integration tests require its local installation.",
+        "Two optional Node/workerd equivalence or archived replay tests are environment-dependent."
+      ]
+    },
+    {
+      "command": "node --test --test-concurrency=4 tests/reading-context*.test.mjs tests/reading-modality.test.mjs",
+      "exitCode": 0,
+      "tests": 95,
+      "passed": 95,
+      "failed": 0,
+      "contextTests": 81
+    },
+    {
+      "command": "npx tsc --noEmit",
+      "exitCode": 0
+    },
+    {
+      "command": "npx eslint <all changed TypeScript and JavaScript files>",
+      "exitCode": 0,
+      "scope": "Four changed runtime TypeScript modules, offline validation script and seven changed/new context test files."
+    },
+    {
+      "command": "npm run build",
+      "exitCode": 0,
+      "warnings": "Existing bundler module-directive and bundle-size notices; build completed."
+    },
+    {
+      "command": "node scripts/validate-context-writing-candidate.mjs --out <fresh offline-validation directory>",
+      "exitCode": 0,
+      "authoredControls": 5,
+      "completeFailureFallbacks": 5,
+      "interceptedRequests": 10,
+      "liveProviderRequests": 0
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  ],
+  "authoredRevision": {
+    "sha256": "72289e2cc084541268ce6ad1893228d3586f0654084cd14ece7ae3f9bebc34b8",
+    "cases": [
+      "contact-only",
+      "natal-only"
+    ],
+    "bodyReaderReview": "independent AI, all five criteria 4/5 for each body",
+    "sourceReview": "independent AI pass",
+    "humanReview": false,
+    "benchmarkReplacement": false
+  },
+  "savedPilotReplay": {
+    "rejectedLosslessly": [
+      "contact-only",
+      "natal-only",
+      "synthesis-natal-and-transit"
+    ],
+    "accepted": [
+      "transit-only",
+      "natal-and-transit"
+    ],
+    "completeOriginalFallback": true,
+    "attemptsPerCase": 1,
+    "providerRetry": false
+  },
+  "independentReviews": [
+    "reader-review.md",
+    "source-review.md",
+    "material-source-review.md",
+    "independent-code-review.md",
+    "qualifier-code-review.md"
+  ],
+  "pins": {
+    "benchmarkSha256": "825c877dbb88d5d20d39a12abfd67cea01781506250db93d44ae7c9885b35024",
+    "sourceBundleCanonicalSha256": "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f",
+    "materialSha256": "165a91a427937039757d4a7a3520038a725eb6b7495ee106fc4d1731058471ba",
+    "historicalPilotFilesUnchanged": 72
+  },
+  "sourceFiles": {
+    "scripts/validate-context-writing-candidate.mjs": "3b3e33c9a7527cd396fd9502d6e9a72a3a28e92180ebf0a53d1b1a43c00bd20f",
+    "src/lib/ai/context-pilot-plan.server.ts": "7b20e5b3b6e46cbd7ce68375b3cf01633db53228edf21cc86eee2bce3b29366a",
+    "src/lib/ai/context-writing-material.json": "165a91a427937039757d4a7a3520038a725eb6b7495ee106fc4d1731058471ba",
+    "src/lib/ai/daily-context-claims.ts": "9430501befc9d290e859104f75447570a158033d5dcfc458727cd323a7838e85",
+    "src/lib/ai/daily-context-writing.ts": "91c78185cf5211346e7f9b1cd8be6c1d3af680b5f3f931e9dca628aa44c11cac",
+    "src/lib/ai/language.server.ts": "881b543214eb4e4507872fe6f2b0d1809da525678b3163f52191947577ed823c",
+    "tests/reading-context-brief.test.mjs": "7689469aab45e3665fbcd80d01b9417b22e319946e66eca99f7c2d0b7777be1d",
+    "tests/reading-context-material.test.mjs": "4ad90bc257bdb77ef8688eca8b03a64c319b57f7a8e7a3dba39b013017d792c4",
+    "tests/reading-context-pilot-plan.test.mjs": "cce7fea07e4a6c7dd997b0f7676694d96c2bab505df7f63f9b140e9b4f1da243",
+    "tests/reading-context-pilot.test.mjs": "ff2e85c694b7d9ff7dc1d00eb1f3a4423a75662604b185081f0787dc459ef448",
+    "tests/reading-context-qualifiers.test.mjs": "92e7b601a4f27bc4776c82c7d1589b3b3691eb15fc3ff2ac1f7b2053b5fac593",
+    "tests/reading-context-voice.test.mjs": "5afd5fbbc1bdc56ead9fa260efada90148b9d7d50748225360992dab376e8f0b",
+    "tests/reading-context-writer.test.mjs": "7f33dd07a25e697edb323693bcddb1662ba1c99888b33e1c4f31c1a9a404ebcc"
+  },
+  "evidence": {
+    "liveProviderRequests": 0,
+    "paidProviderRequests": 0,
+    "memberWrites": 0,
+    "campaignStarts": 0,
+    "newPaidAllowance": false,
+    "deploymentCommands": 0,
+    "memberActivation": false,
+    "liveProductionVerification": false,
+    "environmentFileUnchanged": true,
+    "ordinaryMemberRoutingChanged": false
+  },
+  "limits": [
+    "Authored revisions and mocked accepted drafts do not qualify generated version-3 prose.",
+    "Lexical qualifier checks cover observed forms; arbitrary predicate changes, distant dependencies and other strengthening need source review.",
+    "Conservative comma-isolated supported ease may reject.",
+    "Combined/synthesis coherence, chapter placement, other source coverage, imagery, all tones/depths, consecutive days and human/member acceptance remain open."
+  ]
+}

@@ -20,14 +20,16 @@ test("the candidate supplies scene details and useful distinctions without compe
   const { input } = await contextWritingFixture(h, benchmark);
   const original = structuredClone(input.facts);
   const projected = brief.toDailyContextBrief(input.facts, "warm", "standard");
-  assert.equal(projected.materialVersion, "daily-context-material-2");
+  assert.equal(projected.materialVersion, "daily-context-material-3");
   for (const material of projected.material) {
     const source = input.facts.find((f) => f.id === material.factId);
     assert.ok(material.sceneDetails.length > 0, material.factId);
     assert.ok(material.practicalDistinction.length > 25, material.factId);
     assert.ok(material.optionalDirections.length > 0, material.factId);
+    const meaning = projected.controls.sourceMeanings.find((m) => m.factId === material.factId);
+    assert.equal(material.meaning, undefined);
     assert.ok(
-      !source.statement.endsWith(material.meaning),
+      !source.statement.endsWith(meaning.meaning),
       "do not supply a second legacy paragraph",
     );
     assert.equal(material.sourceFact, undefined, "source proof stays local");

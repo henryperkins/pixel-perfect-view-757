@@ -30,7 +30,7 @@ const sourceGraph = (facts: { id: string }[]) =>
   canonicalContentJson([...facts].sort((a, b) => a.id.localeCompare(b.id)));
 const EXPECTED_BENCHMARK_HASH = "825c877dbb88d5d20d39a12abfd67cea01781506250db93d44ae7c9885b35024";
 const EXPECTED_BUNDLE_HASH = "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f";
-const EXPECTED_MATERIAL_HASH = "be7c09a59c536ea963e128770f61b5d1af4dbb7bccebe6ac771efd4b52108a21";
+const EXPECTED_MATERIAL_HASH = "165a91a427937039757d4a7a3520038a725eb6b7495ee106fc4d1731058471ba";
 const CASE_IDS = [
   "contact-only",
   "natal-only",

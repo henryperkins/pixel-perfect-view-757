@@ -1,0 +1,54 @@
+{
+  "review_date": "2026-10-17",
+  "reviewer_type": "AI",
+  "human": false,
+  "scope": "Body prose only; controlled same-scene authored revisions assessed against the unchanged benchmark standard.",
+  "threshold_each": 4,
+  "input_hash_algorithm": "sha256",
+  "input_hashes": {
+    "/tmp/pattern-context-voice-20261017/reader-packet.md": "61c2da47294551097fdc769d68bd4adbcc74cc27a301265659ef9d12fbd00adc",
+    "/tmp/pattern-context-voice-worktree-20261017/docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-readings.md": "75258c2eabec3625cd49b72374c3fcdc4b2d2d769bd6b383403a77b4a6e6ebf2"
+  },
+  "source_fidelity_assessed": false,
+  "provider_output_assessed": false,
+  "consecutive_day_variety_assessed": false,
+  "results": [
+    {
+      "revision": "V1",
+      "scores": {
+        "Recognition": 4,
+        "Meaning": 4,
+        "Direction": 4,
+        "Distinctness": 4,
+        "Voice": 4
+      },
+      "pass": true,
+      "material_findings": [],
+      "minor_findings": [
+        "The curiosity sentence explains in generic terms between stronger concrete details.",
+        "The move from an added check to competing ideas is slightly loose but remains coherent around the afternoon's hours."
+      ],
+      "strongest_quote": "A note can hold the second idea without promising it the afternoon."
+    },
+    {
+      "revision": "V2",
+      "scores": {
+        "Recognition": 4,
+        "Meaning": 4,
+        "Direction": 4,
+        "Distinctness": 4,
+        "Voice": 3
+      },
+      "pass": false,
+      "material_findings": [
+        "The final sentence repeats the opening capacity premise almost verbatim.",
+        "After the useful calendar observation, the second paragraph provides abstract recap and a less tangible ending instead of a further observed turn."
+      ],
+      "strongest_quote": "Moving the task to a later calendar opening may leave the check attached.",
+      "repetition_quotes": [
+        "If the original work already fills the afternoon, the check still needs some of the same hours.",
+        "If the original work already fills those hours, one addition could stay outside the agreement."
+      ]
+    }
+  ]
+}

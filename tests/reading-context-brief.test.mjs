@@ -61,12 +61,15 @@ test("source-bound material preserves complete meaning while structural referenc
     const fact = facts.find((item) => item.id === entry.factId);
     assert.equal(entry.sourceKey, fact.sourceKey);
     assert.equal(entry.releaseVersion, fact.releaseVersion);
-    assert.ok(entry.meaning.length > 20);
-    assert.ok(!entry.meaning.startsWith("Published "));
+    assert.equal(entry.meaning, undefined);
+    const meaning = result.controls.sourceMeanings.find((item) => item.factId === entry.factId);
+    assert.ok(meaning.meaning.length > 20);
+    assert.ok(!meaning.meaning.startsWith("Published "));
+    assert.deepEqual(meaning.requiredFacts, entry.requiredFacts);
     assert.ok(entry.sceneDetails.length > 0, "reviewed details must supplement the meaning");
     assert.ok(entry.practicalDistinction.length > 20);
     assert.ok(
-      !fact.statement.endsWith(entry.meaning),
+      !fact.statement.endsWith(meaning.meaning),
       "legacy prose must not compete with reviewed material",
     );
   }

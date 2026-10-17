@@ -1,0 +1,392 @@
+{
+  "id": "transit-only",
+  "contextMode": "transit",
+  "fixture": {
+    "baseId": "arc-synthesis-natal-integration",
+    "fixtureVersion": "synthetic-daily-7",
+    "baseSha256": "5f7c2b9abc280754a14b318d92141b1009fe2085b02f67ebe85bbb7208ac0710",
+    "cycleSelection": "primary-only",
+    "natalContext": false,
+    "transitContext": true,
+    "localContext": "none",
+    "synthetic": true
+  },
+  "config": {
+    "day": "2026-12-17",
+    "timeZone": "UTC",
+    "tone": "warm",
+    "depth": "standard",
+    "granted": [
+      "USR-01",
+      "USR-02"
+    ]
+  },
+  "sourceHash": "c6c1130cba3edfca47afd4c28170f6c03068d06d9eb9f3da6cfe3cb980b2a425",
+  "selectedSources": [
+    {
+      "id": "C1",
+      "kind": "calculation",
+      "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.00 degrees. phase exact. domain identity. Calculated exact date: 2026-12-17.",
+      "cycle": {
+        "transitBody": "saturn",
+        "natalPoint": "sun",
+        "aspect": "square",
+        "orb": 0,
+        "exactDate": "2026-12-17"
+      }
+    },
+    {
+      "id": "I1",
+      "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+      "kind": "interpretation",
+      "dependsOn": [
+        "C1"
+      ],
+      "sourceKey": "square:saturn:sun",
+      "releaseVersion": "0.9.0"
+    },
+    {
+      "id": "A1",
+      "kind": "calculation",
+      "dependsOn": [
+        "C1"
+      ],
+      "statement": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+      "arc": {
+        "cycleKey": "saturn_square_sun",
+        "chapter": "return",
+        "passIndex": 2,
+        "passTotal": 3,
+        "chronologySentence": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+        "dates": [
+          {
+            "eventId": "pass-1",
+            "kind": "exact-contact",
+            "civilDay": "2026-09-08",
+            "monthYear": "2026-09"
+          },
+          {
+            "eventId": "pass-2",
+            "kind": "exact-contact",
+            "civilDay": "2026-12-17",
+            "monthYear": "2026-12"
+          },
+          {
+            "eventId": "pass-3",
+            "kind": "exact-contact",
+            "civilDay": "2027-03-27",
+            "monthYear": "2027-03"
+          }
+        ]
+      }
+    },
+    {
+      "id": "P2",
+      "kind": "interpretation",
+      "dependsOn": [
+        "C1",
+        "I1",
+        "A1"
+      ],
+      "sourceKey": "chapter-return-1",
+      "releaseVersion": "0.9.0",
+      "statement": "Published transit chapter: If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.",
+      "storyChapter": "return"
+    }
+  ],
+  "brief": {
+    "version": "daily-context-brief-3",
+    "materialVersion": "daily-context-material-3",
+    "material": [
+      {
+        "factId": "I1",
+        "sourceKey": "square:saturn:sun",
+        "releaseVersion": "0.9.0",
+        "sceneDetails": [
+          "An extra check or another version added beside the original task.",
+          "One afternoon set aside for a familiar responsibility.",
+          "The same task moved into a later calendar opening without changing what it includes."
+        ],
+        "practicalDistinction": "Moving the task to a later opening may leave the extra check attached.",
+        "optionalDirections": [
+          "If the original work already fills the afternoon, the extra check could be left out."
+        ],
+        "requiredFacts": [
+          "I1",
+          "C1"
+        ]
+      },
+      {
+        "factId": "P2",
+        "sourceKey": "chapter-return-1",
+        "releaseVersion": "0.9.0",
+        "sceneDetails": [
+          "A task put into a different calendar opening while its contents stay the same.",
+          "A defined stopping point for what belongs inside this afternoon's commitment."
+        ],
+        "practicalDistinction": "Moving a task to a later slot does not change its size; adjusting what is included or where it stops can change the method or boundary.",
+        "optionalDirections": [
+          "If the earlier method no longer fits, change one part of the task's method or boundary.",
+          "Make a stopping point visible before an extra check or version enters the agreement."
+        ],
+        "requiredFacts": [
+          "P2",
+          "C1",
+          "I1",
+          "A1"
+        ]
+      }
+    ],
+    "references": [
+      {
+        "id": "C1",
+        "kind": "calculation",
+        "dependsOn": [],
+        "cycle": {
+          "transitBody": "saturn",
+          "natalPoint": "sun",
+          "aspect": "square"
+        }
+      },
+      {
+        "id": "I1",
+        "kind": "interpretation",
+        "dependsOn": [
+          "C1"
+        ],
+        "sourceKey": "square:saturn:sun",
+        "releaseVersion": "0.9.0"
+      },
+      {
+        "id": "A1",
+        "kind": "calculation",
+        "dependsOn": [
+          "C1"
+        ],
+        "chronologySentence": "This is the second of three calculated contacts; the first exact contact falls in September 2026."
+      },
+      {
+        "id": "P2",
+        "kind": "interpretation",
+        "dependsOn": [
+          "C1",
+          "I1",
+          "A1"
+        ],
+        "sourceKey": "chapter-return-1",
+        "releaseVersion": "0.9.0",
+        "storyChapter": "return"
+      }
+    ],
+    "controls": {
+      "voiceVersion": "daily-context-voice-3",
+      "draftFrom": [
+        "sceneDetails",
+        "practicalDistinction",
+        "optionalDirections"
+      ],
+      "editingPrinciples": [
+        {
+          "id": "visible-first",
+          "instruction": "Lead with a supported visible detail or plain distinction; cut an abstract preface that announces the lesson."
+        },
+        {
+          "id": "consequence-once",
+          "instruction": "Let one concrete consequence explain the distinction. Cut a following abstract sentence that repeats it."
+        },
+        {
+          "id": "claim-local-qualifiers",
+          "instruction": "Keep a source condition and its possibility word attached to their own claim. An immediate clear reference may continue the same hypothetical; repeat its condition only when needed for clarity."
+        },
+        {
+          "id": "finish-on-the-choice",
+          "instruction": "Let a supported object or small optional choice finish the thought. Cut a counselor reminder, prescribed script or final recap that adds no meaning."
+        },
+        {
+          "id": "no-strengthening",
+          "instruction": "Shortening must preserve possibility and scope. Do not add speed, ease, frequency or necessity while making the prose more direct."
+        }
+      ],
+      "sourceMeanings": [
+        {
+          "factId": "I1",
+          "meaning": "An established responsibility can ask for more deliberate effort. Where its expectations exceed the capacity available, its boundary may need to become clearer.",
+          "requiredFacts": [
+            "I1",
+            "C1"
+          ]
+        },
+        {
+          "factId": "P2",
+          "meaning": "If an earlier way of handling the responsibility no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.",
+          "requiredFacts": [
+            "P2",
+            "C1",
+            "I1",
+            "A1"
+          ]
+        }
+      ],
+      "tone": "warm",
+      "depth": "standard",
+      "requiredMeaningFacts": [
+        "I1",
+        "P2"
+      ],
+      "natalConditional": false,
+      "chronologyFirstTwo": true,
+      "chronologyOnce": true,
+      "technicalDetails": false,
+      "sourceConditions": [
+        {
+          "factId": "I1",
+          "conditions": [
+            "The responsibility asking more effort is an interpretive possibility, not an established condition of the reader today.",
+            "Any actual mismatch between expectations and capacity must remain conditional.",
+            "Follow-up references to the task, added scope or boundary must remain inside the possible scene."
+          ]
+        },
+        {
+          "factId": "P2",
+          "conditions": [
+            "Preserve the condition that an earlier way must no longer fit before offering an adjustment as a return-chapter application.",
+            "A calculated return does not establish that a life situation recurred or that a previous attempt failed.",
+            "Use any chronology only from A1 exactly, with C1 and I1 as parents."
+          ]
+        }
+      ]
+    }
+  },
+  "previousWriter": {
+    "headline": "Saturn square Sun",
+    "body": "An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries. This is the second of three calculated contacts; the first exact contact falls in September 2026. If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.\n\nA title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.\n\nTiming: the calculated exact contact falls on 2026-12-17. This describes the current connected window.",
+    "reflection": "What responsibility is currently asking for clearer boundaries?"
+  },
+  "candidate": {
+    "headline": "A calendar cannot shrink the task",
+    "paragraphs": [
+      {
+        "text": "An afternoon already set aside for one responsibility can look roomy until the smaller requests start arriving. If the familiar task now takes the whole block, moving it to the next empty space may leave the same problem waiting there. Saturn's square to your natal Sun is a picture of expectations pressing against the capacity to meet them.",
+        "facts": [
+          "C1",
+          "I1"
+        ],
+        "scenes": []
+      },
+      {
+        "text": "This is the second of three calculated contacts; the first exact contact falls in September 2026. If an earlier way of fitting the task in no longer works, this return offers a chance to adjust one part of the method or boundary. That could mean changing what belongs inside the commitment, rather than finding another place to put it.",
+        "facts": [
+          "C1",
+          "I1",
+          "A1",
+          "P2"
+        ],
+        "scenes": []
+      },
+      {
+        "text": "An extra check or another version may look small beside the original task. A defined stopping point can make the size of that addition easier to see before you agree to it.",
+        "facts": [
+          "C1",
+          "I1"
+        ],
+        "scenes": []
+      }
+    ],
+    "reflection": "What tells you a method needs adjusting before you decide the whole plan has failed?"
+  },
+  "validation": {
+    "transport": "offline-intercepted-response",
+    "liveProviderRequests": 0,
+    "sourceGraphBound": true,
+    "completeEarlyCoverage": true,
+    "chronologyOccurrences": 1,
+    "authoredResponseAcceptedBySharedValidator": true,
+    "candidateFinalQuality": {
+      "version": "daily-writing-quality-1",
+      "outcome": "pass",
+      "issues": [
+        {
+          "code": "scene_unavailable",
+          "severity": "info",
+          "paragraph": null,
+          "ruleId": "no_scene"
+        }
+      ]
+    },
+    "completeFallbackAfterIntercepted503": true,
+    "fallbackDiagnostics": {
+      "version": 1,
+      "promptVersion": "daily-context-body-3",
+      "validatorVersion": "daily-context-reference-3",
+      "model": "google/gemini-3.8-flash",
+      "gatewayTimeoutMs": 60000,
+      "outcome": "unavailable",
+      "attempted": true,
+      "code": "http",
+      "durationMs": 0,
+      "paragraph": null
+    }
+  },
+  "assembledRequest": {
+    "model": "google/gemini-3.8-flash",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You write a daily astrology reading in an attentive, observational voice. Notice a recognizable detail, develop one useful distinction, and let that distinction give the reader proportionate direction. Draft from material.sceneDetails, practicalDistinction and optionalDirections. The sourceMeanings and sourceConditions in controls constrain what each illustration can mean; preserve them without restating their abstract summaries as prose. Material authorizes possible illustrations, never known events. Structural references identify sources and parents; calculated references establish geometry and exact supplied chronology. Neither establishes personal events, causes, temperament or another person's intentions. Keep every source condition in controls.sourceConditions attached to its own claim. Preserve source possibility words such as can, may and could on the claim they qualify, including across intervening adverbs. Do not add speed, ease, frequency, necessity, certainty or a relationship beyond the supplied source meaning. A modal in an unrelated clause does not qualify another claim. A clear immediate reference may continue the same hypothetical scene; it never establishes a personal event. Each paragraph cites every source used and all its required parent facts. A synthesis keeps its distinct parent meanings, rather than reducing planets to a keyword list. Direction may be noticing, waiting, asking, a small reversible choice, leaving something unresolved or enjoying a supported moment. It remains optional; never pressure, predict, promise a result or turn a possibility into a personal prescription. Controls and source labels are separate from writing material. Do not narrate the rules, source selection, model, calculation system or limits as body prose. Respect supplied suppression limits and never invent astronomical, biographical or health claims."
+      },
+      {
+        "role": "user",
+        "content": "Tone: warm. Attentive and conversational. Use natural direct address and occasional contractions. Warmth comes from accurate observation; avoid praise, consolation and a counselor's reassurance.\nDepth: standard. Keep human meaning in the foreground. Omit optional orb values, degree measurements, phase and exact-date detail. When A1 is supplied, its immutable chronology sentence is required even at standard depth.\nChoose a few supplied scene details to develop one central situation through the primary practical distinction. These are building blocks, not paragraphs to concatenate. Let selected synthesis, natal and transit distinctions change what can be noticed or chosen within that same situation. Do not append separate mini-readings or invent a new setting for each source. A possible illustration must remain possible.\nOpen on a supported visible detail, recognizable gesture or plain distinction. Develop a concrete consequence before naming another abstraction. Cut a following sentence when it merely explains the same point again. Apply controls.editingPrinciples as editing moves, never as body prose. An if opening is optional. Vary paragraph count, sentence rhythm and the position of astrology; no fixed three-paragraph formula, mandatory script or closing permission sentence. Use only the words the thought needs; required chronology and technical detail may need more space.\nIntegrate any selected N1 and P2 meaning within the first two paragraphs, each with its full source parents. Preserve natal conditionality. P2 contributes its supplied chapter distinction to the same scene; it authorizes no account of previous personal events, resolution or closure.\nIf A1 is supplied, include its chronologySentence unchanged exactly once in paragraph 1 or 2, citing A1 and C1. Cite P2, C1, I1 and A1 together for chapter meaning. Do not paraphrase chronology, repeat it, add dates or reinterpret a calculated pass as an event in the reader's life.\nPlanetary imagery can clarify a distinction only when supplied by material. Avoid a list of planet keywords. Do not explain that a contact offers a symbolic lens or gives this reading its theme; let supported meaning stand in ordinary language.\nA useful ending may be the distinction itself or supported optional direction. Do not force a sentence to say aloud, recap the reading, console the reader or add hollow reassurance. The headline and independently validated reflection are separate; write only the body.\nOne source-bound writing brief; draft from its scene details, practical distinctions and optional directions. Source meanings and conditions in controls constrain the writing:\n{\"version\":\"daily-context-brief-3\",\"materialVersion\":\"daily-context-material-3\",\"material\":[{\"factId\":\"I1\",\"sourceKey\":\"square:saturn:sun\",\"releaseVersion\":\"0.9.0\",\"sceneDetails\":[\"An extra check or another version added beside the original task.\",\"One afternoon set aside for a familiar responsibility.\",\"The same task moved into a later calendar opening without changing what it includes.\"],\"practicalDistinction\":\"Moving the task to a later opening may leave the extra check attached.\",\"optionalDirections\":[\"If the original work already fills the afternoon, the extra check could be left out.\"],\"requiredFacts\":[\"I1\",\"C1\"]},{\"factId\":\"P2\",\"sourceKey\":\"chapter-return-1\",\"releaseVersion\":\"0.9.0\",\"sceneDetails\":[\"A task put into a different calendar opening while its contents stay the same.\",\"A defined stopping point for what belongs inside this afternoon's commitment.\"],\"practicalDistinction\":\"Moving a task to a later slot does not change its size; adjusting what is included or where it stops can change the method or boundary.\",\"optionalDirections\":[\"If the earlier method no longer fits, change one part of the task's method or boundary.\",\"Make a stopping point visible before an extra check or version enters the agreement.\"],\"requiredFacts\":[\"P2\",\"C1\",\"I1\",\"A1\"]}],\"references\":[{\"id\":\"C1\",\"kind\":\"calculation\",\"dependsOn\":[],\"cycle\":{\"transitBody\":\"saturn\",\"natalPoint\":\"sun\",\"aspect\":\"square\"}},{\"id\":\"I1\",\"kind\":\"interpretation\",\"dependsOn\":[\"C1\"],\"sourceKey\":\"square:saturn:sun\",\"releaseVersion\":\"0.9.0\"},{\"id\":\"A1\",\"kind\":\"calculation\",\"dependsOn\":[\"C1\"],\"chronologySentence\":\"This is the second of three calculated contacts; the first exact contact falls in September 2026.\"},{\"id\":\"P2\",\"kind\":\"interpretation\",\"dependsOn\":[\"C1\",\"I1\",\"A1\"],\"sourceKey\":\"chapter-return-1\",\"releaseVersion\":\"0.9.0\",\"storyChapter\":\"return\"}],\"controls\":{\"voiceVersion\":\"daily-context-voice-3\",\"draftFrom\":[\"sceneDetails\",\"practicalDistinction\",\"optionalDirections\"],\"editingPrinciples\":[{\"id\":\"visible-first\",\"instruction\":\"Lead with a supported visible detail or plain distinction; cut an abstract preface that announces the lesson.\"},{\"id\":\"consequence-once\",\"instruction\":\"Let one concrete consequence explain the distinction. Cut a following abstract sentence that repeats it.\"},{\"id\":\"claim-local-qualifiers\",\"instruction\":\"Keep a source condition and its possibility word attached to their own claim. An immediate clear reference may continue the same hypothetical; repeat its condition only when needed for clarity.\"},{\"id\":\"finish-on-the-choice\",\"instruction\":\"Let a supported object or small optional choice finish the thought. Cut a counselor reminder, prescribed script or final recap that adds no meaning.\"},{\"id\":\"no-strengthening\",\"instruction\":\"Shortening must preserve possibility and scope. Do not add speed, ease, frequency or necessity while making the prose more direct.\"}],\"sourceMeanings\":[{\"factId\":\"I1\",\"meaning\":\"An established responsibility can ask for more deliberate effort. Where its expectations exceed the capacity available, its boundary may need to become clearer.\",\"requiredFacts\":[\"I1\",\"C1\"]},{\"factId\":\"P2\",\"meaning\":\"If an earlier way of handling the responsibility no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.\",\"requiredFacts\":[\"P2\",\"C1\",\"I1\",\"A1\"]}],\"tone\":\"warm\",\"depth\":\"standard\",\"requiredMeaningFacts\":[\"I1\",\"P2\"],\"natalConditional\":false,\"chronologyFirstTwo\":true,\"chronologyOnce\":true,\"technicalDetails\":false,\"sourceConditions\":[{\"factId\":\"I1\",\"conditions\":[\"The responsibility asking more effort is an interpretive possibility, not an established condition of the reader today.\",\"Any actual mismatch between expectations and capacity must remain conditional.\",\"Follow-up references to the task, added scope or boundary must remain inside the possible scene.\"]},{\"factId\":\"P2\",\"conditions\":[\"Preserve the condition that an earlier way must no longer fit before offering an adjustment as a return-chapter application.\",\"A calculated return does not establish that a life situation recurred or that a previous attempt failed.\",\"Use any chronology only from A1 exactly, with C1 and I1 as parents.\"]}]}}\nWrite only the body. The first paragraph concerns the primary contact and cites C1/I1. Use two to four paragraphs of one to four complete sentences each, each under 200 words, at most 700 words total. Declare empty scenes arrays; this brief supplies no SC identifiers.\nIntegrate every selected meaning in paragraph 1 or 2. S1 cites S1/C1/I1/C2/I2; N1 cites N1/C1/I1; chapter P2 cites P2/C1/I1/A1. Preserve each source's conditions. Copy A1 chronology unchanged exactly once in the first two paragraphs, citing A1/C1.\nEvery named planet, aspect or measurement cites its matching C reference. These are transit-to-natal contacts, not current-sky pairs. Do not introduce sign placements, individual houses, natal origins or unprovided imagery. Do not add dates outside the supplied literal chronology unless technical depth provides a directly cited C exactDate.\nKeep the current orb and any exact date in separate sentences. Neither is a personal deadline. Never assert a personal past event, a usual cause or frequency absent from the source, another person's intent, or a promised resolution.\nThe app handles calculation caveats separately. Do not add a headline, reflection question, source-policy explanation or wellbeing framing."
+      }
+    ],
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "name": "daily_reading",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "paragraphs": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 4,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string"
+                  },
+                  "facts": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "scenes": {
+                    "type": "array",
+                    "maxItems": 2,
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "text",
+                  "facts",
+                  "scenes"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "paragraphs"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  }
+}

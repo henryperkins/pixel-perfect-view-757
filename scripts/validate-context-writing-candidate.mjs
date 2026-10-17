@@ -23,6 +23,7 @@ const packet = await readContextBenchmarks();
 const sourceFiles = [
   "src/lib/ai/language.server.ts",
   "src/lib/ai/daily-context-writing.ts",
+  "src/lib/ai/daily-context-claims.ts",
   "src/lib/ai/context-writing-material.json",
   "src/lib/ai/context-pilot-plan.server.ts",
   "src/lib/ai/daily-context-candidate.server.ts",
@@ -69,7 +70,7 @@ try {
       "model",
       `intercepted contract acceptance: ${benchmark.id}`,
     );
-    assert.equal(result.prose.meta.diagnostics.promptVersion, "daily-context-body-2");
+    assert.equal(result.prose.meta.diagnostics.promptVersion, "daily-context-body-3");
     assert.equal(result.prose.body, benchmark.paragraphs.map((p) => p.text).join("\n\n"));
     assert.equal(result.prose.headline, benchmark.headline);
     assert.equal(result.prose.prompt, benchmark.reflection);
@@ -136,7 +137,7 @@ try {
   assert.equal(h.gatewayRequests.length, 10);
   assert.equal(h.geminiEnterpriseRequests.length, 0);
   const manifest = {
-    version: "daily-context-candidate-validation-2",
+    version: "daily-context-candidate-validation-3",
     completedAt: new Date().toISOString(),
     gitHead: execFileSync("git", ["rev-parse", "HEAD"], {
       cwd: projectRoot,

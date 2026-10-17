@@ -1,5 +1,5 @@
 {
-  "version": "daily-context-material-2",
+  "version": "daily-context-material-3",
   "cards": [
     {
       "factId": "I1",
@@ -11,15 +11,13 @@
       ],
       "meaning": "An established responsibility can ask for more deliberate effort. Where its expectations exceed the capacity available, its boundary may need to become clearer.",
       "sceneDetails": [
-        "One afternoon set aside for a familiar responsibility.",
         "An extra check or another version added beside the original task.",
+        "One afternoon set aside for a familiar responsibility.",
         "The same task moved into a later calendar opening without changing what it includes."
       ],
-      "practicalDistinction": "Fitting the task into a time slot is different from deciding how much belongs inside the commitment.",
+      "practicalDistinction": "Moving the task to a later opening may leave the extra check attached.",
       "optionalDirections": [
-        "Notice whether an apparently small addition changes the size of the original agreement.",
-        "Leave one addition outside the commitment, if the existing work already fills the hours available.",
-        "Make the boundary visible by naming the part that fits within the time available."
+        "If the original work already fills the afternoon, the extra check could be left out."
       ],
       "requiredConditions": [
         "The responsibility asking more effort is an interpretive possibility, not an established condition of the reader today.",
@@ -57,7 +55,7 @@
           "basis": "exact source meaning with benchmark application"
         },
         {
-          "field": "sceneDetails[0]",
+          "field": "sceneDetails[1]",
           "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
           "benchmarkCase": "contact-only",
           "paragraph": 1,
@@ -69,7 +67,7 @@
           "basis": "reviewed benchmark illustration"
         },
         {
-          "field": "sceneDetails[1]",
+          "field": "sceneDetails[0]",
           "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
           "benchmarkCase": "contact-only",
           "paragraph": 3,
@@ -94,51 +92,27 @@
         },
         {
           "field": "practicalDistinction",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "contact-only",
           "paragraph": 2,
           "paragraphIndex": 1,
           "sourceFactIds": [
             "C1",
             "I1"
           ],
-          "basis": "reviewed benchmark illustration"
+          "basis": "source-reviewed authored revision; condition retained in standalone material",
+          "revisionPath": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/revised-readings.json",
+          "revisionCase": "contact-only"
         },
         {
           "field": "optionalDirections[0]",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "contact-only",
-          "paragraph": 3,
-          "paragraphIndex": 2,
-          "sourceFactIds": [
-            "C1",
-            "I1"
-          ],
-          "basis": "reviewed benchmark illustration"
-        },
-        {
-          "field": "optionalDirections[1]",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "contact-only",
-          "paragraph": 3,
-          "paragraphIndex": 2,
-          "sourceFactIds": [
-            "C1",
-            "I1"
-          ],
-          "basis": "reviewed benchmark illustration"
-        },
-        {
-          "field": "optionalDirections[2]",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "contact-only",
           "paragraph": 2,
           "paragraphIndex": 1,
           "sourceFactIds": [
             "C1",
             "I1"
           ],
-          "basis": "reviewed benchmark illustration"
+          "basis": "source-reviewed authored revision; condition retained in standalone material",
+          "revisionPath": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/revised-readings.json",
+          "revisionCase": "contact-only"
         }
       ]
     },
@@ -156,10 +130,9 @@
         "A page of notes for one idea beside a tab open for another.",
         "One possible project kept as a note beside the project selected for the afternoon."
       ],
-      "practicalDistinction": "An interest being explored has not yet become a promise to give it the same afternoon's hours.",
+      "practicalDistinction": "Sampling a few projects and choosing one may be different stages.",
       "optionalDirections": [
-        "Sample possible directions before deciding which one becomes the commitment.",
-        "Keep another possibility in the notes without assigning it the chosen project's time."
+        "If several projects compete for that afternoon, a note can hold the second idea without promising it those hours."
       ],
       "requiredConditions": [
         "This natal lens is an interpretive possibility, not a fixed personality claim.",
@@ -226,8 +199,6 @@
         },
         {
           "field": "practicalDistinction",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "natal-only",
           "paragraph": 2,
           "paragraphIndex": 1,
           "sourceFactIds": [
@@ -235,12 +206,12 @@
             "I1",
             "N1"
           ],
-          "basis": "reviewed benchmark illustration"
+          "basis": "source-reviewed authored revision; condition retained in standalone material",
+          "revisionPath": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/revised-readings.json",
+          "revisionCase": "natal-only"
         },
         {
           "field": "optionalDirections[0]",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "natal-only",
           "paragraph": 2,
           "paragraphIndex": 1,
           "sourceFactIds": [
@@ -248,20 +219,9 @@
             "I1",
             "N1"
           ],
-          "basis": "reviewed benchmark illustration"
-        },
-        {
-          "field": "optionalDirections[1]",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "natal-only",
-          "paragraph": 3,
-          "paragraphIndex": 2,
-          "sourceFactIds": [
-            "C1",
-            "I1",
-            "N1"
-          ],
-          "basis": "reviewed benchmark illustration"
+          "basis": "source-reviewed authored revision; condition retained in standalone material",
+          "revisionPath": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/revised-readings.json",
+          "revisionCase": "natal-only"
         }
       ]
     },
@@ -654,5 +614,31 @@
         }
       ]
     }
-  ]
+  ],
+  "voiceEdits": {
+    "derivedFrom": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/revised-readings.json",
+    "revisionSha256": "72289e2cc084541268ce6ad1893228d3586f0654084cd14ece7ae3f9bebc34b8",
+    "principles": [
+      {
+        "id": "visible-first",
+        "instruction": "Lead with a supported visible detail or plain distinction; cut an abstract preface that announces the lesson."
+      },
+      {
+        "id": "consequence-once",
+        "instruction": "Let one concrete consequence explain the distinction. Cut a following abstract sentence that repeats it."
+      },
+      {
+        "id": "claim-local-qualifiers",
+        "instruction": "Keep a source condition and its possibility word attached to their own claim. An immediate clear reference may continue the same hypothetical; repeat its condition only when needed for clarity."
+      },
+      {
+        "id": "finish-on-the-choice",
+        "instruction": "Let a supported object or small optional choice finish the thought. Cut a counselor reminder, prescribed script or final recap that adds no meaning."
+      },
+      {
+        "id": "no-strengthening",
+        "instruction": "Shortening must preserve possibility and scope. Do not add speed, ease, frequency or necessity while making the prose more direct."
+      }
+    ]
+  }
 }

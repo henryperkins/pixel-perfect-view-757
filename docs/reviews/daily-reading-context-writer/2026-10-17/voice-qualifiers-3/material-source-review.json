@@ -1,0 +1,677 @@
+{
+  "schemaVersion": "context-material-source-review-3",
+  "reviewDate": "2026-10-17",
+  "reviewType": "independent-ai-source-and-projection-review",
+  "status": "pass",
+  "blockingFindings": 0,
+  "unresolvedFindings": 0,
+  "humanApproval": false,
+  "materialVersion": "daily-context-material-3",
+  "materialSha256": "165a91a427937039757d4a7a3520038a725eb6b7495ee106fc4d1731058471ba",
+  "writingProjectionSha256": "91c78185cf5211346e7f9b1cd8be6c1d3af680b5f3f931e9dca628aa44c11cac",
+  "authoredRevisionSha256": "72289e2cc084541268ce6ad1893228d3586f0654084cd14ece7ae3f9bebc34b8",
+  "sourceBundleVersion": "0.9.0",
+  "sourceBundleCanonicalSha256": "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f",
+  "providerRequests": 0,
+  "networkRequests": 0,
+  "activated": false,
+  "published": false,
+  "scope": "Exact v3 material bytes, all five source bindings and parent lists, all 28 reviewSupport mappings, source conditions, five generic voice edits, and actual toDailyContextBrief projection at standard and technical depth for the five immutable benchmark graphs. No provider output, future writing quality, other source material, production activation or member behavior is qualified.",
+  "inputs": [
+    {
+      "path": "src/lib/ai/context-writing-material.json",
+      "sha256": "165a91a427937039757d4a7a3520038a725eb6b7495ee106fc4d1731058471ba",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/daily-context-writing.ts",
+      "sha256": "91c78185cf5211346e7f9b1cd8be6c1d3af680b5f3f931e9dca628aa44c11cac",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/revised-readings.json",
+      "sha256": "72289e2cc084541268ce6ad1893228d3586f0654084cd14ece7ae3f9bebc34b8",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/source-review.json",
+      "sha256": "e2c3c0d48ec9abd7e6c89b0a12e6ae5f385a52fd6b163a7c83b9c8b1cf9dcd12",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/source-review.md",
+      "sha256": "ec0c23351ae63e3b62c5ae5a825c99a069d8f9a931f27ea74bb0b50732448f7e",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+      "sha256": "825c877dbb88d5d20d39a12abfd67cea01781506250db93d44ae7c9885b35024",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-readings.md",
+      "sha256": "75258c2eabec3625cd49b72374c3fcdc4b2d2d769bd6b383403a77b4a6e6ebf2",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "docs/reviews/daily-reading-release/2026-10-17/bundle.json",
+      "sha256": "a77eb43eba5aa9c140b514ef56c987167bea1eb905abfa68dcceabe2da35c6f3",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/material-source-review.json",
+      "sha256": "8e9287283c9bd25644e92b3310c74dd49fb875217e825428fc1fcfa14dda4459",
+      "hashMode": "exact-file-bytes"
+    }
+  ],
+  "baseline": {
+    "source": "git HEAD:src/lib/ai/context-writing-material.json",
+    "version": "daily-context-material-2",
+    "sha256": "be7c09a59c536ea963e128770f61b5d1af4dbb7bccebe6ac771efd4b52108a21",
+    "P2I2S1ExactlyUnchanged": true,
+    "allCardsSourceFactsMeaningsConditionsLimitationsUnchanged": true
+  },
+  "checks": {
+    "cardCount": 5,
+    "supportRowsChecked": 28,
+    "allSupportParagraphIndicesAndCitationListsExact": true,
+    "everySourceFactMatchesEveryImmutableBenchmarkOccurrence": true,
+    "sourceKeyReleaseVersionDependsOnMatchSourceFact": true,
+    "sourceMeaningEqualsExactSourceFactStatement": true,
+    "sourceMechanismsMatchReleaseBundle": true,
+    "I1SceneOrderSwapHasMatchingSupportFieldIndices": true,
+    "I1N1ChangedMaterialGroundedInSourceAndReviewedRevision": true,
+    "allSourceConditionsUnchanged": true,
+    "allLimitationsUnchanged": true,
+    "voiceEditsDerivedRevisionHashExact": true,
+    "genericPrinciplesOnlyIdInstruction": true,
+    "newFixedSettingOrUnsupportedImagery": false,
+    "fullAuthoredBodyOrParagraphInProjection": false,
+    "noSourceIdsOrExcerptExamplesInGenericPrinciples": true,
+    "sourceProofAuditAndRevisionMetadataExcludedFromProjection": true,
+    "actualProjectionOfflineCases": 10,
+    "allFiveGraphsAtBothDepthsPass": true,
+    "materialHasNoMeaningProperty": true,
+    "sourceMeaningsExactlyRetainedInControls": true,
+    "sourceConditionsExactlyRetainedInControls": true,
+    "allMaterialAndMeaningRequiredFactsContainFullRecursiveClosure": true,
+    "inputFactGraphsUnchangedByProjection": true
+  },
+  "cards": [
+    {
+      "factId": "I1",
+      "status": "pass",
+      "parents": [
+        "C1"
+      ],
+      "changedFields": [
+        "sceneDetails",
+        "practicalDistinction",
+        "optionalDirections",
+        "reviewSupport"
+      ],
+      "review": "The reviewed extra-check illustration now leads the card. Existing afternoon and rescheduling details are reordered, with their original local benchmark support fields corrected. Moving the task may leave the check attached is the reviewed calendar-versus-content consequence and retains may. The standalone optional direction explicitly repeats the full-afternoon condition and retains could; it asserts neither actual overload nor obligatory refusal. No new speed, ease, onset, capacity change or result guarantee.",
+      "support": "The practical distinction and direction point to the passed final contact paragraph 2 with C1/I1; all unchanged scene support remains in the immutable benchmark.",
+      "conditions": "The three unchanged controls retain interpretive possibility, conditional actual mismatch and scene-bound follow-up references."
+    },
+    {
+      "factId": "N1",
+      "status": "pass",
+      "parents": [
+        "C1",
+        "I1"
+      ],
+      "changedFields": [
+        "practicalDistinction",
+        "optionalDirections",
+        "reviewSupport"
+      ],
+      "review": "Sampling and choosing may be different stages is directly supported by exact N1 source meaning. It remains a possible general distinction, not a claim about actual competing projects or a fixed temperament. The standalone note direction restores the explicit competing-project condition before can; second idea/hours stay within that hypothetical. Reviewed notes/tab imagery is unchanged.",
+      "support": "Both updated pointers resolve to passed final natal paragraph 2 with C1/I1/N1. The optional note direction is directly illustrated there; the sampling/choosing wording is a source-bound semantic restatement of N1, while the paragraph makes exploration versus promising time concrete. It is not represented as a verbatim paragraph excerpt.",
+      "conditions": "The three unchanged controls retain interpretive possibility, the competing-same-time condition and the exploration/commitment distinction."
+    },
+    {
+      "factId": "P2",
+      "status": "pass",
+      "parents": [
+        "C1",
+        "I1",
+        "A1"
+      ],
+      "exactlyUnchangedFromV2": true,
+      "review": "The earlier-method-no-longer-fits precondition remains in source meaning, summary and requiredConditions. Existing rescheduling/stopping-point material stays inside the possible task illustration; no recurrence, prior failure or wholesale restart is inferred. Chronology remains exclusively from A1 with parents."
+    },
+    {
+      "factId": "I2",
+      "status": "pass",
+      "parents": [
+        "C2"
+      ],
+      "exactlyUnchangedFromV2": true,
+      "review": "Well-chosen aim remains explicit in source meaning, summary and conditions. Existing notes/outline/appealing piece supports possible initiative/ease without guaranteeing success or an arriving opportunity. No synthesis or natal meaning is borrowed."
+    },
+    {
+      "factId": "S1",
+      "status": "pass",
+      "parents": [
+        "C1",
+        "I1",
+        "C2",
+        "I2"
+      ],
+      "exactlyUnchangedFromV2": true,
+      "review": "All four parents and combined scope/structure tension remain required. Existing proposed additions stay possible; growth is not equated with overcommitment, and no boundary is promised to succeed. No natal curiosity distinction is imported into this card."
+    }
+  ],
+  "supportMappings": [
+    {
+      "factId": "I1",
+      "field": "meaning",
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+      "caseId": "contact-only",
+      "paragraph": 1,
+      "paragraphIndex": 0,
+      "sourceFactIds": [
+        "C1",
+        "I1"
+      ],
+      "indexAndCitationListExact": true,
+      "status": "pass"
+    },
+    {
+      "factId": "I1",
+      "field": "sceneDetails[1]",
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+      "caseId": "contact-only",
+      "paragraph": 1,
+      "paragraphIndex": 0,
+      "sourceFactIds": [
+        "C1",
+        "I1"
+      ],
+      "indexAndCitationListExact": true,
+      "status": "pass"
+    },
+    {
+      "factId": "I1",
+      "field": "sceneDetails[0]",
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+      "caseId": "contact-only",
+      "paragraph": 3,
+      "paragraphIndex": 2,
+      "sourceFactIds": [
+        "C1",
+        "I1"
+      ],
+      "indexAndCitationListExact": true,
+      "status": "pass"
+    },
+    {
+      "factId": "I1",
+      "field": "sceneDetails[2]",
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+      "caseId": "contact-only",
+      "paragraph": 1,
+      "paragraphIndex": 0,
+      "sourceFactIds": [
+        "C1",
+        "I1"
+      ],
+      "indexAndCitationListExact": true,
+      "status": "pass"
+    },
+    {
+      "factId": "I1",
+      "field": "practicalDistinction",
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/revised-readings.json",
+      "caseId": "contact-only",
+      "paragraph": 2,
+      "paragraphIndex": 1,
+      "sourceFactIds": [
+        "C1",
+        "I1"
+      ],
+      "indexAndCitationListExact": true,
+      "status": "pass"
+    },
+    {
+      "factId": "I1",
+      "field": "optionalDirections[0]",
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/revised-readings.json",
+      "caseId": "contact-only",
+      "paragraph": 2,
+      "paragraphIndex": 1,
+      "sourceFactIds": [
+        "C1",
+        "I1"
+      ],
+      "indexAndCitationListExact": true,
+      "status": "pass"
+    },
+    {
+      "factId": "N1",
+      "field": "meaning",
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+      "caseId": "natal-only",
+      "paragraph": 2,
+      "paragraphIndex": 1,
+      "sourceFactIds": [
+        "C1",
+        "I1",
+        "N1"
+      ],
+      "indexAndCitationListExact": true,
+      "status": "pass"
+    },
+    {
+      "factId": "N1",
+      "field": "sceneDetails[0]",
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+      "caseId": "natal-only",
+      "paragraph": 1,
+      "paragraphIndex": 0,
+      "sourceFactIds": [
+        "C1",
+        "I1"
+      ],
+      "indexAndCitationListExact": true,
+      "status": "pass"
+    },
+    {
+      "factId": "N1",
+      "field": "sceneDetails[1]",
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+      "caseId": "natal-only",
+      "paragraph": 3,
+      "paragraphIndex": 2,
+      "sourceFactIds": [
+        "C1",
+        "I1",
+        "N1"
+      ],
+      "indexAndCitationListExact": true,
+      "status": "pass"
+    },
+    {
+      "factId": "N1",
+      "field": "practicalDistinction",
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/revised-readings.json",
+      "caseId": "natal-only",
+      "paragraph": 2,
+      "paragraphIndex": 1,
+      "sourceFactIds": [
+        "C1",
+        "I1",
+        "N1"
+      ],
+      "indexAndCitationListExact": true,
+      "status": "pass"
+    },
+    {
+      "factId": "N1",
+      "field": "optionalDirections[0]",
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/revised-readings.json",
+      "caseId": "natal-only",
+      "paragraph": 2,
+      "paragraphIndex": 1,
+      "sourceFactIds": [
+        "C1",
+        "I1",
+        "N1"
+      ],
+      "indexAndCitationListExact": true,
+      "status": "pass"
+    },
+    {
+      "factId": "P2",
+      "field": "meaning",
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+      "caseId": "transit-only",
+      "paragraph": 2,
+      "paragraphIndex": 1,
+      "sourceFactIds": [
+        "C1",
+        "I1",
+        "A1",
+        "P2"
+      ],
+      "indexAndCitationListExact": true,
+      "status": "pass"
+    },
+    {
+      "factId": "P2",
+      "field": "sceneDetails[0]",
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+      "caseId": "transit-only",
+      "paragraph": 1,
+      "paragraphIndex": 0,
+      "sourceFactIds": [
+        "C1",
+        "I1"
+      ],
+      "indexAndCitationListExact": true,
+      "status": "pass"
+    },
+    {
+      "factId": "P2",
+      "field": "sceneDetails[1]",
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+      "caseId": "transit-only",
+      "paragraph": 3,
+      "paragraphIndex": 2,
+      "sourceFactIds": [
+        "C1",
+        "I1"
+      ],
+      "indexAndCitationListExact": true,
+      "status": "pass"
+    },
+    {
+      "factId": "P2",
+      "field": "practicalDistinction",
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+      "caseId": "transit-only",
+      "paragraph": 2,
+      "paragraphIndex": 1,
+      "sourceFactIds": [
+        "C1",
+        "I1",
+        "A1",
+        "P2"
+      ],
+      "indexAndCitationListExact": true,
+      "status": "pass"
+    },
+    {
+      "factId": "P2",
+      "field": "optionalDirections[0]",
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+      "caseId": "transit-only",
+      "paragraph": 2,
+      "paragraphIndex": 1,
+      "sourceFactIds": [
+        "C1",
+        "I1",
+        "A1",
+        "P2"
+      ],
+      "indexAndCitationListExact": true,
+      "status": "pass"
+    },
+    {
+      "factId": "P2",
+      "field": "optionalDirections[1]",
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+      "caseId": "transit-only",
+      "paragraph": 3,
+      "paragraphIndex": 2,
+      "sourceFactIds": [
+        "C1",
+        "I1"
+      ],
+      "indexAndCitationListExact": true,
+      "status": "pass"
+    },
+    {
+      "factId": "I2",
+      "field": "meaning",
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+      "caseId": "synthesis-natal-and-transit",
+      "paragraph": 1,
+      "paragraphIndex": 0,
+      "sourceFactIds": [
+        "C1",
+        "I1",
+        "C2",
+        "I2",
+        "S1",
+        "N1"
+      ],
+      "indexAndCitationListExact": true,
+      "status": "pass"
+    },
+    {
+      "factId": "I2",
+      "field": "sceneDetails[0]",
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+      "caseId": "synthesis-natal-and-transit",
+      "paragraph": 1,
+      "paragraphIndex": 0,
+      "sourceFactIds": [
+        "C1",
+        "I1",
+        "C2",
+        "I2",
+        "S1",
+        "N1"
+      ],
+      "indexAndCitationListExact": true,
+      "status": "pass"
+    },
+    {
+      "factId": "I2",
+      "field": "sceneDetails[1]",
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+      "caseId": "synthesis-natal-and-transit",
+      "paragraph": 1,
+      "paragraphIndex": 0,
+      "sourceFactIds": [
+        "C1",
+        "I1",
+        "C2",
+        "I2",
+        "S1",
+        "N1"
+      ],
+      "indexAndCitationListExact": true,
+      "status": "pass"
+    },
+    {
+      "factId": "I2",
+      "field": "practicalDistinction",
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+      "caseId": "synthesis-natal-and-transit",
+      "paragraph": 2,
+      "paragraphIndex": 1,
+      "sourceFactIds": [
+        "C1",
+        "I1",
+        "C2",
+        "I2",
+        "S1",
+        "A1",
+        "P2"
+      ],
+      "indexAndCitationListExact": true,
+      "status": "pass"
+    },
+    {
+      "factId": "I2",
+      "field": "optionalDirections[0]",
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+      "caseId": "synthesis-natal-and-transit",
+      "paragraph": 1,
+      "paragraphIndex": 0,
+      "sourceFactIds": [
+        "C1",
+        "I1",
+        "C2",
+        "I2",
+        "S1",
+        "N1"
+      ],
+      "indexAndCitationListExact": true,
+      "status": "pass"
+    },
+    {
+      "factId": "S1",
+      "field": "meaning",
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+      "caseId": "synthesis-natal-and-transit",
+      "paragraph": 1,
+      "paragraphIndex": 0,
+      "sourceFactIds": [
+        "C1",
+        "I1",
+        "C2",
+        "I2",
+        "S1",
+        "N1"
+      ],
+      "indexAndCitationListExact": true,
+      "status": "pass"
+    },
+    {
+      "factId": "S1",
+      "field": "sceneDetails[0]",
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+      "caseId": "synthesis-natal-and-transit",
+      "paragraph": 1,
+      "paragraphIndex": 0,
+      "sourceFactIds": [
+        "C1",
+        "I1",
+        "C2",
+        "I2",
+        "S1",
+        "N1"
+      ],
+      "indexAndCitationListExact": true,
+      "status": "pass"
+    },
+    {
+      "factId": "S1",
+      "field": "sceneDetails[1]",
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+      "caseId": "contact-only",
+      "paragraph": 3,
+      "paragraphIndex": 2,
+      "sourceFactIds": [
+        "C1",
+        "I1"
+      ],
+      "indexAndCitationListExact": true,
+      "status": "pass"
+    },
+    {
+      "factId": "S1",
+      "field": "practicalDistinction",
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+      "caseId": "synthesis-natal-and-transit",
+      "paragraph": 2,
+      "paragraphIndex": 1,
+      "sourceFactIds": [
+        "C1",
+        "I1",
+        "C2",
+        "I2",
+        "S1",
+        "A1",
+        "P2"
+      ],
+      "indexAndCitationListExact": true,
+      "status": "pass"
+    },
+    {
+      "factId": "S1",
+      "field": "optionalDirections[0]",
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+      "caseId": "synthesis-natal-and-transit",
+      "paragraph": 3,
+      "paragraphIndex": 2,
+      "sourceFactIds": [
+        "C1",
+        "I1",
+        "C2",
+        "I2",
+        "S1",
+        "N1"
+      ],
+      "indexAndCitationListExact": true,
+      "status": "pass"
+    },
+    {
+      "factId": "S1",
+      "field": "optionalDirections[1]",
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+      "caseId": "synthesis-natal-and-transit",
+      "paragraph": 3,
+      "paragraphIndex": 2,
+      "sourceFactIds": [
+        "C1",
+        "I1",
+        "C2",
+        "I2",
+        "S1",
+        "N1"
+      ],
+      "indexAndCitationListExact": true,
+      "status": "pass"
+    }
+  ],
+  "genericPrinciples": [
+    {
+      "id": "visible-first",
+      "status": "pass",
+      "assessment": "Supported detail or plain distinction is a general editing move; it imports no object, setting or astrology claim."
+    },
+    {
+      "id": "consequence-once",
+      "status": "pass",
+      "assessment": "Cuts a redundant abstraction after one concrete consequence without authorizing a new consequence."
+    },
+    {
+      "id": "claim-local-qualifiers",
+      "status": "pass",
+      "assessment": "Retains each condition and modal on its claim; permits only an immediate clear hypothetical reference and does not borrow an unrelated modal."
+    },
+    {
+      "id": "finish-on-the-choice",
+      "status": "pass",
+      "assessment": "Requires support and an optional small choice; it adds no counselor script or promised resolution."
+    },
+    {
+      "id": "no-strengthening",
+      "status": "pass",
+      "assessment": "Explicitly prevents new speed/ease/frequency/necessity when shortening. This does not erase source-supported I2 ease."
+    }
+  ],
+  "projectionReview": {
+    "method": "Static inspection plus memory-only esbuild compilation (write:false) and direct calls to the actual toDailyContextBrief function. No test harness, provider or network was invoked.",
+    "cases": [
+      "contact-only",
+      "natal-only",
+      "transit-only",
+      "natal-and-transit",
+      "synthesis-natal-and-transit"
+    ],
+    "depths": [
+      "standard",
+      "technical"
+    ],
+    "draftingFields": [
+      "factId",
+      "sourceKey",
+      "releaseVersion",
+      "sceneDetails",
+      "practicalDistinction",
+      "optionalDirections",
+      "requiredFacts"
+    ],
+    "meaningControls": "Each selected reviewed card has an exact controls.sourceMeanings entry containing factId, unchanged meaning and full recursive requiredFacts. No summary remains on material.",
+    "conditionControls": "Each selected reviewed card has an exact controls.sourceConditions entry with its unchanged requiredConditions.",
+    "genericEditingControls": "Only id/instruction are projected from voiceEdits.principles. derivedFrom, revisionSha256, sourceIds, examples, beforeAfter, qualifierNotes and reviewSupport do not enter the projected brief.",
+    "fullBodyBoundary": "No complete paragraph from either authored revision appears in any of the 10 projected briefs. Full revised bodies remain local review artifacts.",
+    "bindingBoundary": "reviewedCard requires exact projected sourceFact identity, including statement, release, key and parents; facts cannot acquire a familiar card by reusing only its id/key.",
+    "promptScope": "System voice states that controls constrain meaning, illustrations remain possible, source conditions/modals remain local, immediate references never establish personal events and every paragraph cites complete parents. Shared voice edits supply no fixed setting."
+  },
+  "findings": [],
+  "recommendedLineEdits": [],
+  "limitations": [
+    "Independent AI review, not human editorial approval.",
+    "This qualifies exact local material and projection boundaries only; it does not show how a provider will write or whether generated voice improves.",
+    "Coverage is the five bounded 0.9.0 source graphs. Other contacts, natal lenses, chapters, settings and consecutive days remain unqualified.",
+    "The authored revisions and source scenes are possible illustrations, not known member life.",
+    "No runtime or authored draft edits, provider/network requests, commits, publication or activation were performed by this reviewer."
+  ]
+}

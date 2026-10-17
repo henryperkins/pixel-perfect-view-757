@@ -195,7 +195,7 @@ test("signed workflow captures five distinct context outputs with no member or r
     assert.equal(result.metadata.experimentVersion, "daily-context-pilot-2");
     assert.equal(result.metadata.runPlanHash, saved.ledger.sourcePlan.hash);
     assert.equal(result.metadata.bundleSource, "context-pilot");
-    assert.equal(result.case.diagnostics.promptVersion, "daily-context-body-2");
+    assert.equal(result.case.diagnostics.promptVersion, "daily-context-body-3");
     assert.equal(result.case.transport.maxOutputTokens, 65536);
     assert.equal(result.case.transport.deadlineMs, 60000);
     assert.equal(h.geminiEnterpriseRequests[index].generationConfig.maxOutputTokens, 65536);
