@@ -16,18 +16,22 @@ export const requestPasswordReset = createServerFn({ method: "POST" })
   });
 export const resetPassword = createServerFn({ method: "POST" })
   .inputValidator(z.object({ token, password }))
-  .handler(async ({ data }) =>
-    (await import("./account-security.server")).consumeAccountToken(
+  .handler(async ({ data }) => {
+    const result=await (await import("./account-security.server")).consumeAccountToken(
       data.token,
       "reset",
       data.password,
-    ),
-  );
+    );
+    (await import("./auth.server")).clearCurrentSessionCookie();
+    return result;
+  });
 export const confirmEmail = createServerFn({ method: "POST" })
   .inputValidator(z.object({ token }))
-  .handler(async ({ data }) =>
-    (await import("./account-security.server")).consumeAccountToken(data.token, "confirm"),
-  );
+  .handler(async ({ data }) => {
+    const result=await (await import("./account-security.server")).consumeAccountToken(data.token,"confirm");
+    if (result.signInRequired) (await import("./auth.server")).clearCurrentSessionCookie();
+    return result;
+  });
 export const fetchAccountSecurity = createServerFn({ method: "GET" })
   .middleware([requireAuth])
   .handler(async ({ context }) =>

@@ -176,7 +176,8 @@ export async function membershipPortal(userId:string,_email:string,db=records())
   });
 }
 export async function updateMembership(userId:string,action:"cancel"|"resume"|MembershipPlan,db=records()) {
-  const env=billingEnvironment();await requireVerifiedEmail(userId,db);
+  const env=billingEnvironment();
+  if (action === "month" || action === "year") await requireVerifiedEmail(userId,db);
   await withBillingLock(db,userId,async()=> {
     const customer=await customerFor(db,userId,env);
     if (!customer || customer.deleting) throw new Error("There is no membership to manage.");

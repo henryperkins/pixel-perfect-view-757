@@ -78,7 +78,7 @@ export async function deleteAccount(userId: string, password: string, db: DBClie
     // A failed cancellation leaves the account intact and checkout disabled for retry.
     await prepareBillingDeletion(userId, db);
     try {
-      const results = await execBatch([
+      const results = await db.batch([
         {
           sql: "SELECT CASE WHEN EXISTS(SELECT 1 FROM users WHERE id=? AND password_hash=?) THEN 1 ELSE json('account-changed') END",
           params: [userId, hash],
