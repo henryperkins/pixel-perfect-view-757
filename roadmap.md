@@ -1,5 +1,9 @@
 # Browsing refresh
 
+## Dependency security repair
+- [ ] Refresh compatible dependencies and confirm the lockfile resolves all reported vulnerabilities to fixed versions.
+- [ ] Re-scan dependencies, run relevant regression tests, and check the app build.
+
 ## Purchase and account audit
 - [x] Research current catalog, authentication, payments, account changes, entitlements, and renewals; document evidence and gaps in docs/reviews/membership/2026-10-17-audit.md (54 tests passed; live onboarding incomplete).
 - [x] Resolve business-policy questions and present the repair plan for approval.
