@@ -257,6 +257,15 @@ function TransitChartCalculatorPage() {
   );
 }
 
+/** Wide tables scroll inside their column when enlarged text outgrows a phone screen. */
+function TableScroll({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <div className="calculator-table-scroll" role="region" aria-label={label} tabIndex={0}>
+      {children}
+    </div>
+  );
+}
+
 function PrimaryAction({ signedIn }: { signedIn: boolean }) {
   return (
     <div className="calculator-action">
@@ -626,31 +635,33 @@ function RuleSections() {
               <dd>{names(NATAL_TARGETS.map(pointName))}</dd>
             </div>
           </dl>
-          <table className="calculator-table">
-            <caption>Aspects</caption>
-            <thead>
-              <tr>
-                <th scope="col">Aspect</th>
-                <th scope="col" className="is-number">
-                  Angle
-                </th>
-                <th scope="col" className="is-number">
-                  Strength factor
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {ASPECTS.map((aspect) => (
-                <tr key={aspect.key}>
-                  <th scope="row">{capitalize(aspect.key)}</th>
-                  <td className="is-number calculator-number">{aspect.angle}°</td>
-                  <td className="is-number calculator-number">
-                    {aspectFactor(aspect.hard).toFixed(2)}
-                  </td>
+          <TableScroll label="Aspects">
+            <table className="calculator-table">
+              <caption>Aspects</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Aspect</th>
+                  <th scope="col" className="is-number">
+                    Angle
+                  </th>
+                  <th scope="col" className="is-number">
+                    Strength factor
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {ASPECTS.map((aspect) => (
+                  <tr key={aspect.key}>
+                    <th scope="row">{capitalize(aspect.key)}</th>
+                    <td className="is-number calculator-number">{aspect.angle}°</td>
+                    <td className="is-number calculator-number">
+                      {aspectFactor(aspect.hard).toFixed(2)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </TableScroll>
         </div>
       </section>
 
@@ -663,31 +674,33 @@ function RuleSections() {
           only inside these limits. Slower bodies get a little more room, the Moon less, and the
           quincunx less than half.
         </p>
-        <table className="calculator-table calculator-table-wide calculator-orb-table">
-          <caption>Orb limits</caption>
-          <thead>
-            <tr>
-              <th scope="col">Moving body</th>
-              {ORB_COLUMNS.map((column) => (
-                <th scope="col" className="is-number" key={column[0]!.key}>
-                  {capitalize(names(column.map((a) => a.key)))}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {ORB_ROWS.map((bodies) => (
-              <tr key={bodies.join()}>
-                <th scope="row">{names(bodies.map(bodyName))}</th>
+        <TableScroll label="Orb limits">
+          <table className="calculator-table calculator-table-wide calculator-orb-table">
+            <caption>Orb limits</caption>
+            <thead>
+              <tr>
+                <th scope="col">Moving body</th>
                 {ORB_COLUMNS.map((column) => (
-                  <td className="is-number calculator-number" key={column[0]!.key}>
-                    {deg(transitOrb(bodies[0]!, column[0]!.key))}
-                  </td>
+                  <th scope="col" className="is-number" key={column[0]!.key}>
+                    {capitalize(names(column.map((a) => a.key)))}
+                  </th>
                 ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {ORB_ROWS.map((bodies) => (
+                <tr key={bodies.join()}>
+                  <th scope="row">{names(bodies.map(bodyName))}</th>
+                  {ORB_COLUMNS.map((column) => (
+                    <td className="is-number calculator-number" key={column[0]!.key}>
+                      {deg(transitOrb(bodies[0]!, column[0]!.key))}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </TableScroll>
       </section>
 
       <section className="calculator-section" aria-labelledby="calculator-window">
@@ -782,69 +795,75 @@ function RuleSections() {
           known to the hour
         </p>
         <div className="calculator-columns calculator-columns-three">
-          <table className="calculator-table">
-            <caption>Body weights</caption>
-            <thead>
-              <tr>
-                <th scope="col">Moving body</th>
-                <th scope="col" className="is-number">
-                  Weight
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {TRANSIT_BODIES.map((key) => (
-                <tr key={key}>
-                  <th scope="row">{bodyName(key)}</th>
-                  <td className="is-number calculator-number">
-                    {(BODY_WEIGHT[key] ?? 0).toFixed(2)}
-                  </td>
+          <TableScroll label="Body weights">
+            <table className="calculator-table">
+              <caption>Body weights</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Moving body</th>
+                  <th scope="col" className="is-number">
+                    Weight
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-          <table className="calculator-table">
-            <caption>Point weights</caption>
-            <thead>
-              <tr>
-                <th scope="col">Natal point</th>
-                <th scope="col">Area</th>
-                <th scope="col" className="is-number">
-                  Weight
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {NATAL_TARGETS.map((key) => (
-                <tr key={key}>
-                  <th scope="row">{pointName(key)}</th>
-                  <td>{DOMAIN_LABEL[DOMAIN_BY_TARGET[key] ?? ""]}</td>
-                  <td className="is-number calculator-number">
-                    {(TARGET_WEIGHT[key] ?? 0).toFixed(2)}
-                  </td>
+              </thead>
+              <tbody>
+                {TRANSIT_BODIES.map((key) => (
+                  <tr key={key}>
+                    <th scope="row">{bodyName(key)}</th>
+                    <td className="is-number calculator-number">
+                      {(BODY_WEIGHT[key] ?? 0).toFixed(2)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </TableScroll>
+          <TableScroll label="Point weights">
+            <table className="calculator-table">
+              <caption>Point weights</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Natal point</th>
+                  <th scope="col">Area</th>
+                  <th scope="col" className="is-number">
+                    Weight
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-          <table className="calculator-table">
-            <caption>Strength labels</caption>
-            <thead>
-              <tr>
-                <th scope="col">Label</th>
-                <th scope="col" className="is-number">
-                  Strength
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {STRENGTH_BANDS.map((band, index) => (
-                <tr key={band.label}>
-                  <th scope="row">{band.label}</th>
-                  <td className="is-number">{bandRange(index)}</td>
+              </thead>
+              <tbody>
+                {NATAL_TARGETS.map((key) => (
+                  <tr key={key}>
+                    <th scope="row">{pointName(key)}</th>
+                    <td>{DOMAIN_LABEL[DOMAIN_BY_TARGET[key] ?? ""]}</td>
+                    <td className="is-number calculator-number">
+                      {(TARGET_WEIGHT[key] ?? 0).toFixed(2)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </TableScroll>
+          <TableScroll label="Strength labels">
+            <table className="calculator-table">
+              <caption>Strength labels</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Label</th>
+                  <th scope="col" className="is-number">
+                    Strength
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {STRENGTH_BANDS.map((band, index) => (
+                  <tr key={band.label}>
+                    <th scope="row">{band.label}</th>
+                    <td className="is-number">{bandRange(index)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </TableScroll>
         </div>
       </section>
 
@@ -856,25 +875,27 @@ function RuleSections() {
           Unknown or approximate birth times are normal. Pattern grades what the time can support
           and suppresses the claims that depend on it rather than softening them.
         </p>
-        <table className="calculator-table calculator-table-wide">
-          <caption>What each birth-time setting supports</caption>
-          <thead>
-            <tr>
-              <th scope="col">Birth time</th>
-              <th scope="col">House claims</th>
-              <th scope="col">Ascendant and Midheaven contacts</th>
-            </tr>
-          </thead>
-          <tbody>
-            {ACCURACIES.map((key) => (
-              <tr key={key}>
-                <th scope="row">{TIME_ACCURACY_LABEL[key]}</th>
-                <td>{birthTimeSupport(key).housesReliable ? "Supported" : "Suppressed"}</td>
-                <td>{angleContacts(key)}</td>
+        <TableScroll label="What each birth-time setting supports">
+          <table className="calculator-table calculator-table-wide">
+            <caption>What each birth-time setting supports</caption>
+            <thead>
+              <tr>
+                <th scope="col">Birth time</th>
+                <th scope="col">House claims</th>
+                <th scope="col">Ascendant and Midheaven contacts</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {ACCURACIES.map((key) => (
+                <tr key={key}>
+                  <th scope="row">{TIME_ACCURACY_LABEL[key]}</th>
+                  <td>{birthTimeSupport(key).housesReliable ? "Supported" : "Suppressed"}</td>
+                  <td>{angleContacts(key)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </TableScroll>
         <dl className="calculator-sources">
           <div>
             <dt>Your natal chart</dt>

@@ -1,0 +1,225 @@
+async (page) => {
+  const browser = page.context().browser();
+  const engine = browser.browserType().name();
+  const origin = new URL(page.url()).origin;
+  const checks = [];
+  const assert = (condition, message, details) => {
+    if (!condition) throw new Error(`${message}: ${JSON.stringify(details)}`);
+  };
+  const settle = (p) =>
+    p.evaluate(
+      () =>
+        new Promise((resolve) =>
+          requestAnimationFrame(() => requestAnimationFrame(() => requestAnimationFrame(resolve))),
+        ),
+    );
+  const run = async (name, size, task) => {
+    const context = await browser.newContext({
+      viewport: size,
+      isMobile: engine === "chromium",
+      hasTouch: true,
+      reducedMotion: "reduce",
+    });
+    const p = await context.newPage();
+    const errors = [];
+    p.on("pageerror", (error) => errors.push(String(error)));
+    p.setDefaultTimeout(12000);
+    try {
+      const detail = await task(p);
+      assert(errors.length === 0, "Unexpected application exception", errors);
+      checks.push({ name: `${name} at ${size.width}x${size.height}`, passed: true, detail });
+    } catch (error) {
+      checks.push({
+        name: `${name} at ${size.width}x${size.height}`,
+        passed: false,
+        error: String(error),
+      });
+    } finally {
+      await context.close();
+    }
+  };
+  const smallFields = (p) =>
+    p.evaluate(() =>
+      [
+        ...document.querySelectorAll(
+          "main input:not([type=radio]):not([type=checkbox]), main select, main textarea",
+        ),
+      ]
+        .filter((e) => e.getClientRects().length)
+        .map((e) => ({
+          label: e.labels?.[0]?.textContent?.trim().slice(0, 40) ?? e.id,
+          font: parseFloat(getComputedStyle(e).fontSize),
+        }))
+        .filter((e) => e.font < 16),
+    );
+  const linkHeights = (p, names) =>
+    p.evaluate(
+      (names) =>
+        names.map((name) => {
+          const link = [...document.querySelectorAll("a")].find(
+            (a) => a.textContent.trim() === name && a.getClientRects().length,
+          );
+          return { name, height: link ? link.getBoundingClientRect().height : null };
+        }),
+      names,
+    );
+
+  // Section shortcuts land just below whatever covers the top of the viewport.
+  for (const size of [
+    { width: 390, height: 844 },
+    { width: 667, height: 375 },
+  ]) {
+    await run("F-03: Today section shortcuts clear only the covering header", size, async (p) => {
+      await p.goto(origin + "/");
+      await p.getByRole("textbox", { name: "Reflection note" }).waitFor();
+      await p.evaluate(() => document.fonts.ready);
+      const rows = [];
+      for (const [name, id] of [
+        ["Check-in", "today-reflection"],
+        ["Timing", "today-timing"],
+        ["Journal", "today-journal"],
+        ["Sources", "today-evidence-section"],
+      ]) {
+        await p.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+        await settle(p);
+        await p.locator('nav[aria-label="Today sections"] a', { hasText: name }).click();
+        await p.waitForTimeout(300);
+        const row = await p.evaluate((id) => {
+          const header = document.querySelector(".pattern-header");
+          const nav = document.querySelector(".mobile-journey");
+          const covering = getComputedStyle(header).position === "sticky";
+          return {
+            id,
+            covering,
+            clearance: covering ? header.getBoundingClientRect().bottom : 0,
+            sectionTop: document.getElementById(id).getBoundingClientRect().top,
+            navTop: nav.getBoundingClientRect().top,
+            atEnd: Math.ceil(scrollY + innerHeight) >= document.documentElement.scrollHeight,
+          };
+        }, id);
+        rows.push(row);
+        // The last section can sit lower when the page cannot scroll further.
+        assert(
+          row.atEnd
+            ? row.sectionTop >= row.clearance && row.sectionTop < row.navTop
+            : Math.abs(row.sectionTop - (row.clearance + 8)) <= 2,
+          "Section must land 8px below the covering header",
+          row,
+        );
+      }
+      return rows;
+    });
+  }
+
+  await run("F-04: Timing filters and reset-password fields stay 16px", { width: 390, height: 844 }, async (p) => {
+    await p.goto(origin + "/timing");
+    await p.getByRole("button", { name: "Upcoming", exact: true }).click();
+    await p.getByText("Upcoming area").waitFor();
+    const upcoming = await smallFields(p);
+    await p.getByRole("button", { name: "Moon & eclipses", exact: true }).click();
+    await p.getByText("Sky event type").waitFor();
+    const sky = await smallFields(p);
+    await p.goto(origin + "/reset-password#token=" + "a".repeat(64));
+    await p.getByText("Repeat new password").waitFor();
+    const reset = await smallFields(p);
+    assert(
+      upcoming.length + sky.length + reset.length === 0,
+      "Phone fields must compute to at least 16px",
+      { upcoming, sky, reset },
+    );
+    return { upcoming, sky, reset };
+  });
+
+  await run("F-05: standalone links offer a 44px target", { width: 390, height: 844 }, async (p) => {
+    await p.goto(origin + "/birth");
+    await p.getByText("See the chart snapshot").waitFor();
+    const birth = await linkHeights(p, ["See the chart snapshot"]);
+    await p.goto(origin + "/pattern");
+    await p.locator("summary", { hasText: "Birth and calculation record" }).click();
+    await p.getByText("Check sources").waitFor();
+    const pattern = await linkHeights(p, ["Check sources", "Edit birth details"]);
+    await p.goto(origin + "/auth?visitor=1");
+    await p.getByText("Back to Pattern").waitFor();
+    const auth = await linkHeights(p, ["Back to Pattern", "Sign in"]);
+    const rows = [...birth, ...pattern, ...auth];
+    assert(
+      rows.every((row) => row.height >= 44),
+      "Standalone links must be at least 44px tall",
+      rows,
+    );
+    return rows;
+  });
+
+  for (const member of [true, false]) {
+    await run(
+      `F-02: /plans actions wrap at 32px text (member=${member})`,
+      { width: 320, height: 568 },
+      async (p) => {
+        await p.goto(origin + "/plans");
+        await p.locator("h1").waitFor();
+        await p.waitForFunction(() => !document.body.textContent.includes("Loading plans"));
+        if (!member) {
+          await p.evaluate(() => {
+            const qc = window.auditQueryClient;
+            qc.setQueryDefaults(["membership"], { staleTime: Infinity, refetchInterval: false });
+            qc.setQueryData(["membership", window.mobileAudit.state.ownerId], (old) => ({
+              ...old,
+              membership: null,
+              trialEligible: true,
+            }));
+          });
+          await p.getByRole("button", { name: /Choose \$8/ }).waitFor();
+        }
+        await p.evaluate(() => document.fonts.ready);
+        await p.evaluate(() => (document.documentElement.style.fontSize = "32px"));
+        await settle(p);
+        const result = await p.evaluate(() => ({
+          client: document.documentElement.clientWidth,
+          scroll: document.documentElement.scrollWidth,
+          actions: [...document.querySelectorAll("main a.inline-flex, main button")]
+            .filter((e) => e.getClientRects().length)
+            .map((e) => ({
+              text: e.textContent.trim(),
+              right: e.getBoundingClientRect().right,
+              height: e.getBoundingClientRect().height,
+            })),
+        }));
+        assert(
+          result.scroll <= result.client &&
+            result.actions.every((a) => a.right <= result.client && a.height >= 44),
+          "Plan actions must wrap within 320px",
+          result,
+        );
+        return result;
+      },
+    );
+  }
+
+  await run("F-07: deletion warning describes the password field", { width: 390, height: 844 }, async (p) => {
+    await p.goto(origin + "/privacy");
+    await p.getByRole("button", { name: "Delete account", exact: true }).click();
+    await p.getByText("Current password").waitFor();
+    const result = await p.evaluate(() => {
+      const active = document.activeElement;
+      const ids = active?.getAttribute("aria-describedby")?.split(/\s+/) ?? [];
+      return {
+        active: `${active?.tagName}:${active?.getAttribute("type")}`,
+        description: ids.map((id) => document.getElementById(id)?.textContent ?? "").join(" "),
+      };
+    });
+    assert(
+      result.active === "INPUT:password" && result.description.includes("cannot be undone"),
+      "The focused password field must carry the deletion warning",
+      result,
+    );
+    return result;
+  });
+
+  return {
+    engine,
+    browserVersion: browser.version(),
+    checks,
+    evidence: "Render: desktop engines at phone dimensions with synthetic services",
+    notTested: "Physical phones, iOS focus zoom, virtual keyboards and screen-reader output",
+  };
+}

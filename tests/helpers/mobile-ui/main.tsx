@@ -16,6 +16,8 @@ import { Route as R5 } from "@/routes/_authenticated/privacy.tsx";
 import { Route as R6 } from "@/routes/_authenticated/plans.tsx";
 import { Route as R7 } from "@/routes/_authenticated/birth.tsx";
 import { Route as R8 } from "@/routes/_authenticated/time-travel.tsx";
+import { Route as R9 } from "@/routes/transit-chart-calculator.tsx";
+import { Route as R10 } from "@/routes/reset-password.tsx";
 import { Route as AppRoot } from "@/routes/__root.tsx";
 const queryClient = new QueryClient();
 const root = createRootRoute({
@@ -41,8 +43,24 @@ const r5 = R5.update({ id: "/privacy", path: "/privacy", getParentRoute: () => m
 const r6 = R6.update({ id: "/plans", path: "/plans", getParentRoute: () => member });
 const r7 = R7.update({ id: "/birth", path: "/birth", getParentRoute: () => member });
 const r8 = R8.update({ id: "/time-travel", path: "/time-travel", getParentRoute: () => member });
+const r9 = R9.update({
+  id: "/transit-chart-calculator",
+  path: "/transit-chart-calculator",
+  getParentRoute: () => root,
+});
+const r10 = R10.update({
+  id: "/reset-password",
+  path: "/reset-password",
+  getParentRoute: () => root,
+});
 const router = createRouter({
-  routeTree: root.addChildren([index, r0, member.addChildren([r1, r2, r3, r4, r5, r6, r7, r8])]),
+  routeTree: root.addChildren([
+    index,
+    r0,
+    r9,
+    r10,
+    member.addChildren([r1, r2, r3, r4, r5, r6, r7, r8]),
+  ]),
   scrollRestoration: true,
 });
 Object.assign(window, { auditRouter: router, auditQueryClient: queryClient });

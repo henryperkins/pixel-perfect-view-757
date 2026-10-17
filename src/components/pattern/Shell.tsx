@@ -93,7 +93,12 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
         available - headerHeight - navHeight < Math.max(160, fieldHeight + 16),
       );
       const fixedHeight = nav && getComputedStyle(nav).position === "fixed" ? navHeight : 0;
-      root.style.setProperty("--pattern-header-height", `${headerHeight}px`);
+      // A short landscape viewport keeps the header in flow, so it covers nothing.
+      const stickyHeight =
+        headerRef.current && getComputedStyle(headerRef.current).position === "sticky"
+          ? headerHeight
+          : 0;
+      root.style.setProperty("--pattern-header-height", `${stickyHeight}px`);
       root.style.setProperty("--pattern-header-bar-height", `${headerBarHeight}px`);
       root.style.setProperty("--pattern-bottom-nav-height", `${fixedHeight}px`);
     };
@@ -440,7 +445,7 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
                 </Button>
               </>
             ) : (
-              <Link to="/auth" className="technical text-primary">
+              <Link to="/auth" className="technical inline-flex min-h-11 items-center text-primary">
                 Sign in
               </Link>
             )}

@@ -369,8 +369,12 @@ export function PatternChartDetails({ data }: { data: PatternData }) {
               : " House claims and the rising lens are suppressed because your birth time isn't precise enough."}
           </p>
           <div className="mt-4 flex flex-wrap gap-5 text-sm text-primary">
-            <Link to="/sources">Check sources</Link>
-            <Link to="/birth">Edit birth details</Link>
+            <Link to="/sources" className="inline-flex min-h-11 items-center">
+              Check sources
+            </Link>
+            <Link to="/birth" className="inline-flex min-h-11 items-center">
+              Edit birth details
+            </Link>
           </div>
         </div>
       </details>

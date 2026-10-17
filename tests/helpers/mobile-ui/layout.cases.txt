@@ -1,7 +1,7 @@
 async(page)=>{
  const out={version:await page.context().browser().version(),layout:[],focus:[],note:'Desktop render evidence. Root font 32px is a stress test, not phone zoom.'};
  page.setDefaultTimeout(8000);page.on('dialog',d=>d.accept());
- for(const route of ['/','/journal','/auth','/onboarding','/timing','/pattern','/privacy','/birth']) {
+ for(const route of ['/','/journal','/auth','/onboarding','/timing','/pattern','/privacy','/birth','/plans','/time-travel','/transit-chart-calculator','/reset-password#token='+'a'.repeat(64)]) {
   await page.setViewportSize({width:390,height:844});await page.goto('http://127.0.0.1:4198'+route);await page.locator('h1').waitFor();await page.evaluate(()=>document.fonts.ready);
   for(const scale of [16,32]) for(const size of (scale===16?[{width:320,height:568},{width:360,height:800},{width:390,height:844},{width:440,height:956},{width:667,height:375},{width:844,height:390}]:[{width:320,height:568},{width:390,height:844},{width:667,height:375}])) {
    await page.setViewportSize(size);await page.evaluate(scale=>document.documentElement.style.fontSize=scale+'px',scale);await page.waitForTimeout(70);

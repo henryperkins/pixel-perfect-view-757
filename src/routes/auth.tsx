@@ -173,7 +173,7 @@ function AuthPage() {
         )}
 
         <p className="mt-10 text-xs text-muted-foreground">
-          <Link to="/" className="underline">
+          <Link to="/" className="inline-flex min-h-11 items-center underline">
             Back to Pattern
           </Link>
         </p>

@@ -23,6 +23,8 @@ playwright-cli -s=mobile-chromium run-code --filename=tests/helpers/mobile-ui/to
 playwright-cli -s=mobile-chromium run-code --filename=tests/helpers/mobile-ui/today-forms.cases.txt
 playwright-cli -s=mobile-chromium run-code --filename=tests/helpers/mobile-ui/today-overlays.cases.txt
 playwright-cli -s=mobile-chromium run-code --filename=tests/helpers/mobile-ui/today-scroll.cases.txt
+playwright-cli -s=mobile-chromium run-code --filename=tests/helpers/mobile-ui/journal-scroll.cases.txt
+playwright-cli -s=mobile-chromium run-code --filename=tests/helpers/mobile-ui/secondary.cases.txt
 ```
 
 The `.cases.txt` files contain the async function accepted by Playwright CLI `run-code`, rather than Node test modules. Use the wrapper in place of `playwright-cli` if it is not on PATH. A CLI success exit alone is insufficient: inspect every returned `passed`, any `error`, overflow dimensions, font measurements, focus bounds and reduced-motion result. `core` resets only the synthetic `mobile-audit-member` draft records and fixture session state. Other destructive cases use fresh, isolated browser contexts. Do not run these probes against a member site.
@@ -33,11 +35,17 @@ The `.cases.txt` files contain the async function accepted by Playwright CLI `ru
 | `review`   | Immediate login cache refresh, root survival with blocked sessionStorage, Today discard, two-tab clear/reactivation, synthetic quota failure, and blocked IndexedDB fallback.                                                                                                                                 |
 | `core`     | Today → check-in → save → Journal first at 390×844; navigation/reload, slow save, journal read-only pending fields, lost acknowledgement without duplicate, deletion Back/focus, editor recovery, membership focus, input purposes, selection state and stale geocoding.                                      |
 | `advanced` | Uncertain Today save with later edits, dated prior-day recovery, account switching, missing-create retry with original operation, edit retry retaining newer text, failed/pending/direct-link deletion, birth-edit manual coordinates, and focus revalidation without BroadcastChannel.                       |
-| `layout`   | Eight routes × six normal viewports plus three 32 px root-font stress viewports; page width, nav-label overlap, editable text, landscape Timing position, keyboard focus bounds, an unbroken saved URL and reduced motion.                                                                                    |
+| `layout`   | Twelve routes × six normal viewports plus three 32 px root-font stress viewports; page width, nav-label overlap, editable text, landscape Timing position, keyboard focus bounds, an unbroken saved URL and reduced motion.                                                                                   |
 
 Normal viewports are 320×568, 360×800, 390×844, 440×956, 667×375 and 844×390. Root-font stress uses 320×568, 390×844 and 667×375. Doubling the root font is not physical-phone zoom. Programmatic Tab and focus bounds do not reproduce an OS virtual keyboard. Real toolbar, safe-area, keyboard/autofill, gesture, VoiceOver/TalkBack and performance qualification remain in the [completion checklist](../../../docs/superpowers/plans/2026-10-14-mobile-member-flow-completion-checklist.md).
 
 The `today-scroll` probe checks empty, short and overflowing notes in portrait and landscape, long/short draft recovery and saved edits, and containment changes after wrapping, rotation and enlarged text without typing. Chromium uses compositor touch input; desktop WebKit uses wheel input at phone dimensions because mobile WebKit does not support Playwright wheel injection. Inspect all eleven results in each engine. These are Render checks; native WebKit swipes, physical-phone pinch zoom, keyboards and browser chrome remain Device checks.
+
+The `journal-scroll` probe applies the same input to the Journal's new-entry and inline-edit bodies: empty, short and overflowing text in portrait and landscape, plus containment that follows growing and shrinking text. Inspect all fourteen results in each engine.
+
+The `secondary` probe covers routes and controls outside the Today flow. Today's section shortcuts must land 8px below the sticky header, or 8px from the top when a short landscape viewport leaves the header in flow. The Timing filters and reset-password fields must compute to at least 16px. Standalone links must be 44px tall. `/plans` actions must wrap within 320px at a 32px root font, for members and non-members. The account-deletion password field must carry the deletion warning as its description. Inspect all seven results in each engine.
+
+Besides the member routes, the fixture mounts the public transit chart calculator and the reset-password page (`/reset-password#token=` followed by 64 hex characters shows the form) so `layout` can measure them.
 
 The fixture's synthetic server keeps test records in sessionStorage solely to simulate a server surviving reload. This is separate from production's encrypted IndexedDB draft store. Inspect the latter database for the encryption cases; do not mistake the test backend for production draft persistence.
 

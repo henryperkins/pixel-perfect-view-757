@@ -35,7 +35,7 @@ function PlansPage() {
   }
   return (
     <Shell>
-      <div className="mx-auto max-w-3xl">
+      <div className="plans-main mx-auto max-w-3xl">
         <h1 className="text-3xl">Go deeper with Pattern Plus</h1>
         <p className="mt-4 max-w-2xl text-muted-foreground">
           Read every chapter of your natal pattern, with its calculated evidence and a question to

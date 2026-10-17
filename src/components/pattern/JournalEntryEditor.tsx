@@ -4,6 +4,7 @@ import { DraftRecoveryNotice } from "./DraftRecoveryNotice";
 import type { DraftValuesMap } from "@/lib/member-drafts";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useScrollableField } from "@/hooks/useScrollableField";
 
 export interface EditableJournalEntry {
   id: string;
@@ -50,6 +51,8 @@ export function JournalEntryEditor({
   });
   const values = recovery.draft?.values ?? fallback;
   const { label, body, expectedRevision: revision } = values;
+  const bodyRef = useRef<HTMLTextAreaElement>(null);
+  useScrollableField(bodyRef, body);
   const recoveryRef = useRef(recovery);
   recoveryRef.current = recovery;
   const setLabel = (value: string) => recovery.update({ ...values, label: value });
@@ -197,6 +200,7 @@ export function JournalEntryEditor({
       <label className="block">
         <span className="technical text-muted-foreground">Entry</span>
         <textarea
+          ref={bodyRef}
           value={body}
           onChange={(event) => setBody(event.target.value)}
           maxLength={4000}

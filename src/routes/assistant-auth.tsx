@@ -145,7 +145,7 @@ export function AssistantAuthPage() {
                 <label className="block text-sm">
                   Email
                   <input
-                    className="mt-2 min-h-11 w-full rounded-sm border border-input bg-card px-3"
+                    className="pattern-mobile-field mt-2 min-h-11 w-full rounded-sm border border-input bg-card px-3"
                     type="email"
                     autoComplete="email"
                     required
@@ -158,7 +158,7 @@ export function AssistantAuthPage() {
                 <label className="block text-sm">
                   Password
                   <input
-                    className="mt-2 min-h-11 w-full rounded-sm border border-input bg-card px-3"
+                    className="pattern-mobile-field mt-2 min-h-11 w-full rounded-sm border border-input bg-card px-3"
                     type="password"
                     autoComplete={
                       mode === "signup" || updating ? "new-password" : "current-password"

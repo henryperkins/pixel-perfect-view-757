@@ -1,0 +1,205 @@
+async (page) => {
+  const browser = page.context().browser();
+  const engine = browser.browserType().name();
+  const origin = new URL(page.url()).origin;
+  const checks = [];
+  const shortBody = "A short entry.";
+  const longBody = "Keep this journal line.\n".repeat(60).trimEnd();
+  const assert = (condition, message, details) => {
+    if (!condition) throw new Error(`${message}: ${JSON.stringify(details)}`);
+  };
+  const settle = (p) =>
+    p.evaluate(
+      () =>
+        new Promise((resolve) =>
+          requestAnimationFrame(() => requestAnimationFrame(() => requestAnimationFrame(resolve))),
+        ),
+    );
+  const geometry = (field) =>
+    field.evaluate((el) => ({
+      pageY: window.scrollY,
+      innerTop: el.scrollTop,
+      client: el.clientHeight,
+      scroll: el.scrollHeight,
+      overscroll: getComputedStyle(el).overscrollBehaviorY,
+      rect: el.getBoundingClientRect().toJSON(),
+    }));
+  const scrollFromField = async (p, field) => {
+    const before = await geometry(field);
+    const x = before.rect.x + before.rect.width / 2;
+    // Start near the top of tall fields so the whole gesture stays inside the viewport.
+    const y = before.rect.y + Math.min(before.rect.height / 2, 60);
+    assert(
+      await field.evaluate((el, point) => el === document.elementFromPoint(point.x, point.y), {
+        x,
+        y,
+      }),
+      "Scroll input must start on the textarea",
+      before,
+    );
+    if (engine === "chromium") {
+      const cdp = await p.context().newCDPSession(p);
+      try {
+        await cdp.send("Input.dispatchTouchEvent", {
+          type: "touchStart",
+          touchPoints: [{ x, y, id: 1 }],
+        });
+        for (let step = 1; step <= 12; step++) {
+          await cdp.send("Input.dispatchTouchEvent", {
+            type: "touchMove",
+            touchPoints: [{ x, y: y - (180 * step) / 12, id: 1 }],
+          });
+          await p.waitForTimeout(18);
+        }
+        await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+      } finally {
+        await cdp.detach();
+      }
+    } else {
+      // Mobile WebKit has no wheel injection. Use desktop WebKit at phone
+      // dimensions to verify rendered wheel behavior, never device touch behavior.
+      await p.mouse.move(x, y);
+      await p.mouse.wheel(0, 180);
+    }
+    await p.waitForTimeout(450);
+    const after = await geometry(field);
+    return {
+      before,
+      after,
+      pageDelta: after.pageY - before.pageY,
+      innerDelta: after.innerTop - before.innerTop,
+    };
+  };
+  const place = async (p, field, end = false) => {
+    await field.evaluate((el, end) => {
+      el.blur();
+      el.scrollIntoView({ block: "center", behavior: "instant" });
+      el.scrollTop = end ? el.scrollHeight : 0;
+    }, end);
+    await settle(p);
+  };
+  const fields = {
+    compose: async (p) => {
+      const field = p.getByRole("textbox", { name: "Entry", exact: true }).first();
+      await field.waitFor();
+      return field;
+    },
+    editor: async (p) => {
+      await p.locator(".journal-entry").first().waitFor();
+      await p.getByRole("button", { name: "Edit", exact: true }).first().click();
+      const field = p.locator(".journal-entry-editor textarea");
+      await field.waitFor();
+      return field;
+    },
+  };
+  const run = async (name, size, task) => {
+    const context = await browser.newContext({
+      viewport: size,
+      isMobile: engine === "chromium",
+      hasTouch: true,
+      reducedMotion: "reduce",
+    });
+    const p = await context.newPage();
+    const errors = [];
+    p.on("pageerror", (error) => errors.push(String(error)));
+    p.setDefaultTimeout(12000);
+    try {
+      await p.goto(origin + "/journal");
+      await p.locator("h1").waitFor();
+      await p.evaluate(() => document.fonts.ready);
+      assert(
+        await p.evaluate(() => window.mobileAudit?.state.ownerId === "mobile-audit-member"),
+        "Synthetic fixture required",
+      );
+      const detail = await task(p);
+      assert(errors.length === 0, "Unexpected application exception", errors);
+      checks.push({ name: `${name} at ${size.width}x${size.height}`, passed: true, detail });
+    } catch (error) {
+      checks.push({
+        name: `${name} at ${size.width}x${size.height}`,
+        passed: false,
+        error: String(error),
+      });
+    } finally {
+      await context.close();
+    }
+  };
+
+  for (const size of [
+    { width: 390, height: 844 },
+    { width: 667, height: 375 },
+  ]) {
+    for (const [surface, open] of Object.entries(fields)) {
+      for (const [name, value, overflowing] of [
+        ["empty", "", false],
+        ["short", shortBody, false],
+        ["long", longBody, true],
+      ]) {
+        await run(`F-01: ${name} ${surface} body scrolls the correct area`, size, async (p) => {
+          const field = await open(p);
+          await field.fill(value);
+          await place(p, field);
+          const scroll = await scrollFromField(p, field);
+          if (overflowing) {
+            assert(scroll.before.scroll > scroll.before.client, "Long fixture must overflow", scroll);
+            assert(
+              scroll.innerDelta > 40 && Math.abs(scroll.pageDelta) <= 1,
+              "Long body must scroll internally without moving the page",
+              scroll,
+            );
+            await place(p, field, true);
+            const boundary = await scrollFromField(p, field);
+            assert(
+              Math.abs(boundary.pageDelta) <= 1,
+              "Long-body boundary must remain contained",
+              boundary,
+            );
+            return { scroll, boundary };
+          }
+          assert(scroll.before.scroll === scroll.before.client, "Short fixture must fit", scroll);
+          assert(
+            scroll.pageDelta > 40 && scroll.innerDelta === 0,
+            "Short/empty body must allow the page to scroll",
+            scroll,
+          );
+          assert(
+            scroll.before.overscroll === "auto",
+            "A fitting body must retain native scroll chaining",
+            scroll,
+          );
+          return scroll;
+        });
+      }
+    }
+  }
+
+  for (const [surface, open] of Object.entries(fields)) {
+    await run(
+      `F-01: ${surface} containment follows growing and shrinking text`,
+      { width: 390, height: 844 },
+      async (p) => {
+        const field = await open(p);
+        await field.fill(longBody);
+        await settle(p);
+        const grown = await geometry(field);
+        assert(grown.overscroll === "contain", "Overflowing body must be contained", grown);
+        await field.fill(shortBody);
+        await settle(p);
+        const shrunk = await geometry(field);
+        assert(shrunk.overscroll === "auto", "Fitting body must chain again", shrunk);
+        return { grown, shrunk };
+      },
+    );
+  }
+
+  return {
+    engine,
+    browserVersion: browser.version(),
+    checks,
+    evidence:
+      engine === "chromium"
+        ? "Render: Chromium compositor touch input"
+        : "Render: desktop WebKit wheel input at phone widths",
+    notTested: "Physical phones, native WebKit swipes, virtual keyboards and browser chrome",
+  };
+}

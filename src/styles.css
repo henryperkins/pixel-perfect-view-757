@@ -290,9 +290,6 @@ body {
 .flow-page .animate-rise {
   animation: none;
 }
-.flow-page section {
-  scroll-margin-top: 7rem;
-}
 .flow-page a {
   text-underline-offset: 5px;
 }
@@ -2667,16 +2664,24 @@ body {
   font-size: 2.375rem;
   line-height: 1.12;
   text-wrap: balance;
+  overflow-wrap: anywhere;
 }
 .calculator-lede {
   max-width: 38rem;
 }
 .calculator-action {
+  container-type: inline-size;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 14px 24px;
   margin-top: 32px;
+}
+/* The action needs about 18rem on one line; a narrower column trades padding for whole words. */
+@container (width < 18rem) {
+  .calculator-action a.inline-flex {
+    padding-inline: 0.75rem;
+  }
 }
 .calculator-action p {
   max-width: 22rem;
@@ -2833,6 +2838,18 @@ input.calculator-control {
   gap: 10px;
   margin-top: 14px;
 }
+.calculator-inputs {
+  container-type: inline-size;
+}
+/* Three fields need 20rem with the longest sign; a narrower form gives the sign its own row. */
+@container (width < 20rem) {
+  .calculator-position {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .calculator-position > :first-child {
+    grid-column: 1 / -1;
+  }
+}
 .calculator-working {
   padding: 24px;
   border: 1px solid var(--rule);
@@ -2949,6 +2966,11 @@ input.calculator-control {
 .calculator-sources a {
   color: var(--primary);
   text-decoration: underline;
+}
+.calculator-table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
 }
 .calculator-table {
   width: 100%;
@@ -3255,8 +3277,8 @@ input.calculator-control {
   min-width: 0;
 }
 .today-check-in-note textarea[data-scrollable],
-.journal-compose textarea,
-.journal-entry-editor textarea {
+.journal-compose textarea[data-scrollable],
+.journal-entry-editor textarea[data-scrollable] {
   overscroll-behavior-y: contain;
 }
 .journal-delete-body {
@@ -3265,7 +3287,8 @@ input.calculator-control {
   overscroll-behavior: contain;
 }
 .journal-delete-body:focus-visible,
-.pattern-placement-table:focus-visible {
+.pattern-placement-table:focus-visible,
+.calculator-table-scroll:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: -2px;
 }
@@ -3289,7 +3312,10 @@ input.calculator-control {
       max(var(--pattern-bottom-nav-height, 0px), env(safe-area-inset-bottom, 0px)) + 16px
     );
   }
-  .pattern-mobile-field {
+  .pattern-mobile-field,
+  .travel-date-form input,
+  .calculator-control,
+  input.calculator-control {
     font-size: 16px;
     font-size: max(1rem, 16px);
   }
@@ -3318,10 +3344,13 @@ html[data-constrained-viewport] .mobile-journey {
   }
 }
 
-/* Keep contextual recovery and settings actions inside their column with enlarged text. */
+/* Keep contextual recovery, settings, plan and calculator actions inside their column with enlarged text. */
 .draft-recovery button,
 .privacy-main button,
-.privacy-main a.inline-flex {
+.privacy-main a.inline-flex,
+.plans-main button,
+.plans-main a.inline-flex,
+.calculator-action a.inline-flex {
   max-width: 100%;
   height: auto;
   min-height: 44px;

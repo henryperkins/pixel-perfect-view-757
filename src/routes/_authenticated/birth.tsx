@@ -420,7 +420,10 @@ function BirthPage() {
                         ? "Save and recalculate"
                         : "Calculate my chart"}
                   </button>
-                  <Link to="/pattern" className="technical text-primary">
+                  <Link
+                    to="/pattern"
+                    className="technical inline-flex min-h-11 items-center text-primary"
+                  >
                     See the chart snapshot
                   </Link>
                 </div>

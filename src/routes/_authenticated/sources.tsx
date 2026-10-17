@@ -80,7 +80,10 @@ function SourcesPage() {
       ) : !q.data || q.data.needsOnboarding ? (
         <div className="max-w-xl">
           <h1 className="text-2xl sm:text-3xl">No chart yet</h1>
-          <Link to="/onboarding" className="technical mt-6 inline-flex text-primary">
+          <Link
+            to="/onboarding"
+            className="technical mt-6 inline-flex min-h-11 items-center text-primary"
+          >
             Enter birth details
           </Link>
         </div>
@@ -103,7 +106,7 @@ function SourcesView({
 
   return (
     <div className="animate-rise max-w-3xl">
-      <Link to="/pattern" className="technical text-primary">
+      <Link to="/pattern" className="technical inline-flex min-h-11 items-center text-primary">
         ← Your pattern
       </Link>
       <h1 className="mt-4 text-2xl sm:text-3xl">Chart sources</h1>

@@ -645,7 +645,7 @@ function PrivacyPage() {
                   doDelete.mutate();
                 }}
               >
-                <p className="text-sm">
+                <p id="delete-account-consequences" className="text-sm">
                   Delete your Pattern login, all sessions, saved chart, readings, journal and
                   encryption key, cancel your membership immediately, and stop all connected
                   assistant access. This cannot be undone. Your separate Google or assistant sign-in
@@ -656,6 +656,7 @@ function PrivacyPage() {
                   <input
                     type="password"
                     autoFocus
+                    aria-describedby="delete-account-consequences"
                     autoComplete="current-password"
                     required
                     maxLength={200}

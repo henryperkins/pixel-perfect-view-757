@@ -84,7 +84,7 @@ export function AccountLink({ reset = false }: { reset?: boolean }) {
                   <label key={field.label} className="block text-sm">
                     {field.label}
                     <input
-                      className="mt-2 min-h-11 w-full rounded-sm border border-input bg-card px-3"
+                      className="pattern-mobile-field mt-2 min-h-11 w-full rounded-sm border border-input bg-card px-3"
                       type="password"
                       autoComplete="new-password"
                       required

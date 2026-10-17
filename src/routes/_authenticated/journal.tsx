@@ -22,6 +22,7 @@ import {
 import { NotebookPen, Save, Trash2 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useCalendarQueryRefresh, useCalendarRefresh } from "@/hooks/useCalendarRefresh";
+import { useScrollableField } from "@/hooks/useScrollableField";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import {
@@ -159,6 +160,8 @@ function JournalPage() {
   });
   const values = recovery.draft?.values ?? initialValues;
   const { occurredOn, domain, label, body, cycleKey, featureKey } = values;
+  const bodyRef = useRef<HTMLTextAreaElement>(null);
+  useScrollableField(bodyRef, body);
   const change = <K extends keyof DraftValuesMap["journal-new"]>(
     key: K,
     value: DraftValuesMap["journal-new"][K],
@@ -435,6 +438,7 @@ function JournalPage() {
               <label className="block">
                 <span className="technical text-muted-foreground">Entry</span>
                 <textarea
+                  ref={bodyRef}
                   readOnly={save.isPending || checkingSave}
                   value={body}
                   onChange={(e) => setBody(e.target.value)}

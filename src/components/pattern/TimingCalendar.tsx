@@ -83,7 +83,7 @@ export function TimingCalendar({
       <label className="grid gap-1 text-sm">
         Future horizon
         <select
-          className="min-h-11 rounded border border-input bg-background px-3"
+          className="pattern-mobile-field min-h-11 rounded border border-input bg-background px-3"
           value={horizon}
           onChange={(e) => setHorizon(Number(e.target.value) as 90 | 365)}
         >
@@ -190,7 +190,7 @@ export function TimingCalendar({
           <label className="grid gap-1 text-sm">
             Upcoming area
             <select
-              className="min-h-11 rounded border border-input bg-background px-3"
+              className="pattern-mobile-field min-h-11 rounded border border-input bg-background px-3"
               value={domain}
               onChange={(e) => setDomain(e.target.value as typeof domain)}
             >
@@ -205,7 +205,7 @@ export function TimingCalendar({
           <label className="grid gap-1 text-sm">
             Window duration
             <select
-              className="min-h-11 rounded border border-input bg-background px-3"
+              className="pattern-mobile-field min-h-11 rounded border border-input bg-background px-3"
               value={duration}
               onChange={(e) => setDuration(e.target.value as DurationFilter)}
             >
@@ -298,7 +298,7 @@ export function TimingCalendar({
         <label className="mb-5 grid max-w-sm gap-1 text-sm">
           Sky event type
           <select
-            className="min-h-11 rounded border border-input bg-background px-3"
+            className="pattern-mobile-field min-h-11 rounded border border-input bg-background px-3"
             value={eventKind}
             onChange={(e) => setEventKind(e.target.value)}
           >
