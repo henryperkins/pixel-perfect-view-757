@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-17T08:47:50.199Z",
+  "url": "https://patterns.lakefrontdigital.io/api/public/evaluation-identity",
+  "sourceSha": "9bce3b55ce72eae00563b3b3b51e61f6a72f8b59",
+  "identity": {
+    "sourceSha": "9bce3b55ce72eae00563b3b3b51e61f6a72f8b59",
+    "requestPolicyVersion": "synthetic-facts-local-context-1",
+    "fixtureVersion": "synthetic-daily-7"
+  },
+  "servingDeploymentId": "cfa7847d-e514-478c-8bfa-e4d54f63c9cb",
+  "deploymentHeader": "psr2.cfa7847d-e514-478c-8bfa-e4d54f63c9cb.1792831669.Jh2gx7_zaclMJvr9gKfW9-cDjYS5tYzGiReNamr8urQ",
+  "providerAttemptsBeforeIdentityVerified": 0,
+  "workerUnchanged": true
+}

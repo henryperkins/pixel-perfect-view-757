@@ -1,0 +1,202 @@
+{
+  "reviewType": "AI",
+  "aiReview": true,
+  "humanReview": false,
+  "inputFile": "/tmp/pattern-context-material-pilot-20261017/source-review-packet.md",
+  "inputHashAlgorithm": "sha256",
+  "inputHash": "b01bae81b0561ed223955d335210a8151bc290657d5ac3e6a8ee72f6d788d71e",
+  "inputScope": "Only the metadata-hidden source-review packet; no provider, outcome, case mapping or prior review.",
+  "groundingScoreScale": {
+    "5": "No material defect found",
+    "4": "Minor unsupported emphasis; source conditions intact",
+    "3": "Bounded major defect requiring correction",
+    "2": "Several major defects",
+    "1": "Pervasive unsupported meaning"
+  },
+  "passRule": "No major or critical source-fidelity defect",
+  "contextIntegrationRule": "A score of 4 requires a natal and/or author-chapter distinction to change the meaning of the same concrete situation; merely adjacent context scores 2; no-extra-context baseline is not applicable.",
+  "blockerCount": 1,
+  "results": [
+    {
+      "label": "R1",
+      "pass": true,
+      "score": 5,
+      "contextIntegration": {
+        "applicable": true,
+        "score": 4,
+        "meetsFourThreshold": true,
+        "reason": "The conditional return chapter changes the same afternoon task from rescheduling unchanged work to trying a smaller method or boundary adjustment with a stopping point."
+      },
+      "findings": [],
+      "checks": {
+        "requiredMeaningsPresent": true,
+        "completeParents": true,
+        "paragraphParentClosure": [
+          {"paragraph": 1, "complete": true, "required": ["C1", "I1"], "missing": []},
+          {"paragraph": 2, "complete": true, "required": ["P2", "C1", "I1", "A1"], "missing": []}
+        ],
+        "conditionalPossibilityScopesPreserved": true,
+        "knownLifeOnsetOrHistoryAdded": false,
+        "unsupportedCausesNecessityOrOutcomesAdded": false,
+        "unsupportedGeometryAdded": false,
+        "natalConditional": "not_applicable",
+        "chapterConditionPreserved": true,
+        "synthesisDistinctParents": "not_applicable",
+        "chronology": {"applicable": true, "exact": true, "occurrences": 1, "paragraph": 2, "withinFirstTwo": true, "parentsComplete": true}
+      }
+    },
+    {
+      "label": "R2",
+      "pass": false,
+      "score": 3,
+      "contextIntegration": {
+        "applicable": true,
+        "score": 4,
+        "meetsFourThreshold": true,
+        "reason": "Exploration versus commitment changes the same afternoon's workload meaning, and the return chapter changes a stopping point rather than merely the calendar. The source-fidelity failure is assessed separately."
+      },
+      "findings": [
+        {
+          "id": "R2-F1",
+          "severity": "major",
+          "blocking": true,
+          "category": "lost_possibility_and_added_speed",
+          "paragraph": 2,
+          "quote": "Yet ease in beginning another piece is different from having enough structure to carry the expanded commitment, as giving a plan more scope quickly increases the structure needed to hold it.",
+          "sourceFactIds": ["S1", "C1", "I1", "C2", "I2"],
+          "sourceQuote": "Giving a plan more scope can increase the structure needed to carry it.",
+          "reason": "The body changes can increase into quickly increases, asserting a definite relationship and an unsupported speed. The prior I2 condition does not qualify this separate general clause.",
+          "minimalCorrection": "Preserve can increase and omit quickly."
+        }
+      ],
+      "checks": {
+        "requiredMeaningsPresent": true,
+        "completeParents": true,
+        "paragraphParentClosure": [
+          {"paragraph": 1, "complete": true, "required": ["A1", "C1", "I1", "P2"], "missing": []},
+          {"paragraph": 2, "complete": true, "required": ["C1", "C2", "I1", "I2", "N1", "S1"], "missing": []}
+        ],
+        "conditionalPossibilityScopesPreserved": false,
+        "knownLifeOnsetOrHistoryAdded": false,
+        "unsupportedCausesNecessityOrOutcomesAdded": true,
+        "unsupportedGeometryAdded": false,
+        "natalConditional": true,
+        "wellChosenAimConditionPreserved": true,
+        "chapterConditionPreserved": true,
+        "synthesisDistinctParents": true,
+        "synthesisPossibilityPreserved": false,
+        "chronology": {"applicable": true, "exact": true, "occurrences": 1, "paragraph": 1, "withinFirstTwo": true, "parentsComplete": true}
+      }
+    },
+    {
+      "label": "R3",
+      "pass": true,
+      "score": 4,
+      "contextIntegration": {
+        "applicable": true,
+        "score": 4,
+        "meetsFourThreshold": true,
+        "reason": "The natal exploration-versus-commitment distinction changes whether an extra curiosity uses the selected project's hours in the same afternoon; the boundary reference links back to I1."
+      },
+      "findings": [
+        {
+          "id": "R3-F1",
+          "severity": "minor",
+          "blocking": false,
+          "category": "added_ease_emphasis",
+          "paragraph": 1,
+          "quote": "If an established responsibility asks for more deliberate effort today, an extra check or another version can easily slip beside the original task.",
+          "sourceFactIds": ["I1", "C1"],
+          "sourceQuote": "An extra check or another version added beside the original task.",
+          "reason": "The supplied material authorizes the possible addition but does not characterize its occurrence as easy. The opening If and can preserve hypothetical scope, so no actual occurrence or causal mechanism is established.",
+          "minimalCorrection": "Omit easily."
+        }
+      ],
+      "checks": {
+        "requiredMeaningsPresent": true,
+        "completeParents": true,
+        "paragraphParentClosure": [
+          {"paragraph": 1, "complete": true, "required": ["C1", "I1"], "missing": []},
+          {"paragraph": 2, "complete": true, "required": ["N1", "C1", "I1"], "missing": []}
+        ],
+        "conditionalPossibilityScopesPreserved": true,
+        "knownLifeOnsetOrHistoryAdded": false,
+        "unsupportedCausesNecessityOrOutcomesAdded": false,
+        "unsupportedGeometryAdded": false,
+        "natalConditional": true,
+        "chapterConditionPreserved": "not_applicable",
+        "synthesisDistinctParents": "not_applicable",
+        "chronology": {"applicable": false, "occurrences": 0}
+      }
+    },
+    {
+      "label": "R4",
+      "pass": true,
+      "score": 4,
+      "contextIntegration": {
+        "applicable": false,
+        "score": null,
+        "meetsFourThreshold": null,
+        "reason": "Only I1/C1 baseline material was supplied; no extra natal or author-chapter context exists to integrate."
+      },
+      "findings": [
+        {
+          "id": "R4-F1",
+          "severity": "minor",
+          "blocking": false,
+          "category": "added_speed_emphasis",
+          "paragraph": 1,
+          "quote": "If an extra check or another version is added beside the original task, its expectations may quickly exceed the capacity you actually have available.",
+          "sourceFactIds": ["I1", "C1"],
+          "sourceQuote": "An established responsibility can ask for more deliberate effort. Where its expectations exceed the capacity available, its boundary may need to become clearer.",
+          "reason": "Quickly adds a speed characterization absent from the material. If and may preserve the mismatch as possible rather than necessary or actual.",
+          "minimalCorrection": "Omit quickly."
+        }
+      ],
+      "checks": {
+        "requiredMeaningsPresent": true,
+        "completeParents": true,
+        "paragraphParentClosure": [
+          {"paragraph": 1, "complete": true, "required": ["C1", "I1"], "missing": []},
+          {"paragraph": 2, "complete": true, "required": ["C1", "I1"], "missing": []}
+        ],
+        "conditionalPossibilityScopesPreserved": true,
+        "knownLifeOnsetOrHistoryAdded": false,
+        "unsupportedCausesNecessityOrOutcomesAdded": false,
+        "unsupportedGeometryAdded": false,
+        "natalConditional": "not_applicable",
+        "chapterConditionPreserved": "not_applicable",
+        "synthesisDistinctParents": "not_applicable",
+        "chronology": {"applicable": false, "occurrences": 0}
+      }
+    },
+    {
+      "label": "R5",
+      "pass": true,
+      "score": 5,
+      "contextIntegration": {
+        "applicable": true,
+        "score": 4,
+        "meetsFourThreshold": true,
+        "reason": "The natal distinction changes whether an interest claims the familiar task's afternoon, and the conditional chapter changes the same workload's stopping point rather than merely rescheduling it."
+      },
+      "findings": [],
+      "checks": {
+        "requiredMeaningsPresent": true,
+        "completeParents": true,
+        "paragraphParentClosure": [
+          {"paragraph": 1, "complete": true, "required": ["C1", "I1"], "missing": []},
+          {"paragraph": 2, "complete": true, "required": ["A1", "C1", "I1", "N1", "P2"], "missing": []}
+        ],
+        "conditionalPossibilityScopesPreserved": true,
+        "knownLifeOnsetOrHistoryAdded": false,
+        "unsupportedCausesNecessityOrOutcomesAdded": false,
+        "unsupportedGeometryAdded": false,
+        "natalConditional": true,
+        "chapterConditionPreserved": true,
+        "synthesisDistinctParents": "not_applicable",
+        "chronology": {"applicable": true, "exact": true, "occurrences": 1, "paragraph": 2, "withinFirstTwo": true, "parentsComplete": true}
+      }
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "at": "2026-10-17T08:50:28.148Z",
+  "operatorId": "19a3e356-8dcd-4aeb-b572-466916af5f6f",
+  "disabledUserRetained": true,
+  "cleanup": {
+    "sessions": 0,
+    "roles": 0,
+    "memberReadings": 0,
+    "evaluationRuns": 1,
+    "evaluationResults": 5
+  },
+  "activeUnchanged": true,
+  "active": {
+    "id": "94b44ea7-65c3-490b-83ea-37baeff8bfd3",
+    "version": "0.9.0",
+    "checksum": "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f",
+    "checksum_algorithm": "sha256-canonical-json-v1",
+    "is_active": 1,
+    "publication_state": "{\"operationId\":\"a214ca85-989c-4efc-af2e-aea62724b587\",\"operation\":\"activate\",\"status\":\"complete\",\"active\":true,\"previousVersion\":\"0.7.1\",\"artifactKey\":\"content-releases/0.9.0/bundle.json\",\"error\":null}"
+  },
+  "historicalRunUnchanged": true
+}

@@ -1,0 +1,31 @@
+{
+  "at": "2026-10-17T08:51:04.729Z",
+  "method": "read-only-d1-recheck",
+  "operatorId": "19a3e356-8dcd-4aeb-b572-466916af5f6f",
+  "counts": {
+    "sessions": 0,
+    "roles": 0,
+    "profiles": 0,
+    "memberReadings": 0,
+    "evaluationRuns": 1,
+    "evaluationResults": 5
+  },
+  "passwordLoginDisabled": true,
+  "activeUnchanged": true,
+  "active": {
+    "id": "94b44ea7-65c3-490b-83ea-37baeff8bfd3",
+    "version": "0.9.0",
+    "checksum": "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f",
+    "checksum_algorithm": "sha256-canonical-json-v1",
+    "is_active": 1,
+    "publication_state": "{\"operationId\":\"a214ca85-989c-4efc-af2e-aea62724b587\",\"operation\":\"activate\",\"status\":\"complete\",\"active\":true,\"previousVersion\":\"0.7.1\",\"artifactKey\":\"content-releases/0.9.0/bundle.json\",\"error\":null}"
+  },
+  "historicalRunsUnchanged": true,
+  "historicalRunIds": [
+    "a7b75991-14eb-422e-b892-3a6cfd9ca596",
+    "e5b9b69d-7cb6-4527-af9d-15a79e89a080"
+  ],
+  "historicalRunFingerprint": "d29c6b7d1740045063fb956530df414ae0b3bfcac4b61fe157c077b3888b12b9",
+  "mutations": 0,
+  "providerRequests": 0
+}

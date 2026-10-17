@@ -1,0 +1,20 @@
+{
+  "at": "2026-10-17T08:52:19.732181+00:00",
+  "preDispatch": [
+    {
+      "event": "Initial read-only preview attempted before client module hydration",
+      "effect": "No server function invoked and no provider attempt",
+      "resolution": "Observed content page title and no console errors; preview succeeded after module loaded"
+    },
+    {
+      "event": "Preview RPC envelope normalized for local integrity check",
+      "effect": "First local check inspected envelope rather than its plans field; no start invoked",
+      "resolution": "Preserved full preview-response privately, verified nested plan hash and exact material/benchmark/source before the sole start"
+    }
+  ],
+  "startInvocations": 1,
+  "startMarker": "exclusive private start-requested.json created before the only invocation",
+  "readOnlyPolling": "Workflow API, no model request replay",
+  "browserReopenedOnlyAfterWorkflowTerminal": true,
+  "providerRetryInvocations": 0
+}

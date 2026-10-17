@@ -1,0 +1,53 @@
+{
+  "at": "2026-10-17T08:50:26.904Z",
+  "runId": "12bdc739-e16f-45f8-beca-3c1656b0eaf8",
+  "ownerId": "19a3e356-8dcd-4aeb-b572-466916af5f6f",
+  "status": "complete",
+  "completed": 5,
+  "workflowInstanceId": "12bdc739-e16f-45f8-beca-3c1656b0eaf8",
+  "planHash": "583c3a84f06645e9400abe0200020621976cfdfb58bfef99df29a299a109eebb",
+  "attemptLimit": 5,
+  "dollarCeilingMicros": 5000000,
+  "records": [
+    {
+      "position": 0,
+      "caseId": "contact-only",
+      "attempted": 1,
+      "reservedMicros": 29348,
+      "resultBytes": 15850,
+      "resultSha256": "3d2958e498f1a0e96c651eda11252b00f6366ed6665265a46ea49971f294a57f"
+    },
+    {
+      "position": 1,
+      "caseId": "natal-only",
+      "attempted": 1,
+      "reservedMicros": 34230,
+      "resultBytes": 21587,
+      "resultSha256": "904ccc29830dac127e792a1934e78d4abf5cf90f47de6d80c82378697e065dab"
+    },
+    {
+      "position": 2,
+      "caseId": "transit-only",
+      "attempted": 1,
+      "reservedMicros": 40824,
+      "resultBytes": 45923,
+      "resultSha256": "ee9cb54d0627b5da8ce95fc5f3eb4ac504f9902968dd102d7bbbbad36ccf9a0e"
+    },
+    {
+      "position": 3,
+      "caseId": "natal-and-transit",
+      "attempted": 1,
+      "reservedMicros": 80306,
+      "resultBytes": 51664,
+      "resultSha256": "b7bdd32269bf6e50ac0eaf63896b7d5e1ae6ebb7f8ec4123b49b585847bdf024"
+    },
+    {
+      "position": 4,
+      "caseId": "synthesis-natal-and-transit",
+      "attempted": 1,
+      "reservedMicros": 71154,
+      "resultBytes": 56189,
+      "resultSha256": "88b004a2b2215b9b1d57a96baf4f25f1ea93e092f3cf9708f6107bd4cf918b42"
+    }
+  ]
+}

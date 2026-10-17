@@ -1,0 +1,147 @@
+{
+  "at": "2026-10-17T08:50:13.257Z",
+  "params": {
+    "runId": "12bdc739-e16f-45f8-beca-3c1656b0eaf8",
+    "total": 5,
+    "callback": "https://patterns.lakefrontdigital.io/api/public/evaluation-step",
+    "planHash": "583c3a84f06645e9400abe0200020621976cfdfb58bfef99df29a299a109eebb"
+  },
+  "trigger": {
+    "source": "binding"
+  },
+  "versionId": "5ba04a83-52c7-4927-bd6e-bda18a940b35",
+  "queued": "2026-10-17T08:48:37.468Z",
+  "start": "2026-10-17T08:48:41.596Z",
+  "end": "2026-10-17T08:50:11.300Z",
+  "success": true,
+  "error": null,
+  "output": {
+    "runId": "12bdc739-e16f-45f8-beca-3c1656b0eaf8",
+    "steps": 5
+  },
+  "rollback": null,
+  "status": "complete",
+  "step_count": 5,
+  "steps": [
+    {
+      "name": "case 0-1",
+      "start": "2026-10-17T08:48:41.859Z",
+      "end": "2026-10-17T08:48:55.224Z",
+      "attempts": [
+        {
+          "start": "2026-10-17T08:48:41.859Z",
+          "end": "2026-10-17T08:48:55.224Z",
+          "success": true,
+          "error": null
+        }
+      ],
+      "config": {
+        "retries": {
+          "limit": 0,
+          "delay": "1 second",
+          "backoff": "exponential"
+        },
+        "timeout": "5 minutes"
+      },
+      "output": "{\"next\":true}",
+      "success": true,
+      "type": "step"
+    },
+    {
+      "name": "case 1-1",
+      "start": "2026-10-17T08:48:55.244Z",
+      "end": "2026-10-17T08:49:07.758Z",
+      "attempts": [
+        {
+          "start": "2026-10-17T08:48:55.244Z",
+          "end": "2026-10-17T08:49:07.758Z",
+          "success": true,
+          "error": null
+        }
+      ],
+      "config": {
+        "retries": {
+          "limit": 0,
+          "delay": "1 second",
+          "backoff": "exponential"
+        },
+        "timeout": "5 minutes"
+      },
+      "output": "{\"next\":true}",
+      "success": true,
+      "type": "step"
+    },
+    {
+      "name": "case 2-1",
+      "start": "2026-10-17T08:49:07.779Z",
+      "end": "2026-10-17T08:49:21.690Z",
+      "attempts": [
+        {
+          "start": "2026-10-17T08:49:07.779Z",
+          "end": "2026-10-17T08:49:21.690Z",
+          "success": true,
+          "error": null
+        }
+      ],
+      "config": {
+        "retries": {
+          "limit": 0,
+          "delay": "1 second",
+          "backoff": "exponential"
+        },
+        "timeout": "5 minutes"
+      },
+      "output": "{\"next\":true}",
+      "success": true,
+      "type": "step"
+    },
+    {
+      "name": "case 3-1",
+      "start": "2026-10-17T08:49:21.711Z",
+      "end": "2026-10-17T08:49:47.895Z",
+      "attempts": [
+        {
+          "start": "2026-10-17T08:49:21.711Z",
+          "end": "2026-10-17T08:49:47.895Z",
+          "success": true,
+          "error": null
+        }
+      ],
+      "config": {
+        "retries": {
+          "limit": 0,
+          "delay": "1 second",
+          "backoff": "exponential"
+        },
+        "timeout": "5 minutes"
+      },
+      "output": "{\"next\":true}",
+      "success": true,
+      "type": "step"
+    },
+    {
+      "name": "case 4-1",
+      "start": "2026-10-17T08:49:47.916Z",
+      "end": "2026-10-17T08:50:11.279Z",
+      "attempts": [
+        {
+          "start": "2026-10-17T08:49:47.916Z",
+          "end": "2026-10-17T08:50:11.279Z",
+          "success": true,
+          "error": null
+        }
+      ],
+      "config": {
+        "retries": {
+          "limit": 0,
+          "delay": "1 second",
+          "backoff": "exponential"
+        },
+        "timeout": "5 minutes"
+      },
+      "output": "{\"next\":false}",
+      "success": true,
+      "type": "step"
+    }
+  ]
+}

@@ -1,0 +1,412 @@
+{
+  "version": "daily-context-material-pilot-verification-2",
+  "at": "2026-10-17T08:55:47.683375+00:00",
+  "result": {
+    "materialSourceReview": "pass",
+    "execution": "complete",
+    "editorialQualification": "fail",
+    "sourceGroundingQualification": "fail",
+    "humanReviewCompleted": false,
+    "memberWriterActivated": false
+  },
+  "source": {
+    "runtimeSha": "9bce3b55ce72eae00563b3b3b51e61f6a72f8b59",
+    "baseSourceSha": "3de2393149c5b086efab31dd5c3183702b4f4138",
+    "servingDeploymentId": "cfa7847d-e514-478c-8bfa-e4d54f63c9cb",
+    "sourceVerifiedBeforeDispatch": true,
+    "planHash": "583c3a84f06645e9400abe0200020621976cfdfb58bfef99df29a299a109eebb",
+    "materialVersion": "daily-context-material-2",
+    "materialBytesSha256": "be7c09a59c536ea963e128770f61b5d1af4dbb7bccebe6ac771efd4b52108a21",
+    "benchmarkBytesSha256": "825c877dbb88d5d20d39a12abfd67cea01781506250db93d44ae7c9885b35024",
+    "caseSetHash": "93855b484ef95b1b950fc229633d4467215ff0cd2c6d6ce1eb1445ba3375f5c4",
+    "sourceBundleCanonicalChecksum": "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f",
+    "runtimeFilesUnchangedAfterPilot": true,
+    "finalEvidenceCommitIsDocumentationOnly": true,
+    "deployEvidenceCommit": false
+  },
+  "run": {
+    "id": "12bdc739-e16f-45f8-beca-3c1656b0eaf8",
+    "status": "complete",
+    "caseIds": [
+      "contact-only",
+      "natal-only",
+      "transit-only",
+      "natal-and-transit",
+      "synthesis-natal-and-transit"
+    ],
+    "provider": "gemini-enterprise",
+    "actualModel": "gemini-3.8-flash",
+    "attempts": 5,
+    "maximumAttempts": 5,
+    "retries": 0,
+    "maximumRetries": 0,
+    "attemptBudgetExhausted": true,
+    "accountedMicros": 255862,
+    "ceilingMicros": 5000000,
+    "accountingIsConservativeEstimateNotInvoice": true,
+    "paidReviewAttempts": 0,
+    "completedWithAdminBrowserClosed": true,
+    "requestsStartedAfterRecordedClosure": 4,
+    "browserReopenedAfterWorkflowTerminal": true,
+    "closureReceiptIsOperatorObservation": true
+  },
+  "captures": {
+    "expectedParagraphFieldsPreserved": 5,
+    "automaticAccepted": 5,
+    "automaticRejected": 0,
+    "finalModelBodies": 5,
+    "fallbackBodies": 0,
+    "generatedContent": "body-paragraphs-only",
+    "headlineAndReflectionSource": "unchanged-authored-benchmarks",
+    "wholeUnparsedHttpArchive": false,
+    "liveNativeWireBodyArchive": false,
+    "thinkingTextRetained": false,
+    "sourcePinnedNativeReconstructionMatched": 5,
+    "normalizedRequestBriefEqualsFrozenPlan": 5,
+    "localAuditFieldsOrFullAuthoredAnswersInRequests": false,
+    "originalDatabaseSerializedResultBytesAndHashesMatched": 5
+  },
+  "reviews": {
+    "reader": "reader-review.md",
+    "grounding": "grounding-review.md",
+    "executionEvidence": "independent-live-evidence-review.md",
+    "type": "independent-ai-assistant-judgments",
+    "humanOrMemberResearch": false,
+    "readerTargetEachDimension": 4,
+    "readerPassAllDimensions": 0,
+    "closestCases": [
+      "contact-only",
+      "natal-only"
+    ],
+    "voiceAtLeastFour": 0,
+    "noMajorGroundingDefect": 4,
+    "cleanGroundingNoFindings": 2,
+    "minorGroundingConcerns": 2,
+    "blockingGroundingConcerns": 1,
+    "blockingCase": "synthesis-natal-and-transit",
+    "contextIntegrationApplicableCases": 4,
+    "contextIntegrationScores": [
+      4,
+      4,
+      4,
+      4
+    ],
+    "priorContextIntegrationScores": [
+      2,
+      2,
+      2,
+      2
+    ],
+    "comparisonIsPairedABStudy": false,
+    "readerIllustrativeEditsApplied": false,
+    "readerIllustrativeEditsSourceValidated": false,
+    "readerPacketSha256": "c5ec808225a65438002c1c1d6807f6397d7043f6f676bbdf5758e65023cef9bc",
+    "sourcePacketSha256": "b01bae81b0561ed223955d335210a8151bc290657d5ac3e6a8ee72f6d788d71e",
+    "mapping": "blind-mapping.json",
+    "comparison": "comparison.json"
+  },
+  "verification": {
+    "baselineContextTests": 45,
+    "materialRed": {
+      "failed": 2,
+      "reason": "reviewed material fields absent; changed source allowed"
+    },
+    "onsetGuardRed": "exact first-pilot unsupported body previously accepted",
+    "historicalCampaignRed": "v1 prevented separately authorized v2 campaign",
+    "fullSuite": {
+      "command": "node --test --test-concurrency=4 tests/*.test.mjs",
+      "total": 1030,
+      "passed": 1026,
+      "failed": 0,
+      "skipped": 4,
+      "durationMs": 68209.404465,
+      "log": "/tmp/pattern-context-material-pilot-20261017/full-tests.log"
+    },
+    "typecheckExitCode": 0,
+    "scopedLintExitCode": 0,
+    "buildExitCode": 0,
+    "offlineValidation": "offline-validation/manifest.json",
+    "offlineCases": 5,
+    "interceptedGatewayRequests": 10,
+    "sourceMaterialReview": "pass",
+    "environmentPreserved": true,
+    "independentCodeReview": "independent-implementation-review.md",
+    "independentFocusedTestsPassed": 39,
+    "fullSuiteAfterRevision": true,
+    "usageArithmetic": "passed",
+    "reviewInputHashChecks": "passed",
+    "captureExportEquality": "passed",
+    "exactMaterialAndBenchmarkPins": "passed",
+    "scopedWhitespace": "passed",
+    "sensitiveEnvironmentValueScan": "passed",
+    "privateSessionFilesRemoved": true,
+    "runtimeDiffAfterSourceCommit": "empty",
+    "offlineValidationLiveProviderRequests": 0
+  },
+  "cleanup": {
+    "receipt": "cleanup.json",
+    "freshReadOnlyRecheck": "cleanup-verification.json",
+    "sessions": 0,
+    "roles": 0,
+    "profiles": 0,
+    "syntheticOperatorMemberReadings": 0,
+    "syntheticOperatorEvaluationRuns": 1,
+    "syntheticOperatorEvaluationResults": 5,
+    "disabledOwnerRetained": true,
+    "activeRelease": "0.9.0",
+    "activeReleaseChecksum": "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f",
+    "fullPublicationStateUnchanged": true,
+    "historicalSelectedRunFieldsUnchanged": true,
+    "historicalFingerprintFields": [
+      "id",
+      "status",
+      "completed",
+      "message",
+      "updated_at",
+      "plan"
+    ],
+    "historicalResultsReaudited": false,
+    "globalMemberRecordAudit": false
+  },
+  "limits": [
+    "Controlled five-case comparison from reviewed benchmark-derived scenes; no broad-source or consecutive-day generalization.",
+    "Paid pilot uses warm/standard only; offline contracts across six settings are not generated-writing qualification.",
+    "Different independent AI reviewers; no paired blinded A/B experiment or human/member research.",
+    "Expected paragraph captures and normalized request observations are preserved; complete provider wire responses/thinking text are not.",
+    "Illustrative reader edits have not been source-reviewed, rescored or applied.",
+    "Source/deployment/database receipts are point-in-time snapshots.",
+    "No additional campaign or member activation follows from this result."
+  ],
+  "artifacts": [
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/01-contact-only.json",
+      "bytes": 19031,
+      "sha256": "4ef3bc5a184e11eba295a6d1c22f78fb54cad45ef6ab92a95efea34d1dbbfb64"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/02-natal-only.json",
+      "bytes": 31757,
+      "sha256": "514ce92a25336b4dbeebbfda87b38f5367bf05b91256d1dfe91e1a7cdbb3ba30"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/03-transit-only.json",
+      "bytes": 80823,
+      "sha256": "7b09f13681ad5c2df36462334298ff0d7b8e3bf2f452c3c54e354023b61b436d"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/04-natal-and-transit.json",
+      "bytes": 93553,
+      "sha256": "be34f84fd235d8159c240f36f5e5fc27f1e1f71366f67e99545cac8620802065"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/05-synthesis-natal-and-transit.json",
+      "bytes": 98694,
+      "sha256": "548dd18f883cf2ba146d970f740ec71d80ade383bb68fe471508e883c6a6f11c"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/admin-page-closed.json",
+      "bytes": 235,
+      "sha256": "ab451d379c50f5187e62583a469cc995fb2b00522ff2edee52d452062ff11bc1"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/admin-reopened.json",
+      "bytes": 131,
+      "sha256": "16478b7b96612712abef3d18259b0cba15dca922a510912bb95973b9875f447f"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/baseline.json",
+      "bytes": 757,
+      "sha256": "8e3f6f083b769ad276cf4346a40acae430180fce828dd180f5c0e404357746da"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/blind-mapping.json",
+      "bytes": 381,
+      "sha256": "10af00b5d6be21925b4c69374b2184858e775d820da6523c3b19f1eaf91ffb64"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/captured-readings.md",
+      "bytes": 5676,
+      "sha256": "36198cc5fbca7ffa15ab2cb26983b674b03560f763261449166e60bb525d5b36"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/claim-scope-regression.md",
+      "bytes": 2607,
+      "sha256": "5b4cfe68ea46901bc0e2d670ac39738d38d163b45fa23dece28f7600be8d437b"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/cleanup-verification.json",
+      "bytes": 1137,
+      "sha256": "a56961d82fdd6312e1da765fd89e1fe3be12fee201e8e334475e0301f1afe9e3"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/cleanup.json",
+      "bytes": 824,
+      "sha256": "d1461eae6e22d5bb0963217de1cc7b1660ef0a3fdb36323daf745ae40f6c0897"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/comparison.json",
+      "bytes": 6644,
+      "sha256": "2c32d8e2f928a7bcc61d08e17d417329f859ba74527ea1e57d65e88e279c2fb5"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/database-receipt.json",
+      "bytes": 1603,
+      "sha256": "94cfdfea1da8972546847f680667dbd82a2f5ae9b8d86774c90280b8615b939d"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/deployment.json",
+      "bytes": 626,
+      "sha256": "3125278882f48b7390847b8ede9aa4d157f47ce963faff474c6592c58d783635"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/grounding-review.md",
+      "bytes": 11105,
+      "sha256": "55ddc6e502e96a26393886e15fb827461a9896e06f8229a386d4efe99be3308c"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/grounding-scores.json",
+      "bytes": 9488,
+      "sha256": "47da614e6da52ebcfbd86ae1cd8c253214b227f374be23e91e21a7e21f76e943"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/independent-implementation-review.md",
+      "bytes": 7079,
+      "sha256": "96f055b274aaee2ce49e53caa8c0474bd165bee253f3957f21f06329505e6015"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/independent-live-evidence-review.md",
+      "bytes": 14280,
+      "sha256": "504b8645d4a06761602ef275f15d067740e492cc9267e2d9f506cd3ef113159c"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/material-source-review.json",
+      "bytes": 11371,
+      "sha256": "8e9287283c9bd25644e92b3310c74dd49fb875217e825428fc1fcfa14dda4459"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/material-source-review.md",
+      "bytes": 9722,
+      "sha256": "09f41a457b26718b3be2888099ac2894a3f655640cc6607e815140713a0c4997"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/offline-validation/contact-only.json",
+      "bytes": 15669,
+      "sha256": "11ee1de4dd8db1943e660251e2836d3fb480891fbb309776f4122b7d82d9ff76"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/offline-validation/manifest.json",
+      "bytes": 3851,
+      "sha256": "35edd87f3d7fd41048f2038e457c54d31edfa13dab52998f99504202cc953805"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/offline-validation/natal-and-transit.json",
+      "bytes": 24844,
+      "sha256": "6edb3839bd9d190a16bd2edbf21093003904b0207b7215979580ba95ba81ec22"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/offline-validation/natal-only.json",
+      "bytes": 19303,
+      "sha256": "0382c9f1f32d60c3f159323526fc1095560dc2fe8f8b9439d55eadb57dfab8dd"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/offline-validation/synthesis-natal-and-transit.json",
+      "bytes": 32285,
+      "sha256": "fcea9cf9ecf6840823fe4696d0d220766891efa612878e341719db127646c476"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/offline-validation/transit-only.json",
+      "bytes": 21044,
+      "sha256": "f46db3f1e9f6292bc84e63b6bef12e7fe09f99eca75f0e1aa5d73ecf19ca0aad"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/operator-observations.json",
+      "bytes": 955,
+      "sha256": "f82e3a2ab8bc6c590fecc71e882b974a7c42a593a2f5031bb5b952bcf8422211"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/preflight.json",
+      "bytes": 2065,
+      "sha256": "0bdfd9cf2224eb89a563116743480b523e8340804640d32c327a01863e89c389"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/preview.json",
+      "bytes": 997818,
+      "sha256": "2d5f2c237e4ca1cf62f2951f64eee67af52ead987dded2a74d545d90206178f4"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/progress.md",
+      "bytes": 4401,
+      "sha256": "fdd780b67447d8059001b6b182b87e16546f98a325aa77e3af9de247f4f6699a"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/reader-packet.md",
+      "bytes": 4643,
+      "sha256": "c5ec808225a65438002c1c1d6807f6397d7043f6f676bbdf5758e65023cef9bc"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/reader-review.md",
+      "bytes": 17805,
+      "sha256": "d969868a08d13fd170e4d4d2b192fea3d741cd524caa49066da396460c10eebd"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/reader-scores.json",
+      "bytes": 23124,
+      "sha256": "d942797ee74d73de5131a2e3994971faab388ba19b4c83ba1f7eb543f1c0fd2d"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/run.json",
+      "bytes": 1850087,
+      "sha256": "847711547e71cbc10551156c75b204e56679b8bba3d12928aea25c5c68d8770c"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/serving-verification.json",
+      "bytes": 474,
+      "sha256": "e7793484b51c7247d4400d62f5648d4b91786754d26aa97dc3adef121218fafe"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/source-review-packet.md",
+      "bytes": 46097,
+      "sha256": "b01bae81b0561ed223955d335210a8151bc290657d5ac3e6a8ee72f6d788d71e"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/status-observations.json",
+      "bytes": 4048,
+      "sha256": "3236a5fdfa213374a7cbba06a3876d9e93864622590d5af913e7eb4169d60519"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/summary.json",
+      "bytes": 3278,
+      "sha256": "c145e978edbb8ed40de5a9d546df1865bd522e1baac38ba3e87b0f6782abc25a"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/verdict.md",
+      "bytes": 7150,
+      "sha256": "02212dadfd258354042a45463049363d70af0316862daf071e988ed7c04126b0"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/workflow-status.json",
+      "bytes": 3572,
+      "sha256": "244e4bdca602902085adf5c44a065293dcc47cb55070d7de2ed9c0a680d8d6f5"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/README.md",
+      "bytes": 7469,
+      "sha256": "e2d36ca125160b3d8ec7550c0df09310fc9ba07b5ee745da6979e84847795f09"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+      "bytes": 26926,
+      "sha256": "825c877dbb88d5d20d39a12abfd67cea01781506250db93d44ae7c9885b35024"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-readings.md",
+      "bytes": 6802,
+      "sha256": "75258c2eabec3625cd49b72374c3fcdc4b2d2d769bd6b383403a77b4a6e6ebf2"
+    },
+    {
+      "path": "src/lib/ai/context-writing-material.json",
+      "bytes": 26414,
+      "sha256": "be7c09a59c536ea963e128770f61b5d1af4dbb7bccebe6ac771efd4b52108a21"
+    }
+  ]
+}

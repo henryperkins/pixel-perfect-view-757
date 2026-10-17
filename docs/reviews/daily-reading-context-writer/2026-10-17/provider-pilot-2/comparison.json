@@ -1,0 +1,208 @@
+{
+  "version": "daily-context-pilot-comparison-2",
+  "sameBenchmarkBytes": true,
+  "benchmarkBytesSha256": "825c877dbb88d5d20d39a12abfd67cea01781506250db93d44ae7c9885b35024",
+  "sameSourceBundle": "0.9.0",
+  "sameCaseSetHash": "93855b484ef95b1b950fc229633d4467215ff0cd2c6d6ce1eb1445ba3375f5c4",
+  "reviewType": "Independent AI judgments from different reviewers; not a paired blinded A/B test or human/member research",
+  "dimensionOrder": [
+    "Recognition",
+    "Meaning",
+    "Direction",
+    "Distinctness",
+    "Voice"
+  ],
+  "cases": [
+    {
+      "id": "contact-only",
+      "firstPilot": {
+        "readerScores": {
+          "Recognition": 2,
+          "Meaning": 3,
+          "Direction": 2,
+          "Distinctness": 2,
+          "Voice": 3
+        },
+        "groundingPassNoMajorDefect": false,
+        "contextIntegration": null
+      },
+      "secondPilot": {
+        "readerScores": {
+          "Recognition": 4,
+          "Meaning": 4,
+          "Direction": 4,
+          "Distinctness": 4,
+          "Voice": 3
+        },
+        "readerPassEveryDimension": false,
+        "groundingPassNoMajorDefect": true,
+        "groundingScore": 4,
+        "contextIntegration": null,
+        "findings": [
+          {
+            "id": "R4-F1",
+            "severity": "minor",
+            "blocking": false,
+            "category": "added_speed_emphasis",
+            "paragraph": 1,
+            "quote": "If an extra check or another version is added beside the original task, its expectations may quickly exceed the capacity you actually have available.",
+            "sourceFactIds": [
+              "I1",
+              "C1"
+            ],
+            "sourceQuote": "An established responsibility can ask for more deliberate effort. Where its expectations exceed the capacity available, its boundary may need to become clearer.",
+            "reason": "Quickly adds a speed characterization absent from the material. If and may preserve the mismatch as possible rather than necessary or actual.",
+            "minimalCorrection": "Omit quickly."
+          }
+        ]
+      }
+    },
+    {
+      "id": "natal-only",
+      "firstPilot": {
+        "readerScores": {
+          "Recognition": 3,
+          "Meaning": 3,
+          "Direction": 3,
+          "Distinctness": 3,
+          "Voice": 3
+        },
+        "groundingPassNoMajorDefect": true,
+        "contextIntegration": 2
+      },
+      "secondPilot": {
+        "readerScores": {
+          "Recognition": 4,
+          "Meaning": 4,
+          "Direction": 4,
+          "Distinctness": 4,
+          "Voice": 3
+        },
+        "readerPassEveryDimension": false,
+        "groundingPassNoMajorDefect": true,
+        "groundingScore": 4,
+        "contextIntegration": 4,
+        "findings": [
+          {
+            "id": "R3-F1",
+            "severity": "minor",
+            "blocking": false,
+            "category": "added_ease_emphasis",
+            "paragraph": 1,
+            "quote": "If an established responsibility asks for more deliberate effort today, an extra check or another version can easily slip beside the original task.",
+            "sourceFactIds": [
+              "I1",
+              "C1"
+            ],
+            "sourceQuote": "An extra check or another version added beside the original task.",
+            "reason": "The supplied material authorizes the possible addition but does not characterize its occurrence as easy. The opening If and can preserve hypothetical scope, so no actual occurrence or causal mechanism is established.",
+            "minimalCorrection": "Omit easily."
+          }
+        ]
+      }
+    },
+    {
+      "id": "transit-only",
+      "firstPilot": {
+        "readerScores": {
+          "Recognition": 2,
+          "Meaning": 3,
+          "Direction": 2,
+          "Distinctness": 2,
+          "Voice": 3
+        },
+        "groundingPassNoMajorDefect": true,
+        "contextIntegration": 2
+      },
+      "secondPilot": {
+        "readerScores": {
+          "Recognition": 3,
+          "Meaning": 4,
+          "Direction": 4,
+          "Distinctness": 4,
+          "Voice": 3
+        },
+        "readerPassEveryDimension": false,
+        "groundingPassNoMajorDefect": true,
+        "groundingScore": 5,
+        "contextIntegration": 4,
+        "findings": []
+      }
+    },
+    {
+      "id": "natal-and-transit",
+      "firstPilot": {
+        "readerScores": {
+          "Recognition": 3,
+          "Meaning": 3,
+          "Direction": 2,
+          "Distinctness": 2,
+          "Voice": 2
+        },
+        "groundingPassNoMajorDefect": true,
+        "contextIntegration": 2
+      },
+      "secondPilot": {
+        "readerScores": {
+          "Recognition": 3,
+          "Meaning": 3,
+          "Direction": 4,
+          "Distinctness": 3,
+          "Voice": 3
+        },
+        "readerPassEveryDimension": false,
+        "groundingPassNoMajorDefect": true,
+        "groundingScore": 5,
+        "contextIntegration": 4,
+        "findings": []
+      }
+    },
+    {
+      "id": "synthesis-natal-and-transit",
+      "firstPilot": {
+        "readerScores": {
+          "Recognition": 3,
+          "Meaning": 4,
+          "Direction": 3,
+          "Distinctness": 3,
+          "Voice": 2
+        },
+        "groundingPassNoMajorDefect": true,
+        "contextIntegration": 2
+      },
+      "secondPilot": {
+        "readerScores": {
+          "Recognition": 3,
+          "Meaning": 3,
+          "Direction": 4,
+          "Distinctness": 3,
+          "Voice": 2
+        },
+        "readerPassEveryDimension": false,
+        "groundingPassNoMajorDefect": false,
+        "groundingScore": 3,
+        "contextIntegration": 4,
+        "findings": [
+          {
+            "id": "R2-F1",
+            "severity": "major",
+            "blocking": true,
+            "category": "lost_possibility_and_added_speed",
+            "paragraph": 2,
+            "quote": "Yet ease in beginning another piece is different from having enough structure to carry the expanded commitment, as giving a plan more scope quickly increases the structure needed to hold it.",
+            "sourceFactIds": [
+              "S1",
+              "C1",
+              "I1",
+              "C2",
+              "I2"
+            ],
+            "sourceQuote": "Giving a plan more scope can increase the structure needed to carry it.",
+            "reason": "The body changes can increase into quickly increases, asserting a definite relationship and an unsupported speed. The prior I2 condition does not qualify this separate general clause.",
+            "minimalCorrection": "Preserve can increase and omit quickly."
+          }
+        ]
+      }
+    }
+  ]
+}
