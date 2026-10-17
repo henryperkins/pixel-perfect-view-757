@@ -1,0 +1,5 @@
+{
+  "at": "2026-10-17T10:04:08.255286+00:00",
+  "adminBrowserClosed": true,
+  "purpose": "Demonstrate durable server execution without browser; prevent extra client work."
+}

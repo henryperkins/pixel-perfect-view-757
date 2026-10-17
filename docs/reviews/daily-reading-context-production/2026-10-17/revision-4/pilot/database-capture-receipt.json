@@ -1,0 +1,38 @@
+{
+  "runId": "8d5d7931-1040-4a93-9c28-164df447e337",
+  "rowCount": 4,
+  "rows": [
+    {
+      "position": 0,
+      "caseId": "contact-only",
+      "attempted": 1,
+      "reservedMicros": 49808,
+      "resultBytes": 18771,
+      "resultSha256": "a894da5b7c74b0a4284e83c3996b4f0ad5ee056330ccedb988155f51d7d5957c"
+    },
+    {
+      "position": 1,
+      "caseId": "natal-only",
+      "attempted": 1,
+      "reservedMicros": 66502,
+      "resultBytes": 25170,
+      "resultSha256": "b995fb6668b655281593b4412cd12fa0095c619d3cae42140d5308a7fcaaeb22"
+    },
+    {
+      "position": 2,
+      "caseId": "transit-only",
+      "attempted": 1,
+      "reservedMicros": 63946,
+      "resultBytes": 49134,
+      "resultSha256": "c7e3c9733bb9eccde1a7cffa9e900e6ad601afc6f17859b64b9eccc43ffac143"
+    },
+    {
+      "position": 3,
+      "caseId": "natal-and-transit",
+      "attempted": 1,
+      "reservedMicros": 2800000,
+      "resultBytes": 54620,
+      "resultSha256": "20d1bdfc1fa81fb85d89a71d3ed4eefb706bad072aa028aa09434e7f563386f0"
+    }
+  ]
+}

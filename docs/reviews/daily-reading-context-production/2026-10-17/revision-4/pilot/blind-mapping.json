@@ -1,0 +1,17 @@
+[
+  {
+    "label": "R1",
+    "id": "transit-only",
+    "position": 2
+  },
+  {
+    "label": "R2",
+    "id": "natal-only",
+    "position": 1
+  },
+  {
+    "label": "R3",
+    "id": "contact-only",
+    "position": 0
+  }
+]

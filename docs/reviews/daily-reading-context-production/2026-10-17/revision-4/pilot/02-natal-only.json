@@ -1,0 +1,880 @@
+{
+  "metadata": {
+    "reportVersion": 1,
+    "storyPlanVersion": "daily-transit-story-1",
+    "anchorVersion": "transit-anchor-1",
+    "solverVersion": "transit-episode-1",
+    "sourceContract": "swiss-transit-episode/1",
+    "transitFixtureHash": "c612c026a1573104c5d363be23eace427a3caf33667c8805ec3d1036df08582d",
+    "storyUse": true,
+    "contextRuntime": {
+      "path": "member-production-context",
+      "memberAdapterVersion": "daily-member-context-1"
+    },
+    "caseSetId": "daily-context-1",
+    "fixtureVersion": "daily-context-1",
+    "caseSetHash": "93855b484ef95b1b950fc229633d4467215ff0cd2c6d6ce1eb1445ba3375f5c4",
+    "bundleVersion": "0.9.0",
+    "bundleHash": "761d68d270b93759b66c4a77dabad21213f1e4ca2f2873a4295d003cadcb6b61",
+    "transitCopyHash": "277042506214469482ddb953b8bd817190e10251979ab1a1cd6338ed6b3de9df",
+    "planVersion": "daily-synthesis-1",
+    "natalPlanVersion": "daily-natal-lens-2",
+    "reliabilityVersion": "natal-reliability-1",
+    "promptVersion": "daily-context-body-4",
+    "validatorVersion": "daily-context-reference-4",
+    "writingPlanVersion": "daily-concrete-writing-1",
+    "writingQualityVersion": "daily-writing-quality-1",
+    "reflectionVersion": "daily-reflection-1",
+    "voiceExamplesVersion": "daily-context-voice-4",
+    "model": "gemini-enterprise/gemini-3.8-flash",
+    "gatewayTimeoutMs": 60000,
+    "source": "live-synthetic",
+    "network": "Live Gemini Enterprise Agent Platform; fixed synthetic facts only",
+    "warning": "Synthetic body output through the member production context adapter; headline and reflection are reviewed authored runtime fields. Runtime fallback bodies are frozen separately from original review benchmarks. Inspect diagnostics: authored fallback is not generated writing. This capture does not establish member acceptance, semantic grounding or writing quality.",
+    "bundleSource": "context-pilot",
+    "sourceSha": "966d6cd33d3a7d685681749c8966e12ee7682cde",
+    "runPlanHash": "c28e305c61b231033d96814da4d96ecc013f3749018d161c63852a9beeca5dbc",
+    "requestPolicyVersion": "synthetic-facts-local-context-1",
+    "experimentVersion": "daily-context-pilot-4"
+  },
+  "case": {
+    "contextRuntime": {
+      "mode": "natal-only",
+      "benchmarkSourceHash": "5b34230d36b51e40b99391ca590d22f9f154d819ae3c1aaa0d9344bff0f126b8",
+      "fallbackBodyHash": "94669396f944c41b0f883bb8b6be0d54febe69c6afd2b1b36f19d0b0eb603060",
+      "benchmarkBodyHash": "46b10b3a7556e44f1bdff71091915f228787ea21410cfb6e8d49603b5161ee7b"
+    },
+    "transport": {
+      "version": "admin-model-transport-1",
+      "provider": "gemini-enterprise",
+      "requestedModel": "gemini-enterprise/gemini-3.8-flash",
+      "actualModel": "gemini-3.8-flash",
+      "thinkingLevel": null,
+      "maxOutputTokens": 65536,
+      "deadlineMs": 60000,
+      "startedAt": "2026-10-17T10:04:27.343Z",
+      "headersAt": "2026-10-17T10:04:49.616Z",
+      "bodyAt": "2026-10-17T10:04:49.616Z",
+      "abortAt": null,
+      "finishedAt": "2026-10-17T10:04:49.616Z",
+      "httpStatus": 200,
+      "requestId": null,
+      "responseId": "K0jTarTVIqLYsbwP19aosQE",
+      "finishReason": "STOP",
+      "usage": {
+        "inputTokens": 2531,
+        "outputTokens": 224,
+        "thinkingTokens": 2848,
+        "totalTokens": 5603,
+        "outputIncludesThinking": false
+      }
+    },
+    "id": "natal-only",
+    "description": "Context writer benchmark: natal; fixed synthetic source facts only.",
+    "config": {
+      "day": "2026-12-17",
+      "timeZone": "UTC",
+      "tone": "warm",
+      "depth": "standard",
+      "granted": [
+        "USR-01",
+        "USR-02"
+      ]
+    },
+    "configHash": "86f187388f8dc7880766567bf2dd04dbe01ef31b949dbb8be254e555f19d2f53",
+    "localNoon": "2026-12-17T12:00:00.000Z",
+    "eligibleCycleKeys": [
+      "saturn_square_sun"
+    ],
+    "facts": [
+      {
+        "id": "C1",
+        "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.00 degrees. phase exact. domain identity. Calculated exact date: 2026-12-17.",
+        "kind": "calculation",
+        "cycle": {
+          "transitBody": "saturn",
+          "natalPoint": "sun",
+          "aspect": "square",
+          "orb": 0,
+          "exactDate": "2026-12-17"
+        }
+      },
+      {
+        "id": "I1",
+        "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+        "kind": "interpretation",
+        "sourceKey": "square:saturn:sun",
+        "releaseVersion": "0.9.0",
+        "dependsOn": [
+          "C1"
+        ]
+      },
+      {
+        "id": "N1",
+        "statement": "Published natal lens, an interpretive possibility: Following more than one line of curiosity can help a direction take shape. If several possible projects compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages.",
+        "kind": "temperament",
+        "sourceKey": "nl-sun-03",
+        "releaseVersion": "0.9.0",
+        "dependsOn": [
+          "C1",
+          "I1"
+        ],
+        "natalEvidenceId": "NL1"
+      }
+    ],
+    "interpretationPlan": {
+      "version": "daily-synthesis-1",
+      "interpretations": [
+        {
+          "index": 1,
+          "cycleKey": "saturn_square_sun",
+          "interpretationKey": "square:saturn:sun"
+        }
+      ],
+      "pairStatus": "insufficient",
+      "pairRuleKey": null,
+      "releaseVersion": "0.9.0",
+      "synthesis": null
+    },
+    "natalLensPlan": {
+      "version": "daily-natal-lens-2",
+      "reliabilityVersion": "natal-reliability-1",
+      "releaseVersion": "0.9.0",
+      "status": "selected",
+      "lens": {
+        "ruleKey": "nl-sun-03",
+        "role": "self_direction",
+        "mechanism": "Following more than one line of curiosity can help a direction take shape. If several possible projects compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages.",
+        "anchorCycleKey": "saturn_square_sun",
+        "dependsOn": [
+          "C1",
+          "I1"
+        ],
+        "evidenceId": "NL1",
+        "evidence": [
+          {
+            "kind": "sign",
+            "body": "sun",
+            "sign": "Gemini",
+            "source": "service",
+            "longitudes": [
+              75,
+              75,
+              75
+            ],
+            "marginsDeg": [
+              15,
+              15,
+              15
+            ]
+          }
+        ],
+        "screen": {
+          "accuracy": "exact",
+          "sampleOffsetsMinutes": [
+            -2,
+            0,
+            2
+          ],
+          "sampleEngines": [
+            "swiss-ephemeris@synthetic-swiss-1",
+            "swiss-ephemeris@synthetic-swiss-1",
+            "swiss-ephemeris@synthetic-swiss-1"
+          ]
+        }
+      }
+    },
+    "natalReliability": {
+      "version": "natal-reliability-1",
+      "chartFingerprint": "synthetic:natal-only",
+      "accuracy": "exact",
+      "status": "screened",
+      "reason": null,
+      "sampleOffsetsMinutes": [
+        -2,
+        0,
+        2
+      ],
+      "sampleEngines": [
+        "swiss-ephemeris@synthetic-swiss-1",
+        "swiss-ephemeris@synthetic-swiss-1",
+        "swiss-ephemeris@synthetic-swiss-1"
+      ],
+      "evidence": [
+        {
+          "kind": "house",
+          "body": "mars",
+          "house": 2,
+          "source": "service",
+          "anglesSource": "service",
+          "system": "placidus",
+          "longitudes": [
+            165,
+            165,
+            165
+          ],
+          "cusps": [
+            [
+              120,
+              150,
+              180,
+              210,
+              240,
+              270,
+              300,
+              330,
+              0,
+              30,
+              60,
+              90
+            ],
+            [
+              120,
+              150,
+              180,
+              210,
+              240,
+              270,
+              300,
+              330,
+              0,
+              30,
+              60,
+              90
+            ],
+            [
+              120,
+              150,
+              180,
+              210,
+              240,
+              270,
+              300,
+              330,
+              0,
+              30,
+              60,
+              90
+            ]
+          ],
+          "angles": [
+            {
+              "ascendant": 120,
+              "midheaven": 30
+            },
+            {
+              "ascendant": 120,
+              "midheaven": 30
+            },
+            {
+              "ascendant": 120,
+              "midheaven": 30
+            }
+          ],
+          "marginsDeg": [
+            15,
+            15,
+            15
+          ]
+        },
+        {
+          "kind": "house",
+          "body": "mercury",
+          "house": 12,
+          "source": "service",
+          "anglesSource": "service",
+          "system": "placidus",
+          "longitudes": [
+            105,
+            105,
+            105
+          ],
+          "cusps": [
+            [
+              120,
+              150,
+              180,
+              210,
+              240,
+              270,
+              300,
+              330,
+              0,
+              30,
+              60,
+              90
+            ],
+            [
+              120,
+              150,
+              180,
+              210,
+              240,
+              270,
+              300,
+              330,
+              0,
+              30,
+              60,
+              90
+            ],
+            [
+              120,
+              150,
+              180,
+              210,
+              240,
+              270,
+              300,
+              330,
+              0,
+              30,
+              60,
+              90
+            ]
+          ],
+          "angles": [
+            {
+              "ascendant": 120,
+              "midheaven": 30
+            },
+            {
+              "ascendant": 120,
+              "midheaven": 30
+            },
+            {
+              "ascendant": 120,
+              "midheaven": 30
+            }
+          ],
+          "marginsDeg": [
+            15,
+            15,
+            15
+          ]
+        },
+        {
+          "kind": "house",
+          "body": "moon",
+          "house": 6,
+          "source": "service",
+          "anglesSource": "service",
+          "system": "placidus",
+          "longitudes": [
+            285,
+            285,
+            285
+          ],
+          "cusps": [
+            [
+              120,
+              150,
+              180,
+              210,
+              240,
+              270,
+              300,
+              330,
+              0,
+              30,
+              60,
+              90
+            ],
+            [
+              120,
+              150,
+              180,
+              210,
+              240,
+              270,
+              300,
+              330,
+              0,
+              30,
+              60,
+              90
+            ],
+            [
+              120,
+              150,
+              180,
+              210,
+              240,
+              270,
+              300,
+              330,
+              0,
+              30,
+              60,
+              90
+            ]
+          ],
+          "angles": [
+            {
+              "ascendant": 120,
+              "midheaven": 30
+            },
+            {
+              "ascendant": 120,
+              "midheaven": 30
+            },
+            {
+              "ascendant": 120,
+              "midheaven": 30
+            }
+          ],
+          "marginsDeg": [
+            15,
+            15,
+            15
+          ]
+        },
+        {
+          "kind": "house",
+          "body": "sun",
+          "house": 11,
+          "source": "service",
+          "anglesSource": "service",
+          "system": "placidus",
+          "longitudes": [
+            75,
+            75,
+            75
+          ],
+          "cusps": [
+            [
+              120,
+              150,
+              180,
+              210,
+              240,
+              270,
+              300,
+              330,
+              0,
+              30,
+              60,
+              90
+            ],
+            [
+              120,
+              150,
+              180,
+              210,
+              240,
+              270,
+              300,
+              330,
+              0,
+              30,
+              60,
+              90
+            ],
+            [
+              120,
+              150,
+              180,
+              210,
+              240,
+              270,
+              300,
+              330,
+              0,
+              30,
+              60,
+              90
+            ]
+          ],
+          "angles": [
+            {
+              "ascendant": 120,
+              "midheaven": 30
+            },
+            {
+              "ascendant": 120,
+              "midheaven": 30
+            },
+            {
+              "ascendant": 120,
+              "midheaven": 30
+            }
+          ],
+          "marginsDeg": [
+            15,
+            15,
+            15
+          ]
+        },
+        {
+          "kind": "house",
+          "body": "venus",
+          "house": 1,
+          "source": "service",
+          "anglesSource": "service",
+          "system": "placidus",
+          "longitudes": [
+            135,
+            135,
+            135
+          ],
+          "cusps": [
+            [
+              120,
+              150,
+              180,
+              210,
+              240,
+              270,
+              300,
+              330,
+              0,
+              30,
+              60,
+              90
+            ],
+            [
+              120,
+              150,
+              180,
+              210,
+              240,
+              270,
+              300,
+              330,
+              0,
+              30,
+              60,
+              90
+            ],
+            [
+              120,
+              150,
+              180,
+              210,
+              240,
+              270,
+              300,
+              330,
+              0,
+              30,
+              60,
+              90
+            ]
+          ],
+          "angles": [
+            {
+              "ascendant": 120,
+              "midheaven": 30
+            },
+            {
+              "ascendant": 120,
+              "midheaven": 30
+            },
+            {
+              "ascendant": 120,
+              "midheaven": 30
+            }
+          ],
+          "marginsDeg": [
+            15,
+            15,
+            15
+          ]
+        },
+        {
+          "kind": "sign",
+          "body": "mars",
+          "sign": "Virgo",
+          "source": "service",
+          "longitudes": [
+            165,
+            165,
+            165
+          ],
+          "marginsDeg": [
+            15,
+            15,
+            15
+          ]
+        },
+        {
+          "kind": "sign",
+          "body": "mercury",
+          "sign": "Cancer",
+          "source": "service",
+          "longitudes": [
+            105,
+            105,
+            105
+          ],
+          "marginsDeg": [
+            15,
+            15,
+            15
+          ]
+        },
+        {
+          "kind": "sign",
+          "body": "moon",
+          "sign": "Capricorn",
+          "source": "service",
+          "longitudes": [
+            285,
+            285,
+            285
+          ],
+          "marginsDeg": [
+            15,
+            15,
+            15
+          ]
+        },
+        {
+          "kind": "sign",
+          "body": "sun",
+          "sign": "Gemini",
+          "source": "service",
+          "longitudes": [
+            75,
+            75,
+            75
+          ],
+          "marginsDeg": [
+            15,
+            15,
+            15
+          ]
+        },
+        {
+          "kind": "sign",
+          "body": "venus",
+          "sign": "Leo",
+          "source": "service",
+          "longitudes": [
+            135,
+            135,
+            135
+          ],
+          "marginsDeg": [
+            15,
+            15,
+            15
+          ]
+        }
+      ]
+    },
+    "transitStoryPlan": {
+      "version": "daily-transit-story-1",
+      "solverVersion": "transit-episode-1",
+      "anchorVersion": "transit-anchor-1",
+      "status": "omitted",
+      "reason": "no_anchor"
+    },
+    "writingPlan": {
+      "version": "daily-concrete-writing-1",
+      "releaseVersion": "0.9.0",
+      "theme": {
+        "factId": "I1",
+        "sourceKey": "square:saturn:sun",
+        "relationship": null,
+        "requiredFacts": [
+          "C1",
+          "I1"
+        ]
+      },
+      "status": "no_frame",
+      "frame": null,
+      "scenes": [],
+      "templateSources": [
+        {
+          "factId": "I1",
+          "sourceKey": "square:saturn:sun",
+          "sentences": [
+            "An established role can feel demanding when its obligations require more deliberate effort than usual.",
+            "Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries."
+          ]
+        }
+      ]
+    },
+    "reflectionPlan": {
+      "version": "daily-reflection-1",
+      "question": "What helps you recognize an interest you want to explore before deciding whether to commit?",
+      "themeFactId": "I1",
+      "frameKey": null,
+      "variant": "editorial",
+      "localSource": null
+    },
+    "writing": {
+      "renderMode": "unframed",
+      "reason": null,
+      "sceneUse": [],
+      "candidateQuality": {
+        "version": "daily-writing-quality-1",
+        "outcome": "pass",
+        "issues": [
+          {
+            "code": "scene_unavailable",
+            "severity": "info",
+            "paragraph": null,
+            "ruleId": "no_scene"
+          }
+        ]
+      },
+      "finalQuality": {
+        "version": "daily-writing-quality-1",
+        "outcome": "pass",
+        "issues": [
+          {
+            "code": "scene_unavailable",
+            "severity": "info",
+            "paragraph": null,
+            "ruleId": "no_scene"
+          }
+        ]
+      }
+    },
+    "request": {
+      "model": "gemini-enterprise/gemini-3.8-flash",
+      "max_tokens": 65536,
+      "messages": [
+        {
+          "role": "system",
+          "content": "Write a daily astrology reading that sounds like an attentive person noticing something precise. Put a familiar object or choice in view, then show the distinction that makes it useful. Address the reader naturally; do not deliver a formal account of their situation. Draft only from the supplied material. Preserve each selected source's full meaning and conditions, but let the concrete situation express them: a claim about the hours a check needs can carry a limit without a second sentence announcing expectations, capacity and boundaries. The development map gives each source a different job, not a writing order. These are possible illustrations, never known events in the reader's life. References establish only their supplied source links, geometry and literal chronology. Keep every source condition in controls.sourceConditions attached to its own claim. Preserve source possibility words such as can, may and could on the claim they qualify, including across intervening adverbs. Do not add speed, ease, frequency, necessity, certainty or a relationship beyond the supplied source meaning. A modal in an unrelated clause does not qualify another claim. A clear immediate reference may continue the same hypothetical scene; it never establishes a personal event. Each paragraph cites every source used and all its required parent facts. A synthesis keeps its distinct parent meanings, rather than reducing planets to a keyword list. An image does not authorize a new effect. Link only relationships the selected source actually supplies; if or can does not ground an added causal claim. A familiar task asking more effort and its possible mismatch with the available hours must both remain legible, even when expressed through the extra check rather than an abstract summary. Direction stays optional and proportionate. End when a supported choice or distinction is clear. Never promise an outcome, prescribe a life decision, console, or narrate these rules, source selection or the calculation system. Invent no personal history, motives, temperament, causal effects, astronomical or health claims. N1 is a conditional possibility, not a personality description. Within the shared situation in paragraph 1 or 2, preserve curiosity possibly helping a direction take shape as well as exploring versus choosing. Cite N1, C1 and I1 together. Notes beside an open tab do not establish blurred attention. Do not turn exploration into confusion, diagnose the reader, or recite natal origins."
+        },
+        {
+          "role": "user",
+          "content": "Tone: warm. Attentive and conversational. Use natural direct address and occasional contractions. Warmth comes from accurate observation; avoid praise, consolation and a counselor's reassurance.\nDepth: standard. Keep human meaning in the foreground. Omit optional orb values, degree measurements, phase and exact-date detail. When A1 is supplied, its immutable chronology sentence is required even at standard depth.\nStay in one supplied situation. Each source in development.sourceRoles must change how that situation reads or what could be chosen within it. The map is not an order or a paragraph template. Choose the details that belong together; omit unused illustrations. Do not stack a separate lesson for every source.\nOpen with a supported detail or a plain distinction. Prefer the check, the hours, the note and the stopping point to formal descriptions of responsibilities, capacity, boundaries and agreements. Keep more-effort meaning when shortening. Once a concrete sentence makes a point, cut a second sentence that translates it back into abstractions. Use contractions where natural. Vary sentence length, paragraph count and where astrology appears; no mandatory if opening, three-paragraph pattern, script or permission ending. Apply controls.editingPrinciples without quoting them.\nIntegrate any selected N1 and P2 meaning within the first two paragraphs, each with its full source parents. N1 adds the difference between exploring and choosing, with curiosity possibly helping a direction emerge. P2 adds one smaller adjustment if an earlier way no longer fits; it must not repeat a calendar-versus-size explanation already made. It establishes no previous failed attempt, personal recurrence, resolution or closure.\nIf A1 is supplied, include its chronologySentence unchanged exactly once in paragraph 1 or 2, citing A1 and C1. Cite P2, C1, I1 and A1 together for chapter meaning. Do not paraphrase chronology, repeat it, add dates or reinterpret a calculated pass as an event in the reader's life.\nPlanetary imagery can clarify a distinction only when supplied by material. Avoid a list of planet keywords. Do not explain that a contact offers a symbolic lens or gives this reading its theme; let supported meaning stand in ordinary language.\nA useful ending may be the distinction itself or supported optional direction. Do not force a sentence to say aloud, recap the reading, console the reader or add hollow reassurance. The headline and independently validated reflection are separate; write only the body.\nOne source-bound writing brief; draft from its scene details, practical distinctions and optional directions. Source meanings and conditions in controls constrain the writing:\n{\"version\":\"daily-context-brief-4\",\"materialVersion\":\"daily-context-material-4\",\"material\":[{\"factId\":\"I1\",\"sourceKey\":\"square:saturn:sun\",\"releaseVersion\":\"0.9.0\",\"sceneDetails\":[\"An extra check can look small beside a familiar task.\",\"An afternoon set aside for that familiar task.\",\"A task moved to a later calendar opening, with the extra check still included.\"],\"practicalDistinction\":\"If the original task already fills the afternoon, an extra check still needs some of the same hours.\",\"optionalDirections\":[\"If the original work already fills the afternoon, the extra check could stay outside the task.\"],\"requiredFacts\":[\"I1\",\"C1\"]},{\"factId\":\"N1\",\"sourceKey\":\"nl-sun-03\",\"releaseVersion\":\"0.9.0\",\"sceneDetails\":[\"If several projects compete for the afternoon, a page of notes for one idea can sit beside a tab open for another.\",\"If several projects compete for that afternoon, one could stay as a note while you choose another to pursue.\"],\"practicalDistinction\":\"If several projects compete for the same afternoon, exploring a few and choosing one may be separate stages.\",\"optionalDirections\":[\"If several projects compete for that afternoon, a note can hold the second idea without promising it those hours.\"],\"requiredFacts\":[\"N1\",\"C1\",\"I1\"]}],\"references\":[{\"id\":\"C1\",\"kind\":\"calculation\",\"dependsOn\":[],\"cycle\":{\"transitBody\":\"saturn\",\"natalPoint\":\"sun\",\"aspect\":\"square\"}},{\"id\":\"I1\",\"kind\":\"interpretation\",\"dependsOn\":[\"C1\"],\"sourceKey\":\"square:saturn:sun\",\"releaseVersion\":\"0.9.0\"},{\"id\":\"N1\",\"kind\":\"temperament\",\"dependsOn\":[\"C1\",\"I1\"],\"sourceKey\":\"nl-sun-03\",\"releaseVersion\":\"0.9.0\",\"natalEvidenceId\":\"NL1\"}],\"development\":{\"centralSituationFact\":\"I1\",\"sourceRoles\":[{\"factId\":\"I1\",\"role\":\"effort-and-what-fits\"},{\"factId\":\"N1\",\"role\":\"exploration-before-commitment\"}]},\"controls\":{\"voiceVersion\":\"daily-context-voice-4\",\"draftFrom\":[\"sceneDetails\",\"practicalDistinction\",\"optionalDirections\"],\"editingPrinciples\":[{\"id\":\"visible-first\",\"instruction\":\"Lead with a supported visible detail or plain distinction; cut an abstract preface that announces the lesson.\"},{\"id\":\"consequence-once\",\"instruction\":\"Let one concrete consequence explain the distinction. Cut a following abstract sentence that repeats it.\"},{\"id\":\"claim-local-qualifiers\",\"instruction\":\"Keep a source condition and its possibility word attached to their own claim. An immediate clear reference may continue the same hypothetical; repeat its condition only when needed for clarity.\"},{\"id\":\"finish-on-the-choice\",\"instruction\":\"Let a supported object or small optional choice finish the thought. Cut a counselor reminder, prescribed script or final recap that adds no meaning.\"},{\"id\":\"no-strengthening\",\"instruction\":\"Shortening must preserve possibility and scope. Do not add speed, ease, frequency or necessity while making the prose more direct.\"},{\"id\":\"one-job-per-source\",\"instruction\":\"Use the source-role map as a coverage check, not a sequence: each selected meaning must develop the same situation in a different way. A return chapter adds a smaller adjustment instead of repeating a scheduling point.\"},{\"id\":\"no-new-effects\",\"instruction\":\"Preserve the relationships the selected source supplies. A scene image authorizes no new effect on attention, feelings or behavior. Neither if nor can grounds an added causal claim.\"},{\"id\":\"ordinary-words-complete-meaning\",\"instruction\":\"Let objects and their concrete cost carry the meaning. Keep both the possible extra effort and conditional limit; do not omit one or restate the concrete point as a formal summary.\"}],\"sourceMeanings\":[{\"factId\":\"I1\",\"meaning\":\"A familiar responsibility can need more effort than usual. If it asks for more than the available hours can hold, what belongs in the task may need a clearer limit.\",\"requiredFacts\":[\"I1\",\"C1\"]},{\"factId\":\"N1\",\"meaning\":\"Following a few lines of curiosity may help one direction take shape. If several projects compete for the same afternoon, exploring a few and choosing one may be different stages.\",\"requiredFacts\":[\"N1\",\"C1\",\"I1\"]}],\"tone\":\"warm\",\"depth\":\"standard\",\"requiredMeaningFacts\":[\"I1\",\"N1\"],\"natalConditional\":true,\"chronologyFirstTwo\":false,\"chronologyOnce\":false,\"technicalDetails\":false,\"sourceConditions\":[{\"factId\":\"I1\",\"conditions\":[\"The responsibility asking more effort is an interpretive possibility, not an established condition of the reader today.\",\"Any actual mismatch between expectations and capacity must remain conditional.\",\"Follow-up references to the task, added scope or boundary must remain inside the possible scene.\"]},{\"factId\":\"N1\",\"conditions\":[\"This natal lens is an interpretive possibility, not a fixed personality claim.\",\"The multiple-project scene applies only if several possibilities are competing for the same time.\",\"Keep the distinction between exploration and commitment visible in the shared project scene.\"]}]}}\nWrite only the body. The first paragraph concerns the primary contact and cites C1/I1. Use two to four paragraphs of one to four complete sentences each, each under 200 words, at most 700 words total. Declare empty scenes arrays; this brief supplies no SC identifiers.\nIntegrate every selected meaning in paragraph 1 or 2. S1 cites S1/C1/I1/C2/I2; N1 cites N1/C1/I1; chapter P2 cites P2/C1/I1/A1. Preserve each source's conditions. Copy A1 chronology unchanged exactly once in the first two paragraphs, citing A1/C1.\nEvery named planet, aspect or measurement cites its matching C reference. These are transit-to-natal contacts, not current-sky pairs. Do not introduce sign placements, individual houses, natal origins or unprovided imagery. Do not add dates outside the supplied literal chronology unless technical depth provides a directly cited C exactDate.\nKeep the current orb and any exact date in separate sentences. Neither is a personal deadline. Never assert a personal past event, a usual cause or frequency absent from the source, another person's intent, or a promised resolution.\nThe app handles calculation caveats separately. Do not add a headline, reflection question, source-policy explanation or wellbeing framing."
+        }
+      ],
+      "response_format": {
+        "type": "json_schema",
+        "json_schema": {
+          "name": "daily_reading",
+          "strict": true,
+          "schema": {
+            "type": "object",
+            "properties": {
+              "paragraphs": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 4,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "text": {
+                      "type": "string"
+                    },
+                    "facts": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "scenes": {
+                      "type": "array",
+                      "maxItems": 2,
+                      "uniqueItems": true,
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "text",
+                    "facts",
+                    "scenes"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "paragraphs"
+            ],
+            "additionalProperties": false
+          }
+        }
+      }
+    },
+    "candidate": {
+      "paragraphs": [
+        {
+          "text": "An extra check can look small beside a familiar task, but as transit Saturn squares your natal Sun, a familiar responsibility can need more effort than usual. If the original task already fills the afternoon, an extra check still needs some of the same hours. If it's asking for more than the available hours can hold, what belongs in the task may need a clearer limit, and the extra check could stay outside it.",
+          "facts": [
+            "C1",
+            "I1"
+          ],
+          "scenes": []
+        },
+        {
+          "text": "If several projects compete for that same afternoon, exploring a few and choosing one may be separate stages. Following a few lines of curiosity may help one direction take shape. A page of notes can sit beside an open tab for another idea, holding it without promising it those hours while you choose which one to pursue.",
+          "facts": [
+            "C1",
+            "I1",
+            "N1"
+          ],
+          "scenes": []
+        }
+      ],
+      "paragraphCount": 2,
+      "truncated": false,
+      "captureLossless": true
+    },
+    "diagnostics": {
+      "version": 1,
+      "promptVersion": "daily-context-body-4",
+      "validatorVersion": "daily-context-reference-4",
+      "model": "gemini-enterprise/gemini-3.8-flash",
+      "gatewayTimeoutMs": 60000,
+      "outcome": "accepted",
+      "attempted": true,
+      "code": "accepted",
+      "durationMs": 22273,
+      "paragraph": null
+    },
+    "output": {
+      "mode": "model",
+      "headline": "An idea is not yet a promise",
+      "body": "An extra check can look small beside a familiar task, but as transit Saturn squares your natal Sun, a familiar responsibility can need more effort than usual. If the original task already fills the afternoon, an extra check still needs some of the same hours. If it's asking for more than the available hours can hold, what belongs in the task may need a clearer limit, and the extra check could stay outside it.\n\nIf several projects compete for that same afternoon, exploring a few and choosing one may be separate stages. Following a few lines of curiosity may help one direction take shape. A page of notes can sit beside an open tab for another idea, holding it without promising it those hours while you choose which one to pursue.",
+      "prompt": "What helps you recognize an interest you want to explore before deciding whether to commit?",
+      "citations": [
+        {
+          "paragraph": 1,
+          "facts": [
+            "C1",
+            "I1"
+          ]
+        },
+        {
+          "paragraph": 2,
+          "facts": [
+            "C1",
+            "I1",
+            "N1"
+          ]
+        }
+      ]
+    },
+    "template": {
+      "body": "An extra check can look small beside a familiar task. If the original work already fills the afternoon, the check still needs some of the same hours. Saturn's square to your natal Sun is a picture of expectations pressing against the capacity to meet them.\n\nIf several projects compete for that afternoon, a page of notes for one idea can sit beside a tab open for another. Following a few lines of curiosity may help one direction take shape. A note can hold the second idea without promising it the afternoon."
+    },
+    "manualReview": {
+      "specificity": null,
+      "voice": null,
+      "repetition": null,
+      "grounding": null,
+      "lensIntegration": null,
+      "unsupportedPersonalClaim": null,
+      "temporalCoherence": null,
+      "chapterIntegration": null,
+      "unsupportedHistory": null,
+      "promisedResolution": null,
+      "notes": null
+    }
+  },
+  "controller": {
+    "version": "evaluation-disposition-1",
+    "message": null,
+    "status": "running"
+  }
+}

@@ -1,0 +1,330 @@
+{
+  "sourceSha": "966d6cd33d3a7d685681749c8966e12ee7682cde",
+  "runId": "8d5d7931-1040-4a93-9c28-164df447e337",
+  "qualifiedModes": [],
+  "qualificationVersion": "daily-context-production-revision-4",
+  "qualified": false,
+  "status": "not-qualified-pilot-incomplete-and-reader-gates-failed",
+  "generatedAtUtc": "2026-10-17T10:11:19.665492+00:00",
+  "humanReviewCompleted": false,
+  "planHash": "c28e305c61b231033d96814da4d96ecc013f3749018d161c63852a9beeca5dbc",
+  "pilotComplete": false,
+  "plannedCaseCount": 5,
+  "attemptCount": 4,
+  "fullCapturedGeneratedBodyCount": 3,
+  "automaticAcceptedCount": 3,
+  "automaticRejectedCount": 0,
+  "automaticUnavailableCount": 1,
+  "unrequestedCaseCount": 1,
+  "readerReviewedBodyCount": 3,
+  "readerPassedBodyCount": 0,
+  "sourceReviewedBodyCount": 3,
+  "sourcePassedBodyCount": 3,
+  "countsNote": "Four attempts and three fully captured generated bodies from five planned cases. Run completed=4 counts processed outcomes, including the timeout; it does not establish four bodies or five-of-five completion.",
+  "requirements": {
+    "automatic": "Accepted generated model output with lossless, non-truncated capture.",
+    "reader": "All five frozen reader dimensions must be at least 4; no averaging or compensation.",
+    "source": "Source pass, zero unsupported claims, no omitted selected meanings, and context integration at least 4 when applicable.",
+    "contextApplicability": "Single-selected-meaning contact-only has no added-context integration score; null is not relabeled as 4 or treated as evidence of multi-source integration.",
+    "allGatesRequired": true,
+    "thresholdsChanged": false,
+    "frozenReaderGradesChanged": false,
+    "missingEvidence": "Unavailable and unrequested cases cannot qualify and receive no writing-quality pass or failure score."
+  },
+  "cases": [
+    {
+      "position": 0,
+      "id": "contact-only",
+      "planned": true,
+      "attempted": true,
+      "availability": "fully-captured-generated-body",
+      "blindLabel": "R3",
+      "captureFile": "01-contact-only.json",
+      "captureSha256": "e9895ca3c208b780df3dd988e81a9aaa6219d8b9913fbd17d50b6b4a1c38e1c6",
+      "bodySha256": "dab6c4c330e3ba2cb927426b9fbc68299ef3f9bafa689f5a96aee8047a2dfb1e",
+      "automatic": {
+        "status": "accepted",
+        "diagnostic": "accepted",
+        "outputMode": "model",
+        "captureLossless": true,
+        "candidateTruncated": false,
+        "gatePass": true
+      },
+      "reader": {
+        "status": "reviewed",
+        "scores": {
+          "recognition": 4,
+          "meaning": 4,
+          "direction": 4,
+          "distinctness": 4,
+          "voice": 3
+        },
+        "pass": false,
+        "belowThreshold": [
+          "voice"
+        ],
+        "reviewArtifact": "reader-scores.json"
+      },
+      "source": {
+        "status": "reviewed",
+        "sourcePass": true,
+        "unsupportedClaims": 0,
+        "omittedMeanings": [],
+        "contextIntegration": null,
+        "contextIntegrationApplicable": false,
+        "contextGatePass": null,
+        "gatePass": true,
+        "reviewArtifact": "grounding-scores.json",
+        "editorialFindings": []
+      },
+      "qualified": false,
+      "disposition": "not-qualified-reader-failure",
+      "writingQualityJudgment": "reader-below-threshold",
+      "costEstimateMicros": 49808
+    },
+    {
+      "position": 1,
+      "id": "natal-only",
+      "planned": true,
+      "attempted": true,
+      "availability": "fully-captured-generated-body",
+      "blindLabel": "R2",
+      "captureFile": "02-natal-only.json",
+      "captureSha256": "bfc0f78784ff681c13291ac49fd75a48dfd5795ec76ad08ed3a53ae0af44e67b",
+      "bodySha256": "4b6dddee3ee639132805b6b03d7c75f30ef59aafa7420a56cdbd9a5a4f293f2d",
+      "automatic": {
+        "status": "accepted",
+        "diagnostic": "accepted",
+        "outputMode": "model",
+        "captureLossless": true,
+        "candidateTruncated": false,
+        "gatePass": true
+      },
+      "reader": {
+        "status": "reviewed",
+        "scores": {
+          "recognition": 4,
+          "meaning": 4,
+          "direction": 4,
+          "distinctness": 4,
+          "voice": 3
+        },
+        "pass": false,
+        "belowThreshold": [
+          "voice"
+        ],
+        "reviewArtifact": "reader-scores.json"
+      },
+      "source": {
+        "status": "reviewed",
+        "sourcePass": true,
+        "unsupportedClaims": 0,
+        "omittedMeanings": [],
+        "contextIntegration": 4,
+        "contextIntegrationApplicable": true,
+        "contextGatePass": true,
+        "gatePass": true,
+        "reviewArtifact": "grounding-scores.json",
+        "editorialFindings": [
+          {
+            "classification": "brief-editorial",
+            "severity": "nonblocking-for-grounding",
+            "message": "P1S1 explicitly names the transit geometry despite technicalDetails=false. Geometry is accurate, so this is a writing-brief issue rather than an unsupported source claim."
+          }
+        ]
+      },
+      "qualified": false,
+      "disposition": "not-qualified-reader-failure",
+      "writingQualityJudgment": "reader-below-threshold",
+      "costEstimateMicros": 66502
+    },
+    {
+      "position": 2,
+      "id": "transit-only",
+      "planned": true,
+      "attempted": true,
+      "availability": "fully-captured-generated-body",
+      "blindLabel": "R1",
+      "captureFile": "03-transit-only.json",
+      "captureSha256": "a030dd8e15e3680f58f343724bbd50a78e37c5a3140b973574ebf25874670f84",
+      "bodySha256": "0c6862df582c84b47f67dc7941599ffb0c569f4dd91cb6c671323dcee7514c5d",
+      "automatic": {
+        "status": "accepted",
+        "diagnostic": "accepted",
+        "outputMode": "model",
+        "captureLossless": true,
+        "candidateTruncated": false,
+        "gatePass": true
+      },
+      "reader": {
+        "status": "reviewed",
+        "scores": {
+          "recognition": 4,
+          "meaning": 3,
+          "direction": 4,
+          "distinctness": 3,
+          "voice": 3
+        },
+        "pass": false,
+        "belowThreshold": [
+          "meaning",
+          "distinctness",
+          "voice"
+        ],
+        "reviewArtifact": "reader-scores.json"
+      },
+      "source": {
+        "status": "reviewed",
+        "sourcePass": true,
+        "unsupportedClaims": 0,
+        "omittedMeanings": [],
+        "contextIntegration": 4,
+        "contextIntegrationApplicable": true,
+        "contextGatePass": true,
+        "gatePass": true,
+        "reviewArtifact": "grounding-scores.json",
+        "editorialFindings": []
+      },
+      "qualified": false,
+      "disposition": "not-qualified-reader-failure",
+      "writingQualityJudgment": "reader-below-threshold",
+      "costEstimateMicros": 63946
+    },
+    {
+      "position": 3,
+      "id": "natal-and-transit",
+      "planned": true,
+      "attempted": true,
+      "availability": "unavailable-timeout",
+      "blindLabel": null,
+      "captureFile": "04-natal-and-transit.json",
+      "captureSha256": "ad92b4ba5dffa0c67db6f458bb2e7b9eb62faa822e0759fbc54bda2038d043b4",
+      "bodySha256": null,
+      "automatic": {
+        "status": "unavailable",
+        "diagnostic": "timeout",
+        "outputMode": "template",
+        "captureLossless": false,
+        "candidateTruncated": null,
+        "gatePass": false,
+        "note": "No generated candidate body was captured. Authored template fallback is not generated-body evidence."
+      },
+      "reader": {
+        "status": "not-reviewed-no-generated-body",
+        "scores": null,
+        "pass": null,
+        "belowThreshold": null
+      },
+      "source": {
+        "status": "not-reviewed-no-generated-body",
+        "sourcePass": null,
+        "unsupportedClaims": null,
+        "omittedMeanings": null,
+        "contextIntegration": null,
+        "contextIntegrationApplicable": true,
+        "contextGatePass": null,
+        "gatePass": null
+      },
+      "qualified": false,
+      "disposition": "not-qualified-unavailable",
+      "writingQualityJudgment": "not-assessed",
+      "uncertainReservationMicros": 2800000
+    },
+    {
+      "position": 4,
+      "id": "synthesis-natal-and-transit",
+      "planned": true,
+      "attempted": false,
+      "availability": "unrequested",
+      "blindLabel": null,
+      "captureFile": null,
+      "captureSha256": null,
+      "bodySha256": null,
+      "automatic": {
+        "status": "not-requested",
+        "diagnostic": null,
+        "outputMode": null,
+        "captureLossless": null,
+        "candidateTruncated": null,
+        "gatePass": null
+      },
+      "reader": {
+        "status": "not-reviewed-unrequested",
+        "scores": null,
+        "pass": null,
+        "belowThreshold": null
+      },
+      "source": {
+        "status": "not-reviewed-unrequested",
+        "sourcePass": null,
+        "unsupportedClaims": null,
+        "omittedMeanings": null,
+        "contextIntegration": null,
+        "contextIntegrationApplicable": true,
+        "contextGatePass": null,
+        "gatePass": null
+      },
+      "qualified": false,
+      "disposition": "not-qualified-unrequested",
+      "writingQualityJudgment": "not-assessed",
+      "costEstimateMicros": null
+    }
+  ],
+  "activation": {
+    "decision": "off",
+    "performed": false,
+    "qualifiedModeChanges": [],
+    "note": "No mode is eligible. This evidence aggregation performs no activation."
+  },
+  "authenticatedTodayProof": {
+    "status": "deferred",
+    "performed": false,
+    "reason": "No mode qualified; no temporary authored override was used for proof."
+  },
+  "costAccounting": {
+    "currency": "USD",
+    "unit": "micros",
+    "accountedMicros": 2980256,
+    "knownThreeEstimateMicros": 180256,
+    "uncertainFourthReservationMicros": 2800000,
+    "invoiceVerified": false,
+    "costStatus": "reservation-estimates-not-invoices",
+    "note": "Accounted total includes the unresolved conservative timeout reservation. It is not an invoice or a verified final charge."
+  },
+  "reviewIndependence": {
+    "readerVerdictsFrozenBeforeMapping": true,
+    "sourceVerdictsFrozenBeforeReaderOutcome": true,
+    "readerReviewType": "independent blind AI reader review",
+    "sourceReviewType": "independent-source-and-meaning-review",
+    "humanReviewCompleted": false
+  },
+  "inputHashes": {
+    "summary.json": "2ada4cc5072f4a1b9c0966a78524de8c63de5e19e514bc61f409399c09515fc3",
+    "run.json": "5db4eef97691962ae7e621a8cba3a2853181f64c741939d9dd446ad37b3b64e9",
+    "captured-readings.md": "5f408dc170903dd20e7ab5e40f4067da1651d35c523c640f231197f8fac15b0c",
+    "01-contact-only.json": "e9895ca3c208b780df3dd988e81a9aaa6219d8b9913fbd17d50b6b4a1c38e1c6",
+    "02-natal-only.json": "bfc0f78784ff681c13291ac49fd75a48dfd5795ec76ad08ed3a53ae0af44e67b",
+    "03-transit-only.json": "a030dd8e15e3680f58f343724bbd50a78e37c5a3140b973574ebf25874670f84",
+    "04-natal-and-transit.json": "ad92b4ba5dffa0c67db6f458bb2e7b9eb62faa822e0759fbc54bda2038d043b4",
+    "reader-review.md": "9b2edcb4bd70a7566c25edb0757dcac00b38473124836f3fe80082a4d9150b9a",
+    "reader-scores.json": "b7c5a829db19f417f941dfab1f95d9497ca6f590074207babb7b9a95ce1865ec",
+    "grounding-review.md": "88af5f360c3468d5bf78d8c457260e12d5aab1e843ecd992b0d12009a3753404",
+    "grounding-scores.json": "920e2e2acefd88103f758d5b3acf2d12cc8e8c9798ef3230b7736358afb3d7dc",
+    "reader-packet.md": "910d431f821e3bf465740f9c93d7cad6756da7036a61c12d06cb77016f14f91c",
+    "source-review-packet.md": "bcdcc124ad52e2d37d4479d095165c086fec11bff76dccb97887cf571868b9f2",
+    "blind-mapping.json": "a5eab2a9aa93f31a993aa636158a4828015545ef33071d90e576dec92dc0c4ba",
+    "benchmark-readings.md": "75258c2eabec3625cd49b72374c3fcdc4b2d2d769bd6b383403a77b4a6e6ebf2"
+  },
+  "verification": {
+    "allCaptureSourceShasMatch": true,
+    "allThreeBodiesMatchBlindPacketAndCandidateParagraphJoinsExactly": true,
+    "allThreeBodyHashesMatchGroundingReview": true,
+    "readerPacketHashMatchesSummaryAndFrozenReview": true,
+    "sourcePacketHashMatchesSummaryAndFrozenGroundingReview": true,
+    "frozenReviewHashesUnchanged": true,
+    "providerCallsDuringAggregation": false,
+    "networkCallsDuringAggregation": false,
+    "rawCapturesOrPriorReviewsEdited": false
+  },
+  "summary": "No modes qualify. All three fully captured generated bodies pass automatic capture and source gates but fail the frozen reader gate. The fourth case timed out without a generated body and the fifth was not requested; both remain ungraded. The pilot is incomplete, activation stays off, and authenticated Today proof is deferred."
+}

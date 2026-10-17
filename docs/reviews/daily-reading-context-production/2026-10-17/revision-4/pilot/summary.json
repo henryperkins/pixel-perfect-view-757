@@ -1,0 +1,110 @@
+{
+  "runId": "8d5d7931-1040-4a93-9c28-164df447e337",
+  "status": "halted",
+  "completed": 4,
+  "planHash": "c28e305c61b231033d96814da4d96ecc013f3749018d161c63852a9beeca5dbc",
+  "sourceSha": "966d6cd33d3a7d685681749c8966e12ee7682cde",
+  "attempts": 4,
+  "accountedMicros": 2980256,
+  "automaticAccepted": 3,
+  "automaticRejected": 0,
+  "allCapturesLossless": false,
+  "readerPacketSha256": "910d431f821e3bf465740f9c93d7cad6756da7036a61c12d06cb77016f14f91c",
+  "sourcePacketSha256": "bcdcc124ad52e2d37d4479d095165c086fec11bff76dccb97887cf571868b9f2",
+  "headlineReflectionSource": "reviewed-runtime-fallback-fields",
+  "plannedCases": 5,
+  "fullCapturedBodies": 3,
+  "notRequested": [
+    "synthesis-natal-and-transit"
+  ],
+  "invoiceVerified": false,
+  "accountingNote": "Includes unresolved conservative reservation for timed-out request; not an invoice.",
+  "cases": [
+    {
+      "id": "contact-only",
+      "position": 0,
+      "accepted": true,
+      "diagnostic": "accepted",
+      "mode": "model",
+      "captureLossless": true,
+      "actualModel": "gemini-3.8-flash",
+      "usage": {
+        "inputTokens": 2144,
+        "outputTokens": 202,
+        "thinkingTokens": 2074,
+        "totalTokens": 4420,
+        "outputIncludesThinking": false
+      },
+      "controller": {
+        "version": "evaluation-disposition-1",
+        "message": null,
+        "status": "running"
+      }
+    },
+    {
+      "id": "natal-only",
+      "position": 1,
+      "accepted": true,
+      "diagnostic": "accepted",
+      "mode": "model",
+      "captureLossless": true,
+      "actualModel": "gemini-3.8-flash",
+      "usage": {
+        "inputTokens": 2531,
+        "outputTokens": 224,
+        "thinkingTokens": 2848,
+        "totalTokens": 5603,
+        "outputIncludesThinking": false
+      },
+      "controller": {
+        "version": "evaluation-disposition-1",
+        "message": null,
+        "status": "running"
+      }
+    },
+    {
+      "id": "transit-only",
+      "position": 2,
+      "accepted": true,
+      "diagnostic": "accepted",
+      "mode": "model",
+      "captureLossless": true,
+      "actualModel": "gemini-3.8-flash",
+      "usage": {
+        "inputTokens": 2493,
+        "outputTokens": 248,
+        "thinkingTokens": 2700,
+        "totalTokens": 5441,
+        "outputIncludesThinking": false
+      },
+      "controller": {
+        "version": "evaluation-disposition-1",
+        "message": null,
+        "status": "running"
+      }
+    },
+    {
+      "id": "natal-and-transit",
+      "position": 3,
+      "accepted": false,
+      "diagnostic": "timeout",
+      "mode": "template",
+      "captureLossless": false,
+      "actualModel": null,
+      "usage": {
+        "inputTokens": null,
+        "outputTokens": null,
+        "thinkingTokens": null,
+        "totalTokens": null,
+        "outputIncludesThinking": null
+      },
+      "controller": {
+        "version": "evaluation-disposition-1",
+        "message": "Run stopped: language gateway timed out. Remaining cases were not requested.",
+        "status": "halted"
+      }
+    }
+  ],
+  "automaticUnavailable": 1,
+  "unrequestedCases": 1
+}

@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-17T10:11:47.250708+00:00",
+  "status": 200,
+  "identity": {
+    "sourceSha": "966d6cd33d3a7d685681749c8966e12ee7682cde",
+    "requestPolicyVersion": "synthetic-facts-local-context-1",
+    "fixtureVersion": "synthetic-daily-7"
+  },
+  "deploymentHeader": "psr2.68e25ca2-1017-4ede-9cf5-2aaba2e8f8b2.1792836647.jP2TlcACr3n89mPuCuPhajjRizCp-UBdhtDjQdzWk4E",
+  "establishes": "serving source identity only"
+}

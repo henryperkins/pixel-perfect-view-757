@@ -1,0 +1,35 @@
+{
+  "at": "2026-10-17T10:03:52.851Z",
+  "sourceSha": "966d6cd33d3a7d685681749c8966e12ee7682cde",
+  "planHash": "c28e305c61b231033d96814da4d96ecc013f3749018d161c63852a9beeca5dbc",
+  "campaign": "daily-context-pilot-4",
+  "provider": "gemini-enterprise",
+  "model": "gemini-enterprise/gemini-3.8-flash",
+  "attemptLimit": 5,
+  "dollarCeilingMicros": 5000000,
+  "runtimePath": "member-production-context",
+  "rolloutScope": "admin-workflow-only",
+  "policy": {
+    "adapterVersion": "daily-member-context-1",
+    "adapterHash": "d728de67a0547ac9d611c365dd68cb8440cf8aad038d34f143bd66731b21685a",
+    "fallbackVersion": "daily-member-context-fallbacks-1",
+    "fallbackHash": "af143337793ad4136a16fd4144adec0be365d15fa0b1e83d326763bcae85a0eb",
+    "materialVersion": "daily-context-material-4",
+    "materialHash": "e1f0621413c14cbbe4fd591cf4858309b1b0840df2b88d8b3c10dd22d0fb704e",
+    "promptVersion": "daily-context-body-4",
+    "validatorVersion": "daily-context-reference-4",
+    "voiceVersion": "daily-context-voice-4",
+    "briefVersion": "daily-context-brief-4",
+    "writerHash": "b8f2e6763feae0f1cb4dff6235a998683176fae6cfad9c636150dccad8c42007",
+    "briefHash": "8d422ccac1294563d28af0cb9f3acd8b9d242ef4e4c31f4e54284e7ee87115cd",
+    "claimsHash": "1362b888ffffd630018514b7052a9ad8de44f9cdcbac1f915473a85aef9058fd"
+  },
+  "caseIds": [
+    "contact-only",
+    "natal-only",
+    "transit-only",
+    "natal-and-transit",
+    "synthesis-natal-and-transit"
+  ],
+  "verifiedBeforeSpend": true
+}

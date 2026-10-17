@@ -1,0 +1,1168 @@
+{
+  "version": "member-context-independent-live-evidence-review-4",
+  "reviewedAt": "2026-10-17T10:13:16.368958+00:00",
+  "status": "pass-for-evidence-integrity-incomplete-coverage-activation-held",
+  "reviewType": "independent offline audit of saved hosted synthetic evidence and final receipts",
+  "humanReviewCompleted": false,
+  "evidenceIntegrityFindings": [],
+  "releaseBlockers": [
+    "The five-case experiment is incomplete: natal-and-transit timed out without a captured body; synthesis-natal-and-transit was not requested.",
+    "All three separately reviewed captured bodies fail the recorded reader threshold, so no generated mode qualifies for activation."
+  ],
+  "runId": "8d5d7931-1040-4a93-9c28-164df447e337",
+  "sourceSha": "966d6cd33d3a7d685681749c8966e12ee7682cde",
+  "planHash": "c28e305c61b231033d96814da4d96ecc013f3749018d161c63852a9beeca5dbc",
+  "plannedCases": 5,
+  "recordedAttempts": 4,
+  "losslessCapturedBodies": 3,
+  "automaticallyAccepted": 3,
+  "automaticallyRejectedDrafts": 0,
+  "unavailableAttempts": 1,
+  "unrequested": [
+    "synthesis-natal-and-transit"
+  ],
+  "recordedRetries": 0,
+  "recordedProviderFailovers": 0,
+  "afterBrowserClosureNewAttempts": 3,
+  "knownUsageReservationMicros": 180256,
+  "uncertainReservationMicros": 2800000,
+  "totalAccountedMicros": 2980256,
+  "costStatus": "reservation-estimates-not-invoices",
+  "entries": [
+    {
+      "position": 0,
+      "id": "contact-only",
+      "attempted": true,
+      "reservedMicros": 49808,
+      "diagnosticOutcome": "accepted",
+      "diagnosticCode": "accepted",
+      "losslessCapturedBody": true,
+      "responseId": "GEjTaorVFuXCsbwPsPnw2Qo",
+      "startedAt": "2026-10-17T10:04:08.130Z",
+      "finishedAt": "2026-10-17T10:04:25.055Z"
+    },
+    {
+      "position": 1,
+      "id": "natal-only",
+      "attempted": true,
+      "reservedMicros": 66502,
+      "diagnosticOutcome": "accepted",
+      "diagnosticCode": "accepted",
+      "losslessCapturedBody": true,
+      "responseId": "K0jTarTVIqLYsbwP19aosQE",
+      "startedAt": "2026-10-17T10:04:27.343Z",
+      "finishedAt": "2026-10-17T10:04:49.616Z"
+    },
+    {
+      "position": 2,
+      "id": "transit-only",
+      "attempted": true,
+      "reservedMicros": 63946,
+      "diagnosticOutcome": "accepted",
+      "diagnosticCode": "accepted",
+      "losslessCapturedBody": true,
+      "responseId": "REjTao_1Ee-UsbwPs8n8-AI",
+      "startedAt": "2026-10-17T10:04:52.068Z",
+      "finishedAt": "2026-10-17T10:05:10.520Z"
+    },
+    {
+      "position": 3,
+      "id": "natal-and-transit",
+      "attempted": true,
+      "reservedMicros": 2800000,
+      "diagnosticOutcome": "unavailable",
+      "diagnosticCode": "timeout",
+      "losslessCapturedBody": false,
+      "responseId": null,
+      "startedAt": "2026-10-17T10:05:13.352Z",
+      "finishedAt": "2026-10-17T10:06:13.352Z"
+    }
+  ],
+  "policy": {
+    "adapterVersion": "daily-member-context-1",
+    "adapterHash": "d728de67a0547ac9d611c365dd68cb8440cf8aad038d34f143bd66731b21685a",
+    "fallbackVersion": "daily-member-context-fallbacks-1",
+    "fallbackHash": "af143337793ad4136a16fd4144adec0be365d15fa0b1e83d326763bcae85a0eb",
+    "materialVersion": "daily-context-material-4",
+    "materialHash": "e1f0621413c14cbbe4fd591cf4858309b1b0840df2b88d8b3c10dd22d0fb704e",
+    "promptVersion": "daily-context-body-4",
+    "validatorVersion": "daily-context-reference-4",
+    "voiceVersion": "daily-context-voice-4",
+    "briefVersion": "daily-context-brief-4",
+    "writerHash": "b8f2e6763feae0f1cb4dff6235a998683176fae6cfad9c636150dccad8c42007",
+    "briefHash": "8d422ccac1294563d28af0cb9f3acd8b9d242ef4e4c31f4e54284e7ee87115cd",
+    "claimsHash": "1362b888ffffd630018514b7052a9ad8de44f9cdcbac1f915473a85aef9058fd"
+  },
+  "finalReceipts": {
+    "activeReleaseUnchanged": true,
+    "writerRollout": null,
+    "authoredActivation": false,
+    "modelActivation": false,
+    "qualifiedModes": [],
+    "memberTodayProof": "deferred-no-qualified-modes",
+    "sessionsRemaining": 0,
+    "adminRolesRemaining": 0,
+    "profileRemoved": true,
+    "passwordDisabled": true,
+    "operatorUserRetainedForEvaluationOwnership": true,
+    "retainedRunCount": 1,
+    "retainedResultCount": 4,
+    "historicalRunCount": 3,
+    "historicalResultCount": 15,
+    "historicalRunsFingerprint": "9ca91c115780d07f5aa9fa1433024de4cadc74ed21dfdbecaaa39197cbe5efe7",
+    "historicalResultsFingerprint": "97652e7c7641c90b7c1dbef708797c30e1d5beceee690be19861609eb4e742f4",
+    "historicalReceiptFingerprintsMatchBaseline": true,
+    "historicalRawRowsIndependentlyRehashed": false,
+    "cleanupAuditId": "f0ea7ab3-dca9-4759-a2ae-8396598a0161",
+    "localStorageStateRemoved": true
+  },
+  "externalReviewResults": [
+    {
+      "label": "R1",
+      "id": "transit-only",
+      "readerPassed": false,
+      "readerScores": {
+        "recognition": 4,
+        "meaning": 3,
+        "direction": 4,
+        "distinctness": 3,
+        "voice": 3
+      },
+      "sourcePassed": true,
+      "sourceUnsupportedClaims": 0,
+      "reviewer": "Separate independent reader/source agents; this audit checked identity and recorded thresholds only."
+    },
+    {
+      "label": "R2",
+      "id": "natal-only",
+      "readerPassed": false,
+      "readerScores": {
+        "recognition": 4,
+        "meaning": 4,
+        "direction": 4,
+        "distinctness": 4,
+        "voice": 3
+      },
+      "sourcePassed": true,
+      "sourceUnsupportedClaims": 0,
+      "reviewer": "Separate independent reader/source agents; this audit checked identity and recorded thresholds only."
+    },
+    {
+      "label": "R3",
+      "id": "contact-only",
+      "readerPassed": false,
+      "readerScores": {
+        "recognition": 4,
+        "meaning": 4,
+        "direction": 4,
+        "distinctness": 4,
+        "voice": 3
+      },
+      "sourcePassed": true,
+      "sourceUnsupportedClaims": 0,
+      "reviewer": "Separate independent reader/source agents; this audit checked identity and recorded thresholds only."
+    }
+  ],
+  "benchmarkHash": "825c877dbb88d5d20d39a12abfd67cea01781506250db93d44ae7c9885b35024",
+  "sourceBundleCanonicalHash": "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f",
+  "localHistoricalFileCount": 153,
+  "releaseContract": {
+    "fullSetQualified": false,
+    "individualModeProhibitionFound": false,
+    "individuallyReviewableModes": [
+      "contact-only",
+      "natal-only",
+      "transit-only"
+    ],
+    "nonqualifiableModes": [
+      "natal-and-transit",
+      "synthesis-natal-and-transit"
+    ],
+    "rubric": {
+      "version": "daily-context-reader-review-1",
+      "dimensions": [
+        "recognition",
+        "meaning",
+        "direction",
+        "distinctness",
+        "voice"
+      ],
+      "grounding": "Zero unsupported personal, causal, outcome or astrology claims; preserve each selected source's condition and distinction.",
+      "context": "Compare contact-only, natal-only, transit-only, both, and synthesis with both against the same reviewed benchmarks. Natal context remains conditional; chronology is exact and appears once.",
+      "independentFields": "Headlines and reflections are reviewed authored runtime fields, never generated output in this pilot. Runtime fallback bodies are frozen independently of the unchanged original review benchmarks.",
+      "humanApproval": false
+    },
+    "scope": "Partial captures cannot qualify the complete set; separately captured modes still need every independent per-mode gate. No mode is qualified or activated by this evidence audit."
+  },
+  "externalProviderCallsByAudit": 0,
+  "remoteReadsByAudit": 0,
+  "remoteMutationsByAudit": 0,
+  "historicalTrackedArtifacts": {
+    "baseSha": "02e32f57950b31a4d1b77e2ddb552654a86a75c0",
+    "fileCount": 153,
+    "allExactBytesUnchanged": true,
+    "files": [
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/artifact-manifest.json",
+        "sha256": "0c3c34fc9bea4fcd56c2f3e9742e8ba4c5fdbdf37745fc8adae5f96b182275ca"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/baseline.json",
+        "sha256": "d9b8799979b342278405f8e85d4bcfc096e1282c42804bc8da7b8ee183e11cee"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/browser-closed.json",
+        "sha256": "56aa6b693c72775bff76fe555d50048e62a6e7c882f9ae9fb7ec6e2917f4781d"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/cleanup.json",
+        "sha256": "4b9c2fdac144b1520d124666bbe9edf2df5641c65045658981ade49e578c29d1"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/deployment.json",
+        "sha256": "c6a63ac17e22681dbc6c2dc2fc493ce7957fb68fbbfd7c999c91a35a369cb622"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/final-state.json",
+        "sha256": "cebf58bb13547bb9cd38c6f935edf0c53f415971838953d9f447dc697f139c9b"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/historical-final.json",
+        "sha256": "cbf9fd2b7c3ab2bdef62e7c76b9072ac360e3685c157dbf18320ab87aa20d8a9"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/independent-integration-review.json",
+        "sha256": "efa8439c78e3374392692446900353394c0ac89c1ebfa740bc4c0ef3c3aa9ecf"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/independent-integration-review.md",
+        "sha256": "9716fdf6df552bd99f8e42c44bb5f269b71badbfab26d29d1466b4410e2fd706"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/independent-live-evidence-review.json",
+        "sha256": "42a37e1b81eaa0de6fafc3342ce63a717d6ccbfb39abd4516253a166a86dc3f6"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/independent-live-evidence-review.md",
+        "sha256": "5e35b0648981443f718ff3527b5481568586ae20c2d1548c791c48ff1e91d412"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/migration-applied.json",
+        "sha256": "17e30649b6df31abff42a4365e2d520d4d6688f81dda5cac1d0bf6cd9e01213b"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/migration-plan.json",
+        "sha256": "6eb039363d1ed87f8e3de8ac45124196308f4041bb144a1c1126e22ea38e9b2c"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/pilot/01-contact-only.json",
+        "sha256": "bb8b6349bb8816be18f36653f9f2b4e4852776a14768ea6b0c74443e4b9b48c2"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/pilot/02-natal-only.json",
+        "sha256": "175434da59270e80e5b8d202fb6335f11aad0315d632cee37b976da18fcdaa49"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/pilot/03-transit-only.json",
+        "sha256": "01bb891c6f5bcc3c5b30a3de29cef8fd1a43ba2ea172bf2a876fce9925536d8f"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/pilot/04-natal-and-transit.json",
+        "sha256": "88bcba9459141dfe78e406d37465a470278e79b2ddeedea7fab94a204f5cbfba"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/pilot/05-synthesis-natal-and-transit.json",
+        "sha256": "3c4ef22c9392dc453987a8095e76efbf8969dc27f927561508b8375cd3fc492a"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/pilot/blind-mapping.json",
+        "sha256": "10af00b5d6be21925b4c69374b2184858e775d820da6523c3b19f1eaf91ffb64"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/pilot/captured-readings.md",
+        "sha256": "cd93b4abb5eea29031ae5946d9176c573bf9abbaa66f5274381bda9de359eed4"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/pilot/database-capture-receipt.json",
+        "sha256": "12c5393bd8eb22df513471e35490bc93d2932b2a641e22a1a1d6528fd465419a"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/pilot/grounding-review.md",
+        "sha256": "ebc78d95109379f9b17f27e7a83af42505411957cb4d38048744aa2267ac56bc"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/pilot/grounding-scores.json",
+        "sha256": "d81f7684766752e33c90c72f9f53bc2952247d0ec0bc0e511539aa74a2f87036"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/pilot/preview.json",
+        "sha256": "70255e54c941750832b49058d3c9eb6e94419549c234a543147e0c36a8f04f48"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/pilot/qualification.json",
+        "sha256": "26b0ab07323757f7d2b25295ea8723bc293107c62c03ba41dc2ab62c4fbfe14d"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/pilot/qualification.md",
+        "sha256": "13a39c5e666334bc4fa04560c69cd4edd09aaa516c57d17681d2ed07c59b54f7"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/pilot/reader-packet.md",
+        "sha256": "3a489ddd88821dda9129a2fbf36f0951b72de903da811bf706ecec2b4135804d"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/pilot/reader-review.md",
+        "sha256": "f97120b56c5cc794edfe26777fe55bab0d4eb263bdf2da4ee58138970125b6b9"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/pilot/reader-scores.json",
+        "sha256": "397c154925ea880e2868c698b3e55d5a1dd8a2ff9727b4f60a1e7261aed5874f"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/pilot/run.json",
+        "sha256": "620760700d717a6720f55394088a5c604617c0b308261c952b7f569ae38f2c7d"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/pilot/source-review-packet.md",
+        "sha256": "a86f8f877532a9d375236b02077ad81b1d57f4de8076add47150f56cea8284fc"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/pilot/summary.json",
+        "sha256": "205157592c698243839e1634e037c9091755af74a0d7b8d4fd1b7b02042a09e5"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/pre-dispatch.json",
+        "sha256": "3a4d179d5e233a8fc7ca74d0373c19bcc195a23cd0c314cc68066a85d3a41ca2"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/preflight.json",
+        "sha256": "7bca71d90f42d4b39416bc2e9ef75440a43823ef7abc83ff1a097920215a0e17"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/progress.md",
+        "sha256": "433a72f527330f6855bc050003263304c97179f9548577c544173539d2574882"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/report.md",
+        "sha256": "1938ab48f46adcc32c1a1a8f7ed4f74d8656689d09eb243028c474cde9b27242"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/runtime-source-review.json",
+        "sha256": "67b487a46fa180658c7c85f2f721372e968443781e03aa125dcbb6a97be92dca"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/runtime-source-review.md",
+        "sha256": "5b2271e102eb3dca0903d131a563825946650b830ec81ef5371b853504d95c91"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/secret-scan.json",
+        "sha256": "0bce2b5f106f0e03f2a1bfa06aa5eaaa528aa1bb0193d66f099ed5c40ce2033a"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/serving-final.json",
+        "sha256": "ca6fbb9ad9bc3e33f4e3bb4e4ec2526edab82c839d4ec340438f788a25f23194"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-production/2026-10-17/verification.json",
+        "sha256": "5ec5f4229ebe3e2cc4691330aa975a3349169a343e9e6dc2b732f8a416a577ea"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/README.md",
+        "sha256": "c7c7708890f4ae0ae2a8bdfbbe323115d8723a57eb6a0274c73f975ff0f94f05"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+        "sha256": "825c877dbb88d5d20d39a12abfd67cea01781506250db93d44ae7c9885b35024"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-readings.md",
+        "sha256": "75258c2eabec3625cd49b72374c3fcdc4b2d2d769bd6b383403a77b4a6e6ebf2"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/independent-code-review.md",
+        "sha256": "290f0183522b12f144dce7d36b666d03ea692fca2a7dde0e5bb73fe734f3e3ed"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/independent-editorial-review.md",
+        "sha256": "d26d880bea9d60410ac3cef110e40ad222962965f73014c766a80e5383a0b3a4"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/01-contact-only.json",
+        "sha256": "4ef3bc5a184e11eba295a6d1c22f78fb54cad45ef6ab92a95efea34d1dbbfb64"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/02-natal-only.json",
+        "sha256": "514ce92a25336b4dbeebbfda87b38f5367bf05b91256d1dfe91e1a7cdbb3ba30"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/03-transit-only.json",
+        "sha256": "7b09f13681ad5c2df36462334298ff0d7b8e3bf2f452c3c54e354023b61b436d"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/04-natal-and-transit.json",
+        "sha256": "be34f84fd235d8159c240f36f5e5fc27f1e1f71366f67e99545cac8620802065"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/05-synthesis-natal-and-transit.json",
+        "sha256": "548dd18f883cf2ba146d970f740ec71d80ade383bb68fe471508e883c6a6f11c"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/admin-page-closed.json",
+        "sha256": "ab451d379c50f5187e62583a469cc995fb2b00522ff2edee52d452062ff11bc1"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/admin-reopened.json",
+        "sha256": "16478b7b96612712abef3d18259b0cba15dca922a510912bb95973b9875f447f"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/baseline.json",
+        "sha256": "8e3f6f083b769ad276cf4346a40acae430180fce828dd180f5c0e404357746da"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/blind-mapping.json",
+        "sha256": "10af00b5d6be21925b4c69374b2184858e775d820da6523c3b19f1eaf91ffb64"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/captured-readings.md",
+        "sha256": "36198cc5fbca7ffa15ab2cb26983b674b03560f763261449166e60bb525d5b36"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/claim-scope-regression.md",
+        "sha256": "5b4cfe68ea46901bc0e2d670ac39738d38d163b45fa23dece28f7600be8d437b"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/cleanup-verification.json",
+        "sha256": "a56961d82fdd6312e1da765fd89e1fe3be12fee201e8e334475e0301f1afe9e3"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/cleanup.json",
+        "sha256": "d1461eae6e22d5bb0963217de1cc7b1660ef0a3fdb36323daf745ae40f6c0897"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/comparison.json",
+        "sha256": "2c32d8e2f928a7bcc61d08e17d417329f859ba74527ea1e57d65e88e279c2fb5"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/database-receipt.json",
+        "sha256": "94cfdfea1da8972546847f680667dbd82a2f5ae9b8d86774c90280b8615b939d"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/deployment.json",
+        "sha256": "3125278882f48b7390847b8ede9aa4d157f47ce963faff474c6592c58d783635"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/grounding-review.md",
+        "sha256": "55ddc6e502e96a26393886e15fb827461a9896e06f8229a386d4efe99be3308c"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/grounding-scores.json",
+        "sha256": "47da614e6da52ebcfbd86ae1cd8c253214b227f374be23e91e21a7e21f76e943"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/independent-implementation-review.md",
+        "sha256": "96f055b274aaee2ce49e53caa8c0474bd165bee253f3957f21f06329505e6015"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/independent-live-evidence-review.md",
+        "sha256": "504b8645d4a06761602ef275f15d067740e492cc9267e2d9f506cd3ef113159c"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/material-source-review.json",
+        "sha256": "8e9287283c9bd25644e92b3310c74dd49fb875217e825428fc1fcfa14dda4459"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/material-source-review.md",
+        "sha256": "09f41a457b26718b3be2888099ac2894a3f655640cc6607e815140713a0c4997"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/offline-validation/contact-only.json",
+        "sha256": "11ee1de4dd8db1943e660251e2836d3fb480891fbb309776f4122b7d82d9ff76"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/offline-validation/manifest.json",
+        "sha256": "35edd87f3d7fd41048f2038e457c54d31edfa13dab52998f99504202cc953805"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/offline-validation/natal-and-transit.json",
+        "sha256": "6edb3839bd9d190a16bd2edbf21093003904b0207b7215979580ba95ba81ec22"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/offline-validation/natal-only.json",
+        "sha256": "0382c9f1f32d60c3f159323526fc1095560dc2fe8f8b9439d55eadb57dfab8dd"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/offline-validation/synthesis-natal-and-transit.json",
+        "sha256": "fcea9cf9ecf6840823fe4696d0d220766891efa612878e341719db127646c476"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/offline-validation/transit-only.json",
+        "sha256": "f46db3f1e9f6292bc84e63b6bef12e7fe09f99eca75f0e1aa5d73ecf19ca0aad"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/operator-observations.json",
+        "sha256": "f82e3a2ab8bc6c590fecc71e882b974a7c42a593a2f5031bb5b952bcf8422211"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/preflight.json",
+        "sha256": "0bdfd9cf2224eb89a563116743480b523e8340804640d32c327a01863e89c389"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/preview.json",
+        "sha256": "2d5f2c237e4ca1cf62f2951f64eee67af52ead987dded2a74d545d90206178f4"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/progress.md",
+        "sha256": "fdd780b67447d8059001b6b182b87e16546f98a325aa77e3af9de247f4f6699a"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/reader-packet.md",
+        "sha256": "c5ec808225a65438002c1c1d6807f6397d7043f6f676bbdf5758e65023cef9bc"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/reader-review.md",
+        "sha256": "d969868a08d13fd170e4d4d2b192fea3d741cd524caa49066da396460c10eebd"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/reader-scores.json",
+        "sha256": "d942797ee74d73de5131a2e3994971faab388ba19b4c83ba1f7eb543f1c0fd2d"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/run.json",
+        "sha256": "847711547e71cbc10551156c75b204e56679b8bba3d12928aea25c5c68d8770c"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/serving-verification.json",
+        "sha256": "e7793484b51c7247d4400d62f5648d4b91786754d26aa97dc3adef121218fafe"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/source-review-packet.md",
+        "sha256": "b01bae81b0561ed223955d335210a8151bc290657d5ac3e6a8ee72f6d788d71e"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/status-observations.json",
+        "sha256": "3236a5fdfa213374a7cbba06a3876d9e93864622590d5af913e7eb4169d60519"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/summary.json",
+        "sha256": "c145e978edbb8ed40de5a9d546df1865bd522e1baac38ba3e87b0f6782abc25a"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/verdict.md",
+        "sha256": "02212dadfd258354042a45463049363d70af0316862daf071e988ed7c04126b0"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/verification.json",
+        "sha256": "3e70ae7c8f2da73dacddb56a3ee470a94eaaa1ea9b34349bfa00980834c0c866"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot-2/workflow-status.json",
+        "sha256": "244e4bdca602902085adf5c44a065293dcc47cb55070d7de2ed9c0a680d8d6f5"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot/01-contact-only.json",
+        "sha256": "782405f5288041673e3da43566ad70e0eddf773d4021e31ed97325ed9f55dd44"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot/02-natal-only.json",
+        "sha256": "eeb127cc9fcd220bd0f474124c7d6f33d73e4eb584c04cac2f5c8f3c234dafa6"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot/03-transit-only.json",
+        "sha256": "ff18acd458c6690db486defd86ae0d0f65d7dc0cc50d624314fa6033140656f5"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot/04-natal-and-transit.json",
+        "sha256": "741314eb9e6bb9430c374d0ddbc28e4296721128653a1f3a46fd019e0f748b29"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot/05-synthesis-natal-and-transit.json",
+        "sha256": "e08bc2bb255fe2f6269c8a0600192e3489d7cc671abc58b1f5f6260125194ab7"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot/admin-page-closed.json",
+        "sha256": "c91d3982c162531709c65f668f1317bcbd21c885f20ba372e26fe1dffb56ea05"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot/baseline.json",
+        "sha256": "1921446ab3045025b7c5734f4c0468e9d643840004fe64e7a77283faf538e9ff"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot/blind-mapping.json",
+        "sha256": "0be3f68d9ab4653e49c39e0b312b9bb6d9f576ed23f1c8d1588b9f12604b6a0a"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot/captured-readings.md",
+        "sha256": "490d8d8c61fe59048852cb5bf039e1e85048954fc03572f19a919a110315bd26"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot/cleanup-verification.json",
+        "sha256": "91d697d07b2094e8c6aea0d18023619ddf85c068c1c0a4650bdf11513cd76541"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot/cleanup.json",
+        "sha256": "10fdf4cd47f4842447f5b609f116ff547ac05476d43957a2e1754b97144cbbdb"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot/database-receipt.json",
+        "sha256": "026a7a56e23b4d81edef384f4e3f92dbcddf22b5f2163b04d54691be2d09f39f"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot/deployment.json",
+        "sha256": "2be6dde9b1b2825d00946cbcf885d82c3d8925b6cc7d643d0b52862930e31cd6"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot/grounding-review.md",
+        "sha256": "7af857977f3288d372849016cd9e48fac2c0ff1eca4a6778f1fd13542bf4d20a"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot/grounding-scores.json",
+        "sha256": "7e97cc16f119d6f423c1bd43e070cfb90889acf764ee71883c36d4f83a37c724"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot/independent-implementation-review.md",
+        "sha256": "8b3d098a4c5aa494002b3b40aaeb63b8ba03513220ad4482e1ef40894cff0d52"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot/independent-live-evidence-review.md",
+        "sha256": "750bc86fb788f44a3a0c4f8b289a9d8f213a49e71f184ac259767dfb43ec4bb2"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot/preflight.json",
+        "sha256": "97293c1e15d999b5cda5af9a0bcf00a91d5c2bb700c54e59f4dad2c2a65beb2e"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot/preview.json",
+        "sha256": "5568e3b471f38b93f504566fba039a728a183d7703eec82a8044292f57f75265"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot/reader-packet.md",
+        "sha256": "1ae1bca89be717c83b094f7ffac83006fd146531f74515f7e10b6650bbe0d637"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot/reader-review.md",
+        "sha256": "57828c2d6d092e949f9aa4de577fa6bd43453283caf954775c112c7b0e34960c"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot/reader-scores.json",
+        "sha256": "845b3cb62179afd25142820431858e0f28cf6c38363b4a893ae0a2acc4582ddd"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot/run.json",
+        "sha256": "dfd944ad1116b2ec6558a81d98d2a0437e741f08f9fee82bf86e9398d5732743"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot/serving-verification.json",
+        "sha256": "2b87c93669cf5d585dd02a849671df4ae026c59140984b4d583fc7add45ded45"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot/source-review-packet.md",
+        "sha256": "30d3c63306f5b5355a023e80311790328536f6231f1945e5cc182320eb89e250"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot/summary.json",
+        "sha256": "a5154090c4085231b3cf6f232740168199d75015d22762b73b7881ec3c64a9a8"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot/verdict.md",
+        "sha256": "37e7668805ea2f2a0d10903c7115a893b9bd5ee56ee1f56472e5802bf6c2b1ed"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot/verification.json",
+        "sha256": "39b103a8eabfa0933af36e5560e55d21cbac3495a4e089977ab147712b0e82e9"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/provider-pilot/workflow-status.json",
+        "sha256": "4bffd08a0d4cc0113dc350e5a9c43477a1d725b2350d26d17b73f8f23963fd9a"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/validation/contact-only.json",
+        "sha256": "0ecbb41ecf20cf175f39df6e4872428aeffce2244a89dc60fab7ef31d16ac647"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/validation/manifest.json",
+        "sha256": "3f0d1e01c6d4da439fa200c88510b8afd5b0d00e10395fb79c51cc6c20710143"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/validation/natal-and-transit.json",
+        "sha256": "9449baa78257b92f4d69c6605a910ef05637873803de9cf33520f89a80030546"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/validation/natal-only.json",
+        "sha256": "298f02fcfb23f03c82904e1baa09c2ed5b8544f02eaca1f77c5a6a2f74903e10"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/validation/synthesis-natal-and-transit.json",
+        "sha256": "d16fbf32887235788e5a0d598f4d2e99b30d11d442770f31cdf98fac59bf1b81"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/validation/transit-only.json",
+        "sha256": "b01cf596b921c0423dd70b36f3571f9b9ab942fdf536c786281688c9b5cc43cd"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/verification.json",
+        "sha256": "fa746c5e865ad691bbec904a01df779ec34ca0243f6cccb110dffbd7c90ab255"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/README.md",
+        "sha256": "a50e0e67beffc1c6fe3635c44fe979e4139655779f21a4722b92623cc4ac27cd"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/artifact-manifest.json",
+        "sha256": "5320194971198c40e617c9430d83bd2e112e0e9ca419cc6658319399084ff20d"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/independent-code-review.md",
+        "sha256": "2733357ed18ebb958370a46cd88e144d007c72a228ec0a4ec1ff190ebda39508"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/initial-reader-packet.md",
+        "sha256": "61c2da47294551097fdc769d68bd4adbcc74cc27a301265659ef9d12fbd00adc"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/initial-reader-review.md",
+        "sha256": "7aa63419757f21ea58c71a6c3bff54c3f8067feb67722183ca8b39d2160f6ca7"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/initial-reader-scores.json",
+        "sha256": "dc58ffaecf28f8836775c1fac84e00fa0f3b93b703f7a770d356f11ea8c38826"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/initial-revised-readings.json",
+        "sha256": "39f9748a0854be372a537eee78248764aed9e9785ef79890e15526596175ba11"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/initial-source-review.json",
+        "sha256": "76e47da3f3b5db62a18fa1b39723f28ea764d8f2170bf90264b74148b9596f08"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/initial-source-review.md",
+        "sha256": "fbf33668ab302ed7e7d847f13f81e6cd23f5c3c0cf840281c7f60ee1f1a1f5f6"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/material-source-review.json",
+        "sha256": "ad9f77145d1579b208b28e1bcecaa5e61163fbcbdf36f45e2b7b42b264f54696"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/material-source-review.md",
+        "sha256": "27ae4e4b97a878ccd5b2d5b5cf39548aeb625baa0ec56075ad744c710207a196"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/offline-validation/contact-only.json",
+        "sha256": "84b5e846788f0124047fdbc64260946ed7767b6b088905dfa19aa99b9f018118"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/offline-validation/manifest.json",
+        "sha256": "482207bd83f92b122e14a81595324bc2fbccc834c6eb3c77362c6d42c5f3e42e"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/offline-validation/natal-and-transit.json",
+        "sha256": "5eff7265fe7ca57c4aa5ea546b4ed78e7cdfceb87d79f66386efd6ce6959bb23"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/offline-validation/natal-only.json",
+        "sha256": "7cbb3d74486f56f9a4c2a91f9631d7c7e235133d87a72b7ee98e23620c5d8bbc"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/offline-validation/synthesis-natal-and-transit.json",
+        "sha256": "3a181d79edd71b47bb5378deddeab993dd7f68e6c467518dad1d183165a1f41c"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/offline-validation/transit-only.json",
+        "sha256": "fa6b4761441ce08c91968e0dd2c32e0b2a180b17b4f91bb8b3139e508b9be31b"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/progress.md",
+        "sha256": "0612a3c8393b2c23b19cf71bdfbf838cb823e47b76780ef1c77c4b46558ab7cd"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/qualifier-code-review.md",
+        "sha256": "10033f5260d37fc7efe0cc765d2f1998cddbdfe7cfb5f89ededf6a062685b3a4"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/reader-packet.md",
+        "sha256": "67ac61a823cf88dd8d9247c2b9460c256a9626cf78a9d10a5ae225e8df9c670f"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/reader-review.md",
+        "sha256": "270f4da24853dd978c2a27839bb8502a31f7c251a413da3b649acc00646df17f"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/reader-scores.json",
+        "sha256": "295ba266f8de21b7c6e96876f9052ebedade42b8a0937d90a482494548394bfa"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/red-green.md",
+        "sha256": "63f2c4616feff94ad40b4539499a88cf9a2aa3fea44560000d4cc763e9f5a498"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/revised-readings.json",
+        "sha256": "72289e2cc084541268ce6ad1893228d3586f0654084cd14ece7ae3f9bebc34b8"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/revised-readings.md",
+        "sha256": "26f34dadfc63325f5b7e5f7df3708b727966bd341221b15f0ff0232675b68d90"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/source-review.json",
+        "sha256": "e2c3c0d48ec9abd7e6c89b0a12e6ae5f385a52fd6b163a7c83b9c8b1cf9dcd12"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/source-review.md",
+        "sha256": "ec0c23351ae63e3b62c5ae5a825c99a069d8f9a931f27ea74bb0b50732448f7e"
+      },
+      {
+        "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/verification.json",
+        "sha256": "9e54486f1611c5f7cb5d80edacc061503fa1c88d62389b23a33985b28a2294c5"
+      }
+    ]
+  },
+  "inputs": [
+    {
+      "path": "/tmp/pattern-context-production-private-4-20261017/final.json",
+      "sha256": "5db4eef97691962ae7e621a8cba3a2853181f64c741939d9dd446ad37b3b64e9"
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-4-20261017/preview.json",
+      "sha256": "1647586ea010da6eb10134b7f5668f8e6a00ebaafe819be49ae57b8367a7441b"
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-4-20261017/pre-dispatch.json",
+      "sha256": "68b399edb9573c884b2b9b7144969b9221c20fa234feeafaa9d428af95b22807"
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-4-20261017/deployment.json",
+      "sha256": "10c0cf2aa9a83a5a629a94ab29a58d0368cb8a9c82abc7fd60d0c9e09a506c15"
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-4-20261017/browser-closed.json",
+      "sha256": "75dce497f1ad485958501dffd56833aad379e363a0c655bd9d1a808df024cc9d"
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-4-20261017/db-proof.json",
+      "sha256": "6ef55bcaca25a0ff4f9db4badee422b9ca2042c23cebd00e021b35b2d5701ee7"
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-4-20261017/source-sha.txt",
+      "sha256": "b0ee685c0519d17191de41bf6be4671460a371bfa48e49d202b4690b7ec762d5"
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-4-20261017/runtime-policy-identity.json",
+      "sha256": "1a7a49ae8b6f87f0e48e822c9c1d7bb3b6ed090b1d1e07f6a28f8982e3254004"
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-4-20261017/started.json",
+      "sha256": "709a8ee5e9bbc1bbcc71db204124ad8297d095f0d2fe335ebd192b5d480265d8"
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-4-20261017/baseline.json",
+      "sha256": "1a1d1a33b82816e320942ecbaf8443ba8ffe24f83193c95be8669bf754c1563e"
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-4-20261017/final-state.json",
+      "sha256": "f694863fe3b5974edce86a14be3830802bea6553a77b5ed911d094f6d45173d8"
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-4-20261017/cleanup.json",
+      "sha256": "caca5a1dceaae5e5292cbdd5d09675353306363e6cfb187c43cb78d9d829ae0e"
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-4-20261017/historical-final.json",
+      "sha256": "8b77c6ea52b3dd1770da46dd6acdc100b7a35a41099269ba352378c16e0c7671"
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-4-20261017/finalize.mjs",
+      "sha256": "54d292843c2e4c314e6bbddffafec606f6a9e4e3421894e2a8fd49fbef517dbe"
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-4-20261017/reader-packet.md",
+      "sha256": "910d431f821e3bf465740f9c93d7cad6756da7036a61c12d06cb77016f14f91c"
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-4-20261017/source-review-packet.md",
+      "sha256": "bcdcc124ad52e2d37d4479d095165c086fec11bff76dccb97887cf571868b9f2"
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-4-20261017/blind-mapping.json",
+      "sha256": "a5eab2a9aa93f31a993aa636158a4828015545ef33071d90e576dec92dc0c4ba"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/pilot/summary.json",
+      "sha256": "2ada4cc5072f4a1b9c0966a78524de8c63de5e19e514bc61f409399c09515fc3",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/pilot/reader-scores.json",
+      "sha256": "b7c5a829db19f417f941dfab1f95d9497ca6f590074207babb7b9a95ce1865ec",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/pilot/grounding-scores.json",
+      "sha256": "920e2e2acefd88103f758d5b3acf2d12cc8e8c9798ef3230b7736358afb3d7dc",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/pilot/01-contact-only.json",
+      "sha256": "e9895ca3c208b780df3dd988e81a9aaa6219d8b9913fbd17d50b6b4a1c38e1c6",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/pilot/02-natal-only.json",
+      "sha256": "bfc0f78784ff681c13291ac49fd75a48dfd5795ec76ad08ed3a53ae0af44e67b",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/pilot/03-transit-only.json",
+      "sha256": "a030dd8e15e3680f58f343724bbd50a78e37c5a3140b973574ebf25874670f84",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/pilot/04-natal-and-transit.json",
+      "sha256": "ad92b4ba5dffa0c67db6f458bb2e7b9eb62faa822e0759fbc54bda2038d043b4",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/pilot/blind-mapping.json",
+      "sha256": "a5eab2a9aa93f31a993aa636158a4828015545ef33071d90e576dec92dc0c4ba",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/pilot/captured-readings.md",
+      "sha256": "5f408dc170903dd20e7ab5e40f4067da1651d35c523c640f231197f8fac15b0c",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/pilot/database-capture-receipt.json",
+      "sha256": "b6292677440ff95f68531e3cb1d3ac8812ba9c84f025eddbe5c0ac1d48d6ac22",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/pilot/grounding-review.md",
+      "sha256": "88af5f360c3468d5bf78d8c457260e12d5aab1e843ecd992b0d12009a3753404",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/pilot/preview.json",
+      "sha256": "1647586ea010da6eb10134b7f5668f8e6a00ebaafe819be49ae57b8367a7441b",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/pilot/qualification.json",
+      "sha256": "9cf0cbf44f57d77d966ff83d0623fd58d41c540d1ede52005d0ac8e3ed15a508",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/pilot/qualification.md",
+      "sha256": "e1a1d01e813f3ad03f908c2a6851fd647f40583323325b219ec4dbfbd71c5f2c",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/pilot/reader-packet.md",
+      "sha256": "910d431f821e3bf465740f9c93d7cad6756da7036a61c12d06cb77016f14f91c",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/pilot/reader-review.md",
+      "sha256": "9b2edcb4bd70a7566c25edb0757dcac00b38473124836f3fe80082a4d9150b9a",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/pilot/run.json",
+      "sha256": "5db4eef97691962ae7e621a8cba3a2853181f64c741939d9dd446ad37b3b64e9",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/pilot/source-review-packet.md",
+      "sha256": "bcdcc124ad52e2d37d4479d095165c086fec11bff76dccb97887cf571868b9f2",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/src/lib/ai/context-pilot.ts",
+      "sha256": "cb8f120d38f7004f85dce7bdd43f6a80dcd9d2a299407feeb791e8da6a97ecd8",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/src/lib/ai/context-pilot-plan.server.ts",
+      "sha256": "313e9bcd491b8f59a4c996aba14d7f423cd7eb56c1667a1af32e3439a340902d",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/src/lib/ai/reading-evaluation.shared.ts",
+      "sha256": "991d30bdc1f9524f66f11cee71bf2455535da07684d2caa26d84a4edd81084db",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/src/lib/ai/admin-transport.ts",
+      "sha256": "7766c746d42c24804b49481ec0eabd938227b3264d980a2016c9af8261684454",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/src/lib/evaluation-runs.server.ts",
+      "sha256": "aa7e2b3265bdbc6e5f5051cd87aa2a3b4e3b9525178ff7427ddcebb6e6ab04de",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/edge/pattern-workflows/worker.mjs",
+      "sha256": "5389b7dcf39b6f1b8a62c4f32d3a62758e24e0591f23020ac90781122dca9449",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/report.md",
+      "sha256": "8394ad8d2770fdf1401b735157e00486b77bad639a365006f9f3235e5fd40d87",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/verification.json",
+      "sha256": "5f1afe19f24d28715ba5844844f2638286abeba74805894e3f9eb302a78fdf3d",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/serving-final.json",
+      "sha256": "3d760b04dd9b4acb99068505279eab27169ee275d17c3035ac3e37b710043f2b",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/final-state.json",
+      "sha256": "f694863fe3b5974edce86a14be3830802bea6553a77b5ed911d094f6d45173d8",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/cleanup.json",
+      "sha256": "caca5a1dceaae5e5292cbdd5d09675353306363e6cfb187c43cb78d9d829ae0e",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/historical-final.json",
+      "sha256": "8b77c6ea52b3dd1770da46dd6acdc100b7a35a41099269ba352378c16e0c7671",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-4-20261017/private-session-cleanup.json",
+      "sha256": "ae01c19f74c790d95965521e579d4e7bb10ed868f9dab41e386906e697418a7a"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/private-session-cleanup.json",
+      "sha256": "ae01c19f74c790d95965521e579d4e7bb10ed868f9dab41e386906e697418a7a",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/baseline.json",
+      "sha256": "1a1d1a33b82816e320942ecbaf8443ba8ffe24f83193c95be8669bf754c1563e",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/browser-closed.json",
+      "sha256": "75dce497f1ad485958501dffd56833aad379e363a0c655bd9d1a808df024cc9d",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/campaign-review.md",
+      "sha256": "f8fc51b4b4cea753ec142b073b0a11247e14a0433c4ec51696ffccffb495fc19",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/claims-review.md",
+      "sha256": "566fabb94cdfde6f6633c9efba8b903dc483cdf3cb0406322fa16002ba14810c",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/deployment.json",
+      "sha256": "10c0cf2aa9a83a5a629a94ab29a58d0368cb8a9c82abc7fd60d0c9e09a506c15",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/independent-integration-review.json",
+      "sha256": "85db0e5043e1b889605d15fd62f1346cfadcc91776ead8049f8a89b3c8eaa411",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/independent-integration-review.md",
+      "sha256": "5fb5747f61885f8a413cbdf87286a87f52cc9415ff52cd2dd4c54c228da284fa",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/material-source-review.json",
+      "sha256": "c4e2ddfa6d93c8b1efb6a1e791d8041379a4b5db494e69e0867ce1ea10132c25",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/material-source-review.md",
+      "sha256": "87bf21eb82fb2f68f5f24ca7aa6c16222b9a1c128b6d52382c71c1b24d1a418c",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/pre-dispatch.json",
+      "sha256": "68b399edb9573c884b2b9b7144969b9221c20fa234feeafaa9d428af95b22807",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/preflight.json",
+      "sha256": "f49421853e4f4b0c25e907a772d0de35d3cd99828172c084c557ef9912a58f8e",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/secret-scan.json",
+      "sha256": "0ca153f3627cebf5708c768f76ac746a9ffdf62c8d1f346afdf8fcb428f2d30c",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/voice-material-changes.json",
+      "sha256": "72b6502cb360a165054338b9745e89d636c44698c679a944c8ca9bce2a7f9faa",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-production/2026-10-17/revision-4/voice-revision.md",
+      "sha256": "c2a6a812d9dd8ca5dcf8c6e6ed42d59b10338f2ac3e9608661b0756e3f1421e4",
+      "hashMode": "exact-file-bytes"
+    }
+  ],
+  "verification": {
+    "command": "node /tmp/pattern-context-production-private-4-20261017/independent-live-audit.mjs",
+    "exitCode": 0,
+    "scriptSha256": "23d805f14bd271e01084f7b889717b6d3627bae3387d7cf6394f735428c150e1",
+    "resultPath": "/tmp/pattern-context-production-private-4-20261017/independent-live-audit-results.json",
+    "resultSha256": "3b9cc3400b8257520a113c3c372af86bf7b3f160fb0d743b0054cabb55999dc0",
+    "logPath": "/tmp/pattern-context-production-private-4-20261017/independent-live-audit.log",
+    "logSha256": "0a71cf00eb6efe05dd9747af8781ea22aab2d97611db9aa21dcaf7a954abe75a",
+    "checks": [
+      "Recomputed frozen run plan and five individual case hashes; compared preview, ledger sourcePlan and exported DB plan exactly.",
+      "Matched exact source SHA across deployment, serving identity, pre-dispatch and all result metadata; checked source commit byte hashes against frozen runtime policy.",
+      "Matched all four public case exports with final run, ledger raw captures and exported database results, fixed case order and single attempted row per position.",
+      "Checked three lossless/untruncated complete paragraph captures, STOP finishes, unique response IDs, selected-provider transport and frozen request briefs; checked fourth null capture/usage and exact 60000ms pre-header abort.",
+      "Recomputed 49808 + 66502 + 63946 = 180256 known-usage accounting micros, plus 2800000 uncertain reservation = 2980256, below the 5000000 ceiling.",
+      "Checked three new request starts after recorded browser closure and no fifth result or request record.",
+      "Checked corrected summary classification, blind packet hashes and literal body inclusion, review input/body identities, recorded source passes and independent reader threshold failures.",
+      "Compared final active/off state and historical receipt fingerprints with baseline; checked cleanup, retained ownership/results and absence of synthetic member data.",
+      "Compared all 153 prior tracked report/artifact files exactly with their pre-revision Git bytes; performed no remote action.",
+      "Checked final report, verification and qualification claims against saved results; verified whole-suite/build log hashes and source identity without rerunning tests or builds.",
+      "Compared public database-capture receipt byte lengths and SHA256 values with exact raw result strings in the saved DB export.",
+      "Compared final public/private session-cleanup receipts and verified the local storage-state file is absent."
+    ]
+  },
+  "resolvedObservations": [
+    "The summary timeout is now correctly classified as automaticUnavailable=1, automaticRejected=0 and unrequestedCases=1; it is not a rejected generated draft."
+  ],
+  "limits": [
+    "This audit made no network/provider call, production database read or write, deployment, activation or authenticated Today call. It evaluated saved receipts and captures with local file and Git operations only.",
+    "The three captureLossless bodies are preserved structured model paragraph captures, matched across saved run, ledger, database export, public capture and blind-review packets. Raw provider wire envelopes or provider dashboard logs were not independently available.",
+    "Exactly four attempts are established for this recorded campaign by the matching ledger and database export, with one entry per fixed position, three unique response IDs and the deployed zero-retry/single-provider controls. This is not a site-wide vendor usage audit.",
+    "The fourth attempt has no received headers/body, response ID, actual model or usage. Its timeout cause and actual charge are unknown. A 2800000-micro conservative reservation remains; no invoice was verified.",
+    "The three historical run and 15 historical result fingerprints match between saved baseline and final receipts. This reviewer inspected the finalizer query ordering and assertions but did not fetch or independently rehash the raw historical database rows. All 153 tracked historical report/artifact files were independently compared byte-for-byte with pre-revision 02e32f5.",
+    "Recorded browser closure followed the first attempt start by 125 milliseconds. The other three attempts began after closure, and the first response plus terminal capture followed it. This supports server continuation within those timestamps; it is not physical-device or browser-lifecycle coverage.",
+    "Reader/source judgments belong to the separate independent agents. This audit checked their packet/body identities, numeric threshold arithmetic and recorded outcomes without regrading any body. These are AI reviews, not human or member research.",
+    "The terminal run has incomplete five-case coverage: three full generated bodies, one unavailable timeout and one unrequested case. It cannot qualify the complete five-mode set or establish every context comparison.",
+    "No explicit frozen-contract prohibition on separately qualifying a fully captured mode was found. That is a narrow textual inference from the report scope and pre-dispatch per-mode process, not new authorization or qualification. Here all three recorded reader reviews fail, so no individual mode qualifies regardless of that interpretation.",
+    "No authenticated authored member route/storage proof occurred because no generated mode qualified; no temporary authored rollout was enabled and no sixth uncached model call is authorized or claimed.",
+    "The final serving endpoint receipt proves source identity only; it does not establish authenticated member delivery or model activation. Local credential-artifact removal is directly checked; the no-published-credential statement is recorded from the saved cleanup receipt, without retaining or re-reading the removed cookie value."
+  ],
+  "publicClaimChecks": {
+    "reportClaimsMatchReceipts": true,
+    "qualificationCountsAndMappingsMatch": true,
+    "verificationLogHashesMatch": true,
+    "publicAndPrivateCleanupReceiptsMatch": true,
+    "servingFinalIdentityMatchesSource": true,
+    "databaseCaptureReceiptRawResultHashesMatch": true,
+    "sourceReviewRecordedSentenceCount": 15,
+    "privateSessionCleanupReceiptMatches": true,
+    "localStorageStateFileAbsenceVerified": true
+  }
+}

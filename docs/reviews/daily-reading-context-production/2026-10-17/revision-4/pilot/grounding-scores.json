@@ -1,0 +1,385 @@
+{
+  "reviewType": "independent-source-and-meaning-review",
+  "reviewVersion": "revision-4",
+  "frozen": true,
+  "frozenAtUtc": "2026-10-17T10:09:48.998653+00:00",
+  "reviewerEvidence": "AI review of only the supplied source-review packet; no human review occurred.",
+  "humanReviewCompleted": false,
+  "blindness": {
+    "onlyInputRead": "/tmp/pattern-context-production-private-4-20261017/source-review-packet.md",
+    "mappingRead": false,
+    "readerReviewRead": false,
+    "automaticResultsRead": false,
+    "priorPilotOrVerdictsRead": false,
+    "modelOrCostRead": false,
+    "networkOrProvidersUsed": false
+  },
+  "inputHashes": {
+    "packetPath": "/tmp/pattern-context-production-private-4-20261017/source-review-packet.md",
+    "packetSha256": "bcdcc124ad52e2d37d4479d095165c086fec11bff76dccb97887cf571868b9f2",
+    "hashAlgorithm": "SHA-256",
+    "hashDefinition": "Packet hash uses the exact file bytes. Body hashes use the exact UTF-8 body between Body and Cited paragraphs, excluding surrounding Markdown separator blank lines and a final newline. JSON-block hashes use exact UTF-8 block content, excluding fences and their separator newlines.",
+    "readings": {
+      "R1": {
+        "bodySha256": "0c6862df582c84b47f67dc7941599ffb0c569f4dd91cb6c671323dcee7514c5d",
+        "citedParagraphsBlockSha256": "caedc7a944f1322d7d42dccf71f6d7f4a2553e88a9a5508198350e14f7780aa5",
+        "sourcesBlockSha256": "87f038f144e018458a16281e3719b5be20d10719da4985060a40812f17cf8dfd",
+        "writingBriefBlockSha256": "5c590b6bcd15479aa2b86a5bfe90f0281bb459cb3766582df1ce26f4c4eaf687",
+        "bodyMatchesCitedParagraphsExactly": true,
+        "paragraphCount": 2,
+        "parentClosureComplete": true
+      },
+      "R2": {
+        "bodySha256": "4b6dddee3ee639132805b6b03d7c75f30ef59aafa7420a56cdbd9a5a4f293f2d",
+        "citedParagraphsBlockSha256": "a03e8917b068c6ab7fd4608ff574d52fef5734220ff28484ab454e0bb9e14106",
+        "sourcesBlockSha256": "aa6abb98d25acffd92d9411f8c8659bfcb2c580e4bcc7383923044fb841ea24f",
+        "writingBriefBlockSha256": "76bee3c26c47b0d8e5e73f8f0faa636d0a7c4ac83f9515bb9fa42026162f83d4",
+        "bodyMatchesCitedParagraphsExactly": true,
+        "paragraphCount": 2,
+        "parentClosureComplete": true
+      },
+      "R3": {
+        "bodySha256": "dab6c4c330e3ba2cb927426b9fbc68299ef3f9bafa689f5a96aee8047a2dfb1e",
+        "citedParagraphsBlockSha256": "000716a055b8ba5026b960a7913d5be3eca5df60a23de6e55aa662d2ca96b2c2",
+        "sourcesBlockSha256": "e9d681e09e313f19d53da53ecf79611bbf5c48e1d862e2a5d957fe453dc6df30",
+        "writingBriefBlockSha256": "75e7485d363f89bb590aefd0ad09595fbc8b4c1d558634ffc6ac847dd4e02198",
+        "bodyMatchesCitedParagraphsExactly": true,
+        "paragraphCount": 2,
+        "parentClosureComplete": true
+      }
+    }
+  },
+  "inputVerification": {
+    "packetStableBeforeAndAfterReview": true,
+    "allBodiesExactlyMatchCitedParagraphText": true,
+    "allParagraphParentClosuresComplete": true,
+    "externalManifestCompared": false,
+    "limitation": "The packet supplies no independent expected-hash manifest. Hashes identify the exact input and internal body/paragraph parity; they do not claim a comparison against a forbidden raw capture or mapping."
+  },
+  "standard": {
+    "sourcePass": "Requires zero unsupported claims, complete selected meanings, local conditions/possibility, no invented geometry/events/causal effects, complete parents and required chronology.",
+    "contextIntegrationScale": "1 absent; 2 juxtaposed; 3 shared scene with missing/thin selected contribution; 4 complete distinct selected contributions in the same situation; 5 fully integrated and exceptionally economical. Applicable only when more than one selected meaning must be integrated.",
+    "requiredContextIntegrationWhenApplicable": 4,
+    "toneChangesThreshold": false
+  },
+  "readings": [
+    {
+      "label": "R1",
+      "bodySha256": "0c6862df582c84b47f67dc7941599ffb0c569f4dd91cb6c671323dcee7514c5d",
+      "sourcePass": true,
+      "unsupportedClaims": 0,
+      "unsupportedClaimDetails": [],
+      "omittedMeanings": [],
+      "contextIntegration": 4,
+      "contextIntegrationApplicable": true,
+      "contextIntegrationRationale": "4/5: I1 develops the cost of an added check within a familiar task; P2 develops a smaller change to that same task boundary when the earlier way no longer fits. The return contribution adds an adjustment rather than repeating a calendar move. Full selected meanings are present. Some direct explanatory restatement remains, so this is not a style-perfection score.",
+      "selectedMeaningCoverage": [
+        {
+          "factId": "I1",
+          "complete": true,
+          "evidence": [
+            "P1S1",
+            "P1S2"
+          ],
+          "meaning": "Possible extra effort plus conditional capacity mismatch and clearer task boundary."
+        },
+        {
+          "factId": "P2",
+          "complete": true,
+          "evidence": [
+            "P2S1",
+            "P2S2"
+          ],
+          "meaning": "Earlier method no longer fits is retained as the prerequisite; return offers one smaller method or stopping-point adjustment."
+        }
+      ],
+      "sentenceAudit": [
+        {
+          "id": "P1S1",
+          "text": "An extra check can look small beside a familiar task, but if the original task already fills the afternoon, that check still needs some of the same hours.",
+          "facts": [
+            "I1",
+            "C1"
+          ],
+          "verdict": "supported",
+          "reason": "Supported. The opening is a possible scene from I1 material; the hours consequence is the supplied practical distinction with its full-afternoon condition attached. It establishes no actual afternoon booking or required extra check."
+        },
+        {
+          "id": "P1S2",
+          "text": "A familiar responsibility can need more effort than usual, and if it asks for more than the available hours can hold, what belongs in the task may need a clearer limit.",
+          "facts": [
+            "I1",
+            "C1"
+          ],
+          "verdict": "supported",
+          "reason": "Supported. Both selected I1 meanings are explicit: possible extra effort, followed by a conditional mismatch and possible clearer boundary. Neither mismatch nor extra effort is stated as an event already happening."
+        },
+        {
+          "id": "P1S3",
+          "text": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+          "facts": [
+            "A1",
+            "C1"
+          ],
+          "verdict": "supported",
+          "reason": "Supported calculation. Exact A1 wording, once, in the first paragraph. This counts contacts and does not assert that a personal problem or failed method recurred."
+        },
+        {
+          "id": "P2S1",
+          "text": "If an earlier way of handling the task no longer fits, this return offers a chance to try one smaller change to how you do it or where you stop.",
+          "facts": [
+            "P2",
+            "C1",
+            "I1",
+            "A1"
+          ],
+          "verdict": "supported",
+          "reason": "Supported. P2 retains its earlier-way-no-longer-fits prerequisite and its chance for one smaller method or boundary adjustment. It asserts neither a previous failure nor a compulsory action."
+        },
+        {
+          "id": "P2S2",
+          "text": "A stopping point could come before the extra check, keeping the adjustment focused on where the task itself ends.",
+          "facts": [
+            "P2",
+            "C1",
+            "I1",
+            "A1"
+          ],
+          "verdict": "supported",
+          "reason": "Supported continuation of the immediately preceding conditional. Could preserves optionality. Keeping the adjustment focused describes the scope of that selected boundary change; it promises no emotional, behavioral, speed, ease or workload outcome."
+        }
+      ],
+      "parentClosurePass": true,
+      "chronologyPass": true,
+      "actualGeometryPass": true,
+      "personalEventsAsserted": false,
+      "findings": [
+        {
+          "classification": "coverage",
+          "severity": "none",
+          "message": "All selected meanings and their conditions are present; no omitted-meaning defect."
+        },
+        {
+          "classification": "provenance",
+          "severity": "none",
+          "message": "Every paragraph includes all cited source parents. Citations corroborate, but do not substitute for, the sentence-level meaning audit."
+        },
+        {
+          "classification": "chronology",
+          "severity": "none",
+          "message": "Exact A1 sentence occurs once, in paragraph 1; all A1/P2 parents are present. No personal recurrence is inferred from contact recurrence."
+        }
+      ],
+      "groundingGatePass": true
+    },
+    {
+      "label": "R2",
+      "bodySha256": "4b6dddee3ee639132805b6b03d7c75f30ef59aafa7420a56cdbd9a5a4f293f2d",
+      "sourcePass": true,
+      "unsupportedClaims": 0,
+      "unsupportedClaimDetails": [],
+      "omittedMeanings": [],
+      "contextIntegration": 4,
+      "contextIntegrationApplicable": true,
+      "contextIntegrationRationale": "4/5: The same afternoon links responsibility, limited hours, exploration and choosing. N1 develops a different decision in the shared scene, and the note/tab ending embodies retaining another possibility without allocating the same hours. Both N1 meanings remain visible. The source-kind distinction is preserved by possibility and no invented natal geometry; no separate chart placement is claimed.",
+      "selectedMeaningCoverage": [
+        {
+          "factId": "I1",
+          "complete": true,
+          "evidence": [
+            "P1S1",
+            "P1S2",
+            "P1S3"
+          ],
+          "meaning": "Possible extra effort plus conditional capacity mismatch and optional boundary."
+        },
+        {
+          "factId": "N1",
+          "complete": true,
+          "evidence": [
+            "P2S1",
+            "P2S2",
+            "P2S3"
+          ],
+          "meaning": "Curiosity may help a direction take shape; only if projects compete for the same time, exploring and choosing may be different stages."
+        }
+      ],
+      "sentenceAudit": [
+        {
+          "id": "P1S1",
+          "text": "An extra check can look small beside a familiar task, but as transit Saturn squares your natal Sun, a familiar responsibility can need more effort than usual.",
+          "facts": [
+            "C1",
+            "I1"
+          ],
+          "verdict": "supported",
+          "reason": "Supported scene and possible interpretation. The only stated geometry is transiting Saturn square natal Sun, exactly C1. As frames the possible interpretation at the transit; the sentence does not claim a physical cause, actual workload event, natal sign/house/angle or fixed personality. Naming geometry is separately an editorial mismatch with technicalDetails=false."
+        },
+        {
+          "id": "P1S2",
+          "text": "If the original task already fills the afternoon, an extra check still needs some of the same hours.",
+          "facts": [
+            "I1",
+            "C1"
+          ],
+          "verdict": "supported",
+          "reason": "Supported supplied practical distinction. The full-afternoon condition remains attached; needs concerns the included work taking hours, not a duty to perform the check."
+        },
+        {
+          "id": "P1S3",
+          "text": "If it's asking for more than the available hours can hold, what belongs in the task may need a clearer limit, and the extra check could stay outside it.",
+          "facts": [
+            "I1",
+            "C1"
+          ],
+          "verdict": "supported",
+          "reason": "Supported. The capacity mismatch is conditional, the limit may be needed, and leaving out the check is optional. The task reference continues the possible task scene."
+        },
+        {
+          "id": "P2S1",
+          "text": "If several projects compete for that same afternoon, exploring a few and choosing one may be separate stages.",
+          "facts": [
+            "N1",
+            "C1",
+            "I1"
+          ],
+          "verdict": "supported",
+          "reason": "Supported. Both the competing-project prerequisite and the possible exploration/commitment distinction match N1. That same afternoon connects this natal possibility to the I1 time-and-scope situation."
+        },
+        {
+          "id": "P2S2",
+          "text": "Following a few lines of curiosity may help one direction take shape.",
+          "facts": [
+            "N1",
+            "C1",
+            "I1"
+          ],
+          "verdict": "supported",
+          "reason": "Supported. This possible curiosity-to-direction relationship is explicitly in N1 and in the selected meaning; it is not inferred merely from a page/tab image. May retains the natal lens as an interpretive possibility."
+        },
+        {
+          "id": "P2S3",
+          "text": "A page of notes can sit beside an open tab for another idea, holding it without promising it those hours while you choose which one to pursue.",
+          "facts": [
+            "N1",
+            "C1",
+            "I1"
+          ],
+          "verdict": "supported",
+          "reason": "Supported concrete continuation of the immediately introduced conditional multiple-project scene. Page, tab, note and reserving a second idea without allocating the same hours are in the reviewed material. The sentence adds no improved focus, ease, frequency, forced choice, known personal event or guaranteed decision outcome."
+        }
+      ],
+      "parentClosurePass": true,
+      "chronologyPass": null,
+      "actualGeometryPass": true,
+      "personalEventsAsserted": false,
+      "findings": [
+        {
+          "classification": "coverage",
+          "severity": "none",
+          "message": "All selected meanings and their conditions are present; no omitted-meaning defect."
+        },
+        {
+          "classification": "provenance",
+          "severity": "none",
+          "message": "Every paragraph includes all cited source parents. Citations corroborate, but do not substitute for, the sentence-level meaning audit."
+        },
+        {
+          "classification": "brief-editorial",
+          "severity": "nonblocking-for-grounding",
+          "message": "P1S1 explicitly names the transit geometry despite technicalDetails=false. Geometry is accurate, so this is a writing-brief issue rather than an unsupported source claim."
+        }
+      ],
+      "groundingGatePass": true
+    },
+    {
+      "label": "R3",
+      "bodySha256": "dab6c4c330e3ba2cb927426b9fbc68299ef3f9bafa689f5a96aee8047a2dfb1e",
+      "sourcePass": true,
+      "unsupportedClaims": 0,
+      "unsupportedClaimDetails": [],
+      "omittedMeanings": [],
+      "contextIntegration": null,
+      "contextIntegrationApplicable": false,
+      "contextIntegrationRationale": "Not applicable to integration across selected meanings: I1 is the only selected interpretation. Its scene and both required components are coherent, but that is not evidence of integrating multiple sources.",
+      "selectedMeaningCoverage": [
+        {
+          "factId": "I1",
+          "complete": true,
+          "evidence": [
+            "P1S2",
+            "P2S1",
+            "P2S2"
+          ],
+          "meaning": "Possible extra effort plus conditional capacity mismatch and a clearer scope limit."
+        }
+      ],
+      "sentenceAudit": [
+        {
+          "id": "P1S1",
+          "text": "An extra check can look small beside a familiar task you've set an afternoon aside to finish.",
+          "facts": [
+            "I1",
+            "C1"
+          ],
+          "verdict": "supported",
+          "reason": "Supported possible scene. The indefinite a familiar task is introduced inside can look; its restrictive relative clause specifies the imagined scheduled task from the supplied afternoon-set-aside material. I do not read this as a claim that the reader has in fact booked an afternoon. The sentence is less explicitly conditional than an if opening, but does not on this reading establish a known personal event or promised completion."
+        },
+        {
+          "id": "P1S2",
+          "text": "A familiar responsibility can need more effort than usual, and if the original task already fills the afternoon, that extra check still needs some of the same hours.",
+          "facts": [
+            "I1",
+            "C1"
+          ],
+          "verdict": "supported",
+          "reason": "Supported. The possible extra effort is explicit. The hours consequence keeps its full-afternoon condition and is supplied directly by the practical distinction."
+        },
+        {
+          "id": "P2S1",
+          "text": "If it asks for more than the available hours can hold, what belongs in the task may need a clearer limit.",
+          "facts": [
+            "I1",
+            "C1"
+          ],
+          "verdict": "supported",
+          "reason": "Supported. Conditional capacity mismatch and a possible clearer limit preserve the second selected I1 component; the pronoun continues the possible task scene."
+        },
+        {
+          "id": "P2S2",
+          "text": "Moving the task to a later calendar opening with the extra check still included leaves that demand in place; if the original work already fills the afternoon, the extra check could stay outside the task.",
+          "facts": [
+            "I1",
+            "C1"
+          ],
+          "verdict": "supported",
+          "reason": "Supported as unchanged included work: the supplied moved-task image explicitly keeps the extra check, so its demand for hours remains. This does not say the later opening is too short, that rescheduling cannot improve fit, or that overload necessarily continues. The second clause attaches the full-afternoon condition to an optional scope limit. No new emotional, attention, ease, frequency or behavioral effect is claimed."
+        }
+      ],
+      "parentClosurePass": true,
+      "chronologyPass": null,
+      "actualGeometryPass": true,
+      "personalEventsAsserted": false,
+      "findings": [
+        {
+          "classification": "coverage",
+          "severity": "none",
+          "message": "All selected meanings and their conditions are present; no omitted-meaning defect."
+        },
+        {
+          "classification": "provenance",
+          "severity": "none",
+          "message": "Every paragraph includes all cited source parents. Citations corroborate, but do not substitute for, the sentence-level meaning audit."
+        },
+        {
+          "classification": "scope-reading",
+          "severity": "nonblocking-for-grounding",
+          "message": "P1S1 is read as an indefinite possible scene under can; P2S2 preserves included-work demand, not necessarily the earlier mismatch. These are explicit semantic judgments, not omissions or rejected claims."
+        }
+      ],
+      "groundingGatePass": true
+    }
+  ],
+  "allGroundingGatesPass": true,
+  "activationPerformed": false
+}

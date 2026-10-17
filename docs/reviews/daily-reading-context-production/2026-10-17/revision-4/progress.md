@@ -13,8 +13,10 @@ If generated modes qualify, complete authenticated member route/storage proof th
 - [x] Preserve environment/unrelated work; use existing isolated worktree on revision branch; record production baseline including prior run and result fingerprints.
 - [x] Revise writing material/prompt and demonstrated validation gaps; verify source equivalence independently before spend.
 - [x] Verify 1,083 passing tests (four skips), lint and TypeScript; independent material and integration reviews pass; freeze campaign identities. Exact committed-source build follows before dispatch.
-- [ ] Publish/deploy candidate with rollout off; verify serving identity.
-- [ ] Run the sole five-request/$5 campaign; retain every attempted response and database/cost receipt.
-- [ ] Independent blind reader and source reviews; qualify modes without altering captures or scores.
-- [ ] If qualified, verify authored member route with zero extra requests and activate only passing modes; otherwise keep off.
-- [ ] Revoke temporary access; verify exact final state, historical preservation and publication of evidence.
+- [x] Publish/deploy exact candidate `966d6cd33d3a7d685681749c8966e12ee7682cde` with rollout off; verify serving identity and exact-source build.
+- [x] Sole campaign halted on fourth request timeout: four attempts, three full drafts, fifth unrequested. Preserve all returned paragraphs, unavailable result, $0.180256 known estimates and $2.80 uncertain reservation ($2.980256 total accounting).
+- [x] Independent source review passes all three returned bodies; blind reader passes none. No mode qualifies. Captures and scores remain unchanged.
+- [x] Keep model and authored rollout off. Member route proof deferred because no mode qualifies; no extra request or restart.
+- [x] Revoke temporary access, remove synthetic profile, retain halted run/results and verify current off state and prior run/result fingerprints. Evidence publication recorded in Git.
+
+Final outcome: code deployed, generated style not qualified, activation held. Five-case coverage is incomplete. See `report.md` for the remaining voice failure and the timeout/accounting limits.

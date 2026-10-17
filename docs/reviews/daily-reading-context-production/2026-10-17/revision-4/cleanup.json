@@ -1,0 +1,51 @@
+{
+  "at": "2026-10-17T10:09:47.538Z",
+  "userId": "0e823692-2046-4963-b162-79517f241517",
+  "browserClosed": true,
+  "before": {
+    "sessions": 1,
+    "user_roles": 1,
+    "birth_profiles": 0,
+    "chart_snapshots": 0,
+    "daily_readings": 0,
+    "source_consents": 0,
+    "cycle_instances": 0,
+    "context_signals": 0
+  },
+  "after": {
+    "sessions": 0,
+    "user_roles": 0,
+    "birth_profiles": 0,
+    "chart_snapshots": 0,
+    "daily_readings": 0,
+    "source_consents": 0,
+    "cycle_instances": 0,
+    "context_signals": 0
+  },
+  "profileRemoved": true,
+  "passwordDisabled": true,
+  "sessionsRevoked": true,
+  "adminRoleRevoked": true,
+  "userRetainedForEvaluationOwnership": true,
+  "evaluationRunsRetained": [
+    {
+      "id": "8d5d7931-1040-4a93-9c28-164df447e337",
+      "status": "halted",
+      "completed": 4,
+      "attempt_limit": 5,
+      "dollar_ceiling_micros": 5000000
+    }
+  ],
+  "evaluationResultsRetained": 4,
+  "auditId": "f0ea7ab3-dca9-4759-a2ae-8396598a0161",
+  "memberTodayRequested": false,
+  "activation": "held",
+  "writerRollout": null,
+  "changes": [
+    0,
+    1,
+    1,
+    1,
+    1
+  ]
+}
