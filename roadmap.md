@@ -1,8 +1,8 @@
 # Browsing refresh
 
 ## Dependency security repair
-- [ ] Refresh compatible dependencies and confirm the lockfile resolves all reported vulnerabilities to fixed versions.
-- [ ] Re-scan dependencies, run relevant regression tests, and check the app build.
+- [ ] Resolve the remaining @lovable.dev/mcp-js advisory: updated to 3.1.1, but its exact SDK dependency still locks to 1.28.0; blocked on a compatible upstream release using SDK >=1.31.0, without forced versions.
+- [x] Re-scan production dependencies (one remaining advisory), run 26 assistant regression tests (all passed), and check the automatic app build (build OK).
 
 ## Purchase and account audit
 - [x] Research current catalog, authentication, payments, account changes, entitlements, and renewals; document evidence and gaps in docs/reviews/membership/2026-10-17-audit.md (54 tests passed; live onboarding incomplete).
