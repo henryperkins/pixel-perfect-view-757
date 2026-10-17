@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import { Shell } from "./Shell";
 import { Button } from "@/components/ui/button";
 import { confirmEmail, resetPassword } from "@/lib/account-security.functions";
+import { useQueryClient } from "@tanstack/react-query";
 
 export function AccountLink({ reset = false }: { reset?: boolean }) {
+  const queryClient=useQueryClient();
   const [token, setToken] = useState(""),
     [ready, setReady] = useState(false),
     [password, setPassword] = useState(""),
@@ -37,6 +39,8 @@ export function AccountLink({ reset = false }: { reset?: boolean }) {
       setPassword("");
       setRepeat("");
       setDone(true);
+      await queryClient.invalidateQueries({queryKey:["session"]});
+      await queryClient.invalidateQueries({queryKey:["account-security"]});
     } catch (e) {
       setError(e instanceof Error ? e.message : "This link could not be used. Request a new one.");
     } finally {

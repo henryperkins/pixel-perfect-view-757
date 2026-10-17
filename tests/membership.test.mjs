@@ -30,10 +30,15 @@ before(async () => {
       typeof input === "string" ? input : input instanceof URL ? input.href : input.url,
     );
     if (url.hostname !== "connector-gateway.lovable.dev") return originalFetch(input, init);
+    assert.equal(new Headers(init.headers).get("X-Connection-Api-Key"),"connection_synthetic");
+    assert.equal(new Headers(init.headers).get("Lovable-API-Key"),"service_synthetic");
     const method = init.method ?? "GET",
       body = new URLSearchParams(String(init.body ?? ""));
     calls.push({ path: url.pathname.replace(/^\/stripe/, ""), method, body });
     const json = (value, status = 200) => Response.json(value, { status });
+    if (url.pathname.replace(/^\/stripe/,"") === "/v1/charges/ch_fixture") return json({id:"ch_fixture",customer:"cus_a",payment_intent:"pi_fixture",refunded:true});
+    if (url.pathname.replace(/^\/stripe/,"") === "/v1/disputes/dp_fixture") return json({id:"dp_fixture",charge:"ch_fixture",status:"needs_response"});
+    if (url.pathname.replace(/^\/stripe/,"") === "/v1/invoice_payments") return json({data:[{invoice:"in_a"}],has_more:false});
     if (url.pathname.replace(/^\/stripe/, "") === "/v1/customers/search")
       return json({ data: [], has_more: false });
     if (url.pathname.replace(/^\/stripe/, "") === "/v1/customers" && method === "GET")
