@@ -1,0 +1,60 @@
+{
+  "version": "daily-member-context-release-preflight-1",
+  "baseSourceSha": "7642f85afecbb324f9294b9d0776866804985227",
+  "status": "offline-reviewed-ready-for-exact-source-build",
+  "checks": {
+    "fullSuite": {
+      "tests": 1077,
+      "passed": 1073,
+      "failed": 0,
+      "skipped": 4
+    },
+    "typescriptExitCode": 0,
+    "scopedEslintExitCode": 0,
+    "sourceReview": "pass",
+    "independentIntegrationReview": "pass",
+    "exactSourceBuild": "required after implementation commit before publication"
+  },
+  "campaign": {
+    "version": "daily-context-pilot-3",
+    "provider": "gemini-enterprise",
+    "attemptLimit": 5,
+    "dollarCeilingMicros": 5000000,
+    "retries": 0,
+    "reviewReserveMicros": 0,
+    "newMemberModelProofCalls": 0
+  },
+  "sourceFiles": {
+    "d1/migrations/20261017_member_context_rollout.sql": "f4ba2b098e91ac7b41295fbd81172319e7815fb583f7723ed8440803facda850",
+    "d1/schema.sql": "990b3f9b5f8f9a0ecc291894411f24639d5d6e53fd32c8ffa161cad4bcd92e8b",
+    "src/lib/ai/context-pilot-plan.server.ts": "8dcc4daa682013ea07c44fbd14fe7601df307f46a5e2bd1127a2933746b80e7f",
+    "src/lib/ai/context-pilot.ts": "adb89f2fa3983706ab6883d7f7171913bee74623047812935f36d06900b8df2b",
+    "src/lib/ai/diagnostics.ts": "a6861279e16ec694c08f35b7557c254380255ffd66028e8112446dde66cd2804",
+    "src/lib/ai/language.server.ts": "b8f2e6763feae0f1cb4dff6235a998683176fae6cfad9c636150dccad8c42007",
+    "src/lib/ai/member-context-reading.ts": "d728de67a0547ac9d611c365dd68cb8440cf8aad038d34f143bd66731b21685a",
+    "src/lib/ai/member-context-readings.json": "ae85bb5ce7793c6af330e6877af294e288f632efb01bcbc74f2d633101155c89",
+    "src/lib/ai/member-context-rollout.server.ts": "ca684574ba92e6883e200d4b5416351ec65b57be3001a065da1278cf488698d3",
+    "src/lib/ai/qualification-plan.server.ts": "f2fe9a687a4db2edd19fbcef467e48c002b204d0d5532fdefc41de3d5ad02b3e",
+    "src/lib/ai/reading-evaluation.server.ts": "82328ac0a145f29b70fd4ed0c3cac725c4bb869679239e99c295afb5f96d2339",
+    "src/lib/ai/reading-evaluation.shared.ts": "699f132fdae3920304960ba6d5fafe9c8b8b683695368da2adeebbe13e320cef",
+    "src/lib/content/daily-reflection.ts": "9dfa57f6371ebf5fe7fbe73073b3cc766e70f15da5db26afdb6f1cbe8b633747",
+    "src/lib/content/daily-writing-storage.server.ts": "25223d8bdc67fdfed4e8d0a4fb3e8c6ffd43a1c9e8dc04a475edfa2768868ee4",
+    "src/lib/pattern.server.ts": "bb242359d5712322a1811c718c4e844616cd448d002125d3d7dcb3f36f5c4c54",
+    "tests/reading-context-pilot-plan.test.mjs": "56e80af2db3a7a22e55dadc9f427512f0148f1462b40d45c586b05202526ce6d",
+    "tests/reading-context-pilot.test.mjs": "49a6c340a72fa330d7a4367d4a9eaf5e4bb91d4560f211c1ccbb64da9702c703",
+    "tests/reading-context-production-path.test.mjs": "1f15e7d06e7b22ca2096b68db4fdc3d9bd8bae24069e4508c881b53b366d5d1e",
+    "tests/reading-member-context-rollout.test.mjs": "e4ffaa3d0d74b1ccf248d62037a320e60f870b009aac9cc5373e079677d28fca",
+    "tests/reading-member-context-storage.test.mjs": "22ec82712118107c4e5f421392b485691b451ba7b68fca4373a3b263b2f5b579",
+    "tests/reading-member-context.test.mjs": "1d1102affffcfe2f1cf0a79b876a365c18e6d0afb93840182fa581f153da0312"
+  },
+  "immutableBenchmarkSourceMaterialUnchanged": true,
+  "liveProviderRequestsAtPreflight": 0,
+  "rolloutAtPreflight": "off",
+  "environmentPreserved": true,
+  "limits": [
+    "Hosted pilot uses the real production adapter on fixed synthetic source inputs.",
+    "Authenticated authored Today persistence/render proof will consume no additional model request.",
+    "Model activation requires independent source and reader passes per mode; unsupported sources retain the existing writer.",
+    "The per-admin campaign lock is supplemented by one private exclusive start marker; no replacement operator/run will reopen this allowance."
+  ]
+}

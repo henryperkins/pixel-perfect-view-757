@@ -154,7 +154,7 @@ export interface ReadingEvaluationRun {
   attemptLimit?: number;
   editorialPilot?: { version: "daily-editorial-pilot-1"; quietDates: string[] };
   contextPilot?: {
-    version: "daily-context-pilot-1" | "daily-context-pilot-2";
+    version: "daily-context-pilot-1" | "daily-context-pilot-2" | "daily-context-pilot-3";
     benchmarkHash: string;
   };
   enterpriseThinking?: "LOW" | "MEDIUM";
@@ -178,6 +178,8 @@ export function readingEvaluationCurrentCaseLabel(run: ReadingEvaluationRun | nu
 }
 
 export function readingEvaluationReportScope(run: ReadingEvaluationRun | null): string {
+  if (run?.contextPilot?.version === "daily-context-pilot-3")
+    return "Context-aware writer pilot: at most five generated bodies against the frozen benchmarks. Headline and reflection remain authored. Runtime fallback bodies and original review benchmarks are recorded separately. A rejected body and its fallback are separate outcomes; partial captures cannot qualify the complete set.";
   if (run?.contextPilot)
     return "Context-aware writer pilot: at most five generated bodies against the frozen benchmarks. Headline and reflection remain authored. A rejected body and its fallback are separate outcomes; partial captures cannot qualify the complete set.";
   if (run?.editorialPilot)
@@ -237,7 +239,8 @@ export interface ReadingEvaluationMetadata {
     | "content-latency-probe-1"
     | "daily-editorial-pilot-1"
     | "daily-context-pilot-1"
-    | "daily-context-pilot-2";
+    | "daily-context-pilot-2"
+    | "daily-context-pilot-3";
   fixtureVersion: string;
   caseSetHash: string;
   caseSetId?: import("./evaluation-case-sets").EvaluationCaseSetId;
@@ -273,11 +276,23 @@ export interface ReadingEvaluationMetadata {
   gatewayTimeoutMs: number;
   /** Absent in historical reports; never inferred. */
   bundleSource?: ReadingEvaluationBundleSource;
+  /** Current production-path context pilot only; absent in historical captures. */
+  contextRuntime?: {
+    path: "member-production-context";
+    memberAdapterVersion: string;
+  };
   source: "live-synthetic";
   network: string;
   warning: string;
 }
 export interface ReadingEvaluationCaseRow {
+  /** Per-case production context identity; never promoted to combined report metadata. */
+  contextRuntime?: {
+    mode: string;
+    benchmarkSourceHash: string;
+    fallbackBodyHash: string;
+    benchmarkBodyHash: string;
+  };
   transport?: AdminTransportTrace | null;
   id: string;
   description: string;
@@ -487,7 +502,9 @@ export function combineReadingEvaluationResults(
           first.metadata[field] !== result.metadata[field],
       ) ||
       JSON.stringify(first.metadata.contentComparison) !==
-        JSON.stringify(result.metadata.contentComparison)
+        JSON.stringify(result.metadata.contentComparison) ||
+      JSON.stringify(first.metadata.contextRuntime) !==
+        JSON.stringify(result.metadata.contextRuntime)
     )
       throw new Error(
         "Synthetic evaluation configuration changed during the run. Start a new run.",

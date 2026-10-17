@@ -111,10 +111,10 @@ test("context plan pins one provider, five attempts, source identity and a five-
 });
 
 // Without the independent material pin, source prose can drift under an unchanged benchmark hash.
-test("second context campaign freezes the exact reviewed material independently of unchanged benchmarks", async () => {
+test("production context campaign freezes the exact reviewed material independently of unchanged benchmarks", async () => {
   const { createContextPilotPlan, revalidateContextPilotPlan } = await pilot();
   const plan = createContextPilotPlan("b".repeat(40), "gemini-enterprise");
-  assert.equal(plan.contextPilot.version, "daily-context-pilot-2");
+  assert.equal(plan.contextPilot.version, "daily-context-pilot-3");
   const bytes = await readFile(
     new URL("../src/lib/ai/context-writing-material.json", import.meta.url),
   );
@@ -177,7 +177,7 @@ test("context plan refuses missing source identity, another provider and stored 
   );
 });
 
-test("candidate preparation rebuilds exact selected source graphs and authored fallback fields", async () => {
+test("production preparation rebuilds exact selected source graphs and authored fallback fields", async () => {
   const { createContextPilotPlan } = await pilot();
   const plan = createContextPilotPlan("b".repeat(40), "gemini-enterprise");
   for (const benchmark of packet.cases) {
@@ -196,7 +196,7 @@ test("candidate preparation rebuilds exact selected source graphs and authored f
     assert.equal(actual.assembled.headline, benchmark.headline);
     assert.equal(
       actual.assembled.astroBody,
-      benchmark.paragraphs.map((item) => item.text).join("\n\n"),
+      plan.cases.find((item) => item.id === benchmark.id).template.body,
     );
     assert.equal(
       actual.assembled.writingPlan.theme.sourceKey,
@@ -223,7 +223,7 @@ test("candidate preparation rebuilds exact selected source graphs and authored f
   );
 });
 
-test("server synthetic runner requests the candidate voice and captures its selected sources truthfully", async () => {
+test("server synthetic runner requests the shared member voice and captures its selected sources truthfully", async () => {
   const { createContextPilotPlan } = await pilot();
   const plan = createContextPilotPlan("b".repeat(40), "gemini-enterprise");
   for (const benchmark of packet.cases) {
@@ -264,14 +264,14 @@ test("server synthetic runner requests the candidate voice and captures its sele
     );
     assert.equal(
       result.case.template.body,
-      benchmark.paragraphs.map((item) => item.text).join("\n\n"),
+      plan.cases.find((item) => item.id === benchmark.id).template.body,
     );
   }
   assert.equal(h.geminiEnterpriseRequests.length, 5);
   assert.equal(h.gatewayRequests.length, 0);
 });
 
-test("server synthetic runner keeps a complete authored benchmark after one failed provider attempt", async () => {
+test("server synthetic runner keeps the authored runtime fallback after one failed provider attempt", async () => {
   const { createContextPilotPlan } = await pilot();
   const plan = createContextPilotPlan("b".repeat(40), "gemini-enterprise");
   h.setGeminiEnterprise(() => new Response(null, { status: 503 }));
@@ -286,7 +286,10 @@ test("server synthetic runner keeps a complete authored benchmark after one fail
   const benchmark = packet.cases.find((item) => item.id === "natal-and-transit");
   assert.equal(result.case.output.mode, "template");
   assert.equal(result.case.diagnostics.attempted, true);
-  assert.equal(result.case.output.body, benchmark.paragraphs.map((item) => item.text).join("\n\n"));
+  assert.equal(
+    result.case.output.body,
+    plan.cases.find((item) => item.id === "natal-and-transit").template.body,
+  );
   assert.equal(result.case.output.prompt, benchmark.reflection);
   assert.equal(h.geminiEnterpriseRequests.length, 1);
   assert.equal(h.gatewayRequests.length, 0);

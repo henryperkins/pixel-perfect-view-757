@@ -23,10 +23,19 @@ import {
   languageModel,
   type LanguageProvider,
 } from "./diagnostics";
-import { generateSyntheticReadingProse, type ReadingProseInput } from "./language.server";
-import { prepareDailyContextCandidate } from "./daily-context-candidate.server";
+import {
+  generateSyntheticReadingProse,
+  generateSyntheticMemberReadingProse,
+  type ReadingProseInput,
+} from "./language.server";
+import { canonicalContentJson } from "../content/draft-comparison";
+import {
+  memberContextMode,
+  prepareMemberContextReading,
+  MEMBER_CONTEXT_READING_VERSION,
+} from "./member-context-reading";
 import { CONTEXT_WRITING_BENCHMARKS } from "./reading-evaluation.context.fixtures";
-import { CONTEXT_PILOT_CASE_SET_ID } from "./context-pilot";
+import { CONTEXT_PILOT_CASE_SET_ID, CONTEXT_PILOT_CASE_IDS } from "./context-pilot";
 import { CONTEXT_DAILY_VOICE_VERSION } from "./daily-context-writing";
 import { composeDailyWritingTemplate } from "../content/daily-writing-template";
 import { DAILY_WRITING_PLAN_VERSION } from "../content/daily-writing";
@@ -141,9 +150,21 @@ export function prepareSyntheticEvaluationCase(
     manifest.id === CONTEXT_PILOT_CASE_SET_ID
       ? CONTEXT_WRITING_BENCHMARKS.cases.find((benchmark) => benchmark.id === caseId)
       : undefined;
+  let memberInput: ReadingProseInput | undefined;
   if (manifest.id === CONTEXT_PILOT_CASE_SET_ID) {
     if (!contextBenchmark) throw Error("The closed context benchmark is unavailable.");
-    input = prepareDailyContextCandidate(input, contextBenchmark);
+    memberInput = input;
+    const prepared = prepareMemberContextReading(memberInput);
+    if (!prepared || memberContextMode(memberInput) !== caseId)
+      throw Error("The reviewed source graph is outside the member production context scope.");
+    const ordered = (items: { id: string }[]) =>
+      [...items].sort((a, b) => a.id.localeCompare(b.id));
+    if (
+      canonicalContentJson(ordered(prepared.facts)) !==
+      canonicalContentJson(ordered(contextBenchmark.selectedSources))
+    )
+      throw Error("The member production source graph differs from the reviewed benchmark.");
+    input = prepared;
     facts = input.facts;
     assembled = {
       ...assembled,
@@ -176,6 +197,7 @@ export function prepareSyntheticEvaluationCase(
     policy,
     manifest,
     contextBenchmark,
+    memberInput,
   };
 }
 
@@ -197,16 +219,20 @@ export async function runSyntheticEvaluationCase(
     policy,
     manifest,
     contextBenchmark,
+    memberInput,
   } = prepareSyntheticEvaluationCase(caseId, bundle, qualificationProfile, caseSetId);
-  const observed = await generateSyntheticReadingProse(
-    input,
-    provider,
-    {
-      ...control,
-      ...(qualificationProfile ? { boundedQualification: true } : {}),
-    },
-    contextBenchmark,
-  );
+  const transportControl = {
+    ...control,
+    ...(qualificationProfile ? { boundedQualification: true } : {}),
+  };
+  const observed = memberInput
+    ? await generateSyntheticMemberReadingProse(
+        memberInput,
+        provider,
+        transportControl,
+        CONTEXT_PILOT_CASE_IDS,
+      )
+    : await generateSyntheticReadingProse(input, provider, transportControl);
   const { prose } = observed;
   if (!prose.meta.diagnostics) throw new Error("Synthetic evaluation requires daily diagnostics");
   const editorialPilot = manifest.id === "daily-editorial-1";
@@ -231,6 +257,14 @@ export async function runSyntheticEvaluationCase(
         ? { qualificationProfile: policy.profile, qualificationPolicyVersion: policy.version }
         : {}),
       ...transitEvaluationMetadata(manifest.id),
+      ...(contextBenchmark
+        ? {
+            contextRuntime: {
+              path: "member-production-context" as const,
+              memberAdapterVersion: MEMBER_CONTEXT_READING_VERSION,
+            },
+          }
+        : {}),
       ...(policy ? { storyUse: policy.transit } : {}),
       ...(manifest.id !== "synthetic-daily-7" ? { caseSetId: manifest.id } : {}),
       fixtureVersion: manifest.fixtureVersion,
@@ -268,12 +302,24 @@ export async function runSyntheticEvaluationCase(
           ? "Live Gemini Enterprise Agent Platform; fixed synthetic facts only"
           : "Live language gateway; fixed synthetic facts only",
       warning: contextBenchmark
-        ? "Candidate-only synthetic body output; headline and reflection are reviewed authored benchmark fields. Inspect diagnostics: authored fallback is not generated writing. This capture does not establish member acceptance, semantic grounding or writing quality."
+        ? "Synthetic body output through the member production context adapter; headline and reflection are reviewed authored runtime fields. Runtime fallback bodies are frozen separately from original review benchmarks. Inspect diagnostics: authored fallback is not generated writing. This capture does not establish member acceptance, semantic grounding or writing quality."
         : editorialPilot
           ? `${editorialOutput} This capture does not establish member acceptance, semantic grounding, or writing quality. Manual scores remain blank.`
           : "Actual model outputs for synthetic plans. This run does not establish production-user acceptance, semantic grounding, or writing quality. Manual scores remain blank.",
     },
     case: {
+      ...(contextBenchmark
+        ? {
+            contextRuntime: {
+              mode: fixed.id,
+              benchmarkSourceHash: contextBenchmark.sourceHash,
+              fallbackBodyHash: createHash("sha256").update(input.fallback.body).digest("hex"),
+              benchmarkBodyHash: createHash("sha256")
+                .update(contextBenchmark.paragraphs.map((item) => item.text).join("\n\n"))
+                .digest("hex"),
+            },
+          }
+        : {}),
       transport: observed.transport,
       id: fixed.id,
       description: fixed.description,

@@ -1,8 +1,14 @@
-/** Immutable synthetic candidate plan; no provider calls, member reads or release pointer access. */
+/** Immutable production-path synthetic plan; no provider calls, member reads or release pointer access. */
 import { createHash } from "node:crypto";
 import bundleData from "../content/context-pilot-bundle.json";
 import benchmarkBytes from "./context-writing-benchmarks.json?raw";
 import materialBytes from "./context-writing-material.json?raw";
+import memberAdapterBytes from "./member-context-reading.ts?raw";
+import runtimeFallbackBytes from "./member-context-readings.json?raw";
+import {
+  MEMBER_CONTEXT_READING_VERSION,
+  MEMBER_CONTEXT_FALLBACK_VERSION,
+} from "./member-context-reading";
 import type { ContentBundle } from "../content/default-bundle";
 import { canonicalContentJson } from "../content/draft-comparison";
 import { validateContentGraph } from "../content/schema";
@@ -17,6 +23,7 @@ import { CONTEXT_DAILY_MATERIAL_VERSION } from "./daily-context-writing";
 import {
   CONTEXT_PILOT_VERSION,
   CONTEXT_PILOT_CASE_SET_ID,
+  CONTEXT_PILOT_CASE_IDS,
   CONTEXT_PILOT_PROVIDER,
   CONTEXT_PILOT_ATTEMPT_LIMIT,
   CONTEXT_PILOT_DOLLAR_CEILING_MICROS,
@@ -30,14 +37,9 @@ const sourceGraph = (facts: { id: string }[]) =>
   canonicalContentJson([...facts].sort((a, b) => a.id.localeCompare(b.id)));
 const EXPECTED_BENCHMARK_HASH = "825c877dbb88d5d20d39a12abfd67cea01781506250db93d44ae7c9885b35024";
 const EXPECTED_BUNDLE_HASH = "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f";
+const EXPECTED_RUNTIME_FALLBACK_HASH =
+  "ae85bb5ce7793c6af330e6877af294e288f632efb01bcbc74f2d633101155c89";
 const EXPECTED_MATERIAL_HASH = "165a91a427937039757d4a7a3520038a725eb6b7495ee106fc4d1731058471ba";
-const CASE_IDS = [
-  "contact-only",
-  "natal-only",
-  "transit-only",
-  "natal-and-transit",
-  "synthesis-natal-and-transit",
-];
 
 export function createContextPilotPlan(sourceSha: string | null, provider: LanguageProvider) {
   if (!sourceSha || !/^[a-f0-9]{40}$/.test(sourceSha))
@@ -61,6 +63,18 @@ export function createContextPilotPlan(sourceSha: string | null, provider: Langu
     !materials.cards.length
   )
     throw Error("The frozen reviewed context benchmarks, source bundle or material changed.");
+  const runtimeFallbacks = JSON.parse(
+    runtimeFallbackBytes,
+  ) as typeof import("./member-context-readings.json");
+  if (
+    createHash("sha256").update(runtimeFallbackBytes).digest("hex") !==
+      EXPECTED_RUNTIME_FALLBACK_HASH ||
+    runtimeFallbacks.version !== MEMBER_CONTEXT_FALLBACK_VERSION ||
+    runtimeFallbacks.materialVersion !== materials.version ||
+    JSON.stringify(runtimeFallbacks.cases.map((item) => item.id)) !==
+      JSON.stringify(CONTEXT_PILOT_CASE_IDS)
+  )
+    throw Error("The reviewed member runtime fallback identity or scope changed.");
   const benchmarks = structuredClone(CONTEXT_WRITING_BENCHMARKS);
   const originalFixtures = CONTEXT_SOURCE_FIXTURES.map((fixture, index) => {
     if (hash(fixture) !== benchmarks.cases[index]?.fixture.baseSha256)
@@ -71,7 +85,7 @@ export function createContextPilotPlan(sourceSha: string | null, provider: Langu
   const base = createEvaluationPlan(candidate, undefined, sourceSha, provider, caseManifest.id);
   if (
     base.attemptLimit !== CONTEXT_PILOT_ATTEMPT_LIMIT ||
-    JSON.stringify(base.cases.map((item) => item.id)) !== JSON.stringify(CASE_IDS) ||
+    JSON.stringify(base.cases.map((item) => item.id)) !== JSON.stringify(CONTEXT_PILOT_CASE_IDS) ||
     base.cases.some(
       (item, index) =>
         !item.expectsModel ||
@@ -81,6 +95,14 @@ export function createContextPilotPlan(sourceSha: string | null, provider: Langu
     throw Error("The closed context pilot scope or selected source identity changed.");
   const contextPilot = {
     version: CONTEXT_PILOT_VERSION,
+    runtimePath: "member-production-context" as const,
+    allowedModes: [...CONTEXT_PILOT_CASE_IDS],
+    rolloutScope: "admin-workflow-only" as const,
+    memberAdapterVersion: MEMBER_CONTEXT_READING_VERSION,
+    memberAdapterHash: createHash("sha256").update(memberAdapterBytes).digest("hex"),
+    runtimeFallbackVersion: runtimeFallbacks.version,
+    runtimeFallbackHash: createHash("sha256").update(runtimeFallbackBytes).digest("hex"),
+    runtimeFallbacks,
     provider,
     model: languageModel(provider),
     caseSetId: CONTEXT_PILOT_CASE_SET_ID,

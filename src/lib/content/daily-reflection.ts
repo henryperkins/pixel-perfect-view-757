@@ -10,7 +10,8 @@ export interface DailyReflectionPlan {
   question: string;
   themeFactId: "I1" | "S1" | null;
   frameKey: string | null;
-  variant: "standard" | "high_stress" | "low_sleep" | "legacy" | "fallback" | "editorial";
+  variant:
+    "standard" | "high_stress" | "low_sleep" | "legacy" | "fallback" | "editorial" | "context";
   localSource: "WEL-03" | "WEL-01" | null;
 }
 

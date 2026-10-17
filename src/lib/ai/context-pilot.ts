@@ -1,7 +1,14 @@
 /** A fresh closed candidate experiment; historical runs never reopen this allowance. */
 import { z } from "zod";
 
-export const CONTEXT_PILOT_VERSION = "daily-context-pilot-2" as const;
+export const CONTEXT_PILOT_VERSION = "daily-context-pilot-3" as const;
+export const CONTEXT_PILOT_CASE_IDS = [
+  "contact-only",
+  "natal-only",
+  "transit-only",
+  "natal-and-transit",
+  "synthesis-natal-and-transit",
+] as const;
 export const CONTEXT_PILOT_CASE_SET_ID = "daily-context-1" as const;
 export const CONTEXT_PILOT_PROVIDER = "gemini-enterprise" as const;
 export const CONTEXT_PILOT_ATTEMPT_LIMIT = 5;
@@ -15,7 +22,7 @@ export const CONTEXT_PILOT_REVIEW_RUBRIC = {
   context:
     "Compare contact-only, natal-only, transit-only, both, and synthesis with both against the same reviewed benchmarks. Natal context remains conditional; chronology is exact and appears once.",
   independentFields:
-    "Headlines and reflections are reviewed authored benchmark fields, never generated output in this pilot.",
+    "Headlines and reflections are reviewed authored runtime fields, never generated output in this pilot. Runtime fallback bodies are frozen independently of the unchanged original review benchmarks.",
   humanApproval: false,
 } as const;
 export const contextPilotPreviewSchema = z.object({ mode: z.literal("context-pilot") }).strict();

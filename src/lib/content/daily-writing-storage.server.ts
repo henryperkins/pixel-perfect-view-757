@@ -55,6 +55,7 @@ export interface SavedDailyWriting {
   reason: "template_editorial_failure" | null;
   sceneUse: { id: "SC1" | "SC2"; paragraph: number }[];
   reflection: DailyReflectionPlan;
+  /** Frozen question for legacy primary copy or the reviewed member-context fallback. */
   legacySourceQuestion: string | null;
   effectiveTimezone: string;
   astroParagraphCount: number;
@@ -251,6 +252,7 @@ const envelopeSchema = z
           "legacy",
           "fallback",
           "editorial",
+          "context",
         ]),
         localSource: z.enum(["WEL-03", "WEL-01"]).nullable(),
       })
@@ -473,10 +475,10 @@ export function validateSavedDailyWriting(
     (plan.editorial && reflection.question !== plan.editorial.entry.reflection)
   )
     throw Error("Saved editorial reflection differs from its source selection.");
-  if (reflection.variant === "legacy") {
+  if (reflection.variant === "legacy" || reflection.variant === "context") {
     if (
       plan.status !== "no_frame" ||
-      theme?.factId !== "I1" ||
+      (reflection.variant === "legacy" ? theme?.factId !== "I1" : !theme) ||
       saved.legacySourceQuestion !== reflection.question
     )
       throw Error("Saved legacy question differs from its frozen primary source question.");

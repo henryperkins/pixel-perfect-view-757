@@ -126,6 +126,13 @@ import {
 import { readSavedFactAtoms, type FactAtom } from "./ai/facts";
 import { NATAL_LENS_PLAN_VERSION } from "./content/natal-lens";
 import {
+  loadMemberContextRollout,
+  memberContextRolloutIdentity,
+} from "./ai/member-context-rollout.server";
+import { memberContextMode, prepareMemberContextReading } from "./ai/member-context-reading";
+import { toDailyContextBrief } from "./ai/daily-context-writing";
+import type { ReadingProseInput } from "./ai/language.server";
+import {
   PRIMARY_COMPOSITION_VERSION,
   PRIMARY_REFLECTION_VERSION,
 } from "./content/primary-composition";
@@ -1465,6 +1472,32 @@ async function getTodayReading(
         : null,
     wellness: wellnessAllowed ? { sleep: wellnessState.sleep, stress: wellnessState.stress } : null,
   };
+  const { memberLanguageProvider } = await import("./ai/language.server");
+  let memberRollout =
+    ctx.tone === "warm" && ctx.depth === "standard"
+      ? await loadMemberContextRollout(db, bundle.version, memberLanguageProvider())
+      : null;
+  // Avoid invalidating unrelated contacts. This pure preview uses no provider or
+  // transit-service request; actual chapter/geometry validation still runs later.
+  if (memberRollout) {
+    const previewChart = snapshotToChart(snapRow);
+    const preview = assembleReading(
+      previewChart,
+      cyclesForLocalDay(previewChart, day, tz),
+      ctx,
+      bundle,
+      natalReliability,
+    );
+    try {
+      if (preview.eligibleCycles[0]?.cycle_key !== "saturn_square_sun") memberRollout = null;
+      else {
+        const { readingFacts } = await import("./ai/facts");
+        toDailyContextBrief(readingFacts(previewChart, preview, tz), ctx.tone, ctx.depth);
+      }
+    } catch {
+      memberRollout = null;
+    }
+  }
   const optionalSources = LAUNCH_SOURCES.filter((source) => source.tier > 0).map(
     (source) => source.id,
   );
@@ -1472,11 +1505,23 @@ async function getTodayReading(
     () => "EXISTS(SELECT 1 FROM source_consents WHERE user_id=? AND source_id=? AND granted=1)=?",
   );
   const params = optionalSources.flatMap((id) => [userId, id, granted.has(id) ? 1 : 0]);
+  const rolloutGuard = memberRollout
+    ? " AND EXISTS(SELECT 1 FROM content_releases WHERE id=? AND is_active=1 AND version=? AND writer_rollout=?)"
+    : "";
   db.bindWritePolicy({
     sql: `SELECT CASE WHEN ${consentChecks.join(" AND ")} AND EXISTS(SELECT 1 FROM profiles WHERE id=? AND
       (CASE WHEN EXISTS(SELECT 1 FROM source_consents WHERE user_id=? AND source_id='USR-01' AND granted=1) AND tone_pref IN ('plain','warm','clinical') THEN tone_pref ELSE 'plain' END)=? AND
-      (CASE WHEN EXISTS(SELECT 1 FROM source_consents WHERE user_id=? AND source_id='USR-02' AND granted=1) AND depth_pref='technical' THEN depth_pref ELSE 'standard' END)=?) AND ${birthState.predicate} THEN 1 ELSE json('privacy-settings-changed') END`,
-    params: [...params, userId, userId, ctx.tone, userId, ctx.depth, ...birthState.params],
+      (CASE WHEN EXISTS(SELECT 1 FROM source_consents WHERE user_id=? AND source_id='USR-02' AND granted=1) AND depth_pref='technical' THEN depth_pref ELSE 'standard' END)=?) AND ${birthState.predicate}${rolloutGuard} THEN 1 ELSE json('privacy-settings-changed') END`,
+    params: [
+      ...params,
+      userId,
+      userId,
+      ctx.tone,
+      userId,
+      ctx.depth,
+      ...birthState.params,
+      ...(memberRollout ? [memberRollout.releaseId, bundle.version, memberRollout.raw] : []),
+    ],
   });
   const assertPolicy = async () => {
     await birthState.assertCurrent();
@@ -1544,6 +1589,7 @@ async function getTodayReading(
         }
       : {}),
     model: LANGUAGE_MODEL,
+    ...(memberRollout ? { memberContextWriter: memberContextRolloutIdentity(memberRollout) } : {}),
     snapshot: { ...snapRow, houses: snapshotHouses },
     natalReliabilityVersion: NATAL_RELIABILITY_VERSION,
     natalReliability,
@@ -1665,7 +1711,7 @@ async function getTodayReading(
   const { readingFacts } = await import("./ai/facts");
   for (const source of ["AST-05", "AST-07", "AST-08", "AST-20"])
     assertUse(source, "external_language");
-  const facts = readingFacts(
+  let facts = readingFacts(
     {
       engine: chart.engine,
       engineVersion: chart.engineVersion,
@@ -1676,10 +1722,11 @@ async function getTodayReading(
     assembled,
     tz,
   );
-  const recentWriting = assembled.writingTemplate
-    ? await loadRecentDailyWritingBodies(db, userId, snapRow.id, day, tz, dek, granted, now)
-    : null;
-  const prose = await generateReadingProse({
+  const recentWriting =
+    assembled.writingTemplate || memberRollout
+      ? await loadRecentDailyWritingBodies(db, userId, snapRow.id, day, tz, dek, granted, now)
+      : null;
+  const ordinaryInput: ReadingProseInput = {
     facts,
     hasEligibleCycles: assembled.eligibleCycles.length > 0,
     tone: ctx.tone,
@@ -1708,7 +1755,35 @@ async function getTodayReading(
           },
         }
       : {}),
-  });
+  };
+  const runtimeMode = memberContextMode(ordinaryInput);
+  const memberContext =
+    memberRollout && runtimeMode && memberRollout.config.modes.includes(runtimeMode)
+      ? prepareMemberContextReading(ordinaryInput)
+      : null;
+  const selectedInput = memberContext ?? ordinaryInput;
+  facts = selectedInput.facts;
+  const selectedWritingPlan = selectedInput.writing?.plan ?? assembled.writingPlan;
+  const selectedReflection = memberContext
+    ? {
+        version: DAILY_REFLECTION_VERSION,
+        question: selectedInput.fallback.prompt,
+        themeFactId: selectedWritingPlan.theme?.factId ?? null,
+        frameKey: null,
+        variant: "context" as const,
+        localSource: null,
+      }
+    : assembled.reflectionPlan;
+  await assertPolicy();
+  const prose = await generateReadingProse(
+    selectedInput,
+    memberRollout
+      ? {
+          contextModes: memberRollout.config.modes,
+          contextRenderMode: memberRollout.config.render,
+        }
+      : {},
+  );
   await assertPolicy();
   const body = [prose.body, assembled.contextBody].filter(Boolean).join("\n\n");
   const durableContext = assembled.contextParts.filter((part) =>
@@ -1752,12 +1827,12 @@ async function getTodayReading(
     facts: storyFacts,
     usedParagraphs: {
       A1: storyFacts.length
-        ? prose.meta.mode === "model"
+        ? prose.meta.mode === "model" || memberContext
           ? prose.meta.citations.filter((c) => c.facts.includes("A1")).map((c) => c.paragraph)
           : templateStoryUsage.A1
         : [],
       P2: storyFacts.length
-        ? prose.meta.mode === "model"
+        ? prose.meta.mode === "model" || memberContext
           ? prose.meta.citations.filter((c) => c.facts.includes("P2")).map((c) => c.paragraph)
           : templateStoryUsage.P2
         : [],
@@ -1781,9 +1856,9 @@ async function getTodayReading(
     },
   );
   const provenance = assembled.provenance.filter(
-    (entry) => prose.meta.mode !== "model" || entry.lane !== "content",
+    (entry) => (prose.meta.mode !== "model" && !memberContext) || entry.lane !== "content",
   );
-  if (prose.meta.mode === "template") {
+  if (prose.meta.mode === "template" && !memberContext) {
     for (const entry of provenance.filter((entry) => entry.lane === "content")) {
       const fact = facts.find(
         (f) =>
@@ -1813,7 +1888,7 @@ async function getTodayReading(
       });
     }
   }
-  if (prose.meta.mode === "model") {
+  if (prose.meta.mode === "model" || memberContext) {
     for (const fact of facts) {
       const paragraphs = prose.meta.citations
         .filter((citation) => citation.facts.includes(fact.id))
@@ -1836,17 +1911,18 @@ async function getTodayReading(
         },
       });
     }
-    provenance.push({
-      lane: "content",
-      source_id: "LLM-01",
-      label: `Language layer · ${prose.meta.model}`,
-      detail: {
-        model: prose.meta.model,
-        paragraphs: prose.meta.citations.length,
-        dropped: prose.meta.dropped,
-        cited: prose.meta.citations.map((c) => `${c.paragraph}:${c.facts.join("+")}`).join(" "),
-      },
-    });
+    if (prose.meta.mode === "model")
+      provenance.push({
+        lane: "content",
+        source_id: "LLM-01",
+        label: `Language layer · ${prose.meta.model}`,
+        detail: {
+          model: prose.meta.model,
+          paragraphs: prose.meta.citations.length,
+          dropped: prose.meta.dropped,
+          cited: prose.meta.citations.map((c) => `${c.paragraph}:${c.facts.join("+")}`).join(" "),
+        },
+      });
   }
   if (natalLens) {
     validateSavedNatalLens(
@@ -1902,19 +1978,19 @@ async function getTodayReading(
   }
   const readingId = crypto.randomUUID();
   const dailyWriting: SavedDailyWriting | null =
-    prose.meta.writing && assembled.reflectionPlan && recentWriting
+    prose.meta.writing && selectedReflection && recentWriting
       ? {
           version: 1,
           readingId,
           snapshotId: snapRow.id,
           releaseVersion: assembled.release_version,
           primaryCycleKey: assembled.primary_cycle_key,
-          plan: assembled.writingPlan,
+          plan: selectedWritingPlan,
           ...prose.meta.writing,
-          reflection: assembled.reflectionPlan,
+          reflection: selectedReflection,
           legacySourceQuestion:
-            assembled.reflectionPlan.variant === "legacy"
-              ? assembled.reflectionPlan.question
+            selectedReflection.variant === "legacy" || selectedReflection.variant === "context"
+              ? selectedReflection.question
               : null,
           effectiveTimezone: tz,
           astroParagraphCount: prose.paragraphs.length,
@@ -1971,6 +2047,14 @@ async function getTodayReading(
       language_model: prose.meta.model,
       language_meta: {
         ...prose.meta,
+        ...(memberContext && memberRollout
+          ? {
+              memberContextWriter: {
+                ...memberContextRolloutIdentity(memberRollout),
+                mode: runtimeMode,
+              },
+            }
+          : {}),
         ...(dailyWriting
           ? {
               daily_writing_ct: await encryptJson(dek, dailyWriting),

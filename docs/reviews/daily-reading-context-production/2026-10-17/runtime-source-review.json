@@ -1,0 +1,161 @@
+{
+  "version": "member-context-runtime-source-review-1",
+  "reviewedAt": "2026-10-17T09:30:48.234Z",
+  "status": "pass",
+  "reviewType": "independent AI source and projection review",
+  "scope": {
+    "releaseVersion": "0.9.0",
+    "tone": "warm",
+    "depth": "standard",
+    "primaryGeometry": "Saturn square natal Sun",
+    "supportingGeometryWhenSynthesized": "Jupiter trine natal Mars",
+    "natalSource": "nl-sun-03 with NL1 marker",
+    "transitChapter": "chapter-return-1 / return",
+    "synthesisRelationship": "tension"
+  },
+  "inputs": [
+    {
+      "path": "src/lib/ai/member-context-reading.ts",
+      "sha256": "d728de67a0547ac9d611c365dd68cb8440cf8aad038d34f143bd66731b21685a",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/member-context-readings.json",
+      "sha256": "ae85bb5ce7793c6af330e6877af294e288f632efb01bcbc74f2d633101155c89",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/context-writing-material.json",
+      "sha256": "165a91a427937039757d4a7a3520038a725eb6b7495ee106fc4d1731058471ba",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/daily-context-writing.ts",
+      "sha256": "91c78185cf5211346e7f9b1cd8be6c1d3af680b5f3f931e9dca628aa44c11cac",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/facts.ts",
+      "sha256": "c8d5f44d414c0046e92fccad7b4c4326db10216a1d53763e02e8c0ab5793ede9",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/content/daily-writing.ts",
+      "sha256": "b01e0d9b5034bce1dc32ed4f19fb5ed31875a20f3eee2d026b83055890af6d21",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/context-writing-benchmarks.json",
+      "sha256": "825c877dbb88d5d20d39a12abfd67cea01781506250db93d44ae7c9885b35024",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+      "sha256": "825c877dbb88d5d20d39a12abfd67cea01781506250db93d44ae7c9885b35024",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/revised-readings.json",
+      "sha256": "72289e2cc084541268ce6ad1893228d3586f0654084cd14ece7ae3f9bebc34b8",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/source-review.json",
+      "sha256": "e2c3c0d48ec9abd7e6c89b0a12e6ae5f385a52fd6b163a7c83b9c8b1cf9dcd12",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/material-source-review.json",
+      "sha256": "ad9f77145d1579b208b28e1bcecaa5e61163fbcbdf36f45e2b7b42b264f54696",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "docs/reviews/daily-reading-release/2026-10-17/bundle.json",
+      "sha256": "a77eb43eba5aa9c140b514ef56c987167bea1eb905abfa68dcceabe2da35c6f3",
+      "hashMode": "exact-file-bytes"
+    }
+  ],
+  "cases": [
+    {
+      "id": "contact-only",
+      "status": "pass",
+      "reference": "voice-qualifiers-3/revised-readings.json",
+      "exactHeadlineReflectionBodyCitations": true,
+      "completeParentClosure": true,
+      "exactLocalSourceSentenceInventory": true,
+      "chronologyTokens": 0
+    },
+    {
+      "id": "natal-only",
+      "status": "pass",
+      "reference": "voice-qualifiers-3/revised-readings.json",
+      "exactHeadlineReflectionBodyCitations": true,
+      "completeParentClosure": true,
+      "exactLocalSourceSentenceInventory": true,
+      "chronologyTokens": 0
+    },
+    {
+      "id": "transit-only",
+      "status": "pass",
+      "reference": "immutable benchmark with literal A1 chronology token",
+      "exactHeadlineReflectionBodyCitations": true,
+      "completeParentClosure": true,
+      "exactLocalSourceSentenceInventory": true,
+      "chronologyTokens": 1
+    },
+    {
+      "id": "natal-and-transit",
+      "status": "pass",
+      "reference": "immutable benchmark with literal A1 chronology token",
+      "exactHeadlineReflectionBodyCitations": true,
+      "completeParentClosure": true,
+      "exactLocalSourceSentenceInventory": true,
+      "chronologyTokens": 1
+    },
+    {
+      "id": "synthesis-natal-and-transit",
+      "status": "pass",
+      "reference": "immutable benchmark with literal A1 chronology token",
+      "exactHeadlineReflectionBodyCitations": true,
+      "completeParentClosure": true,
+      "exactLocalSourceSentenceInventory": true,
+      "chronologyTokens": 1
+    }
+  ],
+  "semanticReview": {
+    "contact-only": "The full-afternoon if condition controls may leave and the immediate In that case / could continuation. The check and task stay possible; no actual overload, compulsory refusal or successful resolution is asserted.",
+    "natal-only": "The full-afternoon and competing-project conditions remain explicit. Curiosity may help, and a note can hold the second idea within the possible notes/tab scene. No stable temperament or guaranteed clarity is added.",
+    "transit-only": "Task/calendar/check details stay possible. Earlier method no longer working explicitly conditions the small return-chapter adjustment. Calculated chronology never establishes recurring life events or a past failed attempt.",
+    "natal-and-transit": "Conditional responsibility effort, possible curiosity, competing-afternoon premise, note/commitment distinction and possible stopping point remain source-bound. No actual extra commitment or past failed method is asserted.",
+    "synthesis-natal-and-transit": "Well-chosen aim limits I2 ease; conditional extra scope can ask for more structure. Distinct I1/I2 meanings and the S1 tension retain all four parents. N1 stays possible and P2 retains its earlier-method condition. No new cause, speed, certainty or promised success."
+  },
+  "projectionReview": {
+    "exactSourceIdentity": "reviewedCard binds normalized full sourceFact identity, including statement, key, release, parents, natal marker and chapter. Familiar IDs/keys do not qualify changed meanings.",
+    "actualGeometry": "C1/C2 statements, orbs and exact dates survive unchanged; standard prose references omit numeric measurements instead of substituting fixture values.",
+    "chronology": "Three transit templates contain exactly one token; actual validated A1.arc.chronologySentence replaces it literally once. No fixture dates or pass measurements are injected.",
+    "localSentenceInventory": "The final adapter stores exact complete I1 sentences and, only for synthesis, exact S1 sentences from the selected published source. This inventory stays local and supplies existing saved-writing validation; no new scene, meaning, fallback body or provider-brief field is introduced.",
+    "providerBoundary": "Material contains drafting fields plus source/parent identifiers. Meanings/conditions remain separate controls. Generic edits project id/instruction only. Full fallback paragraphs and review metadata do not enter the brief.",
+    "unsupportedScope": "Only five selected graph shapes with eligible cycles and warm/standard settings are prepared. Unsupported selected sources/graphs decline and retain the established writer. Existing projection may omit unjoined optional framing; this never authorizes that framing as new meaning."
+  },
+  "verification": {
+    "method": "Read-only inspection plus in-memory esbuild compilation with write:false and direct actual-function calls. Fetch replaced with a throwing counter; no test harness/database/provider invoked.",
+    "exactFallbackCases": 5,
+    "completeParentClosure": true,
+    "sourceCardsComparedToExactBundle": 5,
+    "projectedCardInstancesChecked": 13,
+    "variableMeasurementsPreserved": true,
+    "actualChronologyAppearsExactlyOnce": true,
+    "unsupportedMutationProbesRejected": 26,
+    "networkCalls": 0,
+    "runtimeWrites": 0
+  },
+  "findings": [],
+  "recommendedLineEdits": [],
+  "limitations": [
+    "Independent AI source review, not human editorial approval or member research.",
+    "Pass binds exact recorded bytes and five bounded warm/standard 0.9.0 graphs; other contacts, natal sources, chapters, settings and consecutive days remain unqualified.",
+    "Calculation inputs are assumed to originate in the existing validated pipeline; this verifies preservation, not astronomical accuracy.",
+    "Authored fallback/source approval does not qualify generated pilot 3 prose; its exact raw captures still need independent reader and source review.",
+    "No runtime file, provider/network request, production database, hosted Today flow, deployment, activation or Git history was changed by this reviewer."
+  ]
+}

@@ -35,6 +35,7 @@ import {
   prepareDailyContextCandidate,
   type DailyContextBenchmark,
 } from "./daily-context-candidate.server";
+import { memberContextMode, prepareMemberContextReading } from "./member-context-reading";
 import {
   dailySystemVoice,
   dailyVoice,
@@ -965,7 +966,11 @@ async function generateDailyProse(
   observation?: SyntheticObservation,
   provider: LanguageProvider = "lovable",
   control: SyntheticTransportControl = {},
-  options: { authoredEditorial?: boolean; contextCandidate?: boolean } = {},
+  options: {
+    authoredEditorial?: boolean;
+    authoredContext?: boolean;
+    contextCandidate?: boolean;
+  } = {},
 ): Promise<ReadingProse> {
   const { fallback } = input;
   const model = languageModel(provider);
@@ -1093,14 +1098,19 @@ async function generateDailyProse(
   if (contextCandidate) {
     const template = input.writing!.template;
     const checked = dailyDraft({ paragraphs: template.paragraphs }, input, true, true);
-    if ("code" in checked) throw Error(`Candidate benchmark failed ${checked.code} validation.`);
+    if ("code" in checked) throw Error(`Required template failed ${checked.code} validation.`);
     if (quality(template.paragraphs, template.renderMode).outcome === "reject")
-      throw Error("Candidate benchmark failed writing quality validation.");
+      throw Error("Required template failed writing quality validation.");
   }
   if (options.authoredEditorial && editorial)
     return fallbackResult(
       diagnosticLabel("authored_editorial"),
       diagnose("skipped", "authored_editorial", null),
+    );
+  if (options.authoredContext && contextCandidate)
+    return fallbackResult(
+      diagnosticLabel("authored_context"),
+      diagnose("skipped", "authored_context", null),
     );
   if (!input.hasEligibleCycles || !input.facts.some((f) => f.id === "C1" && f.cycle))
     return fallbackResult("no eligible cycle to write from", diagnose("skipped", "no_cycle", null));
@@ -1298,17 +1308,44 @@ async function generateDailyProse(
 }
 
 /** Production readings expose only the established prose/diagnostics contract. */
-export async function generateReadingProse(input: ReadingProseInput): Promise<ReadingProse> {
-  // This limited member release ships its reviewed authored copy. Synthetic
-  // evaluation remains on the model path so later revisions can be assessed.
-  return generateDailyProse(
+export interface MemberReadingProseOptions {
+  contextModes?: readonly string[];
+  contextRenderMode?: "model" | "authored";
+}
+
+function memberReadingSelection(
+  input: ReadingProseInput,
+  allowedModes: readonly string[],
+  renderMode: "model" | "authored" = "model",
+) {
+  const mode = memberContextMode(input);
+  const context = mode && allowedModes.includes(mode) ? prepareMemberContextReading(input) : null;
+  const selected = context ?? input;
+  return {
+    input: selected,
+    options: {
+      contextCandidate: !!context,
+      authoredContext: !!context && renderMode === "authored",
+      authoredEditorial: selected.writing?.plan.editorial?.releaseVersion === "0.9.0",
+    },
+  };
+}
+
+export async function generateReadingProse(
+  input: ReadingProseInput,
+  options: MemberReadingProseOptions = {},
+): Promise<ReadingProse> {
+  const selected = memberReadingSelection(
     input,
+    options.contextModes ?? [],
+    options.contextRenderMode,
+  );
+  return generateDailyProse(
+    selected.input,
     undefined,
     memberLanguageProvider(),
     {},
-    {
-      authoredEditorial: input.writing?.plan.editorial?.releaseVersion === "0.9.0",
-    },
+    selected.options,
   );
 }
 
@@ -1417,6 +1454,43 @@ export async function generateSyntheticReadingProse(
     provider,
     control,
     { contextCandidate: !!contextBenchmark },
+  );
+  return { prose, request, candidate, transport };
+}
+
+/** Synthetic capture of the member selection and provider path, including its authored fallback. */
+export async function generateSyntheticMemberReadingProse(
+  input: ReadingProseInput,
+  provider: LanguageProvider = "lovable",
+  control: SyntheticTransportControl = {},
+  allowedModes: readonly string[] = [],
+): Promise<{
+  prose: ReadingProse;
+  request: SyntheticReadingRequest | null;
+  candidate: SyntheticReadingCandidate | null;
+  transport: AdminTransportTrace | null;
+}> {
+  let request: SyntheticReadingRequest | null = null;
+  let candidate: SyntheticReadingCandidate | null = null;
+  let transport: AdminTransportTrace | null = null;
+  assertSyntheticTransportControl(provider, control);
+  const selected = memberReadingSelection(input, allowedModes);
+  const prose = await generateDailyProse(
+    selected.input,
+    {
+      transport(value) {
+        transport = value;
+      },
+      request(value) {
+        request = value;
+      },
+      candidate(value) {
+        candidate = captureSyntheticCandidate(value, !!selected.input.writing);
+      },
+    },
+    provider,
+    control,
+    selected.options,
   );
   return { prose, request, candidate, transport };
 }

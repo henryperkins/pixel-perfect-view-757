@@ -1,0 +1,167 @@
+{
+  "version": "daily-member-context-fallbacks-1",
+  "materialVersion": "daily-context-material-3",
+  "cases": [
+    {
+      "id": "contact-only",
+      "headline": "The task that will not fit",
+      "reflection": "When does an addition begin to change what you originally agreed to do?",
+      "paragraphs": [
+        {
+          "text": "An extra check can look small beside a familiar task. Saturn's square to your natal Sun is a picture of expectations pressing against the capacity to meet them.",
+          "facts": [
+            "C1",
+            "I1"
+          ],
+          "scenes": []
+        },
+        {
+          "text": "If the original work already fills the afternoon, moving the task to a later calendar opening may leave the check attached. In that case, the extra check could be left out.",
+          "facts": [
+            "C1",
+            "I1"
+          ],
+          "scenes": []
+        }
+      ]
+    },
+    {
+      "id": "natal-only",
+      "headline": "An idea is not yet a promise",
+      "reflection": "What helps you recognize an interest you want to explore before deciding whether to commit?",
+      "paragraphs": [
+        {
+          "text": "An extra check can look small beside a familiar task. If the original work already fills the afternoon, the check still needs some of the same hours. Saturn's square to your natal Sun is a picture of expectations pressing against the capacity to meet them.",
+          "facts": [
+            "C1",
+            "I1"
+          ],
+          "scenes": []
+        },
+        {
+          "text": "If several projects compete for that afternoon, a page of notes for one idea can sit beside a tab open for another. Following a few lines of curiosity may help one direction take shape. A note can hold the second idea without promising it the afternoon.",
+          "facts": [
+            "C1",
+            "I1",
+            "N1"
+          ],
+          "scenes": []
+        }
+      ]
+    },
+    {
+      "id": "transit-only",
+      "headline": "A calendar cannot shrink the task",
+      "reflection": "What tells you a method needs adjusting before you decide the whole plan has failed?",
+      "paragraphs": [
+        {
+          "text": "An afternoon already set aside for one responsibility can look roomy until the smaller requests start arriving. If the familiar task now takes the whole block, moving it to the next empty space may leave the same problem waiting there. Saturn's square to your natal Sun is a picture of expectations pressing against the capacity to meet them.",
+          "facts": [
+            "C1",
+            "I1"
+          ],
+          "scenes": []
+        },
+        {
+          "text": "{{A1_CHRONOLOGY}} If an earlier way of fitting the task in no longer works, this return offers a chance to adjust one part of the method or boundary. That could mean changing what belongs inside the commitment, rather than finding another place to put it.",
+          "facts": [
+            "C1",
+            "I1",
+            "A1",
+            "P2"
+          ],
+          "scenes": []
+        },
+        {
+          "text": "An extra check or another version may look small beside the original task. A defined stopping point can make the size of that addition easier to see before you agree to it.",
+          "facts": [
+            "C1",
+            "I1"
+          ],
+          "scenes": []
+        }
+      ]
+    },
+    {
+      "id": "natal-and-transit",
+      "headline": "An idea can wait in the margin",
+      "reflection": "How do you tell the difference between leaving a possibility open and keeping a commitment vague?",
+      "paragraphs": [
+        {
+          "text": "An afternoon set aside for one project can fill before the project begins: a page of notes for one idea, a tab open for another. If an established responsibility is already asking more effort than usual, each addition has to find its hours somewhere. Following a few lines of curiosity may help a direction take shape. If several projects compete for the same afternoon, sampling a few and choosing one to pursue may be different stages.",
+          "facts": [
+            "C1",
+            "I1",
+            "N1"
+          ],
+          "scenes": []
+        },
+        {
+          "text": "Saturn's square to your natal Sun is a picture of expectations pressing against the capacity to meet them. {{A1_CHRONOLOGY}} If an earlier way of fitting the task in no longer works, this return offers a chance to adjust one part of the method or boundary.",
+          "facts": [
+            "C1",
+            "I1",
+            "A1",
+            "P2"
+          ],
+          "scenes": []
+        },
+        {
+          "text": "A note can hold the second idea without turning it into a second commitment. For the project you choose, the useful change might be a defined stopping point: what belongs inside this afternoon, and what stays outside it.",
+          "facts": [
+            "C1",
+            "I1",
+            "N1",
+            "A1",
+            "P2"
+          ],
+          "scenes": []
+        }
+      ]
+    },
+    {
+      "id": "synthesis-natal-and-transit",
+      "headline": "Before the next piece becomes a promise",
+      "reflection": "What changes an interesting possibility into something you are ready to be responsible for?",
+      "paragraphs": [
+        {
+          "text": "A project can grow between 'this looks promising' and 'I'll take care of it.' When an aim is well chosen, starting can feel easy: a page of notes becomes an outline, and another piece of work starts to look appealing. If a familiar responsibility now needs more effort, that extra scope can also ask for more structure. Sampling a few possible directions may help one take shape before you choose which to pursue.",
+          "facts": [
+            "C1",
+            "I1",
+            "C2",
+            "I2",
+            "S1",
+            "N1"
+          ],
+          "scenes": []
+        },
+        {
+          "text": "Ease in taking on work and enough structure to carry it are different things. {{A1_CHRONOLOGY}} If an earlier way of handling the task no longer fits, this return offers a chance to adjust a method or boundary.",
+          "facts": [
+            "C1",
+            "I1",
+            "C2",
+            "I2",
+            "S1",
+            "A1",
+            "P2"
+          ],
+          "scenes": []
+        },
+        {
+          "text": "Before another piece becomes a promise, there may be a distinction to make: whether it helps you explore the idea or adds something you are agreeing to carry. One possibility can stay in the notes while another becomes the commitment.",
+          "facts": [
+            "C1",
+            "I1",
+            "C2",
+            "I2",
+            "S1",
+            "N1"
+          ],
+          "scenes": []
+        }
+      ]
+    }
+  ]
+}

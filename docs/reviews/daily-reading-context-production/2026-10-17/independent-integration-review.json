@@ -1,0 +1,227 @@
+{
+  "version": "member-context-independent-integration-review-1",
+  "reviewedAt": "2026-10-17T09:36:05.687565+00:00",
+  "status": "pass",
+  "blockingFindings": [],
+  "reviewType": "independent AI code and offline integration review",
+  "humanReviewCompleted": false,
+  "baseSha": "7642f85afecbb324f9294b9d0776866804985227",
+  "reviewedState": "Uncommitted integration; only the exact file bytes in inputs are covered.",
+  "inputs": [
+    {
+      "path": "d1/migrations/20261017_member_context_rollout.sql",
+      "sha256": "f4ba2b098e91ac7b41295fbd81172319e7815fb583f7723ed8440803facda850",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "d1/schema.sql",
+      "sha256": "990b3f9b5f8f9a0ecc291894411f24639d5d6e53fd32c8ffa161cad4bcd92e8b",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/context-pilot-plan.server.ts",
+      "sha256": "8dcc4daa682013ea07c44fbd14fe7601df307f46a5e2bd1127a2933746b80e7f",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/context-pilot.ts",
+      "sha256": "adb89f2fa3983706ab6883d7f7171913bee74623047812935f36d06900b8df2b",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/context-writing-benchmarks.json",
+      "sha256": "825c877dbb88d5d20d39a12abfd67cea01781506250db93d44ae7c9885b35024",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/context-writing-material.json",
+      "sha256": "165a91a427937039757d4a7a3520038a725eb6b7495ee106fc4d1731058471ba",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/daily-context-claims.ts",
+      "sha256": "9430501befc9d290e859104f75447570a158033d5dcfc458727cd323a7838e85",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/daily-context-writing.ts",
+      "sha256": "91c78185cf5211346e7f9b1cd8be6c1d3af680b5f3f931e9dca628aa44c11cac",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/diagnostics.ts",
+      "sha256": "a6861279e16ec694c08f35b7557c254380255ffd66028e8112446dde66cd2804",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/facts.ts",
+      "sha256": "c8d5f44d414c0046e92fccad7b4c4326db10216a1d53763e02e8c0ab5793ede9",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/language.server.ts",
+      "sha256": "b8f2e6763feae0f1cb4dff6235a998683176fae6cfad9c636150dccad8c42007",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/member-context-reading.ts",
+      "sha256": "d728de67a0547ac9d611c365dd68cb8440cf8aad038d34f143bd66731b21685a",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/member-context-readings.json",
+      "sha256": "ae85bb5ce7793c6af330e6877af294e288f632efb01bcbc74f2d633101155c89",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/member-context-rollout.server.ts",
+      "sha256": "ca684574ba92e6883e200d4b5416351ec65b57be3001a065da1278cf488698d3",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/qualification-plan.server.ts",
+      "sha256": "f2fe9a687a4db2edd19fbcef467e48c002b204d0d5532fdefc41de3d5ad02b3e",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/reading-evaluation.server.ts",
+      "sha256": "82328ac0a145f29b70fd4ed0c3cac725c4bb869679239e99c295afb5f96d2339",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/reading-evaluation.shared.ts",
+      "sha256": "699f132fdae3920304960ba6d5fafe9c8b8b683695368da2adeebbe13e320cef",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/content/context-pilot-bundle.json",
+      "sha256": "a77eb43eba5aa9c140b514ef56c987167bea1eb905abfa68dcceabe2da35c6f3",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/content/daily-reflection.ts",
+      "sha256": "9dfa57f6371ebf5fe7fbe73073b3cc766e70f15da5db26afdb6f1cbe8b633747",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/content/daily-writing-storage.server.ts",
+      "sha256": "25223d8bdc67fdfed4e8d0a4fb3e8c6ffd43a1c9e8dc04a475edfa2768868ee4",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/d1.server.ts",
+      "sha256": "bdbff3cbb5ab835ed4527988e9c7261e9da9bbc11d9fe46353563b29d527f8f7",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/evaluation-runs.server.ts",
+      "sha256": "aa7e2b3265bdbc6e5f5051cd87aa2a3b4e3b9525178ff7427ddcebb6e6ab04de",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/pattern.server.ts",
+      "sha256": "bb242359d5712322a1811c718c4e844616cd448d002125d3d7dcb3f36f5c4c54",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "tests/reading-context-pilot-plan.test.mjs",
+      "sha256": "56e80af2db3a7a22e55dadc9f427512f0148f1462b40d45c586b05202526ce6d",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "tests/reading-context-pilot.test.mjs",
+      "sha256": "49a6c340a72fa330d7a4367d4a9eaf5e4bb91d4560f211c1ccbb64da9702c703",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "tests/reading-context-production-path.test.mjs",
+      "sha256": "1f15e7d06e7b22ca2096b68db4fdc3d9bd8bae24069e4508c881b53b366d5d1e",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "tests/reading-member-context-rollout.test.mjs",
+      "sha256": "e4ffaa3d0d74b1ccf248d62037a320e60f870b009aac9cc5373e079677d28fca",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "tests/reading-member-context-storage.test.mjs",
+      "sha256": "22ec82712118107c4e5f421392b485691b451ba7b68fca4373a3b263b2f5b579",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "tests/reading-member-context.test.mjs",
+      "sha256": "1d1102affffcfe2f1cf0a79b876a365c18e6d0afb93840182fa581f153da0312",
+      "hashMode": "exact-file-bytes"
+    }
+  ],
+  "verifiedControls": [
+    "Warm/standard release 0.9.0 selection binds reviewed selected-source identities, supported contact geometry and complete dependency graphs; unsupported inputs retain the existing writer.",
+    "Actual contact measurements and exact A1 chronology remain runtime input; no benchmark measurement substitution occurs.",
+    "Complete authored fallbacks are validated before authored serving or model transport; generated rejection and fallback output remain separate capture outcomes.",
+    "Policy is outside immutable content; six exact raw file hashes and prompt/validator/voice/brief version fields must match, alongside explicit provider, modes, render and review identity.",
+    "Serving/render policy enters immutable Today identity. Previous reading IDs, encrypted bodies, feedback and rollback cache branches remain intact.",
+    "The current raw rollout, active release, birth revision and consent preferences are checked before model transport and guarded storage; disabled in-flight policy cannot save a delayed reading.",
+    "Authored context has skipped/attempted-false diagnostics and no LLM-01 source entry. Natal/story paragraph citations and context reflection remain saved with complete source parents.",
+    "Context reflections use a frozen independent question in encrypted SavedDailyWriting; all five fallback plans validate for archive hydration.",
+    "The synthetic path calls the shared production member adapter and renderer with one provider and one request per case, retaining lossless raw candidates.",
+    "Pilot v3 is distinct from historical v1/v2, reserves each attempt before transport, caps five attempts and conservative reservations at 5000000 micros, blocks same-version restarts for the admin user, and retains failed/uncertain captures without replay.",
+    "Combined report metadata contains only shared runtime path and adapter version; mode and source/runtime-fallback/original-benchmark hashes remain on each case. Mixed adapter identities are rejected."
+  ],
+  "verification": [
+    {
+      "kind": "focused-offline-suite",
+      "command": "node --test tests/reading-context-pilot.test.mjs tests/reading-context-production-path.test.mjs tests/reading-member-context-rollout.test.mjs tests/reading-member-context-storage.test.mjs tests/reading-member-context.test.mjs",
+      "passed": 43,
+      "failed": 0,
+      "skipped": 0,
+      "evidence": "/tmp/pattern-context-production-private-20261017/integration-review/pattern-integration-review-final-suite.log"
+    },
+    {
+      "kind": "independent-policy-mutations",
+      "exactRawHashFields": [
+        "adapterHash",
+        "fallbackHash",
+        "materialHash",
+        "writerHash",
+        "briefHash",
+        "claimsHash"
+      ],
+      "policyFieldCount": 13,
+      "rejectedStaleMissingExtraMalformedMutations": 28,
+      "externalProviderCalls": 0,
+      "evidence": "/tmp/pattern-context-production-private-20261017/integration-review/pattern-integration-policy-review.log"
+    },
+    {
+      "kind": "independent-race-probes",
+      "scenarios": [
+        {
+          "change": "Disable rollout immediately before transport",
+          "mockProviderAttempts": 0,
+          "savedRows": 0,
+          "result": "request rejects"
+        },
+        {
+          "change": "Disable rollout during chosen-provider transport",
+          "mockProviderAttempts": 1,
+          "alternateProviderAttempts": 0,
+          "savedRows": 0,
+          "result": "request rejects"
+        }
+      ],
+      "externalProviderCalls": 0,
+      "evidence": "/tmp/pattern-context-production-private-20261017/integration-review/pattern-integration-race-review.log"
+    }
+  ],
+  "resolvedReviewObservations": [
+    "Final serving policy additionally binds exact shared writer, context brief and qualifier-guard bytes; an unbumped implementation change cannot silently retain the old policy.",
+    "Final combined report keeps per-case runtime identity with its own case instead of promoting the first case mode and hashes to the whole report."
+  ],
+  "limits": [
+    "All provider and D1 interactions in this review used a network-forbidding local records harness. No live provider, production database, deployment or activation action occurred.",
+    "Full repository test, TypeScript, lint and build results belong to the implementing root evidence lane; this reviewer independently ran the focused checks listed above.",
+    "The campaign restart lock is per admin user, not a site-wide cross-admin allowance. The approved hosted operation must retain the single operator/run restriction.",
+    "No generated pilot prose is qualified by this code review. Each captured generated body still requires independent source and reader review before its mode is activated.",
+    "A zero-spend authenticated authored Today/save/reload proof does not establish an additional uncached hosted member-model invocation. No sixth paid request is approved or claimed.",
+    "Astronomy accuracy, physical devices and assistive technology are outside this review."
+  ]
+}
