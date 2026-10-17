@@ -1,0 +1,27 @@
+{
+  "version": "daily-editorial-release-validation-ledger-1",
+  "planHash": "8472e83d579229201ed7a7cc25214f73663e8570813ad7f4d00182f4afa9c489",
+  "startedAt": "2026-10-17T07:39:30.122Z",
+  "completedAt": "2026-10-17T07:39:51.950Z",
+  "status": "halted",
+  "providerAttempts": 2,
+  "reservedMicros": 61926,
+  "costStatus": "reservation-estimates-not-invoices",
+  "stopReason": "model_output_not_accepted",
+  "entries": [
+    {
+      "id": "writing-reply-scene",
+      "attempted": true,
+      "capture": "recorded",
+      "reservedMicros": 29258,
+      "resultFile": "1-result.json"
+    },
+    {
+      "id": "venus-opposition-venus",
+      "attempted": true,
+      "capture": "recorded",
+      "reservedMicros": 32668,
+      "resultFile": "2-result.json"
+    }
+  ]
+}

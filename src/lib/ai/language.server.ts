@@ -907,6 +907,7 @@ async function generateDailyProse(
   observation?: SyntheticObservation,
   provider: LanguageProvider = "lovable",
   control: SyntheticTransportControl = {},
+  options: { authoredEditorial?: boolean } = {},
 ): Promise<ReadingProse> {
   const { fallback } = input;
   const model = languageModel(provider);
@@ -1010,6 +1011,11 @@ async function generateDailyProse(
       },
     };
   };
+  if (options.authoredEditorial && editorial)
+    return fallbackResult(
+      diagnosticLabel("authored_editorial"),
+      diagnose("skipped", "authored_editorial", null),
+    );
   if (!input.hasEligibleCycles || !input.facts.some((f) => f.id === "C1" && f.cycle))
     return fallbackResult("no eligible cycle to write from", diagnose("skipped", "no_cycle", null));
   if (!input.facts.some((f) => f.id === "I1"))
@@ -1184,7 +1190,17 @@ async function generateDailyProse(
 
 /** Production readings expose only the established prose/diagnostics contract. */
 export async function generateReadingProse(input: ReadingProseInput): Promise<ReadingProse> {
-  return generateDailyProse(input, undefined, memberLanguageProvider());
+  // This limited member release ships its reviewed authored copy. Synthetic
+  // evaluation remains on the model path so later revisions can be assessed.
+  return generateDailyProse(
+    input,
+    undefined,
+    memberLanguageProvider(),
+    {},
+    {
+      authoredEditorial: input.writing?.plan.editorial?.releaseVersion === "0.9.0",
+    },
+  );
 }
 
 /** Only whitelisted, bounded paragraph fields are retained for fixed synthetic evaluations. */

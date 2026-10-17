@@ -1,0 +1,120 @@
+{
+  "caseId": "venus-opposition-venus",
+  "inputHash": "7cf95a03f9bde4bd0d92cf37034faf6b35d49e9761bd91e74fbc73d0fc96b648",
+  "requestHash": "29cc40b2db8cd93e383229198aa981e7ffee82aad76a48ca059ea44b2354ec5a",
+  "trace": {
+    "version": "admin-model-transport-1",
+    "provider": "gemini-enterprise",
+    "requestedModel": "gemini-enterprise/gemini-3.8-flash",
+    "actualModel": "gemini-3.8-flash",
+    "thinkingLevel": null,
+    "maxOutputTokens": 65536,
+    "deadlineMs": 60000,
+    "startedAt": "2026-10-17T07:39:40.500Z",
+    "headersAt": "2026-10-17T07:39:51.945Z",
+    "bodyAt": "2026-10-17T07:39:51.946Z",
+    "abortAt": null,
+    "finishedAt": "2026-10-17T07:39:51.946Z",
+    "httpStatus": 200,
+    "requestId": null,
+    "responseId": "PCbTasidIaWaotQP4NKVwQk",
+    "finishReason": "STOP",
+    "usage": {
+      "inputTokens": 1694,
+      "outputTokens": 186,
+      "thinkingTokens": 1278,
+      "totalTokens": 3158,
+      "outputIncludesThinking": false
+    }
+  },
+  "transportIssue": null,
+  "candidate": {
+    "paragraphs": [
+      {
+        "text": "Wanting someone's company and wanting a different kind of evening can easily coexist. When an invitation to go dancing leaves a reply hovering at 'I'd love to' while a walk is what truly appeals, the hesitation often traces back to a possible fear that stating a preference will sound like less affection.",
+        "facts": [
+          "C1",
+          "I1"
+        ],
+        "scenes": []
+      },
+      {
+        "text": "Transiting Venus opposite natal Venus resembles one invitation with two distinct versions of the evening written across it, where contrasting preferences still belong to the same wish to meet. Offering a walk instead of dancing serves as a concrete alternative that directly retains that wish.",
+        "facts": [
+          "C1",
+          "I1"
+        ],
+        "scenes": []
+      }
+    ]
+  },
+  "providerText": "{\n  \"paragraphs\": [\n    {\n      \"text\": \"Wanting someone's company and wanting a different kind of evening can easily coexist. When an invitation to go dancing leaves a reply hovering at 'I'd love to' while a walk is what truly appeals, the hesitation often traces back to a possible fear that stating a preference will sound like less affection.\",\n      \"facts\": [\"C1\", \"I1\"],\n      \"scenes\": []\n    },\n    {\n      \"text\": \"Transiting Venus opposite natal Venus resembles one invitation with two distinct versions of the evening written across it, where contrasting preferences still belong to the same wish to meet. Offering a walk instead of dancing serves as a concrete alternative that directly retains that wish.\",\n      \"facts\": [\"C1\", \"I1\"],\n      \"scenes\": []\n    }\n  ]\n}",
+  "prose": {
+    "headline": "A different plan, the same company",
+    "body": "Wanting to see someone and wanting a different kind of evening can both be true. An invitation to go dancing can leave a reply hovering at 'I'd love to' when a walk is what appeals. The tender part can be the fear that a different preference will sound like less affection.\n\nVenus opposite your natal Venus is an invitation with two versions of the evening written on it. One question to ask is which part of the plan matters most to each of you. The wish to meet can stay in the conversation while the plan changes.",
+    "prompt": "What makes a counterproposal feel like an invitation to you?",
+    "paragraphs": [
+      "Wanting to see someone and wanting a different kind of evening can both be true. An invitation to go dancing can leave a reply hovering at 'I'd love to' when a walk is what appeals. The tender part can be the fear that a different preference will sound like less affection.",
+      "Venus opposite your natal Venus is an invitation with two versions of the evening written on it. One question to ask is which part of the plan matters most to each of you. The wish to meet can stay in the conversation while the plan changes."
+    ],
+    "meta": {
+      "mode": "template",
+      "model": null,
+      "citations": [
+        {
+          "paragraph": 1,
+          "facts": [
+            "C1",
+            "I1"
+          ]
+        },
+        {
+          "paragraph": 2,
+          "facts": [
+            "C1",
+            "I1"
+          ]
+        }
+      ],
+      "dropped": 0,
+      "flagged": [],
+      "reason": "draft drops a qualifier from selected editorial material",
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-editorial-body-2",
+        "validatorVersion": "daily-editorial-reference-2",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "rejected",
+        "attempted": true,
+        "code": "editorial_claim",
+        "durationMs": 11449,
+        "paragraph": 1
+      },
+      "writing": {
+        "renderMode": "unframed",
+        "reason": null,
+        "sceneUse": [],
+        "candidateQuality": {
+          "version": "daily-writing-quality-1",
+          "outcome": "not_evaluated",
+          "issues": []
+        },
+        "finalQuality": {
+          "version": "daily-writing-quality-1",
+          "outcome": "pass",
+          "issues": [
+            {
+              "code": "scene_unavailable",
+              "severity": "info",
+              "paragraph": null,
+              "ruleId": "no_scene"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "localFailure": false,
+  "actualMemberPersistence": false
+}

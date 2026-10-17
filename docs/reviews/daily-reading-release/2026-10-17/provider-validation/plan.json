@@ -1,0 +1,1619 @@
+{
+  "version": "daily-editorial-release-member-writer-validation-1",
+  "sourceSha": "fe8d717a046aaf396486e72ae175c0cf8ba3542a",
+  "sourceFileHashes": {
+    "src/assets/celestial-browsing.jpg": "f2404067bd48eb28c30a21e81361dc3502b65bbaeed88cc11ed22ad1e610e6fb",
+    "src/components/pattern/AccountLink.tsx": "e33b5e4f64bc6a0b99e5773438d61d9972b19d135a67acb7f081c609b727847f",
+    "src/components/pattern/AccountSecurity.tsx": "a0fcfe8ee680ec9da2bb59e5b38f04799d07384789ee6247f456c74a332ebb1c",
+    "src/components/pattern/CelestialScene.tsx": "b92460b4b2ed06fd4e4d78b563351a613121595aafc3cd789816d2c853fd10c8",
+    "src/components/pattern/ContentDraftEvaluation.tsx": "fca6209f2989f5438602cedd3d84e9e473be4d5c0cba4d161660731684ab646e",
+    "src/components/pattern/ContentDraftReview.tsx": "1d6f43a7f328ab1e4c6292e3dd3022b73ee73b995c120044b67cd6af9b66ffd7",
+    "src/components/pattern/CurrentLocation.tsx": "56abdafd596b789cb8974a0448e9d7077ce2d7bfb152b08c6bb8b26f7852ad99",
+    "src/components/pattern/DraftRecoveryNotice.tsx": "2a488e61b28c9549ac00b1c29cf1ad73bb2369dcb989f7c39b99d229e1bd4b42",
+    "src/components/pattern/EditorialPilotEvaluation.tsx": "ab8bea039e9ec4e08aaae99875c2099eec700bd3e11df0b2056203a6b87d6a08",
+    "src/components/pattern/EphemerisNotice.tsx": "22a69a89f99b9942e17cf2a9d4db7d973e9ad12bcd8f32205c1d85eb8ca2d939",
+    "src/components/pattern/EvaluationCaptureNotice.tsx": "3f1142aefd9541a04c300127a3a082a0a0a13feb82347cbe111f495e5ce380ef",
+    "src/components/pattern/JournalDeleteDialog.tsx": "cdf21401a76ddbd4411eb2cefe37f672cadb8ce93b3f366f1b68bd9c1bb6c695",
+    "src/components/pattern/JournalEntryEditor.tsx": "39370be94ec9a42c5b7020b4802b226da353fb92272979947f29c6d3c399a957",
+    "src/components/pattern/Landing.tsx": "7470acb9a50cb5d7476304cfe89ca959aa63c1f8e68da5c3cdc47d4727e54bea",
+    "src/components/pattern/LanguageProviderChoice.tsx": "c695b5caa83f640ee0debaa3d7c3945c96d4c8e2725c2f6116ec5a411f347c86",
+    "src/components/pattern/MemberDraftProvider.tsx": "a7a72318ebc25446a8ce6c9fddc38262db904f25d33d5ee694df7b839d7f94a4",
+    "src/components/pattern/MembershipSettings.tsx": "1c56c78a03050a978002fc63ef08c1ca634456051aeeea0d4a0ff9b937c7f678",
+    "src/components/pattern/MotionSelection.tsx": "74fc2dd660cc9f4b9f581b77ac1d5736e05813852cef92ef94f25e107d05d94f",
+    "src/components/pattern/OrbitMark.tsx": "3b68013aabac24388370616eaed4d48e64bf68b5a7349876d9c040cc234c1f51",
+    "src/components/pattern/PatternChapter.tsx": "e2c793cfcf4e8b909351453ae259248d7d628e4af6ab99cd3738dd246b461d33",
+    "src/components/pattern/PatternChapterEvidence.tsx": "86b2deb2597710d2ddbf2433bd25dad6cde2283fd70856adb0b810729ba0485b",
+    "src/components/pattern/PatternChartDetails.tsx": "4159bed42afc1325b6add9152cfda3b4170be0ca5f299fa114cf2bb88f950898",
+    "src/components/pattern/PatternChartSummary.tsx": "1f4f9408ddf5b9bd5eee6d7aa570cb8dc91e5ee87a41559f72eb00b78db2005e",
+    "src/components/pattern/ReadingEvaluation.tsx": "051282d0f9eba47a0f843a71a2cc6e2b395c4f9515c16142a0212cd8e52f96d3",
+    "src/components/pattern/Shell.tsx": "94308516ea7523c78fae0c23053480880a76b2a17165429a848e9eb7078e636e",
+    "src/components/pattern/TimingCalendar.tsx": "0cbee7fb7aadea014c08c4de86d0e1bc09ac6599101324fc96d1ce09b730a5da",
+    "src/components/pattern/TimingWindow.tsx": "b4da27d89626a40142eb97e95285ae87daee69c323825a67260343d0b9e800ca",
+    "src/components/pattern/TodayCheckIn.tsx": "4ae2990062c01c03216feab598e73b69e57790a118117f65265797539173a434",
+    "src/components/pattern/TodayEvidence.tsx": "24893fd9dc16c22eaf19de0561c970377a68751bb8b41456f5e9d2884079c480",
+    "src/components/pattern/TodayFeedback.tsx": "cc46fcc3f99b0ac628e01fdd20657954a9e74039630f00d31f3f0116a22e0dd2",
+    "src/components/pattern/TodayJournal.tsx": "4e71724fdc899d601373d21eb5904ac42caf34886873ba79ad727c8fdc183f86",
+    "src/components/pattern/TodayTiming.tsx": "4ac017da5614b1aca09d7459757c1af01431396bc159172faf371310fb1c4215",
+    "src/components/pattern/TransitSequence.tsx": "3ce3da6b6626104eabe35cde08542d705b0601e5ebfe15c1d8f6a286fb6ca4f2",
+    "src/components/pattern/pattern-view.ts": "fcce643f81889a2d9751447d50ef916fb30f13584c825be039638e0fdde12dec",
+    "src/components/pattern/time-travel.ts": "68730a1b09ddfdfe46d655ba6a99fdf08835ceedc8d60c2bb8dcc413f1c260b3",
+    "src/components/pattern/timing.ts": "0e291c16e7ef66e19ad82503b858691a74a77f1eb52e90364960f07ce2ec06be",
+    "src/components/pattern/today-view.ts": "d19a03b65b8b045cc08eb2155cb8cfbbfafd82768544c11d8ec3554ab4aff929",
+    "src/components/pattern/useBrowsingMotion.ts": "d5a4ebc6e284a43eeb93a657c3ebdbf74c705dd7cf598e65ad5194f7d2091c3a",
+    "src/components/ui/accordion.tsx": "0903efcd7b746eef0a10c954a541b0dfa7aa1172f3c380a1a88f4e19a317fda3",
+    "src/components/ui/alert-dialog.tsx": "ee4d7f3341a1e5592787b7dac8e924bd226189492819f6704d8a7faf8fe64d20",
+    "src/components/ui/alert.tsx": "e7f4c2e6f78c59270905b4152b7d3ef4d5c6b9e3b2d370daa7b301aa7cbd27b3",
+    "src/components/ui/aspect-ratio.tsx": "d72c73d629e37995a0a71647d851d68d6fdcd7ec120797f36ab83a8ee89f2cab",
+    "src/components/ui/avatar.tsx": "0326c9041c5a0b1ba31ff29822c51950b6aeac485cd0985e7df714741a54e7f4",
+    "src/components/ui/badge.tsx": "6519775252fe729f21c60b92c7c9feefd1fe7d0a8c2cf16d6f1c2fa7e153fe75",
+    "src/components/ui/breadcrumb.tsx": "d5224e87344b3ac0f8b002e5dda6a71ff8fee296db8a5fbe6b034d06bd5c2ae1",
+    "src/components/ui/button.tsx": "e39813b666ba434660ec088356a0349246b6803a4e99961295d0c82bab1ab862",
+    "src/components/ui/calendar.tsx": "e883f2245873fdf360764f77fc8f391426bef5776c6397537012c46970ebd6ee",
+    "src/components/ui/card.tsx": "f13878a0078a5ef9f3e92af29259fc1e93ea56ea80cb992e0c4dea4e35396459",
+    "src/components/ui/carousel.tsx": "568e00e8edbfab8af67ee902ca9ef5ceb6d5ed6f3045e7f9b3c15b4f7ef9e974",
+    "src/components/ui/chart.tsx": "81b1f692f9334ba3030213ff37eeaf2dd762b644e5d96e51ada7072109f07430",
+    "src/components/ui/checkbox.tsx": "c44d02535d5c9c92807576804407dd63d01e7189dbde526e925b53885e645fd4",
+    "src/components/ui/collapsible.tsx": "5f0a45d8f6ca72d37ed10bf0a85306158b67d7cbc386319186ce013ead9bc0a6",
+    "src/components/ui/command.tsx": "ba8c0f8b23044ce9a5066e66d7ab7be3a3c79bfc4a0ab7dfae6ffafe439145a3",
+    "src/components/ui/context-menu.tsx": "b299f50a0a7840b136db5670f2b2e7eec6fc62b3c06bc2ad0015800959cc381b",
+    "src/components/ui/dialog.tsx": "e3a6de153fb15597ea95be9c4549211a297c060267787915599e3d680d476bd9",
+    "src/components/ui/drawer.tsx": "478c487f66245641d5fa0f0d1c53a07d68bd60c4b3c497ec4c41ce08b482e14b",
+    "src/components/ui/dropdown-menu.tsx": "a6b87c89f5a806225b7f3a81f13a6577289c67e5787c2a56b5a22bd1edea02ce",
+    "src/components/ui/form.tsx": "1ed53d4ab564a64708938643de590f2bef3718b0b2a309c1019c57e9c1fde23f",
+    "src/components/ui/hover-card.tsx": "69dc172ece56ac77bf3a044a1cd60ed601b0041945d16b5da4c6cc4f42116988",
+    "src/components/ui/input-otp.tsx": "45b7c4fd518616f76dd611b9da13bc60bece1352e050878bf943e1cc6a4ed678",
+    "src/components/ui/input.tsx": "92debb7d6d2d96d9e607a42d5ce8f37b2d63384ae5dd9ffbbf5f047b680ffb85",
+    "src/components/ui/label.tsx": "9f72e2ecf16206593aa9e3c4fbc14cd8e81aa8488d57d92d4a950b30935a9fa9",
+    "src/components/ui/menubar.tsx": "5bd157c3a446ea1e451867e63724b2e87ad6bba6251c8b5f1b267d1df7bd4e0e",
+    "src/components/ui/navigation-menu.tsx": "755aecc77b7911ab61159c9fbb9b25254009eb4c32c95b1430b6b5b7d37ed8f0",
+    "src/components/ui/pagination.tsx": "cbe8559c578ee2d34c7daef5ee75dc3afeb795851e294b111dec375ba44a9a2d",
+    "src/components/ui/popover.tsx": "861c18577ea5988c6f5ca00d1c677200319fd427cf8b424e59a5cca6ff24f830",
+    "src/components/ui/progress.tsx": "418f612946a520d1380b7a0d058185bb6a6d09846846dd6d6904a0016152dd4a",
+    "src/components/ui/radio-group.tsx": "8c55aa0496b00a27fc4f609ca8b43a7e82c6802f6bf613998438b7632899fa96",
+    "src/components/ui/resizable.tsx": "f0399fec7bc334f06433b41b6ebf34255942ce4916b99173898893fa7fcc8281",
+    "src/components/ui/scroll-area.tsx": "b607f562455152a079d70a22538c95072b0267e0d59a1a1cf16a905a2e373a6f",
+    "src/components/ui/select.tsx": "6d4deee18cf7ced0354eb719300833a83caf46400de6ee9c3d1942fa4c579ad4",
+    "src/components/ui/separator.tsx": "bf5838b692e5f74fde7083280b99492dd402bce6966e912e79f5e23f14bc98eb",
+    "src/components/ui/sheet.tsx": "a82f9341962e766ee925a2fe883b0a9ab5d5dd8475c402ac8e491ee37dc95fde",
+    "src/components/ui/sidebar.tsx": "9f44f4523271f965adec608ae1c3b8a2f350f2f45ba1401a2c7ee33bc5eda238",
+    "src/components/ui/skeleton.tsx": "f4c42257d73925b0b856a3500e2cbdd918fe6744fcd6be87ef28bb88e7eb7366",
+    "src/components/ui/slider.tsx": "d307cf3ff05b54be4a04389ef4379f9e8b4dc49720197937991ce843a8d4b5ec",
+    "src/components/ui/sonner.tsx": "3ad40f66c339e799b1a57c00e10b4627294c7d580d99d8a48ae0d8d4c13cf931",
+    "src/components/ui/switch.tsx": "c3c298df4ffb56695e4a8f0ff3e37eee08437dec542a677153ec16bed0820107",
+    "src/components/ui/table.tsx": "1e945e564c2cc5ca3ef33019ba7da7a8b94cbc73feb3cbc2b7b33c36ea648d92",
+    "src/components/ui/tabs.tsx": "e9b454d2f987c83b36cc8870bba47d9355db4e8f5c733b310dbc1119a7d27654",
+    "src/components/ui/textarea.tsx": "35617a2cf053e52c9e56983bde82d556861d38e462f9e578876c8e99a0432687",
+    "src/components/ui/toggle-group.tsx": "d59cd3937c967a3e221fdfcfe4ea5cd57eb97cbe37e1ac98126664c9c7db49c1",
+    "src/components/ui/toggle.tsx": "62e6e21993f1ab633b9f830cbbf0c181f3d161bae3a7792dbf2d842d42a2f09c",
+    "src/components/ui/tooltip.tsx": "9682690fc3755d0f4b8684f2d7b1f77945876d41a45b723d0761b26804ad5010",
+    "src/hooks/use-ambient-motion.ts": "463a3d5355f827e100140f971b5cda2da7b3cff277b762962030f4bfb8520f3e",
+    "src/hooks/use-mobile.tsx": "21eff740f9e5c965c7f0782925a7e8f67ddfcdf0f58b6613550f99c3e1c454e9",
+    "src/hooks/useAssistantSession.ts": "a6357241757bf2bee3a218890cd66dc5f508e7b3806941484799ec4d9d50ec86",
+    "src/hooks/useAuth.ts": "f1bd024107243d148dda177ea215b13f7eae53be5b472e61f2c9b1398d0b59af",
+    "src/hooks/useCalendarRefresh.ts": "2a5be070799c3e1ce59165196590bd78dd2e524bd0e6d35340dc74ec38743f60",
+    "src/hooks/useMembership.ts": "99ac241de36e35a09cd64211cc6cbb05c85162ad10b413e06b3444c444864313",
+    "src/hooks/useNavigationMenu.ts": "0cdfaa66d58785160cf8890de6a184e7d8b239c75369251c0e5c6425d97840dc",
+    "src/hooks/usePlaceLookup.ts": "f22a9571ded691f52cd7797ad3c85d27a30d98c140fe5679ddcf91c94914255c",
+    "src/integrations/lovable/index.ts": "2b71954d100f88b414b15bcea1bae05450f4761727e030b3a21a0448ce9c6222",
+    "src/integrations/supabase/auth-attacher.ts": "24d0dbdf8dc0fd49b391a948bd04e1db43b97a1d851acc391dd3d1b13b9797fd",
+    "src/integrations/supabase/auth-middleware.ts": "9358ea3516b212bf77abacb3549b36f662a70b4a6888fe23ae572cb3826d9f52",
+    "src/integrations/supabase/client.server.ts": "56ec7f9ac40ccdf96d8aba4f7fe33a586590ac63420b81e6cd5dc1e4777ee28e",
+    "src/integrations/supabase/client.ts": "78a33aab7d61f3d29390546f5340d2df44533118374eb5f71eb797231c73cb7e",
+    "src/integrations/supabase/previewAuthStorage.ts": "c11f61a80071f876a237b06f902f5e278283044e7202d28b33b8341b9fceafa2",
+    "src/integrations/supabase/types.ts": "f420e745d80b07cf53c3781c41865aef664e8ae59a722e517ef781f6e26119f7",
+    "src/lib/account-data.server.ts": "dfc6dc8d0a9953eb5a612591673fc61cd6a360a1d54a7690ca5325d837ff1dec",
+    "src/lib/account-security.functions.ts": "3a4a6ff18e140807168c6f819b5f6a6e74d7a2d03367c8bb92c21176221c4ec2",
+    "src/lib/account-security.server.ts": "613542eaeef95e794ba3e825775699ac215656b360818e1e64fac1c0888ec1d4",
+    "src/lib/ai/admin-transport.ts": "7766c746d42c24804b49481ec0eabd938227b3264d980a2016c9af8261684454",
+    "src/lib/ai/chapter-policy.ts": "d97d26a9484d10a361aff42f284f21e9dd72c91dd500c074be04c318ac78f546",
+    "src/lib/ai/content-comparison-plan.server.ts": "c3f48d30d089c1d58f3d745f15aa1bc2f6ba82c70dd60f45b2f0dd0163e34fbd",
+    "src/lib/ai/daily-modality.ts": "f024203444419f6d636c3aae69dabd3a7e72097daaf7dd56dc7bce4863f68910",
+    "src/lib/ai/daily-voice.ts": "2211a21ece951796410924a94d463319f15a6851a9b3401cae0b77509ae3f41c",
+    "src/lib/ai/daily-writing-quality.ts": "08ff71bd2326f6e049adb57ad8b1df5c213ed5d5bd63255e38af82977a542a45",
+    "src/lib/ai/diagnostics.ts": "04e0493f42262dd3d10a3b5524d356a87095758b9bdcb302edac2d70f09f5c27",
+    "src/lib/ai/editorial-pilot-plan.server.ts": "6d86db6a363bb81f250eb0f1154b7f7fb314df77327f0dae9a69aa865c9159e8",
+    "src/lib/ai/editorial-pilot.ts": "e440d937bc3c04935925d8058671a121db017c1a38179e659b08809f5fb37074",
+    "src/lib/ai/evaluation-case-sets.ts": "5ee7bbe43c8848f332a9be0d76242f222a362b7f2f7a6100e75c65343facd9ff",
+    "src/lib/ai/facts.ts": "c8d5f44d414c0046e92fccad7b4c4326db10216a1d53763e02e8c0ab5793ede9",
+    "src/lib/ai/language.server.ts": "15fa2308574074775601249a2d6a17179fbeeeeb8d271ada126438096a31c53c",
+    "src/lib/ai/latency-probe-plan.server.ts": "b6a37974e0fc255e18a252af3456e42ced2b1f7ec8eaae5d221e113d7e0bd892",
+    "src/lib/ai/latency-probe.ts": "38b9b983a9eade24946d055e998791d3b00d9df792832c35e1f7f2a5b90eb351",
+    "src/lib/ai/qualification-plan.server.ts": "25c192ebfb927cf02c6ff4ad580f9e8d30e41cde9d1b20af93dc01226c861b91",
+    "src/lib/ai/qualification-profiles.ts": "803c9dc7dd326d7ac2de9332133f018f3a2bc7f60a1137cad47316e0aa0e081e",
+    "src/lib/ai/quality.ts": "4c41cc6e34590d08ea6fc173f38d79c97ac93e71f5aa78df90524c26d6c4976c",
+    "src/lib/ai/reading-evaluation.canonical-scans.d.mts": "63be0ff8a8a9c495b7ad752ded32c26a03d7f5c6203837c9669020e4f9e3c9a6",
+    "src/lib/ai/reading-evaluation.canonical-scans.mjs": "3200bf764e2b689f1626f94a9b233d6b76d06ebe7ed8518ba1c840a761849de6",
+    "src/lib/ai/reading-evaluation.draft.fixtures.d.mts": "3bca7e79d36f164c830bd6ca889d45097b23272dc37fc1ff27ffc9d53ce52db3",
+    "src/lib/ai/reading-evaluation.draft.fixtures.mjs": "ffb199e6caa5e7af461efa2bde6544fdb6e3a1efcd36b0ef12a9f4e1e59c227f",
+    "src/lib/ai/reading-evaluation.editorial.fixtures.ts": "c9ec7889b5f3fd0bc0b6f9e7e5053618ca360dfda76e9c0abc12852e0a0f8a4f",
+    "src/lib/ai/reading-evaluation.fixtures.d.mts": "fa607f521953c2d1391afc268b76e2d4d0fdd0f9ed93041cb3747e4f0836b3ce",
+    "src/lib/ai/reading-evaluation.fixtures.mjs": "543b9822ce1206d5df4306f76f4927c19779205d01cfbae08daa1f51755e2e3d",
+    "src/lib/ai/reading-evaluation.natal.ts": "33b322c2e0552a34e6de3504e7f3134afc05f789816b3484c384da87b2057ec2",
+    "src/lib/ai/reading-evaluation.server.ts": "2af0261393baa7cb6c2b89467b91fbe8af700b9fe32a76f4a321bdadf0c652ee",
+    "src/lib/ai/reading-evaluation.shared.ts": "1256fbfca91526b4450c96ad1f2da78858fb3f89489d6c6e3b61550d2933867e",
+    "src/lib/ai/reading-evaluation.transit.fixtures.d.mts": "da4fc8ed385758d303b7bad72c210ff900f25f324d35f318238c1834130dc3a9",
+    "src/lib/ai/reading-evaluation.transit.fixtures.mjs": "d386e2b924f9e66e05b6bad5731287a2b5a2bd85a4cbbae7d131695b23892801",
+    "src/lib/ai/reading-evaluation.transit.ts": "411dd2b5077da1fee443a38c51a8a2322a333d42f65fedef2290050b51c34591",
+    "src/lib/ai/transit-story-facts.ts": "d68673abb945338af9054fbde817e4b194296dbcd1e676c7d0a862f8523561ed",
+    "src/lib/app-origin.server.ts": "262d4497a9749b6418dc6109cab314b354a36d44c3b7bf8f427c3a87363feccf",
+    "src/lib/assistant-navigation.ts": "50600e3c7112397f30bce695919a96b6473bb3834b64624ab253e629c22097c6",
+    "src/lib/assistant.functions.ts": "6524e0cdd4756106bfb8b6be75493b8b8ba93b4d2f5cbf2a9d623f21076e5d0d",
+    "src/lib/assistant.server.ts": "7c2dc528574291b40b16305b024bf06d8e826452a3aa11cf08ec9e075c07be0c",
+    "src/lib/astro/chart.ts": "c7ba964880447b9f9dd6312455e3bb2854f4a35575745be7190a94f6b785c39c",
+    "src/lib/astro/contact-check.ts": "329eaaad7d0feacfb67ddb0682997b298362d60c55f15563354a6e177650b1d8",
+    "src/lib/astro/cycles.ts": "bc67f4cfa423e987e4f0d88a6123f4381a6898f5dc2e42f4d2bd98bd3d1fabb0",
+    "src/lib/astro/ephemeris.ts": "a404ec7cb4eecb8c9f90c7551cc2588adf56ccf8f6f894f2ec3f54e900ed16d1",
+    "src/lib/astro/lunations.server.ts": "dc8be2b80802cf0182fba2966475e19dd3a08e89ffd8c2207b31b7069bd69e7e",
+    "src/lib/astro/natal-reliability.server.ts": "c012c84cb70d524963c464a81e532817b3413b5fe33701fe8c9115306a2e766a",
+    "src/lib/astro/natal-reliability.ts": "87ffcd8f281991f4aab3fe4a42412ae01a7ede283230ecafef25561d0cd19b42",
+    "src/lib/astro/solar-context.server.ts": "8c00fc26a5f5a4907d907d69303365d388cb76d0a7b38c36f8b082bf0585f20d",
+    "src/lib/astro/swiss-calculations.server.ts": "ec1351096f36ba0212673a99dca98b7d2a07caea16d05e2f64e6b7d6229326db",
+    "src/lib/astro/swiss.server.ts": "fe90666cca82622f85b281f0b3847aaf1dd6fc90e8e94384fcdf3bd114579dfe",
+    "src/lib/astro/transit-anchors.server.ts": "9c7c3fa0bcfc3054520c27929d103cf48e6cafc9b0ed7473303be740442fb425",
+    "src/lib/astro/transit-anchors.ts": "ad42f83cd9fc23cea9cc601998247b02942f377ef3864f8bdc488b6505b6118a",
+    "src/lib/astro/transit-episode-proof.ts": "b10af29aca36d91d11a4272fe909d58e60e5a9d5a3ac417c650ba62195eb19e3",
+    "src/lib/astro/transit-episodes.server.ts": "7973e92f7385097d0498510211d8613ff5dcb7fdb2b8b1198a9810f42513c87a",
+    "src/lib/astro/transit-episodes.ts": "7a995b9fd540938fe06185c8605f78a6af4cf8b1143ba7d8ef40f5c3faed80f9",
+    "src/lib/astro/transit-presentation.ts": "2920bdb15e03aa686c7bf53db9a5e4202633a654d5a1ce52f7190117c7f4d562",
+    "src/lib/astro/transit-timing-cache.server.ts": "8d654e6616ba3c2aff11723f1989c6c8698a30a6567328f7d3d2e6be9b00d0a4",
+    "src/lib/astro/upcoming.server.ts": "d3906b1b59b9cf89a23d6263c97a4a4cfe242c3d89a0f8a21282e730f3f56e6b",
+    "src/lib/auth-middleware.ts": "5eb3d06af28e66880f8aa9ed2b255e74611d3a4689106192739ceb9373354258",
+    "src/lib/auth.functions.ts": "13c143e466897cc47968eee9ea6a851f126c4fd85b0bfe247ab1c8bbded92dd2",
+    "src/lib/auth.server.ts": "842caa687245df0cc7285d01489776aef43f07166a3af4dbbed388338836dc43",
+    "src/lib/auth.shared.ts": "c88c4b7fb61534733713fe6c14ed213707beee0dc070ecff63fc2063f21435ae",
+    "src/lib/billing-config.server.ts": "cdaaa44aba87065cd4da66bfafe8bda7f335e9c104d6427cdc34069df1e14b0b",
+    "src/lib/billing-policy.ts": "bf412097fb98a0836e937af57e8b79f2c3f42fcba5d794274f59cf33c290d7bb",
+    "src/lib/billing.functions.ts": "990a0b472cf339471b9d1ee93d4c1c6b51e75a0f601ad757d93b27412fc54d4b",
+    "src/lib/billing.server.ts": "9beff87979db568b32ddd1423a92a6d48901567250fd6c700a9bf612ddd96413",
+    "src/lib/check-in.ts": "b4712c7fab4d65a3a8a16ecc9425cfd617f57c4258f74975ba2ac1c0f5b882f0",
+    "src/lib/content/content-drafts.server.ts": "bb361da100b52112fa4ee90c78d824efd9429b74756679e20c2a5a7b818cdddd",
+    "src/lib/content/daily-editorial.ts": "d10340c276e5ed8aee5101b30a720a716ad4c25501e331aa9defbbedc41284b4",
+    "src/lib/content/daily-reflection.ts": "a4ce0ee3f3a623848f4fda6906961a9244ead7499d701bd80d43c7e7e705ef7a",
+    "src/lib/content/daily-writing-invalidation.ts": "0e9b36232411aba871fe56e64a09a80217567ffa43e61e6c03b03a1af783a4e1",
+    "src/lib/content/daily-writing-policy.ts": "7bcba3999d542d1557e886a324b71769d0f24e3b93807861ae75933b74613782",
+    "src/lib/content/daily-writing-storage.server.ts": "a4df33e056b3b6b03ed93014b3aaa97239785c4ada112fcc5284bef48104ce6b",
+    "src/lib/content/daily-writing-template.ts": "4629d39a152f01cca91ae433b8ac0c50720fa724048265e143a66255bc4b8eed",
+    "src/lib/content/daily-writing.ts": "b01e0d9b5034bce1dc32ed4f19fb5ed31875a20f3eee2d026b83055890af6d21",
+    "src/lib/content/default-bundle.ts": "62c6ce6d7e31bad0c4b12b1f11eeb158b2ba6462b097e90733f9c6dc7b9f9a46",
+    "src/lib/content/draft-comparison.ts": "0862589d2b85db5aa6a34addf33d92d35d2d229d1ff5711b99916cbd2d5a0102",
+    "src/lib/content/editorial-candidate-bundle.ts": "78c5b82cf3c4d0f296f7001385439c4094ea030b3c3e16687dfc4cd9176fff01",
+    "src/lib/content/editorial-candidate-data.json": "5d3bd26122cd1d3f3446abf96670fea43fecddd8de2a2b94e70da52e83564752",
+    "src/lib/content/evaluation-source.server.ts": "125dc073478d7e25814e79ec92c67a6fb9fd191579491784b9aeaf4d9c92fa30",
+    "src/lib/content/natal-candidate-bundle.ts": "9ee41d214523c0c8a162e1bb5b8eb69c1f15393a8375ebeba9fb9e54fd3da155",
+    "src/lib/content/natal-lens-catalogue.ts": "173a59d03e7c50759903eb540ca60bb8f30d0e64bac4733f6369e079e310633a",
+    "src/lib/content/natal-lens-policy.ts": "617a32bcda2f14c673092abe6814f6b927cc85f2f9343ba0e27325f621bb6b2e",
+    "src/lib/content/natal-lens-storage.ts": "30b3ed9df6a69f588cbf41b98f47634ca5904da20dcc5a58afebe59ce6f81475",
+    "src/lib/content/natal-lens-types.ts": "2e30370e01bae9f8bcb89e886f754245f26453401557c7c23413901c3194925b",
+    "src/lib/content/natal-lens.ts": "cabac79663b80fd6b302af4c6f42d83fff63487f4b4b290de805937fef10faea",
+    "src/lib/content/natal-template.ts": "889c4232baf825926cd00bbaeb47bd727529d7efe8d649c33948f9e68ec75eab",
+    "src/lib/content/primary-composition.ts": "c307ab0d754739ac2ff3c5083f0ec7378c9ac0ae9135685fe876c4f74ab7e039",
+    "src/lib/content/release-lifecycle.server.ts": "297b598f5435b07bc8dfc20551934f3082ddd8a3713a1cc3e2fd6271a49adcc1",
+    "src/lib/content/release-version.ts": "b4dcca4d8cd531081a02fa8f813eac91ca07ed21ee8745c03ed1b3750ffcd8d6",
+    "src/lib/content/schema.ts": "f22355a95829bc53d6ced3535a9db73d708e90cedb7ad9a09adc8adaa264420e",
+    "src/lib/content/synthesis-candidate-bundle.ts": "6fd9ec863c8bf6df3c5a356f8af5e9fa0c782c1c924d47f02acdbd4efc0cc84f",
+    "src/lib/content/synthesis-coverage.ts": "4054746a37c07e073c0cb08ee6c9849f3894d8a3e2441dfdcfe7d27c32bb719d",
+    "src/lib/content/synthesis-editorial.ts": "c9ed9a20106dc6eae098eceecfee4e36a936b2a6654ee19a0a1d42814602a6a5",
+    "src/lib/content/synthesis.ts": "6bade229a8eb77188576e12a293933eb80205d4f6d5e4d1a5f0943d03813ad71",
+    "src/lib/content/transit-candidate-bundle.ts": "901872c4c652c01d0ae3e8fb9a509da421f9b5e3f85651cb3721821f15ec600e",
+    "src/lib/content/transit-story-catalogue.ts": "1f1c554b60941faea836abea89a2800a6b3a770df3c5601de744fcd997e25be5",
+    "src/lib/content/transit-story-storage.server.ts": "a324b9b6cb66963c3afdb26f5ee3df641345764b9e54b82d5131613fa4ba74f5",
+    "src/lib/content/transit-story.ts": "b3ccba4ff86680d3161b5bea4a29508c5c2f5dae40164f5735d5fbedd1f437ca",
+    "src/lib/content/writing-candidate-bundle.ts": "9695b3b1a7325bd86a955613399429bac83bb1e107f43c821efcc3176f971bc9",
+    "src/lib/context-policy.ts": "e35cc1ba4b7c8a1ee1a44405370f2f35337c8e834f5cee99d0174154dca4863a",
+    "src/lib/crypto.server.ts": "b53df8f856ab5b71b488bbfa874a5912537d0ad24479fd712ce746b7b7dc4080",
+    "src/lib/d1.server.ts": "bdbff3cbb5ab835ed4527988e9c7261e9da9bbc11d9fe46353563b29d527f8f7",
+    "src/lib/email-templates/email-change.tsx": "4ecbe287f2fb38986f4dad1ac6dac682223e73990a14d43c9a0b76ff2d2dd254",
+    "src/lib/email-templates/invite.tsx": "ce28fa465cecc9c129f9368642506f73fdcb7bea77d16277ef6278517ace01ce",
+    "src/lib/email-templates/magic-link.tsx": "0cdfcd0923d2b2327832c359d6fe5b175d66166a12038805c4ed9e873aa3cd59",
+    "src/lib/email-templates/reauthentication.tsx": "3f1d82e35d24dae2a83a03437713a41496a3701286b82b0b286dec0230230c17",
+    "src/lib/email-templates/recovery.tsx": "826b2fe058a6161ee38afd1361546fa99f4accb347a13bd90f0cacbeb25d19ea",
+    "src/lib/email-templates/registry.ts": "0d0445e0a46947eff61bac41e5462581f74b95c14634d632f8fd47a7831100e3",
+    "src/lib/email-templates/send-email.ts": "faac0fe633d17de635b99773906d9829620a4de2529f11b5e618190a7d7cdf5a",
+    "src/lib/email-templates/signup.tsx": "f22ad4ecb5c58d81d6d705fb643e5d8d302b3c01388319f60fd244058a2a7a5a",
+    "src/lib/error-capture.ts": "d6fa7756cbc4c399f4e891b174c2dce8160e2354972c2ae68413dfd1db843088",
+    "src/lib/error-page.ts": "e633fd9b8037423fe5d7487a5ba8691c25034248a5f748cc4a483aad512e5d23",
+    "src/lib/evaluation-runs.server.ts": "a97f392d21362fdb4ded011e0a570a43035d334e98e5a3a0f706aebf7211207b",
+    "src/lib/journal-submit.ts": "88b90eac155199cc3e9864ce6d6ec997c4350b93651b1d581033068c57c028f4",
+    "src/lib/local-day.ts": "9e358fc4a2415eb13dc1543eb54dd1b7ff13c4732290c973399d80fc1609cad3",
+    "src/lib/lovable-error-reporting.ts": "0d6a91dab0a099507a379b28eaa7d2825e76bcc0ce5a8444e07e3e28427e9b57",
+    "src/lib/mcp/index.ts": "2c51ad81c0dd77b8c70b897bc0a096ce83e5dd183ea02e7af899fc7e014a09f4",
+    "src/lib/mcp/readers.server.ts": "09ace89b635ef2df448805e019430bf87937134c7c8230a80e4e57f0172d5c5b",
+    "src/lib/mcp/schemas.ts": "b98f5d3bd7fd2f5f03f420e71a5814df92a3f52ee440ce09550ac8bbc360166d",
+    "src/lib/member-draft-controller.ts": "6c75305e802bc4a7001baa914a1cf7632f319ef807f78505cfc9f673e545b164",
+    "src/lib/member-draft-store.client.ts": "1cd1d3b46e7f96a829b22009de7079138d23c222b4dfa589c2d07258493b3db4",
+    "src/lib/member-drafts.ts": "a95dd1d2fe458f0a5828180136961732e23ac731ea3bdd8d6ad4ab94f3fd6bc8",
+    "src/lib/pattern-query-cache.ts": "0c0be2a44d22ab9e4629fb2c2bf4dae16cdf17c86413c633289c463e0156cd91",
+    "src/lib/pattern.functions.ts": "7ca847ff2310faa58a63417ceedc628d57fce45b114613ca010facdc46fe2e1e",
+    "src/lib/pattern.server.ts": "60feab3f9bfc30dbeb7f43da19112680264952c382c79b639ec3935a98f33037",
+    "src/lib/place-lookup.ts": "6a51317bb18f891253f0430d9ac311c19cd0c3d4c8293598005e8c2b4c65c215",
+    "src/lib/reading.server.ts": "8b8bb37864bccbe93243763a0b6cf6bccfb45dfe32c64f183727e5f490495910",
+    "src/lib/registry.ts": "4f5f663fe2de148289e592d6268d2dcc4c4d164aa4b6d0bc24988f5180727e80",
+    "src/lib/retention.server.ts": "e4f4bfd88d8d7dfde09e0ae37e21608da5bf9665f522701fa981e2ec0d852bdc",
+    "src/lib/seo.ts": "55657eaf1bbacc1f8295411ccdc5c3f9d11cc9f4bc202194cf6c18c8d998ce08",
+    "src/lib/solar-context.ts": "26b6ffd159a46f6a050cbe8bb4561d7ecc6632018c22d17d39c0f03f8adcbbd3",
+    "src/lib/solar-location.server.ts": "289593ad59c69775b5c7ba206d6d804fd81b45b958694a456f960e52be93f88c",
+    "src/lib/utils.ts": "d1f1e0d62cb8d8d1e04c26e14de842d8a151f75812d81b046c65b5d1fe8e4b27",
+    "src/lib/workflows.server.ts": "0be32720f3d2d929839b6170ae0e61e80fc7af9a8b44abd0a7237edd5e88bc44",
+    "src/routeTree.gen.ts": "dc67c3f27f21b1b0e31a1c990f7187b5682b8c1d04b95c38c084ab62b4073191",
+    "src/router.tsx": "72b68964d3f55ba4f7dcf2a04aad9d97d7c61fabad13aec1d298f1e39ee59fcc",
+    "src/routes/README.md": "5c8187dbe79dac7a3c494f2600585508f5d15e75f04f21ea364d0de14de10575",
+    "src/routes/[.lovable]/oauth/consent.ts": "e358c0fcf0a0525c3791f7a2e69e0a145997da92045b4a5af66dce66e1ec95d0",
+    "src/routes/[.well-known]/oauth-protected-resource.ts": "c4dd8866921fe2c4bfc0943c21e35406388419c2ebbbefd79a5c14e6069cb8d5",
+    "src/routes/__root.tsx": "f5bb27fd3043ab28a5b790b575e2c2295b080657977de6e575c9e7cfeeaee5e3",
+    "src/routes/_authenticated/assistants.tsx": "a160d3f6f4991b554c81b82c6a788f5a8b15e51bb41fc60184da65ddea6fd379",
+    "src/routes/_authenticated/birth.tsx": "eb08eb01b453883c34225925905b1a36dd657cd9f10e3c1ab6b1e84cbffdef11",
+    "src/routes/_authenticated/content.tsx": "93e6d0ce83d07db26d08eb4f56b8e836be65c9c6b825a3243971711dd01c4edb",
+    "src/routes/_authenticated/journal.tsx": "e02a54172833478ae8eda708213573f0c3138d0da2cd12c1edf45cf7dab6c25e",
+    "src/routes/_authenticated/membership.success.tsx": "43b74940b890ff851724b5094bdbca571ec4bbda43a0608cfb7d040b62eb2084",
+    "src/routes/_authenticated/onboarding.tsx": "ec52e349a913c509924ff5a8f315b6ecca46039199b6e4114da5a72802a85c12",
+    "src/routes/_authenticated/pattern.tsx": "7fc8a9570a3cc162336c345b0ddcc1929c77972a2b92829a3029c39d84254c38",
+    "src/routes/_authenticated/plans.tsx": "657c2daa238714cb0dfd80ff15b4dd564d339ba84ed8c231385c6822f3e114a6",
+    "src/routes/_authenticated/privacy.tsx": "1101702c6dd53aeeaad47ed79e38ebfd3085e1c0bc461f6feae10170ad0e7fba",
+    "src/routes/_authenticated/route.tsx": "c4f804ce0c90e9a10e19b81910fe0c74088d65be4459e5550d819d8ffaccc5f7",
+    "src/routes/_authenticated/sources.tsx": "76a0cf28772090aa7fd8c6c6c75b51baa437c5839c9a4904574d2ddfb284fab5",
+    "src/routes/_authenticated/time-travel.tsx": "7811d6b29c0e9f48002762527d57662f68b33fd78314f0e253fde2d5ceb230b8",
+    "src/routes/_authenticated/timing.tsx": "e63ee50dc2f8419db4ec261b06e287790f05c9d51539775d54469d4896d2deed",
+    "src/routes/api/public/content-releases.rollback.ts": "39710b735dee19f1b9c06f5c4c8fc385ae35dca4e8282a9686eabae09bd35ce8",
+    "src/routes/api/public/content-releases.ts": "330d8d06666b1f32b6eed12f908c0807616f957c2591403c5a6307a53d3b5e60",
+    "src/routes/api/public/evaluation-identity.ts": "6d89eaec05d2829f704141a08dfa5e77f375c54f674736d24f1d62c7ebc3e282",
+    "src/routes/api/public/evaluation-step.ts": "70e7881741e08e85e5b6c1073389ee21856254d7ccf247018405ac5b2f91f85d",
+    "src/routes/api/public/retention-step.ts": "d646bb587bba40880d547f204c63a0cd3081d20a65f536007276233b9f603792",
+    "src/routes/api/public/stripe-webhook.ts": "ef727bbd349862bae2a7755b60c3dccca9531d01f5b66a10327613f3db67c687",
+    "src/routes/assistant-auth.tsx": "d4a9c37a9f7d14da9267b8a6848ada0c6320091e0b976e9ea6f668e49a131742",
+    "src/routes/auth.tsx": "19a3fcf4122a028872ce1b750e59e64f60c1e39a200fa5c7a100a03a68c2a9b6",
+    "src/routes/confirm-email.tsx": "98fd2c3575c9e1b8e50366ebdc691a097609a67deb1ca2170e886d59dac9871d",
+    "src/routes/index.tsx": "65786672ad60f4f0b41454eb6f000945fdaf2857ee10b838014bcc6f4a1614a3",
+    "src/routes/lovable/email/auth/preview.ts": "c029a3b93bd6ad3f71a2c3968fdbbd9335a07ff79f826573b2b560629791be4b",
+    "src/routes/lovable/email/auth/webhook.ts": "95bcabddb3a0390683560144313c5107dfcb06310ae0b575c81bddb60ede5dae",
+    "src/routes/lovable/email/transactional/preview.ts": "2e0ed9812c954511df8dd5bc61687967c4483dc7d08d0d98e8896a18dfe24f2b",
+    "src/routes/mcp.ts": "7b154649593a7b209d4b68bb541d7a0a154f7b22c0f0937db44a5dbfe409e554",
+    "src/routes/oauth/consent.tsx": "08c4762dde6e8003c7722431dd9980f036356aceebfd00807e028d57337dda6a",
+    "src/routes/reset-password.tsx": "dc9434b650cf1efaa9022587a28e7f8c6bb1b8933c81e760c2e61dab244bc092",
+    "src/routes/transit-chart-calculator.tsx": "e73da31e0c290093b5f1d0af6af89f9334e5947ad6c1b113fecd9c2b80807ff8",
+    "src/server.ts": "da4ccc4045cb7d4d739111c180d1b3b49e0f2f94a71295d9be16663e5dcb12ba",
+    "src/start.ts": "85471ef9e44c1efbfda261143e27e817c95204724507b7dc6c6a147736434372",
+    "src/styles.css": "4e7161db005749cdce48ecd779f8f4bfd0ea014a288c280695c9ac536c7e2526",
+    "package.json": "a22b5b71fece414a3fd4c219deb1d62b614c16bfcbb09bfcd30dfa7d240483a8",
+    "bun.lock": "d464759ac5d20f3be380c28a16e9d68126d2a3645b15ff5a074615badaad5667",
+    "scripts/validate-editorial-release.mjs": "c23f857963b0d6c8a8a995fe4d9381c79665b74437a704ac9f939542ea8adf84"
+  },
+  "bundleVersion": "0.9.0",
+  "bundleChecksum": "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f",
+  "bundleSerializedHash": "761d68d270b93759b66c4a77dabad21213f1e4ca2f2873a4295d003cadcb6b61",
+  "entryPoint": "generateReadingProse -> memberLanguageProvider",
+  "provider": "gemini-enterprise",
+  "model": "gemini-3.8-flash",
+  "bounds": {
+    "maxProviderAttempts": 5,
+    "maxPerCase": 1,
+    "quietProviderAttempts": 0,
+    "maxInputBytes": 65536,
+    "maxOutputTokens": 65536,
+    "deadlineMs": 60000,
+    "dollarCeilingMicros": 5000000,
+    "reservationPerAttemptMicros": 2800000,
+    "retries": 0
+  },
+  "transportDifferenceFromMembers": "The wrapper adds maxOutputTokens=65536 solely to bound validation spend. System, user, schema, selected provider, validators and fallback handling use generateReadingProse unchanged.",
+  "evidenceLimit": "Local Node execution of the shared member writer on fixed synthetic inputs. This is not production Worker execution, getToday, cache, save/reload, real-chart correctness or member acceptance proof.",
+  "cases": [
+    {
+      "id": "writing-reply-scene",
+      "editorialKey": "editorial-writing-reply-scene",
+      "input": {
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting mercury conjunction natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase separating. domain work. Calculated exact date: 2026-10-10.",
+            "cycle": {
+              "transitBody": "mercury",
+              "natalPoint": "mercury",
+              "aspect": "conjunction",
+              "orb": 0.42,
+              "exactDate": "2026-10-10"
+            }
+          },
+          {
+            "id": "I1",
+            "statement": "Published interpretation conjunction:mercury:mercury: A cycle of thought and communication resets with fresh curiosity. Mercury's conjunction with natal Mercury sharpens interest in new phrasing, questions, or ideas, bringing mental focus back to how you articulate what you mean.",
+            "kind": "interpretation",
+            "dependsOn": [
+              "C1"
+            ],
+            "sourceKey": "conjunction:mercury:mercury",
+            "releaseVersion": "0.9.0"
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for work and output: Pace, scope, and the part of a task that feels like yours are separate pieces of working on something. An unfinished list or a draft with competing aims can be a place to notice friction between those pieces."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If any felt pressure has eased, a response may still be useful."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: exact yesterday. This reading falls in the middle part of the calculated window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "hasEligibleCycles": true,
+        "tone": "warm",
+        "depth": "standard",
+        "suppression": {
+          "angles": false,
+          "houses": false
+        },
+        "fallback": {
+          "headline": "When the point gets edited out",
+          "body": "If you've rewritten a work message until every sentence sounds agreeable, the point you wanted to make may have become harder to find. Perhaps the question has become a suggestion, or an important reservation is buried under explanations. In that kind of draft, it can feel as though your own position has gone missing.\n\nMaking a sentence kinder and making its meaning smaller are different things. Writing the central point once, in the words you would use out loud, can help you hear the difference. That sentence can sit beside the reply while you work on its wording.\n\nMercury meeting your natal Mercury is like a messenger rereading the original note before handing it over. The wording is open to revision; the point can remain legible.",
+          "prompt": "When is directness the kinder choice?"
+        },
+        "writing": {
+          "plan": {
+            "version": "daily-concrete-writing-1",
+            "releaseVersion": "0.9.0",
+            "theme": {
+              "factId": "I1",
+              "sourceKey": "conjunction:mercury:mercury",
+              "relationship": null,
+              "requiredFacts": [
+                "C1",
+                "I1"
+              ]
+            },
+            "status": "no_frame",
+            "frame": null,
+            "scenes": [],
+            "templateSources": [
+              {
+                "factId": "I1",
+                "sourceKey": "conjunction:mercury:mercury",
+                "sentences": [
+                  "A cycle of thought and communication resets with fresh curiosity.",
+                  "Mercury's conjunction with natal Mercury sharpens interest in new phrasing, questions, or ideas, bringing mental focus back to how you articulate what you mean."
+                ]
+              }
+            ],
+            "editorial": {
+              "version": "daily-editorial-1",
+              "releaseVersion": "0.9.0",
+              "mode": "contact",
+              "entry": {
+                "key": "editorial-writing-reply-scene",
+                "source": {
+                  "kind": "interpretation",
+                  "key": "conjunction:mercury:mercury"
+                },
+                "cycleKeys": [
+                  "mercury_conjunction_mercury"
+                ],
+                "writingMaterial": {
+                  "meaning": "Making a sentence kinder and making its meaning smaller are different things. A revised message can lose its central point while becoming more agreeable.",
+                  "scene": "A question becomes a suggestion, or a reservation is buried behind explanations in a work reply. In that kind of draft, the writer's position may feel missing.",
+                  "imagery": "Mercury as messenger at its return to natal Mercury: the messenger rereads the original note before handing it over. Fresh phrasing can carry the original point.",
+                  "direction": "Writing the central point in a plain sentence apart from the reply can help the writer hear the difference between kindness and diminished meaning and keep the point available while choosing the final wording.",
+                  "reflection": "Directness and kindness can sometimes support one another; clear expression can itself be considerate."
+                },
+                "constraints": [
+                  "The message and editing are possible scenes, not supplied events or a personality diagnosis.",
+                  "The messenger is an image, not a physical being or a claim that Mercury alters the reader's thinking.",
+                  "No reception, successful outcome, or obligation to send is established. Do not narrate this limitation in the body."
+                ],
+                "headline": "When the point gets edited out",
+                "reflection": "When is directness the kinder choice?",
+                "fallbackParagraphs": [
+                  "If you've rewritten a work message until every sentence sounds agreeable, the point you wanted to make may have become harder to find. Perhaps the question has become a suggestion, or an important reservation is buried under explanations. In that kind of draft, it can feel as though your own position has gone missing.",
+                  "Making a sentence kinder and making its meaning smaller are different things. Writing the central point once, in the words you would use out loud, can help you hear the difference. That sentence can sit beside the reply while you work on its wording.",
+                  "Mercury meeting your natal Mercury is like a messenger rereading the original note before handing it over. The wording is open to revision; the point can remain legible."
+                ]
+              },
+              "requiredFacts": [
+                "C1",
+                "I1"
+              ]
+            }
+          },
+          "template": {
+            "paragraphs": [
+              {
+                "text": "If you've rewritten a work message until every sentence sounds agreeable, the point you wanted to make may have become harder to find. Perhaps the question has become a suggestion, or an important reservation is buried under explanations. In that kind of draft, it can feel as though your own position has gone missing.",
+                "facts": [
+                  "C1",
+                  "I1"
+                ],
+                "scenes": []
+              },
+              {
+                "text": "Making a sentence kinder and making its meaning smaller are different things. Writing the central point once, in the words you would use out loud, can help you hear the difference. That sentence can sit beside the reply while you work on its wording.",
+                "facts": [
+                  "C1",
+                  "I1"
+                ],
+                "scenes": []
+              },
+              {
+                "text": "Mercury meeting your natal Mercury is like a messenger rereading the original note before handing it over. The wording is open to revision; the point can remain legible.",
+                "facts": [
+                  "C1",
+                  "I1"
+                ],
+                "scenes": []
+              }
+            ],
+            "renderMode": "unframed",
+            "reason": null
+          },
+          "minimalTemplate": {
+            "paragraphs": [
+              {
+                "text": "If you've rewritten a work message until every sentence sounds agreeable, the point you wanted to make may have become harder to find. Perhaps the question has become a suggestion, or an important reservation is buried under explanations. In that kind of draft, it can feel as though your own position has gone missing.",
+                "facts": [
+                  "C1",
+                  "I1"
+                ],
+                "scenes": []
+              },
+              {
+                "text": "Making a sentence kinder and making its meaning smaller are different things. Writing the central point once, in the words you would use out loud, can help you hear the difference. That sentence can sit beside the reply while you work on its wording.",
+                "facts": [
+                  "C1",
+                  "I1"
+                ],
+                "scenes": []
+              },
+              {
+                "text": "Mercury meeting your natal Mercury is like a messenger rereading the original note before handing it over. The wording is open to revision; the point can remain legible.",
+                "facts": [
+                  "C1",
+                  "I1"
+                ],
+                "scenes": []
+              }
+            ],
+            "renderMode": "unframed",
+            "reason": null
+          },
+          "recent": []
+        }
+      },
+      "inputHash": "d7c07f65455c0cdaa647b9f6ccb897beba2eef31a337f6c7708b4e25d452f920",
+      "request": {
+        "systemInstruction": {
+          "parts": [
+            {
+              "text": "You write a daily astrology reading in an attentive, observational voice. Calculated C references establish only the named transit-to-natal contact. I and S references identify the selected source and its parent bindings; they supply no additional meaning. Only the exact selected writingMaterial supplies draftable interpretation, scenes, imagery and direction. It does not establish causes, personal events or another person's intentions. The supplied constraints are controls, never reader-facing prose or additional writing material. Keep them separate from the meaning, scene, imagery and direction. Preserve every supplied condition and possibility qualifier. Do not add frequency, certainty, necessity, causal connections or joint meanings. Cite every paragraph's sources and all required synthesis parents. Supported optional direction may offer noticing, waiting, asking, a small reversible choice, letting something stand or enjoyment. It must remain optional and proportionate; never command, pressure, predict or promise a result. Never add astronomical or biographical facts, assume a lived event, or make claims about health, medication, diagnosis, money, investing, pregnancy, divorce or death. Respect all suppression limits. Use supplied planetary imagery as an explicit comparison. The comparison does not mean the sky causes feelings or behavior. Do not introduce symbols absent from the selected material."
+            }
+          ]
+        },
+        "contents": [
+          {
+            "role": "user",
+            "parts": [
+              {
+                "text": "Tone: warm. Observe one recognizable detail, name one distinction that changes how it looks, and give the reader a useful direction without managing their life. Warmth comes from accuracy, not praise, consolation or a counselor's reassurance.\nCraft pairs, not factual sources: observe a pause staying with someone rather than announce the day's emotional character; distinguish making a sentence kinder from making its meaning smaller rather than reassure that nothing is wrong; permit an impression to remain unresolved rather than say an ordinary moment is enough.\nVoice examples only: [\"A pause can stay with you longer than the words.\",\"Making a sentence kinder and making its meaning smaller are different things.\",\"'I felt unsettled, and I'm not sure why' can be an honest place to leave it.\"]\nNever copy an example or borrow its scene unless the selected writing material independently supports it.\nUse the supplied meaning, scene, imagery and optional direction as material. Constraints tell you what to avoid; do not turn them into phrases such as 'offers a symbolic lens', 'gives this reading its theme' or explanations of what the system cannot know.\nOpen on an observable gesture, a general distinction or a supported conditional possibility. No mandatory 'if' opening. An ordinary general observation can stand without claiming it happened to this reader.\nWrite two to four paragraphs of one to four complete sentences each. Aim for 90–170 words, but stop sooner when the thought is complete. Never pad or repeat a distinction to meet a range.\nVary the rhythm and the position of supplied astrology. Planetary imagery can make the comparison vivid; do not reduce the contact to a list of planet keywords. The imagery and its geometry must stay within the selected sources.\nThis warm/standard body contains no orb numbers, degree measurements, exact dates, contact phase or calculated timing. Those details belong to the calculation record. A named transit-to-natal contact may support the supplied image without reporting its measurements.\nOptional direction can be implicit in a distinction. It need not be a final paragraph, a script to say aloud, or another permission sentence. Stop when the thought lands, without a recap or reassurance formula.\nThe headline and independently validated reflection are supplied separately. Do not write either in the body.\nStructural source references; no draftable prose:\n{\"references\":[{\"id\":\"C1\",\"kind\":\"calculation\",\"cycleKey\":\"mercury_conjunction_mercury\",\"cycle\":{\"transitBody\":\"mercury\",\"natalPoint\":\"mercury\",\"aspect\":\"conjunction\"}},{\"id\":\"I1\",\"kind\":\"interpretation\",\"sourceKey\":\"conjunction:mercury:mercury\",\"releaseVersion\":\"0.9.0\",\"dependsOn\":[\"C1\"]}]}\nSource-bound writing brief:\n{\"themeFactId\":\"I1\",\"requiredFacts\":[\"C1\",\"I1\"],\"scenes\":[],\"editorial\":{\"version\":\"daily-editorial-1\",\"mode\":\"contact\",\"requiredFacts\":[\"C1\",\"I1\"],\"writingMaterial\":{\"meaning\":\"Making a sentence kinder and making its meaning smaller are different things. A revised message can lose its central point while becoming more agreeable.\",\"scene\":\"A question becomes a suggestion, or a reservation is buried behind explanations in a work reply. In that kind of draft, the writer's position may feel missing.\",\"imagery\":\"Mercury as messenger at its return to natal Mercury: the messenger rereads the original note before handing it over. Fresh phrasing can carry the original point.\",\"direction\":\"Writing the central point in a plain sentence apart from the reply can help the writer hear the difference between kindness and diminished meaning and keep the point available while choosing the final wording.\",\"reflection\":\"Directness and kindness can sometimes support one another; clear expression can itself be considerate.\"},\"constraints\":[\"The message and editing are possible scenes, not supplied events or a personality diagnosis.\",\"The messenger is an image, not a physical being or a claim that Mercury alters the reader's thinking.\",\"No reception, successful outcome, or obligation to send is established. Do not narrate this limitation in the body.\"]}}\nThe editorial writingMaterial contains this reading's permitted meaning, scene, imagery and optional direction. Its constraints are separate controls and must not appear as policy explanations in the prose. Develop one central thread using this selected material only. Declare empty scenes arrays: this editorial scene is not a schema-5 SC reference. Cite the central source and all required parents for its meaning, imagery and direction. Do not introduce another setting or borrow a demonstration's subject. Keep each condition attached to its own claim.\nWrite only the body of today's reading. The selected writingMaterial is the sole source of draftable meaning; the structural references identify its source and contact geometry only.\nKeep each paragraph under 200 words and the whole body under 700 words.\nThe first paragraph must concern the selected meaning and cite C1 and I1. Cite only the IDs in the structural source references; each paragraph includes every required source and parent ID.\nKeep the selected meaning and its C1 contact as the focus. No synthesis relationship is supplied; do not invent a joint relationship or premise.\nCite the supplied IDs each paragraph rests on. This is reference coverage, not permission to invent astronomical facts.\nAny paragraph naming a planet or aspect must cite its supplied calculated cycle ID. Source IDs cannot replace that cycle citation.\nDo not write a headline, reflection question, local-time context or wellbeing framing; those are provided separately.\nDo not introduce sign or individual house placements. Do not write orb, degree, exact date, phase or calculated timing details in this warm/standard body.\nC1-C3 describe a transiting body contacting a natal point, not two bodies in the current sky. Preserve those roles whenever naming the geometry: explicitly name the target as natal if describing the contact as occurring in the sky. A source's subjective 'feels like yours' stays subjective; do not turn it into an objective task allocation.\nDo not repeat calculation caveats; the app appends them separately."
+              }
+            ]
+          }
+        ],
+        "generationConfig": {
+          "responseMimeType": "application/json",
+          "responseJsonSchema": {
+            "type": "object",
+            "properties": {
+              "paragraphs": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 4,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "text": {
+                      "type": "string"
+                    },
+                    "facts": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "scenes": {
+                      "type": "array",
+                      "maxItems": 2,
+                      "uniqueItems": true,
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "text",
+                    "facts",
+                    "scenes"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "paragraphs"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "requestHash": "9073ccbe8c2a53a2df51e214b3431952df3822dd9faddfdc9e6abcfdffae2060"
+    },
+    {
+      "id": "venus-opposition-venus",
+      "editorialKey": "editorial-venus-opposition-venus",
+      "input": {
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting venus opposition natal venus. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain relationships. Calculated exact date: 2026-10-14.",
+            "cycle": {
+              "transitBody": "venus",
+              "natalPoint": "venus",
+              "aspect": "opposition",
+              "orb": 0.42,
+              "exactDate": "2026-10-14"
+            }
+          },
+          {
+            "id": "I1",
+            "statement": "Published interpretation opposition:venus:venus: Recognizing personal preferences can involve noticing a contrast with what others want or expect. Venus's opposition to natal Venus brings differences in taste and social ease into view, clarifying what you genuinely value in company and quiet.",
+            "kind": "interpretation",
+            "dependsOn": [
+              "C1"
+            ],
+            "sourceKey": "opposition:venus:venus",
+            "releaseVersion": "0.9.0"
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for relationships and affection: Closeness, personal preference, and what you choose to express do not always line up neatly. A reply left unfinished or a plan you feel uncertain about can be a scene for that tension."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "hasEligibleCycles": true,
+        "tone": "warm",
+        "depth": "standard",
+        "suppression": {
+          "angles": false,
+          "houses": false
+        },
+        "fallback": {
+          "headline": "A different plan, the same company",
+          "body": "Wanting to see someone and wanting a different kind of evening can both be true. An invitation to go dancing can leave a reply hovering at 'I'd love to' when a walk is what appeals. The tender part can be the fear that a different preference will sound like less affection.\n\nVenus opposite your natal Venus is an invitation with two versions of the evening written on it. One question to ask is which part of the plan matters most to each of you. The wish to meet can stay in the conversation while the plan changes.",
+          "prompt": "What makes a counterproposal feel like an invitation to you?"
+        },
+        "writing": {
+          "plan": {
+            "version": "daily-concrete-writing-1",
+            "releaseVersion": "0.9.0",
+            "theme": {
+              "factId": "I1",
+              "sourceKey": "opposition:venus:venus",
+              "relationship": null,
+              "requiredFacts": [
+                "C1",
+                "I1"
+              ]
+            },
+            "status": "no_frame",
+            "frame": null,
+            "scenes": [],
+            "templateSources": [
+              {
+                "factId": "I1",
+                "sourceKey": "opposition:venus:venus",
+                "sentences": [
+                  "Recognizing personal preferences can involve noticing a contrast with what others want or expect.",
+                  "Venus's opposition to natal Venus brings differences in taste and social ease into view, clarifying what you genuinely value in company and quiet."
+                ]
+              }
+            ],
+            "editorial": {
+              "version": "daily-editorial-1",
+              "releaseVersion": "0.9.0",
+              "mode": "contact",
+              "entry": {
+                "key": "editorial-venus-opposition-venus",
+                "source": {
+                  "kind": "interpretation",
+                  "key": "opposition:venus:venus"
+                },
+                "cycleKeys": [
+                  "venus_opposition_venus"
+                ],
+                "writingMaterial": {
+                  "meaning": "Wanting someone's company and wanting a different kind of evening can coexist. A possible difficulty in stating a preference is the fear that it will sound like less affection.",
+                  "scene": "An invitation to go dancing can leave a reply hovering at 'I'd love to' when a walk is what appeals. A walk instead of dancing is a concrete alternative.",
+                  "imagery": "Venus opposite natal Venus as one invitation with two versions of the evening written on it. Contrasting preferences can belong to the same wish to meet.",
+                  "direction": "Ask which part of an evening matters to each person, or make a concrete alternative that retains the wish to meet.",
+                  "reflection": "A counterproposal can be considered from the receiving side: what makes it feel like continued interest in meeting."
+                },
+                "constraints": [
+                  "No invitation, reader fear, partner preference, reaction, relationship condition, or compatibility is established.",
+                  "The invitation with two versions is imagery for contrasting preferences, not an asserted event or agreement.",
+                  "Do not reassure that the relationship is fine, predict agreement, or copy agency disclaimers into the reading.",
+                  "Develop one response; the alternatives are a repertoire, not a checklist."
+                ],
+                "headline": "A different plan, the same company",
+                "reflection": "What makes a counterproposal feel like an invitation to you?",
+                "fallbackParagraphs": [
+                  "Wanting to see someone and wanting a different kind of evening can both be true. An invitation to go dancing can leave a reply hovering at 'I'd love to' when a walk is what appeals. The tender part can be the fear that a different preference will sound like less affection.",
+                  "Venus opposite your natal Venus is an invitation with two versions of the evening written on it. One question to ask is which part of the plan matters most to each of you. The wish to meet can stay in the conversation while the plan changes."
+                ]
+              },
+              "requiredFacts": [
+                "C1",
+                "I1"
+              ]
+            }
+          },
+          "template": {
+            "paragraphs": [
+              {
+                "text": "Wanting to see someone and wanting a different kind of evening can both be true. An invitation to go dancing can leave a reply hovering at 'I'd love to' when a walk is what appeals. The tender part can be the fear that a different preference will sound like less affection.",
+                "facts": [
+                  "C1",
+                  "I1"
+                ],
+                "scenes": []
+              },
+              {
+                "text": "Venus opposite your natal Venus is an invitation with two versions of the evening written on it. One question to ask is which part of the plan matters most to each of you. The wish to meet can stay in the conversation while the plan changes.",
+                "facts": [
+                  "C1",
+                  "I1"
+                ],
+                "scenes": []
+              }
+            ],
+            "renderMode": "unframed",
+            "reason": null
+          },
+          "minimalTemplate": {
+            "paragraphs": [
+              {
+                "text": "Wanting to see someone and wanting a different kind of evening can both be true. An invitation to go dancing can leave a reply hovering at 'I'd love to' when a walk is what appeals. The tender part can be the fear that a different preference will sound like less affection.",
+                "facts": [
+                  "C1",
+                  "I1"
+                ],
+                "scenes": []
+              },
+              {
+                "text": "Venus opposite your natal Venus is an invitation with two versions of the evening written on it. One question to ask is which part of the plan matters most to each of you. The wish to meet can stay in the conversation while the plan changes.",
+                "facts": [
+                  "C1",
+                  "I1"
+                ],
+                "scenes": []
+              }
+            ],
+            "renderMode": "unframed",
+            "reason": null
+          },
+          "recent": []
+        }
+      },
+      "inputHash": "7cf95a03f9bde4bd0d92cf37034faf6b35d49e9761bd91e74fbc73d0fc96b648",
+      "request": {
+        "systemInstruction": {
+          "parts": [
+            {
+              "text": "You write a daily astrology reading in an attentive, observational voice. Calculated C references establish only the named transit-to-natal contact. I and S references identify the selected source and its parent bindings; they supply no additional meaning. Only the exact selected writingMaterial supplies draftable interpretation, scenes, imagery and direction. It does not establish causes, personal events or another person's intentions. The supplied constraints are controls, never reader-facing prose or additional writing material. Keep them separate from the meaning, scene, imagery and direction. Preserve every supplied condition and possibility qualifier. Do not add frequency, certainty, necessity, causal connections or joint meanings. Cite every paragraph's sources and all required synthesis parents. Supported optional direction may offer noticing, waiting, asking, a small reversible choice, letting something stand or enjoyment. It must remain optional and proportionate; never command, pressure, predict or promise a result. Never add astronomical or biographical facts, assume a lived event, or make claims about health, medication, diagnosis, money, investing, pregnancy, divorce or death. Respect all suppression limits. Use supplied planetary imagery as an explicit comparison. The comparison does not mean the sky causes feelings or behavior. Do not introduce symbols absent from the selected material."
+            }
+          ]
+        },
+        "contents": [
+          {
+            "role": "user",
+            "parts": [
+              {
+                "text": "Tone: warm. Observe one recognizable detail, name one distinction that changes how it looks, and give the reader a useful direction without managing their life. Warmth comes from accuracy, not praise, consolation or a counselor's reassurance.\nCraft pairs, not factual sources: observe a pause staying with someone rather than announce the day's emotional character; distinguish making a sentence kinder from making its meaning smaller rather than reassure that nothing is wrong; permit an impression to remain unresolved rather than say an ordinary moment is enough.\nVoice examples only: [\"A pause can stay with you longer than the words.\",\"Making a sentence kinder and making its meaning smaller are different things.\",\"'I felt unsettled, and I'm not sure why' can be an honest place to leave it.\"]\nNever copy an example or borrow its scene unless the selected writing material independently supports it.\nUse the supplied meaning, scene, imagery and optional direction as material. Constraints tell you what to avoid; do not turn them into phrases such as 'offers a symbolic lens', 'gives this reading its theme' or explanations of what the system cannot know.\nOpen on an observable gesture, a general distinction or a supported conditional possibility. No mandatory 'if' opening. An ordinary general observation can stand without claiming it happened to this reader.\nWrite two to four paragraphs of one to four complete sentences each. Aim for 90–170 words, but stop sooner when the thought is complete. Never pad or repeat a distinction to meet a range.\nVary the rhythm and the position of supplied astrology. Planetary imagery can make the comparison vivid; do not reduce the contact to a list of planet keywords. The imagery and its geometry must stay within the selected sources.\nThis warm/standard body contains no orb numbers, degree measurements, exact dates, contact phase or calculated timing. Those details belong to the calculation record. A named transit-to-natal contact may support the supplied image without reporting its measurements.\nOptional direction can be implicit in a distinction. It need not be a final paragraph, a script to say aloud, or another permission sentence. Stop when the thought lands, without a recap or reassurance formula.\nThe headline and independently validated reflection are supplied separately. Do not write either in the body.\nStructural source references; no draftable prose:\n{\"references\":[{\"id\":\"C1\",\"kind\":\"calculation\",\"cycleKey\":\"venus_opposition_venus\",\"cycle\":{\"transitBody\":\"venus\",\"natalPoint\":\"venus\",\"aspect\":\"opposition\"}},{\"id\":\"I1\",\"kind\":\"interpretation\",\"sourceKey\":\"opposition:venus:venus\",\"releaseVersion\":\"0.9.0\",\"dependsOn\":[\"C1\"]}]}\nSource-bound writing brief:\n{\"themeFactId\":\"I1\",\"requiredFacts\":[\"C1\",\"I1\"],\"scenes\":[],\"editorial\":{\"version\":\"daily-editorial-1\",\"mode\":\"contact\",\"requiredFacts\":[\"C1\",\"I1\"],\"writingMaterial\":{\"meaning\":\"Wanting someone's company and wanting a different kind of evening can coexist. A possible difficulty in stating a preference is the fear that it will sound like less affection.\",\"scene\":\"An invitation to go dancing can leave a reply hovering at 'I'd love to' when a walk is what appeals. A walk instead of dancing is a concrete alternative.\",\"imagery\":\"Venus opposite natal Venus as one invitation with two versions of the evening written on it. Contrasting preferences can belong to the same wish to meet.\",\"direction\":\"Ask which part of an evening matters to each person, or make a concrete alternative that retains the wish to meet.\",\"reflection\":\"A counterproposal can be considered from the receiving side: what makes it feel like continued interest in meeting.\"},\"constraints\":[\"No invitation, reader fear, partner preference, reaction, relationship condition, or compatibility is established.\",\"The invitation with two versions is imagery for contrasting preferences, not an asserted event or agreement.\",\"Do not reassure that the relationship is fine, predict agreement, or copy agency disclaimers into the reading.\",\"Develop one response; the alternatives are a repertoire, not a checklist.\"]}}\nThe editorial writingMaterial contains this reading's permitted meaning, scene, imagery and optional direction. Its constraints are separate controls and must not appear as policy explanations in the prose. Develop one central thread using this selected material only. Declare empty scenes arrays: this editorial scene is not a schema-5 SC reference. Cite the central source and all required parents for its meaning, imagery and direction. Do not introduce another setting or borrow a demonstration's subject. Keep each condition attached to its own claim.\nWrite only the body of today's reading. The selected writingMaterial is the sole source of draftable meaning; the structural references identify its source and contact geometry only.\nKeep each paragraph under 200 words and the whole body under 700 words.\nThe first paragraph must concern the selected meaning and cite C1 and I1. Cite only the IDs in the structural source references; each paragraph includes every required source and parent ID.\nKeep the selected meaning and its C1 contact as the focus. No synthesis relationship is supplied; do not invent a joint relationship or premise.\nCite the supplied IDs each paragraph rests on. This is reference coverage, not permission to invent astronomical facts.\nAny paragraph naming a planet or aspect must cite its supplied calculated cycle ID. Source IDs cannot replace that cycle citation.\nDo not write a headline, reflection question, local-time context or wellbeing framing; those are provided separately.\nDo not introduce sign or individual house placements. Do not write orb, degree, exact date, phase or calculated timing details in this warm/standard body.\nC1-C3 describe a transiting body contacting a natal point, not two bodies in the current sky. Preserve those roles whenever naming the geometry: explicitly name the target as natal if describing the contact as occurring in the sky. A source's subjective 'feels like yours' stays subjective; do not turn it into an objective task allocation.\nDo not repeat calculation caveats; the app appends them separately."
+              }
+            ]
+          }
+        ],
+        "generationConfig": {
+          "responseMimeType": "application/json",
+          "responseJsonSchema": {
+            "type": "object",
+            "properties": {
+              "paragraphs": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 4,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "text": {
+                      "type": "string"
+                    },
+                    "facts": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "scenes": {
+                      "type": "array",
+                      "maxItems": 2,
+                      "uniqueItems": true,
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "text",
+                    "facts",
+                    "scenes"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "paragraphs"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "requestHash": "29cc40b2db8cd93e383229198aa981e7ffee82aad76a48ca059ea44b2354ec5a"
+    },
+    {
+      "id": "synthesis-tension",
+      "editorialKey": "editorial-synthesis-tension",
+      "input": {
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain identity. Calculated exact date: 2026-10-14.",
+            "cycle": {
+              "transitBody": "saturn",
+              "natalPoint": "sun",
+              "aspect": "square",
+              "orb": 0.42,
+              "exactDate": "2026-10-14"
+            }
+          },
+          {
+            "id": "C2",
+            "kind": "calculation",
+            "statement": "transiting jupiter trine natal mars. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain identity. Calculated exact date: 2026-10-14.",
+            "cycle": {
+              "transitBody": "jupiter",
+              "natalPoint": "mars",
+              "aspect": "trine",
+              "orb": 0.42,
+              "exactDate": "2026-10-14"
+            }
+          },
+          {
+            "id": "I1",
+            "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+            "kind": "interpretation",
+            "dependsOn": [
+              "C1"
+            ],
+            "sourceKey": "square:saturn:sun",
+            "releaseVersion": "0.9.0"
+          },
+          {
+            "id": "I2",
+            "statement": "Published interpretation trine:jupiter:mars: Enthusiasm and practical initiative reinforce one another when an aim is well chosen. Jupiter's trine to Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening.",
+            "kind": "interpretation",
+            "dependsOn": [
+              "C2"
+            ],
+            "sourceKey": "trine:jupiter:mars",
+            "releaseVersion": "0.9.0"
+          },
+          {
+            "id": "S1",
+            "statement": "Published tension synthesis square:saturn:sun_tension_trine:jupiter:mars (parents: C1, I1, C2, I2): Giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.",
+            "kind": "synthesis",
+            "dependsOn": [
+              "C1",
+              "I1",
+              "C2",
+              "I2"
+            ],
+            "sourceKey": "square:saturn:sun_tension_trine:jupiter:mars",
+            "releaseVersion": "0.9.0"
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for identity and direction: A title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "hasEligibleCycles": true,
+        "tone": "warm",
+        "depth": "standard",
+        "suppression": {
+          "angles": false,
+          "houses": false
+        },
+        "fallback": {
+          "headline": "When enthusiasm becomes a promise",
+          "body": "If you're excited about a project, 'I can do this much' may feel like too little enthusiasm for an idea you care about. In that situation, promising more can become a way of trying to show how much the project matters.\n\nJupiter's trine to your natal Mars is a lengthening stride; Saturn's square to your natal Sun is the pack that comes along. A faster pace doesn't make the pack lighter.\n\nBefore adding another piece, there is something to notice: whether you want to do that work or want the promise to show how much you care. The size of the promise doesn't have to do all the talking.",
+          "prompt": "What would taking an idea seriously look like at a scale you can manage?"
+        },
+        "writing": {
+          "plan": {
+            "version": "daily-concrete-writing-1",
+            "releaseVersion": "0.9.0",
+            "theme": {
+              "factId": "S1",
+              "sourceKey": "square:saturn:sun_tension_trine:jupiter:mars",
+              "relationship": "tension",
+              "requiredFacts": [
+                "S1",
+                "C1",
+                "I1",
+                "C2",
+                "I2"
+              ]
+            },
+            "status": "no_frame",
+            "frame": null,
+            "scenes": [],
+            "templateSources": [
+              {
+                "factId": "I1",
+                "sourceKey": "square:saturn:sun",
+                "sentences": [
+                  "An established role can feel demanding when its obligations require more deliberate effort than usual.",
+                  "Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries."
+                ]
+              },
+              {
+                "factId": "S1",
+                "sourceKey": "square:saturn:sun_tension_trine:jupiter:mars",
+                "sentences": [
+                  "Giving a plan more scope can increase the structure needed to carry it.",
+                  "A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension."
+                ]
+              }
+            ],
+            "editorial": {
+              "version": "daily-editorial-1",
+              "releaseVersion": "0.9.0",
+              "mode": "contact",
+              "entry": {
+                "key": "editorial-synthesis-tension",
+                "source": {
+                  "kind": "synthesis",
+                  "key": "square:saturn:sun_tension_trine:jupiter:mars"
+                },
+                "cycleKeys": [
+                  "saturn_square_sun",
+                  "jupiter_trine_mars"
+                ],
+                "writingMaterial": {
+                  "meaning": "When an idea matters, a smaller commitment can seem to understate enthusiasm. Promising more may become a way of trying to show how much one cares. Enthusiasm and the scope of a promise can be expressed separately.",
+                  "scene": "Being excited about a project and finding that 'I can do this much' sounds smaller than the interest behind it.",
+                  "imagery": "Jupiter's trine to natal Mars as a lengthening stride; Saturn's square to natal Sun as the pack that comes along. A faster pace does not make the pack lighter.",
+                  "direction": "Before adding a piece of work, distinguish wanting that work from wanting the promise to express enthusiasm. The size of a commitment need not carry all the expression of interest.",
+                  "reflection": "Taking an idea seriously can be considered at a manageable scale."
+                },
+                "constraints": [
+                  "Preserve both parents C1/I1 and C2/I2 and the exact selected tension synthesis.",
+                  "Saved S1 says expansion can increase the structure needed; do not turn this into an invariant rule for every ambition.",
+                  "Stride and pack are imagery, not predicted energy, burden, bodily experience, or a causal effect on the reader.",
+                  "No project, workload, overcommitment, motive, success, or future feasibility is established."
+                ],
+                "headline": "When enthusiasm becomes a promise",
+                "reflection": "What would taking an idea seriously look like at a scale you can manage?",
+                "fallbackParagraphs": [
+                  "If you're excited about a project, 'I can do this much' may feel like too little enthusiasm for an idea you care about. In that situation, promising more can become a way of trying to show how much the project matters.",
+                  "Jupiter's trine to your natal Mars is a lengthening stride; Saturn's square to your natal Sun is the pack that comes along. A faster pace doesn't make the pack lighter.",
+                  "Before adding another piece, there is something to notice: whether you want to do that work or want the promise to show how much you care. The size of the promise doesn't have to do all the talking."
+                ]
+              },
+              "requiredFacts": [
+                "S1",
+                "C1",
+                "I1",
+                "C2",
+                "I2"
+              ]
+            }
+          },
+          "template": {
+            "paragraphs": [
+              {
+                "text": "If you're excited about a project, 'I can do this much' may feel like too little enthusiasm for an idea you care about. In that situation, promising more can become a way of trying to show how much the project matters.",
+                "facts": [
+                  "S1",
+                  "C1",
+                  "I1",
+                  "C2",
+                  "I2"
+                ],
+                "scenes": []
+              },
+              {
+                "text": "Jupiter's trine to your natal Mars is a lengthening stride; Saturn's square to your natal Sun is the pack that comes along. A faster pace doesn't make the pack lighter.",
+                "facts": [
+                  "S1",
+                  "C1",
+                  "I1",
+                  "C2",
+                  "I2"
+                ],
+                "scenes": []
+              },
+              {
+                "text": "Before adding another piece, there is something to notice: whether you want to do that work or want the promise to show how much you care. The size of the promise doesn't have to do all the talking.",
+                "facts": [
+                  "S1",
+                  "C1",
+                  "I1",
+                  "C2",
+                  "I2"
+                ],
+                "scenes": []
+              }
+            ],
+            "renderMode": "unframed",
+            "reason": null
+          },
+          "minimalTemplate": {
+            "paragraphs": [
+              {
+                "text": "If you're excited about a project, 'I can do this much' may feel like too little enthusiasm for an idea you care about. In that situation, promising more can become a way of trying to show how much the project matters.",
+                "facts": [
+                  "S1",
+                  "C1",
+                  "I1",
+                  "C2",
+                  "I2"
+                ],
+                "scenes": []
+              },
+              {
+                "text": "Jupiter's trine to your natal Mars is a lengthening stride; Saturn's square to your natal Sun is the pack that comes along. A faster pace doesn't make the pack lighter.",
+                "facts": [
+                  "S1",
+                  "C1",
+                  "I1",
+                  "C2",
+                  "I2"
+                ],
+                "scenes": []
+              },
+              {
+                "text": "Before adding another piece, there is something to notice: whether you want to do that work or want the promise to show how much you care. The size of the promise doesn't have to do all the talking.",
+                "facts": [
+                  "S1",
+                  "C1",
+                  "I1",
+                  "C2",
+                  "I2"
+                ],
+                "scenes": []
+              }
+            ],
+            "renderMode": "unframed",
+            "reason": null
+          },
+          "recent": []
+        }
+      },
+      "inputHash": "1a259a3359e7129f2efd97008818e40691381a9092716943e5fba10577a8758b",
+      "request": {
+        "systemInstruction": {
+          "parts": [
+            {
+              "text": "You write a daily astrology reading in an attentive, observational voice. Calculated C references establish only the named transit-to-natal contact. I and S references identify the selected source and its parent bindings; they supply no additional meaning. Only the exact selected writingMaterial supplies draftable interpretation, scenes, imagery and direction. It does not establish causes, personal events or another person's intentions. The supplied constraints are controls, never reader-facing prose or additional writing material. Keep them separate from the meaning, scene, imagery and direction. Preserve every supplied condition and possibility qualifier. Do not add frequency, certainty, necessity, causal connections or joint meanings. Cite every paragraph's sources and all required synthesis parents. Supported optional direction may offer noticing, waiting, asking, a small reversible choice, letting something stand or enjoyment. It must remain optional and proportionate; never command, pressure, predict or promise a result. Never add astronomical or biographical facts, assume a lived event, or make claims about health, medication, diagnosis, money, investing, pregnancy, divorce or death. Respect all suppression limits. Use supplied planetary imagery as an explicit comparison. The comparison does not mean the sky causes feelings or behavior. Do not introduce symbols absent from the selected material."
+            }
+          ]
+        },
+        "contents": [
+          {
+            "role": "user",
+            "parts": [
+              {
+                "text": "Tone: warm. Observe one recognizable detail, name one distinction that changes how it looks, and give the reader a useful direction without managing their life. Warmth comes from accuracy, not praise, consolation or a counselor's reassurance.\nCraft pairs, not factual sources: observe a pause staying with someone rather than announce the day's emotional character; distinguish making a sentence kinder from making its meaning smaller rather than reassure that nothing is wrong; permit an impression to remain unresolved rather than say an ordinary moment is enough.\nVoice examples only: [\"A pause can stay with you longer than the words.\",\"Making a sentence kinder and making its meaning smaller are different things.\",\"'I felt unsettled, and I'm not sure why' can be an honest place to leave it.\"]\nNever copy an example or borrow its scene unless the selected writing material independently supports it.\nUse the supplied meaning, scene, imagery and optional direction as material. Constraints tell you what to avoid; do not turn them into phrases such as 'offers a symbolic lens', 'gives this reading its theme' or explanations of what the system cannot know.\nOpen on an observable gesture, a general distinction or a supported conditional possibility. No mandatory 'if' opening. An ordinary general observation can stand without claiming it happened to this reader.\nWrite two to four paragraphs of one to four complete sentences each. Aim for 90–170 words, but stop sooner when the thought is complete. Never pad or repeat a distinction to meet a range.\nVary the rhythm and the position of supplied astrology. Planetary imagery can make the comparison vivid; do not reduce the contact to a list of planet keywords. The imagery and its geometry must stay within the selected sources.\nThis warm/standard body contains no orb numbers, degree measurements, exact dates, contact phase or calculated timing. Those details belong to the calculation record. A named transit-to-natal contact may support the supplied image without reporting its measurements.\nOptional direction can be implicit in a distinction. It need not be a final paragraph, a script to say aloud, or another permission sentence. Stop when the thought lands, without a recap or reassurance formula.\nThe headline and independently validated reflection are supplied separately. Do not write either in the body.\nStructural source references; no draftable prose:\n{\"references\":[{\"id\":\"S1\",\"kind\":\"synthesis\",\"sourceKey\":\"square:saturn:sun_tension_trine:jupiter:mars\",\"releaseVersion\":\"0.9.0\",\"dependsOn\":[\"C1\",\"I1\",\"C2\",\"I2\"]},{\"id\":\"C1\",\"kind\":\"calculation\",\"cycleKey\":\"saturn_square_sun\",\"cycle\":{\"transitBody\":\"saturn\",\"natalPoint\":\"sun\",\"aspect\":\"square\"}},{\"id\":\"I1\",\"kind\":\"interpretation\",\"sourceKey\":\"square:saturn:sun\",\"releaseVersion\":\"0.9.0\",\"dependsOn\":[\"C1\"]},{\"id\":\"C2\",\"kind\":\"calculation\",\"cycleKey\":\"jupiter_trine_mars\",\"cycle\":{\"transitBody\":\"jupiter\",\"natalPoint\":\"mars\",\"aspect\":\"trine\"}},{\"id\":\"I2\",\"kind\":\"interpretation\",\"sourceKey\":\"trine:jupiter:mars\",\"releaseVersion\":\"0.9.0\",\"dependsOn\":[\"C2\"]}]}\nSource-bound writing brief:\n{\"themeFactId\":\"S1\",\"requiredFacts\":[\"S1\",\"C1\",\"I1\",\"C2\",\"I2\"],\"scenes\":[],\"editorial\":{\"version\":\"daily-editorial-1\",\"mode\":\"contact\",\"requiredFacts\":[\"S1\",\"C1\",\"I1\",\"C2\",\"I2\"],\"writingMaterial\":{\"meaning\":\"When an idea matters, a smaller commitment can seem to understate enthusiasm. Promising more may become a way of trying to show how much one cares. Enthusiasm and the scope of a promise can be expressed separately.\",\"scene\":\"Being excited about a project and finding that 'I can do this much' sounds smaller than the interest behind it.\",\"imagery\":\"Jupiter's trine to natal Mars as a lengthening stride; Saturn's square to natal Sun as the pack that comes along. A faster pace does not make the pack lighter.\",\"direction\":\"Before adding a piece of work, distinguish wanting that work from wanting the promise to express enthusiasm. The size of a commitment need not carry all the expression of interest.\",\"reflection\":\"Taking an idea seriously can be considered at a manageable scale.\"},\"constraints\":[\"Preserve both parents C1/I1 and C2/I2 and the exact selected tension synthesis.\",\"Saved S1 says expansion can increase the structure needed; do not turn this into an invariant rule for every ambition.\",\"Stride and pack are imagery, not predicted energy, burden, bodily experience, or a causal effect on the reader.\",\"No project, workload, overcommitment, motive, success, or future feasibility is established.\"]}}\nThe editorial writingMaterial contains this reading's permitted meaning, scene, imagery and optional direction. Its constraints are separate controls and must not appear as policy explanations in the prose. Develop one central thread using this selected material only. Declare empty scenes arrays: this editorial scene is not a schema-5 SC reference. Cite the central source and all required parents for its meaning, imagery and direction. Do not introduce another setting or borrow a demonstration's subject. Keep each condition attached to its own claim.\nWrite only the body of today's reading. The selected writingMaterial is the sole source of draftable meaning; the structural references identify its source and contact geometry only.\nKeep each paragraph under 200 words and the whole body under 700 words.\nThe first paragraph must concern the selected meaning and cite C1 and I1. Cite only the IDs in the structural source references; each paragraph includes every required source and parent ID.\nDevelop the selected writingMaterial relationship within paragraph 1 or 2. Join its distinct roles through the selected imagery without a planet-keyword list or fixed order of contact names. Preserve its conditions. Every paragraph using the relationship, its imagery or direction must cite [\"S1\", \"C1\", \"I1\", \"C2\", \"I2\"]. A supported possibility stays a possibility; \"can increase\" cannot become \"increases\". The relationship is editorial meaning, not a measured personal state.\nCite the supplied IDs each paragraph rests on. This is reference coverage, not permission to invent astronomical facts.\nAny paragraph naming a planet or aspect must cite its supplied calculated cycle ID. Source IDs cannot replace that cycle citation.\nDo not write a headline, reflection question, local-time context or wellbeing framing; those are provided separately.\nDo not introduce sign or individual house placements. Do not write orb, degree, exact date, phase or calculated timing details in this warm/standard body.\nC1-C3 describe a transiting body contacting a natal point, not two bodies in the current sky. Preserve those roles whenever naming the geometry: explicitly name the target as natal if describing the contact as occurring in the sky. A source's subjective 'feels like yours' stays subjective; do not turn it into an objective task allocation.\nDo not repeat calculation caveats; the app appends them separately."
+              }
+            ]
+          }
+        ],
+        "generationConfig": {
+          "responseMimeType": "application/json",
+          "responseJsonSchema": {
+            "type": "object",
+            "properties": {
+              "paragraphs": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 4,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "text": {
+                      "type": "string"
+                    },
+                    "facts": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "scenes": {
+                      "type": "array",
+                      "maxItems": 2,
+                      "uniqueItems": true,
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "text",
+                    "facts",
+                    "scenes"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "paragraphs"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "requestHash": "cf7c1872c0cdfe3af8b1796a1746ff1409613dd81128d5335a66f230c71222bf"
+    },
+    {
+      "id": "jupiter-trine-sun-technical",
+      "editorialKey": "editorial-jupiter-trine-sun-technical",
+      "input": {
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting jupiter trine natal sun. Current orb at the reading's calculation time: 0.42 degrees. phase exact. domain identity. Calculated exact date: 2026-10-11.",
+            "cycle": {
+              "transitBody": "jupiter",
+              "natalPoint": "sun",
+              "aspect": "trine",
+              "orb": 0.42,
+              "exactDate": "2026-10-11"
+            }
+          },
+          {
+            "id": "I1",
+            "statement": "Published interpretation soft:jupiter:sun: An existing plan can look roomier without becoming a different plan. A supportive Jupiter contact with the Sun frames that sense of permission to explore one more option or describe an ambition more openly. The interesting detail is where curiosity fits alongside what is already underway.",
+            "kind": "interpretation",
+            "dependsOn": [
+              "C1"
+            ],
+            "sourceKey": "soft:jupiter:sun",
+            "releaseVersion": "0.9.0"
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for identity and direction: A description of yourself can feel useful when it fits what you actually return to. A familiar project or an interest you can name plainly can offer a scene for that fit."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand feels immediate, one clearly described choice can offer a place to begin."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: exact today. This reading falls in the middle part of the calculated window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "hasEligibleCycles": true,
+        "tone": "warm",
+        "depth": "standard",
+        "suppression": {
+          "angles": false,
+          "houses": false
+        },
+        "fallback": {
+          "headline": "What 'just' leaves out",
+          "body": "Lighting up about an interest, then calling it 'just a hobby,' can happen in the same breath. The qualification comes after the enthusiasm, but it gets the last word. Jupiter's trine to your natal Sun is a wider frame around a familiar self-portrait.\n\nAn interest can belong to the way you describe yourself while it is unfinished, private, or pursued in fits and starts. The detail worth catching is whether you reach for 'just' before anyone has questioned it. Dropping that word once can leave the interest standing without an explanation of how good you are at it.",
+          "prompt": "What draws you to someone else's interests before you know how skilled they are?"
+        },
+        "writing": {
+          "plan": {
+            "version": "daily-concrete-writing-1",
+            "releaseVersion": "0.9.0",
+            "theme": {
+              "factId": "I1",
+              "sourceKey": "soft:jupiter:sun",
+              "relationship": null,
+              "requiredFacts": [
+                "C1",
+                "I1"
+              ]
+            },
+            "status": "no_frame",
+            "frame": null,
+            "scenes": [],
+            "templateSources": [
+              {
+                "factId": "I1",
+                "sourceKey": "soft:jupiter:sun",
+                "sentences": [
+                  "An existing plan can look roomier without becoming a different plan.",
+                  "A supportive Jupiter contact with the Sun frames that sense of permission to explore one more option or describe an ambition more openly.",
+                  "The interesting detail is where curiosity fits alongside what is already underway."
+                ]
+              }
+            ],
+            "editorial": {
+              "version": "daily-editorial-1",
+              "releaseVersion": "0.9.0",
+              "mode": "contact",
+              "entry": {
+                "key": "editorial-jupiter-trine-sun-technical",
+                "source": {
+                  "kind": "interpretation",
+                  "key": "soft:jupiter:sun"
+                },
+                "cycleKeys": [
+                  "jupiter_trine_sun"
+                ],
+                "writingMaterial": {
+                  "meaning": "Lighting up about an interest and then calling it 'just a hobby' puts a qualification after the enthusiasm. Enjoyment can be a reason for an interest to belong in one's self-description before it becomes an achievement.",
+                  "scene": "The shift from speaking with animation about an interest to shrinking it with 'just'.",
+                  "imagery": "Jupiter's trine to natal Sun as a wider frame around a familiar self-portrait: an existing interest is included without becoming a different person.",
+                  "direction": "Dropping 'just' once can leave the interest stated without a ranking of how accomplished or important it is.",
+                  "reflection": "An interest can draw another person's attention before its holder's level of skill is known."
+                },
+                "constraints": [
+                  "This is a bounded proposed self-description interpretation, not established low confidence or a global self-worth judgment.",
+                  "No actual hobby, habit of minimizing, skill, talent, entitlement, identity change, or recognition is known.",
+                  "The wider frame is imagery, not a transit causing personal growth.",
+                  "Both sides retain the disclosed warm/standard override of the original technical fixture.",
+                  "The scene can use any interest; do not narrow the whole reading to an invented hobby."
+                ],
+                "headline": "What 'just' leaves out",
+                "reflection": "What draws you to someone else's interests before you know how skilled they are?",
+                "fallbackParagraphs": [
+                  "Lighting up about an interest, then calling it 'just a hobby,' can happen in the same breath. The qualification comes after the enthusiasm, but it gets the last word. Jupiter's trine to your natal Sun is a wider frame around a familiar self-portrait.",
+                  "An interest can belong to the way you describe yourself while it is unfinished, private, or pursued in fits and starts. The detail worth catching is whether you reach for 'just' before anyone has questioned it. Dropping that word once can leave the interest standing without an explanation of how good you are at it."
+                ]
+              },
+              "requiredFacts": [
+                "C1",
+                "I1"
+              ]
+            }
+          },
+          "template": {
+            "paragraphs": [
+              {
+                "text": "Lighting up about an interest, then calling it 'just a hobby,' can happen in the same breath. The qualification comes after the enthusiasm, but it gets the last word. Jupiter's trine to your natal Sun is a wider frame around a familiar self-portrait.",
+                "facts": [
+                  "C1",
+                  "I1"
+                ],
+                "scenes": []
+              },
+              {
+                "text": "An interest can belong to the way you describe yourself while it is unfinished, private, or pursued in fits and starts. The detail worth catching is whether you reach for 'just' before anyone has questioned it. Dropping that word once can leave the interest standing without an explanation of how good you are at it.",
+                "facts": [
+                  "C1",
+                  "I1"
+                ],
+                "scenes": []
+              }
+            ],
+            "renderMode": "unframed",
+            "reason": null
+          },
+          "minimalTemplate": {
+            "paragraphs": [
+              {
+                "text": "Lighting up about an interest, then calling it 'just a hobby,' can happen in the same breath. The qualification comes after the enthusiasm, but it gets the last word. Jupiter's trine to your natal Sun is a wider frame around a familiar self-portrait.",
+                "facts": [
+                  "C1",
+                  "I1"
+                ],
+                "scenes": []
+              },
+              {
+                "text": "An interest can belong to the way you describe yourself while it is unfinished, private, or pursued in fits and starts. The detail worth catching is whether you reach for 'just' before anyone has questioned it. Dropping that word once can leave the interest standing without an explanation of how good you are at it.",
+                "facts": [
+                  "C1",
+                  "I1"
+                ],
+                "scenes": []
+              }
+            ],
+            "renderMode": "unframed",
+            "reason": null
+          },
+          "recent": []
+        }
+      },
+      "inputHash": "9242f121a4f24e4d0662f21d3b175dcdb7cb392176184e2c6bf0f91158372e6e",
+      "request": {
+        "systemInstruction": {
+          "parts": [
+            {
+              "text": "You write a daily astrology reading in an attentive, observational voice. Calculated C references establish only the named transit-to-natal contact. I and S references identify the selected source and its parent bindings; they supply no additional meaning. Only the exact selected writingMaterial supplies draftable interpretation, scenes, imagery and direction. It does not establish causes, personal events or another person's intentions. The supplied constraints are controls, never reader-facing prose or additional writing material. Keep them separate from the meaning, scene, imagery and direction. Preserve every supplied condition and possibility qualifier. Do not add frequency, certainty, necessity, causal connections or joint meanings. Cite every paragraph's sources and all required synthesis parents. Supported optional direction may offer noticing, waiting, asking, a small reversible choice, letting something stand or enjoyment. It must remain optional and proportionate; never command, pressure, predict or promise a result. Never add astronomical or biographical facts, assume a lived event, or make claims about health, medication, diagnosis, money, investing, pregnancy, divorce or death. Respect all suppression limits. Use supplied planetary imagery as an explicit comparison. The comparison does not mean the sky causes feelings or behavior. Do not introduce symbols absent from the selected material."
+            }
+          ]
+        },
+        "contents": [
+          {
+            "role": "user",
+            "parts": [
+              {
+                "text": "Tone: warm. Observe one recognizable detail, name one distinction that changes how it looks, and give the reader a useful direction without managing their life. Warmth comes from accuracy, not praise, consolation or a counselor's reassurance.\nCraft pairs, not factual sources: observe a pause staying with someone rather than announce the day's emotional character; distinguish making a sentence kinder from making its meaning smaller rather than reassure that nothing is wrong; permit an impression to remain unresolved rather than say an ordinary moment is enough.\nVoice examples only: [\"A pause can stay with you longer than the words.\",\"Making a sentence kinder and making its meaning smaller are different things.\",\"'I felt unsettled, and I'm not sure why' can be an honest place to leave it.\"]\nNever copy an example or borrow its scene unless the selected writing material independently supports it.\nUse the supplied meaning, scene, imagery and optional direction as material. Constraints tell you what to avoid; do not turn them into phrases such as 'offers a symbolic lens', 'gives this reading its theme' or explanations of what the system cannot know.\nOpen on an observable gesture, a general distinction or a supported conditional possibility. No mandatory 'if' opening. An ordinary general observation can stand without claiming it happened to this reader.\nWrite two to four paragraphs of one to four complete sentences each. Aim for 90–170 words, but stop sooner when the thought is complete. Never pad or repeat a distinction to meet a range.\nVary the rhythm and the position of supplied astrology. Planetary imagery can make the comparison vivid; do not reduce the contact to a list of planet keywords. The imagery and its geometry must stay within the selected sources.\nThis warm/standard body contains no orb numbers, degree measurements, exact dates, contact phase or calculated timing. Those details belong to the calculation record. A named transit-to-natal contact may support the supplied image without reporting its measurements.\nOptional direction can be implicit in a distinction. It need not be a final paragraph, a script to say aloud, or another permission sentence. Stop when the thought lands, without a recap or reassurance formula.\nThe headline and independently validated reflection are supplied separately. Do not write either in the body.\nStructural source references; no draftable prose:\n{\"references\":[{\"id\":\"C1\",\"kind\":\"calculation\",\"cycleKey\":\"jupiter_trine_sun\",\"cycle\":{\"transitBody\":\"jupiter\",\"natalPoint\":\"sun\",\"aspect\":\"trine\"}},{\"id\":\"I1\",\"kind\":\"interpretation\",\"sourceKey\":\"soft:jupiter:sun\",\"releaseVersion\":\"0.9.0\",\"dependsOn\":[\"C1\"]}]}\nSource-bound writing brief:\n{\"themeFactId\":\"I1\",\"requiredFacts\":[\"C1\",\"I1\"],\"scenes\":[],\"editorial\":{\"version\":\"daily-editorial-1\",\"mode\":\"contact\",\"requiredFacts\":[\"C1\",\"I1\"],\"writingMaterial\":{\"meaning\":\"Lighting up about an interest and then calling it 'just a hobby' puts a qualification after the enthusiasm. Enjoyment can be a reason for an interest to belong in one's self-description before it becomes an achievement.\",\"scene\":\"The shift from speaking with animation about an interest to shrinking it with 'just'.\",\"imagery\":\"Jupiter's trine to natal Sun as a wider frame around a familiar self-portrait: an existing interest is included without becoming a different person.\",\"direction\":\"Dropping 'just' once can leave the interest stated without a ranking of how accomplished or important it is.\",\"reflection\":\"An interest can draw another person's attention before its holder's level of skill is known.\"},\"constraints\":[\"This is a bounded proposed self-description interpretation, not established low confidence or a global self-worth judgment.\",\"No actual hobby, habit of minimizing, skill, talent, entitlement, identity change, or recognition is known.\",\"The wider frame is imagery, not a transit causing personal growth.\",\"Both sides retain the disclosed warm/standard override of the original technical fixture.\",\"The scene can use any interest; do not narrow the whole reading to an invented hobby.\"]}}\nThe editorial writingMaterial contains this reading's permitted meaning, scene, imagery and optional direction. Its constraints are separate controls and must not appear as policy explanations in the prose. Develop one central thread using this selected material only. Declare empty scenes arrays: this editorial scene is not a schema-5 SC reference. Cite the central source and all required parents for its meaning, imagery and direction. Do not introduce another setting or borrow a demonstration's subject. Keep each condition attached to its own claim.\nWrite only the body of today's reading. The selected writingMaterial is the sole source of draftable meaning; the structural references identify its source and contact geometry only.\nKeep each paragraph under 200 words and the whole body under 700 words.\nThe first paragraph must concern the selected meaning and cite C1 and I1. Cite only the IDs in the structural source references; each paragraph includes every required source and parent ID.\nKeep the selected meaning and its C1 contact as the focus. No synthesis relationship is supplied; do not invent a joint relationship or premise.\nCite the supplied IDs each paragraph rests on. This is reference coverage, not permission to invent astronomical facts.\nAny paragraph naming a planet or aspect must cite its supplied calculated cycle ID. Source IDs cannot replace that cycle citation.\nDo not write a headline, reflection question, local-time context or wellbeing framing; those are provided separately.\nDo not introduce sign or individual house placements. Do not write orb, degree, exact date, phase or calculated timing details in this warm/standard body.\nC1-C3 describe a transiting body contacting a natal point, not two bodies in the current sky. Preserve those roles whenever naming the geometry: explicitly name the target as natal if describing the contact as occurring in the sky. A source's subjective 'feels like yours' stays subjective; do not turn it into an objective task allocation.\nDo not repeat calculation caveats; the app appends them separately."
+              }
+            ]
+          }
+        ],
+        "generationConfig": {
+          "responseMimeType": "application/json",
+          "responseJsonSchema": {
+            "type": "object",
+            "properties": {
+              "paragraphs": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 4,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "text": {
+                      "type": "string"
+                    },
+                    "facts": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "scenes": {
+                      "type": "array",
+                      "maxItems": 2,
+                      "uniqueItems": true,
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "text",
+                    "facts",
+                    "scenes"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "paragraphs"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "requestHash": "e9f93d32bc9558a57a1c42a4e1ce4c3734397f5812965c4ddb6049238cc25d8b"
+    },
+    {
+      "id": "fallback-hard-neptune-mercury",
+      "editorialKey": "editorial-fallback-hard-neptune-mercury",
+      "input": {
+        "facts": [
+          {
+            "id": "C1",
+            "kind": "calculation",
+            "statement": "transiting neptune square natal mercury. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain inner-life. Calculated exact date: 2026-10-14.",
+            "cycle": {
+              "transitBody": "neptune",
+              "natalPoint": "mercury",
+              "aspect": "square",
+              "orb": 0.42,
+              "exactDate": "2026-10-14"
+            }
+          },
+          {
+            "id": "I1",
+            "statement": "Published interpretation square:neptune:mercury: A pause or shift in tone can linger after a conversation. An impression and the story formed around it are different. A feeling can deserve attention while another person's intentions remain unknown.",
+            "kind": "interpretation",
+            "dependsOn": [
+              "C1"
+            ],
+            "sourceKey": "square:neptune:mercury",
+            "releaseVersion": "0.9.0"
+          },
+          {
+            "id": "D1",
+            "statement": "Published framing for inner life and rest: An unclaimed hour can still be mentally full of unfinished tasks. A full calendar or an obligation that follows you into a quiet moment can offer a scene for tension around the amount of private space you prefer."
+          },
+          {
+            "id": "P1",
+            "statement": "Published phase wording: If a demand catches your attention, you can notice your response before deciding how to act."
+          },
+          {
+            "id": "T1",
+            "statement": "Timing: exact in 3 days. This reading falls in the middle part of the calculated window."
+          },
+          {
+            "id": "E1",
+            "statement": "Natal positions computed by synthetic-evaluation-engine fixture-1 at high precision, Placidus houses. Current transit geometry and orb use kepler-approx@1.0.0."
+          },
+          {
+            "id": "U1",
+            "statement": "recorded birth-time accuracy is \"exact\" (about plus or minus 2 minutes)"
+          }
+        ],
+        "hasEligibleCycles": true,
+        "tone": "warm",
+        "depth": "standard",
+        "suppression": {
+          "angles": false,
+          "houses": false
+        },
+        "fallback": {
+          "headline": "Before a feeling becomes a verdict",
+          "body": "After a conversation, a pause or a shift in tone can stay with you longer than the words. If that happens, you might find yourself going over what was said, adding an explanation to the memory.\n\nA feeling can deserve your attention while leaving another person's intentions unknown. Neptune blurs; Mercury names. A square between Neptune and your natal Mercury is a fair picture of the gap between an impression and the story that forms around it.\n\nAn impression can stay an impression for a while. 'I felt unsettled, and I'm not sure why' can be an honest place to leave it.",
+          "prompt": "When you're the one who goes quiet, what's usually behind it?"
+        },
+        "writing": {
+          "plan": {
+            "version": "daily-concrete-writing-1",
+            "releaseVersion": "0.9.0",
+            "theme": {
+              "factId": "I1",
+              "sourceKey": "square:neptune:mercury",
+              "relationship": null,
+              "requiredFacts": [
+                "C1",
+                "I1"
+              ]
+            },
+            "status": "no_frame",
+            "frame": null,
+            "scenes": [],
+            "templateSources": [
+              {
+                "factId": "I1",
+                "sourceKey": "square:neptune:mercury",
+                "sentences": [
+                  "A pause or shift in tone can linger after a conversation.",
+                  "An impression and the story formed around it are different.",
+                  "A feeling can deserve attention while another person's intentions remain unknown."
+                ]
+              }
+            ],
+            "editorial": {
+              "version": "daily-editorial-1",
+              "releaseVersion": "0.9.0",
+              "mode": "contact",
+              "entry": {
+                "key": "editorial-fallback-hard-neptune-mercury",
+                "source": {
+                  "kind": "interpretation",
+                  "key": "square:neptune:mercury"
+                },
+                "cycleKeys": [
+                  "neptune_square_mercury"
+                ],
+                "writingMaterial": {
+                  "meaning": "A pause or shift in tone can linger after a conversation. An impression and the story formed around it are different. A feeling can deserve attention while another person's intentions remain unknown.",
+                  "scene": "Returning to a remembered exchange and noticing an explanation being added to the memory.",
+                  "imagery": "Neptune blurs; Mercury names. A square between Neptune and natal Mercury pictures the gap between an impression and the story that forms around it.",
+                  "direction": "An impression can remain an impression for a while. 'I felt unsettled, and I'm not sure why' can be an honest place to leave it.",
+                  "reflection": "Remembering one's own reasons for going quiet can broaden perspective on the unknown meaning of someone else's silence."
+                },
+                "constraints": [
+                  "All Neptune/Mercury meaning and imagery here are newly proposed. Selected hard:*:* supplies only generic friction; never credit it or hard:neptune:sun for this meaning.",
+                  "Symbolic verbs describe an image, not a planet blurring the reader's judgment or causing confusion.",
+                  "No actual exchange, motive, deception, impaired judgment, memory accuracy, or outcome is known.",
+                  "The reflection opens another perspective; one's own reason for silence is not evidence of another person's reason.",
+                  "Emotional uncertainty is never derived from birth-time uncertainty; recorded birth accuracy is unchanged."
+                ],
+                "headline": "Before a feeling becomes a verdict",
+                "reflection": "When you're the one who goes quiet, what's usually behind it?",
+                "fallbackParagraphs": [
+                  "After a conversation, a pause or a shift in tone can stay with you longer than the words. If that happens, you might find yourself going over what was said, adding an explanation to the memory.",
+                  "A feeling can deserve your attention while leaving another person's intentions unknown. Neptune blurs; Mercury names. A square between Neptune and your natal Mercury is a fair picture of the gap between an impression and the story that forms around it.",
+                  "An impression can stay an impression for a while. 'I felt unsettled, and I'm not sure why' can be an honest place to leave it."
+                ]
+              },
+              "requiredFacts": [
+                "C1",
+                "I1"
+              ]
+            }
+          },
+          "template": {
+            "paragraphs": [
+              {
+                "text": "After a conversation, a pause or a shift in tone can stay with you longer than the words. If that happens, you might find yourself going over what was said, adding an explanation to the memory.",
+                "facts": [
+                  "C1",
+                  "I1"
+                ],
+                "scenes": []
+              },
+              {
+                "text": "A feeling can deserve your attention while leaving another person's intentions unknown. Neptune blurs; Mercury names. A square between Neptune and your natal Mercury is a fair picture of the gap between an impression and the story that forms around it.",
+                "facts": [
+                  "C1",
+                  "I1"
+                ],
+                "scenes": []
+              },
+              {
+                "text": "An impression can stay an impression for a while. 'I felt unsettled, and I'm not sure why' can be an honest place to leave it.",
+                "facts": [
+                  "C1",
+                  "I1"
+                ],
+                "scenes": []
+              }
+            ],
+            "renderMode": "unframed",
+            "reason": null
+          },
+          "minimalTemplate": {
+            "paragraphs": [
+              {
+                "text": "After a conversation, a pause or a shift in tone can stay with you longer than the words. If that happens, you might find yourself going over what was said, adding an explanation to the memory.",
+                "facts": [
+                  "C1",
+                  "I1"
+                ],
+                "scenes": []
+              },
+              {
+                "text": "A feeling can deserve your attention while leaving another person's intentions unknown. Neptune blurs; Mercury names. A square between Neptune and your natal Mercury is a fair picture of the gap between an impression and the story that forms around it.",
+                "facts": [
+                  "C1",
+                  "I1"
+                ],
+                "scenes": []
+              },
+              {
+                "text": "An impression can stay an impression for a while. 'I felt unsettled, and I'm not sure why' can be an honest place to leave it.",
+                "facts": [
+                  "C1",
+                  "I1"
+                ],
+                "scenes": []
+              }
+            ],
+            "renderMode": "unframed",
+            "reason": null
+          },
+          "recent": []
+        }
+      },
+      "inputHash": "22576f5a6c5fe5e416a86396cc24e7a93ee249aae2b3863ae8049716c01b1373",
+      "request": {
+        "systemInstruction": {
+          "parts": [
+            {
+              "text": "You write a daily astrology reading in an attentive, observational voice. Calculated C references establish only the named transit-to-natal contact. I and S references identify the selected source and its parent bindings; they supply no additional meaning. Only the exact selected writingMaterial supplies draftable interpretation, scenes, imagery and direction. It does not establish causes, personal events or another person's intentions. The supplied constraints are controls, never reader-facing prose or additional writing material. Keep them separate from the meaning, scene, imagery and direction. Preserve every supplied condition and possibility qualifier. Do not add frequency, certainty, necessity, causal connections or joint meanings. Cite every paragraph's sources and all required synthesis parents. Supported optional direction may offer noticing, waiting, asking, a small reversible choice, letting something stand or enjoyment. It must remain optional and proportionate; never command, pressure, predict or promise a result. Never add astronomical or biographical facts, assume a lived event, or make claims about health, medication, diagnosis, money, investing, pregnancy, divorce or death. Respect all suppression limits. Use supplied planetary imagery as an explicit comparison. The comparison does not mean the sky causes feelings or behavior. Do not introduce symbols absent from the selected material."
+            }
+          ]
+        },
+        "contents": [
+          {
+            "role": "user",
+            "parts": [
+              {
+                "text": "Tone: warm. Observe one recognizable detail, name one distinction that changes how it looks, and give the reader a useful direction without managing their life. Warmth comes from accuracy, not praise, consolation or a counselor's reassurance.\nCraft pairs, not factual sources: observe a pause staying with someone rather than announce the day's emotional character; distinguish making a sentence kinder from making its meaning smaller rather than reassure that nothing is wrong; permit an impression to remain unresolved rather than say an ordinary moment is enough.\nVoice examples only: [\"A pause can stay with you longer than the words.\",\"Making a sentence kinder and making its meaning smaller are different things.\",\"'I felt unsettled, and I'm not sure why' can be an honest place to leave it.\"]\nNever copy an example or borrow its scene unless the selected writing material independently supports it.\nUse the supplied meaning, scene, imagery and optional direction as material. Constraints tell you what to avoid; do not turn them into phrases such as 'offers a symbolic lens', 'gives this reading its theme' or explanations of what the system cannot know.\nOpen on an observable gesture, a general distinction or a supported conditional possibility. No mandatory 'if' opening. An ordinary general observation can stand without claiming it happened to this reader.\nWrite two to four paragraphs of one to four complete sentences each. Aim for 90–170 words, but stop sooner when the thought is complete. Never pad or repeat a distinction to meet a range.\nVary the rhythm and the position of supplied astrology. Planetary imagery can make the comparison vivid; do not reduce the contact to a list of planet keywords. The imagery and its geometry must stay within the selected sources.\nThis warm/standard body contains no orb numbers, degree measurements, exact dates, contact phase or calculated timing. Those details belong to the calculation record. A named transit-to-natal contact may support the supplied image without reporting its measurements.\nOptional direction can be implicit in a distinction. It need not be a final paragraph, a script to say aloud, or another permission sentence. Stop when the thought lands, without a recap or reassurance formula.\nThe headline and independently validated reflection are supplied separately. Do not write either in the body.\nStructural source references; no draftable prose:\n{\"references\":[{\"id\":\"C1\",\"kind\":\"calculation\",\"cycleKey\":\"neptune_square_mercury\",\"cycle\":{\"transitBody\":\"neptune\",\"natalPoint\":\"mercury\",\"aspect\":\"square\"}},{\"id\":\"I1\",\"kind\":\"interpretation\",\"sourceKey\":\"square:neptune:mercury\",\"releaseVersion\":\"0.9.0\",\"dependsOn\":[\"C1\"]}]}\nSource-bound writing brief:\n{\"themeFactId\":\"I1\",\"requiredFacts\":[\"C1\",\"I1\"],\"scenes\":[],\"editorial\":{\"version\":\"daily-editorial-1\",\"mode\":\"contact\",\"requiredFacts\":[\"C1\",\"I1\"],\"writingMaterial\":{\"meaning\":\"A pause or shift in tone can linger after a conversation. An impression and the story formed around it are different. A feeling can deserve attention while another person's intentions remain unknown.\",\"scene\":\"Returning to a remembered exchange and noticing an explanation being added to the memory.\",\"imagery\":\"Neptune blurs; Mercury names. A square between Neptune and natal Mercury pictures the gap between an impression and the story that forms around it.\",\"direction\":\"An impression can remain an impression for a while. 'I felt unsettled, and I'm not sure why' can be an honest place to leave it.\",\"reflection\":\"Remembering one's own reasons for going quiet can broaden perspective on the unknown meaning of someone else's silence.\"},\"constraints\":[\"All Neptune/Mercury meaning and imagery here are newly proposed. Selected hard:*:* supplies only generic friction; never credit it or hard:neptune:sun for this meaning.\",\"Symbolic verbs describe an image, not a planet blurring the reader's judgment or causing confusion.\",\"No actual exchange, motive, deception, impaired judgment, memory accuracy, or outcome is known.\",\"The reflection opens another perspective; one's own reason for silence is not evidence of another person's reason.\",\"Emotional uncertainty is never derived from birth-time uncertainty; recorded birth accuracy is unchanged.\"]}}\nThe editorial writingMaterial contains this reading's permitted meaning, scene, imagery and optional direction. Its constraints are separate controls and must not appear as policy explanations in the prose. Develop one central thread using this selected material only. Declare empty scenes arrays: this editorial scene is not a schema-5 SC reference. Cite the central source and all required parents for its meaning, imagery and direction. Do not introduce another setting or borrow a demonstration's subject. Keep each condition attached to its own claim.\nWrite only the body of today's reading. The selected writingMaterial is the sole source of draftable meaning; the structural references identify its source and contact geometry only.\nKeep each paragraph under 200 words and the whole body under 700 words.\nThe first paragraph must concern the selected meaning and cite C1 and I1. Cite only the IDs in the structural source references; each paragraph includes every required source and parent ID.\nKeep the selected meaning and its C1 contact as the focus. No synthesis relationship is supplied; do not invent a joint relationship or premise.\nCite the supplied IDs each paragraph rests on. This is reference coverage, not permission to invent astronomical facts.\nAny paragraph naming a planet or aspect must cite its supplied calculated cycle ID. Source IDs cannot replace that cycle citation.\nDo not write a headline, reflection question, local-time context or wellbeing framing; those are provided separately.\nDo not introduce sign or individual house placements. Do not write orb, degree, exact date, phase or calculated timing details in this warm/standard body.\nC1-C3 describe a transiting body contacting a natal point, not two bodies in the current sky. Preserve those roles whenever naming the geometry: explicitly name the target as natal if describing the contact as occurring in the sky. A source's subjective 'feels like yours' stays subjective; do not turn it into an objective task allocation.\nDo not repeat calculation caveats; the app appends them separately."
+              }
+            ]
+          }
+        ],
+        "generationConfig": {
+          "responseMimeType": "application/json",
+          "responseJsonSchema": {
+            "type": "object",
+            "properties": {
+              "paragraphs": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 4,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "text": {
+                      "type": "string"
+                    },
+                    "facts": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "scenes": {
+                      "type": "array",
+                      "maxItems": 2,
+                      "uniqueItems": true,
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "text",
+                    "facts",
+                    "scenes"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "paragraphs"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "requestHash": "66a28652e0bedfa78695f996aaefbbd7cabaf7b811b09dc4cbdb2147d9a7fe73"
+    }
+  ],
+  "hash": "8472e83d579229201ed7a7cc25214f73663e8570813ad7f4d00182f4afa9c489"
+}

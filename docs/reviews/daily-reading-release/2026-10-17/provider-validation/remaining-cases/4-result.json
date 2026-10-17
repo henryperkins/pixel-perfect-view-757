@@ -1,0 +1,128 @@
+{
+  "caseId": "jupiter-trine-sun-technical",
+  "inputHash": "9242f121a4f24e4d0662f21d3b175dcdb7cb392176184e2c6bf0f91158372e6e",
+  "requestHash": "e9f93d32bc9558a57a1c42a4e1ce4c3734397f5812965c4ddb6049238cc25d8b",
+  "trace": {
+    "version": "admin-model-transport-1",
+    "provider": "gemini-enterprise",
+    "requestedModel": "gemini-enterprise/gemini-3.8-flash",
+    "actualModel": "gemini-3.8-flash",
+    "thinkingLevel": null,
+    "maxOutputTokens": 65536,
+    "deadlineMs": 60000,
+    "startedAt": "2026-10-17T07:42:56.087Z",
+    "headersAt": "2026-10-17T07:43:12.182Z",
+    "bodyAt": "2026-10-17T07:43:12.183Z",
+    "abortAt": null,
+    "finishedAt": "2026-10-17T07:43:12.183Z",
+    "httpStatus": 200,
+    "requestId": null,
+    "responseId": "ACfTas20CI6ZotQPxKzIeA",
+    "finishReason": "STOP",
+    "usage": {
+      "inputTokens": 1705,
+      "outputTokens": 188,
+      "thinkingTokens": 590,
+      "totalTokens": 2483,
+      "outputIncludesThinking": false
+    }
+  },
+  "transportIssue": null,
+  "candidate": {
+    "paragraphs": [
+      {
+        "text": "Speaking with animation about an interest only to call it \"just a hobby\" puts a qualification immediately after the enthusiasm. Enjoyment can be a reason for an interest to belong in one's self-description before it ever becomes an achievement.",
+        "facts": [
+          "C1",
+          "I1"
+        ],
+        "scenes": []
+      },
+      {
+        "text": "Like transiting Jupiter forming a trine to the natal Sun, the shift is like a wider frame placed around a familiar self-portrait, allowing an existing interest to be included without requiring someone to become a different person. Dropping \"just\" once can leave the interest stated without a ranking of how accomplished or important it is.",
+        "facts": [
+          "C1",
+          "I1"
+        ],
+        "scenes": []
+      }
+    ]
+  },
+  "providerText": "{\n  \"paragraphs\": [\n    {\n      \"text\": \"Speaking with animation about an interest only to call it \\\"just a hobby\\\" puts a qualification immediately after the enthusiasm. Enjoyment can be a reason for an interest to belong in one's self-description before it ever becomes an achievement.\",\n      \"facts\": [\"C1\", \"I1\"],\n      \"scenes\": []\n    },\n    {\n      \"text\": \"Like transiting Jupiter forming a trine to the natal Sun, the shift is like a wider frame placed around a familiar self-portrait, allowing an existing interest to be included without requiring someone to become a different person. Dropping \\\"just\\\" once can leave the interest stated without a ranking of how accomplished or important it is.\",\n      \"facts\": [\"C1\", \"I1\"],\n      \"scenes\": []\n    }\n  ]\n}",
+  "prose": {
+    "headline": "What 'just' leaves out",
+    "body": "Speaking with animation about an interest only to call it \"just a hobby\" puts a qualification immediately after the enthusiasm. Enjoyment can be a reason for an interest to belong in one's self-description before it ever becomes an achievement.\n\nLike transiting Jupiter forming a trine to the natal Sun, the shift is like a wider frame placed around a familiar self-portrait, allowing an existing interest to be included without requiring someone to become a different person. Dropping \"just\" once can leave the interest stated without a ranking of how accomplished or important it is.",
+    "paragraphs": [
+      "Speaking with animation about an interest only to call it \"just a hobby\" puts a qualification immediately after the enthusiasm. Enjoyment can be a reason for an interest to belong in one's self-description before it ever becomes an achievement.",
+      "Like transiting Jupiter forming a trine to the natal Sun, the shift is like a wider frame placed around a familiar self-portrait, allowing an existing interest to be included without requiring someone to become a different person. Dropping \"just\" once can leave the interest stated without a ranking of how accomplished or important it is."
+    ],
+    "prompt": "What draws you to someone else's interests before you know how skilled they are?",
+    "meta": {
+      "mode": "model",
+      "model": "gemini-enterprise/gemini-3.8-flash",
+      "citations": [
+        {
+          "paragraph": 1,
+          "facts": [
+            "C1",
+            "I1"
+          ]
+        },
+        {
+          "paragraph": 2,
+          "facts": [
+            "C1",
+            "I1"
+          ]
+        }
+      ],
+      "dropped": 0,
+      "flagged": [],
+      "reason": null,
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-editorial-body-2",
+        "validatorVersion": "daily-editorial-reference-2",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 16099,
+        "paragraph": null
+      },
+      "writing": {
+        "renderMode": "unframed",
+        "reason": null,
+        "sceneUse": [],
+        "candidateQuality": {
+          "version": "daily-writing-quality-1",
+          "outcome": "pass",
+          "issues": [
+            {
+              "code": "scene_unavailable",
+              "severity": "info",
+              "paragraph": null,
+              "ruleId": "no_scene"
+            }
+          ]
+        },
+        "finalQuality": {
+          "version": "daily-writing-quality-1",
+          "outcome": "pass",
+          "issues": [
+            {
+              "code": "scene_unavailable",
+              "severity": "info",
+              "paragraph": null,
+              "ruleId": "no_scene"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "testedOutcome": "accepted_model",
+  "localFailure": false,
+  "actualMemberPersistence": false
+}

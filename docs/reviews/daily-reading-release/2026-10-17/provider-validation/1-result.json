@@ -1,0 +1,127 @@
+{
+  "caseId": "writing-reply-scene",
+  "inputHash": "d7c07f65455c0cdaa647b9f6ccb897beba2eef31a337f6c7708b4e25d452f920",
+  "requestHash": "9073ccbe8c2a53a2df51e214b3431952df3822dd9faddfdc9e6abcfdffae2060",
+  "trace": {
+    "version": "admin-model-transport-1",
+    "provider": "gemini-enterprise",
+    "requestedModel": "gemini-enterprise/gemini-3.8-flash",
+    "actualModel": "gemini-3.8-flash",
+    "thinkingLevel": null,
+    "maxOutputTokens": 65536,
+    "deadlineMs": 60000,
+    "startedAt": "2026-10-17T07:39:30.126Z",
+    "headersAt": "2026-10-17T07:39:40.491Z",
+    "bodyAt": "2026-10-17T07:39:40.494Z",
+    "abortAt": null,
+    "finishedAt": "2026-10-17T07:39:40.495Z",
+    "httpStatus": 200,
+    "requestId": null,
+    "responseId": "MibTauKRDsKJl7oPiO3pQQ",
+    "finishReason": "STOP",
+    "usage": {
+      "inputTokens": 1689,
+      "outputTokens": 206,
+      "thinkingTokens": 1088,
+      "totalTokens": 2983,
+      "outputIncludesThinking": false
+    }
+  },
+  "transportIssue": null,
+  "candidate": {
+    "paragraphs": [
+      {
+        "text": "Making a sentence kinder and making its meaning smaller are different things. In a work reply, a clear question can slip into a tentative suggestion, or a genuine reservation can become buried behind extra explanations until your position feels missing. When a message is softened simply to sound more agreeable, its central point can quietly vanish.",
+        "facts": [
+          "C1",
+          "I1"
+        ],
+        "scenes": []
+      },
+      {
+        "text": "The impulse is like Mercury at its return to natal Mercury, where the messenger pauses to reread the original note before handing it over, checking that fresh phrasing still carries the initial message. Writing the central point in a plain sentence apart from the draft can help you hear the gap between kindness and diminished meaning, keeping your purpose available while choosing the final words.",
+        "facts": [
+          "C1",
+          "I1"
+        ],
+        "scenes": []
+      }
+    ]
+  },
+  "providerText": "{\n  \"paragraphs\": [\n    {\n      \"text\": \"Making a sentence kinder and making its meaning smaller are different things. In a work reply, a clear question can slip into a tentative suggestion, or a genuine reservation can become buried behind extra explanations until your position feels missing. When a message is softened simply to sound more agreeable, its central point can quietly vanish.\",\n      \"facts\": [\"C1\", \"I1\"],\n      \"scenes\": []\n    },\n    {\n      \"text\": \"The impulse is like Mercury at its return to natal Mercury, where the messenger pauses to reread the original note before handing it over, checking that fresh phrasing still carries the initial message. Writing the central point in a plain sentence apart from the draft can help you hear the gap between kindness and diminished meaning, keeping your purpose available while choosing the final words.\",\n      \"facts\": [\"C1\", \"I1\"],\n      \"scenes\": []\n    }\n  ]\n}",
+  "prose": {
+    "headline": "When the point gets edited out",
+    "body": "Making a sentence kinder and making its meaning smaller are different things. In a work reply, a clear question can slip into a tentative suggestion, or a genuine reservation can become buried behind extra explanations until your position feels missing. When a message is softened simply to sound more agreeable, its central point can quietly vanish.\n\nThe impulse is like Mercury at its return to natal Mercury, where the messenger pauses to reread the original note before handing it over, checking that fresh phrasing still carries the initial message. Writing the central point in a plain sentence apart from the draft can help you hear the gap between kindness and diminished meaning, keeping your purpose available while choosing the final words.",
+    "paragraphs": [
+      "Making a sentence kinder and making its meaning smaller are different things. In a work reply, a clear question can slip into a tentative suggestion, or a genuine reservation can become buried behind extra explanations until your position feels missing. When a message is softened simply to sound more agreeable, its central point can quietly vanish.",
+      "The impulse is like Mercury at its return to natal Mercury, where the messenger pauses to reread the original note before handing it over, checking that fresh phrasing still carries the initial message. Writing the central point in a plain sentence apart from the draft can help you hear the gap between kindness and diminished meaning, keeping your purpose available while choosing the final words."
+    ],
+    "prompt": "When is directness the kinder choice?",
+    "meta": {
+      "mode": "model",
+      "model": "gemini-enterprise/gemini-3.8-flash",
+      "citations": [
+        {
+          "paragraph": 1,
+          "facts": [
+            "C1",
+            "I1"
+          ]
+        },
+        {
+          "paragraph": 2,
+          "facts": [
+            "C1",
+            "I1"
+          ]
+        }
+      ],
+      "dropped": 0,
+      "flagged": [],
+      "reason": null,
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-editorial-body-2",
+        "validatorVersion": "daily-editorial-reference-2",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 10372,
+        "paragraph": null
+      },
+      "writing": {
+        "renderMode": "unframed",
+        "reason": null,
+        "sceneUse": [],
+        "candidateQuality": {
+          "version": "daily-writing-quality-1",
+          "outcome": "pass",
+          "issues": [
+            {
+              "code": "scene_unavailable",
+              "severity": "info",
+              "paragraph": null,
+              "ruleId": "no_scene"
+            }
+          ]
+        },
+        "finalQuality": {
+          "version": "daily-writing-quality-1",
+          "outcome": "pass",
+          "issues": [
+            {
+              "code": "scene_unavailable",
+              "severity": "info",
+              "paragraph": null,
+              "ruleId": "no_scene"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "localFailure": false,
+  "actualMemberPersistence": false
+}

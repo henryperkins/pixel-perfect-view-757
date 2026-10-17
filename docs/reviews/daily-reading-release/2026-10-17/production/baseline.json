@@ -1,0 +1,10 @@
+{
+  "checkedAt": "2026-10-17T07:36:31.723Z",
+  "activeVersion": "0.7.1",
+  "releaseId": "edcc53cf-d19a-415b-a8a2-a66040846b1d",
+  "storedChecksum": "20b793acda524da945b07ec32b2ed795f31e273c533ff6b4e9c4f96ef821eeac",
+  "storedAlgorithm": null,
+  "canonicalRawChecksum": "57155bafffd19552de4138bc1252502d2eb2b8552129da7620a4dfcc2d3fae68",
+  "canonicalNormalizedChecksum": "44c05c8b0336dc778c2efdcbf0c28dc2091d33a96b91c352a2481123b7f7ccae",
+  "normalizedBundleMatchesFrozen": true
+}

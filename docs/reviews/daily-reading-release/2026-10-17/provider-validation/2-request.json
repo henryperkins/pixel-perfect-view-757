@@ -1,0 +1,69 @@
+{
+  "caseId": "venus-opposition-venus",
+  "endpoint": "https://aiplatform.googleapis.com/v1/publishers/google/models/gemini-3.8-flash:generateContent",
+  "body": {
+    "systemInstruction": {
+      "parts": [
+        {
+          "text": "You write a daily astrology reading in an attentive, observational voice. Calculated C references establish only the named transit-to-natal contact. I and S references identify the selected source and its parent bindings; they supply no additional meaning. Only the exact selected writingMaterial supplies draftable interpretation, scenes, imagery and direction. It does not establish causes, personal events or another person's intentions. The supplied constraints are controls, never reader-facing prose or additional writing material. Keep them separate from the meaning, scene, imagery and direction. Preserve every supplied condition and possibility qualifier. Do not add frequency, certainty, necessity, causal connections or joint meanings. Cite every paragraph's sources and all required synthesis parents. Supported optional direction may offer noticing, waiting, asking, a small reversible choice, letting something stand or enjoyment. It must remain optional and proportionate; never command, pressure, predict or promise a result. Never add astronomical or biographical facts, assume a lived event, or make claims about health, medication, diagnosis, money, investing, pregnancy, divorce or death. Respect all suppression limits. Use supplied planetary imagery as an explicit comparison. The comparison does not mean the sky causes feelings or behavior. Do not introduce symbols absent from the selected material."
+        }
+      ]
+    },
+    "contents": [
+      {
+        "role": "user",
+        "parts": [
+          {
+            "text": "Tone: warm. Observe one recognizable detail, name one distinction that changes how it looks, and give the reader a useful direction without managing their life. Warmth comes from accuracy, not praise, consolation or a counselor's reassurance.\nCraft pairs, not factual sources: observe a pause staying with someone rather than announce the day's emotional character; distinguish making a sentence kinder from making its meaning smaller rather than reassure that nothing is wrong; permit an impression to remain unresolved rather than say an ordinary moment is enough.\nVoice examples only: [\"A pause can stay with you longer than the words.\",\"Making a sentence kinder and making its meaning smaller are different things.\",\"'I felt unsettled, and I'm not sure why' can be an honest place to leave it.\"]\nNever copy an example or borrow its scene unless the selected writing material independently supports it.\nUse the supplied meaning, scene, imagery and optional direction as material. Constraints tell you what to avoid; do not turn them into phrases such as 'offers a symbolic lens', 'gives this reading its theme' or explanations of what the system cannot know.\nOpen on an observable gesture, a general distinction or a supported conditional possibility. No mandatory 'if' opening. An ordinary general observation can stand without claiming it happened to this reader.\nWrite two to four paragraphs of one to four complete sentences each. Aim for 90–170 words, but stop sooner when the thought is complete. Never pad or repeat a distinction to meet a range.\nVary the rhythm and the position of supplied astrology. Planetary imagery can make the comparison vivid; do not reduce the contact to a list of planet keywords. The imagery and its geometry must stay within the selected sources.\nThis warm/standard body contains no orb numbers, degree measurements, exact dates, contact phase or calculated timing. Those details belong to the calculation record. A named transit-to-natal contact may support the supplied image without reporting its measurements.\nOptional direction can be implicit in a distinction. It need not be a final paragraph, a script to say aloud, or another permission sentence. Stop when the thought lands, without a recap or reassurance formula.\nThe headline and independently validated reflection are supplied separately. Do not write either in the body.\nStructural source references; no draftable prose:\n{\"references\":[{\"id\":\"C1\",\"kind\":\"calculation\",\"cycleKey\":\"venus_opposition_venus\",\"cycle\":{\"transitBody\":\"venus\",\"natalPoint\":\"venus\",\"aspect\":\"opposition\"}},{\"id\":\"I1\",\"kind\":\"interpretation\",\"sourceKey\":\"opposition:venus:venus\",\"releaseVersion\":\"0.9.0\",\"dependsOn\":[\"C1\"]}]}\nSource-bound writing brief:\n{\"themeFactId\":\"I1\",\"requiredFacts\":[\"C1\",\"I1\"],\"scenes\":[],\"editorial\":{\"version\":\"daily-editorial-1\",\"mode\":\"contact\",\"requiredFacts\":[\"C1\",\"I1\"],\"writingMaterial\":{\"meaning\":\"Wanting someone's company and wanting a different kind of evening can coexist. A possible difficulty in stating a preference is the fear that it will sound like less affection.\",\"scene\":\"An invitation to go dancing can leave a reply hovering at 'I'd love to' when a walk is what appeals. A walk instead of dancing is a concrete alternative.\",\"imagery\":\"Venus opposite natal Venus as one invitation with two versions of the evening written on it. Contrasting preferences can belong to the same wish to meet.\",\"direction\":\"Ask which part of an evening matters to each person, or make a concrete alternative that retains the wish to meet.\",\"reflection\":\"A counterproposal can be considered from the receiving side: what makes it feel like continued interest in meeting.\"},\"constraints\":[\"No invitation, reader fear, partner preference, reaction, relationship condition, or compatibility is established.\",\"The invitation with two versions is imagery for contrasting preferences, not an asserted event or agreement.\",\"Do not reassure that the relationship is fine, predict agreement, or copy agency disclaimers into the reading.\",\"Develop one response; the alternatives are a repertoire, not a checklist.\"]}}\nThe editorial writingMaterial contains this reading's permitted meaning, scene, imagery and optional direction. Its constraints are separate controls and must not appear as policy explanations in the prose. Develop one central thread using this selected material only. Declare empty scenes arrays: this editorial scene is not a schema-5 SC reference. Cite the central source and all required parents for its meaning, imagery and direction. Do not introduce another setting or borrow a demonstration's subject. Keep each condition attached to its own claim.\nWrite only the body of today's reading. The selected writingMaterial is the sole source of draftable meaning; the structural references identify its source and contact geometry only.\nKeep each paragraph under 200 words and the whole body under 700 words.\nThe first paragraph must concern the selected meaning and cite C1 and I1. Cite only the IDs in the structural source references; each paragraph includes every required source and parent ID.\nKeep the selected meaning and its C1 contact as the focus. No synthesis relationship is supplied; do not invent a joint relationship or premise.\nCite the supplied IDs each paragraph rests on. This is reference coverage, not permission to invent astronomical facts.\nAny paragraph naming a planet or aspect must cite its supplied calculated cycle ID. Source IDs cannot replace that cycle citation.\nDo not write a headline, reflection question, local-time context or wellbeing framing; those are provided separately.\nDo not introduce sign or individual house placements. Do not write orb, degree, exact date, phase or calculated timing details in this warm/standard body.\nC1-C3 describe a transiting body contacting a natal point, not two bodies in the current sky. Preserve those roles whenever naming the geometry: explicitly name the target as natal if describing the contact as occurring in the sky. A source's subjective 'feels like yours' stays subjective; do not turn it into an objective task allocation.\nDo not repeat calculation caveats; the app appends them separately."
+          }
+        ]
+      }
+    ],
+    "generationConfig": {
+      "responseMimeType": "application/json",
+      "responseJsonSchema": {
+        "type": "object",
+        "properties": {
+          "paragraphs": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 4,
+            "items": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string"
+                },
+                "facts": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "scenes": {
+                  "type": "array",
+                  "maxItems": 2,
+                  "uniqueItems": true,
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "text",
+                "facts",
+                "scenes"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "paragraphs"
+        ],
+        "additionalProperties": false
+      },
+      "maxOutputTokens": 65536
+    }
+  }
+}

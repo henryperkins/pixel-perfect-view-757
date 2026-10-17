@@ -1,0 +1,14 @@
+{
+  "draftId": "47be7dc8-0de9-4b99-8c8d-cee3f9d9c8d9",
+  "candidateHash": "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f",
+  "baseHash": "44c05c8b0336dc778c2efdcbf0c28dc2091d33a96b91c352a2481123b7f7ccae",
+  "baseVersion": "0.7.1",
+  "baseAvailable": true,
+  "reviewed": false,
+  "counts": {
+    "added": 5,
+    "removed": 0,
+    "changed": 1,
+    "unchanged": 110
+  }
+}

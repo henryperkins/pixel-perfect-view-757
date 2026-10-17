@@ -1,0 +1,25 @@
+{
+  "review": {
+    "approved": true,
+    "candidateHash": "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f",
+    "baseHash": "44c05c8b0336dc778c2efdcbf0c28dc2091d33a96b91c352a2481123b7f7ccae"
+  },
+  "staged": {
+    "id": "94b44ea7-65c3-490b-83ea-37baeff8bfd3",
+    "version": "0.9.0",
+    "checksum": "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f",
+    "checksumAlgorithm": "sha256-canonical-json-v1",
+    "previousVersion": null,
+    "activeVersion": "0.7.1",
+    "isRollback": false,
+    "publication": {
+      "operationId": "d8919e57-3b76-4073-8328-61a9545baaa6",
+      "operation": "stage",
+      "status": "complete",
+      "active": false,
+      "previousVersion": null,
+      "artifactKey": "content-releases/0.9.0/bundle.json",
+      "error": null
+    }
+  }
+}

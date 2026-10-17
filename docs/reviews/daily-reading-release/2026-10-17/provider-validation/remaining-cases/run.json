@@ -1,0 +1,41 @@
+{
+  "version": "daily-editorial-release-continuation-ledger-1",
+  "planHash": "152dc99596f747266b40bc6eea8c3ce47b93411c53f908a7bc890f92b568531e",
+  "parentLedgerHash": "bf2477b5cc172852dde77944fd6411727060d286ac344db8a2b17be2ed84141f",
+  "startedAt": "2026-10-17T07:42:35.720Z",
+  "completedAt": "2026-10-17T07:43:51.481Z",
+  "status": "completed_with_fallbacks",
+  "inheritedAttempts": 2,
+  "inheritedReservedMicros": 61926,
+  "providerAttempts": 5,
+  "reservedMicros": 168724,
+  "costStatus": "reservation-estimates-not-invoices",
+  "fallbackCount": 1,
+  "stopReason": null,
+  "entries": [
+    {
+      "id": "synthesis-tension",
+      "attempted": true,
+      "capture": "recorded",
+      "reservedMicros": 60442,
+      "resultFile": "3-result.json",
+      "testedOutcome": "accepted_model"
+    },
+    {
+      "id": "jupiter-trine-sun-technical",
+      "attempted": true,
+      "capture": "recorded",
+      "reservedMicros": 18970,
+      "resultFile": "4-result.json",
+      "testedOutcome": "accepted_model"
+    },
+    {
+      "id": "fallback-hard-neptune-mercury",
+      "attempted": true,
+      "capture": "recorded",
+      "reservedMicros": 27386,
+      "resultFile": "5-result.json",
+      "testedOutcome": "accepted_model"
+    }
+  ]
+}

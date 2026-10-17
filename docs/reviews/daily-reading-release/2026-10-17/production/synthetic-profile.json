@@ -1,0 +1,151 @@
+{
+  "purpose": "Isolated synthetic account only; no member data",
+  "setup": [
+    {
+      "ok": true
+    },
+    {
+      "source_id": "USR-01",
+      "granted": true
+    },
+    {
+      "source_id": "USR-02",
+      "granted": true
+    },
+    {
+      "snapshotId": "fabda4cf-6bcf-41e0-b50c-55306b807d56",
+      "fingerprint": "Oa4c0qdlhzmOogiDisTipElGL2vkUEIj",
+      "revision": "5b40cdf2246de67041e20e8c6cc58a7d61823bd1d9f7636e613f7e6decc7c923",
+      "changeSummary": {
+        "changedFields": [
+          "date",
+          "time",
+          "accuracy",
+          "place"
+        ],
+        "previous": null,
+        "current": {
+          "engine": "swiss-ephemeris@2.10.03",
+          "precision": "high",
+          "houseSystem": "placidus",
+          "timeAccuracy": "unknown",
+          "housesSupported": false,
+          "anglesSupported": false
+        },
+        "unchanged": false
+      }
+    }
+  ],
+  "cycles": {
+    "needsOnboarding": false,
+    "day": "2026-10-17",
+    "timezone": "UTC",
+    "referenceAt": "2026-10-17T12:00:00.000Z",
+    "engine": "swiss-ephemeris@2.10.03",
+    "contractVersion": "chart-contract/1",
+    "computedAt": "2026-10-17T07:38:17.134Z",
+    "uncertainty": {
+      "accuracy": "unknown",
+      "minutes": 720,
+      "ascendantSpreadDeg": 180,
+      "moonSpreadDeg": 6.6,
+      "housesReliable": false,
+      "angleClaimsSuppressed": true
+    },
+    "ephemeris": {
+      "engine": "swiss-ephemeris@2.10.03",
+      "precision": "high",
+      "degraded": false,
+      "degradedReason": null,
+      "transitEngine": "kepler-approx@1.0.0",
+      "eventTiming": null
+    },
+    "storyCalculation": {
+      "status": "omitted",
+      "reason": "no_anchor"
+    },
+    "cycles": [
+      {
+        "cycle_key": "jupiter_trine_sun",
+        "transit_body": "jupiter",
+        "natal_point": "sun",
+        "aspect": "trine",
+        "orb": 0.24,
+        "phase": "separating",
+        "domain": "identity",
+        "importance": 0.6649,
+        "ingress_at": "2026-09-28T00:00:00.000Z",
+        "exact_at": "2026-10-16T00:00:00.000Z",
+        "egress_at": "2026-11-08T00:00:00.000Z",
+        "label": "Jupiter trine natal Sun",
+        "days_to_exact": -1,
+        "arc_position": 0.476
+      },
+      {
+        "cycle_key": "sun_opposition_sun",
+        "transit_body": "sun",
+        "natal_point": "sun",
+        "aspect": "opposition",
+        "orb": 2.01,
+        "phase": "separating",
+        "domain": "identity",
+        "importance": 0.0975,
+        "ingress_at": "2026-10-12T12:00:00.000Z",
+        "exact_at": "2026-10-15T12:00:00.000Z",
+        "egress_at": "2026-10-18T00:00:00.000Z",
+        "label": "Sun opposition natal Sun",
+        "days_to_exact": -2,
+        "arc_position": 0.909
+      },
+      {
+        "cycle_key": "uranus_conjunction_venus",
+        "transit_body": "uranus",
+        "natal_point": "venus",
+        "aspect": "conjunction",
+        "orb": 2.63,
+        "phase": "approaching",
+        "domain": "relationships",
+        "importance": 0.0816,
+        "ingress_at": "2026-07-25T00:00:00.000Z",
+        "exact_at": null,
+        "egress_at": "2026-10-29T00:00:00.000Z",
+        "label": "Uranus conjunction natal Venus",
+        "days_to_exact": null,
+        "arc_position": 0.88
+      },
+      {
+        "cycle_key": "saturn_sextile_venus",
+        "transit_body": "saturn",
+        "natal_point": "venus",
+        "aspect": "sextile",
+        "orb": 2.6,
+        "phase": "approaching",
+        "domain": "relationships",
+        "importance": 0.0805,
+        "ingress_at": "2026-10-12T00:00:00.000Z",
+        "exact_at": null,
+        "egress_at": "2027-02-06T00:00:00.000Z",
+        "label": "Saturn sextile natal Venus",
+        "days_to_exact": null,
+        "arc_position": 0.047
+      },
+      {
+        "cycle_key": "sun_sextile_mars",
+        "transit_body": "sun",
+        "natal_point": "mars",
+        "aspect": "sextile",
+        "orb": 2.27,
+        "phase": "approaching",
+        "domain": "work",
+        "importance": 0.0275,
+        "ingress_at": "2026-10-17T00:00:00.000Z",
+        "exact_at": "2026-10-19T18:00:00.000Z",
+        "egress_at": "2026-10-22T12:00:00.000Z",
+        "label": "Sun sextile natal Mars",
+        "days_to_exact": 2,
+        "arc_position": 0.091
+      }
+    ],
+    "preferredDomain": null
+  }
+}

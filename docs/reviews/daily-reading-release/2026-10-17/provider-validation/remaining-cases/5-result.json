@@ -1,0 +1,128 @@
+{
+  "caseId": "fallback-hard-neptune-mercury",
+  "inputHash": "22576f5a6c5fe5e416a86396cc24e7a93ee249aae2b3863ae8049716c01b1373",
+  "requestHash": "66a28652e0bedfa78695f996aaefbbd7cabaf7b811b09dc4cbdb2147d9a7fe73",
+  "trace": {
+    "version": "admin-model-transport-1",
+    "provider": "gemini-enterprise",
+    "requestedModel": "gemini-enterprise/gemini-3.8-flash",
+    "actualModel": "gemini-3.8-flash",
+    "thinkingLevel": null,
+    "maxOutputTokens": 65536,
+    "deadlineMs": 60000,
+    "startedAt": "2026-10-17T07:43:12.190Z",
+    "headersAt": "2026-10-17T07:43:51.476Z",
+    "bodyAt": "2026-10-17T07:43:51.477Z",
+    "abortAt": null,
+    "finishedAt": "2026-10-17T07:43:51.478Z",
+    "httpStatus": 200,
+    "requestId": null,
+    "responseId": "ECfTaoSxDvzhsbwPqoGi6AE",
+    "finishReason": "STOP",
+    "usage": {
+      "inputTokens": 1743,
+      "outputTokens": 219,
+      "thinkingTokens": 976,
+      "totalTokens": 2938,
+      "outputIncludesThinking": false
+    }
+  },
+  "transportIssue": null,
+  "candidate": {
+    "paragraphs": [
+      {
+        "text": "A pause or a shift in tone can linger long after a conversation ends. In returning to a remembered exchange, one can often catch an explanation being quietly added to the memory. An immediate impression and the story formed around it are distinct things, and a feeling can deserve attention even while another person's intentions remain unknown.",
+        "facts": [
+          "C1",
+          "I1"
+        ],
+        "scenes": []
+      },
+      {
+        "text": "Where Neptune blurs, Mercury names; a square between transiting Neptune and natal Mercury pictures that gap between an impression and the story that gathers to explain it. That impression can simply remain an impression for a while. Acknowledging that you felt unsettled, without immediately knowing why, can be an honest place to leave it.",
+        "facts": [
+          "C1",
+          "I1"
+        ],
+        "scenes": []
+      }
+    ]
+  },
+  "providerText": "{\n  \"paragraphs\": [\n    {\n      \"text\": \"A pause or a shift in tone can linger long after a conversation ends. In returning to a remembered exchange, one can often catch an explanation being quietly added to the memory. An immediate impression and the story formed around it are distinct things, and a feeling can deserve attention even while another person's intentions remain unknown.\",\n      \"facts\": [\n        \"C1\",\n        \"I1\"\n      ],\n      \"scenes\": []\n    },\n    {\n      \"text\": \"Where Neptune blurs, Mercury names; a square between transiting Neptune and natal Mercury pictures that gap between an impression and the story that gathers to explain it. That impression can simply remain an impression for a while. Acknowledging that you felt unsettled, without immediately knowing why, can be an honest place to leave it.\",\n      \"facts\": [\n        \"C1\",\n        \"I1\"\n      ],\n      \"scenes\": []\n    }\n  ]\n}",
+  "prose": {
+    "headline": "Before a feeling becomes a verdict",
+    "body": "A pause or a shift in tone can linger long after a conversation ends. In returning to a remembered exchange, one can often catch an explanation being quietly added to the memory. An immediate impression and the story formed around it are distinct things, and a feeling can deserve attention even while another person's intentions remain unknown.\n\nWhere Neptune blurs, Mercury names; a square between transiting Neptune and natal Mercury pictures that gap between an impression and the story that gathers to explain it. That impression can simply remain an impression for a while. Acknowledging that you felt unsettled, without immediately knowing why, can be an honest place to leave it.",
+    "paragraphs": [
+      "A pause or a shift in tone can linger long after a conversation ends. In returning to a remembered exchange, one can often catch an explanation being quietly added to the memory. An immediate impression and the story formed around it are distinct things, and a feeling can deserve attention even while another person's intentions remain unknown.",
+      "Where Neptune blurs, Mercury names; a square between transiting Neptune and natal Mercury pictures that gap between an impression and the story that gathers to explain it. That impression can simply remain an impression for a while. Acknowledging that you felt unsettled, without immediately knowing why, can be an honest place to leave it."
+    ],
+    "prompt": "When you're the one who goes quiet, what's usually behind it?",
+    "meta": {
+      "mode": "model",
+      "model": "gemini-enterprise/gemini-3.8-flash",
+      "citations": [
+        {
+          "paragraph": 1,
+          "facts": [
+            "C1",
+            "I1"
+          ]
+        },
+        {
+          "paragraph": 2,
+          "facts": [
+            "C1",
+            "I1"
+          ]
+        }
+      ],
+      "dropped": 0,
+      "flagged": [],
+      "reason": null,
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-editorial-body-2",
+        "validatorVersion": "daily-editorial-reference-2",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 39290,
+        "paragraph": null
+      },
+      "writing": {
+        "renderMode": "unframed",
+        "reason": null,
+        "sceneUse": [],
+        "candidateQuality": {
+          "version": "daily-writing-quality-1",
+          "outcome": "pass",
+          "issues": [
+            {
+              "code": "scene_unavailable",
+              "severity": "info",
+              "paragraph": null,
+              "ruleId": "no_scene"
+            }
+          ]
+        },
+        "finalQuality": {
+          "version": "daily-writing-quality-1",
+          "outcome": "pass",
+          "issues": [
+            {
+              "code": "scene_unavailable",
+              "severity": "info",
+              "paragraph": null,
+              "ruleId": "no_scene"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "testedOutcome": "accepted_model",
+  "localFailure": false,
+  "actualMemberPersistence": false
+}

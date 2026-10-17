@@ -1,0 +1,162 @@
+{
+  "caseId": "synthesis-tension",
+  "inputHash": "1a259a3359e7129f2efd97008818e40691381a9092716943e5fba10577a8758b",
+  "requestHash": "cf7c1872c0cdfe3af8b1796a1746ff1409613dd81128d5335a66f230c71222bf",
+  "trace": {
+    "version": "admin-model-transport-1",
+    "provider": "gemini-enterprise",
+    "requestedModel": "gemini-enterprise/gemini-3.8-flash",
+    "actualModel": "gemini-3.8-flash",
+    "thinkingLevel": null,
+    "maxOutputTokens": 65536,
+    "deadlineMs": 60000,
+    "startedAt": "2026-10-17T07:42:35.724Z",
+    "headersAt": "2026-10-17T07:42:56.076Z",
+    "bodyAt": "2026-10-17T07:42:56.079Z",
+    "abortAt": null,
+    "finishedAt": "2026-10-17T07:42:56.080Z",
+    "httpStatus": 200,
+    "requestId": null,
+    "responseId": "6ybTao3iMJjWsbwPosO1UQ",
+    "finishReason": "STOP",
+    "usage": {
+      "inputTokens": 1931,
+      "outputTokens": 286,
+      "thinkingTokens": 2543,
+      "totalTokens": 4760,
+      "outputIncludesThinking": false
+    }
+  },
+  "transportIssue": null,
+  "candidate": {
+    "paragraphs": [
+      {
+        "text": "When an idea matters, a smaller commitment can seem to understate enthusiasm. Finding that 'I can do this much' sounds smaller than the interest behind it, promising more may become a way of trying to show how much one cares.",
+        "facts": [
+          "S1",
+          "C1",
+          "I1",
+          "C2",
+          "I2"
+        ],
+        "scenes": []
+      },
+      {
+        "text": "Consider transiting Jupiter's trine to natal Mars as a lengthening stride, with transiting Saturn's square to natal Sun as the pack that comes along; a faster pace does not make the pack lighter. While expansion can increase the structure needed, enthusiasm and the scope of a promise can be expressed separately.",
+        "facts": [
+          "S1",
+          "C1",
+          "I1",
+          "C2",
+          "I2"
+        ],
+        "scenes": []
+      },
+      {
+        "text": "Before adding a piece of work, one can distinguish wanting that work from wanting the promise to express enthusiasm. The size of a commitment need not carry all the expression of interest.",
+        "facts": [
+          "S1",
+          "C1",
+          "I1",
+          "C2",
+          "I2"
+        ],
+        "scenes": []
+      }
+    ]
+  },
+  "providerText": "{\n  \"paragraphs\": [\n    {\n      \"text\": \"When an idea matters, a smaller commitment can seem to understate enthusiasm. Finding that 'I can do this much' sounds smaller than the interest behind it, promising more may become a way of trying to show how much one cares.\",\n      \"facts\": [\"S1\", \"C1\", \"I1\", \"C2\", \"I2\"],\n      \"scenes\": []\n    },\n    {\n      \"text\": \"Consider transiting Jupiter's trine to natal Mars as a lengthening stride, with transiting Saturn's square to natal Sun as the pack that comes along; a faster pace does not make the pack lighter. While expansion can increase the structure needed, enthusiasm and the scope of a promise can be expressed separately.\",\n      \"facts\": [\"S1\", \"C1\", \"I1\", \"C2\", \"I2\"],\n      \"scenes\": []\n    },\n    {\n      \"text\": \"Before adding a piece of work, one can distinguish wanting that work from wanting the promise to express enthusiasm. The size of a commitment need not carry all the expression of interest.\",\n      \"facts\": [\"S1\", \"C1\", \"I1\", \"C2\", \"I2\"],\n      \"scenes\": []\n    }\n  ]\n}",
+  "prose": {
+    "headline": "When enthusiasm becomes a promise",
+    "body": "When an idea matters, a smaller commitment can seem to understate enthusiasm. Finding that 'I can do this much' sounds smaller than the interest behind it, promising more may become a way of trying to show how much one cares.\n\nConsider transiting Jupiter's trine to natal Mars as a lengthening stride, with transiting Saturn's square to natal Sun as the pack that comes along; a faster pace does not make the pack lighter. While expansion can increase the structure needed, enthusiasm and the scope of a promise can be expressed separately.\n\nBefore adding a piece of work, one can distinguish wanting that work from wanting the promise to express enthusiasm. The size of a commitment need not carry all the expression of interest.",
+    "paragraphs": [
+      "When an idea matters, a smaller commitment can seem to understate enthusiasm. Finding that 'I can do this much' sounds smaller than the interest behind it, promising more may become a way of trying to show how much one cares.",
+      "Consider transiting Jupiter's trine to natal Mars as a lengthening stride, with transiting Saturn's square to natal Sun as the pack that comes along; a faster pace does not make the pack lighter. While expansion can increase the structure needed, enthusiasm and the scope of a promise can be expressed separately.",
+      "Before adding a piece of work, one can distinguish wanting that work from wanting the promise to express enthusiasm. The size of a commitment need not carry all the expression of interest."
+    ],
+    "prompt": "What would taking an idea seriously look like at a scale you can manage?",
+    "meta": {
+      "mode": "model",
+      "model": "gemini-enterprise/gemini-3.8-flash",
+      "citations": [
+        {
+          "paragraph": 1,
+          "facts": [
+            "S1",
+            "C1",
+            "I1",
+            "C2",
+            "I2"
+          ]
+        },
+        {
+          "paragraph": 2,
+          "facts": [
+            "S1",
+            "C1",
+            "I1",
+            "C2",
+            "I2"
+          ]
+        },
+        {
+          "paragraph": 3,
+          "facts": [
+            "S1",
+            "C1",
+            "I1",
+            "C2",
+            "I2"
+          ]
+        }
+      ],
+      "dropped": 0,
+      "flagged": [],
+      "reason": null,
+      "diagnostics": {
+        "version": 1,
+        "promptVersion": "daily-editorial-body-2",
+        "validatorVersion": "daily-editorial-reference-2",
+        "model": "gemini-enterprise/gemini-3.8-flash",
+        "gatewayTimeoutMs": 60000,
+        "outcome": "accepted",
+        "attempted": true,
+        "code": "accepted",
+        "durationMs": 20359,
+        "paragraph": null
+      },
+      "writing": {
+        "renderMode": "unframed",
+        "reason": null,
+        "sceneUse": [],
+        "candidateQuality": {
+          "version": "daily-writing-quality-1",
+          "outcome": "pass",
+          "issues": [
+            {
+              "code": "scene_unavailable",
+              "severity": "info",
+              "paragraph": null,
+              "ruleId": "no_scene"
+            }
+          ]
+        },
+        "finalQuality": {
+          "version": "daily-writing-quality-1",
+          "outcome": "pass",
+          "issues": [
+            {
+              "code": "scene_unavailable",
+              "severity": "info",
+              "paragraph": null,
+              "ruleId": "no_scene"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "testedOutcome": "accepted_model",
+  "localFailure": false,
+  "actualMemberPersistence": false
+}

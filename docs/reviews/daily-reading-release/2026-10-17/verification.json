@@ -1,0 +1,39 @@
+{
+  "at": "2026-10-17T07:47:47.273Z",
+  "tests": {
+    "command": "npm test",
+    "total": 974,
+    "passed": 970,
+    "skipped": 4,
+    "failed": 0,
+    "durationMs": 58060.493797,
+    "logSha256": "5f05e8f9b24b38c8824a7972d6457763cffd393312637804099f41187b6c36ae"
+  },
+  "checks": {
+    "build": "passed",
+    "typescript": "passed",
+    "scopedEslint": "passed",
+    "scopedWhitespace": "passed"
+  },
+  "runtimeAndTestHashes": {
+    "src/lib/reading.server.ts": "8b8bb37864bccbe93243763a0b6cf6bccfb45dfe32c64f183727e5f490495910",
+    "src/lib/ai/language.server.ts": "d047347ed2609c28f63052342ede9711895e2699fbf34884923a291412b28ef5",
+    "src/lib/ai/diagnostics.ts": "d24888fbdbe4ca47d955a1691f3558751393942d02c298833c7dc2cc9650f76a",
+    "tests/reading-editorial-member.test.mjs": "3d08192779bd8edce3cdceaa1f56b2ab79bf1367f64ecdb602b9602203932867",
+    "tests/reading-editorial-authored-member.test.mjs": "4258c27a447686cc0f28ca0518a2f65e47232e52a16aa070c470b37bbd71e392",
+    "tests/reading-editorial-member-compat.test.mjs": "c5963e3a0e8ac30dd996ddfa8423d71b88c96c3969cfd43c14ae9231cb9f8f99"
+  },
+  "authoredMemberCases": 9,
+  "configuredProvidersTested": 2,
+  "eligibleAuthoredProviderRequests": 0,
+  "generatedValidation": {
+    "attempts": 5,
+    "retries": 0,
+    "automaticAccepted": 4,
+    "automaticRejected": 1,
+    "conservativeUsageMicros": 168724,
+    "editoriallyQualified": false,
+    "memberDelivery": "reviewed authored copy only"
+  },
+  "liveActivation": "pending"
+}
