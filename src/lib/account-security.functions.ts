@@ -69,3 +69,11 @@ export const changePassword = createServerFn({ method: "POST" })
     (await import("./auth.server")).clearCurrentSessionCookie();
     return result;
   });
+
+export const signOutAll = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
+  .handler(async ({ context }) => {
+    const result = await (await import("./account-security.server")).signOutAll(context.userId, context.db);
+    (await import("./auth.server")).clearCurrentSessionCookie();
+    return result;
+  });

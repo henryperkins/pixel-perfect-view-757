@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { useMembership } from "@/hooks/useMembership";
-import { cancelMembership, openMembershipPortal, refreshMembership } from "@/lib/billing.functions";
+import { cancelMembership, changeMembership, openMembershipPortal, refreshMembership, unwrapBilling } from "@/lib/billing.functions";
 
 export function MembershipSettings() {
   const query = useMembership(),
@@ -19,14 +19,19 @@ export function MembershipSettings() {
       const target = cancelTrigger.current?.isConnected ? cancelTrigger.current : heading.current;
       target?.focus();
     });
-  async function act(action: "portal" | "cancel" | "refresh") {
+  async function act(action: "portal" | "cancel" | "refresh" | "resume" | "month" | "year") {
     setBusy(true);
     setError("");
     try {
-      if (action === "portal") window.location.assign((await openMembershipPortal()).url);
+      if (action === "portal") {
+        const tab=window.open("about:blank","_blank");
+        if (!tab) throw new Error("Allow a new tab to open billing details.");
+        try {tab.location.href=unwrapBilling(await openMembershipPortal()).url;} catch(e) {tab.close();throw e;}
+      }
       else {
-        if (action === "cancel") await cancelMembership();
-        else await refreshMembership({ data: {} });
+        if (action === "cancel") unwrapBilling(await cancelMembership());
+        else if (action === "refresh") unwrapBilling(await refreshMembership({ data: {} }));
+        else unwrapBilling(await changeMembership({data:{action}}));
         setConfirmCancel(false);
         await Promise.all([
           client.invalidateQueries({ queryKey: ["membership"] }),
@@ -69,7 +74,7 @@ export function MembershipSettings() {
                   : "Your Pattern Plus membership is active."
                 : "You’re on the free plan. Chapter openings and your calculated chart remain available."}
           </p>
-          {state.enabled && (
+          {state.testMode && (
             <p className="mt-2 text-sm text-muted-foreground">
               Payments are in test mode. No real money is charged.
             </p>
@@ -102,6 +107,8 @@ export function MembershipSettings() {
             </p>
           )}
           <div className="mt-4 flex flex-wrap gap-3">
+            {state.membership?.cancelAtPeriodEnd && state.fullAccess && <Button variant="outline" disabled={busy} onClick={()=>act("resume")}>Resume renewal</Button>}
+            {state.fullAccess && state.membership && <Button variant="outline" disabled={busy} onClick={()=>act(state.membership?.plan === "month" ? "year" : "month")}>Switch to {state.membership.plan === "month" ? "yearly" : "monthly"}, prorated</Button>}
             {!state.fullAccess && state.enabled && (
               <Button asChild>
                 <Link to="/plans">View plans</Link>

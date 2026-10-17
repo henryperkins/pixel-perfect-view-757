@@ -31,7 +31,7 @@ export function paidThrough(row: MembershipRow): number {
 /** A renewing membership keeps access while Stripe collects payment; a reported failure ends it. */
 export function accessEnd(row: MembershipRow): number {
   const end = paidThrough(row);
-  return end && row.status !== "past_due" && !row.cancel_at_period_end
+  return end && !row.cancel_at_period_end
     ? end + RENEWAL_GRACE_SECONDS
     : end;
 }

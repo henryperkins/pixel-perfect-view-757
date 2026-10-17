@@ -131,7 +131,7 @@ export async function signUpWithPassword(
     .select("id")
     .eq("email", normalized)
     .maybeSingle();
-  if (existing) throw new Error("An account already exists for that email.");
+  if (existing) throw new Error("Unable to create this account. Try signing in or resetting your password.");
 
   const { data: created, error } = await db
     .from<{ id: string }>("users")
@@ -164,7 +164,10 @@ export async function signInWithPassword(email: string, password: string): Promi
     .select("id, email, password_hash")
     .eq("email", normalized)
     .maybeSingle();
-  if (!user || !(await verifyPassword(password, user.password_hash))) {
+  // Match password-derivation cost for missing accounts without storing a dummy account.
+  const valid = user ? await verifyPassword(password, user.password_hash) :
+    (await derive(password, "00000000000000000000000000000000"), false);
+  if (!user || !valid) {
     throw new Error("That email and password do not match an account.");
   }
   await db.from("users").update({ last_seen_at: new Date().toISOString() }).eq("id", user.id);

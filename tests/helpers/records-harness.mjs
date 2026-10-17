@@ -206,7 +206,8 @@ export async function createRecordsHarness({ plugins = [] } = {}) {
       cacheDir: join(directory, "vite-cache"),
       configFile: false,
       envFile: false,
-      define: { __PATTERN_SOURCE_SHA__: JSON.stringify("a".repeat(40)) },
+      define: { __PATTERN_SOURCE_SHA__: JSON.stringify("a".repeat(40)), "import.meta.env.VITE_PAYMENTS_CLIENT_TOKEN": JSON.stringify("pk_test_fixture") },
+      // Billing environment follows the build token, not caller-controlled input.
       resolve: { alias: { "@": join(projectRoot, "src") } },
       appType: "custom",
       logLevel: "error",

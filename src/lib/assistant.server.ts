@@ -86,6 +86,7 @@ export async function verifyAssistantIdentity(accessToken: string) {
 }
 
 export async function linkIdentity(userId: string, accessToken: string) {
+  await (await import("./account-security.server")).requireVerifiedEmail(userId);
   const identity = await verifyAssistantIdentity(accessToken);
   const issuer = assistantIssuer();
   await exec(
