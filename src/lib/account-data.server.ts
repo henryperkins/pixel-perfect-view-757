@@ -355,7 +355,7 @@ export async function exportAccountData(userId: string, db: DBClient = records()
     profile: profileSafe,
     consents: data.source_consents,
     memberships: await db.exec<Row>(
-      "SELECT status,plan,current_period_end,trial_end,paid_until,cancel_at_period_end,updated_at FROM memberships WHERE user_id=?",
+      "SELECT environment,status,plan,current_period_end,trial_end,paid_until,cancel_at_period_end,updated_at FROM memberships_v2 WHERE user_id=?",
       [userId],
     ),
     birth,
