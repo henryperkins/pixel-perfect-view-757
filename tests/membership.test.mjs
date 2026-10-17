@@ -493,3 +493,51 @@ test("server chapter and assistant reads enforce membership, including saved ful
   assert.equal((await h.app.getFeatureNarrative(h.records(), h.userA, "sun")).paragraphs.length, 1);
   assert.equal((await readers.readChapter(h.userA, "sun")).status, "unavailable");
 });
+
+test("unverified accounts cannot purchase",async()=> {
+  h.sqlite.prepare("DELETE FROM account_email_state").run();
+  await assert.rejects(billing.startCheckout(h.userA,"fixture@example.invalid","month",h.records()),/Confirm your Pattern email/);
+  assert.equal(calls.length,0);
+});
+test("checkout is embedded, uses gateway headers and carries customer ownership",async()=> {
+  await billing.startCheckout(h.userA,"fixture@example.invalid","month",h.records());
+  const request=calls.find(c=>c.path==="/v1/checkout/sessions" && c.method==="POST");
+  assert.equal(request.body.get("ui_mode"),"embedded_page");
+  assert.equal(request.body.has("success_url"),false);
+  assert.equal(request.body.get("managed_payments[enabled]"),"true");
+  assert.equal(request.body.get("metadata[userId]"),h.userA);
+  assert.equal(request.body.get("subscription_data[metadata][userId]"),h.userA);
+});
+test("pausing sales never removes paid entitlement",async()=> {
+  await customer();subscription();await billing.handleBillingEvent(event(),h.records());
+  process.env.PATTERN_MEMBERSHIPS_ENABLED="false";
+  const state=await billing.getMembership(h.userA,h.records());
+  assert.equal(state.checkoutReady,false);assert.equal(state.fullAccess,true);
+});
+test("live membership rows never grant access in a test build",async()=> {
+  await h.records().exec("INSERT INTO memberships_v2(stripe_subscription_id,environment,user_id,status,plan,current_period_end,paid_until,updated_at) VALUES('sub_live','live',?,'active','month',?,?,?)",[h.userA,end,end,new Date().toISOString()]);
+  assert.equal((await billing.getMembership(h.userA,h.records())).fullAccess,false);
+});
+test("suspended paid access cannot be extended by renewal grace",()=> {
+  assert.equal(policy.membershipAccess([{status:"suspended",paid_until:end,trial_end:end,cancel_at_period_end:0}]).fullAccess,false);
+});
+test("resuming cancellation preserves access and resumes Stripe renewal",async()=> {
+  await customer();subscription();await billing.handleBillingEvent(event(),h.records());
+  await billing.cancelMembership(h.userA,h.records());
+  const state=await billing.updateMembership(h.userA,"resume",h.records());
+  assert.equal(sub.cancel_at_period_end,false);assert.equal(state.fullAccess,true);
+});
+test("switching intervals requests immediate invoicing and leaves unpaid changes pending",async()=> {
+  await customer();subscription();await billing.handleBillingEvent(event(),h.records());
+  await billing.updateMembership(h.userA,"year",h.records());
+  const request=calls.filter(c=>c.path==="/v1/subscriptions/sub_a" && c.method==="POST").at(-1);
+  assert.equal(request.body.get("proration_behavior"),"always_invoice");
+  assert.equal(request.body.get("payment_behavior"),"pending_if_incomplete");
+  assert.equal(request.body.get("items[0][price]"),"price_year");
+});
+test("paid coverage is derived from settled invoice line dates, not a later subscription period",async()=> {
+  await customer();subscription();await billing.handleBillingEvent(event(),h.records());
+  sub.items.data[0].current_period_end=end+86400*30;sub.latest_invoice.status="draft";
+  await billing.handleBillingEvent(event("evt_future","customer.subscription.updated"),h.records());
+  assert.equal(h.sqlite.prepare("SELECT paid_until FROM memberships_v2").get().paid_until,end);
+});
