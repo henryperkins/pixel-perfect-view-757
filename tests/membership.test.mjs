@@ -30,12 +30,27 @@ before(async () => {
       typeof input === "string" ? input : input instanceof URL ? input.href : input.url,
     );
     if (url.hostname !== "connector-gateway.lovable.dev") return originalFetch(input, init);
+    assert.equal(new Headers(init.headers).get("X-Connection-Api-Key"), "connection_synthetic");
+    assert.equal(new Headers(init.headers).get("Lovable-API-Key"), "service_synthetic");
     const method = init.method ?? "GET",
       body = new URLSearchParams(String(init.body ?? ""));
     calls.push({ path: url.pathname.replace(/^\/stripe/, ""), method, body });
     const json = (value, status = 200) => Response.json(value, { status });
-    if (url.pathname.replace(/^\/stripe/, "") === "/v1/customers/search") return json({data:[],has_more:false});
-    if (url.pathname.replace(/^\/stripe/, "") === "/v1/customers" && method === "GET") return json({data:[],has_more:false});
+    if (url.pathname.replace(/^\/stripe/, "") === "/v1/charges/ch_fixture")
+      return json({
+        id: "ch_fixture",
+        customer: "cus_a",
+        payment_intent: "pi_fixture",
+        refunded: true,
+      });
+    if (url.pathname.replace(/^\/stripe/, "") === "/v1/disputes/dp_fixture")
+      return json({ id: "dp_fixture", charge: "ch_fixture", status: "needs_response" });
+    if (url.pathname.replace(/^\/stripe/, "") === "/v1/invoice_payments")
+      return json({ data: [{ invoice: "in_a" }], has_more: false });
+    if (url.pathname.replace(/^\/stripe/, "") === "/v1/customers/search")
+      return json({ data: [], has_more: false });
+    if (url.pathname.replace(/^\/stripe/, "") === "/v1/customers" && method === "GET")
+      return json({ data: [], has_more: false });
     if (url.pathname.replace(/^\/stripe/, "") === "/v1/customers") {
       stripeEmail = body.get("email");
       return json({ id: "cus_a", livemode: false });
@@ -53,24 +68,55 @@ before(async () => {
           return json({ error: { message: "Synthetic outage", type: "api_error" } }, 503);
         stripeEmail = body.get("email");
       }
-      return json({ id: "cus_a", object: "customer", email: stripeEmail, metadata: {userId:h.userA}, livemode: false });
+      return json({
+        id: "cus_a",
+        object: "customer",
+        email: stripeEmail,
+        metadata: { userId: h.userA },
+        livemode: false,
+      });
     }
     if (url.pathname.replace(/^\/stripe/, "") === "/v1/billing_portal/sessions")
       return json({ id: "bps_a", url: "https://billing.stripe.com/p/session/test_a" });
     if (url.pathname.replace(/^\/stripe/, "") === "/v1/prices") {
       const year = url.searchParams.get("lookup_keys[0]") === "plus_yearly";
-      return json({data:[{
-        id: year ? "price_year" : "price_month",
-        livemode: false,
-        active: true,
-        unit_amount: year ? 7200 : 800,
-        currency: "usd",
-        lookup_key:year ? "plus_yearly":"plus_monthly",
-        recurring: { interval: year ? "year" : "month", interval_count: 1 },
-      }],has_more:false});
+      return json({
+        data: [
+          {
+            id: year ? "price_year" : "price_month",
+            livemode: false,
+            active: true,
+            unit_amount: year ? 7200 : 800,
+            currency: "usd",
+            lookup_key: year ? "plus_yearly" : "plus_monthly",
+            recurring: { interval: year ? "year" : "month", interval_count: 1 },
+          },
+        ],
+        has_more: false,
+      });
     }
-    if (url.pathname.replace(/^\/stripe/, "") === "/v1/invoices") return json({data:sub?.latest_invoice.status === "paid" && sub.status !== "trialing" ? [{id:"in_a",amount_paid:800}]:[],has_more:false});
-    if (url.pathname.replace(/^\/stripe/, "") === "/v1/invoices/in_a/lines") return json({data:[{amount:800,period:{start:now,end:sub.items.data[0].current_period_end},parent:{type:"subscription_item_details",subscription_item_details:{subscription:"sub_a",proration:false}}}],has_more:false});
+    if (url.pathname.replace(/^\/stripe/, "") === "/v1/invoices")
+      return json({
+        data:
+          sub?.latest_invoice.status === "paid" && sub.status !== "trialing"
+            ? [{ id: "in_a", amount_paid: 800 }]
+            : [],
+        has_more: false,
+      });
+    if (url.pathname.replace(/^\/stripe/, "") === "/v1/invoices/in_a/lines")
+      return json({
+        data: [
+          {
+            amount: 800,
+            period: { start: now, end: sub.items.data[0].current_period_end },
+            parent: {
+              type: "subscription_item_details",
+              subscription_item_details: { subscription: "sub_a", proration: false },
+            },
+          },
+        ],
+        has_more: false,
+      });
     if (url.pathname.replace(/^\/stripe/, "") === "/v1/subscriptions")
       return json({ data: sub ? [sub] : [], has_more: false });
     if (url.pathname.replace(/^\/stripe/, "") === "/v1/subscriptions/sub_a") {
@@ -125,7 +171,12 @@ beforeEach(async () => {
   failEmailUpdate = false;
   customerRetrieveGate = null;
   customerUpdateGate = null;
-  await h.records().exec("INSERT INTO account_email_state(user_id,confirmed_at) VALUES(?,?)",[h.userA,new Date().toISOString()]);
+  await h
+    .records()
+    .exec("INSERT INTO account_email_state(user_id,confirmed_at) VALUES(?,?)", [
+      h.userA,
+      new Date().toISOString(),
+    ]);
 });
 after(async () => {
   globalThis.fetch = originalFetch;
@@ -138,10 +189,10 @@ after(async () => {
 async function customer() {
   await h
     .records()
-    .exec("INSERT INTO billing_customers_v2(user_id,stripe_customer_id,environment) VALUES(?,?,'sandbox')", [
-      h.userA,
-      "cus_a",
-    ]);
+    .exec(
+      "INSERT INTO billing_customers_v2(user_id,stripe_customer_id,environment) VALUES(?,?,'sandbox')",
+      [h.userA, "cus_a"],
+    );
 }
 async function confirmChange(next) {
   const raw = randomBytes(32).toString("hex"),
@@ -181,7 +232,16 @@ function subscription(status = "active") {
     trial_start: status === "trialing" ? now : null,
     trial_end: status === "trialing" ? now + 7 * 86400 : null,
     cancel_at_period_end: false,
-    items: { data: [{ id:"si_a", price: { id: "price_month",lookup_key:"plus_monthly" }, quantity: 1, current_period_end: end }] },
+    items: {
+      data: [
+        {
+          id: "si_a",
+          price: { id: "price_month", lookup_key: "plus_monthly" },
+          quantity: 1,
+          current_period_end: end,
+        },
+      ],
+    },
     latest_invoice: { id: "in_a", status: "paid" },
   };
 }
@@ -309,7 +369,11 @@ test("duplicate and out-of-order webhooks use current Stripe state and never res
   await billing.handleBillingEvent(event("evt_old"), h.records());
   assert.equal((await billing.getMembership(h.userA, h.records())).fullAccess, false);
   await assert.rejects(
-    billing.handleBillingEvent({ ...event(), id: "evt_live", livemode: true }, h.records(), "sandbox"),
+    billing.handleBillingEvent(
+      { ...event(), id: "evt_live", livemode: true },
+      h.records(),
+      "sandbox",
+    ),
     /environment|configured/,
   );
 });
@@ -492,4 +556,117 @@ test("server chapter and assistant reads enforce membership, including saved ful
   h.sqlite.prepare("UPDATE memberships_v2 SET paid_until=?,cancel_at_period_end=1").run(now - 1);
   assert.equal((await h.app.getFeatureNarrative(h.records(), h.userA, "sun")).paragraphs.length, 1);
   assert.equal((await readers.readChapter(h.userA, "sun")).status, "unavailable");
+});
+
+test("unverified accounts cannot purchase", async () => {
+  h.sqlite.prepare("DELETE FROM account_email_state").run();
+  await assert.rejects(
+    billing.startCheckout(h.userA, "fixture@example.invalid", "month", h.records()),
+    /Confirm your Pattern email/,
+  );
+  assert.equal(calls.length, 0);
+});
+test("checkout is embedded, uses gateway headers and carries customer ownership", async () => {
+  await billing.startCheckout(h.userA, "fixture@example.invalid", "month", h.records());
+  const request = calls.find((c) => c.path === "/v1/checkout/sessions" && c.method === "POST");
+  assert.equal(request.body.get("ui_mode"), "embedded_page");
+  assert.equal(request.body.has("success_url"), false);
+  assert.equal(request.body.get("managed_payments[enabled]"), "true");
+  assert.equal(request.body.get("metadata[userId]"), h.userA);
+  assert.equal(request.body.get("subscription_data[metadata][userId]"), h.userA);
+});
+test("pausing sales never removes paid entitlement", async () => {
+  await customer();
+  subscription();
+  await billing.handleBillingEvent(event(), h.records());
+  process.env.PATTERN_MEMBERSHIPS_ENABLED = "false";
+  const state = await billing.getMembership(h.userA, h.records());
+  assert.equal(state.checkoutReady, false);
+  assert.equal(state.fullAccess, true);
+});
+test("live membership rows never grant access in a test build", async () => {
+  await h
+    .records()
+    .exec(
+      "INSERT INTO memberships_v2(stripe_subscription_id,environment,user_id,status,plan,current_period_end,paid_until,updated_at) VALUES('sub_live','live',?,'active','month',?,?,?)",
+      [h.userA, end, end, new Date().toISOString()],
+    );
+  assert.equal((await billing.getMembership(h.userA, h.records())).fullAccess, false);
+});
+test("suspended paid access cannot be extended by renewal grace", () => {
+  assert.equal(
+    policy.membershipAccess([
+      { status: "suspended", paid_until: end, trial_end: end, cancel_at_period_end: 0 },
+    ]).fullAccess,
+    false,
+  );
+});
+test("resuming cancellation preserves access and resumes Stripe renewal", async () => {
+  await customer();
+  subscription();
+  await billing.handleBillingEvent(event(), h.records());
+  await billing.cancelMembership(h.userA, h.records());
+  const state = await billing.updateMembership(h.userA, "resume", h.records());
+  assert.equal(sub.cancel_at_period_end, false);
+  assert.equal(state.fullAccess, true);
+});
+test("switching intervals requests immediate invoicing and leaves unpaid changes pending", async () => {
+  await customer();
+  subscription();
+  await billing.handleBillingEvent(event(), h.records());
+  await billing.updateMembership(h.userA, "year", h.records());
+  const request = calls
+    .filter((c) => c.path === "/v1/subscriptions/sub_a" && c.method === "POST")
+    .at(-1);
+  assert.equal(request.body.get("proration_behavior"), "always_invoice");
+  assert.equal(request.body.get("payment_behavior"), "pending_if_incomplete");
+  assert.equal(request.body.get("items[0][price]"), "price_year");
+});
+test("paid coverage is derived from settled invoice line dates, not a later subscription period", async () => {
+  await customer();
+  subscription();
+  await billing.handleBillingEvent(event(), h.records());
+  sub.items.data[0].current_period_end = end + 86400 * 30;
+  sub.latest_invoice.status = "draft";
+  await billing.handleBillingEvent(
+    event("evt_future", "customer.subscription.updated"),
+    h.records(),
+  );
+  assert.equal(h.sqlite.prepare("SELECT paid_until FROM memberships_v2").get().paid_until, end);
+});
+
+test("full refunds suspend affected paid invoice access", async () => {
+  await customer();
+  subscription();
+  await billing.handleBillingEvent(event(), h.records());
+  await billing.handleBillingEvent(
+    {
+      id: "evt_refund",
+      type: "charge.refunded",
+      livemode: false,
+      data: { object: { id: "ch_fixture", customer: "cus_a" } },
+    },
+    h.records(),
+  );
+  assert.equal((await billing.getMembership(h.userA, h.records())).fullAccess, false);
+  assert.equal(
+    h.sqlite.prepare("SELECT suspended FROM billing_coverage WHERE invoice_id='in_a'").get()
+      .suspended,
+    1,
+  );
+});
+test("disputes suspend affected paid invoice access", async () => {
+  await customer();
+  subscription();
+  await billing.handleBillingEvent(event(), h.records());
+  await billing.handleBillingEvent(
+    {
+      id: "evt_dispute",
+      type: "charge.dispute.created",
+      livemode: false,
+      data: { object: { id: "dp_fixture" } },
+    },
+    h.records(),
+  );
+  assert.equal((await billing.getMembership(h.userA, h.records())).fullAccess, false);
 });

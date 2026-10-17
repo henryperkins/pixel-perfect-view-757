@@ -74,11 +74,14 @@ export async function resetPersonalization(userId: string, db: DBClient = record
 export async function deleteAccount(userId: string, password: string, db: DBClient = records()) {
   const hash = await requireCurrentPassword(userId, password, db);
   return withBillingLock(db, userId, async () => {
-    await db.exec("SELECT CASE WHEN EXISTS(SELECT 1 FROM users WHERE id=? AND password_hash=?) THEN 1 ELSE json('account-changed') END", [userId, hash]);
+    await db.exec(
+      "SELECT CASE WHEN EXISTS(SELECT 1 FROM users WHERE id=? AND password_hash=?) THEN 1 ELSE json('account-changed') END",
+      [userId, hash],
+    );
     // A failed cancellation leaves the account intact and checkout disabled for retry.
     await prepareBillingDeletion(userId, db);
     try {
-      const results = await execBatch([
+      const results = await db.batch([
         {
           sql: "SELECT CASE WHEN EXISTS(SELECT 1 FROM users WHERE id=? AND password_hash=?) THEN 1 ELSE json('account-changed') END",
           params: [userId, hash],
@@ -352,6 +355,8 @@ export async function exportAccountData(userId: string, db: DBClient = records()
     schema_version: "pattern-account-export-1" as const,
     exported_at: new Date().toISOString(),
     account,
+    billingRetention:
+      "Deleting Pattern stops billing without an automatic refund. Stripe retains legally required transaction records; separate assistant identities are not deleted.",
     profile: profileSafe,
     consents: data.source_consents,
     memberships: await db.exec<Row>(

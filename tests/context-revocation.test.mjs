@@ -8,6 +8,17 @@ before(async () => {
 beforeEach(async (ctx) => {
   await h.reset();
   ctx.mock.timers.enable({ apis: ["Date"], now: new Date("2026-10-12T12:00:00Z") });
+  await h
+    .records()
+    .exec(
+      "INSERT INTO memberships_v2(stripe_subscription_id,environment,user_id,status,plan,current_period_end,paid_until,updated_at) VALUES('sub_fixture','sandbox',?,'active','month',?,?,?)",
+      [
+        h.userA,
+        Math.floor(Date.now() / 1000) + 86400,
+        Math.floor(Date.now() / 1000) + 86400,
+        new Date().toISOString(),
+      ],
+    );
 });
 after(async () => h?.close());
 async function readingFixture() {
@@ -207,16 +218,13 @@ test("a saved assistant chapter withholds revoked tone after its final key read"
   const { dek, snapshotId } = await h.seedChart(h.records());
   await h.app.updatePrefs(h.records(), h.userA, null, "warm", "standard");
   await h.app.setConsent(h.records(), h.userA, "USR-01", true);
-  await h
-    .records()
-    .from("natal_features")
-    .insert({
-      user_id: h.userA,
-      snapshot_id: snapshotId,
-      feature_key: "sun",
-      family: "placement",
-      title: "Saved Sun chapter",
-    });
+  await h.records().from("natal_features").insert({
+    user_id: h.userA,
+    snapshot_id: snapshotId,
+    feature_key: "sun",
+    family: "placement",
+    title: "Saved Sun chapter",
+  });
   const { FEATURE_ESSAY_VERSION } = await h.vite.ssrLoadModule("/src/lib/ai/chapter-policy.ts");
   const paragraphs = [
     "Saved warm chapter.",

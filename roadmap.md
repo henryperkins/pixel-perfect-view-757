@@ -2,9 +2,12 @@
 
 ## Purchase and account audit
 - [x] Research current catalog, authentication, payments, account changes, entitlements, and renewals; document evidence and gaps in docs/reviews/membership/2026-10-17-audit.md (54 tests passed; live onboarding incomplete).
-- [ ] Resolve business-policy questions and present the repair plan for approval.
-- [ ] Implement approved fixes and focused regression tests.
-- [ ] Verify real preview purchase/account flows and provide test-card steps; record external blockers.
+- [x] Resolve business-policy questions and present the repair plan for approval.
+- [x] Implement connected embedded checkout, environment-scoped D1 billing migration, invoice coverage, plan changes, verification and recovery protections with regression tests.
+- [x] Verify delivered confirmation and password recovery in the real preview; verify embedded checkout and signature protection; document test-card steps.
+- [ ] Complete actual payment, cancellation, switching, renewal, refund/dispute and billed-deletion journeys: Stripe rejects disposable inboxes; needs an owner-approved isolated account with a non-disposable inbox.
+- [ ] Deploy Worker secret-export removal and activate scheduled reconciliation: external production Worker deployment is withheld under the no-production-publishing instruction; published app callbacks are still old.
+- [ ] Complete live Stripe onboarding, app installation and readiness: requires owner's Stripe onboarding.
 
 - [x] Apply selected palette and typography.
 - [x] Add fluid navigation, section reveals, and reading interactions without changing chart or reading logic.

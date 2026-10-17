@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import { Shell } from "./Shell";
 import { Button } from "@/components/ui/button";
 import { confirmEmail, resetPassword } from "@/lib/account-security.functions";
+import { useQueryClient } from "@tanstack/react-query";
 
 export function AccountLink({ reset = false }: { reset?: boolean }) {
+  const queryClient = useQueryClient();
   const [token, setToken] = useState(""),
     [ready, setReady] = useState(false),
     [password, setPassword] = useState(""),
@@ -37,6 +39,8 @@ export function AccountLink({ reset = false }: { reset?: boolean }) {
       setPassword("");
       setRepeat("");
       setDone(true);
+      await queryClient.invalidateQueries({ queryKey: ["session"] });
+      await queryClient.invalidateQueries({ queryKey: ["account-security"] });
     } catch (e) {
       setError(e instanceof Error ? e.message : "This link could not be used. Request a new one.");
     } finally {
@@ -64,7 +68,9 @@ export function AccountLink({ reset = false }: { reset?: boolean }) {
             <p role="status" className="mt-4 text-sm">
               {reset
                 ? "Your password has changed and all devices have been signed out. Sign in with your new password."
-                : signInRequired ? "Your email has changed. All devices have been signed out. Sign in with your new address." : "Your email is confirmed."}
+                : signInRequired
+                  ? "Your email has changed. All devices have been signed out. Sign in with your new address."
+                  : "Your email is confirmed."}
             </p>
             <Button asChild className="mt-6">
               <Link to="/auth">Sign in to Pattern</Link>

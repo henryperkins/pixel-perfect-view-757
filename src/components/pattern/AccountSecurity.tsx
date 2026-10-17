@@ -124,12 +124,27 @@ export function AccountSecurity() {
             >
               {delivery.isFetching ? "Checking delivery…" : "Check email delivery"}
             </Button>
-            <Button variant="outline" disabled={busy} onClick={async () => {
-              setBusy(true); setError("");
-              try { await signOutAll(); await purgeAccountDrafts(); window.location.assign("/auth"); }
-              catch (e) { setError(e instanceof Error ? e.message : "Sign-out could not finish. Please retry."); }
-              finally { setBusy(false); }
-            }}>Sign out all devices and assistants</Button>
+            <Button
+              variant="outline"
+              disabled={busy}
+              onClick={async () => {
+                setBusy(true);
+                setError("");
+                try {
+                  await signOutAll();
+                  await purgeAccountDrafts();
+                  window.location.assign("/auth");
+                } catch (e) {
+                  setError(
+                    e instanceof Error ? e.message : "Sign-out could not finish. Please retry.",
+                  );
+                } finally {
+                  setBusy(false);
+                }
+              }}
+            >
+              Sign out all devices and assistants
+            </Button>
           </div>
           {delivery.isError || (delivery.data && !delivery.data.available) ? (
             <p role="status" className="mt-3 text-sm">
@@ -151,11 +166,27 @@ export function AccountSecurity() {
               )}
             </div>
           ) : null}
-          {delivery.data?.attempts.length ? <ul className="mt-3 space-y-2 text-sm" aria-label="Recent email attempts">{delivery.data.attempts.map((attempt, index) => {
-            let detail: {purpose?: string; status?: string} = {};
-            try { detail = typeof attempt.detail === "string" ? JSON.parse(attempt.detail) : attempt.detail; } catch { /* Invalid historical receipt. */ }
-            return <li key={`${attempt.created_at}-${index}`}>{detail.purpose ?? "Account email"} · {detail.status ?? "Unknown"} · {new Date(attempt.created_at).toLocaleString()}</li>;
-          })}</ul> : null}
+          {delivery.data?.attempts.length ? (
+            <ul className="mt-3 space-y-2 text-sm" aria-label="Recent email attempts">
+              {delivery.data.attempts.map((attempt, index) => {
+                let detail: { purpose?: string; status?: string } = {};
+                try {
+                  detail =
+                    typeof attempt.detail === "string"
+                      ? JSON.parse(attempt.detail)
+                      : attempt.detail;
+                } catch {
+                  /* Invalid historical receipt. */
+                }
+                return (
+                  <li key={`${attempt.created_at}-${index}`}>
+                    {detail.purpose ?? "Account email"} · {detail.status ?? "Unknown"} ·{" "}
+                    {new Date(attempt.created_at).toLocaleString()}
+                  </li>
+                );
+              })}
+            </ul>
+          ) : null}
           {mode && (
             <form onSubmit={act} className="mt-5 max-w-md space-y-4">
               <label className="block text-sm">
