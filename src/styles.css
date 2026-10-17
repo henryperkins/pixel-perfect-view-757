@@ -3254,7 +3254,7 @@ input.calculator-control {
 .journal-delete-header h2 {
   min-width: 0;
 }
-.today-check-in-note textarea,
+.today-check-in-note textarea[data-scrollable],
 .journal-compose textarea,
 .journal-entry-editor textarea {
   overscroll-behavior-y: contain;

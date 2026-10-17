@@ -22,6 +22,7 @@ playwright-cli -s=mobile-chromium run-code --filename=tests/helpers/mobile-ui/la
 playwright-cli -s=mobile-chromium run-code --filename=tests/helpers/mobile-ui/today.cases.txt
 playwright-cli -s=mobile-chromium run-code --filename=tests/helpers/mobile-ui/today-forms.cases.txt
 playwright-cli -s=mobile-chromium run-code --filename=tests/helpers/mobile-ui/today-overlays.cases.txt
+playwright-cli -s=mobile-chromium run-code --filename=tests/helpers/mobile-ui/today-scroll.cases.txt
 ```
 
 The `.cases.txt` files contain the async function accepted by Playwright CLI `run-code`, rather than Node test modules. Use the wrapper in place of `playwright-cli` if it is not on PATH. A CLI success exit alone is insufficient: inspect every returned `passed`, any `error`, overflow dimensions, font measurements, focus bounds and reduced-motion result. `core` resets only the synthetic `mobile-audit-member` draft records and fixture session state. Other destructive cases use fresh, isolated browser contexts. Do not run these probes against a member site.
@@ -35,6 +36,8 @@ The `.cases.txt` files contain the async function accepted by Playwright CLI `ru
 | `layout`   | Eight routes × six normal viewports plus three 32 px root-font stress viewports; page width, nav-label overlap, editable text, landscape Timing position, keyboard focus bounds, an unbroken saved URL and reduced motion.                                                                                    |
 
 Normal viewports are 320×568, 360×800, 390×844, 440×956, 667×375 and 844×390. Root-font stress uses 320×568, 390×844 and 667×375. Doubling the root font is not physical-phone zoom. Programmatic Tab and focus bounds do not reproduce an OS virtual keyboard. Real toolbar, safe-area, keyboard/autofill, gesture, VoiceOver/TalkBack and performance qualification remain in the [completion checklist](../../../docs/superpowers/plans/2026-10-14-mobile-member-flow-completion-checklist.md).
+
+The `today-scroll` probe checks empty, short and overflowing notes in portrait and landscape, long/short draft recovery and saved edits, and containment changes after wrapping, rotation and enlarged text without typing. Chromium uses compositor touch input; desktop WebKit uses wheel input at phone dimensions because mobile WebKit does not support Playwright wheel injection. Inspect all eleven results in each engine. These are Render checks; native WebKit swipes, physical-phone pinch zoom, keyboards and browser chrome remain Device checks.
 
 The fixture's synthetic server keeps test records in sessionStorage solely to simulate a server surviving reload. This is separate from production's encrypted IndexedDB draft store. Inspect the latter database for the encryption cases; do not mistake the test backend for production draft persistence.
 

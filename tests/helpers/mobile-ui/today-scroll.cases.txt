@@ -1,0 +1,274 @@
+async (page) => {
+  const browser = page.context().browser();
+  const engine = browser.browserType().name();
+  const origin = new URL(page.url()).origin;
+  const checks = [];
+  const shortNote = "A short reflection.";
+  const longNote = "Keep this reflection line.\n".repeat(60).trimEnd();
+  const assert = (condition, message, details) => {
+    if (!condition) throw new Error(`${message}: ${JSON.stringify(details)}`);
+  };
+  const settle = (p) =>
+    p.evaluate(
+      () =>
+        new Promise((resolve) =>
+          requestAnimationFrame(() => requestAnimationFrame(() => requestAnimationFrame(resolve))),
+        ),
+    );
+  const geometry = (note) =>
+    note.evaluate((el) => ({
+      pageY: window.scrollY,
+      innerTop: el.scrollTop,
+      client: el.clientHeight,
+      scroll: el.scrollHeight,
+      overscroll: getComputedStyle(el).overscrollBehaviorY,
+      touchAction: getComputedStyle(el).touchAction,
+      rect: el.getBoundingClientRect().toJSON(),
+    }));
+  const scrollFromNote = async (p, note) => {
+    const before = await geometry(note);
+    const x = before.rect.x + before.rect.width / 2;
+    const y = before.rect.y + before.rect.height / 2;
+    assert(
+      await note.evaluate((el, point) => el === document.elementFromPoint(point.x, point.y), {
+        x,
+        y,
+      }),
+      "Scroll input must start on the textarea",
+      before,
+    );
+    if (engine === "chromium") {
+      const cdp = await p.context().newCDPSession(p);
+      try {
+        await cdp.send("Input.dispatchTouchEvent", {
+          type: "touchStart",
+          touchPoints: [{ x, y, id: 1 }],
+        });
+        for (let step = 1; step <= 12; step++) {
+          await cdp.send("Input.dispatchTouchEvent", {
+            type: "touchMove",
+            touchPoints: [{ x, y: y - (180 * step) / 12, id: 1 }],
+          });
+          await p.waitForTimeout(18);
+        }
+        await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+      } finally {
+        await cdp.detach();
+      }
+    } else {
+      // Mobile WebKit has no wheel injection. Use desktop WebKit at phone
+      // dimensions to verify rendered wheel behavior, never device touch behavior.
+      await p.mouse.move(x, y);
+      await p.mouse.wheel(0, 180);
+    }
+    await p.waitForTimeout(450);
+    const after = await geometry(note);
+    return {
+      before,
+      after,
+      pageDelta: after.pageY - before.pageY,
+      innerDelta: after.innerTop - before.innerTop,
+    };
+  };
+  const place = async (p, note, end = false) => {
+    await note.evaluate((el, end) => {
+      el.blur();
+      el.scrollIntoView({ block: "center", behavior: "instant" });
+      el.scrollTop = end ? el.scrollHeight : 0;
+    }, end);
+    await settle(p);
+  };
+  const run = async (name, size, task) => {
+    const context = await browser.newContext({
+      viewport: size,
+      isMobile: engine === "chromium",
+      hasTouch: true,
+      reducedMotion: "reduce",
+    });
+    const p = await context.newPage();
+    const errors = [];
+    p.on("pageerror", (error) => errors.push(String(error)));
+    p.setDefaultTimeout(12000);
+    try {
+      await p.goto(origin + "/");
+      const note = p.getByRole("textbox", { name: "Reflection note" });
+      await note.waitFor();
+      await p.evaluate(() => document.fonts.ready);
+      assert(
+        await p.evaluate(() => window.mobileAudit?.state.ownerId === "mobile-audit-member"),
+        "Synthetic fixture required",
+      );
+      const detail = await task(p, note);
+      assert(errors.length === 0, "Unexpected application exception", errors);
+      checks.push({ name: `${name} at ${size.width}x${size.height}`, passed: true, detail });
+    } catch (error) {
+      checks.push({
+        name: `${name} at ${size.width}x${size.height}`,
+        passed: false,
+        error: String(error),
+      });
+    } finally {
+      await context.close();
+    }
+  };
+
+  for (const size of [
+    { width: 390, height: 844 },
+    { width: 667, height: 375 },
+  ]) {
+    for (const [name, value, overflowing] of [
+      ["empty", "", false],
+      ["short", shortNote, false],
+      ["long", longNote, true],
+    ]) {
+      await run(`G-01: ${name} note scrolls the correct area`, size, async (p, note) => {
+        await p.locator("body").ariaSnapshot();
+        await note.fill(value);
+        await place(p, note);
+        const scroll = await scrollFromNote(p, note);
+        if (overflowing) {
+          assert(scroll.before.scroll > scroll.before.client, "Long fixture must overflow", scroll);
+          assert(
+            scroll.innerDelta > 40 && Math.abs(scroll.pageDelta) <= 1,
+            "Long note must scroll internally without moving the page",
+            scroll,
+          );
+          await place(p, note, true);
+          const boundary = await scrollFromNote(p, note);
+          assert(
+            Math.abs(boundary.pageDelta) <= 1,
+            "Long-note boundary must remain contained",
+            boundary,
+          );
+          return { scroll, boundary };
+        }
+        assert(scroll.before.scroll === scroll.before.client, "Short fixture must fit", scroll);
+        assert(
+          scroll.pageDelta > 40 && scroll.innerDelta === 0,
+          "Short/empty note must allow the page to scroll",
+          scroll,
+        );
+        assert(
+          scroll.before.overscroll === "auto",
+          "A fitting note must retain native scroll chaining",
+          scroll,
+        );
+        return scroll;
+      });
+    }
+
+    for (const [name, value, expected, replacement, replacementExpected] of [
+      ["long", longNote, "contain", shortNote, "auto"],
+      ["short", shortNote, "auto", longNote, "contain"],
+    ]) {
+      await run(
+        `G-01: recovered ${name} note and later edits update containment`,
+        size,
+        async (p, note) => {
+          await p.locator("body").ariaSnapshot();
+          await note.fill(value);
+          await p.getByText("Draft saved on this device", { exact: true }).waitFor();
+          await p.reload();
+          await note.waitFor();
+          await p.locator("body").ariaSnapshot();
+          await p.locator(".draft-recovery summary").filter({ hasText: "Resume draft" }).click();
+          await p.locator("body").ariaSnapshot();
+          await p.getByRole("button", { name: "Resume draft", exact: true }).click();
+          await p.waitForFunction(
+            (value) => document.querySelector("textarea")?.value === value,
+            value,
+          );
+          await settle(p);
+          const recovered = await geometry(note);
+          assert(
+            recovered.overscroll === expected,
+            "Recovery must recompute containment without an input event",
+            recovered,
+          );
+          await p.locator("body").ariaSnapshot();
+          await note.fill(replacement);
+          await settle(p);
+          const edited = await geometry(note);
+          assert(
+            edited.overscroll === replacementExpected,
+            "Growing/shrinking a note must update containment",
+            edited,
+          );
+          await p.locator("body").ariaSnapshot();
+          await p.getByRole("button", { name: "Save check-in", exact: true }).click();
+          await p.waitForFunction(() =>
+            document.querySelector(".today-check-in-status")?.textContent?.startsWith("Saved "),
+          );
+          assert((await note.inputValue()) === replacement, "Saving changed the reflection text");
+          assert(
+            (await geometry(note)).overscroll === replacementExpected,
+            "Save acknowledgement changed containment",
+          );
+          return { recovered, edited, saved: true };
+        },
+      );
+    }
+  }
+
+  await run(
+    "G-01: wrapping, orientation and enlarged text update containment without typing",
+    { width: 667, height: 375 },
+    async (p, note) => {
+      const wrappingNote = "A measured reflection. ".repeat(7);
+      await p.locator("body").ariaSnapshot();
+      await note.fill(wrappingNote);
+      await settle(p);
+      const wide = await geometry(note);
+      assert(
+        wide.scroll === wide.client && wide.overscroll === "auto",
+        "Wide note must fit and chain",
+        wide,
+      );
+      await p.setViewportSize({ width: 320, height: 568 });
+      await settle(p);
+      const narrow = await geometry(note);
+      assert(
+        narrow.scroll > narrow.client && narrow.overscroll === "contain",
+        "Narrow wrapping must become contained",
+        narrow,
+      );
+      await p.evaluate(() => {
+        document.documentElement.style.fontSize = "32px";
+      });
+      await settle(p);
+      const enlarged = await geometry(note);
+      assert(
+        enlarged.scroll > enlarged.client && enlarged.overscroll === "contain",
+        "Enlarged note must remain contained",
+        enlarged,
+      );
+      await p.evaluate(() => {
+        document.documentElement.style.removeProperty("font-size");
+      });
+      await p.setViewportSize({ width: 667, height: 375 });
+      await settle(p);
+      const returned = await geometry(note);
+      assert(
+        returned.scroll === returned.client && returned.overscroll === "auto",
+        "Rotation back must restore chaining without typing",
+        returned,
+      );
+      assert(
+        wide.touchAction === "auto" && enlarged.touchAction === "auto",
+        "Native panning and pinch axes must remain unrestricted",
+      );
+      return { wide, narrow, enlarged, returned };
+    },
+  );
+
+  return {
+    engine,
+    browserVersion: browser.version(),
+    checks,
+    evidence:
+      engine === "chromium"
+        ? "Render: Chromium compositor touch input"
+        : "Render: desktop WebKit wheel input at phone widths",
+    notTested: "Physical phones, native WebKit swipes, virtual keyboards and browser chrome",
+  };
+}

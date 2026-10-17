@@ -226,6 +226,24 @@ export function TodayCheckIn({
   }, [wellness]);
 
   const draft = permittedCheckIn(recovery.draft?.values ?? state.draft, wellness);
+  useEffect(() => {
+    const note = noteRef.current;
+    if (!note) return;
+    let active = true;
+    const measure = () => {
+      // Containing a fitting field would swallow a swipe meant for the page.
+      if (active)
+        note.toggleAttribute("data-scrollable", note.scrollHeight > note.clientHeight + 1);
+    };
+    measure();
+    void document.fonts.ready.then(measure);
+    const observer = new ResizeObserver(measure);
+    observer.observe(note);
+    return () => {
+      active = false;
+      observer.disconnect();
+    };
+  }, [draft.note]);
   const dirty = !sameCheckIn(draft, permittedCheckIn(state.saved, wellness));
   const edit = <K extends keyof CheckInDraft>(field: K, value: CheckInDraft[K]) => {
     recovery.update(complete({ ...draft, [field]: value }));
