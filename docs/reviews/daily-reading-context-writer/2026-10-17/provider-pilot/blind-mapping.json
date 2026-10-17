@@ -1,0 +1,27 @@
+[
+  {
+    "label": "R1",
+    "id": "natal-and-transit",
+    "position": 3
+  },
+  {
+    "label": "R2",
+    "id": "contact-only",
+    "position": 0
+  },
+  {
+    "label": "R3",
+    "id": "synthesis-natal-and-transit",
+    "position": 4
+  },
+  {
+    "label": "R4",
+    "id": "natal-only",
+    "position": 1
+  },
+  {
+    "label": "R5",
+    "id": "transit-only",
+    "position": 2
+  }
+]

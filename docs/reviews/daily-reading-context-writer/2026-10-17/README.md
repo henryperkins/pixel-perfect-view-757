@@ -1,6 +1,8 @@
 # Context-aware daily writer candidate
 
-The candidate and five authored benchmark readings are ready for review. Read [the benchmark readings](benchmark-readings.md) first; the [independent editorial review](independent-editorial-review.md) explains how each added context changes the meaning. These are authored standards for the writer, not captured model responses.
+The bounded provider pilot is complete and the generated set fails the authored writing standard. Read the [pilot verdict](provider-pilot/verdict.md) and [actual captured bodies](provider-pilot/captured-readings.md). All five passed automatic structural validation, but none met every reader-quality threshold; one also failed source grounding. The context-aware candidate remains inactive for member readings.
+
+The five [benchmark readings](benchmark-readings.md) remain the authored standard; the [independent editorial review](independent-editorial-review.md) explains how each added context changes the meaning. They are not captured model responses.
 
 The comparison holds one synthetic Saturn-square-Sun contact constant across contact-only, natal-only, transit-only and combined-context readings. A fifth case adds the existing Jupiter–Mars synthesis with both contexts. Headline, cited paragraphs and an independent reflection are included for every case. The combined reading is the strongest demonstration: exploring an idea and committing an afternoon become distinct choices, while the transit chapter offers a smaller adjustment to the same boundary if an earlier method no longer fits.
 
@@ -27,4 +29,10 @@ The independent assistant review scored every authored reading at least 4/5 for 
 
 Run `node scripts/validate-context-writing-candidate.mjs --out /tmp/pattern-context-review-new` with a fresh output directory. The script refuses to overwrite an existing capture and blocks unconfigured network calls through the local harness. Run `node --test tests/reading-context-brief.test.mjs tests/reading-context-writer.test.mjs` for the focused behavioral checks.
 
-The next qualification step is to pin this exact candidate and its benchmark identities in the durable server evaluation plan, then run a new bounded provider pilot. The assembled readings need review of their actual returned bodies and independent reflections. Wider source coverage, consecutive-day review and production publication follow that qualification; this candidate does not activate a member writing change.
+## Provider pilot result
+
+The source-pinned production Workflow completed five Gemini Enterprise attempts with zero retries and $0.274780 in conservative usage accounting against the $5 ceiling. All five raw captures were retained. The admin browser was closed during the run; the remaining cases completed on the server. Temporary operator access was revoked, and active content `0.9.0` and its publication state remained unchanged. [Pilot verification](provider-pilot/verification.json) records the identities, limits and evidence.
+
+The independent assistant reader review found that the bodies explain capacity, boundaries and curiosity without the benchmarks' observable details and practical consequences. The source review found context mostly included beside the primary interpretation, with no context-bearing case reaching 4/5 integration. The contact-only body adds an unsupported recent-onset claim. Headlines and reflections in the assembled captures remain authored benchmark fields; this pilot generated bodies only. These are AI assistant reviews, not human or member research.
+
+The next candidate should supply reviewed, source-bound scene details, practical distinctions and optional directions as writing material, then apply natal and chapter meaning within one situation while preserving each condition. That is a proposed remedy based on the captured brief and outputs, not a demonstrated fix. A revised candidate needs its own bounded provider qualification; this campaign has exhausted all five authorized attempts. Wider source coverage, consecutive-day review and member activation remain open.

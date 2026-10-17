@@ -1,0 +1,153 @@
+{
+  "reviewType": "blind AI source review",
+  "input": "source-review-packet.md",
+  "automatedAcceptanceKnown": false,
+  "automatedAcceptanceProven": false,
+  "scoreScale": {
+    "1": "No additional supplied context integrated",
+    "2": "Context included faithfully but predominantly adjacent or generic",
+    "3": "Explicit but incomplete application",
+    "4": "Natal distinction and chapter applied to the same concrete scene where supplied",
+    "5": "Clear economical application preserving interpretive limits"
+  },
+  "results": [
+    {
+      "label": "R1",
+      "groundingPass": true,
+      "contextIntegration": 2,
+      "verdict": "Grounded with minor comparative emphasis; natal and chapter material remain mostly adjacent rather than applied to one scene.",
+      "findings": [
+        {
+          "severity": "low",
+          "quote": "especially if several possible projects compete for the same free afternoon",
+          "source": "N1",
+          "reason": "Adds comparative emphasis about when curiosity is especially helpful. The source supplies this as a conditional example, without that emphasis. The full condition remains hypothetical; nonblocking."
+        },
+        {
+          "severity": "medium",
+          "quote": "If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.",
+          "source": "N1, P2, I1",
+          "reason": "Integration concern: the generic this does not apply a smaller adjustment to the sampling-versus-selection distinction under the role's capacity limits. The source meaning itself remains faithful."
+        }
+      ],
+      "checks": {
+        "conditionsAndModality": "Preserved; turn out to be is inside if, so the stage distinction is hypothetical rather than a known fact.",
+        "geometry": "Saturn square Sun correct; transit/natal direction implicit in published interpretation wording.",
+        "chronology": "A1 exact chronology once in paragraph 1.",
+        "paragraphParentsComplete": true,
+        "natalLens": "Conditional useful distinction retained; weak application to role-demand scene.",
+        "chapter": "Condition and chance retained; generic restatement.",
+        "synthesis": "Not supplied.",
+        "inventedPersonalHistoryOrOutcome": false
+      }
+    },
+    {
+      "label": "R2",
+      "groundingPass": false,
+      "contextIntegration": 1,
+      "verdict": "Blocking unsupported recent onset and member-specific presupposition; complete citations do not establish source fidelity. No additional context facts were supplied.",
+      "findings": [
+        {
+          "severity": "high",
+          "quote": "expectations have begun to outpace your available capacity",
+          "source": "I1, C1",
+          "reason": "Blocking: have begun adds unsupported recent onset and presents an interpretive possibility as an actual current member condition. You might find that scopes the previous sentence only. The exact transit calculation cannot establish a life event."
+        },
+        {
+          "severity": "medium",
+          "quote": "Recognizing that strain",
+          "source": "I1",
+          "reason": "Carries the prior possible strain forward as an established condition without explicit conditional scope. This extends the same grounding failure rather than asserting an independent event."
+        },
+        {
+          "severity": "low",
+          "quote": "gives you a practical chance to pace yourself rather than pushing past what is currently sustainable",
+          "source": "I1",
+          "reason": "Adds plausible pacing advice and an opportunity claim beyond the source's boundary interpretation. It does not literally claim past overwork or guarantee success, but unqualified gives makes the extension stronger than the source."
+        }
+      ],
+      "checks": {
+        "conditionsAndModality": "First sentence conditional; separate have begun assertion loses interpretive scope and adds temporal history.",
+        "geometry": "Transiting Saturn square natal Sun explicitly correct.",
+        "chronology": "A1 not supplied; not applicable.",
+        "paragraphParentsComplete": true,
+        "natalLens": "Not supplied.",
+        "chapter": "Not supplied.",
+        "synthesis": "Not supplied.",
+        "inventedPersonalHistoryOrOutcome": "Unsupported recent onset; no guaranteed outcome."
+      }
+    },
+    {
+      "label": "R3",
+      "groundingPass": true,
+      "contextIntegration": 2,
+      "verdict": "Faithful conditions, chronology, geometry and synthesis parents; natal and chapter passages remain mostly concatenated rather than applied.",
+      "findings": [
+        {
+          "severity": "medium",
+          "quote": "If several possible projects compete for the same free afternoon ... If an earlier way of handling this doesn't fit anymore",
+          "source": "N1, P2, I1",
+          "reason": "Integration concern: conditions are preserved, but proximity and this do not explain how project sampling versus selection relates to the demanding role or which smaller adjustment applies to the same scene."
+        }
+      ],
+      "checks": {
+        "conditionsAndModality": "All source conditions and can/may/chance scopes retained, including well-chosen aim and possible scope-versus-structure tension.",
+        "geometry": "Saturn square Sun and Jupiter trine Mars correct; transit/natal direction implicit. No false exact-phase claim for approaching Jupiter.",
+        "chronology": "A1 exact chronology once in paragraph 1.",
+        "paragraphParentsComplete": true,
+        "natalLens": "Conditional useful distinction retained; generic placement.",
+        "chapter": "Conditional earlier-method possibility retained; no concrete applied adjustment.",
+        "synthesis": "C1/I1 and C2/I2 both cited and semantically distinct; S1 meaning retained.",
+        "inventedPersonalHistoryOrOutcome": false
+      }
+    },
+    {
+      "label": "R4",
+      "groundingPass": true,
+      "contextIntegration": 2,
+      "verdict": "Grounded conditional natal lens, joined additively without applying its useful distinction to the transit scene.",
+      "findings": [
+        {
+          "severity": "medium",
+          "quote": "At the same time, following more than one line of curiosity can help a direction take shape.",
+          "source": "N1, I1",
+          "reason": "Integration concern: an additive transition does not explain how sampling versus choosing helps interpret the role's demands or capacity boundary. No grounding failure is implied."
+        }
+      ],
+      "checks": {
+        "conditionsAndModality": "Role condition, can help, if and may scopes retained. Simply does not exclude alternatives.",
+        "geometry": "Saturn square Sun correct; transit/natal direction implicit in published interpretation wording.",
+        "chronology": "A1 not supplied; not applicable.",
+        "paragraphParentsComplete": true,
+        "natalLens": "Conditional useful distinction retained; adjacent to transit interpretation.",
+        "chapter": "Not supplied.",
+        "synthesis": "Not supplied.",
+        "inventedPersonalHistoryOrOutcome": false
+      }
+    },
+    {
+      "label": "R5",
+      "groundingPass": true,
+      "contextIntegration": 2,
+      "verdict": "Grounded chronology and conditional chapter; the chapter remains a generic restatement rather than an applied scene.",
+      "findings": [
+        {
+          "severity": "medium",
+          "quote": "If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.",
+          "source": "P2, I1, A1",
+          "reason": "Integration concern: correctly sourced generic this gives continuity but no concrete application of the smaller adjustment to the role-demand scene."
+        }
+      ],
+      "checks": {
+        "conditionsAndModality": "I1 and P2 conditions and modest chance scope retained.",
+        "geometry": "Saturn square Sun correct; transit/natal direction implicit in published interpretation wording.",
+        "chronology": "A1 exact chronology once at start of paragraph 2.",
+        "paragraphParentsComplete": true,
+        "natalLens": "Not supplied.",
+        "chapter": "Faithful conditional restatement; generic application.",
+        "synthesis": "Not supplied.",
+        "inventedPersonalHistoryOrOutcome": false
+      }
+    }
+  ]
+}

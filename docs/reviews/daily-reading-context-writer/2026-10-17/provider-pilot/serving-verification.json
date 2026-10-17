@@ -1,0 +1,12 @@
+{
+  "at": "2026-10-17T08:33:05.210Z",
+  "url": "https://patterns.lakefrontdigital.io/api/public/evaluation-identity",
+  "httpStatus": 200,
+  "identity": {
+    "sourceSha": "be0522bcc86187280fd8c2951b8dac1a3f1fdd54",
+    "requestPolicyVersion": "synthetic-facts-local-context-1",
+    "fixtureVersion": "synthetic-daily-7"
+  },
+  "deploymentHeader": "psr2.43b3a438-c357-4338-9a9a-885e90554d45.1792830784.u_gkNxtEr3MyWPdCfuxxsd0UfRShaLkqJhV8h9q1y9A",
+  "providerRequests": 0
+}
