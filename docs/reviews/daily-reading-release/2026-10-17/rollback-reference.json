@@ -1,0 +1,15 @@
+{
+  "id": "edcc53cf-d19a-415b-a8a2-a66040846b1d",
+  "version": "0.7.1",
+  "checksum": "20b793acda524da945b07ec32b2ed795f31e273c533ff6b4e9c4f96ef821eeac",
+  "storedChecksumAlgorithm": "not recorded in historical receipt; verify live",
+  "canonicalBundleChecksum": "44c05c8b0336dc778c2efdcbf0c28dc2091d33a96b91c352a2481123b7f7ccae",
+  "canonicalBundleChecksumAlgorithm": "sha256-canonical-json-v1",
+  "serializedBundleHash": "300173610977707a1852f4e5898d8e27a2e0d4b932ab3fc4db398eda7efbdad8",
+  "frozenBundleSource": "docs/reviews/content-draft-effectiveness/2026-10-13/pilot/frozen-pair.json",
+  "frozenBundleSelector": "bundles.baseline",
+  "lastProductionVerification": "2026-10-15T20:08:40.794445+00:00",
+  "productionEvidence": "docs/reviews/daily-reading-pilot/2026-10-15/repair/production-e2e/receipt.json",
+  "instruction": "Confirm this exact release ID/version/stored checksum is still present and its bundle canonically matches the saved baseline before activation. Use the normal rollback lifecycle to reactivate 0.7.1; retain both immutable releases and existing readings.",
+  "verificationScope": "Historical production receipt plus current offline baseline identity. The historical stored checksum differs from the canonical checksum; its algorithm and full live bundle require separate verification. This script performs no live reads."
+}

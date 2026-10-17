@@ -1,0 +1,397 @@
+{
+  "version": "daily-editorial-limited-release-preparation-1",
+  "releaseVersion": "0.9.0",
+  "checksum": "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f",
+  "checksumAlgorithm": "sha256-canonical-json-v1",
+  "serializedBundleHash": "761d68d270b93759b66c4a77dabad21213f1e4ca2f2873a4295d003cadcb6b61",
+  "compactBytes": 55724,
+  "formattedBytes": 69157,
+  "schemaVersion": 6,
+  "candidate": {
+    "version": "0.9.0-editorial-pilot.1",
+    "serializedBundleHash": "ac78d4b47d8b0930f2b2d6d560948869284bbc032834a1c195d061a7a1f29cb4",
+    "changedPaths": [
+      "version"
+    ]
+  },
+  "baseline": {
+    "version": "0.7.1",
+    "canonicalChecksum": "44c05c8b0336dc778c2efdcbf0c28dc2091d33a96b91c352a2481123b7f7ccae",
+    "historicalStoredChecksum": "20b793acda524da945b07ec32b2ed795f31e273c533ff6b4e9c4f96ef821eeac",
+    "serializedBundleHash": "300173610977707a1852f4e5898d8e27a2e0d4b932ab3fc4db398eda7efbdad8"
+  },
+  "scope": {
+    "tone": "warm",
+    "depth": "standard",
+    "contactFrames": 5,
+    "quietEntries": 4,
+    "natalAndTransitContext": "existing writer; runtime compatibility guard is a separate prerequisite"
+  },
+  "counts": {
+    "interpretations": 27,
+    "synthesisRules": 6,
+    "natalLenses": 62,
+    "transitChapters": 5,
+    "dailyWritingFrames": 0
+  },
+  "preservedSections": [
+    "natal",
+    "phases",
+    "domains",
+    "synthesisRules",
+    "dailyWritingFrames",
+    "transitChapters",
+    "natalLenses"
+  ],
+  "addedInterpretationKeys": [
+    "square:neptune:mercury"
+  ],
+  "childVersionReferences": [],
+  "comparison": {
+    "counts": {
+      "added": 5,
+      "removed": 0,
+      "changed": 1,
+      "unchanged": 110
+    },
+    "changedEntries": [
+      {
+        "kind": "section",
+        "section": "bundle structure",
+        "key": "dailyEditorial",
+        "change": "added",
+        "base": null,
+        "candidate": {
+          "container": "object"
+        },
+        "changedFields": [
+          "container"
+        ]
+      },
+      {
+        "kind": "entry",
+        "section": "bundle",
+        "key": "schemaVersion",
+        "change": "changed",
+        "base": 4,
+        "candidate": 6,
+        "changedFields": [
+          "$value"
+        ]
+      },
+      {
+        "kind": "entry",
+        "section": "cycles",
+        "key": "square:neptune:mercury",
+        "change": "added",
+        "base": null,
+        "candidate": {
+          "key": "square:neptune:mercury",
+          "mechanism": "A pause or shift in tone can linger after a conversation. An impression and the story formed around it are different. A feeling can deserve attention while another person's intentions remain unknown.",
+          "question": "When you're the one who goes quiet, what's usually behind it?",
+          "themes": [
+            "uncertainty",
+            "expression"
+          ]
+        },
+        "changedFields": []
+      },
+      {
+        "kind": "entry",
+        "section": "dailyEditorial",
+        "key": "frames",
+        "change": "added",
+        "base": null,
+        "candidate": [
+          {
+            "key": "editorial-writing-reply-scene",
+            "source": {
+              "kind": "interpretation",
+              "key": "conjunction:mercury:mercury"
+            },
+            "cycleKeys": [
+              "mercury_conjunction_mercury"
+            ],
+            "writingMaterial": {
+              "meaning": "Making a sentence kinder and making its meaning smaller are different things. A revised message can lose its central point while becoming more agreeable.",
+              "scene": "A question becomes a suggestion, or a reservation is buried behind explanations in a work reply. In that kind of draft, the writer's position may feel missing.",
+              "imagery": "Mercury as messenger at its return to natal Mercury: the messenger rereads the original note before handing it over. Fresh phrasing can carry the original point.",
+              "direction": "Writing the central point in a plain sentence apart from the reply can help the writer hear the difference between kindness and diminished meaning and keep the point available while choosing the final wording.",
+              "reflection": "Directness and kindness can sometimes support one another; clear expression can itself be considerate."
+            },
+            "constraints": [
+              "The message and editing are possible scenes, not supplied events or a personality diagnosis.",
+              "The messenger is an image, not a physical being or a claim that Mercury alters the reader's thinking.",
+              "No reception, successful outcome, or obligation to send is established. Do not narrate this limitation in the body."
+            ],
+            "headline": "When the point gets edited out",
+            "reflection": "When is directness the kinder choice?",
+            "fallbackParagraphs": [
+              "If you've rewritten a work message until every sentence sounds agreeable, the point you wanted to make may have become harder to find. Perhaps the question has become a suggestion, or an important reservation is buried under explanations. In that kind of draft, it can feel as though your own position has gone missing.",
+              "Making a sentence kinder and making its meaning smaller are different things. Writing the central point once, in the words you would use out loud, can help you hear the difference. That sentence can sit beside the reply while you work on its wording.",
+              "Mercury meeting your natal Mercury is like a messenger rereading the original note before handing it over. The wording is open to revision; the point can remain legible."
+            ]
+          },
+          {
+            "key": "editorial-venus-opposition-venus",
+            "source": {
+              "kind": "interpretation",
+              "key": "opposition:venus:venus"
+            },
+            "cycleKeys": [
+              "venus_opposition_venus"
+            ],
+            "writingMaterial": {
+              "meaning": "Wanting someone's company and wanting a different kind of evening can coexist. A possible difficulty in stating a preference is the fear that it will sound like less affection.",
+              "scene": "An invitation to go dancing can leave a reply hovering at 'I'd love to' when a walk is what appeals. A walk instead of dancing is a concrete alternative.",
+              "imagery": "Venus opposite natal Venus as one invitation with two versions of the evening written on it. Contrasting preferences can belong to the same wish to meet.",
+              "direction": "Ask which part of an evening matters to each person, or make a concrete alternative that retains the wish to meet.",
+              "reflection": "A counterproposal can be considered from the receiving side: what makes it feel like continued interest in meeting."
+            },
+            "constraints": [
+              "No invitation, reader fear, partner preference, reaction, relationship condition, or compatibility is established.",
+              "The invitation with two versions is imagery for contrasting preferences, not an asserted event or agreement.",
+              "Do not reassure that the relationship is fine, predict agreement, or copy agency disclaimers into the reading.",
+              "Develop one response; the alternatives are a repertoire, not a checklist."
+            ],
+            "headline": "A different plan, the same company",
+            "reflection": "What makes a counterproposal feel like an invitation to you?",
+            "fallbackParagraphs": [
+              "Wanting to see someone and wanting a different kind of evening can both be true. An invitation to go dancing can leave a reply hovering at 'I'd love to' when a walk is what appeals. The tender part can be the fear that a different preference will sound like less affection.",
+              "Venus opposite your natal Venus is an invitation with two versions of the evening written on it. One question to ask is which part of the plan matters most to each of you. The wish to meet can stay in the conversation while the plan changes."
+            ]
+          },
+          {
+            "key": "editorial-synthesis-tension",
+            "source": {
+              "kind": "synthesis",
+              "key": "square:saturn:sun_tension_trine:jupiter:mars"
+            },
+            "cycleKeys": [
+              "saturn_square_sun",
+              "jupiter_trine_mars"
+            ],
+            "writingMaterial": {
+              "meaning": "When an idea matters, a smaller commitment can seem to understate enthusiasm. Promising more may become a way of trying to show how much one cares. Enthusiasm and the scope of a promise can be expressed separately.",
+              "scene": "Being excited about a project and finding that 'I can do this much' sounds smaller than the interest behind it.",
+              "imagery": "Jupiter's trine to natal Mars as a lengthening stride; Saturn's square to natal Sun as the pack that comes along. A faster pace does not make the pack lighter.",
+              "direction": "Before adding a piece of work, distinguish wanting that work from wanting the promise to express enthusiasm. The size of a commitment need not carry all the expression of interest.",
+              "reflection": "Taking an idea seriously can be considered at a manageable scale."
+            },
+            "constraints": [
+              "Preserve both parents C1/I1 and C2/I2 and the exact selected tension synthesis.",
+              "Saved S1 says expansion can increase the structure needed; do not turn this into an invariant rule for every ambition.",
+              "Stride and pack are imagery, not predicted energy, burden, bodily experience, or a causal effect on the reader.",
+              "No project, workload, overcommitment, motive, success, or future feasibility is established."
+            ],
+            "headline": "When enthusiasm becomes a promise",
+            "reflection": "What would taking an idea seriously look like at a scale you can manage?",
+            "fallbackParagraphs": [
+              "If you're excited about a project, 'I can do this much' may feel like too little enthusiasm for an idea you care about. In that situation, promising more can become a way of trying to show how much the project matters.",
+              "Jupiter's trine to your natal Mars is a lengthening stride; Saturn's square to your natal Sun is the pack that comes along. A faster pace doesn't make the pack lighter.",
+              "Before adding another piece, there is something to notice: whether you want to do that work or want the promise to show how much you care. The size of the promise doesn't have to do all the talking."
+            ]
+          },
+          {
+            "key": "editorial-jupiter-trine-sun-technical",
+            "source": {
+              "kind": "interpretation",
+              "key": "soft:jupiter:sun"
+            },
+            "cycleKeys": [
+              "jupiter_trine_sun"
+            ],
+            "writingMaterial": {
+              "meaning": "Lighting up about an interest and then calling it 'just a hobby' puts a qualification after the enthusiasm. Enjoyment can be a reason for an interest to belong in one's self-description before it becomes an achievement.",
+              "scene": "The shift from speaking with animation about an interest to shrinking it with 'just'.",
+              "imagery": "Jupiter's trine to natal Sun as a wider frame around a familiar self-portrait: an existing interest is included without becoming a different person.",
+              "direction": "Dropping 'just' once can leave the interest stated without a ranking of how accomplished or important it is.",
+              "reflection": "An interest can draw another person's attention before its holder's level of skill is known."
+            },
+            "constraints": [
+              "This is a bounded proposed self-description interpretation, not established low confidence or a global self-worth judgment.",
+              "No actual hobby, habit of minimizing, skill, talent, entitlement, identity change, or recognition is known.",
+              "The wider frame is imagery, not a transit causing personal growth.",
+              "Both sides retain the disclosed warm/standard override of the original technical fixture.",
+              "The scene can use any interest; do not narrow the whole reading to an invented hobby."
+            ],
+            "headline": "What 'just' leaves out",
+            "reflection": "What draws you to someone else's interests before you know how skilled they are?",
+            "fallbackParagraphs": [
+              "Lighting up about an interest, then calling it 'just a hobby,' can happen in the same breath. The qualification comes after the enthusiasm, but it gets the last word. Jupiter's trine to your natal Sun is a wider frame around a familiar self-portrait.",
+              "An interest can belong to the way you describe yourself while it is unfinished, private, or pursued in fits and starts. The detail worth catching is whether you reach for 'just' before anyone has questioned it. Dropping that word once can leave the interest standing without an explanation of how good you are at it."
+            ]
+          },
+          {
+            "key": "editorial-fallback-hard-neptune-mercury",
+            "source": {
+              "kind": "interpretation",
+              "key": "square:neptune:mercury"
+            },
+            "cycleKeys": [
+              "neptune_square_mercury"
+            ],
+            "writingMaterial": {
+              "meaning": "A pause or shift in tone can linger after a conversation. An impression and the story formed around it are different. A feeling can deserve attention while another person's intentions remain unknown.",
+              "scene": "Returning to a remembered exchange and noticing an explanation being added to the memory.",
+              "imagery": "Neptune blurs; Mercury names. A square between Neptune and natal Mercury pictures the gap between an impression and the story that forms around it.",
+              "direction": "An impression can remain an impression for a while. 'I felt unsettled, and I'm not sure why' can be an honest place to leave it.",
+              "reflection": "Remembering one's own reasons for going quiet can broaden perspective on the unknown meaning of someone else's silence."
+            },
+            "constraints": [
+              "All Neptune/Mercury meaning and imagery here are newly proposed. Selected hard:*:* supplies only generic friction; never credit it or hard:neptune:sun for this meaning.",
+              "Symbolic verbs describe an image, not a planet blurring the reader's judgment or causing confusion.",
+              "No actual exchange, motive, deception, impaired judgment, memory accuracy, or outcome is known.",
+              "The reflection opens another perspective; one's own reason for silence is not evidence of another person's reason.",
+              "Emotional uncertainty is never derived from birth-time uncertainty; recorded birth accuracy is unchanged."
+            ],
+            "headline": "Before a feeling becomes a verdict",
+            "reflection": "When you're the one who goes quiet, what's usually behind it?",
+            "fallbackParagraphs": [
+              "After a conversation, a pause or a shift in tone can stay with you longer than the words. If that happens, you might find yourself going over what was said, adding an explanation to the memory.",
+              "A feeling can deserve your attention while leaving another person's intentions unknown. Neptune blurs; Mercury names. A square between Neptune and your natal Mercury is a fair picture of the gap between an impression and the story that forms around it.",
+              "An impression can stay an impression for a while. 'I felt unsettled, and I'm not sure why' can be an honest place to leave it."
+            ]
+          }
+        ],
+        "changedFields": []
+      },
+      {
+        "kind": "entry",
+        "section": "dailyEditorial",
+        "key": "quiet",
+        "change": "added",
+        "base": null,
+        "candidate": [
+          {
+            "key": "quiet-detail-without-message",
+            "writingMaterial": {
+              "meaning": "A detail can catch attention before it carries meaning. Noticing and searching for a message are different ways of looking.",
+              "scene": "A bright thread in a dark coat; its cloth and a stitch that does not quite match. One ordinary visual detail can hold a second look.",
+              "imagery": null,
+              "direction": "A second look can leave the detail as a detail, without making it stand for a message.",
+              "reflection": "Searching for an answer can focus attention on clues and leave other details outside the search."
+            },
+            "constraints": [
+              "No selected contact, interpretation, synthesis, or hidden cosmic explanation is introduced.",
+              "Do not announce the selection system in the reading or describe the day's emotional character to demonstrate openness.",
+              "The coat/thread is an ordinary possible scene, not a known possession or event.",
+              "Do not deny that a reader may find personal meaning; no message is required, but one is not ruled out.",
+              "Do not confine quiet-day direction to enjoyment, promise calm, invent urgency, or describe an editorial variation as date-specific astrology."
+            ],
+            "headline": "A detail without a message",
+            "reflection": "What do you miss when you're looking for an answer?",
+            "fallbackParagraphs": [
+              "A bright thread in a dark coat can catch your eye before you know why. Looking for a message can turn the color into a clue, something that points beyond the cloth.",
+              "There is also the second look that asks nothing of it. Just the thread, the cloth around it, a stitch that doesn't quite match. Something can be worth noticing without becoming a message."
+            ]
+          },
+          {
+            "key": "quiet-pause-before-activity",
+            "writingMaterial": {
+              "meaning": "An available pause and an obligation to fill it are different. Reaching for another activity can happen before choosing it.",
+              "scene": "A kettle is heating while a hand reaches for a phone. There is a small interval between putting the kettle on and hearing it finish.",
+              "imagery": null,
+              "direction": "The interval can stay unassigned for a moment; the next activity can begin by choice rather than because there is a gap.",
+              "reflection": "The urge to fill a pause can reveal expectations about what time is for."
+            },
+            "constraints": [
+              "This is an editorial observation with no selected contact, interpretation, synthesis, or cosmic explanation.",
+              "The scene is an ordinary possibility, not a known event, possession, habit, mood, or diagnosis.",
+              "Do not announce the selection system, describe the day as calm, or imply a date-specific astrological message.",
+              "Offer one proportionate possibility without a command, reassurance formula, urgency, or promised outcome.",
+              "Do not diagnose distraction, require mindfulness, prescribe a screen limit, or turn an unfilled pause into a productivity technique."
+            ],
+            "headline": "Before the next thing begins",
+            "reflection": "What makes a pause feel as though it needs filling?",
+            "fallbackParagraphs": [
+              "A kettle takes a few minutes. A hand can reach for a phone before there is anything in particular to look up. The interval between one task and the next has acquired a task of its own.",
+              "That small gap can stay unassigned for a moment. The kettle is still heating; whatever comes next has not quite begun."
+            ]
+          },
+          {
+            "key": "quiet-detail-before-example",
+            "writingMaterial": {
+              "meaning": "A familiar example can help explain a situation, but it can also stand in for another person's account before its unfamiliar part is heard. Curiosity leaves space for what is not yet understood.",
+              "scene": "Someone starts describing a problem and a similar experience comes to mind before they have finished speaking.",
+              "imagery": null,
+              "direction": "A question about the part that remains unclear can keep the conversation open before an example or conclusion is offered.",
+              "reflection": "An unexpected detail can change the understanding of a familiar subject."
+            },
+            "constraints": [
+              "This is an editorial observation with no selected contact, interpretation, synthesis, or cosmic explanation.",
+              "The scene is an ordinary possibility, not a known event, possession, habit, mood, or diagnosis.",
+              "Do not announce the selection system, describe the day as calm, or imply a date-specific astrological message.",
+              "Offer one proportionate possibility without a command, reassurance formula, urgency, or promised outcome.",
+              "Do not assume a real conversation, another person needing help, poor listening, or a good outcome from any response."
+            ],
+            "headline": "The part you have not heard",
+            "reflection": "When has an unfamiliar detail changed a familiar story for you?",
+            "fallbackParagraphs": [
+              "Someone begins describing a problem, and a similar experience comes to mind. The example is ready before the other person has finished. Recognizing the outline can make the rest seem familiar, even while a detail is still arriving.",
+              "A question about that detail can take the conversation somewhere the example might have missed. Having something relevant to say and having heard the full story are different things. The example can wait until there is a clearer sense of what it belongs beside."
+            ]
+          },
+          {
+            "key": "quiet-experience-without-record",
+            "writingMaterial": {
+              "meaning": "Having an experience and keeping a record of it are different. Missing a title or a capture does not remove the experience that happened.",
+              "scene": "A song ends before its title is found; a phrase of the melody remains after the screen changes.",
+              "imagery": null,
+              "direction": "The remaining melody can be enjoyed or remembered without turning the moment into a search task.",
+              "reflection": "What is remembered from an experience may differ from what could have been recorded."
+            },
+            "constraints": [
+              "This is an editorial observation with no selected contact, interpretation, synthesis, or cosmic explanation.",
+              "The scene is an ordinary possibility, not a known event, possession, habit, mood, or diagnosis.",
+              "Do not announce the selection system, describe the day as calm, or imply a date-specific astrological message.",
+              "Offer one proportionate possibility without a command, reassurance formula, urgency, or promised outcome.",
+              "Do not claim a lost recording is beneficial, dismiss the wish to find a song, or promise that a memory will endure."
+            ],
+            "headline": "After the title has gone",
+            "reflection": "Which part of an experience tends to stay with you without a record?",
+            "fallbackParagraphs": [
+              "A song ends before its title can be found. The screen has moved on, but a small phrase of melody remains. Looking it up is one possibility. Following the tune for another moment is another.",
+              "The name would make the song easier to find again; it would not be the part that first caught your ear. For now, there may be just those few notes. They can belong to the moment without becoming something to save."
+            ]
+          }
+        ],
+        "changedFields": []
+      },
+      {
+        "kind": "entry",
+        "section": "dailyEditorial",
+        "key": "version",
+        "change": "added",
+        "base": null,
+        "candidate": "daily-editorial-1",
+        "changedFields": []
+      }
+    ]
+  },
+  "sourceFileHashes": {
+    "scripts/prepare-editorial-release.mjs": "894d7260f15742b2e9d9aa0534ec3c8f63e621b7a9dced515971ab50c414b7d1",
+    "src/lib/content/editorial-candidate-bundle.ts": "78c5b82cf3c4d0f296f7001385439c4094ea030b3c3e16687dfc4cd9176fff01",
+    "src/lib/content/editorial-candidate-data.json": "5d3bd26122cd1d3f3446abf96670fea43fecddd8de2a2b94e70da52e83564752",
+    "src/lib/content/schema.ts": "f22355a95829bc53d6ced3535a9db73d708e90cedb7ad9a09adc8adaa264420e",
+    "src/lib/content/draft-comparison.ts": "0862589d2b85db5aa6a34addf33d92d35d2d229d1ff5711b99916cbd2d5a0102",
+    "src/lib/content/daily-editorial.ts": "d10340c276e5ed8aee5101b30a720a716ad4c25501e331aa9defbbedc41284b4",
+    "src/lib/content/synthesis.ts": "6bade229a8eb77188576e12a293933eb80205d4f6d5e4d1a5f0943d03813ad71",
+    "docs/reviews/daily-reading-pilot/2026-10-15/candidate.json": "8b5b79fbd905a5152dfdd46a14fed03867f23bd8f07c745b9e6ebbf573135849",
+    "docs/reviews/daily-reading-pilot/2026-10-15/repair/production-e2e/receipt.json": "a35f0b08113eaa72496b6decfad8c5ec27aa80e8fced09249d36eb5cf441cd43"
+  },
+  "artifacts": {
+    "bundle.json": "a77eb43eba5aa9c140b514ef56c987167bea1eb905abfa68dcceabe2da35c6f3",
+    "source-bindings.json": "1370f36e53e14121fb9c918fbea46c5cb4c15779e325524992960009da8f91ea",
+    "rollback-reference.json": "01fcf82f9c43f54f242f40835f9b0395d4e61b2880610c52dd541a91b6e1f2b8",
+    "authored-readings.md": "86c2adb2be1ac9243909e7b0e00e0e0d2181e5a7961d3028a1397308bf6e80ea"
+  },
+  "evidence": {
+    "mode": "offline_packaging",
+    "networkAttempts": 0,
+    "providerRequests": 0,
+    "published": false,
+    "activated": false,
+    "memberFlowVerified": false
+  }
+}

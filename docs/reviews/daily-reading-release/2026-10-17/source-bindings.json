@@ -1,0 +1,130 @@
+{
+  "contacts": [
+    {
+      "editorialKey": "editorial-writing-reply-scene",
+      "source": {
+        "kind": "interpretation",
+        "key": "conjunction:mercury:mercury"
+      },
+      "cycleKeys": [
+        "mercury_conjunction_mercury"
+      ],
+      "requiredFacts": [
+        "C1",
+        "I1"
+      ],
+      "interpretationKeys": [
+        "conjunction:mercury:mercury"
+      ],
+      "releaseVersion": "0.9.0",
+      "headline": "When the point gets edited out"
+    },
+    {
+      "editorialKey": "editorial-venus-opposition-venus",
+      "source": {
+        "kind": "interpretation",
+        "key": "opposition:venus:venus"
+      },
+      "cycleKeys": [
+        "venus_opposition_venus"
+      ],
+      "requiredFacts": [
+        "C1",
+        "I1"
+      ],
+      "interpretationKeys": [
+        "opposition:venus:venus"
+      ],
+      "releaseVersion": "0.9.0",
+      "headline": "A different plan, the same company"
+    },
+    {
+      "editorialKey": "editorial-synthesis-tension",
+      "source": {
+        "kind": "synthesis",
+        "key": "square:saturn:sun_tension_trine:jupiter:mars"
+      },
+      "cycleKeys": [
+        "saturn_square_sun",
+        "jupiter_trine_mars"
+      ],
+      "requiredFacts": [
+        "S1",
+        "C1",
+        "I1",
+        "C2",
+        "I2"
+      ],
+      "interpretationKeys": [
+        "square:saturn:sun",
+        "trine:jupiter:mars"
+      ],
+      "releaseVersion": "0.9.0",
+      "headline": "When enthusiasm becomes a promise"
+    },
+    {
+      "editorialKey": "editorial-jupiter-trine-sun-technical",
+      "source": {
+        "kind": "interpretation",
+        "key": "soft:jupiter:sun"
+      },
+      "cycleKeys": [
+        "jupiter_trine_sun"
+      ],
+      "requiredFacts": [
+        "C1",
+        "I1"
+      ],
+      "interpretationKeys": [
+        "soft:jupiter:sun"
+      ],
+      "releaseVersion": "0.9.0",
+      "headline": "What 'just' leaves out"
+    },
+    {
+      "editorialKey": "editorial-fallback-hard-neptune-mercury",
+      "source": {
+        "kind": "interpretation",
+        "key": "square:neptune:mercury"
+      },
+      "cycleKeys": [
+        "neptune_square_mercury"
+      ],
+      "requiredFacts": [
+        "C1",
+        "I1"
+      ],
+      "interpretationKeys": [
+        "square:neptune:mercury"
+      ],
+      "releaseVersion": "0.9.0",
+      "headline": "Before a feeling becomes a verdict"
+    }
+  ],
+  "quietRotation": [
+    {
+      "editorialKey": "quiet-detail-without-message",
+      "day": "2026-10-11",
+      "releaseVersion": "0.9.0",
+      "source": null
+    },
+    {
+      "editorialKey": "quiet-pause-before-activity",
+      "day": "2026-10-12",
+      "releaseVersion": "0.9.0",
+      "source": null
+    },
+    {
+      "editorialKey": "quiet-detail-before-example",
+      "day": "2026-10-13",
+      "releaseVersion": "0.9.0",
+      "source": null
+    },
+    {
+      "editorialKey": "quiet-experience-without-record",
+      "day": "2026-10-14",
+      "releaseVersion": "0.9.0",
+      "source": null
+    }
+  ]
+}

@@ -194,7 +194,6 @@ export function assembleReading(
 
   const ranked = eligibleReadingCycles(chart, cycles);
   const interpretationPlan = resolveInterpretationPlan(bundle, ranked);
-  const writingPlan = resolveDailyWritingPlan(bundle, interpretationPlan, ctx);
   const primary = ranked[0] ?? null;
   const natalLensPlan = resolveDailyNatalLens(
     bundle,
@@ -207,6 +206,13 @@ export function assembleReading(
     primary,
     interpretationPlan.interpretations.find((i) => i.index === 1) ?? null,
     storyCalculation,
+  );
+  // The limited editorial writer covers contact parents only. Keep the ordinary
+  // writer when selected natal or transit context also requires N1 or A1/P2.
+  const writingPlan = resolveDailyWritingPlan(
+    bundle,
+    interpretationPlan,
+    natalLensPlan.status === "selected" || transitStoryPlan.status === "selected" ? undefined : ctx,
   );
   const selectedCalculation =
     transitStoryPlan.status === "selected"
