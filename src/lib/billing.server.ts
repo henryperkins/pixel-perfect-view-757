@@ -20,10 +20,10 @@ export async function withBillingLock<T>(db: DBClient, userId: string, operation
   const token = crypto.randomUUID(), now = Date.now();
   const [lock] = await db.exec<{token: string}>("INSERT INTO billing_locks_v2(user_id,token,expires_at) VALUES(?,?,?) ON CONFLICT(user_id) DO UPDATE SET token=excluded.token,expires_at=excluded.expires_at WHERE billing_locks_v2.expires_at<? RETURNING token", [userId, token, now + 180_000, now]);
   if (lock?.token !== token) throw new Error("A membership change is already in progress. Please try again shortly.");
-  db.bindWritePolicy({sql:"SELECT CASE WHEN EXISTS(SELECT 1 FROM billing_locks_v2 WHERE user_id=? AND token=? AND expires_at>?) THEN 1 ELSE json('billing-lease-lost') END", params:[userId,token,now]});
+  db.bindBillingFence(()=>({sql:"SELECT CASE WHEN EXISTS(SELECT 1 FROM billing_locks_v2 WHERE user_id=? AND token=? AND expires_at>?) THEN 1 ELSE json('billing-lease-lost') END", params:[userId,token,Date.now()]}));
   const heartbeat = setInterval(() => { void db.exec("UPDATE billing_locks_v2 SET expires_at=? WHERE user_id=? AND token=?", [Date.now()+180_000,userId,token]).catch(() => {}); }, 30_000);
   try { return await operation(); }
-  finally { clearInterval(heartbeat); await db.exec("DELETE FROM billing_locks_v2 WHERE user_id=? AND token=?", [userId,token]); }
+  finally { clearInterval(heartbeat); db.bindBillingFence(null); await db.exec("DELETE FROM billing_locks_v2 WHERE user_id=? AND token=?", [userId,token]); }
 }
 export async function getMembership(userId: string, db = records()) {
   let env: StripeEnv;
@@ -128,6 +128,7 @@ export async function syncBillingEmail(userId:string,_email:string,db=records())
 export async function startCheckout(userId:string,_email:string,plan:MembershipPlan,db=records()) {
   const env=billingEnvironment();
   await requireVerifiedEmail(userId,db);
+  if ((await customerFor(db,userId,env))?.deleting) throw new Error("Account deletion is in progress. Checkout is unavailable.");
   if (!(await getMembership(userId,db)).checkoutReady) throw new Error("Membership checkout is unavailable. Please try again later.");
   return withBillingLock(db,userId,async()=> {
     const stripe=createStripeClient(env); let customer=await customerFor(db,userId,env);
