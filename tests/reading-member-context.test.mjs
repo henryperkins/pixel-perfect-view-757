@@ -36,8 +36,8 @@ test("an explicitly enabled supported member graph uses the context writer", asy
   process.env.LOVABLE_API_KEY = "test-member-context-key";
   h.setGateway(() => response(benchmark.paragraphs));
   const result = await language.generateReadingProse(input, { contextModes: ["contact-only"] });
-  assert.equal(result.meta.diagnostics.promptVersion, "daily-context-body-3");
-  assert.equal(result.meta.diagnostics.validatorVersion, "daily-context-reference-3");
+  assert.equal(result.meta.diagnostics.promptVersion, "daily-context-body-4");
+  assert.equal(result.meta.diagnostics.validatorVersion, "daily-context-reference-4");
   assert.equal(result.meta.mode, "model");
   assert.equal(result.headline, "The task that will not fit");
   assert.equal(h.gatewayRequests.length, 1);
@@ -255,7 +255,7 @@ test("each synthetic member mode uses the production adapter and captures the ra
       result.prose.body,
       expected.paragraphs.map((paragraph) => paragraph.text).join("\n\n"),
     );
-    assert.equal(result.prose.meta.diagnostics.promptVersion, "daily-context-body-3");
+    assert.equal(result.prose.meta.diagnostics.promptVersion, "daily-context-body-4");
     assert.equal(result.candidate.captureLossless, true);
     assert.equal(result.candidate.truncated, false);
     assert.deepEqual(result.candidate.paragraphs, expected.paragraphs);

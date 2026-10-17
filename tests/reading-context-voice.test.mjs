@@ -19,6 +19,38 @@ before(async () => {
 });
 after(async () => h?.close());
 
+// The rejected pilot joined one mini-reading per source, then repeated the
+// calendar distinction for the return chapter. Give each selected meaning one
+// job inside a shared situation without supplying another authored body.
+test("the brief gives every selected meaning one distinct job in the central situation", async () => {
+  for (const benchmark of benchmarks.cases) {
+    const { input } = await contextWritingFixture(h, benchmark);
+    const projected = brief.toDailyContextBrief(input.facts, "warm", "standard");
+    const selected = projected.material.map(({ factId }) => factId);
+    assert.equal(projected.development.centralSituationFact, "I1");
+    assert.deepEqual(
+      projected.development.sourceRoles.map(({ factId }) => factId).sort(),
+      [...selected].sort(),
+      "every selected source has a role, and unselected sources have none",
+    );
+    assert.equal(
+      new Set(projected.development.sourceRoles.map(({ role }) => role)).size,
+      selected.length,
+      "additional context develops a different part of the same decision",
+    );
+    const serialized = JSON.stringify(projected.development);
+    for (const { text } of benchmark.paragraphs) assert.ok(!serialized.includes(text));
+    for (const { meaning } of projected.controls.sourceMeanings)
+      assert.ok(!serialized.includes(meaning), "planning roles do not duplicate source prose");
+    projected.development.sourceRoles[0].role = "mutated";
+    assert.ok(
+      !JSON.stringify(
+        brief.toDailyContextBrief(input.facts, "warm", "standard").development,
+      ).includes("mutated"),
+    );
+  }
+});
+
 // Source summaries in the drafting field caused the observed abstract openings.
 // Keep their authority while preventing a second paragraph of competing copy.
 test("draftable material starts with scenes while interpretation summaries are separate constraints", async () => {
@@ -26,7 +58,7 @@ test("draftable material starts with scenes while interpretation summaries are s
     const { input } = await contextWritingFixture(h, benchmark);
     const original = structuredClone(input.facts);
     const projected = brief.toDailyContextBrief(input.facts, "warm", "standard");
-    assert.equal(projected.version, "daily-context-brief-3");
+    assert.equal(projected.version, "daily-context-brief-4");
     assert.deepEqual(projected.controls.draftFrom, [
       "sceneDetails",
       "practicalDistinction",
@@ -62,12 +94,12 @@ test("the real context request uses the scene-first brief and retains each sourc
   const result = await language.generateSyntheticReadingProse(input, "lovable", {}, benchmark);
   const user = result.request.messages.find((m) => m.role === "user").content;
   const projected = JSON.parse(user.split("\n").find((line) => line.startsWith('{"version":')));
-  assert.equal(projected.version, "daily-context-brief-3");
+  assert.equal(projected.version, "daily-context-brief-4");
   assert.ok(projected.material.every((m) => m.meaning === undefined));
   for (const { meaning } of projected.controls.sourceMeanings)
     assert.equal(user.split(meaning).length - 1, 1);
-  assert.equal(result.prose.meta.diagnostics.promptVersion, "daily-context-body-3");
-  assert.equal(result.prose.meta.diagnostics.validatorVersion, "daily-context-reference-3");
+  assert.equal(result.prose.meta.diagnostics.promptVersion, "daily-context-body-4");
+  assert.equal(result.prose.meta.diagnostics.validatorVersion, "daily-context-reference-4");
   assert.ok(!user.includes(benchmark.headline));
   assert.ok(!user.includes(benchmark.reflection));
   for (const paragraph of benchmark.paragraphs) assert.ok(!user.includes(paragraph.text));

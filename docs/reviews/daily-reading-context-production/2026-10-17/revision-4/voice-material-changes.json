@@ -1,0 +1,156 @@
+{
+  "version": "daily-context-voice-revision-4",
+  "human": false,
+  "status": "authored material revision awaiting independent source review and generated pilot review",
+  "materialHash": "e1f0621413c14cbbe4fd591cf4858309b1b0840df2b88d8b3c10dd22d0fb704e",
+  "briefHash": "8d422ccac1294563d28af0cb9f3acd8b9d242ef4e4c31f4e54284e7ee87115cd",
+  "sources": [
+    {
+      "factId": "I1",
+      "sourceFactUnchanged": true,
+      "changedFields": {
+        "meaning": {
+          "before": "An established responsibility can ask for more deliberate effort. Where its expectations exceed the capacity available, its boundary may need to become clearer.",
+          "after": "A familiar responsibility can need more effort than usual. If it asks for more than the available hours can hold, what belongs in the task may need a clearer limit."
+        },
+        "sceneDetails": {
+          "before": [
+            "An extra check or another version added beside the original task.",
+            "One afternoon set aside for a familiar responsibility.",
+            "The same task moved into a later calendar opening without changing what it includes."
+          ],
+          "after": [
+            "An extra check can look small beside a familiar task.",
+            "An afternoon set aside for that familiar task.",
+            "A task moved to a later calendar opening, with the extra check still included."
+          ]
+        },
+        "practicalDistinction": {
+          "before": "Moving the task to a later opening may leave the extra check attached.",
+          "after": "If the original task already fills the afternoon, an extra check still needs some of the same hours."
+        },
+        "optionalDirections": {
+          "before": [
+            "If the original work already fills the afternoon, the extra check could be left out."
+          ],
+          "after": [
+            "If the original work already fills the afternoon, the extra check could stay outside the task."
+          ]
+        }
+      }
+    },
+    {
+      "factId": "N1",
+      "sourceFactUnchanged": true,
+      "changedFields": {
+        "meaning": {
+          "before": "Several lines of curiosity may help a direction emerge. Exploring possible projects and choosing one to pursue can be separate stages.",
+          "after": "Following a few lines of curiosity may help one direction take shape. If several projects compete for the same afternoon, exploring a few and choosing one may be different stages."
+        },
+        "sceneDetails": {
+          "before": [
+            "A page of notes for one idea beside a tab open for another.",
+            "One possible project kept as a note beside the project selected for the afternoon."
+          ],
+          "after": [
+            "If several projects compete for the afternoon, a page of notes for one idea can sit beside a tab open for another.",
+            "If several projects compete for that afternoon, one could stay as a note while you choose another to pursue."
+          ]
+        },
+        "practicalDistinction": {
+          "before": "Sampling a few projects and choosing one may be different stages.",
+          "after": "If several projects compete for the same afternoon, exploring a few and choosing one may be separate stages."
+        }
+      }
+    },
+    {
+      "factId": "P2",
+      "sourceFactUnchanged": true,
+      "changedFields": {
+        "meaning": {
+          "before": "If an earlier way of handling the responsibility no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.",
+          "after": "If an earlier way of handling the task no longer fits, this return offers a chance to try one smaller change to how you do it or where you stop."
+        },
+        "sceneDetails": {
+          "before": [
+            "A task put into a different calendar opening while its contents stay the same.",
+            "A defined stopping point for what belongs inside this afternoon's commitment."
+          ],
+          "after": [
+            "If an earlier method no longer fits, a stopping point could come before the extra check or version."
+          ]
+        },
+        "practicalDistinction": {
+          "before": "Moving a task to a later slot does not change its size; adjusting what is included or where it stops can change the method or boundary.",
+          "after": "If an earlier way no longer fits, the smaller adjustment could be to where the original task stops."
+        },
+        "optionalDirections": {
+          "before": [
+            "If the earlier method no longer fits, change one part of the task's method or boundary.",
+            "Make a stopping point visible before an extra check or version enters the agreement."
+          ],
+          "after": [
+            "If an earlier way of handling the task no longer fits, you could try one smaller change to the method or where you stop."
+          ]
+        }
+      }
+    },
+    {
+      "factId": "I2",
+      "sourceFactUnchanged": true,
+      "changedFields": {
+        "meaning": {
+          "before": "When an aim is well chosen, enthusiasm and practical initiative can reinforce each other, making a larger piece of work or an emerging opening easier to take up.",
+          "after": "When an aim is well chosen, enthusiasm and a practical start can support each other, and taking up more of the work can feel easier."
+        },
+        "practicalDistinction": {
+          "before": "A well-chosen aim can bring enthusiasm and a practical start together; ease in taking up a piece is not a guarantee about its result.",
+          "after": "When an aim is well chosen, wanting to begin and making a practical start can come together; that ease is not a promise about the result."
+        },
+        "optionalDirections": {
+          "before": [
+            "Notice the moment an appealing next piece begins to look like something to take on."
+          ],
+          "after": [
+            "With a well-chosen aim, you might notice an appealing next piece before agreeing to take it on."
+          ]
+        },
+        "requiredConditions": {
+          "before": [
+            "Preserve the well-chosen-aim condition; do not assert that the reader's current aim is well chosen.",
+            "Ease is an interpretive possibility, not a promise of success or an actual opportunity arriving."
+          ],
+          "after": [
+            "Preserve the well-chosen-aim condition; do not assert that the reader's current aim is well chosen.",
+            "Ease is an interpretive possibility, not a promise of success or an actual opportunity arriving.",
+            "Keep enthusiasm and practical initiative as mutually supporting possibilities under the well-chosen-aim condition; initiative does not cause the next piece to look appealing."
+          ]
+        }
+      }
+    },
+    {
+      "factId": "S1",
+      "sourceFactUnchanged": true,
+      "changedFields": {
+        "meaning": {
+          "before": "Giving a plan more scope can increase the structure needed to carry it. A possible task growing beyond its agreed limits makes that tension visible.",
+          "after": "Adding more to a plan can mean needing more structure to carry it. A possible task growing past its agreed limits is one place to notice that tension."
+        },
+        "practicalDistinction": {
+          "before": "Ease in beginning more work is different from having enough structure to carry the expanded commitment.",
+          "after": "A larger task can need more structure, even when starting feels easy."
+        },
+        "optionalDirections": {
+          "before": [
+            "Notice whether an appealing addition changes the amount the original agreement includes.",
+            "Consider the structure a larger piece would need before adding it to the same agreement."
+          ],
+          "after": [
+            "Notice whether an appealing addition changes how much the original task includes.",
+            "Before adding another piece, you could consider what it would take to carry the larger task."
+          ]
+        }
+      }
+    }
+  ]
+}

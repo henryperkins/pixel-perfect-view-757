@@ -1,0 +1,492 @@
+{
+  "version": "daily-context-material-source-review-4",
+  "reviewedAt": "2026-10-17T10:01:26.634036+00:00",
+  "status": "pass",
+  "reviewType": "independent AI semantic source and provider-brief material review before spend",
+  "reviewer": "context_revision4_material_review",
+  "baseCommit": "02e32f57950b31a4d1b77e2ddb552654a86a75c0",
+  "scope": {
+    "releaseVersion": "0.9.0",
+    "materialVersion": "daily-context-material-4",
+    "tone": "warm",
+    "depth": "standard",
+    "cards": [
+      "I1",
+      "N1",
+      "P2",
+      "I2",
+      "S1"
+    ],
+    "caseIds": [
+      "contact-only",
+      "natal-only",
+      "transit-only",
+      "natal-and-transit",
+      "synthesis-natal-and-transit"
+    ],
+    "generatedPilotResultsRead": false
+  },
+  "verdict": "The frozen revised material and its prompt projection preserve the five published source meanings and their conditions. No unsupported cause, outcome, extra ease, frequency, necessity, strengthened personal claim or lost condition was found. This qualifies the source/material preparation for the authorized pilot, not generated prose or activation.",
+  "inputs": [
+    {
+      "path": "src/lib/ai/context-writing-material.json",
+      "sha256": "e1f0621413c14cbbe4fd591cf4858309b1b0840df2b88d8b3c10dd22d0fb704e",
+      "sameBytesAsBase": false,
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/daily-context-writing.ts",
+      "sha256": "8d422ccac1294563d28af0cb9f3acd8b9d242ef4e4c31f4e54284e7ee87115cd",
+      "sameBytesAsBase": false,
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/language.server.ts",
+      "sha256": "b8f2e6763feae0f1cb4dff6235a998683176fae6cfad9c636150dccad8c42007",
+      "sameBytesAsBase": true,
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/member-context-readings.json",
+      "sha256": "af143337793ad4136a16fd4144adec0be365d15fa0b1e83d326763bcae85a0eb",
+      "sameBytesAsBase": false,
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/context-writing-benchmarks.json",
+      "sha256": "825c877dbb88d5d20d39a12abfd67cea01781506250db93d44ae7c9885b35024",
+      "sameBytesAsBase": true,
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/content/context-pilot-bundle.json",
+      "sha256": "a77eb43eba5aa9c140b514ef56c987167bea1eb905abfa68dcceabe2da35c6f3",
+      "sameBytesAsBase": true,
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "docs/reviews/daily-reading-release/2026-10-17/bundle.json",
+      "sha256": "a77eb43eba5aa9c140b514ef56c987167bea1eb905abfa68dcceabe2da35c6f3",
+      "sameBytesAsBase": true,
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/member-context-reading.ts",
+      "sha256": "d728de67a0547ac9d611c365dd68cb8440cf8aad038d34f143bd66731b21685a",
+      "sameBytesAsBase": true,
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/facts.ts",
+      "sha256": "c8d5f44d414c0046e92fccad7b4c4326db10216a1d53763e02e8c0ab5793ede9",
+      "sameBytesAsBase": true,
+      "hashMode": "exact-file-bytes"
+    }
+  ],
+  "sourceBundleCanonicalSha256": "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f",
+  "immutableEvidence": {
+    "sourceFactsAllUnchangedVsBase": true,
+    "sourceBundleExactBytesUnchangedVsBase": true,
+    "sourceBundleExactBytesEqualPublishedReleaseArtifact": true,
+    "originalFiveBenchmarksExactBytesUnchangedVsBase": true,
+    "benchmarkRuntimeCopyEqualsOriginalAuthoredBenchmark": true,
+    "fallbackChangedTopLevelKeys": [
+      "materialVersion"
+    ],
+    "allFiveFallbackCasesDeepEqualBase": true,
+    "fallbackHeadlinesReflectionsBodiesAndReferencesUnchanged": true,
+    "memberAdapterAndFactCodeUnchanged": true,
+    "currentMaterialHashPinnedByPilotPlan": true
+  },
+  "semanticReviews": [
+    {
+      "factId": "I1",
+      "status": "pass",
+      "sourceFact": {
+        "id": "I1",
+        "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+        "kind": "interpretation",
+        "dependsOn": [
+          "C1"
+        ],
+        "sourceKey": "square:saturn:sun",
+        "releaseVersion": "0.9.0"
+      },
+      "sourceIdentityChecks": {
+        "sourceFactUnchangedVsBase": true,
+        "metadataMatchesFact": true,
+        "sourceMeaningEqualsSourceStatement": true,
+        "publishedMechanismExact": true,
+        "sameFactInAllOriginalCases": true
+      },
+      "reviewedFields": {
+        "meaning": "A familiar responsibility can need more effort than usual. If it asks for more than the available hours can hold, what belongs in the task may need a clearer limit.",
+        "sceneDetails": [
+          "An extra check can look small beside a familiar task.",
+          "An afternoon set aside for that familiar task.",
+          "A task moved to a later calendar opening, with the extra check still included."
+        ],
+        "practicalDistinction": "If the original task already fills the afternoon, an extra check still needs some of the same hours.",
+        "optionalDirections": [
+          "If the original work already fills the afternoon, the extra check could stay outside the task."
+        ],
+        "requiredConditions": [
+          "The responsibility asking more effort is an interpretive possibility, not an established condition of the reader today.",
+          "Any actual mismatch between expectations and capacity must remain conditional.",
+          "Follow-up references to the task, added scope or boundary must remain inside the possible scene."
+        ]
+      },
+      "semanticAssessment": [
+        "The possible familiar responsibility requiring more effort remains present in meaning and in the system instruction requiring both effort and the hours/limit distinction to remain legible. Concrete checks and hours may carry that meaning without repeating an abstract boundary summary.",
+        "The practical distinction and optional exclusion of the extra check both retain the full-afternoon condition. A later calendar opening and an extra check are possible authored illustrations, not personal events or an asserted change in capacity.",
+        "The arithmetic cost of an extra check within the same hours adds no promised result, onset, frequency, unsustainable effort or causal psychological effect."
+      ]
+    },
+    {
+      "factId": "N1",
+      "status": "pass",
+      "sourceFact": {
+        "id": "N1",
+        "kind": "temperament",
+        "statement": "Published natal lens, an interpretive possibility: Following more than one line of curiosity can help a direction take shape. If several possible projects compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages.",
+        "dependsOn": [
+          "C1",
+          "I1"
+        ],
+        "sourceKey": "nl-sun-03",
+        "releaseVersion": "0.9.0",
+        "natalEvidenceId": "NL1"
+      },
+      "sourceIdentityChecks": {
+        "sourceFactUnchangedVsBase": true,
+        "metadataMatchesFact": true,
+        "sourceMeaningEqualsSourceStatement": true,
+        "publishedMechanismExact": true,
+        "sameFactInAllOriginalCases": true
+      },
+      "reviewedFields": {
+        "meaning": "Following a few lines of curiosity may help one direction take shape. If several projects compete for the same afternoon, exploring a few and choosing one may be different stages.",
+        "sceneDetails": [
+          "If several projects compete for the afternoon, a page of notes for one idea can sit beside a tab open for another.",
+          "If several projects compete for that afternoon, one could stay as a note while you choose another to pursue."
+        ],
+        "practicalDistinction": "If several projects compete for the same afternoon, exploring a few and choosing one may be separate stages.",
+        "optionalDirections": [
+          "If several projects compete for that afternoon, a note can hold the second idea without promising it those hours."
+        ],
+        "requiredConditions": [
+          "This natal lens is an interpretive possibility, not a fixed personality claim.",
+          "The multiple-project scene applies only if several possibilities are competing for the same time.",
+          "Keep the distinction between exploration and commitment visible in the shared project scene."
+        ]
+      },
+      "semanticAssessment": [
+        "Both source meanings remain: following several lines of curiosity may help a direction form, and exploring several projects versus choosing one may be different stages.",
+        "The competing-projects condition is explicit in both scene details, the practical distinction and the optional note direction; requiredConditions and natal-specific voice also preserve the lens as a possibility.",
+        "A note and an open tab illustrate exploration and choice. No claim about blurred attention, distraction, fixed temperament, failure to finish or cognitive benefit is introduced."
+      ]
+    },
+    {
+      "factId": "P2",
+      "status": "pass",
+      "sourceFact": {
+        "id": "P2",
+        "kind": "interpretation",
+        "dependsOn": [
+          "C1",
+          "I1",
+          "A1"
+        ],
+        "sourceKey": "chapter-return-1",
+        "releaseVersion": "0.9.0",
+        "statement": "Published transit chapter: If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.",
+        "storyChapter": "return"
+      },
+      "sourceIdentityChecks": {
+        "sourceFactUnchangedVsBase": true,
+        "metadataMatchesFact": true,
+        "sourceMeaningEqualsSourceStatement": true,
+        "publishedMechanismExact": true,
+        "sameFactInAllOriginalCases": true
+      },
+      "reviewedFields": {
+        "meaning": "If an earlier way of handling the task no longer fits, this return offers a chance to try one smaller change to how you do it or where you stop.",
+        "sceneDetails": [
+          "If an earlier method no longer fits, a stopping point could come before the extra check or version."
+        ],
+        "practicalDistinction": "If an earlier way no longer fits, the smaller adjustment could be to where the original task stops.",
+        "optionalDirections": [
+          "If an earlier way of handling the task no longer fits, you could try one smaller change to the method or where you stop."
+        ],
+        "requiredConditions": [
+          "Preserve the condition that an earlier way must no longer fit before offering an adjustment as a return-chapter application.",
+          "A calculated return does not establish that a life situation recurred or that a previous attempt failed.",
+          "Use any chronology only from A1 exactly, with C1 and I1 as parents."
+        ]
+      },
+      "semanticAssessment": [
+        "Every current scene, meaning, practical distinction and direction retains an earlier method or way no longer fitting as the condition for a smaller adjustment.",
+        "How you do the task or where you stop is a plain rendering of method or boundary. Stopping before the extra check is a proportionate illustration of that adjustment and gives the chapter a distinct role from rescheduling.",
+        "The singular smaller change adds no chronology count, previous failure, personal recurrence or guarantee of closure. Literal chronology remains supplied only by A1."
+      ]
+    },
+    {
+      "factId": "I2",
+      "status": "pass",
+      "sourceFact": {
+        "id": "I2",
+        "statement": "Published interpretation trine:jupiter:mars: Enthusiasm and practical initiative reinforce one another when an aim is well chosen. Jupiter's trine to Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening.",
+        "kind": "interpretation",
+        "dependsOn": [
+          "C2"
+        ],
+        "sourceKey": "trine:jupiter:mars",
+        "releaseVersion": "0.9.0"
+      },
+      "sourceIdentityChecks": {
+        "sourceFactUnchangedVsBase": true,
+        "metadataMatchesFact": true,
+        "sourceMeaningEqualsSourceStatement": true,
+        "publishedMechanismExact": true,
+        "sameFactInAllOriginalCases": true
+      },
+      "reviewedFields": {
+        "meaning": "When an aim is well chosen, enthusiasm and a practical start can support each other, and taking up more of the work can feel easier.",
+        "sceneDetails": [
+          "A page of notes beginning to become an outline.",
+          "Another piece of the same project starting to look appealing."
+        ],
+        "practicalDistinction": "When an aim is well chosen, wanting to begin and making a practical start can come together; that ease is not a promise about the result.",
+        "optionalDirections": [
+          "With a well-chosen aim, you might notice an appealing next piece before agreeing to take it on."
+        ],
+        "requiredConditions": [
+          "Preserve the well-chosen-aim condition; do not assert that the reader's current aim is well chosen.",
+          "Ease is an interpretive possibility, not a promise of success or an actual opportunity arriving.",
+          "Keep enthusiasm and practical initiative as mutually supporting possibilities under the well-chosen-aim condition; initiative does not cause the next piece to look appealing."
+        ]
+      },
+      "semanticAssessment": [
+        "When an aim is well chosen remains local to the plain-language meaning, practical distinction and direction. The mutual support of enthusiasm and practical initiative is preserved as enthusiasm and a practical start supporting each other.",
+        "Possible ease in taking up more work is supplied by the published little-friction/natural-to-take-on-more interpretation; it is not a new ease or outcome claim. The explicit no-promise clause narrows the reading rather than predicting a result.",
+        "Notes becoming an outline and another appealing piece remain possible illustrations. The selected-card condition expressly prevents initiative from causing the next piece to look appealing; no success, reward, motivation or actual opportunity is promised."
+      ]
+    },
+    {
+      "factId": "S1",
+      "status": "pass",
+      "sourceFact": {
+        "id": "S1",
+        "statement": "Published tension synthesis square:saturn:sun_tension_trine:jupiter:mars (parents: C1, I1, C2, I2): Giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.",
+        "kind": "synthesis",
+        "dependsOn": [
+          "C1",
+          "I1",
+          "C2",
+          "I2"
+        ],
+        "sourceKey": "square:saturn:sun_tension_trine:jupiter:mars",
+        "releaseVersion": "0.9.0"
+      },
+      "sourceIdentityChecks": {
+        "sourceFactUnchangedVsBase": true,
+        "metadataMatchesFact": true,
+        "sourceMeaningEqualsSourceStatement": true,
+        "publishedMechanismExact": true,
+        "sameFactInAllOriginalCases": true
+      },
+      "reviewedFields": {
+        "meaning": "Adding more to a plan can mean needing more structure to carry it. A possible task growing past its agreed limits is one place to notice that tension.",
+        "sceneDetails": [
+          "An appealing extra piece added to the same project.",
+          "One more check or another version enlarging the same proposed task."
+        ],
+        "practicalDistinction": "A larger task can need more structure, even when starting feels easy.",
+        "optionalDirections": [
+          "Notice whether an appealing addition changes how much the original task includes.",
+          "Before adding another piece, you could consider what it would take to carry the larger task."
+        ],
+        "requiredConditions": [
+          "Use only with C1, I1, C2 and I2; preserve both contact interpretations and the combined tension.",
+          "Added scope and limits being exceeded must remain possible, not assumed facts about the reader's project."
+        ]
+      },
+      "semanticAssessment": [
+        "Adding scope can require more structure remains a possibility. The meaning retains the possible task growing beyond agreed limits, while the concrete extra check/version illustrates scope.",
+        "The practical distinction combines that supported scope/structure relationship with possible ease from parent I2; all four parents and I2 own well-chosen-aim condition remain required. It does not claim that initiative causes additional scope or that all growth exceeds limits.",
+        "The directions invite noticing or considering the larger task. They add no obligation to refuse growth and no promise that a boundary will reduce strain or produce success."
+      ]
+    }
+  ],
+  "promptReview": {
+    "status": "pass",
+    "path": "src/lib/ai/language.server.ts",
+    "contextBranchLine": 1206,
+    "systemBranchLine": 1234,
+    "assessment": [
+      "The actual context branch serializes exactly one toDailyContextBrief result after dailyContextVoice; the separate legacyPrompt branch is not concatenated. The context system uses dailyContextSystemVoice with a natal-specific instruction only when N1 is selected.",
+      "Draftable material is whitelisted to sceneDetails, practicalDistinction, optionalDirections and source/reference identity fields. Plain source meanings and conditions remain in controls, while sourceFact, exact published source paragraphs, historical/current review support and limitations stay local.",
+      "The source-role development map supplies distinct functions without full paragraphs or an ordering template. Explicit instructions preserve complete meaning, local conditions and modal scope, prohibit added relationships and prevent authored illustrations from becoming personal events.",
+      "References preserve selected IDs, source keys, versions, parents, natal evidence markers, story chapter and supplied contact geometry. Standard depth omits optional numerical details; technical depth preserves exact supplied values. A1 chronology is projected literally and required exactly once.",
+      "No complete fallback body, headline, reflection or original benchmark paragraph appears in any of the five local projected briefs. Original facts remain unchanged."
+    ]
+  },
+  "localVerification": {
+    "reviewedMaterialSha256": "e1f0621413c14cbbe4fd591cf4858309b1b0840df2b88d8b3c10dd22d0fb704e",
+    "briefImplementationSha256": "8d422ccac1294563d28af0cb9f3acd8b9d242ef4e4c31f4e54284e7ee87115cd",
+    "sourceBundleCanonicalSha256": "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f",
+    "networkCalls": 0,
+    "externalProviderCalls": 0,
+    "caseCount": 5,
+    "projectedCardInstances": 13,
+    "changedSelectedSourceRejections": 10,
+    "cases": [
+      {
+        "id": "contact-only",
+        "selectedCards": [
+          "I1"
+        ],
+        "referenceIds": [
+          "C1",
+          "I1"
+        ],
+        "cardInstances": 1,
+        "briefCanonicalSha256": "e005d6ba2fadeecb51da550c538c51e1673fff9a0095058ba4fe6bbd7f56b3ec",
+        "checks": {
+          "exactSelectedDraftFields": true,
+          "exactMeaningAndConditionControls": true,
+          "fullParentReferences": true,
+          "noSourceProofOrReviewMetadata": true,
+          "noFallbackParagraphHeadlineOrReflection": true,
+          "standardGeometryExactWithoutOptionalMeasurements": true,
+          "technicalGeometryExact": true,
+          "literalChronologyOnceWherePresent": true,
+          "inputUnchanged": true
+        }
+      },
+      {
+        "id": "natal-only",
+        "selectedCards": [
+          "I1",
+          "N1"
+        ],
+        "referenceIds": [
+          "C1",
+          "I1",
+          "N1"
+        ],
+        "cardInstances": 2,
+        "briefCanonicalSha256": "0e8ca1a3aa8bb1bfc09bed19ac00bf0b7237d73044651c5ab0cfd1f6fbf457fa",
+        "checks": {
+          "exactSelectedDraftFields": true,
+          "exactMeaningAndConditionControls": true,
+          "fullParentReferences": true,
+          "noSourceProofOrReviewMetadata": true,
+          "noFallbackParagraphHeadlineOrReflection": true,
+          "standardGeometryExactWithoutOptionalMeasurements": true,
+          "technicalGeometryExact": true,
+          "literalChronologyOnceWherePresent": true,
+          "inputUnchanged": true
+        }
+      },
+      {
+        "id": "transit-only",
+        "selectedCards": [
+          "I1",
+          "P2"
+        ],
+        "referenceIds": [
+          "C1",
+          "I1",
+          "A1",
+          "P2"
+        ],
+        "cardInstances": 2,
+        "briefCanonicalSha256": "f43d6a1f4fb3964cf1fb2df51e91f6902cc5b95d9f699a20a4b8459f9e072ba1",
+        "checks": {
+          "exactSelectedDraftFields": true,
+          "exactMeaningAndConditionControls": true,
+          "fullParentReferences": true,
+          "noSourceProofOrReviewMetadata": true,
+          "noFallbackParagraphHeadlineOrReflection": true,
+          "standardGeometryExactWithoutOptionalMeasurements": true,
+          "technicalGeometryExact": true,
+          "literalChronologyOnceWherePresent": true,
+          "inputUnchanged": true
+        }
+      },
+      {
+        "id": "natal-and-transit",
+        "selectedCards": [
+          "I1",
+          "N1",
+          "P2"
+        ],
+        "referenceIds": [
+          "C1",
+          "I1",
+          "N1",
+          "A1",
+          "P2"
+        ],
+        "cardInstances": 3,
+        "briefCanonicalSha256": "10f9b5d4bd6e7fcb7cbe43a5b2fb9872d957640807a12f95a26cc76cb04e4917",
+        "checks": {
+          "exactSelectedDraftFields": true,
+          "exactMeaningAndConditionControls": true,
+          "fullParentReferences": true,
+          "noSourceProofOrReviewMetadata": true,
+          "noFallbackParagraphHeadlineOrReflection": true,
+          "standardGeometryExactWithoutOptionalMeasurements": true,
+          "technicalGeometryExact": true,
+          "literalChronologyOnceWherePresent": true,
+          "inputUnchanged": true
+        }
+      },
+      {
+        "id": "synthesis-natal-and-transit",
+        "selectedCards": [
+          "I1",
+          "I2",
+          "S1",
+          "N1",
+          "P2"
+        ],
+        "referenceIds": [
+          "C1",
+          "I1",
+          "C2",
+          "I2",
+          "S1",
+          "N1",
+          "A1",
+          "P2"
+        ],
+        "cardInstances": 5,
+        "briefCanonicalSha256": "d92f5f295e6bff7a8faf8d8eb0e4a890ff030bfebdc7ab7586163cfdf7c9d35d",
+        "checks": {
+          "exactSelectedDraftFields": true,
+          "exactMeaningAndConditionControls": true,
+          "fullParentReferences": true,
+          "noSourceProofOrReviewMetadata": true,
+          "noFallbackParagraphHeadlineOrReflection": true,
+          "standardGeometryExactWithoutOptionalMeasurements": true,
+          "technicalGeometryExact": true,
+          "literalChronologyOnceWherePresent": true,
+          "inputUnchanged": true
+        }
+      }
+    ]
+  },
+  "findings": [],
+  "provenanceBookkeeping": {
+    "status": "pass",
+    "assessment": "Prior index-based support is explicitly labeled historical material-3 evidence. Current revisionSupport names current existing fields; it does not claim those old indices independently qualify revised material."
+  },
+  "limitations": [
+    "No generated revision-4 pilot result existed or was read. Generated source fidelity, reader quality and cross-reading repetition require their own independent review after the authorized pilot.",
+    "This review makes no activation, deployment, hosted authenticated reading, physical-device or astronomical-accuracy claim.",
+    "No provider or remote call, source-code edit, commit or state activation occurred. Only the requested review artifacts and private verification evidence were written.",
+    "The pass is bound to the exact material and brief hashes recorded here; later drafting or prompt changes require review of the changed bytes."
+  ]
+}

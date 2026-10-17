@@ -20,7 +20,7 @@ test("the candidate supplies scene details and useful distinctions without compe
   const { input } = await contextWritingFixture(h, benchmark);
   const original = structuredClone(input.facts);
   const projected = brief.toDailyContextBrief(input.facts, "warm", "standard");
-  assert.equal(projected.materialVersion, "daily-context-material-3");
+  assert.equal(projected.materialVersion, "daily-context-material-4");
   for (const material of projected.material) {
     const source = input.facts.find((f) => f.id === material.factId);
     assert.ok(material.sceneDetails.length > 0, material.factId);

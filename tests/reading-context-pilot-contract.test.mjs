@@ -41,3 +41,16 @@ test("partial context pilot scope never describes authored fields or fallback as
   assert.match(scope, /headline.*reflection.*authored/i);
   assert.match(scope, /fallback/i);
 });
+
+// A fresh production-path campaign must keep the authored runtime fallback distinct
+// from the original benchmark even when only a partial capture is available.
+test("fourth context campaign reports independent runtime fallbacks for partial captures", () => {
+  const scope = shared.readingEvaluationReportScope({
+    status: "halted",
+    total: 5,
+    completed: 2,
+    contextPilot: { version: "daily-context-pilot-4", benchmarkHash: "b".repeat(64) },
+  });
+  assert.match(scope, /runtime fallback bodies.*original review benchmarks.*separately/i);
+  assert.match(scope, /partial captures cannot qualify/i);
+});

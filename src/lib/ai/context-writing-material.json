@@ -1,5 +1,5 @@
 {
-  "version": "daily-context-material-3",
+  "version": "daily-context-material-4",
   "cards": [
     {
       "factId": "I1",
@@ -9,15 +9,15 @@
       "dependsOn": [
         "C1"
       ],
-      "meaning": "An established responsibility can ask for more deliberate effort. Where its expectations exceed the capacity available, its boundary may need to become clearer.",
+      "meaning": "A familiar responsibility can need more effort than usual. If it asks for more than the available hours can hold, what belongs in the task may need a clearer limit.",
       "sceneDetails": [
-        "An extra check or another version added beside the original task.",
-        "One afternoon set aside for a familiar responsibility.",
-        "The same task moved into a later calendar opening without changing what it includes."
+        "An extra check can look small beside a familiar task.",
+        "An afternoon set aside for that familiar task.",
+        "A task moved to a later calendar opening, with the extra check still included."
       ],
-      "practicalDistinction": "Moving the task to a later opening may leave the extra check attached.",
+      "practicalDistinction": "If the original task already fills the afternoon, an extra check still needs some of the same hours.",
       "optionalDirections": [
-        "If the original work already fills the afternoon, the extra check could be left out."
+        "If the original work already fills the afternoon, the extra check could stay outside the task."
       ],
       "requiredConditions": [
         "The responsibility asking more effort is an interpretive possibility, not an established condition of the reader today.",
@@ -41,80 +41,98 @@
         "sourceKey": "square:saturn:sun",
         "releaseVersion": "0.9.0"
       },
-      "reviewSupport": [
-        {
-          "field": "meaning",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "contact-only",
-          "paragraph": 1,
-          "paragraphIndex": 0,
-          "sourceFactIds": [
-            "C1",
-            "I1"
-          ],
-          "basis": "exact source meaning with benchmark application"
-        },
-        {
-          "field": "sceneDetails[1]",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "contact-only",
-          "paragraph": 1,
-          "paragraphIndex": 0,
-          "sourceFactIds": [
-            "C1",
-            "I1"
-          ],
-          "basis": "reviewed benchmark illustration"
-        },
-        {
-          "field": "sceneDetails[0]",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "contact-only",
-          "paragraph": 3,
-          "paragraphIndex": 2,
-          "sourceFactIds": [
-            "C1",
-            "I1"
-          ],
-          "basis": "reviewed benchmark illustration"
-        },
-        {
-          "field": "sceneDetails[2]",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "contact-only",
-          "paragraph": 1,
-          "paragraphIndex": 0,
-          "sourceFactIds": [
-            "C1",
-            "I1"
-          ],
-          "basis": "reviewed benchmark illustration"
-        },
-        {
-          "field": "practicalDistinction",
-          "paragraph": 2,
-          "paragraphIndex": 1,
-          "sourceFactIds": [
-            "C1",
-            "I1"
-          ],
-          "basis": "source-reviewed authored revision; condition retained in standalone material",
-          "revisionPath": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/revised-readings.json",
-          "revisionCase": "contact-only"
-        },
-        {
-          "field": "optionalDirections[0]",
-          "paragraph": 2,
-          "paragraphIndex": 1,
-          "sourceFactIds": [
-            "C1",
-            "I1"
-          ],
-          "basis": "source-reviewed authored revision; condition retained in standalone material",
-          "revisionPath": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/revised-readings.json",
-          "revisionCase": "contact-only"
-        }
-      ]
+      "revisionSupport": {
+        "revisionPath": "docs/reviews/daily-reading-context-production/2026-10-17/revision-4/voice-revision.md",
+        "basis": "Authored plain-language equivalent and conditional illustration; independent source review required before paid pilot.",
+        "sourceFactIds": [
+          "I1",
+          "C1"
+        ],
+        "fields": [
+          "meaning",
+          "sceneDetails",
+          "practicalDistinction",
+          "optionalDirections"
+        ]
+      },
+      "historicalReviewSupport": {
+        "materialVersion": "daily-context-material-3",
+        "fieldPathsApplyTo": "daily-context-material-3 only; not current material-4 indices or wording",
+        "entries": [
+          {
+            "field": "meaning",
+            "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+            "benchmarkCase": "contact-only",
+            "paragraph": 1,
+            "paragraphIndex": 0,
+            "sourceFactIds": [
+              "C1",
+              "I1"
+            ],
+            "basis": "exact source meaning with benchmark application"
+          },
+          {
+            "field": "sceneDetails[1]",
+            "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+            "benchmarkCase": "contact-only",
+            "paragraph": 1,
+            "paragraphIndex": 0,
+            "sourceFactIds": [
+              "C1",
+              "I1"
+            ],
+            "basis": "reviewed benchmark illustration"
+          },
+          {
+            "field": "sceneDetails[0]",
+            "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+            "benchmarkCase": "contact-only",
+            "paragraph": 3,
+            "paragraphIndex": 2,
+            "sourceFactIds": [
+              "C1",
+              "I1"
+            ],
+            "basis": "reviewed benchmark illustration"
+          },
+          {
+            "field": "sceneDetails[2]",
+            "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+            "benchmarkCase": "contact-only",
+            "paragraph": 1,
+            "paragraphIndex": 0,
+            "sourceFactIds": [
+              "C1",
+              "I1"
+            ],
+            "basis": "reviewed benchmark illustration"
+          },
+          {
+            "field": "practicalDistinction",
+            "paragraph": 2,
+            "paragraphIndex": 1,
+            "sourceFactIds": [
+              "C1",
+              "I1"
+            ],
+            "basis": "source-reviewed authored revision; condition retained in standalone material",
+            "revisionPath": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/revised-readings.json",
+            "revisionCase": "contact-only"
+          },
+          {
+            "field": "optionalDirections[0]",
+            "paragraph": 2,
+            "paragraphIndex": 1,
+            "sourceFactIds": [
+              "C1",
+              "I1"
+            ],
+            "basis": "source-reviewed authored revision; condition retained in standalone material",
+            "revisionPath": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/revised-readings.json",
+            "revisionCase": "contact-only"
+          }
+        ]
+      }
     },
     {
       "factId": "N1",
@@ -125,12 +143,12 @@
         "C1",
         "I1"
       ],
-      "meaning": "Several lines of curiosity may help a direction emerge. Exploring possible projects and choosing one to pursue can be separate stages.",
+      "meaning": "Following a few lines of curiosity may help one direction take shape. If several projects compete for the same afternoon, exploring a few and choosing one may be different stages.",
       "sceneDetails": [
-        "A page of notes for one idea beside a tab open for another.",
-        "One possible project kept as a note beside the project selected for the afternoon."
+        "If several projects compete for the afternoon, a page of notes for one idea can sit beside a tab open for another.",
+        "If several projects compete for that afternoon, one could stay as a note while you choose another to pursue."
       ],
-      "practicalDistinction": "Sampling a few projects and choosing one may be different stages.",
+      "practicalDistinction": "If several projects compete for the same afternoon, exploring a few and choosing one may be separate stages.",
       "optionalDirections": [
         "If several projects compete for that afternoon, a note can hold the second idea without promising it those hours."
       ],
@@ -158,72 +176,90 @@
         "releaseVersion": "0.9.0",
         "natalEvidenceId": "NL1"
       },
-      "reviewSupport": [
-        {
-          "field": "meaning",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "natal-only",
-          "paragraph": 2,
-          "paragraphIndex": 1,
-          "sourceFactIds": [
-            "C1",
-            "I1",
-            "N1"
-          ],
-          "basis": "exact source meaning with benchmark application"
-        },
-        {
-          "field": "sceneDetails[0]",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "natal-only",
-          "paragraph": 1,
-          "paragraphIndex": 0,
-          "sourceFactIds": [
-            "C1",
-            "I1"
-          ],
-          "basis": "reviewed benchmark illustration"
-        },
-        {
-          "field": "sceneDetails[1]",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "natal-only",
-          "paragraph": 3,
-          "paragraphIndex": 2,
-          "sourceFactIds": [
-            "C1",
-            "I1",
-            "N1"
-          ],
-          "basis": "reviewed benchmark illustration"
-        },
-        {
-          "field": "practicalDistinction",
-          "paragraph": 2,
-          "paragraphIndex": 1,
-          "sourceFactIds": [
-            "C1",
-            "I1",
-            "N1"
-          ],
-          "basis": "source-reviewed authored revision; condition retained in standalone material",
-          "revisionPath": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/revised-readings.json",
-          "revisionCase": "natal-only"
-        },
-        {
-          "field": "optionalDirections[0]",
-          "paragraph": 2,
-          "paragraphIndex": 1,
-          "sourceFactIds": [
-            "C1",
-            "I1",
-            "N1"
-          ],
-          "basis": "source-reviewed authored revision; condition retained in standalone material",
-          "revisionPath": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/revised-readings.json",
-          "revisionCase": "natal-only"
-        }
-      ]
+      "revisionSupport": {
+        "revisionPath": "docs/reviews/daily-reading-context-production/2026-10-17/revision-4/voice-revision.md",
+        "basis": "Authored plain-language equivalent and conditional illustration; independent source review required before paid pilot.",
+        "sourceFactIds": [
+          "N1",
+          "C1",
+          "I1"
+        ],
+        "fields": [
+          "meaning",
+          "sceneDetails",
+          "practicalDistinction"
+        ]
+      },
+      "historicalReviewSupport": {
+        "materialVersion": "daily-context-material-3",
+        "fieldPathsApplyTo": "daily-context-material-3 only; not current material-4 indices or wording",
+        "entries": [
+          {
+            "field": "meaning",
+            "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+            "benchmarkCase": "natal-only",
+            "paragraph": 2,
+            "paragraphIndex": 1,
+            "sourceFactIds": [
+              "C1",
+              "I1",
+              "N1"
+            ],
+            "basis": "exact source meaning with benchmark application"
+          },
+          {
+            "field": "sceneDetails[0]",
+            "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+            "benchmarkCase": "natal-only",
+            "paragraph": 1,
+            "paragraphIndex": 0,
+            "sourceFactIds": [
+              "C1",
+              "I1"
+            ],
+            "basis": "reviewed benchmark illustration"
+          },
+          {
+            "field": "sceneDetails[1]",
+            "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+            "benchmarkCase": "natal-only",
+            "paragraph": 3,
+            "paragraphIndex": 2,
+            "sourceFactIds": [
+              "C1",
+              "I1",
+              "N1"
+            ],
+            "basis": "reviewed benchmark illustration"
+          },
+          {
+            "field": "practicalDistinction",
+            "paragraph": 2,
+            "paragraphIndex": 1,
+            "sourceFactIds": [
+              "C1",
+              "I1",
+              "N1"
+            ],
+            "basis": "source-reviewed authored revision; condition retained in standalone material",
+            "revisionPath": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/revised-readings.json",
+            "revisionCase": "natal-only"
+          },
+          {
+            "field": "optionalDirections[0]",
+            "paragraph": 2,
+            "paragraphIndex": 1,
+            "sourceFactIds": [
+              "C1",
+              "I1",
+              "N1"
+            ],
+            "basis": "source-reviewed authored revision; condition retained in standalone material",
+            "revisionPath": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/revised-readings.json",
+            "revisionCase": "natal-only"
+          }
+        ]
+      }
     },
     {
       "factId": "P2",
@@ -235,15 +271,13 @@
         "I1",
         "A1"
       ],
-      "meaning": "If an earlier way of handling the responsibility no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.",
+      "meaning": "If an earlier way of handling the task no longer fits, this return offers a chance to try one smaller change to how you do it or where you stop.",
       "sceneDetails": [
-        "A task put into a different calendar opening while its contents stay the same.",
-        "A defined stopping point for what belongs inside this afternoon's commitment."
+        "If an earlier method no longer fits, a stopping point could come before the extra check or version."
       ],
-      "practicalDistinction": "Moving a task to a later slot does not change its size; adjusting what is included or where it stops can change the method or boundary.",
+      "practicalDistinction": "If an earlier way no longer fits, the smaller adjustment could be to where the original task stops.",
       "optionalDirections": [
-        "If the earlier method no longer fits, change one part of the task's method or boundary.",
-        "Make a stopping point visible before an extra check or version enters the agreement."
+        "If an earlier way of handling the task no longer fits, you could try one smaller change to the method or where you stop."
       ],
       "requiredConditions": [
         "Preserve the condition that an earlier way must no longer fit before offering an adjustment as a return-chapter application.",
@@ -270,86 +304,106 @@
         "statement": "Published transit chapter: If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.",
         "storyChapter": "return"
       },
-      "reviewSupport": [
-        {
-          "field": "meaning",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "transit-only",
-          "paragraph": 2,
-          "paragraphIndex": 1,
-          "sourceFactIds": [
-            "C1",
-            "I1",
-            "A1",
-            "P2"
-          ],
-          "basis": "exact source meaning with benchmark application"
-        },
-        {
-          "field": "sceneDetails[0]",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "transit-only",
-          "paragraph": 1,
-          "paragraphIndex": 0,
-          "sourceFactIds": [
-            "C1",
-            "I1"
-          ],
-          "basis": "reviewed benchmark illustration"
-        },
-        {
-          "field": "sceneDetails[1]",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "transit-only",
-          "paragraph": 3,
-          "paragraphIndex": 2,
-          "sourceFactIds": [
-            "C1",
-            "I1"
-          ],
-          "basis": "reviewed task-boundary illustration applied conditionally within the chapter"
-        },
-        {
-          "field": "practicalDistinction",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "transit-only",
-          "paragraph": 2,
-          "paragraphIndex": 1,
-          "sourceFactIds": [
-            "C1",
-            "I1",
-            "A1",
-            "P2"
-          ],
-          "basis": "reviewed benchmark illustration"
-        },
-        {
-          "field": "optionalDirections[0]",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "transit-only",
-          "paragraph": 2,
-          "paragraphIndex": 1,
-          "sourceFactIds": [
-            "C1",
-            "I1",
-            "A1",
-            "P2"
-          ],
-          "basis": "reviewed benchmark illustration"
-        },
-        {
-          "field": "optionalDirections[1]",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "transit-only",
-          "paragraph": 3,
-          "paragraphIndex": 2,
-          "sourceFactIds": [
-            "C1",
-            "I1"
-          ],
-          "basis": "reviewed benchmark illustration"
-        }
-      ]
+      "revisionSupport": {
+        "revisionPath": "docs/reviews/daily-reading-context-production/2026-10-17/revision-4/voice-revision.md",
+        "basis": "Authored plain-language equivalent and conditional illustration; independent source review required before paid pilot.",
+        "sourceFactIds": [
+          "P2",
+          "C1",
+          "I1",
+          "A1"
+        ],
+        "fields": [
+          "meaning",
+          "sceneDetails",
+          "practicalDistinction",
+          "optionalDirections"
+        ]
+      },
+      "historicalReviewSupport": {
+        "materialVersion": "daily-context-material-3",
+        "fieldPathsApplyTo": "daily-context-material-3 only; not current material-4 indices or wording",
+        "entries": [
+          {
+            "field": "meaning",
+            "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+            "benchmarkCase": "transit-only",
+            "paragraph": 2,
+            "paragraphIndex": 1,
+            "sourceFactIds": [
+              "C1",
+              "I1",
+              "A1",
+              "P2"
+            ],
+            "basis": "exact source meaning with benchmark application"
+          },
+          {
+            "field": "sceneDetails[0]",
+            "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+            "benchmarkCase": "transit-only",
+            "paragraph": 1,
+            "paragraphIndex": 0,
+            "sourceFactIds": [
+              "C1",
+              "I1"
+            ],
+            "basis": "reviewed benchmark illustration"
+          },
+          {
+            "field": "sceneDetails[1]",
+            "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+            "benchmarkCase": "transit-only",
+            "paragraph": 3,
+            "paragraphIndex": 2,
+            "sourceFactIds": [
+              "C1",
+              "I1"
+            ],
+            "basis": "reviewed task-boundary illustration applied conditionally within the chapter"
+          },
+          {
+            "field": "practicalDistinction",
+            "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+            "benchmarkCase": "transit-only",
+            "paragraph": 2,
+            "paragraphIndex": 1,
+            "sourceFactIds": [
+              "C1",
+              "I1",
+              "A1",
+              "P2"
+            ],
+            "basis": "reviewed benchmark illustration"
+          },
+          {
+            "field": "optionalDirections[0]",
+            "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+            "benchmarkCase": "transit-only",
+            "paragraph": 2,
+            "paragraphIndex": 1,
+            "sourceFactIds": [
+              "C1",
+              "I1",
+              "A1",
+              "P2"
+            ],
+            "basis": "reviewed benchmark illustration"
+          },
+          {
+            "field": "optionalDirections[1]",
+            "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+            "benchmarkCase": "transit-only",
+            "paragraph": 3,
+            "paragraphIndex": 2,
+            "sourceFactIds": [
+              "C1",
+              "I1"
+            ],
+            "basis": "reviewed benchmark illustration"
+          }
+        ]
+      }
     },
     {
       "factId": "I2",
@@ -359,18 +413,19 @@
       "dependsOn": [
         "C2"
       ],
-      "meaning": "When an aim is well chosen, enthusiasm and practical initiative can reinforce each other, making a larger piece of work or an emerging opening easier to take up.",
+      "meaning": "When an aim is well chosen, enthusiasm and a practical start can support each other, and taking up more of the work can feel easier.",
       "sceneDetails": [
         "A page of notes beginning to become an outline.",
         "Another piece of the same project starting to look appealing."
       ],
-      "practicalDistinction": "A well-chosen aim can bring enthusiasm and a practical start together; ease in taking up a piece is not a guarantee about its result.",
+      "practicalDistinction": "When an aim is well chosen, wanting to begin and making a practical start can come together; that ease is not a promise about the result.",
       "optionalDirections": [
-        "Notice the moment an appealing next piece begins to look like something to take on."
+        "With a well-chosen aim, you might notice an appealing next piece before agreeing to take it on."
       ],
       "requiredConditions": [
         "Preserve the well-chosen-aim condition; do not assert that the reader's current aim is well chosen.",
-        "Ease is an interpretive possibility, not a promise of success or an actual opportunity arriving."
+        "Ease is an interpretive possibility, not a promise of success or an actual opportunity arriving.",
+        "Keep enthusiasm and practical initiative as mutually supporting possibilities under the well-chosen-aim condition; initiative does not cause the next piece to look appealing."
       ],
       "limitations": [
         "Do not guarantee motivation, success, luck, a reward or an opportunity.",
@@ -389,89 +444,107 @@
         "sourceKey": "trine:jupiter:mars",
         "releaseVersion": "0.9.0"
       },
-      "reviewSupport": [
-        {
-          "field": "meaning",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "synthesis-natal-and-transit",
-          "paragraph": 1,
-          "paragraphIndex": 0,
-          "sourceFactIds": [
-            "C1",
-            "I1",
-            "C2",
-            "I2",
-            "S1",
-            "N1"
-          ],
-          "basis": "exact source meaning with benchmark application"
-        },
-        {
-          "field": "sceneDetails[0]",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "synthesis-natal-and-transit",
-          "paragraph": 1,
-          "paragraphIndex": 0,
-          "sourceFactIds": [
-            "C1",
-            "I1",
-            "C2",
-            "I2",
-            "S1",
-            "N1"
-          ],
-          "basis": "reviewed benchmark illustration"
-        },
-        {
-          "field": "sceneDetails[1]",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "synthesis-natal-and-transit",
-          "paragraph": 1,
-          "paragraphIndex": 0,
-          "sourceFactIds": [
-            "C1",
-            "I1",
-            "C2",
-            "I2",
-            "S1",
-            "N1"
-          ],
-          "basis": "reviewed benchmark illustration"
-        },
-        {
-          "field": "practicalDistinction",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "synthesis-natal-and-transit",
-          "paragraph": 2,
-          "paragraphIndex": 1,
-          "sourceFactIds": [
-            "C1",
-            "I1",
-            "C2",
-            "I2",
-            "S1",
-            "A1",
-            "P2"
-          ],
-          "basis": "reviewed benchmark application; card retains only its own source distinction"
-        },
-        {
-          "field": "optionalDirections[0]",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "synthesis-natal-and-transit",
-          "paragraph": 1,
-          "paragraphIndex": 0,
-          "sourceFactIds": [
-            "C1",
-            "I1",
-            "C2",
-            "I2",
-            "S1",
-            "N1"
-          ],
-          "basis": "reviewed benchmark illustration"
-        }
-      ]
+      "revisionSupport": {
+        "revisionPath": "docs/reviews/daily-reading-context-production/2026-10-17/revision-4/voice-revision.md",
+        "basis": "Authored plain-language equivalent and conditional illustration; independent source review required before paid pilot.",
+        "sourceFactIds": [
+          "I2",
+          "C2"
+        ],
+        "fields": [
+          "meaning",
+          "practicalDistinction",
+          "optionalDirections",
+          "requiredConditions"
+        ]
+      },
+      "historicalReviewSupport": {
+        "materialVersion": "daily-context-material-3",
+        "fieldPathsApplyTo": "daily-context-material-3 only; not current material-4 indices or wording",
+        "entries": [
+          {
+            "field": "meaning",
+            "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+            "benchmarkCase": "synthesis-natal-and-transit",
+            "paragraph": 1,
+            "paragraphIndex": 0,
+            "sourceFactIds": [
+              "C1",
+              "I1",
+              "C2",
+              "I2",
+              "S1",
+              "N1"
+            ],
+            "basis": "exact source meaning with benchmark application"
+          },
+          {
+            "field": "sceneDetails[0]",
+            "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+            "benchmarkCase": "synthesis-natal-and-transit",
+            "paragraph": 1,
+            "paragraphIndex": 0,
+            "sourceFactIds": [
+              "C1",
+              "I1",
+              "C2",
+              "I2",
+              "S1",
+              "N1"
+            ],
+            "basis": "reviewed benchmark illustration"
+          },
+          {
+            "field": "sceneDetails[1]",
+            "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+            "benchmarkCase": "synthesis-natal-and-transit",
+            "paragraph": 1,
+            "paragraphIndex": 0,
+            "sourceFactIds": [
+              "C1",
+              "I1",
+              "C2",
+              "I2",
+              "S1",
+              "N1"
+            ],
+            "basis": "reviewed benchmark illustration"
+          },
+          {
+            "field": "practicalDistinction",
+            "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+            "benchmarkCase": "synthesis-natal-and-transit",
+            "paragraph": 2,
+            "paragraphIndex": 1,
+            "sourceFactIds": [
+              "C1",
+              "I1",
+              "C2",
+              "I2",
+              "S1",
+              "A1",
+              "P2"
+            ],
+            "basis": "reviewed benchmark application; card retains only its own source distinction"
+          },
+          {
+            "field": "optionalDirections[0]",
+            "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+            "benchmarkCase": "synthesis-natal-and-transit",
+            "paragraph": 1,
+            "paragraphIndex": 0,
+            "sourceFactIds": [
+              "C1",
+              "I1",
+              "C2",
+              "I2",
+              "S1",
+              "N1"
+            ],
+            "basis": "reviewed benchmark illustration"
+          }
+        ]
+      }
     },
     {
       "factId": "S1",
@@ -484,15 +557,15 @@
         "C2",
         "I2"
       ],
-      "meaning": "Giving a plan more scope can increase the structure needed to carry it. A possible task growing beyond its agreed limits makes that tension visible.",
+      "meaning": "Adding more to a plan can mean needing more structure to carry it. A possible task growing past its agreed limits is one place to notice that tension.",
       "sceneDetails": [
         "An appealing extra piece added to the same project.",
         "One more check or another version enlarging the same proposed task."
       ],
-      "practicalDistinction": "Ease in beginning more work is different from having enough structure to carry the expanded commitment.",
+      "practicalDistinction": "A larger task can need more structure, even when starting feels easy.",
       "optionalDirections": [
-        "Notice whether an appealing addition changes the amount the original agreement includes.",
-        "Consider the structure a larger piece would need before adding it to the same agreement."
+        "Notice whether an appealing addition changes how much the original task includes.",
+        "Before adding another piece, you could consider what it would take to carry the larger task."
       ],
       "requiredConditions": [
         "Use only with C1, I1, C2 and I2; preserve both contact interpretations and the combined tension.",
@@ -518,106 +591,125 @@
         "sourceKey": "square:saturn:sun_tension_trine:jupiter:mars",
         "releaseVersion": "0.9.0"
       },
-      "reviewSupport": [
-        {
-          "field": "meaning",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "synthesis-natal-and-transit",
-          "paragraph": 1,
-          "paragraphIndex": 0,
-          "sourceFactIds": [
-            "C1",
-            "I1",
-            "C2",
-            "I2",
-            "S1",
-            "N1"
-          ],
-          "basis": "exact source meaning with benchmark application"
-        },
-        {
-          "field": "sceneDetails[0]",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "synthesis-natal-and-transit",
-          "paragraph": 1,
-          "paragraphIndex": 0,
-          "sourceFactIds": [
-            "C1",
-            "I1",
-            "C2",
-            "I2",
-            "S1",
-            "N1"
-          ],
-          "basis": "reviewed benchmark illustration"
-        },
-        {
-          "field": "sceneDetails[1]",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "contact-only",
-          "paragraph": 3,
-          "paragraphIndex": 2,
-          "sourceFactIds": [
-            "C1",
-            "I1"
-          ],
-          "basis": "reviewed primary-task illustration applied within the synthesis scene"
-        },
-        {
-          "field": "practicalDistinction",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "synthesis-natal-and-transit",
-          "paragraph": 2,
-          "paragraphIndex": 1,
-          "sourceFactIds": [
-            "C1",
-            "I1",
-            "C2",
-            "I2",
-            "S1",
-            "A1",
-            "P2"
-          ],
-          "basis": "reviewed benchmark illustration"
-        },
-        {
-          "field": "optionalDirections[0]",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "synthesis-natal-and-transit",
-          "paragraph": 3,
-          "paragraphIndex": 2,
-          "sourceFactIds": [
-            "C1",
-            "I1",
-            "C2",
-            "I2",
-            "S1",
-            "N1"
-          ],
-          "basis": "reviewed benchmark application; card retains only its own source distinction"
-        },
-        {
-          "field": "optionalDirections[1]",
-          "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
-          "benchmarkCase": "synthesis-natal-and-transit",
-          "paragraph": 3,
-          "paragraphIndex": 2,
-          "sourceFactIds": [
-            "C1",
-            "I1",
-            "C2",
-            "I2",
-            "S1",
-            "N1"
-          ],
-          "basis": "reviewed benchmark application; card retains only its own source distinction"
-        }
-      ]
+      "revisionSupport": {
+        "revisionPath": "docs/reviews/daily-reading-context-production/2026-10-17/revision-4/voice-revision.md",
+        "basis": "Authored plain-language equivalent and conditional illustration; independent source review required before paid pilot.",
+        "sourceFactIds": [
+          "S1",
+          "C1",
+          "I1",
+          "C2",
+          "I2"
+        ],
+        "fields": [
+          "meaning",
+          "practicalDistinction",
+          "optionalDirections"
+        ]
+      },
+      "historicalReviewSupport": {
+        "materialVersion": "daily-context-material-3",
+        "fieldPathsApplyTo": "daily-context-material-3 only; not current material-4 indices or wording",
+        "entries": [
+          {
+            "field": "meaning",
+            "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+            "benchmarkCase": "synthesis-natal-and-transit",
+            "paragraph": 1,
+            "paragraphIndex": 0,
+            "sourceFactIds": [
+              "C1",
+              "I1",
+              "C2",
+              "I2",
+              "S1",
+              "N1"
+            ],
+            "basis": "exact source meaning with benchmark application"
+          },
+          {
+            "field": "sceneDetails[0]",
+            "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+            "benchmarkCase": "synthesis-natal-and-transit",
+            "paragraph": 1,
+            "paragraphIndex": 0,
+            "sourceFactIds": [
+              "C1",
+              "I1",
+              "C2",
+              "I2",
+              "S1",
+              "N1"
+            ],
+            "basis": "reviewed benchmark illustration"
+          },
+          {
+            "field": "sceneDetails[1]",
+            "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+            "benchmarkCase": "contact-only",
+            "paragraph": 3,
+            "paragraphIndex": 2,
+            "sourceFactIds": [
+              "C1",
+              "I1"
+            ],
+            "basis": "reviewed primary-task illustration applied within the synthesis scene"
+          },
+          {
+            "field": "practicalDistinction",
+            "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+            "benchmarkCase": "synthesis-natal-and-transit",
+            "paragraph": 2,
+            "paragraphIndex": 1,
+            "sourceFactIds": [
+              "C1",
+              "I1",
+              "C2",
+              "I2",
+              "S1",
+              "A1",
+              "P2"
+            ],
+            "basis": "reviewed benchmark illustration"
+          },
+          {
+            "field": "optionalDirections[0]",
+            "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+            "benchmarkCase": "synthesis-natal-and-transit",
+            "paragraph": 3,
+            "paragraphIndex": 2,
+            "sourceFactIds": [
+              "C1",
+              "I1",
+              "C2",
+              "I2",
+              "S1",
+              "N1"
+            ],
+            "basis": "reviewed benchmark application; card retains only its own source distinction"
+          },
+          {
+            "field": "optionalDirections[1]",
+            "benchmarkPath": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+            "benchmarkCase": "synthesis-natal-and-transit",
+            "paragraph": 3,
+            "paragraphIndex": 2,
+            "sourceFactIds": [
+              "C1",
+              "I1",
+              "C2",
+              "I2",
+              "S1",
+              "N1"
+            ],
+            "basis": "reviewed benchmark application; card retains only its own source distinction"
+          }
+        ]
+      }
     }
   ],
   "voiceEdits": {
-    "derivedFrom": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/revised-readings.json",
-    "revisionSha256": "72289e2cc084541268ce6ad1893228d3586f0654084cd14ece7ae3f9bebc34b8",
+    "derivedFrom": "docs/reviews/daily-reading-context-production/2026-10-17/revision-4/voice-revision.md",
     "principles": [
       {
         "id": "visible-first",
@@ -638,6 +730,18 @@
       {
         "id": "no-strengthening",
         "instruction": "Shortening must preserve possibility and scope. Do not add speed, ease, frequency or necessity while making the prose more direct."
+      },
+      {
+        "id": "one-job-per-source",
+        "instruction": "Use the source-role map as a coverage check, not a sequence: each selected meaning must develop the same situation in a different way. A return chapter adds a smaller adjustment instead of repeating a scheduling point."
+      },
+      {
+        "id": "no-new-effects",
+        "instruction": "Preserve the relationships the selected source supplies. A scene image authorizes no new effect on attention, feelings or behavior. Neither if nor can grounds an added causal claim."
+      },
+      {
+        "id": "ordinary-words-complete-meaning",
+        "instruction": "Let objects and their concrete cost carry the meaning. Keep both the possible extra effort and conditional limit; do not omit one or restate the concrete point as a formal summary."
       }
     ]
   }

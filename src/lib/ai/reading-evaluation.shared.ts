@@ -154,7 +154,11 @@ export interface ReadingEvaluationRun {
   attemptLimit?: number;
   editorialPilot?: { version: "daily-editorial-pilot-1"; quietDates: string[] };
   contextPilot?: {
-    version: "daily-context-pilot-1" | "daily-context-pilot-2" | "daily-context-pilot-3";
+    version:
+      | "daily-context-pilot-1"
+      | "daily-context-pilot-2"
+      | "daily-context-pilot-3"
+      | "daily-context-pilot-4";
     benchmarkHash: string;
   };
   enterpriseThinking?: "LOW" | "MEDIUM";
@@ -178,7 +182,10 @@ export function readingEvaluationCurrentCaseLabel(run: ReadingEvaluationRun | nu
 }
 
 export function readingEvaluationReportScope(run: ReadingEvaluationRun | null): string {
-  if (run?.contextPilot?.version === "daily-context-pilot-3")
+  if (
+    run?.contextPilot?.version === "daily-context-pilot-3" ||
+    run?.contextPilot?.version === "daily-context-pilot-4"
+  )
     return "Context-aware writer pilot: at most five generated bodies against the frozen benchmarks. Headline and reflection remain authored. Runtime fallback bodies and original review benchmarks are recorded separately. A rejected body and its fallback are separate outcomes; partial captures cannot qualify the complete set.";
   if (run?.contextPilot)
     return "Context-aware writer pilot: at most five generated bodies against the frozen benchmarks. Headline and reflection remain authored. A rejected body and its fallback are separate outcomes; partial captures cannot qualify the complete set.";
@@ -240,7 +247,8 @@ export interface ReadingEvaluationMetadata {
     | "daily-editorial-pilot-1"
     | "daily-context-pilot-1"
     | "daily-context-pilot-2"
-    | "daily-context-pilot-3";
+    | "daily-context-pilot-3"
+    | "daily-context-pilot-4";
   fixtureVersion: string;
   caseSetHash: string;
   caseSetId?: import("./evaluation-case-sets").EvaluationCaseSetId;

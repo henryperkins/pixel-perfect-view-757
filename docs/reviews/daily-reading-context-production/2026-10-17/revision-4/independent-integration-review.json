@@ -1,0 +1,281 @@
+{
+  "version": "member-context-independent-integration-review-4",
+  "reviewedAt": "2026-10-17T10:01:34.494769+00:00",
+  "status": "pass",
+  "blockingFindings": [],
+  "reviewType": "independent AI code, controls and offline integration review",
+  "humanReviewCompleted": false,
+  "baseSha": "02e32f57950b31a4d1b77e2ddb552654a86a75c0",
+  "headShaAtReview": "02e32f57950b31a4d1b77e2ddb552654a86a75c0",
+  "branchAtReview": "codex/context-production-revision-4-20261017",
+  "reviewedState": "Uncommitted revision 4 source integration; only exact input file hashes listed here are covered. This is not a built or deployed source SHA.",
+  "inputs": [
+    {
+      "path": "edge/pattern-workflows/worker.mjs",
+      "sha256": "5389b7dcf39b6f1b8a62c4f32d3a62758e24e0591f23020ac90781122dca9449",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/context-pilot-plan.server.ts",
+      "sha256": "313e9bcd491b8f59a4c996aba14d7f423cd7eb56c1667a1af32e3439a340902d",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/context-pilot.ts",
+      "sha256": "cb8f120d38f7004f85dce7bdd43f6a80dcd9d2a299407feeb791e8da6a97ecd8",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/context-writing-benchmarks.json",
+      "sha256": "825c877dbb88d5d20d39a12abfd67cea01781506250db93d44ae7c9885b35024",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/context-writing-material.json",
+      "sha256": "e1f0621413c14cbbe4fd591cf4858309b1b0840df2b88d8b3c10dd22d0fb704e",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/daily-context-claims.ts",
+      "sha256": "1362b888ffffd630018514b7052a9ad8de44f9cdcbac1f915473a85aef9058fd",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/daily-context-writing.ts",
+      "sha256": "8d422ccac1294563d28af0cb9f3acd8b9d242ef4e4c31f4e54284e7ee87115cd",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/diagnostics.ts",
+      "sha256": "a6861279e16ec694c08f35b7557c254380255ffd66028e8112446dde66cd2804",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/language.server.ts",
+      "sha256": "b8f2e6763feae0f1cb4dff6235a998683176fae6cfad9c636150dccad8c42007",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/member-context-reading.ts",
+      "sha256": "d728de67a0547ac9d611c365dd68cb8440cf8aad038d34f143bd66731b21685a",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/member-context-readings.json",
+      "sha256": "af143337793ad4136a16fd4144adec0be365d15fa0b1e83d326763bcae85a0eb",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/member-context-rollout.server.ts",
+      "sha256": "ca684574ba92e6883e200d4b5416351ec65b57be3001a065da1278cf488698d3",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/qualification-plan.server.ts",
+      "sha256": "634d9b79aa978d0abe0b863f34b9405c6f5e5cd0fc5577da10af5ff79907ca27",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/reading-evaluation.server.ts",
+      "sha256": "82328ac0a145f29b70fd4ed0c3cac725c4bb869679239e99c295afb5f96d2339",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/ai/reading-evaluation.shared.ts",
+      "sha256": "991d30bdc1f9524f66f11cee71bf2455535da07684d2caa26d84a4edd81084db",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/content/context-pilot-bundle.json",
+      "sha256": "a77eb43eba5aa9c140b514ef56c987167bea1eb905abfa68dcceabe2da35c6f3",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/evaluation-runs.server.ts",
+      "sha256": "aa7e2b3265bdbc6e5f5051cd87aa2a3b4e3b9525178ff7427ddcebb6e6ab04de",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "src/lib/pattern.server.ts",
+      "sha256": "bb242359d5712322a1811c718c4e844616cd448d002125d3d7dcb3f36f5c4c54",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "tests/reading-context-claim-scope.test.mjs",
+      "sha256": "7a34b91f67cb2308e5aa235f8f55772d4102a9e76d0e1668e969a68e044a7a79",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "tests/reading-context-material.test.mjs",
+      "sha256": "991959dda2310fc6c289132e8eab0bf392c0bc515c1cfec62a20a63ec70cddbd",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "tests/reading-context-observed-claims.test.mjs",
+      "sha256": "636dbbdb7b3f40f1dad80f6b13f94699f6ff36208784b4d94813585523e0f8f9",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "tests/reading-context-pilot-contract.test.mjs",
+      "sha256": "b9c5c7bba26d985bbe1e27cfd4f5a7abb6dfce7030d771c58d73f98578b93712",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "tests/reading-context-pilot-plan.test.mjs",
+      "sha256": "456a7c4417dfbe634c6d89e6e017fb02a0bf31b6571fa17f728caddb2c243201",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "tests/reading-context-pilot.test.mjs",
+      "sha256": "0b783fa71cd69c5a44fad9e5437d49692ff36c8597d6303ee40f9e8466c931f4",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "tests/reading-context-production-path.test.mjs",
+      "sha256": "e8abf21ea67a56b506dc4014a7f78039bb5a0b474072deb76c881f9d11016108",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "tests/reading-context-voice.test.mjs",
+      "sha256": "d96f281419b40e52439b6284e58662860ac01fad54b4fd4c07054471fc00b32c",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "tests/reading-context-writer.test.mjs",
+      "sha256": "8c315dc860b5925b9a09f112a4c9e35f3a525b4153ba163bdce61f9884539019",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "tests/reading-member-context-rollout.test.mjs",
+      "sha256": "e4ffaa3d0d74b1ccf248d62037a320e60f870b009aac9cc5373e079677d28fca",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "tests/reading-member-context-storage.test.mjs",
+      "sha256": "22ec82712118107c4e5f421392b485691b451ba7b68fca4373a3b263b2f5b579",
+      "hashMode": "exact-file-bytes"
+    },
+    {
+      "path": "tests/reading-member-context.test.mjs",
+      "sha256": "ddfcd34be17e152d1ef08f7bece28f8b226602f3f06a62bffb963a57882263bf",
+      "hashMode": "exact-file-bytes"
+    }
+  ],
+  "verifiedControls": [
+    "The v4 allowance uses daily-context-pilot-4 while v1/v2/v3 remain in readback and report types. Failed dispatch, failed persistence, uncertain transport, replay and prior campaign status do not reset the per-operator current-version allowance.",
+    "The same five case IDs and order, five model attempts, 5000000-micro conservative ceiling, 2800000-micro pre-transport reservation, 60000ms request deadline, model identity checks, Gemini Enterprise-only dispatch and Workflow zero-retry controls remain in effect.",
+    "New claim guards are candidate-only and bind I1/square:saturn:sun, N1/nl-sun-03 and I2/trine:jupiter:mars to release 0.9.0 plus bounded local observed predicates. Full reviewed fact equality is enforced upstream; source IDs alone are not semantic proof.",
+    "Actual member adapter and fallback bytes remain frozen separately from unchanged original benchmarks. The runtime fallback JSON differs from the prior commit only in materialVersion. Adapter/fallback versions remain 1, and hashes change when bytes change.",
+    "Serving policy binds six exact raw-file hashes plus all five writer/material version fields. Old, missing, extra and stale policies fail closed. Missing rollout remains off, and provider, release, modes, render and review identities remain required.",
+    "The full rollout configuration participates in the immutable Today cache identity. Local authored serving creates its own encrypted reading, saves the independent reflection and source links, survives reload/export and preserves the prior reading and feedback when rollback restores its cache branch.",
+    "Production-path metadata retains shared adapter identity at report level and each case mode/source/runtime-fallback/original-benchmark identity at case level; rejected raw candidate and delivered complete fallback remain distinct.",
+    "Original benchmark, original source bundle, member adapter, rollout loader, evaluator dispatch/reservation/capture, shared language writer, Today storage logic and Workflow implementation remain byte-for-byte equal to the prior commit except for the explicitly listed revision-4 sources. No prior report or pilot artifact was overwritten by this review."
+  ],
+  "verification": [
+    {
+      "kind": "focused-offline-suite",
+      "command": "node --test --test-concurrency=1 tests/reading-context-observed-claims.test.mjs tests/reading-context-claim-scope.test.mjs tests/reading-context-pilot-contract.test.mjs tests/reading-context-pilot-plan.test.mjs tests/reading-context-pilot.test.mjs tests/reading-context-production-path.test.mjs tests/reading-member-context-rollout.test.mjs tests/reading-member-context-storage.test.mjs tests/reading-member-context.test.mjs",
+      "passed": 67,
+      "failed": 0,
+      "skipped": 0,
+      "evidence": "/tmp/pattern-context-production-private-20261017/revision-4-integration-review/focused-final.log",
+      "evidenceSha256": "08667566d86298cec4b8671c2dddd1ea1920d3f9db4bc279e7b24ff05975b4ad"
+    },
+    {
+      "kind": "independent-source-policy-claim-probes",
+      "command": "node /tmp/pattern-context-production-private-20261017/revision-4-integration-review/independent-probes.mjs",
+      "scriptSha256": "23e803508c74ec26ecb3ffd28302e75d33f6f95bc81b30880691bdeab68851c9",
+      "evidence": "/tmp/pattern-context-production-private-20261017/revision-4-integration-review/independent-probes.json",
+      "evidenceSha256": "cfa2d4234e6570baa242ffd1f0b7a3d47ed5794c5676267069fc35b4118ccea0",
+      "policyMutationRejections": 28,
+      "unchangedExactFiles": [
+        {
+          "path": "src/lib/ai/context-writing-benchmarks.json",
+          "sha256": "825c877dbb88d5d20d39a12abfd67cea01781506250db93d44ae7c9885b35024"
+        },
+        {
+          "path": "src/lib/content/context-pilot-bundle.json",
+          "sha256": "a77eb43eba5aa9c140b514ef56c987167bea1eb905abfa68dcceabe2da35c6f3"
+        },
+        {
+          "path": "src/lib/ai/member-context-reading.ts",
+          "sha256": "d728de67a0547ac9d611c365dd68cb8440cf8aad038d34f143bd66731b21685a"
+        },
+        {
+          "path": "src/lib/ai/member-context-rollout.server.ts",
+          "sha256": "ca684574ba92e6883e200d4b5416351ec65b57be3001a065da1278cf488698d3"
+        },
+        {
+          "path": "src/lib/evaluation-runs.server.ts",
+          "sha256": "aa7e2b3265bdbc6e5f5051cd87aa2a3b4e3b9525178ff7427ddcebb6e6ab04de"
+        },
+        {
+          "path": "src/lib/ai/language.server.ts",
+          "sha256": "b8f2e6763feae0f1cb4dff6235a998683176fae6cfad9c636150dccad8c42007"
+        },
+        {
+          "path": "src/lib/pattern.server.ts",
+          "sha256": "bb242359d5712322a1811c718c4e844616cd448d002125d3d7dcb3f36f5c4c54"
+        },
+        {
+          "path": "edge/pattern-workflows/worker.mjs",
+          "sha256": "5389b7dcf39b6f1b8a62c4f32d3a62758e24e0591f23020ac90781122dca9449"
+        }
+      ],
+      "fallbackEquivalentExceptMaterialVersion": true,
+      "policy": {
+        "adapterVersion": "daily-member-context-1",
+        "adapterHash": "d728de67a0547ac9d611c365dd68cb8440cf8aad038d34f143bd66731b21685a",
+        "fallbackVersion": "daily-member-context-fallbacks-1",
+        "fallbackHash": "af143337793ad4136a16fd4144adec0be365d15fa0b1e83d326763bcae85a0eb",
+        "materialVersion": "daily-context-material-4",
+        "materialHash": "e1f0621413c14cbbe4fd591cf4858309b1b0840df2b88d8b3c10dd22d0fb704e",
+        "promptVersion": "daily-context-body-4",
+        "validatorVersion": "daily-context-reference-4",
+        "voiceVersion": "daily-context-voice-4",
+        "briefVersion": "daily-context-brief-4",
+        "writerHash": "b8f2e6763feae0f1cb4dff6235a998683176fae6cfad9c636150dccad8c42007",
+        "briefHash": "8d422ccac1294563d28af0cb9f3acd8b9d242ef4e4c31f4e54284e7ee87115cd",
+        "claimsHash": "1362b888ffffd630018514b7052a9ad8de44f9cdcbac1f915473a85aef9058fd"
+      },
+      "claimProbes": {
+        "rejectedObserved": 3,
+        "acceptedSupported": 3,
+        "acceptedUnrelatedSourceOrRelease": 6,
+        "acceptedKnownOutsideGuard": [
+          "Notes can scatter your attention across projects.",
+          "Initiative may transform another piece into an appealing prospect."
+        ]
+      },
+      "externalProviderCalls": 0,
+      "remoteCalls": 0
+    },
+    {
+      "kind": "diff-whitespace",
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  ],
+  "preFreezeCheck": {
+    "command": "node --test --test-concurrency=1 tests/reading-context-observed-claims.test.mjs tests/reading-context-claim-scope.test.mjs tests/reading-context-pilot-contract.test.mjs tests/reading-context-pilot-plan.test.mjs tests/reading-context-pilot.test.mjs tests/reading-context-production-path.test.mjs tests/reading-member-context-rollout.test.mjs",
+    "passed": 24,
+    "failed": 30,
+    "skipped": 0,
+    "disposition": "All 30 failures stopped at the frozen material identity guard while material and its plan pin were being finalized. Superseded by the final frozen-byte 67-test pass; not claimed as a passing check."
+  },
+  "savedPriorOffEvidence": {
+    "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-4/baseline.json",
+    "sha256": "1a1d1a33b82816e320942ecbaf8443ba8ffe24f83193c95be8669bf754c1563e",
+    "writerRollout": null,
+    "liveVerifiedByThisReviewer": false
+  },
+  "limits": [
+    "This is independent AI code/control and local harness verification. It does not independently certify material semantic equivalence or writing quality; the separate source-material review owns that gate.",
+    "The deterministic observed-predicate checks are intentionally incomplete and may conservatively reject unusual wording. Two unsupported paraphrase probes still pass the bounded guard; every exact generated body still needs source review for added claims, omitted meaning and lost conditions.",
+    "The allowance lock is per admin user and pilot version, not site-wide across operators. The hosted pilot must use the single designated operator/run authorized by the user; another operator is not a second allowance.",
+    "The prior-off state is read from the saved revision-4 baseline, which records writer_rollout=null. I made no fresh production query; current deployment, production database, active pointer and post-pilot historical preservation require the implementing release evidence.",
+    "All model, database and workflow interactions in this review used the local network-forbidding records harness. No real provider request, remote mutation, deployment or activation occurred.",
+    "Full repository tests, TypeScript, final lint, exact-source build and serving source verification belong to the implementing root. These focused results do not substitute for those checks.",
+    "No mode is qualified for activation by this review. Independent blind reader and source reviews of the sole new five-request campaign, followed by authorized zero-extra-model authenticated route/storage proof for qualified modes, remain required. A sixth uncached model call is outside this allowance."
+  ]
+}

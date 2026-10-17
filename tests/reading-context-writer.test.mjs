@@ -39,8 +39,8 @@ test("candidate composes all five complete source graphs and keeps their indepen
   for (const benchmark of packet.cases) {
     const result = await run(benchmark);
     assert.equal(result.prose.meta.mode, "model", benchmark.id);
-    assert.equal(result.prose.meta.diagnostics.promptVersion, "daily-context-body-3", benchmark.id);
-    assert.equal(result.prose.meta.diagnostics.validatorVersion, "daily-context-reference-3");
+    assert.equal(result.prose.meta.diagnostics.promptVersion, "daily-context-body-4", benchmark.id);
+    assert.equal(result.prose.meta.diagnostics.validatorVersion, "daily-context-reference-4");
     assert.equal(result.prose.body, benchmark.paragraphs.map((p) => p.text).join("\n\n"));
     assert.equal(result.prose.headline, benchmark.headline);
     assert.equal(result.prose.prompt, benchmark.reflection);
@@ -184,7 +184,7 @@ test("candidate supports each tone/depth while standard allows only its required
     for (const depth of ["standard", "technical"]) {
       const result = await run(benchmark, () => {}, { tone, depth });
       assert.equal(result.prose.meta.mode, "model", `${tone}/${depth}`);
-      assert.equal(result.prose.meta.diagnostics.promptVersion, "daily-context-body-3");
+      assert.equal(result.prose.meta.diagnostics.promptVersion, "daily-context-body-4");
     }
   }
   const detail = (p) =>

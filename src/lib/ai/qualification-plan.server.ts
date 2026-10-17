@@ -187,7 +187,8 @@ export type EvaluationPlan = ReturnType<typeof createEvaluationPlan> & {
       | "enterprise-thinking-pilot-1"
       | "daily-context-pilot-1"
       | "daily-context-pilot-2"
-      | "daily-context-pilot-3";
+      | "daily-context-pilot-3"
+      | "daily-context-pilot-4";
   };
 };
 export const ENTERPRISE_PILOT_CASES = [

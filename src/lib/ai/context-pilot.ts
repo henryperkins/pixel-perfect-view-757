@@ -1,7 +1,7 @@
 /** A fresh closed candidate experiment; historical runs never reopen this allowance. */
 import { z } from "zod";
 
-export const CONTEXT_PILOT_VERSION = "daily-context-pilot-3" as const;
+export const CONTEXT_PILOT_VERSION = "daily-context-pilot-4" as const;
 export const CONTEXT_PILOT_CASE_IDS = [
   "contact-only",
   "natal-only",

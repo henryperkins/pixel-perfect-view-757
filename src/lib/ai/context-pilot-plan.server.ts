@@ -38,8 +38,8 @@ const sourceGraph = (facts: { id: string }[]) =>
 const EXPECTED_BENCHMARK_HASH = "825c877dbb88d5d20d39a12abfd67cea01781506250db93d44ae7c9885b35024";
 const EXPECTED_BUNDLE_HASH = "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f";
 const EXPECTED_RUNTIME_FALLBACK_HASH =
-  "ae85bb5ce7793c6af330e6877af294e288f632efb01bcbc74f2d633101155c89";
-const EXPECTED_MATERIAL_HASH = "165a91a427937039757d4a7a3520038a725eb6b7495ee106fc4d1731058471ba";
+  "af143337793ad4136a16fd4144adec0be365d15fa0b1e83d326763bcae85a0eb";
+const EXPECTED_MATERIAL_HASH = "e1f0621413c14cbbe4fd591cf4858309b1b0840df2b88d8b3c10dd22d0fb704e";
 
 export function createContextPilotPlan(sourceSha: string | null, provider: LanguageProvider) {
   if (!sourceSha || !/^[a-f0-9]{40}$/.test(sourceSha))

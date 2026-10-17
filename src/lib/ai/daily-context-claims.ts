@@ -140,6 +140,48 @@ function addsLocalAmplification(sentences: string[], sources: FactAtom[]): boole
   return false;
 }
 
+/**
+ * Contradictions found in the third pilot, bound to its immutable published
+ * sources and the local subject/predicate. An authorized scene image is not
+ * evidence of a new effect. These checks cover the observed predicates, not
+ * arbitrary causal paraphrases or missing meaning; those still need review.
+ */
+function observedSceneProblem(sentences: string[], sources: FactAtom[]): string | null {
+  const has = (id: string, key: string) =>
+    sources.some(
+      (source) => source.id === id && source.sourceKey === key && source.releaseVersion === "0.9.0",
+    );
+  const removal = has("I1", "square:saturn:sun");
+  const natal = has("N1", "nl-sun-03");
+  const initiative = has("I2", "trine:jupiter:mars");
+  for (const sentence of sentences) {
+    for (const clause of sentence.split(/[.!?,;:]|\b(?:and|but|yet|so|though)\b/i)) {
+      if (
+        removal &&
+        /\b(?:extra check|another version)\b[^.!?,;:]{0,80}\b(?:can|may|could|might)\s+simply\s+be\s+(?:left out|omitted|removed)\b/i.test(
+          clause,
+        )
+      )
+        return "draft adds ease to the supplied optional removal";
+      if (
+        natal &&
+        /\b(?:notes?|tab)\b[^.!?,;:]{0,140}\bblurs?\s+where\s+(?:your|the)\s+attention\s+belongs\b/i.test(
+          clause,
+        )
+      )
+        return "draft makes the supplied natal scene cause an unsupported attention effect";
+      if (
+        initiative &&
+        /\b(?:practical\s+)?initiative\s+(?:(?:can|may|could|might)\s+)?(?:makes?|causes?)\b[^.!?,;:]{0,140}\b(?:look|seem|feel)\s+appealing\b/i.test(
+          clause,
+        )
+      )
+        return "draft makes initiative cause unsupported appeal";
+    }
+  }
+  return null;
+}
+
 /** Source IDs never establish semantic support on their own. */
 export function dailyContextClaimProblem(sentences: string[], cited: FactAtom[]): string | null {
   const sources = cited.filter((fact) => /^(?:I[1-3]|[SN]1|P2)$/.test(fact.id));
@@ -147,5 +189,5 @@ export function dailyContextClaimProblem(sentences: string[], cited: FactAtom[])
     return "draft drops the local possibility qualifier from a supplied context claim";
   if (addsLocalAmplification(sentences, sources))
     return "draft adds speed or ease absent from its local context source";
-  return null;
+  return observedSceneProblem(sentences, sources);
 }

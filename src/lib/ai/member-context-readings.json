@@ -1,6 +1,6 @@
 {
   "version": "daily-member-context-fallbacks-1",
-  "materialVersion": "daily-context-material-3",
+  "materialVersion": "daily-context-material-4",
   "cases": [
     {
       "id": "contact-only",

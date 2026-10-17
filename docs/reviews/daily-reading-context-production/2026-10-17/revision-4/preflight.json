@@ -1,0 +1,49 @@
+{
+  "baseSourceSha": "02e32f57950b31a4d1b77e2ddb552654a86a75c0",
+  "policy": {
+    "adapterVersion": "daily-member-context-1",
+    "adapterHash": "d728de67a0547ac9d611c365dd68cb8440cf8aad038d34f143bd66731b21685a",
+    "fallbackVersion": "daily-member-context-fallbacks-1",
+    "fallbackHash": "af143337793ad4136a16fd4144adec0be365d15fa0b1e83d326763bcae85a0eb",
+    "materialVersion": "daily-context-material-4",
+    "materialHash": "e1f0621413c14cbbe4fd591cf4858309b1b0840df2b88d8b3c10dd22d0fb704e",
+    "promptVersion": "daily-context-body-4",
+    "validatorVersion": "daily-context-reference-4",
+    "voiceVersion": "daily-context-voice-4",
+    "briefVersion": "daily-context-brief-4",
+    "writerHash": "b8f2e6763feae0f1cb4dff6235a998683176fae6cfad9c636150dccad8c42007",
+    "briefHash": "8d422ccac1294563d28af0cb9f3acd8b9d242ef4e4c31f4e54284e7ee87115cd",
+    "claimsHash": "1362b888ffffd630018514b7052a9ad8de44f9cdcbac1f915473a85aef9058fd"
+  },
+  "checks": {
+    "tests": {
+      "total": 1087,
+      "passed": 1083,
+      "failed": 0,
+      "skipped": 4
+    },
+    "typescriptExit": 0,
+    "eslintExit": 0,
+    "sourceBuild": "required from exact committed source before dispatch"
+  },
+  "secretScan": {
+    "files": 23,
+    "exactValues": 5,
+    "findings": 0
+  },
+  "rolloutOff": true,
+  "providerRequestsInRevision": 0,
+  "humanReviewCompleted": false,
+  "benchmarkAndFallbackBodiesChanged": false,
+  "logs": {
+    "full-tests-final.log": "20eb4e7e75059db6dd10c2253542f9fb2c82e5ad2de9c341687db5a4600e871c",
+    "typescript.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "eslint-final.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "independentMaterialSourceReview": "pass",
+  "independentIntegrationReview": "pass",
+  "reviewHashes": {
+    "material-source-review.json": "c4e2ddfa6d93c8b1efb6a1e791d8041379a4b5db494e69e0867ce1ea10132c25",
+    "independent-integration-review.json": "85db0e5043e1b889605d15fd62f1346cfadcc91776ead8049f8a89b3c8eaa411"
+  }
+}

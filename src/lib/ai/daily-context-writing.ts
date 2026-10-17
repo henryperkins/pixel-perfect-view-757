@@ -2,11 +2,11 @@
 import { assertDailyFactGraph, InvalidDailyFactGraph, type FactAtom } from "./facts";
 import reviewedMaterial from "./context-writing-material.json";
 
-export const CONTEXT_DAILY_PROMPT_VERSION = "daily-context-body-3" as const;
-export const CONTEXT_DAILY_VALIDATOR_VERSION = "daily-context-reference-3" as const;
-export const CONTEXT_DAILY_VOICE_VERSION = "daily-context-voice-3" as const;
-export const CONTEXT_DAILY_BRIEF_VERSION = "daily-context-brief-3" as const;
-export const CONTEXT_DAILY_MATERIAL_VERSION = "daily-context-material-3" as const;
+export const CONTEXT_DAILY_PROMPT_VERSION = "daily-context-body-4" as const;
+export const CONTEXT_DAILY_VALIDATOR_VERSION = "daily-context-reference-4" as const;
+export const CONTEXT_DAILY_VOICE_VERSION = "daily-context-voice-4" as const;
+export const CONTEXT_DAILY_BRIEF_VERSION = "daily-context-brief-4" as const;
+export const CONTEXT_DAILY_MATERIAL_VERSION = "daily-context-material-4" as const;
 
 type ContextTone = "plain" | "warm" | "clinical";
 type ContextDepth = "standard" | "technical";
@@ -85,6 +85,13 @@ export interface DailyContextMaterial {
   optionalDirections: string[];
   requiredFacts: string[];
 }
+const SOURCE_ROLE = {
+  I1: "effort-and-what-fits",
+  N1: "exploration-before-commitment",
+  P2: "one-smaller-adjustment",
+  I2: "enthusiasm-with-a-practical-start",
+  S1: "what-a-larger-task-needs",
+} as const;
 interface ReviewedMaterialCard {
   factId: string;
   sourceFact: FactAtom;
@@ -174,6 +181,15 @@ export function toDailyContextBrief(facts: FactAtom[], tone: string, depth: stri
     materialVersion: CONTEXT_DAILY_MATERIAL_VERSION,
     material,
     references,
+    // A map of meaning, not a sentence or paragraph sequence. The chapter must
+    // add an adjustment rather than repeat the primary scheduling distinction.
+    development: {
+      centralSituationFact: "I1",
+      sourceRoles: material.map(({ factId }) => ({
+        factId,
+        role: SOURCE_ROLE[factId as keyof typeof SOURCE_ROLE],
+      })),
+    },
     controls: {
       voiceVersion: CONTEXT_DAILY_VOICE_VERSION,
       draftFrom: ["sceneDetails", "practicalDistinction", "optionalDirections"],
@@ -203,14 +219,14 @@ export function toDailyContextBrief(facts: FactAtom[], tone: string, depth: stri
 
 export function dailyContextSystemVoice(hasNatal: boolean): string {
   return [
-    "You write a daily astrology reading in an attentive, observational voice. Notice a recognizable detail, develop one useful distinction, and let that distinction give the reader proportionate direction.",
-    "Draft from material.sceneDetails, practicalDistinction and optionalDirections. The sourceMeanings and sourceConditions in controls constrain what each illustration can mean; preserve them without restating their abstract summaries as prose. Material authorizes possible illustrations, never known events. Structural references identify sources and parents; calculated references establish geometry and exact supplied chronology. Neither establishes personal events, causes, temperament or another person's intentions.",
+    "Write a daily astrology reading that sounds like an attentive person noticing something precise. Put a familiar object or choice in view, then show the distinction that makes it useful. Address the reader naturally; do not deliver a formal account of their situation.",
+    "Draft only from the supplied material. Preserve each selected source's full meaning and conditions, but let the concrete situation express them: a claim about the hours a check needs can carry a limit without a second sentence announcing expectations, capacity and boundaries. The development map gives each source a different job, not a writing order. These are possible illustrations, never known events in the reader's life. References establish only their supplied source links, geometry and literal chronology.",
     "Keep every source condition in controls.sourceConditions attached to its own claim. Preserve source possibility words such as can, may and could on the claim they qualify, including across intervening adverbs. Do not add speed, ease, frequency, necessity, certainty or a relationship beyond the supplied source meaning. A modal in an unrelated clause does not qualify another claim. A clear immediate reference may continue the same hypothetical scene; it never establishes a personal event. Each paragraph cites every source used and all its required parent facts. A synthesis keeps its distinct parent meanings, rather than reducing planets to a keyword list.",
-    "Direction may be noticing, waiting, asking, a small reversible choice, leaving something unresolved or enjoying a supported moment. It remains optional; never pressure, predict, promise a result or turn a possibility into a personal prescription.",
-    "Controls and source labels are separate from writing material. Do not narrate the rules, source selection, model, calculation system or limits as body prose. Respect supplied suppression limits and never invent astronomical, biographical or health claims.",
+    "An image does not authorize a new effect. Link only relationships the selected source actually supplies; if or can does not ground an added causal claim. A familiar task asking more effort and its possible mismatch with the available hours must both remain legible, even when expressed through the extra check rather than an abstract summary.",
+    "Direction stays optional and proportionate. End when a supported choice or distinction is clear. Never promise an outcome, prescribe a life decision, console, or narrate these rules, source selection or the calculation system. Invent no personal history, motives, temperament, causal effects, astronomical or health claims.",
     ...(hasNatal
       ? [
-          "N1 is a conditional symbolic possibility. Preserve its own condition and practical distinction within the primary situation in paragraph 1 or 2, citing N1, C1 and I1 together. The natal distinction can deepen that situation without becoming a personality section, objective ownership, diagnosis or a cause of the reader's behavior. Do not recite raw natal origins.",
+          "N1 is a conditional possibility, not a personality description. Within the shared situation in paragraph 1 or 2, preserve curiosity possibly helping a direction take shape as well as exploring versus choosing. Cite N1, C1 and I1 together. Notes beside an open tab do not establish blurred attention. Do not turn exploration into confusion, diagnose the reader, or recite natal origins.",
         ]
       : []),
   ].join(" ");
@@ -234,9 +250,9 @@ export function dailyContextVoice(tone: string, depth: string): string {
         ? "Lead with the human meaning. Add relevant supplied orb or exact-date detail in a compact separate passage when it helps; cite its calculated contact directly. Measurements describe geometry, never personal timing or a deadline."
         : "Keep human meaning in the foreground. Omit optional orb values, degree measurements, phase and exact-date detail. When A1 is supplied, its immutable chronology sentence is required even at standard depth."
     }`,
-    "Choose a few supplied scene details to develop one central situation through the primary practical distinction. These are building blocks, not paragraphs to concatenate. Let selected synthesis, natal and transit distinctions change what can be noticed or chosen within that same situation. Do not append separate mini-readings or invent a new setting for each source. A possible illustration must remain possible.",
-    "Open on a supported visible detail, recognizable gesture or plain distinction. Develop a concrete consequence before naming another abstraction. Cut a following sentence when it merely explains the same point again. Apply controls.editingPrinciples as editing moves, never as body prose. An if opening is optional. Vary paragraph count, sentence rhythm and the position of astrology; no fixed three-paragraph formula, mandatory script or closing permission sentence. Use only the words the thought needs; required chronology and technical detail may need more space.",
-    "Integrate any selected N1 and P2 meaning within the first two paragraphs, each with its full source parents. Preserve natal conditionality. P2 contributes its supplied chapter distinction to the same scene; it authorizes no account of previous personal events, resolution or closure.",
+    "Stay in one supplied situation. Each source in development.sourceRoles must change how that situation reads or what could be chosen within it. The map is not an order or a paragraph template. Choose the details that belong together; omit unused illustrations. Do not stack a separate lesson for every source.",
+    "Open with a supported detail or a plain distinction. Prefer the check, the hours, the note and the stopping point to formal descriptions of responsibilities, capacity, boundaries and agreements. Keep more-effort meaning when shortening. Once a concrete sentence makes a point, cut a second sentence that translates it back into abstractions. Use contractions where natural. Vary sentence length, paragraph count and where astrology appears; no mandatory if opening, three-paragraph pattern, script or permission ending. Apply controls.editingPrinciples without quoting them.",
+    "Integrate any selected N1 and P2 meaning within the first two paragraphs, each with its full source parents. N1 adds the difference between exploring and choosing, with curiosity possibly helping a direction emerge. P2 adds one smaller adjustment if an earlier way no longer fits; it must not repeat a calendar-versus-size explanation already made. It establishes no previous failed attempt, personal recurrence, resolution or closure.",
     "If A1 is supplied, include its chronologySentence unchanged exactly once in paragraph 1 or 2, citing A1 and C1. Cite P2, C1, I1 and A1 together for chapter meaning. Do not paraphrase chronology, repeat it, add dates or reinterpret a calculated pass as an event in the reader's life.",
     "Planetary imagery can clarify a distinction only when supplied by material. Avoid a list of planet keywords. Do not explain that a contact offers a symbolic lens or gives this reading its theme; let supported meaning stand in ordinary language.",
     "A useful ending may be the distinction itself or supported optional direction. Do not force a sentence to say aloud, recap the reading, console the reader or add hollow reassurance. The headline and independently validated reflection are separate; write only the body.",
