@@ -30,15 +30,23 @@ before(async () => {
       typeof input === "string" ? input : input instanceof URL ? input.href : input.url,
     );
     if (url.hostname !== "connector-gateway.lovable.dev") return originalFetch(input, init);
-    assert.equal(new Headers(init.headers).get("X-Connection-Api-Key"),"connection_synthetic");
-    assert.equal(new Headers(init.headers).get("Lovable-API-Key"),"service_synthetic");
+    assert.equal(new Headers(init.headers).get("X-Connection-Api-Key"), "connection_synthetic");
+    assert.equal(new Headers(init.headers).get("Lovable-API-Key"), "service_synthetic");
     const method = init.method ?? "GET",
       body = new URLSearchParams(String(init.body ?? ""));
     calls.push({ path: url.pathname.replace(/^\/stripe/, ""), method, body });
     const json = (value, status = 200) => Response.json(value, { status });
-    if (url.pathname.replace(/^\/stripe/,"") === "/v1/charges/ch_fixture") return json({id:"ch_fixture",customer:"cus_a",payment_intent:"pi_fixture",refunded:true});
-    if (url.pathname.replace(/^\/stripe/,"") === "/v1/disputes/dp_fixture") return json({id:"dp_fixture",charge:"ch_fixture",status:"needs_response"});
-    if (url.pathname.replace(/^\/stripe/,"") === "/v1/invoice_payments") return json({data:[{invoice:"in_a"}],has_more:false});
+    if (url.pathname.replace(/^\/stripe/, "") === "/v1/charges/ch_fixture")
+      return json({
+        id: "ch_fixture",
+        customer: "cus_a",
+        payment_intent: "pi_fixture",
+        refunded: true,
+      });
+    if (url.pathname.replace(/^\/stripe/, "") === "/v1/disputes/dp_fixture")
+      return json({ id: "dp_fixture", charge: "ch_fixture", status: "needs_response" });
+    if (url.pathname.replace(/^\/stripe/, "") === "/v1/invoice_payments")
+      return json({ data: [{ invoice: "in_a" }], has_more: false });
     if (url.pathname.replace(/^\/stripe/, "") === "/v1/customers/search")
       return json({ data: [], has_more: false });
     if (url.pathname.replace(/^\/stripe/, "") === "/v1/customers" && method === "GET")
@@ -625,4 +633,40 @@ test("paid coverage is derived from settled invoice line dates, not a later subs
     h.records(),
   );
   assert.equal(h.sqlite.prepare("SELECT paid_until FROM memberships_v2").get().paid_until, end);
+});
+
+test("full refunds suspend affected paid invoice access", async () => {
+  await customer();
+  subscription();
+  await billing.handleBillingEvent(event(), h.records());
+  await billing.handleBillingEvent(
+    {
+      id: "evt_refund",
+      type: "charge.refunded",
+      livemode: false,
+      data: { object: { id: "ch_fixture", customer: "cus_a" } },
+    },
+    h.records(),
+  );
+  assert.equal((await billing.getMembership(h.userA, h.records())).fullAccess, false);
+  assert.equal(
+    h.sqlite.prepare("SELECT suspended FROM billing_coverage WHERE invoice_id='in_a'").get()
+      .suspended,
+    1,
+  );
+});
+test("disputes suspend affected paid invoice access", async () => {
+  await customer();
+  subscription();
+  await billing.handleBillingEvent(event(), h.records());
+  await billing.handleBillingEvent(
+    {
+      id: "evt_dispute",
+      type: "charge.dispute.created",
+      livemode: false,
+      data: { object: { id: "dp_fixture" } },
+    },
+    h.records(),
+  );
+  assert.equal((await billing.getMembership(h.userA, h.records())).fullAccess, false);
 });

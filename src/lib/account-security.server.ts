@@ -32,13 +32,11 @@ async function securityAlert(userId: string, email: string, message: string, db:
         newEmail: message,
       },
     });
-    await db
-      .from("audit_events")
-      .insert({
-        user_id: userId,
-        kind: "account.security-alert",
-        detail: { status: result.sent ? "queued" : "suppressed" },
-      });
+    await db.from("audit_events").insert({
+      user_id: userId,
+      kind: "account.security-alert",
+      detail: { status: result.sent ? "queued" : "suppressed" },
+    });
   } catch {
     await db
       .from("audit_events")
