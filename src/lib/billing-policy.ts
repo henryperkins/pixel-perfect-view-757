@@ -28,7 +28,7 @@ export function paidThrough(row: MembershipRow): number {
   return 0;
 }
 
-/** A renewing membership keeps access while Stripe collects payment; a reported failure ends it. */
+/** A renewing membership gets exactly 24 hours of payment grace, including failed renewals. */
 export function accessEnd(row: MembershipRow): number {
   const end = paidThrough(row);
   return end && !row.cancel_at_period_end

@@ -352,6 +352,7 @@ export async function exportAccountData(userId: string, db: DBClient = records()
     schema_version: "pattern-account-export-1" as const,
     exported_at: new Date().toISOString(),
     account,
+    billingRetention:"Deleting Pattern stops billing without an automatic refund. Stripe retains legally required transaction records; separate assistant identities are not deleted.",
     profile: profileSafe,
     consents: data.source_consents,
     memberships: await db.exec<Row>(

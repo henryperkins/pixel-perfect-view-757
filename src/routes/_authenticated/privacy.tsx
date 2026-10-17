@@ -650,6 +650,7 @@ function PrivacyPage() {
                   encryption key, cancel your membership immediately, and stop all connected
                   assistant access. This cannot be undone. Your separate Google or assistant sign-in
                   account is kept. Provider backups follow their own retention policy.
+                  No automatic refund is issued. Stripe retains legally required payment records.
                 </p>
                 <label className="block text-sm">
                   Current password

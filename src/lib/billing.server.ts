@@ -111,7 +111,7 @@ async function syncSubscription(db:DBClient,userId:string,stripe:Stripe,subscrip
     }
   }
   const [coverage]=await db.exec<{end:number}>("SELECT MAX(period_end) AS end FROM billing_coverage WHERE environment=? AND subscription_id=? AND suspended=0",[env,sub.id]);
-  const [suspended]=await db.exec<{n:number}>("SELECT COUNT(*) AS n FROM billing_coverage WHERE environment=? AND subscription_id=? AND suspended=1",[env,sub.id]);
+  const [suspended]=await db.exec<{n:number}>("SELECT COUNT(*) AS n FROM billing_coverage WHERE environment=? AND subscription_id=? AND suspended=1 AND period_end>?",[env,sub.id,Math.floor(Date.now()/1000)]);
   await db.batch([
     {sql:"INSERT INTO memberships_v2(stripe_subscription_id,environment,user_id,status,plan,current_period_end,trial_end,paid_until,cancel_at_period_end,updated_at) VALUES(?,?,?,?,?,?,?,?,?,?) ON CONFLICT(environment,stripe_subscription_id) DO UPDATE SET status=excluded.status,plan=excluded.plan,current_period_end=excluded.current_period_end,trial_end=excluded.trial_end,paid_until=excluded.paid_until,cancel_at_period_end=excluded.cancel_at_period_end,updated_at=excluded.updated_at",params:[sub.id,env,userId,!supported ? "unsupported" : suspended?.n ? "suspended" : sub.status,plan ?? "month",item?.current_period_end ?? 0,sub.trial_end ?? 0,coverage?.end ?? 0,sub.cancel_at_period_end ? 1 : 0,new Date().toISOString()]},
     {sql:"UPDATE billing_customers_v2 SET trial_used=MAX(trial_used,?) WHERE user_id=? AND environment=?",params:[sub.trial_start ? 1:0,userId,env]},
@@ -257,11 +257,12 @@ async function processBillingEvent(id:string,env:StripeEnv,db:DBClient) {
     throw error;
   }
 }
-export async function reconcileBilling(env:StripeEnv,db=records()) {
+export async function reconcileBilling(env:StripeEnv,db=records(),cursor="") {
   const events=await db.exec<{id:string}>("SELECT id FROM billing_events_v2 WHERE environment=? AND status='pending' AND retry_at<=? LIMIT 25",[env,Date.now()]);
   for (const event of events) try {await processBillingEvent(event.id,env,db);} catch { /* Durable retry timestamp already recorded. */ }
-  const customers=await db.exec<Customer>("SELECT * FROM billing_customers_v2 WHERE environment=? AND deleting=0 ORDER BY user_id",[env]);
+  const customers=await db.exec<Customer>("SELECT * FROM billing_customers_v2 WHERE environment=? AND deleting=0 AND user_id>? ORDER BY user_id LIMIT 20",[env,cursor]);
   const stripe=createStripeClient(env);
   for (const customer of customers) try {await withBillingLock(db,customer.user_id,async()=> {for (const sub of await allSubscriptions(stripe,customer.stripe_customer_id)) await syncSubscription(db,customer.user_id,stripe,sub.id,env);});} catch {console.warn("Billing reconciliation deferred an account.");}
-  return {events:events.length,customers:customers.length};
+  const [failures]=await db.exec<{n:number}>("SELECT count(*) AS n FROM billing_events_v2 WHERE environment=? AND status='failed'",[env]);
+  return {events:events.length,customers:customers.length,failedEvents:failures?.n??0,nextCursor:customers.length === 20 ? customers.at(-1)?.user_id ?? null:null};
 }
