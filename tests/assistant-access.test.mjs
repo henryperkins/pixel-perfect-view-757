@@ -148,6 +148,7 @@ beforeEach(async () => {
   rememberedGrants.clear();
   failProviderReset = false;
   cookieUser = h.userA;
+  await h.records().exec("INSERT INTO account_email_state(user_id,confirmed_at) VALUES(?,?),(?,?)",[h.userA,new Date().toISOString(),h.userB,new Date().toISOString()]);
 });
 after(async () => {
   await h?.close();
@@ -262,6 +263,7 @@ test("unlink and relink never resurrect old client grants", async () => {
 test("unlink or revocation racing an approval wins over the in-flight approval", async () => {
   for (const action of ["unlink", "revoke"]) {
     await h.reset();
+    await h.records().exec("INSERT INTO account_email_state(user_id,confirmed_at) VALUES(?,?)",[h.userA,new Date().toISOString()]);
     rememberedGrants.clear();
     await api.linkIdentity(h.userA, direct);
     onConsent = () =>
@@ -430,6 +432,7 @@ test("ordinary member and admin access still requires the original cookie, inclu
   const cookie = signedUp.headers.get("set-cookie").split(";")[0];
   assert.equal((await (await current(request({ cookie }))).json()).isAdmin, false);
   await h.records().from("user_roles").insert({ user_id: member.userId, role: "admin" });
+  await h.records().exec("INSERT INTO account_email_state(user_id,confirmed_at) VALUES(?,?)",[member.userId,new Date().toISOString()]);
   await api.linkIdentity(member.userId, direct);
   const admin = requestHandler(async () => {
     const session = await auth.getSessionUser();
