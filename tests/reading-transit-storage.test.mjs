@@ -105,6 +105,38 @@ test("natal template saves exact chapter copy in paragraph two and rejects false
   assert.equal(h.gatewayRequests.length, 0);
   assert.equal(h.episodeRequests.length, 1);
 });
+test("model reading citing natal and story facts reopens and exports", async () => {
+  await seedTransitReading(h, { natal: true });
+  h.setGateway((request) => {
+    const content = request.messages[1].content;
+    const line = (id) => content.match(new RegExp(`^${id}: (.*)$`, "m"))[1];
+    const paragraphs = [
+      {
+        text: "An established role can feel demanding when its obligations require more deliberate effort than usual. If an unfinished project is one of those obligations, a direction can become clearer through commitments that are manageable over time. That project may distinguish building something durable from treating every obligation as a measure of worth.",
+        facts: ["C1", "I1", "N1"],
+      },
+      {
+        text: `${line("A1")} ${line("P2").replace(/^Published transit chapter: /, "")}`,
+        facts: ["C1", "I1", "A1", "P2"],
+      },
+    ];
+    return Response.json({ choices: [{ message: { content: JSON.stringify({ paragraphs }) } }] });
+  });
+  const first = await h.app.getToday(h.records(), h.userA, "UTC");
+  assert.equal(first.language.mode, "model", first.language.reason);
+  assert.ok(first.language.natalLens);
+  assert.deepEqual(first.language.transitStory.usedParagraphs, { A1: [2], P2: [2] });
+  h.reopen();
+  const reopened = await h.app.getToday(h.records(), h.userA, "UTC");
+  assert.equal(reopened.reading.id, first.reading.id);
+  assert.deepEqual(reopened.language, first.language);
+  const exported = await h.app.exportEverything(h.records(), h.userA);
+  assert.deepEqual(
+    exported.readings.find((r) => r.id === first.reading.id).language,
+    first.language,
+  );
+  assert.equal(h.gatewayRequests.length, 1);
+});
 test("source_unavailable_is_immutable_but_policy_change_creates_new_identity", async () => {
   await seedTransitReading(h);
   h.setEpisode(() => new Response(null, { status: 503 }));

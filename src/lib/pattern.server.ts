@@ -1184,9 +1184,18 @@ export async function readingLanguage(
         count > paragraphs.length
       )
         throw new Error("Missing saved paragraph bounds");
+      // Generation validated N1 against the whole graph, so a model citation of A1/P2
+      // needs the story atoms here; the story block below still proves them in full.
+      const savedStory =
+        typeof meta["transit_story_ct"] === "string"
+          ? await decryptJson<SavedTransitStory>(dek, meta["transit_story_ct"])
+          : null;
+      const storyAtoms = Array.isArray(savedStory?.facts)
+        ? savedStory.facts.filter((f) => f?.id === "A1" || f?.id === "P2")
+        : [];
       natalLens = validateSavedNatalLens(
         await decryptJson<unknown>(dek, meta["natal_lens_ct"]),
-        facts,
+        [...facts, ...storyAtoms],
         {
           releaseVersion: row.release_version,
           primaryCycleKey: row.primary_cycle_key,
