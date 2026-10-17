@@ -1,0 +1,397 @@
+{
+  "version": "daily-context-revision-5-artifacts",
+  "baseCommit": "d35e8b5bd99fa9905f7630751de4c1427271e224",
+  "evidence": [
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/edited-failures.json",
+      "sha256": "8d5e11b4098f9de755300220468b2a6d73c14c3cf011d04299b4c6d768474686",
+      "bytes": 18487
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/edited-failures.md",
+      "sha256": "0945cb318265a8defb39dc93cfb1da978fec1a2036037eb5a2683ae2057a2630",
+      "bytes": 12320
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/next-pilot-manifest.json",
+      "sha256": "dfe816ba7d12131e6b1cfc8b9e0a63a04a6827ba02f24e9a62be4d0e373caa68",
+      "bytes": 7208
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/next-pilot-manifest.md",
+      "sha256": "f83a3f6d18003297044facf528ead4838088e356872d1729e58ba05c34cb03b2",
+      "bytes": 4334
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reference-readings.json",
+      "sha256": "75f06dbf43c7f973d4a9fff940bd3ff71442a938e6753377d620c90a69c567e3",
+      "bytes": 15697
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reference-readings.md",
+      "sha256": "ca824e5c8dbead832bee224f25dcea5dd97d2387e38473bfe1942a9882c8aaaa",
+      "bytes": 8057
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/report.md",
+      "sha256": "17d81335f0e9494d6f8d95e1fb03f303b7efc46a515fd92a260b08ca9addf6a0",
+      "bytes": 8128
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/structure-revision.md",
+      "sha256": "13886a14973f0a0fc43a5c7d81831015436a6e83816ec25b61155c3571c013cf",
+      "bytes": 16316
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/timeout-analysis.json",
+      "sha256": "d360e6648ee6e6f59fd8ed73f970914f164536d5ecdc4699faf521fa1e4f492f",
+      "bytes": 6663
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/timeout-analysis.md",
+      "sha256": "42ce5362131b0fc655146465276799dddeaf25872e42da568ffb182664c3f0ac",
+      "bytes": 2151
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/verification.json",
+      "sha256": "44b5ce7d51ff47fae42ad7bd5db0dab03791ec0502489d0d5ef3b3ced09df1b9",
+      "bytes": 3812
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/source-2/blind-mapping.json",
+      "sha256": "c7261dbf04bb54a8272e6ab4c0fb002852e559a20250cca1ad41240fde294c33",
+      "bytes": 904
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/source-2/receipt.json",
+      "sha256": "1cbe090bdd694c2662d3bbf5e1ff1273eb4219c7a09fea650abf61d68239fd3b",
+      "bytes": 1460
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/source-2/source-review-packet.md",
+      "sha256": "49d3e683702ff25d2b636aa39249e93cab0e4efea540f7b06a9579f27771de01",
+      "bytes": 47330
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/source-2/source-review.md",
+      "sha256": "9430639388114ff37e9727f95df8b973836a07ed8e809a3615ad686eb5c01a4d",
+      "bytes": 24405
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/source-2/source-scores.json",
+      "sha256": "73803054ab5531eb795def89fd48d1f9824a0846b519305add454b36749c8264",
+      "bytes": 17884
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/source-1/blind-mapping.json",
+      "sha256": "d0016e9ab61a6770997e7817a091e8445028a2851a3bcf8f73ca26a8eff2c9a0",
+      "bytes": 1582
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/source-1/receipt.json",
+      "sha256": "df3ea249094116a1083ff53b260dacfd81c9f119024fd5f1ade690e0a890a710",
+      "bytes": 1459
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/source-1/source-review-packet.md",
+      "sha256": "933257344bd5c8e7a0e3e55ee31fea9abb70f8a273769f9079f4f94340e6e98b",
+      "bytes": 68908
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/source-1/source-review.md",
+      "sha256": "51e4ce2f8d2e3cfebf82385cba0ea86f2a11f63d1dede6a484d7eb8038f5d77d",
+      "bytes": 31531
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/source-1/source-scores.json",
+      "sha256": "c1c041016a405dcdab52cafa91ef96ed147751e6d7dd641f71bff7c027444e6c",
+      "bytes": 25793
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-4/blind-mapping.json",
+      "sha256": "74917fcde14dfe7cf4987ebbd0c5b7b9cfee89276c63057198ccede5f540ecc9",
+      "bytes": 2706
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-4/reader-packet.md",
+      "sha256": "cb4fdb2dd31a92a8e0ed6589ba00240bebdd6d223d7dba559b7ae6e7d049ec8d",
+      "bytes": 1935
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-4/reader-review.md",
+      "sha256": "92a378ddd65d5e9c6ca2e44afda13be5093755844625ed735d0c47cf8359bdfe",
+      "bytes": 5926
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-4/reader-scores.json",
+      "sha256": "ce2af789d6cd32b1b45112e4789a9caf9ab79ebdb371c95a600249c96fce3e26",
+      "bytes": 5502
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-4/receipt.json",
+      "sha256": "9b65a43c088b62b9fa51786a4efce85352696b61afac9764438d8d462f1dda36",
+      "bytes": 1768
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-3/blind-mapping.json",
+      "sha256": "4060a60139eceaad37682d0271a7d65644dd7d754c7df03823dce4d2ad9fba9e",
+      "bytes": 2143
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-3/reader-packet.md",
+      "sha256": "e8a214b3e229078f72333246295d5ae6244348345eb40e2bc624923cdbce298a",
+      "bytes": 3722
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-3/reader-review.md",
+      "sha256": "4d74199478d1444221a1bd116ddf58f0328d5d89dbead1808cfb97475202c4a0",
+      "bytes": 15592
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-3/reader-scores.json",
+      "sha256": "1cb24a6f7fb78779dc1f881c4122a531479483ebd0c907ffe344266aac392ee0",
+      "bytes": 13704
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-3/receipt.json",
+      "sha256": "f625b5fc73bd31ac12ca63a8c6a329e1d3014e21ad0632e212705df487f03501",
+      "bytes": 1433
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-2/blind-mapping.json",
+      "sha256": "d426b3387f7452a4ac2492e2a18b6c2ea917f6d05c40a9bf654c9f07f5f941e4",
+      "bytes": 1582
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-2/reader-packet.md",
+      "sha256": "278b33fbcbc189428357eb26202eb0a5f7a5568e3ee299a91bc51566ac71ec77",
+      "bytes": 5408
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-2/reader-review.md",
+      "sha256": "27dc4454684de6029237a76282f65b23116c5c8dcb9bbafab07f1402f4e24101",
+      "bytes": 23744
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-2/reader-scores.json",
+      "sha256": "e198f306cbf9f8cb1088bf8d9ef9c0137f82c453bd73633f6c25949f2cb4204e",
+      "bytes": 22172
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-2/receipt.json",
+      "sha256": "25f6020f5f66900c74049db0bb15a123672fe46accedc66880825cefcaf34100",
+      "bytes": 1379
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-1/blind-mapping.json",
+      "sha256": "01231889cb31416f107ff655e774d74a5865454d8ac54f779261f59b18efd8fe",
+      "bytes": 1582
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-1/reader-packet.md",
+      "sha256": "4ad4deeb707e89cce59f8b47b6e4c907314be57e7bb32ecf29ae839ad9118c43",
+      "bytes": 5773
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-1/reader-review.md",
+      "sha256": "8a3fb7dabafcaecffc6c068fe8035c66d829896c6e172f5672159f312b484c3e",
+      "bytes": 20558
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-1/reader-scores.json",
+      "sha256": "1c2c5824877fc56b852ff1249dcaef33bfbf36602076ca2f5551538ebfec330a",
+      "bytes": 18727
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-1/receipt.json",
+      "sha256": "5b2cec469900a0fc81092f19f8a8c1f5f4037147404f0c0eaf7b16eb382fbae0",
+      "bytes": 2243
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/scripts/analyze.mjs",
+      "sha256": "bd48868f716d403228607e26efee1878b05a8a4a4b09ba952f335ecf2d138d81",
+      "bytes": 2732
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/scripts/capture-requests.mjs",
+      "sha256": "5e7ccd2a1b8b82f7a6f9100d4fa9db2e8a110a0f742b78c895cce2702e9cc45d",
+      "bytes": 4475
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/scripts/replay.mjs",
+      "sha256": "18da54fca6cb973d8f448e87808811247439cbde1be976bbe6d84fb35345168f",
+      "bytes": 2337
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/request-trace/README.md",
+      "sha256": "61544e09712c69bbb021d6ab09ff2fc3f24628cd370f7c849595f006a40e2a48",
+      "bytes": 1480
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/request-trace/after-requests.json",
+      "sha256": "761ae0d3cb894ba75d69eed5ad402f8121ea1beccf4efb5b786a5a00dc886faa",
+      "bytes": 34354
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/request-trace/before-requests.json",
+      "sha256": "6ce77fecf6c0f9607ae2066bf9726fd4525def52c5eecf2fd9cbfc7b29461dbd",
+      "bytes": 73870
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/request-trace/premise-analysis.json",
+      "sha256": "6dad143af404e5d05337bbc22b6724c4807dfbd9ad49fd0c01fb534cbebc0ef2",
+      "bytes": 16211
+    }
+  ],
+  "implementation": [
+    {
+      "path": "src/lib/ai/context-pilot-plan.server.ts",
+      "sha256": "b1f8d5aeb0082086c7cc25c54a1037d75d0e6c5b9d49a9661c27277ef183edcf",
+      "bytes": 7374
+    },
+    {
+      "path": "src/lib/ai/context-pilot.ts",
+      "sha256": "f6ffb41834ca543d98517bbe4cc863591466993ef49c2b0d79afa9d4dcff8c76",
+      "bytes": 1752
+    },
+    {
+      "path": "src/lib/ai/context-writing-material.json",
+      "sha256": "40a86ccab103f37f6b28db1e1aef8313f142d2cb7af6c0f8806f483eabf665b8",
+      "bytes": 25335
+    },
+    {
+      "path": "src/lib/ai/daily-context-claims.ts",
+      "sha256": "f92e02de1be42229ed2da9e6e21085785a03218ee3f855d9859f7c6e7402c6c9",
+      "bytes": 8822
+    },
+    {
+      "path": "src/lib/ai/daily-context-writing.ts",
+      "sha256": "22846e762ebc4ee078a035c13c7b4665ab2b59a68dcfd1f6d549f5db0209245a",
+      "bytes": 13794
+    },
+    {
+      "path": "src/lib/ai/language.server.ts",
+      "sha256": "344248c03ef2202fbe804b66210fa1edb95f03e658c5666f874bd7a6a1a10173",
+      "bytes": 73506
+    },
+    {
+      "path": "src/lib/ai/member-context-readings.json",
+      "sha256": "de37f4d42308bec8acbc7fff346a4bd8a446698eae1041b0ac1d3539e9bd2703",
+      "bytes": 6837
+    },
+    {
+      "path": "src/lib/ai/qualification-plan.server.ts",
+      "sha256": "ae69f75bc56b603c0e73d232864951d7d3639a70b401a739b4134fdbf9f1b02f",
+      "bytes": 9587
+    },
+    {
+      "path": "src/lib/ai/reading-evaluation.shared.ts",
+      "sha256": "d808812d4d5397cb05c32cbd5c790bf9d06d6143bd1cef8c6f2be89b40569606",
+      "bytes": 21089
+    },
+    {
+      "path": "src/lib/pattern.server.ts",
+      "sha256": "94bd97b368bbb6b90c8f52c45259423fcd157076d62a89720fa025ac7ee5f4a5",
+      "bytes": 144132
+    },
+    {
+      "path": "tests/helpers/context-premises.mjs",
+      "sha256": "cb7f0bbd372430af4dc28cbe8851ffaf389d4fffa8d0275f9512091f733342da",
+      "bytes": 3915
+    },
+    {
+      "path": "tests/reading-context-brief.test.mjs",
+      "sha256": "dc31e8d724d2a8a0e1c4324d57871877aca2ed289871352a5fcb56d92dc6c9b9",
+      "bytes": 8847
+    },
+    {
+      "path": "tests/reading-context-material.test.mjs",
+      "sha256": "cdbcd98bb24e858d699d9aba6bf614e4a0434a408e5ab2f9cd049e1915505930",
+      "bytes": 5542
+    },
+    {
+      "path": "tests/reading-context-pilot-contract.test.mjs",
+      "sha256": "93b69dc39a0740dbf35b209214381646b2a3961c0b30e2562a2697df7ba42e2a",
+      "bytes": 2850
+    },
+    {
+      "path": "tests/reading-context-pilot-plan.test.mjs",
+      "sha256": "7f7a1d4b0c001d21b3568e56026ab295d69dac0a5e0d7da1e5bc8143660b82a2",
+      "bytes": 12730
+    },
+    {
+      "path": "tests/reading-context-pilot.test.mjs",
+      "sha256": "64711bba3c4178c52a05bc94068468aa85810561716f0241c75650c864e910be",
+      "bytes": 18426
+    },
+    {
+      "path": "tests/reading-context-production-path.test.mjs",
+      "sha256": "efa319c57b94050d48c1f53004dfbd7ea619be6e76f9afd9ba7bb3685534e21c",
+      "bytes": 7781
+    },
+    {
+      "path": "tests/reading-context-structure.test.mjs",
+      "sha256": "43005ebfd3a9d04e124cab9ba81107460783b572778d5c17e1dbaffc720adb0d",
+      "bytes": 15586
+    },
+    {
+      "path": "tests/reading-context-voice.test.mjs",
+      "sha256": "35e813e8fa4a2d5060bea476e22f186ecb029e0274911951d234a892f0c2e6c6",
+      "bytes": 6680
+    },
+    {
+      "path": "tests/reading-context-writer.test.mjs",
+      "sha256": "c4136b784756a1d650a9d5b0cc81671fb90b6ee59dbddca250d938862efcf32c",
+      "bytes": 11462
+    },
+    {
+      "path": "tests/reading-member-context.test.mjs",
+      "sha256": "da9f6f11cef0fad819bf25e3437e04c0cbe65223787d942e2812473605e3f70f",
+      "bytes": 18058
+    }
+  ],
+  "preservedInputs": [
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-4/pilot/01-contact-only.json",
+      "sha256": "e9895ca3c208b780df3dd988e81a9aaa6219d8b9913fbd17d50b6b4a1c38e1c6",
+      "bytes": 22120,
+      "identicalToBaseCommit": true
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-4/pilot/02-natal-only.json",
+      "sha256": "bfc0f78784ff681c13291ac49fd75a48dfd5795ec76ad08ed3a53ae0af44e67b",
+      "bytes": 35508,
+      "identicalToBaseCommit": true
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-4/pilot/03-transit-only.json",
+      "sha256": "a030dd8e15e3680f58f343724bbd50a78e37c5a3140b973574ebf25874670f84",
+      "bytes": 84228,
+      "identicalToBaseCommit": true
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-4/pilot/04-natal-and-transit.json",
+      "sha256": "ad92b4ba5dffa0c67db6f458bb2e7b9eb62faa822e0759fbc54bda2038d043b4",
+      "bytes": 96443,
+      "identicalToBaseCommit": true
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json",
+      "sha256": "825c877dbb88d5d20d39a12abfd67cea01781506250db93d44ae7c9885b35024",
+      "bytes": 26926,
+      "identicalToBaseCommit": true
+    },
+    {
+      "path": "src/lib/ai/context-writing-benchmarks.json",
+      "sha256": "825c877dbb88d5d20d39a12abfd67cea01781506250db93d44ae7c9885b35024",
+      "bytes": 26926,
+      "identicalToBaseCommit": true
+    },
+    {
+      "path": "src/lib/content/context-pilot-bundle.json",
+      "sha256": "a77eb43eba5aa9c140b514ef56c987167bea1eb905abfa68dcceabe2da35c6f3",
+      "bytes": 69157,
+      "identicalToBaseCommit": true
+    }
+  ]
+}

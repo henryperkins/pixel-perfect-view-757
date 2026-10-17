@@ -1,0 +1,109 @@
+{
+  "mapping": [
+    {
+      "label": "B1",
+      "kind": "reference",
+      "id": "synthesis-natal-and-transit",
+      "bodySha256": "b15a9caf1c28e1b608c98e29adf1ea38eaed75fdcc98c478ab4084ed8c2610e4"
+    }
+  ],
+  "carriedFromRound2": [
+    {
+      "kind": "reference",
+      "id": "contact-only",
+      "bodySha256": "fb20c4345f963dfef569f0f8d5b16ed56c17d615d9ecc56a43bfecca35abdb61",
+      "round2Label": "B2",
+      "round2Scores": {
+        "recognition": 4,
+        "meaning": 4,
+        "direction": 4,
+        "distinctness": 5,
+        "voice": 4
+      }
+    },
+    {
+      "kind": "reference",
+      "id": "transit-only",
+      "bodySha256": "ccc6b95155d86681f95a6fb4d7251ea0f4d37ea3181a39e0056e05224573b051",
+      "round2Label": "B4",
+      "round2Scores": {
+        "recognition": 4,
+        "meaning": 4,
+        "direction": 4,
+        "distinctness": 4,
+        "voice": 4
+      }
+    },
+    {
+      "kind": "edited-failure",
+      "id": "contact-only",
+      "bodySha256": "4636315664d98daa4e10f8e84e964ae2f6905f89423d6606af802ec72e3f534b",
+      "round2Label": "B8",
+      "round2Scores": {
+        "recognition": 4,
+        "meaning": 4,
+        "direction": 4,
+        "distinctness": 4,
+        "voice": 4
+      }
+    },
+    {
+      "kind": "edited-failure",
+      "id": "transit-only",
+      "bodySha256": "1b9b8aca1d7c5acda76f13ca45fc3f7ff736c5dfe2f155e3c3e613a35bd66fee",
+      "round2Label": "B1",
+      "round2Scores": {
+        "recognition": 4,
+        "meaning": 4,
+        "direction": 4,
+        "distinctness": 4,
+        "voice": 4
+      }
+    }
+  ],
+  "carriedFromRound3": [
+    {
+      "label": "B1",
+      "kind": "edited-failure",
+      "id": "natal-only",
+      "editedFrom": "R2",
+      "bodySha256": "cee40b0e54254ec7c69ad1a97a27612463a55f9b1fb395027aad1a2c159bed49",
+      "round3Label": "B1",
+      "round3Scores": {
+        "recognition": 4,
+        "meaning": 4,
+        "direction": 4,
+        "distinctness": 4,
+        "voice": 4
+      }
+    },
+    {
+      "label": "B2",
+      "kind": "reference",
+      "id": "natal-only",
+      "bodySha256": "765aef8e3e72d636c6f675657b5147bd00bcbaa3ee88a869f3c85d10f1a7e0f0",
+      "round3Label": "B3",
+      "round3Scores": {
+        "recognition": 4,
+        "meaning": 4,
+        "direction": 4,
+        "distinctness": 4,
+        "voice": 4
+      }
+    },
+    {
+      "label": "B3",
+      "kind": "reference",
+      "id": "natal-and-transit",
+      "bodySha256": "285fa7115dabf5a8c05752423ac139f5dfadc216a4ea4a4af1e8e61493fb49ae",
+      "round3Label": "B4",
+      "round3Scores": {
+        "recognition": 4,
+        "meaning": 4,
+        "direction": 4,
+        "distinctness": 4,
+        "voice": 4
+      }
+    }
+  ]
+}

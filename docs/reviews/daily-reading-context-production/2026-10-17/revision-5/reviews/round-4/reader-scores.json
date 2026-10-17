@@ -1,0 +1,90 @@
+{
+  "reviewType": "independent blind AI reader review",
+  "humanReviewCompleted": false,
+  "frozenAtUtc": "2026-10-17T12:17:16Z",
+  "inputs": [
+    {
+      "path": "/tmp/pattern-context-structure-private-5-r4-20261017/reader/reader-packet.md",
+      "sha256": "cb4fdb2dd31a92a8e0ed6589ba00240bebdd6d223d7dba559b7ae6e7d049ec8d"
+    },
+    {
+      "path": "/tmp/pattern-context-structure-private-5-r4-20261017/reader/benchmark-readings.md",
+      "sha256": "75258c2eabec3625cd49b72374c3fcdc4b2d2d769bd6b383403a77b4a6e6ebf2"
+    }
+  ],
+  "threshold": 4,
+  "bodies": [
+    {
+      "label": "B1",
+      "scores": {
+        "recognition": 4,
+        "meaning": 4,
+        "direction": 4,
+        "distinctness": 3,
+        "voice": 4
+      },
+      "pass": false,
+      "evidence": [
+        {
+          "dimension": "distinctness",
+          "quote": "A bigger task can need more structure to carry it, however easy starting feels, and that need can show up where the task grows past what it was set up for.",
+          "note": "Blocking. The same point in different words: 'however easy starting feels' re-says 'adding the next piece can feel natural'; 'more structure to carry it' re-says 'the task itself can take more effort than usual'; 'where the task grows past what it was set up for' re-says the notes 'turning into an outline'. The paragraph that should move the tension forward opens by repeating it."
+        },
+        {
+          "dimension": "distinctness",
+          "quote": "And if an earlier way of handling the task no longer fits",
+          "note": "Blocking. Crowding: after the restatement the paragraph goes on as stacked conditionals ('If more than one piece is competing for the afternoon', then 'And if ...'), each opening a new frame. Seven sentences carry two contacts, the chronology, a distinction, a curiosity point and a method change, and no idea gets a second sentence. Wording repeats too: 'the next piece' three times, 'more than one' twice in one sentence."
+        },
+        {
+          "dimension": "recognition",
+          "quote": "The notes for a task you know well can start turning into an outline.",
+          "note": "Limiting. The image is recognizable, but it is posed as a possibility about an unnamed familiar task instead of a noticed detail."
+        },
+        {
+          "dimension": "recognition",
+          "quote": "the next piece needs hours that are already spoken for",
+          "note": "Limiting. 'The next piece' carries the central tension but is never made concrete (a section, an idea, a second project?), and later shifts to competing options ('more than one piece is competing for the afternoon')."
+        },
+        {
+          "dimension": "meaning",
+          "quote": "and that need can show up where the task grows past what it was set up for",
+          "note": "Limiting. Places the need only in the abstract; 'structure' gets no practical form, and the closing step answers it by limiting scope, a link the reader has to make."
+        },
+        {
+          "dimension": "meaning",
+          "quote": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+          "note": "Limiting. Fixed chronology sentence placed after two named contacts with no bridge, so the reader has to work out which one 'This' refers to (placement suggests the Saturn contact). Its practical meaning arrives three sentences later, and only as a condition, through 'an earlier way of handling the task', 'this return' and 'one smaller change'. Adequate, not blocking."
+        },
+        {
+          "dimension": "direction",
+          "quote": "If more than one piece is competing for the afternoon, you may not need to decide between them yet: following more than one line of curiosity can help a direction take shape.",
+          "note": "Limiting. The first paragraph says the afternoon's hours are 'already spoken for', yet this permits several pieces to keep going, which pulls against the closing step; the reader has to reconcile the two (explore in notes, commit in the outline). The closing step itself is the body's strongest line: 'the next piece can wait as a note instead of joining the outline'."
+        },
+        {
+          "dimension": "direction",
+          "quote": "you could use this return to try one smaller change",
+          "note": "Limiting (minor). It never says what the change is smaller than."
+        },
+        {
+          "dimension": "voice",
+          "quote": "when the aim is well chosen",
+          "note": "Limiting. A formal qualifier that is never picked up; the reader is not told what aim, or how to tell whether it is well chosen."
+        },
+        {
+          "dimension": "voice",
+          "quote": "following more than one line of curiosity can help a direction take shape",
+          "note": "Limiting. Aphoristic and abstract, beside mild reassurance in 'you may not need to decide between them yet'."
+        },
+        {
+          "dimension": "voice",
+          "quote": "A bigger task can need more structure to carry it",
+          "note": "Limiting. Shows the hedging: eight 'can' in six authored sentences, plus 'may' and 'could', so every authored sentence is modal and the body supposes instead of noticing. The distinction sentence, where the voice should be most exact, is the most abstract. No counseling, dictated script or appended personality."
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "reviewed": 1,
+    "passed": 0
+  }
+}

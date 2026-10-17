@@ -1,0 +1,78 @@
+{
+  "review": "independent blind AI reader review, round 1",
+  "reviewer": "fresh general-purpose subagent; one reviewer",
+  "humanReviewCompleted": false,
+  "frozenAtUtc": "2026-10-17T11:18:35Z",
+  "inputs": {
+    "reader-packet.md": "4ad4deeb707e89cce59f8b47b6e4c907314be57e7bb32ecf29ae839ad9118c43",
+    "benchmark-readings.md": "75258c2eabec3625cd49b72374c3fcdc4b2d2d769bd6b383403a77b4a6e6ebf2"
+  },
+  "outputs": {
+    "reader-review.md": "8a3fb7dabafcaecffc6c068fe8035c66d829896c6e172f5672159f312b484c3e",
+    "reader-scores.json": "1c2c5824877fc56b852ff1249dcaef33bfbf36602076ca2f5551538ebfec330a"
+  },
+  "mappingSha256": "01231889cb31416f107ff655e774d74a5865454d8ac54f779261f59b18efd8fe",
+  "mappingReadBeforeFreeze": false,
+  "transcriptAudit": {
+    "method": "tool_use entries parsed from the reviewer transcript; only tool names and touched paths inspected",
+    "toolCalls": 9,
+    "pathsTouched": [
+      "reader/reader-packet.md",
+      "reader/benchmark-readings.md",
+      "reader/reader-review.md",
+      "reader/reader-scores.json"
+    ],
+    "otherAccess": "none",
+    "calls": [
+      {
+        "n": 1,
+        "tool": "Bash",
+        "use": "sha256sum of reader-packet.md and benchmark-readings.md; date"
+      },
+      {
+        "n": 2,
+        "tool": "Read",
+        "use": "reader/reader-packet.md"
+      },
+      {
+        "n": 3,
+        "tool": "Read",
+        "use": "reader/benchmark-readings.md"
+      },
+      {
+        "n": 4,
+        "tool": "Read",
+        "use": "reader/reader-packet.md"
+      },
+      {
+        "n": 5,
+        "tool": "Read",
+        "use": "reader/benchmark-readings.md"
+      },
+      {
+        "n": 6,
+        "tool": "Bash",
+        "use": "grep for non-ASCII characters in reader/reader-packet.md"
+      },
+      {
+        "n": 7,
+        "tool": "Bash",
+        "use": "re-hash inputs and write reader/reader-review.md and reader/reader-scores.json"
+      },
+      {
+        "n": 8,
+        "tool": "Bash",
+        "use": "re-hash inputs and write reader/reader-review.md and reader/reader-scores.json"
+      },
+      {
+        "n": 9,
+        "tool": "Bash",
+        "use": "chmod 444 on the two outputs"
+      }
+    ]
+  },
+  "outcome": {
+    "reviewed": 8,
+    "passed": 1
+  }
+}

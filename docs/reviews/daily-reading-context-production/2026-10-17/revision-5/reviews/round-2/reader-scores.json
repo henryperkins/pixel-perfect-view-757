@@ -1,0 +1,346 @@
+{
+  "reviewType": "independent blind AI reader review",
+  "humanReviewCompleted": false,
+  "frozenAtUtc": "2026-10-17T11:45:13Z",
+  "inputs": [
+    {
+      "path": "/tmp/pattern-context-structure-private-5-r2-20261017/reader/reader-packet.md",
+      "sha256": "278b33fbcbc189428357eb26202eb0a5f7a5568e3ee299a91bc51566ac71ec77"
+    },
+    {
+      "path": "/tmp/pattern-context-structure-private-5-r2-20261017/reader/benchmark-readings.md",
+      "sha256": "75258c2eabec3625cd49b72374c3fcdc4b2d2d769bd6b383403a77b4a6e6ebf2"
+    }
+  ],
+  "threshold": 4,
+  "bodies": [
+    {
+      "label": "B1",
+      "scores": {
+        "recognition": 4,
+        "meaning": 4,
+        "direction": 4,
+        "distinctness": 4,
+        "voice": 4
+      },
+      "pass": true,
+      "evidence": [
+        {
+          "dimension": "recognition",
+          "quote": "An extra check can look small beside a familiar task.",
+          "note": "Limiting: The scene is recognizable, but the task is generic, the check is never specified, and 'the afternoon' in the next sentence arrives without being set up, so the reader supplies most of the picture."
+        },
+        {
+          "dimension": "meaning",
+          "quote": "With Saturn squaring your natal Sun, that task can need more effort than usual, and if it already fills the afternoon, the check still needs some of the same hours.",
+          "note": "Limiting: The contact is glossed only as 'more effort than usual'. The distinction (an addition that looks small still takes hours from a full block) carries the meaning, and 'some of the same hours' blurs it slightly."
+        },
+        {
+          "dimension": "direction",
+          "quote": "If an earlier way of handling the task no longer fits, you could use this return to try one smaller change rather than a whole new plan: stopping before the extra check, for instance.",
+          "note": "Limiting: Optional and proportionate, and it gives the fixed chronology a practical use: treat the second pass as a chance to revise one thing, not to start over. But the concrete step is tacked on with 'for instance', 'an earlier way' is not tied to the September contact in so many words, and 'of three' is never used."
+        },
+        {
+          "dimension": "distinctness",
+          "quote": "If an earlier way of handling the task no longer fits, you could use this return to try one smaller change rather than a whole new plan: stopping before the extra check, for instance.",
+          "note": "Limiting: Nothing is restated and each sentence adds, but the paragraph opens on a generic hinge ('If an earlier way of handling the task no longer fits') that would fit almost any task; only the closing example belongs to this body."
+        },
+        {
+          "dimension": "voice",
+          "quote": "If an earlier way of handling the task no longer fits, you could use this return to try one smaller change rather than a whole new plan: stopping before the extra check, for instance.",
+          "note": "Limiting: Plain, with no counseling or reassurance, but 'this return' is borrowed jargon (a reader may hear 'Saturn return'), and the trailing 'for instance' makes the close stilted."
+        }
+      ]
+    },
+    {
+      "label": "B2",
+      "scores": {
+        "recognition": 4,
+        "meaning": 4,
+        "direction": 4,
+        "distinctness": 5,
+        "voice": 4
+      },
+      "pass": true,
+      "evidence": [
+        {
+          "dimension": "recognition",
+          "quote": "An extra check can look like almost nothing next to a task you know well.",
+          "note": "Limiting: Personal and plain, but the check is never specified and 'the whole afternoon' two sentences later is not set up, so the scene stays generic."
+        },
+        {
+          "dimension": "meaning",
+          "quote": "With Saturn squaring your natal Sun, even that task can take more effort than usual.",
+          "note": "Limiting: The contact is glossed only generically. Otherwise the meaning is strong: 'Moving the task to another afternoon only takes the check along with it.' is a sharp, useful distinction (rescheduling does not change what the task includes)."
+        },
+        {
+          "dimension": "direction",
+          "quote": "Changing what the task includes is the other option: the check could stay outside it.",
+          "note": "Limiting: One optional, proportionate alternative, but 'stay outside it' leaves the reader to decide what happens to the check: done separately, done later, or dropped."
+        },
+        {
+          "dimension": "voice",
+          "quote": "Changing what the task includes is the other option: the check could stay outside it.",
+          "note": "Limiting: The phrase 'hours that are already spoken for' is accurate and warm; this close is flatter and slightly procedural ('is the other option')."
+        }
+      ]
+    },
+    {
+      "label": "B3",
+      "scores": {
+        "recognition": 4,
+        "meaning": 3,
+        "direction": 3,
+        "distinctness": 3,
+        "voice": 4
+      },
+      "pass": false,
+      "evidence": [
+        {
+          "dimension": "recognition",
+          "quote": "If several projects compete for that same afternoon, following a few lines of curiosity may help a direction take shape before you choose.",
+          "note": "Limiting: The opening check and 'A page of notes' are concrete, but this sentence brings in a second, generic scene (several projects) as a hypothetical, so the reader has to hold two different afternoons."
+        },
+        {
+          "dimension": "meaning",
+          "quote": "If several projects compete for that same afternoon, following a few lines of curiosity may help a direction take shape before you choose.",
+          "note": "Blocking: The first paragraph opens and closes one problem: an extra check inside a familiar task that already fills the afternoon. This sentence starts a different one, choosing among several projects, that the first paragraph never contained, and does not square it with an afternoon already said to be full. The check is dropped, and 'help a direction take shape' does not say what the reader would learn."
+        },
+        {
+          "dimension": "direction",
+          "quote": "If it already fills the afternoon, the check still needs some of the same hours and could stay outside the task.",
+          "note": "Blocking: The first of three directions in five sentences (keep the check out, follow curiosity, park the other ideas in notes). It is wedged into the observation sentence, so it reads as an aside rather than a choice."
+        },
+        {
+          "dimension": "direction",
+          "quote": "If several projects compete for that same afternoon, following a few lines of curiosity may help a direction take shape before you choose.",
+          "note": "Blocking: Following curiosity into several projects asks for time the body has just said is taken, and nothing says how much or when; not proportionate to the situation the body set up."
+        },
+        {
+          "dimension": "distinctness",
+          "quote": "If it already fills the afternoon, the check still needs some of the same hours and could stay outside the task.",
+          "note": "Blocking: Read with the closing sentence, the same move is made twice in different words: keep an addition out of hours already committed, first for the check, then for the ideas."
+        },
+        {
+          "dimension": "distinctness",
+          "quote": "A page of notes can hold the other ideas without promising them those hours.",
+          "note": "Blocking: Restates the first paragraph's 'could stay outside the task' for a new object instead of adding a step, so the second paragraph restarts rather than develops."
+        },
+        {
+          "dimension": "voice",
+          "quote": "If several projects compete for that same afternoon, following a few lines of curiosity may help a direction take shape before you choose.",
+          "note": "Limiting: The phrases 'lines of curiosity' and 'help a direction take shape' are abstract. The rest is plain, though the earlier 'and could stay outside the task' crowds observation and advice into one sentence."
+        }
+      ]
+    },
+    {
+      "label": "B4",
+      "scores": {
+        "recognition": 4,
+        "meaning": 4,
+        "direction": 4,
+        "distinctness": 4,
+        "voice": 4
+      },
+      "pass": true,
+      "evidence": [
+        {
+          "dimension": "recognition",
+          "quote": "An extra check can look like almost nothing next to a task you know well.",
+          "note": "Limiting: Plain and personal, but the check and the task stay unspecified and 'the whole afternoon' is not set up."
+        },
+        {
+          "dimension": "meaning",
+          "quote": "With Saturn squaring your natal Sun, even that task can take more effort than usual, and if it fills the whole afternoon, the check needs hours that are already spoken for.",
+          "note": "Limiting: The contact is glossed generically. The distinction between a check that looks like nothing and hours already spoken for carries the meaning."
+        },
+        {
+          "dimension": "direction",
+          "quote": "If an earlier way of handling the task no longer fits, you could use this return to try one smaller change rather than a new plan: a stopping point that comes before the check.",
+          "note": "Limiting: The step 'a stopping point that comes before the check' is concrete, optional and proportionate, and the sentence gives the fixed chronology a practical use (revise one thing on the second pass). The hinge is conditional, 'an earlier way' is not tied to September explicitly, and 'of three' is unused."
+        },
+        {
+          "dimension": "distinctness",
+          "quote": "If an earlier way of handling the task no longer fits, you could use this return to try one smaller change rather than a new plan: a stopping point that comes before the check.",
+          "note": "Limiting: No restatement and each sentence adds, but the paragraph opens on a generic hinge clause that would fit almost any task."
+        },
+        {
+          "dimension": "voice",
+          "quote": "If an earlier way of handling the task no longer fits, you could use this return to try one smaller change rather than a new plan: a stopping point that comes before the check.",
+          "note": "Limiting: Without 'whole', 'one smaller change rather than a new plan' compares unlike things (smaller than what?), and 'this return' is borrowed jargon."
+        }
+      ]
+    },
+    {
+      "label": "B5",
+      "scores": {
+        "recognition": 4,
+        "meaning": 3,
+        "direction": 3,
+        "distinctness": 4,
+        "voice": 4
+      },
+      "pass": false,
+      "evidence": [
+        {
+          "dimension": "recognition",
+          "quote": "If other projects are competing for those hours, with notes on one idea and a tab open on another, following your curiosity into both can help show which way to go before you commit.",
+          "note": "Limiting: The roomy-looking afternoon and the note and open tab are concrete and recognizable, but the vivid detail belongs to the side projects while the task the afternoon is for stays generic, and these details compete with the chronology sentence for attention."
+        },
+        {
+          "dimension": "meaning",
+          "quote": "And if an earlier way of handling the task no longer fits, you could use this return to try one smaller change: an idea can stay a note instead of joining this afternoon.",
+          "note": "Blocking: This is the only bridge to the fixed chronology sentence, and the change in handling the task that it offers turns out to concern a side idea, not the task, so the September contact gets no clear practical meaning. It also pulls against the previous sentence: go into both ideas, or keep one as a note."
+        },
+        {
+          "dimension": "direction",
+          "quote": "If other projects are competing for those hours, with notes on one idea and a tab open on another, following your curiosity into both can help show which way to go before you commit.",
+          "note": "Blocking: Directly after 'anything else needs hours that are already spoken for', the main direction asks the reader to spend time on two other projects, with no limit or timing; not proportionate to the constraint the body just set."
+        },
+        {
+          "dimension": "direction",
+          "quote": "And if an earlier way of handling the task no longer fits, you could use this return to try one smaller change: an idea can stay a note instead of joining this afternoon.",
+          "note": "Blocking: A second conditional direction stacked on with 'And if'. The reader gets two branches that point different ways and is not told how they fit together."
+        },
+        {
+          "dimension": "distinctness",
+          "quote": "And if an earlier way of handling the task no longer fits, you could use this return to try one smaller change: an idea can stay a note instead of joining this afternoon.",
+          "note": "Limiting: Nothing is restated outright, but the second paragraph branches into two 'if' clauses instead of developing the first paragraph's point about hours already spoken for."
+        },
+        {
+          "dimension": "voice",
+          "quote": "And if an earlier way of handling the task no longer fits, you could use this return to try one smaller change: an idea can stay a note instead of joining this afternoon.",
+          "note": "Limiting: Plain words, but a long stacked sentence (conditional, main clause, colon, example) with 'this return' as jargon; the preceding 'following your curiosity' assumes a trait rather than noticing one."
+        }
+      ]
+    },
+    {
+      "label": "B6",
+      "scores": {
+        "recognition": 4,
+        "meaning": 3,
+        "direction": 3,
+        "distinctness": 3,
+        "voice": 3
+      },
+      "pass": false,
+      "evidence": [
+        {
+          "dimension": "recognition",
+          "quote": "With Saturn squaring your natal Sun, though, even a familiar task can take more effort than usual, and if it fills the whole afternoon, that next piece needs hours that are already spoken for.",
+          "note": "Limiting: The opening ('A page of notes can start turning into an outline.') is concrete and recognizable, but this sentence brings in a second, unrelated 'familiar task', so the opening scene does not hold."
+        },
+        {
+          "dimension": "meaning",
+          "quote": "Each added piece can mean more structure to carry the whole, and a task growing past what was agreed is one place to notice that.",
+          "note": "Blocking: The referents keep shifting: notes and outline, then 'a familiar task', then 'the whole', then 'a task growing past what was agreed', then 'joining the task'. Nothing was agreed earlier in the body. The synthesis the two contacts point to (ease of starting versus the structure to carry more) is never stated plainly, so the reader cannot assemble one meaning."
+        },
+        {
+          "dimension": "direction",
+          "quote": "If several pieces like that compete for the afternoon, following your curiosity into more than one can help show which way to go before you commit.",
+          "note": "Blocking: Invites taking up more than one piece right after saying each added piece needs more structure and the afternoon is spoken for."
+        },
+        {
+          "dimension": "direction",
+          "quote": "And if an earlier way of handling the task no longer fits, you could use this return to try one smaller change: the next piece can stay a note instead of joining the task.",
+          "note": "Blocking: A third direction that reverses the second (keep the next piece out). The chronology hinge is attached to a change about the next piece rather than to how the task was handled, so the September contact carries no practical meaning."
+        },
+        {
+          "dimension": "distinctness",
+          "quote": "Each added piece can mean more structure to carry the whole, and a task growing past what was agreed is one place to notice that.",
+          "note": "Blocking: Restates, more abstractly, the earlier point that 'that next piece needs hours that are already spoken for'. The word 'piece' appears five times with shifting referents, and seven sentences carry two contacts, the chronology and three directions."
+        },
+        {
+          "dimension": "voice",
+          "quote": "With Jupiter trining your natal Mars, wanting to start and actually starting can feed each other when the aim is well chosen, and taking on the next piece can feel natural.",
+          "note": "Blocking: Abstract and formal ('wanting to start and actually starting can feed each other', 'when the aim is well chosen'), and the next sentence repeats the same planet-aspect-natal-planet frame with 'though'."
+        },
+        {
+          "dimension": "voice",
+          "quote": "Each added piece can mean more structure to carry the whole, and a task growing past what was agreed is one place to notice that.",
+          "note": "Blocking: Phrases such as 'more structure to carry the whole' and 'is one place to notice that' are report language, not a noticed detail."
+        }
+      ]
+    },
+    {
+      "label": "B7",
+      "scores": {
+        "recognition": 4,
+        "meaning": 4,
+        "direction": 4,
+        "distinctness": 4,
+        "voice": 4
+      },
+      "pass": true,
+      "evidence": [
+        {
+          "dimension": "recognition",
+          "quote": "An afternoon set aside for a task you know well can look like plenty of room.",
+          "note": "Limiting: A good, recognizable opening, and the note and open tab later are vivid, but the task the afternoon is for never gets a concrete detail of its own."
+        },
+        {
+          "dimension": "meaning",
+          "quote": "If other projects are competing for those hours, with notes on one idea and a tab open on another, following your curiosity into both can help show which way to go before you commit.",
+          "note": "Limiting: The body names two useful distinctions (looks roomy versus already spoken for; kept in view versus promised the afternoon), but here 'which way to go' and 'commit' have no stated object, and the contact itself is glossed only as 'more effort than usual'."
+        },
+        {
+          "dimension": "direction",
+          "quote": "If other projects are competing for those hours, with notes on one idea and a tab open on another, following your curiosity into both can help show which way to go before you commit.",
+          "note": "Limiting: The closing 'A note can keep an idea in view without promising it the afternoon.' is optional, concrete and proportionate. This sentence, though, asks for time on two side projects right after the body says the hours are spoken for, with no limit; the reader has to infer that the sampling stays light and the note is where it ends. A narrow 4."
+        },
+        {
+          "dimension": "distinctness",
+          "quote": "A note can keep an idea in view without promising it the afternoon.",
+          "note": "Limiting: Adds the in-view versus promised distinction, but returns to the notes already introduced, and 'without promising it the afternoon' sits close to the preceding 'before you commit'."
+        },
+        {
+          "dimension": "voice",
+          "quote": "If other projects are competing for those hours, with notes on one idea and a tab open on another, following your curiosity into both can help show which way to go before you commit.",
+          "note": "Limiting: Plain and concrete, but one long conditional sentence with an inserted clause; 'following your curiosity' assumes a trait rather than noticing one, and 'which way to go' is stock phrasing."
+        }
+      ]
+    },
+    {
+      "label": "B8",
+      "scores": {
+        "recognition": 4,
+        "meaning": 4,
+        "direction": 4,
+        "distinctness": 4,
+        "voice": 4
+      },
+      "pass": true,
+      "evidence": [
+        {
+          "dimension": "recognition",
+          "quote": "An extra check can look small beside a familiar task you've set an afternoon aside to finish.",
+          "note": "Limiting: The afternoon is set up and the task is the reader's own ('you've set an afternoon aside'), but the check and the task are still unspecified."
+        },
+        {
+          "dimension": "meaning",
+          "quote": "Moving the task to a later opening only takes the check along with it, but the check could also stay outside the task.",
+          "note": "Limiting: The rescheduling-versus-scope distinction is present, but 'but ... also' frames the alternative as an add-on rather than naming it as the other choice, so the distinction lands softer than it could."
+        },
+        {
+          "dimension": "direction",
+          "quote": "Moving the task to a later opening only takes the check along with it, but the check could also stay outside the task.",
+          "note": "Limiting: Optional and proportionate, but 'stay outside the task' is abstract; what happens to the check is left to the reader."
+        },
+        {
+          "dimension": "distinctness",
+          "quote": "Moving the task to a later opening only takes the check along with it, but the check could also stay outside the task.",
+          "note": "Limiting: Each of the three sentences adds, but the last compresses two moves into one sentence, so the alternative is asserted rather than developed."
+        },
+        {
+          "dimension": "voice",
+          "quote": "With Saturn squaring your natal Sun, that task can need more effort than usual, and if it already fills the afternoon, the check still needs some of the same hours.",
+          "note": "Limiting: Plain and uncounseling, but 'some of the same hours' is awkward (the same as what?), and 'a later opening' in the next sentence is slightly stiff."
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "reviewed": 8,
+    "passed": 5
+  }
+}

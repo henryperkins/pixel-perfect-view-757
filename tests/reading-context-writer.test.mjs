@@ -39,8 +39,8 @@ test("candidate composes all five complete source graphs and keeps their indepen
   for (const benchmark of packet.cases) {
     const result = await run(benchmark);
     assert.equal(result.prose.meta.mode, "model", benchmark.id);
-    assert.equal(result.prose.meta.diagnostics.promptVersion, "daily-context-body-4", benchmark.id);
-    assert.equal(result.prose.meta.diagnostics.validatorVersion, "daily-context-reference-4");
+    assert.equal(result.prose.meta.diagnostics.promptVersion, "daily-context-body-5", benchmark.id);
+    assert.equal(result.prose.meta.diagnostics.validatorVersion, "daily-context-reference-5");
     assert.equal(result.prose.body, benchmark.paragraphs.map((p) => p.text).join("\n\n"));
     assert.equal(result.prose.headline, benchmark.headline);
     assert.equal(result.prose.prompt, benchmark.reflection);
@@ -77,14 +77,23 @@ test("candidate provider boundary has one complete brief and excludes audit copy
   assert.ok(!prompt.includes(benchmark.headline));
   assert.ok(!prompt.includes(benchmark.reflection));
   const brief = JSON.parse(prompt.split("\n").find((line) => line.startsWith('{"version":')));
-  assert.deepEqual(brief.material.map((m) => m.factId).sort(), ["I1", "I2", "N1", "P2", "S1"]);
+  assert.deepEqual([...new Set(brief.claims.flatMap((claim) => claim.cite))].sort(), [
+    "A1",
+    "C1",
+    "C2",
+    "I1",
+    "I2",
+    "N1",
+    "P2",
+    "S1",
+  ]);
   assert.ok(
     brief.references.some(
       (ref) => ref.id === "A1" && ref.chronologySentence === benchmark.chronology,
     ),
   );
-  for (const { meaning } of brief.controls.sourceMeanings)
-    assert.equal(prompt.split(meaning).length - 1, 1);
+  for (const { write } of brief.claims.filter((claim) => claim.write))
+    assert.equal(prompt.split(write).length - 1, 1);
   assert.deepEqual(input, original);
 });
 
@@ -184,7 +193,7 @@ test("candidate supports each tone/depth while standard allows only its required
     for (const depth of ["standard", "technical"]) {
       const result = await run(benchmark, () => {}, { tone, depth });
       assert.equal(result.prose.meta.mode, "model", `${tone}/${depth}`);
-      assert.equal(result.prose.meta.diagnostics.promptVersion, "daily-context-body-4");
+      assert.equal(result.prose.meta.diagnostics.promptVersion, "daily-context-body-5");
     }
   }
   const detail = (p) =>

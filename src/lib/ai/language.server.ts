@@ -27,8 +27,8 @@ import { storyParagraphProblem, storyCoverageProblem } from "./transit-story-fac
 import {
   CONTEXT_DAILY_PROMPT_VERSION,
   CONTEXT_DAILY_VALIDATOR_VERSION,
+  dailyContextPrompt,
   dailyContextSystemVoice,
-  dailyContextVoice,
   toDailyContextBrief,
 } from "./daily-context-writing";
 import {
@@ -68,7 +68,7 @@ import {
   type SyntheticTransportControl,
 } from "./admin-transport";
 import { dropsSourceModality } from "./daily-modality";
-import { dailyContextClaimProblem } from "./daily-context-claims";
+import { dailyContextClaimProblem, dailyContextRepeatProblem } from "./daily-context-claims";
 import { natalLensWordingProblem } from "../content/natal-lens-policy";
 import type {
   EvaluationJsonValue,
@@ -919,6 +919,8 @@ function dailyDraft(
   const storyCoverage = storyCoverageProblem(kept, citations, validationFacts);
   if (storyCoverage)
     return rejection(storyCoverage, "draft omitted the supplied chronology or chapter");
+  const repeated = contextCandidate ? dailyContextRepeatProblem(kept, validationFacts) : null;
+  if (repeated) return rejection("writing_quality", repeated);
   return { body: kept.join("\n\n"), paragraphs: kept, citations, writingParagraphs };
 }
 
@@ -1204,22 +1206,7 @@ async function generateDailyProse(
       .filter(Boolean)
       .join("\n");
   const prompt = contextBrief
-    ? [
-        dailyContextVoice(input.tone, input.depth),
-        "One source-bound writing brief; draft from its scene details, practical distinctions and optional directions. Source meanings and conditions in controls constrain the writing:",
-        JSON.stringify(contextBrief),
-        "Write only the body. The first paragraph concerns the primary contact and cites C1/I1. Use two to four paragraphs of one to four complete sentences each, each under 200 words, at most 700 words total. Declare empty scenes arrays; this brief supplies no SC identifiers.",
-        "Integrate every selected meaning in paragraph 1 or 2. S1 cites S1/C1/I1/C2/I2; N1 cites N1/C1/I1; chapter P2 cites P2/C1/I1/A1. Preserve each source's conditions. Copy A1 chronology unchanged exactly once in the first two paragraphs, citing A1/C1.",
-        "Every named planet, aspect or measurement cites its matching C reference. These are transit-to-natal contacts, not current-sky pairs. Do not introduce sign placements, individual houses, natal origins or unprovided imagery. Do not add dates outside the supplied literal chronology unless technical depth provides a directly cited C exactDate.",
-        "Keep the current orb and any exact date in separate sentences. Neither is a personal deadline. Never assert a personal past event, a usual cause or frequency absent from the source, another person's intent, or a promised resolution.",
-        input.suppression.angles
-          ? "Angle claims are suppressed; mention no angles or rising sign."
-          : "",
-        input.suppression.houses ? "House claims are suppressed; mention no houses or cusps." : "",
-        "The app handles calculation caveats separately. Do not add a headline, reflection question, source-policy explanation or wellbeing framing.",
-      ]
-        .filter(Boolean)
-        .join("\n")
+    ? dailyContextPrompt(contextBrief, input.suppression)
     : legacyPrompt();
   let raw: unknown;
   const started = performance.now();

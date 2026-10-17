@@ -38,8 +38,8 @@ const sourceGraph = (facts: { id: string }[]) =>
 const EXPECTED_BENCHMARK_HASH = "825c877dbb88d5d20d39a12abfd67cea01781506250db93d44ae7c9885b35024";
 const EXPECTED_BUNDLE_HASH = "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f";
 const EXPECTED_RUNTIME_FALLBACK_HASH =
-  "af143337793ad4136a16fd4144adec0be365d15fa0b1e83d326763bcae85a0eb";
-const EXPECTED_MATERIAL_HASH = "e1f0621413c14cbbe4fd591cf4858309b1b0840df2b88d8b3c10dd22d0fb704e";
+  "de37f4d42308bec8acbc7fff346a4bd8a446698eae1041b0ac1d3539e9bd2703";
+const EXPECTED_MATERIAL_HASH = "40a86ccab103f37f6b28db1e1aef8313f142d2cb7af6c0f8806f483eabf665b8";
 
 export function createContextPilotPlan(sourceSha: string | null, provider: LanguageProvider) {
   if (!sourceSha || !/^[a-f0-9]{40}$/.test(sourceSha))
@@ -52,15 +52,19 @@ export function createContextPilotPlan(sourceSha: string | null, provider: Langu
   const materialHash = createHash("sha256").update(materialBytes).digest("hex");
   const materials = JSON.parse(materialBytes) as {
     version: string;
-    cards: Record<string, unknown>[];
+    sources: Record<string, unknown>[];
+    compositions: { mode: string }[];
   };
   if (
     benchmarkHash !== EXPECTED_BENCHMARK_HASH ||
     canonicalHash(candidate) !== EXPECTED_BUNDLE_HASH ||
     materialHash !== EXPECTED_MATERIAL_HASH ||
     materials.version !== CONTEXT_DAILY_MATERIAL_VERSION ||
-    !Array.isArray(materials.cards) ||
-    !materials.cards.length
+    !Array.isArray(materials.sources) ||
+    !materials.sources.length ||
+    !Array.isArray(materials.compositions) ||
+    JSON.stringify(materials.compositions.map((item) => item.mode)) !==
+      JSON.stringify(CONTEXT_PILOT_CASE_IDS)
   )
     throw Error("The frozen reviewed context benchmarks, source bundle or material changed.");
   const runtimeFallbacks = JSON.parse(

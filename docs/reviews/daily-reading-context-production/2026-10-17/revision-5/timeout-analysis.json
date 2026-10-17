@@ -1,0 +1,176 @@
+{
+  "version": "daily-context-timeout-analysis-5",
+  "status": "offline analysis of saved transport receipts; cause unknown",
+  "run": "8d5d7931-1040-4a93-9c28-164df447e337",
+  "providerOrNetworkCalls": 0,
+  "attempts": [
+    {
+      "case": "contact-only",
+      "capture": "docs/reviews/daily-reading-context-production/2026-10-17/revision-4/pilot/01-contact-only.json",
+      "captureSha256": "e9895ca3c208b780df3dd988e81a9aaa6219d8b9913fbd17d50b6b4a1c38e1c6",
+      "startedAt": "2026-10-17T10:04:08.130Z",
+      "headersAt": "2026-10-17T10:04:25.055Z",
+      "bodyAt": "2026-10-17T10:04:25.055Z",
+      "abortAt": null,
+      "finishedAt": "2026-10-17T10:04:25.055Z",
+      "secondsToFinish": 16.925,
+      "httpStatus": 200,
+      "deadlineMs": 60000,
+      "maxOutputTokens": 65536,
+      "thinkingLevel": null,
+      "requestedModel": "gemini-enterprise/gemini-3.8-flash",
+      "actualModel": "gemini-3.8-flash",
+      "responseId": "GEjTaorVFuXCsbwPsPnw2Qo",
+      "finishReason": "STOP",
+      "requestChars": 9582,
+      "usage": {
+        "inputTokens": 2144,
+        "outputTokens": 202,
+        "thinkingTokens": 2074,
+        "totalTokens": 4420,
+        "outputIncludesThinking": false
+      },
+      "generatedTokensPerSecond": 134.5,
+      "charsPerInputToken": 4.47
+    },
+    {
+      "case": "natal-only",
+      "capture": "docs/reviews/daily-reading-context-production/2026-10-17/revision-4/pilot/02-natal-only.json",
+      "captureSha256": "bfc0f78784ff681c13291ac49fd75a48dfd5795ec76ad08ed3a53ae0af44e67b",
+      "startedAt": "2026-10-17T10:04:27.343Z",
+      "headersAt": "2026-10-17T10:04:49.616Z",
+      "bodyAt": "2026-10-17T10:04:49.616Z",
+      "abortAt": null,
+      "finishedAt": "2026-10-17T10:04:49.616Z",
+      "secondsToFinish": 22.273,
+      "httpStatus": 200,
+      "deadlineMs": 60000,
+      "maxOutputTokens": 65536,
+      "thinkingLevel": null,
+      "requestedModel": "gemini-enterprise/gemini-3.8-flash",
+      "actualModel": "gemini-3.8-flash",
+      "responseId": "K0jTarTVIqLYsbwP19aosQE",
+      "finishReason": "STOP",
+      "requestChars": 11321,
+      "usage": {
+        "inputTokens": 2531,
+        "outputTokens": 224,
+        "thinkingTokens": 2848,
+        "totalTokens": 5603,
+        "outputIncludesThinking": false
+      },
+      "generatedTokensPerSecond": 137.9,
+      "charsPerInputToken": 4.47
+    },
+    {
+      "case": "transit-only",
+      "capture": "docs/reviews/daily-reading-context-production/2026-10-17/revision-4/pilot/03-transit-only.json",
+      "captureSha256": "a030dd8e15e3680f58f343724bbd50a78e37c5a3140b973574ebf25874670f84",
+      "startedAt": "2026-10-17T10:04:52.068Z",
+      "headersAt": "2026-10-17T10:05:10.520Z",
+      "bodyAt": "2026-10-17T10:05:10.520Z",
+      "abortAt": null,
+      "finishedAt": "2026-10-17T10:05:10.520Z",
+      "secondsToFinish": 18.452,
+      "httpStatus": 200,
+      "deadlineMs": 60000,
+      "maxOutputTokens": 65536,
+      "thinkingLevel": null,
+      "requestedModel": "gemini-enterprise/gemini-3.8-flash",
+      "actualModel": "gemini-3.8-flash",
+      "responseId": "REjTao_1Ee-UsbwPs8n8-AI",
+      "finishReason": "STOP",
+      "requestChars": 10997,
+      "usage": {
+        "inputTokens": 2493,
+        "outputTokens": 248,
+        "thinkingTokens": 2700,
+        "totalTokens": 5441,
+        "outputIncludesThinking": false
+      },
+      "generatedTokensPerSecond": 159.8,
+      "charsPerInputToken": 4.41
+    },
+    {
+      "case": "natal-and-transit",
+      "capture": "docs/reviews/daily-reading-context-production/2026-10-17/revision-4/pilot/04-natal-and-transit.json",
+      "captureSha256": "ad92b4ba5dffa0c67db6f458bb2e7b9eb62faa822e0759fbc54bda2038d043b4",
+      "startedAt": "2026-10-17T10:05:13.352Z",
+      "headersAt": null,
+      "bodyAt": null,
+      "abortAt": "2026-10-17T10:06:13.352Z",
+      "finishedAt": "2026-10-17T10:06:13.352Z",
+      "secondsToFinish": 60.0,
+      "httpStatus": null,
+      "deadlineMs": 60000,
+      "maxOutputTokens": 65536,
+      "thinkingLevel": null,
+      "requestedModel": "gemini-enterprise/gemini-3.8-flash",
+      "actualModel": null,
+      "responseId": null,
+      "finishReason": null,
+      "requestChars": 12736,
+      "usage": {
+        "inputTokens": null,
+        "outputTokens": null,
+        "thinkingTokens": null,
+        "totalTokens": null,
+        "outputIncludesThinking": null
+      },
+      "generatedTokensPerSecond": null,
+      "charsPerInputToken": null
+    }
+  ],
+  "observations": {
+    "successfulSecondsToHeaders": [
+      16.925,
+      22.273,
+      18.452
+    ],
+    "headersAndBodyArriveTogether": true,
+    "gapBetweenAttemptsSeconds": [
+      2.288,
+      2.452,
+      2.832
+    ],
+    "fourthAttemptEstimatedInputTokens": 2862,
+    "meanCharsPerInputToken": 4.45,
+    "slowestObservedGenerationTokensPerSecond": 134.5,
+    "generatedTokensThatWouldFitIn60sAtSlowestObservedRate": 8070,
+    "largestObservedGeneratedTokens": 3072
+  },
+  "interpretation": [
+    "Gemini Enterprise generateContent is not streamed here, so response headers arrive only after the complete response, including thinking. A timeout before headers cannot distinguish long generation from provider queueing or a stalled connection.",
+    "The fourth request was about 12% larger than the natal-only request that succeeded in 22.3 seconds. At the slowest observed generation rate, 60 seconds allows about 8,070 generated tokens, roughly 2.6 times the largest observed thinking-plus-output total (3,072). Input growth alone therefore does not explain the timeout.",
+    "No HTTP status, response ID, model version, finish reason or usage was recorded for the fourth attempt. Its cost is unknown; the $2.80 figure is a conservative reservation, not a charge.",
+    "The cause remains unknown. This revision makes no change to the provider, the 60-second deadline, the no-retry rule or the halt-on-timeout controller."
+  ],
+  "revision5RequestSize": [
+    {
+      "case": "contact-only",
+      "requestChars": 3466,
+      "estimatedInputTokens": 779
+    },
+    {
+      "case": "natal-only",
+      "requestChars": 3911,
+      "estimatedInputTokens": 879
+    },
+    {
+      "case": "transit-only",
+      "requestChars": 3862,
+      "estimatedInputTokens": 868
+    },
+    {
+      "case": "natal-and-transit",
+      "requestChars": 4489,
+      "estimatedInputTokens": 1009
+    },
+    {
+      "case": "synthesis-natal-and-transit",
+      "requestChars": 5361,
+      "estimatedInputTokens": 1205
+    }
+  ],
+  "note": "The revision-5 requests are smaller and carry fewer competing instructions. That may shorten thinking, but it is not evidence about the timeout and is not presented as a fix."
+}

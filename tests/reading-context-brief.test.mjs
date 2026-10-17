@@ -50,47 +50,32 @@ test("natal-only and transit-only briefs preserve their respective sources and e
   ]);
 });
 
-test("source-bound material preserves complete meaning while structural references contain no prose", () => {
+test("drafted claims cite every parent they use while structural references contain no prose", () => {
   const { facts } = prepared();
   const result = brief.toDailyContextBrief(facts, "warm", "standard");
-  assert.deepEqual(
-    result.material.map((entry) => entry.factId),
-    ["I1", "I2", "S1", "N1", "P2"],
-  );
-  for (const entry of result.material) {
-    const fact = facts.find((item) => item.id === entry.factId);
-    assert.equal(entry.sourceKey, fact.sourceKey);
-    assert.equal(entry.releaseVersion, fact.releaseVersion);
-    assert.equal(entry.meaning, undefined);
-    const meaning = result.controls.sourceMeanings.find((item) => item.factId === entry.factId);
-    assert.ok(meaning.meaning.length > 20);
-    assert.ok(!meaning.meaning.startsWith("Published "));
-    assert.deepEqual(meaning.requiredFacts, entry.requiredFacts);
-    assert.ok(entry.sceneDetails.length > 0, "reviewed details must supplement the meaning");
-    assert.ok(entry.practicalDistinction.length > 20);
-    assert.ok(
-      !fact.statement.endsWith(meaning.meaning),
-      "legacy prose must not compete with reviewed material",
+  const cited = new Set(result.claims.flatMap((claim) => claim.cite));
+  assert.deepEqual([...cited].sort(), ["A1", "C1", "C2", "I1", "I2", "N1", "P2", "S1"]);
+  const firstCiting = (id) => result.claims.find((claim) => claim.cite.includes(id));
+  assert.deepEqual(firstCiting("S1").cite, ["S1", "C1", "I1", "C2", "I2"]);
+  assert.deepEqual(firstCiting("N1").cite.slice(0, 3), ["N1", "C1", "I1"]);
+  assert.deepEqual(firstCiting("P2").cite.slice(0, 4), ["P2", "C1", "I1", "A1"]);
+  for (const claim of result.claims) {
+    assert.deepEqual(
+      Object.keys(claim).filter(
+        (key) =>
+          !["id", "move", "write", "copy", "cite", "keep", "continues", "byParagraph"].includes(
+            key,
+          ),
+      ),
+      [],
+      "source proof and carried-claim bookkeeping stay local",
     );
+    if (claim.write) {
+      assert.ok(!claim.write.startsWith("Published "));
+      for (const fact of facts.filter((item) => item.statement.length > 40))
+        assert.ok(!claim.write.includes(fact.statement), "legacy prose must not compete");
+    }
   }
-  assert.deepEqual(result.material.find((entry) => entry.factId === "S1").requiredFacts, [
-    "S1",
-    "C1",
-    "I1",
-    "C2",
-    "I2",
-  ]);
-  assert.deepEqual(result.material.find((entry) => entry.factId === "N1").requiredFacts, [
-    "N1",
-    "C1",
-    "I1",
-  ]);
-  assert.deepEqual(result.material.find((entry) => entry.factId === "P2").requiredFacts, [
-    "P2",
-    "C1",
-    "I1",
-    "A1",
-  ]);
   for (const reference of result.references) {
     assert.equal(reference.statement, undefined);
     assert.equal(reference.meaning, undefined);

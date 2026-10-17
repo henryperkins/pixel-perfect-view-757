@@ -1,0 +1,92 @@
+{
+  "version": "daily-context-next-pilot-proposal-5",
+  "status": "proposal only; not authorized, not dispatched",
+  "authorization": {
+    "required": "Fresh, explicit operator authorization for this campaign and its ceiling. The halted daily-context-pilot-4 campaign and its unused fifth slot are closed and are not reused.",
+    "notGrantedBy": "This document, its offline reviews, or any earlier campaign approval."
+  },
+  "campaign": {
+    "experimentVersion": "daily-context-pilot-5",
+    "caseSetId": "daily-context-1",
+    "caseSetHash": "93855b484ef95b1b950fc229633d4467215ff0cd2c6d6ce1eb1445ba3375f5c4",
+    "cases": [
+      "contact-only",
+      "natal-only",
+      "transit-only",
+      "natal-and-transit",
+      "synthesis-natal-and-transit"
+    ],
+    "attemptLimit": 5,
+    "oneRunPerCampaign": true
+  },
+  "transport": {
+    "provider": "gemini-enterprise",
+    "model": "gemini-enterprise/gemini-3.8-flash",
+    "gatewayTimeoutMs": 60000,
+    "maxOutputTokens": 65536,
+    "thinkingLevel": "provider default (unset), unchanged",
+    "retries": 0,
+    "providerFailover": false,
+    "haltOnUnavailable": true
+  },
+  "budget": {
+    "dollarCeilingMicros": 5000000,
+    "reservationPerAttemptMicros": 2800000,
+    "estimateFormula": "input tokens x 2 + (output + thinking) x 20 micros, capped at the reservation; an attempt without complete usage keeps the full reservation",
+    "expectedIfAllComplete": "about $0.20-$0.35 (pilot-4 completed bodies cost $0.050-$0.067 each with roughly three times the input)",
+    "worstCaseAccounted": "about $3.10: four completed bodies and one unresolved timeout reservation; the controller halts on the first timeout",
+    "invoiceVerified": false
+  },
+  "candidateIdentity": {
+    "adapterVersion": "daily-member-context-1",
+    "adapterHash": "d728de67a0547ac9d611c365dd68cb8440cf8aad038d34f143bd66731b21685a",
+    "fallbackVersion": "daily-member-context-fallbacks-1",
+    "fallbackHash": "de37f4d42308bec8acbc7fff346a4bd8a446698eae1041b0ac1d3539e9bd2703",
+    "materialVersion": "daily-context-material-5",
+    "materialHash": "40a86ccab103f37f6b28db1e1aef8313f142d2cb7af6c0f8806f483eabf665b8",
+    "promptVersion": "daily-context-body-5",
+    "validatorVersion": "daily-context-reference-5",
+    "voiceVersion": "daily-context-voice-5",
+    "briefVersion": "daily-context-brief-5",
+    "writerHash": "344248c03ef2202fbe804b66210fa1edb95f03e658c5666f874bd7a6a1a10173",
+    "briefHash": "22846e762ebc4ee078a035c13c7b4665ab2b59a68dcfd1f6d549f5db0209245a",
+    "claimsHash": "f92e02de1be42229ed2da9e6e21085785a03218ee3f855d9859f7c6e7402c6c9",
+    "benchmarkHash": "825c877dbb88d5d20d39a12abfd67cea01781506250db93d44ae7c9885b35024",
+    "sourceBundleCanonicalHash": "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f",
+    "planHash": "computed at preview from the exact deployed source SHA; must equal the reviewed preview before start"
+  },
+  "offlineEvidence": {
+    "label": "Authored offline evidence, not generated qualification. All reviews are AI reviews; no human review was done.",
+    "referenceReadings": "One authored reference per source graph and versioned edits of the three saved failures, eight bodies. All eight pass the production validator through the intercepted pilot path.",
+    "readerReview": "Four blind rounds, a fresh reviewer each time. Before the source fix, seven of the eight bodies scored at least 4 on recognition, meaning, direction, distinctness and voice; the synthesis reference did not. The source fix then changed four bodies (natal-only reference and edit, natal-and-transit, synthesis). They were not re-read, so they have no reader verdict on their final wording.",
+    "sourceReview": "Round 1: zero unsupported claims, but every natal wording lost N1's 'possible' and 'free'; contact-only and transit-only passed. Round 2, after the condition was restored: zero unsupported claims and no lost condition; natal-and-transit passes; natal-only omits I1's boundary on the task, and synthesis omits I2's 'or pursue an emerging opening'. Those two need a fix and re-review before this pilot is authorized."
+  },
+  "preDispatch": [
+    "The deployed serving identity equals the reviewed commit, and its build passed the full suite, TypeScript, ESLint and the production build.",
+    "Active release 0.9.0 is unchanged and writer_rollout is NULL.",
+    "No daily-context-pilot-5 run exists; earlier context runs and results match their recorded fingerprints.",
+    "Preview returns five cases, attempt limit 5, the $5 ceiling, Gemini Enterprise and the identities above; start uses that preview's plan hash.",
+    "Temporary admin access is granted only for the run and revoked afterwards; the run continues server-side if the browser closes."
+  ],
+  "gates": {
+    "automatic": "accepted model output with a lossless, untruncated capture",
+    "source": "independent source review: zero unsupported claims, no omitted selected meaning, context integration at least 4 where more than one meaning applies",
+    "reader": "independent blind reader review frozen before mapping: recognition, meaning, direction, distinctness and voice each at least 4; no averaging",
+    "independence": "reader and source reviewers are separate, receive only their packets, and freeze verdicts before seeing each other's or any mapping",
+    "allGatesRequired": true,
+    "thresholdsChanged": false,
+    "humanReviewClaimed": false
+  },
+  "interpretation": [
+    "A mode can qualify only on its own complete capture passing all three gates. Unavailable or unrequested cases are not graded and cannot qualify.",
+    "A partial run cannot qualify the five-case set, and a qualified subset does not imply the others.",
+    "Authored fallbacks and the offline reference readings are not generated evidence."
+  ],
+  "activation": "None during the pilot. Enabling any qualified mode, model or authored, is a separate authorized step with its own rollout policy identity and member verification.",
+  "synthesis": {
+    "offlineStatus": "No authored synthesis reference reached the reader bar. Distinctness stayed at 3 in all four bounded rounds; recognition, meaning, direction and voice reached 4 in round 4. The reader named crowding: seven sentences for two contacts, the chronology, a distinction, a curiosity point and a method change. It also found S1 re-saying its parents I1 and I2.",
+    "inThisPilot": "Included as the fixed fifth case. Its generated reading can qualify only by passing all three gates on its own capture. It is at risk under the current contract, and the other four modes do not depend on it.",
+    "proposal": "For review; not implemented. For the synthesis graph only: N1 may be introduced in paragraph 3, with C1/I1 staying in paragraph 1 and S1, P2 and the exact chronology in paragraphs 1-2; and S1's wording carries the meeting of I2's ease and I1's effort. Demonstrate offline with fresh blind reader and source reviews before any validator change.",
+    "alternative": "If one authorized run should be able to qualify all five modes, defer this pilot until the proposal is reviewed and demonstrated. The candidate identity would then change, with new validator and material versions."
+  }
+}

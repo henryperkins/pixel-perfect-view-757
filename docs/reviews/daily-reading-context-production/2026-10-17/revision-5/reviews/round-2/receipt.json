@@ -1,0 +1,32 @@
+{
+  "review": "independent blind AI reader review, round 2",
+  "reviewer": "fresh general-purpose subagent; one reviewer; did not see round 1",
+  "humanReviewCompleted": false,
+  "frozenAtUtc": "2026-10-17T11:45:13Z",
+  "instructionDifferenceFromRound1": "Added: 'Some bodies contain a fixed calculated chronology sentence; judge whether the body around it gives it practical meaning.' Rubric, scale and pass threshold unchanged.",
+  "inputs": {
+    "reader-packet.md": "278b33fbcbc189428357eb26202eb0a5f7a5568e3ee299a91bc51566ac71ec77",
+    "benchmark-readings.md": "75258c2eabec3625cd49b72374c3fcdc4b2d2d769bd6b383403a77b4a6e6ebf2"
+  },
+  "outputs": {
+    "reader-review.md": "27dc4454684de6029237a76282f65b23116c5c8dcb9bbafab07f1402f4e24101",
+    "reader-scores.json": "e198f306cbf9f8cb1088bf8d9ef9c0137f82c453bd73633f6c25949f2cb4204e"
+  },
+  "mappingSha256": "d426b3387f7452a4ac2492e2a18b6c2ea917f6d05c40a9bf654c9f07f5f941e4",
+  "mappingReadBeforeFreeze": false,
+  "transcriptAudit": {
+    "method": "tool_use entries parsed from the reviewer transcript; only tool names and touched paths inspected",
+    "toolCalls": 8,
+    "pathsTouched": [
+      "reader/reader-packet.md",
+      "reader/benchmark-readings.md",
+      "reader/reader-review.md",
+      "reader/reader-scores.json"
+    ],
+    "otherAccess": "none"
+  },
+  "outcome": {
+    "reviewed": 8,
+    "passed": 5
+  }
+}

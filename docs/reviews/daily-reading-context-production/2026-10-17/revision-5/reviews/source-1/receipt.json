@@ -1,0 +1,32 @@
+{
+  "review": "independent AI source review, source round 1",
+  "reviewer": "fresh general-purpose subagent; one reviewer; saw no reader review, mapping or earlier source review",
+  "humanReviewCompleted": false,
+  "recordedAtUtc": "2026-10-17T12:20:49Z",
+  "frozenAtUtc": "2026-10-17T12:38:45Z",
+  "scope": "All five compositions and all eight authored bodies at material sha256 df3024fef88d8d302f0c26039ac23e404ecff902ab3753fc76bde2dadb86e910.",
+  "inputs": {
+    "source-review-packet.md": "933257344bd5c8e7a0e3e55ee31fea9abb70f8a273769f9079f4f94340e6e98b"
+  },
+  "outputs": {
+    "source-review.md": "51e4ce2f8d2e3cfebf82385cba0ea86f2a11f63d1dede6a484d7eb8038f5d77d",
+    "source-scores.json": "c1c041016a405dcdab52cafa91ef96ed147751e6d7dd641f71bff7c027444e6c"
+  },
+  "mappingSha256": "d0016e9ab61a6770997e7817a091e8445028a2851a3bcf8f73ca26a8eff2c9a0",
+  "mappingReadBeforeFreeze": false,
+  "transcriptAudit": {
+    "method": "tool_use entries parsed from the reviewer transcript; only tool names and touched paths inspected",
+    "toolCalls": 19,
+    "pathsTouched": [
+      "source/source-review-packet.md",
+      "source/source-review.md",
+      "source/source-scores.json"
+    ],
+    "otherAccess": "Beyond the permitted commands the reviewer used echo/cut to format grep output and one ls on its two output paths; it opened no other file."
+  },
+  "outcome": {
+    "compositionsPassed": 2,
+    "bodiesPassed": 4,
+    "unsupportedClaimsTotal": 0
+  }
+}

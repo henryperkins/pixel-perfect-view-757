@@ -1,0 +1,697 @@
+{
+ "requests": {
+  "before": [
+   {
+    "id": "contact-only",
+    "systemChars": 2112,
+    "userChars": 7470,
+    "requestBytes": 10443,
+    "requestSha256": "c1870fcf4555663eb5a2fde2d0a45a9a9bd3edbb9ea95fddf87c1a1ce987aa96",
+    "units": 130,
+    "premiseExpressions": {
+     "I1.effort": 3,
+     "I1.capacity": 8,
+     "I1.boundary": 6,
+     "I1.calendar": 2,
+     "N1.stages": 1,
+     "N1.curiosity": 1,
+     "P2.adjustment": 2
+    },
+    "repeatedPremises": {
+     "I1.effort": [
+      "system[17]",
+      "brief.controls.sourceMeanings[0].meaning",
+      "brief.controls.sourceConditions[0].conditions[0]"
+     ],
+     "I1.capacity": [
+      "system[4]",
+      "system[17]",
+      "user.line3[1]",
+      "brief.material[0].practicalDistinction",
+      "brief.material[0].optionalDirections[0]",
+      "brief.development.sourceRoles[0].role",
+      "brief.controls.sourceMeanings[0].meaning",
+      "brief.controls.sourceConditions[0].conditions[1]"
+     ],
+     "I1.boundary": [
+      "system[4]",
+      "user.line3[1]",
+      "brief.material[0].optionalDirections[0]",
+      "brief.controls.editingPrinciples[7].instruction",
+      "brief.controls.sourceMeanings[0].meaning",
+      "brief.controls.sourceConditions[0].conditions[2]"
+     ],
+     "I1.calendar": [
+      "user.line4[2]",
+      "brief.material[0].sceneDetails[2]"
+     ],
+     "P2.adjustment": [
+      "user.line4[2]",
+      "brief.controls.editingPrinciples[5].instruction"
+     ]
+    }
+   },
+   {
+    "id": "natal-only",
+    "systemChars": 2498,
+    "userChars": 8823,
+    "requestBytes": 12280,
+    "requestSha256": "cbf3dbeaff2546093455048bc50633e61ea5f6563786444733a2728045c34fb2",
+    "units": 164,
+    "premiseExpressions": {
+     "I1.effort": 3,
+     "I1.capacity": 8,
+     "I1.boundary": 6,
+     "I1.calendar": 2,
+     "N1.stages": 6,
+     "N1.curiosity": 3,
+     "N1.hold": 2,
+     "P2.adjustment": 2
+    },
+    "repeatedPremises": {
+     "I1.effort": [
+      "system[17]",
+      "brief.controls.sourceMeanings[0].meaning",
+      "brief.controls.sourceConditions[0].conditions[0]"
+     ],
+     "I1.capacity": [
+      "system[4]",
+      "system[17]",
+      "user.line3[1]",
+      "brief.material[0].practicalDistinction",
+      "brief.material[0].optionalDirections[0]",
+      "brief.development.sourceRoles[0].role",
+      "brief.controls.sourceMeanings[0].meaning",
+      "brief.controls.sourceConditions[0].conditions[1]"
+     ],
+     "I1.boundary": [
+      "system[4]",
+      "user.line3[1]",
+      "brief.material[0].optionalDirections[0]",
+      "brief.controls.editingPrinciples[7].instruction",
+      "brief.controls.sourceMeanings[0].meaning",
+      "brief.controls.sourceConditions[0].conditions[2]"
+     ],
+     "I1.calendar": [
+      "user.line4[2]",
+      "brief.material[0].sceneDetails[2]"
+     ],
+     "N1.stages": [
+      "system[23]",
+      "user.line4[1]",
+      "brief.material[1].practicalDistinction",
+      "brief.development.sourceRoles[1].role",
+      "brief.controls.sourceMeanings[1].meaning",
+      "brief.controls.sourceConditions[1].conditions[2]"
+     ],
+     "N1.curiosity": [
+      "system[23]",
+      "user.line4[1]",
+      "brief.controls.sourceMeanings[1].meaning"
+     ],
+     "N1.hold": [
+      "brief.material[1].sceneDetails[1]",
+      "brief.material[1].optionalDirections[0]"
+     ],
+     "P2.adjustment": [
+      "user.line4[2]",
+      "brief.controls.editingPrinciples[5].instruction"
+     ]
+    }
+   },
+   {
+    "id": "transit-only",
+    "systemChars": 2112,
+    "userChars": 8885,
+    "requestBytes": 11976,
+    "requestSha256": "5b32cb1e5e7f83620336f6fa52c3d0400dcd5a186d4d0792217dcd3e318dc23d",
+    "units": 165,
+    "premiseExpressions": {
+     "I1.effort": 3,
+     "I1.capacity": 8,
+     "I1.boundary": 9,
+     "I1.calendar": 2,
+     "N1.stages": 1,
+     "N1.curiosity": 1,
+     "P2.adjustment": 8
+    },
+    "repeatedPremises": {
+     "I1.effort": [
+      "system[17]",
+      "brief.controls.sourceMeanings[0].meaning",
+      "brief.controls.sourceConditions[0].conditions[0]"
+     ],
+     "I1.capacity": [
+      "system[4]",
+      "system[17]",
+      "user.line3[1]",
+      "brief.material[0].practicalDistinction",
+      "brief.material[0].optionalDirections[0]",
+      "brief.development.sourceRoles[0].role",
+      "brief.controls.sourceMeanings[0].meaning",
+      "brief.controls.sourceConditions[0].conditions[1]"
+     ],
+     "I1.boundary": [
+      "system[4]",
+      "user.line3[1]",
+      "brief.material[0].optionalDirections[0]",
+      "brief.material[1].sceneDetails[0]",
+      "brief.material[1].optionalDirections[0]",
+      "brief.controls.editingPrinciples[7].instruction",
+      "brief.controls.sourceMeanings[0].meaning",
+      "brief.controls.sourceMeanings[1].meaning",
+      "brief.controls.sourceConditions[0].conditions[2]"
+     ],
+     "I1.calendar": [
+      "user.line4[2]",
+      "brief.material[0].sceneDetails[2]"
+     ],
+     "P2.adjustment": [
+      "user.line4[2]",
+      "brief.material[1].sceneDetails[0]",
+      "brief.material[1].practicalDistinction",
+      "brief.material[1].optionalDirections[0]",
+      "brief.development.sourceRoles[1].role",
+      "brief.controls.editingPrinciples[5].instruction",
+      "brief.controls.sourceMeanings[1].meaning",
+      "brief.controls.sourceConditions[1].conditions[0]"
+     ]
+    }
+   },
+   {
+    "id": "natal-and-transit",
+    "systemChars": 2498,
+    "userChars": 10238,
+    "requestBytes": 13813,
+    "requestSha256": "567acd61a3d40a558cef9e93f325f445bd3e9d2a290e3d095eb5b69716ecb629",
+    "units": 199,
+    "premiseExpressions": {
+     "I1.effort": 3,
+     "I1.capacity": 8,
+     "I1.boundary": 9,
+     "I1.calendar": 2,
+     "N1.stages": 6,
+     "N1.curiosity": 3,
+     "N1.hold": 2,
+     "P2.adjustment": 8
+    },
+    "repeatedPremises": {
+     "I1.effort": [
+      "system[17]",
+      "brief.controls.sourceMeanings[0].meaning",
+      "brief.controls.sourceConditions[0].conditions[0]"
+     ],
+     "I1.capacity": [
+      "system[4]",
+      "system[17]",
+      "user.line3[1]",
+      "brief.material[0].practicalDistinction",
+      "brief.material[0].optionalDirections[0]",
+      "brief.development.sourceRoles[0].role",
+      "brief.controls.sourceMeanings[0].meaning",
+      "brief.controls.sourceConditions[0].conditions[1]"
+     ],
+     "I1.boundary": [
+      "system[4]",
+      "user.line3[1]",
+      "brief.material[0].optionalDirections[0]",
+      "brief.material[2].sceneDetails[0]",
+      "brief.material[2].optionalDirections[0]",
+      "brief.controls.editingPrinciples[7].instruction",
+      "brief.controls.sourceMeanings[0].meaning",
+      "brief.controls.sourceMeanings[2].meaning",
+      "brief.controls.sourceConditions[0].conditions[2]"
+     ],
+     "I1.calendar": [
+      "user.line4[2]",
+      "brief.material[0].sceneDetails[2]"
+     ],
+     "N1.stages": [
+      "system[23]",
+      "user.line4[1]",
+      "brief.material[1].practicalDistinction",
+      "brief.development.sourceRoles[1].role",
+      "brief.controls.sourceMeanings[1].meaning",
+      "brief.controls.sourceConditions[1].conditions[2]"
+     ],
+     "N1.curiosity": [
+      "system[23]",
+      "user.line4[1]",
+      "brief.controls.sourceMeanings[1].meaning"
+     ],
+     "N1.hold": [
+      "brief.material[1].sceneDetails[1]",
+      "brief.material[1].optionalDirections[0]"
+     ],
+     "P2.adjustment": [
+      "user.line4[2]",
+      "brief.material[2].sceneDetails[0]",
+      "brief.material[2].practicalDistinction",
+      "brief.material[2].optionalDirections[0]",
+      "brief.development.sourceRoles[2].role",
+      "brief.controls.editingPrinciples[5].instruction",
+      "brief.controls.sourceMeanings[2].meaning",
+      "brief.controls.sourceConditions[2].conditions[0]"
+     ]
+    }
+   },
+   {
+    "id": "synthesis-natal-and-transit",
+    "systemChars": 2498,
+    "userChars": 12894,
+    "requestBytes": 16687,
+    "requestSha256": "67f5c43a83ccc19616b2ffb936047980a1bf11207b78d4af929760ff734c8540",
+    "units": 263,
+    "premiseExpressions": {
+     "I1.effort": 3,
+     "I1.capacity": 8,
+     "I1.boundary": 9,
+     "I1.calendar": 2,
+     "N1.stages": 6,
+     "N1.curiosity": 3,
+     "N1.hold": 2,
+     "P2.adjustment": 8,
+     "I2.reinforce": 6,
+     "I2.ease": 2,
+     "S1.structure": 4,
+     "S1.notice": 1
+    },
+    "repeatedPremises": {
+     "I1.effort": [
+      "system[17]",
+      "brief.controls.sourceMeanings[0].meaning",
+      "brief.controls.sourceConditions[0].conditions[0]"
+     ],
+     "I1.capacity": [
+      "system[4]",
+      "system[17]",
+      "user.line3[1]",
+      "brief.material[0].practicalDistinction",
+      "brief.material[0].optionalDirections[0]",
+      "brief.development.sourceRoles[0].role",
+      "brief.controls.sourceMeanings[0].meaning",
+      "brief.controls.sourceConditions[0].conditions[1]"
+     ],
+     "I1.boundary": [
+      "system[4]",
+      "user.line3[1]",
+      "brief.material[0].optionalDirections[0]",
+      "brief.material[4].sceneDetails[0]",
+      "brief.material[4].optionalDirections[0]",
+      "brief.controls.editingPrinciples[7].instruction",
+      "brief.controls.sourceMeanings[0].meaning",
+      "brief.controls.sourceMeanings[4].meaning",
+      "brief.controls.sourceConditions[0].conditions[2]"
+     ],
+     "I1.calendar": [
+      "user.line4[2]",
+      "brief.material[0].sceneDetails[2]"
+     ],
+     "N1.stages": [
+      "system[23]",
+      "user.line4[1]",
+      "brief.material[3].practicalDistinction",
+      "brief.development.sourceRoles[3].role",
+      "brief.controls.sourceMeanings[3].meaning",
+      "brief.controls.sourceConditions[3].conditions[2]"
+     ],
+     "N1.curiosity": [
+      "system[23]",
+      "user.line4[1]",
+      "brief.controls.sourceMeanings[3].meaning"
+     ],
+     "N1.hold": [
+      "brief.material[3].sceneDetails[1]",
+      "brief.material[3].optionalDirections[0]"
+     ],
+     "P2.adjustment": [
+      "user.line4[2]",
+      "brief.material[4].sceneDetails[0]",
+      "brief.material[4].practicalDistinction",
+      "brief.material[4].optionalDirections[0]",
+      "brief.development.sourceRoles[4].role",
+      "brief.controls.editingPrinciples[5].instruction",
+      "brief.controls.sourceMeanings[4].meaning",
+      "brief.controls.sourceConditions[4].conditions[0]"
+     ],
+     "I2.reinforce": [
+      "brief.material[1].practicalDistinction",
+      "brief.material[1].optionalDirections[0]",
+      "brief.development.sourceRoles[1].role",
+      "brief.controls.sourceMeanings[1].meaning",
+      "brief.controls.sourceConditions[1].conditions[0]",
+      "brief.controls.sourceConditions[1].conditions[2]"
+     ],
+     "I2.ease": [
+      "brief.material[2].practicalDistinction",
+      "brief.controls.sourceMeanings[1].meaning"
+     ],
+     "S1.structure": [
+      "brief.material[2].practicalDistinction",
+      "brief.material[2].optionalDirections[1]",
+      "brief.development.sourceRoles[2].role",
+      "brief.controls.sourceMeanings[2].meaning"
+     ]
+    }
+   }
+  ],
+  "after": [
+   {
+    "id": "contact-only",
+    "systemChars": 1049,
+    "userChars": 2417,
+    "requestBytes": 4280,
+    "requestSha256": "f8a48c008e7eaa3eedbfc55431ed211d4436a64418a138f8437b377ef82fc03d",
+    "units": 77,
+    "premiseExpressions": {
+     "I1.effort": 1,
+     "I1.capacity": 1,
+     "I1.boundary": 1,
+     "I1.calendar": 1
+    },
+    "repeatedPremises": {}
+   },
+   {
+    "id": "natal-only",
+    "systemChars": 1172,
+    "userChars": 2739,
+    "requestBytes": 4761,
+    "requestSha256": "6040a5d19e950308032b3df102b129053ed918035c904b06a2e5c0231e5ee632",
+    "units": 88,
+    "premiseExpressions": {
+     "I1.effort": 1,
+     "I1.capacity": 1,
+     "N1.curiosity": 1,
+     "N1.hold": 1
+    },
+    "repeatedPremises": {}
+   },
+   {
+    "id": "transit-only",
+    "systemChars": 1049,
+    "userChars": 2813,
+    "requestBytes": 4728,
+    "requestSha256": "7a239ddcecf3e2c54caf48eba4c1cf6fd35011a60b7fb5374e2043fbd7baa761",
+    "units": 91,
+    "premiseExpressions": {
+     "I1.effort": 1,
+     "I1.capacity": 1,
+     "I1.boundary": 1,
+     "P2.adjustment": 1
+    },
+    "repeatedPremises": {}
+   },
+   {
+    "id": "natal-and-transit",
+    "systemChars": 1172,
+    "userChars": 3317,
+    "requestBytes": 5413,
+    "requestSha256": "dfe93ee51a5875f337272d1de8ec3ef193e17074afc1b59e5f4841dfad27b3df",
+    "units": 108,
+    "premiseExpressions": {
+     "I1.effort": 1,
+     "I1.capacity": 1,
+     "I1.boundary": 1,
+     "N1.curiosity": 1,
+     "N1.hold": 1,
+     "P2.adjustment": 1
+    },
+    "repeatedPremises": {}
+   },
+   {
+    "id": "synthesis-natal-and-transit",
+    "systemChars": 1172,
+    "userChars": 4189,
+    "requestBytes": 6423,
+    "requestSha256": "03c614bbc9cd6ee8adf1141fdb6daa4a6f5b7fed46b0468268e2016ea501e235",
+    "units": 148,
+    "premiseExpressions": {
+     "I1.effort": 1,
+     "I1.capacity": 1,
+     "N1.curiosity": 1,
+     "N1.hold": 1,
+     "P2.adjustment": 1,
+     "I2.reinforce": 1,
+     "I2.ease": 1,
+     "S1.structure": 1,
+     "S1.notice": 1
+    },
+    "repeatedPremises": {}
+   }
+  ]
+ },
+ "bodies": {
+  "reference": {
+   "contact-only": {
+    "premiseSentences": {
+     "I1.effort": [
+      2
+     ],
+     "I1.capacity": [
+      3
+     ],
+     "I1.boundary": [
+      5
+     ],
+     "I1.calendar": [
+      4
+     ]
+    },
+    "repeated": {}
+   },
+   "natal-only": {
+    "premiseSentences": {
+     "I1.effort": [
+      2
+     ],
+     "I1.capacity": [
+      2
+     ],
+     "N1.curiosity": [
+      3
+     ],
+     "N1.hold": [
+      4
+     ]
+    },
+    "repeated": {}
+   },
+   "transit-only": {
+    "premiseSentences": {
+     "I1.effort": [
+      2
+     ],
+     "I1.capacity": [
+      2
+     ],
+     "I1.boundary": [
+      4
+     ],
+     "P2.adjustment": [
+      4
+     ]
+    },
+    "repeated": {}
+   },
+   "natal-and-transit": {
+    "premiseSentences": {
+     "I1.effort": [
+      2
+     ],
+     "I1.capacity": [
+      2
+     ],
+     "I1.boundary": [
+      5
+     ],
+     "N1.curiosity": [
+      4
+     ],
+     "N1.hold": [
+      5
+     ],
+     "P2.adjustment": [
+      5
+     ]
+    },
+    "repeated": {}
+   },
+   "synthesis-natal-and-transit": {
+    "premiseSentences": {
+     "I1.effort": [
+      3
+     ],
+     "I1.capacity": [
+      3
+     ],
+     "N1.curiosity": [
+      6
+     ],
+     "N1.hold": [
+      7
+     ],
+     "P2.adjustment": [
+      7
+     ],
+     "I2.reinforce": [
+      2
+     ],
+     "I2.ease": [
+      2
+     ],
+     "S1.structure": [
+      5
+     ],
+     "S1.notice": [
+      5
+     ]
+    },
+    "repeated": {}
+   }
+  },
+  "edited": {
+   "R3 contact-only": {
+    "premiseSentences": {
+     "I1.effort": [
+      2
+     ],
+     "I1.capacity": [
+      2
+     ],
+     "I1.boundary": [
+      3
+     ],
+     "I1.calendar": [
+      3
+     ]
+    },
+    "repeated": {}
+   },
+   "R2 natal-only": {
+    "premiseSentences": {
+     "I1.effort": [
+      2
+     ],
+     "I1.capacity": [
+      2
+     ],
+     "N1.curiosity": [
+      3
+     ],
+     "N1.hold": [
+      4
+     ]
+    },
+    "repeated": {}
+   },
+   "R1 transit-only": {
+    "premiseSentences": {
+     "I1.effort": [
+      2
+     ],
+     "I1.capacity": [
+      2
+     ],
+     "I1.boundary": [
+      4
+     ],
+     "P2.adjustment": [
+      4
+     ]
+    },
+    "repeated": {}
+   }
+  },
+  "original": {
+   "R3 contact-only": {
+    "premiseSentences": {
+     "I1.effort": [
+      2
+     ],
+     "I1.capacity": [
+      2,
+      3,
+      4
+     ],
+     "I1.boundary": [
+      3,
+      4
+     ],
+     "I1.calendar": [
+      4
+     ]
+    },
+    "repeated": {
+     "I1.capacity": [
+      2,
+      3,
+      4
+     ],
+     "I1.boundary": [
+      3,
+      4
+     ]
+    }
+   },
+   "R2 natal-only": {
+    "premiseSentences": {
+     "I1.effort": [
+      1
+     ],
+     "I1.capacity": [
+      2,
+      3
+     ],
+     "I1.boundary": [
+      3
+     ],
+     "N1.stages": [
+      4
+     ],
+     "N1.curiosity": [
+      5
+     ],
+     "N1.hold": [
+      6
+     ]
+    },
+    "repeated": {
+     "I1.capacity": [
+      2,
+      3
+     ]
+    }
+   },
+   "R1 transit-only": {
+    "premiseSentences": {
+     "I1.effort": [
+      2
+     ],
+     "I1.capacity": [
+      1,
+      2
+     ],
+     "I1.boundary": [
+      2,
+      4,
+      5
+     ],
+     "P2.adjustment": [
+      4
+     ]
+    },
+    "repeated": {
+     "I1.capacity": [
+      1,
+      2
+     ],
+     "I1.boundary": [
+      2,
+      4,
+      5
+     ]
+    }
+   }
+  }
+ }
+}

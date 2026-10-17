@@ -1,0 +1,156 @@
+{
+  "reviewType": "independent AI source review",
+  "humanReviewCompleted": false,
+  "input": {
+    "path": "/tmp/pattern-context-structure-private-5-src2-20261017/source/source-review-packet.md",
+    "sha256": "49d3e683702ff25d2b636aa39249e93cab0e4efea540f7b06a9579f27771de01",
+    "recordedAtUtc": "2026-10-17T12:52:57Z"
+  },
+  "frozenAtUtc": "2026-10-17T13:08:21Z",
+  "compositions": [
+    {
+      "mode": "natal-only",
+      "pass": false,
+      "unsupportedExpressions": 0,
+      "omittedMeanings": [
+        "I1 'showing where a routine or responsibility needs clearer boundaries' (local claim I1.boundary): the carries proof assigns it to N1.2, but 'A note can keep an idea in view without promising it the afternoon' bounds a new idea's claim on the afternoon; no expression says a routine or responsibility may need a clearer boundary (borderline call, reasoning in source-review.md)."
+      ],
+      "lostConditions": [],
+      "citationProblems": [],
+      "restatements": [],
+      "requestIssues": [],
+      "expressions": [
+        {"id": "I1.1", "supported": true, "supportQuote": "I1: 'An established role' and 'where expectations outpace available capacity' (scene illustration of the expectation side; carries no claim)", "issues": []},
+        {"id": "I1.2", "supported": true, "supportQuote": "C1: 'transiting saturn square natal sun'; I1: 'An established role can feel demanding when its obligations require more deliberate effort than usual.'", "issues": []},
+        {"id": "I1.3", "supported": true, "supportQuote": "I1: 'Saturn's square to the Sun highlights where expectations outpace available capacity'", "issues": []},
+        {"id": "N1.1", "supported": true, "supportQuote": "N1: 'Following more than one line of curiosity can help a direction take shape. If several possible projects compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages.'", "issues": []},
+        {"id": "N1.2", "supported": true, "supportQuote": "N1: 'sampling a few and choosing one to pursue may be different stages' (application N1.hold)", "issues": ["carries proof overclaims I1.boundary: the wording bounds the idea, not a routine or responsibility (counted under omittedMeanings)"]}
+      ]
+    },
+    {
+      "mode": "natal-and-transit",
+      "pass": true,
+      "unsupportedExpressions": 0,
+      "omittedMeanings": [],
+      "lostConditions": [],
+      "citationProblems": [],
+      "restatements": [],
+      "requestIssues": [],
+      "expressions": [
+        {"id": "I1.1", "supported": true, "supportQuote": "I1: 'An established role' and 'where expectations outpace available capacity' (scene illustration of the expectation side; carries no claim)", "issues": []},
+        {"id": "I1.2", "supported": true, "supportQuote": "C1: 'transiting saturn square natal sun'; I1: 'An established role can feel demanding when its obligations require more deliberate effort than usual.'", "issues": []},
+        {"id": "I1.3", "supported": true, "supportQuote": "I1: 'Saturn's square to the Sun highlights where expectations outpace available capacity'", "issues": []},
+        {"id": "A1.1", "supported": true, "supportQuote": "A1: 'This is the second of three calculated contacts; the first exact contact falls in September 2026.' (copied exactly)", "issues": []},
+        {"id": "N1.1", "supported": true, "supportQuote": "N1: 'Following more than one line of curiosity can help a direction take shape. If several possible projects compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages.'", "issues": []},
+        {"id": "P2.1", "supported": true, "supportQuote": "P2: 'If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.'; I1: 'showing where a routine or responsibility needs clearer boundaries'; N1: 'sampling a few and choosing one to pursue may be different stages'", "issues": []}
+      ]
+    },
+    {
+      "mode": "synthesis-natal-and-transit",
+      "pass": false,
+      "unsupportedExpressions": 0,
+      "omittedMeanings": [
+        "I2 'making it natural to take on a larger piece of work or pursue an emerging opening': only the larger-piece outlet is carried ('adding the next piece can feel natural'); 'or pursue an emerging opening' appears in no expression and is also missing from the local claim I2.ease."
+      ],
+      "lostConditions": [],
+      "citationProblems": [],
+      "restatements": [],
+      "requestIssues": [],
+      "expressions": [
+        {"id": "I2.1", "supported": true, "supportQuote": "I2: 'making it natural to take on a larger piece of work'; I1: 'An established role'; I2 limitation: 'The notes, outline and appealing addition are authored benchmark illustrations.' (scene illustration; carries no claim)", "issues": []},
+        {"id": "I2.2", "supported": true, "supportQuote": "C2: 'transiting jupiter trine natal mars'; I2: 'Enthusiasm and practical initiative reinforce one another when an aim is well chosen.' and 'effort encounters little friction, making it natural to take on a larger piece of work'", "issues": ["does not carry I2's 'or pursue an emerging opening' (counted under omittedMeanings)"]},
+        {"id": "I1.2", "supported": true, "supportQuote": "C1: 'transiting saturn square natal sun'; I1: 'An established role can feel demanding when its obligations require more deliberate effort than usual.'", "issues": []},
+        {"id": "I1.3", "supported": true, "supportQuote": "I1: 'Saturn's square to the Sun highlights where expectations outpace available capacity'", "issues": []},
+        {"id": "A1.1", "supported": true, "supportQuote": "A1: 'This is the second of three calculated contacts; the first exact contact falls in September 2026.' (copied exactly)", "issues": []},
+        {"id": "S1.1", "supported": true, "supportQuote": "S1: 'Giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.'", "issues": []},
+        {"id": "N1.1", "supported": true, "supportQuote": "N1: 'Following more than one line of curiosity can help a direction take shape. If several possible projects compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages.'", "issues": []},
+        {"id": "P2.1", "supported": true, "supportQuote": "P2: 'If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.'; I1: 'a routine or responsibility needs clearer boundaries'; N1: 'sampling a few and choosing one to pursue may be different stages'", "issues": []}
+      ]
+    }
+  ],
+  "bodies": [
+    {
+      "label": "B1",
+      "sourceGraph": "natal-only",
+      "pass": false,
+      "unsupportedClaims": 0,
+      "omittedMeanings": [
+        "I1 'showing where a routine or responsibility needs clearer boundaries' (I1.boundary): no sentence says the familiar task, or any routine or responsibility, may need a clearer boundary; 'A page of notes can hold them without promising them those hours' limits the projects instead."
+      ],
+      "lostConditions": [],
+      "citationProblems": [],
+      "chronology": "not applicable",
+      "contextIntegration": 3,
+      "sentences": [
+        {"paragraph": 1, "sentence": 1, "text": "On a free afternoon, an extra check can look small beside a familiar task.", "supportedBy": ["I1"], "unsupported": [], "note": "Scene illustration of the expectation side of I1 'where expectations outpace available capacity'; 'a familiar task' stands for 'An established role'; the check stays under 'can'; carries no source meaning on its own."},
+        {"paragraph": 1, "sentence": 2, "text": "As Saturn squares your natal Sun, that task can need more effort than usual, and if it already fills the afternoon, anything added needs hours that are already spoken for.", "supportedBy": ["C1", "I1"], "unsupported": [], "note": "C1 'transiting saturn square natal sun'; I1 'can feel demanding when its obligations require more deliberate effort than usual' ('deliberate' not carried, nuance only); capacity mismatch from 'expectations outpace available capacity' kept inside 'if'; 'already' stays in the if-clause, so no actual overloaded afternoon; 'As' read as the source's own association, not an added cause."},
+        {"paragraph": 2, "sentence": 1, "text": "If several possible projects compete for that same free afternoon, you may not need to choose between them yet: following a few lines of curiosity may help a direction take shape.", "supportedBy": ["N1"], "unsupported": [], "note": "N1 condition verbatim; 'may not need to choose between them yet' restates 'sampling a few and choosing one to pursue may be different stages' (hedged, accepted); 'following a few lines of curiosity may help a direction take shape' restates 'Following more than one line of curiosity can help a direction take shape' ('a few' echoes 'sampling a few'; can to may is not a hardening)."},
+        {"paragraph": 2, "sentence": 2, "text": "A page of notes can hold them without promising them those hours.", "supportedBy": ["N1"], "unsupported": [], "note": "Application of N1 'sampling a few and choosing one to pursue may be different stages'; notes are an anticipated illustration; it bounds the projects' claim on the hours and gives no routine or responsibility a clearer boundary, so I1's boundary meaning is not carried."}
+      ]
+    },
+    {
+      "label": "B2",
+      "sourceGraph": "natal-and-transit",
+      "pass": true,
+      "unsupportedClaims": 0,
+      "omittedMeanings": [],
+      "lostConditions": [],
+      "citationProblems": [],
+      "chronology": "exact",
+      "contextIntegration": 4,
+      "sentences": [
+        {"paragraph": 1, "sentence": 1, "text": "A free afternoon can look like plenty of room for a task you know well.", "supportedBy": ["I1"], "unsupported": [], "note": "Scene illustration of the expectation side of I1 'where expectations outpace available capacity'; carries no source meaning on its own."},
+        {"paragraph": 1, "sentence": 2, "text": "With Saturn squaring your natal Sun, even that task can take more effort than usual, and if it fills the whole afternoon, anything else needs hours that are already spoken for.", "supportedBy": ["C1", "I1"], "unsupported": [], "note": "C1 aspect; I1 'An established role can feel demanding when its obligations require more deliberate effort than usual' and 'expectations outpace available capacity'; mismatch kept inside 'if'."},
+        {"paragraph": 1, "sentence": 3, "text": "This is the second of three calculated contacts; the first exact contact falls in September 2026.", "supportedBy": ["A1"], "unsupported": [], "note": "A1 chronologySentence reproduced exactly, once, in paragraph 1; follows the Saturn sentence, so 'This' refers to C1."},
+        {"paragraph": 2, "sentence": 1, "text": "If several possible projects are competing for that same free afternoon, with notes on one idea and a tab open on another, you may not need to decide between them yet: following more than one line of curiosity can help a direction take shape.", "supportedBy": ["N1"], "unsupported": [], "note": "N1 condition kept; notes and tab sit inside the condition as possible illustrations; stages and curiosity meanings both carried."},
+        {"paragraph": 2, "sentence": 2, "text": "And if an earlier way of handling the task no longer fits, you could use this return to try one smaller change: a clear point where the task stops, with the other ideas waiting as notes.", "supportedBy": ["P2", "I1", "N1"], "unsupported": [], "note": "P2 'If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary', with condition and 'could' kept; the stopping point carries I1 'a routine or responsibility needs clearer boundaries'; ideas waiting as notes is the N1 application; no failed attempt, recurrence, restart or closure."}
+      ]
+    },
+    {
+      "label": "B3",
+      "sourceGraph": "natal-only",
+      "pass": false,
+      "unsupportedClaims": 0,
+      "omittedMeanings": [
+        "I1 'showing where a routine or responsibility needs clearer boundaries' (I1.boundary): 'A note can keep an idea in view without promising it the afternoon' bounds the idea, not a routine or responsibility; no sentence carries the boundary meaning."
+      ],
+      "lostConditions": [],
+      "citationProblems": [],
+      "chronology": "not applicable",
+      "contextIntegration": 3,
+      "sentences": [
+        {"paragraph": 1, "sentence": 1, "text": "A free afternoon can look like plenty of room for a task you know well.", "supportedBy": ["I1"], "unsupported": [], "note": "Scene illustration of the expectation side of I1; carries no source meaning on its own."},
+        {"paragraph": 1, "sentence": 2, "text": "With Saturn squaring your natal Sun, even that task can take more effort than usual, and if it fills the whole afternoon, anything else needs hours that are already spoken for.", "supportedBy": ["C1", "I1"], "unsupported": [], "note": "C1 aspect; I1 effort and capacity; mismatch kept inside 'if'."},
+        {"paragraph": 2, "sentence": 1, "text": "If several possible projects are competing for that same free afternoon, with notes on one idea and a tab open on another, you may not need to decide between them yet: following more than one line of curiosity can help a direction take shape.", "supportedBy": ["N1"], "unsupported": [], "note": "N1 condition kept; illustrations inside it; stages and curiosity meanings carried."},
+        {"paragraph": 2, "sentence": 2, "text": "A note can keep an idea in view without promising it the afternoon.", "supportedBy": ["N1"], "unsupported": [], "note": "Application of N1 'sampling a few and choosing one to pursue may be different stages'; it gives no routine or responsibility a clearer boundary, so I1's boundary meaning is not carried."}
+      ]
+    },
+    {
+      "label": "B4",
+      "sourceGraph": "synthesis-natal-and-transit",
+      "pass": false,
+      "unsupportedClaims": 0,
+      "omittedMeanings": [
+        "I2 'making it natural to take on a larger piece of work or pursue an emerging opening': only the larger-piece outlet is carried ('adding the next piece can feel natural'); 'or pursue an emerging opening' is carried nowhere."
+      ],
+      "lostConditions": [],
+      "citationProblems": [],
+      "chronology": "exact",
+      "contextIntegration": 3,
+      "sentences": [
+        {"paragraph": 1, "sentence": 1, "text": "On a free afternoon, the notes for a task you know well can start turning into an outline.", "supportedBy": ["I2", "I1"], "unsupported": [], "note": "Scene illustration: I2 'take on a larger piece of work' and I1 'An established role'; notes and outline are named in I2's limitations as authored illustrations; growth stays under 'can'."},
+        {"paragraph": 1, "sentence": 2, "text": "With Jupiter trining your natal Mars, the notes and your interest in them can feed each other when the aim is well chosen, and adding the next piece can feel natural.", "supportedBy": ["C2", "I2"], "unsupported": [], "note": "C2 'transiting jupiter trine natal mars'; I2 'Enthusiasm and practical initiative reinforce one another when an aim is well chosen' with its condition kept; 'effort encounters little friction, making it natural to take on a larger piece of work' compressed to 'can feel natural'; 'or pursue an emerging opening' not carried."},
+        {"paragraph": 1, "sentence": 3, "text": "With Saturn squaring your natal Sun, though, the task itself can take more effort than usual, and if it fills the whole afternoon, the next piece needs hours that are already spoken for.", "supportedBy": ["C1", "I1"], "unsupported": [], "note": "C1 aspect; I1 effort and capacity; mismatch inside 'if'; 'though' is a connecting word, not an S1 claim; 'the next piece' is a borrowed scene noun."},
+        {"paragraph": 1, "sentence": 4, "text": "This is the second of three calculated contacts; the first exact contact falls in September 2026.", "supportedBy": ["A1"], "unsupported": [], "note": "A1 chronologySentence exact, once, in paragraph 1; follows the Saturn sentence, so 'This' refers to C1, not C2."},
+        {"paragraph": 2, "sentence": 1, "text": "A bigger task can need more structure to carry it, and that need can show up where the task grows past what it was set up for.", "supportedBy": ["S1"], "unsupported": [], "note": "S1 'Giving a plan more scope can increase the structure needed to carry it' and 'A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension'; 'show up' read as 'become noticeable'; exceeded limits stay possible."},
+        {"paragraph": 2, "sentence": 2, "text": "If several possible projects are competing for that same free afternoon, you may not need to decide between them yet: following more than one line of curiosity can help a direction take shape.", "supportedBy": ["N1"], "unsupported": [], "note": "N1 condition kept; stages and curiosity meanings carried."},
+        {"paragraph": 2, "sentence": 3, "text": "And if an earlier way of handling the task no longer fits, you could use this return to try one smaller change: the next piece can wait as a note instead of joining the outline.", "supportedBy": ["P2", "I1", "N1"], "unsupported": [], "note": "P2 condition and 'could' kept; keeping the outline to its limits carries I1 'a routine or responsibility needs clearer boundaries'; note-holding is the N1 application; 'the next piece' and 'the outline' are I2 scene nouns; optional, so no instruction to refuse growth (S1 limitation)."}
+      ]
+    }
+  ],
+  "summary": {
+    "compositionsPassed": 1,
+    "bodiesPassed": 1,
+    "unsupportedClaimsTotal": 0
+  }
+}

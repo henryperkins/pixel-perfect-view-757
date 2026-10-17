@@ -1,0 +1,32 @@
+{
+  "review": "independent AI source review, source round 2",
+  "reviewer": "fresh general-purpose subagent; one reviewer; saw no reader review, mapping or earlier source review",
+  "humanReviewCompleted": false,
+  "recordedAtUtc": "2026-10-17T12:52:57Z",
+  "frozenAtUtc": "2026-10-17T13:08:21Z",
+  "scope": "Only the three compositions and four bodies changed after round 1, at material sha256 40a86ccab103f37f6b28db1e1aef8313f142d2cb7af6c0f8806f483eabf665b8. Contact-only and transit-only compositions and the other four bodies keep their round-1 verdicts on byte-identical text.",
+  "inputs": {
+    "source-review-packet.md": "49d3e683702ff25d2b636aa39249e93cab0e4efea540f7b06a9579f27771de01"
+  },
+  "outputs": {
+    "source-review.md": "9430639388114ff37e9727f95df8b973836a07ed8e809a3615ad686eb5c01a4d",
+    "source-scores.json": "73803054ab5531eb795def89fd48d1f9824a0846b519305add454b36749c8264"
+  },
+  "mappingSha256": "c7261dbf04bb54a8272e6ab4c0fb002852e559a20250cca1ad41240fde294c33",
+  "mappingReadBeforeFreeze": false,
+  "transcriptAudit": {
+    "method": "tool_use entries parsed from the reviewer transcript; only tool names and touched paths inspected",
+    "toolCalls": 15,
+    "pathsTouched": [
+      "source/source-review-packet.md",
+      "source/source-review.md",
+      "source/source-scores.json"
+    ],
+    "otherAccess": "none"
+  },
+  "outcome": {
+    "compositionsPassed": 1,
+    "bodiesPassed": 1,
+    "unsupportedClaimsTotal": 0
+  }
+}

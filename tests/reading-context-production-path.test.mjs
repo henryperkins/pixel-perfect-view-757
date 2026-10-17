@@ -17,7 +17,7 @@ after(async () => h?.close());
 // must fail before any provider request is permitted.
 test("production pilot freezes a fresh campaign and the actual runtime adapter and fallback bytes", async () => {
   const plan = plans.createContextPilotPlan("b".repeat(40), "gemini-enterprise");
-  assert.equal(plan.contextPilot.version, "daily-context-pilot-4");
+  assert.equal(plan.contextPilot.version, "daily-context-pilot-5");
   assert.equal(plan.contextPilot.runtimePath, "member-production-context");
   assert.equal(plan.contextPilot.memberAdapterVersion, "daily-member-context-1");
   assert.equal(plan.contextPilot.runtimeFallbackVersion, "daily-member-context-fallbacks-1");

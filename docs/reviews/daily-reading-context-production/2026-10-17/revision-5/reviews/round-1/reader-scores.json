@@ -1,0 +1,361 @@
+{
+  "reviewType": "independent blind AI reader review",
+  "humanReviewCompleted": false,
+  "frozenAtUtc": "2026-10-17T11:18:35Z",
+  "inputs": [
+    {
+      "path": "/tmp/pattern-context-structure-private-5-20261017/reader/reader-packet.md",
+      "sha256": "4ad4deeb707e89cce59f8b47b6e4c907314be57e7bb32ecf29ae839ad9118c43"
+    },
+    {
+      "path": "/tmp/pattern-context-structure-private-5-20261017/reader/benchmark-readings.md",
+      "sha256": "75258c2eabec3625cd49b72374c3fcdc4b2d2d769bd6b383403a77b4a6e6ebf2"
+    }
+  ],
+  "threshold": 4,
+  "bodies": [
+    {
+      "label": "B1",
+      "scores": {
+        "recognition": 4,
+        "meaning": 3,
+        "direction": 4,
+        "distinctness": 4,
+        "voice": 3
+      },
+      "pass": false,
+      "evidence": [
+        {
+          "dimension": "recognition",
+          "quote": "An extra check can look small beside a familiar task, which can itself need more effort than usual.",
+          "note": "Limiting: the main pressure (the familiar task itself is heavier) is tucked into a trailing relative clause, so the two pressures arrive crowded in one sentence."
+        },
+        {
+          "dimension": "meaning",
+          "quote": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+          "note": "Blocking: contacts of what? B1 names no planet or natal point, so this timing attaches to nothing, and \"this return\" in the next sentence has no referent."
+        },
+        {
+          "dimension": "meaning",
+          "quote": "which can itself need more effort than usual",
+          "note": "Blocking: the body never says why the task is heavier now, so its central claim is unexplained."
+        },
+        {
+          "dimension": "direction",
+          "quote": "If an earlier way of handling the task no longer fits, this return offers a chance to try one smaller change rather than a whole new plan: stopping before the extra check, for instance.",
+          "note": "Limiting: the move is good, but it depends on \"an earlier way of handling the task\" that the body never describes, so the reader has to invent the premise before using the direction."
+        },
+        {
+          "dimension": "distinctness",
+          "quote": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+          "note": "Limiting: it closes the first paragraph without building on the check-versus-hours point; the paragraph reads the same without it."
+        },
+        {
+          "dimension": "voice",
+          "quote": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+          "note": "Blocking: \"calculated contacts\" and \"exact contact\" are system and technical register in an otherwise plain body, and \"of three\" names a third contact that nothing uses (chronology without practical meaning)."
+        },
+        {
+          "dimension": "voice",
+          "quote": "this return offers a chance to try one smaller change rather than a whole new plan",
+          "note": "Blocking: stock opportunity framing; the warmth comes from formula rather than from accuracy."
+        }
+      ]
+    },
+    {
+      "label": "B2",
+      "scores": {
+        "recognition": 4,
+        "meaning": 3,
+        "direction": 4,
+        "distinctness": 3,
+        "voice": 3
+      },
+      "pass": false,
+      "evidence": [
+        {
+          "dimension": "recognition",
+          "quote": "With Jupiter trining your natal Mars, enthusiasm and a practical start can feed each other when the aim is well chosen, and taking on a larger piece of work can feel natural.",
+          "note": "Limiting: straight after a concrete opener the body switches to abstractions (\"enthusiasm and a practical start\"), which dilutes the recognizable scene."
+        },
+        {
+          "dimension": "meaning",
+          "quote": "A bigger task can need more structure to carry it, and the point where it grows past what was agreed is one place to notice that.",
+          "note": "Blocking: \"more structure\" is unspecified and \"notice that\" has no clear object; the distinction between finding it easy to take work on and having the structure to carry it is gestured at, never stated."
+        },
+        {
+          "dimension": "meaning",
+          "quote": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+          "note": "Blocking: B2 names two contacts (Jupiter trine Mars and Saturn square Sun), so the reader cannot tell which one is returning or what the September date refers to."
+        },
+        {
+          "dimension": "direction",
+          "quote": "If an earlier way of handling the task no longer fits, this return offers a chance to try something smaller than a new plan: the extra piece could stay a note instead of being added to the task.",
+          "note": "Limiting: a good, concrete close, but it is conditional on an undescribed \"earlier way\" and comes after a line that encourages following more than one line of curiosity, so the move is partly blurred."
+        },
+        {
+          "dimension": "distinctness",
+          "quote": "taking on a larger piece of work can feel natural",
+          "note": "Blocking: restates the first sentence's \"one more piece of the work can start to look appealing\"; the same growth point comes a third time in \"A bigger task can need more structure to carry it\"."
+        },
+        {
+          "dimension": "distinctness",
+          "quote": "exploring a few and choosing one to pursue may be different stages, and following more than one line of curiosity can help a direction take shape.",
+          "note": "Blocking: the two clauses make one point (explore several lines, then one emerges)."
+        },
+        {
+          "dimension": "voice",
+          "quote": "enthusiasm and a practical start can feed each other when the aim is well chosen",
+          "note": "Blocking: abstract, formal phrasing with no observed detail behind it."
+        },
+        {
+          "dimension": "voice",
+          "quote": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+          "note": "Blocking: technical register (\"calculated contacts\", \"exact contact\") inserted between the curiosity point and the direction, adding to the crowding; \"of three\" goes unused."
+        }
+      ]
+    },
+    {
+      "label": "B3",
+      "scores": {
+        "recognition": 4,
+        "meaning": 4,
+        "direction": 5,
+        "distinctness": 5,
+        "voice": 4
+      },
+      "pass": true,
+      "evidence": [
+        {
+          "dimension": "recognition",
+          "quote": "An extra check can look like almost nothing next to a task you know well.",
+          "note": "Limiting: \"an extra check\" and \"a task you know well\" are placeholders the reader has to fill in; recognizable but not vivid."
+        },
+        {
+          "dimension": "meaning",
+          "quote": "With Saturn squaring your natal Sun, even that task can ask more effort than usual.",
+          "note": "Limiting: the contact is named but glossed only as \"more effort than usual\", so the reader learns the task is heavier, not what kind of pressure this is; the meaning rests on the practical distinction."
+        },
+        {
+          "dimension": "voice",
+          "quote": "With Saturn squaring your natal Sun, even that task can ask more effort than usual.",
+          "note": "Limiting: \"ask more effort\" is a slightly off collocation that stiffens the one astrological line."
+        },
+        {
+          "dimension": "voice",
+          "quote": "Changing what the task includes is the other option: the check could stay outside it.",
+          "note": "Limiting: \"is the other option\" reads a little like a menu, though the move it introduces is the body's best line."
+        }
+      ]
+    },
+    {
+      "label": "B4",
+      "scores": {
+        "recognition": 4,
+        "meaning": 4,
+        "direction": 4,
+        "distinctness": 4,
+        "voice": 3
+      },
+      "pass": false,
+      "evidence": [
+        {
+          "dimension": "recognition",
+          "quote": "An extra check can look like almost nothing next to a task you know well.",
+          "note": "Limiting: \"an extra check\" and \"a task you know well\" are placeholders the reader has to fill in."
+        },
+        {
+          "dimension": "meaning",
+          "quote": "If an earlier way of handling the task no longer fits, this return offers a chance to try something smaller than a new plan",
+          "note": "Limiting: the reader has to supply what the earlier way was and how to tell that it no longer fits; the September date invites recall, but the body never makes the link."
+        },
+        {
+          "dimension": "direction",
+          "quote": "one change to how you do it, or a stopping point that comes before the check.",
+          "note": "Limiting: the first option is vague (which change?); only the second is something the reader could do this afternoon."
+        },
+        {
+          "dimension": "distinctness",
+          "quote": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+          "note": "Limiting: a detachable timing block; the paragraph does not build on the check-versus-hours observation."
+        },
+        {
+          "dimension": "voice",
+          "quote": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+          "note": "Blocking: technical register (\"calculated contacts\", \"exact contact\"), and \"of three\" names a third contact nothing uses (chronology without practical meaning)."
+        },
+        {
+          "dimension": "voice",
+          "quote": "this return offers a chance to try something smaller than a new plan",
+          "note": "Blocking: stock opportunity formula; together with the timing sentence it makes the whole direction paragraph read as template."
+        }
+      ]
+    },
+    {
+      "label": "B5",
+      "scores": {
+        "recognition": 4,
+        "meaning": 4,
+        "direction": 4,
+        "distinctness": 3,
+        "voice": 4
+      },
+      "pass": false,
+      "evidence": [
+        {
+          "dimension": "recognition",
+          "quote": "An extra check can look small beside a familiar task.",
+          "note": "Limiting: generic placeholders; the second paragraph's \"several projects\" are never made concrete either."
+        },
+        {
+          "dimension": "meaning",
+          "quote": "If several projects compete for that same afternoon, exploring a few and choosing one may be separate stages.",
+          "note": "Limiting: the body does not show how the competing projects relate to the heavier familiar task or the check, so two meanings sit side by side rather than one developing into the other."
+        },
+        {
+          "dimension": "direction",
+          "quote": "If it already fills the afternoon, the check still needs some of the same hours, so it could stay outside the task.",
+          "note": "Limiting: the direction is tacked on as a conclusion to the observation, and the two \"it\"s refer to different things (the task, then the check)."
+        },
+        {
+          "dimension": "distinctness",
+          "quote": "exploring a few and choosing one may be separate stages. Following a few lines of curiosity may help one direction take shape.",
+          "note": "Blocking: \"exploring a few\" is \"following a few lines of curiosity\" and \"choosing one\" is \"one direction take shape\"; the second sentence restates the first."
+        },
+        {
+          "dimension": "voice",
+          "quote": "Following a few lines of curiosity may help one direction take shape.",
+          "note": "Limiting: abstract, hedged process language (\"may ... may\"); \"As transit Saturn squares your natal Sun\" also uses technical \"transit\"."
+        }
+      ]
+    },
+    {
+      "label": "B6",
+      "scores": {
+        "recognition": 4,
+        "meaning": 4,
+        "direction": 4,
+        "distinctness": 3,
+        "voice": 4
+      },
+      "pass": false,
+      "evidence": [
+        {
+          "dimension": "recognition",
+          "quote": "With Saturn squaring your natal Sun, even that task can ask more effort than usual, and if it fills the whole afternoon, anything else needs hours that are already spoken for.",
+          "note": "Limiting: a long compound sentence, with \"anything else\" standing in for what competes until the next paragraph."
+        },
+        {
+          "dimension": "meaning",
+          "quote": "If other projects are competing for those hours, with notes on one idea and a tab open on another, exploring them and choosing one to pursue may be different stages.",
+          "note": "Limiting: the distinction is stated as abstract process; the body does not say what treating these as different stages changes about this afternoon."
+        },
+        {
+          "dimension": "direction",
+          "quote": "Following more than one line of curiosity can help a direction take shape.",
+          "note": "Limiting: encourages more exploration in an afternoon the body has just said may already be spoken for, which blurs the note-keeping move that follows."
+        },
+        {
+          "dimension": "distinctness",
+          "quote": "exploring them and choosing one to pursue may be different stages. Following more than one line of curiosity can help a direction take shape.",
+          "note": "Blocking: \"exploring them\" is \"following more than one line of curiosity\" and \"choosing one to pursue\" is \"a direction take shape\"; the same point twice."
+        },
+        {
+          "dimension": "voice",
+          "quote": "Following more than one line of curiosity can help a direction take shape.",
+          "note": "Limiting: \"help a direction take shape\" is an abstract stock phrase set against the body's otherwise observed details."
+        }
+      ]
+    },
+    {
+      "label": "B7",
+      "scores": {
+        "recognition": 4,
+        "meaning": 3,
+        "direction": 4,
+        "distinctness": 4,
+        "voice": 3
+      },
+      "pass": false,
+      "evidence": [
+        {
+          "dimension": "recognition",
+          "quote": "An extra check can look small beside a familiar task you've set an afternoon aside to finish.",
+          "note": "Limiting: recognizable, but the check and the task stay generic placeholders."
+        },
+        {
+          "dimension": "meaning",
+          "quote": "That task can need more effort than usual, and if it already fills the afternoon, the check still needs some of the same hours.",
+          "note": "Blocking: the body names no contact or reason, so its central claim (\"more effort than usual\") is unexplained and the reading could be any day's scheduling tip."
+        },
+        {
+          "dimension": "meaning",
+          "quote": "leaves that demand in place",
+          "note": "Blocking: \"that demand\" has no clear referent (the heavier task? the check's hours?), so the one distinction the body offers arrives blurred."
+        },
+        {
+          "dimension": "direction",
+          "quote": "instead, the check could stay outside the task.",
+          "note": "Limiting: the right move, but it arrives as the tail of a semicolon clause, so it reads as a correction rather than an option."
+        },
+        {
+          "dimension": "distinctness",
+          "quote": "with the check still included",
+          "note": "Limiting: re-explains what moving the task already implies; minor redundancy in a three-sentence body."
+        },
+        {
+          "dimension": "voice",
+          "quote": "Moving the task to a later calendar opening with the check still included leaves that demand in place; instead, the check could stay outside the task.",
+          "note": "Blocking: \"a later calendar opening\", \"leaves that demand in place\" and the semicolon-\"instead\" pivot are formal and abstract where the point needs plain words."
+        }
+      ]
+    },
+    {
+      "label": "B8",
+      "scores": {
+        "recognition": 4,
+        "meaning": 3,
+        "direction": 4,
+        "distinctness": 3,
+        "voice": 3
+      },
+      "pass": false,
+      "evidence": [
+        {
+          "dimension": "recognition",
+          "quote": "With Saturn squaring your natal Sun, even that task can ask more effort than usual, and if it fills the whole afternoon, anything else needs hours that are already spoken for.",
+          "note": "Limiting: a long compound sentence, with \"anything else\" standing in for what competes until the next sentence."
+        },
+        {
+          "dimension": "meaning",
+          "quote": "If an earlier way of handling the task no longer fits, this return offers a chance to try something smaller than a new plan, such as a clear point where the task stops.",
+          "note": "Blocking: this task-level move sits between the projects thread and its continuation (\"Following more than one line of curiosity can help a direction take shape.\"); the body never relates the task's stopping point to the competing ideas, so no single meaning lands."
+        },
+        {
+          "dimension": "direction",
+          "quote": "A note can keep an idea in view without promising it the afternoon.",
+          "note": "Limiting: a good move, but it is the second of two directions in separate paragraphs (the first is \"a clear point where the task stops\"), which crowds a short body."
+        },
+        {
+          "dimension": "distinctness",
+          "quote": "Following more than one line of curiosity can help a direction take shape.",
+          "note": "Blocking: restates the first paragraph's \"exploring them and choosing one to pursue may be different stages\" after the timing paragraph, so the final paragraph reads as appended rather than as development."
+        },
+        {
+          "dimension": "voice",
+          "quote": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+          "note": "Blocking: technical register, and \"of three\" names a third contact nothing uses (chronology without practical meaning)."
+        },
+        {
+          "dimension": "voice",
+          "quote": "this return offers a chance to try something smaller than a new plan",
+          "note": "Blocking: stock opportunity formula, alongside the abstract \"may be different stages\" and \"help a direction take shape\"."
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "reviewed": 8,
+    "passed": 1
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "review": "independent blind AI reader review, round 4",
+  "reviewer": "fresh general-purpose subagent; one reviewer; did not see rounds 1-3",
+  "humanReviewCompleted": false,
+  "frozenAtUtc": "2026-10-17T12:17:16Z",
+  "frozenByCoordinatorAtUtc": "2026-10-17T12:18:11Z",
+  "scope": "Only the synthesis reference after its final bounded revision. The other seven bodies keep their round-2 or round-3 verdicts on byte-identical text (carriedFromRound2 and carriedFromRound3 in blind-mapping.json).",
+  "instructionDifferenceFromRound3": "None except the body count (one) and paths.",
+  "inputs": {
+    "reader-packet.md": "cb4fdb2dd31a92a8e0ed6589ba00240bebdd6d223d7dba559b7ae6e7d049ec8d",
+    "benchmark-readings.md": "75258c2eabec3625cd49b72374c3fcdc4b2d2d769bd6b383403a77b4a6e6ebf2"
+  },
+  "outputs": {
+    "reader-review.md": "92a378ddd65d5e9c6ca2e44afda13be5093755844625ed735d0c47cf8359bdfe",
+    "reader-scores.json": "ce2af789d6cd32b1b45112e4789a9caf9ab79ebdb371c95a600249c96fce3e26"
+  },
+  "mappingSha256": "74917fcde14dfe7cf4987ebbd0c5b7b9cfee89276c63057198ccede5f540ecc9",
+  "mappingReadBeforeFreeze": false,
+  "transcriptAudit": {
+    "method": "tool_use entries parsed from the reviewer transcript; only tool names and touched paths inspected",
+    "toolCalls": 12,
+    "pathsTouched": [
+      "reader/reader-packet.md",
+      "reader/benchmark-readings.md",
+      "reader/reader-review.md",
+      "reader/reader-scores.json"
+    ],
+    "otherAccess": "none"
+  },
+  "outcome": {
+    "reviewed": 1,
+    "passed": 0
+  },
+  "stoppingRule": "Round 4 was the last bounded revision of the synthesis reference. It failed, so synthesis is reported as a contract-level crowding finding with a proposal for review; no further synthesis rewording was attempted."
+}

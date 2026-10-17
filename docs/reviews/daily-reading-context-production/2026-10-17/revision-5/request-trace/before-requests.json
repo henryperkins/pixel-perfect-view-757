@@ -1,0 +1,536 @@
+{
+ "capturedFrom": "d35e8b5bd99fa9905f7630751de4c1427271e224 (revision 4, unchanged)",
+ "planHash": "08758940bed0b2c0c976f1bf5f39070e989f0dd4817c87cdfa2b6433cc8b8482",
+ "planVersion": "daily-context-pilot-4",
+ "network": "records-harness fetch interception; external calls throw",
+ "providerRequestsIntercepted": 10,
+ "lovableRequestsIntercepted": 0,
+ "externalAttempts": 0,
+ "cases": [
+  {
+   "id": "contact-only",
+   "promptVersion": "daily-context-body-4",
+   "validatorVersion": "daily-context-reference-4",
+   "diagnostics": "http",
+   "memberDiagnostics": "http",
+   "memberMessagesIdentical": true,
+   "memberGenerationConfig": {
+    "responseMimeType": "application/json",
+    "responseJsonSchema": {
+     "type": "object",
+     "properties": {
+      "paragraphs": {
+       "type": "array",
+       "minItems": 2,
+       "maxItems": 4,
+       "items": {
+        "type": "object",
+        "properties": {
+         "text": {
+          "type": "string"
+         },
+         "facts": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "scenes": {
+          "type": "array",
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+           "type": "string"
+          }
+         }
+        },
+        "required": [
+         "text",
+         "facts",
+         "scenes"
+        ],
+        "additionalProperties": false
+       }
+      }
+     },
+     "required": [
+      "paragraphs"
+     ],
+     "additionalProperties": false
+    }
+   },
+   "systemChars": 2112,
+   "userChars": 7470,
+   "requestBytes": 10443,
+   "requestSha256": "c1870fcf4555663eb5a2fde2d0a45a9a9bd3edbb9ea95fddf87c1a1ce987aa96",
+   "generationConfig": {
+    "responseMimeType": "application/json",
+    "responseJsonSchema": {
+     "type": "object",
+     "properties": {
+      "paragraphs": {
+       "type": "array",
+       "minItems": 2,
+       "maxItems": 4,
+       "items": {
+        "type": "object",
+        "properties": {
+         "text": {
+          "type": "string"
+         },
+         "facts": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "scenes": {
+          "type": "array",
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+           "type": "string"
+          }
+         }
+        },
+        "required": [
+         "text",
+         "facts",
+         "scenes"
+        ],
+        "additionalProperties": false
+       }
+      }
+     },
+     "required": [
+      "paragraphs"
+     ],
+     "additionalProperties": false
+    },
+    "maxOutputTokens": 65536
+   },
+   "system": "Write a daily astrology reading that sounds like an attentive person noticing something precise. Put a familiar object or choice in view, then show the distinction that makes it useful. Address the reader naturally; do not deliver a formal account of their situation. Draft only from the supplied material. Preserve each selected source's full meaning and conditions, but let the concrete situation express them: a claim about the hours a check needs can carry a limit without a second sentence announcing expectations, capacity and boundaries. The development map gives each source a different job, not a writing order. These are possible illustrations, never known events in the reader's life. References establish only their supplied source links, geometry and literal chronology. Keep every source condition in controls.sourceConditions attached to its own claim. Preserve source possibility words such as can, may and could on the claim they qualify, including across intervening adverbs. Do not add speed, ease, frequency, necessity, certainty or a relationship beyond the supplied source meaning. A modal in an unrelated clause does not qualify another claim. A clear immediate reference may continue the same hypothetical scene; it never establishes a personal event. Each paragraph cites every source used and all its required parent facts. A synthesis keeps its distinct parent meanings, rather than reducing planets to a keyword list. An image does not authorize a new effect. Link only relationships the selected source actually supplies; if or can does not ground an added causal claim. A familiar task asking more effort and its possible mismatch with the available hours must both remain legible, even when expressed through the extra check rather than an abstract summary. Direction stays optional and proportionate. End when a supported choice or distinction is clear. Never promise an outcome, prescribe a life decision, console, or narrate these rules, source selection or the calculation system. Invent no personal history, motives, temperament, causal effects, astronomical or health claims.",
+   "user": "Tone: warm. Attentive and conversational. Use natural direct address and occasional contractions. Warmth comes from accurate observation; avoid praise, consolation and a counselor's reassurance.\nDepth: standard. Keep human meaning in the foreground. Omit optional orb values, degree measurements, phase and exact-date detail. When A1 is supplied, its immutable chronology sentence is required even at standard depth.\nStay in one supplied situation. Each source in development.sourceRoles must change how that situation reads or what could be chosen within it. The map is not an order or a paragraph template. Choose the details that belong together; omit unused illustrations. Do not stack a separate lesson for every source.\nOpen with a supported detail or a plain distinction. Prefer the check, the hours, the note and the stopping point to formal descriptions of responsibilities, capacity, boundaries and agreements. Keep more-effort meaning when shortening. Once a concrete sentence makes a point, cut a second sentence that translates it back into abstractions. Use contractions where natural. Vary sentence length, paragraph count and where astrology appears; no mandatory if opening, three-paragraph pattern, script or permission ending. Apply controls.editingPrinciples without quoting them.\nIntegrate any selected N1 and P2 meaning within the first two paragraphs, each with its full source parents. N1 adds the difference between exploring and choosing, with curiosity possibly helping a direction emerge. P2 adds one smaller adjustment if an earlier way no longer fits; it must not repeat a calendar-versus-size explanation already made. It establishes no previous failed attempt, personal recurrence, resolution or closure.\nIf A1 is supplied, include its chronologySentence unchanged exactly once in paragraph 1 or 2, citing A1 and C1. Cite P2, C1, I1 and A1 together for chapter meaning. Do not paraphrase chronology, repeat it, add dates or reinterpret a calculated pass as an event in the reader's life.\nPlanetary imagery can clarify a distinction only when supplied by material. Avoid a list of planet keywords. Do not explain that a contact offers a symbolic lens or gives this reading its theme; let supported meaning stand in ordinary language.\nA useful ending may be the distinction itself or supported optional direction. Do not force a sentence to say aloud, recap the reading, console the reader or add hollow reassurance. The headline and independently validated reflection are separate; write only the body.\nOne source-bound writing brief; draft from its scene details, practical distinctions and optional directions. Source meanings and conditions in controls constrain the writing:\n{\"version\":\"daily-context-brief-4\",\"materialVersion\":\"daily-context-material-4\",\"material\":[{\"factId\":\"I1\",\"sourceKey\":\"square:saturn:sun\",\"releaseVersion\":\"0.9.0\",\"sceneDetails\":[\"An extra check can look small beside a familiar task.\",\"An afternoon set aside for that familiar task.\",\"A task moved to a later calendar opening, with the extra check still included.\"],\"practicalDistinction\":\"If the original task already fills the afternoon, an extra check still needs some of the same hours.\",\"optionalDirections\":[\"If the original work already fills the afternoon, the extra check could stay outside the task.\"],\"requiredFacts\":[\"I1\",\"C1\"]}],\"references\":[{\"id\":\"C1\",\"kind\":\"calculation\",\"dependsOn\":[],\"cycle\":{\"transitBody\":\"saturn\",\"natalPoint\":\"sun\",\"aspect\":\"square\"}},{\"id\":\"I1\",\"kind\":\"interpretation\",\"dependsOn\":[\"C1\"],\"sourceKey\":\"square:saturn:sun\",\"releaseVersion\":\"0.9.0\"}],\"development\":{\"centralSituationFact\":\"I1\",\"sourceRoles\":[{\"factId\":\"I1\",\"role\":\"effort-and-what-fits\"}]},\"controls\":{\"voiceVersion\":\"daily-context-voice-4\",\"draftFrom\":[\"sceneDetails\",\"practicalDistinction\",\"optionalDirections\"],\"editingPrinciples\":[{\"id\":\"visible-first\",\"instruction\":\"Lead with a supported visible detail or plain distinction; cut an abstract preface that announces the lesson.\"},{\"id\":\"consequence-once\",\"instruction\":\"Let one concrete consequence explain the distinction. Cut a following abstract sentence that repeats it.\"},{\"id\":\"claim-local-qualifiers\",\"instruction\":\"Keep a source condition and its possibility word attached to their own claim. An immediate clear reference may continue the same hypothetical; repeat its condition only when needed for clarity.\"},{\"id\":\"finish-on-the-choice\",\"instruction\":\"Let a supported object or small optional choice finish the thought. Cut a counselor reminder, prescribed script or final recap that adds no meaning.\"},{\"id\":\"no-strengthening\",\"instruction\":\"Shortening must preserve possibility and scope. Do not add speed, ease, frequency or necessity while making the prose more direct.\"},{\"id\":\"one-job-per-source\",\"instruction\":\"Use the source-role map as a coverage check, not a sequence: each selected meaning must develop the same situation in a different way. A return chapter adds a smaller adjustment instead of repeating a scheduling point.\"},{\"id\":\"no-new-effects\",\"instruction\":\"Preserve the relationships the selected source supplies. A scene image authorizes no new effect on attention, feelings or behavior. Neither if nor can grounds an added causal claim.\"},{\"id\":\"ordinary-words-complete-meaning\",\"instruction\":\"Let objects and their concrete cost carry the meaning. Keep both the possible extra effort and conditional limit; do not omit one or restate the concrete point as a formal summary.\"}],\"sourceMeanings\":[{\"factId\":\"I1\",\"meaning\":\"A familiar responsibility can need more effort than usual. If it asks for more than the available hours can hold, what belongs in the task may need a clearer limit.\",\"requiredFacts\":[\"I1\",\"C1\"]}],\"tone\":\"warm\",\"depth\":\"standard\",\"requiredMeaningFacts\":[\"I1\"],\"natalConditional\":false,\"chronologyFirstTwo\":false,\"chronologyOnce\":false,\"technicalDetails\":false,\"sourceConditions\":[{\"factId\":\"I1\",\"conditions\":[\"The responsibility asking more effort is an interpretive possibility, not an established condition of the reader today.\",\"Any actual mismatch between expectations and capacity must remain conditional.\",\"Follow-up references to the task, added scope or boundary must remain inside the possible scene.\"]}]}}\nWrite only the body. The first paragraph concerns the primary contact and cites C1/I1. Use two to four paragraphs of one to four complete sentences each, each under 200 words, at most 700 words total. Declare empty scenes arrays; this brief supplies no SC identifiers.\nIntegrate every selected meaning in paragraph 1 or 2. S1 cites S1/C1/I1/C2/I2; N1 cites N1/C1/I1; chapter P2 cites P2/C1/I1/A1. Preserve each source's conditions. Copy A1 chronology unchanged exactly once in the first two paragraphs, citing A1/C1.\nEvery named planet, aspect or measurement cites its matching C reference. These are transit-to-natal contacts, not current-sky pairs. Do not introduce sign placements, individual houses, natal origins or unprovided imagery. Do not add dates outside the supplied literal chronology unless technical depth provides a directly cited C exactDate.\nKeep the current orb and any exact date in separate sentences. Neither is a personal deadline. Never assert a personal past event, a usual cause or frequency absent from the source, another person's intent, or a promised resolution.\nThe app handles calculation caveats separately. Do not add a headline, reflection question, source-policy explanation or wellbeing framing."
+  },
+  {
+   "id": "natal-only",
+   "promptVersion": "daily-context-body-4",
+   "validatorVersion": "daily-context-reference-4",
+   "diagnostics": "http",
+   "memberDiagnostics": "http",
+   "memberMessagesIdentical": true,
+   "memberGenerationConfig": {
+    "responseMimeType": "application/json",
+    "responseJsonSchema": {
+     "type": "object",
+     "properties": {
+      "paragraphs": {
+       "type": "array",
+       "minItems": 2,
+       "maxItems": 4,
+       "items": {
+        "type": "object",
+        "properties": {
+         "text": {
+          "type": "string"
+         },
+         "facts": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "scenes": {
+          "type": "array",
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+           "type": "string"
+          }
+         }
+        },
+        "required": [
+         "text",
+         "facts",
+         "scenes"
+        ],
+        "additionalProperties": false
+       }
+      }
+     },
+     "required": [
+      "paragraphs"
+     ],
+     "additionalProperties": false
+    }
+   },
+   "systemChars": 2498,
+   "userChars": 8823,
+   "requestBytes": 12280,
+   "requestSha256": "cbf3dbeaff2546093455048bc50633e61ea5f6563786444733a2728045c34fb2",
+   "generationConfig": {
+    "responseMimeType": "application/json",
+    "responseJsonSchema": {
+     "type": "object",
+     "properties": {
+      "paragraphs": {
+       "type": "array",
+       "minItems": 2,
+       "maxItems": 4,
+       "items": {
+        "type": "object",
+        "properties": {
+         "text": {
+          "type": "string"
+         },
+         "facts": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "scenes": {
+          "type": "array",
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+           "type": "string"
+          }
+         }
+        },
+        "required": [
+         "text",
+         "facts",
+         "scenes"
+        ],
+        "additionalProperties": false
+       }
+      }
+     },
+     "required": [
+      "paragraphs"
+     ],
+     "additionalProperties": false
+    },
+    "maxOutputTokens": 65536
+   },
+   "system": "Write a daily astrology reading that sounds like an attentive person noticing something precise. Put a familiar object or choice in view, then show the distinction that makes it useful. Address the reader naturally; do not deliver a formal account of their situation. Draft only from the supplied material. Preserve each selected source's full meaning and conditions, but let the concrete situation express them: a claim about the hours a check needs can carry a limit without a second sentence announcing expectations, capacity and boundaries. The development map gives each source a different job, not a writing order. These are possible illustrations, never known events in the reader's life. References establish only their supplied source links, geometry and literal chronology. Keep every source condition in controls.sourceConditions attached to its own claim. Preserve source possibility words such as can, may and could on the claim they qualify, including across intervening adverbs. Do not add speed, ease, frequency, necessity, certainty or a relationship beyond the supplied source meaning. A modal in an unrelated clause does not qualify another claim. A clear immediate reference may continue the same hypothetical scene; it never establishes a personal event. Each paragraph cites every source used and all its required parent facts. A synthesis keeps its distinct parent meanings, rather than reducing planets to a keyword list. An image does not authorize a new effect. Link only relationships the selected source actually supplies; if or can does not ground an added causal claim. A familiar task asking more effort and its possible mismatch with the available hours must both remain legible, even when expressed through the extra check rather than an abstract summary. Direction stays optional and proportionate. End when a supported choice or distinction is clear. Never promise an outcome, prescribe a life decision, console, or narrate these rules, source selection or the calculation system. Invent no personal history, motives, temperament, causal effects, astronomical or health claims. N1 is a conditional possibility, not a personality description. Within the shared situation in paragraph 1 or 2, preserve curiosity possibly helping a direction take shape as well as exploring versus choosing. Cite N1, C1 and I1 together. Notes beside an open tab do not establish blurred attention. Do not turn exploration into confusion, diagnose the reader, or recite natal origins.",
+   "user": "Tone: warm. Attentive and conversational. Use natural direct address and occasional contractions. Warmth comes from accurate observation; avoid praise, consolation and a counselor's reassurance.\nDepth: standard. Keep human meaning in the foreground. Omit optional orb values, degree measurements, phase and exact-date detail. When A1 is supplied, its immutable chronology sentence is required even at standard depth.\nStay in one supplied situation. Each source in development.sourceRoles must change how that situation reads or what could be chosen within it. The map is not an order or a paragraph template. Choose the details that belong together; omit unused illustrations. Do not stack a separate lesson for every source.\nOpen with a supported detail or a plain distinction. Prefer the check, the hours, the note and the stopping point to formal descriptions of responsibilities, capacity, boundaries and agreements. Keep more-effort meaning when shortening. Once a concrete sentence makes a point, cut a second sentence that translates it back into abstractions. Use contractions where natural. Vary sentence length, paragraph count and where astrology appears; no mandatory if opening, three-paragraph pattern, script or permission ending. Apply controls.editingPrinciples without quoting them.\nIntegrate any selected N1 and P2 meaning within the first two paragraphs, each with its full source parents. N1 adds the difference between exploring and choosing, with curiosity possibly helping a direction emerge. P2 adds one smaller adjustment if an earlier way no longer fits; it must not repeat a calendar-versus-size explanation already made. It establishes no previous failed attempt, personal recurrence, resolution or closure.\nIf A1 is supplied, include its chronologySentence unchanged exactly once in paragraph 1 or 2, citing A1 and C1. Cite P2, C1, I1 and A1 together for chapter meaning. Do not paraphrase chronology, repeat it, add dates or reinterpret a calculated pass as an event in the reader's life.\nPlanetary imagery can clarify a distinction only when supplied by material. Avoid a list of planet keywords. Do not explain that a contact offers a symbolic lens or gives this reading its theme; let supported meaning stand in ordinary language.\nA useful ending may be the distinction itself or supported optional direction. Do not force a sentence to say aloud, recap the reading, console the reader or add hollow reassurance. The headline and independently validated reflection are separate; write only the body.\nOne source-bound writing brief; draft from its scene details, practical distinctions and optional directions. Source meanings and conditions in controls constrain the writing:\n{\"version\":\"daily-context-brief-4\",\"materialVersion\":\"daily-context-material-4\",\"material\":[{\"factId\":\"I1\",\"sourceKey\":\"square:saturn:sun\",\"releaseVersion\":\"0.9.0\",\"sceneDetails\":[\"An extra check can look small beside a familiar task.\",\"An afternoon set aside for that familiar task.\",\"A task moved to a later calendar opening, with the extra check still included.\"],\"practicalDistinction\":\"If the original task already fills the afternoon, an extra check still needs some of the same hours.\",\"optionalDirections\":[\"If the original work already fills the afternoon, the extra check could stay outside the task.\"],\"requiredFacts\":[\"I1\",\"C1\"]},{\"factId\":\"N1\",\"sourceKey\":\"nl-sun-03\",\"releaseVersion\":\"0.9.0\",\"sceneDetails\":[\"If several projects compete for the afternoon, a page of notes for one idea can sit beside a tab open for another.\",\"If several projects compete for that afternoon, one could stay as a note while you choose another to pursue.\"],\"practicalDistinction\":\"If several projects compete for the same afternoon, exploring a few and choosing one may be separate stages.\",\"optionalDirections\":[\"If several projects compete for that afternoon, a note can hold the second idea without promising it those hours.\"],\"requiredFacts\":[\"N1\",\"C1\",\"I1\"]}],\"references\":[{\"id\":\"C1\",\"kind\":\"calculation\",\"dependsOn\":[],\"cycle\":{\"transitBody\":\"saturn\",\"natalPoint\":\"sun\",\"aspect\":\"square\"}},{\"id\":\"I1\",\"kind\":\"interpretation\",\"dependsOn\":[\"C1\"],\"sourceKey\":\"square:saturn:sun\",\"releaseVersion\":\"0.9.0\"},{\"id\":\"N1\",\"kind\":\"temperament\",\"dependsOn\":[\"C1\",\"I1\"],\"sourceKey\":\"nl-sun-03\",\"releaseVersion\":\"0.9.0\",\"natalEvidenceId\":\"NL1\"}],\"development\":{\"centralSituationFact\":\"I1\",\"sourceRoles\":[{\"factId\":\"I1\",\"role\":\"effort-and-what-fits\"},{\"factId\":\"N1\",\"role\":\"exploration-before-commitment\"}]},\"controls\":{\"voiceVersion\":\"daily-context-voice-4\",\"draftFrom\":[\"sceneDetails\",\"practicalDistinction\",\"optionalDirections\"],\"editingPrinciples\":[{\"id\":\"visible-first\",\"instruction\":\"Lead with a supported visible detail or plain distinction; cut an abstract preface that announces the lesson.\"},{\"id\":\"consequence-once\",\"instruction\":\"Let one concrete consequence explain the distinction. Cut a following abstract sentence that repeats it.\"},{\"id\":\"claim-local-qualifiers\",\"instruction\":\"Keep a source condition and its possibility word attached to their own claim. An immediate clear reference may continue the same hypothetical; repeat its condition only when needed for clarity.\"},{\"id\":\"finish-on-the-choice\",\"instruction\":\"Let a supported object or small optional choice finish the thought. Cut a counselor reminder, prescribed script or final recap that adds no meaning.\"},{\"id\":\"no-strengthening\",\"instruction\":\"Shortening must preserve possibility and scope. Do not add speed, ease, frequency or necessity while making the prose more direct.\"},{\"id\":\"one-job-per-source\",\"instruction\":\"Use the source-role map as a coverage check, not a sequence: each selected meaning must develop the same situation in a different way. A return chapter adds a smaller adjustment instead of repeating a scheduling point.\"},{\"id\":\"no-new-effects\",\"instruction\":\"Preserve the relationships the selected source supplies. A scene image authorizes no new effect on attention, feelings or behavior. Neither if nor can grounds an added causal claim.\"},{\"id\":\"ordinary-words-complete-meaning\",\"instruction\":\"Let objects and their concrete cost carry the meaning. Keep both the possible extra effort and conditional limit; do not omit one or restate the concrete point as a formal summary.\"}],\"sourceMeanings\":[{\"factId\":\"I1\",\"meaning\":\"A familiar responsibility can need more effort than usual. If it asks for more than the available hours can hold, what belongs in the task may need a clearer limit.\",\"requiredFacts\":[\"I1\",\"C1\"]},{\"factId\":\"N1\",\"meaning\":\"Following a few lines of curiosity may help one direction take shape. If several projects compete for the same afternoon, exploring a few and choosing one may be different stages.\",\"requiredFacts\":[\"N1\",\"C1\",\"I1\"]}],\"tone\":\"warm\",\"depth\":\"standard\",\"requiredMeaningFacts\":[\"I1\",\"N1\"],\"natalConditional\":true,\"chronologyFirstTwo\":false,\"chronologyOnce\":false,\"technicalDetails\":false,\"sourceConditions\":[{\"factId\":\"I1\",\"conditions\":[\"The responsibility asking more effort is an interpretive possibility, not an established condition of the reader today.\",\"Any actual mismatch between expectations and capacity must remain conditional.\",\"Follow-up references to the task, added scope or boundary must remain inside the possible scene.\"]},{\"factId\":\"N1\",\"conditions\":[\"This natal lens is an interpretive possibility, not a fixed personality claim.\",\"The multiple-project scene applies only if several possibilities are competing for the same time.\",\"Keep the distinction between exploration and commitment visible in the shared project scene.\"]}]}}\nWrite only the body. The first paragraph concerns the primary contact and cites C1/I1. Use two to four paragraphs of one to four complete sentences each, each under 200 words, at most 700 words total. Declare empty scenes arrays; this brief supplies no SC identifiers.\nIntegrate every selected meaning in paragraph 1 or 2. S1 cites S1/C1/I1/C2/I2; N1 cites N1/C1/I1; chapter P2 cites P2/C1/I1/A1. Preserve each source's conditions. Copy A1 chronology unchanged exactly once in the first two paragraphs, citing A1/C1.\nEvery named planet, aspect or measurement cites its matching C reference. These are transit-to-natal contacts, not current-sky pairs. Do not introduce sign placements, individual houses, natal origins or unprovided imagery. Do not add dates outside the supplied literal chronology unless technical depth provides a directly cited C exactDate.\nKeep the current orb and any exact date in separate sentences. Neither is a personal deadline. Never assert a personal past event, a usual cause or frequency absent from the source, another person's intent, or a promised resolution.\nThe app handles calculation caveats separately. Do not add a headline, reflection question, source-policy explanation or wellbeing framing."
+  },
+  {
+   "id": "transit-only",
+   "promptVersion": "daily-context-body-4",
+   "validatorVersion": "daily-context-reference-4",
+   "diagnostics": "http",
+   "memberDiagnostics": "http",
+   "memberMessagesIdentical": true,
+   "memberGenerationConfig": {
+    "responseMimeType": "application/json",
+    "responseJsonSchema": {
+     "type": "object",
+     "properties": {
+      "paragraphs": {
+       "type": "array",
+       "minItems": 2,
+       "maxItems": 4,
+       "items": {
+        "type": "object",
+        "properties": {
+         "text": {
+          "type": "string"
+         },
+         "facts": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "scenes": {
+          "type": "array",
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+           "type": "string"
+          }
+         }
+        },
+        "required": [
+         "text",
+         "facts",
+         "scenes"
+        ],
+        "additionalProperties": false
+       }
+      }
+     },
+     "required": [
+      "paragraphs"
+     ],
+     "additionalProperties": false
+    }
+   },
+   "systemChars": 2112,
+   "userChars": 8885,
+   "requestBytes": 11976,
+   "requestSha256": "5b32cb1e5e7f83620336f6fa52c3d0400dcd5a186d4d0792217dcd3e318dc23d",
+   "generationConfig": {
+    "responseMimeType": "application/json",
+    "responseJsonSchema": {
+     "type": "object",
+     "properties": {
+      "paragraphs": {
+       "type": "array",
+       "minItems": 2,
+       "maxItems": 4,
+       "items": {
+        "type": "object",
+        "properties": {
+         "text": {
+          "type": "string"
+         },
+         "facts": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "scenes": {
+          "type": "array",
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+           "type": "string"
+          }
+         }
+        },
+        "required": [
+         "text",
+         "facts",
+         "scenes"
+        ],
+        "additionalProperties": false
+       }
+      }
+     },
+     "required": [
+      "paragraphs"
+     ],
+     "additionalProperties": false
+    },
+    "maxOutputTokens": 65536
+   },
+   "system": "Write a daily astrology reading that sounds like an attentive person noticing something precise. Put a familiar object or choice in view, then show the distinction that makes it useful. Address the reader naturally; do not deliver a formal account of their situation. Draft only from the supplied material. Preserve each selected source's full meaning and conditions, but let the concrete situation express them: a claim about the hours a check needs can carry a limit without a second sentence announcing expectations, capacity and boundaries. The development map gives each source a different job, not a writing order. These are possible illustrations, never known events in the reader's life. References establish only their supplied source links, geometry and literal chronology. Keep every source condition in controls.sourceConditions attached to its own claim. Preserve source possibility words such as can, may and could on the claim they qualify, including across intervening adverbs. Do not add speed, ease, frequency, necessity, certainty or a relationship beyond the supplied source meaning. A modal in an unrelated clause does not qualify another claim. A clear immediate reference may continue the same hypothetical scene; it never establishes a personal event. Each paragraph cites every source used and all its required parent facts. A synthesis keeps its distinct parent meanings, rather than reducing planets to a keyword list. An image does not authorize a new effect. Link only relationships the selected source actually supplies; if or can does not ground an added causal claim. A familiar task asking more effort and its possible mismatch with the available hours must both remain legible, even when expressed through the extra check rather than an abstract summary. Direction stays optional and proportionate. End when a supported choice or distinction is clear. Never promise an outcome, prescribe a life decision, console, or narrate these rules, source selection or the calculation system. Invent no personal history, motives, temperament, causal effects, astronomical or health claims.",
+   "user": "Tone: warm. Attentive and conversational. Use natural direct address and occasional contractions. Warmth comes from accurate observation; avoid praise, consolation and a counselor's reassurance.\nDepth: standard. Keep human meaning in the foreground. Omit optional orb values, degree measurements, phase and exact-date detail. When A1 is supplied, its immutable chronology sentence is required even at standard depth.\nStay in one supplied situation. Each source in development.sourceRoles must change how that situation reads or what could be chosen within it. The map is not an order or a paragraph template. Choose the details that belong together; omit unused illustrations. Do not stack a separate lesson for every source.\nOpen with a supported detail or a plain distinction. Prefer the check, the hours, the note and the stopping point to formal descriptions of responsibilities, capacity, boundaries and agreements. Keep more-effort meaning when shortening. Once a concrete sentence makes a point, cut a second sentence that translates it back into abstractions. Use contractions where natural. Vary sentence length, paragraph count and where astrology appears; no mandatory if opening, three-paragraph pattern, script or permission ending. Apply controls.editingPrinciples without quoting them.\nIntegrate any selected N1 and P2 meaning within the first two paragraphs, each with its full source parents. N1 adds the difference between exploring and choosing, with curiosity possibly helping a direction emerge. P2 adds one smaller adjustment if an earlier way no longer fits; it must not repeat a calendar-versus-size explanation already made. It establishes no previous failed attempt, personal recurrence, resolution or closure.\nIf A1 is supplied, include its chronologySentence unchanged exactly once in paragraph 1 or 2, citing A1 and C1. Cite P2, C1, I1 and A1 together for chapter meaning. Do not paraphrase chronology, repeat it, add dates or reinterpret a calculated pass as an event in the reader's life.\nPlanetary imagery can clarify a distinction only when supplied by material. Avoid a list of planet keywords. Do not explain that a contact offers a symbolic lens or gives this reading its theme; let supported meaning stand in ordinary language.\nA useful ending may be the distinction itself or supported optional direction. Do not force a sentence to say aloud, recap the reading, console the reader or add hollow reassurance. The headline and independently validated reflection are separate; write only the body.\nOne source-bound writing brief; draft from its scene details, practical distinctions and optional directions. Source meanings and conditions in controls constrain the writing:\n{\"version\":\"daily-context-brief-4\",\"materialVersion\":\"daily-context-material-4\",\"material\":[{\"factId\":\"I1\",\"sourceKey\":\"square:saturn:sun\",\"releaseVersion\":\"0.9.0\",\"sceneDetails\":[\"An extra check can look small beside a familiar task.\",\"An afternoon set aside for that familiar task.\",\"A task moved to a later calendar opening, with the extra check still included.\"],\"practicalDistinction\":\"If the original task already fills the afternoon, an extra check still needs some of the same hours.\",\"optionalDirections\":[\"If the original work already fills the afternoon, the extra check could stay outside the task.\"],\"requiredFacts\":[\"I1\",\"C1\"]},{\"factId\":\"P2\",\"sourceKey\":\"chapter-return-1\",\"releaseVersion\":\"0.9.0\",\"sceneDetails\":[\"If an earlier method no longer fits, a stopping point could come before the extra check or version.\"],\"practicalDistinction\":\"If an earlier way no longer fits, the smaller adjustment could be to where the original task stops.\",\"optionalDirections\":[\"If an earlier way of handling the task no longer fits, you could try one smaller change to the method or where you stop.\"],\"requiredFacts\":[\"P2\",\"C1\",\"I1\",\"A1\"]}],\"references\":[{\"id\":\"C1\",\"kind\":\"calculation\",\"dependsOn\":[],\"cycle\":{\"transitBody\":\"saturn\",\"natalPoint\":\"sun\",\"aspect\":\"square\"}},{\"id\":\"I1\",\"kind\":\"interpretation\",\"dependsOn\":[\"C1\"],\"sourceKey\":\"square:saturn:sun\",\"releaseVersion\":\"0.9.0\"},{\"id\":\"A1\",\"kind\":\"calculation\",\"dependsOn\":[\"C1\"],\"chronologySentence\":\"This is the second of three calculated contacts; the first exact contact falls in September 2026.\"},{\"id\":\"P2\",\"kind\":\"interpretation\",\"dependsOn\":[\"C1\",\"I1\",\"A1\"],\"sourceKey\":\"chapter-return-1\",\"releaseVersion\":\"0.9.0\",\"storyChapter\":\"return\"}],\"development\":{\"centralSituationFact\":\"I1\",\"sourceRoles\":[{\"factId\":\"I1\",\"role\":\"effort-and-what-fits\"},{\"factId\":\"P2\",\"role\":\"one-smaller-adjustment\"}]},\"controls\":{\"voiceVersion\":\"daily-context-voice-4\",\"draftFrom\":[\"sceneDetails\",\"practicalDistinction\",\"optionalDirections\"],\"editingPrinciples\":[{\"id\":\"visible-first\",\"instruction\":\"Lead with a supported visible detail or plain distinction; cut an abstract preface that announces the lesson.\"},{\"id\":\"consequence-once\",\"instruction\":\"Let one concrete consequence explain the distinction. Cut a following abstract sentence that repeats it.\"},{\"id\":\"claim-local-qualifiers\",\"instruction\":\"Keep a source condition and its possibility word attached to their own claim. An immediate clear reference may continue the same hypothetical; repeat its condition only when needed for clarity.\"},{\"id\":\"finish-on-the-choice\",\"instruction\":\"Let a supported object or small optional choice finish the thought. Cut a counselor reminder, prescribed script or final recap that adds no meaning.\"},{\"id\":\"no-strengthening\",\"instruction\":\"Shortening must preserve possibility and scope. Do not add speed, ease, frequency or necessity while making the prose more direct.\"},{\"id\":\"one-job-per-source\",\"instruction\":\"Use the source-role map as a coverage check, not a sequence: each selected meaning must develop the same situation in a different way. A return chapter adds a smaller adjustment instead of repeating a scheduling point.\"},{\"id\":\"no-new-effects\",\"instruction\":\"Preserve the relationships the selected source supplies. A scene image authorizes no new effect on attention, feelings or behavior. Neither if nor can grounds an added causal claim.\"},{\"id\":\"ordinary-words-complete-meaning\",\"instruction\":\"Let objects and their concrete cost carry the meaning. Keep both the possible extra effort and conditional limit; do not omit one or restate the concrete point as a formal summary.\"}],\"sourceMeanings\":[{\"factId\":\"I1\",\"meaning\":\"A familiar responsibility can need more effort than usual. If it asks for more than the available hours can hold, what belongs in the task may need a clearer limit.\",\"requiredFacts\":[\"I1\",\"C1\"]},{\"factId\":\"P2\",\"meaning\":\"If an earlier way of handling the task no longer fits, this return offers a chance to try one smaller change to how you do it or where you stop.\",\"requiredFacts\":[\"P2\",\"C1\",\"I1\",\"A1\"]}],\"tone\":\"warm\",\"depth\":\"standard\",\"requiredMeaningFacts\":[\"I1\",\"P2\"],\"natalConditional\":false,\"chronologyFirstTwo\":true,\"chronologyOnce\":true,\"technicalDetails\":false,\"sourceConditions\":[{\"factId\":\"I1\",\"conditions\":[\"The responsibility asking more effort is an interpretive possibility, not an established condition of the reader today.\",\"Any actual mismatch between expectations and capacity must remain conditional.\",\"Follow-up references to the task, added scope or boundary must remain inside the possible scene.\"]},{\"factId\":\"P2\",\"conditions\":[\"Preserve the condition that an earlier way must no longer fit before offering an adjustment as a return-chapter application.\",\"A calculated return does not establish that a life situation recurred or that a previous attempt failed.\",\"Use any chronology only from A1 exactly, with C1 and I1 as parents.\"]}]}}\nWrite only the body. The first paragraph concerns the primary contact and cites C1/I1. Use two to four paragraphs of one to four complete sentences each, each under 200 words, at most 700 words total. Declare empty scenes arrays; this brief supplies no SC identifiers.\nIntegrate every selected meaning in paragraph 1 or 2. S1 cites S1/C1/I1/C2/I2; N1 cites N1/C1/I1; chapter P2 cites P2/C1/I1/A1. Preserve each source's conditions. Copy A1 chronology unchanged exactly once in the first two paragraphs, citing A1/C1.\nEvery named planet, aspect or measurement cites its matching C reference. These are transit-to-natal contacts, not current-sky pairs. Do not introduce sign placements, individual houses, natal origins or unprovided imagery. Do not add dates outside the supplied literal chronology unless technical depth provides a directly cited C exactDate.\nKeep the current orb and any exact date in separate sentences. Neither is a personal deadline. Never assert a personal past event, a usual cause or frequency absent from the source, another person's intent, or a promised resolution.\nThe app handles calculation caveats separately. Do not add a headline, reflection question, source-policy explanation or wellbeing framing."
+  },
+  {
+   "id": "natal-and-transit",
+   "promptVersion": "daily-context-body-4",
+   "validatorVersion": "daily-context-reference-4",
+   "diagnostics": "http",
+   "memberDiagnostics": "http",
+   "memberMessagesIdentical": true,
+   "memberGenerationConfig": {
+    "responseMimeType": "application/json",
+    "responseJsonSchema": {
+     "type": "object",
+     "properties": {
+      "paragraphs": {
+       "type": "array",
+       "minItems": 2,
+       "maxItems": 4,
+       "items": {
+        "type": "object",
+        "properties": {
+         "text": {
+          "type": "string"
+         },
+         "facts": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "scenes": {
+          "type": "array",
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+           "type": "string"
+          }
+         }
+        },
+        "required": [
+         "text",
+         "facts",
+         "scenes"
+        ],
+        "additionalProperties": false
+       }
+      }
+     },
+     "required": [
+      "paragraphs"
+     ],
+     "additionalProperties": false
+    }
+   },
+   "systemChars": 2498,
+   "userChars": 10238,
+   "requestBytes": 13813,
+   "requestSha256": "567acd61a3d40a558cef9e93f325f445bd3e9d2a290e3d095eb5b69716ecb629",
+   "generationConfig": {
+    "responseMimeType": "application/json",
+    "responseJsonSchema": {
+     "type": "object",
+     "properties": {
+      "paragraphs": {
+       "type": "array",
+       "minItems": 2,
+       "maxItems": 4,
+       "items": {
+        "type": "object",
+        "properties": {
+         "text": {
+          "type": "string"
+         },
+         "facts": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "scenes": {
+          "type": "array",
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+           "type": "string"
+          }
+         }
+        },
+        "required": [
+         "text",
+         "facts",
+         "scenes"
+        ],
+        "additionalProperties": false
+       }
+      }
+     },
+     "required": [
+      "paragraphs"
+     ],
+     "additionalProperties": false
+    },
+    "maxOutputTokens": 65536
+   },
+   "system": "Write a daily astrology reading that sounds like an attentive person noticing something precise. Put a familiar object or choice in view, then show the distinction that makes it useful. Address the reader naturally; do not deliver a formal account of their situation. Draft only from the supplied material. Preserve each selected source's full meaning and conditions, but let the concrete situation express them: a claim about the hours a check needs can carry a limit without a second sentence announcing expectations, capacity and boundaries. The development map gives each source a different job, not a writing order. These are possible illustrations, never known events in the reader's life. References establish only their supplied source links, geometry and literal chronology. Keep every source condition in controls.sourceConditions attached to its own claim. Preserve source possibility words such as can, may and could on the claim they qualify, including across intervening adverbs. Do not add speed, ease, frequency, necessity, certainty or a relationship beyond the supplied source meaning. A modal in an unrelated clause does not qualify another claim. A clear immediate reference may continue the same hypothetical scene; it never establishes a personal event. Each paragraph cites every source used and all its required parent facts. A synthesis keeps its distinct parent meanings, rather than reducing planets to a keyword list. An image does not authorize a new effect. Link only relationships the selected source actually supplies; if or can does not ground an added causal claim. A familiar task asking more effort and its possible mismatch with the available hours must both remain legible, even when expressed through the extra check rather than an abstract summary. Direction stays optional and proportionate. End when a supported choice or distinction is clear. Never promise an outcome, prescribe a life decision, console, or narrate these rules, source selection or the calculation system. Invent no personal history, motives, temperament, causal effects, astronomical or health claims. N1 is a conditional possibility, not a personality description. Within the shared situation in paragraph 1 or 2, preserve curiosity possibly helping a direction take shape as well as exploring versus choosing. Cite N1, C1 and I1 together. Notes beside an open tab do not establish blurred attention. Do not turn exploration into confusion, diagnose the reader, or recite natal origins.",
+   "user": "Tone: warm. Attentive and conversational. Use natural direct address and occasional contractions. Warmth comes from accurate observation; avoid praise, consolation and a counselor's reassurance.\nDepth: standard. Keep human meaning in the foreground. Omit optional orb values, degree measurements, phase and exact-date detail. When A1 is supplied, its immutable chronology sentence is required even at standard depth.\nStay in one supplied situation. Each source in development.sourceRoles must change how that situation reads or what could be chosen within it. The map is not an order or a paragraph template. Choose the details that belong together; omit unused illustrations. Do not stack a separate lesson for every source.\nOpen with a supported detail or a plain distinction. Prefer the check, the hours, the note and the stopping point to formal descriptions of responsibilities, capacity, boundaries and agreements. Keep more-effort meaning when shortening. Once a concrete sentence makes a point, cut a second sentence that translates it back into abstractions. Use contractions where natural. Vary sentence length, paragraph count and where astrology appears; no mandatory if opening, three-paragraph pattern, script or permission ending. Apply controls.editingPrinciples without quoting them.\nIntegrate any selected N1 and P2 meaning within the first two paragraphs, each with its full source parents. N1 adds the difference between exploring and choosing, with curiosity possibly helping a direction emerge. P2 adds one smaller adjustment if an earlier way no longer fits; it must not repeat a calendar-versus-size explanation already made. It establishes no previous failed attempt, personal recurrence, resolution or closure.\nIf A1 is supplied, include its chronologySentence unchanged exactly once in paragraph 1 or 2, citing A1 and C1. Cite P2, C1, I1 and A1 together for chapter meaning. Do not paraphrase chronology, repeat it, add dates or reinterpret a calculated pass as an event in the reader's life.\nPlanetary imagery can clarify a distinction only when supplied by material. Avoid a list of planet keywords. Do not explain that a contact offers a symbolic lens or gives this reading its theme; let supported meaning stand in ordinary language.\nA useful ending may be the distinction itself or supported optional direction. Do not force a sentence to say aloud, recap the reading, console the reader or add hollow reassurance. The headline and independently validated reflection are separate; write only the body.\nOne source-bound writing brief; draft from its scene details, practical distinctions and optional directions. Source meanings and conditions in controls constrain the writing:\n{\"version\":\"daily-context-brief-4\",\"materialVersion\":\"daily-context-material-4\",\"material\":[{\"factId\":\"I1\",\"sourceKey\":\"square:saturn:sun\",\"releaseVersion\":\"0.9.0\",\"sceneDetails\":[\"An extra check can look small beside a familiar task.\",\"An afternoon set aside for that familiar task.\",\"A task moved to a later calendar opening, with the extra check still included.\"],\"practicalDistinction\":\"If the original task already fills the afternoon, an extra check still needs some of the same hours.\",\"optionalDirections\":[\"If the original work already fills the afternoon, the extra check could stay outside the task.\"],\"requiredFacts\":[\"I1\",\"C1\"]},{\"factId\":\"N1\",\"sourceKey\":\"nl-sun-03\",\"releaseVersion\":\"0.9.0\",\"sceneDetails\":[\"If several projects compete for the afternoon, a page of notes for one idea can sit beside a tab open for another.\",\"If several projects compete for that afternoon, one could stay as a note while you choose another to pursue.\"],\"practicalDistinction\":\"If several projects compete for the same afternoon, exploring a few and choosing one may be separate stages.\",\"optionalDirections\":[\"If several projects compete for that afternoon, a note can hold the second idea without promising it those hours.\"],\"requiredFacts\":[\"N1\",\"C1\",\"I1\"]},{\"factId\":\"P2\",\"sourceKey\":\"chapter-return-1\",\"releaseVersion\":\"0.9.0\",\"sceneDetails\":[\"If an earlier method no longer fits, a stopping point could come before the extra check or version.\"],\"practicalDistinction\":\"If an earlier way no longer fits, the smaller adjustment could be to where the original task stops.\",\"optionalDirections\":[\"If an earlier way of handling the task no longer fits, you could try one smaller change to the method or where you stop.\"],\"requiredFacts\":[\"P2\",\"C1\",\"I1\",\"A1\"]}],\"references\":[{\"id\":\"C1\",\"kind\":\"calculation\",\"dependsOn\":[],\"cycle\":{\"transitBody\":\"saturn\",\"natalPoint\":\"sun\",\"aspect\":\"square\"}},{\"id\":\"I1\",\"kind\":\"interpretation\",\"dependsOn\":[\"C1\"],\"sourceKey\":\"square:saturn:sun\",\"releaseVersion\":\"0.9.0\"},{\"id\":\"N1\",\"kind\":\"temperament\",\"dependsOn\":[\"C1\",\"I1\"],\"sourceKey\":\"nl-sun-03\",\"releaseVersion\":\"0.9.0\",\"natalEvidenceId\":\"NL1\"},{\"id\":\"A1\",\"kind\":\"calculation\",\"dependsOn\":[\"C1\"],\"chronologySentence\":\"This is the second of three calculated contacts; the first exact contact falls in September 2026.\"},{\"id\":\"P2\",\"kind\":\"interpretation\",\"dependsOn\":[\"C1\",\"I1\",\"A1\"],\"sourceKey\":\"chapter-return-1\",\"releaseVersion\":\"0.9.0\",\"storyChapter\":\"return\"}],\"development\":{\"centralSituationFact\":\"I1\",\"sourceRoles\":[{\"factId\":\"I1\",\"role\":\"effort-and-what-fits\"},{\"factId\":\"N1\",\"role\":\"exploration-before-commitment\"},{\"factId\":\"P2\",\"role\":\"one-smaller-adjustment\"}]},\"controls\":{\"voiceVersion\":\"daily-context-voice-4\",\"draftFrom\":[\"sceneDetails\",\"practicalDistinction\",\"optionalDirections\"],\"editingPrinciples\":[{\"id\":\"visible-first\",\"instruction\":\"Lead with a supported visible detail or plain distinction; cut an abstract preface that announces the lesson.\"},{\"id\":\"consequence-once\",\"instruction\":\"Let one concrete consequence explain the distinction. Cut a following abstract sentence that repeats it.\"},{\"id\":\"claim-local-qualifiers\",\"instruction\":\"Keep a source condition and its possibility word attached to their own claim. An immediate clear reference may continue the same hypothetical; repeat its condition only when needed for clarity.\"},{\"id\":\"finish-on-the-choice\",\"instruction\":\"Let a supported object or small optional choice finish the thought. Cut a counselor reminder, prescribed script or final recap that adds no meaning.\"},{\"id\":\"no-strengthening\",\"instruction\":\"Shortening must preserve possibility and scope. Do not add speed, ease, frequency or necessity while making the prose more direct.\"},{\"id\":\"one-job-per-source\",\"instruction\":\"Use the source-role map as a coverage check, not a sequence: each selected meaning must develop the same situation in a different way. A return chapter adds a smaller adjustment instead of repeating a scheduling point.\"},{\"id\":\"no-new-effects\",\"instruction\":\"Preserve the relationships the selected source supplies. A scene image authorizes no new effect on attention, feelings or behavior. Neither if nor can grounds an added causal claim.\"},{\"id\":\"ordinary-words-complete-meaning\",\"instruction\":\"Let objects and their concrete cost carry the meaning. Keep both the possible extra effort and conditional limit; do not omit one or restate the concrete point as a formal summary.\"}],\"sourceMeanings\":[{\"factId\":\"I1\",\"meaning\":\"A familiar responsibility can need more effort than usual. If it asks for more than the available hours can hold, what belongs in the task may need a clearer limit.\",\"requiredFacts\":[\"I1\",\"C1\"]},{\"factId\":\"N1\",\"meaning\":\"Following a few lines of curiosity may help one direction take shape. If several projects compete for the same afternoon, exploring a few and choosing one may be different stages.\",\"requiredFacts\":[\"N1\",\"C1\",\"I1\"]},{\"factId\":\"P2\",\"meaning\":\"If an earlier way of handling the task no longer fits, this return offers a chance to try one smaller change to how you do it or where you stop.\",\"requiredFacts\":[\"P2\",\"C1\",\"I1\",\"A1\"]}],\"tone\":\"warm\",\"depth\":\"standard\",\"requiredMeaningFacts\":[\"I1\",\"N1\",\"P2\"],\"natalConditional\":true,\"chronologyFirstTwo\":true,\"chronologyOnce\":true,\"technicalDetails\":false,\"sourceConditions\":[{\"factId\":\"I1\",\"conditions\":[\"The responsibility asking more effort is an interpretive possibility, not an established condition of the reader today.\",\"Any actual mismatch between expectations and capacity must remain conditional.\",\"Follow-up references to the task, added scope or boundary must remain inside the possible scene.\"]},{\"factId\":\"N1\",\"conditions\":[\"This natal lens is an interpretive possibility, not a fixed personality claim.\",\"The multiple-project scene applies only if several possibilities are competing for the same time.\",\"Keep the distinction between exploration and commitment visible in the shared project scene.\"]},{\"factId\":\"P2\",\"conditions\":[\"Preserve the condition that an earlier way must no longer fit before offering an adjustment as a return-chapter application.\",\"A calculated return does not establish that a life situation recurred or that a previous attempt failed.\",\"Use any chronology only from A1 exactly, with C1 and I1 as parents.\"]}]}}\nWrite only the body. The first paragraph concerns the primary contact and cites C1/I1. Use two to four paragraphs of one to four complete sentences each, each under 200 words, at most 700 words total. Declare empty scenes arrays; this brief supplies no SC identifiers.\nIntegrate every selected meaning in paragraph 1 or 2. S1 cites S1/C1/I1/C2/I2; N1 cites N1/C1/I1; chapter P2 cites P2/C1/I1/A1. Preserve each source's conditions. Copy A1 chronology unchanged exactly once in the first two paragraphs, citing A1/C1.\nEvery named planet, aspect or measurement cites its matching C reference. These are transit-to-natal contacts, not current-sky pairs. Do not introduce sign placements, individual houses, natal origins or unprovided imagery. Do not add dates outside the supplied literal chronology unless technical depth provides a directly cited C exactDate.\nKeep the current orb and any exact date in separate sentences. Neither is a personal deadline. Never assert a personal past event, a usual cause or frequency absent from the source, another person's intent, or a promised resolution.\nThe app handles calculation caveats separately. Do not add a headline, reflection question, source-policy explanation or wellbeing framing."
+  },
+  {
+   "id": "synthesis-natal-and-transit",
+   "promptVersion": "daily-context-body-4",
+   "validatorVersion": "daily-context-reference-4",
+   "diagnostics": "http",
+   "memberDiagnostics": "http",
+   "memberMessagesIdentical": true,
+   "memberGenerationConfig": {
+    "responseMimeType": "application/json",
+    "responseJsonSchema": {
+     "type": "object",
+     "properties": {
+      "paragraphs": {
+       "type": "array",
+       "minItems": 2,
+       "maxItems": 4,
+       "items": {
+        "type": "object",
+        "properties": {
+         "text": {
+          "type": "string"
+         },
+         "facts": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "scenes": {
+          "type": "array",
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+           "type": "string"
+          }
+         }
+        },
+        "required": [
+         "text",
+         "facts",
+         "scenes"
+        ],
+        "additionalProperties": false
+       }
+      }
+     },
+     "required": [
+      "paragraphs"
+     ],
+     "additionalProperties": false
+    }
+   },
+   "systemChars": 2498,
+   "userChars": 12894,
+   "requestBytes": 16687,
+   "requestSha256": "67f5c43a83ccc19616b2ffb936047980a1bf11207b78d4af929760ff734c8540",
+   "generationConfig": {
+    "responseMimeType": "application/json",
+    "responseJsonSchema": {
+     "type": "object",
+     "properties": {
+      "paragraphs": {
+       "type": "array",
+       "minItems": 2,
+       "maxItems": 4,
+       "items": {
+        "type": "object",
+        "properties": {
+         "text": {
+          "type": "string"
+         },
+         "facts": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "scenes": {
+          "type": "array",
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+           "type": "string"
+          }
+         }
+        },
+        "required": [
+         "text",
+         "facts",
+         "scenes"
+        ],
+        "additionalProperties": false
+       }
+      }
+     },
+     "required": [
+      "paragraphs"
+     ],
+     "additionalProperties": false
+    },
+    "maxOutputTokens": 65536
+   },
+   "system": "Write a daily astrology reading that sounds like an attentive person noticing something precise. Put a familiar object or choice in view, then show the distinction that makes it useful. Address the reader naturally; do not deliver a formal account of their situation. Draft only from the supplied material. Preserve each selected source's full meaning and conditions, but let the concrete situation express them: a claim about the hours a check needs can carry a limit without a second sentence announcing expectations, capacity and boundaries. The development map gives each source a different job, not a writing order. These are possible illustrations, never known events in the reader's life. References establish only their supplied source links, geometry and literal chronology. Keep every source condition in controls.sourceConditions attached to its own claim. Preserve source possibility words such as can, may and could on the claim they qualify, including across intervening adverbs. Do not add speed, ease, frequency, necessity, certainty or a relationship beyond the supplied source meaning. A modal in an unrelated clause does not qualify another claim. A clear immediate reference may continue the same hypothetical scene; it never establishes a personal event. Each paragraph cites every source used and all its required parent facts. A synthesis keeps its distinct parent meanings, rather than reducing planets to a keyword list. An image does not authorize a new effect. Link only relationships the selected source actually supplies; if or can does not ground an added causal claim. A familiar task asking more effort and its possible mismatch with the available hours must both remain legible, even when expressed through the extra check rather than an abstract summary. Direction stays optional and proportionate. End when a supported choice or distinction is clear. Never promise an outcome, prescribe a life decision, console, or narrate these rules, source selection or the calculation system. Invent no personal history, motives, temperament, causal effects, astronomical or health claims. N1 is a conditional possibility, not a personality description. Within the shared situation in paragraph 1 or 2, preserve curiosity possibly helping a direction take shape as well as exploring versus choosing. Cite N1, C1 and I1 together. Notes beside an open tab do not establish blurred attention. Do not turn exploration into confusion, diagnose the reader, or recite natal origins.",
+   "user": "Tone: warm. Attentive and conversational. Use natural direct address and occasional contractions. Warmth comes from accurate observation; avoid praise, consolation and a counselor's reassurance.\nDepth: standard. Keep human meaning in the foreground. Omit optional orb values, degree measurements, phase and exact-date detail. When A1 is supplied, its immutable chronology sentence is required even at standard depth.\nStay in one supplied situation. Each source in development.sourceRoles must change how that situation reads or what could be chosen within it. The map is not an order or a paragraph template. Choose the details that belong together; omit unused illustrations. Do not stack a separate lesson for every source.\nOpen with a supported detail or a plain distinction. Prefer the check, the hours, the note and the stopping point to formal descriptions of responsibilities, capacity, boundaries and agreements. Keep more-effort meaning when shortening. Once a concrete sentence makes a point, cut a second sentence that translates it back into abstractions. Use contractions where natural. Vary sentence length, paragraph count and where astrology appears; no mandatory if opening, three-paragraph pattern, script or permission ending. Apply controls.editingPrinciples without quoting them.\nIntegrate any selected N1 and P2 meaning within the first two paragraphs, each with its full source parents. N1 adds the difference between exploring and choosing, with curiosity possibly helping a direction emerge. P2 adds one smaller adjustment if an earlier way no longer fits; it must not repeat a calendar-versus-size explanation already made. It establishes no previous failed attempt, personal recurrence, resolution or closure.\nIf A1 is supplied, include its chronologySentence unchanged exactly once in paragraph 1 or 2, citing A1 and C1. Cite P2, C1, I1 and A1 together for chapter meaning. Do not paraphrase chronology, repeat it, add dates or reinterpret a calculated pass as an event in the reader's life.\nPlanetary imagery can clarify a distinction only when supplied by material. Avoid a list of planet keywords. Do not explain that a contact offers a symbolic lens or gives this reading its theme; let supported meaning stand in ordinary language.\nA useful ending may be the distinction itself or supported optional direction. Do not force a sentence to say aloud, recap the reading, console the reader or add hollow reassurance. The headline and independently validated reflection are separate; write only the body.\nOne source-bound writing brief; draft from its scene details, practical distinctions and optional directions. Source meanings and conditions in controls constrain the writing:\n{\"version\":\"daily-context-brief-4\",\"materialVersion\":\"daily-context-material-4\",\"material\":[{\"factId\":\"I1\",\"sourceKey\":\"square:saturn:sun\",\"releaseVersion\":\"0.9.0\",\"sceneDetails\":[\"An extra check can look small beside a familiar task.\",\"An afternoon set aside for that familiar task.\",\"A task moved to a later calendar opening, with the extra check still included.\"],\"practicalDistinction\":\"If the original task already fills the afternoon, an extra check still needs some of the same hours.\",\"optionalDirections\":[\"If the original work already fills the afternoon, the extra check could stay outside the task.\"],\"requiredFacts\":[\"I1\",\"C1\"]},{\"factId\":\"I2\",\"sourceKey\":\"trine:jupiter:mars\",\"releaseVersion\":\"0.9.0\",\"sceneDetails\":[\"A page of notes beginning to become an outline.\",\"Another piece of the same project starting to look appealing.\"],\"practicalDistinction\":\"When an aim is well chosen, wanting to begin and making a practical start can come together; that ease is not a promise about the result.\",\"optionalDirections\":[\"With a well-chosen aim, you might notice an appealing next piece before agreeing to take it on.\"],\"requiredFacts\":[\"I2\",\"C2\"]},{\"factId\":\"S1\",\"sourceKey\":\"square:saturn:sun_tension_trine:jupiter:mars\",\"releaseVersion\":\"0.9.0\",\"sceneDetails\":[\"An appealing extra piece added to the same project.\",\"One more check or another version enlarging the same proposed task.\"],\"practicalDistinction\":\"A larger task can need more structure, even when starting feels easy.\",\"optionalDirections\":[\"Notice whether an appealing addition changes how much the original task includes.\",\"Before adding another piece, you could consider what it would take to carry the larger task.\"],\"requiredFacts\":[\"S1\",\"C1\",\"I1\",\"C2\",\"I2\"]},{\"factId\":\"N1\",\"sourceKey\":\"nl-sun-03\",\"releaseVersion\":\"0.9.0\",\"sceneDetails\":[\"If several projects compete for the afternoon, a page of notes for one idea can sit beside a tab open for another.\",\"If several projects compete for that afternoon, one could stay as a note while you choose another to pursue.\"],\"practicalDistinction\":\"If several projects compete for the same afternoon, exploring a few and choosing one may be separate stages.\",\"optionalDirections\":[\"If several projects compete for that afternoon, a note can hold the second idea without promising it those hours.\"],\"requiredFacts\":[\"N1\",\"C1\",\"I1\"]},{\"factId\":\"P2\",\"sourceKey\":\"chapter-return-1\",\"releaseVersion\":\"0.9.0\",\"sceneDetails\":[\"If an earlier method no longer fits, a stopping point could come before the extra check or version.\"],\"practicalDistinction\":\"If an earlier way no longer fits, the smaller adjustment could be to where the original task stops.\",\"optionalDirections\":[\"If an earlier way of handling the task no longer fits, you could try one smaller change to the method or where you stop.\"],\"requiredFacts\":[\"P2\",\"C1\",\"I1\",\"A1\"]}],\"references\":[{\"id\":\"C1\",\"kind\":\"calculation\",\"dependsOn\":[],\"cycle\":{\"transitBody\":\"saturn\",\"natalPoint\":\"sun\",\"aspect\":\"square\"}},{\"id\":\"I1\",\"kind\":\"interpretation\",\"dependsOn\":[\"C1\"],\"sourceKey\":\"square:saturn:sun\",\"releaseVersion\":\"0.9.0\"},{\"id\":\"C2\",\"kind\":\"calculation\",\"dependsOn\":[],\"cycle\":{\"transitBody\":\"jupiter\",\"natalPoint\":\"mars\",\"aspect\":\"trine\"}},{\"id\":\"I2\",\"kind\":\"interpretation\",\"dependsOn\":[\"C2\"],\"sourceKey\":\"trine:jupiter:mars\",\"releaseVersion\":\"0.9.0\"},{\"id\":\"S1\",\"kind\":\"synthesis\",\"dependsOn\":[\"C1\",\"I1\",\"C2\",\"I2\"],\"sourceKey\":\"square:saturn:sun_tension_trine:jupiter:mars\",\"releaseVersion\":\"0.9.0\"},{\"id\":\"N1\",\"kind\":\"temperament\",\"dependsOn\":[\"C1\",\"I1\"],\"sourceKey\":\"nl-sun-03\",\"releaseVersion\":\"0.9.0\",\"natalEvidenceId\":\"NL1\"},{\"id\":\"A1\",\"kind\":\"calculation\",\"dependsOn\":[\"C1\"],\"chronologySentence\":\"This is the second of three calculated contacts; the first exact contact falls in September 2026.\"},{\"id\":\"P2\",\"kind\":\"interpretation\",\"dependsOn\":[\"C1\",\"I1\",\"A1\"],\"sourceKey\":\"chapter-return-1\",\"releaseVersion\":\"0.9.0\",\"storyChapter\":\"return\"}],\"development\":{\"centralSituationFact\":\"I1\",\"sourceRoles\":[{\"factId\":\"I1\",\"role\":\"effort-and-what-fits\"},{\"factId\":\"I2\",\"role\":\"enthusiasm-with-a-practical-start\"},{\"factId\":\"S1\",\"role\":\"what-a-larger-task-needs\"},{\"factId\":\"N1\",\"role\":\"exploration-before-commitment\"},{\"factId\":\"P2\",\"role\":\"one-smaller-adjustment\"}]},\"controls\":{\"voiceVersion\":\"daily-context-voice-4\",\"draftFrom\":[\"sceneDetails\",\"practicalDistinction\",\"optionalDirections\"],\"editingPrinciples\":[{\"id\":\"visible-first\",\"instruction\":\"Lead with a supported visible detail or plain distinction; cut an abstract preface that announces the lesson.\"},{\"id\":\"consequence-once\",\"instruction\":\"Let one concrete consequence explain the distinction. Cut a following abstract sentence that repeats it.\"},{\"id\":\"claim-local-qualifiers\",\"instruction\":\"Keep a source condition and its possibility word attached to their own claim. An immediate clear reference may continue the same hypothetical; repeat its condition only when needed for clarity.\"},{\"id\":\"finish-on-the-choice\",\"instruction\":\"Let a supported object or small optional choice finish the thought. Cut a counselor reminder, prescribed script or final recap that adds no meaning.\"},{\"id\":\"no-strengthening\",\"instruction\":\"Shortening must preserve possibility and scope. Do not add speed, ease, frequency or necessity while making the prose more direct.\"},{\"id\":\"one-job-per-source\",\"instruction\":\"Use the source-role map as a coverage check, not a sequence: each selected meaning must develop the same situation in a different way. A return chapter adds a smaller adjustment instead of repeating a scheduling point.\"},{\"id\":\"no-new-effects\",\"instruction\":\"Preserve the relationships the selected source supplies. A scene image authorizes no new effect on attention, feelings or behavior. Neither if nor can grounds an added causal claim.\"},{\"id\":\"ordinary-words-complete-meaning\",\"instruction\":\"Let objects and their concrete cost carry the meaning. Keep both the possible extra effort and conditional limit; do not omit one or restate the concrete point as a formal summary.\"}],\"sourceMeanings\":[{\"factId\":\"I1\",\"meaning\":\"A familiar responsibility can need more effort than usual. If it asks for more than the available hours can hold, what belongs in the task may need a clearer limit.\",\"requiredFacts\":[\"I1\",\"C1\"]},{\"factId\":\"I2\",\"meaning\":\"When an aim is well chosen, enthusiasm and a practical start can support each other, and taking up more of the work can feel easier.\",\"requiredFacts\":[\"I2\",\"C2\"]},{\"factId\":\"S1\",\"meaning\":\"Adding more to a plan can mean needing more structure to carry it. A possible task growing past its agreed limits is one place to notice that tension.\",\"requiredFacts\":[\"S1\",\"C1\",\"I1\",\"C2\",\"I2\"]},{\"factId\":\"N1\",\"meaning\":\"Following a few lines of curiosity may help one direction take shape. If several projects compete for the same afternoon, exploring a few and choosing one may be different stages.\",\"requiredFacts\":[\"N1\",\"C1\",\"I1\"]},{\"factId\":\"P2\",\"meaning\":\"If an earlier way of handling the task no longer fits, this return offers a chance to try one smaller change to how you do it or where you stop.\",\"requiredFacts\":[\"P2\",\"C1\",\"I1\",\"A1\"]}],\"tone\":\"warm\",\"depth\":\"standard\",\"requiredMeaningFacts\":[\"I1\",\"I2\",\"S1\",\"N1\",\"P2\"],\"natalConditional\":true,\"chronologyFirstTwo\":true,\"chronologyOnce\":true,\"technicalDetails\":false,\"sourceConditions\":[{\"factId\":\"I1\",\"conditions\":[\"The responsibility asking more effort is an interpretive possibility, not an established condition of the reader today.\",\"Any actual mismatch between expectations and capacity must remain conditional.\",\"Follow-up references to the task, added scope or boundary must remain inside the possible scene.\"]},{\"factId\":\"I2\",\"conditions\":[\"Preserve the well-chosen-aim condition; do not assert that the reader's current aim is well chosen.\",\"Ease is an interpretive possibility, not a promise of success or an actual opportunity arriving.\",\"Keep enthusiasm and practical initiative as mutually supporting possibilities under the well-chosen-aim condition; initiative does not cause the next piece to look appealing.\"]},{\"factId\":\"S1\",\"conditions\":[\"Use only with C1, I1, C2 and I2; preserve both contact interpretations and the combined tension.\",\"Added scope and limits being exceeded must remain possible, not assumed facts about the reader's project.\"]},{\"factId\":\"N1\",\"conditions\":[\"This natal lens is an interpretive possibility, not a fixed personality claim.\",\"The multiple-project scene applies only if several possibilities are competing for the same time.\",\"Keep the distinction between exploration and commitment visible in the shared project scene.\"]},{\"factId\":\"P2\",\"conditions\":[\"Preserve the condition that an earlier way must no longer fit before offering an adjustment as a return-chapter application.\",\"A calculated return does not establish that a life situation recurred or that a previous attempt failed.\",\"Use any chronology only from A1 exactly, with C1 and I1 as parents.\"]}]}}\nWrite only the body. The first paragraph concerns the primary contact and cites C1/I1. Use two to four paragraphs of one to four complete sentences each, each under 200 words, at most 700 words total. Declare empty scenes arrays; this brief supplies no SC identifiers.\nIntegrate every selected meaning in paragraph 1 or 2. S1 cites S1/C1/I1/C2/I2; N1 cites N1/C1/I1; chapter P2 cites P2/C1/I1/A1. Preserve each source's conditions. Copy A1 chronology unchanged exactly once in the first two paragraphs, citing A1/C1.\nEvery named planet, aspect or measurement cites its matching C reference. These are transit-to-natal contacts, not current-sky pairs. Do not introduce sign placements, individual houses, natal origins or unprovided imagery. Do not add dates outside the supplied literal chronology unless technical depth provides a directly cited C exactDate.\nKeep the current orb and any exact date in separate sentences. Neither is a personal deadline. Never assert a personal past event, a usual cause or frequency absent from the source, another person's intent, or a promised resolution.\nThe app handles calculation caveats separately. Do not add a headline, reflection question, source-policy explanation or wellbeing framing."
+  }
+ ]
+}

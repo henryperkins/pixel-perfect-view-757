@@ -36,8 +36,8 @@ test("an explicitly enabled supported member graph uses the context writer", asy
   process.env.LOVABLE_API_KEY = "test-member-context-key";
   h.setGateway(() => response(benchmark.paragraphs));
   const result = await language.generateReadingProse(input, { contextModes: ["contact-only"] });
-  assert.equal(result.meta.diagnostics.promptVersion, "daily-context-body-4");
-  assert.equal(result.meta.diagnostics.validatorVersion, "daily-context-reference-4");
+  assert.equal(result.meta.diagnostics.promptVersion, "daily-context-body-5");
+  assert.equal(result.meta.diagnostics.validatorVersion, "daily-context-reference-5");
   assert.equal(result.meta.mode, "model");
   assert.equal(result.headline, "The task that will not fit");
   assert.equal(h.gatewayRequests.length, 1);
@@ -255,7 +255,7 @@ test("each synthetic member mode uses the production adapter and captures the ra
       result.prose.body,
       expected.paragraphs.map((paragraph) => paragraph.text).join("\n\n"),
     );
-    assert.equal(result.prose.meta.diagnostics.promptVersion, "daily-context-body-4");
+    assert.equal(result.prose.meta.diagnostics.promptVersion, "daily-context-body-5");
     assert.equal(result.candidate.captureLossless, true);
     assert.equal(result.candidate.truncated, false);
     assert.deepEqual(result.candidate.paragraphs, expected.paragraphs);
@@ -345,15 +345,20 @@ test("member provider boundary exposes only selected source-bound material and c
   assert.ok(!user.includes(benchmark.reflection));
   for (const paragraph of benchmark.paragraphs) assert.ok(!user.includes(paragraph.text));
   const brief = JSON.parse(user.split("\n").find((line) => line.startsWith('{"version":')));
-  assert.deepEqual(
-    brief.material.map((entry) => entry.factId),
-    ["I1", "N1", "P2"],
-  );
-  assert.deepEqual(brief.material.find((entry) => entry.factId === "P2").requiredFacts, [
+  assert.deepEqual([...new Set(brief.claims.flatMap((claim) => claim.cite))].sort(), [
+    "A1",
+    "C1",
+    "I1",
+    "N1",
+    "P2",
+  ]);
+  // The chapter's one wording also carries the natal note, so it cites N1 as well.
+  assert.deepEqual(brief.claims.find((claim) => claim.cite[0] === "P2").cite, [
     "P2",
     "C1",
     "I1",
     "A1",
+    "N1",
   ]);
   assert.deepEqual(input, original);
 });

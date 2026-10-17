@@ -1,0 +1,56 @@
+{
+  "createdAt": "2026-10-17T11:05:59.336Z",
+  "mapping": [
+    {
+      "label": "B1",
+      "kind": "edited-failure",
+      "id": "transit-only",
+      "editedFrom": "R1",
+      "bodySha256": "57235fb72369d83bd95a7edf1039543d5499ec36113a981ab041ce509d9c4c12"
+    },
+    {
+      "label": "B2",
+      "kind": "reference",
+      "id": "synthesis-natal-and-transit",
+      "bodySha256": "37a2dee35abb1c46781c601095b03e5823cc8c6068a8dfda034fcb6dd7c3f509"
+    },
+    {
+      "label": "B3",
+      "kind": "reference",
+      "id": "contact-only",
+      "bodySha256": "5792aeb3a926837d701c6b23c29241ae2a840fc24cc61880aadb1500c9bc01eb"
+    },
+    {
+      "label": "B4",
+      "kind": "reference",
+      "id": "transit-only",
+      "bodySha256": "9e516b98d7b5f7f030a83711b23aa7d0bc71585cab69b3aad21117a321a26cf4"
+    },
+    {
+      "label": "B5",
+      "kind": "edited-failure",
+      "id": "natal-only",
+      "editedFrom": "R2",
+      "bodySha256": "3cd8a7e41084585dcbf9fa88f264609886c362fa96e30d34a453feef99ed41d4"
+    },
+    {
+      "label": "B6",
+      "kind": "reference",
+      "id": "natal-only",
+      "bodySha256": "2379706cfce40b202cbd3c393d1a26ddb0a369c0145e530fc2b02d27ba1768e2"
+    },
+    {
+      "label": "B7",
+      "kind": "edited-failure",
+      "id": "contact-only",
+      "editedFrom": "R3",
+      "bodySha256": "a98cdb0a27e43c47de2f71519519f57ceb5d7539e2772ccbc04fda74550d67dc"
+    },
+    {
+      "label": "B8",
+      "kind": "reference",
+      "id": "natal-and-transit",
+      "bodySha256": "84c4f16df01efc834226117c3628ea6b97da592da2ad5d7bbad4c045a02b846e"
+    }
+  ]
+}

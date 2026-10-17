@@ -54,3 +54,15 @@ test("fourth context campaign reports independent runtime fallbacks for partial 
   assert.match(scope, /runtime fallback bodies.*original review benchmarks.*separately/i);
   assert.match(scope, /partial captures cannot qualify/i);
 });
+
+// The fifth campaign keeps the same partial-capture limits as the halted fourth one.
+test("fifth context campaign reports independent runtime fallbacks for partial captures", () => {
+  const scope = shared.readingEvaluationReportScope({
+    status: "halted",
+    total: 5,
+    completed: 3,
+    contextPilot: { version: "daily-context-pilot-5", benchmarkHash: "b".repeat(64) },
+  });
+  assert.match(scope, /runtime fallback bodies.*original review benchmarks.*separately/i);
+  assert.match(scope, /partial captures cannot qualify/i);
+});

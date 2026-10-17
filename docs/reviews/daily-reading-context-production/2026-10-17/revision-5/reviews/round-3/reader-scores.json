@@ -1,0 +1,194 @@
+{
+  "reviewType": "independent blind AI reader review",
+  "humanReviewCompleted": false,
+  "frozenAtUtc": "2026-10-17T12:05:54Z",
+  "inputs": [
+    {
+      "path": "/tmp/pattern-context-structure-private-5-r3-20261017/reader/reader-packet.md",
+      "sha256": "e8a214b3e229078f72333246295d5ae6244348345eb40e2bc624923cdbce298a"
+    },
+    {
+      "path": "/tmp/pattern-context-structure-private-5-r3-20261017/reader/benchmark-readings.md",
+      "sha256": "75258c2eabec3625cd49b72374c3fcdc4b2d2d769bd6b383403a77b4a6e6ebf2"
+    }
+  ],
+  "threshold": 4,
+  "bodies": [
+    {
+      "label": "B1",
+      "scores": {
+        "recognition": 4,
+        "meaning": 4,
+        "direction": 4,
+        "distinctness": 4,
+        "voice": 4
+      },
+      "pass": true,
+      "evidence": [
+        {
+          "dimension": "recognition",
+          "quote": "An extra check can look small beside a familiar task.",
+          "note": "Limiting: A comparison rather than a scene. \"An extra check\" is never defined (a review pass? a check-in?) and the task is unnamed; the afternoon arrives only in the next sentence, inside a conditional, so the reader has to assemble the situation."
+        },
+        {
+          "dimension": "meaning",
+          "quote": "If several projects compete for that same afternoon, you may not need to choose between them yet: following a few lines of curiosity may help a direction take shape.",
+          "note": "Limiting: \"several projects\" can be read as including the familiar task that already fills the afternoon, and \"yet\" has no time frame, so \"you may not need to choose\" seems to undo \"hours that are already spoken for\" until the last sentence resolves it. The reason offered, \"may help a direction take shape\", is abstract."
+        },
+        {
+          "dimension": "direction",
+          "quote": "A page of notes can hold them without promising them those hours.",
+          "note": "Limiting: A good, proportionate move, but it suits ideas, not the extra check the body opens on; a reader whose pressure is the check gets an observation and no move."
+        },
+        {
+          "dimension": "distinctness",
+          "quote": "If several projects compete for that same afternoon, you may not need to choose between them yet: following a few lines of curiosity may help a direction take shape.",
+          "note": "Limiting: The body changes scene at the paragraph break, from one added check to several projects, instead of developing its opening detail; the curiosity clause is the one part that adds no observation specific to this afternoon."
+        },
+        {
+          "dimension": "voice",
+          "quote": "As Saturn squares your natal Sun, that task can need more effort than usual, and if it already fills the afternoon, anything added needs hours that are already spoken for.",
+          "note": "Limiting: \"can need\" is clumsy, and with \"can look\", \"may not need\", \"may help\" and \"can hold\" nearly every clause is hedged, which blunts the noticing; the closing \"hold them without promising them\" doubles a pronoun whose referent (the projects or the lines of curiosity) is unclear."
+        }
+      ]
+    },
+    {
+      "label": "B2",
+      "scores": {
+        "recognition": 4,
+        "meaning": 3,
+        "direction": 4,
+        "distinctness": 3,
+        "voice": 3
+      },
+      "pass": false,
+      "evidence": [
+        {
+          "dimension": "recognition",
+          "quote": "Under Saturn's square to your natal Sun, though, the familiar task underneath can take more effort than usual, and if it fills the whole afternoon, the next piece needs hours that are already spoken for.",
+          "note": "Limiting: \"the familiar task underneath\" arrives with no antecedent; the reader is not told what task sits under the outline or how the two relate, so the concrete opening loses its footing just as the pressure arrives."
+        },
+        {
+          "dimension": "meaning",
+          "quote": "A bigger outline can need more organizing to hold it together, and the point where it grows past what the task was meant to include is one place to notice that.",
+          "note": "Blocking: \"notice that\" has no clear referent (the extra organizing or the growth), and \"one place\" implies other places it never names; the scope distinction the sentence reaches for does not land."
+        },
+        {
+          "dimension": "meaning",
+          "quote": "With Jupiter trining your natal Mars, interest and progress can feed each other when the aim is well chosen, and adding the next piece can feel natural.",
+          "note": "Blocking: Read with the sixth and seventh sentences: progress is tied to an aim \"well chosen\", then \"you may not need to decide between them yet\", then \"following more than one line of curiosity\", then the next piece should \"wait as a note instead of joining the outline\". The reader is pulled between choosing, not choosing, expanding and holding back, and is left without one clear meaning."
+        },
+        {
+          "dimension": "meaning",
+          "quote": "And if an earlier way of handling the task no longer fits, you could use this return to try one smaller change: the next piece can wait as a note instead of joining the outline.",
+          "note": "Limiting: The only sentence that gives the chronology a use, and it comes three sentences after it, behind two sentences about organizing and curiosity; the return is tied to \"the task\" while the change applies to the outline, so the link between the dates and the move is loose."
+        },
+        {
+          "dimension": "direction",
+          "quote": "If several pieces compete for the afternoon, you may not need to decide between them yet: following more than one line of curiosity can help a direction take shape.",
+          "note": "Limiting: With the noticing prompt before it and the closing change after it, this makes three moves in one paragraph; inviting more than one line of curiosity just before advising the next piece to wait blurs the direction, and \"yet\" has no time frame."
+        },
+        {
+          "dimension": "distinctness",
+          "quote": "A bigger outline can need more organizing to hold it together, and the point where it grows past what the task was meant to include is one place to notice that.",
+          "note": "Blocking: \"can need more organizing to hold it together\" restates the third sentence's \"can take more effort than usual\" in different words."
+        },
+        {
+          "dimension": "distinctness",
+          "quote": "If several pieces compete for the afternoon, you may not need to decide between them yet: following more than one line of curiosity can help a direction take shape.",
+          "note": "Blocking: \"several pieces compete for the afternoon\" restates \"the next piece needs hours that are already spoken for\" from paragraph one. With two contacts, the chronology and three moves in seven sentences, the body is crowded and no single thread develops cleanly."
+        },
+        {
+          "dimension": "voice",
+          "quote": "A bigger outline can need more organizing to hold it together, and the point where it grows past what the task was meant to include is one place to notice that.",
+          "note": "Blocking: Formal and abstract (\"what the task was meant to include\", \"one place to notice that\"); it reads as an editorial aside, not an observation."
+        },
+        {
+          "dimension": "voice",
+          "quote": "With Jupiter trining your natal Mars, interest and progress can feed each other when the aim is well chosen, and adding the next piece can feel natural.",
+          "note": "Blocking: Together with the outline-organizing sentence: \"interest and progress can feed each other\" and \"when the aim is well chosen\" are abstract, and the closing \"you could use this return to try one smaller change\" adds coaching, so the register drifts from noticing to summarizing."
+        }
+      ]
+    },
+    {
+      "label": "B3",
+      "scores": {
+        "recognition": 4,
+        "meaning": 4,
+        "direction": 4,
+        "distinctness": 4,
+        "voice": 4
+      },
+      "pass": true,
+      "evidence": [
+        {
+          "dimension": "recognition",
+          "quote": "With Saturn squaring your natal Sun, even that task can take more effort than usual, and if it fills the whole afternoon, anything else needs hours that are already spoken for.",
+          "note": "Limiting: The pressure the reading turns on is named only as \"more effort than usual\", with no sign of what that effort looks like in the task; the vivid details belong to the side ideas, not the main task."
+        },
+        {
+          "dimension": "meaning",
+          "quote": "If other projects are competing for those hours, with notes on one idea and a tab open on another, you may not need to decide between them this afternoon: following more than one line of curiosity can help a direction take shape.",
+          "note": "Limiting: The reason given for not deciding is a general maxim (\"a direction\" toward what?) rather than a reading of this afternoon, and \"following\" more than one line sits awkwardly beside hours that are already spoken for; the last sentence has to carry the real distinction."
+        },
+        {
+          "dimension": "direction",
+          "quote": "A note can keep an idea in view without promising it the afternoon.",
+          "note": "Limiting: Concrete and well scoped, but it handles only the side ideas; the familiar task now taking more effort gets no move."
+        },
+        {
+          "dimension": "distinctness",
+          "quote": "If other projects are competing for those hours, with notes on one idea and a tab open on another, you may not need to decide between them this afternoon: following more than one line of curiosity can help a direction take shape.",
+          "note": "Limiting: Forty-two words carrying a condition, two details, a permission and a rationale; the rationale clause is the one part that adds no observation specific to this scene."
+        },
+        {
+          "dimension": "voice",
+          "quote": "If other projects are competing for those hours, with notes on one idea and a tab open on another, you may not need to decide between them this afternoon: following more than one line of curiosity can help a direction take shape.",
+          "note": "Limiting: \"you may not need to decide between them this afternoon\" is reassuring permission more than observation, and \"can help a direction take shape\" is the one abstract phrase; every sentence is hedged with can or may."
+        }
+      ]
+    },
+    {
+      "label": "B4",
+      "scores": {
+        "recognition": 4,
+        "meaning": 4,
+        "direction": 4,
+        "distinctness": 4,
+        "voice": 4
+      },
+      "pass": true,
+      "evidence": [
+        {
+          "dimension": "recognition",
+          "quote": "With Saturn squaring your natal Sun, even that task can take more effort than usual, and if it fills the whole afternoon, anything else needs hours that are already spoken for.",
+          "note": "Limiting: The main pressure is named only as \"more effort than usual\"; later, \"an earlier way of handling the task\" asks the reader to supply a history the body cannot show."
+        },
+        {
+          "dimension": "meaning",
+          "quote": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+          "note": "Limiting: Placement only (the fixed wording was not scored): it closes paragraph one, and its practical meaning arrives two sentences later, after an unrelated sentence about other projects; the reader has to infer that \"this return\" is this second contact and that \"an earlier way\" points back to September. The meaning given (change one thing about how the task is handled) is practical but left implicit."
+        },
+        {
+          "dimension": "direction",
+          "quote": "And if an earlier way of handling the task no longer fits, you could use this return to try one smaller change: a clear point where the task stops, with the other ideas waiting as notes.",
+          "note": "Limiting: The move is concrete and proportionate, but it is gated behind a condition the reader has to supply, \"one smaller change\" has no point of comparison, and \"use this return to try\" is coach-like."
+        },
+        {
+          "dimension": "distinctness",
+          "quote": "If other projects are competing for those hours, with notes on one idea and a tab open on another, you may not need to decide between them this afternoon: following more than one line of curiosity can help a direction take shape.",
+          "note": "Limiting: Paragraph two is this 42-word sentence followed by a 36-word if-clause and colon sentence of the same shape, so it reads as stacked hypotheticals; the closing \"with the other ideas waiting as notes\" repeats this sentence's deferral rather than adding a distinction."
+        },
+        {
+          "dimension": "voice",
+          "quote": "And if an earlier way of handling the task no longer fits, you could use this return to try one smaller change: a clear point where the task stops, with the other ideas waiting as notes.",
+          "note": "Limiting: \"an earlier way of handling the task no longer fits\" and \"use this return to try one smaller change\" are abstract, coach-like phrasing around a concrete payoff; \"can help a direction take shape\" in the previous sentence is the other abstract spot."
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "reviewed": 4,
+    "passed": 3
+  }
+}

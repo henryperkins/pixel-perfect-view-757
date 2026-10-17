@@ -130,7 +130,7 @@ import {
   memberContextRolloutIdentity,
 } from "./ai/member-context-rollout.server";
 import { memberContextMode, prepareMemberContextReading } from "./ai/member-context-reading";
-import { toDailyContextBrief } from "./ai/daily-context-writing";
+import { assertReviewedContextSources } from "./ai/daily-context-writing";
 import type { ReadingProseInput } from "./ai/language.server";
 import {
   PRIMARY_COMPOSITION_VERSION,
@@ -1492,7 +1492,7 @@ async function getTodayReading(
       if (preview.eligibleCycles[0]?.cycle_key !== "saturn_square_sun") memberRollout = null;
       else {
         const { readingFacts } = await import("./ai/facts");
-        toDailyContextBrief(readingFacts(previewChart, preview, tz), ctx.tone, ctx.depth);
+        assertReviewedContextSources(readingFacts(previewChart, preview, tz));
       }
     } catch {
       memberRollout = null;

@@ -1,0 +1,94 @@
+{
+  "at": "2026-10-17T12:56:26+00:00",
+  "baseCommit": "d35e8b5bd99fa9905f7630751de4c1427271e224",
+  "scope": "offline revision; working tree of codex/context-structure-revision-5-20261017 before its local commit",
+  "materialSha256": "40a86ccab103f37f6b28db1e1aef8313f142d2cb7af6c0f8806f483eabf665b8",
+  "checks": {
+    "tests": {
+      "total": 1098,
+      "passed": 1094,
+      "skipped": 4,
+      "failed": 0,
+      "command": "node --test --test-concurrency=4 --test-timeout=240000 tests/*.test.mjs"
+    },
+    "structureTests": {
+      "file": "tests/reading-context-structure.test.mjs",
+      "total": 10,
+      "failOnBase": 6,
+      "passOnBase": 4,
+      "passOnRevision": 10,
+      "passOnBaseReason": "preservation and characterization checks: saved pilot-4 requests fail the rule, authored bodies pass the unchanged gate, capture hashes intact, timeout policy unchanged"
+    },
+    "typescript": {
+      "command": "npx tsc --noEmit",
+      "exitCode": 0
+    },
+    "eslint": {
+      "scope": "22 changed code, test and evidence-script files",
+      "exitCode": 0
+    },
+    "build": {
+      "command": "npm run build",
+      "exitCode": 0
+    }
+  },
+  "offline": {
+    "providerRequests": 0,
+    "networkRequests": 0,
+    "externalCallAttempts": 0,
+    "interceptedCaptures": "five cases through the pilot path and the member Today route; identical messages on both",
+    "replay": "eight authored bodies accepted; saved R3 rejected as writing_quality with the authored fallback; saved R1 and R2 still accepted"
+  },
+  "privateLogHashes": {
+    "build.log": "0cf8defe7420f38ec6968cae8d817c6c761feb76ba95145ef53e9dbcc09d88ec",
+    "eslint-files.txt": "e6356c5e6070e8e5c81e6795e330e3e99dca93a593ef493d131f1de76164c5f0",
+    "eslint-final.log": "f148dcc4ade04b51677789f034ee82bbdb384fda76a278507119fdfc87958fda",
+    "full-tests-final.log": "11e90bc8cdbe4e794dc399c6a27d3582119e00c3d19a995540419aac4530df97",
+    "structure-green.log": "1d7ae89a51180ab4f00b29275e712dc76b5015d8eddbb1a7f6d6d0f25655abef",
+    "structure-red.log": "5c0ae1cd6be2fb170d94d30eece86fc1fd0abf18790598600210a96eaed6cf97",
+    "typescript.log": "a6ce7f41eaf235b981cdbfe9a3d6a5d9a3502b6bd605ffc2acf78679a4ee9a2f"
+  },
+  "review": {
+    "readerRounds": 4,
+    "readerPassesBeforeSourceFix": "7 of 8 (all but the synthesis reference)",
+    "bodiesChangedAfterLastReaderReview": 4,
+    "sourceRound1": {
+      "compositionsPassed": "2 of 5",
+      "bodiesPassed": "4 of 8",
+      "unsupportedClaims": 0,
+      "finding": "N1 condition 'several possible projects compete for the same free afternoon' lost in every natal wording"
+    },
+    "sourceRound2": {
+      "compositionsPassed": 1,
+      "bodiesPassed": 1,
+      "unsupportedClaimsTotal": 0,
+      "compositions": {
+        "natal-only": false,
+        "natal-and-transit": true,
+        "synthesis-natal-and-transit": false
+      },
+      "bodies": {
+        "natal-only edit": false,
+        "natal-and-transit": true,
+        "natal-only": false,
+        "synthesis-natal-and-transit": false
+      }
+    },
+    "humanReviewCompleted": false
+  },
+  "production": {
+    "pushed": false,
+    "deployed": false,
+    "writerRollout": null,
+    "modelActivated": false,
+    "authoredActivated": false,
+    "campaignPilot4Reused": false
+  },
+  "limits": [
+    "Synthesis has no reference reading that passes the reader bar; a contract change for that graph is proposed, not implemented.",
+    "Four bodies changed by the source fix were not re-read by a blind reader.",
+    "Natal-only and natal-and-transit runtime fallbacks keep the benchmark wording that drops N1's 'possible' and 'free'; revise and review before any natal activation.",
+    "Timeout cause unknown; transport policy unchanged.",
+    "AI reviews; authored offline evidence, not generated qualification."
+  ]
+}

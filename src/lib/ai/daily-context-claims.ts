@@ -182,6 +182,51 @@ function observedSceneProblem(sentences: string[], sources: FactAtom[]): string 
   return null;
 }
 
+/**
+ * The brief states each supplied condition once, and the fourth pilot's
+ * contact-only body restated its full-afternoon condition. These patterns cover
+ * the reviewed conditions of the 0.9.0 sources only; a paraphrased restatement
+ * still needs reader review.
+ */
+const SOURCE_CONDITIONS = [
+  {
+    id: "I1",
+    key: "square:saturn:sun",
+    pattern:
+      /\b(?:fills?|filled|filling|takes?|taking|took)\s+(?:up\s+)?(?:the|that|this|your|an?)\s+(?:whole\s+|entire\s+)?(?:afternoon|block)\b/gi,
+  },
+  {
+    id: "N1",
+    key: "nl-sun-03",
+    pattern:
+      /\bcompet(?:e|es|ed|ing)\s+for\s+(?:the|that|this|those|one|your|an?)\s+(?:same\s+)?(?:free\s+)?(?:afternoon|hours)\b/gi,
+  },
+  {
+    id: "P2",
+    key: "chapter-return-1",
+    pattern: /\bearlier\s+(?:way|method)\b[^.!?]{0,80}?\bno\s+longer\s+(?:fits?|works?)\b/gi,
+  },
+  {
+    id: "I2",
+    key: "trine:jupiter:mars",
+    pattern: /\b(?:aim|goal)\s+is\s+well[- ]chosen\b|\bwell[- ]chosen\s+(?:aim|goal)\b/gi,
+  },
+];
+
+/** Whole-body check: a supplied condition stated twice restates its claim. */
+export function dailyContextRepeatProblem(paragraphs: string[], facts: FactAtom[]): string | null {
+  const body = paragraphs.join("\n\n");
+  for (const { id, key, pattern } of SOURCE_CONDITIONS)
+    if (
+      facts.some(
+        (fact) => fact.id === id && fact.sourceKey === key && fact.releaseVersion === "0.9.0",
+      ) &&
+      (body.match(pattern)?.length ?? 0) > 1
+    )
+      return "draft restates a supplied source condition";
+  return null;
+}
+
 /** Source IDs never establish semantic support on their own. */
 export function dailyContextClaimProblem(sentences: string[], cited: FactAtom[]): string | null {
   const sources = cited.filter((fact) => /^(?:I[1-3]|[SN]1|P2)$/.test(fact.id));

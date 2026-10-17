@@ -1,0 +1,31 @@
+{
+  "createdAt": "2026-10-17T12:52:33.443Z",
+  "materialSha256": "40a86ccab103f37f6b28db1e1aef8313f142d2cb7af6c0f8806f483eabf665b8",
+  "mapping": [
+    {
+      "label": "B1",
+      "kind": "edited-failure",
+      "id": "natal-only",
+      "editedFrom": "R2",
+      "bodySha256": "4075a965243f5948fbba86ebf9e17dc8fa7df4728ab55f6659617ae0b4ecfb54"
+    },
+    {
+      "label": "B2",
+      "kind": "reference",
+      "id": "natal-and-transit",
+      "bodySha256": "c194aeb3732d2fb3945639a8679a43c1a93219fb68608073c482867945d81adb"
+    },
+    {
+      "label": "B3",
+      "kind": "reference",
+      "id": "natal-only",
+      "bodySha256": "ccbb6a46e425ee781710ab1aed3d8e9cddcd22281e0c16cbf8bdf59154741e45"
+    },
+    {
+      "label": "B4",
+      "kind": "reference",
+      "id": "synthesis-natal-and-transit",
+      "bodySha256": "84bdca12f0d51acbe7e82a21d19285083c92723b48bebf751fba66e0f409e6a3"
+    }
+  ]
+}
