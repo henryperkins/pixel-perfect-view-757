@@ -3,7 +3,13 @@ import { useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { useMembership } from "@/hooks/useMembership";
-import { cancelMembership, changeMembership, openMembershipPortal, refreshMembership, unwrapBilling } from "@/lib/billing.functions";
+import {
+  cancelMembership,
+  changeMembership,
+  openMembershipPortal,
+  refreshMembership,
+  unwrapBilling,
+} from "@/lib/billing.functions";
 
 export function MembershipSettings() {
   const query = useMembership(),
@@ -24,14 +30,18 @@ export function MembershipSettings() {
     setError("");
     try {
       if (action === "portal") {
-        const tab=window.open("about:blank","_blank");
+        const tab = window.open("about:blank", "_blank");
         if (!tab) throw new Error("Allow a new tab to open billing details.");
-        try {tab.location.href=unwrapBilling(await openMembershipPortal()).url;} catch(e) {tab.close();throw e;}
-      }
-      else {
+        try {
+          tab.location.href = unwrapBilling(await openMembershipPortal()).url;
+        } catch (e) {
+          tab.close();
+          throw e;
+        }
+      } else {
         if (action === "cancel") unwrapBilling(await cancelMembership());
         else if (action === "refresh") unwrapBilling(await refreshMembership({ data: {} }));
-        else unwrapBilling(await changeMembership({data:{action}}));
+        else unwrapBilling(await changeMembership({ data: { action } }));
         setConfirmCancel(false);
         await Promise.all([
           client.invalidateQueries({ queryKey: ["membership"] }),
@@ -107,8 +117,20 @@ export function MembershipSettings() {
             </p>
           )}
           <div className="mt-4 flex flex-wrap gap-3">
-            {state.membership?.cancelAtPeriodEnd && state.fullAccess && <Button variant="outline" disabled={busy} onClick={()=>act("resume")}>Resume renewal</Button>}
-            {state.fullAccess && state.membership && <Button variant="outline" disabled={busy} onClick={()=>act(state.membership?.plan === "month" ? "year" : "month")}>Switch to {state.membership.plan === "month" ? "yearly" : "monthly"}, prorated</Button>}
+            {state.membership?.cancelAtPeriodEnd && state.fullAccess && (
+              <Button variant="outline" disabled={busy} onClick={() => act("resume")}>
+                Resume renewal
+              </Button>
+            )}
+            {state.fullAccess && state.membership && (
+              <Button
+                variant="outline"
+                disabled={busy}
+                onClick={() => act(state.membership?.plan === "month" ? "year" : "month")}
+              >
+                Switch to {state.membership.plan === "month" ? "yearly" : "monthly"}, prorated
+              </Button>
+            )}
             {!state.fullAccess && state.enabled && (
               <Button asChild>
                 <Link to="/plans">View plans</Link>

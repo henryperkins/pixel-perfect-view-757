@@ -14,7 +14,18 @@ export const Route = createFileRoute("/_authenticated/membership/success")({
         : "",
   }),
   head: () => ({
-    meta: [{ title: "Membership confirmation — Pattern" }, {name:"description",content:"Check your Pattern Plus payment and chapter access."},{property:"og:title",content:"Membership confirmation — Pattern"},{property:"og:description",content:"Check your Pattern Plus payment and chapter access."},{property:"og:type",content:"website"},{name:"twitter:card",content:"summary"}, { name: "robots", content: "noindex" }],
+    meta: [
+      { title: "Membership confirmation — Pattern" },
+      { name: "description", content: "Check your Pattern Plus payment and chapter access." },
+      { property: "og:title", content: "Membership confirmation — Pattern" },
+      {
+        property: "og:description",
+        content: "Check your Pattern Plus payment and chapter access.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+      { name: "robots", content: "noindex" },
+    ],
   }),
   component: MembershipSuccess,
 });
@@ -24,10 +35,12 @@ function MembershipSuccess() {
     client = useQueryClient();
   const query = useQuery({
     queryKey: ["membership-checkout", user.userId, session_id],
-    queryFn: async () => unwrapBilling(await refreshMembership({ data: { sessionId: session_id } })),
+    queryFn: async () =>
+      unwrapBilling(await refreshMembership({ data: { sessionId: session_id } })),
     enabled: Boolean(session_id),
     retry: false,
-    refetchInterval: (query) => query.state.data?.checkoutPending && query.state.dataUpdateCount < 20 ? 3000 : false,
+    refetchInterval: (query) =>
+      query.state.data?.checkoutPending && query.state.dataUpdateCount < 20 ? 3000 : false,
   });
   useEffect(() => {
     if (query.data) {

@@ -31,7 +31,7 @@ export interface TemplateEntry {
  *   // then add to TEMPLATES: 'welcome': welcomeTemplate
  */
 export const TEMPLATES: Record<string, TemplateEntry> = {
-  "security-alert": {component:SecurityAlertEmail,subject:"Your Pattern account was updated"},
+  "security-alert": { component: SecurityAlertEmail, subject: "Your Pattern account was updated" },
   "account-confirmation": { component: SignupEmail, subject: "Confirm your Pattern email" },
   "password-reset": { component: RecoveryEmail, subject: "Reset your Pattern password" },
   "email-change": { component: EmailChangeEmail, subject: "Confirm your new Pattern email" },

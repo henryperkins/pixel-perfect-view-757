@@ -12,7 +12,22 @@ export const Route = createFileRoute("/_authenticated/plans")({
   validateSearch: (search: Record<string, unknown>): { canceled?: boolean } => ({
     canceled: search["canceled"] === true || search["canceled"] === "true",
   }),
-  head: () => ({ meta: [{ title: "Plans — Pattern" },{name:"description",content:"Choose a Pattern Plus membership for complete natal chapters."},{property:"og:title",content:"Plans — Pattern"},{property:"og:description",content:"Choose a Pattern Plus membership for complete natal chapters."},{property:"og:type",content:"website"},{name:"twitter:card",content:"summary"}] }),
+  head: () => ({
+    meta: [
+      { title: "Plans — Pattern" },
+      {
+        name: "description",
+        content: "Choose a Pattern Plus membership for complete natal chapters.",
+      },
+      { property: "og:title", content: "Plans — Pattern" },
+      {
+        property: "og:description",
+        content: "Choose a Pattern Plus membership for complete natal chapters.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+    ],
+  }),
   component: PlansPage,
 });
 function PlansPage() {
@@ -25,8 +40,19 @@ function PlansPage() {
       state?.enabled &&
       state?.membership &&
       !["canceled", "incomplete_expired"].includes(state.membership.status);
-  const checkoutError=useCallback((message:string)=>{setError(message);setBusy(null);},[]);
-  function checkout(plan: MembershipPlan) { setError(""); try {getStripeEnvironment();setBusy(plan);} catch(e) {checkoutError(e instanceof Error ? e.message : "Checkout is unavailable.");} }
+  const checkoutError = useCallback((message: string) => {
+    setError(message);
+    setBusy(null);
+  }, []);
+  function checkout(plan: MembershipPlan) {
+    setError("");
+    try {
+      getStripeEnvironment();
+      setBusy(plan);
+    } catch (e) {
+      checkoutError(e instanceof Error ? e.message : "Checkout is unavailable.");
+    }
+  }
   return (
     <Shell>
       <PaymentTestModeBanner />
@@ -64,9 +90,16 @@ function PlansPage() {
               Retry plans
             </Button>
           </div>
-         ) : busy ? (
-           <div className="mt-8"><Button variant="outline" onClick={()=>setBusy(null)}>Back to plans</Button><div className="mt-6"><StripeEmbeddedCheckout key={busy} plan={busy} onError={checkoutError}/></div></div>
-         ) : hasMembership ? (
+        ) : busy ? (
+          <div className="mt-8">
+            <Button variant="outline" onClick={() => setBusy(null)}>
+              Back to plans
+            </Button>
+            <div className="mt-6">
+              <StripeEmbeddedCheckout key={busy} plan={busy} onError={checkoutError} />
+            </div>
+          </div>
+        ) : hasMembership ? (
           <div className="mt-8">
             <p>You already have a Pattern Plus membership.</p>
             <Button asChild className="mt-4">
@@ -91,7 +124,7 @@ function PlansPage() {
                     {plan === "month" ? "Monthly" : "Yearly"}
                   </h2>
                   <p className="mt-3">
-                    <span className="font-mono text-3xl">${PLANS[plan].amount/100}</span>
+                    <span className="font-mono text-3xl">${PLANS[plan].amount / 100}</span>
                     <span className="ml-2 text-sm text-muted-foreground">/ {plan}</span>
                   </p>
                   <p className="mt-3 text-sm text-muted-foreground">

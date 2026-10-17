@@ -318,14 +318,36 @@ export default {
     // Opt in after the app callbacks are deployed; never call unpublished code by default.
     if (env.PATTERN_BILLING_RECONCILE_URL && env.PATTERN_BILLING_ENVIRONMENT) {
       let cursor = "";
-      for (let page=0;page<50;page++) {
-        const raw=JSON.stringify({issuedAt:Date.now(),environment:env.PATTERN_BILLING_ENVIRONMENT,cursor});
-        const response=await fetch(env.PATTERN_BILLING_RECONCILE_URL,{method:"POST",headers:{"content-type":"application/json","x-pattern-signature":await hmacHex(raw,env.PATTERN_WORKFLOW_SECRET)},body:raw,redirect:"manual",signal:AbortSignal.timeout(60_000)});
-        if (!response.ok) { console.error(JSON.stringify({event:"billing-reconcile-failed",status:response.status})); break; }
-        const result=await response.json();
-        await env.ARTIFACTS.put("operations/billing/latest.json",JSON.stringify({at:new Date().toISOString(),...result}),{httpMetadata:{contentType:"application/json"}});
+      for (let page = 0; page < 50; page++) {
+        const raw = JSON.stringify({
+          issuedAt: Date.now(),
+          environment: env.PATTERN_BILLING_ENVIRONMENT,
+          cursor,
+        });
+        const response = await fetch(env.PATTERN_BILLING_RECONCILE_URL, {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+            "x-pattern-signature": await hmacHex(raw, env.PATTERN_WORKFLOW_SECRET),
+          },
+          body: raw,
+          redirect: "manual",
+          signal: AbortSignal.timeout(60_000),
+        });
+        if (!response.ok) {
+          console.error(
+            JSON.stringify({ event: "billing-reconcile-failed", status: response.status }),
+          );
+          break;
+        }
+        const result = await response.json();
+        await env.ARTIFACTS.put(
+          "operations/billing/latest.json",
+          JSON.stringify({ at: new Date().toISOString(), ...result }),
+          { httpMetadata: { contentType: "application/json" } },
+        );
         if (!result.nextCursor) break;
-        cursor=result.nextCursor;
+        cursor = result.nextCursor;
       }
     }
     const now = new Date(controller.scheduledTime).toISOString();

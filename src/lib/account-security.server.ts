@@ -19,11 +19,31 @@ type Token = {
 const digest = (value: string) => createHash("sha256").update(value).digest("hex");
 const invalidLink = "This link has expired or already been used. Request a new link.";
 
-async function securityAlert(userId:string,email:string,message:string,db:DBClient) {
+async function securityAlert(userId: string, email: string, message: string, db: DBClient) {
   try {
-    const result=await sendTemplateEmail("security-alert",email,{templateData:{siteName:"Pattern",siteUrl:appOrigin(),recipient:email,confirmationUrl:"",oldEmail:email,email,newEmail:message}});
-    await db.from("audit_events").insert({user_id:userId,kind:"account.security-alert",detail:{status:result.sent ? "queued":"suppressed"}});
-  } catch {await db.from("audit_events").insert({user_id:userId,kind:"account.security-alert",detail:{status:"failed"}});}
+    const result = await sendTemplateEmail("security-alert", email, {
+      templateData: {
+        siteName: "Pattern",
+        siteUrl: appOrigin(),
+        recipient: email,
+        confirmationUrl: "",
+        oldEmail: email,
+        email,
+        newEmail: message,
+      },
+    });
+    await db
+      .from("audit_events")
+      .insert({
+        user_id: userId,
+        kind: "account.security-alert",
+        detail: { status: result.sent ? "queued" : "suppressed" },
+      });
+  } catch {
+    await db
+      .from("audit_events")
+      .insert({ user_id: userId, kind: "account.security-alert", detail: { status: "failed" } });
+  }
 }
 
 export async function accountRateLimit(key: string, limit: number, db = records()) {
@@ -95,7 +115,10 @@ async function emailToken(account: Account, purpose: Purpose, db: DBClient, newE
         result.reason,
       );
     // A failed resend must not destroy an earlier usable link.
-    await db.exec("DELETE FROM account_tokens WHERE user_id=? AND purpose=? AND token_hash<>? AND created_at<=?", [account.id, purpose, hash, now]);
+    await db.exec(
+      "DELETE FROM account_tokens WHERE user_id=? AND purpose=? AND token_hash<>? AND created_at<=?",
+      [account.id, purpose, hash, now],
+    );
     await db.from("audit_events").insert({
       user_id: account.id,
       kind: "account.email",
@@ -170,7 +193,9 @@ export async function securityStatus(userId: string, db = records()) {
 
 export async function requireVerifiedEmail(userId: string, db = records()) {
   if (!(await securityStatus(userId, db)).confirmed)
-    throw new Error("Confirm your Pattern email in Context & privacy before purchasing or linking an assistant.");
+    throw new Error(
+      "Confirm your Pattern email in Context & privacy before purchasing or linking an assistant.",
+    );
 }
 
 /** Removing the identity link fences approvals in flight through the existing triggers. */
@@ -193,17 +218,29 @@ export async function emailDeliveryStatus(userId: string, db = records()) {
   const apiKey = process.env["LOVABLE_API_KEY"];
   if (!apiKey) throw new Error("Email delivery status is unavailable.");
   try {
-    const pending = await db.exec<{new_email: string}>("SELECT new_email FROM account_tokens WHERE user_id=? AND purpose='change' AND expires_at>?", [userId, Date.now()]);
-    const recipients = [...new Set([email, ...pending.map((row) => row.new_email).filter(Boolean)])];
-    const results = await Promise.all(recipients.map((recipient) => listEmailLogs(
-      { recipient, since: new Date(Date.now() - 7 * 86400_000).toISOString(), limit: 20 },
-      { apiKey },
-    )));
+    const pending = await db.exec<{ new_email: string }>(
+      "SELECT new_email FROM account_tokens WHERE user_id=? AND purpose='change' AND expires_at>?",
+      [userId, Date.now()],
+    );
+    const recipients = [
+      ...new Set([email, ...pending.map((row) => row.new_email).filter(Boolean)]),
+    ];
+    const results = await Promise.all(
+      recipients.map((recipient) =>
+        listEmailLogs(
+          { recipient, since: new Date(Date.now() - 7 * 86400_000).toISOString(), limit: 20 },
+          { apiKey },
+        ),
+      ),
+    );
     return {
       available: true as const,
       attempts,
-      events: results.flatMap((result) => result.data)
-        .filter((event) => recipients.some((recipient) => event.recipient.toLowerCase() === recipient.toLowerCase()))
+      events: results
+        .flatMap((result) => result.data)
+        .filter((event) =>
+          recipients.some((recipient) => event.recipient.toLowerCase() === recipient.toLowerCase()),
+        )
         .map((event) => ({
           timestamp: event.timestamp,
           event: event.event_type,
@@ -247,7 +284,7 @@ export async function changePassword(
   if (!(await accountRateLimit(`account-change:${userId}`, 10, db)))
     throw new Error("Too many attempts. Please try again later.");
   const previous = await requireCurrentPassword(userId, current, db);
-  const {email}=await securityStatus(userId,db);
+  const { email } = await securityStatus(userId, db);
   const hash = await hashPassword(next);
   await db.batch([
     {
@@ -259,7 +296,12 @@ export async function changePassword(
     { sql: "DELETE FROM account_tokens WHERE user_id=?", params: [userId] },
     { sql: "DELETE FROM identity_links WHERE user_id=?", params: [userId] },
   ]);
-  await securityAlert(userId,email,"Your Pattern password changed. All devices and assistants have been signed out.",db);
+  await securityAlert(
+    userId,
+    email,
+    "Your Pattern password changed. All devices and assistants have been signed out.",
+    db,
+  );
   return { ok: true };
 }
 
@@ -306,16 +348,25 @@ export async function consumeAccountToken(
     statements.push({ sql: "DELETE FROM sessions WHERE user_id=?", params: [token.user_id] });
   if (purpose === "reset")
     statements.push({ sql: "DELETE FROM identity_links WHERE user_id=?", params: [token.user_id] });
-  statements.push(purpose === "reset" || token.purpose === "change"
-    ? { sql: "DELETE FROM account_tokens WHERE user_id=?", params: [token.user_id] }
-    : { sql: "DELETE FROM account_tokens WHERE token_hash=?", params: [hash] });
+  statements.push(
+    purpose === "reset" || token.purpose === "change"
+      ? { sql: "DELETE FROM account_tokens WHERE user_id=?", params: [token.user_id] }
+      : { sql: "DELETE FROM account_tokens WHERE token_hash=?", params: [hash] },
+  );
   try {
     await db.batch(statements);
   } catch {
     throw new Error(invalidLink);
   }
   if (purpose === "reset" || token.purpose === "change")
-    await securityAlert(token.user_id,token.email,purpose === "reset" ? "Your Pattern password was reset. All devices and assistants have been signed out." : "Your Pattern email address changed. All devices have been signed out.",db);
+    await securityAlert(
+      token.user_id,
+      token.email,
+      purpose === "reset"
+        ? "Your Pattern password was reset. All devices and assistants have been signed out."
+        : "Your Pattern email address changed. All devices have been signed out.",
+      db,
+    );
   if (token.purpose === "change" && token.new_email) {
     // The login has already changed; Stripe failing here must not undo or block it.
     try {

@@ -18,8 +18,8 @@ export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
       { title: "Sign in — Pattern" },
-      {property:"og:type",content:"website"},
-      {name:"twitter:card",content:"summary"},
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       {
         name: "description",
         content: "Sign in to Pattern to see today's calculated reading and the evidence behind it.",

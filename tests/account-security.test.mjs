@@ -222,37 +222,60 @@ test("unknown or malformed tokens fail without changing any account", async () =
   await auth.requireCurrentPassword(h.userA, password, h.records());
 });
 
-test("confirming email does not invalidate a pending password reset", async()=> {
-  await api.requestPasswordReset("fixture@example.invalid","fixture-ip",h.records());const reset=emailToken();
-  await api.sendConfirmation(h.userA,h.records());const confirm=emailToken();
-  await api.consumeAccountToken(confirm,"confirm",undefined,h.records());
-  await api.consumeAccountToken(reset,"reset","Replacement fixture password",h.records());
-  await auth.requireCurrentPassword(h.userA,"Replacement fixture password",h.records());
+test("confirming email does not invalidate a pending password reset", async () => {
+  await api.requestPasswordReset("fixture@example.invalid", "fixture-ip", h.records());
+  const reset = emailToken();
+  await api.sendConfirmation(h.userA, h.records());
+  const confirm = emailToken();
+  await api.consumeAccountToken(confirm, "confirm", undefined, h.records());
+  await api.consumeAccountToken(reset, "reset", "Replacement fixture password", h.records());
+  await auth.requireCurrentPassword(h.userA, "Replacement fixture password", h.records());
 });
-test("a failed resend preserves the earlier usable confirmation",async()=> {
-  await api.sendConfirmation(h.userA,h.records());const original=emailToken();
-  const delegate=globalThis.fetch;
-  globalThis.fetch=(input,init)=>String(input).startsWith("https://api.lovable.dev/") ? Promise.resolve(Response.json({success:false,status:"rejected"})):delegate(input,init);
-  try {await assert.rejects(api.sendConfirmation(h.userA,h.records()));} finally {globalThis.fetch=delegate;}
-  await api.consumeAccountToken(original,"confirm",undefined,h.records());
-  assert.equal((await api.securityStatus(h.userA,h.records())).confirmed,true);
+test("a failed resend preserves the earlier usable confirmation", async () => {
+  await api.sendConfirmation(h.userA, h.records());
+  const original = emailToken();
+  const delegate = globalThis.fetch;
+  globalThis.fetch = (input, init) =>
+    String(input).startsWith("https://api.lovable.dev/")
+      ? Promise.resolve(Response.json({ success: false, status: "rejected" }))
+      : delegate(input, init);
+  try {
+    await assert.rejects(api.sendConfirmation(h.userA, h.records()));
+  } finally {
+    globalThis.fetch = delegate;
+  }
+  await api.consumeAccountToken(original, "confirm", undefined, h.records());
+  assert.equal((await api.securityStatus(h.userA, h.records())).confirmed, true);
 });
 async function assistantLink() {
-  await h.records().exec("INSERT INTO identity_links(id,user_id,issuer,subject) VALUES('link',?,'fixture','subject')",[h.userA]);
-  await h.records().exec("INSERT INTO assistant_grants(id,user_id,link_id,client_id,status) VALUES('grant',?,'link','client','active')",[h.userA]);
+  await h
+    .records()
+    .exec(
+      "INSERT INTO identity_links(id,user_id,issuer,subject) VALUES('link',?,'fixture','subject')",
+      [h.userA],
+    );
+  await h
+    .records()
+    .exec(
+      "INSERT INTO assistant_grants(id,user_id,link_id,client_id,status) VALUES('grant',?,'link','client','active')",
+      [h.userA],
+    );
 }
-test("password change revokes assistant links and grants",async()=> {
-  await assistantLink();await api.changePassword(h.userA,password,"Replacement fixture password",h.records());
-  assert.equal(h.sqlite.prepare("SELECT count(*) n FROM identity_links").get().n,0);
-  assert.equal(h.sqlite.prepare("SELECT count(*) n FROM assistant_grants").get().n,0);
+test("password change revokes assistant links and grants", async () => {
+  await assistantLink();
+  await api.changePassword(h.userA, password, "Replacement fixture password", h.records());
+  assert.equal(h.sqlite.prepare("SELECT count(*) n FROM identity_links").get().n, 0);
+  assert.equal(h.sqlite.prepare("SELECT count(*) n FROM assistant_grants").get().n, 0);
 });
-test("password recovery revokes assistant links and grants",async()=> {
-  await assistantLink();await api.requestPasswordReset("fixture@example.invalid","fixture-ip",h.records());
-  await api.consumeAccountToken(emailToken(),"reset","Replacement fixture password",h.records());
-  assert.equal(h.sqlite.prepare("SELECT count(*) n FROM assistant_grants").get().n,0);
+test("password recovery revokes assistant links and grants", async () => {
+  await assistantLink();
+  await api.requestPasswordReset("fixture@example.invalid", "fixture-ip", h.records());
+  await api.consumeAccountToken(emailToken(), "reset", "Replacement fixture password", h.records());
+  assert.equal(h.sqlite.prepare("SELECT count(*) n FROM assistant_grants").get().n, 0);
 });
-test("sign out all revokes member sessions and assistant access",async()=> {
-  await assistantLink();await api.signOutAll(h.userA,h.records());
-  assert.equal(h.sqlite.prepare("SELECT count(*) n FROM sessions").get().n,0);
-  assert.equal(h.sqlite.prepare("SELECT count(*) n FROM assistant_grants").get().n,0);
+test("sign out all revokes member sessions and assistant access", async () => {
+  await assistantLink();
+  await api.signOutAll(h.userA, h.records());
+  assert.equal(h.sqlite.prepare("SELECT count(*) n FROM sessions").get().n, 0);
+  assert.equal(h.sqlite.prepare("SELECT count(*) n FROM assistant_grants").get().n, 0);
 });
