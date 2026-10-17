@@ -1,5 +1,5 @@
 {
-  "version": "daily-member-context-fallbacks-1",
+  "version": "daily-member-context-fallbacks-2",
   "materialVersion": "daily-context-material-5",
   "cases": [
     {
@@ -8,7 +8,7 @@
       "reflection": "When does an addition begin to change what you originally agreed to do?",
       "paragraphs": [
         {
-          "text": "An extra check can look small beside a familiar task. Saturn's square to your natal Sun is a picture of expectations pressing against the capacity to meet them.",
+          "text": "An extra check can look like almost nothing next to a task you know well. With Saturn squaring your natal Sun, even that task can take more effort than usual. If it fills the whole afternoon, the check needs hours that are already spoken for.",
           "facts": [
             "C1",
             "I1"
@@ -16,7 +16,7 @@
           "scenes": []
         },
         {
-          "text": "If the original work already fills the afternoon, moving the task to a later calendar opening may leave the check attached. In that case, the extra check could be left out.",
+          "text": "Moving the task to another afternoon only takes the check along with it. Changing what the task includes is the other option: the check could stay outside it.",
           "facts": [
             "C1",
             "I1"
@@ -31,7 +31,7 @@
       "reflection": "What helps you recognize an interest you want to explore before deciding whether to commit?",
       "paragraphs": [
         {
-          "text": "An extra check can look small beside a familiar task. If the original work already fills the afternoon, the check still needs some of the same hours. Saturn's square to your natal Sun is a picture of expectations pressing against the capacity to meet them.",
+          "text": "A free afternoon can look like plenty of room for a task you know well. With Saturn squaring your natal Sun, even that task can take more effort than usual, and if it fills the whole afternoon, anything else needs hours that are already spoken for.",
           "facts": [
             "C1",
             "I1"
@@ -39,7 +39,7 @@
           "scenes": []
         },
         {
-          "text": "If several projects compete for that afternoon, a page of notes for one idea can sit beside a tab open for another. Following a few lines of curiosity may help one direction take shape. A note can hold the second idea without promising it the afternoon.",
+          "text": "If several possible projects are competing for that same free afternoon, with notes on one idea and a tab open on another, you may not need to decide between them yet: following more than one line of curiosity can help a direction take shape. You could give the task a clear stopping point, with the other ideas waiting as notes.",
           "facts": [
             "C1",
             "I1",
@@ -55,28 +55,21 @@
       "reflection": "What tells you a method needs adjusting before you decide the whole plan has failed?",
       "paragraphs": [
         {
-          "text": "An afternoon already set aside for one responsibility can look roomy until the smaller requests start arriving. If the familiar task now takes the whole block, moving it to the next empty space may leave the same problem waiting there. Saturn's square to your natal Sun is a picture of expectations pressing against the capacity to meet them.",
+          "text": "An extra check can look like almost nothing next to a task you know well. With Saturn squaring your natal Sun, even that task can take more effort than usual, and if it fills the whole afternoon, the check needs hours that are already spoken for. {{A1_CHRONOLOGY}}",
           "facts": [
             "C1",
-            "I1"
+            "I1",
+            "A1"
           ],
           "scenes": []
         },
         {
-          "text": "{{A1_CHRONOLOGY}} If an earlier way of fitting the task in no longer works, this return offers a chance to adjust one part of the method or boundary. That could mean changing what belongs inside the commitment, rather than finding another place to put it.",
+          "text": "If an earlier way of handling the task no longer fits, you could use this return to try one smaller change rather than a new plan: a stopping point that comes before the check.",
           "facts": [
             "C1",
             "I1",
             "A1",
             "P2"
-          ],
-          "scenes": []
-        },
-        {
-          "text": "An extra check or another version may look small beside the original task. A defined stopping point can make the size of that addition easier to see before you agree to it.",
-          "facts": [
-            "C1",
-            "I1"
           ],
           "scenes": []
         }
@@ -88,26 +81,16 @@
       "reflection": "How do you tell the difference between leaving a possibility open and keeping a commitment vague?",
       "paragraphs": [
         {
-          "text": "An afternoon set aside for one project can fill before the project begins: a page of notes for one idea, a tab open for another. If an established responsibility is already asking more effort than usual, each addition has to find its hours somewhere. Following a few lines of curiosity may help a direction take shape. If several projects compete for the same afternoon, sampling a few and choosing one to pursue may be different stages.",
+          "text": "A free afternoon can look like plenty of room for a task you know well. With Saturn squaring your natal Sun, even that task can take more effort than usual, and if it fills the whole afternoon, anything else needs hours that are already spoken for. {{A1_CHRONOLOGY}}",
           "facts": [
             "C1",
             "I1",
-            "N1"
+            "A1"
           ],
           "scenes": []
         },
         {
-          "text": "Saturn's square to your natal Sun is a picture of expectations pressing against the capacity to meet them. {{A1_CHRONOLOGY}} If an earlier way of fitting the task in no longer works, this return offers a chance to adjust one part of the method or boundary.",
-          "facts": [
-            "C1",
-            "I1",
-            "A1",
-            "P2"
-          ],
-          "scenes": []
-        },
-        {
-          "text": "A note can hold the second idea without turning it into a second commitment. For the project you choose, the useful change might be a defined stopping point: what belongs inside this afternoon, and what stays outside it.",
+          "text": "If several possible projects are competing for that same free afternoon, with notes on one idea and a tab open on another, you may not need to decide between them yet: following more than one line of curiosity can help a direction take shape. And if an earlier way of handling the task no longer fits, you could use this return to try one smaller change: a clear point where the task stops, with the other ideas waiting as notes.",
           "facts": [
             "C1",
             "I1",
@@ -125,39 +108,27 @@
       "reflection": "What changes an interesting possibility into something you are ready to be responsible for?",
       "paragraphs": [
         {
-          "text": "A project can grow between 'this looks promising' and 'I'll take care of it.' When an aim is well chosen, starting can feel easy: a page of notes becomes an outline, and another piece of work starts to look appealing. If a familiar responsibility now needs more effort, that extra scope can also ask for more structure. Sampling a few possible directions may help one take shape before you choose which to pursue.",
+          "text": "On a free afternoon, the notes for a task you know well can start turning into an outline. With Jupiter trining your natal Mars, the notes and your interest in them can feed each other when the aim is well chosen, and effort can meet little friction, making it natural to add the next piece or pursue an emerging opening. With Saturn squaring your natal Sun, though, the task itself can take more deliberate effort than usual, and if it fills the whole afternoon, the next piece needs hours that are already spoken for. {{A1_CHRONOLOGY}}",
           "facts": [
             "C1",
             "I1",
             "C2",
             "I2",
-            "S1",
-            "N1"
+            "A1"
           ],
           "scenes": []
         },
         {
-          "text": "Ease in taking on work and enough structure to carry it are different things. {{A1_CHRONOLOGY}} If an earlier way of handling the task no longer fits, this return offers a chance to adjust a method or boundary.",
+          "text": "A bigger task can need more structure to carry it, and that need can show up where the task's ambitions grow beyond its agreed limits. If several possible projects are competing for that same free afternoon, you may not need to decide between them yet: following more than one line of curiosity can help a direction take shape. And if an earlier way of handling the task no longer fits, you could use this return to try one smaller change to how you do it or where it stops: the next piece can wait as a note instead of joining the outline.",
           "facts": [
             "C1",
             "I1",
             "C2",
             "I2",
             "S1",
+            "N1",
             "A1",
             "P2"
-          ],
-          "scenes": []
-        },
-        {
-          "text": "Before another piece becomes a promise, there may be a distinction to make: whether it helps you explore the idea or adds something you are agreeing to carry. One possibility can stay in the notes while another becomes the commitment.",
-          "facts": [
-            "C1",
-            "I1",
-            "C2",
-            "I2",
-            "S1",
-            "N1"
           ],
           "scenes": []
         }

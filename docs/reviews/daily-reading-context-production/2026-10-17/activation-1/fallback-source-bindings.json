@@ -1,0 +1,151 @@
+{
+  "version": 1,
+  "fallbackVersion": "daily-member-context-fallbacks-2",
+  "fallbackHash": "561f76b372aa2f6cc67caa001dfc6805c9c487f5861b2094cb1f1f9d10700939",
+  "reviewedReferences": "../revision-5/reference-readings.json",
+  "reviewLedger": "../revision-5/source-fix-1/body-review-ledger.json",
+  "humanReviewCompleted": false,
+  "generatedQualification": false,
+  "cases": [
+    {
+      "mode": "contact-only",
+      "referenceBodySha256": "fb20c4345f963dfef569f0f8d5b16ed56c17d615d9ecc56a43bfecca35abdb61",
+      "sourceReview": {
+        "bodySha256": "fb20c4345f963dfef569f0f8d5b16ed56c17d615d9ecc56a43bfecca35abdb61",
+        "review": "reviews/source-1/source-scores.json",
+        "label": "B8",
+        "pass": true,
+        "unsupportedClaims": 0,
+        "omittedMeanings": 0,
+        "integration": null
+      },
+      "readerReview": {
+        "bodySha256": "fb20c4345f963dfef569f0f8d5b16ed56c17d615d9ecc56a43bfecca35abdb61",
+        "review": "reviews/round-2/reader-scores.json",
+        "label": "B2",
+        "pass": true,
+        "scores": {
+          "recognition": 4,
+          "meaning": 4,
+          "direction": 4,
+          "distinctness": 5,
+          "voice": 4
+        }
+      },
+      "transformation": "Exact reviewed reference paragraphs and citations.",
+      "headingsAndReflection": "Existing member runtime values retained."
+    },
+    {
+      "mode": "natal-only",
+      "referenceBodySha256": "78fb60416eef8eb0b649e46ac3195832278db6595964dc59b9b8d04b3438035e",
+      "sourceReview": {
+        "bodySha256": "78fb60416eef8eb0b649e46ac3195832278db6595964dc59b9b8d04b3438035e",
+        "review": "source-fix-1/reviews/source-3/scores.json",
+        "label": "B3",
+        "pass": true,
+        "unsupportedClaims": 0,
+        "omittedMeanings": 0,
+        "integration": 4
+      },
+      "readerReview": {
+        "bodySha256": "78fb60416eef8eb0b649e46ac3195832278db6595964dc59b9b8d04b3438035e",
+        "review": "source-fix-1/reviews/reader-5/scores.json",
+        "label": "B3",
+        "pass": true,
+        "scores": {
+          "recognition": 4,
+          "meaning": 4,
+          "direction": 4,
+          "distinctness": 4,
+          "voice": 4
+        }
+      },
+      "transformation": "Exact reviewed reference paragraphs and citations.",
+      "headingsAndReflection": "Existing member runtime values retained."
+    },
+    {
+      "mode": "transit-only",
+      "referenceBodySha256": "ccc6b95155d86681f95a6fb4d7251ea0f4d37ea3181a39e0056e05224573b051",
+      "sourceReview": {
+        "bodySha256": "ccc6b95155d86681f95a6fb4d7251ea0f4d37ea3181a39e0056e05224573b051",
+        "review": "reviews/source-1/source-scores.json",
+        "label": "B4",
+        "pass": true,
+        "unsupportedClaims": 0,
+        "omittedMeanings": 0,
+        "integration": 4
+      },
+      "readerReview": {
+        "bodySha256": "ccc6b95155d86681f95a6fb4d7251ea0f4d37ea3181a39e0056e05224573b051",
+        "review": "reviews/round-2/reader-scores.json",
+        "label": "B4",
+        "pass": true,
+        "scores": {
+          "recognition": 4,
+          "meaning": 4,
+          "direction": 4,
+          "distinctness": 4,
+          "voice": 4
+        }
+      },
+      "transformation": "Replace the single fixture chronology sentence with the runtime chronology slot; keep every other word and all citations.",
+      "headingsAndReflection": "Existing member runtime values retained."
+    },
+    {
+      "mode": "natal-and-transit",
+      "referenceBodySha256": "c194aeb3732d2fb3945639a8679a43c1a93219fb68608073c482867945d81adb",
+      "sourceReview": {
+        "bodySha256": "c194aeb3732d2fb3945639a8679a43c1a93219fb68608073c482867945d81adb",
+        "review": "reviews/source-2/source-scores.json",
+        "label": "B2",
+        "pass": true,
+        "unsupportedClaims": 0,
+        "omittedMeanings": 0,
+        "integration": 4
+      },
+      "readerReview": {
+        "bodySha256": "c194aeb3732d2fb3945639a8679a43c1a93219fb68608073c482867945d81adb",
+        "review": "source-fix-1/reviews/reader-5/scores.json",
+        "label": "B4",
+        "pass": false,
+        "scores": {
+          "recognition": 4,
+          "meaning": 4,
+          "direction": 4,
+          "distinctness": 4,
+          "voice": 3
+        }
+      },
+      "transformation": "Replace the single fixture chronology sentence with the runtime chronology slot; keep every other word and all citations.",
+      "headingsAndReflection": "Existing member runtime values retained."
+    },
+    {
+      "mode": "synthesis-natal-and-transit",
+      "referenceBodySha256": "372e0ae1fa40328a7a2507322bd8f6d28adc698df5807e574483fbf06858323f",
+      "sourceReview": {
+        "bodySha256": "372e0ae1fa40328a7a2507322bd8f6d28adc698df5807e574483fbf06858323f",
+        "review": "source-fix-1/reviews/source-5/scores.json",
+        "label": "B1",
+        "pass": true,
+        "unsupportedClaims": 0,
+        "omittedMeanings": 0,
+        "integration": 4
+      },
+      "readerReview": {
+        "bodySha256": "372e0ae1fa40328a7a2507322bd8f6d28adc698df5807e574483fbf06858323f",
+        "review": "source-fix-1/reviews/reader-5/scores.json",
+        "label": "B2",
+        "pass": false,
+        "scores": {
+          "recognition": 4,
+          "meaning": 4,
+          "direction": 4,
+          "distinctness": 3,
+          "voice": 3
+        }
+      },
+      "transformation": "Replace the single fixture chronology sentence with the runtime chronology slot; keep every other word and all citations.",
+      "headingsAndReflection": "Existing member runtime values retained."
+    }
+  ]
+}

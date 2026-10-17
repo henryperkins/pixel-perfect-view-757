@@ -1,0 +1,29 @@
+{
+  "version": "daily-member-context-rollout-1",
+  "releaseVersion": "0.9.0",
+  "provider": "gemini-enterprise",
+  "render": "model",
+  "modes": [
+    "contact-only",
+    "natal-only",
+    "transit-only",
+    "natal-and-transit",
+    "synthesis-natal-and-transit"
+  ],
+  "policy": {
+    "adapterVersion": "daily-member-context-1",
+    "adapterHash": "e8d759f3367fd59da8d3764987719fe0b2643279f31fed8bccf8c4df5576c67f",
+    "fallbackVersion": "daily-member-context-fallbacks-2",
+    "fallbackHash": "561f76b372aa2f6cc67caa001dfc6805c9c487f5861b2094cb1f1f9d10700939",
+    "materialVersion": "daily-context-material-5",
+    "materialHash": "1c2374490a07be6856a3639660f8ee6014ba60f5ab9c922bb2b9bd078c1ad5bc",
+    "promptVersion": "daily-context-body-5",
+    "validatorVersion": "daily-context-reference-5",
+    "voiceVersion": "daily-context-voice-5",
+    "briefVersion": "daily-context-brief-5",
+    "writerHash": "344248c03ef2202fbe804b66210fa1edb95f03e658c5666f874bd7a6a1a10173",
+    "briefHash": "22846e762ebc4ee078a035c13c7b4665ab2b59a68dcfd1f6d549f5db0209245a",
+    "claimsHash": "f92e02de1be42229ed2da9e6e21085785a03218ee3f855d9859f7c6e7402c6c9"
+  },
+  "reviewId": "5f44acc579d2657a35277a5c3ae46bfa7f5a417d0bcf3825c1b7671915c17d29"
+}

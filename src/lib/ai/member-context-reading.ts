@@ -16,7 +16,7 @@ import type { FactAtom } from "./facts";
 import type { ReadingProseInput } from "./language.server";
 
 export const MEMBER_CONTEXT_READING_VERSION = "daily-member-context-1" as const;
-export const MEMBER_CONTEXT_FALLBACK_VERSION = "daily-member-context-fallbacks-1" as const;
+export const MEMBER_CONTEXT_FALLBACK_VERSION = "daily-member-context-fallbacks-2" as const;
 export type MemberContextMode =
   | "contact-only"
   | "natal-only"

@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "capturedAt": "2026-10-17T14:18:44.051Z",
+  "authorization": {
+    "kind": "explicit-operator-request",
+    "request": "turn the experimebtal writer on",
+    "scope": "Enable the experimental member writer in model mode for its five existing supported source graphs."
+  },
+  "release": {
+    "id": "94b44ea7-65c3-490b-83ea-37baeff8bfd3",
+    "version": "0.9.0",
+    "checksum": "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f"
+  },
+  "policy": {
+    "adapterVersion": "daily-member-context-1",
+    "adapterHash": "e8d759f3367fd59da8d3764987719fe0b2643279f31fed8bccf8c4df5576c67f",
+    "fallbackVersion": "daily-member-context-fallbacks-2",
+    "fallbackHash": "561f76b372aa2f6cc67caa001dfc6805c9c487f5861b2094cb1f1f9d10700939",
+    "materialVersion": "daily-context-material-5",
+    "materialHash": "1c2374490a07be6856a3639660f8ee6014ba60f5ab9c922bb2b9bd078c1ad5bc",
+    "promptVersion": "daily-context-body-5",
+    "validatorVersion": "daily-context-reference-5",
+    "voiceVersion": "daily-context-voice-5",
+    "briefVersion": "daily-context-brief-5",
+    "writerHash": "344248c03ef2202fbe804b66210fa1edb95f03e658c5666f874bd7a6a1a10173",
+    "briefHash": "22846e762ebc4ee078a035c13c7b4665ab2b59a68dcfd1f6d549f5db0209245a",
+    "claimsHash": "f92e02de1be42229ed2da9e6e21085785a03218ee3f855d9859f7c6e7402c6c9"
+  },
+  "render": "model",
+  "provider": "gemini-enterprise",
+  "modes": [
+    "contact-only",
+    "natal-only",
+    "transit-only",
+    "natal-and-transit",
+    "synthesis-natal-and-transit"
+  ],
+  "coverage": {
+    "tone": "warm",
+    "depth": "standard",
+    "primaryContact": "saturn_square_sun",
+    "requiredSources": "Exact existing source identities, member consent and chart evidence; unsupported combinations retain the established writer."
+  },
+  "fallbackSourceBindings": {
+    "file": "fallback-source-bindings.json",
+    "sha256": "1aa8a3650d72cff04d0f8d1e02965a3e0955b0582b28c2663bb1c69ddfa78e77"
+  },
+  "qualification": {
+    "generatedQualification": false,
+    "humanReviewCompleted": false,
+    "sourceReviewsPassed": true,
+    "readerGatePassed": false,
+    "unresolvedReaderFindings": {
+      "natal-and-transit": {
+        "voice": 3
+      },
+      "synthesis-natal-and-transit": {
+        "distinctness": 3,
+        "voice": 3
+      }
+    },
+    "decision": "The operator explicitly requested experimental activation. This does not certify the reader bar or new model output."
+  },
+  "providerPolicy": {
+    "attemptsPerReading": 1,
+    "deadlineMs": 60000,
+    "retry": false,
+    "providerFailover": false
+  },
+  "paidPilot": {
+    "started": false,
+    "authorizedByThisRecord": false,
+    "earlierCampaignsRemainClosed": true
+  },
+  "rollback": "Restore writer_rollout to NULL only if the active release and exact rollout value match this activation. Retain all existing readings and feedback."
+}

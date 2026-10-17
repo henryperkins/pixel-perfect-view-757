@@ -20,7 +20,7 @@ test("production pilot freezes a fresh campaign and the actual runtime adapter a
   assert.equal(plan.contextPilot.version, "daily-context-pilot-5");
   assert.equal(plan.contextPilot.runtimePath, "member-production-context");
   assert.equal(plan.contextPilot.memberAdapterVersion, "daily-member-context-1");
-  assert.equal(plan.contextPilot.runtimeFallbackVersion, "daily-member-context-fallbacks-1");
+  assert.equal(plan.contextPilot.runtimeFallbackVersion, "daily-member-context-fallbacks-2");
   const adapterBytes = await readFile(
     new URL("../src/lib/ai/member-context-reading.ts", import.meta.url),
   );
@@ -54,7 +54,7 @@ test("production dry cases use edited runtime fallback bodies while preserving o
   const revised = JSON.parse(
     await readFile(
       new URL(
-        "../docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/revised-readings.json",
+        "../docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reference-readings.json",
         import.meta.url,
       ),
     ),

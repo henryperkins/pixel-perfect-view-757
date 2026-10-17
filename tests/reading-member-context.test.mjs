@@ -13,15 +13,21 @@ before(async () => {
   language = await h.vite.ssrLoadModule("/src/lib/ai/language.server.ts");
   adapter = await h.vite.ssrLoadModule("/src/lib/ai/member-context-reading.ts");
   packet = await readContextBenchmarks();
-  revisions = JSON.parse(
+  const reviewed = JSON.parse(
     await readFile(
       new URL(
-        "../docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/revised-readings.json",
+        "../docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reference-readings.json",
         import.meta.url,
       ),
       "utf8",
     ),
   );
+  revisions = {
+    cases: packet.cases.map((benchmark) => ({
+      ...benchmark,
+      paragraphs: reviewed.cases.find((entry) => entry.id === benchmark.id).paragraphs,
+    })),
+  };
 });
 beforeEach(() => h.reset());
 after(async () => h?.close());

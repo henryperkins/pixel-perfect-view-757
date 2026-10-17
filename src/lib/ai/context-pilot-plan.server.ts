@@ -38,7 +38,7 @@ const sourceGraph = (facts: { id: string }[]) =>
 const EXPECTED_BENCHMARK_HASH = "825c877dbb88d5d20d39a12abfd67cea01781506250db93d44ae7c9885b35024";
 const EXPECTED_BUNDLE_HASH = "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f";
 const EXPECTED_RUNTIME_FALLBACK_HASH =
-  "de37f4d42308bec8acbc7fff346a4bd8a446698eae1041b0ac1d3539e9bd2703";
+  "561f76b372aa2f6cc67caa001dfc6805c9c487f5861b2094cb1f1f9d10700939";
 const EXPECTED_MATERIAL_HASH = "1c2374490a07be6856a3639660f8ee6014ba60f5ab9c922bb2b9bd078c1ad5bc";
 
 export function createContextPilotPlan(sourceSha: string | null, provider: LanguageProvider) {
