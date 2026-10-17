@@ -1,0 +1,78 @@
+{
+  "at": "2026-10-17T09:49:55.913069+00:00",
+  "implementationSourceSha": "b7d9cf5fdfc463baca358a6318c4cf5c38702bb3",
+  "checks": {
+    "tests": {
+      "total": 1077,
+      "passed": 1073,
+      "skipped": 4,
+      "failed": 0,
+      "command": "node --test --test-concurrency=4 tests/*.test.mjs"
+    },
+    "typescript": {
+      "command": "npx tsc --noEmit",
+      "exitCode": 0
+    },
+    "eslint": {
+      "scope": "changed TS/JS/test files",
+      "exitCode": 0
+    },
+    "build": {
+      "command": "npm run build",
+      "exitCode": 0,
+      "sourceSha": "b7d9cf5fdfc463baca358a6318c4cf5c38702bb3"
+    }
+  },
+  "privateLogHashes": {
+    "tests": {
+      "filename": "full-tests-final.log",
+      "bytes": 108085,
+      "sha256": "848cd1c2a883134eecd347bf08a99aa43ce2ef5e721ea65d63f7af0866164b4c"
+    },
+    "typescript": {
+      "filename": "typescript-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "eslint": {
+      "filename": "eslint-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "build": {
+      "filename": "build.log",
+      "bytes": 96404,
+      "sha256": "842565a65c203a7398ebe22a712f7bf860ada14749213fd8779bf94032afb1b3"
+    }
+  },
+  "review": {
+    "independentRuntimeSource": "pass",
+    "independentIntegration": "pass",
+    "readerPasses": 1,
+    "generatedModesQualified": 0,
+    "humanReviewCompleted": false
+  },
+  "pilot": {
+    "attempts": 5,
+    "attemptLimit": 5,
+    "retries": 0,
+    "accountedMicros": 342324,
+    "ceilingMicros": 5000000,
+    "losslessCaptures": 5,
+    "invoiceVerified": false
+  },
+  "production": {
+    "deployed": true,
+    "writerRollout": null,
+    "modelActivated": false,
+    "authoredActivated": false,
+    "immutableBundleUnchanged": true,
+    "temporaryAccessRevoked": true
+  },
+  "limits": [
+    "Authenticated Today/source/save/reload/export deferred after no mode qualified.",
+    "No member-model Today call or sixth provider request.",
+    "AI editorial reviews do not establish member outcomes.",
+    "Historical production evaluation_results were not independently fingerprinted."
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "reviewType": "independent-blind-ai-reader",
+  "humanOrMemberResearch": false,
+  "scope": "Body prose only; controlled shared-contact comparisons, not consecutive days",
+  "inputHashes": {
+    "algorithm": "sha256",
+    "readerPacket": {
+      "path": "/tmp/pattern-context-production-private-20261017/reader-packet.md",
+      "hash": "3a489ddd88821dda9129a2fbf36f0951b72de903da811bf706ecec2b4135804d"
+    },
+    "authoredStandard": {
+      "path": "/tmp/pattern-context-production-20261017/docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-readings.md",
+      "hash": "75258c2eabec3625cd49b72374c3fcdc4b2d2d769bd6b383403a77b4a6e6ebf2"
+    }
+  },
+  "threshold": {
+    "minimumPerDimension": 4,
+    "allDimensionsRequired": true,
+    "dimensions": ["recognition", "meaning", "direction", "distinctness", "voice"],
+    "scale": {
+      "1": "serious failure",
+      "2": "weak",
+      "3": "below requested bar",
+      "4": "solid and acceptable",
+      "5": "unusually strong"
+    }
+  },
+  "sourceFidelityAssessed": false,
+  "readings": [
+    {
+      "label": "R1",
+      "scores": {"recognition": 4, "meaning": 4, "direction": 4, "distinctness": 3, "voice": 3},
+      "pass": false,
+      "bestQuotes": ["Moving that work into a later calendar opening may leave the extra check attached"],
+      "blockers": [
+        "The second paragraph restates the scheduling-versus-scope distinction already established in the first.",
+        "Expectations, available capacity and a clearer boundary are expressed in a formal administrative register.",
+        "The recurrence detail yields some practical meaning but does not supply enough new development."
+      ],
+      "flags": ["abstract repetition", "formal wording"]
+    },
+    {
+      "label": "R2",
+      "scores": {"recognition": 4, "meaning": 3, "direction": 4, "distinctness": 2, "voice": 2},
+      "pass": false,
+      "bestQuotes": ["a note can hold a second idea without promising it those hours."],
+      "blockers": [
+        "Rescheduling, scope, competing projects, chronology and initiative are assembled without a sufficiently clear shared observation.",
+        "The chronology sentence interrupts the first paragraph without changing its practical meaning.",
+        "Ease of beginning versus capacity to carry expanded work is repeated in adjacent sentences.",
+        "The practical-initiative sentence is formal and laborious."
+      ],
+      "flags": ["multiple mini-readings", "abstract repetition", "formal wording", "chronology without sufficient practical meaning"]
+    },
+    {
+      "label": "R3",
+      "scores": {"recognition": 4, "meaning": 4, "direction": 4, "distinctness": 4, "voice": 4},
+      "pass": true,
+      "bestQuotes": [
+        "a note can hold the second idea without promising it the rest of the afternoon.",
+        "Exploring possible directions and choosing one project to pursue can be separate stages"
+      ],
+      "blockers": [],
+      "reservations": [
+        "The expectations-capacity-boundary sentence remains too formal.",
+        "The transition to competing projects is slightly mechanical.",
+        "This is an acceptable threshold pass, not an exceptional body."
+      ],
+      "flags": ["isolated formal wording"]
+    },
+    {
+      "label": "R4",
+      "scores": {"recognition": 4, "meaning": 4, "direction": 4, "distinctness": 4, "voice": 3},
+      "pass": false,
+      "bestQuotes": ["If the original work already fills the afternoon, the extra check could be left out."],
+      "blockers": [
+        "The central interpretation stacks abstract responsibility, deliberate effort, expectations, capacity and a clearer boundary; that formal register dominates this short body."
+      ],
+      "flags": ["formal wording", "abstract phrasing"]
+    },
+    {
+      "label": "R5",
+      "scores": {"recognition": 4, "meaning": 4, "direction": 4, "distinctness": 3, "voice": 3},
+      "pass": false,
+      "bestQuotes": ["a note can hold the second idea without promising it those hours."],
+      "blockers": [
+        "The second paragraph repeats the scheduling-versus-size distinction after the first has already supplied its consequence.",
+        "The return detail supplies little further development beyond a conditional earlier-method statement.",
+        "The competing-projects idea arrives as an appended option.",
+        "The stopping-point, boundary and agreement sentence is procedural and difficult to say naturally."
+      ],
+      "flags": ["abstract repetition", "formal wording", "appended option"]
+    }
+  ],
+  "summary": {
+    "passCount": 1,
+    "failCount": 4,
+    "passingLabels": ["R3"],
+    "verdict": "Only R3 meets every dimension at 4 or higher. The main packet weaknesses are formal wording, abstract repetition and assembled mini-readings, not counselor politeness or dictated scripts."
+  },
+  "limitations": [
+    "No source fidelity judgment without facts.",
+    "No inference about provider identity or causal benefit from a context mode.",
+    "No consecutive-day or broader reading coverage established.",
+    "No production-readiness or member-outcome claim."
+  ]
+}

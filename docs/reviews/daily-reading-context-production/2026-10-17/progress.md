@@ -6,16 +6,16 @@ The bounded integration uses real selected source facts and actual chronology, w
 
 The hosted pilot uses the same production adapter/renderer through the durable Workflow, one attempt per fixed case, no retries or provider switching, with five total requests and $5 ceiling. Original benchmarks and prior captures remain unchanged. Review must consider raw generated bodies, source fidelity and reader quality independently of automatic acceptance.
 
-To stay within five requests, hosted Today/save/reload proof uses the adapter's validated authored render policy with zero model requests. Model rendering may be enabled only for context modes whose captured generated reading passes source and reader review. Hosted generated-model writing is proven in the Workflow's shared production writer; an additional uncached live member-model call is outside this allowance and will not be made. This evidence limit must remain explicit.
+The planned hosted Today/save/reload proof would use the adapter's validated authored render policy with zero model requests. Model rendering may be enabled only for context modes whose captured generated reading passes source and reader review. Hosted generated-model writing is proven in the Workflow's shared production writer; an additional uncached live member-model call is outside this allowance. No generated mode qualified, so the temporary authored policy and member-route proof were deferred. No member Today call or serving-policy change was made.
 
 - [x] Inspect current serving source, member route, provider/campaign controls and cache behavior.
 - [x] Preserve environment and unrelated dirty work; create isolated checkout and private operational evidence.
 - [x] Implement and independently review runtime source adapter, complete fallback, rollout/cache/persistence integration and new bounded campaign.
 - [x] Complete source/fallback review, 1,073 passing tests (four skips), lint and TypeScript. Exact committed-source build and serving identity will be recorded before spend.
-- [ ] Apply inspected additive migration with rollout off; deploy and verify source identity.
-- [ ] Start exactly one five-request/$5 hosted campaign; preserve every attempted response and accounting record.
-- [ ] Independently review captured writing; enable only passing modes if any qualify.
-- [ ] Verify authenticated Today/source selection/encrypted save/reload/export using authored rendering with zero extra provider requests; activate model rendering only as qualified.
-- [ ] Revoke temporary access, preserve prior reports, verify final rollout/publication state and publish evidence.
+- [x] Apply inspected additive migration with rollout off; deploy and verify source identity `b7d9cf5fdfc463baca358a6318c4cf5c38702bb3`.
+- [x] Complete sole hosted campaign `b0aa4a22-c22b-4906-bb33-48366a38f46e`: five attempts, no retries, $0.342324 conservative accounting, five lossless captures.
+- [x] Independently review captured writing. No mode meets automatic, source and reader requirements together; model activation held.
+- [ ] Authenticated Today/source selection/encrypted save/reload/export proof: deferred because no generated mode qualifies. No temporary authored activation or extra provider request.
+- [x] Revoke temporary access, remove synthetic profile, retain run/results, verify prior reports and final off/publication state. Evidence publication recorded in Git.
 
-No new spending, run, deployment or activation has occurred at ledger creation. Operational receipts, not this preflight statement, establish later external actions.
+The implementation is deployed; the generated-writing rollout is off. The pilot allowance is exhausted. Any further paid pilot requires a new bounded authorization; the prior campaigns and captured drafts remain unchanged. See `report.md`, `pilot/qualification.md` and the operational receipts for the final outcome.

@@ -1,0 +1,46 @@
+{
+  "runId": "b0aa4a22-c22b-4906-bb33-48366a38f46e",
+  "rowCount": 5,
+  "results": [
+    {
+      "position": 0,
+      "caseId": "contact-only",
+      "attempted": 1,
+      "reservedMicros": 36268,
+      "resultBytes": 17565,
+      "resultSha256": "a73bbfd51d6c66dcd25fe52e2ca4916ea7f5c324b6949dab301ff531856a45e9"
+    },
+    {
+      "position": 1,
+      "caseId": "natal-only",
+      "attempted": 1,
+      "reservedMicros": 45256,
+      "resultBytes": 23598,
+      "resultSha256": "b01e5496faf4128b9cca85a87dccc62548c6106844127e4599507162a43fb640"
+    },
+    {
+      "position": 2,
+      "caseId": "transit-only",
+      "attempted": 1,
+      "reservedMicros": 57906,
+      "resultBytes": 48316,
+      "resultSha256": "c63afb4c2a4917dc6a4cc91cc335ded2f2fb681c9e252c85da30a62b5a93dfd0"
+    },
+    {
+      "position": 3,
+      "caseId": "natal-and-transit",
+      "attempted": 1,
+      "reservedMicros": 137574,
+      "resultBytes": 54160,
+      "resultSha256": "c466c2cb49a9135f21ec4925268ffc8efe8a23bbc7ab87151b5ede537c732ec2"
+    },
+    {
+      "position": 4,
+      "caseId": "synthesis-natal-and-transit",
+      "attempted": 1,
+      "reservedMicros": 65320,
+      "resultBytes": 58766,
+      "resultSha256": "c1952f6a436ef119120754c719b5f218bc77f5453068fa361f0dfdbd6c9d63f1"
+    }
+  ]
+}

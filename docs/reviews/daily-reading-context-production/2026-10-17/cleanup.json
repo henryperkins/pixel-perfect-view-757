@@ -1,0 +1,51 @@
+{
+  "at": "2026-10-17T09:48:44.802Z",
+  "userId": "364e713e-76d5-437c-81e3-0a132f21d42e",
+  "browserClosed": true,
+  "before": {
+    "sessions": 1,
+    "user_roles": 1,
+    "birth_profiles": 0,
+    "chart_snapshots": 0,
+    "daily_readings": 0,
+    "source_consents": 0,
+    "cycle_instances": 0,
+    "context_signals": 0
+  },
+  "after": {
+    "sessions": 0,
+    "user_roles": 0,
+    "birth_profiles": 0,
+    "chart_snapshots": 0,
+    "daily_readings": 0,
+    "source_consents": 0,
+    "cycle_instances": 0,
+    "context_signals": 0
+  },
+  "profileRemoved": true,
+  "passwordDisabled": true,
+  "sessionsRevoked": true,
+  "adminRoleRevoked": true,
+  "userRetainedForEvaluationOwnership": true,
+  "evaluationRunsRetained": [
+    {
+      "id": "b0aa4a22-c22b-4906-bb33-48366a38f46e",
+      "status": "complete",
+      "completed": 5,
+      "attempt_limit": 5,
+      "dollar_ceiling_micros": 5000000
+    }
+  ],
+  "evaluationResultsRetained": 5,
+  "auditId": "eeae85f8-9327-4724-98a5-5497a3ce221d",
+  "memberTodayRequested": false,
+  "activation": "held",
+  "writerRollout": null,
+  "changes": [
+    0,
+    1,
+    1,
+    1,
+    1
+  ]
+}

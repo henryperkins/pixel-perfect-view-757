@@ -1,0 +1,13 @@
+{
+  "at": "2026-10-17T09:39:58.146579+00:00",
+  "sourceSha": "b7d9cf5fdfc463baca358a6318c4cf5c38702bb3",
+  "identity": {
+    "sourceSha": "b7d9cf5fdfc463baca358a6318c4cf5c38702bb3",
+    "requestPolicyVersion": "synthetic-facts-local-context-1",
+    "fixtureVersion": "synthetic-daily-7"
+  },
+  "servingDeploymentId": "d0c5444f-f197-41f5-b24a-2f958734511e",
+  "deploymentHeader": "psr2.d0c5444f-f197-41f5-b24a-2f958734511e.1792834747.XqCDUf8bu92NtXkCpAame7Kg5dG35AfqRgl4Z5ulli0",
+  "providerAttemptsBeforeIdentityVerified": 0,
+  "workerUnchanged": true
+}

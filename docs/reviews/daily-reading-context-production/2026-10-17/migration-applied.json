@@ -1,0 +1,15 @@
+{
+  "id": "20261017_member_context_rollout",
+  "sourceHash": "f4ba2b098e91ac7b41295fbd81172319e7815fb583f7723ed8440803facda850",
+  "applied": true,
+  "pendingColumns": [
+    "writer_rollout"
+  ],
+  "statements": [
+    {
+      "sql": "ALTER TABLE content_releases ADD COLUMN writer_rollout TEXT",
+      "params": []
+    }
+  ],
+  "alreadyApplied": false
+}

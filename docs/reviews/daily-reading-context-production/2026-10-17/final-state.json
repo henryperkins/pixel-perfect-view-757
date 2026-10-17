@@ -1,0 +1,21 @@
+{
+  "at": "2026-10-17T09:48:45.075Z",
+  "active": {
+    "id": "94b44ea7-65c3-490b-83ea-37baeff8bfd3",
+    "version": "0.9.0",
+    "checksum": "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f",
+    "checksum_algorithm": "sha256-canonical-json-v1",
+    "is_active": 1,
+    "publication_state": "{\"operationId\":\"a214ca85-989c-4efc-af2e-aea62724b587\",\"operation\":\"activate\",\"status\":\"complete\",\"active\":true,\"previousVersion\":\"0.7.1\",\"artifactKey\":\"content-releases/0.9.0/bundle.json\",\"error\":null}",
+    "writer_rollout": null
+  },
+  "historicalFingerprint": "cf6a48850cfc49bb4f201ceda94bf3d941d9eed3902f2333197a6eb422ac2668",
+  "historicalUnchanged": true,
+  "runCount": 1,
+  "resultsCount": 5,
+  "modelActivation": false,
+  "authoredActivation": false,
+  "qualifiedModes": [],
+  "memberTodayProof": "deferred-no-qualified-modes",
+  "cleanupAuditId": "eeae85f8-9327-4724-98a5-5497a3ce221d"
+}

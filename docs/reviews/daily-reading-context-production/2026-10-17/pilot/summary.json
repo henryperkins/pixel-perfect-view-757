@@ -1,0 +1,122 @@
+{
+  "runId": "b0aa4a22-c22b-4906-bb33-48366a38f46e",
+  "status": "complete",
+  "completed": 5,
+  "planHash": "b891664d982aa39bb86053437de0eae17f72cb4839f2ef3c5c38692fb63029dc",
+  "sourceSha": "b7d9cf5fdfc463baca358a6318c4cf5c38702bb3",
+  "attempts": 5,
+  "accountedMicros": 342324,
+  "automaticAccepted": 3,
+  "automaticRejected": 2,
+  "allCapturesLossless": true,
+  "readerPacketSha256": "3a489ddd88821dda9129a2fbf36f0951b72de903da811bf706ecec2b4135804d",
+  "sourcePacketSha256": "a86f8f877532a9d375236b02077ad81b1d57f4de8076add47150f56cea8284fc",
+  "headlineReflectionSource": "reviewed-runtime-fallback-fields",
+  "cases": [
+    {
+      "id": "contact-only",
+      "position": 0,
+      "accepted": true,
+      "diagnostic": "accepted",
+      "mode": "model",
+      "captureLossless": true,
+      "actualModel": "gemini-3.8-flash",
+      "usage": {
+        "inputTokens": 1874,
+        "outputTokens": 173,
+        "thinkingTokens": 1453,
+        "totalTokens": 3500,
+        "outputIncludesThinking": false
+      },
+      "controller": {
+        "version": "evaluation-disposition-1",
+        "message": null,
+        "status": "running"
+      }
+    },
+    {
+      "id": "natal-only",
+      "position": 1,
+      "accepted": false,
+      "diagnostic": "editorial_claim",
+      "mode": "template",
+      "captureLossless": true,
+      "actualModel": "gemini-3.8-flash",
+      "usage": {
+        "inputTokens": 2208,
+        "outputTokens": 244,
+        "thinkingTokens": 1798,
+        "totalTokens": 4250,
+        "outputIncludesThinking": false
+      },
+      "controller": {
+        "version": "evaluation-disposition-1",
+        "message": null,
+        "status": "running"
+      }
+    },
+    {
+      "id": "transit-only",
+      "position": 2,
+      "accepted": true,
+      "diagnostic": "accepted",
+      "mode": "model",
+      "captureLossless": true,
+      "actualModel": "gemini-3.8-flash",
+      "usage": {
+        "inputTokens": 2233,
+        "outputTokens": 234,
+        "thinkingTokens": 2438,
+        "totalTokens": 4905,
+        "outputIncludesThinking": false
+      },
+      "controller": {
+        "version": "evaluation-disposition-1",
+        "message": null,
+        "status": "running"
+      }
+    },
+    {
+      "id": "natal-and-transit",
+      "position": 3,
+      "accepted": true,
+      "diagnostic": "accepted",
+      "mode": "model",
+      "captureLossless": true,
+      "actualModel": "gemini-3.8-flash",
+      "usage": {
+        "inputTokens": 2567,
+        "outputTokens": 268,
+        "thinkingTokens": 6354,
+        "totalTokens": 9189,
+        "outputIncludesThinking": false
+      },
+      "controller": {
+        "version": "evaluation-disposition-1",
+        "message": null,
+        "status": "running"
+      }
+    },
+    {
+      "id": "synthesis-natal-and-transit",
+      "position": 4,
+      "accepted": false,
+      "diagnostic": "safety",
+      "mode": "template",
+      "captureLossless": true,
+      "actualModel": "gemini-3.8-flash",
+      "usage": {
+        "inputTokens": 3150,
+        "outputTokens": 278,
+        "thinkingTokens": 2673,
+        "totalTokens": 6101,
+        "outputIncludesThinking": false
+      },
+      "controller": {
+        "version": "evaluation-disposition-1",
+        "message": null,
+        "status": "complete"
+      }
+    }
+  ]
+}

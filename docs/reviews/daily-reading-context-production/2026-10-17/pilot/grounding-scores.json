@@ -1,0 +1,737 @@
+{
+  "review": "Independent source and context-integration review",
+  "date": "2026-10-17",
+  "reviewer": "assistant-source-reviewer",
+  "human": false,
+  "input": {
+    "path": "/tmp/pattern-context-production-private-20261017/source-review-packet.md",
+    "sha256": "a86f8f877532a9d375236b02077ad81b1d57f4de8076add47150f56cea8284fc",
+    "sha256Verified": true
+  },
+  "scope": "Five exact raw generated bodies labeled R1-R5 in the supplied packet. Only that packet was used for content decisions. No automatic-result, label-mapping, reader-review, cost, model, or prior-pilot-verdict artifact was read. No model request, database access, network access, or runtime edit was performed.",
+  "method": {
+    "sourcePass": "Requires zero unsupported claims, preserved source conditions, complete citation parent closure, faithful selected meanings, correct stated geometry and chronology, and no substantive unresolved source issue.",
+    "contextIntegrationScale": {
+      "1": "Context absent or substantially replaced",
+      "2": "Some source context present but materially distorted or poorly integrated",
+      "3": "Context joined to the scene but a selected meaning is missing or distorted",
+      "4": "All selected meanings faithfully joined early, with only minor integration limitations",
+      "5": "All selected meanings faithfully and clearly embodied in a shared early scene; single-source cases receive a coverage score but are marked not applicable to multi-context integration"
+    },
+    "concreteMaterial": "Reviewed scenes and optional directions are valid illustrations. They do not authorize an unsourced causal, ease, speed, frequency, necessity, personality, or historical claim.",
+    "qualifiers": "A modal must qualify a source-supported proposition. Can, may, or if cannot make a new proposition grounded. Clear immediate references may continue the same hypothetical."
+  },
+  "cases": [
+    {
+      "label": "R1",
+      "bodySha256": "aec0ce6bc2574274a28c64a9caab9c8c439689c3342e92a3ac1f4065fc0566eb",
+      "human": false,
+      "sourcePass": true,
+      "unsupportedClaimCount": 0,
+      "contextIntegration": 5,
+      "contextIntegrationApplicable": true,
+      "substantiveUnresolvedIssue": false,
+      "findings": [],
+      "meaningCoverage": [
+        {
+          "sourceId": "I1",
+          "status": "preserved",
+          "paragraphs": [
+            1,
+            2
+          ],
+          "evidence": "can ask for more deliberate effort; where expectations exceed the capacity available, its boundary may need to become clearer",
+          "reason": "The reviewed extra-check and afternoon scene concretely carries the possible obligation demand and conditional boundary need."
+        },
+        {
+          "sourceId": "P2",
+          "status": "preserved",
+          "paragraphs": [
+            2
+          ],
+          "evidence": "if an earlier way of handling it no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary",
+          "reason": "Earlier-method condition, return opportunity, small adjustment, and optional application remain together."
+        }
+      ],
+      "claimAudit": [
+        {
+          "paragraph": 1,
+          "span": "An afternoon set aside for a familiar responsibility can ask for more deliberate effort, especially when an extra check or another version is added beside the original task.",
+          "sourceIds": [
+            "I1",
+            "C1"
+          ],
+          "verdict": "supported",
+          "reason": "An extra obligation is a reviewed concrete illustration of the possible effort demand, not a claim about an actual afternoon."
+        },
+        {
+          "paragraph": 1,
+          "span": "Moving that work into a later calendar opening may leave the extra check attached, and where expectations exceed the capacity available, its boundary may need to become clearer.",
+          "sourceIds": [
+            "I1",
+            "C1"
+          ],
+          "verdict": "supported",
+          "reason": "Both the may-qualified reviewed distinction and the conditional capacity/boundary meaning are preserved."
+        },
+        {
+          "paragraph": 2,
+          "span": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+          "sourceIds": [
+            "A1",
+            "C1",
+            "I1"
+          ],
+          "verdict": "supported",
+          "reason": "Literal A1 sentence, once in paragraph 2."
+        },
+        {
+          "paragraph": 2,
+          "span": "Putting the commitment into a different slot does not change what it includes, but if an earlier way of handling it no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.",
+          "sourceIds": [
+            "P2",
+            "C1",
+            "I1",
+            "A1"
+          ],
+          "verdict": "supported",
+          "reason": "Reviewed contents/slot distinction and the full conditional P2 opportunity."
+        },
+        {
+          "paragraph": 2,
+          "span": "You might make a stopping point visible before an extra version enters, leaving the extra check out if the original work already fills the afternoon.",
+          "sourceIds": [
+            "P2",
+            "C1",
+            "I1",
+            "A1"
+          ],
+          "verdict": "supported",
+          "reason": "Optional reviewed application continues the hypothetical and retains the local full-afternoon condition."
+        }
+      ],
+      "checks": {
+        "paragraphTextMatchesBody": true,
+        "parentClosurePass": true,
+        "missingParents": [],
+        "chronologyApplicable": true,
+        "chronologyLiteralCount": 1,
+        "chronologyParagraphs": [
+          2
+        ],
+        "chronologyPass": true,
+        "natalConditionalApplicable": false,
+        "natalConditionalPass": true,
+        "earlierMethodConditionApplicable": true,
+        "earlierMethodConditionPass": true,
+        "transitToNatalGeometryPass": true,
+        "inventedPersonalHistory": false,
+        "unsupportedFrequencyOrSpeed": false,
+        "promisedOutcome": false
+      }
+    },
+    {
+      "label": "R2",
+      "bodySha256": "8695330801c7cef727ef4da4359b78e88902a44f8b13b0ca8bbe096714ed4d3d",
+      "human": false,
+      "sourcePass": false,
+      "unsupportedClaimCount": 1,
+      "contextIntegration": 3,
+      "contextIntegrationApplicable": true,
+      "substantiveUnresolvedIssue": true,
+      "findings": [
+        {
+          "id": "R2-F1",
+          "severity": "major",
+          "category": "unsupported-causal-relation",
+          "paragraph": 2,
+          "span": "practical initiative can make another piece of the same project start to look appealing to take up",
+          "paragraphCharStart": 28,
+          "paragraphCharEndExclusive": 126,
+          "sourceIds": [
+            "I2",
+            "C2"
+          ],
+          "reason": "I2 supplies mutual reinforcement between enthusiasm and practical initiative under a well-chosen aim, and low-friction effort that makes taking up a larger piece natural. The reviewed material permits an appealing next piece as a scene. It does not establish the narrower directional claim that practical initiative creates the appeal of another piece. 'Can' preserves possibility but cannot supply this causal relationship. The rendering also drops the source's explicit reciprocal reinforcement.",
+          "minimumCorrection": "Keep the well-chosen-aim condition and express enthusiasm and practical initiative coming together, then use the appealing piece as an illustrative detail without making initiative its cause.",
+          "resolved": false
+        },
+        {
+          "id": "R2-F2",
+          "severity": "major",
+          "category": "selected-meaning-coverage",
+          "paragraph": 1,
+          "span": "Moving a familiar task to a later calendar opening without changing what it includes may leave an extra check attached.",
+          "paragraphCharStart": 0,
+          "paragraphCharEndExclusive": 119,
+          "sourceIds": [
+            "I1",
+            "C1"
+          ],
+          "reason": "The full body never conveys that an established responsibility can require more deliberate effort, nor that a possible expectations/capacity mismatch is the reason its boundary may need to become clearer. Moving the same contents and changing a stopping point are reviewed applications, but here they replace the selected I1 meaning. P2's earlier-method condition is preserved; it does not substitute for I1's demand/capacity relationship.",
+          "minimumCorrection": "Integrate the possible effort demand and the conditional capacity/boundary relationship into the shared task scene without assuming the reader has that mismatch.",
+          "resolved": false
+        }
+      ],
+      "meaningCoverage": [
+        {
+          "sourceId": "I1",
+          "status": "incomplete",
+          "paragraphs": [
+            1,
+            2
+          ],
+          "evidence": "Moving a familiar task ... may leave an extra check attached",
+          "reason": "Reviewed application remains, but possible deliberate effort and the expectations/capacity boundary meaning are absent."
+        },
+        {
+          "sourceId": "I2",
+          "status": "distorted",
+          "paragraphs": [
+            2
+          ],
+          "evidence": "practical initiative can make another piece ... start to look appealing",
+          "reason": "Well-chosen-aim condition remains, but reciprocal reinforcement is replaced with a narrower unsupported cause of appeal."
+        },
+        {
+          "sourceId": "S1",
+          "status": "preserved",
+          "paragraphs": [
+            2
+          ],
+          "evidence": "ease in beginning more work is different from having enough structure to carry an expanded commitment",
+          "reason": "Directly supported by the reviewed synthesis distinction and optional scope check; all four parents are cited."
+        },
+        {
+          "sourceId": "N1",
+          "status": "preserved",
+          "paragraphs": [
+            1
+          ],
+          "evidence": "If several projects compete for that afternoon, exploring projects and choosing one may be separate stages",
+          "reason": "Conditional multi-project scene and exploration/commitment distinction are joined to the same afternoon; the note is explicitly authorized."
+        },
+        {
+          "sourceId": "P2",
+          "status": "preserved",
+          "paragraphs": [
+            1
+          ],
+          "evidence": "If an earlier method no longer fits ... adjusting where it stops can change its boundary",
+          "reason": "The earlier-method condition attaches to the boundary adjustment, with exact A1 chronology and full parents in the paragraph."
+        }
+      ],
+      "claimAudit": [
+        {
+          "paragraph": 1,
+          "span": "Moving a familiar task to a later calendar opening without changing what it includes may leave an extra check attached.",
+          "sourceIds": [
+            "I1",
+            "C1"
+          ],
+          "verdict": "supported-but-incomplete-meaning",
+          "reason": "Exact reviewed distinction; selected I1 effort/capacity meaning is not otherwise supplied."
+        },
+        {
+          "paragraph": 1,
+          "span": "If an earlier method no longer fits, moving the task does not change its size, but adjusting where it stops can change its boundary.",
+          "sourceIds": [
+            "P2",
+            "C1",
+            "I1",
+            "A1"
+          ],
+          "verdict": "supported",
+          "reason": "Earlier-method condition retained with reviewed size/boundary distinction."
+        },
+        {
+          "paragraph": 1,
+          "span": "If several projects compete for that afternoon, exploring projects and choosing one may be separate stages, so a note can hold a second idea without promising it those hours.",
+          "sourceIds": [
+            "N1",
+            "C1",
+            "I1"
+          ],
+          "verdict": "supported",
+          "reason": "Conditional scene, possible separate stages, and note application are all supplied."
+        },
+        {
+          "paragraph": 1,
+          "span": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+          "sourceIds": [
+            "A1",
+            "C1",
+            "I1"
+          ],
+          "verdict": "supported",
+          "reason": "Literal A1 sentence, once in paragraph 1."
+        },
+        {
+          "paragraph": 2,
+          "span": "When an aim is well chosen, practical initiative can make another piece of the same project start to look appealing to take up, though ease in starting isn't a guarantee about its result.",
+          "sourceIds": [
+            "I2",
+            "C2"
+          ],
+          "verdict": "partly-unsupported",
+          "reason": "Aim condition and no-guarantee/ease distinction are supplied; the initiative-causes-appeal relationship is not. See R2-F1."
+        },
+        {
+          "paragraph": 2,
+          "span": "Even so, ease in beginning more work is different from having enough structure to carry an expanded commitment.",
+          "sourceIds": [
+            "S1",
+            "C1",
+            "I1",
+            "C2",
+            "I2"
+          ],
+          "verdict": "supported",
+          "reason": "Reviewed synthesis distinction, without saying the member actually expanded a commitment."
+        },
+        {
+          "paragraph": 2,
+          "span": "You can notice whether an appealing addition changes what the original agreement includes before letting it enlarge the task.",
+          "sourceIds": [
+            "S1",
+            "C1",
+            "I1",
+            "C2",
+            "I2"
+          ],
+          "verdict": "supported",
+          "reason": "Reviewed optional notice/structure application; whether leaves the scope change open."
+        }
+      ],
+      "checks": {
+        "paragraphTextMatchesBody": true,
+        "parentClosurePass": true,
+        "missingParents": [],
+        "chronologyApplicable": true,
+        "chronologyLiteralCount": 1,
+        "chronologyParagraphs": [
+          1
+        ],
+        "chronologyPass": true,
+        "natalConditionalApplicable": true,
+        "natalConditionalPass": true,
+        "earlierMethodConditionApplicable": true,
+        "earlierMethodConditionPass": true,
+        "transitToNatalGeometryPass": true,
+        "inventedPersonalHistory": false,
+        "unsupportedFrequencyOrSpeed": false,
+        "promisedOutcome": false
+      }
+    },
+    {
+      "label": "R3",
+      "bodySha256": "4e2a65cb654a9f7cefd054d3c49cf1cb986f4df9161b6a1b3c3bb1c3a81673cc",
+      "human": false,
+      "sourcePass": false,
+      "unsupportedClaimCount": 3,
+      "contextIntegration": 2,
+      "contextIntegrationApplicable": true,
+      "substantiveUnresolvedIssue": true,
+      "findings": [
+        {
+          "id": "R3-F1",
+          "severity": "minor",
+          "category": "unsupported-ease",
+          "paragraph": 1,
+          "span": "can easily attach itself",
+          "paragraphCharStart": 96,
+          "paragraphCharEndExclusive": 120,
+          "sourceIds": [
+            "I1",
+            "C1"
+          ],
+          "reason": "The sources and reviewed scene permit an extra check or version being added. They do not say adding it occurs easily. The local modal 'can' does not ground the added ease.",
+          "minimumCorrection": "Remove 'easily'.",
+          "resolved": false
+        },
+        {
+          "id": "R3-F2",
+          "severity": "minor",
+          "category": "unsupported-ease",
+          "paragraph": 1,
+          "span": "could simply be left out",
+          "paragraphCharStart": 456,
+          "paragraphCharEndExclusive": 480,
+          "sourceIds": [
+            "I1",
+            "C1"
+          ],
+          "reason": "The reviewed direction permits leaving the extra check out if the original work fills the afternoon. 'Simply' adds an unsupported suggestion of ease or uncomplicated removal.",
+          "minimumCorrection": "Remove 'simply' while retaining the original-work-fills-the-afternoon condition.",
+          "resolved": false
+        },
+        {
+          "id": "R3-F3",
+          "severity": "major",
+          "category": "unsupported-causal-relation",
+          "paragraph": 2,
+          "span": "keeping a page of notes for one idea beside a tab open for another can blur where your attention belongs",
+          "paragraphCharStart": 60,
+          "paragraphCharEndExclusive": 164,
+          "sourceIds": [
+            "N1",
+            "C1",
+            "I1"
+          ],
+          "reason": "The notes/tab image is explicitly reviewed material, so its concreteness is legitimate. N1 says multiple lines of curiosity can help a direction take shape and that sampling and choosing may be separate stages. Neither N1 nor the reviewed image says keeping notes beside a tab blurs the reader's proper allocation of attention. The sentence invents a causal attention problem and shifts the lens from possible exploration toward confusion. The preceding 'If several projects...' condition does not authorize this new effect.",
+          "minimumCorrection": "Retain the conditional notes/tab image and the exploration-versus-commitment distinction; remove the invented attention-blurring consequence.",
+          "resolved": false
+        },
+        {
+          "id": "R3-F4",
+          "severity": "major",
+          "category": "selected-meaning-coverage",
+          "paragraph": 1,
+          "span": "Where expectations exceed the capacity available, the task's boundary may need to become clearer",
+          "paragraphCharStart": 288,
+          "paragraphCharEndExclusive": 384,
+          "sourceIds": [
+            "I1",
+            "C1"
+          ],
+          "reason": "This correctly preserves I1's conditional capacity/boundary component, but the full body omits I1's other selected component: an established responsibility can ask for more deliberate effort. N1's direction-forming possibility is also displaced by the invented attention problem identified in R3-F3.",
+          "minimumCorrection": "Restore the possible deliberate-effort meaning and express N1 as exploratory possibility without the added confusion claim.",
+          "resolved": false
+        }
+      ],
+      "meaningCoverage": [
+        {
+          "sourceId": "I1",
+          "status": "incomplete",
+          "paragraphs": [
+            1
+          ],
+          "evidence": "Where expectations exceed the capacity available, the task's boundary may need to become clearer",
+          "reason": "Conditional capacity/boundary meaning remains, while deliberate effort is omitted and ease is added."
+        },
+        {
+          "sourceId": "N1",
+          "status": "distorted",
+          "paragraphs": [
+            2
+          ],
+          "evidence": "Exploring possible directions and choosing one project to pursue can be separate stages",
+          "reason": "The useful stage distinction is preserved, but the new attention-blurring claim changes the lens and its effect."
+        }
+      ],
+      "claimAudit": [
+        {
+          "paragraph": 1,
+          "span": "When an afternoon is set aside for a familiar responsibility, an extra check or another version can easily attach itself beside the original task.",
+          "sourceIds": [
+            "I1",
+            "C1"
+          ],
+          "verdict": "partly-unsupported",
+          "reason": "Scene is reviewed and hypothetical; ease is added. See R3-F1."
+        },
+        {
+          "paragraph": 1,
+          "span": "As transit Saturn forms a square to your natal Sun, moving the work into a later calendar opening may still leave that extra check attached.",
+          "sourceIds": [
+            "C1",
+            "I1"
+          ],
+          "verdict": "supported",
+          "reason": "Geometry correctly remains transit Saturn square natal Sun; reviewed task distinction stays may-qualified."
+        },
+        {
+          "paragraph": 1,
+          "span": "Where expectations exceed the capacity available, the task's boundary may need to become clearer, and if the original work already fills the afternoon, the extra check could simply be left out.",
+          "sourceIds": [
+            "I1",
+            "C1"
+          ],
+          "verdict": "partly-unsupported",
+          "reason": "Boundary and removal conditions are correct; simply adds unsupported ease. See R3-F2."
+        },
+        {
+          "paragraph": 2,
+          "span": "If several projects happen to compete for those same hours, keeping a page of notes for one idea beside a tab open for another can blur where your attention belongs.",
+          "sourceIds": [
+            "N1",
+            "C1",
+            "I1"
+          ],
+          "verdict": "partly-unsupported",
+          "reason": "The reviewed image is allowed and locally conditional; its asserted attention-blurring effect is new. See R3-F3."
+        },
+        {
+          "paragraph": 2,
+          "span": "Exploring possible directions and choosing one project to pursue can be separate stages, rather than tasks that must happen all at once.",
+          "sourceIds": [
+            "N1",
+            "C1",
+            "I1"
+          ],
+          "verdict": "supported",
+          "reason": "Preserves possible separate stages; the immediate sentence remains inside the conditional project scene."
+        },
+        {
+          "paragraph": 2,
+          "span": "In that case, a note can hold the second idea without promising it the rest of the afternoon.",
+          "sourceIds": [
+            "N1",
+            "C1",
+            "I1"
+          ],
+          "verdict": "supported",
+          "reason": "In that case explicitly continues the conditional reviewed note application."
+        }
+      ],
+      "checks": {
+        "paragraphTextMatchesBody": true,
+        "parentClosurePass": true,
+        "missingParents": [],
+        "chronologyApplicable": false,
+        "chronologyLiteralCount": null,
+        "chronologyParagraphs": [],
+        "chronologyPass": true,
+        "natalConditionalApplicable": true,
+        "natalConditionalPass": true,
+        "earlierMethodConditionApplicable": false,
+        "earlierMethodConditionPass": true,
+        "transitToNatalGeometryPass": true,
+        "inventedPersonalHistory": false,
+        "unsupportedFrequencyOrSpeed": false,
+        "promisedOutcome": false
+      }
+    },
+    {
+      "label": "R4",
+      "bodySha256": "0768ae89c7e029493763982c0c5e722d3dd23933ec2b76fe245ea115b0e95fa8",
+      "human": false,
+      "sourcePass": true,
+      "unsupportedClaimCount": 0,
+      "contextIntegration": 5,
+      "contextIntegrationApplicable": false,
+      "substantiveUnresolvedIssue": false,
+      "findings": [],
+      "meaningCoverage": [
+        {
+          "sourceId": "I1",
+          "status": "preserved",
+          "paragraphs": [
+            1,
+            2
+          ],
+          "evidence": "an established responsibility can ask for more deliberate effort, and where its expectations exceed the capacity available, its boundary may need to become clearer",
+          "reason": "Full meaning remains in a supported possible afternoon/task scene and optional extra-check choice."
+        }
+      ],
+      "claimAudit": [
+        {
+          "paragraph": 1,
+          "span": "When an afternoon is set aside for a familiar responsibility, an extra check or another version can end up added beside the original task.",
+          "sourceIds": [
+            "I1",
+            "C1"
+          ],
+          "verdict": "supported",
+          "reason": "Reviewed possible scene, without added ease/frequency or invented personal history."
+        },
+        {
+          "paragraph": 1,
+          "span": "As transit Saturn squares your natal Sun, an established responsibility can ask for more deliberate effort, and where its expectations exceed the capacity available, its boundary may need to become clearer.",
+          "sourceIds": [
+            "C1",
+            "I1"
+          ],
+          "verdict": "supported",
+          "reason": "Correct transit-to-natal geometry and full locally qualified I1 meaning."
+        },
+        {
+          "paragraph": 2,
+          "span": "Moving the same task into a later calendar opening may leave the extra check attached without changing what it includes.",
+          "sourceIds": [
+            "I1",
+            "C1"
+          ],
+          "verdict": "supported",
+          "reason": "Exact reviewed may-qualified distinction continues the possible scene."
+        },
+        {
+          "paragraph": 2,
+          "span": "If the original work already fills the afternoon, the extra check could be left out.",
+          "sourceIds": [
+            "I1",
+            "C1"
+          ],
+          "verdict": "supported",
+          "reason": "The reviewed conditional optional choice is preserved."
+        }
+      ],
+      "checks": {
+        "paragraphTextMatchesBody": true,
+        "parentClosurePass": true,
+        "missingParents": [],
+        "chronologyApplicable": false,
+        "chronologyLiteralCount": null,
+        "chronologyParagraphs": [],
+        "chronologyPass": true,
+        "natalConditionalApplicable": false,
+        "natalConditionalPass": true,
+        "earlierMethodConditionApplicable": false,
+        "earlierMethodConditionPass": true,
+        "transitToNatalGeometryPass": true,
+        "inventedPersonalHistory": false,
+        "unsupportedFrequencyOrSpeed": false,
+        "promisedOutcome": false
+      }
+    },
+    {
+      "label": "R5",
+      "bodySha256": "4873feccc008f7dc39a1739b357ac31f8558709767b5609d2aa162e4f9205e9c",
+      "human": false,
+      "sourcePass": true,
+      "unsupportedClaimCount": 0,
+      "contextIntegration": 5,
+      "contextIntegrationApplicable": true,
+      "substantiveUnresolvedIssue": false,
+      "findings": [],
+      "meaningCoverage": [
+        {
+          "sourceId": "I1",
+          "status": "preserved-concretely",
+          "paragraphs": [
+            1,
+            2
+          ],
+          "evidence": "can ask for more deliberate effort; If the original work already fills the afternoon, the extra check could be left out",
+          "reason": "The full-afternoon condition plus optional removal is the reviewed concrete capacity/boundary application; P2 then gives a defined stopping point. A second abstract restatement is unnecessary."
+        },
+        {
+          "sourceId": "N1",
+          "status": "preserved",
+          "paragraphs": [
+            2
+          ],
+          "evidence": "If several projects compete for that afternoon, sampling a few projects and choosing one may be different stages",
+          "reason": "The interpretive lens remains conditional and preserves exploration versus commitment in the same afternoon scene; the note application is explicitly authorized."
+        },
+        {
+          "sourceId": "P2",
+          "status": "preserved",
+          "paragraphs": [
+            2
+          ],
+          "evidence": "If an earlier method no longer fits ... making a defined stopping point visible can change the boundary before an extra version enters the agreement",
+          "reason": "Earlier-method condition and small boundary adjustment remain attached; chronology is exact and no failed prior attempt is invented."
+        }
+      ],
+      "claimAudit": [
+        {
+          "paragraph": 1,
+          "span": "An afternoon set aside for a familiar responsibility can ask for more deliberate effort as transit Saturn squares your natal Sun.",
+          "sourceIds": [
+            "C1",
+            "I1"
+          ],
+          "verdict": "supported",
+          "reason": "Possible demand and reviewed afternoon image; correct transit Saturn to natal Sun square."
+        },
+        {
+          "paragraph": 1,
+          "span": "Moving the task to a later calendar opening without changing what it includes may leave an extra check attached beside the original task.",
+          "sourceIds": [
+            "I1",
+            "C1"
+          ],
+          "verdict": "supported",
+          "reason": "Reviewed distinction with local may."
+        },
+        {
+          "paragraph": 1,
+          "span": "If the original work already fills the afternoon, the extra check could be left out.",
+          "sourceIds": [
+            "I1",
+            "C1"
+          ],
+          "verdict": "supported",
+          "reason": "Explicit reviewed full-capacity condition and optional boundary application."
+        },
+        {
+          "paragraph": 2,
+          "span": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+          "sourceIds": [
+            "A1",
+            "C1",
+            "I1"
+          ],
+          "verdict": "supported",
+          "reason": "Literal A1 sentence, once in paragraph 2."
+        },
+        {
+          "paragraph": 2,
+          "span": "If an earlier method no longer fits, moving a task to a later slot doesn't change its size, though making a defined stopping point visible can change the boundary before an extra version enters the agreement.",
+          "sourceIds": [
+            "P2",
+            "C1",
+            "I1",
+            "A1"
+          ],
+          "verdict": "supported",
+          "reason": "Preserves the earlier-method condition and reviewed small boundary adjustment; does not invent an actual earlier failure."
+        },
+        {
+          "paragraph": 2,
+          "span": "If several projects compete for that afternoon, sampling a few projects and choosing one may be different stages, and a note can hold the second idea without promising it those hours.",
+          "sourceIds": [
+            "N1",
+            "C1",
+            "I1"
+          ],
+          "verdict": "supported",
+          "reason": "Locally conditional natal possibility and authorized exploration/commitment application, joined to the same afternoon."
+        }
+      ],
+      "checks": {
+        "paragraphTextMatchesBody": true,
+        "parentClosurePass": true,
+        "missingParents": [],
+        "chronologyApplicable": true,
+        "chronologyLiteralCount": 1,
+        "chronologyParagraphs": [
+          2
+        ],
+        "chronologyPass": true,
+        "natalConditionalApplicable": true,
+        "natalConditionalPass": true,
+        "earlierMethodConditionApplicable": true,
+        "earlierMethodConditionPass": true,
+        "transitToNatalGeometryPass": true,
+        "inventedPersonalHistory": false,
+        "unsupportedFrequencyOrSpeed": false,
+        "promisedOutcome": false
+      }
+    }
+  ],
+  "summary": {
+    "sourcePassLabels": [
+      "R1",
+      "R4",
+      "R5"
+    ],
+    "sourceFailLabels": [
+      "R2",
+      "R3"
+    ],
+    "allFiveSourcePass": false,
+    "zeroUnsupportedClaimLabels": [
+      "R1",
+      "R4",
+      "R5"
+    ],
+    "contextThresholdPassLabels": [
+      "R1",
+      "R4",
+      "R5"
+    ],
+    "boundedConclusion": "This review supports only the exact passing raw bodies and identifies unresolved issues in R2 and R3. It does not qualify all future outputs, other providers, other source selections, live use, or any unpublished candidate."
+  }
+}

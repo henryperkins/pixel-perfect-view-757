@@ -1,0 +1,667 @@
+{
+  "version": "member-context-independent-live-evidence-review-1",
+  "reviewedAt": "2026-10-17T09:49:38.515Z",
+  "status": "pass",
+  "reviewType": "independent AI read-only saved production evidence audit",
+  "sourceSha": "b7d9cf5fdfc463baca358a6318c4cf5c38702bb3",
+  "runId": "b0aa4a22-c22b-4906-bb33-48366a38f46e",
+  "planHash": "b891664d982aa39bb86053437de0eae17f72cb4839f2ef3c5c38692fb63029dc",
+  "checksPassed": 79,
+  "checksTotal": 79,
+  "blockingFindings": [],
+  "checks": [
+    {
+      "name": "exact reviewed source",
+      "passed": true
+    },
+    {
+      "name": "frozen plan hash recomputed",
+      "passed": true
+    },
+    {
+      "name": "all plan representations identical",
+      "passed": true
+    },
+    {
+      "name": "pre-dispatch and serving identities match source and plan",
+      "passed": true
+    },
+    {
+      "name": "admin-only closed production adapter scope",
+      "passed": true
+    },
+    {
+      "name": "exact frozen source bytes: src/lib/ai/member-context-reading.ts",
+      "passed": true
+    },
+    {
+      "name": "exact frozen source bytes: src/lib/ai/member-context-readings.json",
+      "passed": true
+    },
+    {
+      "name": "exact frozen source bytes: src/lib/ai/context-writing-material.json",
+      "passed": true
+    },
+    {
+      "name": "exact frozen source bytes: src/lib/ai/context-writing-benchmarks.json",
+      "passed": true
+    },
+    {
+      "name": "runtime policy input: adapterHash",
+      "passed": true
+    },
+    {
+      "name": "runtime policy input: fallbackHash",
+      "passed": true
+    },
+    {
+      "name": "runtime policy input: materialHash",
+      "passed": true
+    },
+    {
+      "name": "runtime policy input: writerHash",
+      "passed": true
+    },
+    {
+      "name": "runtime policy input: briefHash",
+      "passed": true
+    },
+    {
+      "name": "runtime policy input: claimsHash",
+      "passed": true
+    },
+    {
+      "name": "pre-dispatch adapter and fallback identities match",
+      "passed": true
+    },
+    {
+      "name": "frozen embedded materials exact",
+      "passed": true
+    },
+    {
+      "name": "immutable candidate and published source bundle identities",
+      "passed": true
+    },
+    {
+      "name": "five fixed cases and five attempted DB rows",
+      "passed": true
+    },
+    {
+      "name": "campaign limits match authorization",
+      "passed": true
+    },
+    {
+      "name": "one durable instance and campaign identity",
+      "passed": true
+    },
+    {
+      "name": "public and private full exports match bytes",
+      "passed": true
+    },
+    {
+      "name": "contact-only: exact frozen per-case plan",
+      "passed": true
+    },
+    {
+      "name": "contact-only: runtime fallback preserves supplied chronology",
+      "passed": true
+    },
+    {
+      "name": "contact-only: stored, ledger, and public capture identical",
+      "passed": true
+    },
+    {
+      "name": "contact-only: one chosen model transport",
+      "passed": true
+    },
+    {
+      "name": "contact-only: conservative accounted amount recomputed",
+      "passed": true
+    },
+    {
+      "name": "contact-only: complete allowed paragraph capture",
+      "passed": true
+    },
+    {
+      "name": "contact-only: generated and authored outputs stay distinct",
+      "passed": true
+    },
+    {
+      "name": "contact-only: controller matches completed sequence",
+      "passed": true
+    },
+    {
+      "name": "natal-only: exact frozen per-case plan",
+      "passed": true
+    },
+    {
+      "name": "natal-only: runtime fallback preserves supplied chronology",
+      "passed": true
+    },
+    {
+      "name": "natal-only: stored, ledger, and public capture identical",
+      "passed": true
+    },
+    {
+      "name": "natal-only: one chosen model transport",
+      "passed": true
+    },
+    {
+      "name": "natal-only: conservative accounted amount recomputed",
+      "passed": true
+    },
+    {
+      "name": "natal-only: complete allowed paragraph capture",
+      "passed": true
+    },
+    {
+      "name": "natal-only: generated and authored outputs stay distinct",
+      "passed": true
+    },
+    {
+      "name": "natal-only: controller matches completed sequence",
+      "passed": true
+    },
+    {
+      "name": "transit-only: exact frozen per-case plan",
+      "passed": true
+    },
+    {
+      "name": "transit-only: runtime fallback preserves supplied chronology",
+      "passed": true
+    },
+    {
+      "name": "transit-only: stored, ledger, and public capture identical",
+      "passed": true
+    },
+    {
+      "name": "transit-only: one chosen model transport",
+      "passed": true
+    },
+    {
+      "name": "transit-only: conservative accounted amount recomputed",
+      "passed": true
+    },
+    {
+      "name": "transit-only: complete allowed paragraph capture",
+      "passed": true
+    },
+    {
+      "name": "transit-only: generated and authored outputs stay distinct",
+      "passed": true
+    },
+    {
+      "name": "transit-only: controller matches completed sequence",
+      "passed": true
+    },
+    {
+      "name": "natal-and-transit: exact frozen per-case plan",
+      "passed": true
+    },
+    {
+      "name": "natal-and-transit: runtime fallback preserves supplied chronology",
+      "passed": true
+    },
+    {
+      "name": "natal-and-transit: stored, ledger, and public capture identical",
+      "passed": true
+    },
+    {
+      "name": "natal-and-transit: one chosen model transport",
+      "passed": true
+    },
+    {
+      "name": "natal-and-transit: conservative accounted amount recomputed",
+      "passed": true
+    },
+    {
+      "name": "natal-and-transit: complete allowed paragraph capture",
+      "passed": true
+    },
+    {
+      "name": "natal-and-transit: generated and authored outputs stay distinct",
+      "passed": true
+    },
+    {
+      "name": "natal-and-transit: controller matches completed sequence",
+      "passed": true
+    },
+    {
+      "name": "synthesis-natal-and-transit: exact frozen per-case plan",
+      "passed": true
+    },
+    {
+      "name": "synthesis-natal-and-transit: runtime fallback preserves supplied chronology",
+      "passed": true
+    },
+    {
+      "name": "synthesis-natal-and-transit: stored, ledger, and public capture identical",
+      "passed": true
+    },
+    {
+      "name": "synthesis-natal-and-transit: one chosen model transport",
+      "passed": true
+    },
+    {
+      "name": "synthesis-natal-and-transit: conservative accounted amount recomputed",
+      "passed": true
+    },
+    {
+      "name": "synthesis-natal-and-transit: complete allowed paragraph capture",
+      "passed": true
+    },
+    {
+      "name": "synthesis-natal-and-transit: generated and authored outputs stay distinct",
+      "passed": true
+    },
+    {
+      "name": "synthesis-natal-and-transit: controller matches completed sequence",
+      "passed": true
+    },
+    {
+      "name": "all five response identities unique",
+      "passed": true
+    },
+    {
+      "name": "sequential transports without overlapping case execution",
+      "passed": true
+    },
+    {
+      "name": "ledger accounting and public summary agree",
+      "passed": true
+    },
+    {
+      "name": "server work continued after recorded browser closure",
+      "passed": true
+    },
+    {
+      "name": "Workflow source forbids automatic retries",
+      "passed": true
+    },
+    {
+      "name": "Workflow source unchanged since base",
+      "passed": true
+    },
+    {
+      "name": "reader and source packets match summary hashes",
+      "passed": true
+    },
+    {
+      "name": "original benchmarks/source bundle/prior local reports immutable",
+      "passed": true,
+      "detail": {
+        "baseSha": "7642f85afecbb324f9294b9d0776866804985227",
+        "files": 116,
+        "manifestSha256": "c04820d66cbc02efa5d263d14adbd7b2f5fc8ac2ac26c36fcb5cff4801981ecf"
+      }
+    },
+    {
+      "name": "prior voice-review artifact manifest remains valid",
+      "passed": true,
+      "detail": {
+        "files": 27
+      }
+    },
+    {
+      "name": "historical production run-row fingerprint matches baseline",
+      "passed": true
+    },
+    {
+      "name": "active content release and publication unchanged with rollout off",
+      "passed": true
+    },
+    {
+      "name": "no activation and member Today proof honestly deferred",
+      "passed": true
+    },
+    {
+      "name": "temporary session, roles and profile revoked",
+      "passed": true
+    },
+    {
+      "name": "no temporary member reading or profile data exists",
+      "passed": true
+    },
+    {
+      "name": "single run and five results retained after cleanup",
+      "passed": true
+    },
+    {
+      "name": "final receipts postdate complete pilot",
+      "passed": true
+    },
+    {
+      "name": "reviewed finalizer preserves runs/results and does not invoke member routes",
+      "passed": true
+    }
+  ],
+  "accounting": {
+    "attempts": 5,
+    "accountedMicros": 342324,
+    "dollarCeilingMicros": 5000000,
+    "costStatus": "reservation-estimates-not-invoices",
+    "maximumPrefixPlusNextReservationMicros": 3077004
+  },
+  "cases": [
+    {
+      "id": "contact-only",
+      "position": 0,
+      "attempts": 1,
+      "accountedMicros": 36268,
+      "actualModel": "gemini-3.8-flash",
+      "responseId": "pELTateSG6Lkl7oPxcTm6Aw",
+      "startedAt": "2026-10-17T09:40:52.188Z",
+      "finishedAt": "2026-10-17T09:41:03.695Z",
+      "diagnostic": "accepted",
+      "outputMode": "model",
+      "controllerStatus": "running",
+      "captureLossless": true,
+      "generatedBodySha256": "0768ae89c7e029493763982c0c5e722d3dd23933ec2b76fe245ea115b0e95fa8",
+      "runtimeFallbackBodySha256": "274c9f745d23941586216c0c33040541c2cbdf2e53a240c4fb3e382f6f61b483",
+      "originalBenchmarkBodySha256": "9e617d62f5c7b9cd0d7b433faa56310ad950375e34449015c3350596ca084e24"
+    },
+    {
+      "id": "natal-only",
+      "position": 1,
+      "attempts": 1,
+      "accountedMicros": 45256,
+      "actualModel": "gemini-3.8-flash",
+      "responseId": "skLTavP0ENyUsbwPhYzAwAo",
+      "startedAt": "2026-10-17T09:41:06.076Z",
+      "finishedAt": "2026-10-17T09:41:18.345Z",
+      "diagnostic": "editorial_claim",
+      "outputMode": "template",
+      "controllerStatus": "running",
+      "captureLossless": true,
+      "generatedBodySha256": "4e2a65cb654a9f7cefd054d3c49cf1cb986f4df9161b6a1b3c3bb1c3a81673cc",
+      "runtimeFallbackBodySha256": "94669396f944c41b0f883bb8b6be0d54febe69c6afd2b1b36f19d0b0eb603060",
+      "originalBenchmarkBodySha256": "46b10b3a7556e44f1bdff71091915f228787ea21410cfb6e8d49603b5161ee7b"
+    },
+    {
+      "id": "transit-only",
+      "position": 2,
+      "attempts": 1,
+      "accountedMicros": 57906,
+      "actualModel": "gemini-3.8-flash",
+      "responseId": "wELTarfSE6SjirgPpvfumQk",
+      "startedAt": "2026-10-17T09:41:20.154Z",
+      "finishedAt": "2026-10-17T09:41:33.755Z",
+      "diagnostic": "accepted",
+      "outputMode": "model",
+      "controllerStatus": "running",
+      "captureLossless": true,
+      "generatedBodySha256": "aec0ce6bc2574274a28c64a9caab9c8c439689c3342e92a3ac1f4065fc0566eb",
+      "runtimeFallbackBodySha256": "b7da7d1239d6fa524b27d6e380c716632fd3c94b3013e4f2291a402f65210028",
+      "originalBenchmarkBodySha256": "b7da7d1239d6fa524b27d6e380c716632fd3c94b3013e4f2291a402f65210028"
+    },
+    {
+      "id": "natal-and-transit",
+      "position": 3,
+      "attempts": 1,
+      "accountedMicros": 137574,
+      "actualModel": "gemini-3.8-flash",
+      "responseId": "z0LTat7iOaWaotQP4NKVwQk",
+      "startedAt": "2026-10-17T09:41:35.819Z",
+      "finishedAt": "2026-10-17T09:42:19.619Z",
+      "diagnostic": "accepted",
+      "outputMode": "model",
+      "controllerStatus": "running",
+      "captureLossless": true,
+      "generatedBodySha256": "4873feccc008f7dc39a1739b357ac31f8558709767b5609d2aa162e4f9205e9c",
+      "runtimeFallbackBodySha256": "e53f77147b1efea6ff05aa488f57ffd019d4b3c74d27cb04ac2d06bb2c24123c",
+      "originalBenchmarkBodySha256": "e53f77147b1efea6ff05aa488f57ffd019d4b3c74d27cb04ac2d06bb2c24123c"
+    },
+    {
+      "id": "synthesis-natal-and-transit",
+      "position": 4,
+      "attempts": 1,
+      "accountedMicros": 65320,
+      "actualModel": "gemini-3.8-flash",
+      "responseId": "_kLTaraIAdaMotQP-svU-QE",
+      "startedAt": "2026-10-17T09:42:21.833Z",
+      "finishedAt": "2026-10-17T09:42:52.642Z",
+      "diagnostic": "safety",
+      "outputMode": "template",
+      "controllerStatus": "complete",
+      "captureLossless": true,
+      "generatedBodySha256": "8695330801c7cef727ef4da4359b78e88902a44f8b13b0ca8bbe096714ed4d3d",
+      "runtimeFallbackBodySha256": "a31a4acf038dd560037930550f50c2375ac13d23af0973e3bccd61997633b0c8",
+      "originalBenchmarkBodySha256": "a31a4acf038dd560037930550f50c2375ac13d23af0973e3bccd61997633b0c8"
+    }
+  ],
+  "browserClosure": {
+    "recordedAt": "2026-10-17T09:41:14.449495+00:00",
+    "newTransportsAfterClosure": [
+      "transit-only",
+      "natal-and-transit",
+      "synthesis-natal-and-transit"
+    ],
+    "completedTransportsAfterClosure": [
+      "natal-only",
+      "transit-only",
+      "natal-and-transit",
+      "synthesis-natal-and-transit"
+    ]
+  },
+  "preservation": {
+    "baseSha": "7642f85afecbb324f9294b9d0776866804985227",
+    "localFilesChecked": 116,
+    "manifestSha256": "c04820d66cbc02efa5d263d14adbd7b2f5fc8ac2ac26c36fcb5cff4801981ecf",
+    "historicalProductionBaselineFingerprint": "cf6a48850cfc49bb4f201ceda94bf3d941d9eed3902f2333197a6eb422ac2668",
+    "historicalProductionFinalFingerprint": "cf6a48850cfc49bb4f201ceda94bf3d941d9eed3902f2333197a6eb422ac2668",
+    "historicalProductionFingerprintScope": "evaluation_runs rows for the two baseline run IDs; historical evaluation_results are not fingerprinted",
+    "finalOperations": {
+      "activeReleaseUnchanged": true,
+      "writerRollout": null,
+      "modelActivation": false,
+      "authoredActivation": false,
+      "qualifiedModes": [],
+      "memberTodayProof": "deferred-no-qualified-modes",
+      "sessionsRevoked": true,
+      "adminRoleRevoked": true,
+      "profileRemoved": true,
+      "disabledUserRetainedForEvaluationOwnership": true,
+      "retainedRuns": 1,
+      "retainedResults": 5,
+      "cleanupAuditId": "eeae85f8-9327-4724-98a5-5497a3ce221d"
+    }
+  },
+  "inputHashes": [
+    {
+      "path": "/tmp/pattern-context-production-private-20261017/final.json",
+      "sha256": "620760700d717a6720f55394088a5c604617c0b308261c952b7f569ae38f2c7d",
+      "bytes": 1895267
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-20261017/db-proof.json",
+      "sha256": "11a257fbaec126b41fa934b2da93f36d5417f9517bfb206e8ad158d2411e3ea7",
+      "bytes": 760633
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-20261017/pre-dispatch.json",
+      "sha256": "3a4d179d5e233a8fc7ca74d0373c19bcc195a23cd0c314cc68066a85d3a41ca2",
+      "bytes": 662
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-20261017/deployment.json",
+      "sha256": "c6a63ac17e22681dbc6c2dc2fc493ce7957fb68fbbfd7c999c91a35a369cb622",
+      "bytes": 554
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-20261017/baseline.json",
+      "sha256": "d9b8799979b342278405f8e85d4bcfc096e1282c42804bc8da7b8ee183e11cee",
+      "bytes": 812
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-20261017/browser-closed.json",
+      "sha256": "56aa6b693c72775bff76fe555d50048e62a6e7c882f9ae9fb7ec6e2917f4781d",
+      "bytes": 159
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-20261017/preview.json",
+      "sha256": "70255e54c941750832b49058d3c9eb6e94419549c234a543147e0c36a8f04f48",
+      "bytes": 1069276
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-20261017/runtime-policy-identity.json",
+      "sha256": "2051dde135e4483f9d9f993828ff795ca0b9f9e29e1c910d4d42edf28cc26617",
+      "bytes": 843
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-20261017/reader-packet.md",
+      "sha256": "3a489ddd88821dda9129a2fbf36f0951b72de903da811bf706ecec2b4135804d",
+      "bytes": 4636
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-20261017/source-review-packet.md",
+      "sha256": "a86f8f877532a9d375236b02077ad81b1d57f4de8076add47150f56cea8284fc",
+      "bytes": 52491
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-20261017/export.mjs",
+      "sha256": "001815091d0006b59fe194d61b42b53c1229b05c0ce33bf5da38cc523571df74",
+      "bytes": 5909
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-20261017/historical-final.json",
+      "sha256": "cbf9fd2b7c3ab2bdef62e7c76b9072ac360e3685c157dbf18320ab87aa20d8a9",
+      "bytes": 254
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-20261017/cleanup.json",
+      "sha256": "4b9c2fdac144b1520d124666bbe9edf2df5641c65045658981ade49e578c29d1",
+      "bytes": 1131
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-20261017/final-state.json",
+      "sha256": "cebf58bb13547bb9cd38c6f935edf0c53f415971838953d9f447dc697f139c9b",
+      "bytes": 931
+    },
+    {
+      "path": "/tmp/pattern-context-production-private-20261017/finalize.mjs",
+      "sha256": "52e85a139ed27f4f5524d6eff45e867f6593969f047ed106bf156bbe9edea1eb",
+      "bytes": 5005
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/pilot/01-contact-only.json",
+      "sha256": "bb8b6349bb8816be18f36653f9f2b4e4852776a14768ea6b0c74443e4b9b48c2",
+      "bytes": 20914
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/pilot/02-natal-only.json",
+      "sha256": "175434da59270e80e5b8d202fb6335f11aad0315d632cee37b976da18fcdaa49",
+      "bytes": 33849
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/pilot/03-transit-only.json",
+      "sha256": "01bb891c6f5bcc3c5b30a3de29cef8fd1a43ba2ea172bf2a876fce9925536d8f",
+      "bytes": 83384
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/pilot/04-natal-and-transit.json",
+      "sha256": "88bcba9459141dfe78e406d37465a470278e79b2ddeedea7fab94a204f5cbfba",
+      "bytes": 96217
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/pilot/05-synthesis-natal-and-transit.json",
+      "sha256": "3c4ef22c9392dc453987a8095e76efbf8969dc27f927561508b8375cd3fc492a",
+      "bytes": 101613
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/pilot/captured-readings.md",
+      "sha256": "cd93b4abb5eea29031ae5946d9176c573bf9abbaa66f5274381bda9de359eed4",
+      "bytes": 7376
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/pilot/grounding-scores.json",
+      "sha256": "d81f7684766752e33c90c72f9f53bc2952247d0ec0bc0e511539aa74a2f87036",
+      "bytes": 31386
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/pilot/preview.json",
+      "sha256": "70255e54c941750832b49058d3c9eb6e94419549c234a543147e0c36a8f04f48",
+      "bytes": 1069276
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/pilot/reader-scores.json",
+      "sha256": "397c154925ea880e2868c698b3e55d5a1dd8a2ff9727b4f60a1e7261aed5874f",
+      "bytes": 5129
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/pilot/run.json",
+      "sha256": "620760700d717a6720f55394088a5c604617c0b308261c952b7f569ae38f2c7d",
+      "bytes": 1895267
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/pilot/summary.json",
+      "sha256": "205157592c698243839e1634e037c9091755af74a0d7b8d4fd1b7b02042a09e5",
+      "bytes": 3305
+    },
+    {
+      "path": "src/lib/ai/member-context-reading.ts",
+      "sha256": "d728de67a0547ac9d611c365dd68cb8440cf8aad038d34f143bd66731b21685a",
+      "bytes": 5821
+    },
+    {
+      "path": "src/lib/ai/member-context-readings.json",
+      "sha256": "ae85bb5ce7793c6af330e6877af294e288f632efb01bcbc74f2d633101155c89",
+      "bytes": 6837
+    },
+    {
+      "path": "src/lib/ai/context-writing-material.json",
+      "sha256": "165a91a427937039757d4a7a3520038a725eb6b7495ee106fc4d1731058471ba",
+      "bytes": 26451
+    },
+    {
+      "path": "src/lib/ai/language.server.ts",
+      "sha256": "b8f2e6763feae0f1cb4dff6235a998683176fae6cfad9c636150dccad8c42007",
+      "bytes": 75114
+    },
+    {
+      "path": "src/lib/ai/daily-context-writing.ts",
+      "sha256": "91c78185cf5211346e7f9b1cd8be6c1d3af680b5f3f931e9dca628aa44c11cac",
+      "bytes": 13826
+    },
+    {
+      "path": "src/lib/ai/daily-context-claims.ts",
+      "sha256": "9430501befc9d290e859104f75447570a158033d5dcfc458727cd323a7838e85",
+      "bytes": 5566
+    },
+    {
+      "path": "src/lib/ai/context-pilot-plan.server.ts",
+      "sha256": "8dcc4daa682013ea07c44fbd14fe7601df307f46a5e2bd1127a2933746b80e7f",
+      "bytes": 7164
+    },
+    {
+      "path": "src/lib/ai/admin-transport.ts",
+      "sha256": "7766c746d42c24804b49481ec0eabd938227b3264d980a2016c9af8261684454",
+      "bytes": 7505
+    },
+    {
+      "path": "src/lib/evaluation-runs.server.ts",
+      "sha256": "aa7e2b3265bdbc6e5f5051cd87aa2a3b4e3b9525178ff7427ddcebb6e6ab04de",
+      "bytes": 64372
+    },
+    {
+      "path": "edge/pattern-workflows/worker.mjs",
+      "sha256": "5389b7dcf39b6f1b8a62c4f32d3a62758e24e0591f23020ac90781122dca9449",
+      "bytes": 20531
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-writer/2026-10-17/voice-qualifiers-3/artifact-manifest.json",
+      "sha256": "5320194971198c40e617c9430d83bd2e112e0e9ca419cc6658319399084ff20d",
+      "bytes": 2804
+    }
+  ],
+  "limits": [
+    "No provider/model request, Today call, database mutation, deployment, new run, retry, or external network call was made in this audit.",
+    "The exact five-attempt claim covers the supplied operator-scoped DB export and run/campaign; it is not a provider-account-wide invoice audit.",
+    "342324 micros is recomputed conservative accounting using input*2+(total-input)*20; it is not an invoice or independently verified provider price.",
+    "Lossless capture refers to complete whitelisted generated paragraph text/facts/scenes retained before validation. Full raw HTTP payloads and private thought content are not retained or claimed.",
+    "Browser closure is an operator-recorded receipt; timestamps show three later starts and four later finishes, not physical-device or independently observed browser evidence.",
+    "Serving identity is verified from saved deployment/HTTP receipts; no fresh public HTTP request was needed.",
+    "Final operational receipts match the baseline fingerprint for the two historical evaluation_runs rows. Historical evaluation_results lack an independent pre/post production fingerprint; prior local result reports/source/benchmarks match their base Git bytes.",
+    "Source fidelity and reader writing quality are separate reviews. Automatic acceptance does not approve activation.",
+    "No generated mode qualified under the separate reviews, so model and authored activation were held and rollout remained NULL. Authenticated Today/save/reload/export proof was deferred; no member reading or sixth model invocation was requested or claimed."
+  ]
+}

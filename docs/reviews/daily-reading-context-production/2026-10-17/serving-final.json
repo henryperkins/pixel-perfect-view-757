@@ -1,0 +1,12 @@
+{
+  "at": "2026-10-17T09:49:55.908722+00:00",
+  "status": 200,
+  "identity": {
+    "sourceSha": "b7d9cf5fdfc463baca358a6318c4cf5c38702bb3",
+    "requestPolicyVersion": "synthetic-facts-local-context-1",
+    "fixtureVersion": "synthetic-daily-7"
+  },
+  "deploymentHeader": "psr2.d0c5444f-f197-41f5-b24a-2f958734511e.1792835349.Ju2S8DkEs02pnWVUIsQLA_7TARpEdW8q1ps8sdyfQdw",
+  "establishes": "serving source identity only",
+  "transport": "curl; Python urllib received 403 before successful curl recheck"
+}

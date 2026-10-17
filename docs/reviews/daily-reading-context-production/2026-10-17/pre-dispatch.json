@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-17T09:40:44.238625+00:00",
+  "sourceSha": "b7d9cf5fdfc463baca358a6318c4cf5c38702bb3",
+  "planHash": "b891664d982aa39bb86053437de0eae17f72cb4839f2ef3c5c38692fb63029dc",
+  "campaign": "daily-context-pilot-3",
+  "provider": "gemini-enterprise",
+  "model": "gemini-enterprise/gemini-3.8-flash",
+  "attemptLimit": 5,
+  "dollarCeilingMicros": 5000000,
+  "runtimePath": "member-production-context",
+  "adapterHash": "d728de67a0547ac9d611c365dd68cb8440cf8aad038d34f143bd66731b21685a",
+  "runtimeFallbackHash": "ae85bb5ce7793c6af330e6877af294e288f632efb01bcbc74f2d633101155c89",
+  "rolloutScope": "admin-workflow-only",
+  "verifiedBeforeSpend": true
+}

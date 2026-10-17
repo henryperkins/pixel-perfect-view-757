@@ -1,0 +1,493 @@
+{
+  "qualificationVersion": "daily-context-production-qualification-1",
+  "date": "2026-10-17",
+  "scope": "Five exact lossless raw generated body candidates in one controlled shared-contact context comparison; not consecutive-day coverage or qualification of future outputs.",
+  "status": "not-qualified",
+  "humanReviewCompleted": false,
+  "reviews": {
+    "reader": "independent blind AI reader review",
+    "source": "independent blind AI source and context-integration review",
+    "originalScoresPreserved": true,
+    "reviewsFrozenBeforeMappingRead": true
+  },
+  "identity": {
+    "runId": "b0aa4a22-c22b-4906-bb33-48366a38f46e",
+    "sourceSha": "b7d9cf5fdfc463baca358a6318c4cf5c38702bb3",
+    "runPlanHash": "b891664d982aa39bb86053437de0eae17f72cb4839f2ef3c5c38692fb63029dc",
+    "provider": "gemini-enterprise",
+    "actualModels": [
+      "gemini-3.8-flash"
+    ],
+    "promptVersions": [
+      "daily-context-body-3"
+    ],
+    "validatorVersions": [
+      "daily-context-reference-3"
+    ],
+    "experimentVersion": "daily-context-pilot-3"
+  },
+  "requiredGates": {
+    "logic": "automatic AND reader AND source; no averaging or substitution",
+    "automatic": {
+      "accepted": true,
+      "outputMode": "model",
+      "captureLossless": true,
+      "candidateTruncated": false
+    },
+    "reader": {
+      "minimumPerDimension": 4,
+      "allDimensionsRequired": true,
+      "dimensions": [
+        "recognition",
+        "meaning",
+        "direction",
+        "distinctness",
+        "voice"
+      ]
+    },
+    "source": {
+      "sourcePass": true,
+      "unsupportedClaimCount": 0,
+      "minimumContextIntegration": 4,
+      "singleSourceNote": "Contact-only context score records complete supplied-meaning coverage; multi-context integration is not applicable."
+    }
+  },
+  "blindMapping": [
+    {
+      "label": "R4",
+      "id": "contact-only",
+      "position": 0
+    },
+    {
+      "label": "R3",
+      "id": "natal-only",
+      "position": 1
+    },
+    {
+      "label": "R1",
+      "id": "transit-only",
+      "position": 2
+    },
+    {
+      "label": "R5",
+      "id": "natal-and-transit",
+      "position": 3
+    },
+    {
+      "label": "R2",
+      "id": "synthesis-natal-and-transit",
+      "position": 4
+    }
+  ],
+  "cases": [
+    {
+      "mode": "contact-only",
+      "position": 0,
+      "blindLabel": "R4",
+      "candidateBodySha256": "0768ae89c7e029493763982c0c5e722d3dd23933ec2b76fe245ea115b0e95fa8",
+      "captureArtifact": "01-contact-only.json",
+      "automatic": {
+        "accepted": true,
+        "diagnostic": "accepted",
+        "outputMode": "model",
+        "captureLossless": true,
+        "candidateTruncated": false,
+        "gatePass": true
+      },
+      "reader": {
+        "scores": {
+          "recognition": 4,
+          "meaning": 4,
+          "direction": 4,
+          "distinctness": 4,
+          "voice": 3
+        },
+        "gatePass": false,
+        "blockers": [
+          "The central interpretation stacks abstract responsibility, deliberate effort, expectations, capacity and a clearer boundary; that formal register dominates this short body."
+        ]
+      },
+      "source": {
+        "sourcePass": true,
+        "unsupportedClaimCount": 0,
+        "contextIntegration": 5,
+        "contextIntegrationApplicable": false,
+        "substantiveUnresolvedIssue": false,
+        "gatePass": true,
+        "findings": []
+      },
+      "qualified": false,
+      "blockingGates": [
+        "reader"
+      ],
+      "blockers": [
+        "Reader dimensions below 4: voice=3."
+      ]
+    },
+    {
+      "mode": "natal-only",
+      "position": 1,
+      "blindLabel": "R3",
+      "candidateBodySha256": "4e2a65cb654a9f7cefd054d3c49cf1cb986f4df9161b6a1b3c3bb1c3a81673cc",
+      "captureArtifact": "02-natal-only.json",
+      "automatic": {
+        "accepted": false,
+        "diagnostic": "editorial_claim",
+        "outputMode": "template",
+        "captureLossless": true,
+        "candidateTruncated": false,
+        "gatePass": false
+      },
+      "reader": {
+        "scores": {
+          "recognition": 4,
+          "meaning": 4,
+          "direction": 4,
+          "distinctness": 4,
+          "voice": 4
+        },
+        "gatePass": true,
+        "blockers": []
+      },
+      "source": {
+        "sourcePass": false,
+        "unsupportedClaimCount": 3,
+        "contextIntegration": 2,
+        "contextIntegrationApplicable": true,
+        "substantiveUnresolvedIssue": true,
+        "gatePass": false,
+        "findings": [
+          {
+            "id": "R3-F1",
+            "severity": "minor",
+            "category": "unsupported-ease",
+            "span": "can easily attach itself",
+            "sourceIds": [
+              "I1",
+              "C1"
+            ],
+            "reason": "The sources and reviewed scene permit an extra check or version being added. They do not say adding it occurs easily. The local modal 'can' does not ground the added ease."
+          },
+          {
+            "id": "R3-F2",
+            "severity": "minor",
+            "category": "unsupported-ease",
+            "span": "could simply be left out",
+            "sourceIds": [
+              "I1",
+              "C1"
+            ],
+            "reason": "The reviewed direction permits leaving the extra check out if the original work fills the afternoon. 'Simply' adds an unsupported suggestion of ease or uncomplicated removal."
+          },
+          {
+            "id": "R3-F3",
+            "severity": "major",
+            "category": "unsupported-causal-relation",
+            "span": "keeping a page of notes for one idea beside a tab open for another can blur where your attention belongs",
+            "sourceIds": [
+              "N1",
+              "C1",
+              "I1"
+            ],
+            "reason": "The notes/tab image is explicitly reviewed material, so its concreteness is legitimate. N1 says multiple lines of curiosity can help a direction take shape and that sampling and choosing may be separate stages. Neither N1 nor the reviewed image says keeping notes beside a tab blurs the reader's proper allocation of attention. The sentence invents a causal attention problem and shifts the lens from possible exploration toward confusion. The preceding 'If several projects...' condition does not authorize this new effect."
+          },
+          {
+            "id": "R3-F4",
+            "severity": "major",
+            "category": "selected-meaning-coverage",
+            "span": "Where expectations exceed the capacity available, the task's boundary may need to become clearer",
+            "sourceIds": [
+              "I1",
+              "C1"
+            ],
+            "reason": "This correctly preserves I1's conditional capacity/boundary component, but the full body omits I1's other selected component: an established responsibility can ask for more deliberate effort. N1's direction-forming possibility is also displaced by the invented attention problem identified in R3-F3."
+          }
+        ]
+      },
+      "qualified": false,
+      "blockingGates": [
+        "automatic",
+        "source"
+      ],
+      "blockers": [
+        "Automatic rejection: editorial_claim; output mode is template, so the raw candidate is not accepted model output.",
+        "Source review fails: 3 unsupported claims; context integration 2/5."
+      ]
+    },
+    {
+      "mode": "transit-only",
+      "position": 2,
+      "blindLabel": "R1",
+      "candidateBodySha256": "aec0ce6bc2574274a28c64a9caab9c8c439689c3342e92a3ac1f4065fc0566eb",
+      "captureArtifact": "03-transit-only.json",
+      "automatic": {
+        "accepted": true,
+        "diagnostic": "accepted",
+        "outputMode": "model",
+        "captureLossless": true,
+        "candidateTruncated": false,
+        "gatePass": true
+      },
+      "reader": {
+        "scores": {
+          "recognition": 4,
+          "meaning": 4,
+          "direction": 4,
+          "distinctness": 3,
+          "voice": 3
+        },
+        "gatePass": false,
+        "blockers": [
+          "The second paragraph restates the scheduling-versus-scope distinction already established in the first.",
+          "Expectations, available capacity and a clearer boundary are expressed in a formal administrative register.",
+          "The recurrence detail yields some practical meaning but does not supply enough new development."
+        ]
+      },
+      "source": {
+        "sourcePass": true,
+        "unsupportedClaimCount": 0,
+        "contextIntegration": 5,
+        "contextIntegrationApplicable": true,
+        "substantiveUnresolvedIssue": false,
+        "gatePass": true,
+        "findings": []
+      },
+      "qualified": false,
+      "blockingGates": [
+        "reader"
+      ],
+      "blockers": [
+        "Reader dimensions below 4: distinctness=3, voice=3."
+      ]
+    },
+    {
+      "mode": "natal-and-transit",
+      "position": 3,
+      "blindLabel": "R5",
+      "candidateBodySha256": "4873feccc008f7dc39a1739b357ac31f8558709767b5609d2aa162e4f9205e9c",
+      "captureArtifact": "04-natal-and-transit.json",
+      "automatic": {
+        "accepted": true,
+        "diagnostic": "accepted",
+        "outputMode": "model",
+        "captureLossless": true,
+        "candidateTruncated": false,
+        "gatePass": true
+      },
+      "reader": {
+        "scores": {
+          "recognition": 4,
+          "meaning": 4,
+          "direction": 4,
+          "distinctness": 3,
+          "voice": 3
+        },
+        "gatePass": false,
+        "blockers": [
+          "The second paragraph repeats the scheduling-versus-size distinction after the first has already supplied its consequence.",
+          "The return detail supplies little further development beyond a conditional earlier-method statement.",
+          "The competing-projects idea arrives as an appended option.",
+          "The stopping-point, boundary and agreement sentence is procedural and difficult to say naturally."
+        ]
+      },
+      "source": {
+        "sourcePass": true,
+        "unsupportedClaimCount": 0,
+        "contextIntegration": 5,
+        "contextIntegrationApplicable": true,
+        "substantiveUnresolvedIssue": false,
+        "gatePass": true,
+        "findings": []
+      },
+      "qualified": false,
+      "blockingGates": [
+        "reader"
+      ],
+      "blockers": [
+        "Reader dimensions below 4: distinctness=3, voice=3."
+      ]
+    },
+    {
+      "mode": "synthesis-natal-and-transit",
+      "position": 4,
+      "blindLabel": "R2",
+      "candidateBodySha256": "8695330801c7cef727ef4da4359b78e88902a44f8b13b0ca8bbe096714ed4d3d",
+      "captureArtifact": "05-synthesis-natal-and-transit.json",
+      "automatic": {
+        "accepted": false,
+        "diagnostic": "safety",
+        "outputMode": "template",
+        "captureLossless": true,
+        "candidateTruncated": false,
+        "gatePass": false
+      },
+      "reader": {
+        "scores": {
+          "recognition": 4,
+          "meaning": 3,
+          "direction": 4,
+          "distinctness": 2,
+          "voice": 2
+        },
+        "gatePass": false,
+        "blockers": [
+          "Rescheduling, scope, competing projects, chronology and initiative are assembled without a sufficiently clear shared observation.",
+          "The chronology sentence interrupts the first paragraph without changing its practical meaning.",
+          "Ease of beginning versus capacity to carry expanded work is repeated in adjacent sentences.",
+          "The practical-initiative sentence is formal and laborious."
+        ]
+      },
+      "source": {
+        "sourcePass": false,
+        "unsupportedClaimCount": 1,
+        "contextIntegration": 3,
+        "contextIntegrationApplicable": true,
+        "substantiveUnresolvedIssue": true,
+        "gatePass": false,
+        "findings": [
+          {
+            "id": "R2-F1",
+            "severity": "major",
+            "category": "unsupported-causal-relation",
+            "span": "practical initiative can make another piece of the same project start to look appealing to take up",
+            "sourceIds": [
+              "I2",
+              "C2"
+            ],
+            "reason": "I2 supplies mutual reinforcement between enthusiasm and practical initiative under a well-chosen aim, and low-friction effort that makes taking up a larger piece natural. The reviewed material permits an appealing next piece as a scene. It does not establish the narrower directional claim that practical initiative creates the appeal of another piece. 'Can' preserves possibility but cannot supply this causal relationship. The rendering also drops the source's explicit reciprocal reinforcement."
+          },
+          {
+            "id": "R2-F2",
+            "severity": "major",
+            "category": "selected-meaning-coverage",
+            "span": "Moving a familiar task to a later calendar opening without changing what it includes may leave an extra check attached.",
+            "sourceIds": [
+              "I1",
+              "C1"
+            ],
+            "reason": "The full body never conveys that an established responsibility can require more deliberate effort, nor that a possible expectations/capacity mismatch is the reason its boundary may need to become clearer. Moving the same contents and changing a stopping point are reviewed applications, but here they replace the selected I1 meaning. P2's earlier-method condition is preserved; it does not substitute for I1's demand/capacity relationship."
+          }
+        ]
+      },
+      "qualified": false,
+      "blockingGates": [
+        "automatic",
+        "reader",
+        "source"
+      ],
+      "blockers": [
+        "Automatic rejection: safety; output mode is template, so the raw candidate is not accepted model output.",
+        "Reader dimensions below 4: meaning=3, distinctness=2, voice=2.",
+        "Source review fails: 1 unsupported claims; context integration 3/5."
+      ]
+    }
+  ],
+  "totals": {
+    "attempts": 5,
+    "completed": 5,
+    "automaticAccepted": 3,
+    "automaticRejected": 2,
+    "allCapturesLossless": true,
+    "readerPass": 1,
+    "sourcePass": 3,
+    "qualified": 0
+  },
+  "qualifiedModes": [],
+  "activation": {
+    "conditionalActivation": "held",
+    "qualificationPermitsGeneratedActivation": false,
+    "activationPerformedByThisReview": false,
+    "temporaryLiveRolloutRequired": false,
+    "reason": "No generated mode meets the combined automatic, reader and source thresholds."
+  },
+  "futureAuthoredTodayRouteProof": {
+    "status": "deferred",
+    "reason": "No generated mode qualifies, so the conditional future authored Today route proof is not reached. No temporary live rollout is needed to establish this failed qualification."
+  },
+  "interpretation": [
+    "The three automatically accepted model outputs also pass source review, but every one fails the independent reader voice threshold.",
+    "The sole reader pass, natal-only/R3, is rejected automatically and fails source review; its reader pass cannot qualify an authored fallback or override the unsupported claims.",
+    "Rejected natal-only and synthesis candidates were reviewed as raw candidates. Their template output modes are authored fallbacks, not accepted generated writing.",
+    "Headline and reflection fields are reviewed authored runtime fields; they do not establish generated body quality.",
+    "No original scores or raw captures were changed, no new model requests were made, and no activation was performed by this qualification task.",
+    "This report makes no claim of human review, member research, broad source coverage, consecutive-day quality or production member acceptance."
+  ],
+  "evidenceHashAlgorithm": "sha256",
+  "evidenceHashes": [
+    {
+      "artifact": "run.json",
+      "sha256": "620760700d717a6720f55394088a5c604617c0b308261c952b7f569ae38f2c7d",
+      "visibility": "public"
+    },
+    {
+      "artifact": "summary.json",
+      "sha256": "205157592c698243839e1634e037c9091755af74a0d7b8d4fd1b7b02042a09e5",
+      "visibility": "public"
+    },
+    {
+      "artifact": "reader-review.md",
+      "sha256": "f97120b56c5cc794edfe26777fe55bab0d4eb263bdf2da4ee58138970125b6b9",
+      "visibility": "public"
+    },
+    {
+      "artifact": "reader-scores.json",
+      "sha256": "397c154925ea880e2868c698b3e55d5a1dd8a2ff9727b4f60a1e7261aed5874f",
+      "visibility": "public"
+    },
+    {
+      "artifact": "grounding-review.md",
+      "sha256": "ebc78d95109379f9b17f27e7a83af42505411957cb4d38048744aa2267ac56bc",
+      "visibility": "public"
+    },
+    {
+      "artifact": "grounding-scores.json",
+      "sha256": "d81f7684766752e33c90c72f9f53bc2952247d0ec0bc0e511539aa74a2f87036",
+      "visibility": "public"
+    },
+    {
+      "artifact": "authored-standard:benchmark-readings.md",
+      "sha256": "75258c2eabec3625cd49b72374c3fcdc4b2d2d769bd6b383403a77b4a6e6ebf2",
+      "visibility": "public"
+    },
+    {
+      "artifact": "reader-packet.md",
+      "sha256": "3a489ddd88821dda9129a2fbf36f0951b72de903da811bf706ecec2b4135804d",
+      "visibility": "private-original"
+    },
+    {
+      "artifact": "source-review-packet.md",
+      "sha256": "a86f8f877532a9d375236b02077ad81b1d57f4de8076add47150f56cea8284fc",
+      "visibility": "private-original"
+    },
+    {
+      "artifact": "blind-mapping.json",
+      "sha256": "10af00b5d6be21925b4c69374b2184858e775d820da6523c3b19f1eaf91ffb64",
+      "visibility": "private-original"
+    },
+    {
+      "artifact": "01-contact-only.json",
+      "sha256": "bb8b6349bb8816be18f36653f9f2b4e4852776a14768ea6b0c74443e4b9b48c2",
+      "visibility": "public"
+    },
+    {
+      "artifact": "02-natal-only.json",
+      "sha256": "175434da59270e80e5b8d202fb6335f11aad0315d632cee37b976da18fcdaa49",
+      "visibility": "public"
+    },
+    {
+      "artifact": "03-transit-only.json",
+      "sha256": "01bb891c6f5bcc3c5b30a3de29cef8fd1a43ba2ea172bf2a876fce9925536d8f",
+      "visibility": "public"
+    },
+    {
+      "artifact": "04-natal-and-transit.json",
+      "sha256": "88bcba9459141dfe78e406d37465a470278e79b2ddeedea7fab94a204f5cbfba",
+      "visibility": "public"
+    },
+    {
+      "artifact": "05-synthesis-natal-and-transit.json",
+      "sha256": "3c4ef22c9392dc453987a8095e76efbf8969dc27f927561508b8375cd3fc492a",
+      "visibility": "public"
+    }
+  ]
+}
