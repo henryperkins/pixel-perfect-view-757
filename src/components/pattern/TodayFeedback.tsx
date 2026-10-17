@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { Check, RotateCcw } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { sendFeedback, type fetchToday } from "@/lib/pattern.functions";
@@ -22,6 +22,7 @@ export function TodayFeedback({
 }) {
   const client = useQueryClient();
   const send = useServerFn(sendFeedback);
+  const responseButtons = useRef<Partial<Record<-1 | 0 | 1, HTMLButtonElement | null>>>({});
   const [receipt, setReceipt] = useState<{
     feedback: NonNullable<TodayData["feedback"]>;
     baseRevision: number;
@@ -82,13 +83,19 @@ export function TodayFeedback({
         ).map((option) => (
           <Button
             key={option.value}
+            ref={(button) => {
+              responseButtons.current[option.value] = button;
+            }}
             type="button"
             variant={confirmed?.resonance === option.value ? "default" : "outline"}
             aria-pressed={confirmed?.resonance === option.value}
-            disabled={mutation.isPending}
-            className="px-3"
+            aria-disabled={mutation.isPending}
+            className="px-3 aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
             onClick={() => {
-              if (confirmed?.resonance !== option.value || mutation.isError)
+              if (
+                !mutation.isPending &&
+                (confirmed?.resonance !== option.value || mutation.isError)
+              )
                 mutation.mutate(option.value);
             }}
           >
@@ -103,7 +110,11 @@ export function TodayFeedback({
         aria-live={mutation.isError ? "assertive" : "polite"}
       >
         {mutation.isPending ? (
-          "Saving your response…"
+          mutation.isPaused ? (
+            "Waiting for a connection. Your response will save when you’re back online."
+          ) : (
+            "Saving your response…"
+          )
         ) : mutation.isError ? (
           "Your response couldn’t be saved. Please try again."
         ) : confirmed ? (
@@ -117,10 +128,17 @@ export function TodayFeedback({
       </p>
       {mutation.isError ? (
         <Button
+          type="button"
           variant="outline"
-          className="mt-2"
-          onClick={() => {
-            if (mutation.variables !== undefined) mutation.mutate(mutation.variables);
+          className="mt-2 h-auto min-h-11 min-w-0 max-w-full whitespace-normal"
+          onClick={(event) => {
+            if (!mutation.isPending && mutation.variables !== undefined) {
+              // Retry disappears during the request; keep keyboard focus on
+              // the corresponding choice without interrupting another field.
+              if (document.activeElement === event.currentTarget)
+                responseButtons.current[mutation.variables]?.focus();
+              mutation.mutate(mutation.variables);
+            }
           }}
         >
           <RotateCcw aria-hidden="true" /> Retry response

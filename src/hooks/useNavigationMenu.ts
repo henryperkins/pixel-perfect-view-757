@@ -38,6 +38,17 @@ export function useNavigationMenu(
   const closingKey = useRef<string | undefined>(undefined);
   const restoreFocus = useRef(true);
   const previousMenu = useRef(menu);
+  const ownsFocus = useCallback(
+    (kind: MenuKind) => {
+      const active = document.activeElement;
+      const trigger = kind === "mobile" ? mobileTrigger.current : moreTrigger.current;
+      const panel = document.getElementById(
+        kind === "mobile" ? "mobile-navigation" : "more-navigation",
+      );
+      return active === trigger || Boolean(active && panel?.contains(active));
+    },
+    [mobileTrigger, moreTrigger],
+  );
   const focusTrigger = useCallback(
     (kind: MenuKind) => {
       const trigger = kind === "mobile" ? mobileTrigger.current : moreTrigger.current;
@@ -51,12 +62,12 @@ export function useNavigationMenu(
       const current = router.history.location;
       const active = menuAt(current);
       if (!active || closingKey.current === current.state.__TSR_key) return;
-      restoreFocus.current = focus;
+      restoreFocus.current = focus && ownsFocus(active.kind);
       closingKey.current = current.state.__TSR_key;
-      if (focus) focusTrigger(active.kind);
+      if (restoreFocus.current) focusTrigger(active.kind);
       router.history.back();
     },
-    [router, focusTrigger],
+    [router, focusTrigger, ownsFocus],
   );
   const toggle = (kind: MenuKind) => {
     const current = router.history.location;
@@ -77,11 +88,17 @@ export function useNavigationMenu(
   useEffect(() => {
     const previous = previousMenu.current;
     if (menu && !previous) restoreFocus.current = true;
-    if (previous && !menu && previous.href === location.href && restoreFocus.current)
+    if (
+      previous &&
+      !menu &&
+      previous.href === location.href &&
+      restoreFocus.current &&
+      (document.activeElement === document.body || ownsFocus(previous.kind))
+    )
       focusTrigger(previous.kind);
     previousMenu.current = menu;
     if (closingKey.current !== location.state.__TSR_key) closingKey.current = undefined;
-  }, [menu, location.href, location.state.__TSR_key, focusTrigger]);
+  }, [menu, location.href, location.state.__TSR_key, focusTrigger, ownsFocus]);
 
   useEffect(() => {
     const escape = (event: KeyboardEvent) => {

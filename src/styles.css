@@ -2223,6 +2223,7 @@ body {
   padding-top: 1.5rem;
 }
 .today-feedback {
+  min-width: 0;
   border-top: 1px solid var(--rule);
   padding-top: 1.5rem;
 }
@@ -2266,13 +2267,25 @@ body {
 }
 .today-recovery {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
   justify-items: start;
   gap: 1rem;
   border: 1px solid var(--rule);
   border-radius: 6px;
-  padding: 1.25rem;
+  padding: min(1.25rem, 20px);
   background: var(--secondary);
   font-size: 0.875rem;
+  overflow-wrap: anywhere;
+}
+.today-recovery > * {
+  min-width: 0;
+  max-width: 100%;
+}
+.today-recovery button {
+  height: auto;
+  padding-inline: min(1rem, 16px);
+  white-space: normal;
 }
 .today-window-list,
 .today-journal-previews {
@@ -3325,6 +3338,7 @@ html[data-constrained-viewport] .mobile-journey {
 .today-reading h1 {
   overflow-wrap: anywhere;
 }
-.today-check-in-save > button[type="submit"] {
+.today-check-in-save > div:first-child > button {
   min-height: 48px;
+  overflow-wrap: anywhere;
 }

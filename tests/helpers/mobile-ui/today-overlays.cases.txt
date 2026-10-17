@@ -1,0 +1,402 @@
+async (page) => {
+  const browser = page.context().browser(),
+    engine = browser.browserType().name(),
+    origin = new URL(page.url()).origin,
+    checks = [];
+  const assert = (ok, message, detail) => {
+    if (!ok) throw Error(message + " " + JSON.stringify(detail));
+  };
+  const click = async (p, loc) => {
+    await p.locator("body").ariaSnapshot();
+    await loc.click();
+  };
+  const open = async (p) => {
+    await click(p, p.getByRole("button", { name: "Open menu", exact: true }));
+    await p.locator("#mobile-navigation").waitFor();
+  };
+  const closed = async (p) => {
+    await p.locator("#mobile-navigation").waitFor({ state: "detached" });
+  };
+  const run = async (
+    name,
+    task,
+    viewports = !name.startsWith("Menu fits") &&
+    /focus|Escape|destination|Reload|Close button|Selecting current/.test(name)
+      ? [
+          [390, 844],
+          [667, 375],
+        ]
+      : [[390, 844]],
+  ) => {
+    for (const [width, height] of viewports) {
+      const c = await browser.newContext({
+          viewport: { width, height },
+          isMobile: true,
+          hasTouch: true,
+          reducedMotion: "reduce",
+        }),
+        p = await c.newPage(),
+        errors = [];
+      p.on("pageerror", (e) => errors.push(String(e)));
+      p.setDefaultTimeout(7000);
+      try {
+        await p.goto(origin + "/");
+        await p.getByRole("textbox", { name: "Reflection note" }).waitFor();
+        await p.evaluate(() => document.fonts.ready);
+        assert(
+          await p.evaluate(() => window.mobileAudit.state.ownerId === "mobile-audit-member"),
+          "Synthetic fixture required",
+        );
+        const details = await task(p);
+        assert(!errors.length, "Runtime errors", errors);
+        checks.push({ name: name + " at " + width + "x" + height, passed: true, details });
+      } catch (e) {
+        checks.push({
+          name: name + " at " + width + "x" + height,
+          passed: false,
+          error: String(e),
+        });
+      } finally {
+        await c.close();
+      }
+    }
+  };
+  const seed = async (p) => {
+    await p.evaluate(() => history.replaceState(history.state, "", "/__audit/previous"));
+    await p.goto(origin + "/");
+    await p.getByRole("textbox", { name: "Reflection note" }).waitFor();
+  };
+  await run("Close button removes menu history entry; one Back leaves Today", async (p) => {
+    await seed(p);
+    await open(p);
+    await click(p, p.getByRole("button", { name: "Close menu", exact: true }));
+    await closed(p);
+    await p.goBack();
+    assert(new URL(p.url()).pathname === "/__audit/previous", "Stale menu entry", p.url());
+    return { path: new URL(p.url()).pathname };
+  });
+  await run("Escape from menu content closes and returns focus to trigger", async (p) => {
+    await open(p);
+    await p.locator("#mobile-navigation a").first().focus();
+    await p.keyboard.press("Escape");
+    await closed(p);
+    assert(
+      await p
+        .getByRole("button", { name: "Open menu", exact: true })
+        .evaluate((e) => document.activeElement === e),
+      "Missing trigger focus",
+    );
+    return { closed: true };
+  });
+  await run("O1: keyboard focus outside menu is preserved when Escape dismisses it", async (p) => {
+    await open(p);
+    await p
+      .locator("#mobile-navigation")
+      .getByRole("button", { name: "Sign out", exact: true })
+      .focus();
+    await p.locator("body").ariaSnapshot();
+    await p.keyboard.press("Tab");
+    const outside = await p.evaluate(
+      () =>
+        document.activeElement !== document.body &&
+        !document.activeElement.closest(".pattern-header"),
+    );
+    assert(outside, "Tab did not leave menu");
+    const focused = await p.evaluateHandle(() => document.activeElement);
+    await p.keyboard.press("Escape");
+    await closed(p);
+    assert(
+      await focused.evaluate((e) => e === document.activeElement),
+      "Escape pulled focus away from the new control",
+    );
+    return { preserved: true };
+  });
+  await run("O1: Back does not steal focus from another control", async (p) => {
+    await open(p);
+    const note = p.getByRole("textbox", { name: "Reflection note" });
+    await note.focus();
+    await p.goBack();
+    await closed(p);
+    assert(
+      await note.evaluate((e) => document.activeElement === e),
+      "Back pulled focus to menu trigger",
+    );
+    return { preserved: true };
+  });
+  await run("O1: a newer focus action wins while close history traversal is pending", async (p) => {
+    await open(p);
+    await p.evaluate(() => {
+      document.querySelector("#mobile-navigation a").focus();
+      document.activeElement.dispatchEvent(
+        new KeyboardEvent("keydown", { key: "Escape", bubbles: true }),
+      );
+      document.querySelector("textarea").focus();
+    });
+    await closed(p);
+    assert(
+      await p
+        .getByRole("textbox", { name: "Reflection note" })
+        .evaluate((e) => document.activeElement === e),
+      "Close completion overrode newer focus",
+    );
+    return { preserved: true, evidence: "Render ordering probe" };
+  });
+  await run(
+    "Menu destination replaces menu entry and Back returns directly to Today",
+    async (p) => {
+      await open(p);
+      await click(
+        p,
+        p.locator("#mobile-navigation").getByRole("link", { name: "Journal", exact: true }),
+      );
+      await p.waitForURL(origin + "/journal");
+      await p.goBack();
+      await p.waitForURL(origin + "/");
+      await closed(p);
+      return { path: new URL(p.url()).pathname };
+    },
+  );
+  await run("Selecting current destination closes without an extra Back", async (p) => {
+    await seed(p);
+    await open(p);
+    await click(
+      p,
+      p.locator("#mobile-navigation").getByRole("link", { name: "Today", exact: true }),
+    );
+    await closed(p);
+    await p.goBack();
+    assert(new URL(p.url()).pathname === "/__audit/previous", "Current link left stale history");
+    return { path: new URL(p.url()).pathname };
+  });
+  await run(
+    "Outside pointer dismissal preserves focus and removes its history entry",
+    async (p) => {
+      await seed(p);
+      await open(p);
+      const note = p.getByRole("textbox", { name: "Reflection note" });
+      await note.focus();
+      await p.evaluate(
+        () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))),
+      );
+      await p.locator("body").ariaSnapshot();
+      await note.tap();
+      await closed(p);
+      assert(
+        await note.evaluate((e) => document.activeElement === e),
+        "Outside pointer close stole field focus",
+      );
+      await p.goBack();
+      assert(
+        new URL(p.url()).pathname === "/__audit/previous",
+        "Pointer dismissal left menu history",
+      );
+      return { closed: true, focusPreserved: true };
+    },
+    [[390, 844]],
+  );
+  await run("Back from a focused menu link restores the visible trigger", async (p) => {
+    await open(p);
+    await p.locator("#mobile-navigation a").first().focus();
+    await p.goBack();
+    await closed(p);
+    assert(
+      await p
+        .getByRole("button", { name: "Open menu", exact: true })
+        .evaluate((e) => document.activeElement === e),
+      "Back failed to restore trigger focus",
+    );
+    return { restored: true };
+  });
+  await run("Reload and Forward retain intentional menu state; Back closes it", async (p) => {
+    await open(p);
+    await p.reload();
+    await p.locator("#mobile-navigation").waitFor();
+    await p.goBack();
+    await closed(p);
+    await p.goForward();
+    await p.locator("#mobile-navigation").waitFor();
+    await p.goBack();
+    await closed(p);
+    return { reload: true, forward: true };
+  });
+  await run(
+    "Menu fits and last destination/close remain reachable across phone sizes",
+    async (p) => {
+      const samples = [];
+      for (const [width, height, font] of [
+        [320, 568, 16],
+        [360, 800, 16],
+        [390, 844, 16],
+        [440, 956, 16],
+        [667, 375, 16],
+        [844, 390, 16],
+        [320, 568, 32],
+        [667, 375, 32],
+      ]) {
+        await p.setViewportSize({ width, height });
+        await p.evaluate((s) => (document.documentElement.style.fontSize = s + "px"), font);
+        await open(p);
+        await p.evaluate(
+          () =>
+            new Promise((r) =>
+              requestAnimationFrame(() => requestAnimationFrame(() => requestAnimationFrame(r))),
+            ),
+        );
+        await p.locator("#mobile-navigation").evaluate((e) => (e.scrollTop = e.scrollHeight));
+        const geometry = await p.evaluate(() => {
+          const menu = document.querySelector("#mobile-navigation"),
+            close = document.querySelector('[aria-controls="mobile-navigation"]'),
+            last = menu.querySelector("button"),
+            m = menu.getBoundingClientRect(),
+            c = close.getBoundingClientRect(),
+            l = last.getBoundingClientRect(),
+            hit = document.elementFromPoint(l.left + l.width / 2, l.top + l.height / 2);
+          return {
+            width: document.documentElement.clientWidth,
+            scrollWidth: document.documentElement.scrollWidth,
+            menuTop: m.top,
+            menuBottom: m.bottom,
+            lastTop: l.top,
+            lastBottom: l.bottom,
+            lastReachable: last.contains(hit),
+            closeReachable: close.contains(
+              document.elementFromPoint(c.left + c.width / 2, c.top + c.height / 2),
+            ),
+            overscroll: getComputedStyle(menu).overscrollBehaviorY,
+          };
+        });
+        assert(
+          geometry.width === geometry.scrollWidth &&
+            geometry.lastReachable &&
+            geometry.closeReachable &&
+            geometry.lastTop >= geometry.menuTop &&
+            geometry.lastBottom <= height,
+          "Menu clips actions",
+          { width, height, font, geometry },
+        );
+        samples.push({ width, height, font, ...geometry });
+        await click(p, p.getByRole("button", { name: "Close menu", exact: true }));
+        await closed(p);
+      }
+      return samples;
+    },
+  );
+  if (engine === "chromium")
+    await run("Menu scroll containment prevents wheel chaining at its end", async (p) => {
+      await open(p);
+      const menu = p.locator("#mobile-navigation");
+      await p.setViewportSize({ width: 390, height: 400 });
+      await menu.evaluate((e) => (e.scrollTop = e.scrollHeight));
+      const before = await p.evaluate(() => scrollY);
+      await menu.hover();
+      await p.mouse.wheel(0, 700);
+      await p.waitForTimeout(150);
+      const after = await p.evaluate(() => scrollY);
+      assert(Math.abs(after - before) < 2, "Menu scroll chained to document", { before, after });
+      return { before, after, evidence: "Desktop wheel Render; native touch overscroll untested" };
+    });
+  await run("O2: valid long content version and dense source records reflow", async (p) => {
+    await p.evaluate(() => {
+      const q = window.auditQueryClient,
+        key = ["today", window.mobileAudit.state.ownerId];
+      q.setQueryData(key, (data) => ({
+        ...data,
+        reading: {
+          ...data.reading,
+          paragraphLinksAvailable: true,
+          release_version: "1.0." + "1".repeat(40),
+        },
+        provenance: [
+          { source_id: "AST-08", label: "A retained calculation source", lane: "calculation" },
+        ],
+        language: {
+          mode: "model",
+          facts: Array.from({ length: 3 }, (_, i) => ({
+            id: "I" + (i + 1),
+            statement: "Published interpretation synthetic: " + "Long reference text. ".repeat(7),
+            kind: "interpretation",
+          })),
+          citations: [
+            { paragraph: 1, facts: ["I1", "I2", "I3"] },
+            { paragraph: 2, facts: ["I2", "I3"] },
+          ],
+        },
+      }));
+    });
+    await click(p, p.getByRole("button", { name: "Sources behind this reading", exact: true }));
+    await click(p, p.locator(".today-metadata summary"));
+    const samples = [];
+    for (const [width, height, font] of [
+      [320, 568, 16],
+      [390, 844, 16],
+      [667, 375, 16],
+      [320, 568, 32],
+    ]) {
+      await p.setViewportSize({ width, height });
+      await p.evaluate((s) => (document.documentElement.style.fontSize = s + "px"), font);
+      const measure = await p.evaluate(() => ({
+        client: document.documentElement.clientWidth,
+        scroll: document.documentElement.scrollWidth,
+        table: document.querySelectorAll("table").length,
+        lists: document.querySelectorAll("#today-evidence ul,#today-evidence ol,#today-evidence dl")
+          .length,
+      }));
+      await p.locator(".today-metadata").scrollIntoViewIfNeeded();
+      assert(measure.scroll === measure.client, "Source content causes page overflow", {
+        width,
+        font,
+        measure,
+      });
+      samples.push({ width, height, font, ...measure });
+    }
+    return samples;
+  });
+  await run(
+    "Sources and timing remain inline and do not consume an overlay history entry",
+    async (p) => {
+      const before = await p.evaluate(() => history.state.__TSR_index);
+      await click(p, p.getByRole("button", { name: "Sources behind this reading", exact: true }));
+      await p.locator("#today-evidence").waitFor();
+      await click(p, p.locator(".today-window summary").first());
+      assert(
+        (await p.locator(".today-window").first().getAttribute("open")) !== null,
+        "Timing not expanded",
+      );
+      const after = await p.evaluate(() => history.state.__TSR_index);
+      assert(before === after, "Inline details changed history");
+      assert((await p.locator("dialog,[popover]").count()) === 0, "Unexpected overlay");
+      return { before, after };
+    },
+  );
+  await run(
+    "Shared More disclosure preserves outside focus and restores focus from its own links",
+    async (p) => {
+      const more = p.getByRole("button", { name: "More pages", exact: true });
+      await click(p, more);
+      await p.locator("#more-navigation").waitFor();
+      await p.locator("#more-navigation a").first().focus();
+      await p.keyboard.press("Escape");
+      await p.locator("#more-navigation").waitFor({ state: "detached" });
+      assert(await more.evaluate((e) => document.activeElement === e), "More failed focus return");
+      await click(p, more);
+      await p.locator("#more-navigation").waitFor();
+      const note = p.getByRole("textbox", { name: "Reflection note" });
+      await note.focus();
+      await p.goBack();
+      await p.locator("#more-navigation").waitFor({ state: "detached" });
+      assert(await note.evaluate((e) => document.activeElement === e), "More stole outside focus");
+      return {
+        restoredInside: true,
+        preservedOutside: true,
+        evidence: "Shared-hook desktop regression; outside phone layout matrix",
+      };
+    },
+    [[1280, 800]],
+  );
+  return {
+    engine,
+    browser: browser.version(),
+    evidence: "Render with synthetic services; no Device evidence",
+    checks,
+  };
+}

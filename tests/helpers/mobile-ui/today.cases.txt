@@ -1,0 +1,394 @@
+async (page) => {
+  const browser = page.context().browser();
+  const origin = new URL(page.url()).origin;
+  const checks = [];
+  const assert = (condition, message, details) => {
+    if (!condition) throw new Error(`${message}: ${JSON.stringify(details)}`);
+  };
+  const click = async (p, locator) => {
+    await p.locator('body').ariaSnapshot();
+    await locator.evaluate((element) => element.scrollIntoView({ block: 'center', behavior: 'instant' }));
+    await locator.tap();
+  };
+  const run = async (name, task) => {
+    const context = await browser.newContext({
+      viewport: { width: 390, height: 844 },
+      isMobile: true,
+      hasTouch: true,
+      reducedMotion: 'reduce',
+    });
+    const p = await context.newPage();
+    p.setDefaultTimeout(10000);
+    try {
+      await p.goto(origin + '/');
+      await p.getByRole('textbox', { name: 'Reflection note' }).waitFor();
+      assert(await p.evaluate(() => window.mobileAudit?.state.ownerId === 'mobile-audit-member'), 'Synthetic fixture required');
+      await p.evaluate(() => document.fonts.ready);
+      checks.push({ name, passed: true, details: await task(p) });
+    } catch (error) {
+      checks.push({ name, passed: false, error: String(error) });
+    } finally {
+      await context.close();
+    }
+  };
+
+  await run('F1: enlarged check-in choices remain distinct and each value can be selected', async (p) => {
+    await p.evaluate(async () => {
+      window.mobileAudit.state.wellness.sleepEnabled = true;
+      window.mobileAudit.state.wellness.stressEnabled = true;
+      await window.auditQueryClient.invalidateQueries({ queryKey: ['today'] });
+    });
+    await p.getByRole('group', { name: 'Stress', exact: true }).waitFor();
+    const samples = [];
+    for (const [width, height, font] of [[320, 568, 16], [360, 800, 16], [390, 844, 16], [440, 956, 16], [667, 375, 16], [844, 390, 16], [320, 568, 32], [390, 844, 32]]) {
+      await p.setViewportSize({ width, height });
+      await p.evaluate((size) => document.documentElement.style.fontSize = size + 'px', font);
+      // Let Shell's measured header and navigation settle before touch coordinates are chosen.
+      await p.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => requestAnimationFrame(resolve)))));
+      const geometry = await p.evaluate(() => [...document.querySelectorAll('.today-check-in-options')].map((row) => {
+        const cells = [...row.querySelectorAll('label')].map((label) => {
+          const cell = label.getBoundingClientRect(), paint = label.querySelector('span').getBoundingClientRect();
+          return { left: paint.left, right: paint.right, cellLeft: cell.left, cellRight: cell.right, width: cell.width, height: cell.height };
+        });
+        return { cells, fits: cells.every((cell) => cell.left >= cell.cellLeft - 1 && cell.right <= cell.cellRight + 1 && cell.width >= 24 && cell.height >= 24) };
+      }));
+      assert(geometry.length === 4 && geometry.every((row) => row.fits), 'A choice overlaps another cell or loses its minimum target', { width, height, font, geometry });
+      if (font === 32) {
+        for (const label of ['Mood', 'Energy', 'Sleep', 'Stress']) {
+          for (let value = 1; value <= 5; value++) {
+            const radio = p.getByRole('radio', { name: new RegExp('^' + label + ': ' + value + ' of 5,') });
+            await click(p, radio.locator('..'));
+            await p.waitForFunction((name) => [...document.querySelectorAll('input[type=radio]')].some((input) => input.getAttribute('aria-label') === name && input.checked), await radio.getAttribute('aria-label'));
+            assert(await radio.isChecked(), 'Tapping a choice selected the wrong value', { width, label, value });
+          }
+        }
+      }
+      samples.push({ width, height, font, geometry });
+    }
+    return samples;
+  });
+
+  await run('F2: saved-value review reflows at narrow widths and enlarged text', async (p) => {
+    const note = p.getByRole('textbox', { name: 'Reflection note' });
+    await note.fill('A synthetic draft whose save will fail before commit.');
+    await p.evaluate(() => { window.mobileAudit.state.fail = ['saveDailyCheckIn']; });
+    await click(p, p.getByRole('button', { name: 'Save check-in', exact: true }));
+    await p.getByRole('button', { name: 'Check save', exact: true }).waitFor();
+    await click(p, p.getByRole('button', { name: 'Check save', exact: true }));
+    const review = p.getByRole('button', { name: 'Keep my draft and review before saving', exact: true });
+    await review.waitFor();
+    const samples = [];
+    for (const [width, height, font] of [[320, 568, 16], [360, 800, 16], [320, 568, 32], [390, 844, 32]]) {
+      await p.setViewportSize({ width, height });
+      await p.evaluate((size) => document.documentElement.style.fontSize = size + 'px', font);
+      const geometry = await review.evaluate((button) => {
+        const box = button.getBoundingClientRect(), parent = button.parentElement.getBoundingClientRect();
+        const range = document.createRange();
+        range.selectNodeContents(button);
+        const text = range.getBoundingClientRect();
+        return { client: document.documentElement.clientWidth, scroll: document.documentElement.scrollWidth, fitsParent: box.left >= parent.left - 1 && box.right <= parent.right + 1, fitsText: text.top >= box.top - 1 && text.bottom <= box.bottom + 1 };
+      });
+      assert(geometry.scroll <= geometry.client && geometry.fitsParent && geometry.fitsText, 'The review action overflows or clips its label', { width, height, font, geometry });
+      samples.push({ width, height, font, geometry });
+    }
+    await p.evaluate(() => { document.documentElement.style.fontSize = ''; window.mobileAudit.state.fail = []; });
+    await click(p, review);
+    await click(p, p.getByRole('button', { name: 'Save check-in', exact: true }));
+    await p.waitForFunction(() => document.querySelector('.today-check-in-status').textContent.startsWith('Saved '));
+    assert(await note.inputValue() === 'A synthetic draft whose save will fail before commit.', 'Review discarded the draft');
+    return samples;
+  });
+
+  await run('F3: Sources labels remain inside the button when opening and closing with enlarged text', async (p) => {
+    const toggle = p.getByRole('button', { name: /sources behind this reading/i });
+    const samples = [];
+    for (const [width, height, font] of [[320, 568, 16], [320, 568, 32], [390, 844, 32], [667, 375, 32]]) {
+      await p.setViewportSize({ width, height });
+      await p.evaluate((size) => document.documentElement.style.fontSize = size + 'px', font);
+      for (const open of [false, true]) {
+        const geometry = await toggle.evaluate((button) => {
+          const box = button.getBoundingClientRect(), range = document.createRange();
+          range.selectNodeContents(button);
+          const text = range.getBoundingClientRect();
+          return { buttonHeight: box.height, textHeight: text.height, containsText: text.top >= box.top - 1 && text.bottom <= box.bottom + 1 && text.left >= box.left - 1 && text.right <= box.right + 1 };
+        });
+        assert(geometry.containsText, 'The Sources label extends outside its hit area', { width, height, font, open, geometry });
+        assert(await toggle.getAttribute('aria-expanded') === String(open), 'Sources has the wrong disclosure state', { open });
+        samples.push({ width, height, font, open, geometry });
+        await click(p, toggle);
+      }
+    }
+    return samples;
+  });
+
+  await run('F4: an uncertain save exposes a nearby action and reconciles without losing newer edits', async (p) => {
+    const note = p.getByRole('textbox', { name: 'Reflection note' });
+    await note.fill('Earlier synthetic check-in that reaches the server.');
+    await p.evaluate(() => { window.mobileAudit.state.dropResponse = ['saveDailyCheckIn']; window.mobileAudit.state.delay = 600; });
+    await click(p, p.getByRole('button', { name: 'Save check-in', exact: true }));
+    await note.fill('Newer synthetic reflection typed while the response was lost.');
+    await p.getByRole('button', { name: 'Check save', exact: true }).waitFor();
+    const actions = p.locator('.today-check-in-save');
+    const checkSave = actions.getByRole('button', { name: 'Check save', exact: true });
+    assert(await checkSave.count() === 1 && await checkSave.isEnabled(), 'Check save is missing from the save/status area');
+    assert(await actions.getByRole('button', { name: 'Try saving again', exact: true }).count() === 0, 'A disabled retry competes with the recovery action');
+    const geometry = await checkSave.evaluate((button) => {
+      const action = button.getBoundingClientRect(), status = document.querySelector('.today-check-in-status').getBoundingClientRect();
+      return { verticalGap: Math.max(0, action.top - status.bottom, status.top - action.bottom) };
+    });
+    assert(geometry.verticalGap <= 24, 'Recovery is separated from its status', geometry);
+    await p.evaluate(() => { window.mobileAudit.state.delay = 0; window.mobileAudit.state.fail = ['fetchToday']; });
+    await click(p, checkSave);
+    await checkSave.waitFor({ state: 'visible' });
+    await p.waitForFunction(() => [...document.querySelectorAll('.today-check-in-save button')].some((button) => button.textContent === 'Check save' && !button.disabled));
+    assert(await note.inputValue() === 'Newer synthetic reflection typed while the response was lost.', 'A failed confirmation replaced newer edits');
+    await p.evaluate(() => { window.mobileAudit.state.fail = []; });
+    await click(p, checkSave);
+    await p.getByRole('button', { name: 'Save check-in', exact: true }).waitFor();
+    assert(await note.inputValue() === 'Newer synthetic reflection typed while the response was lost.', 'Confirmation replaced newer edits');
+    assert(await p.getByRole('button', { name: 'Save check-in', exact: true }).isEnabled(), 'Newer edits cannot be saved after confirmation');
+    await p.getByText('Draft saved on this device', { exact: true }).waitFor();
+    assert(await p.getByText('Draft saved on this device', { exact: true }).count() === 1, 'Newer edits lost their device checkpoint');
+    const writes = await p.evaluate(() => window.mobileAudit.state.calls.filter((call) => call.name === 'saveDailyCheckIn').length);
+    assert(writes === 1, 'Checking confirmation issued another save', { writes });
+    return { ...geometry, writes };
+  });
+  await run('M1: an offline save sends its original snapshot and retains later edits', async (p) => {
+    const note = p.getByRole('textbox', { name: 'Reflection note' });
+    const original = 'Synthetic text present when Save was tapped.';
+    const later = 'Later synthetic text, not submitted again.';
+    await note.fill(original);
+    await p.getByText('Draft saved on this device', { exact: true }).waitFor();
+    await p.evaluate(() => window.mobileAudit.resetCalls());
+    await p.context().setOffline(true);
+    await click(p, p.getByRole('button', { name: 'Save check-in', exact: true }));
+    await p.waitForFunction(() => window.auditQueryClient.getMutationCache().getAll().some((m) => m.state.isPaused));
+    await note.fill(later);
+    await p.getByText('Draft saved on this device', { exact: true }).waitFor();
+    await p.context().setOffline(false);
+    await p.waitForFunction(() => document.querySelector('.today-check-in-status').textContent.includes('Unsaved changes'));
+    await p.getByText('Draft saved on this device', { exact: true }).waitFor();
+    const writes = await p.evaluate(() => window.mobileAudit.state.calls.filter((c) => c.name === 'saveDailyCheckIn').map((c) => c.args.data.note));
+    assert(writes.length === 1 && writes[0] === original, 'Reconnection changed the submitted values', writes);
+    assert(await note.inputValue() === later, 'The queued acknowledgment consumed newer edits');
+    await p.reload();
+    await note.waitFor();
+    await click(p, p.locator('.draft-recovery details').first().locator('summary'));
+    await click(p, p.getByRole('button', { name: 'Resume draft', exact: true }));
+    await p.waitForFunction((text) => document.querySelector('textarea').value === text, later);
+    assert(await p.getByRole('button', { name: 'Save check-in', exact: true }).isEnabled(), 'Later edits cannot be saved after recovery');
+    return { writes, recovered: await note.inputValue() };
+  });
+
+  await run('M2: all Today recovery actions reflow at narrow and enlarged text sizes', async (p) => {
+    const samples = [];
+    const measure = async (state, action) => {
+      await action.waitFor();
+      for (const [width, height, font] of [[320, 568, 16], [390, 844, 16], [320, 568, 32], [390, 844, 32], [667, 375, 32]]) {
+        await p.setViewportSize({ width, height });
+        await p.evaluate((font) => { document.documentElement.style.fontSize = font + 'px'; window.scrollTo({ left: 0, top: 0, behavior: 'instant' }); }, font);
+        await p.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => requestAnimationFrame(resolve)))));
+        // A resize retains focus; simulate a fresh arrival at the action rather
+        // than expecting resize to pull an already-focused control into view.
+        await p.evaluate(() => { if (document.activeElement instanceof HTMLElement) document.activeElement.blur(); });
+        await action.focus();
+        await p.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => requestAnimationFrame(resolve)))));
+        const geometry = await action.evaluate((element) => {
+          const box = element.getBoundingClientRect(), parent = element.parentElement.getBoundingClientRect(), range = document.createRange();
+          range.selectNodeContents(element);
+          const text = range.getBoundingClientRect();
+          const header = document.querySelector('header'), nav = document.querySelector('.mobile-journey');
+          const viewport = window.visualViewport;
+          const clearTop = Math.max(viewport?.offsetTop ?? 0, getComputedStyle(header).position === 'sticky' ? header.getBoundingClientRect().bottom : 0);
+          const clearBottom = Math.min((viewport?.offsetTop ?? 0) + (viewport?.height ?? innerHeight), getComputedStyle(nav).position === 'fixed' ? nav.getBoundingClientRect().top : Infinity);
+          return { client: document.documentElement.clientWidth, scroll: document.documentElement.scrollWidth, fitsParent: box.left >= parent.left - 1 && box.right <= parent.right + 1, containsText: text.top >= box.top - 1 && text.bottom <= box.bottom + 1, clearFocus: box.top >= clearTop - 1 && box.bottom <= clearBottom + 1 };
+        });
+        assert(geometry.scroll <= geometry.client && geometry.fitsParent && geometry.containsText && geometry.clearFocus, 'A recovery action or its label overflows or is covered', { state, width, height, font, geometry });
+        samples.push({ state, width, height, font, geometry });
+      }
+      await p.setViewportSize({ width: 390, height: 844 });
+      await p.evaluate(() => document.documentElement.style.fontSize = '');
+    };
+    await p.evaluate(() => { window.mobileAudit.state.fail = ['fetchToday']; void window.auditQueryClient.resetQueries({ queryKey: ['today'], exact: false }); });
+    await measure('initial reading error', p.getByRole('button', { name: 'Retry reading', exact: true }));
+    await p.evaluate(() => { window.mobileAudit.state.fail = []; });
+    await click(p, p.getByRole('button', { name: 'Retry reading', exact: true }));
+    await p.getByRole('textbox', { name: 'Reflection note' }).waitFor();
+    await p.evaluate(() => { window.mobileAudit.state.fail = ['fetchToday']; void window.auditQueryClient.invalidateQueries({ queryKey: ['today'] }); });
+    await measure('reading refresh error', p.getByRole('button', { name: 'Refresh reading', exact: true }));
+    await p.evaluate(() => { window.mobileAudit.state.fail = []; });
+    await click(p, p.getByRole('button', { name: 'Refresh reading', exact: true }));
+    await p.waitForFunction(() => !document.querySelector('.today-recovery'));
+    await p.evaluate(() => { const q = window.auditQueryClient, key = ['today', window.mobileAudit.state.ownerId], d = structuredClone(q.getQueryData(key)); d.day = new Date(Date.now() - 86400000).toISOString().slice(0, 10); q.setQueryData(key, d); });
+    await measure('previous day', p.getByRole('button', { name: 'Refresh reading', exact: true }));
+    await click(p, p.getByRole('button', { name: 'Refresh reading', exact: true }));
+    await p.waitForFunction(() => !document.querySelector('.today-recovery'));
+    await p.evaluate(() => { window.mobileAudit.state.fail = ['fetchReadingJournal']; void window.auditQueryClient.resetQueries({ queryKey: ['journal'] }); });
+    await measure('journal context error', p.getByRole('button', { name: 'Retry entries', exact: true }));
+    await p.evaluate(() => { window.mobileAudit.state.fail = []; });
+    await click(p, p.getByRole('button', { name: 'Retry entries', exact: true }));
+    await p.waitForFunction(() => !document.querySelector('#today-journal .today-recovery'));
+    await p.evaluate(() => { window.mobileAudit.state.fail = ['sendFeedback']; });
+    await click(p, p.locator('.today-feedback').getByRole('button', { name: 'Yes', exact: true }));
+    await measure('feedback error', p.getByRole('button', { name: 'Retry response', exact: true }));
+    await p.evaluate(() => window.auditQueryClient.setQueryData(['today', window.mobileAudit.state.ownerId], { needsOnboarding: true }));
+    await measure('birth details required', p.getByRole('link', { name: 'Enter birth details', exact: true }));
+    return samples;
+  });
+
+  await run('M3: paused saves and reads explain waiting and resume automatically', async (p) => {
+    const note = p.getByRole('textbox', { name: 'Reflection note' });
+    await note.fill('Synthetic offline status check.');
+    await p.getByText('Draft saved on this device', { exact: true }).waitFor();
+    await p.context().setOffline(true);
+    await click(p, p.getByRole('button', { name: 'Save check-in', exact: true }));
+    await p.waitForFunction(() => /waiting for a connection/i.test(document.querySelector('.today-check-in-status').textContent));
+    assert(await p.locator('.today-check-in-save button').first().isDisabled(), 'A paused save permits a duplicate submission');
+    await p.context().setOffline(false);
+    await p.waitForFunction(() => document.querySelector('.today-check-in-status').textContent.startsWith('Saved '));
+    await p.context().setOffline(true);
+    await click(p, p.locator('.today-feedback').getByRole('button', { name: 'Yes', exact: true }));
+    await p.waitForFunction(() => /waiting for a connection/i.test(document.querySelector('.today-feedback [role=status]').textContent));
+    await p.evaluate(() => { void window.auditQueryClient.resetQueries({ queryKey: ['journal'] }); });
+    await p.waitForFunction(() => /waiting for a connection/i.test(document.querySelector('#today-journal').textContent));
+    await p.context().setOffline(false);
+    await p.getByText('Response saved', { exact: true }).waitFor();
+    await p.waitForFunction(() => !document.querySelector('#today-journal [aria-busy]'));
+    // The synthetic backend returns no saved feedback on a fresh Today read.
+    // Verify the response before resetting its mounted consumer.
+    await p.context().setOffline(true);
+    await p.evaluate(() => { void window.auditQueryClient.resetQueries({ queryKey: ['today'] }); });
+    await p.getByRole('heading', { name: 'Waiting for a connection', exact: true }).waitFor();
+    assert(await p.locator('main [aria-busy]').getAttribute('aria-busy') === 'false', 'A paused read is announced as actively busy');
+    await p.context().setOffline(false);
+    await note.waitFor();
+    const writes = await p.evaluate(() => window.mobileAudit.state.calls.filter((c) => ['saveDailyCheckIn', 'sendFeedback'].includes(c.name)).map((c) => c.name));
+    assert(writes.filter((n) => n === 'saveDailyCheckIn').length === 1 && writes.filter((n) => n === 'sendFeedback').length === 1, 'Resuming duplicated a write', writes);
+    return { writes };
+  });
+
+  await run('M4: denied clipboard fallback contains the selected recovered draft', async (p) => {
+    const note = p.getByRole('textbox', { name: 'Reflection note' });
+    await note.fill('OLDER synthetic note chosen for recovery.');
+    await p.getByText('Draft saved on this device', { exact: true }).waitFor();
+    await p.reload();
+    await note.waitFor();
+    await p.locator('.draft-recovery details').first().waitFor();
+    await note.fill('CURRENT synthetic note, not the selected candidate.');
+    await p.getByText('Draft saved on this device', { exact: true }).waitFor();
+    const candidate = p.locator('.draft-recovery details').first();
+    await click(p, candidate.locator('summary'));
+    const chosen = await candidate.locator('pre').innerText();
+    await p.evaluate(() => Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async () => { throw new DOMException('Synthetic clipboard denial', 'NotAllowedError'); } } }));
+    await click(p, candidate.getByRole('button', { name: 'Copy draft', exact: true }));
+    await p.getByText('Select and copy the draft below.', { exact: true }).waitFor();
+    const fallback = await p.locator('.draft-recovery > pre').innerText();
+    assert(fallback === chosen && fallback.includes('OLDER synthetic note') && !fallback.includes('CURRENT synthetic note'), 'Manual copy displays a different draft', { chosen, fallback });
+    assert(await note.inputValue() === 'CURRENT synthetic note, not the selected candidate.', 'Copying replaced the active draft');
+    await click(p, candidate.getByRole('button', { name: 'Discard draft', exact: true }));
+    await click(p, p.getByRole('group', { name: 'Confirm draft action', exact: true }).getByRole('button', { name: 'Confirm', exact: true }));
+    await p.locator('.draft-recovery > pre').waitFor({ state: 'detached' });
+    await click(p, p.getByRole('button', { name: 'Copy draft', exact: true }));
+    await p.locator('.draft-recovery > pre').waitFor();
+    await note.fill('Changed after copying; require a new copy attempt.');
+    await p.locator('.draft-recovery > pre').waitFor({ state: 'detached' });
+    return { chosen, fallback };
+  });
+
+  await run('M1/M4: revoking and re-enabling consent cannot resurrect queued or copied wellness values', async (p) => {
+    const consent = async (enabled) => {
+      await p.evaluate((enabled) => {
+        const audit = window.mobileAudit;
+        audit.state.wellness = { ...audit.state.wellness, sleepEnabled: enabled, stressEnabled: enabled };
+        window.auditQueryClient.setQueryData(['today', audit.state.ownerId], structuredClone(audit.today()));
+      }, enabled);
+      await p.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    };
+    await consent(true);
+    const note = p.getByRole('textbox', { name: 'Reflection note' });
+    await note.fill('Original synthetic consent-sensitive note.');
+    await click(p, p.getByRole('radio', { name: /^Sleep: 5 of 5,/ }).locator('..'));
+    await click(p, p.getByRole('radio', { name: /^Stress: 2 of 5,/ }).locator('..'));
+    await p.getByText('Draft saved on this device', { exact: true }).waitFor();
+    await p.context().setOffline(true);
+    await click(p, p.getByRole('button', { name: 'Save check-in', exact: true }));
+    await p.waitForFunction(() => window.auditQueryClient.getMutationCache().getAll().some((m) => m.state.isPaused));
+    await note.fill('Later synthetic note stays unsaved.');
+    await p.getByText('Draft saved on this device', { exact: true }).waitFor();
+    await p.evaluate(() => Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async () => { throw new DOMException('Synthetic clipboard denial', 'NotAllowedError'); } } }));
+    await click(p, p.getByRole('button', { name: 'Copy draft', exact: true }));
+    await p.waitForFunction(() => document.querySelector('.draft-recovery > pre')?.textContent.includes('Sleep: 5'));
+    await consent(false);
+    await p.getByRole('group', { name: 'Sleep', exact: true }).waitFor({ state: 'detached' });
+    await p.locator('.draft-recovery > pre').waitFor({ state: 'detached' });
+    await consent(true);
+    await p.getByRole('group', { name: 'Sleep', exact: true }).waitFor();
+    assert(!await p.getByRole('radio', { name: /^Sleep: 5 of 5,/ }).isChecked(), 'Re-enabling consent restored an old editor value');
+    await p.context().setOffline(false);
+    await p.waitForFunction(() => document.querySelector('.today-check-in-status').textContent.includes('Unsaved changes'));
+    const writes = await p.evaluate(() => window.mobileAudit.state.calls.filter((c) => c.name === 'saveDailyCheckIn').map((c) => c.args.data));
+    assert(writes.length === 1 && writes[0].note === 'Original synthetic consent-sensitive note.' && writes[0].sleep === null && writes[0].stress === null, 'The queued request resurrected withdrawn values or consumed later typing', writes);
+    assert(await note.inputValue() === 'Later synthetic note stays unsaved.', 'Consent reconciliation lost later typing');
+    return { writes };
+  });
+
+  await run('M1: discarding a queued attempt prevents it replaying into a replacement draft', async (p) => {
+    const note = p.getByRole('textbox', { name: 'Reflection note' });
+    await note.fill('Original queued draft, then discarded.');
+    await p.getByText('Draft saved on this device', { exact: true }).waitFor();
+    await p.context().setOffline(true);
+    await click(p, p.getByRole('button', { name: 'Save check-in', exact: true }));
+    await p.waitForFunction(() => window.auditQueryClient.getMutationCache().getAll().some((m) => m.state.isPaused));
+    await click(p, p.getByRole('button', { name: 'Discard draft', exact: true }));
+    await click(p, p.getByRole('group', { name: 'Confirm draft action', exact: true }).getByRole('button', { name: 'Confirm', exact: true }));
+    await p.waitForFunction(() => document.querySelector('textarea').value === '');
+    await note.fill('Replacement draft requires its own Save.');
+    await p.getByText('Draft saved on this device', { exact: true }).waitFor();
+    await p.context().setOffline(false);
+    await p.waitForFunction(() => window.auditQueryClient.getMutationCache().getAll().some((m) => m.state.status === 'error'));
+    const beforeRetry = await p.evaluate(() => window.mobileAudit.state.calls.filter((c) => c.name === 'saveDailyCheckIn').length);
+    assert(beforeRetry === 0, 'A discarded queued attempt reached the server', { beforeRetry });
+    assert(await note.inputValue() === 'Replacement draft requires its own Save.', 'Reconnection replaced the new draft');
+    await click(p, p.getByRole('button', { name: 'Try saving again', exact: true }));
+    await p.waitForFunction(() => document.querySelector('.today-check-in-status').textContent.startsWith('Saved '));
+    const writes = await p.evaluate(() => window.mobileAudit.state.calls.filter((c) => c.name === 'saveDailyCheckIn').map((c) => c.args.data.note));
+    assert(writes.length === 1 && writes[0] === 'Replacement draft requires its own Save.', 'The replacement did not retain its independent save intent', writes);
+    return { writes };
+  });
+
+  await run('M5: Save and Check save retain 48px primary targets', async (p) => {
+    const action = p.locator('.today-check-in-save button').first(), samples = [];
+    for (const [width, height] of [[320, 568], [360, 800], [390, 844], [440, 956], [667, 375], [844, 390]]) {
+      await p.setViewportSize({ width, height });
+      const box = await action.boundingBox();
+      assert(box.width >= 48 && box.height >= 48, 'Save loses its primary target size', { width, height, box });
+      samples.push({ width, height, box });
+    }
+    await p.getByRole('textbox', { name: 'Reflection note' }).fill('Synthetic recovery target check.');
+    await p.evaluate(() => { window.mobileAudit.state.fail = ['saveDailyCheckIn']; });
+    await click(p, p.getByRole('button', { name: 'Save check-in', exact: true }));
+    await p.getByRole('button', { name: 'Check save', exact: true }).waitFor();
+    // Measure the resting target after the browser releases touch :active feedback.
+    await p.waitForFunction(() => !document.querySelector('.today-check-in-save button:active'));
+    const recovery = await action.boundingBox();
+    assert(recovery.width >= 48 && recovery.height >= 48, 'Check save loses its primary target size', recovery);
+    return { samples, recovery };
+  });
+
+  await run('M6: saved-value review returns keyboard focus to Save', async (p) => {
+    await p.getByRole('textbox', { name: 'Reflection note' }).fill('Synthetic keyboard review note.');
+    await p.evaluate(() => { window.mobileAudit.state.fail = ['saveDailyCheckIn']; });
+    await click(p, p.getByRole('button', { name: 'Save check-in', exact: true }));
+    await p.getByRole('button', { name: 'Check save', exact: true }).waitFor();
+    await click(p, p.getByRole('button', { name: 'Check save', exact: true }));
+    const review = p.getByRole('button', { name: 'Keep my draft and review before saving', exact: true });
+    await review.waitFor();
+    await p.locator('body').ariaSnapshot();
+    await review.focus();
+    await p.keyboard.press('Enter');
+    await p.waitForFunction(() => document.activeElement?.matches('.today-check-in-save button[type="submit"]'));
+    assert(await p.getByRole('button', { name: 'Save check-in', exact: true }).isEnabled(), 'Focus returned to an unavailable action');
+    return { active: await p.evaluate(() => document.activeElement.textContent) };
+  });
+  return { browser: browser.version(), checks };
+}

@@ -53,9 +53,11 @@ export function TodayJournal({
         </p>
       ) : null}
       {query.isPending && permission !== false ? (
-        <div className="mt-4" aria-busy="true">
+        <div className="mt-4" aria-busy={query.isFetching}>
           <p role="status" className="text-sm text-muted-foreground">
-            Loading your entries…
+            {query.isPaused
+              ? "Waiting for a connection. Your entries will load automatically when you’re back online."
+              : "Loading your entries…"}
           </p>
           <div aria-hidden="true" className="mt-3 h-16 animate-pulse rounded-md bg-secondary/40" />
         </div>

@@ -108,11 +108,14 @@ function TodayReading({ accountId }: { accountId: string }) {
 
   if (query.isPending) {
     return (
-      <div className="max-w-2xl space-y-4" aria-busy="true">
-        <h1 className="text-3xl text-primary">Your day is taking shape</h1>
+      <div className="max-w-2xl space-y-4 [overflow-wrap:anywhere]" aria-busy={query.isFetching}>
+        <h1 className="text-3xl text-primary">
+          {query.isPaused ? "Waiting for a connection" : "Your day is taking shape"}
+        </h1>
         <p role="status" className="text-sm text-muted-foreground">
-          Preparing today’s reading from your chart. The first reading of the day can take a little
-          longer.
+          {query.isPaused
+            ? "Today’s reading will load automatically when you’re back online."
+            : "Preparing today’s reading from your chart. The first reading of the day can take a little longer."}
         </p>
         <div aria-hidden="true" className="space-y-4">
           <div className="h-10 w-3/4 animate-pulse rounded-sm bg-secondary" />
@@ -138,13 +141,13 @@ function TodayReading({ accountId }: { accountId: string }) {
   const data = query.data;
   if (!data || data.needsOnboarding) {
     return (
-      <div className="max-w-xl animate-rise">
+      <div className="max-w-xl animate-rise [overflow-wrap:anywhere]">
         <h1 className="text-3xl">Your chart isn’t calculated yet</h1>
         <p className="prose-reading mt-4 text-foreground">
           Pattern needs birth date, time and place before it can say anything specific. Unknown time
           is fine — the reading will label what it can’t support.
         </p>
-        <Button asChild className="mt-8">
+        <Button asChild className="mt-8 h-auto min-h-11 min-w-0 max-w-full whitespace-normal">
           <Link to="/onboarding">Enter birth details</Link>
         </Button>
       </div>
@@ -340,7 +343,7 @@ function TodayContent({
             aria-expanded={openEvidence}
             aria-controls="today-evidence"
             onClick={() => setOpenEvidence(!openEvidence)}
-            className="today-evidence-toggle px-0 text-primary"
+            className="today-evidence-toggle h-auto px-0 text-primary"
           >
             {openEvidence ? "Hide sources behind this reading" : "Sources behind this reading"}
           </Button>
@@ -364,7 +367,10 @@ function TodayContent({
             <Field label="Date" value={timingDate(data.day)} />
             <Field label="Time zone" value={<span className="break-all">{data.timezone}</span>} />
             <Field label="Confidence" value={data.reading.confidence} />
-            <Field label="Content version" value={data.reading.release_version} />
+            <Field
+              label="Content version"
+              value={<span className="break-all">{data.reading.release_version}</span>}
+            />
             <Field label="Wording" value={data.language?.mode === "model" ? "Model" : "Template"} />
             <Field label="Birth-time accuracy" value={data.uncertainty?.accuracy ?? "unknown"} />
             <Field

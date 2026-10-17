@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { draftText, type MemberDraft } from "@/lib/member-drafts";
 import type { DraftDurability } from "@/lib/member-draft-controller";
@@ -20,18 +20,49 @@ export function DraftRecoveryNotice({
   entityKey: string;
 }) {
   const [confirm, setConfirm] = useState<string | null>(null),
-    [copy, setCopy] = useState<string | null>(null);
+    [copy, setCopy] = useState<{ draftId: string; text: string; copied: boolean } | null>(null);
+  const copyAttempt = useRef(0);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const confirmationTrigger = useRef<HTMLButtonElement | null>(null);
+  const askConfirmation = (action: string, trigger: HTMLButtonElement) => {
+    confirmationTrigger.current = trigger;
+    setConfirm(action);
+  };
+  const closeConfirmation = (returnToForm = false) => {
+    const trigger = confirmationTrigger.current;
+    const form = rootRef.current?.closest("form");
+    setConfirm(null);
+    requestAnimationFrame(() => {
+      // An explicit new focus action takes precedence over returning focus.
+      if (document.activeElement !== document.body) return;
+      const field =
+        form?.querySelector<HTMLElement>("textarea:not(:disabled)") ??
+        form?.querySelector<HTMLElement>("input:not(:disabled):not([type=hidden])");
+      if (!returnToForm && trigger?.isConnected) trigger.focus();
+      else if (field?.isConnected) field.focus();
+      else if (trigger?.isConnected) trigger.focus();
+    });
+  };
+  const copySource =
+    copy &&
+    (draft?.draftId === copy.draftId
+      ? draft
+      : candidates.find((candidate) => candidate.draftId === copy.draftId));
+  const visibleCopy = copySource && draftText(copySource) === copy?.text ? copy : null;
   const copyDraft = async (item: MemberDraft) => {
+    const attempt = ++copyAttempt.current;
+    const text = draftText(item);
+    setCopy(null);
     try {
-      await navigator.clipboard.writeText(draftText(item));
-      setCopy("Draft copied.");
+      await navigator.clipboard.writeText(text);
+      if (attempt === copyAttempt.current) setCopy({ draftId: item.draftId, text, copied: true });
     } catch {
-      setCopy("Select and copy the draft below.");
+      if (attempt === copyAttempt.current) setCopy({ draftId: item.draftId, text, copied: false });
     }
   };
   if (!draft && !candidates.length && !error) return null;
   return (
-    <div className="draft-recovery my-3 min-w-0 space-y-2 text-sm">
+    <div ref={rootRef} className="draft-recovery my-3 min-w-0 space-y-2 text-sm">
       {draft && (
         <p role="status">
           {durability === "stored"
@@ -47,7 +78,11 @@ export function DraftRecoveryNotice({
           <Button type="button" variant="ghost" onClick={() => void copyDraft(draft)}>
             Copy draft
           </Button>
-          <Button type="button" variant="ghost" onClick={() => setConfirm(draft.draftId)}>
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={(event) => askConfirmation(draft.draftId, event.currentTarget)}
+          >
             Discard draft
           </Button>
         </div>
@@ -70,9 +105,12 @@ export function DraftRecoveryNotice({
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={() => {
-                    if (draft) setConfirm(`replace:${candidate.draftId}`);
-                    else onResume(candidate.draftId);
+                  onClick={(event) => {
+                    if (draft) askConfirmation(`replace:${candidate.draftId}`, event.currentTarget);
+                    else {
+                      onResume(candidate.draftId);
+                      closeConfirmation(true);
+                    }
                   }}
                 >
                   {draft ? "Replace with this draft" : "Resume draft"}
@@ -81,7 +119,11 @@ export function DraftRecoveryNotice({
               <Button type="button" variant="ghost" onClick={() => void copyDraft(candidate)}>
                 Copy draft
               </Button>
-              <Button type="button" variant="ghost" onClick={() => setConfirm(candidate.draftId)}>
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={(event) => askConfirmation(candidate.draftId, event.currentTarget)}
+              >
                 Discard draft
               </Button>
             </div>
@@ -95,7 +137,7 @@ export function DraftRecoveryNotice({
               : "Discard this unsaved draft from this device?"}
           </p>
           <div className="mt-2 flex flex-wrap gap-2">
-            <Button type="button" variant="outline" onClick={() => setConfirm(null)}>
+            <Button type="button" variant="outline" onClick={() => closeConfirmation()}>
               Keep editing
             </Button>
             <Button
@@ -103,7 +145,7 @@ export function DraftRecoveryNotice({
               onClick={() => {
                 if (confirm.startsWith("replace:")) onResume(confirm.slice(8));
                 else void onDiscard(confirm);
-                setConfirm(null);
+                closeConfirmation(true);
               }}
             >
               Confirm
@@ -111,10 +153,14 @@ export function DraftRecoveryNotice({
           </div>
         </div>
       )}
-      {copy && <p role="status">{copy}</p>}
-      {copy === "Select and copy the draft below." && draft && (
+      {visibleCopy && (
+        <p role="status">
+          {visibleCopy.copied ? "Draft copied." : "Select and copy the draft below."}
+        </p>
+      )}
+      {visibleCopy && !visibleCopy.copied && (
         <pre className="whitespace-pre-wrap font-sans [overflow-wrap:anywhere]">
-          {draftText(draft)}
+          {visibleCopy.text}
         </pre>
       )}
       <p className="text-xs text-muted-foreground">

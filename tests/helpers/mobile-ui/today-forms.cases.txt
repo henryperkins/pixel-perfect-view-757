@@ -1,0 +1,296 @@
+async (page) => {
+  const browser = page.context().browser();
+  const origin = new URL(page.url()).origin;
+  const checks = [];
+  const assert = (condition, message, details) => {
+    if (!condition) throw new Error(`${message}: ${JSON.stringify(details)}`);
+  };
+  const settle = (p) => p.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => requestAnimationFrame(resolve)))));
+  const activate = async (p, control) => {
+    await p.locator('body').ariaSnapshot();
+    await control.focus();
+    await p.keyboard.press('Enter');
+  };
+  const focused = (control) => control.evaluate((element) => document.activeElement === element);
+  const run = async (name, size, task) => {
+    const context = await browser.newContext({ viewport: size, isMobile: true, hasTouch: true, reducedMotion: 'reduce' });
+    const p = await context.newPage();
+    p.setDefaultTimeout(10000);
+    try {
+      await p.goto(origin + '/');
+      await p.getByRole('textbox', { name: 'Reflection note' }).waitFor();
+      await p.evaluate(() => document.fonts.ready);
+      assert(await p.evaluate(() => window.mobileAudit?.state.ownerId === 'mobile-audit-member'), 'Synthetic fixture required');
+      checks.push({ name: `${name} at ${size.width}x${size.height}`, passed: true, details: await task(p, context) });
+    } catch (error) {
+      checks.push({ name: `${name} at ${size.width}x${size.height}`, passed: false, error: String(error) });
+    } finally {
+      await context.close();
+    }
+  };
+
+  for (const size of [{ width: 390, height: 844 }, { width: 667, height: 375 }]) {
+    await run('K2: check-in retains focus through an error, correction and confirmed submission', size, async (p) => {
+      await p.evaluate(async () => {
+        window.mobileAudit.state.wellness.sleepEnabled = true;
+        window.mobileAudit.state.wellness.stressEnabled = true;
+        await window.auditQueryClient.invalidateQueries({ queryKey: ['today'] });
+      });
+      await p.getByRole('group', { name: 'Stress', exact: true }).waitFor();
+      for (const label of ['Mood', 'Energy', 'Sleep', 'Stress']) {
+        const radio = p.getByRole('radio', { name: new RegExp(`^${label}: 3 of 5,`) });
+        await radio.focus();
+        await p.keyboard.press('ArrowRight');
+        assert(await p.getByRole('radio', { name: new RegExp(`^${label}: 4 of 5,`) }).isChecked(), 'Native radio arrow selection failed', label);
+      }
+      const note = p.getByRole('textbox', { name: 'Reflection note' });
+      await note.focus();
+      await p.keyboard.type('I wnat a clearer answer.');
+      await p.keyboard.press('ControlOrMeta+A');
+      await p.keyboard.insertText('I want a clearer answer. Café, 日本語, مرحبا 👋');
+      await p.keyboard.press('Enter');
+      await p.keyboard.type('Leave time to listen.');
+      const first = 'I want a clearer answer. Café, 日本語, مرحبا 👋\nLeave time to listen.';
+      assert(await note.inputValue() === first, 'Typing/correction/newline changed valid prose');
+      assert(await p.evaluate(() => window.mobileAudit.state.calls.filter((c) => c.name === 'saveDailyCheckIn').length) === 0, 'Return submitted a multiline note');
+      await p.evaluate(() => { window.mobileAudit.state.fail = ['saveDailyCheckIn']; window.mobileAudit.state.delay = 200; });
+      const save = p.getByRole('button', { name: 'Save check-in', exact: true });
+      await activate(p, save);
+      await p.waitForFunction(() => document.querySelector('.today-check-in-status')?.textContent === 'Saving…');
+      await p.keyboard.press('Enter');
+      const check = p.getByRole('button', { name: 'Check save', exact: true });
+      await check.waitFor();
+      const failureFocus = await focused(check);
+      assert(await note.inputValue() === first, 'Failure lost typed input');
+      assert(await p.evaluate(() => window.mobileAudit.state.calls.filter((c) => c.name === 'saveDailyCheckIn').length) === 1, 'Pending Enter repeated the write');
+      await p.evaluate(() => { window.mobileAudit.state.fail = []; window.mobileAudit.state.delay = 0; });
+      await activate(p, check);
+      await activate(p, p.getByRole('button', { name: 'Keep my draft and review before saving', exact: true }));
+      await note.focus();
+      await p.keyboard.press('End');
+      await p.keyboard.type(' Corrected.');
+      const corrected = first + ' Corrected.';
+      await activate(p, p.getByRole('button', { name: 'Save check-in', exact: true }));
+      await p.waitForFunction(() => document.querySelector('.today-check-in-status')?.textContent?.startsWith('Saved '));
+      const successFocus = await focused(p.getByRole('button', { name: 'Save check-in', exact: true }));
+      const canonical = await p.evaluate(() => window.mobileAudit.state.wellness);
+      assert(canonical.note === corrected && ['mood', 'energy', 'sleep', 'stress'].every((key) => canonical[key] === 4), 'Wrong canonical payload', canonical);
+      assert(failureFocus && successFocus, 'Save action lost focus after pending state', { failureFocus, successFocus });
+      return { failureFocus, successFocus, note: canonical.note, allBands: 4 };
+    });
+
+    await run('K2: response retains focus through failure and correction without duplicate writes', size, async (p) => {
+      await p.evaluate(() => { window.mobileAudit.state.fail = ['sendFeedback']; window.mobileAudit.state.delay = 200; });
+      const yes = p.getByRole('button', { name: 'Yes', exact: true });
+      await activate(p, yes);
+      await p.getByText('Saving your response…', { exact: true }).waitFor();
+      await p.keyboard.press('Enter');
+      await p.getByText('Your response couldn’t be saved. Please try again.', { exact: true }).waitFor();
+      const failureFocus = await focused(yes);
+      assert(await p.evaluate(() => window.mobileAudit.state.calls.filter((c) => c.name === 'sendFeedback').length) === 1, 'Pending Enter repeated the response');
+      await p.evaluate(() => { window.mobileAudit.state.fail = []; window.mobileAudit.state.delay = 0; });
+      const no = p.getByRole('button', { name: 'No', exact: true });
+      await activate(p, no);
+      await p.getByText('Response saved', { exact: true }).waitFor();
+      assert(await no.getAttribute('aria-pressed') === 'true', 'Corrected response was not selected');
+      assert(failureFocus && await focused(no), 'Response action lost focus', { failureFocus });
+      return { failureFocus, correctedResponse: -1 };
+    });
+
+    await run('K2: the built-in response retry returns focus to its persistent choice', size, async (p) => {
+      await p.evaluate(() => { window.mobileAudit.state.fail = ['sendFeedback']; window.mobileAudit.state.delay = 150; });
+      const yes = p.getByRole('button', { name: 'Yes', exact: true });
+      await activate(p, yes);
+      await p.getByRole('button', { name: 'Retry response', exact: false }).waitFor();
+      await p.evaluate(() => { window.mobileAudit.state.fail = []; });
+      await activate(p, p.getByRole('button', { name: 'Retry response', exact: false }));
+      await p.getByText('Response saved', { exact: true }).waitFor();
+      assert(await focused(yes), 'Retry removed the focused button without returning focus to the response');
+      assert(await yes.getAttribute('aria-pressed') === 'true', 'Retry did not confirm the original choice');
+      return { selected: 'Yes', focusReturned: true };
+    });
+
+    await run('K2: Clear keeps focus while correcting optional check-in choices', size, async (p) => {
+      const radio = p.getByRole('radio', { name: /^Mood: 3 of 5,/ });
+      await radio.focus();
+      await p.keyboard.press('Space');
+      const clear = p.getByRole('button', { name: 'Clear mood selection' });
+      await activate(p, clear);
+      assert(await focused(clear), 'Clearing an optional choice removed keyboard focus');
+      assert(!await radio.isChecked(), 'Clear retained the selected choice');
+      return { focusRetained: true, selected: false };
+    });
+
+    await run('K3: cancelling and confirming draft actions return focus to usable controls', size, async (p) => {
+      const note = p.getByRole('textbox', { name: 'Reflection note' });
+      await note.fill('A recoverable reflection.');
+      await p.getByText('Draft saved on this device', { exact: true }).waitFor();
+      const discard = p.getByRole('button', { name: 'Discard draft', exact: true });
+      await activate(p, discard);
+      await activate(p, p.getByRole('button', { name: 'Keep editing', exact: true }));
+      await settle(p);
+      const cancelFocus = await focused(discard);
+      assert(await note.inputValue() === 'A recoverable reflection.', 'Cancellation removed input');
+      await activate(p, discard);
+      await activate(p, p.getByRole('group', { name: 'Confirm draft action' }).getByRole('button', { name: 'Confirm', exact: true }));
+      await p.getByRole('button', { name: 'Discard draft', exact: true }).waitFor({ state: 'detached' });
+      await settle(p);
+      const discardFocus = await focused(note);
+      assert(await note.inputValue() === '', 'Confirmed discard did not clear the unsaved draft');
+      assert(cancelFocus && discardFocus, 'Draft action lost focus', { cancelFocus, discardFocus });
+      return { cancelFocus, discardFocus };
+    });
+
+    await run('K4: note limit is discoverable and reaching it does not lose existing text', size, async (p) => {
+      const note = p.getByRole('textbox', { name: 'Reflection note' });
+      const [region] = await p.locator('.today-check-in-note [role=status]').elementHandles();
+      assert(region, 'The limit status container must exist before its message');
+      await note.fill('x'.repeat(1999));
+      await note.focus();
+      await p.keyboard.press('End');
+      await p.keyboard.type('YZ');
+      assert((await note.inputValue()).length === 2000, 'Native length limit failed');
+      const description = await note.evaluate((element) => (element.getAttribute('aria-describedby') || '').split(/\s+/).map((id) => document.getElementById(id)?.textContent || '').join(' '));
+      assert(/2,?000/.test(description), 'The length limit is not described', description);
+      assert(await p.getByRole('status').filter({ hasText: /character limit/i }).count() === 1, 'The at-limit status message is missing');
+      assert(await region.evaluate((element) => element.isConnected && /character limit/i.test(element.textContent)), 'The status container was replaced instead of updated');
+      await p.keyboard.press('Backspace');
+      await p.keyboard.type('Q');
+      assert((await note.inputValue()).endsWith('Q') && (await note.inputValue()).length === 2000, 'Correcting text at the limit failed');
+      return { length: 2000, description };
+    });
+
+    await run('Unsaved input survives reload and document recreation before submission', size, async (p, context) => {
+      const text = 'Unsaved Café 日本語 👋\nReturn to this thought.';
+      const note = p.getByRole('textbox', { name: 'Reflection note' });
+      await note.fill(text);
+      await p.getByText('Draft saved on this device', { exact: true }).waitFor();
+      const resume = async (q) => {
+        const field = q.getByRole('textbox', { name: 'Reflection note' });
+        await field.waitFor();
+        if (await field.inputValue() !== text) {
+          const details = q.locator('.draft-recovery details').first();
+          await activate(q, details.locator('summary'));
+          await activate(q, details.getByRole('button', { name: 'Resume draft', exact: true }));
+        }
+        assert(await field.inputValue() === text, 'Recovered draft differs');
+      };
+      await p.reload();
+      await resume(p);
+      await p.getByText('Draft saved on this device', { exact: true }).waitFor();
+      await p.close();
+      const recreated = await context.newPage();
+      await recreated.goto(origin + '/');
+      await resume(recreated);
+      await activate(recreated, recreated.getByRole('button', { name: 'Save check-in', exact: true }));
+      await recreated.waitForFunction(() => document.querySelector('.today-check-in-status')?.textContent?.startsWith('Saved '));
+      assert(await recreated.evaluate(() => window.mobileAudit.state.wellness.note) === text, 'Recovered draft did not submit');
+      return { text, reload: true, documentRecreation: true, submitted: true, evidence: 'Render; not OS background-tab discard' };
+    });
+  }
+
+  const failOwnerResult = () => {
+    // Reproduce a result-deserialization failure at the real IndexedDB boundary.
+    const original = Object.getOwnPropertyDescriptor(IDBRequest.prototype, 'result');
+    window.auditDraftResultFaults = 0;
+    Object.defineProperty(IDBRequest.prototype, 'result', {
+      ...original,
+      get() {
+        const value = original.get.call(this);
+        if (this.source?.name === 'owners' && value?.key) {
+          window.auditDraftResultFaults++;
+          throw new DOMException('Synthetic draft-result deserialization failure', 'UnknownError');
+        }
+        return value;
+      },
+    });
+  };
+  for (const duringRecovery of [true, false]) {
+    await run(`K6: a result getter failure settles into storage fallback during ${duringRecovery ? 'recovery' : 'editing'}`, { width: 390, height: 844 }, async (p, context) => {
+      const errors = [];
+      p.on('pageerror', (error) => errors.push(error.message));
+      const note = p.getByRole('textbox', { name: 'Reflection note' });
+      await note.fill('Synthetic draft before storage becomes unavailable.');
+      await p.getByText('Draft saved on this device', { exact: true }).waitFor();
+      if (duringRecovery) {
+        await context.addInitScript(failOwnerResult);
+        await p.reload();
+        await note.waitFor();
+      } else await p.evaluate(failOwnerResult);
+      const text = 'Current text remains editable and can save to my account.';
+      await note.fill(text);
+      await p.waitForFunction(() => window.auditDraftResultFaults > 0);
+      await settle(p);
+      const notices = await p.locator('.draft-recovery').allTextContents();
+      assert(notices.some((text) => text.includes('only kept while this page stays open')), 'A result getter failure left draft work pending without a fallback', notices);
+      await activate(p, p.getByRole('button', { name: 'Save check-in', exact: true }));
+      await p.waitForFunction(() => document.querySelector('.today-check-in-status')?.textContent?.startsWith('Saved '));
+      assert(await p.evaluate(() => window.mobileAudit.state.wellness.note) === text, 'Storage failure blocked account submission or changed current text');
+      assert(errors.length === 0, 'The result getter exception escaped the existing error path', errors);
+      return { duringRecovery, currentTextSaved: true, localStorageUnavailable: true, unhandledErrors: errors };
+    });
+  }
+
+  await run('K5: enlarged note clears fixed bars at the 320px reflow width', { width: 320, height: 568 }, async (p) => {
+    await p.evaluate(() => document.documentElement.style.fontSize = '32px');
+    await settle(p);
+    await p.getByRole('textbox', { name: 'Reflection note' }).focus();
+    await settle(p);
+    const geometry = await p.evaluate(() => {
+      const field = document.activeElement.getBoundingClientRect();
+      const header = document.querySelector('header').getBoundingClientRect();
+      const nav = document.querySelector('.mobile-journey');
+      const top = Math.max(visualViewport.offsetTop, header.bottom) + 8;
+      const bottom = Math.min(visualViewport.offsetTop + visualViewport.height, getComputedStyle(nav).position === 'fixed' ? nav.getBoundingClientRect().top : Infinity) - 8;
+      return { top: field.top, bottom: field.bottom, clearTop: top, clearBottom: bottom, nav: getComputedStyle(nav).position };
+    });
+    assert(geometry.top >= geometry.clearTop - 1 && geometry.bottom <= geometry.clearBottom + 1, 'The enlarged note is partly hidden by fixed bars', geometry);
+    return geometry;
+  });
+
+  await run('K1: constrained viewport handling distinguishes editing, zoom and layout changes', { width: 320, height: 568 }, async (p) => {
+    // Exercise the shared algorithm in both engines. Synthetic geometry is not keyboard evidence.
+    await p.evaluate(() => {
+      const viewport = window.visualViewport;
+      window.auditViewportGeometry = { height: 568, scale: 1, offsetTop: 0 };
+      for (const key of ['height', 'scale', 'offsetTop']) Object.defineProperty(viewport, key, { configurable: true, get: () => window.auditViewportGeometry[key] });
+    });
+    const samples = [];
+    const geometry = async (height, scale, offsetTop, event = 'resize') => {
+      await p.evaluate(({ height, scale, offsetTop, event }) => {
+        Object.assign(window.auditViewportGeometry, { height, scale, offsetTop });
+        visualViewport.dispatchEvent(new Event(event));
+      }, { height, scale, offsetTop, event });
+      await settle(p);
+      return p.evaluate(() => ({ constrained: document.documentElement.hasAttribute('data-constrained-viewport'), nav: getComputedStyle(document.querySelector('.mobile-journey')).position, scrollY }));
+    };
+    await p.evaluate(() => document.activeElement?.blur());
+    samples.push({ step: 'No editing, small visual viewport', ...await geometry(180, 1, 0) });
+    const note = p.getByRole('textbox', { name: 'Reflection note' });
+    await note.focus();
+    samples.push({ step: 'Editing with scale 1', ...await geometry(180, 1, 40, 'scroll') });
+    samples.push({ step: 'Pinch while editing', ...await geometry(180, 2, 40) });
+    await p.evaluate(() => document.activeElement?.blur());
+    samples.push({ step: 'Pinch without editing', ...await geometry(180, 2, 40) });
+    assert(samples[0].nav === 'fixed' && samples[1].nav === 'static' && samples[2].nav === 'fixed' && samples[3].nav === 'fixed', 'Geometry was mistaken for keyboard state', samples);
+    return { evidence: 'Synthetic viewport geometry only', samples };
+  });
+
+  if (browser.browserType().name() === 'chromium') {
+    await run('K1: actual Chromium page-scale zoom preserves quick navigation', { width: 320, height: 568 }, async (p, context) => {
+      const cdp = await context.newCDPSession(p);
+      const samples = [];
+      for (const editing of [false, true]) {
+        await cdp.send('Emulation.setPageScaleFactor', { pageScaleFactor: 1 });
+        if (editing) await p.getByRole('textbox', { name: 'Reflection note' }).focus();
+        else await p.evaluate(() => document.activeElement?.blur());
+        await cdp.send('Emulation.setPageScaleFactor', { pageScaleFactor: 2 });
+        await settle(p);
+        samples.push(await p.evaluate(() => ({ nav: getComputedStyle(document.querySelector('.mobile-journey')).position, scale: visualViewport.scale, height: visualViewport.height })));
+      }
+      assert(samples.every((sample) => sample.nav === 'fixed' && sample.scale === 2), 'Pinch zoom relocated quick navigation', samples);
+      return { evidence: 'Chromium Render page-scale emulation; not physical pinch', samples };
+    });
+  }
+  return { browser: browser.version(), engine: browser.browserType().name(), evidence: 'Render with synthetic member services', checks };
+}

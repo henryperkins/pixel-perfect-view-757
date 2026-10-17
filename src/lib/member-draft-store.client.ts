@@ -30,7 +30,13 @@ type Stored = Pick<
 type Tombstone = { ownerId: string; draftId: string; deleted: true };
 function request<T>(value: IDBRequest<T>): Promise<T> {
   return new Promise((resolve, reject) => {
-    value.onsuccess = () => resolve(value.result);
+    value.onsuccess = () => {
+      try {
+        resolve(value.result);
+      } catch (error) {
+        reject(error);
+      }
+    };
     value.onerror = () => reject(new Error("Local draft storage is unavailable."));
   });
 }

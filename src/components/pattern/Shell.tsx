@@ -72,8 +72,26 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
       const headerHeight = headerRef.current?.getBoundingClientRect().height ?? 0;
       const nav = mobileNavRef.current;
       const navHeight = nav?.getBoundingClientRect().height ?? 0;
-      const available = window.visualViewport?.height ?? window.innerHeight;
-      root.toggleAttribute("data-constrained-viewport", available - headerHeight - navHeight < 160);
+      const active = document.activeElement;
+      const editing =
+        (active instanceof HTMLTextAreaElement && !active.disabled && !active.readOnly) ||
+        (active instanceof HTMLInputElement &&
+          !active.disabled &&
+          !active.readOnly &&
+          /^(text|search|email|tel|url|password|number)$/.test(active.type)) ||
+        (active instanceof HTMLElement && active.isContentEditable);
+      const viewport = window.visualViewport;
+      // A small visual viewport can be pinch zoom, not a keyboard. Keep the
+      // normal navigation placement unless an unzoomed field is being edited.
+      const available = editing && viewport?.scale === 1 ? viewport.height : window.innerHeight;
+      const fieldHeight =
+        editing && viewport?.scale === 1 && active instanceof HTMLElement
+          ? active.getBoundingClientRect().height
+          : 0;
+      root.toggleAttribute(
+        "data-constrained-viewport",
+        available - headerHeight - navHeight < Math.max(160, fieldHeight + 16),
+      );
       const fixedHeight = nav && getComputedStyle(nav).position === "fixed" ? navHeight : 0;
       root.style.setProperty("--pattern-header-height", `${headerHeight}px`);
       root.style.setProperty("--pattern-header-bar-height", `${headerBarHeight}px`);
@@ -108,7 +126,14 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
     };
     const focus = () => {
       cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(revealFocus);
+      frame = requestAnimationFrame(() => {
+        measure();
+        revealFocus();
+      });
+    };
+    const blur = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(measure);
     };
     const resize = () => {
       // Browser chrome can resize after the reader scrolls away from a focused control.
@@ -125,15 +150,19 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
     if (mobileNavRef.current) observer.observe(mobileNavRef.current);
     measure();
     document.addEventListener("focusin", focus);
+    document.addEventListener("focusout", blur);
     window.addEventListener("resize", resize);
     window.visualViewport?.addEventListener("resize", resize);
+    window.visualViewport?.addEventListener("scroll", resize, { passive: true });
     return () => {
       observer.disconnect();
       cancelAnimationFrame(frame);
       cancelAnimationFrame(measureFrame);
       document.removeEventListener("focusin", focus);
+      document.removeEventListener("focusout", blur);
       window.removeEventListener("resize", resize);
       window.visualViewport?.removeEventListener("resize", resize);
+      window.visualViewport?.removeEventListener("scroll", resize);
       root.style.removeProperty("--pattern-header-height");
       root.style.removeProperty("--pattern-header-bar-height");
       root.style.removeProperty("--pattern-bottom-nav-height");

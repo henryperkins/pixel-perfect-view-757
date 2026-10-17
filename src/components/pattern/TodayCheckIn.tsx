@@ -37,10 +37,13 @@ function BandPicker({
         <Button
           variant="ghost"
           type="button"
-          disabled={disabled || value === null}
-          onClick={() => onChange(null)}
+          disabled={disabled}
+          aria-disabled={disabled || value === null}
+          onClick={() => {
+            if (value !== null) onChange(null);
+          }}
           aria-label={`Clear ${label.toLowerCase()} selection`}
-          className="h-11 min-w-11 shrink-0 px-1 text-xs text-muted-foreground"
+          className="h-11 min-w-11 shrink-0 px-1 text-xs text-muted-foreground aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
         >
           Clear
         </Button>
@@ -59,7 +62,7 @@ function BandPicker({
             />
             <span
               aria-hidden="true"
-              className="flex h-12 min-w-11 items-center justify-center rounded-md border border-input bg-card font-mono text-sm text-foreground transition-colors hover:bg-secondary peer-checked:border-primary peer-checked:bg-primary peer-checked:text-primary-foreground peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-background peer-disabled:cursor-not-allowed peer-disabled:opacity-50"
+              className="flex h-12 min-w-0 items-center justify-center rounded-md border border-input bg-card font-mono text-sm text-foreground transition-colors hover:bg-secondary peer-checked:border-primary peer-checked:bg-primary peer-checked:text-primary-foreground peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-background peer-disabled:cursor-not-allowed peer-disabled:opacity-50"
             >
               {band}
             </span>
@@ -142,6 +145,9 @@ export function TodayCheckIn({
   const qc = useQueryClient();
   const mounted = useRef(false);
   const pendingSave = useRef<CheckInDraft | null>(null);
+  const pendingOperation = useRef<string | null>(null);
+  const saveActionRef = useRef<HTMLButtonElement>(null);
+  const noteRef = useRef<HTMLTextAreaElement>(null);
   const [state, setState] = useState(() => {
     const values = permittedCheckIn(checkInDraft(wellness), wellness);
     return {
@@ -230,15 +236,24 @@ export function TodayCheckIn({
   };
 
   const saveNote = useMutation({
-    mutationFn: async (submitted: CheckInDraft) => {
-      const checkpoint = await recoveryRef.current.checkpointSubmission(complete(submitted));
+    mutationFn: async (_submitted: CheckInDraft) => {
+      // Use the retained attempt: consent may have scrubbed it while offline.
+      // A discarded attempt must never be recreated from stale mutation variables.
+      const checkpoint = recoveryRef.current.current()?.submission;
+      if (!checkpoint || checkpoint.operationId !== pendingOperation.current)
+        throw new Error("This draft changed before its queued save could start.");
       const values = permittedCheckIn(checkpoint.values, wellness);
       const res = await checkIn({ data: { day, ...values, note: values.note.trim() || null } });
       return { res, checkpoint };
     },
-    onMutate: (submitted) => {
+    onMutate: async (submitted) => {
       pendingSave.current = submitted;
+      pendingOperation.current = null;
       setState((previous) => ({ ...previous, error: null }));
+      // onMutate runs before Query pauses offline work. Capture the Save-tap
+      // revision now so later typing stays outside the submitted checkpoint.
+      const checkpoint = await recoveryRef.current.checkpointSubmission(complete(submitted));
+      pendingOperation.current = checkpoint.operationId;
     },
     onSuccess: ({ res, checkpoint }, submitted) => {
       const liveDraft = recoveryRef.current.current()?.values ?? submitted;
@@ -284,10 +299,48 @@ export function TodayCheckIn({
     },
     onSettled: () => {
       pendingSave.current = null;
+      pendingOperation.current = null;
     },
   });
   const editedWhileSaving =
     saveNote.isPending && saveNote.variables && !sameCheckIn(draft, saveNote.variables);
+  const needsSaveCheck = Boolean(recovery.draft?.submission) && !saveNote.isPending;
+  const checkSave = async () => {
+    setChecking(true);
+    try {
+      const latest = await fetchToday({ data: { timezone } });
+      if (latest.needsOnboarding || latest.day !== day)
+        throw new Error("Return to this draft’s original day to review it.");
+      const saved = permittedCheckIn(checkInDraft(latest.wellness), latest.wellness);
+      const pending = recovery.current()?.submission;
+      if (
+        pending &&
+        sameDraftValues({ ...pending.values, note: pending.values.note.trim() }, complete(saved))
+      ) {
+        recovery.reconcileAcknowledgement(
+          { ...pending, values: { ...pending.values, note: pending.values.note.trim() } },
+          complete(saved),
+          latest.wellness.savedAt,
+        );
+        setState((previous) => ({
+          ...previous,
+          draft: saved,
+          saved,
+          savedAt: latest.wellness.savedAt,
+          error: null,
+        }));
+      } else {
+        setReview(saved);
+      }
+    } catch {
+      setState((previous) => ({
+        ...previous,
+        error: "The saved check-in could not be checked. Your draft is kept.",
+      }));
+    } finally {
+      setChecking(false);
+    }
+  };
   const savedTime = state.savedAt
     ? new Date(state.savedAt).toLocaleTimeString([], {
         hour: "2-digit",
@@ -295,18 +348,28 @@ export function TodayCheckIn({
       })
     : null;
   const status = saveNote.isPending
-    ? editedWhileSaving
-      ? "Saving earlier changes; newer edits are unsaved."
-      : "Saving…"
-    : state.error
-      ? "Couldn’t confirm this save. Your edits are still here. Try again."
-      : dirty
-        ? savedTime
-          ? `Unsaved changes · last saved ${savedTime}`
-          : "Unsaved changes"
-        : savedTime
-          ? `Saved ${savedTime}`
-          : "Not saved yet today";
+    ? saveNote.isPaused
+      ? editedWhileSaving
+        ? "Waiting for a connection. Earlier changes will save when you’re back online; newer edits are unsaved."
+        : "Waiting for a connection. Your check-in will save when you’re back online."
+      : editedWhileSaving
+        ? "Saving earlier changes; newer edits are unsaved."
+        : "Saving…"
+    : needsSaveCheck
+      ? checking
+        ? "Checking whether your check-in saved…"
+        : review
+          ? "The saved check-in differs from this draft. Review it below before saving."
+          : "This save hasn’t been confirmed. Check whether it saved before retrying. Your edits are still here."
+      : state.error
+        ? "Couldn’t confirm this save. Your edits are still here. Try again."
+        : dirty
+          ? savedTime
+            ? `Unsaved changes · last saved ${savedTime}`
+            : "Unsaved changes"
+          : savedTime
+            ? `Saved ${savedTime}`
+            : "Not saved yet today";
 
   const formId = useId();
   const canSave =
@@ -330,78 +393,6 @@ export function TodayCheckIn({
       <p className="mt-1 text-sm text-muted-foreground">
         Choose what fits. Every field is optional.
       </p>
-      {recovery.draft?.submission && !saveNote.isPending && (
-        <div className="my-3 space-y-2 text-sm" role="status">
-          <p>A previous save has not been confirmed. Check the saved check-in before retrying.</p>
-          <Button
-            type="button"
-            variant="outline"
-            disabled={checking}
-            onClick={async () => {
-              setChecking(true);
-              try {
-                const latest = await fetchToday({ data: { timezone } });
-                if (latest.needsOnboarding || latest.day !== day)
-                  throw new Error("Return to this draft’s original day to review it.");
-                const saved = permittedCheckIn(checkInDraft(latest.wellness), latest.wellness);
-                const pending = recovery.current()?.submission;
-                if (
-                  pending &&
-                  sameDraftValues(
-                    { ...pending.values, note: pending.values.note.trim() },
-                    complete(saved),
-                  )
-                ) {
-                  recovery.reconcileAcknowledgement(
-                    { ...pending, values: { ...pending.values, note: pending.values.note.trim() } },
-                    complete(saved),
-                    latest.wellness.savedAt,
-                  );
-                  setState((previous) => ({
-                    ...previous,
-                    draft: saved,
-                    saved,
-                    savedAt: latest.wellness.savedAt,
-                    error: null,
-                  }));
-                } else {
-                  setReview(saved);
-                }
-              } catch {
-                setState((previous) => ({
-                  ...previous,
-                  error: "The saved check-in could not be checked. Your draft is kept.",
-                }));
-              } finally {
-                setChecking(false);
-              }
-            }}
-          >
-            {checking ? "Checking…" : "Check save"}
-          </Button>
-          {review && (
-            <div className="space-y-2 border border-rule p-3">
-              <p>
-                Saved check-in: mood {review.mood ?? "—"}, energy {review.energy ?? "—"}.{" "}
-                {review.note || "No reflection note saved."}
-              </p>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => {
-                  const pending = recovery.current()?.submission;
-                  if (pending)
-                    recovery.reconcileAcknowledgement(pending, complete(review), state.savedAt);
-                  setState((previous) => ({ ...previous, saved: review, error: null }));
-                  setReview(null);
-                }}
-              >
-                Keep my draft and review before saving
-              </Button>
-            </div>
-          )}
-        </div>
-      )}
       <div className="mt-3 space-y-3">
         <BandPicker
           label="Mood"
@@ -446,9 +437,15 @@ export function TodayCheckIn({
           Reflection note <span className="font-normal text-muted-foreground">· optional</span>
         </label>
         <textarea
+          ref={noteRef}
           id={`${formId}-note`}
+          name="note"
           disabled={disabled}
-          aria-describedby={`${formId}-privacy ${formId}-status`}
+          inputMode="text"
+          autoComplete="off"
+          autoCapitalize="sentences"
+          enterKeyHint="enter"
+          aria-describedby={`${formId}-note-limit ${formId}-privacy ${formId}-status`}
           value={draft.note}
           onChange={(event) => edit("note", event.target.value)}
           rows={3}
@@ -456,6 +453,14 @@ export function TodayCheckIn({
           placeholder="A few words about today…"
           className="pattern-mobile-field mt-2 w-full rounded-sm border border-input bg-card px-3 py-2 text-base outline-none focus:border-ring focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm"
         />
+        <p id={`${formId}-note-limit`} className="mt-2 text-xs text-muted-foreground">
+          Up to 2,000 characters.
+          <span role="status" aria-atomic="true">
+            {draft.note.length === 2000
+              ? " Character limit reached. Edit the note to add more."
+              : ""}
+          </span>
+        </p>
       </div>
       <DraftRecoveryNotice
         draft={recovery.draft}
@@ -472,23 +477,79 @@ export function TodayCheckIn({
         }}
         entityKey={day}
       />
-      <div className="today-check-in-save mt-4 flex flex-wrap items-center gap-3">
-        <Button
-          type="submit"
-          disabled={!canSave}
-          className="h-auto min-h-12 min-w-0 max-w-full whitespace-normal rounded-sm px-4 text-sm"
-        >
-          {saveNote.isPending ? "Saving…" : state.error ? "Try saving again" : "Save check-in"}
-        </Button>
-        <span
-          id={`${formId}-status`}
-          className={`today-check-in-status text-sm ${state.error ? "text-destructive" : "text-muted-foreground"}`}
-          role={state.error ? "alert" : "status"}
-          aria-live={state.error ? "assertive" : "polite"}
-          aria-atomic="true"
-        >
-          {status}
-        </span>
+      <div className="today-check-in-save mt-4 space-y-3">
+        <div className="flex flex-wrap items-center gap-3">
+          {needsSaveCheck ? (
+            <Button
+              ref={saveActionRef}
+              type="button"
+              variant="outline"
+              disabled={disabled}
+              aria-disabled={checking || disabled}
+              onClick={(event) => {
+                // Confirmation can replace this control with Submit during the same click.
+                event.preventDefault();
+                if (!checking && !disabled) void checkSave();
+              }}
+              className="h-auto min-h-12 min-w-0 max-w-full whitespace-normal rounded-sm px-4 text-sm aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
+            >
+              {checking ? "Checking…" : "Check save"}
+            </Button>
+          ) : (
+            <Button
+              ref={saveActionRef}
+              type="submit"
+              disabled={disabled}
+              aria-disabled={!canSave}
+              className="h-auto min-h-12 min-w-0 max-w-full whitespace-normal rounded-sm px-4 text-sm aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
+            >
+              {saveNote.isPending
+                ? saveNote.isPaused
+                  ? "Waiting for connection…"
+                  : "Saving…"
+                : state.error
+                  ? "Try saving again"
+                  : "Save check-in"}
+            </Button>
+          )}
+          <span
+            id={`${formId}-status`}
+            className={`today-check-in-status text-sm ${state.error ? "text-destructive" : "text-muted-foreground"}`}
+            role={state.error ? "alert" : "status"}
+            aria-live={state.error ? "assertive" : "polite"}
+            aria-atomic="true"
+          >
+            {status}
+          </span>
+        </div>
+        {needsSaveCheck && review && (
+          <div className="space-y-2 border border-rule p-3 text-sm">
+            <p>
+              Saved check-in: mood {review.mood ?? "—"}, energy {review.energy ?? "—"}.{" "}
+              {review.note || "No reflection note saved."}
+            </p>
+            <Button
+              type="button"
+              variant="outline"
+              className="h-auto min-h-11 min-w-0 max-w-full whitespace-normal"
+              onClick={() => {
+                const pending = recovery.current()?.submission;
+                if (pending)
+                  recovery.reconcileAcknowledgement(pending, complete(review), state.savedAt);
+                setState((previous) => ({ ...previous, saved: review, error: null }));
+                setReview(null);
+                requestAnimationFrame(() => {
+                  if (document.activeElement !== document.body) return;
+                  const action = saveActionRef.current;
+                  if (action && !action.disabled) action.focus();
+                  else noteRef.current?.focus();
+                });
+              }}
+            >
+              Keep my draft and review before saving
+            </Button>
+          </div>
+        )}
       </div>
       <div className="today-check-in-privacy mt-4 text-xs text-muted-foreground">
         <p id={`${formId}-privacy`}>

@@ -183,3 +183,41 @@ test("submission waits for its checkpoint even when a conflict forks the draft",
     true,
   );
 });
+
+test("a deferred checkpoint cannot restore optional values after consent is withdrawn and re-enabled", async () => {
+  const { controller: c, rows } = setup();
+  await c.setOwner("a");
+  const pending = {
+    kind: "check-in",
+    entityKey: "2026-10-17",
+    values: {
+      day: "2026-10-17",
+      timezone: "UTC",
+      mood: 3,
+      energy: 4,
+      sleep: 5,
+      stress: 2,
+      note: "Queued reflection",
+    },
+    baseline: {
+      values: {
+        day: "2026-10-17",
+        timezone: "UTC",
+        mood: null,
+        energy: null,
+        sleep: null,
+        stress: null,
+        note: "",
+      },
+      version: null,
+    },
+  };
+  c.update("a", pending);
+  await c.flush();
+  await c.setWellnessPermission({ sleep: false, stress: false });
+  await c.setWellnessPermission({ sleep: true, stress: true });
+  const submission = await c.submit("a", pending, "queued-check-in");
+  assert.equal(submission.values.sleep, null);
+  assert.equal(submission.values.stress, null);
+  assert.equal([...rows.values()][0].submission.values.sleep, null);
+});
