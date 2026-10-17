@@ -25,7 +25,7 @@ function snapshot() {
     .all();
   return Object.fromEntries(
     tables.map(({ name }) => {
-      assert.match(name, /^[a-z_]+$/);
+      assert.match(name, /^[a-z_][a-z0-9_]*$/);
       return [name, h.sqlite.prepare(`SELECT * FROM ${name} ORDER BY 1`).all()];
     }),
   );

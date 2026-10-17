@@ -74,10 +74,14 @@ export async function resetPersonalization(userId: string, db: DBClient = record
 export async function deleteAccount(userId: string, password: string, db: DBClient = records()) {
   const hash = await requireCurrentPassword(userId, password, db);
   return withBillingLock(db, userId, async () => {
+    await db.exec(
+      "SELECT CASE WHEN EXISTS(SELECT 1 FROM users WHERE id=? AND password_hash=?) THEN 1 ELSE json('account-changed') END",
+      [userId, hash],
+    );
     // A failed cancellation leaves the account intact and checkout disabled for retry.
     await prepareBillingDeletion(userId, db);
     try {
-      const results = await execBatch([
+      const results = await db.batch([
         {
           sql: "SELECT CASE WHEN EXISTS(SELECT 1 FROM users WHERE id=? AND password_hash=?) THEN 1 ELSE json('account-changed') END",
           params: [userId, hash],
@@ -88,7 +92,7 @@ export async function deleteAccount(userId: string, password: string, db: DBClie
           params: [userId, hash],
         },
       ]);
-      if (results[2]!.results.length !== 1) throw new Error("Account changed");
+      if (results[2]?.results.length !== 1) throw new Error("Account changed");
     } catch {
       throw new Error("Your account could not be deleted. Please retry.");
     }
@@ -351,10 +355,12 @@ export async function exportAccountData(userId: string, db: DBClient = records()
     schema_version: "pattern-account-export-1" as const,
     exported_at: new Date().toISOString(),
     account,
+    billingRetention:
+      "Deleting Pattern stops billing without an automatic refund. Stripe retains legally required transaction records; separate assistant identities are not deleted.",
     profile: profileSafe,
     consents: data.source_consents,
     memberships: await db.exec<Row>(
-      "SELECT status,plan,current_period_end,trial_end,paid_until,cancel_at_period_end,updated_at FROM memberships WHERE user_id=?",
+      "SELECT environment,status,plan,current_period_end,trial_end,paid_until,cancel_at_period_end,updated_at FROM memberships_v2 WHERE user_id=?",
       [userId],
     ),
     birth,

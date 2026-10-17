@@ -3,20 +3,23 @@ import { useEffect, useState } from "react";
 import { Shell } from "./Shell";
 import { Button } from "@/components/ui/button";
 import { confirmEmail, resetPassword } from "@/lib/account-security.functions";
+import { useQueryClient } from "@tanstack/react-query";
 
 export function AccountLink({ reset = false }: { reset?: boolean }) {
+  const queryClient = useQueryClient();
   const [token, setToken] = useState(""),
     [ready, setReady] = useState(false),
     [password, setPassword] = useState(""),
     [repeat, setRepeat] = useState("");
   const [busy, setBusy] = useState(false),
     [done, setDone] = useState(false),
+    [signInRequired, setSignInRequired] = useState(false),
     [error, setError] = useState("");
   useEffect(() => {
     const value = new URLSearchParams(window.location.hash.slice(1)).get("token") ?? "";
     setToken(/^[a-f0-9]{64}$/.test(value) ? value : "");
     setReady(true);
-    window.history.replaceState(null, "", window.location.pathname);
+    // Keep the fragment until explicit submission succeeds; it is never sent to the server by navigation.
   }, []);
   async function submit(event: React.FormEvent) {
     event.preventDefault();
@@ -26,11 +29,18 @@ export function AccountLink({ reset = false }: { reset?: boolean }) {
       if (reset) {
         if (password !== repeat) throw new Error("Your passwords do not match.");
         await resetPassword({ data: { token, password } });
-      } else await confirmEmail({ data: { token } });
+        setSignInRequired(true);
+      } else {
+        const result = await confirmEmail({ data: { token } });
+        setSignInRequired(result.signInRequired);
+      }
+      window.history.replaceState(null, "", window.location.pathname);
       setToken("");
       setPassword("");
       setRepeat("");
       setDone(true);
+      await queryClient.invalidateQueries({ queryKey: ["session"] });
+      await queryClient.invalidateQueries({ queryKey: ["account-security"] });
     } catch (e) {
       setError(e instanceof Error ? e.message : "This link could not be used. Request a new one.");
     } finally {
@@ -58,7 +68,9 @@ export function AccountLink({ reset = false }: { reset?: boolean }) {
             <p role="status" className="mt-4 text-sm">
               {reset
                 ? "Your password has changed and all devices have been signed out. Sign in with your new password."
-                : "Your email is confirmed. If you changed your address, sign in with the new one."}
+                : signInRequired
+                  ? "Your email has changed. All devices have been signed out. Sign in with your new address."
+                  : "Your email is confirmed."}
             </p>
             <Button asChild className="mt-6">
               <Link to="/auth">Sign in to Pattern</Link>

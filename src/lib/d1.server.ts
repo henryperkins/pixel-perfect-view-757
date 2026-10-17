@@ -447,6 +447,7 @@ class Query<Row = Record<string, unknown>> implements PromiseLike<D1Result<Row[]
 export function records() {
   let keyFence: { sql: string; params: Primitive[] } | null = null;
   let policyFence: { sql: string; params: Primitive[] } | null = null;
+  let billingFence: (() => { sql: string; params: Primitive[] }) | null = null;
   const readingWrite = (sql: string) =>
     /^\s*(insert\s+into|update|replace\s+into)\s+"?(daily_readings|reading_sources|cycle_instances)"?\b/i.test(
       sql,
@@ -461,6 +462,11 @@ export function records() {
     // Removing this request's incomplete row remains allowed after consent revocation.
     if (policyFence && statements.some((statement) => readingWrite(statement.sql)))
       guards.push(policyFence);
+    if (
+      billingFence &&
+      statements.some((statement) => /^\s*(insert|update|delete|replace)\b/i.test(statement.sql))
+    )
+      guards.push(billingFence());
     const results = await execBatch([...guards, ...statements]);
     return results.slice(guards.length);
   }
@@ -468,10 +474,13 @@ export function records() {
     sql: string,
     params: Primitive[] = [],
   ): Promise<T[]> {
-    if ((!keyFence && !policyFence) || !/^\s*(insert|update|delete|replace)\b/i.test(sql))
+    if (
+      (!keyFence && !policyFence && !billingFence) ||
+      !/^\s*(insert|update|delete|replace)\b/i.test(sql)
+    )
       return exec<T>(sql, params);
     const [result] = await batch([{ sql, params }]);
-    return result!.results as T[];
+    return (result?.results ?? []) as T[];
   }
   return {
     from<Row = Record<string, unknown>>(table: string) {
@@ -479,6 +488,9 @@ export function records() {
     },
     exec: guardedExec,
     batch,
+    bindBillingFence(fence: (() => { sql: string; params: Primitive[] }) | null) {
+      billingFence = fence;
+    },
     bindWritePolicy(statement: { sql: string; params: Primitive[] }) {
       policyFence = statement;
     },

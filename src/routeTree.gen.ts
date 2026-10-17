@@ -32,12 +32,14 @@ import { Route as AuthenticatedTimingRouteImport } from './routes/_authenticated
 import { Route as OauthConsentRouteImport } from './routes/oauth/consent'
 import { Route as Char91DotlovableChar93OauthConsentRouteImport } from './routes/[.lovable]/oauth/consent'
 import { Route as AuthenticatedMembershipSuccessRouteImport } from './routes/_authenticated/membership.success'
+import { Route as ApiPublicBillingReconcileRouteImport } from './routes/api/public/billing-reconcile'
 import { Route as ApiPublicContentReleasesRouteImport } from './routes/api/public/content-releases'
 import { Route as ApiPublicEvaluationIdentityRouteImport } from './routes/api/public/evaluation-identity'
 import { Route as ApiPublicEvaluationStepRouteImport } from './routes/api/public/evaluation-step'
 import { Route as ApiPublicRetentionStepRouteImport } from './routes/api/public/retention-step'
 import { Route as ApiPublicStripeWebhookRouteImport } from './routes/api/public/stripe-webhook'
 import { Route as ApiPublicContentReleasesRollbackRouteImport } from './routes/api/public/content-releases.rollback'
+import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
 import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
@@ -159,6 +161,12 @@ const AuthenticatedMembershipSuccessRoute =
     path: '/membership/success',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const ApiPublicBillingReconcileRoute =
+  ApiPublicBillingReconcileRouteImport.update({
+    id: '/api/public/billing-reconcile',
+    path: '/api/public/billing-reconcile',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiPublicContentReleasesRoute =
   ApiPublicContentReleasesRouteImport.update({
     id: '/api/public/content-releases',
@@ -191,6 +199,12 @@ const ApiPublicContentReleasesRollbackRoute =
     id: '/rollback',
     path: '/rollback',
     getParentRoute: () => ApiPublicContentReleasesRoute,
+  } as any)
+const ApiPublicPaymentsWebhookRoute =
+  ApiPublicPaymentsWebhookRouteImport.update({
+    id: '/api/public/payments/webhook',
+    path: '/api/public/payments/webhook',
+    getParentRoute: () => rootRouteImport,
   } as any)
 const LovableEmailAuthPreviewRoute = LovableEmailAuthPreviewRouteImport.update({
   id: '/lovable/email/auth/preview',
@@ -232,12 +246,14 @@ export interface FileRoutesByFullPath {
   '/oauth/consent': typeof OauthConsentRoute
   '/.lovable/oauth/consent': typeof Char91DotlovableChar93OauthConsentRoute
   '/membership/success': typeof AuthenticatedMembershipSuccessRoute
+  '/api/public/billing-reconcile': typeof ApiPublicBillingReconcileRoute
   '/api/public/content-releases': typeof ApiPublicContentReleasesRouteWithChildren
   '/api/public/evaluation-identity': typeof ApiPublicEvaluationIdentityRoute
   '/api/public/evaluation-step': typeof ApiPublicEvaluationStepRoute
   '/api/public/retention-step': typeof ApiPublicRetentionStepRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/api/public/content-releases/rollback': typeof ApiPublicContentReleasesRollbackRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -265,12 +281,14 @@ export interface FileRoutesByTo {
   '/oauth/consent': typeof OauthConsentRoute
   '/.lovable/oauth/consent': typeof Char91DotlovableChar93OauthConsentRoute
   '/membership/success': typeof AuthenticatedMembershipSuccessRoute
+  '/api/public/billing-reconcile': typeof ApiPublicBillingReconcileRoute
   '/api/public/content-releases': typeof ApiPublicContentReleasesRouteWithChildren
   '/api/public/evaluation-identity': typeof ApiPublicEvaluationIdentityRoute
   '/api/public/evaluation-step': typeof ApiPublicEvaluationStepRoute
   '/api/public/retention-step': typeof ApiPublicRetentionStepRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/api/public/content-releases/rollback': typeof ApiPublicContentReleasesRollbackRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -300,12 +318,14 @@ export interface FileRoutesById {
   '/oauth/consent': typeof OauthConsentRoute
   '/.lovable/oauth/consent': typeof Char91DotlovableChar93OauthConsentRoute
   '/_authenticated/membership/success': typeof AuthenticatedMembershipSuccessRoute
+  '/api/public/billing-reconcile': typeof ApiPublicBillingReconcileRoute
   '/api/public/content-releases': typeof ApiPublicContentReleasesRouteWithChildren
   '/api/public/evaluation-identity': typeof ApiPublicEvaluationIdentityRoute
   '/api/public/evaluation-step': typeof ApiPublicEvaluationStepRoute
   '/api/public/retention-step': typeof ApiPublicRetentionStepRoute
   '/api/public/stripe-webhook': typeof ApiPublicStripeWebhookRoute
   '/api/public/content-releases/rollback': typeof ApiPublicContentReleasesRollbackRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -335,12 +355,14 @@ export interface FileRouteTypes {
     | '/oauth/consent'
     | '/.lovable/oauth/consent'
     | '/membership/success'
+    | '/api/public/billing-reconcile'
     | '/api/public/content-releases'
     | '/api/public/evaluation-identity'
     | '/api/public/evaluation-step'
     | '/api/public/retention-step'
     | '/api/public/stripe-webhook'
     | '/api/public/content-releases/rollback'
+    | '/api/public/payments/webhook'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/lovable/email/transactional/preview'
@@ -368,12 +390,14 @@ export interface FileRouteTypes {
     | '/oauth/consent'
     | '/.lovable/oauth/consent'
     | '/membership/success'
+    | '/api/public/billing-reconcile'
     | '/api/public/content-releases'
     | '/api/public/evaluation-identity'
     | '/api/public/evaluation-step'
     | '/api/public/retention-step'
     | '/api/public/stripe-webhook'
     | '/api/public/content-releases/rollback'
+    | '/api/public/payments/webhook'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/lovable/email/transactional/preview'
@@ -402,12 +426,14 @@ export interface FileRouteTypes {
     | '/oauth/consent'
     | '/.lovable/oauth/consent'
     | '/_authenticated/membership/success'
+    | '/api/public/billing-reconcile'
     | '/api/public/content-releases'
     | '/api/public/evaluation-identity'
     | '/api/public/evaluation-step'
     | '/api/public/retention-step'
     | '/api/public/stripe-webhook'
     | '/api/public/content-releases/rollback'
+    | '/api/public/payments/webhook'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/lovable/email/transactional/preview'
@@ -425,11 +451,13 @@ export interface RootRouteChildren {
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   OauthConsentRoute: typeof OauthConsentRoute
   Char91DotlovableChar93OauthConsentRoute: typeof Char91DotlovableChar93OauthConsentRoute
+  ApiPublicBillingReconcileRoute: typeof ApiPublicBillingReconcileRoute
   ApiPublicContentReleasesRoute: typeof ApiPublicContentReleasesRouteWithChildren
   ApiPublicEvaluationIdentityRoute: typeof ApiPublicEvaluationIdentityRoute
   ApiPublicEvaluationStepRoute: typeof ApiPublicEvaluationStepRoute
   ApiPublicRetentionStepRoute: typeof ApiPublicRetentionStepRoute
   ApiPublicStripeWebhookRoute: typeof ApiPublicStripeWebhookRoute
+  ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
   LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
   LovableEmailAuthWebhookRoute: typeof LovableEmailAuthWebhookRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
@@ -598,6 +626,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMembershipSuccessRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/public/billing-reconcile': {
+      id: '/api/public/billing-reconcile'
+      path: '/api/public/billing-reconcile'
+      fullPath: '/api/public/billing-reconcile'
+      preLoaderRoute: typeof ApiPublicBillingReconcileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/content-releases': {
       id: '/api/public/content-releases'
       path: '/api/public/content-releases'
@@ -639,6 +674,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/public/content-releases/rollback'
       preLoaderRoute: typeof ApiPublicContentReleasesRollbackRouteImport
       parentRoute: typeof ApiPublicContentReleasesRoute
+    }
+    '/api/public/payments/webhook': {
+      id: '/api/public/payments/webhook'
+      path: '/api/public/payments/webhook'
+      fullPath: '/api/public/payments/webhook'
+      preLoaderRoute: typeof ApiPublicPaymentsWebhookRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/lovable/email/auth/preview': {
       id: '/lovable/email/auth/preview'
@@ -726,11 +768,13 @@ const rootRouteChildren: RootRouteChildren = {
   OauthConsentRoute: OauthConsentRoute,
   Char91DotlovableChar93OauthConsentRoute:
     Char91DotlovableChar93OauthConsentRoute,
+  ApiPublicBillingReconcileRoute: ApiPublicBillingReconcileRoute,
   ApiPublicContentReleasesRoute: ApiPublicContentReleasesRouteWithChildren,
   ApiPublicEvaluationIdentityRoute: ApiPublicEvaluationIdentityRoute,
   ApiPublicEvaluationStepRoute: ApiPublicEvaluationStepRoute,
   ApiPublicRetentionStepRoute: ApiPublicRetentionStepRoute,
   ApiPublicStripeWebhookRoute: ApiPublicStripeWebhookRoute,
+  ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
   LovableEmailAuthPreviewRoute: LovableEmailAuthPreviewRoute,
   LovableEmailAuthWebhookRoute: LovableEmailAuthWebhookRoute,
   LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,

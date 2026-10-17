@@ -11,6 +11,19 @@ before(async () => {
 });
 beforeEach(async () => {
   await h.reset();
+  for (const user of [h.userA, h.userB])
+    await h
+      .records()
+      .exec(
+        "INSERT INTO memberships_v2(stripe_subscription_id,environment,user_id,status,plan,current_period_end,paid_until,updated_at) VALUES(?,'sandbox',?,'active','month',?,?,?)",
+        [
+          "sub_" + user,
+          user,
+          Math.floor(Date.now() / 1000) + 86400,
+          Math.floor(Date.now() / 1000) + 86400,
+          new Date().toISOString(),
+        ],
+      );
 });
 after(async () => {
   await h?.close();

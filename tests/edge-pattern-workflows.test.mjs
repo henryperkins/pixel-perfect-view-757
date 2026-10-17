@@ -57,7 +57,9 @@ test("billing configuration requires a fresh signed server request and forbids c
   const response = await worker.default.fetch(request(data), env);
   assert.equal(response.status, 200);
   assert.equal(response.headers.get("Cache-Control"), "no-store");
-  assert.equal((await response.json()).secretKey, "sk_test_fixture");
+  const configuration = await response.json();
+  assert.equal(Object.hasOwn(configuration, "secretKey"), false);
+  assert.equal(Object.hasOwn(configuration, "webhookSecret"), false);
 });
 
 function publicationFixture() {

@@ -1,16 +1,33 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Shell } from "@/components/pattern/Shell";
 import { Button } from "@/components/ui/button";
 import { useMembership } from "@/hooks/useMembership";
-import { startCheckout } from "@/lib/billing.functions";
-import type { MembershipPlan } from "@/lib/billing-policy";
+import { PLANS, type MembershipPlan } from "@/lib/billing-policy";
+import { PaymentTestModeBanner } from "@/components/pattern/PaymentTestModeBanner";
+import { StripeEmbeddedCheckout } from "@/components/pattern/StripeEmbeddedCheckout";
+import { getStripeEnvironment } from "@/lib/stripe";
 
 export const Route = createFileRoute("/_authenticated/plans")({
   validateSearch: (search: Record<string, unknown>): { canceled?: boolean } => ({
     canceled: search["canceled"] === true || search["canceled"] === "true",
   }),
-  head: () => ({ meta: [{ title: "Plans — Pattern" }] }),
+  head: () => ({
+    meta: [
+      { title: "Plans — Pattern" },
+      {
+        name: "description",
+        content: "Choose a Pattern Plus membership for complete natal chapters.",
+      },
+      { property: "og:title", content: "Plans — Pattern" },
+      {
+        property: "og:description",
+        content: "Choose a Pattern Plus membership for complete natal chapters.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+    ],
+  }),
   component: PlansPage,
 });
 function PlansPage() {
@@ -23,18 +40,22 @@ function PlansPage() {
       state?.enabled &&
       state?.membership &&
       !["canceled", "incomplete_expired"].includes(state.membership.status);
-  async function checkout(plan: MembershipPlan) {
-    setBusy(plan);
+  const checkoutError = useCallback((message: string) => {
+    setError(message);
+    setBusy(null);
+  }, []);
+  function checkout(plan: MembershipPlan) {
     setError("");
     try {
-      window.location.assign((await startCheckout({ data: { plan } })).url);
+      getStripeEnvironment();
+      setBusy(plan);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Checkout could not open. Please try again.");
-      setBusy(null);
+      checkoutError(e instanceof Error ? e.message : "Checkout is unavailable.");
     }
   }
   return (
     <Shell>
+      <PaymentTestModeBanner />
       <div className="plans-main mx-auto max-w-3xl">
         <h1 className="text-3xl">Go deeper with Pattern Plus</h1>
         <p className="mt-4 max-w-2xl text-muted-foreground">
@@ -45,7 +66,7 @@ function PlansPage() {
           Your chart, daily reading, journal and chapter openings remain available on the free plan.
         </p>
         <div className="mt-6 border-y border-rule py-4 text-sm">
-          <p>Test payments only. No real money is charged.</p>
+          <p>Prices are in USD, before applicable tax.</p>
           <p className="mt-2 text-muted-foreground">
             {state?.trialEligible === false
               ? "You’ve used your free trial. Your next membership starts with a payment."
@@ -68,6 +89,15 @@ function PlansPage() {
             <Button variant="outline" className="mt-3" onClick={() => query.refetch()}>
               Retry plans
             </Button>
+          </div>
+        ) : busy ? (
+          <div className="mt-8">
+            <Button variant="outline" onClick={() => setBusy(null)}>
+              Back to plans
+            </Button>
+            <div className="mt-6">
+              <StripeEmbeddedCheckout key={busy} plan={busy} onError={checkoutError} />
+            </div>
           </div>
         ) : hasMembership ? (
           <div className="mt-8">
@@ -94,7 +124,7 @@ function PlansPage() {
                     {plan === "month" ? "Monthly" : "Yearly"}
                   </h2>
                   <p className="mt-3">
-                    <span className="font-mono text-3xl">${plan === "month" ? "8" : "72"}</span>
+                    <span className="font-mono text-3xl">${PLANS[plan].amount / 100}</span>
                     <span className="ml-2 text-sm text-muted-foreground">/ {plan}</span>
                   </p>
                   <p className="mt-3 text-sm text-muted-foreground">
