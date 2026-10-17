@@ -1,5 +1,11 @@
 # Browsing refresh
 
+## Purchase and account audit
+- [ ] Research current catalog, authentication, payments, account changes, entitlements, and renewals; document evidence and gaps.
+- [ ] Resolve business-policy questions and present the repair plan for approval.
+- [ ] Implement approved fixes and focused regression tests.
+- [ ] Verify real preview purchase/account flows and provide test-card steps; record external blockers.
+
 - [x] Apply selected palette and typography.
 - [x] Add fluid navigation, section reveals, and reading interactions without changing chart or reading logic.
 - [x] Verify browsing and reduced-motion behavior; check page metadata.
