@@ -39,7 +39,7 @@ const EXPECTED_BENCHMARK_HASH = "825c877dbb88d5d20d39a12abfd67cea01781506250db93
 const EXPECTED_BUNDLE_HASH = "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f";
 const EXPECTED_RUNTIME_FALLBACK_HASH =
   "de37f4d42308bec8acbc7fff346a4bd8a446698eae1041b0ac1d3539e9bd2703";
-const EXPECTED_MATERIAL_HASH = "40a86ccab103f37f6b28db1e1aef8313f142d2cb7af6c0f8806f483eabf665b8";
+const EXPECTED_MATERIAL_HASH = "1c2374490a07be6856a3639660f8ee6014ba60f5ab9c922bb2b9bd078c1ad5bc";
 
 export function createContextPilotPlan(sourceSha: string | null, provider: LanguageProvider) {
   if (!sourceSha || !/^[a-f0-9]{40}$/.test(sourceSha))

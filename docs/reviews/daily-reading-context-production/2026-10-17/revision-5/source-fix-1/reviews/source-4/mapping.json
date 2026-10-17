@@ -1,0 +1,35 @@
+[
+  {
+    "label": "B1",
+    "id": "synthesis-natal-and-transit",
+    "kind": "reference",
+    "bodySha256": "ac2711d73c84a6400a3e9875eb9a57ef5d7aa6de8196794dcb995627f7109005",
+    "paragraphs": [
+      {
+        "text": "On a free afternoon, the notes for a task you know well can start turning into an outline. With Jupiter trining your natal Mars, the notes and your interest in them can feed each other when the aim is well chosen, and effort can meet little friction, making it natural to add the next piece or pursue an emerging opening. With Saturn squaring your natal Sun, though, the task itself can take more effort than usual, and if it fills the whole afternoon, the next piece needs hours that are already spoken for. This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+        "facts": [
+          "C1",
+          "I1",
+          "C2",
+          "I2",
+          "A1"
+        ],
+        "scenes": []
+      },
+      {
+        "text": "A bigger task can need more structure to carry it, and that need can show up where the task grows past what it was set up for. If several possible projects are competing for that same free afternoon, you may not need to decide between them yet: following more than one line of curiosity can help a direction take shape. And if an earlier way of handling the task no longer fits, you could use this return to try one smaller change: the next piece can wait as a note instead of joining the outline.",
+        "facts": [
+          "C1",
+          "I1",
+          "C2",
+          "I2",
+          "S1",
+          "N1",
+          "A1",
+          "P2"
+        ],
+        "scenes": []
+      }
+    ]
+  }
+]

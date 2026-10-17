@@ -1,5 +1,7 @@
 # Revision 5: one wording per source claim
 
+> **Offline follow-up to `716fe80`:** See the [source wording follow-up](source-fix-1/report.md) for current material and review evidence. The account below records the original revision-5 handoff before that follow-up.
+
 **The context writer now receives exactly one drafted wording for each necessary source claim, chosen for its source graph, and no second expression of the same meaning anywhere in the request.** Source proof stays in the local material file. This is an offline revision: no provider request, push, deployment or activation was made, and `writer_rollout` stays off.
 
 ## What the provider actually received

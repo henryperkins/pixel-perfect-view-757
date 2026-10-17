@@ -205,7 +205,7 @@
         {
           "id": "I2.ease",
           "necessity": "required",
-          "meaning": "Effort can meet little friction, making a larger piece of work natural to take on.",
+          "meaning": "Effort can meet little friction, making it natural to take on a larger piece of work or pursue an emerging opening.",
           "qualifier": "Possibility; not a promise of success, reward or an opportunity arriving."
         }
       ],
@@ -435,14 +435,14 @@
         {
           "id": "N1.2",
           "move": "choose",
-          "write": "A note can keep an idea in view without promising it the afternoon.",
+          "write": "You could give the task a clear stopping point, with the other ideas waiting as notes.",
           "cite": [
             "N1",
             "C1",
             "I1"
           ],
           "keep": [
-            "can"
+            "could"
           ],
           "continues": "N1.1",
           "carries": [
@@ -659,7 +659,7 @@
         {
           "id": "I2.2",
           "move": "explain",
-          "write": "With Jupiter trining your natal Mars, the notes and your interest in them can feed each other when the aim is well chosen, and adding the next piece can feel natural.",
+          "write": "With Jupiter trining your natal Mars, the notes and your interest in them can feed each other when the aim is well chosen, and effort can meet little friction, making it natural to add the next piece or pursue an emerging opening.",
           "cite": [
             "C2",
             "I2"
@@ -676,7 +676,7 @@
         {
           "id": "I1.2",
           "move": "explain",
-          "write": "With Saturn squaring your natal Sun, the task itself can take more effort than usual.",
+          "write": "With Saturn squaring your natal Sun, the task itself can take more deliberate effort than usual.",
           "cite": [
             "C1",
             "I1"
@@ -718,7 +718,7 @@
         {
           "id": "S1.1",
           "move": "distinguish",
-          "write": "A bigger task can need more structure to carry it, and that need can show up where the task grows past what it was set up for.",
+          "write": "A bigger task can need more structure to carry it, and that need can show up where the task's ambitions grow beyond its agreed limits.",
           "cite": [
             "S1",
             "C1",
@@ -758,7 +758,7 @@
         {
           "id": "P2.1",
           "move": "choose",
-          "write": "If an earlier way of handling the task no longer fits, you could use this return to try one smaller change: the next piece can wait as a note instead of joining the outline.",
+          "write": "If an earlier way of handling the task no longer fits, you could use this return to try one smaller change to how you do it or where it stops: the next piece can wait as a note instead of joining the outline.",
           "cite": [
             "P2",
             "C1",

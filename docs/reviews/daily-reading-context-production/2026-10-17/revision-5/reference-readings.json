@@ -92,7 +92,7 @@
           "scenes": []
         },
         {
-          "text": "If several possible projects are competing for that same free afternoon, with notes on one idea and a tab open on another, you may not need to decide between them yet: following more than one line of curiosity can help a direction take shape. A note can keep an idea in view without promising it the afternoon.",
+          "text": "If several possible projects are competing for that same free afternoon, with notes on one idea and a tab open on another, you may not need to decide between them yet: following more than one line of curiosity can help a direction take shape. You could give the task a clear stopping point, with the other ideas waiting as notes.",
           "facts": [
             "C1",
             "I1",
@@ -129,14 +129,14 @@
         },
         {
           "paragraph": 2,
-          "text": "A note can keep an idea in view without promising it the afternoon.",
+          "text": "You could give the task a clear stopping point, with the other ideas waiting as notes.",
           "entries": [
             "N1.2"
           ],
-          "contribution": "Direction: the optional limit on what this afternoon holds."
+          "contribution": "Direction: an optional stopping point for the task itself, with the other ideas held as notes."
         }
       ],
-      "bodySha256": "ccbb6a46e425ee781710ab1aed3d8e9cddcd22281e0c16cbf8bdf59154741e45"
+      "bodySha256": "78fb60416eef8eb0b649e46ac3195832278db6595964dc59b9b8d04b3438035e"
     },
     {
       "id": "transit-only",
@@ -271,7 +271,7 @@
       "id": "synthesis-natal-and-transit",
       "paragraphs": [
         {
-          "text": "On a free afternoon, the notes for a task you know well can start turning into an outline. With Jupiter trining your natal Mars, the notes and your interest in them can feed each other when the aim is well chosen, and adding the next piece can feel natural. With Saturn squaring your natal Sun, though, the task itself can take more effort than usual, and if it fills the whole afternoon, the next piece needs hours that are already spoken for. This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+          "text": "On a free afternoon, the notes for a task you know well can start turning into an outline. With Jupiter trining your natal Mars, the notes and your interest in them can feed each other when the aim is well chosen, and effort can meet little friction, making it natural to add the next piece or pursue an emerging opening. With Saturn squaring your natal Sun, though, the task itself can take more deliberate effort than usual, and if it fills the whole afternoon, the next piece needs hours that are already spoken for. This is the second of three calculated contacts; the first exact contact falls in September 2026.",
           "facts": [
             "C1",
             "I1",
@@ -282,7 +282,7 @@
           "scenes": []
         },
         {
-          "text": "A bigger task can need more structure to carry it, and that need can show up where the task grows past what it was set up for. If several possible projects are competing for that same free afternoon, you may not need to decide between them yet: following more than one line of curiosity can help a direction take shape. And if an earlier way of handling the task no longer fits, you could use this return to try one smaller change: the next piece can wait as a note instead of joining the outline.",
+          "text": "A bigger task can need more structure to carry it, and that need can show up where the task's ambitions grow beyond its agreed limits. If several possible projects are competing for that same free afternoon, you may not need to decide between them yet: following more than one line of curiosity can help a direction take shape. And if an earlier way of handling the task no longer fits, you could use this return to try one smaller change to how you do it or where it stops: the next piece can wait as a note instead of joining the outline.",
           "facts": [
             "C1",
             "I1",
@@ -307,15 +307,15 @@
         },
         {
           "paragraph": 1,
-          "text": "With Jupiter trining your natal Mars, the notes and your interest in them can feed each other when the aim is well chosen, and adding the next piece can feel natural.",
+          "text": "With Jupiter trining your natal Mars, the notes and your interest in them can feed each other when the aim is well chosen, and effort can meet little friction, making it natural to add the next piece or pursue an emerging opening.",
           "entries": [
             "I2.2"
           ],
-          "contribution": "Meaning: the supporting contact's conditional reinforcement and ease."
+          "contribution": "Meaning: the supporting contact's conditional reinforcement, possible low-friction effort, and both expansion and emerging-opening alternatives."
         },
         {
           "paragraph": 1,
-          "text": "With Saturn squaring your natal Sun, though, the task itself can take more effort than usual, and if it fills the whole afternoon, the next piece needs hours that are already spoken for.",
+          "text": "With Saturn squaring your natal Sun, though, the task itself can take more deliberate effort than usual, and if it fills the whole afternoon, the next piece needs hours that are already spoken for.",
           "entries": [
             "I1.2",
             "I1.3"
@@ -332,7 +332,7 @@
         },
         {
           "paragraph": 2,
-          "text": "A bigger task can need more structure to carry it, and that need can show up where the task grows past what it was set up for.",
+          "text": "A bigger task can need more structure to carry it, and that need can show up where the task's ambitions grow beyond its agreed limits.",
           "entries": [
             "S1.1"
           ],
@@ -348,14 +348,14 @@
         },
         {
           "paragraph": 2,
-          "text": "And if an earlier way of handling the task no longer fits, you could use this return to try one smaller change: the next piece can wait as a note instead of joining the outline.",
+          "text": "And if an earlier way of handling the task no longer fits, you could use this return to try one smaller change to how you do it or where it stops: the next piece can wait as a note instead of joining the outline.",
           "entries": [
             "P2.1"
           ],
-          "contribution": "Direction: one smaller change that keeps the task's limit and the idea in view."
+          "contribution": "Direction: a smaller change to method or stopping point, with the next piece optionally held as a note."
         }
       ],
-      "bodySha256": "84bdca12f0d51acbe7e82a21d19285083c92723b48bebf751fba66e0f409e6a3"
+      "bodySha256": "372e0ae1fa40328a7a2507322bd8f6d28adc698df5807e574483fbf06858323f"
     }
   ]
 }

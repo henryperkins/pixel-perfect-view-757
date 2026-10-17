@@ -1,0 +1,164 @@
+{
+  "at": "2026-10-17T13:38:15.745621+00:00",
+  "baseCommit": "716fe8090ace7be2879327dc017f20120f303685",
+  "scope": "final uncommitted offline source follow-up to 716fe80; not a deployed identity",
+  "identity": {
+    "materialVersion": "daily-context-material-5",
+    "materialHash": "1c2374490a07be6856a3639660f8ee6014ba60f5ab9c922bb2b9bd078c1ad5bc",
+    "pilotPlanSourceHash": "a34e6814aaaada5d49cd737defa2fdbd387e11a43c80c1dd7f7a793b48088cf4"
+  },
+  "checks": {
+    "fullSuite": {
+      "command": "node --test --test-concurrency=4 --test-timeout=240000 tests/*.test.mjs",
+      "exitCode": 0,
+      "tests": 1098,
+      "pass": 1094,
+      "fail": 0,
+      "skipped": 4,
+      "skipDetails": [
+        "﹣ real Swiss episode output retains enough evidence for existing app acceptance (0.276045ms) # Run the standalone Swiss service installation first.",
+        "﹣ explicit birth recalculation stores owned source anchors while preserving the legacy snapshot (0.126448ms) # Run the standalone Swiss service installation first.",
+        "﹣ Node and workerd produce identical complete plans for the new case sets and both bundles (0.283466ms) # SKIP",
+        "﹣ strict archived-source workerd replay reproduces captured requests and outputs without provider calls (0.599602ms) # SKIP"
+      ]
+    },
+    "typescript": {
+      "command": "./node_modules/.bin/tsc --noEmit",
+      "exitCode": 0
+    },
+    "eslint": {
+      "command": "./node_modules/.bin/eslint src/lib/ai/context-pilot-plan.server.ts",
+      "exitCode": 0
+    },
+    "build": {
+      "command": "npm run build",
+      "exitCode": 0
+    },
+    "replay": {
+      "authoredBodiesAccepted": 8,
+      "savedContactOnlyRejected": "writing_quality",
+      "providerRequestsIntercepted": 11,
+      "externalProviderRequests": 0
+    },
+    "diffWhitespace": {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  },
+  "logs": {
+    "full-tests-final.log": {
+      "path": "/tmp/pattern-context-source-fix-5-20261017/full-tests-final.log",
+      "sha256": "42510c4131e140f038b4556c96532d41702cc01c0834414752e8cf66c8c62a19",
+      "bytes": 110189
+    },
+    "typescript-final.log": {
+      "path": "/tmp/pattern-context-source-fix-5-20261017/typescript-final.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "eslint-final.log": {
+      "path": "/tmp/pattern-context-source-fix-5-20261017/eslint-final.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build-final.log": {
+      "path": "/tmp/pattern-context-source-fix-5-20261017/build-final.log",
+      "sha256": "a3a00e95df6a42f6a1771edf699e3062bf79d04e0194cb81454d9c1f9ef11b44",
+      "bytes": 92942
+    },
+    "replay-final.log": {
+      "path": "/tmp/pattern-context-source-fix-5-20261017/replay-final.log",
+      "sha256": "d4cef5e95f2484cb2444daa45cad641f9d858b19accdbe90aa75a2bea9370048",
+      "bytes": 1264
+    },
+    "premise-analysis-final.log": {
+      "path": "/tmp/pattern-context-source-fix-5-20261017/premise-analysis-final.log",
+      "sha256": "f51219a887de84d66d2f17579d68f4b9dd32649212028b356d27eb1acdbe7178",
+      "bytes": 2306
+    }
+  },
+  "requestCaptures": {
+    "path": "requests.json",
+    "sha256": "4498b023474cefefc4f21cf61b95c5320bae0bb80e8e4202ba9ab84e9469da3a",
+    "interceptedRequests": 10,
+    "externalCallAttempts": 0,
+    "sameMessagesOnBothRoutes": true,
+    "eachDetectedPremiseAppearsOnce": true,
+    "userCharsRange": [
+      2417,
+      4307
+    ]
+  },
+  "review": {
+    "source": {
+      "finalChangedCompositionsPass": true,
+      "currentBodyPasses": 8,
+      "currentBodies": 8,
+      "round3": "natal-only passes; synthesis fails on implicit low-friction effort",
+      "round4": "I2 accepted; synthesis fails on deliberate effort, agreed limits, method-or-boundary alternatives",
+      "round5": "synthesis composition and body pass with integration 4; zero unsupported claims or omitted meanings"
+    },
+    "reader": {
+      "freshRound": 5,
+      "freshBodies": 4,
+      "currentBodyPasses": 6,
+      "currentBodies": 8,
+      "finalWordingBodiesAwaitingReaderReview": 0,
+      "belowBar": [
+        {
+          "id": "natal-and-transit",
+          "kind": "reference",
+          "scores": {
+            "recognition": 4,
+            "meaning": 4,
+            "direction": 4,
+            "distinctness": 4,
+            "voice": 3
+          }
+        },
+        {
+          "id": "synthesis-natal-and-transit",
+          "kind": "reference",
+          "scores": {
+            "recognition": 4,
+            "meaning": 4,
+            "direction": 4,
+            "distinctness": 3,
+            "voice": 3
+          }
+        }
+      ]
+    },
+    "ledger": "body-review-ledger.json",
+    "ledgerSha256": "81925ddc61e5da4dded2fa1db5c06438d25990c8a3fafc6c56226d5a1e8037a5",
+    "newReviewers": 4,
+    "sequentialFreshAgents": true,
+    "humanReviewCompleted": false,
+    "generatedQualification": false
+  },
+  "actions": {
+    "providerPilotRequests": 0,
+    "providerTraffic": 0,
+    "paidPilotAuthorized": false,
+    "push": false,
+    "deployment": false,
+    "activation": false,
+    "writerRollout": "off per user handoff; not queried live",
+    "mainCheckout": "HEAD, status, tracked diff and .env bytes match the before snapshot; no files edited here",
+    "committed": false
+  },
+  "openItems": [
+    "Synthesis final authored reference: distinctness 3 and voice 3; the proposed synthesis paragraph contract change is still unimplemented.",
+    "Natal-and-transit final authored reference: voice 3 because exact chronology lacks a sufficient practical connection.",
+    "Natal-only and natal-and-transit runtime fallbacks still need possible/free correction and review before natal activation.",
+    "Any paid pilot requires fresh explicit authorization.",
+    "All review evidence is AI, not human; authored readings do not qualify generated writing."
+  ],
+  "preserved": {
+    "sourceFacts": true,
+    "allCompositionMetadataExceptWordingAndPossibilityWord": true,
+    "rawBytePreservation": "preserved-inputs.json",
+    "snapshot": "preservation.json",
+    "mainSnapshotMatches": true
+  }
+}

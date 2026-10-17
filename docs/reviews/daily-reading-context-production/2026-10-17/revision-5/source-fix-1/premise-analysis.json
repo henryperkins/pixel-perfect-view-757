@@ -1,0 +1,437 @@
+{
+ "requests": {
+  "before": [
+   {
+    "id": "contact-only",
+    "systemChars": 1049,
+    "userChars": 2417,
+    "requestBytes": 4280,
+    "requestSha256": "f8a48c008e7eaa3eedbfc55431ed211d4436a64418a138f8437b377ef82fc03d",
+    "units": 77,
+    "premiseExpressions": {
+     "I1.effort": 1,
+     "I1.capacity": 1,
+     "I1.boundary": 1,
+     "I1.calendar": 1
+    },
+    "repeatedPremises": {}
+   },
+   {
+    "id": "natal-only",
+    "systemChars": 1172,
+    "userChars": 2739,
+    "requestBytes": 4761,
+    "requestSha256": "6040a5d19e950308032b3df102b129053ed918035c904b06a2e5c0231e5ee632",
+    "units": 88,
+    "premiseExpressions": {
+     "I1.effort": 1,
+     "I1.capacity": 1,
+     "N1.curiosity": 1,
+     "N1.hold": 1
+    },
+    "repeatedPremises": {}
+   },
+   {
+    "id": "transit-only",
+    "systemChars": 1049,
+    "userChars": 2813,
+    "requestBytes": 4728,
+    "requestSha256": "7a239ddcecf3e2c54caf48eba4c1cf6fd35011a60b7fb5374e2043fbd7baa761",
+    "units": 91,
+    "premiseExpressions": {
+     "I1.effort": 1,
+     "I1.capacity": 1,
+     "I1.boundary": 1,
+     "P2.adjustment": 1
+    },
+    "repeatedPremises": {}
+   },
+   {
+    "id": "natal-and-transit",
+    "systemChars": 1172,
+    "userChars": 3317,
+    "requestBytes": 5413,
+    "requestSha256": "dfe93ee51a5875f337272d1de8ec3ef193e17074afc1b59e5f4841dfad27b3df",
+    "units": 108,
+    "premiseExpressions": {
+     "I1.effort": 1,
+     "I1.capacity": 1,
+     "I1.boundary": 1,
+     "N1.curiosity": 1,
+     "N1.hold": 1,
+     "P2.adjustment": 1
+    },
+    "repeatedPremises": {}
+   },
+   {
+    "id": "synthesis-natal-and-transit",
+    "systemChars": 1172,
+    "userChars": 4189,
+    "requestBytes": 6423,
+    "requestSha256": "03c614bbc9cd6ee8adf1141fdb6daa4a6f5b7fed46b0468268e2016ea501e235",
+    "units": 148,
+    "premiseExpressions": {
+     "I1.effort": 1,
+     "I1.capacity": 1,
+     "N1.curiosity": 1,
+     "N1.hold": 1,
+     "P2.adjustment": 1,
+     "I2.reinforce": 1,
+     "I2.ease": 1,
+     "S1.structure": 1,
+     "S1.notice": 1
+    },
+    "repeatedPremises": {}
+   }
+  ],
+  "after": [
+   {
+    "id": "contact-only",
+    "systemChars": 1049,
+    "userChars": 2417,
+    "requestBytes": 4280,
+    "requestSha256": "f8a48c008e7eaa3eedbfc55431ed211d4436a64418a138f8437b377ef82fc03d",
+    "units": 77,
+    "premiseExpressions": {
+     "I1.effort": 1,
+     "I1.capacity": 1,
+     "I1.boundary": 1,
+     "I1.calendar": 1
+    },
+    "repeatedPremises": {}
+   },
+   {
+    "id": "natal-only",
+    "systemChars": 1172,
+    "userChars": 2760,
+    "requestBytes": 4782,
+    "requestSha256": "7cd93e3fea03340e407a1ec69ba239ee580b8c28824b6b6a6afc47b1ea427f6b",
+    "units": 88,
+    "premiseExpressions": {
+     "I1.effort": 1,
+     "I1.capacity": 1,
+     "I1.boundary": 1,
+     "N1.curiosity": 1,
+     "N1.hold": 1
+    },
+    "repeatedPremises": {}
+   },
+   {
+    "id": "transit-only",
+    "systemChars": 1049,
+    "userChars": 2813,
+    "requestBytes": 4728,
+    "requestSha256": "7a239ddcecf3e2c54caf48eba4c1cf6fd35011a60b7fb5374e2043fbd7baa761",
+    "units": 91,
+    "premiseExpressions": {
+     "I1.effort": 1,
+     "I1.capacity": 1,
+     "I1.boundary": 1,
+     "P2.adjustment": 1
+    },
+    "repeatedPremises": {}
+   },
+   {
+    "id": "natal-and-transit",
+    "systemChars": 1172,
+    "userChars": 3317,
+    "requestBytes": 5413,
+    "requestSha256": "dfe93ee51a5875f337272d1de8ec3ef193e17074afc1b59e5f4841dfad27b3df",
+    "units": 108,
+    "premiseExpressions": {
+     "I1.effort": 1,
+     "I1.capacity": 1,
+     "I1.boundary": 1,
+     "N1.curiosity": 1,
+     "N1.hold": 1,
+     "P2.adjustment": 1
+    },
+    "repeatedPremises": {}
+   },
+   {
+    "id": "synthesis-natal-and-transit",
+    "systemChars": 1172,
+    "userChars": 4307,
+    "requestBytes": 6541,
+    "requestSha256": "fa6c072537b4d8663eec93658e3ca5879610e08ea7c75357eb732dbe4c5ed8d7",
+    "units": 148,
+    "premiseExpressions": {
+     "I1.effort": 1,
+     "I1.capacity": 1,
+     "I1.boundary": 1,
+     "N1.curiosity": 1,
+     "N1.hold": 1,
+     "P2.adjustment": 1,
+     "I2.reinforce": 1,
+     "I2.ease": 1,
+     "S1.structure": 1,
+     "S1.notice": 1
+    },
+    "repeatedPremises": {}
+   }
+  ]
+ },
+ "bodies": {
+  "reference": {
+   "contact-only": {
+    "premiseSentences": {
+     "I1.effort": [
+      2
+     ],
+     "I1.capacity": [
+      3
+     ],
+     "I1.boundary": [
+      5
+     ],
+     "I1.calendar": [
+      4
+     ]
+    },
+    "repeated": {}
+   },
+   "natal-only": {
+    "premiseSentences": {
+     "I1.effort": [
+      2
+     ],
+     "I1.capacity": [
+      2
+     ],
+     "I1.boundary": [
+      4
+     ],
+     "N1.curiosity": [
+      3
+     ],
+     "N1.hold": [
+      4
+     ]
+    },
+    "repeated": {}
+   },
+   "transit-only": {
+    "premiseSentences": {
+     "I1.effort": [
+      2
+     ],
+     "I1.capacity": [
+      2
+     ],
+     "I1.boundary": [
+      4
+     ],
+     "P2.adjustment": [
+      4
+     ]
+    },
+    "repeated": {}
+   },
+   "natal-and-transit": {
+    "premiseSentences": {
+     "I1.effort": [
+      2
+     ],
+     "I1.capacity": [
+      2
+     ],
+     "I1.boundary": [
+      5
+     ],
+     "N1.curiosity": [
+      4
+     ],
+     "N1.hold": [
+      5
+     ],
+     "P2.adjustment": [
+      5
+     ]
+    },
+    "repeated": {}
+   },
+   "synthesis-natal-and-transit": {
+    "premiseSentences": {
+     "I1.effort": [
+      3
+     ],
+     "I1.capacity": [
+      3
+     ],
+     "I1.boundary": [
+      7
+     ],
+     "N1.curiosity": [
+      6
+     ],
+     "N1.hold": [
+      7
+     ],
+     "P2.adjustment": [
+      7
+     ],
+     "I2.reinforce": [
+      2
+     ],
+     "I2.ease": [
+      2
+     ],
+     "S1.structure": [
+      5
+     ],
+     "S1.notice": [
+      5
+     ]
+    },
+    "repeated": {}
+   }
+  },
+  "edited": {
+   "R3 contact-only": {
+    "premiseSentences": {
+     "I1.effort": [
+      2
+     ],
+     "I1.capacity": [
+      2
+     ],
+     "I1.boundary": [
+      3
+     ],
+     "I1.calendar": [
+      3
+     ]
+    },
+    "repeated": {}
+   },
+   "R2 natal-only": {
+    "premiseSentences": {
+     "I1.effort": [
+      2
+     ],
+     "I1.capacity": [
+      2
+     ],
+     "I1.boundary": [
+      4
+     ],
+     "N1.curiosity": [
+      3
+     ],
+     "N1.hold": [
+      4
+     ]
+    },
+    "repeated": {}
+   },
+   "R1 transit-only": {
+    "premiseSentences": {
+     "I1.effort": [
+      2
+     ],
+     "I1.capacity": [
+      2
+     ],
+     "I1.boundary": [
+      4
+     ],
+     "P2.adjustment": [
+      4
+     ]
+    },
+    "repeated": {}
+   }
+  },
+  "original": {
+   "R3 contact-only": {
+    "premiseSentences": {
+     "I1.effort": [
+      2
+     ],
+     "I1.capacity": [
+      2,
+      3,
+      4
+     ],
+     "I1.boundary": [
+      3,
+      4
+     ],
+     "I1.calendar": [
+      4
+     ]
+    },
+    "repeated": {
+     "I1.capacity": [
+      2,
+      3,
+      4
+     ],
+     "I1.boundary": [
+      3,
+      4
+     ]
+    }
+   },
+   "R2 natal-only": {
+    "premiseSentences": {
+     "I1.effort": [
+      1
+     ],
+     "I1.capacity": [
+      2,
+      3
+     ],
+     "I1.boundary": [
+      3
+     ],
+     "N1.stages": [
+      4
+     ],
+     "N1.curiosity": [
+      5
+     ],
+     "N1.hold": [
+      6
+     ]
+    },
+    "repeated": {
+     "I1.capacity": [
+      2,
+      3
+     ]
+    }
+   },
+   "R1 transit-only": {
+    "premiseSentences": {
+     "I1.effort": [
+      2
+     ],
+     "I1.capacity": [
+      1,
+      2
+     ],
+     "I1.boundary": [
+      2,
+      4,
+      5
+     ],
+     "P2.adjustment": [
+      4
+     ]
+    },
+    "repeated": {
+     "I1.capacity": [
+      1,
+      2
+     ],
+     "I1.boundary": [
+      2,
+      4,
+      5
+     ]
+    }
+   }
+  }
+ }
+}

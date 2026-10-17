@@ -1,0 +1,10 @@
+{
+  "reviewerTask": "/root/source_review_5",
+  "independence": "fresh agent with fork_turns none; only supplied packet; no mapping, prior verdict or other reviewer supplied",
+  "packetSha256": "48bfedf8845b11608d5b22ae90085ba9debbc0f74c0dc85e5a15c54a5a5764bf",
+  "reportSha256": "6741c54749117c5aa1b2ddbce3df227542e2b9ade84947837607fcab5f1ede69",
+  "scoresSha256": "a799ff3bd22c6706b82792db7d37bce23b7645502c0ef0227c8ef468004df4c3",
+  "humanReviewCompleted": false,
+  "verdictFrozenBeforeMapping": true,
+  "result": "synthesis composition and body pass: zero unsupported claims or omitted meanings; conditions, citations and chronology preserved; integration 4"
+}

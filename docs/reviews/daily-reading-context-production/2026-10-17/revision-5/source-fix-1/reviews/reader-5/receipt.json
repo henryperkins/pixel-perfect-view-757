@@ -1,0 +1,9 @@
+{
+  "reviewerTask": "/root/reader_review_5",
+  "independence": "fresh agent with fork_turns none; only blind body packet; no source, mapping, prior verdict or other reviewer supplied; started after the source verdict froze",
+  "packetSha256": "f416c84484d4b20eceaacd1e1f5e14d5fccfe4cb3f65915b671a3c1ce439f4ad",
+  "reportSha256": "00cde4fd5b3908e4dd51f12fe875089668e88325fc999b00321af553d23ae5b8",
+  "scoresSha256": "f16a8f0c77a42a2da55ce79fc3b617d9ff65ef03b5077bb8db18cb4245204db6",
+  "humanReviewCompleted": false,
+  "verdictFrozenBeforeMapping": true
+}

@@ -1,0 +1,95 @@
+{
+  "packetSha256": "ec138a08ba47c0e73eb2e0f95e1885b8e54b6b19581b119ca4b078d7c1bfb7a8",
+  "humanReviewCompleted": false,
+  "compositions": [
+    {
+      "mode": "synthesis-natal-and-transit",
+      "pass": false,
+      "unsupportedClaims": 0,
+      "omittedMeanings": 3,
+      "conditionsPreserved": false,
+      "citationsComplete": true,
+      "restatements": [],
+      "findings": [
+        {
+          "id": "F1",
+          "type": "omitted-meaning",
+          "expression": "I1.2",
+          "source": "I1: obligations require more deliberate effort than usual.",
+          "draft": "The task itself can take more effort than usual.",
+          "finding": "The draft preserves increased effort but drops its deliberate character. Greater exertion or quantity of effort does not by itself express more intentional or careful effort. The familiar-task setup does not restore that distinction.",
+          "requiredMeaning": "Retain the deliberate character of the effort; verbatim wording is unnecessary."
+        },
+        {
+          "id": "F2",
+          "type": "lost-condition-and-omitted-meaning",
+          "expression": "S1.1",
+          "source": "S1: a task whose ambitions are growing beyond its agreed limits.",
+          "draft": "Where the task grows past what it was set up for.",
+          "finding": "The example no longer identifies agreed limits as the threshold. Outgrowing a setup can mean exceeding preparation, purpose or available support even while staying within agreed scope. The larger-scope/more-structure contribution is retained, but the agreed-limit contribution is incomplete.",
+          "requiredMeaning": "Preserve the sense of ambitions exceeding agreed scope or limits, still as a possible situation."
+        },
+        {
+          "id": "F3",
+          "type": "omitted-alternative",
+          "expression": "P2.1",
+          "source": "P2: a smaller adjustment to a method or boundary.",
+          "draft": "Try one smaller change: the next piece can wait as a note instead of joining the outline.",
+          "finding": "The conditional return and proportionate adjustment survive, and holding an addition back is a supported boundary illustration. But the draft supplies this one operation instead of preserving method adjustment and boundary adjustment as the source alternatives. The generic phrase one smaller change does not independently convey that full choice. This is an incompleteness finding, not a claim that keeping a note is unsupported.",
+          "requiredMeaning": "Preserve both possible loci of adjustment, method and boundary, while keeping the concrete note illustration optional."
+        }
+      ]
+    }
+  ],
+  "bodies": [
+    {
+      "label": "B1",
+      "pass": false,
+      "unsupportedClaims": 0,
+      "omittedMeanings": 3,
+      "conditionsPreserved": false,
+      "citationsComplete": true,
+      "chronology": "The A1 chronology sentence is reproduced exactly once, as paragraph 1 sentence 4. Second of three contacts and September 2026 are preserved, with A1 and C1 cited. No other date, orb or phase is added.",
+      "integration": 3,
+      "restatements": [],
+      "findings": [
+        {
+          "id": "F1",
+          "type": "omitted-meaning",
+          "expression": "I1.2",
+          "source": "I1: obligations require more deliberate effort than usual.",
+          "draft": "The task itself can take more effort than usual.",
+          "finding": "The draft preserves increased effort but drops its deliberate character. Greater exertion or quantity of effort does not by itself express more intentional or careful effort. The familiar-task setup does not restore that distinction.",
+          "requiredMeaning": "Retain the deliberate character of the effort; verbatim wording is unnecessary.",
+          "sentence": "B1.P1.S3"
+        },
+        {
+          "id": "F2",
+          "type": "lost-condition-and-omitted-meaning",
+          "expression": "S1.1",
+          "source": "S1: a task whose ambitions are growing beyond its agreed limits.",
+          "draft": "Where the task grows past what it was set up for.",
+          "finding": "The example no longer identifies agreed limits as the threshold. Outgrowing a setup can mean exceeding preparation, purpose or available support even while staying within agreed scope. The larger-scope/more-structure contribution is retained, but the agreed-limit contribution is incomplete.",
+          "requiredMeaning": "Preserve the sense of ambitions exceeding agreed scope or limits, still as a possible situation.",
+          "sentence": "B1.P2.S1"
+        },
+        {
+          "id": "F3",
+          "type": "omitted-alternative",
+          "expression": "P2.1",
+          "source": "P2: a smaller adjustment to a method or boundary.",
+          "draft": "Try one smaller change: the next piece can wait as a note instead of joining the outline.",
+          "finding": "The conditional return and proportionate adjustment survive, and holding an addition back is a supported boundary illustration. But the draft supplies this one operation instead of preserving method adjustment and boundary adjustment as the source alternatives. The generic phrase one smaller change does not independently convey that full choice. This is an incompleteness finding, not a claim that keeping a note is unsupported.",
+          "requiredMeaning": "Preserve both possible loci of adjustment, method and boundary, while keeping the concrete note illustration optional.",
+          "sentence": "B1.P2.S3"
+        }
+      ]
+    }
+  ],
+  "declinedToJudge": [
+    "Reader appeal, tone and voice quality.",
+    "Human review or editorial approval.",
+    "Generated-output qualification, runtime/provider behavior, activation or deployment.",
+    "Independent astronomical verification beyond the calculation facts supplied in the packet."
+  ]
+}

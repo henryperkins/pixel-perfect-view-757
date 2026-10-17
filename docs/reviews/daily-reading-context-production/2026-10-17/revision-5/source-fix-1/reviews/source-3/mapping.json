@@ -1,0 +1,85 @@
+[
+  {
+    "label": "B1",
+    "id": "synthesis-natal-and-transit",
+    "kind": "reference",
+    "paragraphs": [
+      {
+        "text": "On a free afternoon, the notes for a task you know well can start turning into an outline. With Jupiter trining your natal Mars, the notes and your interest in them can feed each other when the aim is well chosen, and adding the next piece or pursuing an emerging opening can feel natural. With Saturn squaring your natal Sun, though, the task itself can take more effort than usual, and if it fills the whole afternoon, the next piece needs hours that are already spoken for. This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+        "facts": [
+          "C1",
+          "I1",
+          "C2",
+          "I2",
+          "A1"
+        ],
+        "scenes": []
+      },
+      {
+        "text": "A bigger task can need more structure to carry it, and that need can show up where the task grows past what it was set up for. If several possible projects are competing for that same free afternoon, you may not need to decide between them yet: following more than one line of curiosity can help a direction take shape. And if an earlier way of handling the task no longer fits, you could use this return to try one smaller change: the next piece can wait as a note instead of joining the outline.",
+        "facts": [
+          "C1",
+          "I1",
+          "C2",
+          "I2",
+          "S1",
+          "N1",
+          "A1",
+          "P2"
+        ],
+        "scenes": []
+      }
+    ],
+    "bodySha256": "3263043a797cee27da8fd1bf5a031e6f928568b254eb5f5def909738d218b4a4"
+  },
+  {
+    "label": "B2",
+    "id": "natal-only",
+    "kind": "edit",
+    "paragraphs": [
+      {
+        "text": "On a free afternoon, an extra check can look small beside a familiar task. As Saturn squares your natal Sun, that task can need more effort than usual, and if it already fills the afternoon, anything added needs hours that are already spoken for.",
+        "facts": [
+          "C1",
+          "I1"
+        ],
+        "scenes": []
+      },
+      {
+        "text": "If several possible projects compete for that same free afternoon, you may not need to choose between them yet: following a few lines of curiosity may help a direction take shape. You could give the task a clear stopping point, with the other ideas waiting as notes.",
+        "facts": [
+          "C1",
+          "I1",
+          "N1"
+        ],
+        "scenes": []
+      }
+    ],
+    "bodySha256": "ce298c07df8c45cfa13953cd7334e4174a860ceedc7d53d31bf5be25036de568"
+  },
+  {
+    "label": "B3",
+    "id": "natal-only",
+    "kind": "reference",
+    "paragraphs": [
+      {
+        "text": "A free afternoon can look like plenty of room for a task you know well. With Saturn squaring your natal Sun, even that task can take more effort than usual, and if it fills the whole afternoon, anything else needs hours that are already spoken for.",
+        "facts": [
+          "C1",
+          "I1"
+        ],
+        "scenes": []
+      },
+      {
+        "text": "If several possible projects are competing for that same free afternoon, with notes on one idea and a tab open on another, you may not need to decide between them yet: following more than one line of curiosity can help a direction take shape. You could give the task a clear stopping point, with the other ideas waiting as notes.",
+        "facts": [
+          "C1",
+          "I1",
+          "N1"
+        ],
+        "scenes": []
+      }
+    ],
+    "bodySha256": "78fb60416eef8eb0b649e46ac3195832278db6595964dc59b9b8d04b3438035e"
+  }
+]

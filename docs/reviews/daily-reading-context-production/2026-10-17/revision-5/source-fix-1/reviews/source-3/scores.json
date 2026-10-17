@@ -1,0 +1,91 @@
+{
+  "packetSha256": "8629fe16e17ad42e33fb1c89f988037258be53bed6a8df986b53cf6fc589896a",
+  "humanReviewCompleted": false,
+  "compositions": [
+    {
+      "mode": "natal-only",
+      "pass": true,
+      "unsupportedClaims": 0,
+      "omittedMeanings": 0,
+      "conditionsPreserved": true,
+      "citationsComplete": true,
+      "restatements": [],
+      "findings": []
+    },
+    {
+      "mode": "synthesis-natal-and-transit",
+      "pass": false,
+      "unsupportedClaims": 0,
+      "omittedMeanings": 1,
+      "conditionsPreserved": true,
+      "citationsComplete": true,
+      "restatements": [],
+      "findings": [
+        {
+          "id": "I2.low-friction-effort",
+          "category": "omittedMeaning",
+          "location": "I2.2",
+          "sourceText": "Jupiter's trine to Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening.",
+          "draftText": "With Jupiter trining your natal Mars, the notes and your interest in them can feed each other when the aim is well chosen, and adding the next piece or pursuing an emerging opening can feel natural.",
+          "finding": "Mutual reinforcement, its well-chosen-aim condition, and both natural expansion/opening alternatives are present. The distinct low-friction-effort component is absent; natural-feeling pursuit and notes becoming an outline do not establish that effort meets little friction. Counted once as omission, not as an unsupported claim."
+        }
+      ]
+    }
+  ],
+  "bodies": [
+    {
+      "label": "B1",
+      "pass": false,
+      "unsupportedClaims": 0,
+      "omittedMeanings": 1,
+      "conditionsPreserved": true,
+      "citationsComplete": true,
+      "chronology": "Exact A1 chronology sentence appears once in paragraph 1, with Saturn as the correct antecedent and September 2026 preserved; no personal-history inference.",
+      "integration": 3,
+      "restatements": [],
+      "findings": [
+        {
+          "id": "I2.low-friction-effort",
+          "category": "omittedMeaning",
+          "location": "B1 paragraph 1 sentence 2",
+          "sourceText": "Jupiter's trine to Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening.",
+          "draftText": "With Jupiter trining your natal Mars, the notes and your interest in them can feed each other when the aim is well chosen, and adding the next piece or pursuing an emerging opening can feel natural.",
+          "finding": "Mutual reinforcement, its well-chosen-aim condition, and both natural expansion/opening alternatives are present. The distinct low-friction-effort component is absent; natural-feeling pursuit and notes becoming an outline do not establish that effort meets little friction. Counted once as omission, not as an unsupported claim."
+        }
+      ]
+    },
+    {
+      "label": "B2",
+      "pass": true,
+      "unsupportedClaims": 0,
+      "omittedMeanings": 0,
+      "conditionsPreserved": true,
+      "citationsComplete": true,
+      "chronology": "Not applicable: no A1 or transit-chapter source selected; no chronology invented.",
+      "integration": 4,
+      "restatements": [],
+      "findings": []
+    },
+    {
+      "label": "B3",
+      "pass": true,
+      "unsupportedClaims": 0,
+      "omittedMeanings": 0,
+      "conditionsPreserved": true,
+      "citationsComplete": true,
+      "chronology": "Not applicable: no A1 or transit-chapter source selected; no chronology invented.",
+      "integration": 4,
+      "restatements": [],
+      "findings": []
+    }
+  ],
+  "declinedToJudge": [
+    "Voice, warmth, reader appeal, and style preference.",
+    "Actual astrological truth or independent ephemeris correctness.",
+    "Source provenance outside the supplied packet.",
+    "Provider identity, provider performance, or production behavior.",
+    "Mapping or origin labels for B1, B2, and B3.",
+    "Human approval or review completion; this is AI review only.",
+    "Editorial, publication, or generated-material qualification."
+  ]
+}

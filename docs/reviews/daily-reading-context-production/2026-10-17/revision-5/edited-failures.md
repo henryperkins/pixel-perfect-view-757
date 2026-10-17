@@ -51,11 +51,11 @@ Moving the task to a later opening only takes the check along with it, but the c
 >
 > If several projects compete for that same afternoon, exploring a few and choosing one may be separate stages. Following a few lines of curiosity may help one direction take shape. A page of notes can sit beside an open tab for another idea, holding it without promising it those hours while you choose which one to pursue.
 
-**Edited** (body SHA-256 `4075a965243f5948fbba86ebf9e17dc8fa7df4728ab55f6659617ae0b4ecfb54`):
+**Edited** (body SHA-256 `ce298c07df8c45cfa13953cd7334e4174a860ceedc7d53d31bf5be25036de568`):
 
 On a free afternoon, an extra check can look small beside a familiar task. As Saturn squares your natal Sun, that task can need more effort than usual, and if it already fills the afternoon, anything added needs hours that are already spoken for.
 
-If several possible projects compete for that same free afternoon, you may not need to choose between them yet: following a few lines of curiosity may help a direction take shape. A page of notes can hold them without promising them those hours.
+If several possible projects compete for that same free afternoon, you may not need to choose between them yet: following a few lines of curiosity may help a direction take shape. You could give the task a clear stopping point, with the other ideas waiting as notes.
 
 **Cut**
 
@@ -72,21 +72,23 @@ If several possible projects compete for that same free afternoon, you may not n
 - 'holding it without promising it those hours' became 'can hold them without promising them those hours'.
 - Restored N1's published condition: 'If several projects compete for that same afternoon' became 'If several possible projects compete for that same free afternoon', and the opening now reads 'On a free afternoon', so the task and the projects share one free afternoon (independent source review: the generated wording dropped 'possible' and 'free' and put the competition in hours already spoken for).
 
+- Restored I1's boundary on the task itself: the close now offers a clear stopping point, with the other ideas waiting as notes.
+
 **Where each meaning now lives**
 
 - `I1.effort`: “that task can need more effort than usual”
 - `I1.capacity`: “if it already fills the afternoon, anything added needs hours that are already spoken for”
-- `I1.boundary`: “A page of notes can hold them without promising them those hours”
+- `I1.boundary`: “You could give the task a clear stopping point”
 - `N1.curiosity`: “following a few lines of curiosity may help a direction take shape”
 - `N1.stages`: “If several possible projects compete for that same free afternoon” … “you may not need to choose between them yet”
-- `N1.hold`: “A page of notes can hold them without promising them those hours”
+- `N1.hold`: “with the other ideas waiting as notes”
 
 **What each sentence adds**
 
 - 1.1: Observation: the check beside the familiar task on a free afternoon, without an interrupting clause.
 - 1.2: Meaning: the contact, its possible extra effort and the conditional mismatch for anything added, once each.
 - 2.1: Distinction: the natal possibility as a reason not to decide yet, under its own published condition.
-- 2.2: Direction: the single optional limit; the projects are kept without the afternoon.
+- 2.2: Direction: an optional stopping point for the task itself, with the other ideas held as notes.
 
 ## R1: `transit-only`
 

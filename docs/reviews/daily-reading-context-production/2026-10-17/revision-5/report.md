@@ -1,5 +1,7 @@
 # Revision 5: one wording per source claim, verified offline
 
+> **Offline follow-up to `716fe80`:** See the [current source follow-up](source-fix-1/report.md) for current material and review evidence. The account below records the original revision-5 handoff before that follow-up.
+
 **This is an offline revision. No provider request, push, deployment or activation was made; `writer_rollout` stays off, and another paid pilot needs fresh authorization.** The fourth campaign, including its unused fifth slot, stays closed.
 
 ## What changed

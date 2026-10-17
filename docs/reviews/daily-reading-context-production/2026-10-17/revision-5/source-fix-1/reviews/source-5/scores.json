@@ -1,0 +1,35 @@
+{
+  "packetSha256": "48bfedf8845b11608d5b22ae90085ba9debbc0f74c0dc85e5a15c54a5a5764bf",
+  "humanReviewCompleted": false,
+  "compositions": [
+    {
+      "mode": "synthesis-natal-and-transit",
+      "pass": true,
+      "unsupportedClaims": 0,
+      "omittedMeanings": 0,
+      "conditionsPreserved": true,
+      "citationsComplete": true,
+      "restatements": [],
+      "findings": []
+    }
+  ],
+  "bodies": [
+    {
+      "label": "B1",
+      "pass": true,
+      "unsupportedClaims": 0,
+      "omittedMeanings": 0,
+      "conditionsPreserved": true,
+      "citationsComplete": true,
+      "chronology": "The exact A1 chronology sentence occurs once, in paragraph 1 immediately after the Saturn passage; it establishes calculated contacts only, with no experiential history.",
+      "integration": 4,
+      "restatements": [],
+      "findings": []
+    }
+  ],
+  "declinedToJudge": [
+    "Voice, warmth, reader appeal, or writing quality beyond source fidelity.",
+    "Human review or generated-writing qualification.",
+    "Truth of astrology, accuracy of the supplied calculations, or publication and activation state."
+  ]
+}

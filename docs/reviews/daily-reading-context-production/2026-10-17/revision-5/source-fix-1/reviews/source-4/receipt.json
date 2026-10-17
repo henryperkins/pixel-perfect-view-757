@@ -1,0 +1,10 @@
+{
+  "reviewerTask": "/root/source_review_4",
+  "independence": "fresh agent with fork_turns none; only supplied packet; no prior verdict, mapping or other reviewer supplied",
+  "packetSha256": "ec138a08ba47c0e73eb2e0f95e1885b8e54b6b19581b119ca4b078d7c1bfb7a8",
+  "reportSha256": "10e9acb98073ef78d13e6437f9c1e010366f4fae4dc5ed96a721b6ac444813c3",
+  "scoresSha256": "c7c0e8b56fc722717bba0f42ede5c88113b7307568288a61b340c7c564263ba4",
+  "humanReviewCompleted": false,
+  "verdictFrozenBeforeMapping": true,
+  "result": "I2 accepted; synthesis fails on deliberate effort, agreed limits, and method-or-boundary alternatives"
+}

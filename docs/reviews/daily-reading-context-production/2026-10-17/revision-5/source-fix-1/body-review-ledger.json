@@ -1,0 +1,246 @@
+{
+  "evidence": "Authored offline evidence only. Exact body hashes bind each verdict; older verdicts apply only when bytes match. AI reviews, not human.",
+  "humanReviewCompleted": false,
+  "bodies": [
+    {
+      "id": "contact-only",
+      "kind": "reference",
+      "bodySha256": "fb20c4345f963dfef569f0f8d5b16ed56c17d615d9ecc56a43bfecca35abdb61",
+      "automaticOfflineReplay": true,
+      "source": {
+        "bodySha256": "fb20c4345f963dfef569f0f8d5b16ed56c17d615d9ecc56a43bfecca35abdb61",
+        "review": "reviews/source-1/source-scores.json",
+        "label": "B8",
+        "pass": true,
+        "unsupportedClaims": 0,
+        "omittedMeanings": 0,
+        "integration": null
+      },
+      "reader": {
+        "bodySha256": "fb20c4345f963dfef569f0f8d5b16ed56c17d615d9ecc56a43bfecca35abdb61",
+        "review": "reviews/round-2/reader-scores.json",
+        "label": "B2",
+        "pass": true,
+        "scores": {
+          "recognition": 4,
+          "meaning": 4,
+          "direction": 4,
+          "distinctness": 5,
+          "voice": 4
+        }
+      },
+      "authoredOfflineGatesPass": true,
+      "generatedQualification": false
+    },
+    {
+      "id": "natal-only",
+      "kind": "reference",
+      "bodySha256": "78fb60416eef8eb0b649e46ac3195832278db6595964dc59b9b8d04b3438035e",
+      "automaticOfflineReplay": true,
+      "source": {
+        "bodySha256": "78fb60416eef8eb0b649e46ac3195832278db6595964dc59b9b8d04b3438035e",
+        "review": "source-fix-1/reviews/source-3/scores.json",
+        "label": "B3",
+        "pass": true,
+        "unsupportedClaims": 0,
+        "omittedMeanings": 0,
+        "integration": 4
+      },
+      "reader": {
+        "bodySha256": "78fb60416eef8eb0b649e46ac3195832278db6595964dc59b9b8d04b3438035e",
+        "review": "source-fix-1/reviews/reader-5/scores.json",
+        "label": "B3",
+        "pass": true,
+        "scores": {
+          "recognition": 4,
+          "meaning": 4,
+          "direction": 4,
+          "distinctness": 4,
+          "voice": 4
+        }
+      },
+      "authoredOfflineGatesPass": true,
+      "generatedQualification": false
+    },
+    {
+      "id": "transit-only",
+      "kind": "reference",
+      "bodySha256": "ccc6b95155d86681f95a6fb4d7251ea0f4d37ea3181a39e0056e05224573b051",
+      "automaticOfflineReplay": true,
+      "source": {
+        "bodySha256": "ccc6b95155d86681f95a6fb4d7251ea0f4d37ea3181a39e0056e05224573b051",
+        "review": "reviews/source-1/source-scores.json",
+        "label": "B4",
+        "pass": true,
+        "unsupportedClaims": 0,
+        "omittedMeanings": 0,
+        "integration": 4
+      },
+      "reader": {
+        "bodySha256": "ccc6b95155d86681f95a6fb4d7251ea0f4d37ea3181a39e0056e05224573b051",
+        "review": "reviews/round-2/reader-scores.json",
+        "label": "B4",
+        "pass": true,
+        "scores": {
+          "recognition": 4,
+          "meaning": 4,
+          "direction": 4,
+          "distinctness": 4,
+          "voice": 4
+        }
+      },
+      "authoredOfflineGatesPass": true,
+      "generatedQualification": false
+    },
+    {
+      "id": "natal-and-transit",
+      "kind": "reference",
+      "bodySha256": "c194aeb3732d2fb3945639a8679a43c1a93219fb68608073c482867945d81adb",
+      "automaticOfflineReplay": true,
+      "source": {
+        "bodySha256": "c194aeb3732d2fb3945639a8679a43c1a93219fb68608073c482867945d81adb",
+        "review": "reviews/source-2/source-scores.json",
+        "label": "B2",
+        "pass": true,
+        "unsupportedClaims": 0,
+        "omittedMeanings": 0,
+        "integration": 4
+      },
+      "reader": {
+        "bodySha256": "c194aeb3732d2fb3945639a8679a43c1a93219fb68608073c482867945d81adb",
+        "review": "source-fix-1/reviews/reader-5/scores.json",
+        "label": "B4",
+        "pass": false,
+        "scores": {
+          "recognition": 4,
+          "meaning": 4,
+          "direction": 4,
+          "distinctness": 4,
+          "voice": 3
+        }
+      },
+      "authoredOfflineGatesPass": false,
+      "generatedQualification": false
+    },
+    {
+      "id": "synthesis-natal-and-transit",
+      "kind": "reference",
+      "bodySha256": "372e0ae1fa40328a7a2507322bd8f6d28adc698df5807e574483fbf06858323f",
+      "automaticOfflineReplay": true,
+      "source": {
+        "bodySha256": "372e0ae1fa40328a7a2507322bd8f6d28adc698df5807e574483fbf06858323f",
+        "review": "source-fix-1/reviews/source-5/scores.json",
+        "label": "B1",
+        "pass": true,
+        "unsupportedClaims": 0,
+        "omittedMeanings": 0,
+        "integration": 4
+      },
+      "reader": {
+        "bodySha256": "372e0ae1fa40328a7a2507322bd8f6d28adc698df5807e574483fbf06858323f",
+        "review": "source-fix-1/reviews/reader-5/scores.json",
+        "label": "B2",
+        "pass": false,
+        "scores": {
+          "recognition": 4,
+          "meaning": 4,
+          "direction": 4,
+          "distinctness": 3,
+          "voice": 3
+        }
+      },
+      "authoredOfflineGatesPass": false,
+      "generatedQualification": false
+    },
+    {
+      "id": "contact-only",
+      "kind": "edit",
+      "bodySha256": "4636315664d98daa4e10f8e84e964ae2f6905f89423d6606af802ec72e3f534b",
+      "automaticOfflineReplay": true,
+      "source": {
+        "bodySha256": "4636315664d98daa4e10f8e84e964ae2f6905f89423d6606af802ec72e3f534b",
+        "review": "reviews/source-1/source-scores.json",
+        "label": "B7",
+        "pass": true,
+        "unsupportedClaims": 0,
+        "omittedMeanings": 0,
+        "integration": null
+      },
+      "reader": {
+        "bodySha256": "4636315664d98daa4e10f8e84e964ae2f6905f89423d6606af802ec72e3f534b",
+        "review": "reviews/round-2/reader-scores.json",
+        "label": "B8",
+        "pass": true,
+        "scores": {
+          "recognition": 4,
+          "meaning": 4,
+          "direction": 4,
+          "distinctness": 4,
+          "voice": 4
+        }
+      },
+      "authoredOfflineGatesPass": true,
+      "generatedQualification": false
+    },
+    {
+      "id": "natal-only",
+      "kind": "edit",
+      "bodySha256": "ce298c07df8c45cfa13953cd7334e4174a860ceedc7d53d31bf5be25036de568",
+      "automaticOfflineReplay": true,
+      "source": {
+        "bodySha256": "ce298c07df8c45cfa13953cd7334e4174a860ceedc7d53d31bf5be25036de568",
+        "review": "source-fix-1/reviews/source-3/scores.json",
+        "label": "B2",
+        "pass": true,
+        "unsupportedClaims": 0,
+        "omittedMeanings": 0,
+        "integration": 4
+      },
+      "reader": {
+        "bodySha256": "ce298c07df8c45cfa13953cd7334e4174a860ceedc7d53d31bf5be25036de568",
+        "review": "source-fix-1/reviews/reader-5/scores.json",
+        "label": "B1",
+        "pass": true,
+        "scores": {
+          "recognition": 4,
+          "meaning": 4,
+          "direction": 4,
+          "distinctness": 4,
+          "voice": 4
+        }
+      },
+      "authoredOfflineGatesPass": true,
+      "generatedQualification": false
+    },
+    {
+      "id": "transit-only",
+      "kind": "edit",
+      "bodySha256": "1b9b8aca1d7c5acda76f13ca45fc3f7ff736c5dfe2f155e3c3e613a35bd66fee",
+      "automaticOfflineReplay": true,
+      "source": {
+        "bodySha256": "1b9b8aca1d7c5acda76f13ca45fc3f7ff736c5dfe2f155e3c3e613a35bd66fee",
+        "review": "reviews/source-1/source-scores.json",
+        "label": "B5",
+        "pass": true,
+        "unsupportedClaims": 0,
+        "omittedMeanings": 0,
+        "integration": 4
+      },
+      "reader": {
+        "bodySha256": "1b9b8aca1d7c5acda76f13ca45fc3f7ff736c5dfe2f155e3c3e613a35bd66fee",
+        "review": "reviews/round-2/reader-scores.json",
+        "label": "B1",
+        "pass": true,
+        "scores": {
+          "recognition": 4,
+          "meaning": 4,
+          "direction": 4,
+          "distinctness": 4,
+          "voice": 4
+        }
+      },
+      "authoredOfflineGatesPass": true,
+      "generatedQualification": false
+    }
+  ]
+}

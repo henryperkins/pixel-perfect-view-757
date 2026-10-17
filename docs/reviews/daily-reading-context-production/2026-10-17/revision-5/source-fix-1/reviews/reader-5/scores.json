@@ -1,0 +1,104 @@
+{
+  "reviewType": "independent blind AI reader review",
+  "packetSha256": "f416c84484d4b20eceaacd1e1f5e14d5fccfe4cb3f65915b671a3c1ce439f4ad",
+  "humanReviewCompleted": false,
+  "frozenAtUtc": "2026-10-17T13:36:15.722631+00:00",
+  "threshold": 4,
+  "bodies": [
+    {
+      "label": "B1",
+      "scores": {
+        "recognition": 4,
+        "meaning": 4,
+        "direction": 4,
+        "distinctness": 4,
+        "voice": 4
+      },
+      "pass": true,
+      "findings": [
+        "A familiar task occupying a free afternoon while an extra check and other projects compete for time is an understandable possible situation. The extra check is unspecified, but the time conflict is concrete enough.",
+        "The body distinguishes familiarity from the effort a task may require, then distinguishes exploring interests from committing time to them. Those ideas support the optional stopping point.",
+        "The closing notes preserve other interests while limiting the present task. This develops the time problem rather than merely repeating it. The language is plain and the direction proportionate."
+      ],
+      "evidence": [
+        "\"an extra check can look small beside a familiar task\" leads to \"that task can need more effort than usual\"",
+        "\"you may not need to choose between them yet\" separates exploration from immediate selection",
+        "\"You could give the task a clear stopping point, with the other ideas waiting as notes.\""
+      ]
+    },
+    {
+      "label": "B2",
+      "scores": {
+        "recognition": 4,
+        "meaning": 4,
+        "direction": 4,
+        "distinctness": 3,
+        "voice": 3
+      },
+      "pass": false,
+      "findings": [
+        "Notes turning into an outline give an understandable situation in which interest expands a familiar task. The useful core is that momentum can coexist with limited capacity.",
+        "The final suggestion is optional and manageable: change how the task is done or where it ends, leaving the next addition in a note.",
+        "The body crowds momentum, effort, recurrence, structure, agreed limits, competing interests and an earlier method into two paragraphs. The opening of paragraph two recasts the growth-and-limits issue without developing what additional structure would actually change. The earlier-method idea is also introduced just before the conclusion. The concern is crowded and insufficiently developed meaning, not repeated vocabulary or the mere presence of an example.",
+        "\"second of three calculated contacts\" and the exact-contact date introduce a formal register. \"use this return\" gestures toward revisiting an earlier method, but the body supplies no practical connection between the September contact and that method; the date and count do not help the reader make the proposed choice. Abstract phrases also weaken the otherwise concrete opening."
+      ],
+      "evidence": [
+        "\"the notes for a task you know well can start turning into an outline\"",
+        "\"effort can meet little friction\" alongside \"the task itself can take more deliberate effort than usual\" supports the interest-versus-capacity distinction, although it could be clearer",
+        "\"the next piece needs hours that are already spoken for\" is followed by \"A bigger task can need more structure to carry it\" and \"ambitions grow beyond its agreed limits\"",
+        "\"This is the second of three calculated contacts; the first exact contact falls in September 2026.\"",
+        "\"if an earlier way of handling the task no longer fits\" adds another conditional idea before \"the next piece can wait as a note\""
+      ]
+    },
+    {
+      "label": "B3",
+      "scores": {
+        "recognition": 4,
+        "meaning": 4,
+        "direction": 4,
+        "distinctness": 4,
+        "voice": 4
+      },
+      "pass": true,
+      "findings": [
+        "The free afternoon, familiar task, notes and open tab form an understandable possible scene without requiring astrological familiarity.",
+        "The body develops two useful distinctions: a familiar task may still consume the available capacity, and exploring several possibilities need not require an immediate choice.",
+        "The ending gives a small optional action that answers the conflict. Notes and the open tab make divided attention recognizable; the closing notes serve a different purpose, preserving ideas for later. This is not substantive repetition.",
+        "The voice remains plain, observant and measured. There is no dictated script or appended reassurance."
+      ],
+      "evidence": [
+        "\"A free afternoon can look like plenty of room for a task you know well.\"",
+        "\"even that task can take more effort than usual\"",
+        "\"with notes on one idea and a tab open on another\"",
+        "\"You could give the task a clear stopping point, with the other ideas waiting as notes.\""
+      ]
+    },
+    {
+      "label": "B4",
+      "scores": {
+        "recognition": 4,
+        "meaning": 4,
+        "direction": 4,
+        "distinctness": 4,
+        "voice": 3
+      },
+      "pass": false,
+      "findings": [
+        "The familiar task, limited afternoon, notes and open tab offer a concrete, understandable situation.",
+        "The central distinction between available time, task effort and exploratory interest is useful. The optional stopping point remains proportionate, and the body does not materially repeat that meaning.",
+        "The technical contact count and exact-contact date interrupt the plain scene. The final reference to \"this return\" offers a generic occasion for a small change, but does not connect the earlier contact to any practical observation or earlier way of working. That weak bridge does not make the September date or three-contact count useful to the reader. The formal, unexplained chronology keeps voice below the bar."
+      ],
+      "evidence": [
+        "\"with notes on one idea and a tab open on another\"",
+        "\"This is the second of three calculated contacts; the first exact contact falls in September 2026.\"",
+        "\"if an earlier way of handling the task no longer fits, you could use this return to try one smaller change\"",
+        "\"a clear point where the task stops, with the other ideas waiting as notes\""
+      ]
+    }
+  ],
+  "declinedToJudge": [
+    "Astrological or other source accuracy, because no source facts were supplied.",
+    "Which body belongs to any provider, prompt, version or source treatment.",
+    "Human or member reception, research findings, or qualification of generated writing."
+  ]
+}

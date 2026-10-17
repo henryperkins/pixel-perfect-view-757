@@ -4,183 +4,58 @@
   "evidence": [
     {
       "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/edited-failures.json",
-      "sha256": "8d5e11b4098f9de755300220468b2a6d73c14c3cf011d04299b4c6d768474686",
-      "bytes": 18487
+      "sha256": "57cd967fa8f465f4cf6f4703809e401be59d513492334bdcd927bcf441f6cf0d",
+      "bytes": 18727
     },
     {
       "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/edited-failures.md",
-      "sha256": "0945cb318265a8defb39dc93cfb1da978fec1a2036037eb5a2683ae2057a2630",
-      "bytes": 12320
+      "sha256": "ff6c5a12826f2c2210923b36d7e4ee5b4607603d07b104a3a65b8e24a1b8ccbd",
+      "bytes": 12438
     },
     {
       "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/next-pilot-manifest.json",
-      "sha256": "dfe816ba7d12131e6b1cfc8b9e0a63a04a6827ba02f24e9a62be4d0e373caa68",
-      "bytes": 7208
+      "sha256": "218d328bd68082818ba3609ed4ebdc3216f1148d15e34025a51df8e0de2c4120",
+      "bytes": 7910
     },
     {
       "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/next-pilot-manifest.md",
-      "sha256": "f83a3f6d18003297044facf528ead4838088e356872d1729e58ba05c34cb03b2",
-      "bytes": 4334
+      "sha256": "869c508d38c7c227a601a795f42bce00efd3fcacba3e62a39cc2217709ed59ed",
+      "bytes": 4554
     },
     {
       "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reference-readings.json",
-      "sha256": "75f06dbf43c7f973d4a9fff940bd3ff71442a938e6753377d620c90a69c567e3",
-      "bytes": 15697
+      "sha256": "233a1324bb0915a1c6748a19bc49d1a9ed85156d66e1b18f6440abd706bd5e96",
+      "bytes": 16105
     },
     {
       "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reference-readings.md",
-      "sha256": "ca824e5c8dbead832bee224f25dcea5dd97d2387e38473bfe1942a9882c8aaaa",
-      "bytes": 8057
+      "sha256": "ffa4755e531aafbaea049b67766612349ab5a2957ae1291b94bd645b37c6f77e",
+      "bytes": 8328
     },
     {
       "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/report.md",
-      "sha256": "17d81335f0e9494d6f8d95e1fb03f303b7efc46a515fd92a260b08ca9addf6a0",
-      "bytes": 8128
+      "sha256": "67f7d01befeb5962ba1382cab07f9d0a4ee20144964a42bf42eca919bf1fdd77",
+      "bytes": 8349
     },
     {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/structure-revision.md",
-      "sha256": "13886a14973f0a0fc43a5c7d81831015436a6e83816ec25b61155c3571c013cf",
-      "bytes": 16316
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/request-trace/README.md",
+      "sha256": "61544e09712c69bbb021d6ab09ff2fc3f24628cd370f7c849595f006a40e2a48",
+      "bytes": 1480
     },
     {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/timeout-analysis.json",
-      "sha256": "d360e6648ee6e6f59fd8ed73f970914f164536d5ecdc4699faf521fa1e4f492f",
-      "bytes": 6663
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/request-trace/after-requests.json",
+      "sha256": "761ae0d3cb894ba75d69eed5ad402f8121ea1beccf4efb5b786a5a00dc886faa",
+      "bytes": 34354
     },
     {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/timeout-analysis.md",
-      "sha256": "42ce5362131b0fc655146465276799dddeaf25872e42da568ffb182664c3f0ac",
-      "bytes": 2151
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/request-trace/before-requests.json",
+      "sha256": "6ce77fecf6c0f9607ae2066bf9726fd4525def52c5eecf2fd9cbfc7b29461dbd",
+      "bytes": 73870
     },
     {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/verification.json",
-      "sha256": "44b5ce7d51ff47fae42ad7bd5db0dab03791ec0502489d0d5ef3b3ced09df1b9",
-      "bytes": 3812
-    },
-    {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/source-2/blind-mapping.json",
-      "sha256": "c7261dbf04bb54a8272e6ab4c0fb002852e559a20250cca1ad41240fde294c33",
-      "bytes": 904
-    },
-    {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/source-2/receipt.json",
-      "sha256": "1cbe090bdd694c2662d3bbf5e1ff1273eb4219c7a09fea650abf61d68239fd3b",
-      "bytes": 1460
-    },
-    {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/source-2/source-review-packet.md",
-      "sha256": "49d3e683702ff25d2b636aa39249e93cab0e4efea540f7b06a9579f27771de01",
-      "bytes": 47330
-    },
-    {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/source-2/source-review.md",
-      "sha256": "9430639388114ff37e9727f95df8b973836a07ed8e809a3615ad686eb5c01a4d",
-      "bytes": 24405
-    },
-    {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/source-2/source-scores.json",
-      "sha256": "73803054ab5531eb795def89fd48d1f9824a0846b519305add454b36749c8264",
-      "bytes": 17884
-    },
-    {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/source-1/blind-mapping.json",
-      "sha256": "d0016e9ab61a6770997e7817a091e8445028a2851a3bcf8f73ca26a8eff2c9a0",
-      "bytes": 1582
-    },
-    {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/source-1/receipt.json",
-      "sha256": "df3ea249094116a1083ff53b260dacfd81c9f119024fd5f1ade690e0a890a710",
-      "bytes": 1459
-    },
-    {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/source-1/source-review-packet.md",
-      "sha256": "933257344bd5c8e7a0e3e55ee31fea9abb70f8a273769f9079f4f94340e6e98b",
-      "bytes": 68908
-    },
-    {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/source-1/source-review.md",
-      "sha256": "51e4ce2f8d2e3cfebf82385cba0ea86f2a11f63d1dede6a484d7eb8038f5d77d",
-      "bytes": 31531
-    },
-    {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/source-1/source-scores.json",
-      "sha256": "c1c041016a405dcdab52cafa91ef96ed147751e6d7dd641f71bff7c027444e6c",
-      "bytes": 25793
-    },
-    {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-4/blind-mapping.json",
-      "sha256": "74917fcde14dfe7cf4987ebbd0c5b7b9cfee89276c63057198ccede5f540ecc9",
-      "bytes": 2706
-    },
-    {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-4/reader-packet.md",
-      "sha256": "cb4fdb2dd31a92a8e0ed6589ba00240bebdd6d223d7dba559b7ae6e7d049ec8d",
-      "bytes": 1935
-    },
-    {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-4/reader-review.md",
-      "sha256": "92a378ddd65d5e9c6ca2e44afda13be5093755844625ed735d0c47cf8359bdfe",
-      "bytes": 5926
-    },
-    {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-4/reader-scores.json",
-      "sha256": "ce2af789d6cd32b1b45112e4789a9caf9ab79ebdb371c95a600249c96fce3e26",
-      "bytes": 5502
-    },
-    {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-4/receipt.json",
-      "sha256": "9b65a43c088b62b9fa51786a4efce85352696b61afac9764438d8d462f1dda36",
-      "bytes": 1768
-    },
-    {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-3/blind-mapping.json",
-      "sha256": "4060a60139eceaad37682d0271a7d65644dd7d754c7df03823dce4d2ad9fba9e",
-      "bytes": 2143
-    },
-    {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-3/reader-packet.md",
-      "sha256": "e8a214b3e229078f72333246295d5ae6244348345eb40e2bc624923cdbce298a",
-      "bytes": 3722
-    },
-    {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-3/reader-review.md",
-      "sha256": "4d74199478d1444221a1bd116ddf58f0328d5d89dbead1808cfb97475202c4a0",
-      "bytes": 15592
-    },
-    {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-3/reader-scores.json",
-      "sha256": "1cb24a6f7fb78779dc1f881c4122a531479483ebd0c907ffe344266aac392ee0",
-      "bytes": 13704
-    },
-    {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-3/receipt.json",
-      "sha256": "f625b5fc73bd31ac12ca63a8c6a329e1d3014e21ad0632e212705df487f03501",
-      "bytes": 1433
-    },
-    {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-2/blind-mapping.json",
-      "sha256": "d426b3387f7452a4ac2492e2a18b6c2ea917f6d05c40a9bf654c9f07f5f941e4",
-      "bytes": 1582
-    },
-    {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-2/reader-packet.md",
-      "sha256": "278b33fbcbc189428357eb26202eb0a5f7a5568e3ee299a91bc51566ac71ec77",
-      "bytes": 5408
-    },
-    {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-2/reader-review.md",
-      "sha256": "27dc4454684de6029237a76282f65b23116c5c8dcb9bbafab07f1402f4e24101",
-      "bytes": 23744
-    },
-    {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-2/reader-scores.json",
-      "sha256": "e198f306cbf9f8cb1088bf8d9ef9c0137f82c453bd73633f6c25949f2cb4204e",
-      "bytes": 22172
-    },
-    {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-2/receipt.json",
-      "sha256": "25f6020f5f66900c74049db0bb15a123672fe46accedc66880825cefcaf34100",
-      "bytes": 1379
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/request-trace/premise-analysis.json",
+      "sha256": "6dad143af404e5d05337bbc22b6724c4807dfbd9ad49fd0c01fb534cbebc0ef2",
+      "bytes": 16211
     },
     {
       "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-1/blind-mapping.json",
@@ -208,6 +83,131 @@
       "bytes": 2243
     },
     {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-2/blind-mapping.json",
+      "sha256": "d426b3387f7452a4ac2492e2a18b6c2ea917f6d05c40a9bf654c9f07f5f941e4",
+      "bytes": 1582
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-2/reader-packet.md",
+      "sha256": "278b33fbcbc189428357eb26202eb0a5f7a5568e3ee299a91bc51566ac71ec77",
+      "bytes": 5408
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-2/reader-review.md",
+      "sha256": "27dc4454684de6029237a76282f65b23116c5c8dcb9bbafab07f1402f4e24101",
+      "bytes": 23744
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-2/reader-scores.json",
+      "sha256": "e198f306cbf9f8cb1088bf8d9ef9c0137f82c453bd73633f6c25949f2cb4204e",
+      "bytes": 22172
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-2/receipt.json",
+      "sha256": "25f6020f5f66900c74049db0bb15a123672fe46accedc66880825cefcaf34100",
+      "bytes": 1379
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-3/blind-mapping.json",
+      "sha256": "4060a60139eceaad37682d0271a7d65644dd7d754c7df03823dce4d2ad9fba9e",
+      "bytes": 2143
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-3/reader-packet.md",
+      "sha256": "e8a214b3e229078f72333246295d5ae6244348345eb40e2bc624923cdbce298a",
+      "bytes": 3722
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-3/reader-review.md",
+      "sha256": "4d74199478d1444221a1bd116ddf58f0328d5d89dbead1808cfb97475202c4a0",
+      "bytes": 15592
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-3/reader-scores.json",
+      "sha256": "1cb24a6f7fb78779dc1f881c4122a531479483ebd0c907ffe344266aac392ee0",
+      "bytes": 13704
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-3/receipt.json",
+      "sha256": "f625b5fc73bd31ac12ca63a8c6a329e1d3014e21ad0632e212705df487f03501",
+      "bytes": 1433
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-4/blind-mapping.json",
+      "sha256": "74917fcde14dfe7cf4987ebbd0c5b7b9cfee89276c63057198ccede5f540ecc9",
+      "bytes": 2706
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-4/reader-packet.md",
+      "sha256": "cb4fdb2dd31a92a8e0ed6589ba00240bebdd6d223d7dba559b7ae6e7d049ec8d",
+      "bytes": 1935
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-4/reader-review.md",
+      "sha256": "92a378ddd65d5e9c6ca2e44afda13be5093755844625ed735d0c47cf8359bdfe",
+      "bytes": 5926
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-4/reader-scores.json",
+      "sha256": "ce2af789d6cd32b1b45112e4789a9caf9ab79ebdb371c95a600249c96fce3e26",
+      "bytes": 5502
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/round-4/receipt.json",
+      "sha256": "9b65a43c088b62b9fa51786a4efce85352696b61afac9764438d8d462f1dda36",
+      "bytes": 1768
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/source-1/blind-mapping.json",
+      "sha256": "d0016e9ab61a6770997e7817a091e8445028a2851a3bcf8f73ca26a8eff2c9a0",
+      "bytes": 1582
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/source-1/receipt.json",
+      "sha256": "df3ea249094116a1083ff53b260dacfd81c9f119024fd5f1ade690e0a890a710",
+      "bytes": 1459
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/source-1/source-review-packet.md",
+      "sha256": "933257344bd5c8e7a0e3e55ee31fea9abb70f8a273769f9079f4f94340e6e98b",
+      "bytes": 68908
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/source-1/source-review.md",
+      "sha256": "51e4ce2f8d2e3cfebf82385cba0ea86f2a11f63d1dede6a484d7eb8038f5d77d",
+      "bytes": 31531
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/source-1/source-scores.json",
+      "sha256": "c1c041016a405dcdab52cafa91ef96ed147751e6d7dd641f71bff7c027444e6c",
+      "bytes": 25793
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/source-2/blind-mapping.json",
+      "sha256": "c7261dbf04bb54a8272e6ab4c0fb002852e559a20250cca1ad41240fde294c33",
+      "bytes": 904
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/source-2/receipt.json",
+      "sha256": "1cbe090bdd694c2662d3bbf5e1ff1273eb4219c7a09fea650abf61d68239fd3b",
+      "bytes": 1460
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/source-2/source-review-packet.md",
+      "sha256": "49d3e683702ff25d2b636aa39249e93cab0e4efea540f7b06a9579f27771de01",
+      "bytes": 47330
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/source-2/source-review.md",
+      "sha256": "9430639388114ff37e9727f95df8b973836a07ed8e809a3615ad686eb5c01a4d",
+      "bytes": 24405
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/reviews/source-2/source-scores.json",
+      "sha256": "73803054ab5531eb795def89fd48d1f9824a0846b519305add454b36749c8264",
+      "bytes": 17884
+    },
+    {
       "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/scripts/analyze.mjs",
       "sha256": "bd48868f716d403228607e26efee1878b05a8a4a4b09ba952f335ecf2d138d81",
       "bytes": 2732
@@ -223,30 +223,180 @@
       "bytes": 2337
     },
     {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/request-trace/README.md",
-      "sha256": "61544e09712c69bbb021d6ab09ff2fc3f24628cd370f7c849595f006a40e2a48",
-      "bytes": 1480
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/source-fix-1/body-review-ledger.json",
+      "sha256": "81925ddc61e5da4dded2fa1db5c06438d25990c8a3fafc6c56226d5a1e8037a5",
+      "bytes": 7896
     },
     {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/request-trace/after-requests.json",
-      "sha256": "761ae0d3cb894ba75d69eed5ad402f8121ea1beccf4efb5b786a5a00dc886faa",
-      "bytes": 34354
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/source-fix-1/premise-analysis.json",
+      "sha256": "3713f832d7da84462aa02b9ac973a6ca578f1c52b7c49c84c63008e689f019cc",
+      "bytes": 7518
     },
     {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/request-trace/before-requests.json",
-      "sha256": "6ce77fecf6c0f9607ae2066bf9726fd4525def52c5eecf2fd9cbfc7b29461dbd",
-      "bytes": 73870
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/source-fix-1/preservation.json",
+      "sha256": "d5a729194e1a5d90e0a17c13117c9cb6d6770f38894bb7187e9abd1715f15aa7",
+      "bytes": 878
     },
     {
-      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/request-trace/premise-analysis.json",
-      "sha256": "6dad143af404e5d05337bbc22b6724c4807dfbd9ad49fd0c01fb534cbebc0ef2",
-      "bytes": 16211
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/source-fix-1/preserved-inputs.json",
+      "sha256": "6df923e900fa71fdbc662a1abccb59bc5b0f3de276deb19a1077e4b009c53938",
+      "bytes": 14749
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/source-fix-1/report.md",
+      "sha256": "25cfa63bb9b0816c77fe2056755b590c253804c1667dc9dc185a4587fd991b44",
+      "bytes": 5725
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/source-fix-1/requests.json",
+      "sha256": "4498b023474cefefc4f21cf61b95c5320bae0bb80e8e4202ba9ab84e9469da3a",
+      "bytes": 34395
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/source-fix-1/reviews/reader-5/mapping.json",
+      "sha256": "d6552530eb9dabb0dce53b3bf2531a43a12e1bca69f984f6336fe5de91dc3dbb",
+      "bytes": 4987
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/source-fix-1/reviews/reader-5/packet.md",
+      "sha256": "f416c84484d4b20eceaacd1e1f5e14d5fccfe4cb3f65915b671a3c1ce439f4ad",
+      "bytes": 3960
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/source-fix-1/reviews/reader-5/receipt.json",
+      "sha256": "bbf8a0c0afd2f1469e183b0347378c653cdd94472250fdf7193f9d12d353b980",
+      "bytes": 555
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/source-fix-1/reviews/reader-5/report.md",
+      "sha256": "00cde4fd5b3908e4dd51f12fe875089668e88325fc999b00321af553d23ae5b8",
+      "bytes": 4266
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/source-fix-1/reviews/reader-5/scores.json",
+      "sha256": "f16a8f0c77a42a2da55ce79fc3b617d9ff65ef03b5077bb8db18cb4245204db6",
+      "bytes": 6601
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/source-fix-1/reviews/source-3/mapping.json",
+      "sha256": "be886a3fd8e5a18dcb7c6b986aba9d6b941fe3034d9c4bab0aa6c8d47e087ebe",
+      "bytes": 3629
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/source-fix-1/reviews/source-3/packet.md",
+      "sha256": "8629fe16e17ad42e33fb1c89f988037258be53bed6a8df986b53cf6fc589896a",
+      "bytes": 44028
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/source-fix-1/reviews/source-3/receipt.json",
+      "sha256": "a8b0510c2dafc79edb676d925c308d5fb81fd62ea780a544062156b6e57756ee",
+      "bytes": 651
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/source-fix-1/reviews/source-3/report.md",
+      "sha256": "7805e43496f6e9c521cf3b1ab16d9ae6d0de2a679d44b0d3f387bcbf62e60eaa",
+      "bytes": 24436
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/source-fix-1/reviews/source-3/requests.json",
+      "sha256": "3742fda3961af6cdcb798620e500b3bd714ec46e22d2fcaed6abe90f47957356",
+      "bytes": 34295
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/source-fix-1/reviews/source-3/scores.json",
+      "sha256": "10d70a0a952e3fb51ce17b2aecf2bffc7112a9191cbc0154b714f3c2099ecda8",
+      "bytes": 4096
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/source-fix-1/reviews/source-4/mapping.json",
+      "sha256": "fb4923519c1fcb0f29e48339a09a577b95846a5688aba14c5635abed0ecefc78",
+      "bytes": 1693
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/source-fix-1/reviews/source-4/packet.md",
+      "sha256": "ec138a08ba47c0e73eb2e0f95e1885b8e54b6b19581b119ca4b078d7c1bfb7a8",
+      "bytes": 27893
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/source-fix-1/reviews/source-4/receipt.json",
+      "sha256": "e722d7c70899b4f933804ae39ffe3fb2a0757be7f36d5269714758281b0857c8",
+      "bytes": 622
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/source-fix-1/reviews/source-4/report.md",
+      "sha256": "10e9acb98073ef78d13e6437f9c1e010366f4fae4dc5ed96a721b6ac444813c3",
+      "bytes": 8937
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/source-fix-1/reviews/source-4/requests.json",
+      "sha256": "5cca3f9cb8f01d14dd2faeb1f033e6ce189912aa00713c9ab5c67622e56113a6",
+      "bytes": 34341
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/source-fix-1/reviews/source-4/scores.json",
+      "sha256": "c7c0e8b56fc722717bba0f42ede5c88113b7307568288a61b340c7c564263ba4",
+      "bytes": 5864
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/source-fix-1/reviews/source-5/mapping.json",
+      "sha256": "abc3377a83a7d37cbac1771a53d37c18a4203ab58ae61574691fecf0cf5f222f",
+      "bytes": 1747
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/source-fix-1/reviews/source-5/packet.md",
+      "sha256": "48bfedf8845b11608d5b22ae90085ba9debbc0f74c0dc85e5a15c54a5a5764bf",
+      "bytes": 28055
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/source-fix-1/reviews/source-5/receipt.json",
+      "sha256": "e31cbaf06407010637cf6fc3867646a4b20c61232585f834186e5433dd2872df",
+      "bytes": 664
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/source-fix-1/reviews/source-5/report.md",
+      "sha256": "6741c54749117c5aa1b2ddbce3df227542e2b9ade84947837607fcab5f1ede69",
+      "bytes": 6582
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/source-fix-1/reviews/source-5/requests.json",
+      "sha256": "4498b023474cefefc4f21cf61b95c5320bae0bb80e8e4202ba9ab84e9469da3a",
+      "bytes": 34395
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/source-fix-1/reviews/source-5/scores.json",
+      "sha256": "a799ff3bd22c6706b82792db7d37bce23b7645502c0ef0227c8ef468004df4c3",
+      "bytes": 1125
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/source-fix-1/verification.json",
+      "sha256": "7c65a4c881a1b8570a83f1c87118a4759b3bb1f0efa412a7a102bbe6b5d1cb6c",
+      "bytes": 6217
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/structure-revision.md",
+      "sha256": "a8f9f319cb8250e75e93a5f35e9aa259f749e6befb71e23be5b3ee52a1ba1db7",
+      "bytes": 16537
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/timeout-analysis.json",
+      "sha256": "d360e6648ee6e6f59fd8ed73f970914f164536d5ecdc4699faf521fa1e4f492f",
+      "bytes": 6663
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/timeout-analysis.md",
+      "sha256": "42ce5362131b0fc655146465276799dddeaf25872e42da568ffb182664c3f0ac",
+      "bytes": 2151
+    },
+    {
+      "path": "docs/reviews/daily-reading-context-production/2026-10-17/revision-5/verification.json",
+      "sha256": "44b5ce7d51ff47fae42ad7bd5db0dab03791ec0502489d0d5ef3b3ced09df1b9",
+      "bytes": 3812
     }
   ],
   "implementation": [
     {
       "path": "src/lib/ai/context-pilot-plan.server.ts",
-      "sha256": "b1f8d5aeb0082086c7cc25c54a1037d75d0e6c5b9d49a9661c27277ef183edcf",
+      "sha256": "a34e6814aaaada5d49cd737defa2fdbd387e11a43c80c1dd7f7a793b48088cf4",
       "bytes": 7374
     },
     {
@@ -256,8 +406,8 @@
     },
     {
       "path": "src/lib/ai/context-writing-material.json",
-      "sha256": "40a86ccab103f37f6b28db1e1aef8313f142d2cb7af6c0f8806f483eabf665b8",
-      "bytes": 25335
+      "sha256": "1c2374490a07be6856a3639660f8ee6014ba60f5ab9c922bb2b9bd078c1ad5bc",
+      "bytes": 25507
     },
     {
       "path": "src/lib/ai/daily-context-claims.ts",
@@ -393,5 +543,7 @@
       "bytes": 69157,
       "identicalToBaseCommit": true
     }
-  ]
+  ],
+  "followupBaseCommit": "716fe8090ace7be2879327dc017f20120f303685",
+  "followupStatus": "uncommitted offline source-fix-1; no provider pilot, push, deployment or activation"
 }

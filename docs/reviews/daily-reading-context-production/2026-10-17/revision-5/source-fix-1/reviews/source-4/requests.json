@@ -1,0 +1,536 @@
+{
+ "capturedFrom": "final revision-5 source-fix-1 after source-3 review",
+ "planHash": "b134a5a9777e4ec122e0918d8bd351fd50ae36d209e99129602d34b23ab662dd",
+ "planVersion": "daily-context-pilot-5",
+ "network": "records-harness fetch interception; external calls throw",
+ "providerRequestsIntercepted": 10,
+ "lovableRequestsIntercepted": 0,
+ "externalAttempts": 0,
+ "cases": [
+  {
+   "id": "contact-only",
+   "promptVersion": "daily-context-body-5",
+   "validatorVersion": "daily-context-reference-5",
+   "diagnostics": "http",
+   "memberDiagnostics": "http",
+   "memberMessagesIdentical": true,
+   "memberGenerationConfig": {
+    "responseMimeType": "application/json",
+    "responseJsonSchema": {
+     "type": "object",
+     "properties": {
+      "paragraphs": {
+       "type": "array",
+       "minItems": 2,
+       "maxItems": 4,
+       "items": {
+        "type": "object",
+        "properties": {
+         "text": {
+          "type": "string"
+         },
+         "facts": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "scenes": {
+          "type": "array",
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+           "type": "string"
+          }
+         }
+        },
+        "required": [
+         "text",
+         "facts",
+         "scenes"
+        ],
+        "additionalProperties": false
+       }
+      }
+     },
+     "required": [
+      "paragraphs"
+     ],
+     "additionalProperties": false
+    }
+   },
+   "systemChars": 1049,
+   "userChars": 2417,
+   "requestBytes": 4280,
+   "requestSha256": "f8a48c008e7eaa3eedbfc55431ed211d4436a64418a138f8437b377ef82fc03d",
+   "generationConfig": {
+    "responseMimeType": "application/json",
+    "responseJsonSchema": {
+     "type": "object",
+     "properties": {
+      "paragraphs": {
+       "type": "array",
+       "minItems": 2,
+       "maxItems": 4,
+       "items": {
+        "type": "object",
+        "properties": {
+         "text": {
+          "type": "string"
+         },
+         "facts": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "scenes": {
+          "type": "array",
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+           "type": "string"
+          }
+         }
+        },
+        "required": [
+         "text",
+         "facts",
+         "scenes"
+        ],
+        "additionalProperties": false
+       }
+      }
+     },
+     "required": [
+      "paragraphs"
+     ],
+     "additionalProperties": false
+    },
+    "maxOutputTokens": 65536
+   },
+   "system": "Write the body of a daily astrology reading for one reader: a precise observation, the distinction that makes it useful, and an optional, proportionate next step. Address the reader as you. The brief's claims are the whole reading. Each is worded once in write, or copied exactly where it names copy. Use every claim exactly once and add nothing else. You may reorder claims, join two in one sentence, change connecting words and pronouns, and choose where paragraphs break. Never restate a claim in other words, follow a claim with an explanation of it, or close with a summary or lesson. An if- or when-clause inside a claim is that claim's condition: keep it on that claim and state it once. A claim marked continues stays within the claim it names and does not repeat that claim's condition or setup. Keep each word in keep on its own claim. Claims describe possible situations, never known events in the reader's life. Add nothing a claim does not say: no history, motive, cause, effect, outcome, frequency, certainty, ease, speed or necessity.",
+   "user": "Tone: warm. Attentive and conversational: natural direct address and occasional contractions. Warmth comes from accurate observation, never praise, consolation or reassurance.\nDepth: standard. Add no orb, degree, phase or date. The only dated sentence is a copied A1 chronology claim.\nWrite two to four paragraphs of one to four complete sentences each, under 200 words per paragraph and 700 in all. Open with the observe claim. Paragraph 1 cites C1 and I1. A claim with byParagraph 2 belongs in paragraph 1 or 2. A claim with copy is reproduced word for word from the named reference field.\nEach paragraph's facts array lists every ID in the cite arrays of the claims it uses. Declare an empty scenes array.\nName a planet or aspect only as a claim does, in a paragraph citing its C reference. Each contact is a transiting planet to a natal point, not two planets in the current sky. Add no sign, house, angle or other geometry.\nWrite only the body: no headline, reflection question, caveat, wellbeing framing, source note or explanation of these instructions.\nBrief:\n{\"version\":\"daily-context-brief-5\",\"materialVersion\":\"daily-context-material-5\",\"claims\":[{\"id\":\"I1.1\",\"move\":\"observe\",\"write\":\"An extra check can look like almost nothing next to a task you know well.\",\"cite\":[\"C1\",\"I1\"],\"keep\":[\"can\"]},{\"id\":\"I1.2\",\"move\":\"explain\",\"write\":\"With Saturn squaring your natal Sun, even that task can take more effort than usual.\",\"cite\":[\"C1\",\"I1\"],\"keep\":[\"can\"],\"continues\":\"I1.1\"},{\"id\":\"I1.3\",\"move\":\"explain\",\"write\":\"If it fills the whole afternoon, the check needs hours that are already spoken for.\",\"cite\":[\"C1\",\"I1\"],\"continues\":\"I1.2\"},{\"id\":\"I1.4\",\"move\":\"distinguish\",\"write\":\"Moving the task to another afternoon only takes the check along with it.\",\"cite\":[\"C1\",\"I1\"],\"continues\":\"I1.3\"},{\"id\":\"I1.5\",\"move\":\"choose\",\"write\":\"Changing what the task includes is the other option: the check could stay outside it.\",\"cite\":[\"C1\",\"I1\"],\"keep\":[\"could\"],\"continues\":\"I1.4\"}],\"references\":[{\"id\":\"C1\",\"kind\":\"calculation\",\"dependsOn\":[],\"cycle\":{\"transitBody\":\"saturn\",\"natalPoint\":\"sun\",\"aspect\":\"square\"}},{\"id\":\"I1\",\"kind\":\"interpretation\",\"dependsOn\":[\"C1\"],\"sourceKey\":\"square:saturn:sun\",\"releaseVersion\":\"0.9.0\"}],\"controls\":{\"voiceVersion\":\"daily-context-voice-5\",\"tone\":\"warm\",\"depth\":\"standard\",\"technicalDetails\":false,\"natalConditional\":false,\"chronologyFirstTwo\":false,\"chronologyOnce\":false}}"
+  },
+  {
+   "id": "natal-only",
+   "promptVersion": "daily-context-body-5",
+   "validatorVersion": "daily-context-reference-5",
+   "diagnostics": "http",
+   "memberDiagnostics": "http",
+   "memberMessagesIdentical": true,
+   "memberGenerationConfig": {
+    "responseMimeType": "application/json",
+    "responseJsonSchema": {
+     "type": "object",
+     "properties": {
+      "paragraphs": {
+       "type": "array",
+       "minItems": 2,
+       "maxItems": 4,
+       "items": {
+        "type": "object",
+        "properties": {
+         "text": {
+          "type": "string"
+         },
+         "facts": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "scenes": {
+          "type": "array",
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+           "type": "string"
+          }
+         }
+        },
+        "required": [
+         "text",
+         "facts",
+         "scenes"
+        ],
+        "additionalProperties": false
+       }
+      }
+     },
+     "required": [
+      "paragraphs"
+     ],
+     "additionalProperties": false
+    }
+   },
+   "systemChars": 1172,
+   "userChars": 2760,
+   "requestBytes": 4782,
+   "requestSha256": "7cd93e3fea03340e407a1ec69ba239ee580b8c28824b6b6a6afc47b1ea427f6b",
+   "generationConfig": {
+    "responseMimeType": "application/json",
+    "responseJsonSchema": {
+     "type": "object",
+     "properties": {
+      "paragraphs": {
+       "type": "array",
+       "minItems": 2,
+       "maxItems": 4,
+       "items": {
+        "type": "object",
+        "properties": {
+         "text": {
+          "type": "string"
+         },
+         "facts": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "scenes": {
+          "type": "array",
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+           "type": "string"
+          }
+         }
+        },
+        "required": [
+         "text",
+         "facts",
+         "scenes"
+        ],
+        "additionalProperties": false
+       }
+      }
+     },
+     "required": [
+      "paragraphs"
+     ],
+     "additionalProperties": false
+    },
+    "maxOutputTokens": 65536
+   },
+   "system": "Write the body of a daily astrology reading for one reader: a precise observation, the distinction that makes it useful, and an optional, proportionate next step. Address the reader as you. The brief's claims are the whole reading. Each is worded once in write, or copied exactly where it names copy. Use every claim exactly once and add nothing else. You may reorder claims, join two in one sentence, change connecting words and pronouns, and choose where paragraphs break. Never restate a claim in other words, follow a claim with an explanation of it, or close with a summary or lesson. An if- or when-clause inside a claim is that claim's condition: keep it on that claim and state it once. A claim marked continues stays within the claim it names and does not repeat that claim's condition or setup. Keep each word in keep on its own claim. Claims describe possible situations, never known events in the reader's life. Add nothing a claim does not say: no history, motive, cause, effect, outcome, frequency, certainty, ease, speed or necessity. The N1 claim is a conditional possibility, never a personality description, a diagnosis or an account of its chart origin.",
+   "user": "Tone: warm. Attentive and conversational: natural direct address and occasional contractions. Warmth comes from accurate observation, never praise, consolation or reassurance.\nDepth: standard. Add no orb, degree, phase or date. The only dated sentence is a copied A1 chronology claim.\nWrite two to four paragraphs of one to four complete sentences each, under 200 words per paragraph and 700 in all. Open with the observe claim. Paragraph 1 cites C1 and I1. A claim with byParagraph 2 belongs in paragraph 1 or 2. A claim with copy is reproduced word for word from the named reference field.\nEach paragraph's facts array lists every ID in the cite arrays of the claims it uses. Declare an empty scenes array.\nName a planet or aspect only as a claim does, in a paragraph citing its C reference. Each contact is a transiting planet to a natal point, not two planets in the current sky. Add no sign, house, angle or other geometry.\nWrite only the body: no headline, reflection question, caveat, wellbeing framing, source note or explanation of these instructions.\nBrief:\n{\"version\":\"daily-context-brief-5\",\"materialVersion\":\"daily-context-material-5\",\"claims\":[{\"id\":\"I1.1\",\"move\":\"observe\",\"write\":\"A free afternoon can look like plenty of room for a task you know well.\",\"cite\":[\"C1\",\"I1\"],\"keep\":[\"can\"]},{\"id\":\"I1.2\",\"move\":\"explain\",\"write\":\"With Saturn squaring your natal Sun, even that task can take more effort than usual.\",\"cite\":[\"C1\",\"I1\"],\"keep\":[\"can\"],\"continues\":\"I1.1\"},{\"id\":\"I1.3\",\"move\":\"explain\",\"write\":\"If it fills the whole afternoon, anything else needs hours that are already spoken for.\",\"cite\":[\"C1\",\"I1\"],\"continues\":\"I1.2\"},{\"id\":\"N1.1\",\"move\":\"distinguish\",\"write\":\"If several possible projects are competing for that same free afternoon, with notes on one idea and a tab open on another, you may not need to decide between them yet: following more than one line of curiosity can help a direction take shape.\",\"cite\":[\"N1\",\"C1\",\"I1\"],\"keep\":[\"can\"],\"continues\":\"I1.1\",\"byParagraph\":2},{\"id\":\"N1.2\",\"move\":\"choose\",\"write\":\"You could give the task a clear stopping point, with the other ideas waiting as notes.\",\"cite\":[\"N1\",\"C1\",\"I1\"],\"keep\":[\"could\"],\"continues\":\"N1.1\"}],\"references\":[{\"id\":\"C1\",\"kind\":\"calculation\",\"dependsOn\":[],\"cycle\":{\"transitBody\":\"saturn\",\"natalPoint\":\"sun\",\"aspect\":\"square\"}},{\"id\":\"I1\",\"kind\":\"interpretation\",\"dependsOn\":[\"C1\"],\"sourceKey\":\"square:saturn:sun\",\"releaseVersion\":\"0.9.0\"},{\"id\":\"N1\",\"kind\":\"temperament\",\"dependsOn\":[\"C1\",\"I1\"],\"sourceKey\":\"nl-sun-03\",\"releaseVersion\":\"0.9.0\",\"natalEvidenceId\":\"NL1\"}],\"controls\":{\"voiceVersion\":\"daily-context-voice-5\",\"tone\":\"warm\",\"depth\":\"standard\",\"technicalDetails\":false,\"natalConditional\":true,\"chronologyFirstTwo\":false,\"chronologyOnce\":false}}"
+  },
+  {
+   "id": "transit-only",
+   "promptVersion": "daily-context-body-5",
+   "validatorVersion": "daily-context-reference-5",
+   "diagnostics": "http",
+   "memberDiagnostics": "http",
+   "memberMessagesIdentical": true,
+   "memberGenerationConfig": {
+    "responseMimeType": "application/json",
+    "responseJsonSchema": {
+     "type": "object",
+     "properties": {
+      "paragraphs": {
+       "type": "array",
+       "minItems": 2,
+       "maxItems": 4,
+       "items": {
+        "type": "object",
+        "properties": {
+         "text": {
+          "type": "string"
+         },
+         "facts": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "scenes": {
+          "type": "array",
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+           "type": "string"
+          }
+         }
+        },
+        "required": [
+         "text",
+         "facts",
+         "scenes"
+        ],
+        "additionalProperties": false
+       }
+      }
+     },
+     "required": [
+      "paragraphs"
+     ],
+     "additionalProperties": false
+    }
+   },
+   "systemChars": 1049,
+   "userChars": 2813,
+   "requestBytes": 4728,
+   "requestSha256": "7a239ddcecf3e2c54caf48eba4c1cf6fd35011a60b7fb5374e2043fbd7baa761",
+   "generationConfig": {
+    "responseMimeType": "application/json",
+    "responseJsonSchema": {
+     "type": "object",
+     "properties": {
+      "paragraphs": {
+       "type": "array",
+       "minItems": 2,
+       "maxItems": 4,
+       "items": {
+        "type": "object",
+        "properties": {
+         "text": {
+          "type": "string"
+         },
+         "facts": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "scenes": {
+          "type": "array",
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+           "type": "string"
+          }
+         }
+        },
+        "required": [
+         "text",
+         "facts",
+         "scenes"
+        ],
+        "additionalProperties": false
+       }
+      }
+     },
+     "required": [
+      "paragraphs"
+     ],
+     "additionalProperties": false
+    },
+    "maxOutputTokens": 65536
+   },
+   "system": "Write the body of a daily astrology reading for one reader: a precise observation, the distinction that makes it useful, and an optional, proportionate next step. Address the reader as you. The brief's claims are the whole reading. Each is worded once in write, or copied exactly where it names copy. Use every claim exactly once and add nothing else. You may reorder claims, join two in one sentence, change connecting words and pronouns, and choose where paragraphs break. Never restate a claim in other words, follow a claim with an explanation of it, or close with a summary or lesson. An if- or when-clause inside a claim is that claim's condition: keep it on that claim and state it once. A claim marked continues stays within the claim it names and does not repeat that claim's condition or setup. Keep each word in keep on its own claim. Claims describe possible situations, never known events in the reader's life. Add nothing a claim does not say: no history, motive, cause, effect, outcome, frequency, certainty, ease, speed or necessity.",
+   "user": "Tone: warm. Attentive and conversational: natural direct address and occasional contractions. Warmth comes from accurate observation, never praise, consolation or reassurance.\nDepth: standard. Add no orb, degree, phase or date. The only dated sentence is a copied A1 chronology claim.\nWrite two to four paragraphs of one to four complete sentences each, under 200 words per paragraph and 700 in all. Open with the observe claim. Paragraph 1 cites C1 and I1. A claim with byParagraph 2 belongs in paragraph 1 or 2. A claim with copy is reproduced word for word from the named reference field.\nEach paragraph's facts array lists every ID in the cite arrays of the claims it uses. Declare an empty scenes array.\nName a planet or aspect only as a claim does, in a paragraph citing its C reference. Each contact is a transiting planet to a natal point, not two planets in the current sky. Add no sign, house, angle or other geometry.\nWrite only the body: no headline, reflection question, caveat, wellbeing framing, source note or explanation of these instructions.\nBrief:\n{\"version\":\"daily-context-brief-5\",\"materialVersion\":\"daily-context-material-5\",\"claims\":[{\"id\":\"I1.1\",\"move\":\"observe\",\"write\":\"An extra check can look like almost nothing next to a task you know well.\",\"cite\":[\"C1\",\"I1\"],\"keep\":[\"can\"]},{\"id\":\"I1.2\",\"move\":\"explain\",\"write\":\"With Saturn squaring your natal Sun, even that task can take more effort than usual.\",\"cite\":[\"C1\",\"I1\"],\"keep\":[\"can\"],\"continues\":\"I1.1\"},{\"id\":\"I1.3\",\"move\":\"explain\",\"write\":\"If it fills the whole afternoon, the check needs hours that are already spoken for.\",\"cite\":[\"C1\",\"I1\"],\"continues\":\"I1.2\"},{\"id\":\"A1.1\",\"move\":\"chronology\",\"copy\":\"A1.chronologySentence\",\"cite\":[\"A1\",\"C1\"],\"continues\":\"I1.3\",\"byParagraph\":2},{\"id\":\"P2.1\",\"move\":\"choose\",\"write\":\"If an earlier way of handling the task no longer fits, you could use this return to try one smaller change rather than a new plan: a stopping point that comes before the check.\",\"cite\":[\"P2\",\"C1\",\"I1\",\"A1\"],\"keep\":[\"could\"],\"continues\":\"A1.1\",\"byParagraph\":2}],\"references\":[{\"id\":\"C1\",\"kind\":\"calculation\",\"dependsOn\":[],\"cycle\":{\"transitBody\":\"saturn\",\"natalPoint\":\"sun\",\"aspect\":\"square\"}},{\"id\":\"I1\",\"kind\":\"interpretation\",\"dependsOn\":[\"C1\"],\"sourceKey\":\"square:saturn:sun\",\"releaseVersion\":\"0.9.0\"},{\"id\":\"A1\",\"kind\":\"calculation\",\"dependsOn\":[\"C1\"],\"chronologySentence\":\"This is the second of three calculated contacts; the first exact contact falls in September 2026.\"},{\"id\":\"P2\",\"kind\":\"interpretation\",\"dependsOn\":[\"C1\",\"I1\",\"A1\"],\"sourceKey\":\"chapter-return-1\",\"releaseVersion\":\"0.9.0\",\"storyChapter\":\"return\"}],\"controls\":{\"voiceVersion\":\"daily-context-voice-5\",\"tone\":\"warm\",\"depth\":\"standard\",\"technicalDetails\":false,\"natalConditional\":false,\"chronologyFirstTwo\":true,\"chronologyOnce\":true}}"
+  },
+  {
+   "id": "natal-and-transit",
+   "promptVersion": "daily-context-body-5",
+   "validatorVersion": "daily-context-reference-5",
+   "diagnostics": "http",
+   "memberDiagnostics": "http",
+   "memberMessagesIdentical": true,
+   "memberGenerationConfig": {
+    "responseMimeType": "application/json",
+    "responseJsonSchema": {
+     "type": "object",
+     "properties": {
+      "paragraphs": {
+       "type": "array",
+       "minItems": 2,
+       "maxItems": 4,
+       "items": {
+        "type": "object",
+        "properties": {
+         "text": {
+          "type": "string"
+         },
+         "facts": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "scenes": {
+          "type": "array",
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+           "type": "string"
+          }
+         }
+        },
+        "required": [
+         "text",
+         "facts",
+         "scenes"
+        ],
+        "additionalProperties": false
+       }
+      }
+     },
+     "required": [
+      "paragraphs"
+     ],
+     "additionalProperties": false
+    }
+   },
+   "systemChars": 1172,
+   "userChars": 3317,
+   "requestBytes": 5413,
+   "requestSha256": "dfe93ee51a5875f337272d1de8ec3ef193e17074afc1b59e5f4841dfad27b3df",
+   "generationConfig": {
+    "responseMimeType": "application/json",
+    "responseJsonSchema": {
+     "type": "object",
+     "properties": {
+      "paragraphs": {
+       "type": "array",
+       "minItems": 2,
+       "maxItems": 4,
+       "items": {
+        "type": "object",
+        "properties": {
+         "text": {
+          "type": "string"
+         },
+         "facts": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "scenes": {
+          "type": "array",
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+           "type": "string"
+          }
+         }
+        },
+        "required": [
+         "text",
+         "facts",
+         "scenes"
+        ],
+        "additionalProperties": false
+       }
+      }
+     },
+     "required": [
+      "paragraphs"
+     ],
+     "additionalProperties": false
+    },
+    "maxOutputTokens": 65536
+   },
+   "system": "Write the body of a daily astrology reading for one reader: a precise observation, the distinction that makes it useful, and an optional, proportionate next step. Address the reader as you. The brief's claims are the whole reading. Each is worded once in write, or copied exactly where it names copy. Use every claim exactly once and add nothing else. You may reorder claims, join two in one sentence, change connecting words and pronouns, and choose where paragraphs break. Never restate a claim in other words, follow a claim with an explanation of it, or close with a summary or lesson. An if- or when-clause inside a claim is that claim's condition: keep it on that claim and state it once. A claim marked continues stays within the claim it names and does not repeat that claim's condition or setup. Keep each word in keep on its own claim. Claims describe possible situations, never known events in the reader's life. Add nothing a claim does not say: no history, motive, cause, effect, outcome, frequency, certainty, ease, speed or necessity. The N1 claim is a conditional possibility, never a personality description, a diagnosis or an account of its chart origin.",
+   "user": "Tone: warm. Attentive and conversational: natural direct address and occasional contractions. Warmth comes from accurate observation, never praise, consolation or reassurance.\nDepth: standard. Add no orb, degree, phase or date. The only dated sentence is a copied A1 chronology claim.\nWrite two to four paragraphs of one to four complete sentences each, under 200 words per paragraph and 700 in all. Open with the observe claim. Paragraph 1 cites C1 and I1. A claim with byParagraph 2 belongs in paragraph 1 or 2. A claim with copy is reproduced word for word from the named reference field.\nEach paragraph's facts array lists every ID in the cite arrays of the claims it uses. Declare an empty scenes array.\nName a planet or aspect only as a claim does, in a paragraph citing its C reference. Each contact is a transiting planet to a natal point, not two planets in the current sky. Add no sign, house, angle or other geometry.\nWrite only the body: no headline, reflection question, caveat, wellbeing framing, source note or explanation of these instructions.\nBrief:\n{\"version\":\"daily-context-brief-5\",\"materialVersion\":\"daily-context-material-5\",\"claims\":[{\"id\":\"I1.1\",\"move\":\"observe\",\"write\":\"A free afternoon can look like plenty of room for a task you know well.\",\"cite\":[\"C1\",\"I1\"],\"keep\":[\"can\"]},{\"id\":\"I1.2\",\"move\":\"explain\",\"write\":\"With Saturn squaring your natal Sun, even that task can take more effort than usual.\",\"cite\":[\"C1\",\"I1\"],\"keep\":[\"can\"],\"continues\":\"I1.1\"},{\"id\":\"I1.3\",\"move\":\"explain\",\"write\":\"If it fills the whole afternoon, anything else needs hours that are already spoken for.\",\"cite\":[\"C1\",\"I1\"],\"continues\":\"I1.2\"},{\"id\":\"A1.1\",\"move\":\"chronology\",\"copy\":\"A1.chronologySentence\",\"cite\":[\"A1\",\"C1\"],\"continues\":\"I1.3\",\"byParagraph\":2},{\"id\":\"N1.1\",\"move\":\"distinguish\",\"write\":\"If several possible projects are competing for that same free afternoon, with notes on one idea and a tab open on another, you may not need to decide between them yet: following more than one line of curiosity can help a direction take shape.\",\"cite\":[\"N1\",\"C1\",\"I1\"],\"keep\":[\"can\"],\"continues\":\"I1.1\",\"byParagraph\":2},{\"id\":\"P2.1\",\"move\":\"choose\",\"write\":\"If an earlier way of handling the task no longer fits, you could use this return to try one smaller change: a clear point where the task stops, with the other ideas waiting as notes.\",\"cite\":[\"P2\",\"C1\",\"I1\",\"A1\",\"N1\"],\"keep\":[\"could\"],\"continues\":\"A1.1\",\"byParagraph\":2}],\"references\":[{\"id\":\"C1\",\"kind\":\"calculation\",\"dependsOn\":[],\"cycle\":{\"transitBody\":\"saturn\",\"natalPoint\":\"sun\",\"aspect\":\"square\"}},{\"id\":\"I1\",\"kind\":\"interpretation\",\"dependsOn\":[\"C1\"],\"sourceKey\":\"square:saturn:sun\",\"releaseVersion\":\"0.9.0\"},{\"id\":\"N1\",\"kind\":\"temperament\",\"dependsOn\":[\"C1\",\"I1\"],\"sourceKey\":\"nl-sun-03\",\"releaseVersion\":\"0.9.0\",\"natalEvidenceId\":\"NL1\"},{\"id\":\"A1\",\"kind\":\"calculation\",\"dependsOn\":[\"C1\"],\"chronologySentence\":\"This is the second of three calculated contacts; the first exact contact falls in September 2026.\"},{\"id\":\"P2\",\"kind\":\"interpretation\",\"dependsOn\":[\"C1\",\"I1\",\"A1\"],\"sourceKey\":\"chapter-return-1\",\"releaseVersion\":\"0.9.0\",\"storyChapter\":\"return\"}],\"controls\":{\"voiceVersion\":\"daily-context-voice-5\",\"tone\":\"warm\",\"depth\":\"standard\",\"technicalDetails\":false,\"natalConditional\":true,\"chronologyFirstTwo\":true,\"chronologyOnce\":true}}"
+  },
+  {
+   "id": "synthesis-natal-and-transit",
+   "promptVersion": "daily-context-body-5",
+   "validatorVersion": "daily-context-reference-5",
+   "diagnostics": "http",
+   "memberDiagnostics": "http",
+   "memberMessagesIdentical": true,
+   "memberGenerationConfig": {
+    "responseMimeType": "application/json",
+    "responseJsonSchema": {
+     "type": "object",
+     "properties": {
+      "paragraphs": {
+       "type": "array",
+       "minItems": 2,
+       "maxItems": 4,
+       "items": {
+        "type": "object",
+        "properties": {
+         "text": {
+          "type": "string"
+         },
+         "facts": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "scenes": {
+          "type": "array",
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+           "type": "string"
+          }
+         }
+        },
+        "required": [
+         "text",
+         "facts",
+         "scenes"
+        ],
+        "additionalProperties": false
+       }
+      }
+     },
+     "required": [
+      "paragraphs"
+     ],
+     "additionalProperties": false
+    }
+   },
+   "systemChars": 1172,
+   "userChars": 4253,
+   "requestBytes": 6487,
+   "requestSha256": "af8c86dab1bbcf1e855bbedfad39b826d07a7e56e0c1d15a0b85ca4f7dbbda70",
+   "generationConfig": {
+    "responseMimeType": "application/json",
+    "responseJsonSchema": {
+     "type": "object",
+     "properties": {
+      "paragraphs": {
+       "type": "array",
+       "minItems": 2,
+       "maxItems": 4,
+       "items": {
+        "type": "object",
+        "properties": {
+         "text": {
+          "type": "string"
+         },
+         "facts": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "scenes": {
+          "type": "array",
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+           "type": "string"
+          }
+         }
+        },
+        "required": [
+         "text",
+         "facts",
+         "scenes"
+        ],
+        "additionalProperties": false
+       }
+      }
+     },
+     "required": [
+      "paragraphs"
+     ],
+     "additionalProperties": false
+    },
+    "maxOutputTokens": 65536
+   },
+   "system": "Write the body of a daily astrology reading for one reader: a precise observation, the distinction that makes it useful, and an optional, proportionate next step. Address the reader as you. The brief's claims are the whole reading. Each is worded once in write, or copied exactly where it names copy. Use every claim exactly once and add nothing else. You may reorder claims, join two in one sentence, change connecting words and pronouns, and choose where paragraphs break. Never restate a claim in other words, follow a claim with an explanation of it, or close with a summary or lesson. An if- or when-clause inside a claim is that claim's condition: keep it on that claim and state it once. A claim marked continues stays within the claim it names and does not repeat that claim's condition or setup. Keep each word in keep on its own claim. Claims describe possible situations, never known events in the reader's life. Add nothing a claim does not say: no history, motive, cause, effect, outcome, frequency, certainty, ease, speed or necessity. The N1 claim is a conditional possibility, never a personality description, a diagnosis or an account of its chart origin.",
+   "user": "Tone: warm. Attentive and conversational: natural direct address and occasional contractions. Warmth comes from accurate observation, never praise, consolation or reassurance.\nDepth: standard. Add no orb, degree, phase or date. The only dated sentence is a copied A1 chronology claim.\nWrite two to four paragraphs of one to four complete sentences each, under 200 words per paragraph and 700 in all. Open with the observe claim. Paragraph 1 cites C1 and I1. A claim with byParagraph 2 belongs in paragraph 1 or 2. A claim with copy is reproduced word for word from the named reference field.\nEach paragraph's facts array lists every ID in the cite arrays of the claims it uses. Declare an empty scenes array.\nName a planet or aspect only as a claim does, in a paragraph citing its C reference. Each contact is a transiting planet to a natal point, not two planets in the current sky. Add no sign, house, angle or other geometry.\nWrite only the body: no headline, reflection question, caveat, wellbeing framing, source note or explanation of these instructions.\nBrief:\n{\"version\":\"daily-context-brief-5\",\"materialVersion\":\"daily-context-material-5\",\"claims\":[{\"id\":\"I2.1\",\"move\":\"observe\",\"write\":\"On a free afternoon, the notes for a task you know well can start turning into an outline.\",\"cite\":[\"C1\",\"I1\",\"C2\",\"I2\"],\"keep\":[\"can\"]},{\"id\":\"I2.2\",\"move\":\"explain\",\"write\":\"With Jupiter trining your natal Mars, the notes and your interest in them can feed each other when the aim is well chosen, and effort can meet little friction, making it natural to add the next piece or pursue an emerging opening.\",\"cite\":[\"C2\",\"I2\"],\"keep\":[\"can\"],\"continues\":\"I2.1\"},{\"id\":\"I1.2\",\"move\":\"explain\",\"write\":\"With Saturn squaring your natal Sun, the task itself can take more effort than usual.\",\"cite\":[\"C1\",\"I1\"],\"keep\":[\"can\"]},{\"id\":\"I1.3\",\"move\":\"explain\",\"write\":\"If it fills the whole afternoon, the next piece needs hours that are already spoken for.\",\"cite\":[\"C1\",\"I1\"],\"continues\":\"I1.2\"},{\"id\":\"A1.1\",\"move\":\"chronology\",\"copy\":\"A1.chronologySentence\",\"cite\":[\"A1\",\"C1\"],\"continues\":\"I1.3\",\"byParagraph\":2},{\"id\":\"S1.1\",\"move\":\"distinguish\",\"write\":\"A bigger task can need more structure to carry it, and that need can show up where the task grows past what it was set up for.\",\"cite\":[\"S1\",\"C1\",\"I1\",\"C2\",\"I2\"],\"keep\":[\"can\"],\"continues\":\"I2.2\",\"byParagraph\":2},{\"id\":\"N1.1\",\"move\":\"distinguish\",\"write\":\"If several possible projects are competing for that same free afternoon, you may not need to decide between them yet: following more than one line of curiosity can help a direction take shape.\",\"cite\":[\"N1\",\"C1\",\"I1\"],\"keep\":[\"can\"],\"continues\":\"I2.1\",\"byParagraph\":2},{\"id\":\"P2.1\",\"move\":\"choose\",\"write\":\"If an earlier way of handling the task no longer fits, you could use this return to try one smaller change: the next piece can wait as a note instead of joining the outline.\",\"cite\":[\"P2\",\"C1\",\"I1\",\"A1\",\"C2\",\"I2\",\"S1\",\"N1\"],\"keep\":[\"could\",\"can\"],\"continues\":\"A1.1\",\"byParagraph\":2}],\"references\":[{\"id\":\"C1\",\"kind\":\"calculation\",\"dependsOn\":[],\"cycle\":{\"transitBody\":\"saturn\",\"natalPoint\":\"sun\",\"aspect\":\"square\"}},{\"id\":\"I1\",\"kind\":\"interpretation\",\"dependsOn\":[\"C1\"],\"sourceKey\":\"square:saturn:sun\",\"releaseVersion\":\"0.9.0\"},{\"id\":\"C2\",\"kind\":\"calculation\",\"dependsOn\":[],\"cycle\":{\"transitBody\":\"jupiter\",\"natalPoint\":\"mars\",\"aspect\":\"trine\"}},{\"id\":\"I2\",\"kind\":\"interpretation\",\"dependsOn\":[\"C2\"],\"sourceKey\":\"trine:jupiter:mars\",\"releaseVersion\":\"0.9.0\"},{\"id\":\"S1\",\"kind\":\"synthesis\",\"dependsOn\":[\"C1\",\"I1\",\"C2\",\"I2\"],\"sourceKey\":\"square:saturn:sun_tension_trine:jupiter:mars\",\"releaseVersion\":\"0.9.0\"},{\"id\":\"N1\",\"kind\":\"temperament\",\"dependsOn\":[\"C1\",\"I1\"],\"sourceKey\":\"nl-sun-03\",\"releaseVersion\":\"0.9.0\",\"natalEvidenceId\":\"NL1\"},{\"id\":\"A1\",\"kind\":\"calculation\",\"dependsOn\":[\"C1\"],\"chronologySentence\":\"This is the second of three calculated contacts; the first exact contact falls in September 2026.\"},{\"id\":\"P2\",\"kind\":\"interpretation\",\"dependsOn\":[\"C1\",\"I1\",\"A1\"],\"sourceKey\":\"chapter-return-1\",\"releaseVersion\":\"0.9.0\",\"storyChapter\":\"return\"}],\"controls\":{\"voiceVersion\":\"daily-context-voice-5\",\"tone\":\"warm\",\"depth\":\"standard\",\"technicalDetails\":false,\"natalConditional\":true,\"chronologyFirstTwo\":true,\"chronologyOnce\":true}}"
+  }
+ ]
+}

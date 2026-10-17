@@ -1,0 +1,44 @@
+AI source-fidelity review. This is an independent AI review, not human review, editorial approval, or qualification of generated production output. No mapping, prior review, checkout, network or provider evidence was consulted. The packet alone was read, all 628 lines, in bounded chunks 1–160, 161–320, 321–480 and 481–628. Local claims and carries were treated as audit assertions, not semantic proof.
+
+Before reading: UTC 2026-10-17T13:24:55.850780+00:00; SHA-256 `ec138a08ba47c0e73eb2e0f95e1885b8e54b6b19581b119ca4b078d7c1bfb7a8`. The same hash was rechecked immediately before writing this report. Verdict frozen at 2026-10-17T13:28:18.973321+00:00, before any mapping or other reviewer input.
+
+Frozen verdict: composition **FAIL**; body B1 **FAIL**. Each has **0 unsupported claims, 3 omitted meanings, incomplete preservation of conditions, complete citation closure, and no restatements**. B1 context integration is **3/5**. All source families appear in one afternoon/task/outline situation, but the incomplete distinct meanings prevent the completeness required for 4. This score does not judge reader appeal or voice.
+
+Counts refer to three distinct semantic gaps, not to every word missing from a source. F2 is one gap recorded both as an omitted meaning and as a lost condition. Findings are not multiplied when the same text occurs in the composition, intercepted request, and B1. Ordinary situational illustrations are allowed within their modal or conditional framing.
+
+| Finding | Source wording | Draft wording | Source-fidelity judgment |
+| --- | --- | --- | --- |
+| F1 — I1.2 | I1: “more deliberate effort than usual” | “take more effort than usual” | Increased effort survives; its deliberate character does not. More exertion or effort quantity alone does not communicate more intentional or careful effort. This is a partial omission, not a demand to reproduce the adjective verbatim. |
+| F2 — S1.1 | S1: ambitions growing beyond “agreed limits” | “grows past what it was set up for” | A setup can be outgrown in preparation, purpose or resources without exceeding agreed scope. The specific agreed-limit threshold is lost. The increased-scope/increased-structure meaning survives. |
+| F3 — P2.1 | P2: smaller adjustment to “a method or boundary” | “one smaller change: the next piece can wait as a note instead of joining the outline” | The draft retains the condition, return and smaller adjustment, and gives a supported boundary illustration. It substitutes that one operation for the source's method-or-boundary alternatives. The generic smaller-change phrase does not independently convey both. The note itself is not an invented claim. |
+
+Every composition expression was audited as follows. A1.1 was resolved from the supplied A1 field, rather than treated as an unwritten expression. The intercepted request contains the same expressions; no separate semantic differences were found there.
+
+| Expression | Supporting supplied meaning | Judgment and citation closure |
+| --- | --- | --- |
+| I2.1 | I1/I2 allow a possible task situation involving effort and initiative; packet explicitly permits authored notes/outline/task illustrations. | Supported scene under “can”; no actual afternoon or known personal history is asserted. Familiarity is inside the possible task scene. C1/I1/C2/I2 are present. No independent source meaning is claimed complete by this setup alone. |
+| I2.2 | I2: enthusiasm and practical initiative reinforce one another when an aim is well chosen; effort can meet little friction, enabling larger work or an emerging opening. | Supported contextual paraphrase: the preceding notes-to-outline activity supplies practical initiative; interest supplies enthusiasm. Mutual feeding preserves reinforcement, rather than inventing a guarantee that initiative creates appeal. The well-chosen-aim condition and both larger-work/opening alternatives survive. C2/I2 closure is complete. |
+| I1.2 | I1: an established role's obligations can require more deliberate effort than usual. | Partial: F1. A familiar task can illustrate the responsibility, but increased effort alone does not retain its deliberate character. Planet/aspect/natal endpoint are correct; C1/I1 closure is complete. |
+| I1.3 | I1: expectations can outpace available capacity. | Supported time-capacity illustration: if the task fills the afternoon, adding work competes with allocated hours. The if-clause retains the possible mismatch. It does not assert actual overload or changed capacity. C1/I1 closure is complete. |
+| A1.1 | A1: second of three calculated contacts, first exact contact in September 2026. | Exact supplied chronology sentence. A1/C1 closure is complete. It establishes calculation chronology, not previous personal failure or lived recurrence. |
+| S1.1 | S1: greater scope can require more structure; ambitions exceeding agreed limits are one place to notice the tension. | Partial: first contribution retained; F2 loses the agreed-limit condition in the second. S1/C1/I1/C2/I2 closure is complete. |
+| N1.1 | N1: following multiple curiosities can help direction form; with several possible projects competing for one free afternoon, sampling and choosing one to pursue may be different stages. | Supported paraphrase: following several curiosities alongside “may not need to decide ... yet” separates exploration from selection. The free-afternoon/multiple-project condition survives, with no personality diagnosis or claim that interests must become projects. “Yet” need not be a verbatim repetition of “different stages.” N1/C1/I1 closure is complete. |
+| P2.1 | P2: if an earlier way no longer fits, the return offers a smaller method-or-boundary adjustment; I1 permits clearer boundaries; N1 separates exploration from commitment. | Partial: F3. The condition is intact, “could”/“can” remain optional, and no failed past attempt or wholesale restart is invented. Deferring a note illustrates a boundary and noncommitment. P2/C1/I1/A1/C2/I2/S1/N1 includes all transitive parents. |
+
+Every B1 sentence was audited against the sources, not merely against the brief.
+
+| Body sentence | Source audit | Paragraph citation closure |
+| --- | --- | --- |
+| P1.S1 — “On a free afternoon...” | Same supported modal illustration as I2.1. No actual personal circumstance is established. | Complete in P1: C1, I1, C2, I2. |
+| P1.S2 — “With Jupiter trining...” | Same supported contextual I2 paraphrase as I2.2. Well-chosen aim, reciprocal support, possible ease, larger work and emerging opening remain. No success, reward, frequency or opportunity-arrival guarantee. | Complete in P1: C2, I2. |
+| P1.S3 — “With Saturn squaring...” | Joins I1.2 and I1.3 without adding a new claim. F1 remains. The afternoon-capacity if-clause is intact. “Though” places two possible tendencies together; it does not invent a causal planetary interaction. | Complete in P1: C1, I1. |
+| P1.S4 — “This is the second...” | Copied word for word from A1, exactly once, within the first two paragraphs. No chronology change. | Complete in P1: A1, C1. |
+| P2.S1 — “A bigger task...” | Preserves increased scope/structure; F2 remains. Modal framing survives. | Complete in P2: S1, C1, I1, C2, I2. |
+| P2.S2 — “If several possible projects...” | Same supported conditional N1 paraphrase as N1.1. Choosing later and exploring now remain distinct. The task filling the afternoon was conditional, so this does not assert that already committed hours are free. | Complete in P2: N1, C1, I1. |
+| P2.S3 — “And if an earlier way...” | Same conditional, proportionate note-deferral application as P2.1; F3 remains. No assumed prior failure, guaranteed relief or prescribed refusal of work. | Complete in P2: P2, C1, I1, A1, C2, I2, S1, N1. |
+
+P1's facts array is exactly the union needed for its expressions: C1/I1/C2/I2/A1. P2 contains the complete union of all eight source IDs. Both scenes arrays are empty. The natal endpoints and named square/trine match C1/C2; no sign, house, angle, orb, phase or extra date is invented. Depth intentionally excludes calculation metadata, so its absence is not scored as an omitted composed meaning.
+
+No restatements were found. Reusing the task, notes, outline and next piece anchors distinct meanings: initiative, capacity, structure, exploration versus commitment, and a possible boundary adjustment. “This return” in the final sentence identifies the conditional opportunity; it does not repeat A1's numbered/date chronology. The condition that a prior method no longer fits does not assert that such a prior method exists or has failed.
+
+Declined judgments: reader appeal, tone and voice; human or editorial approval; generated-output qualification, runtime/provider behavior, activation and deployment; and independent astronomical verification beyond the supplied calculation facts.

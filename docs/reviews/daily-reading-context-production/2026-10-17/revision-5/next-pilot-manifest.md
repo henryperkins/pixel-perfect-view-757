@@ -33,9 +33,12 @@ A mode qualifies only on its own complete capture passing all three gates. Unava
 
 No activation happens in the pilot. Enabling any qualified mode, model or authored, is a separate authorized step: a new rollout policy row carrying this candidate's identity, then authenticated member verification.
 
-## Known risks before authorizing
+## Current readiness before authorizing
 
-- **Synthesis is at risk.** No authored synthesis reference reached the reader bar in four rounds; distinctness stayed at 3. Its generated reading can still qualify on its own capture, and the other four modes do not depend on it. A narrow contract change for that graph is proposed in [structure-revision.md](structure-revision.md) and is not implemented. If one run should be able to qualify all five modes, defer this pilot until that proposal is reviewed; the candidate identity would then change.
-- **Two compositions fail the offline source gate.** Natal-only omits I1's boundary on the task, and synthesis omits I2's "or pursue an emerging opening". Fix and re-review both before authorizing; the material hash will then change.
-- **Four authored bodies were not re-read.** The source fix changed the natal-only reference and edit, natal-and-transit, and synthesis after their last reader review.
-- **Two runtime fallbacks need revision before any natal activation.** The natal-only and natal-and-transit fallbacks reuse the original benchmark wording, which drops N1's "possible" and "free". They are not served while `writer_rollout` is off, and they are unchanged here.
+The [source follow-up](source-fix-1/report.md) fixes both named omissions and records source passes on the changed compositions. Its exact current material hash is in the JSON; any future preview must bind these bytes and the exact reviewed commit. Authored evidence does not qualify generated readings.
+
+- **Synthesis still fails the reader bar:** distinctness 3 and voice 3 on final wording. The synthesis-only paragraph proposal remains unimplemented.
+- **Natal-and-transit now has a final-wording reader failure:** voice 3 because the formal exact chronology lacks a sufficient practical connection. The two natal-only bodies pass all reader dimensions at 4.
+- **Source review passes on final wording.** Eight current authored bodies have matching source passes; six have matching reader passes. No final body is awaiting a reader verdict. The intermediate source failures and differing reviewer rulings are preserved in the follow-up.
+- **Two runtime fallbacks still need revision before any natal activation.** Natal-only and natal-and-transit reuse benchmark wording without N1's `possible` and `free`; those bodies are unchanged here.
+- **The five-case pilot remains deferred and unauthorized.** The existing thresholds, $5 ceiling, provider, deadline and no-retry policy remain unchanged. Fresh explicit authorization is required before any provider request or run-related deployment.
