@@ -12,6 +12,7 @@ import {
 } from "./reading-evaluation.draft.fixtures.mjs";
 import { CANONICAL_SCANS } from "./reading-evaluation.canonical-scans.mjs";
 import { EDITORIAL_EVAL_CASES } from "./reading-evaluation.editorial.fixtures";
+import { CONTEXT_EVAL_CASES } from "./reading-evaluation.context.fixtures";
 
 export type EvaluationCaseSetId =
   | "synthetic-daily-7"
@@ -19,7 +20,8 @@ export type EvaluationCaseSetId =
   | "draft-pilot-1"
   | "draft-fallback-2"
   | "draft-pilot-2"
-  | "daily-editorial-1";
+  | "daily-editorial-1"
+  | "daily-context-1";
 
 export interface EvaluationCaseSet {
   id: EvaluationCaseSetId;
@@ -32,6 +34,12 @@ export interface EvaluationCaseSet {
 // Pinned values keep this shared module browser-safe and preserve the historical
 // hash algorithm. Fixture edits require an explicit new version and identity.
 const MANIFESTS: Record<EvaluationCaseSetId, EvaluationCaseSet> = {
+  "daily-context-1": {
+    id: "daily-context-1",
+    fixtureVersion: "daily-context-1",
+    cases: CONTEXT_EVAL_CASES,
+    caseSetHash: "93855b484ef95b1b950fc229633d4467215ff0cd2c6d6ce1eb1445ba3375f5c4",
+  },
   "daily-editorial-1": {
     id: "daily-editorial-1",
     fixtureVersion: "daily-editorial-1",

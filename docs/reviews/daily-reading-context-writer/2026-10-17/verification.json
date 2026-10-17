@@ -1,0 +1,76 @@
+{
+  "version": "daily-context-writer-verification-1",
+  "status": "implemented-inactive-candidate",
+  "implementationIdentity": "validation/manifest.json",
+  "tests": {
+    "command": "npm test",
+    "total": 991,
+    "passed": 987,
+    "failed": 0,
+    "skipped": 4,
+    "durationMs": 58170.695931,
+    "log": "/tmp/pattern-context-writer-tests.log",
+    "skippedCases": [
+      "real Swiss episode output retains enough evidence for existing app acceptance",
+      "explicit birth recalculation stores owned source anchors while preserving the legacy snapshot",
+      "Node and workerd produce identical complete plans for the new case sets and both bundles",
+      "strict archived-source workerd replay reproduces captured requests and outputs without provider calls"
+    ],
+    "skipContext": "The two Swiss cases require the standalone service installation. The two workerd lanes remain skipped by the existing test configuration; no live/service or cross-runtime equivalence claim follows."
+  },
+  "focusedCandidateTests": {
+    "total": 17,
+    "passed": 17,
+    "failed": 0,
+    "coverage": [
+      "same-contact controlled variants with natal, transit, both and synthesis",
+      "source identity and full parent coverage",
+      "independently validated headline and reflection",
+      "complete fallback validated before the request",
+      "missing context, source modality, chronology and contradictory geometry rejection",
+      "straight and curly possessive reference checks",
+      "six tone/depth combinations at the construction and validation boundary",
+      "standard chronology exception and technical measurement support",
+      "angle and house suppression",
+      "private local context and recent readings excluded from requests",
+      "one failed attempt on either provider without retrying another provider"
+    ]
+  },
+  "checks": {
+    "typescript": { "command": "npx tsc --noEmit", "exitCode": 0 },
+    "scopedEslint": { "exitCode": 0 },
+    "build": { "command": "npm run build", "exitCode": 0, "log": "/tmp/pattern-context-writer-build.log" },
+    "scopedWhitespace": { "command": "git diff --check -- src tests scripts docs", "exitCode": 0 },
+    "environmentPreserved": true,
+    "unrelatedWorkPreserved": true
+  },
+  "offlineArtifacts": {
+    "manifest": "validation/manifest.json",
+    "authoredCases": 5,
+    "interceptedRequests": 10,
+    "liveProviderRequests": 0,
+    "paidRequests": 0,
+    "memberRecordsWritten": 0,
+    "deployed": false,
+    "activated": false
+  },
+  "editorial": {
+    "review": "independent-editorial-review.md",
+    "assistantReviewPassed": true,
+    "minimumScore": 4,
+    "dimensions": ["recognition", "meaning", "direction", "distinctness", "voice"],
+    "humanReviewCompleted": false,
+    "generatedOutputQualified": false,
+    "wideSourceCoverageQualified": false,
+    "consecutiveDayVariationQualified": false,
+    "memberBenefitEstablished": false
+  },
+  "independentCodeReview": "independent-code-review.md",
+  "remaining": [
+    "Human review of authored benchmark readings",
+    "Pin the exact candidate and benchmark identities in a durable server evaluation plan before a new bounded provider pilot",
+    "Review actual provider outputs for meaning, voice, context integration and source grounding",
+    "Expand source and consecutive-day coverage before a broader rollout",
+    "Member persistence, cache, export and production publication verification for any later activation"
+  ]
+}

@@ -1,0 +1,20 @@
+# Independent implementation review
+
+Reviewed the context-pilot working tree against base `3c07edc1c5e96ffad0cf3549396b0d0eec460e13` on 2026-10-17 before deployment or provider requests. No material implementation defect was found within the approved five-case synthetic pilot scope.
+
+The review covered `context-pilot.ts`, `context-pilot-plan.server.ts`, context fixtures and case-set registration, qualification-plan construction, synthetic preparation and output metadata, shared contracts, orchestration changes in `evaluation-runs.server.ts`, and the candidate-only language entry point. Existing signed callback, Workflow bridge, transport accounting and terminal-state helpers were inspected for the new mode's interaction with them.
+
+- **Immutable experiment identity:** the closed mode accepts no provider, case or budget override. It requires an exact built source SHA and Gemini Enterprise provider; freezes the candidate bundle, reviewed benchmark bytes and original fixture identities; and rebuilds the complete source plan before each request. The five selected source graphs match their benchmarks exactly, including natal and transit sources and all parents. A changed plan, source, provider, candidate, fixture or policy stops before a reservation or provider request.
+- **Bounded dispatch and accounting:** the new campaign has five attempts and a 5,000,000-micro conservative ceiling. Each model position atomically reserves an attempt and 2,800,000 micros before transport through the existing conditional insert. Shared campaign sums and the unique run/position claim prevent overlapping callbacks from issuing another request. Complete, consistent usage receipts settle the reservation using conservative estimates; missing, inconsistent or unrecognized receipts retain the full reservation and halt. These amounts are estimates, not invoices.
+- **Replay and recovery:** overlapping callbacks observe the existing claim; completed positions settle their saved disposition without another model call. Final persistence failure leaves a spent uncertain reservation. Terminal recovery cannot revive the run, reduce completed progress or undo a stop. A failed or unconfirmed Workflow dispatch retains the per-operator version identity, so another start by that operator cannot reopen this campaign.
+- **Capture and model consistency:** unknown model/usage, unavailable transport, non-STOP finish, absent candidate, truncation or lossy capture halt remaining positions. A complete rejected draft can continue only as a distinct planned observation; its raw generated body remains separate from the authored fallback. Actual model consistency is checked across captured cases.
+- **Scope and production isolation:** this mode uses only the frozen synthetic bundle and fixtures and stores evaluation records. It uses the existing durable Workflow and signed callback without Worker changes. `generateReadingProse` does not select the context candidate; the `0.9.0` authored member route keeps its existing selection. Headlines and reflections are reviewed authored fields, not model outputs. All five provider-pilot fixtures use Warm/Standard; this pilot cannot qualify other tone/depth settings or universal source coverage.
+
+Independently executed:
+
+```text
+node --test tests/reading-context-pilot-contract.test.mjs tests/reading-context-pilot-plan.test.mjs tests/reading-context-pilot.test.mjs
+30 tests; 30 passed; 0 failed; 0 skipped
+```
+
+These offline tests exercise the actual application orchestration against controlled provider and Workflow responses; no live network or paid request was made by this reviewer. Root-run full-suite and build verification are separate evidence. Deployment identity, the hosted frozen plan, durable execution, actual provider captures and editorial benchmark judgments still require their own receipts. This review establishes implementation readiness for the bounded pilot, not editorial quality, member acceptance or authorization to activate the candidate.

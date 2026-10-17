@@ -1,0 +1,693 @@
+{
+  "version": "daily-context-benchmarks-1",
+  "status": "authored-candidate-awaiting-independent-review",
+  "createdOn": "2026-10-17",
+  "sourceBundle": {
+    "path": "docs/reviews/daily-reading-release/2026-10-17/bundle.json",
+    "version": "0.9.0",
+    "checksum": "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f",
+    "checksumAlgorithm": "sha256-canonical-json-v1"
+  },
+  "evidence": {
+    "mode": "offline-authored-benchmarks",
+    "synthetic": true,
+    "providerRequests": 0,
+    "networkRequests": 0,
+    "published": false,
+    "activated": false,
+    "humanReviewed": false
+  },
+  "comparisonDesign": "The four primary-only cases share the same synthetic Saturn-square-Sun calculation and afternoon/project scene. Only selected natal and transit context change. The fifth preserves the original supporting Jupiter-Mars contact and reviewed tension synthesis to exercise full parent closure.",
+  "cases": [
+    {
+      "id": "contact-only",
+      "contextMode": "contact",
+      "fixture": {
+        "baseId": "arc-synthesis-natal-integration",
+        "fixtureVersion": "synthetic-daily-7",
+        "baseSha256": "5f7c2b9abc280754a14b318d92141b1009fe2085b02f67ebe85bbb7208ac0710",
+        "cycleSelection": "primary-only",
+        "natalContext": false,
+        "transitContext": false,
+        "localContext": "none",
+        "synthetic": true
+      },
+      "config": {
+        "day": "2026-12-17",
+        "timeZone": "UTC",
+        "tone": "warm",
+        "depth": "standard",
+        "granted": [
+          "USR-01",
+          "USR-02"
+        ]
+      },
+      "primaryCycleKey": "saturn_square_sun",
+      "sourceRelease": "0.9.0",
+      "sourceHash": "9d9512094268684f5ebeef23fcdde6d1bc07d7750c94c034bae4e61121a2e656",
+      "selectedSources": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.00 degrees. phase exact. domain identity. Calculated exact date: 2026-12-17.",
+          "cycle": {
+            "transitBody": "saturn",
+            "natalPoint": "sun",
+            "aspect": "square",
+            "orb": 0,
+            "exactDate": "2026-12-17"
+          }
+        },
+        {
+          "id": "I1",
+          "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+          "kind": "interpretation",
+          "dependsOn": [
+            "C1"
+          ],
+          "sourceKey": "square:saturn:sun",
+          "releaseVersion": "0.9.0"
+        }
+      ],
+      "requiredFacts": [
+        "C1",
+        "I1"
+      ],
+      "chronology": null,
+      "headline": "The task that will not fit",
+      "paragraphs": [
+        {
+          "text": "An afternoon already set aside for one responsibility can look roomy until the smaller requests start arriving. If the familiar task now takes the whole block, moving it to the next empty space may leave the same problem waiting there. A role can stay familiar while the effort it asks for changes.",
+          "facts": [
+            "C1",
+            "I1"
+          ],
+          "scenes": []
+        },
+        {
+          "text": "Saturn's square to your natal Sun is a picture of expectations pressing against the capacity to meet them. The edge worth noticing may be the task's size, rather than how neatly it fits on the calendar. A boundary can describe the part you can take on within the hours available.",
+          "facts": [
+            "C1",
+            "I1"
+          ],
+          "scenes": []
+        },
+        {
+          "text": "An extra check or another version may look small beside the original task. Leaving one addition outside the commitment is one way to give that boundary a visible edge.",
+          "facts": [
+            "C1",
+            "I1"
+          ],
+          "scenes": []
+        }
+      ],
+      "reflection": "When does an addition begin to change what you originally agreed to do?"
+    },
+    {
+      "id": "natal-only",
+      "contextMode": "natal",
+      "fixture": {
+        "baseId": "arc-synthesis-natal-integration",
+        "fixtureVersion": "synthetic-daily-7",
+        "baseSha256": "5f7c2b9abc280754a14b318d92141b1009fe2085b02f67ebe85bbb7208ac0710",
+        "cycleSelection": "primary-only",
+        "natalContext": true,
+        "transitContext": false,
+        "localContext": "none",
+        "synthetic": true
+      },
+      "config": {
+        "day": "2026-12-17",
+        "timeZone": "UTC",
+        "tone": "warm",
+        "depth": "standard",
+        "granted": [
+          "USR-01",
+          "USR-02"
+        ]
+      },
+      "primaryCycleKey": "saturn_square_sun",
+      "sourceRelease": "0.9.0",
+      "sourceHash": "5b34230d36b51e40b99391ca590d22f9f154d819ae3c1aaa0d9344bff0f126b8",
+      "selectedSources": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.00 degrees. phase exact. domain identity. Calculated exact date: 2026-12-17.",
+          "cycle": {
+            "transitBody": "saturn",
+            "natalPoint": "sun",
+            "aspect": "square",
+            "orb": 0,
+            "exactDate": "2026-12-17"
+          }
+        },
+        {
+          "id": "I1",
+          "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+          "kind": "interpretation",
+          "dependsOn": [
+            "C1"
+          ],
+          "sourceKey": "square:saturn:sun",
+          "releaseVersion": "0.9.0"
+        },
+        {
+          "id": "N1",
+          "kind": "temperament",
+          "statement": "Published natal lens, an interpretive possibility: Following more than one line of curiosity can help a direction take shape. If several possible projects compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages.",
+          "dependsOn": [
+            "C1",
+            "I1"
+          ],
+          "sourceKey": "nl-sun-03",
+          "releaseVersion": "0.9.0",
+          "natalEvidenceId": "NL1"
+        }
+      ],
+      "requiredFacts": [
+        "C1",
+        "I1",
+        "N1"
+      ],
+      "chronology": null,
+      "headline": "An idea is not yet a promise",
+      "paragraphs": [
+        {
+          "text": "An afternoon set aside for one project can fill before the project begins: a page of notes for one idea, a tab open for another. If an established responsibility is already asking more effort than usual, each addition has to find its hours somewhere. Saturn's square to your natal Sun is a picture of expectations pressing against the capacity to meet them.",
+          "facts": [
+            "C1",
+            "I1"
+          ],
+          "scenes": []
+        },
+        {
+          "text": "Following more than one line of curiosity may help a direction take shape. If several projects compete for the same afternoon, sampling a few and choosing one to pursue may be different stages. The open tabs need not become several promises.",
+          "facts": [
+            "C1",
+            "I1",
+            "N1"
+          ],
+          "scenes": []
+        },
+        {
+          "text": "One idea can remain a note beside the project you choose. It is still there to consider, without being given this afternoon's hours.",
+          "facts": [
+            "C1",
+            "I1",
+            "N1"
+          ],
+          "scenes": []
+        }
+      ],
+      "reflection": "What helps you recognize an interest you want to explore before deciding whether to commit?"
+    },
+    {
+      "id": "transit-only",
+      "contextMode": "transit",
+      "fixture": {
+        "baseId": "arc-synthesis-natal-integration",
+        "fixtureVersion": "synthetic-daily-7",
+        "baseSha256": "5f7c2b9abc280754a14b318d92141b1009fe2085b02f67ebe85bbb7208ac0710",
+        "cycleSelection": "primary-only",
+        "natalContext": false,
+        "transitContext": true,
+        "localContext": "none",
+        "synthetic": true
+      },
+      "config": {
+        "day": "2026-12-17",
+        "timeZone": "UTC",
+        "tone": "warm",
+        "depth": "standard",
+        "granted": [
+          "USR-01",
+          "USR-02"
+        ]
+      },
+      "primaryCycleKey": "saturn_square_sun",
+      "sourceRelease": "0.9.0",
+      "sourceHash": "c6c1130cba3edfca47afd4c28170f6c03068d06d9eb9f3da6cfe3cb980b2a425",
+      "selectedSources": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.00 degrees. phase exact. domain identity. Calculated exact date: 2026-12-17.",
+          "cycle": {
+            "transitBody": "saturn",
+            "natalPoint": "sun",
+            "aspect": "square",
+            "orb": 0,
+            "exactDate": "2026-12-17"
+          }
+        },
+        {
+          "id": "I1",
+          "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+          "kind": "interpretation",
+          "dependsOn": [
+            "C1"
+          ],
+          "sourceKey": "square:saturn:sun",
+          "releaseVersion": "0.9.0"
+        },
+        {
+          "id": "A1",
+          "kind": "calculation",
+          "dependsOn": [
+            "C1"
+          ],
+          "statement": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+          "arc": {
+            "cycleKey": "saturn_square_sun",
+            "chapter": "return",
+            "passIndex": 2,
+            "passTotal": 3,
+            "chronologySentence": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+            "dates": [
+              {
+                "eventId": "pass-1",
+                "kind": "exact-contact",
+                "civilDay": "2026-09-08",
+                "monthYear": "2026-09"
+              },
+              {
+                "eventId": "pass-2",
+                "kind": "exact-contact",
+                "civilDay": "2026-12-17",
+                "monthYear": "2026-12"
+              },
+              {
+                "eventId": "pass-3",
+                "kind": "exact-contact",
+                "civilDay": "2027-03-27",
+                "monthYear": "2027-03"
+              }
+            ]
+          }
+        },
+        {
+          "id": "P2",
+          "kind": "interpretation",
+          "dependsOn": [
+            "C1",
+            "I1",
+            "A1"
+          ],
+          "sourceKey": "chapter-return-1",
+          "releaseVersion": "0.9.0",
+          "statement": "Published transit chapter: If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.",
+          "storyChapter": "return"
+        }
+      ],
+      "requiredFacts": [
+        "C1",
+        "I1",
+        "A1",
+        "P2"
+      ],
+      "chronology": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+      "headline": "A calendar cannot shrink the task",
+      "paragraphs": [
+        {
+          "text": "An afternoon already set aside for one responsibility can look roomy until the smaller requests start arriving. If the familiar task now takes the whole block, moving it to the next empty space may leave the same problem waiting there. Saturn's square to your natal Sun is a picture of expectations pressing against the capacity to meet them.",
+          "facts": [
+            "C1",
+            "I1"
+          ],
+          "scenes": []
+        },
+        {
+          "text": "This is the second of three calculated contacts; the first exact contact falls in September 2026. If an earlier way of fitting the task in no longer works, this return offers a chance to adjust one part of the method or boundary. That could mean changing what belongs inside the commitment, rather than finding another place to put it.",
+          "facts": [
+            "C1",
+            "I1",
+            "A1",
+            "P2"
+          ],
+          "scenes": []
+        },
+        {
+          "text": "An extra check or another version may look small beside the original task. A defined stopping point can make the size of that addition easier to see before you agree to it.",
+          "facts": [
+            "C1",
+            "I1"
+          ],
+          "scenes": []
+        }
+      ],
+      "reflection": "What tells you a method needs adjusting before you decide the whole plan has failed?"
+    },
+    {
+      "id": "natal-and-transit",
+      "contextMode": "both",
+      "fixture": {
+        "baseId": "arc-synthesis-natal-integration",
+        "fixtureVersion": "synthetic-daily-7",
+        "baseSha256": "5f7c2b9abc280754a14b318d92141b1009fe2085b02f67ebe85bbb7208ac0710",
+        "cycleSelection": "primary-only",
+        "natalContext": true,
+        "transitContext": true,
+        "localContext": "none",
+        "synthetic": true
+      },
+      "config": {
+        "day": "2026-12-17",
+        "timeZone": "UTC",
+        "tone": "warm",
+        "depth": "standard",
+        "granted": [
+          "USR-01",
+          "USR-02"
+        ]
+      },
+      "primaryCycleKey": "saturn_square_sun",
+      "sourceRelease": "0.9.0",
+      "sourceHash": "f89571758e96f0a501495e51190361153b107dfadeaa9ff9422660310fa64cf6",
+      "selectedSources": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.00 degrees. phase exact. domain identity. Calculated exact date: 2026-12-17.",
+          "cycle": {
+            "transitBody": "saturn",
+            "natalPoint": "sun",
+            "aspect": "square",
+            "orb": 0,
+            "exactDate": "2026-12-17"
+          }
+        },
+        {
+          "id": "I1",
+          "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+          "kind": "interpretation",
+          "dependsOn": [
+            "C1"
+          ],
+          "sourceKey": "square:saturn:sun",
+          "releaseVersion": "0.9.0"
+        },
+        {
+          "id": "N1",
+          "kind": "temperament",
+          "statement": "Published natal lens, an interpretive possibility: Following more than one line of curiosity can help a direction take shape. If several possible projects compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages.",
+          "dependsOn": [
+            "C1",
+            "I1"
+          ],
+          "sourceKey": "nl-sun-03",
+          "releaseVersion": "0.9.0",
+          "natalEvidenceId": "NL1"
+        },
+        {
+          "id": "A1",
+          "kind": "calculation",
+          "dependsOn": [
+            "C1"
+          ],
+          "statement": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+          "arc": {
+            "cycleKey": "saturn_square_sun",
+            "chapter": "return",
+            "passIndex": 2,
+            "passTotal": 3,
+            "chronologySentence": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+            "dates": [
+              {
+                "eventId": "pass-1",
+                "kind": "exact-contact",
+                "civilDay": "2026-09-08",
+                "monthYear": "2026-09"
+              },
+              {
+                "eventId": "pass-2",
+                "kind": "exact-contact",
+                "civilDay": "2026-12-17",
+                "monthYear": "2026-12"
+              },
+              {
+                "eventId": "pass-3",
+                "kind": "exact-contact",
+                "civilDay": "2027-03-27",
+                "monthYear": "2027-03"
+              }
+            ]
+          }
+        },
+        {
+          "id": "P2",
+          "kind": "interpretation",
+          "dependsOn": [
+            "C1",
+            "I1",
+            "A1"
+          ],
+          "sourceKey": "chapter-return-1",
+          "releaseVersion": "0.9.0",
+          "statement": "Published transit chapter: If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.",
+          "storyChapter": "return"
+        }
+      ],
+      "requiredFacts": [
+        "C1",
+        "I1",
+        "N1",
+        "A1",
+        "P2"
+      ],
+      "chronology": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+      "headline": "An idea can wait in the margin",
+      "paragraphs": [
+        {
+          "text": "An afternoon set aside for one project can fill before the project begins: a page of notes for one idea, a tab open for another. If an established responsibility is already asking more effort than usual, each addition has to find its hours somewhere. Following a few lines of curiosity may help a direction take shape. If several projects compete for the same afternoon, sampling a few and choosing one to pursue may be different stages.",
+          "facts": [
+            "C1",
+            "I1",
+            "N1"
+          ],
+          "scenes": []
+        },
+        {
+          "text": "Saturn's square to your natal Sun is a picture of expectations pressing against the capacity to meet them. This is the second of three calculated contacts; the first exact contact falls in September 2026. If an earlier way of fitting the task in no longer works, this return offers a chance to adjust one part of the method or boundary.",
+          "facts": [
+            "C1",
+            "I1",
+            "A1",
+            "P2"
+          ],
+          "scenes": []
+        },
+        {
+          "text": "A note can hold the second idea without turning it into a second commitment. For the project you choose, the useful change might be a defined stopping point: what belongs inside this afternoon, and what stays outside it.",
+          "facts": [
+            "C1",
+            "I1",
+            "N1",
+            "A1",
+            "P2"
+          ],
+          "scenes": []
+        }
+      ],
+      "reflection": "How do you tell the difference between leaving a possibility open and keeping a commitment vague?"
+    },
+    {
+      "id": "synthesis-natal-and-transit",
+      "contextMode": "synthesis-both",
+      "fixture": {
+        "baseId": "arc-synthesis-natal-integration",
+        "fixtureVersion": "synthetic-daily-7",
+        "baseSha256": "5f7c2b9abc280754a14b318d92141b1009fe2085b02f67ebe85bbb7208ac0710",
+        "cycleSelection": "all",
+        "natalContext": true,
+        "transitContext": true,
+        "localContext": "none",
+        "synthetic": true
+      },
+      "config": {
+        "day": "2026-12-17",
+        "timeZone": "UTC",
+        "tone": "warm",
+        "depth": "standard",
+        "granted": [
+          "USR-01",
+          "USR-02"
+        ]
+      },
+      "primaryCycleKey": "saturn_square_sun",
+      "sourceRelease": "0.9.0",
+      "sourceHash": "4531f75d86b45ae3bf1e01cf80820828db4fd233a8edc0e2d852ebb79be0ed94",
+      "selectedSources": [
+        {
+          "id": "C1",
+          "kind": "calculation",
+          "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.00 degrees. phase exact. domain identity. Calculated exact date: 2026-12-17.",
+          "cycle": {
+            "transitBody": "saturn",
+            "natalPoint": "sun",
+            "aspect": "square",
+            "orb": 0,
+            "exactDate": "2026-12-17"
+          }
+        },
+        {
+          "id": "C2",
+          "kind": "calculation",
+          "statement": "transiting jupiter trine natal mars. Current orb at the reading's calculation time: 0.42 degrees. phase approaching. domain identity. Calculated exact date: 2026-12-19.",
+          "cycle": {
+            "transitBody": "jupiter",
+            "natalPoint": "mars",
+            "aspect": "trine",
+            "orb": 0.42,
+            "exactDate": "2026-12-19"
+          }
+        },
+        {
+          "id": "I1",
+          "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+          "kind": "interpretation",
+          "dependsOn": [
+            "C1"
+          ],
+          "sourceKey": "square:saturn:sun",
+          "releaseVersion": "0.9.0"
+        },
+        {
+          "id": "I2",
+          "statement": "Published interpretation trine:jupiter:mars: Enthusiasm and practical initiative reinforce one another when an aim is well chosen. Jupiter's trine to Mars frames moments when effort encounters little friction, making it natural to take on a larger piece of work or pursue an emerging opening.",
+          "kind": "interpretation",
+          "dependsOn": [
+            "C2"
+          ],
+          "sourceKey": "trine:jupiter:mars",
+          "releaseVersion": "0.9.0"
+        },
+        {
+          "id": "S1",
+          "statement": "Published tension synthesis square:saturn:sun_tension_trine:jupiter:mars (parents: C1, I1, C2, I2): Giving a plan more scope can increase the structure needed to carry it. A task whose ambitions are growing beyond its agreed limits offers one place to notice that tension.",
+          "kind": "synthesis",
+          "dependsOn": [
+            "C1",
+            "I1",
+            "C2",
+            "I2"
+          ],
+          "sourceKey": "square:saturn:sun_tension_trine:jupiter:mars",
+          "releaseVersion": "0.9.0"
+        },
+        {
+          "id": "N1",
+          "kind": "temperament",
+          "statement": "Published natal lens, an interpretive possibility: Following more than one line of curiosity can help a direction take shape. If several possible projects compete for the same free afternoon, sampling a few and choosing one to pursue may be different stages.",
+          "dependsOn": [
+            "C1",
+            "I1"
+          ],
+          "sourceKey": "nl-sun-03",
+          "releaseVersion": "0.9.0",
+          "natalEvidenceId": "NL1"
+        },
+        {
+          "id": "A1",
+          "kind": "calculation",
+          "dependsOn": [
+            "C1"
+          ],
+          "statement": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+          "arc": {
+            "cycleKey": "saturn_square_sun",
+            "chapter": "return",
+            "passIndex": 2,
+            "passTotal": 3,
+            "chronologySentence": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+            "dates": [
+              {
+                "eventId": "pass-1",
+                "kind": "exact-contact",
+                "civilDay": "2026-09-08",
+                "monthYear": "2026-09"
+              },
+              {
+                "eventId": "pass-2",
+                "kind": "exact-contact",
+                "civilDay": "2026-12-17",
+                "monthYear": "2026-12"
+              },
+              {
+                "eventId": "pass-3",
+                "kind": "exact-contact",
+                "civilDay": "2027-03-27",
+                "monthYear": "2027-03"
+              }
+            ]
+          }
+        },
+        {
+          "id": "P2",
+          "kind": "interpretation",
+          "dependsOn": [
+            "C1",
+            "I1",
+            "A1"
+          ],
+          "sourceKey": "chapter-return-1",
+          "releaseVersion": "0.9.0",
+          "statement": "Published transit chapter: If an earlier way of handling this no longer fits, this return offers a chance to try a smaller adjustment to a method or boundary.",
+          "storyChapter": "return"
+        }
+      ],
+      "requiredFacts": [
+        "C1",
+        "C2",
+        "I1",
+        "I2",
+        "S1",
+        "N1",
+        "A1",
+        "P2"
+      ],
+      "chronology": "This is the second of three calculated contacts; the first exact contact falls in September 2026.",
+      "headline": "Before the next piece becomes a promise",
+      "paragraphs": [
+        {
+          "text": "A project can grow between 'this looks promising' and 'I'll take care of it.' When an aim is well chosen, starting can feel easy: a page of notes becomes an outline, and another piece of work starts to look appealing. If a familiar responsibility now needs more effort, that extra scope can also ask for more structure. Sampling a few possible directions may help one take shape before you choose which to pursue.",
+          "facts": [
+            "C1",
+            "I1",
+            "C2",
+            "I2",
+            "S1",
+            "N1"
+          ],
+          "scenes": []
+        },
+        {
+          "text": "Ease in taking on work and enough structure to carry it are different things. This is the second of three calculated contacts; the first exact contact falls in September 2026. If an earlier way of handling the task no longer fits, this return offers a chance to adjust a method or boundary.",
+          "facts": [
+            "C1",
+            "I1",
+            "C2",
+            "I2",
+            "S1",
+            "A1",
+            "P2"
+          ],
+          "scenes": []
+        },
+        {
+          "text": "Before another piece becomes a promise, there may be a distinction to make: whether it helps you explore the idea or adds something you are agreeing to carry. One possibility can stay in the notes while another becomes the commitment.",
+          "facts": [
+            "C1",
+            "I1",
+            "C2",
+            "I2",
+            "S1",
+            "N1"
+          ],
+          "scenes": []
+        }
+      ],
+      "reflection": "What changes an interesting possibility into something you are ready to be responsible for?"
+    }
+  ]
+}

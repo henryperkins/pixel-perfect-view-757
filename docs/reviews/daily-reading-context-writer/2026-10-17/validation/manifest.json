@@ -1,0 +1,74 @@
+{
+  "version": "daily-context-candidate-validation-1",
+  "completedAt": "2026-10-17T08:07:30.398Z",
+  "gitHead": "3c07edc1c5e96ffad0cf3549396b0d0eec460e13",
+  "identity": "source-file SHA256 hashes include uncommitted candidate implementation; gitHead alone does not identify this candidate",
+  "sourceFiles": {
+    "src/lib/ai/language.server.ts": "172af7c02775ec1ea21032f2afd9987dd7a6b8bb60e1d2785bf3cea39c2af1e8",
+    "src/lib/ai/daily-context-writing.ts": "470ef0b789109096d5c12bb32a4bc104ac0718475f2f41384d32870c11e2a20d",
+    "src/lib/ai/daily-context-candidate.server.ts": "d6ae643008ed21942f0ffc4a94bb21b075879bf878267f9d6d3c38da2c35f56d",
+    "src/lib/ai/facts.ts": "c8d5f44d414c0046e92fccad7b4c4326db10216a1d53763e02e8c0ab5793ede9",
+    "src/lib/ai/transit-story-facts.ts": "d68673abb945338af9054fbde817e4b194296dbcd1e676c7d0a862f8523561ed",
+    "src/lib/ai/daily-writing-quality.ts": "08ff71bd2326f6e049adb57ad8b1df5c213ed5d5bd63255e38af82977a542a45",
+    "src/lib/ai/daily-modality.ts": "f024203444419f6d636c3aae69dabd3a7e72097daaf7dd56dc7bce4863f68910",
+    "src/lib/content/natal-lens-policy.ts": "617a32bcda2f14c673092abe6814f6b927cc85f2f9343ba0e27325f621bb6b2e",
+    "src/lib/reading.server.ts": "8b8bb37864bccbe93243763a0b6cf6bccfb45dfe32c64f183727e5f490495910",
+    "tests/helpers/context-writing-fixture.mjs": "72bf39e0375122ce2ea9d474f78451a80e084842239879098ca4a566dd83f2aa",
+    "scripts/validate-context-writing-candidate.mjs": "f9308d72d8b5bc2d78a5434207185457655a308df18e79fd73b81491a6792369",
+    "docs/reviews/daily-reading-context-writer/2026-10-17/benchmark-drafts.json": "825c877dbb88d5d20d39a12abfd67cea01781506250db93d44ae7c9885b35024",
+    "docs/reviews/daily-reading-release/2026-10-17/bundle.json": "a77eb43eba5aa9c140b514ef56c987167bea1eb905abfa68dcceabe2da35c6f3"
+  },
+  "evidence": {
+    "mode": "offline-authored-contract-validation",
+    "liveProviderRequests": 0,
+    "interceptedRequests": 10,
+    "paidRequests": 0,
+    "memberRecordsWritten": 0,
+    "deployed": false,
+    "activated": false,
+    "humanReviewCompleted": false,
+    "warning": "Authored text was supplied through intercepted transport to exercise real request construction, whole-draft validation and fallback. This is not actual model output, provider qualification, production evidence or member research."
+  },
+  "cases": [
+    {
+      "id": "contact-only",
+      "sourceHash": "9d9512094268684f5ebeef23fcdde6d1bc07d7750c94c034bae4e61121a2e656",
+      "contextMode": "contact",
+      "artifact": "contact-only.json",
+      "wordCount": 131,
+      "validated": true
+    },
+    {
+      "id": "natal-only",
+      "sourceHash": "5b34230d36b51e40b99391ca590d22f9f154d819ae3c1aaa0d9344bff0f126b8",
+      "contextMode": "natal",
+      "artifact": "natal-only.json",
+      "wordCount": 126,
+      "validated": true
+    },
+    {
+      "id": "transit-only",
+      "sourceHash": "c6c1130cba3edfca47afd4c28170f6c03068d06d9eb9f3da6cfe3cb980b2a425",
+      "contextMode": "transit",
+      "artifact": "transit-only.json",
+      "wordCount": 149,
+      "validated": true
+    },
+    {
+      "id": "natal-and-transit",
+      "sourceHash": "f89571758e96f0a501495e51190361153b107dfadeaa9ff9422660310fa64cf6",
+      "contextMode": "both",
+      "artifact": "natal-and-transit.json",
+      "wordCount": 174,
+      "validated": true
+    },
+    {
+      "id": "synthesis-natal-and-transit",
+      "sourceHash": "4531f75d86b45ae3bf1e01cf80820828db4fd233a8edc0e2d852ebb79be0ed94",
+      "contextMode": "synthesis-both",
+      "artifact": "synthesis-natal-and-transit.json",
+      "wordCount": 165,
+      "validated": true
+    }
+  ]
+}

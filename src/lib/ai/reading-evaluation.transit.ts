@@ -35,7 +35,8 @@ export function transitEvaluationMetadata(caseSetId: EvaluationCaseSetId = "synt
   if (
     caseSetId !== "draft-fallback-2" &&
     caseSetId !== "draft-pilot-2" &&
-    caseSetId !== "daily-editorial-1"
+    caseSetId !== "daily-editorial-1" &&
+    caseSetId !== "daily-context-1"
   )
     return TRANSIT_EVALUATION_METADATA;
   return {

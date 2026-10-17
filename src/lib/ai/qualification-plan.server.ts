@@ -31,6 +31,13 @@ import {
   EDITORIAL_DAILY_VOICE_VERSION,
 } from "./daily-voice";
 import { assertSyntheticTransportControl, type EnterpriseThinkingLevel } from "./admin-transport";
+import {
+  CONTEXT_DAILY_PROMPT_VERSION,
+  CONTEXT_DAILY_VALIDATOR_VERSION,
+  CONTEXT_DAILY_VOICE_VERSION,
+  toDailyContextBrief,
+} from "./daily-context-writing";
+import { CONTEXT_PILOT_CASE_SET_ID } from "./context-pilot";
 
 declare const __PATTERN_SOURCE_SHA__: string | null;
 export function evaluationSourceSha(): string | null {
@@ -50,7 +57,8 @@ export function createEvaluationPlan(
     Boolean(profile) ||
     caseSetId === "draft-pilot-1" ||
     caseSetId === "draft-pilot-2" ||
-    caseSetId === "daily-editorial-1";
+    caseSetId === "daily-editorial-1" ||
+    caseSetId === CONTEXT_PILOT_CASE_SET_ID;
   if (bounded && (!sourceSha || !/^[a-f0-9]{40}$/.test(sourceSha)))
     throw Error("Qualification requires the exact built source SHA.");
   if (profile && caseSetId !== "synthetic-daily-7")
@@ -63,6 +71,9 @@ export function createEvaluationPlan(
     const prepared = prepareSyntheticEvaluationCase(fixed.id, bundle, profile, caseSetId);
     const dry = {
       id: fixed.id,
+      ...(prepared.contextBenchmark
+        ? { contextSourceHash: prepared.contextBenchmark.sourceHash }
+        : {}),
       configHash: hash(fixed),
       facts: prepared.facts,
       interpretationPlan: dailyPlanIdentity(prepared.assembled.interpretationPlan),
@@ -76,15 +87,20 @@ export function createEvaluationPlan(
         body: prepared.assembled.astroBody,
         prompt: prepared.assembled.prompt,
       },
-      writingBrief: prepared.input.writing
-        ? toDailyWritingBrief(prepared.input.writing.plan)
-        : null,
+      writingBrief:
+        caseSetId === CONTEXT_PILOT_CASE_SET_ID
+          ? toDailyContextBrief(prepared.facts, fixed.config.tone, fixed.config.depth)
+          : prepared.input.writing
+            ? toDailyWritingBrief(prepared.input.writing.plan)
+            : null,
       expectsModel: prepared.input.hasEligibleCycles && prepared.facts.some((f) => f.id === "I1"),
     };
     return { ...dry, planHash: hash(dry) };
   });
   const editorial = cases.length > 0 && cases.every((item) => !!item.writingPlan.editorial);
-  const concrete = policy ? policy.writing : bundle.schemaVersion === 5 || editorial;
+  const contextCandidate = caseSetId === CONTEXT_PILOT_CASE_SET_ID;
+  const concrete =
+    contextCandidate || (policy ? policy.writing : bundle.schemaVersion === 5 || editorial);
   const transitMetadata = transitEvaluationMetadata(caseSetId);
   const metadata = {
     sourceSha,
@@ -101,16 +117,20 @@ export function createEvaluationPlan(
     bundleHash: hash(bundle),
     qualificationProfile: profile ?? null,
     qualificationPolicyVersion: policy?.version ?? null,
-    promptVersion: editorial
-      ? EDITORIAL_DAILY_PROMPT_VERSION
-      : concrete
-        ? CONCRETE_DAILY_PROMPT_VERSION
-        : DAILY_PROMPT_VERSION,
-    validatorVersion: editorial
-      ? EDITORIAL_DAILY_VALIDATOR_VERSION
-      : concrete
-        ? CONCRETE_DAILY_VALIDATOR_VERSION
-        : DAILY_VALIDATOR_VERSION,
+    promptVersion: contextCandidate
+      ? CONTEXT_DAILY_PROMPT_VERSION
+      : editorial
+        ? EDITORIAL_DAILY_PROMPT_VERSION
+        : concrete
+          ? CONCRETE_DAILY_PROMPT_VERSION
+          : DAILY_PROMPT_VERSION,
+    validatorVersion: contextCandidate
+      ? CONTEXT_DAILY_VALIDATOR_VERSION
+      : editorial
+        ? EDITORIAL_DAILY_VALIDATOR_VERSION
+        : concrete
+          ? CONCRETE_DAILY_VALIDATOR_VERSION
+          : DAILY_VALIDATOR_VERSION,
     model: languageModel(provider),
     gatewayTimeoutMs: DAILY_GATEWAY_TIMEOUT_MS,
     requestPolicyVersion: EVALUATION_REQUEST_POLICY_VERSION,
@@ -125,11 +145,13 @@ export function createEvaluationPlan(
       : bundle.schemaVersion === 4
         ? PRIMARY_REFLECTION_VERSION
         : null,
-    voiceExamplesVersion: editorial
-      ? EDITORIAL_DAILY_VOICE_VERSION
-      : concrete
-        ? DAILY_VOICE_EXAMPLES_VERSION
-        : null,
+    voiceExamplesVersion: contextCandidate
+      ? CONTEXT_DAILY_VOICE_VERSION
+      : editorial
+        ? EDITORIAL_DAILY_VOICE_VERSION
+        : concrete
+          ? DAILY_VOICE_EXAMPLES_VERSION
+          : null,
     maxOutputTokens: bounded ? 65536 : null,
     maxInputBytes: bounded ? 65536 : null,
   };
@@ -158,9 +180,10 @@ export type EvaluationPlan = ReturnType<typeof createEvaluationPlan> & {
   pilotPlans?: Record<EnterpriseThinkingLevel, ReturnType<typeof createEnterprisePilotPlan>>;
   latencyProbe?: import("./latency-probe-plan.server").LatencyProbeDetails;
   editorialPilot?: import("./editorial-pilot-plan.server").EditorialPilotDetails;
+  contextPilot?: import("./context-pilot-plan.server").ContextPilotDetails;
   metadata: ReturnType<typeof createEvaluationPlan>["metadata"] & {
     enterpriseThinking?: EnterpriseThinkingLevel;
-    experimentVersion?: "enterprise-thinking-pilot-1";
+    experimentVersion?: "enterprise-thinking-pilot-1" | "daily-context-pilot-1";
   };
 };
 export const ENTERPRISE_PILOT_CASES = [

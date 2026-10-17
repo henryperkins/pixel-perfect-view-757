@@ -1,0 +1,68 @@
+{
+  "version": "daily-context-pilot-preflight-1",
+  "at": "2026-10-17T08:21:01.758703+00:00",
+  "provider": "gemini-enterprise",
+  "model": "gemini-3.8-flash",
+  "caseIds": [
+    "contact-only",
+    "natal-only",
+    "transit-only",
+    "natal-and-transit",
+    "synthesis-natal-and-transit"
+  ],
+  "maximumAttempts": 5,
+  "maximumRetries": 0,
+  "ceilingMicros": 5000000,
+  "initialReservationMicrosPerAttempt": 2800000,
+  "gatewayTimeoutMs": 60000,
+  "maximumInputBytes": 65536,
+  "maximumOutputTokens": 65536,
+  "benchmarkBytesSha256": "825c877dbb88d5d20d39a12abfd67cea01781506250db93d44ae7c9885b35024",
+  "bundleCanonicalChecksum": "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f",
+  "caseSetId": "daily-context-1",
+  "caseSetHash": "93855b484ef95b1b950fc229633d4467215ff0cd2c6d6ce1eb1445ba3375f5c4",
+  "candidateCoreSourceHashesUnchanged": true,
+  "verification": {
+    "fullSuite": {
+      "command": "node --test --test-concurrency=4 tests/*.test.mjs",
+      "total": 1021,
+      "passed": 1017,
+      "failed": 0,
+      "skipped": 4,
+      "durationMs": 67355.852065,
+      "log": "/tmp/pattern-context-pilot-full-tests-bounded.log"
+    },
+    "initialDefaultConcurrencyRun": {
+      "command": "npm test",
+      "log": "/tmp/pattern-context-pilot-full-tests.log",
+      "status": "stalled-child-terminated",
+      "affectedFile": "tests/reading-writing-plan.test.mjs",
+      "observedError": "ENOTEMPTY at node_modules/.vite/deps",
+      "isolatedReruns": "4/4 passed in two isolated runs; complete bounded-concurrency suite passed without source changes"
+    },
+    "typescriptExitCode": 0,
+    "scopedEslintExitCode": 0,
+    "buildExitCode": 0,
+    "buildLog": "/tmp/pattern-context-pilot-build.log",
+    "scopedWhitespaceExitCode": 0,
+    "independentImplementationReview": "independent-implementation-review.md",
+    "independentFocusedTestsPassed": 30,
+    "environmentPreserved": true
+  },
+  "pricing": {
+    "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+    "checkedOn": "2026-10-17",
+    "publishedIntroductoryUsdPerMillion": {
+      "input": 0.75,
+      "output": 3.75
+    },
+    "conservativeAccountingUsdPerMillion": {
+      "input": 2,
+      "outputIncludingThinking": 20
+    },
+    "accountingIsNotInvoice": true
+  },
+  "memberContentActivation": false,
+  "workerChanges": false,
+  "liveProviderRequestsAtPreflight": 0
+}

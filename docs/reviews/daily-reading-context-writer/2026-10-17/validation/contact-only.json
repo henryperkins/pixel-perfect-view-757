@@ -1,0 +1,227 @@
+{
+  "id": "contact-only",
+  "contextMode": "contact",
+  "fixture": {
+    "baseId": "arc-synthesis-natal-integration",
+    "fixtureVersion": "synthetic-daily-7",
+    "baseSha256": "5f7c2b9abc280754a14b318d92141b1009fe2085b02f67ebe85bbb7208ac0710",
+    "cycleSelection": "primary-only",
+    "natalContext": false,
+    "transitContext": false,
+    "localContext": "none",
+    "synthetic": true
+  },
+  "config": {
+    "day": "2026-12-17",
+    "timeZone": "UTC",
+    "tone": "warm",
+    "depth": "standard",
+    "granted": [
+      "USR-01",
+      "USR-02"
+    ]
+  },
+  "sourceHash": "9d9512094268684f5ebeef23fcdde6d1bc07d7750c94c034bae4e61121a2e656",
+  "selectedSources": [
+    {
+      "id": "C1",
+      "kind": "calculation",
+      "statement": "transiting saturn square natal sun. Current orb at the reading's calculation time: 0.00 degrees. phase exact. domain identity. Calculated exact date: 2026-12-17.",
+      "cycle": {
+        "transitBody": "saturn",
+        "natalPoint": "sun",
+        "aspect": "square",
+        "orb": 0,
+        "exactDate": "2026-12-17"
+      }
+    },
+    {
+      "id": "I1",
+      "statement": "Published interpretation square:saturn:sun: An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+      "kind": "interpretation",
+      "dependsOn": [
+        "C1"
+      ],
+      "sourceKey": "square:saturn:sun",
+      "releaseVersion": "0.9.0"
+    }
+  ],
+  "brief": {
+    "version": "daily-context-brief-1",
+    "material": [
+      {
+        "factId": "I1",
+        "sourceKey": "square:saturn:sun",
+        "releaseVersion": "0.9.0",
+        "meaning": "An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.",
+        "requiredFacts": [
+          "I1",
+          "C1"
+        ]
+      }
+    ],
+    "references": [
+      {
+        "id": "C1",
+        "kind": "calculation",
+        "dependsOn": [],
+        "cycle": {
+          "transitBody": "saturn",
+          "natalPoint": "sun",
+          "aspect": "square"
+        }
+      },
+      {
+        "id": "I1",
+        "kind": "interpretation",
+        "dependsOn": [
+          "C1"
+        ],
+        "sourceKey": "square:saturn:sun",
+        "releaseVersion": "0.9.0"
+      }
+    ],
+    "controls": {
+      "voiceVersion": "daily-context-voice-1",
+      "tone": "warm",
+      "depth": "standard",
+      "requiredMeaningFacts": [
+        "I1"
+      ],
+      "natalConditional": false,
+      "chronologyFirstTwo": false,
+      "chronologyOnce": false,
+      "technicalDetails": false
+    }
+  },
+  "previousWriter": {
+    "headline": "Saturn square Sun",
+    "body": "An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.\n\nA title rarely describes everything that holds your attention. An interest you seldom mention, or a responsibility that occupies more of your week than your title suggests, can make that gap concrete.\n\nTiming: exact today. This reading falls in the middle part of the calculated window.",
+    "reflection": "What responsibility is currently asking for clearer boundaries?"
+  },
+  "candidate": {
+    "headline": "The task that will not fit",
+    "paragraphs": [
+      {
+        "text": "An afternoon already set aside for one responsibility can look roomy until the smaller requests start arriving. If the familiar task now takes the whole block, moving it to the next empty space may leave the same problem waiting there. A role can stay familiar while the effort it asks for changes.",
+        "facts": [
+          "C1",
+          "I1"
+        ],
+        "scenes": []
+      },
+      {
+        "text": "Saturn's square to your natal Sun is a picture of expectations pressing against the capacity to meet them. The edge worth noticing may be the task's size, rather than how neatly it fits on the calendar. A boundary can describe the part you can take on within the hours available.",
+        "facts": [
+          "C1",
+          "I1"
+        ],
+        "scenes": []
+      },
+      {
+        "text": "An extra check or another version may look small beside the original task. Leaving one addition outside the commitment is one way to give that boundary a visible edge.",
+        "facts": [
+          "C1",
+          "I1"
+        ],
+        "scenes": []
+      }
+    ],
+    "reflection": "When does an addition begin to change what you originally agreed to do?"
+  },
+  "validation": {
+    "transport": "offline-intercepted-response",
+    "liveProviderRequests": 0,
+    "sourceGraphBound": true,
+    "completeEarlyCoverage": true,
+    "chronologyOccurrences": 0,
+    "authoredResponseAcceptedBySharedValidator": true,
+    "candidateFinalQuality": {
+      "version": "daily-writing-quality-1",
+      "outcome": "pass",
+      "issues": [
+        {
+          "code": "scene_unavailable",
+          "severity": "info",
+          "paragraph": null,
+          "ruleId": "no_scene"
+        }
+      ]
+    },
+    "completeFallbackAfterIntercepted503": true,
+    "fallbackDiagnostics": {
+      "version": 1,
+      "promptVersion": "daily-context-body-1",
+      "validatorVersion": "daily-context-reference-1",
+      "model": "google/gemini-3.8-flash",
+      "gatewayTimeoutMs": 60000,
+      "outcome": "unavailable",
+      "attempted": true,
+      "code": "http",
+      "durationMs": 0,
+      "paragraph": null
+    }
+  },
+  "assembledRequest": {
+    "model": "google/gemini-3.8-flash",
+    "messages": [
+      {
+        "role": "system",
+        "content": "You write a daily astrology reading in an attentive, observational voice. Notice a recognizable detail, develop one useful distinction, and let that distinction give the reader proportionate direction. Only supplied material meanings authorize interpretation, scenes, planetary imagery or optional direction. Structural references identify their sources and parents; calculated references establish contact geometry and the exact supplied chronology. Neither establishes personal events, causes, temperament or another person's intentions. Keep each source condition, possibility and causal direction attached to its own claim. Do not add frequency, necessity, certainty, a causal bridge or a joint meaning. Each paragraph cites every source used and all its required parent facts. A synthesis keeps its distinct parent meanings, rather than reducing planets to a keyword list. Direction may be noticing, waiting, asking, a small reversible choice, leaving something unresolved or enjoying a supported moment. It remains optional; never pressure, predict, promise a result or turn a possibility into a personal prescription. Controls and source labels are separate from writing material. Do not narrate the rules, source selection, model, calculation system or limits as body prose. Respect supplied suppression limits and never invent astronomical, biographical or health claims."
+      },
+      {
+        "role": "user",
+        "content": "Tone: warm. Attentive and conversational. Use natural direct address and occasional contractions. Warmth comes from accurate observation; avoid praise, consolation and a counselor's reassurance.\nDepth: standard. Keep human meaning in the foreground. Omit optional orb values, degree measurements, phase and exact-date detail. When A1 is supplied, its immutable chronology sentence is required even at standard depth.\nDevelop one central situation through the primary meaning. Let selected synthesis, natal and transit distinctions change how that same situation can be considered; do not append separate mini-readings or invent a new setting for each source. Draw concrete details only from the supplied meanings; a possible illustration must remain possible.\nOpen on a supported recognizable gesture, general distinction or conditional possibility. An if opening is optional. Vary paragraph count, sentence rhythm and the position of astrology; no fixed three-paragraph formula, mandatory script or closing permission sentence. Aim for 90–190 words, or a little more when required chronology and technical detail need it; stop when the thought is complete.\nIntegrate any selected N1 and P2 meaning within the first two paragraphs, each with its full source parents. Preserve natal conditionality. P2 contributes its supplied chapter distinction to the same scene; it authorizes no account of previous personal events, resolution or closure.\nIf A1 is supplied, include its chronologySentence unchanged exactly once in paragraph 1 or 2, citing A1 and C1. Cite P2, C1, I1 and A1 together for chapter meaning. Do not paraphrase chronology, repeat it, add dates or reinterpret a calculated pass as an event in the reader's life.\nPlanetary imagery can clarify a distinction only when supplied by material. Avoid a list of planet keywords. Do not explain that a contact offers a symbolic lens or gives this reading its theme; let supported meaning stand in ordinary language.\nA useful ending may be the distinction itself or supported optional direction. Do not force a sentence to say aloud, recap the reading, console the reader or add hollow reassurance. The headline and independently validated reflection are separate; write only the body.\nOne source-bound writing brief; material meanings are the sole draftable sources:\n{\"version\":\"daily-context-brief-1\",\"material\":[{\"factId\":\"I1\",\"sourceKey\":\"square:saturn:sun\",\"releaseVersion\":\"0.9.0\",\"meaning\":\"An established role can feel demanding when its obligations require more deliberate effort than usual. Saturn's square to the Sun highlights where expectations outpace available capacity, showing where a routine or responsibility needs clearer boundaries.\",\"requiredFacts\":[\"I1\",\"C1\"]}],\"references\":[{\"id\":\"C1\",\"kind\":\"calculation\",\"dependsOn\":[],\"cycle\":{\"transitBody\":\"saturn\",\"natalPoint\":\"sun\",\"aspect\":\"square\"}},{\"id\":\"I1\",\"kind\":\"interpretation\",\"dependsOn\":[\"C1\"],\"sourceKey\":\"square:saturn:sun\",\"releaseVersion\":\"0.9.0\"}],\"controls\":{\"voiceVersion\":\"daily-context-voice-1\",\"tone\":\"warm\",\"depth\":\"standard\",\"requiredMeaningFacts\":[\"I1\"],\"natalConditional\":false,\"chronologyFirstTwo\":false,\"chronologyOnce\":false,\"technicalDetails\":false}}\nWrite only the body. The first paragraph concerns the primary contact and cites C1/I1. Use two to four paragraphs of one to four complete sentences each, each under 200 words, at most 700 words total. Declare empty scenes arrays; this brief supplies no SC identifiers.\nIntegrate every selected meaning in paragraph 1 or 2. S1 cites S1/C1/I1/C2/I2; N1 cites N1/C1/I1; chapter P2 cites P2/C1/I1/A1. Preserve each source's conditions. Copy A1 chronology unchanged exactly once in the first two paragraphs, citing A1/C1.\nEvery named planet, aspect or measurement cites its matching C reference. These are transit-to-natal contacts, not current-sky pairs. Do not introduce sign placements, individual houses, natal origins or unprovided imagery. Do not add dates outside the supplied literal chronology unless technical depth provides a directly cited C exactDate.\nKeep the current orb and any exact date in separate sentences. Neither is a personal deadline. Never assert a personal past event, a usual cause or frequency absent from the source, another person's intent, or a promised resolution.\nThe app handles calculation caveats separately. Do not add a headline, reflection question, source-policy explanation or wellbeing framing."
+      }
+    ],
+    "response_format": {
+      "type": "json_schema",
+      "json_schema": {
+        "name": "daily_reading",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "paragraphs": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 4,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string"
+                  },
+                  "facts": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "scenes": {
+                    "type": "array",
+                    "maxItems": 2,
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "text",
+                  "facts",
+                  "scenes"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "paragraphs"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  }
+}

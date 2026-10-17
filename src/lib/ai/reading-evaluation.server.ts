@@ -23,7 +23,11 @@ import {
   languageModel,
   type LanguageProvider,
 } from "./diagnostics";
-import { generateSyntheticReadingProse } from "./language.server";
+import { generateSyntheticReadingProse, type ReadingProseInput } from "./language.server";
+import { prepareDailyContextCandidate } from "./daily-context-candidate.server";
+import { CONTEXT_WRITING_BENCHMARKS } from "./reading-evaluation.context.fixtures";
+import { CONTEXT_PILOT_CASE_SET_ID } from "./context-pilot";
+import { CONTEXT_DAILY_VOICE_VERSION } from "./daily-context-writing";
 import { composeDailyWritingTemplate } from "../content/daily-writing-template";
 import { DAILY_WRITING_PLAN_VERSION } from "../content/daily-writing";
 import { DAILY_REFLECTION_VERSION } from "../content/daily-reflection";
@@ -102,8 +106,8 @@ export function prepareSyntheticEvaluationCase(
       natalReliability,
       calculation,
     );
-  const facts = readingFacts(chart, assembled, fixed.config.timeZone);
-  const input = {
+  let facts = readingFacts(chart, assembled, fixed.config.timeZone);
+  let input: ReadingProseInput = {
     facts,
     hasEligibleCycles: assembled.eligibleCycles.length > 0,
     tone: fixed.config.tone,
@@ -133,6 +137,33 @@ export function prepareSyntheticEvaluationCase(
         }
       : {}),
   };
+  const contextBenchmark =
+    manifest.id === CONTEXT_PILOT_CASE_SET_ID
+      ? CONTEXT_WRITING_BENCHMARKS.cases.find((benchmark) => benchmark.id === caseId)
+      : undefined;
+  if (manifest.id === CONTEXT_PILOT_CASE_SET_ID) {
+    if (!contextBenchmark) throw Error("The closed context benchmark is unavailable.");
+    input = prepareDailyContextCandidate(input, contextBenchmark);
+    facts = input.facts;
+    assembled = {
+      ...assembled,
+      headline: input.fallback.headline,
+      body: input.fallback.body,
+      astroBody: input.fallback.body,
+      prompt: input.fallback.prompt,
+      astroPrompt: input.fallback.prompt,
+      writingPlan: input.writing!.plan,
+      writingTemplate: input.writing!.template,
+      reflectionPlan: {
+        version: DAILY_REFLECTION_VERSION,
+        question: input.fallback.prompt,
+        themeFactId: input.writing!.plan.theme!.factId,
+        frameKey: null,
+        variant: "editorial",
+        localSource: null,
+      },
+    };
+  }
   return {
     fixed,
     reference,
@@ -144,6 +175,7 @@ export function prepareSyntheticEvaluationCase(
     input,
     policy,
     manifest,
+    contextBenchmark,
   };
 }
 
@@ -155,12 +187,26 @@ export async function runSyntheticEvaluationCase(
   control: SyntheticTransportControl = {},
   caseSetId?: EvaluationCaseSetId,
 ): Promise<ReadingEvaluationCaseResult> {
-  const { fixed, reference, natalReliability, assembled, facts, input, policy, manifest } =
-    prepareSyntheticEvaluationCase(caseId, bundle, qualificationProfile, caseSetId);
-  const observed = await generateSyntheticReadingProse(input, provider, {
-    ...control,
-    ...(qualificationProfile ? { boundedQualification: true } : {}),
-  });
+  const {
+    fixed,
+    reference,
+    natalReliability,
+    assembled,
+    facts,
+    input,
+    policy,
+    manifest,
+    contextBenchmark,
+  } = prepareSyntheticEvaluationCase(caseId, bundle, qualificationProfile, caseSetId);
+  const observed = await generateSyntheticReadingProse(
+    input,
+    provider,
+    {
+      ...control,
+      ...(qualificationProfile ? { boundedQualification: true } : {}),
+    },
+    contextBenchmark,
+  );
   const { prose } = observed;
   if (!prose.meta.diagnostics) throw new Error("Synthetic evaluation requires daily diagnostics");
   const editorialPilot = manifest.id === "daily-editorial-1";
@@ -202,9 +248,11 @@ export async function runSyntheticEvaluationCase(
             writingPlanVersion: DAILY_WRITING_PLAN_VERSION,
             writingQualityVersion: DAILY_WRITING_QUALITY_VERSION,
             reflectionVersion: DAILY_REFLECTION_VERSION,
-            voiceExamplesVersion: assembled.writingPlan.editorial
-              ? EDITORIAL_DAILY_VOICE_VERSION
-              : DAILY_VOICE_EXAMPLES_VERSION,
+            voiceExamplesVersion: contextBenchmark
+              ? CONTEXT_DAILY_VOICE_VERSION
+              : assembled.writingPlan.editorial
+                ? EDITORIAL_DAILY_VOICE_VERSION
+                : DAILY_VOICE_EXAMPLES_VERSION,
           }
         : bundle.schemaVersion === 4
           ? { reflectionVersion: PRIMARY_REFLECTION_VERSION }
@@ -219,9 +267,11 @@ export async function runSyntheticEvaluationCase(
         : provider === "gemini-enterprise"
           ? "Live Gemini Enterprise Agent Platform; fixed synthetic facts only"
           : "Live language gateway; fixed synthetic facts only",
-      warning: editorialPilot
-        ? `${editorialOutput} This capture does not establish member acceptance, semantic grounding, or writing quality. Manual scores remain blank.`
-        : "Actual model outputs for synthetic plans. This run does not establish production-user acceptance, semantic grounding, or writing quality. Manual scores remain blank.",
+      warning: contextBenchmark
+        ? "Candidate-only synthetic body output; headline and reflection are reviewed authored benchmark fields. Inspect diagnostics: authored fallback is not generated writing. This capture does not establish member acceptance, semantic grounding or writing quality."
+        : editorialPilot
+          ? `${editorialOutput} This capture does not establish member acceptance, semantic grounding, or writing quality. Manual scores remain blank.`
+          : "Actual model outputs for synthetic plans. This run does not establish production-user acceptance, semantic grounding, or writing quality. Manual scores remain blank.",
     },
     case: {
       transport: observed.transport,

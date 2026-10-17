@@ -18,6 +18,7 @@ import { QUALIFICATION_PROFILES, type QualificationProfile } from "./qualificati
 import type { AdminTransportTrace } from "./admin-transport";
 import { latencyProbePreviewSchema, latencyProbeRunSchema } from "./latency-probe";
 import { editorialPilotPreviewSchema, editorialPilotRunSchema } from "./editorial-pilot";
+import { contextPilotPreviewSchema, contextPilotRunSchema } from "./context-pilot";
 
 export { READING_EVAL_FIXTURE_VERSION };
 export const READING_EVALUATION_CATALOG = READING_EVAL_CASES.map((fixed) => ({
@@ -47,7 +48,8 @@ export type ReadingEvaluationBundleSource =
   | (typeof READING_EVALUATION_BUNDLE_SOURCES)[number]
   | "content-comparison"
   | "latency-probe"
-  | "editorial-pilot";
+  | "editorial-pilot"
+  | "context-pilot";
 
 export const contentComparisonSourceSchema = z.discriminatedUnion("kind", [
   z.object({ kind: z.literal("draft"), draftId: z.string().min(1).max(80) }).strict(),
@@ -106,12 +108,14 @@ const legacyReadingEvaluationRunInputSchema = z
   .strict();
 
 export const readingEvaluationRunInputSchema = z.union([
+  contextPilotRunSchema,
   editorialPilotRunSchema,
   legacyReadingEvaluationRunInputSchema,
   contentComparisonRunSchema,
   latencyProbeRunSchema,
 ]);
 export const readingEvaluationPreviewInputSchema = z.union([
+  contextPilotPreviewSchema,
   editorialPilotPreviewSchema,
   legacyReadingEvaluationRunInputSchema,
   contentComparisonPreviewSchema,
@@ -149,6 +153,7 @@ export interface ReadingEvaluationRun {
   campaignId?: string;
   attemptLimit?: number;
   editorialPilot?: { version: "daily-editorial-pilot-1"; quietDates: string[] };
+  contextPilot?: { version: "daily-context-pilot-1"; benchmarkHash: string };
   enterpriseThinking?: "LOW" | "MEDIUM";
   contentComparison?: {
     arm: "baseline" | "candidate";
@@ -170,6 +175,8 @@ export function readingEvaluationCurrentCaseLabel(run: ReadingEvaluationRun | nu
 }
 
 export function readingEvaluationReportScope(run: ReadingEvaluationRun | null): string {
+  if (run?.contextPilot)
+    return "Context-aware writer pilot: at most five generated bodies against the frozen benchmarks. Headline and reflection remain authored. A rejected body and its fallback are separate outcomes; partial captures cannot qualify the complete set.";
   if (run?.editorialPilot)
     return "Candidate-only editorial pilot: six scenarios and a four-date quiet sequence, at most five model attempts. Quiet outputs are deterministic; this is not a consecutive-day model test.";
   if (run?.latencyProbe)
@@ -223,7 +230,10 @@ export interface ReadingEvaluationMetadata {
   requestPolicyVersion?: string;
   enterpriseThinking?: "LOW" | "MEDIUM";
   experimentVersion?:
-    "enterprise-thinking-pilot-1" | "content-latency-probe-1" | "daily-editorial-pilot-1";
+    | "enterprise-thinking-pilot-1"
+    | "content-latency-probe-1"
+    | "daily-editorial-pilot-1"
+    | "daily-context-pilot-1";
   fixtureVersion: string;
   caseSetHash: string;
   caseSetId?: import("./evaluation-case-sets").EvaluationCaseSetId;
