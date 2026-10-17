@@ -251,7 +251,6 @@ async function syncSubscription(
         if (
           line.parent?.type !== "subscription_item_details" ||
           line.parent.subscription_item_details?.subscription !== sub.id ||
-          line.parent.subscription_item_details.proration ||
           line.amount < 0
         )
           continue;
@@ -559,7 +558,7 @@ async function processBillingEvent(id: string, env: StripeEnv, db: DBClient) {
           await db.exec(
             "UPDATE billing_coverage SET suspended=? WHERE environment=? AND invoice_id=?",
             [
-              dispute ? (dispute.status === "won" ? 0 : 1) : charge.refunded ? 1 : 0,
+              charge.refunded || (dispute && dispute.status !== "won") ? 1 : 0,
               env,
               idOf(payment.invoice) ?? "",
             ],

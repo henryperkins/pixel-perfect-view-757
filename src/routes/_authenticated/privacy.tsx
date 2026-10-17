@@ -30,6 +30,8 @@ export const Route = createFileRoute("/_authenticated/privacy")({
   head: () => ({
     meta: [
       { title: "Context & privacy — Pattern" },
+      {property:"og:type",content:"website"},
+      {name:"twitter:card",content:"summary"},
       {
         name: "description",
         content:
