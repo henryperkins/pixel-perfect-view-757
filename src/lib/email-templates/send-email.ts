@@ -1,12 +1,12 @@
 import * as React from 'react'
 import { render } from '@react-email/render'
 import { EmailAPIError, sendLovableEmail } from '@lovable.dev/email-js'
-import { TEMPLATES } from './registry'
+import { TEMPLATES, type EmailTemplateData } from './registry'
 
 // Server-only: reads LOVABLE_API_KEY. Never import from client components.
 
 // Configuration baked in at scaffold time
-const SITE_NAME = "Pixel Perfect Clone"
+const SITE_NAME = "Pattern"
 // SENDER_DOMAIN is the verified sender subdomain FQDN (e.g., "notify.example.com").
 // It MUST match the subdomain delegated to Lovable's nameservers. NEVER use the root domain.
 const SENDER_DOMAIN = "acct.patterns.lakefrontdigital.io"
@@ -15,11 +15,11 @@ const SENDER_DOMAIN = "acct.patterns.lakefrontdigital.io"
 const FROM_DOMAIN = "acct.patterns.lakefrontdigital.io"
 
 export type SendTemplateEmailResult =
-  | { sent: true }
+  | { sent: true; messageId: string | null; status: string | null }
   | { sent: false; reason: 'recipient_suppressed' }
 
 export interface SendTemplateEmailOptions {
-  templateData?: Record<string, any>
+  templateData?: EmailTemplateData
   /** Dedupes retries of the same logical send; defaults to a random UUID (no dedupe). */
   idempotencyKey?: string
   replyTo?: string
@@ -56,7 +56,8 @@ export async function sendTemplateEmail(
     throw new Error('Recipient is required (the template defines no fixed recipient)')
   }
 
-  const templateData = options.templateData ?? {}
+  const templateData = options.templateData
+  if (!templateData) throw new Error('Email template data is required')
   const element = React.createElement(template.component, templateData)
   const html = await render(element)
   const text = await render(element, { plainText: true })
@@ -66,7 +67,7 @@ export async function sendTemplateEmail(
       : template.subject
 
   try {
-    await sendLovableEmail(
+    const result = await sendLovableEmail(
       {
         to: recipient,
         from: { name: SITE_NAME, address: `noreply@${FROM_DOMAIN}` },
@@ -81,6 +82,8 @@ export async function sendTemplateEmail(
       },
       { apiKey, sendUrl: process.env['LOVABLE_SEND_URL'] }
     )
+    if (!result.success) throw new Error('Email provider did not accept the message')
+    return { sent: true, messageId: result.message_id ?? null, status: result.status ?? null }
   } catch (error) {
     if (error instanceof EmailAPIError && error.code === 'recipient_suppressed') {
       return { sent: false, reason: 'recipient_suppressed' }
@@ -88,5 +91,4 @@ export async function sendTemplateEmail(
     throw error
   }
 
-  return { sent: true }
 }

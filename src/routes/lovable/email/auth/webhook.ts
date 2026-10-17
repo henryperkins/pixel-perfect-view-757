@@ -10,9 +10,9 @@ import { ReauthenticationEmail } from "@/lib/email-templates/reauthentication";
 
 // Configuration
 const SITE_NAME = "Pattern";
-const SENDER_DOMAIN = "notify.hperkins.com";
-const ROOT_DOMAIN = "hperkins.com";
-const FROM_DOMAIN = "notify.hperkins.com";
+const SENDER_DOMAIN = "acct.patterns.lakefrontdigital.io";
+const ROOT_DOMAIN = "patterns.lakefrontdigital.io";
+const FROM_DOMAIN = "acct.patterns.lakefrontdigital.io";
 const SITE_URL = "https://patterns.lakefrontdigital.io";
 
 // The SDK handler owns verification, dispatch, and retry semantics; this file

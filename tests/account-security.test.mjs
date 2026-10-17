@@ -101,8 +101,8 @@ test("an unaccepted send removes its token and records only safe failure metadat
 test("confirmation email uses the requested sender and trusted origin, and cannot be replayed", async () => {
   await api.sendConfirmation(h.userA, h.records());
   assert.equal(emails.length, 1);
-  assert.match(emails[0].from, /Pattern.*noreply@notify.hperkins.com/);
-  assert.equal(emails[0].sender_domain, "notify.hperkins.com");
+  assert.match(emails[0].from, /Pattern.*noreply@acct\.patterns\.lakefrontdigital\.io/);
+  assert.equal(emails[0].sender_domain, "acct.patterns.lakefrontdigital.io");
   assert.match(emails[0].html, /https:\/\/pattern.example.invalid\/confirm-email/);
   const token = emailToken(),
     row = h.sqlite.prepare("SELECT * FROM account_tokens").get();
