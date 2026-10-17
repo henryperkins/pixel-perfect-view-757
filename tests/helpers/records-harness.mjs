@@ -207,6 +207,7 @@ export async function createRecordsHarness({ plugins = [] } = {}) {
       configFile: false,
       envFile: false,
       define: { __PATTERN_SOURCE_SHA__: JSON.stringify("a".repeat(40)) },
+      // Billing environment follows the build token, not caller-controlled input.
       resolve: { alias: { "@": join(projectRoot, "src") } },
       appType: "custom",
       logLevel: "error",

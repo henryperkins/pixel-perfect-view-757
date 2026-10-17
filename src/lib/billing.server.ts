@@ -48,7 +48,7 @@ async function matchCustomerEmail(stripe:Stripe, customerId:string,userId:string
   let email = current.email;
   for (let pass=0;pass<3;pass++) {
     const next = await currentAccountEmail(db,userId);
-    if (email === next && current.metadata.userId === userId) return;
+    if (email === next && current.metadata['userId'] === userId) return;
     email = (await stripe.customers.update(customerId,{email:next,metadata:{...current.metadata,userId}})).email;
     if (email === await currentAccountEmail(db,userId)) return;
   }
@@ -61,13 +61,13 @@ async function resolveOrCreateCustomer(
   if (options.userId && !/^[a-zA-Z0-9_-]+$/.test(options.userId)) throw new Error("Invalid userId");
   if (options.userId) {
     const found = await stripe.customers.search({query:`metadata['userId']:'${options.userId}'`,limit:1});
-    if (found.data.length) return found.data[0].id;
+    if (found.data[0]) return found.data[0].id;
   }
   if (options.email) {
     const existing = await stripe.customers.list({email:options.email,limit:1});
-    if (existing.data.length) {
+    if (existing.data[0]) {
       const customer=existing.data[0];
-      if (options.userId && customer.metadata?.userId !== options.userId) await stripe.customers.update(customer.id,{metadata:{...customer.metadata,userId:options.userId}});
+      if (options.userId && customer.metadata?.['userId'] !== options.userId) await stripe.customers.update(customer.id,{metadata:{...customer.metadata,userId:options.userId}});
       return customer.id;
     }
   }
@@ -87,7 +87,7 @@ async function catalogPrice(stripe:Stripe,plan:MembershipPlan) {
   return price;
 }
 function planFor(price:Stripe.Price):MembershipPlan|null {
-  const key=price.lookup_key ?? price.metadata?.lovable_external_id;
+  const key=price.lookup_key ?? price.metadata?.['lovable_external_id'];
   if (key === "plus_monthly") return "month";
   if (key === "plus_yearly") return "year";
   // Legacy grandfathered prices are identified by their actual recurring catalog shape.
@@ -182,7 +182,9 @@ export async function updateMembership(userId:string,action:"cancel"|"resume"|Me
     const stripe=createStripeClient(env);
     const subscriptions=(await allSubscriptions(stripe,customer.stripe_customer_id)).filter(s=>!["canceled","incomplete_expired"].includes(s.status));
     if (subscriptions.length!==1) throw new Error("Membership needs support before it can be changed.");
-    const sub=subscriptions[0],item=sub.items.data[0];
+    const sub=subscriptions[0];
+    if (!sub) throw new Error("No active membership was found.");
+    const item=sub.items.data[0];
     if (!item || sub.items.data.length!==1 || item.quantity!==1 || !planFor(item.price)) throw new Error("This membership configuration is not supported.");
     if (action === "cancel" || action === "resume") await stripe.subscriptions.update(sub.id,{cancel_at_period_end:action === "cancel"},{idempotencyKey:`pattern-${env}-${sub.id}-${action}-${sub.cancel_at_period_end}`});
     else {

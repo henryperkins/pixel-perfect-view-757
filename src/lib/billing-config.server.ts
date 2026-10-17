@@ -4,7 +4,7 @@ export type BillingConfig = {
   monthPriceId: string; yearPriceId: string; portalConfigurationId: string;
 };
 export function billingEnvironment(): StripeEnv {
-  const token = import.meta.env.VITE_PAYMENTS_CLIENT_TOKEN;
+  const token = import.meta.env['VITE_PAYMENTS_CLIENT_TOKEN'];
   if (token?.startsWith("pk_test_")) return "sandbox";
   if (token?.startsWith("pk_live_")) return "live";
   throw new Error("Payments are not configured for this build. Complete Stripe go-live before accepting real payments.");
