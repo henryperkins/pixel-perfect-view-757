@@ -1,7 +1,7 @@
 # Browsing refresh
 
 ## Purchase and account audit
-- [ ] Research current catalog, authentication, payments, account changes, entitlements, and renewals; document evidence and gaps.
+- [x] Research current catalog, authentication, payments, account changes, entitlements, and renewals; document evidence and gaps in docs/reviews/membership/2026-10-17-audit.md (54 tests passed; live onboarding incomplete).
 - [ ] Resolve business-policy questions and present the repair plan for approval.
 - [ ] Implement approved fixes and focused regression tests.
 - [ ] Verify real preview purchase/account flows and provide test-card steps; record external blockers.
