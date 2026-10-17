@@ -263,6 +263,7 @@ test("unlink and relink never resurrect old client grants", async () => {
 test("unlink or revocation racing an approval wins over the in-flight approval", async () => {
   for (const action of ["unlink", "revoke"]) {
     await h.reset();
+    await h.records().exec("INSERT INTO account_email_state(user_id,confirmed_at) VALUES(?,?)",[h.userA,new Date().toISOString()]);
     rememberedGrants.clear();
     await api.linkIdentity(h.userA, direct);
     onConsent = () =>
