@@ -68,6 +68,7 @@ import {
   type SyntheticTransportControl,
 } from "./admin-transport";
 import { dropsSourceModality } from "./daily-modality";
+import { createMemberDailyTransport, type MemberDailyTransport } from "./member-transport";
 import { dailyContextClaimProblem, dailyContextRepeatProblem } from "./daily-context-claims";
 import { natalLensWordingProblem } from "../content/natal-lens-policy";
 import type {
@@ -158,6 +159,10 @@ interface SyntheticObservation {
   candidate(value: unknown): void;
 }
 
+type GatewayTransportRecorder = Pick<AdminTransportRecorder, "headers" | "body" | "payload"> & {
+  kind?: "member";
+};
+
 /** Fixed boundary failures never retain response bodies or exception messages. */
 class GatewayUnavailable extends Error {
   constructor(readonly code: DailyGatewayCode) {
@@ -213,7 +218,7 @@ async function lovableContent(
   request: SyntheticReadingRequest,
   key: string,
   signal: AbortSignal,
-  recorder?: AdminTransportRecorder,
+  recorder?: GatewayTransportRecorder,
 ): Promise<string> {
   let res: Response;
   try {
@@ -246,8 +251,18 @@ async function lovableContent(
 }
 
 /** Reads only Google's bounded error status and reasons, so a bad key or billing stops admin runs. */
-async function transportJson(res: Response, recorder?: AdminTransportRecorder) {
-  if (!recorder) return res.json();
+async function transportJson(res: Response, recorder?: GatewayTransportRecorder) {
+  if (!recorder || recorder.kind === "member") {
+    try {
+      const payload = await res.json();
+      recorder?.body();
+      return payload;
+    } catch (error) {
+      // A parse error means the response body arrived, even though it was not valid JSON.
+      if (error instanceof SyntaxError) recorder?.body();
+      throw error;
+    }
+  }
   const raw = await res.text();
   recorder.body();
   return JSON.parse(raw);
@@ -255,7 +270,7 @@ async function transportJson(res: Response, recorder?: AdminTransportRecorder) {
 
 async function geminiEnterpriseFailure(
   res: Response,
-  recorder?: AdminTransportRecorder,
+  recorder?: GatewayTransportRecorder,
 ): Promise<DailyGatewayCode> {
   let reasons: unknown[] = [];
   try {
@@ -291,7 +306,7 @@ async function geminiEnterpriseContent(
   schema: JsonSchemaObject,
   key: string,
   signal: AbortSignal,
-  recorder?: AdminTransportRecorder,
+  recorder?: GatewayTransportRecorder,
   control: SyntheticTransportControl = {},
 ): Promise<string> {
   let res: Response;
@@ -342,6 +357,7 @@ interface GatewayOptions {
   system?: string;
   provider?: LanguageProvider;
   control?: SyntheticTransportControl;
+  memberTransport?: ((trace: MemberDailyTransport) => void) | undefined;
 }
 
 /** One provider call returning a strict-schema JSON object, or a safe closed failure. */
@@ -355,6 +371,7 @@ async function callGateway<T>(
     system = VOICE,
     provider = "lovable",
     control = {},
+    memberTransport,
   }: GatewayOptions = {},
 ): Promise<T> {
   assertSyntheticTransportControl(provider, control);
@@ -377,9 +394,19 @@ async function callGateway<T>(
   if (control.boundedQualification && Buffer.byteLength(JSON.stringify(request), "utf8") > 65536)
     throw new GatewayUnavailable("request_limit");
   observation?.request(structuredClone(request));
-  const recorder = observation?.transport
+  const adminRecorder = observation?.transport
     ? createAdminTransportTrace(provider, request.model, timeoutMs, control, signal)
     : undefined;
+  const memberRecorder = memberTransport
+    ? createMemberDailyTransport(
+        provider,
+        request.model,
+        timeoutMs,
+        signal,
+        control.enterpriseThinking ?? null,
+      )
+    : undefined;
+  const recorder = adminRecorder ?? memberRecorder;
   try {
     const content =
       provider === "gemini-enterprise"
@@ -393,7 +420,8 @@ async function callGateway<T>(
       throw gatewayFailure(error, signal);
     }
   } finally {
-    if (recorder) observation?.transport?.(recorder.finish());
+    if (adminRecorder) observation?.transport?.(adminRecorder.finish());
+    if (memberRecorder) memberTransport?.(memberRecorder.finish());
   }
 }
 
@@ -972,6 +1000,7 @@ async function generateDailyProse(
     authoredEditorial?: boolean;
     authoredContext?: boolean;
     contextCandidate?: boolean;
+    recordMemberTransport?: boolean;
   } = {},
 ): Promise<ReadingProse> {
   const { fallback } = input;
@@ -991,13 +1020,14 @@ async function generateDailyProse(
       input.writing.plan,
       input.facts,
     );
+  let transport: MemberDailyTransport | undefined;
   const diagnose = (
     outcome: DailyDiagnostics["outcome"],
     code: DailyDiagnostics["code"],
     started: number | null,
     paragraph: number | null = null,
-  ) =>
-    dailyDiagnostics(
+  ): DailyDiagnostics => ({
+    ...dailyDiagnostics(
       model,
       outcome,
       code,
@@ -1006,7 +1036,9 @@ async function generateDailyProse(
       concrete,
       !!editorial,
       contextCandidate,
-    );
+    ),
+    ...(transport ? { transport } : {}),
+  });
   const quality = (paragraphs: DailyWritingParagraph[], renderMode: DailyWritingRenderMode) => {
     const sources = (editorial ? [] : input.facts)
       .filter((fact) => /^(I[123]|S1|N1|P2)$/.test(fact.id))
@@ -1225,6 +1257,11 @@ async function generateDailyProse(
             : dailySystemVoice(hasNatalLens),
         provider,
         control,
+        memberTransport: options.recordMemberTransport
+          ? (trace) => {
+              transport = trace;
+            }
+          : undefined,
       },
     );
   } catch (error) {
@@ -1318,6 +1355,11 @@ function memberReadingSelection(
   };
 }
 
+/** Daily prose is latency-sensitive; natal chapters and admin evaluations retain their policy. */
+function memberDailyTransportControl(provider: LanguageProvider): SyntheticTransportControl {
+  return provider === "gemini-enterprise" ? { enterpriseThinking: "LOW" } : {};
+}
+
 export async function generateReadingProse(
   input: ReadingProseInput,
   options: MemberReadingProseOptions = {},
@@ -1327,12 +1369,13 @@ export async function generateReadingProse(
     options.contextModes ?? [],
     options.contextRenderMode,
   );
+  const provider = memberLanguageProvider();
   return generateDailyProse(
     selected.input,
     undefined,
-    memberLanguageProvider(),
-    {},
-    selected.options,
+    provider,
+    memberDailyTransportControl(provider),
+    { ...selected.options, recordMemberTransport: true },
   );
 }
 
@@ -1476,7 +1519,7 @@ export async function generateSyntheticMemberReadingProse(
       },
     },
     provider,
-    control,
+    { ...memberDailyTransportControl(provider), ...control },
     selected.options,
   );
   return { prose, request, candidate, transport };

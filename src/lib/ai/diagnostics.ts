@@ -1,3 +1,5 @@
+import { readMemberDailyTransport, type MemberDailyTransport } from "./member-transport";
+
 /** Measurement identifiers describe the current brief and guards, not a cache key. */
 export const DAILY_DIAGNOSTICS_VERSION = 1;
 export const DAILY_READING_PLAN_VERSION = "daily-synthesis-1";
@@ -108,6 +110,8 @@ export interface DailyDiagnostics {
   gatewayTimeoutMs: number | null;
   /** One-based rejected paragraph; null when no particular paragraph is implicated. */
   paragraph: number | null;
+  /** Production daily transport only; absent on historical and synthetic diagnostics. */
+  transport?: MemberDailyTransport | null;
 }
 
 const LABELS: Record<DailyDiagnosticCode, string> = {
@@ -259,5 +263,8 @@ export function readDailyDiagnostics(value: unknown): DailyDiagnostics | null {
     durationMs: durationMs as number | null,
     gatewayTimeoutMs: gatewayTimeoutMs as number | null,
     paragraph: paragraph as number | null,
+    ...(Object.hasOwn(d, "transport")
+      ? { transport: readMemberDailyTransport(d["transport"], d["model"] as string) }
+      : {}),
   };
 }
