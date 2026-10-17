@@ -25,10 +25,22 @@ const journalEdit = z.object({
   body: z.string().max(4000),
   expectedRevision: z.number().int().nonnegative(),
 });
+// Drafts preserve unfinished or invalid input; submit validation remains separate.
+const birthDetails = z.object({
+  birthDate: z.string().max(32),
+  birthTime: z.string().max(32),
+  accuracy: z.enum(["exact", "near", "hour", "unknown"]),
+  placeLabel: z.string().max(500),
+  latitude: z.string().max(64),
+  longitude: z.string().max(64),
+  timezone: z.string().max(240),
+  placeResolution: z.enum(["unresolved", "manual", "lookup", "saved"]),
+});
 export type DraftValuesMap = {
   "check-in": z.infer<typeof checkIn>;
   "journal-new": z.infer<typeof journalNew>;
   "journal-edit": z.infer<typeof journalEdit>;
+  "birth-details": z.infer<typeof birthDetails>;
 };
 export type DraftKind = keyof DraftValuesMap;
 export type DraftBaseline<K extends DraftKind> = {
@@ -73,14 +85,19 @@ const envelope = z.object({
   schemaVersion: z.literal(1),
   ownerId: z.string().min(1),
   draftId: z.string().min(1),
-  kind: z.enum(["check-in", "journal-new", "journal-edit"]),
+  kind: z.enum(["check-in", "journal-new", "journal-edit", "birth-details"]),
   entityKey: z.string().min(1),
   generation: z.string().min(1),
   revision: z.number().int().nonnegative(),
   updatedAt: z.number().finite(),
   expiresAt: z.number().finite(),
 });
-const schemas = { "check-in": checkIn, "journal-new": journalNew, "journal-edit": journalEdit };
+const schemas = {
+  "check-in": checkIn,
+  "journal-new": journalNew,
+  "journal-edit": journalEdit,
+  "birth-details": birthDetails,
+};
 export function parseMemberDraft(value: unknown): MemberDraft | null {
   const meta = envelope.safeParse(value);
   if (!meta.success || typeof value !== "object" || !value) return null;
@@ -110,6 +127,7 @@ export function parseMemberDraft(value: unknown): MemberDraft | null {
     (values.data as DraftValuesMap["journal-edit"]).entryId !== meta.data.entityKey
   )
     return null;
+  if (meta.data.kind === "birth-details" && meta.data.entityKey !== "birth") return null;
   return {
     ...meta.data,
     values: values.data,
@@ -235,6 +253,19 @@ export function draftText(draft: MemberDraft): string {
   if (draft.kind === "check-in") {
     const v = draft.values as DraftValuesMap["check-in"];
     return `${v.day}\nMood: ${v.mood ?? "—"}\nEnergy: ${v.energy ?? "—"}\nSleep: ${v.sleep ?? "—"}\nStress: ${v.stress ?? "—"}\n${v.note}`;
+  }
+  if (draft.kind === "birth-details") {
+    const v = draft.values as DraftValuesMap["birth-details"];
+    return [
+      `Birth date: ${v.birthDate}`,
+      `Birth time: ${v.accuracy === "unknown" ? "Unknown" : v.birthTime}`,
+      `Time accuracy: ${v.accuracy}`,
+      `Birth place: ${v.placeLabel}`,
+      `Latitude: ${v.latitude}`,
+      `Longitude: ${v.longitude}`,
+      `Timezone: ${v.timezone}`,
+      `Place confirmation: ${v.placeResolution}`,
+    ].join("\n");
   }
   const v = draft.values as DraftValuesMap["journal-new"];
   return `${v.label}\n${v.body}`;

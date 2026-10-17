@@ -671,11 +671,72 @@ export async function saveBirth(
     .maybeSingle();
   if (error) throw new Error("Your birth record could not be loaded. Please retry.");
   const conflict = "Your birth record changed in another tab. Reload it before saving.";
-  if (
-    expectedRevision !== undefined &&
-    expectedRevision !== (previous ? await birthRevision(userId, previous) : null)
-  )
-    throw new Error(conflict);
+  const currentRevision = previous ? await birthRevision(userId, previous) : null;
+  if (expectedRevision !== undefined && expectedRevision !== currentRevision) {
+    if (!previous || currentRevision === null) throw new Error(conflict);
+    const committedDetails = await decryptJson<BirthDetails>(dek, previous.payload_ct);
+    // A response may be lost after the atomic save commits. Only acknowledge
+    // exactly the saved values; the chart fingerprint rounds coordinates and
+    // excludes the place label, so it cannot establish that equality itself.
+    if (
+      committedDetails.birthDate !== details.birthDate ||
+      (accuracy !== "unknown" && committedDetails.birthTime !== details.birthTime) ||
+      committedDetails.placeLabel !== details.placeLabel ||
+      committedDetails.latitude !== details.latitude ||
+      committedDetails.longitude !== details.longitude ||
+      previous.time_accuracy !== accuracy ||
+      previous.timezone !== timezone
+    )
+      throw new Error(conflict);
+    const { data: committed, error: snapshotError } = await db
+      .from<SnapshotRow>("chart_snapshots")
+      .select("*")
+      .eq("user_id", userId)
+      .eq("birth_profile_id", previous.id)
+      .eq("fingerprint", previous.fingerprint)
+      .raw(
+        "EXISTS(SELECT 1 FROM birth_profiles WHERE id=? AND user_id=? AND payload_ct=? AND fingerprint=? AND time_accuracy=? AND timezone=?)",
+        [
+          previous.id,
+          userId,
+          previous.payload_ct,
+          previous.fingerprint,
+          previous.time_accuracy,
+          previous.timezone,
+        ],
+      )
+      .maybeSingle();
+    if (snapshotError) throw new Error("Your saved chart could not be loaded. Please retry.");
+    if (!committed) {
+      const { data: stillCurrent, error: currentError } = await db
+        .from<SavedBirthRow>("birth_profiles")
+        .select("id")
+        .eq("id", previous.id)
+        .eq("user_id", userId)
+        .eq("payload_ct", previous.payload_ct)
+        .eq("fingerprint", previous.fingerprint)
+        .eq("time_accuracy", previous.time_accuracy)
+        .eq("timezone", previous.timezone)
+        .maybeSingle();
+      if (currentError) throw new Error("Your birth record could not be loaded. Please retry.");
+      if (!stillCurrent) throw new Error(conflict);
+      throw new Error(
+        "Your saved chart could not be loaded. Reload your birth details before saving.",
+      );
+    }
+    const precision = chartPrecisionSummary(snapshotToChart(committed));
+    return {
+      snapshotId: committed.id,
+      fingerprint: committed.fingerprint,
+      revision: currentRevision,
+      changeSummary: {
+        changedFields: [],
+        previous: precision,
+        current: precision,
+        unchanged: true,
+      } satisfies BirthChangeSummary,
+    };
+  }
   const priorDetails = previous ? await decryptJson<BirthDetails>(dek, previous.payload_ct) : null;
   const priorSnapshot = previous
     ? await db
@@ -2461,7 +2522,7 @@ export async function listReadingJournal(
  * by the chart snapshot summary on /pattern.
  */
 export async function loadBirthRecord(db: DB, userId: string) {
-  const { data } = await db
+  const { data, error } = await db
     .from<{
       id: string;
       payload_ct: string;
@@ -2474,6 +2535,7 @@ export async function loadBirthRecord(db: DB, userId: string) {
     .select("id, payload_ct, time_accuracy, timezone, fingerprint, created_at, updated_at")
     .eq("user_id", userId)
     .maybeSingle();
+  if (error) throw new Error("Your birth record could not be loaded. Please retry.");
   if (!data) return null;
   const dek = await getDek(db, userId);
   const details = await decryptJson<BirthDetails & { utcISO?: string }>(dek, data.payload_ct);

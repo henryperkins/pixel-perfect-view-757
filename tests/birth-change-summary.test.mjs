@@ -108,6 +108,168 @@ test("a stale form revision cannot overwrite a birth record saved in another tab
   assert.equal((await h.app.loadBirthRecord(h.records(), h.userA)).birthDate, "1991-02-03");
 });
 
+function assertReadOnlyRecovery(start) {
+  assert.equal(h.swissRequests.length, 0, "Recovery must not request another calculation");
+  assert.equal(h.gatewayRequests.length, 0);
+  assert.equal(h.geminiEnterpriseRequests.length, 0);
+  assert.deepEqual(
+    h.requests.slice(start).filter(({ sql }) => /^\s*(insert|update|delete|replace)\b/i.test(sql)),
+    [],
+    "Recovery must not rewrite the profile, snapshot, features or audit history",
+  );
+}
+
+test("retrying a birth correction after its response is lost returns the committed chart without writes", async () => {
+  const initial = await save();
+  const correction = { ...details, birthDate: "1991-02-03" };
+  const committed = await save(correction, "exact", "UTC", initial.revision);
+  const profileBefore = h.sqlite
+    .prepare("SELECT * FROM birth_profiles WHERE user_id=?")
+    .get(h.userA);
+  const chartBefore = h.sqlite
+    .prepare("SELECT * FROM chart_snapshots WHERE id=?")
+    .get(committed.snapshotId);
+  const auditBefore = h.sqlite
+    .prepare("SELECT * FROM audit_events WHERE user_id=? ORDER BY id")
+    .all(h.userA);
+  const start = h.requests.length;
+  h.setSwiss(() => Response.json({ error: "Recovery must not calculate" }, { status: 503 }));
+
+  // The browser retained the pre-save revision because it never received the first response.
+  const recovered = await save(correction, "exact", "UTC", initial.revision);
+
+  assert.equal(recovered.snapshotId, committed.snapshotId);
+  assert.equal(recovered.fingerprint, committed.fingerprint);
+  assert.equal(recovered.revision, committed.revision);
+  assert.deepEqual(recovered.changeSummary.changedFields, []);
+  assert.equal(recovered.changeSummary.unchanged, true);
+  assert.deepEqual(recovered.changeSummary.current, committed.changeSummary.current);
+  assert.deepEqual(recovered.changeSummary.previous, committed.changeSummary.current);
+  assert.deepEqual(
+    h.sqlite.prepare("SELECT * FROM birth_profiles WHERE user_id=?").get(h.userA),
+    profileBefore,
+  );
+  assert.deepEqual(
+    h.sqlite.prepare("SELECT * FROM chart_snapshots WHERE id=?").get(committed.snapshotId),
+    chartBefore,
+  );
+  assert.deepEqual(
+    h.sqlite.prepare("SELECT * FROM audit_events WHERE user_id=? ORDER BY id").all(h.userA),
+    auditBefore,
+  );
+  assertReadOnlyRecovery(start);
+});
+
+test("a first-save replay with a null revision recovers only the same canonical values", async () => {
+  const committed = await save(details, "exact", "UTC", null);
+  const start = h.requests.length;
+  h.setSwiss(() => Response.json({ error: "Recovery must not calculate" }, { status: 503 }));
+
+  const recovered = await save(details, "exact", "UTC", null);
+  assert.equal(recovered.snapshotId, committed.snapshotId);
+  assert.equal(recovered.revision, committed.revision);
+  assert.equal(recovered.changeSummary.unchanged, true);
+  await assert.rejects(
+    save({ ...details, birthDate: "1992-03-04" }, "exact", "UTC", null),
+    /changed in another tab/,
+  );
+  assertReadOnlyRecovery(start);
+});
+
+test("unknown-time recovery compares noon without changing the committed record", async () => {
+  const initial = await save();
+  const committed = await save(
+    { ...details, birthTime: "12:00" },
+    "unknown",
+    "UTC",
+    initial.revision,
+  );
+  const start = h.requests.length;
+  h.setSwiss(() => Response.json({ error: "Recovery must not calculate" }, { status: 503 }));
+
+  const recovered = await save(details, "unknown", "UTC", initial.revision);
+  assert.equal(recovered.revision, committed.revision);
+  assert.equal(recovered.changeSummary.unchanged, true);
+  assert.equal((await h.app.loadBirthRecord(h.records(), h.userA)).birthTime, "12:00");
+  assertReadOnlyRecovery(start);
+});
+
+test("stale unchanged forms and fingerprint-equivalent but distinct values still conflict", async () => {
+  const initial = await save();
+  const correction = { ...details, birthDate: "1991-02-03" };
+  const committed = await save(correction, "exact", "UTC", initial.revision);
+  const start = h.requests.length;
+  h.setSwiss(() => Response.json({ error: "Conflicts must not calculate" }, { status: 503 }));
+  const distinct = [
+    [details, "exact", "UTC"],
+    [{ ...correction, birthTime: "08:11" }, "exact", "UTC"],
+    [{ ...correction, placeLabel: "A different label" }, "exact", "UTC"],
+    [{ ...correction, latitude: 30.000001 }, "exact", "UTC"],
+    [{ ...correction, longitude: 0.000001 }, "exact", "UTC"],
+    [correction, "near", "UTC"],
+    [correction, "exact", "Etc/UTC"],
+  ];
+  for (const [value, accuracy, timezone] of distinct) {
+    await assert.rejects(
+      save(value, accuracy, timezone, initial.revision),
+      /changed in another tab/,
+    );
+  }
+  assert.equal((await h.app.loadBirthRecord(h.records(), h.userA)).revision, committed.revision);
+  assertReadOnlyRecovery(start);
+});
+
+test("recovery never claims success without the matching committed chart", async () => {
+  const initial = await save();
+  const correction = { ...details, birthDate: "1991-02-03" };
+  const committed = await save(correction, "exact", "UTC", initial.revision);
+  h.sqlite.prepare("DELETE FROM chart_snapshots WHERE id=?").run(committed.snapshotId);
+  const start = h.requests.length;
+  h.setSwiss(() => Response.json({ error: "Recovery must not calculate" }, { status: 503 }));
+
+  await assert.rejects(
+    save(correction, "exact", "UTC", initial.revision),
+    /saved chart could not be loaded/,
+  );
+  assert.ok(h.sqlite.prepare("SELECT id FROM chart_snapshots WHERE id=?").get(initial.snapshotId));
+  assertReadOnlyRecovery(start);
+});
+
+test("a birth edit committed during recovery cannot be acknowledged as the recovered chart", async () => {
+  const initial = await save();
+  const correction = { ...details, birthDate: "1991-02-03" };
+  await save(correction, "exact", "UTC", initial.revision);
+  const committedRow = h.sqlite
+    .prepare("SELECT * FROM birth_profiles WHERE user_id=?")
+    .get(h.userA);
+  const newer = await save({ ...details, birthDate: "1992-03-04" });
+  const newerRow = h.sqlite.prepare("SELECT * FROM birth_profiles WHERE user_id=?").get(h.userA);
+  const replace = h.sqlite.prepare(
+    "UPDATE birth_profiles SET payload_ct=?,fingerprint=? WHERE user_id=?",
+  );
+  replace.run(committedRow.payload_ct, committedRow.fingerprint, h.userA);
+  let replaced = false;
+  h.setFault({
+    matches: (sql) => {
+      if (!replaced && /^select .*from "?chart_snapshots/i.test(sql)) {
+        replaced = true;
+        replace.run(newerRow.payload_ct, newerRow.fingerprint, h.userA);
+      }
+      return false;
+    },
+  });
+  const start = h.requests.length;
+  h.setSwiss(() => Response.json({ error: "Recovery must not calculate" }, { status: 503 }));
+
+  await assert.rejects(
+    save(correction, "exact", "UTC", initial.revision),
+    /changed in another tab/,
+  );
+  assert.equal(replaced, true);
+  assert.equal((await h.app.loadBirthRecord(h.records(), h.userA)).revision, newer.revision);
+  assertReadOnlyRecovery(start);
+});
+
 test("a slower overlapping save cannot claim success after a newer chart has committed", async () => {
   await save();
   const samples = syntheticNatalSamples(chart, h.ephemerisModule);
@@ -145,4 +307,10 @@ test("invalid calculation input leaves the prior chart and record available", as
   await assert.rejects(save(details, "exact", "Invalid/Zone"));
   assert.equal((await h.app.loadSnapshot(h.records(), h.userA)).id, first.snapshotId);
   assert.equal((await h.app.loadBirthRecord(h.records(), h.userA)).birthDate, details.birthDate);
+});
+
+test("a failed birth-record read cannot be mistaken for an empty account during recovery", async () => {
+  await save();
+  h.setFault({ matches: (sql) => /select .*from "?birth_profiles"?/i.test(sql) });
+  await assert.rejects(h.app.loadBirthRecord(h.records(), h.userA), /could not be loaded|retry/i);
 });

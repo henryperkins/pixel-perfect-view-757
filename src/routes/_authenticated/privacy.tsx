@@ -229,9 +229,9 @@ function PrivacyPage() {
               Drafts on this device
             </h2>
             <p className="mt-2 text-sm">
-              Unfinished check-ins and journal entries are encrypted in this browser. Drafts expire
-              after seven days without edits and are cleared when you sign out. Save an entry to
-              keep it in your account.
+              Unfinished birth details, check-ins and journal entries are encrypted in this browser.
+              Drafts expire after seven days without edits and are cleared when you sign out. Save
+              your details or entry to keep them in your account.
             </p>
             <details className="mt-3">
               <summary className="min-h-11 cursor-pointer py-3">Clear device drafts</summary>

@@ -1,12 +1,11 @@
-import { usePlaceLookup } from "@/hooks/usePlaceLookup";
-import { useMutation } from "@tanstack/react-query";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { useState } from "react";
-import { toast } from "sonner";
-
+import { useEffect, useRef } from "react";
 import { Shell } from "@/components/pattern/Shell";
-import { saveBirthProfile } from "@/lib/pattern.functions";
+import { BirthDetailsForm } from "@/components/pattern/BirthDetailsForm";
+import { Button } from "@/components/ui/button";
+import { fetchBirthRecord } from "@/lib/pattern.functions";
 
 export const Route = createFileRoute("/_authenticated/onboarding")({
   head: () => ({
@@ -26,67 +25,21 @@ export const Route = createFileRoute("/_authenticated/onboarding")({
   component: Onboarding,
 });
 
-const ACCURACY = [
-  { value: "exact", label: "Exact", note: "From a record, to the minute." },
-  { value: "near", label: "Within ~15 min", note: "Remembered closely." },
-  { value: "hour", label: "Within an hour", note: "Rough recollection." },
-  { value: "unknown", label: "Unknown", note: "Houses and angles get suppressed." },
-] as const;
-
-function localTz() {
-  try {
-    return Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
-  } catch {
-    return "UTC";
-  }
-}
-
 function Onboarding() {
   const navigate = useNavigate();
-  const save = useServerFn(saveBirthProfile);
-  const [birthDate, setBirthDate] = useState("");
-  const [birthTime, setBirthTime] = useState("12:00");
-  const [accuracy, setAccuracy] = useState<(typeof ACCURACY)[number]["value"]>("exact");
-  const [placeLabel, setPlaceLabel] = useState("");
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
-  const [timezone, setTimezone] = useState(localTz());
-  const placeLookup = usePlaceLookup({
-    fields: { placeLabel, latitude, longitude, timezone },
-
-    onResolve: (fields) => {
-      setPlaceLabel(fields.placeLabel);
-      setLatitude(fields.latitude);
-      setLongitude(fields.longitude);
-      setTimezone(fields.timezone);
-    },
-  });
-  const lookingUp = placeLookup.pending;
-  const lookupPlace = placeLookup.lookup;
-
-  const submit = useMutation({
-    mutationFn: () =>
-      save({
-        data: {
-          birthDate,
-          birthTime: accuracy === "unknown" ? "12:00" : birthTime,
-          placeLabel,
-          latitude: Number(latitude),
-          longitude: Number(longitude),
-          timezone,
-          accuracy,
-        },
-      }),
-    onSuccess: () => {
-      toast.success("Chart calculated and fingerprinted.");
-      void navigate({ to: "/" });
-    },
-    onError: (e: Error) => toast.error(e.message),
-  });
-
-  const ready =
-    placeLookup.ready && birthDate && placeLabel && latitude !== "" && longitude !== "" && timezone;
-
+  const qc = useQueryClient();
+  const load = useServerFn(fetchBirthRecord);
+  const completed = useRef(false);
+  const query = useQuery({ queryKey: ["birth-record"], queryFn: () => load({}), staleTime: 0 });
+  useEffect(() => {
+    if (query.data && !completed.current) void navigate({ to: "/birth", replace: true });
+  }, [query.data, navigate]);
+  function confirmed(hasDraft: boolean) {
+    completed.current = !hasDraft;
+    for (const key of ["today", "bootstrap", "birth-record"])
+      void qc.invalidateQueries({ queryKey: [key] });
+    if (!hasDraft) void navigate({ to: "/" });
+  }
   return (
     <Shell>
       <div className="mx-auto max-w-xl animate-rise">
@@ -95,143 +48,33 @@ function Onboarding() {
           Stored encrypted. Used only to compute positions, angles and cycles — never shared with
           the editorial system.
         </p>
-
-        <form
-          className="mt-8 space-y-6"
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (ready && !submit.isPending) submit.mutate();
-          }}
-        >
-          {placeLookup.error && (
+        {query.isPending ? (
+          <p role="status" className="mt-8">
+            Checking for saved birth details…
+          </p>
+        ) : query.error ? (
+          <div className="mt-8 space-y-3">
             <p role="alert" className="text-sm text-destructive">
-              {placeLookup.error}
+              {query.error.message}
             </p>
-          )}
-          <label className="block">
-            <span className="technical text-muted-foreground">Birth date</span>
-            <input
-              type="date"
-              enterKeyHint="next"
-              autoComplete="bday"
-              required
-              value={birthDate}
-              onChange={(e) => setBirthDate(e.target.value)}
-              className="pattern-mobile-field mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 font-mono text-sm outline-none focus:border-ring"
-            />
-          </label>
-
-          <fieldset>
-            <legend className="technical text-muted-foreground">Time accuracy</legend>
-            <div className="mt-2 grid gap-2 sm:grid-cols-2">
-              {ACCURACY.map((a) => (
-                <button
-                  key={a.value}
-                  type="button"
-                  aria-pressed={accuracy === a.value}
-                  onClick={() => setAccuracy(a.value)}
-                  className={`rounded-sm border px-3 py-2 text-left text-sm transition-colors ${
-                    accuracy === a.value
-                      ? "border-primary bg-accent text-accent-foreground"
-                      : "border-input bg-card hover:bg-secondary"
-                  }`}
-                >
-                  <span className="block font-medium">{a.label}</span>
-                  <span className="block text-xs text-muted-foreground">{a.note}</span>
-                </button>
-              ))}
-            </div>
-          </fieldset>
-
-          {accuracy !== "unknown" ? (
-            <label className="block">
-              <span className="technical text-muted-foreground">Birth time (local)</span>
-              <input
-                type="time"
-                enterKeyHint="next"
-                value={birthTime}
-                onChange={(e) => setBirthTime(e.target.value)}
-                className="pattern-mobile-field mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 font-mono text-sm outline-none focus:border-ring"
-              />
-            </label>
-          ) : (
-            <p className="border-l-2 border-primary bg-evidence px-3 py-2 text-xs text-evidence-foreground">
-              With an unknown time, houses, ascendant, midheaven and fast Moon claims are suppressed
-              rather than guessed. Everything else still calculates.
-            </p>
-          )}
-
-          <div>
-            <label className="block">
-              <span className="technical text-muted-foreground">Birth place</span>
-              <div className="mt-1.5 flex gap-2">
-                <input
-                  required
-                  value={placeLabel}
-                  onChange={(e) => {
-                    placeLookup.invalidate();
-                    setPlaceLabel(e.target.value);
-                    setLatitude("");
-                    setLongitude("");
-                  }}
-                  placeholder="City, country"
-                  className="pattern-mobile-field w-full rounded-sm border border-input bg-card px-3 py-2 text-sm outline-none focus:border-ring"
-                />
-                <button
-                  type="button"
-                  onClick={() => void lookupPlace()}
-                  disabled={lookingUp}
-                  className="shrink-0 rounded-sm border border-input bg-card px-3 py-2 text-sm transition-colors hover:bg-secondary disabled:opacity-50"
-                >
-                  {lookingUp ? "…" : "Resolve"}
-                </button>
-              </div>
-            </label>
-            <div className="mt-3 grid grid-cols-3 gap-2">
-              <label className="block">
-                <span className="technical text-muted-foreground">Lat</span>
-                <input
-                  value={latitude}
-                  onChange={(e) => {
-                    placeLookup.invalidate("manual");
-                    setLatitude(e.target.value);
-                  }}
-                  className="pattern-mobile-field mt-1.5 w-full rounded-sm border border-input bg-card px-2 py-1.5 font-mono text-xs outline-none focus:border-ring"
-                />
-              </label>
-              <label className="block">
-                <span className="technical text-muted-foreground">Lon</span>
-                <input
-                  value={longitude}
-                  onChange={(e) => {
-                    placeLookup.invalidate("manual");
-                    setLongitude(e.target.value);
-                  }}
-                  className="pattern-mobile-field mt-1.5 w-full rounded-sm border border-input bg-card px-2 py-1.5 font-mono text-xs outline-none focus:border-ring"
-                />
-              </label>
-              <label className="block">
-                <span className="technical text-muted-foreground">Zone</span>
-                <input
-                  value={timezone}
-                  onChange={(e) => {
-                    placeLookup.invalidate("manual");
-                    setTimezone(e.target.value);
-                  }}
-                  className="pattern-mobile-field mt-1.5 w-full rounded-sm border border-input bg-card px-2 py-1.5 font-mono text-xs outline-none focus:border-ring"
-                />
-              </label>
-            </div>
+            <Button type="button" variant="outline" onClick={() => void query.refetch()}>
+              Try again
+            </Button>
           </div>
-
-          <button
-            type="submit"
-            disabled={!ready || submit.isPending}
-            className="rounded-sm bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground disabled:opacity-50"
-          >
-            {submit.isPending ? "Calculating…" : "Calculate my chart"}
-          </button>
-        </form>
+        ) : query.data ? (
+          <p role="status" className="mt-8">
+            Your birth details are already saved.{" "}
+            <Link to="/birth" className="underline">
+              Review birth details
+            </Link>
+          </p>
+        ) : (
+          <BirthDetailsForm
+            record={null}
+            onSaved={(_summary, hasDraft) => confirmed(hasDraft)}
+            onConfirmed={confirmed}
+          />
+        )}
       </div>
     </Shell>
   );
