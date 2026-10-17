@@ -19,6 +19,13 @@ type Token = {
 const digest = (value: string) => createHash("sha256").update(value).digest("hex");
 const invalidLink = "This link has expired or already been used. Request a new link.";
 
+async function securityAlert(userId:string,email:string,message:string,db:DBClient) {
+  try {
+    const result=await sendTemplateEmail("security-alert",email,{templateData:{siteName:"Pattern",siteUrl:appOrigin(),recipient:email,confirmationUrl:"",oldEmail:email,email,newEmail:message}});
+    await db.from("audit_events").insert({user_id:userId,kind:"account.security-alert",detail:{status:result.sent ? "queued":"suppressed"}});
+  } catch {await db.from("audit_events").insert({user_id:userId,kind:"account.security-alert",detail:{status:"failed"}});}
+}
+
 export async function accountRateLimit(key: string, limit: number, db = records()) {
   const now = Date.now(),
     windowStart = now - 3600_000;
@@ -240,6 +247,7 @@ export async function changePassword(
   if (!(await accountRateLimit(`account-change:${userId}`, 10, db)))
     throw new Error("Too many attempts. Please try again later.");
   const previous = await requireCurrentPassword(userId, current, db);
+  const {email}=await securityStatus(userId,db);
   const hash = await hashPassword(next);
   await db.batch([
     {
@@ -251,6 +259,7 @@ export async function changePassword(
     { sql: "DELETE FROM account_tokens WHERE user_id=?", params: [userId] },
     { sql: "DELETE FROM identity_links WHERE user_id=?", params: [userId] },
   ]);
+  await securityAlert(userId,email,"Your Pattern password changed. All devices and assistants have been signed out.",db);
   return { ok: true };
 }
 
@@ -305,6 +314,8 @@ export async function consumeAccountToken(
   } catch {
     throw new Error(invalidLink);
   }
+  if (purpose === "reset" || token.purpose === "change")
+    await securityAlert(token.user_id,token.email,purpose === "reset" ? "Your Pattern password was reset. All devices and assistants have been signed out." : "Your Pattern email address changed. All devices have been signed out.",db);
   if (token.purpose === "change" && token.new_email) {
     // The login has already changed; Stripe failing here must not undo or block it.
     try {
