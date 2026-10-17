@@ -35,5 +35,8 @@
     "editoriallyQualified": false,
     "memberDelivery": "reviewed authored copy only"
   },
-  "liveActivation": "pending"
+  "liveActivation": "complete",
+  "productionProof": "production/member-proof.json",
+  "productionCleanup": "production/cleanup.json",
+  "deployedSourceSha": "2bfa7b3f8e6ad13e2184249ebaf65160d353d2ff"
 }

@@ -1,9 +1,9 @@
 {
-  "deploymentId": "25c4f55d-ccf3-4b8b-b16b-da91e38d0379",
+  "deploymentId": "b7fccada-851d-47ff-8595-7e5c7a2f76a8",
   "url": "https://patterns.lakefrontdigital.io",
-  "verifiedAt": "2026-10-17T07:41:26.866Z",
+  "verifiedAt": "2026-10-17T07:51:38.262Z",
   "identity": {
-    "sourceSha": "fe8d717a046aaf396486e72ae175c0cf8ba3542a",
+    "sourceSha": "2bfa7b3f8e6ad13e2184249ebaf65160d353d2ff",
     "requestPolicyVersion": "synthetic-facts-local-context-1",
     "fixtureVersion": "synthetic-daily-7"
   }

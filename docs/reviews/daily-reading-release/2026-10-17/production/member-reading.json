@@ -1,0 +1,46 @@
+{
+  "reading": {
+    "id": "27676be2-2455-45f0-b1aa-57fa2b086617",
+    "headline": "What 'just' leaves out",
+    "body": "Lighting up about an interest, then calling it 'just a hobby,' can happen in the same breath. The qualification comes after the enthusiasm, but it gets the last word. Jupiter's trine to your natal Sun is a wider frame around a familiar self-portrait.\n\nAn interest can belong to the way you describe yourself while it is unfinished, private, or pursued in fits and starts. The detail worth catching is whether you reach for 'just' before anyone has questioned it. Dropping that word once can leave the interest standing without an explanation of how good you are at it.\n\nYour birth time is recorded as uncertain, so anything that depends on the Ascendant or house placements has been left out of this reading rather than guessed at.",
+    "paragraphs": [
+      "Lighting up about an interest, then calling it 'just a hobby,' can happen in the same breath. The qualification comes after the enthusiasm, but it gets the last word. Jupiter's trine to your natal Sun is a wider frame around a familiar self-portrait.",
+      "An interest can belong to the way you describe yourself while it is unfinished, private, or pursued in fits and starts. The detail worth catching is whether you reach for 'just' before anyone has questioned it. Dropping that word once can leave the interest standing without an explanation of how good you are at it.",
+      "Your birth time is recorded as uncertain, so anything that depends on the Ascendant or house placements has been left out of this reading rather than guessed at."
+    ],
+    "paragraphLinksAvailable": true,
+    "prompt": "What draws you to someone else's interests before you know how skilled they are?",
+    "confidence": "high",
+    "primary_cycle_key": "jupiter_trine_sun",
+    "release_version": "0.9.0"
+  },
+  "language": {
+    "mode": "template",
+    "model": null,
+    "reason": "Published authored editorial reading",
+    "citations": [
+      {
+        "paragraph": 1,
+        "facts": [
+          "C1",
+          "I1"
+        ]
+      },
+      {
+        "paragraph": 2,
+        "facts": [
+          "C1",
+          "I1"
+        ]
+      }
+    ]
+  },
+  "ephemeris": {
+    "engine": "swiss-ephemeris@2.10.03",
+    "precision": "high",
+    "degraded": false,
+    "degradedReason": null,
+    "transitEngine": "kepler-approx@1.0.0",
+    "eventTiming": null
+  }
+}

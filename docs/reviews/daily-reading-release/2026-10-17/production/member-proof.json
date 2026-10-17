@@ -1,0 +1,49 @@
+{
+  "verifiedAt": "2026-10-17T07:51:38.263Z",
+  "syntheticAccount": true,
+  "accountId": "2b0b461d-ba3e-4631-8862-ae644fc03bd7",
+  "release": "0.9.0",
+  "deployedSource": "2bfa7b3f8e6ad13e2184249ebaf65160d353d2ff",
+  "readingId": "27676be2-2455-45f0-b1aa-57fa2b086617",
+  "primaryCycle": "jupiter_trine_sun",
+  "editorialEntry": "editorial-jupiter-trine-sun-technical",
+  "headlineMatchesAuthored": true,
+  "authoredParagraphsMatch": true,
+  "reflectionMatchesAuthored": true,
+  "appendedBirthTimeCaveatPreserved": true,
+  "natalLens": null,
+  "transitStoryStatus": "omitted",
+  "mode": "template",
+  "model": null,
+  "diagnostics": {
+    "version": 1,
+    "promptVersion": "daily-editorial-body-2",
+    "validatorVersion": "daily-editorial-reference-2",
+    "model": "gemini-enterprise/gemini-3.8-flash",
+    "gatewayTimeoutMs": 60000,
+    "outcome": "skipped",
+    "attempted": false,
+    "code": "authored_editorial",
+    "durationMs": null,
+    "paragraph": null
+  },
+  "encryptedStorage": {
+    "bodyCiphertextBytes": 1012,
+    "writingCiphertextBytes": 5028,
+    "editorialDigest": "f29133048f815e8088ddedc4e2d53653391814342bdf04057a70b60a866b2e11"
+  },
+  "sameReadingAfterBrowserReload": true,
+  "singleSavedRow": true,
+  "exportBodyAndReflectionMatch": true,
+  "unreadableExportReadings": 0,
+  "renderedHeadlineBodyAndReflectionMatch": true,
+  "renderEvidence": {
+    "browser": "Chromium",
+    "viewport": "1440x1000",
+    "physicalDevice": false,
+    "screenshot": "docs/reviews/daily-reading-release/2026-10-17/production/today.png",
+    "screenshotSha256": "df33c90c1b1145c4b3473074797a25659c8fd500385c16610566f9c30034ac21"
+  },
+  "bodySha256": "90e558bea5aeaecbd424ce06d0a3930c0e490b2fb078d3b91905f9e740bffdad",
+  "scope": "One actual hosted eligible contact; all nine authored entries and legacy context behavior covered by offline regressions"
+}

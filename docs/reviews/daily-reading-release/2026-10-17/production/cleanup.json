@@ -1,0 +1,28 @@
+{
+  "at": "2026-10-17T07:51:50.170Z",
+  "accountId": "2b0b461d-ba3e-4631-8862-ae644fc03bd7",
+  "disabledAccountRetainedForPublicationProvenance": true,
+  "cleanup": {
+    "sessions": 0,
+    "roles": 0,
+    "readings": 0,
+    "profiles": 0,
+    "publishedDraftRetained": 1,
+    "publicationAuditRetained": 2
+  },
+  "historicalPilotUnchanged": true,
+  "releases": [
+    {
+      "id": "edcc53cf-d19a-415b-a8a2-a66040846b1d",
+      "version": "0.7.1",
+      "checksum": "20b793acda524da945b07ec32b2ed795f31e273c533ff6b4e9c4f96ef821eeac",
+      "is_active": 0
+    },
+    {
+      "id": "94b44ea7-65c3-490b-83ea-37baeff8bfd3",
+      "version": "0.9.0",
+      "checksum": "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f",
+      "is_active": 1
+    }
+  ]
+}

@@ -20,6 +20,12 @@ The first validation run halted after two attempts. Its ledger and captures are 
 
 ## Publication
 
-The exact bundle has been reviewed and staged through the production admin publication functions. Activation and final hosted authored-reading verification are pending. The previous active release `0.7.1` remains the rollback target; its normalized live bundle matched the candidate's frozen baseline.
+Release `0.9.0` is active on [Pattern](https://patterns.lakefrontdigital.io). The exact bundle was reviewed, staged and activated through the production admin functions, with the previous-version guard set to `0.7.1`. Publication completed, including the edge artifact. The deployed authored implementation is `2bfa7b3f8e6ad13e2184249ebaf65160d353d2ff`; [deployment](production/deployment.json) and [activation](production/activation.json) identify the exact code and content separately.
+
+A temporary synthetic member with a service-calculated birth chart received the authored Jupiter–Sun reading through the real Today endpoint. The visible page matched the reviewed headline, two authored paragraphs and reflection, followed by the existing birth-time uncertainty caveat. Its encrypted body and writing evidence survived a real browser reload and saved export. The saved diagnostic is `authored_editorial`, `skipped`, `attempted: false`, with no output model. See the [member proof](production/member-proof.json) and [saved reading](production/member-reading.json). This is one hosted contact case; all nine authored entries and compatibility cases are covered by the offline tests.
+
+Final verification passed 970 tests with four skips and no failures, plus build, TypeScript and scoped lint checks. Temporary member records, sessions and administrator access were removed. The disabled operator, published draft and two publication audit events remain for provenance. The historical failed pilot is unchanged. See [cleanup](production/cleanup.json).
+
+The previous release `0.7.1` remains inactive and available for rollback; its normalized live bundle matched the candidate's frozen baseline.
 
 Activation must compare the previous active version with `0.7.1`. Rollback uses the normal activation function for release ID `edcc53cf-d19a-415b-a8a2-a66040846b1d`, with expected previous version `0.9.0`. No deletion or rewrite of existing saved readings is required: the content version is part of Today’s cache identity.
