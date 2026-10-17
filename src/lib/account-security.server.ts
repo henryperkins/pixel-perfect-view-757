@@ -42,8 +42,8 @@ async function emailToken(account: Account, purpose: Purpose, db: DBClient, newE
   const confirmationUrl = `${origin}/${route}#token=${token}`;
   await db.batch([
     {
-      sql: "DELETE FROM account_tokens WHERE (user_id=? AND purpose=?) OR expires_at<?",
-      params: [account.id, purpose, now],
+      sql: "DELETE FROM account_tokens WHERE expires_at<?",
+      params: [now],
     },
     {
       sql: "INSERT INTO account_tokens(token_hash,user_id,purpose,email,new_email,password_hash,created_at,expires_at) VALUES(?,?,?,?,?,?,?,?)",
@@ -87,6 +87,8 @@ async function emailToken(account: Account, purpose: Purpose, db: DBClient, newE
         null,
         result.reason,
       );
+    // A failed resend must not destroy an earlier usable link.
+    await db.exec("DELETE FROM account_tokens WHERE user_id=? AND purpose=? AND token_hash<>? AND created_at<=?", [account.id, purpose, hash, now]);
     await db.from("audit_events").insert({
       user_id: account.id,
       kind: "account.email",
@@ -95,6 +97,7 @@ async function emailToken(account: Account, purpose: Purpose, db: DBClient, newE
         status: "accepted",
         messageId: result.messageId ?? null,
         providerStatus: result.status ?? null,
+        recipient: newEmail ?? account.email,
       },
     });
   } catch (error) {
@@ -106,6 +109,7 @@ async function emailToken(account: Account, purpose: Purpose, db: DBClient, newE
         status: "failed",
         providerStatus: error instanceof EmailAPIError ? error.status : null,
         providerCode: error instanceof EmailAPIError ? error.code : "send_failed",
+        recipient: newEmail ?? account.email,
       },
     });
     await db.exec("DELETE FROM account_tokens WHERE token_hash=?", [hash]);
@@ -157,6 +161,21 @@ export async function securityStatus(userId: string, db = records()) {
   return { email: row.email, confirmed: Boolean(row.confirmed_at) };
 }
 
+export async function requireVerifiedEmail(userId: string, db = records()) {
+  if (!(await securityStatus(userId, db)).confirmed)
+    throw new Error("Confirm your Pattern email in Context & privacy before purchasing or linking an assistant.");
+}
+
+/** Removing the identity link fences approvals in flight through the existing triggers. */
+export async function signOutAll(userId: string, db = records()) {
+  await db.batch([
+    { sql: "DELETE FROM identity_links WHERE user_id=?", params: [userId] },
+    { sql: "DELETE FROM sessions WHERE user_id=?", params: [userId] },
+    { sql: "DELETE FROM account_tokens WHERE user_id=?", params: [userId] },
+  ]);
+  return { ok: true };
+}
+
 /** Delivery metadata only, scoped to the signed-in account's current address. */
 export async function emailDeliveryStatus(userId: string, db = records()) {
   const { email } = await securityStatus(userId, db);
@@ -167,15 +186,17 @@ export async function emailDeliveryStatus(userId: string, db = records()) {
   const apiKey = process.env["LOVABLE_API_KEY"];
   if (!apiKey) throw new Error("Email delivery status is unavailable.");
   try {
-    const result = await listEmailLogs(
-      { recipient: email, since: new Date(Date.now() - 7 * 86400_000).toISOString(), limit: 20 },
+    const pending = await db.exec<{new_email: string}>("SELECT new_email FROM account_tokens WHERE user_id=? AND purpose='change' AND expires_at>?", [userId, Date.now()]);
+    const recipients = [...new Set([email, ...pending.map((row) => row.new_email).filter(Boolean)])];
+    const results = await Promise.all(recipients.map((recipient) => listEmailLogs(
+      { recipient, since: new Date(Date.now() - 7 * 86400_000).toISOString(), limit: 20 },
       { apiKey },
-    );
+    )));
     return {
       available: true as const,
       attempts,
-      events: result.data
-        .filter((event) => event.recipient.toLowerCase() === email.toLowerCase())
+      events: results.flatMap((result) => result.data)
+        .filter((event) => recipients.some((recipient) => event.recipient.toLowerCase() === recipient.toLowerCase()))
         .map((event) => ({
           timestamp: event.timestamp,
           event: event.event_type,
@@ -228,6 +249,7 @@ export async function changePassword(
     { sql: "UPDATE users SET password_hash=? WHERE id=?", params: [hash, userId] },
     { sql: "DELETE FROM sessions WHERE user_id=?", params: [userId] },
     { sql: "DELETE FROM account_tokens WHERE user_id=?", params: [userId] },
+    { sql: "DELETE FROM identity_links WHERE user_id=?", params: [userId] },
   ]);
   return { ok: true };
 }
@@ -259,7 +281,7 @@ export async function consumeAccountToken(
   if (purpose === "reset")
     statements.push({
       sql: "UPDATE users SET password_hash=? WHERE id=?",
-      params: [await hashPassword(password!), token.user_id],
+      params: [await hashPassword(password ?? ""), token.user_id],
     });
   if (token.purpose === "change")
     statements.push({
@@ -273,7 +295,11 @@ export async function consumeAccountToken(
     });
   if (purpose === "reset" || token.purpose === "change")
     statements.push({ sql: "DELETE FROM sessions WHERE user_id=?", params: [token.user_id] });
-  statements.push({ sql: "DELETE FROM account_tokens WHERE user_id=?", params: [token.user_id] });
+  if (purpose === "reset")
+    statements.push({ sql: "DELETE FROM identity_links WHERE user_id=?", params: [token.user_id] });
+  statements.push(purpose === "reset" || token.purpose === "change"
+    ? { sql: "DELETE FROM account_tokens WHERE user_id=?", params: [token.user_id] }
+    : { sql: "DELETE FROM account_tokens WHERE token_hash=?", params: [hash] });
   try {
     await db.batch(statements);
   } catch {
