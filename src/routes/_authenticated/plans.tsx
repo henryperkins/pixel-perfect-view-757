@@ -7,6 +7,7 @@ import { PLANS, type MembershipPlan } from "@/lib/billing-policy";
 import { PaymentTestModeBanner } from "@/components/pattern/PaymentTestModeBanner";
 import { StripeEmbeddedCheckout } from "@/components/pattern/StripeEmbeddedCheckout";
 import { getStripeEnvironment } from "@/lib/stripe";
+import { AccountSignOutButton } from "@/components/pattern/AccountSignOutButton";
 
 export const Route = createFileRoute("/_authenticated/plans")({
   validateSearch: (search: Record<string, unknown>): { canceled?: boolean } => ({
@@ -92,9 +93,12 @@ function PlansPage() {
           </div>
         ) : busy ? (
           <div className="mt-8">
-            <Button variant="outline" onClick={() => setBusy(null)}>
-              Back to plans
-            </Button>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <Button variant="outline" onClick={() => setBusy(null)}>
+                Back to plans
+              </Button>
+              <AccountSignOutButton label="Sign out of Pattern" />
+            </div>
             <div className="mt-6">
               <StripeEmbeddedCheckout key={busy} plan={busy} onError={checkoutError} />
             </div>

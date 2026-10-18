@@ -1,8 +1,7 @@
-import { useMemberDraftLifecycle } from "./MemberDraftProvider";
+import { AccountSignOutButton } from "./AccountSignOutButton";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
-import { signOut } from "@/lib/auth.shared";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigationMenu } from "@/hooks/useNavigationMenu";
 import { Button } from "@/components/ui/button";
@@ -37,16 +36,6 @@ function navLinkClass(active: boolean) {
 
 export function Shell({ children, signedIn = true }: { children: ReactNode; signedIn?: boolean }) {
   const { isAdmin } = useAuth();
-  const { purgeAccountDrafts } = useMemberDraftLifecycle();
-  const leaveAccount = async () => {
-    await signOut();
-    try {
-      await purgeAccountDrafts();
-    } catch {
-      /* The root retries local cleanup after redirect. */
-    }
-    window.location.replace("/auth");
-  };
   const [progress, setProgress] = useState(0);
   const mainRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLElement>(null);
@@ -419,17 +408,7 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
           <div className="ml-auto flex items-center gap-4">
             {signedIn ? (
               <>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  type="button"
-                  onClick={() => {
-                    void leaveAccount();
-                  }}
-                  className="hidden text-muted-foreground lg:inline-flex"
-                >
-                  Sign out
-                </Button>
+                <AccountSignOutButton className="hidden lg:block" />
                 <Button
                   variant="outline"
                   size="icon"
@@ -479,16 +458,7 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
                 </li>
               ))}
               <li>
-                <Button
-                  variant="ghost"
-                  type="button"
-                  onClick={() => {
-                    void leaveAccount();
-                  }}
-                  className="h-auto w-full justify-start py-3 text-sm text-muted-foreground"
-                >
-                  Sign out
-                </Button>
+                <AccountSignOutButton className="py-3" />
               </li>
             </ul>
           </nav>

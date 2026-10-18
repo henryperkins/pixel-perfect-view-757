@@ -1,6 +1,7 @@
 # Browsing refresh
 
 ## Standard Stripe checkout
+- [x] Add Pattern sign-out outside checkout, including retry on failure and draft cleanup; Link and cards already enabled in sandbox/live default settings. Isolated desktop/mobile warning checks and 67 account/payment tests pass; build OK. Stripe exposes no merchant-controlled Link logout API, so Link-session logout remains unavailable, not implemented. Real returning-Link checkout verification and publication remain blocked as below.
 - [x] Replace Link-required handling for new checkouts with automatic tax and optional eligible payment methods; expire older open Link-required sessions.
 - [x] Run checkout regression tests (35 passed) and inspect preview diagnostics (build OK).
 - [ ] Verify standard checkout with a signed-in returning Link buyer: needs an owner-approved isolated test account with a normal inbox; no real member or live payment was changed. Publish this subsequent checkout change only with explicit approval.
