@@ -25,8 +25,8 @@ export const LANGUAGE_PROVIDER_LABELS: Record<LanguageProvider, string> = {
 export const GEMINI_ENTERPRISE_MODEL = "gemini-3.8-flash";
 /** Member daily writing has its own model; natal and frozen admin runs keep their identity. */
 export const GEMINI_ENTERPRISE_DAILY_MODEL = "gemini-4-argon";
-/** The project of the API key's bound service account. */
-export const GEMINI_ENTERPRISE_PROJECT = "rising-woods-449718-v6";
+/** Must be the project of GEMINI_ENTERPRISE_API_KEY's bound service account; other projects return 403. */
+export const GEMINI_ENTERPRISE_PROJECT = "river-bruin-511100-g8";
 /**
  * The project-scoped global endpoint. The project-less express URL resolves to
  * us-central1, which does not serve gemini-4-argon.

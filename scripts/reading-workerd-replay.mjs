@@ -53,7 +53,7 @@ export default { async test() {
   globalThis.fetch = async (url, init = {}) => {
     const enterprise = plan.provider === "gemini-enterprise";
     const expected = enterprise
-      ? "https://aiplatform.googleapis.com/v1/projects/rising-woods-449718-v6/locations/global/publishers/google/models/gemini-3.8-flash:generateContent"
+      ? "https://aiplatform.googleapis.com/v1/projects/river-bruin-511100-g8/locations/global/publishers/google/models/gemini-3.8-flash:generateContent"
       : "https://ai.gateway.lovable.dev/v1/chat/completions";
     assert.equal(String(url), expected, "Unrecorded network destination");
     assert.equal(init.method, "POST");

@@ -28,7 +28,7 @@ export { compareContentReports, extractContentResponses } from "./reading-conten
 
 const GATEWAY = "https://ai.gateway.lovable.dev/v1/chat/completions";
 const ENTERPRISE_GATEWAY =
-  "https://aiplatform.googleapis.com/v1/projects/rising-woods-449718-v6/locations/global/publishers/google/models/gemini-3.8-flash:generateContent";
+  "https://aiplatform.googleapis.com/v1/projects/river-bruin-511100-g8/locations/global/publishers/google/models/gemini-3.8-flash:generateContent";
 const REPORT_VERSION = 1;
 const PROJECT_ROOT = fileURLToPath(new URL("../", import.meta.url));
 const WARNING =
