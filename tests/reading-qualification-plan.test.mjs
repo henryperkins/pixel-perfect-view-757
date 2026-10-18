@@ -31,7 +31,7 @@ test("the dry campaign freezes four 49-attempt source-bound arms and rejects unk
   assert.equal(dry.attemptLimit, 49);
   assert.equal(dry.cases.length, 50);
   assert.equal(dry.sourceSha, "a".repeat(40));
-  assert.equal(dry.metadata.promptVersion, "daily-concrete-body-16");
+  assert.equal(dry.metadata.promptVersion, "daily-concrete-body-17");
   assert.equal(dry.metadata.validatorVersion, "daily-reference-11");
   assert.equal(dry.metadata.model, "google/gemini-3.8-flash");
   assert.equal(dry.metadata.gatewayTimeoutMs, 60000);
@@ -54,7 +54,7 @@ test("the dry campaign freezes four 49-attempt source-bound arms and rejects unk
     196,
   );
   for (const p of all) assert.equal(p.metadata.bundleHash, dry.metadata.bundleHash);
-  assert.equal(all[3].metadata.promptVersion, "daily-astro-body-17");
+  assert.equal(all[3].metadata.promptVersion, "daily-astro-body-18");
   assert.equal(
     h.gatewayRequests.length + h.geminiEnterpriseRequests.length + h.swissRequests.length,
     0,

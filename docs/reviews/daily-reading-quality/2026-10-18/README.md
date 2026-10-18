@@ -23,3 +23,9 @@ Independent calculation review found no blocking defects; its focused run passed
 Code publication, immutable content activation, generated first-reading acceptance and synthetic-account cleanup are distinct checks. Their exact live receipts will be retained under /home/ubuntu/.cache/pattern-reading-quality-20261018. No live result is claimed by this preparation document.
 
 Rollback: reactivate 0.9.0 through the normal content lifecycle with expectedPreviousVersion 0.9.1; preserve immutable releases and historical saved readings. No database migration is required.
+
+## Live verification and standard-depth follow-up
+
+The first published check at cc39e2d used release 0.9.1 and returned accepted model prose in 4,051 ms. All 23 browser checks passed, including C1/visible cycle/Swiss orb and timing agreement. The synthetic account and all thirty account/owner table counts were verified erased, along with its exact verification-rate remnant and private browser artifacts.
+
+A separate writing review found repeated permission language and a technical orb in the standard-depth body. The final daily guidance keeps orb/phase details in the evidence panel, retains the required exact chronology sentence, and combines repeated invitations while preserving every used source condition. Prompt identities advance to daily-astro-body-18 and daily-concrete-body-17. The source bundle and all validators remain unchanged. A separate fresh-account check verifies this follow-up; the first captured run is retained as its own observation.
