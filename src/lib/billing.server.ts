@@ -383,7 +383,12 @@ export async function startCheckout(
     }
     if (customer.checkout_id) {
       const existing = await stripe.checkout.sessions.retrieve(customer.checkout_id);
-      if (existing.status === "open" && customer.checkout_plan === plan && existing.client_secret)
+      if (
+        existing.status === "open" &&
+        customer.checkout_plan === plan &&
+        existing.client_secret &&
+        existing.metadata?.["checkout_policy"] === "standard_tax_v1"
+      )
         return { clientSecret: existing.client_secret };
       if (existing.status === "open") await stripe.checkout.sessions.expire(existing.id);
       customer.checkout_attempt = null;
@@ -405,8 +410,9 @@ export async function startCheckout(
         line_items: [{ price: price.id, quantity: 1 }],
         return_url: `${appOrigin()}/membership/success?session_id={CHECKOUT_SESSION_ID}`,
         payment_method_collection: "always",
-        managed_payments: { enabled: true },
-        metadata: { userId, managed_payments: "true" },
+        automatic_tax: { enabled: true },
+        customer_update: { address: "auto" },
+        metadata: { userId, managed_payments: "false", checkout_policy: "standard_tax_v1" },
         subscription_data: {
           metadata: { userId },
           ...(!customer.trial_used
@@ -417,7 +423,7 @@ export async function startCheckout(
             : {}),
         },
       } as Stripe.Checkout.SessionCreateParams,
-      { idempotencyKey: `pattern-${env}-checkout-${attempt}` },
+      { idempotencyKey: `pattern-${env}-standard-tax-v1-checkout-${attempt}` },
     );
     await db.exec(
       "UPDATE billing_customers_v2 SET checkout_id=? WHERE user_id=? AND environment=?",
