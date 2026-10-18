@@ -72,7 +72,7 @@ export function AccountSecurity() {
   }
   return (
     <section className="mt-10 border-t border-rule pt-6" aria-labelledby="account-security-heading">
-      <h2 id="account-security-heading" className="text-xl">
+      <h2 id="account-security-heading" className="font-serif text-xl">
         Email &amp; password
       </h2>
       {query.isPending ? (
