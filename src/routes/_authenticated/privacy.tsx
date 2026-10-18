@@ -225,7 +225,7 @@ function PrivacyPage() {
             className="mt-10 border-t border-rule pt-6"
             aria-labelledby="device-drafts-heading"
           >
-              <h2 id="device-drafts-heading" className="font-serif text-xl">
+            <h2 id="device-drafts-heading" className="font-serif text-xl">
               Drafts on this device
             </h2>
             <p className="mt-2 text-sm">
@@ -318,8 +318,9 @@ function PrivacyPage() {
               framing stay in Your Context and never enter a model request or cycle ranking.
             </p>
             <p className="mt-2 text-sm text-muted-foreground">
-              The Daily check-in switch controls whether mood and energy frame your reading. You can
-              still save a private check-in with that switch off. Saving never turns the switch on.
+              The Daily check-in switch lets energy shape the size of a suggested next step and mood
+              frame it gently. These values stay within Pattern. You can still save a private
+              check-in with that switch off. Saving never turns the switch on.
             </p>
             <p className="mt-2 text-sm text-muted-foreground">
               Feedback scores are never sent to the language provider. Scores count locally in

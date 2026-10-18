@@ -29,6 +29,7 @@ import { TodayJournal } from "@/components/pattern/TodayJournal";
 import { TodayTiming } from "@/components/pattern/TodayTiming";
 import { TodayEvidence } from "@/components/pattern/TodayEvidence";
 import { TodayFeedback } from "@/components/pattern/TodayFeedback";
+import { TodayGuidance } from "@/components/pattern/TodayGuidance";
 import { todayParagraphId } from "@/components/pattern/today-view";
 
 const HOME_TITLE = "Pattern — Birth chart, transit timing and daily readings";
@@ -161,7 +162,7 @@ function TodayReading({ accountId }: { accountId: string }) {
       openEvidence={openEvidence}
       setOpenEvidence={setOpenEvidence}
       refreshFailed={Boolean(query.error)}
-      refreshing={query.isFetching}
+      refreshing={query.isFetching || query.isPaused}
       readingRevision={query.dataUpdatedAt}
       retry={() => void query.refetch()}
     />
@@ -252,6 +253,15 @@ function TodayContent({
             </p>
           ))}
         </div>
+        {!refreshFailed && !staleDay && data.localContext?.guidance ? (
+          refreshing ? (
+            <p role="status" className="mt-6 text-sm text-muted-foreground">
+              Updating today’s suggestion…
+            </p>
+          ) : (
+            <TodayGuidance guidance={data.localContext.guidance} timezone={data.timezone} />
+          )
+        ) : null}
         {data.localContext?.solar ? (
           <section className="mt-5 border-t border-rule pt-4" aria-labelledby="today-solar-context">
             <h2 id="today-solar-context" className="flow-section-title">

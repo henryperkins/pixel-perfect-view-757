@@ -290,6 +290,14 @@ export const activateContentRelease = (args) => call("activateContentRelease", a
 export const addEvent = (args) => call("addEvent", args);
 export const approveContentDraftReview = (args) => call("approveContentDraftReview", args);
 export const cancelMembership = (args) => call("cancelMembership", args);
+export const changeMembership = (args) => call("changeMembership", args);
+export function unwrapBilling(value) {
+  if (value && typeof value === "object" && "error" in value)
+    throw Object.assign(new Error(String(value.error)), { retryable: value.retryable === true });
+  return value;
+}
+export const retryBillingContention = (failureCount, error) =>
+  failureCount < 2 && error instanceof Error && error.retryable === true;
 export const changeEmail = (args) => call("changeEmail", args);
 export const changePassword = (args) => call("changePassword", args);
 export const clearCurrentLocation = (args) => call("clearCurrentLocation", args);
@@ -356,4 +364,5 @@ export const currentSession = (args) => call("currentSession", args);
 export const signIn = (args) => call("signIn", args);
 export const signUp = (args) => call("signUp", args);
 export const signOut = (args) => call("signOut", args);
+export const signOutAll = (args) => call("signOutAll", args);
 export const fetchJournalSubmission = (args) => call("fetchJournalSubmission", args);

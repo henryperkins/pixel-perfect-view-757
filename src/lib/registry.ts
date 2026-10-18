@@ -191,7 +191,8 @@ export const SOURCES: SourceDef[] = [
   {
     id: "USR-04",
     label: "Daily check-in",
-    description: "Self-reported mood and energy for a given day.",
+    description:
+      "Self-reported mood and energy for a given day. With reuse enabled, energy shapes the size of a suggested next step and mood can frame it gently. These values stay within Pattern and never change chart calculations.",
     tier: 1,
     sensitivity: "personal",
     allowed_uses: ["framing", "reflection_prompt", "personalisation"],

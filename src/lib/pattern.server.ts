@@ -49,6 +49,7 @@ import {
   type LifeDomain,
   type LocalReadingContext,
 } from "./context-policy";
+import { composeDailyGuidance } from "./daily-guidance";
 import {
   CONTEXT_STORAGE_VERSION,
   civilContextFresh,
@@ -67,7 +68,7 @@ import {
   type Chart,
   type TimeAccuracy,
 } from "./astro/chart";
-import { computeCycles } from "./astro/cycles";
+import { computeCycles, type CycleInstance } from "./astro/cycles";
 import { ENGINE_ID, ENGINE_VERSION, signOf, toJulianDay } from "./astro/ephemeris";
 import { resolvePositions } from "./astro/swiss.server";
 import { assessTransitAnchors, type TransitAnchorManifest } from "./astro/transit-anchors";
@@ -93,7 +94,12 @@ import {
   keyedFingerprint,
   unwrapDek,
 } from "./crypto.server";
-import { DEFAULT_BUNDLE, type ContentBundle, type Interpretation } from "./content/default-bundle";
+import {
+  DEFAULT_BUNDLE,
+  findInterpretation,
+  type ContentBundle,
+  type Interpretation,
+} from "./content/default-bundle";
 import {
   READING_EVALUATION_BUNDLE_SOURCES,
   type ReadingEvaluationBundleSource,
@@ -1472,6 +1478,53 @@ async function captureBirthForRead(db: DB, userId: string, snapshot: SnapshotRow
   };
 }
 
+/** Bind local guidance to this reading's exact saved calculation and published source. */
+function readingGuidanceSource(
+  bundle: ContentBundle,
+  facts: FactAtom[],
+  primary: CycleInstance | null,
+  releaseVersion: string | null,
+  timezone: string,
+  plan: DailyPlanIdentity | null,
+) {
+  if (!primary || releaseVersion !== bundle.version) return null;
+  const calculation = facts.find((fact) => fact.id === "C1");
+  const interpretation = facts.find((fact) => fact.id === "I1");
+  const identity = plan?.interpretations.find((item) => item.index === 1);
+  const source = findInterpretation(
+    bundle,
+    primary.aspect,
+    primary.transit_body,
+    primary.natal_point,
+  );
+  const exactDate = primary.exact_at ? localDayString(new Date(primary.exact_at), timezone) : null;
+  if (
+    source.key === "fallback" ||
+    calculation?.kind !== "calculation" ||
+    calculation.cycle?.transitBody !== primary.transit_body ||
+    calculation.cycle.natalPoint !== primary.natal_point ||
+    calculation.cycle.aspect !== primary.aspect ||
+    calculation.cycle.orb !== primary.orb ||
+    calculation.cycle.exactDate !== exactDate ||
+    identity?.cycleKey !== primary.cycle_key ||
+    identity.interpretationKey !== source.key ||
+    plan?.releaseVersion !== bundle.version ||
+    interpretation?.kind !== "interpretation" ||
+    interpretation.sourceKey !== source.key ||
+    interpretation.releaseVersion !== bundle.version ||
+    interpretation.dependsOn?.length !== 1 ||
+    interpretation.dependsOn[0] !== "C1" ||
+    interpretation.statement !== `Published interpretation ${source.key}: ${source.mechanism}`
+  )
+    return null;
+  return {
+    key: source.key,
+    releaseVersion: bundle.version,
+    themes: source.themes ?? [],
+    question: source.question,
+  };
+}
+
 async function getTodayReading(
   db: DB,
   userId: string,
@@ -1740,6 +1793,7 @@ async function getTodayReading(
     const storyCalculation = language.transitStory
       ? calculationFromStory(language.transitStory)
       : null;
+    const presentedCycles = applyPrimaryStoryCalculation(liveCycles, storyCalculation);
 
     return {
       needsOnboarding: false as const,
@@ -1762,11 +1816,19 @@ async function getTodayReading(
       },
       language,
       storyCalculation,
+      guidanceSource: readingGuidanceSource(
+        bundle,
+        language.facts,
+        presentedCycles.find((cycle) => cycle.cycle_key === existing.primary_cycle_key) ?? null,
+        existing.release_version,
+        tz,
+        language.interpretationPlan,
+      ),
       feedback: await loadReadingFeedback(db, userId, existing.id),
       provenance: (srcs ?? []).filter((source) =>
         savedSourceAllowed(existing, source.source_id, granted, now),
       ),
-      cycles: applyPrimaryStoryCalculation(liveCycles, storyCalculation),
+      cycles: presentedCycles,
       uncertainty: snapRow.uncertainty as Chart["uncertainty"],
       ephemeris: ephemerisState(snapshotToChart(snapRow), storyCalculation),
       wellness: wellnessState,
@@ -2306,6 +2368,14 @@ async function getTodayReading(
         : {}),
     },
     storyCalculation,
+    guidanceSource: readingGuidanceSource(
+      bundle,
+      suppliedFacts,
+      topCycles.find((cycle) => cycle.cycle_key === assembled.primary_cycle_key) ?? null,
+      assembled.release_version,
+      tz,
+      interpretationPlan,
+    ),
     feedback: await loadReadingFeedback(db, userId, inserted.id),
     provenance,
     cycles: topCycles,
@@ -2447,6 +2517,43 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
   }
   const { solarForToday } = await import("./solar-location.server");
   const solar = await solarForToday(db, userId);
+  const checkIn = await loadCheckIn(db, userId, reading.day);
+  // Compare only bands permitted in the appended context or local guidance.
+  // Note-only timestamps and unconsented edits cannot affect either surface;
+  // value comparison still catches relevant writes within the same second.
+  if (
+    (isPermitted("USR-04", "framing", granted) &&
+      ((checkIn?.mood ?? null) !== reading.wellness.mood ||
+        (checkIn?.energy ?? null) !== reading.wellness.energy)) ||
+    (isPermitted("WEL-01", "framing", granted) &&
+      (checkIn?.sleep ?? null) !== reading.wellness.sleep) ||
+    (isPermitted("WEL-03", "framing", granted) &&
+      (checkIn?.stress ?? null) !== reading.wellness.stress)
+  )
+    throw new Error(
+      "Your check-in changed while preparing this reading. Reload to use it together.",
+    );
+  const { guidanceSource, ...publicReading } = reading;
+  const guidance = composeDailyGuidance({
+    day: reading.day,
+    now: new Date(),
+    timezone: reading.timezone,
+    granted,
+    primary:
+      reading.cycles.find((cycle) => cycle.cycle_key === reading.reading.primary_cycle_key) ?? null,
+    source: guidanceSource,
+    checkIn: checkIn
+      ? {
+          day: reading.day,
+          observedAt: checkIn.savedAt,
+          mood: checkIn.mood,
+          energy: checkIn.energy,
+          sleep: checkIn.sleep,
+          stress: checkIn.stress,
+        }
+      : null,
+    preferredDomain,
+  });
   const localContext: LocalReadingContext = {
     version: "local-context-1",
     identity: await keyedFingerprint(userId, {
@@ -2455,14 +2562,16 @@ export async function getToday(db: DB, userId: string, timeZone: string) {
       preferredDomain,
       previousResonance,
       solar,
+      guidance,
     }),
     markedMoments,
     preferredDomain,
     previousResonance,
     solar,
+    guidance,
   };
   await assertPolicy();
-  return { ...reading, localContext };
+  return { ...publicReading, localContext };
 }
 
 /** An optional reading surface, distinct from the owner's always-available Journal. */
