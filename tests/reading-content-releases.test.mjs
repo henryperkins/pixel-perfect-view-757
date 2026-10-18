@@ -762,3 +762,45 @@ test("lifecycle: a complete draft reply rewrites family slots only, keeps review
   assert.ok(draft.affectedKeys.includes("hard:*:*"));
   assert.ok(draft.affectedKeys.includes("hard:jupiter:*"));
 });
+
+test("lifecycle: a draft from a schema 6 release keeps its schema and every catalogue", async () => {
+  const { EDITORIAL_CANDIDATE_BUNDLE } = await h.vite.ssrLoadModule(
+    "/src/lib/content/editorial-candidate-bundle.ts",
+  );
+  const base = { ...structuredClone(EDITORIAL_CANDIDATE_BUNDLE), version: "0.9.2" };
+  await h.records().from("content_releases").insert({
+    version: base.version,
+    checksum: "schema-6-base",
+    bundle: base,
+    is_active: true,
+  });
+  h.setGateway(() =>
+    Response.json({
+      choices: [
+        {
+          message: {
+            content: JSON.stringify({
+              entries: [
+                {
+                  key: "hard:*:*",
+                  mechanism: "A responsibility can have a manageable scope.",
+                  question: "Which part has a clear scope?",
+                },
+              ],
+            }),
+          },
+        },
+      ],
+    }),
+  );
+
+  const drafted = await h.app.draftRelease(h.records(), h.userA);
+  assert.equal(drafted.entries, 1);
+  const row = h.sqlite.prepare("SELECT bundle, notes FROM content_drafts").get();
+  const draft = JSON.parse(row.bundle);
+  assert.equal(draft.schemaVersion, 6);
+  for (const family of ["natalLenses", "transitChapters", "dailyWritingFrames", "dailyEditorial"])
+    assert.deepEqual(draft[family], base[family], family);
+  // Editorial frames bind exact sources, which drafting never rewrites.
+  assert.deepEqual(JSON.parse(row.notes).writingFrameReviewRequired, []);
+});

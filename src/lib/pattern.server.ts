@@ -4013,16 +4013,11 @@ export async function draftRelease(db: DB, userId: string, provider: LanguagePro
     }
   }
 
+  // The candidate keeps the base schema and every catalogue; a lower schema
+  // would reject or silently drop the newer catalogues.
   const candidateBundle: ContentBundle = {
     version: "pending",
-    schemaVersion:
-      base.schemaVersion === 5
-        ? 5
-        : base.schemaVersion === 4
-          ? 4
-          : base.schemaVersion === 3
-            ? 3
-            : 2,
+    schemaVersion: base.schemaVersion ?? 2,
     phases: base.phases,
     natal: base.natal,
     domains: base.domains,
@@ -4031,6 +4026,7 @@ export async function draftRelease(db: DB, userId: string, provider: LanguagePro
     natalLenses: structuredClone(base.natalLenses ?? []),
     transitChapters: structuredClone(base.transitChapters ?? []),
     dailyWritingFrames: structuredClone(base.dailyWritingFrames ?? []),
+    ...(base.dailyEditorial ? { dailyEditorial: structuredClone(base.dailyEditorial) } : {}),
   };
   const { bundle, removedFrameKeys } = invalidateDailyWritingFrames(base, candidateBundle);
 
