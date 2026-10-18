@@ -43,7 +43,11 @@ export function AccountSignOutButton({
       >
         {leaving ? "Signing out…" : label}
       </Button>
-      {error ? <p role="alert" className="max-w-xs text-sm text-destructive">{error}</p> : null}
+      {error ? (
+        <p role="alert" className="max-w-xs text-sm text-destructive">
+          {error}
+        </p>
+      ) : null}
     </div>
   );
 }
