@@ -1,0 +1,37 @@
+{
+  "version": "reading-source-copy-validation-1",
+  "status": "candidate-not-published",
+  "baselinePath": "docs/reviews/daily-reading-release/2026-10-17/bundle.json",
+  "baselineVersion": "0.9.0",
+  "baselineChecksum": "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f",
+  "releaseVersion": "0.9.1",
+  "checksum": "6e3632c71d7da9eff09e3e4e462c23c1d5a5e7eeb60f2c1061a4045736812ce6",
+  "checksumAlgorithm": "sha256-canonical-json-v1",
+  "serializedBundleHash": "5058d253b088d414836c9976ffb8d28df40f185576193b4854cc0ac9c28b63de",
+  "changedPaths": [
+    "version",
+    "cycles[key=soft:jupiter:sun].mechanism",
+    "cycles[key=soft:jupiter:sun].question",
+    "natalLenses[key=nl-sun-01].mechanism",
+    "transitChapters[key=chapter-opening-1].mechanism"
+  ],
+  "checks": {
+    "baselineCanonicalHashMatchesPublishedSnapshot": true,
+    "baselineGraphValid": true,
+    "candidateGraphValid": true,
+    "reflectionShapeAndSafetyValid": true,
+    "allUnrelatedFieldsIdentical": true,
+    "historicalSourceFilesUnchanged": true
+  },
+  "providerRequests": 0,
+  "deployment": false,
+  "activation": false,
+  "liveWritingReviewed": false,
+  "humanReviewCompleted": false,
+  "limits": [
+    "Validation uses the saved 0.9.0 snapshot; compare its checksum with the current active release before staging.",
+    "Source graph and lexical checks do not establish editorial or live provider quality.",
+    "The shared opening chapter affects every opening contact that selects this entry.",
+    "New release serving-policy compatibility is a separate application change."
+  ]
+}

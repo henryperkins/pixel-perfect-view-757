@@ -19,7 +19,7 @@ export interface StoryPolicyBinding {
   anchorIdentity: string;
 }
 export interface SavedTransitStory {
-  version: 1;
+  version: 1 | 2;
   plan: DailyTransitStoryPlan;
   facts: FactAtom[];
   usedParagraphs: { A1: number[]; P2: number[] };
@@ -40,11 +40,13 @@ export const storyDigest = (plan: DailyTransitStoryPlan, binding: StoryPolicyBin
   keyedFingerprint("daily-transit-result-v1", canonicalStoryValue({ plan, binding }));
 export const calculationFromStory = (saved: SavedTransitStory): DailyTransitCalculation =>
   saved.plan.status === "selected"
-    ? {
-        status: "qualified",
-        evidence: saved.plan.evidence,
-        timingOverlay: saved.plan.evidence.timingOverlay,
-      }
+    ? saved.version === 1
+      ? { status: "omitted", reason: "source_disagreement" }
+      : {
+          status: "qualified",
+          evidence: saved.plan.evidence,
+          timingOverlay: saved.plan.evidence.timingOverlay,
+        }
     : { status: "omitted", reason: saved.plan.reason };
 const equal = (a: unknown, b: unknown) =>
   JSON.stringify(canonicalStoryValue(a)) === JSON.stringify(canonicalStoryValue(b));
@@ -72,7 +74,7 @@ export async function validateSavedTransitStory(
   const s = value as SavedTransitStory;
   if (
     !s ||
-    s.version !== 1 ||
+    (s.version !== 1 && s.version !== 2) ||
     !s.plan ||
     s.plan.version !== DAILY_TRANSIT_STORY_VERSION ||
     s.plan.solverVersion !== "transit-episode-1" ||
@@ -145,6 +147,15 @@ export async function validateSavedTransitStory(
     e.day,
     e.timezone,
   );
+  // Preserve historical v1 prose and facts without qualifying their mixed geometry.
+  // New envelopes bind the primary fact's orb to the same proof as its timing.
+  const legacy = s.version === 1;
+  if (result.status === "qualified" && legacy) {
+    if (e.timingOverlay.referenceOrb !== undefined || s.timingOverlay?.referenceOrb !== undefined)
+      throw new Error("Invalid legacy calculation");
+    delete result.timingOverlay.referenceOrb;
+    delete result.evidence.timingOverlay.referenceOrb;
+  }
   if (
     result.status !== "qualified" ||
     !equal(result.evidence, e) ||
@@ -156,7 +167,8 @@ export async function validateSavedTransitStory(
     !equal(s.plan.approvedDates, e.approvedDates) ||
     expected.binding.anchorIdentity !==
       (await keyedFingerprint("transit-anchor-state", canonicalStoryValue(e.anchor))) ||
-    c.exactDate !== result.timingOverlay.qualifiedExactDay
+    c.exactDate !== result.timingOverlay.qualifiedExactDay ||
+    (!legacy && c.orb !== result.timingOverlay.referenceOrb)
   )
     throw new Error("Invalid saved calculation");
   validateTransitCatalogue([s.plan.copy], 4);

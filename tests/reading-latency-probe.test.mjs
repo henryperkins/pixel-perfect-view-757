@@ -175,7 +175,7 @@ test("preview pins the frozen baseline, four ordered observations, rubric and bu
   assert.equal(plan.latencyProbe.reviewRubric.humanApproval, false);
   assert.equal(plan.caseSetId, undefined, "case set identity stays inside metadata/probe details");
   assert.equal(plan.metadata.caseSetId, "draft-pilot-2");
-  assert.equal(plan.metadata.promptVersion, "daily-astro-body-16");
+  assert.equal(plan.metadata.promptVersion, "daily-astro-body-17");
   assert.equal(plan.metadata.validatorVersion, "daily-reference-10");
   assert.equal(plan.metadata.reflectionVersion, "primary-reflection-1");
   assert.equal(plan.metadata.gatewayTimeoutMs, 60_000);

@@ -121,3 +121,30 @@ test("source_notice_distinguishes_natal_and_transit_and_story_atoms_are_distinct
   assert.equal(v.todayFactLabel("A1"), "Calculated contact sequence");
   assert.equal(v.todayFactLabel("P2"), "Published transit chapter");
 });
+test("qualified primary geometry notice distinguishes remaining approximate contacts", () => {
+  const html = renderToStaticMarkup(
+    createElement(notice, {
+      state: {
+        engine: "swiss@test",
+        precision: "high",
+        degraded: false,
+        degradedReason: null,
+        transitEngine: "kepler-approx@1.0.0",
+        primaryTransitGeometry: {
+          engine: "swiss@qualified",
+          cycleKey: "saturn_square_sun",
+          referenceAt: "2026-10-18T12:00:00.000Z",
+          sourceId: "synthetic",
+        },
+        eventTiming: {
+          engine: "swiss@qualified",
+          sourceId: "synthetic",
+          solverVersion: "transit-episode-1",
+        },
+      },
+    }),
+  );
+  assert.match(html, /Primary transit geometry and orb.*swiss@qualified/);
+  assert.match(html, /Other transit geometry and orbs are approximate/);
+  assert.doesNotMatch(html, /Current transit geometry and orb are approximate/);
+});

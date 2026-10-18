@@ -6,6 +6,22 @@ let h;
 before(async () => (h = await createRecordsHarness()));
 beforeEach(() => h.reset());
 after(async () => h?.close());
+test("fresh cached and Timing cycles share qualified primary geometry and window", async () => {
+  await seedTransitReading(h);
+  const first = await h.app.getToday(h.records(), h.userA, "UTC");
+  const second = await h.app.getToday(h.records(), h.userA, "UTC");
+  const timing = await h.app.getCyclesFor(h.records(), h.userA, first.day, "UTC");
+  for (const result of [first, second, timing]) {
+    const overlay = result.storyCalculation.timingOverlay;
+    const primary = result.cycles.find((cycle) => cycle.cycle_key === overlay.cycleKey);
+    assert.equal(primary.orb, overlay.referenceOrb);
+    assert.equal(primary.phase, overlay.phase);
+    assert.equal(primary.exact_at, overlay.centralExactAt);
+    assert.equal(primary.ingress_at, overlay.centralIngressAt);
+    assert.equal(primary.egress_at, overlay.centralEgressAt);
+    assert.equal(result.ephemeris.primaryTransitGeometry.engine, "swiss-ephemeris@synthetic-1");
+  }
+});
 test("fallback_with_qualified_anchors_never_activates_candidate_or_scans", async () => {
   await seedTransitReading(h);
   await h.records().from("content_releases").delete();
@@ -142,12 +158,72 @@ test("source_unavailable_is_immutable_but_policy_change_creates_new_identity", a
   h.setEpisode(() => new Response(null, { status: 503 }));
   const first = await h.app.getToday(h.records(), h.userA, "UTC");
   assert.equal(first.storyCalculation.reason, "service_unavailable");
+  assert.equal(first.ephemeris.primaryTransitGeometry, null);
+  const c1 = first.language.facts.find((fact) => fact.id === "C1");
+  const primary = first.cycles.find((cycle) => cycle.cycle_key === first.reading.primary_cycle_key);
+  assert.equal(c1.cycle.orb, primary.orb);
+  assert.match(
+    first.language.facts.find((fact) => fact.id === "E1").statement,
+    /Current transit geometry and orb use kepler-approx/,
+  );
   await h.app.getToday(h.records(), h.userA, "UTC");
   assert.equal(h.episodeRequests.length, 1);
   process.env.SWISS_TRANSIT_EPISODE_SOURCE_ID = "reviewed-next-version";
   const next = await h.app.getToday(h.records(), h.userA, "UTC");
   assert.notEqual(next.reading.id, first.reading.id);
   assert.equal(h.episodeRequests.length, 2);
+});
+test("legacy geometry remains readable history but cannot masquerade as a current qualified calculation", async () => {
+  const { dek } = await seedTransitReading(h);
+  const first = await h.app.getToday(h.records(), h.userA, "UTC");
+  const row = h.sqlite.prepare("SELECT * FROM daily_readings").get();
+  const meta = JSON.parse(row.language_meta);
+  const saved = await h.cryptoModule.decryptJson(dek, meta.transit_story_ct);
+  const storage = await h.vite.ssrLoadModule("/src/lib/content/transit-story-storage.server.ts");
+  saved.version = 1;
+  delete saved.timingOverlay.referenceOrb;
+  delete saved.plan.evidence.timingOverlay.referenceOrb;
+  saved.resultDigest = await storage.storyDigest(saved.plan, meta.transitStoryPolicy);
+  const atoms = await h.cryptoModule.decryptJson(dek, meta.facts_ct);
+  const c1 = atoms.find((fact) => fact.id === "C1");
+  c1.cycle.orb = 0.02;
+  c1.statement = c1.statement.replace(
+    /Current orb[^.]*\.[^.]* degrees/,
+    "Current orb at the reading's calculation time: 0.02 degrees",
+  );
+  const legacyMeta = {
+    ...meta,
+    transit_story_ct: await h.cryptoModule.encryptJson(dek, saved),
+    facts_ct: await h.cryptoModule.encryptJson(dek, atoms),
+  };
+  const restored = await h.app.readingLanguage({ ...row, language_meta: legacyMeta }, dek);
+  assert.equal(restored.facts.find((fact) => fact.id === "C1").cycle.orb, 0.02);
+  assert.equal(storage.calculationFromStory(restored.transitStory).status, "omitted");
+  h.sqlite
+    .prepare("UPDATE daily_readings SET language_meta=? WHERE id=?")
+    .run(JSON.stringify(legacyMeta), row.id);
+  const archive = await h.app.exportEverything(h.records(), h.userA);
+  assert.equal(
+    archive.readings.find((item) => item.id === row.id).language.transitStory.version,
+    1,
+  );
+  // Fresh v2 envelopes reject the same mismatched atom, even with valid encryption.
+  await assert.rejects(
+    h.app.readingLanguage(
+      {
+        ...row,
+        language_meta: {
+          ...meta,
+          facts_ct: legacyMeta.facts_ct,
+        },
+      },
+      dek,
+    ),
+    /could not be loaded/,
+  );
+  assert.equal(first.language.transitStory.version, 2);
+  assert.equal(h.gatewayRequests.length, 0);
+  assert.equal(h.episodeRequests.length, 1);
 });
 test("corrupt_story_envelope_fails_read_and_cross_account_key_cannot_open", async () => {
   await seedTransitReading(h);

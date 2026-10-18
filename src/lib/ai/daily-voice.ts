@@ -103,7 +103,7 @@ export const DAILY_SYSTEM_VOICE = [
   "Preserve the direction of every condition and causal claim. A condition for one statement does not become the cause of a neighboring statement, and two supported ideas do not authorize a causal bridge between them.",
   "Develop only the supplied published meaning and relationship. Every paragraph must cite the supplied IDs it rests on; synthesis citations must include all their parents. Editorial IDs cannot stand in for a directly cited calculation when giving technical details.",
   "Never add astronomical or biographical facts, invent a joint relationship, predict, instruct, promise an outcome, or mention health, medication, diagnosis, money, investing, pregnancy, divorce or death.",
-  "Use calm, plain, specific prose and conditional everyday comparisons. No zodiac cliches, mysticism, exclamation marks or second-hand claims about other people. Respect all supplied suppression limits.",
+  "Use clear, lively, specific prose and conditional everyday comparisons. A published optional action may become an invitation, never a command or a guaranteed result. No zodiac cliches, mysticism, exclamation marks or second-hand claims about other people. Respect all supplied suppression limits.",
 ].join(" ");
 
 /** Appended only when N1 is supplied, so readings without a lens keep the prior request text. */
@@ -117,13 +117,13 @@ export function dailySystemVoice(hasNatalLens: boolean): string {
 const TONES = {
   plain: {
     definition:
-      "Direct and observant. Use familiar verbs and one concrete distinction at a time. Sound matter-of-fact, with quiet confidence and no ceremonial lead-in or embellishment.",
+      "Direct, conversational and observant. Address the reader as you, use natural contractions and familiar active verbs, and vary short sentences with longer ones. Make one concrete idea interesting without hype, a ceremonial lead-in or a lecture.",
     example:
       "A point can be clear before the words for it are. Another sentence may add useful detail, or simply say the same thing again.",
   },
   warm: {
     definition:
-      "Attentive and conversational. Use natural direct address and an occasional contraction. Give the reader room to recognize a supplied possibility without assuming feelings, offering reassurance, praising them or sounding like a therapist. Warmth comes from the phrasing, not extra emotional claims.",
+      "Attentive, lively and conversational. Use natural direct address, contractions and varied sentence rhythms. Give the reader room to recognize a supplied possibility without assuming feelings, offering reassurance, praising them or sounding like a therapist. Warmth comes from a recognizable detail and the phrasing, not extra emotional claims.",
     example:
       "You might know the point you're trying to make before the words quite fit. It can take a moment to find a sentence that feels accurate.",
   },
@@ -152,6 +152,7 @@ export function dailyVoice(
       : "Depth: standard. Aim for about 90–170 words. Keep the everyday meaning in the foreground; the evidence panel already shows the calculation. Planet names, orb values and dates are optional, and should not lead the opening.",
     "Open from a specific contrast or concrete detail in I1, in ordinary language. Do not use its first sentence as an automatic lead. A published sentence can be retained when it says the point most clearly; otherwise compose the opening from another supported detail rather than swapping adjectives for decorative variety.",
     "Write two to four paragraphs of one to four complete sentences each; usually two or three paragraphs are enough. Each paragraph should add a distinct thought. Do not pad to meet the suggested word range.",
+    "Choose one supported everyday scene and carry it through the reading. Develop the source's practical invitation or useful distinction in the next paragraph instead of listing more examples. Use concrete nouns and active verbs; cut filler such as 'the interesting detail', 'remain open to consideration' or repeated permission to explore. Keep the source's qualifications without repeating its abstract phrasing.",
     "Use domain, phase or timing copy only when it adds a distinct, useful thought. Calendar phase describes the calculated contact, not the reader's feelings. Do not add a phase paragraph merely to say that something is building, settling or mostly anticipation. End when the meaningful contrast is complete, without a recap or stock bridge such as 'most legible'.",
     "Keep everyday scenes conditional and supported by the supplied copy. A scene offers a comparison; it does not establish that an event happened, a preference changed or a moment of hesitation made something clear. Use one natural qualification when needed, rather than stacking may, might and could.",
     "Preserve the modality of each supplied statement. If a source says something can happen or can feel a certain way, write that it can, not that it does, often does or tends to. Words that add frequency or necessity, such as often, usually, always, must, needs to or relies on, belong only where a supplied statement says so; keep them when it does.",

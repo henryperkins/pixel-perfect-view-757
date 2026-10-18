@@ -79,6 +79,7 @@ export function readingFacts(
   const facts: FactAtom[] = [];
   plan.eligibleCycles.forEach((c, i) => {
     const overlay = primaryStoryOverlay(plan.storyCalculation, c.cycle_key);
+    const orb = overlay?.referenceOrb ?? c.orb;
     const exactDate = overlay
       ? overlay.qualifiedExactDay
       : c.exact_at
@@ -86,7 +87,7 @@ export function readingFacts(
         : null;
     const parts = [
       `transiting ${c.transit_body} ${c.aspect} natal ${c.natal_point}`,
-      `Current orb at the reading's calculation time: ${c.orb.toFixed(2)} degrees`,
+      `Current orb at the reading's calculation time: ${orb.toFixed(2)} degrees`,
       `phase ${overlay?.phase ?? c.phase}`,
       `domain ${c.domain}`,
       exactDate
@@ -103,7 +104,7 @@ export function readingFacts(
         transitBody: c.transit_body,
         natalPoint: c.natal_point,
         aspect: c.aspect,
-        orb: c.orb,
+        orb,
         exactDate,
       },
     });
@@ -154,7 +155,7 @@ export function readingFacts(
   }
   facts.push({
     id: "E1",
-    statement: `Natal positions computed by ${chart.engine} ${chart.engineVersion} at ${chart.precision} precision${chart.uncertainty.housesReliable ? `, ${chart.houseSystem} houses` : ""}. Current transit geometry and orb use ${ENGINE_ID}@${ENGINE_VERSION}.${plan.storyCalculation?.status === "qualified" ? " Primary event timing uses source-qualified Swiss Ephemeris." : ""}`,
+    statement: `Natal positions computed by ${chart.engine} ${chart.engineVersion} at ${chart.precision} precision${chart.uncertainty.housesReliable ? `, ${chart.houseSystem} houses` : ""}. ${plan.storyCalculation?.status === "qualified" && plan.storyCalculation.timingOverlay.referenceOrb !== undefined ? "Primary current transit geometry, orb and event timing use source-qualified Swiss Ephemeris. Other transit geometry and orbs use " : "Current transit geometry and orb use "}${ENGINE_ID}@${ENGINE_VERSION}.`,
   });
   facts.push({
     id: "U1",

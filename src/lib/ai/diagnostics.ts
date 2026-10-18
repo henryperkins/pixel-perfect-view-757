@@ -3,9 +3,9 @@ import { readMemberDailyTransport, type MemberDailyTransport } from "./member-tr
 /** Measurement identifiers describe the current brief and guards, not a cache key. */
 export const DAILY_DIAGNOSTICS_VERSION = 1;
 export const DAILY_READING_PLAN_VERSION = "daily-synthesis-1";
-export const DAILY_PROMPT_VERSION = "daily-astro-body-16";
+export const DAILY_PROMPT_VERSION = "daily-astro-body-17";
 export const DAILY_VALIDATOR_VERSION = "daily-reference-10";
-export const CONCRETE_DAILY_PROMPT_VERSION = "daily-concrete-body-15";
+export const CONCRETE_DAILY_PROMPT_VERSION = "daily-concrete-body-16";
 export const CONCRETE_DAILY_VALIDATOR_VERSION = "daily-reference-11";
 export const MAX_DAILY_DURATION_MS = 120_000;
 export const DAILY_GATEWAY_TIMEOUT_MS = 60_000;

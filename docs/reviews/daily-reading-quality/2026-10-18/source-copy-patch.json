@@ -1,0 +1,35 @@
+{
+  "version": "reading-source-copy-patch-1",
+  "baselineVersion": "0.9.0",
+  "baselineChecksum": "d771accdde355e1b435788b9ca708b6deeab3f0d5d9665a9b049b539be81506f",
+  "releaseVersion": "0.9.1",
+  "checksum": "6e3632c71d7da9eff09e3e4e462c23c1d5a5e7eeb60f2c1061a4045736812ce6",
+  "checksumAlgorithm": "sha256-canonical-json-v1",
+  "changes": [
+    {
+      "path": "version",
+      "before": "0.9.0",
+      "after": "0.9.1"
+    },
+    {
+      "path": "cycles[key=soft:jupiter:sun].mechanism",
+      "before": "An existing plan can look roomier without becoming a different plan. A supportive Jupiter contact with the Sun frames that sense of permission to explore one more option or describe an ambition more openly. The interesting detail is where curiosity fits alongside what is already underway.",
+      "after": "A supportive Jupiter contact with the Sun is an invitation to think bigger about something you'd like to do. If a plan comes to mind, you could sketch its bolder version or share a short proposal. Exploring the idea doesn't mean committing to every option it opens."
+    },
+    {
+      "path": "cycles[key=soft:jupiter:sun].question",
+      "before": "Where is the resistance unusually low right now?",
+      "after": "What would you like to try on a slightly bigger scale?"
+    },
+    {
+      "path": "natalLenses[key=nl-sun-01].mechanism",
+      "before": "Starting something yourself can offer a sense of direction. If a task has stalled, the distinction may be between choosing a first step and trying to control its entire outcome.",
+      "after": "If you'd rather try something than keep talking it through, writing the opening lines of a draft is one way to begin. You can choose that step yourself without settling how the whole project will turn out."
+    },
+    {
+      "path": "transitChapters[key=chapter-opening-1].mechanism",
+      "before": "If a new demand catches your attention, your response can remain open to consideration. A small decision can leave room to learn.",
+      "after": "If the next move is unclear, you could treat it as a trial run. One small attempt can give you something specific to reconsider before you decide what comes next."
+    }
+  ]
+}

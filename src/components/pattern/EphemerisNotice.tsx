@@ -4,6 +4,12 @@ interface EphemerisState {
   degraded: boolean;
   degradedReason: string | null;
   transitEngine?: string;
+  primaryTransitGeometry?: {
+    engine: string;
+    sourceId: string;
+    cycleKey: string;
+    referenceAt: string;
+  } | null;
   eventTiming?: { engine: string; sourceId: string; solverVersion: string } | null;
 }
 
@@ -25,8 +31,17 @@ export function EphemerisNotice({
       <p className={`technical text-muted-foreground ${className}`}>
         Natal positions from the Swiss Ephemeris service ·{" "}
         <span className="text-foreground">{state.engine}</span>
+        {state.primaryTransitGeometry ? (
+          <>. Primary transit geometry and orb · {state.primaryTransitGeometry.engine}</>
+        ) : null}
         {state.transitEngine ? (
-          <>. Current transit geometry and orb are approximate · {state.transitEngine}</>
+          <>
+            .{" "}
+            {state.primaryTransitGeometry
+              ? "Other transit geometry and orbs are approximate"
+              : "Current transit geometry and orb are approximate"}{" "}
+            · {state.transitEngine}
+          </>
         ) : null}
         {state.eventTiming ? <>. Primary event timing · {state.eventTiming.engine}</> : null}
       </p>

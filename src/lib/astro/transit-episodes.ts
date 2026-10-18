@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { ASPECTS } from "./chart";
+import { signedDelta } from "./ephemeris";
 import { positionSourceSchema, STORY_BODIES, type PositionSource } from "./transit-anchors";
 export const TRANSIT_EPISODE_CONTRACT = "swiss-transit-episode/1";
 export const TRANSIT_EPISODE_SOLVER_VERSION = "transit-episode-1";
@@ -207,6 +209,8 @@ export interface StoryDateReference {
 }
 export interface StoryTimingOverlay {
   cycleKey: string;
+  /** Central qualified anchor at referenceAt, rounded like other displayed cycle orbs. */
+  referenceOrb?: number;
   phase: "approaching" | "exact" | "separating" | "between" | "uncertain";
   centralExactAt: string | null;
   qualifiedExactDay: string | null;
@@ -295,19 +299,9 @@ export function resolveDailyTransitCalculation(
       return omit("unqualified_source");
     const scan = parseTransitEpisodeScan(value, request);
     const orb = request.maxOrbDegrees;
-    const angle = {
-      conjunction: 0,
-      sextile: 60,
-      square: 90,
-      trine: 120,
-      quincunx: 150,
-      opposition: 180,
-    }[primary.aspect];
+    const angle = ASPECTS.find((aspect) => aspect.key === primary.aspect)!.angle;
     const currentOrb = (lon: number) =>
-      Math.abs(
-        Math.abs(((((scan.reference.unwrappedLongitude - lon + 540) % 360) + 360) % 360) - 180) -
-          angle,
-      );
+      Math.abs(Math.abs(signedDelta(scan.reference.unwrappedLongitude, lon)) - angle);
     if (primary.orb > orb || target.longitudes.some((l) => currentOrb(l) > orb))
       return omit("source_disagreement");
     validateEpisodeProof(scan);
@@ -401,6 +395,7 @@ export function resolveDailyTransitCalculation(
       egress = central.window.egress!.at;
     const timingOverlay: StoryTimingOverlay = {
       cycleKey: primary.cycle_key,
+      referenceOrb: Number(currentOrb(target.longitudes[1]).toFixed(2)),
       phase,
       centralExactAt: exactAt,
       qualifiedExactDay: qualifiedDay,

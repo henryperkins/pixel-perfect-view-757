@@ -185,7 +185,7 @@ test("absent, unknown and nonmatching mode authorizations retain the established
     process.env.LOVABLE_API_KEY = "test-member-context-key";
     h.setGateway(() => response(benchmark.paragraphs));
     const result = await language.generateReadingProse(input, { contextModes: modes });
-    assert.equal(result.meta.diagnostics.promptVersion, "daily-astro-body-16");
+    assert.equal(result.meta.diagnostics.promptVersion, "daily-astro-body-17");
     assert.equal(result.headline, input.fallback.headline);
   }
   assert.equal(h.gatewayRequests.length, 5);

@@ -396,8 +396,8 @@ test("plain normalization and technical depth behave consistently in the templat
 
 test("daily tone and depth guidance is defined, normalized and separate from facts", async () => {
   for (const [tone, expected, phrase] of [
-    ["measured", "plain", "Direct and observant"],
-    ["warm", "warm", "Attentive and conversational"],
+    ["measured", "plain", "Direct, conversational and observant"],
+    ["warm", "warm", "Attentive, lively and conversational"],
     ["clinical", "clinical", "Precise and reserved"],
   ]) {
     const factsBefore = JSON.stringify(input().facts);

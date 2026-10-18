@@ -117,7 +117,7 @@ export function contactImportance(
   return f.body * f.target * f.closeness * f.aspect * f.angle;
 }
 
-export type Phase = "approaching" | "exact" | "separating";
+export type Phase = "approaching" | "exact" | "separating" | "between" | "uncertain";
 
 export interface CycleInstance {
   cycle_key: string;

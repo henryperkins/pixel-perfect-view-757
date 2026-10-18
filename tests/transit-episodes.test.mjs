@@ -35,6 +35,8 @@ test("scan_edges_do_not_prove_total_and_missing_crossings_are_invalid", () => {
     (s) => (s.samples[1].contacts[0].targetTurn = 1),
     (s) => delete s.reference.speed,
     (s) => (s.source.returnedFlags = 260),
+    (s) => (s.reference.at = "2026-12-18T12:00:00.000Z"),
+    (s) => (s.request.targets[1].longitude += 0.01),
   ]) {
     const f = analyticEpisode();
     mutate(f.scan);

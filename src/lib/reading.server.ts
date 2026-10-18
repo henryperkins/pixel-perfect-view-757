@@ -1,6 +1,10 @@
 import { resolveDailyTransitStory, type DailyTransitStoryPlan } from "./content/transit-story";
 import type { DailyTransitCalculation } from "./astro/transit-episodes";
-import { primaryStoryOverlay, storyTimingLine } from "./astro/transit-presentation";
+import {
+  applyPrimaryStoryCalculation,
+  primaryStoryOverlay,
+  storyTimingLine,
+} from "./astro/transit-presentation";
 import type { Chart } from "./astro/chart";
 import type { CycleInstance } from "./astro/cycles";
 import {
@@ -192,9 +196,9 @@ export function assembleReading(
     ascendantSpreadDeg: chart.uncertainty.ascendantSpreadDeg,
   });
 
-  const ranked = eligibleReadingCycles(chart, cycles);
+  let ranked = eligibleReadingCycles(chart, cycles);
   const interpretationPlan = resolveInterpretationPlan(bundle, ranked);
-  const primary = ranked[0] ?? null;
+  let primary = ranked[0] ?? null;
   const natalLensPlan = resolveDailyNatalLens(
     bundle,
     primary,
@@ -221,6 +225,8 @@ export function assembleReading(
         ? { status: "omitted" as const, reason: transitStoryPlan.reason }
         : null;
   const overlay = primary ? primaryStoryOverlay(selectedCalculation, primary.cycle_key) : null;
+  ranked = applyPrimaryStoryCalculation(ranked, selectedCalculation);
+  primary = ranked[0] ?? null;
   const supporting = ranked.slice(1, 3);
 
   const paragraphs: string[] = [];

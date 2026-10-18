@@ -26,6 +26,10 @@ import {
 } from "./ai/daily-voice";
 import { CONCRETE_DAILY_PROMPT_VERSION, CONCRETE_DAILY_VALIDATOR_VERSION } from "./ai/diagnostics";
 import { type DailyTransitCalculation } from "./astro/transit-episodes";
+import {
+  applyPrimaryStoryCalculation,
+  TRANSIT_PRESENTATION_VERSION,
+} from "./astro/transit-presentation";
 import { DAILY_TRANSIT_STORY_VERSION } from "./content/transit-story";
 import {
   canonicalStoryValue,
@@ -1056,6 +1060,15 @@ export function ephemerisState(chart: Chart, story: DailyTransitCalculation | nu
     degraded: chart.degraded,
     degradedReason: chart.degradedReason,
     transitEngine: `${ENGINE_ID}@${ENGINE_VERSION}`,
+    primaryTransitGeometry:
+      story?.status === "qualified" && story.timingOverlay.referenceOrb !== undefined
+        ? {
+            cycleKey: story.evidence.cycleKey,
+            referenceAt: story.evidence.referenceAt,
+            engine: `${story.evidence.scan.source.engine}@${story.evidence.scan.source.engineVersion}`,
+            sourceId: story.evidence.scan.sourceId,
+          }
+        : null,
     eventTiming:
       story?.status === "qualified"
         ? {
@@ -1618,6 +1631,7 @@ async function getTodayReading(
     planVersion: DAILY_READING_PLAN_VERSION,
     natalPlanVersion: NATAL_LENS_PLAN_VERSION,
     storyPlanVersion: DAILY_TRANSIT_STORY_VERSION,
+    transitPresentationVersion: TRANSIT_PRESENTATION_VERSION,
     storySolverVersion: "transit-episode-1",
     storyAnchorVersion: "transit-anchor-1",
     storyPolicy,
@@ -1752,7 +1766,7 @@ async function getTodayReading(
       provenance: (srcs ?? []).filter((source) =>
         savedSourceAllowed(existing, source.source_id, granted, now),
       ),
-      cycles: liveCycles,
+      cycles: applyPrimaryStoryCalculation(liveCycles, storyCalculation),
       uncertainty: snapRow.uncertainty as Chart["uncertainty"],
       ephemeris: ephemerisState(snapshotToChart(snapRow), storyCalculation),
       wellness: wellnessState,
@@ -1773,7 +1787,7 @@ async function getTodayReading(
     episodeCalculation,
   );
   const storyCalculation = assembled.storyCalculation;
-  const topCycles = cycles.slice(0, 12);
+  const topCycles = applyPrimaryStoryCalculation(cycles.slice(0, 12), storyCalculation);
 
   // Only chart facts and published editorial references cross the language
   // boundary. Consented personal context, warnings, and reflection stay local.
@@ -1892,7 +1906,7 @@ async function getTodayReading(
   const storyFacts = suppliedFacts.filter((f) => f.id === "A1" || f.id === "P2");
   const templateStoryUsage = templateStoryParagraphs(assembled.transitStoryPlan, prose.paragraphs);
   const transitStory: SavedTransitStory = {
-    version: 1,
+    version: 2,
     plan: assembled.transitStoryPlan,
     facts: storyFacts,
     usedParagraphs: {
@@ -3119,6 +3133,7 @@ export async function getCyclesFor(db: DB, userId: string, day?: string, timeZon
       release: bundle.version,
       chapters: bundle.transitChapters,
       storyVersion: DAILY_TRANSIT_STORY_VERSION,
+      transitPresentationVersion: TRANSIT_PRESENTATION_VERSION,
       episodePolicy,
     }),
   );
@@ -3150,7 +3165,7 @@ export async function getCyclesFor(db: DB, userId: string, day?: string, timeZon
     uncertainty: chart.uncertainty,
     ephemeris: ephemerisState(chart, storyCalculation),
     storyCalculation,
-    cycles: cycles.slice(0, 40),
+    cycles: applyPrimaryStoryCalculation(cycles.slice(0, 40), storyCalculation),
     preferredDomain,
   };
 }

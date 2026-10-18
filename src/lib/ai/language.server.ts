@@ -1350,7 +1350,10 @@ function memberReadingSelection(
     options: {
       contextCandidate: !!context,
       authoredContext: !!context && renderMode === "authored",
-      authoredEditorial: selected.writing?.plan.editorial?.releaseVersion === "0.9.0",
+      // 0.9.1 revises ordinary source copy; its reviewed editorial catalogue is unchanged.
+      authoredEditorial: ["0.9.0", "0.9.1"].includes(
+        selected.writing?.plan.editorial?.releaseVersion ?? "",
+      ),
     },
   };
 }
