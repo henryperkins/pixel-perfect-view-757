@@ -115,7 +115,8 @@ The twelve new writing cases are appended once to the unchanged first 38 cases. 
 
 `memberDailyLanguagePolicy` is the serving identity for Today: it binds provider,
 model, thinking level and deadline into the daily cache key. Enterprise daily
-writing uses `gemini-4-argon` with HIGH thinking; Lovable keeps its separate model.
+writing uses `gemini-4-argon` with LOW thinking on the project-scoped global endpoint;
+Lovable keeps its separate model.
 `generateSyntheticMemberReadingProse(input, options)` captures that same serving
 path on synthetic facts, including the full native policy and authored/no-request
 outcomes. It adds no qualification token cap or alternate thinking control.

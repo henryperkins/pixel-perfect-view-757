@@ -111,7 +111,7 @@ function checked(output, expected) {
   assert.equal(requests.length, 1, "No retry or second-provider request");
   assert.equal(
     requests[0].url,
-    "https://aiplatform.googleapis.com/v1/publishers/google/models/gemini-4-argon:generateContent",
+    "https://aiplatform.googleapis.com/v1/projects/rising-woods-449718-v6/locations/global/publishers/google/models/gemini-4-argon:generateContent",
   );
   assert.deepEqual(budgets, [60_000]);
   assert.deepEqual(Object.keys(requests[0].body.generationConfig).sort(), [
@@ -119,8 +119,8 @@ function checked(output, expected) {
     "responseMimeType",
     "thinkingConfig",
   ]);
-  assert.deepEqual(requests[0].body.generationConfig.thinkingConfig, { thinkingLevel: "HIGH" });
-  assert.equal(transport.thinkingLevel, "HIGH");
+  assert.deepEqual(requests[0].body.generationConfig.thinkingConfig, { thinkingLevel: "LOW" });
+  assert.equal(transport.thinkingLevel, "LOW");
   assert.doesNotMatch(
     JSON.stringify(transport),
     /private-member|paragraphs|Published|Deterministic/,

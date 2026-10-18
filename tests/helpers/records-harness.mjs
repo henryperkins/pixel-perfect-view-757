@@ -13,8 +13,8 @@ const projectRequire = createRequire(join(projectRoot, "package.json"));
 const { createServer } = await import(pathToFileURL(projectRequire.resolve("vite")).href);
 const gatewayURL = "https://ai.gateway.lovable.dev/v1/chat/completions";
 const geminiEnterpriseURLs = new Set([
-  "https://aiplatform.googleapis.com/v1/publishers/google/models/gemini-3.8-flash:generateContent",
-  "https://aiplatform.googleapis.com/v1/publishers/google/models/gemini-4-argon:generateContent",
+  "https://aiplatform.googleapis.com/v1/projects/rising-woods-449718-v6/locations/global/publishers/google/models/gemini-3.8-flash:generateContent",
+  "https://aiplatform.googleapis.com/v1/projects/rising-woods-449718-v6/locations/global/publishers/google/models/gemini-4-argon:generateContent",
 ]);
 const envNames = [
   "PATTERN_MEMBERSHIPS_ENABLED",

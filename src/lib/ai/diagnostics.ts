@@ -25,6 +25,15 @@ export const LANGUAGE_PROVIDER_LABELS: Record<LanguageProvider, string> = {
 export const GEMINI_ENTERPRISE_MODEL = "gemini-3.8-flash";
 /** Member daily writing has its own model; natal and frozen admin runs keep their identity. */
 export const GEMINI_ENTERPRISE_DAILY_MODEL = "gemini-4-argon";
+/** The project of the API key's bound service account. */
+export const GEMINI_ENTERPRISE_PROJECT = "rising-woods-449718-v6";
+/**
+ * The project-scoped global endpoint. The project-less express URL resolves to
+ * us-central1, which does not serve gemini-4-argon.
+ */
+export function geminiEnterpriseURL(model: string): string {
+  return `https://aiplatform.googleapis.com/v1/projects/${GEMINI_ENTERPRISE_PROJECT}/locations/global/publishers/google/models/${model}:generateContent`;
+}
 /** A provider change is a model identity change for diagnostics, reports and comparisons. */
 export function languageModel(
   provider: LanguageProvider = "lovable",
@@ -41,8 +50,9 @@ export function memberDailyLanguagePolicy(provider: LanguageProvider) {
     provider,
     nativeModel: provider === "gemini-enterprise" ? GEMINI_ENTERPRISE_DAILY_MODEL : LANGUAGE_MODEL,
     model: languageModel(provider, GEMINI_ENTERPRISE_DAILY_MODEL),
+    // HIGH thinking took about 75 s on real readings, past the 60 s deadline.
     thinkingLevel: (provider === "gemini-enterprise"
-      ? "HIGH"
+      ? "LOW"
       : null) as MemberDailyTransport["thinkingLevel"],
     gatewayTimeoutMs: DAILY_GATEWAY_TIMEOUT_MS,
   };

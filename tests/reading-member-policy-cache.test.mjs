@@ -91,7 +91,7 @@ test("a pre-migration Flash reading gets a new immutable Argon row without chang
   const current = await today();
   assert.notEqual(current.reading.id, first.reading.id);
   assert.equal(diagnostics(current.reading.id).model, "gemini-enterprise/gemini-4-argon");
-  assert.equal(diagnostics(current.reading.id).transport.thinkingLevel, "HIGH");
+  assert.equal(diagnostics(current.reading.id).transport.thinkingLevel, "LOW");
   h.reopen();
   assert.equal((await today()).reading.id, current.reading.id);
   assert.deepEqual(row(first.reading.id), saved);
@@ -113,7 +113,7 @@ test("model, thinking, deadline and provider changes partition Today cache and r
   const ids = new Set([current.reading.id]);
   for (const override of [
     { nativeModel: "gemini-3.8-flash", model: "gemini-enterprise/gemini-3.8-flash" },
-    { thinkingLevel: "LOW" },
+    { thinkingLevel: "HIGH" },
     { gatewayTimeoutMs: 59_000 },
   ]) {
     globalThis.__memberPolicyOverride = override;
@@ -123,7 +123,7 @@ test("model, thinking, deadline and provider changes partition Today cache and r
     assert.equal((await today()).reading.id, changed.reading.id);
     const trace = diagnostics(changed.reading.id).transport;
     assert.equal(trace.requestedModel, override.model ?? "gemini-enterprise/gemini-4-argon");
-    assert.equal(trace.thinkingLevel, override.thinkingLevel ?? "HIGH");
+    assert.equal(trace.thinkingLevel, override.thinkingLevel ?? "LOW");
     assert.equal(trace.deadlineMs, override.gatewayTimeoutMs ?? 60_000);
   }
   globalThis.__memberPolicyOverride = {};

@@ -94,11 +94,11 @@ test("every intercepted production request words each selected premise once, ins
         contextRenderMode: "model",
       });
       assert.deepEqual(h.geminiEnterpriseRequests.at(-1), servingWire);
-      assert.deepEqual(servingWire.generationConfig.thinkingConfig, { thinkingLevel: "HIGH" });
+      assert.deepEqual(servingWire.generationConfig.thinkingConfig, { thinkingLevel: "LOW" });
       assert.equal(captured.request.model, "gemini-enterprise/gemini-4-argon");
       assert.equal(captured.request.model, output.meta.diagnostics.model);
       assert.equal(captured.transport.deadlineMs, 60_000);
-      assert.equal(captured.transport.thinkingLevel, "HIGH");
+      assert.equal(captured.transport.thinkingLevel, "LOW");
     } finally {
       delete process.env.PATTERN_MEMBER_LANGUAGE_PROVIDER;
     }

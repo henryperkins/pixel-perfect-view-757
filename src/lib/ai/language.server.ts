@@ -89,6 +89,7 @@ import {
   DAILY_GATEWAY_TIMEOUT_MS,
   MAX_DAILY_DURATION_MS,
   GEMINI_ENTERPRISE_MODEL,
+  geminiEnterpriseURL,
   LANGUAGE_PROVIDERS,
   LANGUAGE_PROVIDER_LABELS,
   diagnosticLabel,
@@ -316,25 +317,21 @@ async function geminiEnterpriseContent(
 ): Promise<string> {
   let res: Response;
   try {
-    // The key's bound service account selects the project on the global Agent Platform endpoint.
-    res = await fetch(
-      `https://aiplatform.googleapis.com/v1/publishers/google/models/${model}:generateContent`,
-      {
-        method: "POST",
-        signal,
-        headers: { "content-type": "application/json", "x-goog-api-key": key },
-        body: JSON.stringify({
-          systemInstruction: { parts: [{ text: system }] },
-          contents: [{ role: "user", parts: [{ text: user }] }],
-          generationConfig: {
-            responseMimeType: "application/json",
-            responseJsonSchema: schema,
-            ...(thinkingLevel ? { thinkingConfig: { thinkingLevel } } : {}),
-            ...(control.boundedQualification ? { maxOutputTokens: 65536 } : {}),
-          },
-        }),
-      },
-    );
+    res = await fetch(geminiEnterpriseURL(model), {
+      method: "POST",
+      signal,
+      headers: { "content-type": "application/json", "x-goog-api-key": key },
+      body: JSON.stringify({
+        systemInstruction: { parts: [{ text: system }] },
+        contents: [{ role: "user", parts: [{ text: user }] }],
+        generationConfig: {
+          responseMimeType: "application/json",
+          responseJsonSchema: schema,
+          ...(thinkingLevel ? { thinkingConfig: { thinkingLevel } } : {}),
+          ...(control.boundedQualification ? { maxOutputTokens: 65536 } : {}),
+        },
+      }),
+    });
   } catch (error) {
     throw gatewayFailure(error, signal);
   }

@@ -28,7 +28,7 @@ const response = (modelVersion = "gemini-4-argon") =>
     ],
   });
 
-test("default member daily Enterprise writing uses Argon with HIGH thinking within the existing deadline", async () => {
+test("default member daily Enterprise writing uses Argon with LOW thinking within the existing deadline", async () => {
   let signal;
   h.setGeminiEnterprise((_body, init) => {
     signal = init.signal;
@@ -38,13 +38,13 @@ test("default member daily Enterprise writing uses Argon with HIGH thinking with
   assert.equal(prose.meta.mode, "model");
   assert.equal(h.geminiEnterpriseRequests.length, 1);
   assert.deepEqual(h.geminiEnterpriseRequests[0].generationConfig.thinkingConfig, {
-    thinkingLevel: "HIGH",
+    thinkingLevel: "LOW",
   });
   assert.equal(prose.meta.model, "gemini-enterprise/gemini-4-argon");
   assert.equal(prose.meta.diagnostics.model, "gemini-enterprise/gemini-4-argon");
   assert.equal(prose.meta.diagnostics.transport.requestedModel, "gemini-enterprise/gemini-4-argon");
   assert.equal(prose.meta.diagnostics.gatewayTimeoutMs, 60000);
-  assert.equal(prose.meta.diagnostics.transport.thinkingLevel, "HIGH");
+  assert.equal(prose.meta.diagnostics.transport.thinkingLevel, "LOW");
   assert.equal(signal.aborted, false);
   assert.equal(h.gatewayRequests.length, 0);
 });
@@ -94,9 +94,9 @@ test("current-member captures use the full serving wire policy while frozen pilo
     const captured = await language.generateSyntheticMemberReadingProse(input);
     assert.equal(captured.version, "member-daily-capture-1");
     assert.equal(captured.policy.model, live.meta.model);
-    assert.equal(captured.policy.thinkingLevel, "HIGH");
+    assert.equal(captured.policy.thinkingLevel, "LOW");
     assert.equal(captured.transport.actualModel, "gemini-4-argon");
-    assert.equal(captured.transport.thinkingLevel, "HIGH");
+    assert.equal(captured.transport.thinkingLevel, "LOW");
     assert.equal(captured.request.model, live.meta.model);
     assert.equal(captured.prose.body, live.body);
     assert.equal(captured.candidate.captureLossless, true);
@@ -132,7 +132,7 @@ test("current-member captures cannot accept Flash qualification controls or sile
   assert.equal(h.geminiEnterpriseRequests.length, 0);
 });
 
-test("Argon with HIGH thinking does not add retries or change the explicitly selected Lovable transport", async () => {
+test("Argon with LOW thinking does not add retries or change the explicitly selected Lovable transport", async () => {
   h.setGeminiEnterprise(() => new Response(null, { status: 504 }));
   h.setGateway(() => {
     throw Error("No cross-provider retry");
