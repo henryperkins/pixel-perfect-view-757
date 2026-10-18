@@ -94,7 +94,7 @@ test("schema-5 model requests use the complete example and scene schema once, ke
   const plain = input();
   const result = await language.generateReadingProse(plain);
   assert.equal(result.meta.mode, "model");
-  assert.equal(result.meta.diagnostics.promptVersion, "daily-astro-body-14");
+  assert.equal(result.meta.diagnostics.promptVersion, "daily-concrete-body-15");
   assert.equal(result.meta.diagnostics.gatewayTimeoutMs, 60000);
   assert.deepEqual(result.meta.writing.sceneUse, [{ id: "SC1", paragraph: 2 }]);
   const request = structuredClone(h.gatewayRequests[0]);

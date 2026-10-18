@@ -152,7 +152,7 @@ test("captured prompt requires scene application and preserves directional condi
   assert.match(user.content, /direction and qualification are explicit in the source/);
   // This is evidence of the delivered brief, not a semantic acceptance test.
   const diagnostics = (await generate(draft())).meta.diagnostics;
-  assert.equal(diagnostics.promptVersion, "daily-astro-body-15");
+  assert.equal(diagnostics.promptVersion, "daily-astro-body-16");
   assert.equal(diagnostics.validatorVersion, "daily-reference-10");
 });
 test("request_without_a_lens_keeps_the_pre_lens_brief", async () => {

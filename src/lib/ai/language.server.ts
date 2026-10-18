@@ -1205,7 +1205,7 @@ async function generateDailyProse(
         : []),
       ...(!editorial && input.facts.some((f) => f.id === "A1")
         ? [
-            "Copy A1's chronology sentence unchanged exactly once in paragraph 1 or 2, citing C1/A1. Connect P2's conditional practical meaning to I1 in paragraph 1 or 2, citing C1/I1/A1/P2. Keep this integration within the existing four-sentence paragraph limit; do not add a separate essay. Only the unchanged chronology sentence may use A1 dates. Do not add counts, pass ordinals, station dates, life history or promises of closure.",
+            'Copy A1\'s chronology sentence unchanged exactly once in paragraph 1 or 2. The paragraph containing it must include "facts": ["C1", "A1"] along with any other source IDs it uses. Connect P2\'s conditional practical meaning to I1 in paragraph 1 or 2. Every paragraph using P2 must include all four IDs in that same paragraph\'s facts array: "facts": ["C1", "I1", "A1", "P2"]. Include A1 when citing P2 even if the chronology sentence appears in another paragraph; cite the dependency without repeating the chronology sentence. Keep this integration within the existing four-sentence paragraph limit; do not add a separate essay. Only the unchanged chronology sentence may use A1 dates. Do not add counts, pass ordinals, station dates, life history or promises of closure.',
           ]
         : []),
       "Cite the supplied IDs each paragraph rests on. This is reference coverage, not permission to invent astronomical facts.",
