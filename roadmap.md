@@ -1,6 +1,7 @@
 # Browsing refresh
 
 ## Standard Stripe checkout
+- [ ] Keep checkout sign-out accessible independently of Stripe; verify optional Link availability and document the Link-account logout boundary.
 - [x] Replace Link-required handling for new checkouts with automatic tax and optional eligible payment methods; expire older open Link-required sessions.
 - [x] Run checkout regression tests (35 passed) and inspect preview diagnostics (build OK).
 - [ ] Verify standard checkout with a signed-in returning Link buyer: needs an owner-approved isolated test account with a normal inbox; no real member or live payment was changed. Publish this subsequent checkout change only with explicit approval.
