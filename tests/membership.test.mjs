@@ -463,13 +463,18 @@ test("a portal request paused during retrieval cannot rewind a confirmed account
   const gate = deferredCustomerRequest();
   customerRetrieveGate = gate;
   const opening = billing.membershipPortal(h.userA, old, h.records());
+  let confirming;
   try {
     await gate.started;
-    assert.equal((await confirmChange("confirmed@example.invalid")).signInRequired, true);
+    // The confirmation's own Stripe update queues behind the paused portal.
+    confirming = confirmChange("confirmed@example.invalid");
+    await new Promise((resolve) => setTimeout(resolve, 300));
   } finally {
     gate.unblock();
   }
   await opening;
+  assert.equal(stripeEmail, "confirmed@example.invalid");
+  assert.equal((await confirming).signInRequired, true);
   assert.equal(stripeEmail, "confirmed@example.invalid");
   assert.equal(h.sqlite.prepare("SELECT COUNT(*) n FROM billing_locks_v2").get().n, 0);
 });
@@ -481,24 +486,235 @@ test("a confirmation during a customer update is reconciled before the portal su
   const gate = deferredCustomerRequest();
   customerUpdateGate = gate;
   const opening = billing.membershipPortal(h.userA, old, h.records());
+  let confirming;
   try {
     await gate.started;
-    assert.equal((await confirmChange("confirmed@example.invalid")).signInRequired, true);
+    confirming = confirmChange("confirmed@example.invalid");
+    await new Promise((resolve) => setTimeout(resolve, 300));
   } finally {
     gate.unblock();
   }
   await opening;
   assert.equal(stripeEmail, "confirmed@example.invalid");
+  assert.equal((await confirming).signInRequired, true);
 });
 
-test("billing lock prevents a concurrent checkout/deletion", async () => {
+test("an email confirmation waits for a running billing change, then reaches Stripe", async () => {
+  await customer();
+  stripeEmail = h.sqlite.prepare("SELECT email FROM users WHERE id=?").get(h.userA).email;
+  const lock = holdBillingLock();
+  await lock.ready;
+  let confirming;
+  try {
+    confirming = confirmChange("waited@example.invalid");
+    await new Promise((resolve) => setTimeout(resolve, 300));
+    assert.notEqual(stripeEmail, "waited@example.invalid");
+  } finally {
+    lock.release();
+  }
+  await lock.held;
+  assert.equal((await confirming).signInRequired, true);
+  assert.equal(stripeEmail, "waited@example.invalid");
+});
+
+function holdBillingLock() {
+  let acquired, release;
+  const ready = new Promise((resolve) => {
+    acquired = resolve;
+  });
+  const held = billing.withBillingLock(h.records(), h.userA, () => {
+    acquired();
+    return new Promise((resolve) => {
+      release = resolve;
+    });
+  });
+  return { ready, held, release: () => release() };
+}
+
+test("billing lock serializes a concurrent checkout behind the active change", async () => {
+  const lock = holdBillingLock();
+  await lock.ready;
+  let checkout;
+  try {
+    checkout = billing.startCheckout(h.userA, "fixture@example.invalid", "month", h.records());
+    await new Promise((resolve) => setTimeout(resolve, 300));
+    assert.equal(calls.length, 0, "checkout must not reach Stripe while another change runs");
+  } finally {
+    lock.release();
+  }
+  await lock.held;
+  assert.equal((await checkout).clientSecret, "cs_test_a_secret_fixture");
+  assert.equal(h.sqlite.prepare("SELECT COUNT(*) n FROM billing_locks_v2").get().n, 0);
+});
+
+test("billing lock reports retryable contention after a bounded wait", async () => {
   await billing.withBillingLock(h.records(), h.userA, async () => {
+    let started = Date.now();
     await assert.rejects(
-      billing.startCheckout(h.userA, "fixture@example.invalid", "month", h.records()),
-      /already in progress/,
+      billing.withBillingLock(
+        h.records(),
+        h.userA,
+        async () => assert.fail("lease was shared"),
+        400,
+      ),
+      (error) =>
+        error instanceof billing.BillingBusyError && /already in progress/.test(error.message),
     );
+    const waited = Date.now() - started;
+    assert.ok(waited >= 100 && waited < 2000, `waited ${waited}ms`);
+    // Batch callers that pass no wait keep the fail-fast behavior.
+    started = Date.now();
+    await assert.rejects(
+      billing.withBillingLock(h.records(), h.userA, async () => assert.fail("lease was shared"), 0),
+      billing.BillingBusyError,
+    );
+    assert.ok(Date.now() - started < 100);
   });
   assert.equal(h.sqlite.prepare("SELECT COUNT(*) n FROM billing_locks_v2").get().n, 0);
+});
+
+test("the confirmation page retries only billing contention, and at most twice", async () => {
+  const functions = await h.vite.ssrLoadModule("/src/lib/billing.functions.ts");
+  const rejection = (value) => {
+    try {
+      functions.unwrapBilling(value);
+    } catch (error) {
+      return error;
+    }
+    assert.fail("an error result must throw");
+  };
+  const busy = rejection({ error: new billing.BillingBusyError().message, retryable: true });
+  assert.match(busy.message, /already in progress/);
+  assert.equal(functions.retryBillingContention(0, busy), true);
+  assert.equal(functions.retryBillingContention(1, busy), true);
+  assert.equal(functions.retryBillingContention(2, busy), false);
+  assert.equal(
+    functions.retryBillingContention(0, rejection({ error: "Your card was declined." })),
+    false,
+  );
+  assert.deepEqual(functions.unwrapBilling({ fullAccess: true }), { fullAccess: true });
+});
+
+test("simultaneous webhooks for one member are processed in turn instead of failing", async () => {
+  await customer();
+  subscription("trialing");
+  await Promise.all([
+    billing.handleBillingEvent(event("evt_created", "customer.subscription.created"), h.records()),
+    billing.handleBillingEvent(event("evt_paid", "invoice.paid"), h.records()),
+    billing.handleBillingEvent(event("evt_completed", "checkout.session.completed"), h.records()),
+  ]);
+  assert.deepEqual(
+    h.sqlite
+      .prepare("SELECT status,attempts FROM billing_events_v2 ORDER BY id")
+      .all()
+      .map((row) => ({ ...row })),
+    Array.from({ length: 3 }, () => ({ status: "processed", attempts: 0 })),
+  );
+  assert.equal((await billing.getMembership(h.userA, h.records())).fullAccess, true);
+});
+
+test("checkout confirmation waits for an in-flight webhook sync instead of failing", async () => {
+  await customer();
+  subscription("trialing");
+  sessions.push({
+    id: "cs_test_done",
+    customer: "cus_a",
+    client_reference_id: h.userA,
+    livemode: false,
+    status: "complete",
+    payment_status: "no_payment_required",
+  });
+  const lock = holdBillingLock();
+  await lock.ready;
+  const confirmation = billing.refreshMembership(h.userA, "cs_test_done", h.records());
+  await new Promise((resolve) => setTimeout(resolve, 300));
+  lock.release();
+  await lock.held;
+  const state = await confirmation;
+  assert.equal(state.checkoutPending, false);
+  assert.equal(state.fullAccess, true);
+  assert.equal(state.membership.status, "trialing");
+});
+
+test("webhooks queued behind a member's change are settled by one sync instead of each repeating it", async () => {
+  await customer();
+  subscription();
+  // A refund that arrived first still needs its own suspension pass.
+  h.sqlite
+    .prepare(
+      "INSERT INTO billing_events_v2(id,environment,type,customer_id,object_id,retry_at,received_at) VALUES('evt_refund','sandbox','charge.refunded','cus_a','ch_fixture',?,?)",
+    )
+    .run(Date.now() + 3600_000, new Date().toISOString());
+  const lock = holdBillingLock();
+  await lock.ready;
+  let deliveries;
+  try {
+    deliveries = Promise.all([
+      billing.handleBillingEvent(
+        event("evt_updated", "customer.subscription.updated"),
+        h.records(),
+      ),
+      billing.handleBillingEvent(event("evt_paid", "invoice.paid"), h.records()),
+    ]);
+    await new Promise((resolve) => setTimeout(resolve, 300));
+  } finally {
+    lock.release();
+  }
+  await lock.held;
+  await deliveries;
+  assert.equal(calls.filter((c) => c.path === "/v1/subscriptions/sub_a").length, 1);
+  assert.deepEqual(
+    h.sqlite
+      .prepare("SELECT id,status,attempts FROM billing_events_v2 ORDER BY id")
+      .all()
+      .map((row) => ({ ...row })),
+    [
+      { id: "evt_paid", status: "processed", attempts: 0 },
+      { id: "evt_refund", status: "pending", attempts: 0 },
+      { id: "evt_updated", status: "processed", attempts: 0 },
+    ],
+  );
+  assert.equal((await billing.getMembership(h.userA, h.records())).fullAccess, true);
+});
+
+test("a paid invoice's lines are read once, not on every sync", async () => {
+  await customer();
+  subscription();
+  await billing.handleBillingEvent(event("evt_first"), h.records());
+  await billing.handleBillingEvent(
+    event("evt_second", "customer.subscription.updated"),
+    h.records(),
+  );
+  assert.equal(calls.filter((c) => c.path === "/v1/subscriptions/sub_a").length, 2);
+  assert.equal(calls.filter((c) => c.path === "/v1/invoices/in_a/lines").length, 1);
+  assert.equal(h.sqlite.prepare("SELECT paid_until FROM memberships_v2").get().paid_until, end);
+});
+
+test("reconciliation defers a busy member's events and sync immediately instead of waiting", async () => {
+  await customer();
+  subscription();
+  h.sqlite
+    .prepare(
+      "INSERT INTO billing_events_v2(id,environment,type,customer_id,received_at) VALUES('evt_busy','sandbox','invoice.paid','cus_a',?)",
+    )
+    .run(new Date().toISOString());
+  const lock = holdBillingLock();
+  await lock.ready;
+  try {
+    const started = Date.now();
+    const report = await billing.reconcileBilling("sandbox", h.records());
+    assert.ok(Date.now() - started < 1000);
+    assert.equal(report.events, 1);
+    assert.equal(report.customers, 1);
+    assert.deepEqual(
+      { ...h.sqlite.prepare("SELECT status,attempts FROM billing_events_v2").get() },
+      { status: "pending", attempts: 1 },
+    );
+    assert.equal(h.sqlite.prepare("SELECT COUNT(*) n FROM memberships_v2").get().n, 0);
+  } finally {
+    lock.release();
+  }
+  await lock.held;
 });
 
 test("account deletion stops open checkouts and subscriptions first; cancellation failure keeps account for retry", async () => {

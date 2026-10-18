@@ -315,44 +315,10 @@ export class RetentionWorkflow extends WorkflowEntrypoint {
 
 export default {
   async scheduled(controller, env) {
-    // Opt in after the app callbacks are deployed; never call unpublished code by default.
-    if (env.PATTERN_BILLING_RECONCILE_URL && env.PATTERN_BILLING_ENVIRONMENT) {
-      let cursor = "";
-      for (let page = 0; page < 50; page++) {
-        const raw = JSON.stringify({
-          issuedAt: Date.now(),
-          environment: env.PATTERN_BILLING_ENVIRONMENT,
-          cursor,
-        });
-        const response = await fetch(env.PATTERN_BILLING_RECONCILE_URL, {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-            "x-pattern-signature": await hmacHex(raw, env.PATTERN_WORKFLOW_SECRET),
-          },
-          body: raw,
-          redirect: "manual",
-          signal: AbortSignal.timeout(60_000),
-        });
-        if (!response.ok) {
-          console.error(
-            JSON.stringify({ event: "billing-reconcile-failed", status: response.status }),
-          );
-          break;
-        }
-        const result = await response.json();
-        await env.ARTIFACTS.put(
-          "operations/billing/latest.json",
-          JSON.stringify({ at: new Date().toISOString(), ...result }),
-          { httpMetadata: { contentType: "application/json" } },
-        );
-        if (!result.nextCursor) break;
-        cursor = result.nextCursor;
-      }
-    }
     const now = new Date(controller.scheduledTime).toISOString();
     const id = "retention-" + now.slice(0, 10);
     const callback = new URL("/api/public/retention-step", env.PATTERN_APP_URL).toString();
+    let retentionError = null;
     try {
       await env.RETENTION.create({ id, params: { now, callback } });
     } catch (error) {
@@ -360,9 +326,55 @@ export default {
         await env.RETENTION.get(id);
       } catch {
         console.error(JSON.stringify({ event: "retention-start-failed", runId: id }));
-        throw error;
+        retentionError = error;
       }
     }
+    // Opt in after the app callbacks are deployed; never call unpublished code by default.
+    // Retention starts first, and a billing outage or timeout is logged, so neither blocks the other.
+    if (env.PATTERN_BILLING_RECONCILE_URL && env.PATTERN_BILLING_ENVIRONMENT) {
+      try {
+        let cursor = "";
+        for (let page = 0; page < 50; page++) {
+          const raw = JSON.stringify({
+            issuedAt: Date.now(),
+            environment: env.PATTERN_BILLING_ENVIRONMENT,
+            cursor,
+          });
+          const response = await fetch(env.PATTERN_BILLING_RECONCILE_URL, {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+              "x-pattern-signature": await hmacHex(raw, env.PATTERN_WORKFLOW_SECRET),
+            },
+            body: raw,
+            redirect: "manual",
+            signal: AbortSignal.timeout(60_000),
+          });
+          if (!response.ok) {
+            console.error(
+              JSON.stringify({ event: "billing-reconcile-failed", status: response.status }),
+            );
+            break;
+          }
+          const result = await response.json();
+          await env.ARTIFACTS.put(
+            "operations/billing/latest.json",
+            JSON.stringify({ at: new Date().toISOString(), ...result }),
+            { httpMetadata: { contentType: "application/json" } },
+          );
+          if (!result.nextCursor) break;
+          cursor = result.nextCursor;
+        }
+      } catch (error) {
+        console.error(
+          JSON.stringify({
+            event: "billing-reconcile-failed",
+            error: error instanceof Error ? error.name : "unknown",
+          }),
+        );
+      }
+    } else console.warn(JSON.stringify({ event: "billing-reconcile-disabled" }));
+    if (retentionError) throw retentionError;
   },
   async fetch(request, env) {
     const url = new URL(request.url);

@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { Shell } from "@/components/pattern/Shell";
 import { Button } from "@/components/ui/button";
-import { refreshMembership, unwrapBilling } from "@/lib/billing.functions";
+import { refreshMembership, retryBillingContention, unwrapBilling } from "@/lib/billing.functions";
 
 export const Route = createFileRoute("/_authenticated/membership/success")({
   validateSearch: (search: Record<string, unknown>) => ({
@@ -38,7 +38,9 @@ function MembershipSuccess() {
     queryFn: async () =>
       unwrapBilling(await refreshMembership({ data: { sessionId: session_id } })),
     enabled: Boolean(session_id),
-    retry: false,
+    // Checkout webhooks can hold the billing lease past the server's wait; nothing else retries.
+    retry: retryBillingContention,
+    retryDelay: (attempt) => 1500 * 2 ** attempt,
     refetchInterval: (query) =>
       query.state.data?.checkoutPending && query.state.dataUpdateCount < 20 ? 3000 : false,
   });

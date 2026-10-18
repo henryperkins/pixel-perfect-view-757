@@ -41,20 +41,39 @@ async function rowsFor(db: DBClient, userId: string, env: StripeEnv) {
     [userId, env],
   );
 }
-/** A renewable lease plus DB write fencing prevents an expired worker overwriting its successor. */
+/** The lease stayed held for the caller's whole wait; repeating the same request is safe. */
+export class BillingBusyError extends Error {
+  constructor() {
+    super("A membership change is already in progress. Please try again shortly.");
+    this.name = "BillingBusyError";
+  }
+}
+/** Stripe sends several webhooks per change at once, so syncs for one member queue briefly. */
+export const BILLING_LOCK_WAIT_MS = 10_000;
+/**
+ * A renewable lease plus DB write fencing prevents an expired worker overwriting its successor.
+ * Callers queue behind the current holder for `waitMs`; batch work passes 0 to defer instead.
+ */
 export async function withBillingLock<T>(
   db: DBClient,
   userId: string,
   operation: (operationId: string) => Promise<T>,
+  waitMs = BILLING_LOCK_WAIT_MS,
 ): Promise<T> {
   const token = crypto.randomUUID(),
-    now = Date.now();
-  const [lock] = await db.exec<{ token: string }>(
-    "INSERT INTO billing_locks_v2(user_id,token,expires_at) VALUES(?,?,?) ON CONFLICT(user_id) DO UPDATE SET token=excluded.token,expires_at=excluded.expires_at WHERE billing_locks_v2.expires_at<? RETURNING token",
-    [userId, token, now + 180_000, now],
-  );
-  if (lock?.token !== token)
-    throw new Error("A membership change is already in progress. Please try again shortly.");
+    started = Date.now();
+  for (let attempt = 0; ; attempt++) {
+    const now = Date.now();
+    const [lock] = await db.exec<{ token: string }>(
+      "INSERT INTO billing_locks_v2(user_id,token,expires_at) VALUES(?,?,?) ON CONFLICT(user_id) DO UPDATE SET token=excluded.token,expires_at=excluded.expires_at WHERE billing_locks_v2.expires_at<? RETURNING token",
+      [userId, token, now + 180_000, now],
+    );
+    if (lock?.token === token) break;
+    // Jittered backoff keeps queued webhooks from polling in lockstep.
+    const delay = Math.min(1000, 200 * 2 ** attempt) * (0.75 + Math.random() / 2);
+    if (now - started + delay > waitMs) throw new BillingBusyError();
+    await new Promise((resolve) => setTimeout(resolve, delay));
+  }
   db.bindBillingFence(() => ({
     sql: "SELECT CASE WHEN EXISTS(SELECT 1 FROM billing_locks_v2 WHERE user_id=? AND token=? AND expires_at>?) THEN 1 ELSE json('billing-lease-lost') END",
     params: [userId, token, Date.now()],
@@ -239,12 +258,22 @@ async function syncSubscription(
     plan = item ? planFor(item.price) : null;
   const supported = Boolean(plan && sub.items.data.length === 1 && item?.quantity === 1);
   if (supported) {
+    // A paid invoice's lines are final, so a sync reads only invoices it has not recorded.
+    const recorded = new Set(
+      (
+        await db.exec<{ invoice_id: string }>(
+          "SELECT invoice_id FROM billing_coverage WHERE environment=? AND subscription_id=?",
+          [env, sub.id],
+        )
+      ).map((row) => row.invoice_id),
+    );
     for await (const invoice of stripe.invoices.list({
       customer: customer.stripe_customer_id,
       subscription: sub.id,
       status: "paid",
       limit: 100,
     })) {
+      if (recorded.has(invoice.id)) continue;
       let start = Infinity,
         end = 0;
       for await (const line of stripe.invoices.listLineItems(invoice.id, { limit: 100 })) {
@@ -293,6 +322,17 @@ async function syncSubscription(
       params: [sub.trial_start ? 1 : 0, userId, env],
     },
   ]);
+}
+/** Re-reads every subscription, which also settles events that arrived before the reads began. */
+async function syncCustomer(db: DBClient, stripe: Stripe, customer: Customer, env: StripeEnv) {
+  const started = new Date().toISOString();
+  for (const sub of await allSubscriptions(stripe, customer.stripe_customer_id))
+    await syncSubscription(db, customer.user_id, stripe, sub.id, env);
+  // Refunds and disputes also suspend coverage, so only their own processing settles them.
+  await db.exec(
+    "UPDATE billing_events_v2 SET status='processed',processed_at=? WHERE environment=? AND customer_id=? AND status='pending' AND received_at<? AND type NOT LIKE 'charge.%'",
+    [new Date().toISOString(), env, customer.stripe_customer_id, started],
+  );
 }
 export async function syncBillingEmail(userId: string, _email: string, db = records()) {
   await withBillingLock(db, userId, async () => {
@@ -449,14 +489,16 @@ export async function updateMembership(
             idempotencyKey: `pattern-${env}-${sub.id}-${item.price.id}-${price.id}-${operationId}`,
           },
         );
-        await syncSubscription(db, userId, stripe, sub.id, env);
-        if (updated.pending_update)
+        if (updated.pending_update) {
+          await syncSubscription(db, userId, stripe, sub.id, env);
           throw new Error(
             "Your plan change needs payment or card authentication. Open billing details to complete it; your existing plan remains unchanged.",
           );
+        }
       }
     }
-    await syncSubscription(db, userId, stripe, sub.id, env);
+    // Also settles the webhooks this change sends, so they do not repeat the sync.
+    await syncCustomer(db, stripe, customer, env);
   });
   return getMembership(userId, db);
 }
@@ -481,9 +523,7 @@ export async function refreshMembership(userId: string, sessionId?: string, db =
         session.status !== "complete" ||
         !["paid", "no_payment_required"].includes(session.payment_status);
     }
-    if (!pending)
-      for (const sub of await allSubscriptions(stripe, customer.stripe_customer_id))
-        await syncSubscription(db, userId, stripe, sub.id, env);
+    if (!pending) await syncCustomer(db, stripe, customer, env);
   });
   return { ...(await getMembership(userId, db)), checkoutPending: pending };
 }
@@ -531,7 +571,12 @@ export async function handleBillingEvent(
   );
   await processBillingEvent(event.id, env, db);
 }
-async function processBillingEvent(id: string, env: StripeEnv, db: DBClient) {
+async function processBillingEvent(
+  id: string,
+  env: StripeEnv,
+  db: DBClient,
+  waitMs = BILLING_LOCK_WAIT_MS,
+) {
   const [event] = await db.exec<{
     type: string;
     customer_id: string | null;
@@ -573,17 +618,27 @@ async function processBillingEvent(id: string, env: StripeEnv, db: DBClient) {
         )
       : [];
     if (customer && !customer.deleting)
-      await withBillingLock(db, customer.user_id, async () => {
-        for (const sub of await allSubscriptions(stripe, customer.stripe_customer_id))
-          await syncSubscription(db, customer.user_id, stripe, sub.id, env);
-      });
+      await withBillingLock(
+        db,
+        customer.user_id,
+        async () => {
+          // A sync that began after this event arrived has already applied it.
+          const [current] = await db.exec<{ status: string }>(
+            "SELECT status FROM billing_events_v2 WHERE id=? AND environment=?",
+            [id, env],
+          );
+          if (current?.status !== "processed") await syncCustomer(db, stripe, customer, env);
+        },
+        waitMs,
+      );
     await db.exec(
       "UPDATE billing_events_v2 SET status='processed',processed_at=? WHERE id=? AND environment=?",
       [new Date().toISOString(), id, env],
     );
   } catch (error) {
-    await db.exec(
-      "UPDATE billing_events_v2 SET status=?,attempts=attempts+1,retry_at=? WHERE id=? AND environment=?",
+    // Another sync may have applied the event while this attempt waited or failed.
+    const [retry] = await db.exec<{ id: string }>(
+      "UPDATE billing_events_v2 SET status=?,attempts=attempts+1,retry_at=? WHERE id=? AND environment=? AND status<>'processed' RETURNING id",
       [
         event.attempts >= 9 ? "failed" : "pending",
         Date.now() + Math.min(3600_000, 30_000 * 2 ** event.attempts),
@@ -591,42 +646,54 @@ async function processBillingEvent(id: string, env: StripeEnv, db: DBClient) {
         env,
       ],
     );
-    throw error;
+    if (retry) throw error;
   }
 }
 export async function reconcileBilling(env: StripeEnv, db = records(), cursor = "") {
-  const events = await db.exec<{ id: string }>(
+  // No work starts after 30 s, so a page answers within the scheduler's 60 s timeout.
+  const deadline = Date.now() + 30_000;
+  const pending = await db.exec<{ id: string }>(
     "SELECT id FROM billing_events_v2 WHERE environment=? AND status='pending' AND retry_at<=? LIMIT 25",
     [env, Date.now()],
   );
-  for (const event of events)
+  let events = 0;
+  // A member whose billing is busy is deferred to the next run instead of stalling the batch.
+  for (const event of pending) {
+    if (Date.now() >= deadline) break;
+    events++;
     try {
-      await processBillingEvent(event.id, env, db);
+      await processBillingEvent(event.id, env, db, 0);
     } catch {
       /* Durable retry timestamp already recorded. */
     }
+  }
   const customers = await db.exec<Customer>(
     "SELECT * FROM billing_customers_v2 WHERE environment=? AND deleting=0 AND user_id>? ORDER BY user_id LIMIT 20",
     [env, cursor],
   );
   const stripe = createStripeClient(env);
-  for (const customer of customers)
+  let reached = 0;
+  for (const customer of customers) {
+    // Every page reconciles at least one member, so the cursor always advances.
+    if (reached && Date.now() >= deadline) break;
+    reached++;
     try {
-      await withBillingLock(db, customer.user_id, async () => {
-        for (const sub of await allSubscriptions(stripe, customer.stripe_customer_id))
-          await syncSubscription(db, customer.user_id, stripe, sub.id, env);
-      });
+      await withBillingLock(db, customer.user_id, () => syncCustomer(db, stripe, customer, env), 0);
     } catch {
       console.warn("Billing reconciliation deferred an account.");
     }
+  }
   const [failures] = await db.exec<{ n: number }>(
     "SELECT count(*) AS n FROM billing_events_v2 WHERE environment=? AND status='failed'",
     [env],
   );
   return {
-    events: events.length,
-    customers: customers.length,
+    events,
+    customers: reached,
     failedEvents: failures?.n ?? 0,
-    nextCursor: customers.length === 20 ? (customers.at(-1)?.user_id ?? null) : null,
+    nextCursor:
+      reached < customers.length || reached === 20
+        ? (customers[reached - 1]?.user_id ?? null)
+        : null,
   };
 }

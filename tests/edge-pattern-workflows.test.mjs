@@ -437,6 +437,82 @@ test("the UTC cron creates one retention instance per day and surfaces startup f
   await assert.rejects(worker.default.scheduled({ scheduledTime: scheduledTime + 86400000 }, env));
 });
 
+test("billing reconciliation pages after retention starts and never blocks it", async () => {
+  const originalFetch = globalThis.fetch,
+    created = [],
+    receipts = [],
+    requests = [];
+  const env = {
+    PATTERN_APP_URL: "https://patterns.lakefrontdigital.io",
+    PATTERN_WORKFLOW_SECRET: SECRET,
+    PATTERN_BILLING_RECONCILE_URL:
+      "https://patterns.lakefrontdigital.io/api/public/billing-reconcile",
+    PATTERN_BILLING_ENVIRONMENT: "live",
+    ARTIFACTS: {
+      async put(key, value) {
+        receipts.push({ key, value: JSON.parse(value) });
+      },
+    },
+    RETENTION: {
+      async create(options) {
+        created.push(options.id);
+        return { id: options.id };
+      },
+      async get() {
+        throw new Error("missing");
+      },
+    },
+  };
+  const pages = [
+    { events: 0, customers: 20, failedEvents: 0, nextCursor: "user-20" },
+    { events: 1, customers: 3, failedEvents: 0, nextCursor: null },
+  ];
+  try {
+    globalThis.fetch = async (input, init) => {
+      assert.equal(String(input), env.PATTERN_BILLING_RECONCILE_URL);
+      assert.equal(created.length, 1, "retention starts before billing recovery");
+      assert.equal(new Headers(init.headers).get("x-pattern-signature"), sign(init.body));
+      requests.push(JSON.parse(init.body));
+      return Response.json(pages[requests.length - 1]);
+    };
+    await worker.default.scheduled({ scheduledTime: Date.parse("2026-10-18T03:00:00Z") }, env);
+    assert.deepEqual(
+      requests.map((request) => [request.environment, request.cursor]),
+      [
+        ["live", ""],
+        ["live", "user-20"],
+      ],
+    );
+    assert.equal(receipts.at(-1).key, "operations/billing/latest.json");
+    assert.equal(receipts.at(-1).value.customers, 3);
+
+    // A timed-out reconciliation page is logged, and retention still starts.
+    created.length = 0;
+    globalThis.fetch = async () => {
+      throw new DOMException("The operation was aborted due to timeout", "TimeoutError");
+    };
+    await worker.default.scheduled({ scheduledTime: Date.parse("2026-10-19T03:00:00Z") }, env);
+    assert.deepEqual(created, ["retention-2026-10-19"]);
+
+    // A retention startup failure is still surfaced after billing recovery runs.
+    let reconciled = false;
+    env.RETENTION.create = async () => {
+      throw new Error("offline");
+    };
+    globalThis.fetch = async () => {
+      reconciled = true;
+      return Response.json({ nextCursor: null });
+    };
+    await assert.rejects(
+      worker.default.scheduled({ scheduledTime: Date.parse("2026-10-20T03:00:00Z") }, env),
+      /offline/,
+    );
+    assert.equal(reconciled, true);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
+
 test("retention resumes cached pages with a fixed cutoff and publishes only count receipts", async () => {
   assert.equal(typeof worker.RetentionWorkflow, "function", "retention Workflow is missing");
   const originalFetch = globalThis.fetch,

@@ -1,10 +1,14 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { requireAuth } from "./auth-middleware";
-async function result<T>(operation: () => Promise<T>): Promise<T | { error: string }> {
+async function result<T>(
+  operation: () => Promise<T>,
+): Promise<T | { error: string; retryable?: true }> {
   try {
     return await operation();
   } catch (error) {
+    if (error instanceof Error && error.name === "BillingBusyError")
+      return { error: error.message, retryable: true };
     return { error: (await import("./stripe.server")).getStripeErrorMessage(error) };
   }
 }
@@ -73,6 +77,12 @@ export const refreshMembership = createServerFn({ method: "POST" })
     ),
   );
 export function unwrapBilling<T>(value: T): Exclude<T, { error: string }> {
-  if (value && typeof value === "object" && "error" in value) throw new Error(String(value.error));
+  if (value && typeof value === "object" && "error" in value)
+    throw Object.assign(new Error(String(value.error)), {
+      retryable: "retryable" in value && value.retryable === true,
+    });
   return value as Exclude<T, { error: string }>;
 }
+/** Only billing-lease contention is safe to repeat automatically, and at most twice. */
+export const retryBillingContention = (failureCount: number, error: Error) =>
+  failureCount < 2 && error instanceof Error && "retryable" in error && error.retryable === true;
