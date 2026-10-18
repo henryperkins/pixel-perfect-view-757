@@ -30,9 +30,14 @@ export function EphemerisNotice({
     return (
       <p className={`technical text-muted-foreground ${className}`}>
         Natal positions from the Swiss Ephemeris service ·{" "}
-        <span className="text-foreground">{state.engine}</span>
+        <span className="font-mono text-xs text-foreground">{state.engine}</span>
         {state.primaryTransitGeometry ? (
-          <>. Primary transit geometry and orb · {state.primaryTransitGeometry.engine}</>
+          <>
+            . Primary transit geometry and orb ·{" "}
+            <span className="font-mono text-xs text-foreground">
+              {state.primaryTransitGeometry.engine}
+            </span>
+          </>
         ) : null}
         {state.transitEngine ? (
           <>
@@ -40,10 +45,15 @@ export function EphemerisNotice({
             {state.primaryTransitGeometry
               ? "Other transit geometry and orbs are approximate"
               : "Current transit geometry and orb are approximate"}{" "}
-            · {state.transitEngine}
+            · <span className="font-mono text-xs text-foreground">{state.transitEngine}</span>
           </>
         ) : null}
-        {state.eventTiming ? <>. Primary event timing · {state.eventTiming.engine}</> : null}
+        {state.eventTiming ? (
+          <>
+            . Primary event timing ·{" "}
+            <span className="font-mono text-xs text-foreground">{state.eventTiming.engine}</span>
+          </>
+        ) : null}
       </p>
     );
   }

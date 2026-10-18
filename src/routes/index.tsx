@@ -2,8 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { createIsomorphicFn, useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
+import { flushSync } from "react-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowDown, RotateCcw } from "lucide-react";
+import { RotateCcw } from "lucide-react";
 import { Landing } from "@/components/pattern/Landing";
 
 import { Field, Shell } from "@/components/pattern/Shell";
@@ -30,7 +31,7 @@ import { TodayTiming } from "@/components/pattern/TodayTiming";
 import { TodayEvidence } from "@/components/pattern/TodayEvidence";
 import { TodayFeedback } from "@/components/pattern/TodayFeedback";
 import { TodayGuidance } from "@/components/pattern/TodayGuidance";
-import { todayParagraphId } from "@/components/pattern/today-view";
+import { todayHeadline, todayParagraphId, todayPointLabel } from "@/components/pattern/today-view";
 
 const HOME_TITLE = "Pattern — Birth chart, transit timing and daily readings";
 const HOME_DESCRIPTION =
@@ -210,20 +211,14 @@ function TodayContent({
           </div>
         ) : null}
         <p className="technical mb-3 text-muted-foreground">
-          Today · <time dateTime={data.day}>{timingDate(data.day)}</time>
+          Today ·{" "}
+          <time dateTime={data.day} className="font-mono text-xs">
+            {timingDate(data.day)}
+          </time>
         </p>
-        <h1 className="text-3xl leading-snug sm:text-4xl">{data.reading.headline}</h1>
-        <nav
-          aria-label="Today sections"
-          className="today-section-nav mt-5 flex flex-wrap items-center text-sm text-primary"
-        >
-          <a href="#today-reflection" className="inline-flex items-center gap-1.5">
-            Check-in <ArrowDown className="h-3 w-3" aria-hidden="true" />
-          </a>
-          <a href="#today-timing">Timing</a>
-          <a href="#today-journal">Journal</a>
-          <a href="#today-evidence-section">Sources</a>
-        </nav>
+        <h1 className="text-3xl leading-snug sm:text-4xl">
+          {todayHeadline(data.reading.headline, primary)}
+        </h1>
         {primary && phase ? (
           <dl className="today-cycle-summary mt-5">
             <div>
@@ -240,7 +235,9 @@ function TodayContent({
             </div>
           </dl>
         ) : null}
-        {data.ephemeris ? <EphemerisNotice state={data.ephemeris} className="mt-5" /> : null}
+        {data.ephemeris?.degraded ? (
+          <EphemerisNotice state={data.ephemeris} className="mt-5" />
+        ) : null}
         <div className="prose-reading mt-6 space-y-5 text-foreground">
           {data.reading.paragraphs.map((paragraph, index) => (
             <p
@@ -265,17 +262,19 @@ function TodayContent({
         {data.localContext?.solar ? (
           <section className="mt-5 border-t border-rule pt-4" aria-labelledby="today-solar-context">
             <h2 id="today-solar-context" className="flow-section-title">
-              Your Context
+              Daylight &amp; season
             </h2>
             <p className="mt-2 text-sm">{solarContextLine(data.localContext.solar)}</p>
             <p className="mt-2 text-xs text-muted-foreground">
-              {data.localContext.solar.timeZone} · selected current location on a 1° grid ·{" "}
-              {data.localContext.solar.source}. Daylight is calculated with standard refraction at
-              sea level; seasons use calendar months outside the tropics.
+              <span className="font-mono">{data.localContext.solar.timeZone}</span> · selected
+              current location on a <span className="font-mono">1°</span> grid ·{" "}
+              <span className="font-mono">{data.localContext.solar.source}</span>. Daylight is
+              calculated with standard refraction at sea level; seasons use calendar months outside
+              the tropics.
             </p>
           </section>
         ) : null}
-        <details className="today-reading-calculation mt-5 border-b border-rule pb-4">
+        <details className="today-reading-calculation mt-5">
           <summary className="text-sm text-primary">Reading calculation</summary>
           {primary ? (
             <dl className="today-calculated-values mt-3">
@@ -305,6 +304,29 @@ function TodayContent({
             <EphemerisNotice state={data.ephemeris} className="mt-4" />
           ) : null}
         </details>
+        <nav
+          aria-label="Today sections"
+          className="today-section-nav mt-4 flex flex-wrap items-center text-sm text-primary"
+        >
+          <a href="#today-reflection">Check-in</a>
+          <a href="#today-timing">Timing</a>
+          <a href="#today-journal">Journal</a>
+          <a
+            href="#today-evidence-section"
+            onClick={() => {
+              flushSync(() => setOpenEvidence(true));
+            }}
+          >
+            Sources
+          </a>
+        </nav>
+        <TodayFeedback
+          key={data.reading.id}
+          readingId={data.reading.id}
+          accountId={accountId}
+          saved={data.feedback}
+          readingRevision={readingRevision}
+        />
         <section id="today-reflection" className="today-section">
           <h2 className="flow-section-title">Reflection &amp; check-in</h2>
           <p className="prose-reading mt-2 text-foreground">{data.reading.prompt}</p>
@@ -353,8 +375,11 @@ function TodayContent({
             aria-expanded={openEvidence}
             aria-controls="today-evidence"
             onClick={() => setOpenEvidence(!openEvidence)}
-            className="today-evidence-toggle h-auto px-0 text-primary"
+            className="today-evidence-toggle -mx-2 h-auto px-2 py-1.5 text-primary"
           >
+            <span aria-hidden="true" className="today-evidence-mark">
+              {openEvidence ? "−" : "+"}
+            </span>
             {openEvidence ? "Hide sources behind this reading" : "Sources behind this reading"}
           </Button>
           {openEvidence ? (
@@ -370,19 +395,22 @@ function TodayContent({
           ) : null}
         </section>
       </article>
-      <aside className="today-sidebar" aria-label="Reading details and feedback">
+      <aside className="today-sidebar" aria-label="Reading details">
         <details className="today-metadata">
           <summary className="text-sm text-primary">Reading details</summary>
           <div className="mt-3 space-y-3">
             <Field label="Date" value={timingDate(data.day)} />
             <Field label="Time zone" value={<span className="break-all">{data.timezone}</span>} />
-            <Field label="Confidence" value={data.reading.confidence} />
+            <Field label="Signal strength" value={todayPointLabel(data.reading.confidence)} />
             <Field
               label="Content version"
               value={<span className="break-all">{data.reading.release_version}</span>}
             />
             <Field label="Wording" value={data.language?.mode === "model" ? "Model" : "Template"} />
-            <Field label="Birth-time accuracy" value={data.uncertainty?.accuracy ?? "unknown"} />
+            <Field
+              label="Birth-time accuracy"
+              value={todayPointLabel(data.uncertainty?.accuracy ?? "unknown")}
+            />
             <Field
               label="House claims"
               value={data.uncertainty?.housesReliable ? "Supported" : "Suppressed"}
@@ -390,13 +418,6 @@ function TodayContent({
             <Field label="Active windows" value={data.cycles.length} />
           </div>
         </details>
-        <TodayFeedback
-          key={data.reading.id}
-          readingId={data.reading.id}
-          accountId={accountId}
-          saved={data.feedback}
-          readingRevision={readingRevision}
-        />
       </aside>
     </div>
   );

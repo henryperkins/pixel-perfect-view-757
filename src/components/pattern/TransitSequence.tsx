@@ -17,7 +17,7 @@ export function TransitSequence({
     end = Date.parse(windows.at(-1)!.egress!.at);
   const percent = (at: string) => ((Date.parse(at) - start) / (end - start)) * 100;
   return (
-    <section className="mt-4 space-y-3" aria-label="Calculated contact sequence">
+    <section className="transit-sequence mt-4 space-y-3" aria-label="Calculated contact sequence">
       <h4 className="text-base text-foreground">
         {e.passIndex === null
           ? "Between calculated contacts"

@@ -181,3 +181,13 @@ test("archived paragraphs without saved boundaries keep fact links but no invent
   assert.ok(!html.includes(`href="#${view.todayParagraphId(p.readingId, 1)}"`));
   assert.ok(html.includes(`href="#${view.todayFactId(p.readingId, "S1")}"`));
 });
+
+test("todayHeadline formats raw lowercase contact labels in sentence case and preserves authored headlines", () => {
+  assert.equal(view.todayHeadline("mars square natal mercury"), "Mars square natal Mercury");
+  assert.equal(view.todayHeadline("node conjunction natal ascendant"), "North Node conjunction natal Ascendant");
+  assert.equal(
+    view.todayHeadline("Leave room for an unhurried answer"),
+    "Leave room for an unhurried answer",
+  );
+  assert.equal(view.todayHeadline("A quiet day in the pattern"), "A quiet day in the pattern");
+});

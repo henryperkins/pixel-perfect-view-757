@@ -93,7 +93,7 @@ export function TodayJournal({
                   <p className="min-w-0 text-sm font-medium text-foreground">{entry.label}</p>
                   <time
                     dateTime={entry.occurred_on}
-                    className="shrink-0 text-xs text-muted-foreground"
+                    className="shrink-0 font-mono text-xs text-muted-foreground"
                   >
                     {timingDate(entry.occurred_on)}
                   </time>
@@ -111,15 +111,11 @@ export function TodayJournal({
               </li>
             ))}
           </ul>
-          <p className="mt-3 text-sm text-muted-foreground">
-            {entries.length > previews.length
-              ? `${entries.length - previews.length} more ${entries.length - previews.length === 1 ? "entry" : "entries"}. `
-              : ""}
-            <Link to="/journal" className="underline underline-offset-4 text-primary">
-              Read full entries in your journal
-            </Link>
-            .
-          </p>
+          {entries.length > previews.length ? (
+            <p className="mt-3 text-xs text-muted-foreground">
+              Showing {previews.length} of {entries.length} matching entries.
+            </p>
+          ) : null}
         </>
       ) : null}
     </section>

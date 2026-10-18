@@ -21,6 +21,32 @@ export function todayPointLabel(value: string) {
   );
 }
 
+/**
+ * Format raw lowercase engine contact strings (e.g. "mars square natal mercury")
+ * into sentence-case editorial headlines while leaving authored headlines untouched.
+ */
+export function todayHeadline(
+  headline: string,
+  primary?: { transit_body: string; aspect: string; natal_point: string; label: string } | null,
+) {
+  const trimmed = headline.trim();
+  if (!trimmed) return headline;
+  const rawContact = trimmed.match(
+    /^([a-z_]+)\s+(conjunction|opposition|square|trine|sextile|quincunx)\s+natal\s+([a-z_]+)$/,
+  );
+  if (rawContact) {
+    const [, transit = "", aspect = "", natal = ""] = rawContact;
+    return `${todayPointLabel(transit)} ${aspect} natal ${todayPointLabel(natal)}`;
+  }
+  if (primary && trimmed === primary.label && /^[a-z]/.test(trimmed)) {
+    return `${todayPointLabel(primary.transit_body)} ${primary.aspect} natal ${todayPointLabel(primary.natal_point)}`;
+  }
+  if (/^[a-z]/.test(trimmed)) {
+    return trimmed.charAt(0).toUpperCase() + trimmed.slice(1);
+  }
+  return headline;
+}
+
 export function todayPhaseLabel(value: string) {
   if (value === "between") return "Between calculated contacts";
   if (value === "uncertain") return "Timing varies across samples";

@@ -32,7 +32,20 @@ function BandPicker({
             {label}
           </span>
           <span className="ml-2 text-xs text-muted-foreground" aria-hidden="true">
-            1 {options[0].toLowerCase()} · 5 {options[4].toLowerCase()}
+            {options.map((opt, index) => {
+              const band = index + 1;
+              const selected = value === band;
+              return (
+                <span key={band}>
+                  {index > 0 ? " · " : ""}
+                  <span
+                    className={`whitespace-nowrap ${selected ? "font-semibold text-primary" : ""}`}
+                  >
+                    {band} {opt.toLowerCase()}
+                  </span>
+                </span>
+              );
+            })}
           </span>
         </div>
         <Button
@@ -63,7 +76,7 @@ function BandPicker({
             />
             <span
               aria-hidden="true"
-              className="flex h-12 min-w-0 items-center justify-center rounded-md border border-input bg-card font-mono text-sm text-foreground transition-colors hover:bg-secondary peer-checked:border-primary peer-checked:bg-primary peer-checked:text-primary-foreground peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-background peer-disabled:cursor-not-allowed peer-disabled:opacity-50"
+              className="flex h-12 min-w-0 items-center justify-center rounded-md border border-input bg-card font-mono text-sm text-foreground transition-colors hover:bg-secondary peer-checked:border-primary peer-checked:bg-primary peer-checked:text-primary-foreground peer-checked:hover:bg-primary peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2 peer-focus-visible:ring-offset-background peer-disabled:cursor-not-allowed peer-disabled:opacity-50"
             >
               {band}
             </span>

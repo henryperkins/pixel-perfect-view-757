@@ -69,7 +69,7 @@ export function TodayGuidance({
             Personal context stays within Pattern.
           </p>
           {calculation && interpretation ? (
-            <p className="text-xs">
+            <p className="font-mono text-xs">
               {interpretation.key} · source release {interpretation.releaseVersion} · current orb{" "}
               {calculation.orb.toFixed(2)}°
               {calculation.exactAt

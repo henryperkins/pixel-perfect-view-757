@@ -27,6 +27,7 @@ export const PHASE_LABEL = {
 
 export const DOMAIN_LABEL: Record<string, string> = {
   all: "Every area",
+  general: "General",
   identity: "Identity and direction",
   relationships: "Relationships and affection",
   work: "Work and output",
