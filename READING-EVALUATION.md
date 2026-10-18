@@ -111,6 +111,35 @@ The twelve new writing cases are appended once to the unchanged first 38 cases. 
 
 ## Offline replay
 
+### Current member transport and frozen campaigns
+
+`memberDailyLanguagePolicy` is the serving identity for Today: it binds provider,
+model, thinking level and deadline into the daily cache key. Enterprise daily
+writing uses `gemini-4-argon` with HIGH thinking; Lovable keeps its separate model.
+`generateSyntheticMemberReadingProse(input, options)` captures that same serving
+path on synthetic facts, including the full native policy and authored/no-request
+outcomes. It adds no qualification token cap or alternate thinking control.
+
+Existing admin campaigns keep their frozen Flash models, LOW/MEDIUM controls and
+Flash-only cost reservations. Their context adapter calls
+`generateFrozenSyntheticMemberReadingProse`; these captures do not measure the
+current Argon serving transport. Natal chapters retain their independent model.
+
+The numeric editorial release's current authored delivery is checked offline:
+
+```sh
+node scripts/validate-editorial-release.mjs --prepare --output-dir /tmp/new-member-delivery-check
+node scripts/validate-editorial-release.mjs --verify --output-dir /tmp/new-member-delivery-check
+node scripts/validate-editorial-release.mjs --verify-archive
+node scripts/continue-editorial-release.mjs --verify
+```
+
+Preparation uses a new output directory and checks all nine editorial scenarios
+for both providers with zero network requests. Archive verification checks the
+original plans, ledgers, requests and captures against pinned hashes; it makes no
+claim about today's runtime. The completed five-attempt campaign cannot be
+reopened with `--run`. Historical review artifacts are never rewritten.
+
 Every offline run names its copy explicitly with `--bundle builtin` (natal-free
 `builtin-0.5.0`), `--bundle natal-candidate` (inactive `builtin-0.6.1`), `--bundle transit-candidate` (inactive `builtin-0.7.1`), or `--bundle writing-candidate` (inactive schema-5 `builtin-0.8.0`). Active
 copy exists only in the hosted app. Run the fixed suite before changing the daily

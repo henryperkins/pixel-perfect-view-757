@@ -3,6 +3,20 @@ import type { LanguageProvider } from "./diagnostics";
 /** Bounded member diagnostics only: never retain requests, prose, errors, IDs or headers. */
 export const MEMBER_DAILY_TRANSPORT_VERSION = "member-daily-transport-1";
 const MAX_DURATION_MS = 120_000;
+export const MEMBER_ENTERPRISE_THINKING_LEVELS = ["LOW", "MEDIUM", "HIGH"] as const;
+
+/** Shared request/recorder boundary. Lovable never receives Enterprise thinking controls. */
+export function assertProviderThinkingLevel(
+  provider: LanguageProvider,
+  level: MemberDailyTransport["thinkingLevel"],
+): void {
+  if (provider !== "lovable" && provider !== "gemini-enterprise")
+    throw Error("Unsupported language provider.");
+  if (provider === "lovable" && level !== null)
+    throw Error("Thinking controls require Gemini Enterprise.");
+  if (level !== null && !(MEMBER_ENTERPRISE_THINKING_LEVELS as readonly unknown[]).includes(level))
+    throw Error("Unsupported member thinking control.");
+}
 const FINISH_REASONS = new Set([
   "STOP",
   "MAX_TOKENS",
@@ -28,7 +42,7 @@ export interface MemberDailyTransport {
   requestedModel: string;
   actualModel: string | null;
   /** Explicit request control; null means the provider default was used. */
-  thinkingLevel: "LOW" | "MEDIUM" | null;
+  thinkingLevel: (typeof MEMBER_ENTERPRISE_THINKING_LEVELS)[number] | null;
   deadlineMs: number;
   durationMs: number;
   /** Last completed transport boundary; body completion does not imply valid content. */
@@ -60,7 +74,9 @@ const finishReason = (value: unknown) =>
 const modelName = (value: unknown) =>
   typeof value === "string" &&
   value.length <= 120 &&
-  /^(?:(?:google|gemini-enterprise)\/)?gemini-\d+(?:\.\d+)?-(?:flash|pro)(?:-\d{3,8})?$/.test(value)
+  /^(?:(?:google|gemini-enterprise)\/)?gemini-\d+(?:\.\d+)?-(?:flash|pro|argon)(?:-\d{3,8})?$/.test(
+    value,
+  )
     ? value
     : null;
 
@@ -89,7 +105,8 @@ export function readMemberDailyTransport(
   if (
     t["version"] !== MEMBER_DAILY_TRANSPORT_VERSION ||
     (provider !== "lovable" && provider !== "gemini-enterprise") ||
-    (thinkingLevel !== null && thinkingLevel !== "LOW" && thinkingLevel !== "MEDIUM") ||
+    (thinkingLevel !== null &&
+      !(MEMBER_ENTERPRISE_THINKING_LEVELS as readonly unknown[]).includes(thinkingLevel)) ||
     (provider === "lovable" && thinkingLevel !== null) ||
     !requested ||
     requested !== requestedModel ||
@@ -117,7 +134,7 @@ export function readMemberDailyTransport(
     provider,
     requestedModel: requested,
     actualModel: reportedModelName(t["actualModel"]),
-    thinkingLevel,
+    thinkingLevel: thinkingLevel as MemberDailyTransport["thinkingLevel"],
     deadlineMs,
     durationMs,
     phase: phase as MemberDailyTransport["phase"],
@@ -144,6 +161,7 @@ export function createMemberDailyTransport(
   signal: AbortSignal,
   thinkingLevel: MemberDailyTransport["thinkingLevel"] = null,
 ) {
+  assertProviderThinkingLevel(provider, thinkingLevel);
   const started = performance.now();
   const elapsed = () =>
     Math.min(MAX_DURATION_MS, Math.max(0, Math.round(performance.now() - started)));

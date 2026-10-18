@@ -36,3 +36,10 @@ dist-ssr
 .agents/skills/impeccable/scripts/bin/
 # Impeccable design-hook cache (per machine and session)
 .impeccable/hook.cache.json
+
+# Local tool configuration, captures and generated browser bundles
+/.opencode/
+/.playwright-cli/
+/.impeccable/critique/
+/output/playwright/
+/session-ses_*.md

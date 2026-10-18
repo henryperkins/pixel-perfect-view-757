@@ -44,7 +44,7 @@ const draft = {
 };
 const enterpriseResponse = (extra = {}) =>
   Response.json({
-    modelVersion: "gemini-3.8-flash",
+    modelVersion: "gemini-4-argon",
     candidates: [
       {
         content: { parts: [{ text: JSON.stringify(draft) }] },
@@ -105,19 +105,22 @@ function checked(output, expected) {
   assert.ok(transport, "Production daily diagnostics include a bounded transport observation");
   assert.equal(transport.version, "member-daily-transport-1");
   assert.equal(transport.provider, "gemini-enterprise");
-  assert.equal(transport.requestedModel, "gemini-enterprise/gemini-3.8-flash");
+  assert.equal(transport.requestedModel, "gemini-enterprise/gemini-4-argon");
   assert.equal(transport.deadlineMs, 60_000);
   for (const [key, value] of Object.entries(expected)) assert.deepEqual(transport[key], value, key);
   assert.equal(requests.length, 1, "No retry or second-provider request");
-  assert.match(requests[0].url, /^https:\/\/aiplatform\.googleapis\.com\//);
+  assert.equal(
+    requests[0].url,
+    "https://aiplatform.googleapis.com/v1/publishers/google/models/gemini-4-argon:generateContent",
+  );
   assert.deepEqual(budgets, [60_000]);
   assert.deepEqual(Object.keys(requests[0].body.generationConfig).sort(), [
     "responseJsonSchema",
     "responseMimeType",
     "thinkingConfig",
   ]);
-  assert.deepEqual(requests[0].body.generationConfig.thinkingConfig, { thinkingLevel: "LOW" });
-  assert.equal(transport.thinkingLevel, "LOW");
+  assert.deepEqual(requests[0].body.generationConfig.thinkingConfig, { thinkingLevel: "HIGH" });
+  assert.equal(transport.thinkingLevel, "HIGH");
   assert.doesNotMatch(
     JSON.stringify(transport),
     /private-member|paragraphs|Published|Deterministic/,
@@ -130,7 +133,7 @@ test("accepted production generation records actual model and bounded usage with
   assert.equal(output.meta.mode, "model");
   const t = checked(output, {
     phase: "body",
-    actualModel: "gemini-3.8-flash",
+    actualModel: "gemini-4-argon",
     httpStatus: 200,
     deadlineAbortMs: null,
     finishReason: "STOP",
@@ -303,5 +306,35 @@ test("a skipped member reading has no fabricated transport attempt", async () =>
   const output = await language.generateReadingProse({ ...input, hasEligibleCycles: false });
   assert.equal(output.meta.diagnostics.attempted, false);
   assert.equal(output.meta.diagnostics.transport, undefined);
+  assert.equal(requests.length, 0);
+});
+
+test("transport construction rejects provider-incompatible and unknown thinking before recording an attempt", async () => {
+  const { createMemberDailyTransport } = await vite.ssrLoadModule(
+    "/src/lib/ai/member-transport.ts",
+  );
+  for (const level of ["LOW", "MEDIUM", "HIGH"])
+    assert.throws(
+      () =>
+        createMemberDailyTransport(
+          "lovable",
+          "google/gemini-3.8-flash",
+          60_000,
+          controller.signal,
+          level,
+        ),
+      /require Gemini Enterprise/,
+    );
+  assert.throws(
+    () =>
+      createMemberDailyTransport(
+        "gemini-enterprise",
+        "gemini-enterprise/gemini-4-argon",
+        60_000,
+        controller.signal,
+        "MINIMAL",
+      ),
+    /Unsupported member thinking/,
+  );
   assert.equal(requests.length, 0);
 });

@@ -13,7 +13,7 @@ export const LANGUAGE_MODEL = "google/gemini-3.8-flash";
 
 /**
  * Admin-selectable providers for /content evaluation and drafting. Member
- * writing selects its configured provider separately and records the same identities.
+ * writing selects its configured provider and daily model separately.
  */
 export const LANGUAGE_PROVIDERS = ["lovable", "gemini-enterprise"] as const;
 export type LanguageProvider = (typeof LANGUAGE_PROVIDERS)[number];
@@ -23,11 +23,29 @@ export const LANGUAGE_PROVIDER_LABELS: Record<LanguageProvider, string> = {
 };
 /** The same Gemini model as LANGUAGE_MODEL, called directly on Gemini Enterprise Agent Platform. */
 export const GEMINI_ENTERPRISE_MODEL = "gemini-3.8-flash";
+/** Member daily writing has its own model; natal and frozen admin runs keep their identity. */
+export const GEMINI_ENTERPRISE_DAILY_MODEL = "gemini-4-argon";
 /** A provider change is a model identity change for diagnostics, reports and comparisons. */
-export function languageModel(provider: LanguageProvider = "lovable"): string {
-  return provider === "gemini-enterprise"
-    ? `gemini-enterprise/${GEMINI_ENTERPRISE_MODEL}`
-    : LANGUAGE_MODEL;
+export function languageModel(
+  provider: LanguageProvider = "lovable",
+  enterpriseModel: string = GEMINI_ENTERPRISE_MODEL,
+): string {
+  return provider === "gemini-enterprise" ? `gemini-enterprise/${enterpriseModel}` : LANGUAGE_MODEL;
+}
+
+/** One serving identity shared by Today caching, generation and current-member captures. */
+export function memberDailyLanguagePolicy(provider: LanguageProvider) {
+  if (!(LANGUAGE_PROVIDERS as readonly unknown[]).includes(provider))
+    throw Error("Unsupported member language provider.");
+  return {
+    provider,
+    nativeModel: provider === "gemini-enterprise" ? GEMINI_ENTERPRISE_DAILY_MODEL : LANGUAGE_MODEL,
+    model: languageModel(provider, GEMINI_ENTERPRISE_DAILY_MODEL),
+    thinkingLevel: (provider === "gemini-enterprise"
+      ? "HIGH"
+      : null) as MemberDailyTransport["thinkingLevel"],
+    gatewayTimeoutMs: DAILY_GATEWAY_TIMEOUT_MS,
+  };
 }
 
 export const DAILY_DIAGNOSTIC_CODES = [

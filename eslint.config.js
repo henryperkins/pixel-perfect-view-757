@@ -6,7 +6,24 @@ import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  { ignores: ["dist", ".output", ".vinxi"] },
+  {
+    ignores: [
+      "dist",
+      ".output",
+      ".vinxi",
+      ".tanstack",
+      ".nitro",
+      ".wrangler",
+      ".playwright-cli/**",
+      "**/vite-cache/**",
+      "output/**",
+      // Installed tool packages use their own lint/format configuration.
+      ".agents/**",
+      ".claude/**",
+      // Immutable review captures may include scripts; their recorded bytes are evidence.
+      "docs/reviews/**",
+    ],
+  },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ["**/*.{ts,tsx}"],

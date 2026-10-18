@@ -38,6 +38,7 @@ test("budget reservations never refund missing, inconsistent or out-of-contract 
     { usage: { ...base.usage, thinkingTokens: null } },
     { actualModel: null },
     { actualModel: "gemini-2.5-pro" },
+    { actualModel: "gemini-4-argon" },
   ])
     assert.equal(reserve({ ...base, ...change }, true), 2800000);
   assert.equal(
@@ -100,12 +101,11 @@ test("Enterprise low/medium controls use the verified native API shape and retai
     assert.doesNotMatch(JSON.stringify(result), /PRIVATE_REASONING_SENTINEL/);
   }
   const before = h.geminiEnterpriseRequests.length;
-  await assert.rejects(
-    run("saturn-square-sun", bundle, "gemini-enterprise", undefined, {
-      enterpriseThinking: "MINIMAL",
-    }),
-    /thinking/,
-  );
+  for (const enterpriseThinking of ["MINIMAL", "HIGH"])
+    await assert.rejects(
+      run("saturn-square-sun", bundle, "gemini-enterprise", undefined, { enterpriseThinking }),
+      /thinking/,
+    );
   assert.equal(h.geminiEnterpriseRequests.length, before);
 });
 test("member and default synthetic Lovable requests retain their original payload; admin transport records explicit unknown usage", async () => {

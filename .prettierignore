@@ -9,3 +9,13 @@ routeTree.gen.ts
 
 # Hash-bound review evidence: keep the recorded bytes
 docs/reviews/*/20*/
+
+# Generated browser captures, bundled dependencies and local tool state
+.playwright-cli/
+**/vite-cache/
+output/
+.opencode/
+.impeccable/critique/
+session-ses_*.md
+.agents/
+.claude/

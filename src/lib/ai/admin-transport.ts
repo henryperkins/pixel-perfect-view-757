@@ -1,6 +1,7 @@
-/** Synthetic-admin observations only. No body text, keys or thought content. */
+/** Frozen Flash synthetic-admin observations only. Current member captures use member-transport. */
 import type { LanguageProvider } from "./diagnostics";
 export const ADMIN_TRANSPORT_VERSION = "admin-model-transport-1";
+/** These controls and the reservation below belong to existing Flash-priced campaigns. */
 export const ENTERPRISE_THINKING_LEVELS = ["LOW", "MEDIUM"] as const;
 export type EnterpriseThinkingLevel = (typeof ENTERPRISE_THINKING_LEVELS)[number];
 export interface SyntheticTransportControl {

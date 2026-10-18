@@ -30,7 +30,7 @@ after(async () => {
 
 const lovableResponse = (draft) =>
   Response.json({ choices: [{ message: { content: JSON.stringify(draft) } }] });
-const enterpriseResponse = (draft, leadingParts = []) =>
+const enterpriseResponse = (draft, leadingParts = [], modelVersion = "gemini-3.8-flash") =>
   Response.json({
     candidates: [
       {
@@ -38,7 +38,7 @@ const enterpriseResponse = (draft, leadingParts = []) =>
         finishReason: "STOP",
       },
     ],
-    modelVersion: "gemini-3.8-flash",
+    modelVersion,
   });
 async function makeAdmin() {
   const result = await h.records().from("user_roles").insert({ user_id: h.userA, role: "admin" });
@@ -188,6 +188,7 @@ test("member readings and natal chapters use configured Gemini Enterprise and re
   const draft = BASELINE_RESPONSES["saturn-square-sun"];
   h.setGeminiEnterprise(() => enterpriseResponse(draft));
   const synthetic = await runCase("saturn-square-sun", bundle, "gemini-enterprise");
+  h.setGeminiEnterprise(() => enterpriseResponse(draft, [], "gemini-4-argon"));
   const production = await language.generateReadingProse({
     facts: synthetic.case.facts,
     hasEligibleCycles: true,
@@ -200,8 +201,9 @@ test("member readings and natal chapters use configured Gemini Enterprise and re
       prompt: synthetic.case.output.prompt,
     },
   });
-  assert.equal(production.meta.diagnostics.model, ENTERPRISE_MODEL);
-  assert.equal(production.meta.model, ENTERPRISE_MODEL);
+  assert.equal(production.meta.diagnostics.model, "gemini-enterprise/gemini-4-argon");
+  assert.equal(production.meta.model, "gemini-enterprise/gemini-4-argon");
+  assert.equal(production.meta.diagnostics.transport.actualModel, "gemini-4-argon");
   h.setGeminiEnterprise(() =>
     enterpriseResponse({
       paragraphs: [{ text: "A supplied natal pattern. A second sentence.", facts: ["F1"] }],

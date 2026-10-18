@@ -131,7 +131,7 @@ import {
   DAILY_READING_PLAN_VERSION,
   DAILY_PROMPT_VERSION,
   DAILY_VALIDATOR_VERSION,
-  LANGUAGE_MODEL,
+  memberDailyLanguagePolicy,
 } from "./ai/diagnostics";
 import { readSavedFactAtoms, type FactAtom } from "./ai/facts";
 import { NATAL_LENS_PLAN_VERSION } from "./content/natal-lens";
@@ -1609,9 +1609,10 @@ async function getTodayReading(
     wellness: wellnessAllowed ? { sleep: wellnessState.sleep, stress: wellnessState.stress } : null,
   };
   const { memberLanguageProvider } = await import("./ai/language.server");
+  const memberLanguage = memberDailyLanguagePolicy(memberLanguageProvider());
   let memberRollout =
     ctx.tone === "warm" && ctx.depth === "standard"
-      ? await loadMemberContextRollout(db, bundle.version, memberLanguageProvider())
+      ? await loadMemberContextRollout(db, bundle.version, memberLanguage.provider)
       : null;
   // Avoid invalidating unrelated contacts. This pure preview uses no provider or
   // transit-service request; actual chapter/geometry validation still runs later.
@@ -1725,7 +1726,8 @@ async function getTodayReading(
           },
         }
       : {}),
-    model: LANGUAGE_MODEL,
+    model: memberLanguage.model,
+    memberLanguage,
     ...(memberRollout ? { memberContextWriter: memberContextRolloutIdentity(memberRollout) } : {}),
     snapshot: { ...snapRow, houses: snapshotHouses },
     natalReliabilityVersion: NATAL_RELIABILITY_VERSION,
@@ -1921,15 +1923,15 @@ async function getTodayReading(
       }
     : assembled.reflectionPlan;
   await assertPolicy();
-  const prose = await generateReadingProse(
-    selectedInput,
-    memberRollout
+  const prose = await generateReadingProse(selectedInput, {
+    provider: memberLanguage.provider,
+    ...(memberRollout
       ? {
           contextModes: memberRollout.config.modes,
           contextRenderMode: memberRollout.config.render,
         }
-      : {},
-  );
+      : {}),
+  });
   await assertPolicy();
   const body = [prose.body, assembled.contextBody].filter(Boolean).join("\n\n");
   const durableContext = assembled.contextParts.filter((part) =>

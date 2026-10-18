@@ -79,15 +79,26 @@ test("every intercepted production request words each selected premise once, ins
     for (const claim of brief.claims.filter((item) => item.write))
       assert.equal((system + user).split(claim.write).length - 1, 1);
 
-    // The member Today route sends the same messages through the same adapter.
+    // Frozen pilots retain the adapter's messages; current captures match the entire serving wire.
     const benchmark = packet.cases.find((item) => item.id === frozen.id);
     const { input } = await contextWritingFixture(h, benchmark);
     process.env.PATTERN_MEMBER_LANGUAGE_PROVIDER = "gemini-enterprise";
     try {
-      await language.generateReadingProse(input, {
+      const output = await language.generateReadingProse(input, {
         contextModes: plan.contextPilot.allowedModes,
         contextRenderMode: "model",
       });
+      const servingWire = h.geminiEnterpriseRequests.at(-1);
+      const captured = await language.generateSyntheticMemberReadingProse(input, {
+        contextModes: plan.contextPilot.allowedModes,
+        contextRenderMode: "model",
+      });
+      assert.deepEqual(h.geminiEnterpriseRequests.at(-1), servingWire);
+      assert.deepEqual(servingWire.generationConfig.thinkingConfig, { thinkingLevel: "HIGH" });
+      assert.equal(captured.request.model, "gemini-enterprise/gemini-4-argon");
+      assert.equal(captured.request.model, output.meta.diagnostics.model);
+      assert.equal(captured.transport.deadlineMs, 60_000);
+      assert.equal(captured.transport.thinkingLevel, "HIGH");
     } finally {
       delete process.env.PATTERN_MEMBER_LANGUAGE_PROVIDER;
     }

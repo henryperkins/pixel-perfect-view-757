@@ -68,7 +68,11 @@ import {
   type SyntheticTransportControl,
 } from "./admin-transport";
 import { dropsSourceModality } from "./daily-modality";
-import { createMemberDailyTransport, type MemberDailyTransport } from "./member-transport";
+import {
+  assertProviderThinkingLevel,
+  createMemberDailyTransport,
+  type MemberDailyTransport,
+} from "./member-transport";
 import { dailyContextClaimProblem, dailyContextRepeatProblem } from "./daily-context-claims";
 import { natalLensWordingProblem } from "../content/natal-lens-policy";
 import type {
@@ -89,6 +93,7 @@ import {
   LANGUAGE_PROVIDER_LABELS,
   diagnosticLabel,
   languageModel,
+  memberDailyLanguagePolicy,
   type DailyDiagnostics,
   type DailyGatewayCode,
   type DailyRejectionCode,
@@ -97,8 +102,6 @@ import {
 export { LANGUAGE_MODEL, DAILY_PROMPT_VERSION, DAILY_VALIDATOR_VERSION } from "./diagnostics";
 
 const GATEWAY = "https://ai.gateway.lovable.dev/v1/chat/completions";
-/** Agent Platform (formerly Vertex AI) global endpoint; the key's bound service account selects the project. */
-const GEMINI_ENTERPRISE = `https://aiplatform.googleapis.com/v1/publishers/google/models/${GEMINI_ENTERPRISE_MODEL}:generateContent`;
 
 const VOICE = [
   "You write for an astrology app that shows its work.",
@@ -308,26 +311,30 @@ async function geminiEnterpriseContent(
   signal: AbortSignal,
   recorder?: GatewayTransportRecorder,
   control: SyntheticTransportControl = {},
+  model: string = GEMINI_ENTERPRISE_MODEL,
+  thinkingLevel: MemberDailyTransport["thinkingLevel"] = control.enterpriseThinking ?? null,
 ): Promise<string> {
   let res: Response;
   try {
-    res = await fetch(GEMINI_ENTERPRISE, {
-      method: "POST",
-      signal,
-      headers: { "content-type": "application/json", "x-goog-api-key": key },
-      body: JSON.stringify({
-        systemInstruction: { parts: [{ text: system }] },
-        contents: [{ role: "user", parts: [{ text: user }] }],
-        generationConfig: {
-          responseMimeType: "application/json",
-          responseJsonSchema: schema,
-          ...(control.enterpriseThinking
-            ? { thinkingConfig: { thinkingLevel: control.enterpriseThinking } }
-            : {}),
-          ...(control.boundedQualification ? { maxOutputTokens: 65536 } : {}),
-        },
-      }),
-    });
+    // The key's bound service account selects the project on the global Agent Platform endpoint.
+    res = await fetch(
+      `https://aiplatform.googleapis.com/v1/publishers/google/models/${model}:generateContent`,
+      {
+        method: "POST",
+        signal,
+        headers: { "content-type": "application/json", "x-goog-api-key": key },
+        body: JSON.stringify({
+          systemInstruction: { parts: [{ text: system }] },
+          contents: [{ role: "user", parts: [{ text: user }] }],
+          generationConfig: {
+            responseMimeType: "application/json",
+            responseJsonSchema: schema,
+            ...(thinkingLevel ? { thinkingConfig: { thinkingLevel } } : {}),
+            ...(control.boundedQualification ? { maxOutputTokens: 65536 } : {}),
+          },
+        }),
+      },
+    );
   } catch (error) {
     throw gatewayFailure(error, signal);
   }
@@ -356,6 +363,8 @@ interface GatewayOptions {
   observation?: SyntheticObservation | undefined;
   system?: string;
   provider?: LanguageProvider;
+  enterpriseModel?: string;
+  enterpriseThinking?: MemberDailyTransport["thinkingLevel"];
   control?: SyntheticTransportControl;
   memberTransport?: ((trace: MemberDailyTransport) => void) | undefined;
 }
@@ -370,17 +379,20 @@ async function callGateway<T>(
     observation,
     system = VOICE,
     provider = "lovable",
+    enterpriseModel = GEMINI_ENTERPRISE_MODEL,
     control = {},
+    enterpriseThinking = control.enterpriseThinking ?? null,
     memberTransport,
   }: GatewayOptions = {},
 ): Promise<T> {
   assertSyntheticTransportControl(provider, control);
+  assertProviderThinkingLevel(provider, enterpriseThinking);
   const key = providerKey(provider);
   if (!key) throw new GatewayUnavailable("not_configured");
   const signal = AbortSignal.timeout(timeoutMs);
   // Gemini Enterprise receives these same messages and schema in its native shape.
   const request: SyntheticReadingRequest = {
-    model: languageModel(provider),
+    model: languageModel(provider, enterpriseModel),
     ...(control.boundedQualification ? { max_tokens: 65536 } : {}),
     messages: [
       { role: "system", content: system },
@@ -398,19 +410,23 @@ async function callGateway<T>(
     ? createAdminTransportTrace(provider, request.model, timeoutMs, control, signal)
     : undefined;
   const memberRecorder = memberTransport
-    ? createMemberDailyTransport(
-        provider,
-        request.model,
-        timeoutMs,
-        signal,
-        control.enterpriseThinking ?? null,
-      )
+    ? createMemberDailyTransport(provider, request.model, timeoutMs, signal, enterpriseThinking)
     : undefined;
   const recorder = adminRecorder ?? memberRecorder;
   try {
     const content =
       provider === "gemini-enterprise"
-        ? await geminiEnterpriseContent(system, user, schema, key, signal, recorder, control)
+        ? await geminiEnterpriseContent(
+            system,
+            user,
+            schema,
+            key,
+            signal,
+            recorder,
+            control,
+            enterpriseModel,
+            enterpriseThinking,
+          )
         : await lovableContent(request, key, signal, recorder);
     try {
       const parsed = JSON.parse(content) as T;
@@ -961,6 +977,7 @@ function dailyDiagnostics(
   concrete = false,
   editorial = false,
   contextCandidate = false,
+  gatewayTimeoutMs = DAILY_GATEWAY_TIMEOUT_MS,
 ): DailyDiagnostics {
   return {
     version: DAILY_DIAGNOSTICS_VERSION,
@@ -979,7 +996,7 @@ function dailyDiagnostics(
           ? CONCRETE_DAILY_VALIDATOR_VERSION
           : DAILY_VALIDATOR_VERSION,
     model,
-    gatewayTimeoutMs: DAILY_GATEWAY_TIMEOUT_MS,
+    gatewayTimeoutMs,
     outcome,
     attempted: started !== null,
     code,
@@ -1001,10 +1018,16 @@ async function generateDailyProse(
     authoredContext?: boolean;
     contextCandidate?: boolean;
     recordMemberTransport?: boolean;
+    enterpriseModel?: string;
+    enterpriseThinking?: MemberDailyTransport["thinkingLevel"];
+    gatewayTimeoutMs?: number;
   } = {},
 ): Promise<ReadingProse> {
   const { fallback } = input;
-  const model = languageModel(provider);
+  const model = languageModel(provider, options.enterpriseModel);
+  const thinkingLevel = options.enterpriseThinking ?? control.enterpriseThinking ?? null;
+  assertProviderThinkingLevel(provider, thinkingLevel);
+  const gatewayTimeoutMs = options.gatewayTimeoutMs ?? DAILY_GATEWAY_TIMEOUT_MS;
   assertDailyFactGraph(input.facts);
   const concrete = !!input.writing;
   const editorial = input.writing?.plan.editorial;
@@ -1036,6 +1059,7 @@ async function generateDailyProse(
       concrete,
       !!editorial,
       contextCandidate,
+      gatewayTimeoutMs,
     ),
     ...(transport ? { transport } : {}),
   });
@@ -1248,7 +1272,7 @@ async function generateDailyProse(
       "daily_reading",
       concrete ? CONCRETE_READING_SCHEMA : READING_SCHEMA,
       {
-        timeoutMs: DAILY_GATEWAY_TIMEOUT_MS,
+        timeoutMs: gatewayTimeoutMs,
         observation,
         system: contextCandidate
           ? dailyContextSystemVoice(input.facts.some((fact) => fact.id === "N1"))
@@ -1256,6 +1280,8 @@ async function generateDailyProse(
             ? dailyEditorialSystemVoice(hasNatalLens)
             : dailySystemVoice(hasNatalLens),
         provider,
+        enterpriseModel: options.enterpriseModel ?? GEMINI_ENTERPRISE_MODEL,
+        enterpriseThinking: thinkingLevel,
         control,
         memberTransport: options.recordMemberTransport
           ? (trace) => {
@@ -1335,6 +1361,8 @@ async function generateDailyProse(
 export interface MemberReadingProseOptions {
   contextModes?: readonly string[];
   contextRenderMode?: "model" | "authored";
+  /** Server-only: Today pins this once before computing its immutable cache identity. */
+  provider?: LanguageProvider;
 }
 
 function memberReadingSelection(
@@ -1358,8 +1386,8 @@ function memberReadingSelection(
   };
 }
 
-/** Daily prose is latency-sensitive; natal chapters and admin evaluations retain their policy. */
-function memberDailyTransportControl(provider: LanguageProvider): SyntheticTransportControl {
+/** Frozen synthetic pilots keep the Flash thinking policy used by their plans and budgets. */
+function syntheticMemberTransportControl(provider: LanguageProvider): SyntheticTransportControl {
   return provider === "gemini-enterprise" ? { enterpriseThinking: "LOW" } : {};
 }
 
@@ -1367,18 +1395,52 @@ export async function generateReadingProse(
   input: ReadingProseInput,
   options: MemberReadingProseOptions = {},
 ): Promise<ReadingProse> {
+  return generateMemberReadingProse(input, options);
+}
+
+/** Live serving and current synthetic captures share selection and every transport setting. */
+async function generateMemberReadingProse(
+  input: ReadingProseInput,
+  options: MemberReadingProseOptions,
+  observation?: {
+    request(value: SyntheticReadingRequest): void;
+    candidate(value: unknown, concrete: boolean): void;
+  },
+): Promise<ReadingProse> {
+  if (
+    !options ||
+    typeof options !== "object" ||
+    Array.isArray(options) ||
+    Object.keys(options).some(
+      (key) => !["provider", "contextModes", "contextRenderMode"].includes(key),
+    )
+  )
+    throw Error(
+      "Unknown member reading option; current captures use the serving transport policy.",
+    );
   const selected = memberReadingSelection(
     input,
     options.contextModes ?? [],
     options.contextRenderMode,
   );
-  const provider = memberLanguageProvider();
+  const policy = memberDailyLanguagePolicy(options.provider ?? memberLanguageProvider());
   return generateDailyProse(
     selected.input,
-    undefined,
-    provider,
-    memberDailyTransportControl(provider),
-    { ...selected.options, recordMemberTransport: true },
+    observation
+      ? {
+          request: (value) => observation.request(value),
+          candidate: (value) => observation.candidate(value, !!selected.input.writing),
+        }
+      : undefined,
+    policy.provider,
+    {},
+    {
+      ...selected.options,
+      recordMemberTransport: true,
+      enterpriseModel: policy.nativeModel,
+      enterpriseThinking: policy.thinkingLevel,
+      gatewayTimeoutMs: policy.gatewayTimeoutMs,
+    },
   );
 }
 
@@ -1491,8 +1553,42 @@ export async function generateSyntheticReadingProse(
   return { prose, request, candidate, transport };
 }
 
-/** Synthetic capture of the member selection and provider path, including its authored fallback. */
+/**
+ * Current-member capture on synthetic facts. This is deliberately separate from
+ * Flash-priced admin campaigns: it uses the live member model, thinking and deadline,
+ * adds no output cap, and includes authored/no-request selections unchanged.
+ */
 export async function generateSyntheticMemberReadingProse(
+  input: ReadingProseInput,
+  options: MemberReadingProseOptions = {},
+) {
+  const policy = memberDailyLanguagePolicy(options.provider ?? memberLanguageProvider());
+  let request: SyntheticReadingRequest | null = null;
+  let candidate: SyntheticReadingCandidate | null = null;
+  const prose = await generateMemberReadingProse(
+    input,
+    { ...options, provider: policy.provider },
+    {
+      request(value) {
+        request = value;
+      },
+      candidate(value, concrete) {
+        candidate = captureSyntheticCandidate(value, concrete);
+      },
+    },
+  );
+  return {
+    version: "member-daily-capture-1" as const,
+    policy,
+    prose,
+    request,
+    candidate,
+    transport: prose.meta.diagnostics?.transport ?? null,
+  };
+}
+
+/** Frozen Flash member-adapter pilot only; never represents the current serving transport. */
+export async function generateFrozenSyntheticMemberReadingProse(
   input: ReadingProseInput,
   provider: LanguageProvider = "lovable",
   control: SyntheticTransportControl = {},
@@ -1522,7 +1618,7 @@ export async function generateSyntheticMemberReadingProse(
       },
     },
     provider,
-    { ...memberDailyTransportControl(provider), ...control },
+    { ...syntheticMemberTransportControl(provider), ...control },
     selected.options,
   );
   return { prose, request, candidate, transport };

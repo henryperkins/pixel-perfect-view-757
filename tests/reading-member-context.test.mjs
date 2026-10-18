@@ -236,9 +236,10 @@ test("member preparation keeps actual measurements and substitutes actual immuta
   assert.ok(!selected.fallback.body.includes("{{A1_CHRONOLOGY}}"));
   assert.deepEqual(adapter.prepareMemberContextReading(selected), selected);
   h.setGateway(() => response(selected.writing.template.paragraphs));
-  const result = await language.generateSyntheticMemberReadingProse(input, "lovable", {}, [
-    "synthesis-natal-and-transit",
-  ]);
+  const result = await language.generateSyntheticMemberReadingProse(input, {
+    provider: "lovable",
+    contextModes: ["synthesis-natal-and-transit"],
+  });
   assert.equal(result.prose.meta.mode, "model");
   assert.equal(result.prose.body, selected.fallback.body);
   assert.ok(
@@ -253,9 +254,10 @@ test("each synthetic member mode uses the production adapter and captures the ra
     const { input } = await contextWritingFixture(h, benchmark);
     const expected = revisions.cases.find((entry) => entry.id === benchmark.id) ?? benchmark;
     h.setGateway(() => response(expected.paragraphs));
-    const result = await language.generateSyntheticMemberReadingProse(input, "lovable", {}, [
-      benchmark.id,
-    ]);
+    const result = await language.generateSyntheticMemberReadingProse(input, {
+      provider: "lovable",
+      contextModes: [benchmark.id],
+    });
     assert.equal(result.prose.meta.mode, "model", benchmark.id);
     assert.equal(
       result.prose.body,
@@ -289,7 +291,10 @@ test("lost context or dropped qualifiers reject once and restore the complete me
         paragraph.facts = paragraph.facts.filter((fact) => fact !== remove);
     h.setGateway(() => response(paragraphs));
     const before = h.gatewayRequests.length;
-    const result = await language.generateSyntheticMemberReadingProse(input, "lovable", {}, [id]);
+    const result = await language.generateSyntheticMemberReadingProse(input, {
+      provider: "lovable",
+      contextModes: [id],
+    });
     assert.equal(result.prose.meta.mode, "template");
     assert.equal(result.prose.meta.diagnostics.code, code);
     assert.equal(
@@ -315,9 +320,10 @@ test("member and synthetic member paths retain single-provider one-attempt failu
     assert.equal(output.body, expected.paragraphs.map((paragraph) => paragraph.text).join("\n\n"));
     assert.equal(output.meta.diagnostics.code, "http");
     assert.equal(output.meta.diagnostics.attempted, true);
-    const captured = await language.generateSyntheticMemberReadingProse(input, provider, {}, [
-      "contact-only",
-    ]);
+    const captured = await language.generateSyntheticMemberReadingProse(input, {
+      provider,
+      contextModes: ["contact-only"],
+    });
     assert.equal(captured.prose.meta.diagnostics.code, "http");
     assert.equal(captured.candidate, null);
     assert.ok(captured.request);
@@ -339,9 +345,10 @@ test("member provider boundary exposes only selected source-bound material and c
   };
   const original = structuredClone(input);
   h.setGateway(() => response(benchmark.paragraphs));
-  const result = await language.generateSyntheticMemberReadingProse(input, "lovable", {}, [
-    "natal-and-transit",
-  ]);
+  const result = await language.generateSyntheticMemberReadingProse(input, {
+    provider: "lovable",
+    contextModes: ["natal-and-transit"],
+  });
   const user = result.request.messages.find((message) => message.role === "user").content;
   assert.doesNotMatch(
     user,

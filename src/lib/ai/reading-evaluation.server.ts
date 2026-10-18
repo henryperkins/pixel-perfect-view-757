@@ -25,7 +25,7 @@ import {
 } from "./diagnostics";
 import {
   generateSyntheticReadingProse,
-  generateSyntheticMemberReadingProse,
+  generateFrozenSyntheticMemberReadingProse,
   type ReadingProseInput,
 } from "./language.server";
 import { canonicalContentJson } from "../content/draft-comparison";
@@ -226,7 +226,7 @@ export async function runSyntheticEvaluationCase(
     ...(qualificationProfile ? { boundedQualification: true } : {}),
   };
   const observed = memberInput
-    ? await generateSyntheticMemberReadingProse(
+    ? await generateFrozenSyntheticMemberReadingProse(
         memberInput,
         provider,
         transportControl,
@@ -302,7 +302,7 @@ export async function runSyntheticEvaluationCase(
           ? "Live Gemini Enterprise Agent Platform; fixed synthetic facts only"
           : "Live language gateway; fixed synthetic facts only",
       warning: contextBenchmark
-        ? "Synthetic body output through the member production context adapter; headline and reflection are reviewed authored runtime fields. Runtime fallback bodies are frozen separately from original review benchmarks. Inspect diagnostics: authored fallback is not generated writing. This capture does not establish member acceptance, semantic grounding or writing quality."
+        ? "Synthetic body output through the member context adapter with the frozen admin Flash model and thinking policy, not the current member serving transport. Headline and reflection are reviewed authored runtime fields. Runtime fallback bodies are frozen separately from original review benchmarks. Inspect diagnostics: authored fallback is not generated writing. This capture does not establish member acceptance, semantic grounding or writing quality."
         : editorialPilot
           ? `${editorialOutput} This capture does not establish member acceptance, semantic grounding, or writing quality. Manual scores remain blank.`
           : "Actual model outputs for synthetic plans. This run does not establish production-user acceptance, semantic grounding, or writing quality. Manual scores remain blank.",
