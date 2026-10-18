@@ -1200,7 +1200,7 @@ async function generateDailyProse(
           : "Keep C1 as the primary focus. No S1 is supplied: do not invent a joint relationship or premise. I2 and I3 may offer separately supported context without connecting the contacts into a new story.",
       ...(hasNatalLens
         ? [
-            'Apply the supplied N1 possibility to a specific I1 scene with one practical distinction in paragraph 1 or 2. Choose one supported task, obligation or choice and keep it as the subject of both meanings. If N1 introduces a concrete example, explicitly place that same example inside I1\'s scene as a possibility; do not jump from a quiet moment or demanding role to an unrelated reply or project. Develop N1\'s distinction on that shared example, keeping its sentences in their published order where practical. Identify what changes in considering that same obligation, task or choice; do not simply append N1 verbatim or connect two summaries with a generic bridge. Keep every scene and source condition intact. Every paragraph using it must cite ["N1", "C1", "I1"]. Keep it conditional and recognizable or rejectable, never a confirmed identity, biological explanation or lived event. N1 and S1 may share a paragraph with all parents, but S1 supplies its own relationship: the N1 distinction must not be made to cause or establish it. Do not add a personality section. N1 does not authorize a natal body, sign, house, aspect or other geometry.',
+            'Apply the supplied N1 possibility to a specific I1 scene with one practical distinction in paragraph 1 or 2. Choose one supported task, obligation or choice and keep it as the subject of both meanings. If N1 introduces a concrete example, explicitly place that same example inside I1\'s scene as a possibility; do not jump from a quiet moment or demanding role to an unrelated reply or project. Select and paraphrase the distinct detail N1 contributes to that shared example without following its sentence order or restating meaning already expressed from I1. Preserve the condition and claim strength of each claim you use; do not merge different conditions or invent a causal bridge. Identify what changes in considering that same obligation, task or choice; do not simply append N1 verbatim or connect two summaries with a generic bridge. Keep every scene and source condition intact. Every paragraph using it must cite ["N1", "C1", "I1"]. Keep it conditional and recognizable or rejectable, never a confirmed identity, biological explanation or lived event. N1 and S1 may share a paragraph with all parents, but S1 supplies its own relationship: the N1 distinction must not be made to cause or establish it. Do not add a personality section. N1 does not authorize a natal body, sign, house, aspect or other geometry.',
           ]
         : []),
       ...(!editorial && input.facts.some((f) => f.id === "A1")
@@ -1350,8 +1350,8 @@ function memberReadingSelection(
     options: {
       contextCandidate: !!context,
       authoredContext: !!context && renderMode === "authored",
-      // 0.9.1 revises ordinary source copy; its reviewed editorial catalogue is unchanged.
-      authoredEditorial: ["0.9.0", "0.9.1"].includes(
+      // 0.9.1 and 0.9.2 revise ordinary source copy; their reviewed editorial catalogue is unchanged.
+      authoredEditorial: ["0.9.0", "0.9.1", "0.9.2"].includes(
         selected.writing?.plan.editorial?.releaseVersion ?? "",
       ),
     },

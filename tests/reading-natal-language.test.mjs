@@ -144,6 +144,10 @@ test("captured prompt requires scene application and preserves directional condi
   );
   assert.match(system.content, /does not prove that a boundary is needed/);
   assert.match(user.content, /do not simply append N1 verbatim/);
+  assert.doesNotMatch(user.content, /keeping its sentences in their published order/);
+  assert.match(user.content, /Select and paraphrase the distinct detail N1 contributes/);
+  assert.match(user.content, /Preserve the condition and claim strength of each claim you use/);
+  assert.match(user.content, /do not merge different conditions or invent a causal bridge/);
   assert.match(user.content, /N1 distinction must not be made to cause or establish it/);
   assert.match(user.content, /retain that condition on reinforcement/);
   assert.match(user.content, /do not say the aim causes low friction/);
@@ -152,7 +156,7 @@ test("captured prompt requires scene application and preserves directional condi
   assert.match(user.content, /direction and qualification are explicit in the source/);
   // This is evidence of the delivered brief, not a semantic acceptance test.
   const diagnostics = (await generate(draft())).meta.diagnostics;
-  assert.equal(diagnostics.promptVersion, "daily-astro-body-18");
+  assert.equal(diagnostics.promptVersion, "daily-astro-body-19");
   assert.equal(diagnostics.validatorVersion, "daily-reference-10");
 });
 test("request_without_a_lens_keeps_the_pre_lens_brief", async () => {

@@ -54,7 +54,7 @@ test("story instructions give paragraph-local JSON citation examples without dup
     /Include A1 when citing P2 even if the chronology sentence appears in another paragraph/,
   );
   assert.match(prompt, /without repeating the chronology sentence/);
-  assert.equal(result.meta.diagnostics.promptVersion, "daily-astro-body-18");
+  assert.equal(result.meta.diagnostics.promptVersion, "daily-astro-body-19");
   assert.equal(result.meta.diagnostics.validatorVersion, "daily-reference-10");
 });
 

@@ -1,0 +1,35 @@
+{
+  "version": "reading-source-copy-patch-1",
+  "baselineVersion": "0.9.1",
+  "releaseVersion": "0.9.2",
+  "changes": [
+    {
+      "path": "version",
+      "before": "0.9.1",
+      "after": "0.9.2"
+    },
+    {
+      "path": "cycles[key=soft:jupiter:sun].mechanism",
+      "before": "A supportive Jupiter contact with the Sun is an invitation to think bigger about something you'd like to do. If a plan comes to mind, you could sketch its bolder version or share a short proposal. Exploring the idea doesn't mean committing to every option it opens.",
+      "after": "A note in your phone might start with 'take a few photos' and grow into 'make a photo essay.' A supportive Jupiter contact with the Sun is an invitation to give an ambition that kind of room. The bigger version is worth exploring for what you'd like to express, before every practical detail is settled."
+    },
+    {
+      "path": "cycles[key=soft:jupiter:sun].question",
+      "before": "What would you like to try on a slightly bigger scale?",
+      "after": "Which idea would you enjoy giving more room?"
+    },
+    {
+      "path": "natalLenses[key=nl-sun-01].mechanism",
+      "before": "If you'd rather try something than keep talking it through, writing the opening lines of a draft is one way to begin. You can choose that step yourself without settling how the whole project will turn out.",
+      "after": "If you'd rather make something than talk it through again, a small move of your own can be satisfying. Choosing an opening line or image is a way to decide how the idea begins."
+    },
+    {
+      "path": "transitChapters[key=chapter-opening-1].mechanism",
+      "before": "If the next move is unclear, you could treat it as a trial run. One small attempt can give you something specific to reconsider before you decide what comes next.",
+      "after": "A trial run can reveal what deserves another go: a detail to keep, an approach to change, a part to drop. A rough result can be useful material for the next attempt."
+    }
+  ],
+  "baselineChecksum": "6e3632c71d7da9eff09e3e4e462c23c1d5a5e7eeb60f2c1061a4045736812ce6",
+  "checksum": "449bf50ec1ad1c1a00cbf1587a7cf6ebc93be9a93905786123f8c5722ac8a531",
+  "checksumAlgorithm": "sha256-canonical-json-v1"
+}

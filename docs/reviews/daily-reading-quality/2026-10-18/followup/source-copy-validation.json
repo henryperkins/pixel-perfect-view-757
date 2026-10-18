@@ -1,0 +1,32 @@
+{
+  "version": "reading-source-copy-validation-1",
+  "status": "candidate-not-published",
+  "baselinePath": "docs/reviews/daily-reading-quality/2026-10-18/bundle-0.9.1.json",
+  "baselineVersion": "0.9.1",
+  "baselineChecksum": "6e3632c71d7da9eff09e3e4e462c23c1d5a5e7eeb60f2c1061a4045736812ce6",
+  "releaseVersion": "0.9.2",
+  "checksum": "449bf50ec1ad1c1a00cbf1587a7cf6ebc93be9a93905786123f8c5722ac8a531",
+  "checksumAlgorithm": "sha256-canonical-json-v1",
+  "changedPaths": [
+    "version",
+    "cycles[key=soft:jupiter:sun].mechanism",
+    "cycles[key=soft:jupiter:sun].question",
+    "natalLenses[key=nl-sun-01].mechanism",
+    "transitChapters[key=chapter-opening-1].mechanism"
+  ],
+  "checks": {
+    "baselineCanonicalHashMatchesPublishedSnapshot": true,
+    "baselineGraphValid": true,
+    "candidateGraphValid": true,
+    "reflectionShapeAndSafetyValid": true,
+    "allUnrelatedFieldsIdentical": true
+  },
+  "providerRequests": 0,
+  "deployment": false,
+  "activation": false,
+  "liveWritingReviewed": false,
+  "humanReviewCompleted": false,
+  "limits": [
+    "Shared opening-chapter source changes affect other opening contacts. Source validation is not live writing acceptance."
+  ]
+}

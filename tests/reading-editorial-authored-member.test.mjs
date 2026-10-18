@@ -85,19 +85,20 @@ test("0.9.0 synthetic evaluation still requests and validates model prose", asyn
   assert.equal(h.gatewayRequests.length, 1);
 });
 
-test("0.9.1 preserves authored delivery for the unchanged editorial catalogue", async () => {
+test("0.9.1 and 0.9.2 preserve authored delivery for the unchanged editorial catalogue", async () => {
   h.setGateway(() => new Response(null, { status: 503 }));
   h.setGeminiEnterprise(() => new Response(null, { status: 503 }));
   for (const provider of ["lovable", "gemini-enterprise"]) {
     process.env.PATTERN_MEMBER_LANGUAGE_PROVIDER = provider;
-    for (const id of ids) {
-      const value = input(id, "0.9.1");
-      const result = await language.generateReadingProse(value);
-      assert.equal(result.body, value.fallback.body, id);
-      assert.equal(result.meta.diagnostics.code, "authored_editorial", id);
-      assert.equal(result.meta.diagnostics.attempted, false, id);
-      assert.equal(result.meta.model, null, id);
-    }
+    for (const version of ["0.9.1", "0.9.2"])
+      for (const id of ids) {
+        const value = input(id, version);
+        const result = await language.generateReadingProse(value);
+        assert.equal(result.body, value.fallback.body, `${version}: ${id}`);
+        assert.equal(result.meta.diagnostics.code, "authored_editorial", `${version}: ${id}`);
+        assert.equal(result.meta.diagnostics.attempted, false, `${version}: ${id}`);
+        assert.equal(result.meta.model, null, `${version}: ${id}`);
+      }
   }
   assert.equal(h.gatewayRequests.length, 0);
   assert.equal(h.geminiEnterpriseRequests.length, 0);

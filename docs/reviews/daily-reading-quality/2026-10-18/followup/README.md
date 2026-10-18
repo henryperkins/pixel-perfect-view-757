@@ -1,0 +1,9 @@
+# Source composition follow-up
+
+The live 0.9.1 check on 7406eb9 generated accepted prose in 3,043 ms and passed all 23 browser checks. The account, all thirty owner/account table counts, the exact verification-rate remnant and private browser files were subsequently verified removed. Grounding review found no substantive defect. Editorial review found only modest improvement: the source repeated the same permission across three passages, and the N1 prompt encouraged preserving sentence order.
+
+Immutable candidate 0.9.2 changes the same four source fields. A hypothetical photo-essay scene gives the primary interpretation a concrete ambition; the natal lens adds conditional self-direction; the shared opening chapter adds learning from a trial. The question remains independently validated. All unrelated structured content, including the authored editorial catalogue, is identical to 0.9.1. The patch and canonical validation identify the exact fields and checksum.
+
+The N1 composition instruction now asks for its distinct contribution instead of its sentence order, preserving the condition and strength of each claim used. Prompt identities advance to ordinary 19 and concrete 18. Exact A1 chronology and all validators remain unchanged. The explicit authored release policy includes 0.9.2; the separate source-bound context rollout remains closed for this new release.
+
+This document records preparation, not live qualification. Publication, one new fresh-account first reading, editorial/source review, and account cleanup have separate receipts under /home/ubuntu/.cache/pattern-reading-quality-20261018/editorial-followup. No provider experiment is part of source validation. Existing immutable releases and their provenance remain available; rollback uses the normal activation lifecycle with an exact expected predecessor.
