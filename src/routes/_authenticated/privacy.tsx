@@ -225,7 +225,7 @@ function PrivacyPage() {
             className="mt-10 border-t border-rule pt-6"
             aria-labelledby="device-drafts-heading"
           >
-            <h2 id="device-drafts-heading" className="text-xl">
+              <h2 id="device-drafts-heading" className="font-serif text-xl">
               Drafts on this device
             </h2>
             <p className="mt-2 text-sm">
