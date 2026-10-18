@@ -161,6 +161,7 @@ before(async () => {
         status: "open",
         payment_status: "unpaid",
         client_secret: "cs_test_a_secret_fixture",
+        metadata: { checkout_policy: body.get("metadata[checkout_policy]") },
       };
       sessions.push(session);
       return json(session);
@@ -813,9 +814,25 @@ test("checkout is embedded, uses gateway headers and carries customer ownership"
   const request = calls.find((c) => c.path === "/v1/checkout/sessions" && c.method === "POST");
   assert.equal(request.body.get("ui_mode"), "embedded_page");
   assert.equal(request.body.has("success_url"), false);
-  assert.equal(request.body.get("managed_payments[enabled]"), "true");
+  assert.equal(request.body.has("managed_payments[enabled]"), false);
   assert.equal(request.body.get("metadata[userId]"), h.userA);
   assert.equal(request.body.get("subscription_data[metadata][userId]"), h.userA);
+});
+test("new checkout calculates tax without requiring Link or forcing payment methods", async () => {
+  await billing.startCheckout(h.userA, "fixture@example.invalid", "month", h.records());
+  const request = calls.find((c) => c.path === "/v1/checkout/sessions" && c.method === "POST");
+  assert.equal(request.body.get("automatic_tax[enabled]"), "true");
+  assert.equal(request.body.get("customer_update[address]"), "auto");
+  assert.equal(request.body.get("metadata[managed_payments]"), "false");
+  assert.equal(request.body.has("payment_method_types[0]"), false);
+});
+test("an older open Link-required checkout is expired rather than reused", async () => {
+  await billing.startCheckout(h.userA, "fixture@example.invalid", "month", h.records());
+  sessions[0].metadata = { managed_payments: "true" };
+  await billing.startCheckout(h.userA, "fixture@example.invalid", "month", h.records());
+  assert.equal(sessions[0].status, "expired");
+  assert.equal(calls.filter((c) => c.path === "/v1/checkout/sessions" && c.method === "POST").length, 2);
+  assert.equal(sessions[1].metadata.checkout_policy, "standard_tax_v1");
 });
 test("pausing sales never removes paid entitlement", async () => {
   await customer();

@@ -1,5 +1,9 @@
 # Browsing refresh
 
+## Standard Stripe checkout
+- [ ] Replace Link-required handling for new checkouts with automatic tax and optional eligible payment methods; expire older open Link-required sessions.
+- [ ] Run checkout regression tests and inspect preview diagnostics; real signed-in payment verification needs an authorized test account.
+
 ## Dependency security repair
 - [ ] Resolve the remaining @lovable.dev/mcp-js advisory: updated to 3.1.1, but its exact SDK dependency still locks to 1.28.0; blocked on a compatible upstream release using SDK >=1.31.0, without forced versions.
 - [x] Re-scan production dependencies (one remaining advisory), run 26 assistant regression tests (all passed), and check the automatic app build (build OK).
