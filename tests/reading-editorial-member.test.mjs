@@ -63,38 +63,49 @@ const today = () => h.app.getToday(h.records(), h.userA, "UTC");
 const rowFor = (id) => h.sqlite.prepare("SELECT * FROM daily_readings WHERE id=?").get(id);
 const frame = () =>
   candidate.dailyEditorial.frames.find((entry) => entry.cycleKeys[0] === "jupiter_trine_sun");
-function forbidEditorialProviderCalls() {
-  const unexpected = () => {
-    throw Error("The reviewed authored release must not request a provider");
-  };
-  h.setGateway(unexpected);
-  h.setGeminiEnterprise(unexpected);
+// The provider answers with the frame's own paragraphs, citing exactly its required facts.
+function answerWithFrame() {
+  h.setGateway(() =>
+    Response.json({
+      choices: [
+        {
+          message: {
+            content: JSON.stringify({
+              paragraphs: frame().fallbackParagraphs.map((text) => ({
+                text,
+                facts: ["C1", "I1"],
+                scenes: [],
+              })),
+            }),
+          },
+        },
+      ],
+    }),
+  );
 }
 
-test("eligible member authored prose is encrypted, saved and reopened without any provider request", async () => {
+test("eligible member editorial prose is generated once, encrypted, saved and reopened", async () => {
   await activate(candidate);
   await preferences();
   await birth();
-  forbidEditorialProviderCalls();
+  answerWithFrame();
   const first = await today();
   assert.equal(first.reading.primary_cycle_key, "jupiter_trine_sun");
   assert.equal(first.reading.release_version, "0.9.0");
-  assert.equal(first.language.mode, "template");
-  assert.equal(first.language.model, null);
+  assert.equal(first.language.mode, "model");
+  assert.equal(first.language.model, "google/gemini-3.8-flash");
   assert.equal(first.language.dailyWriting.status, "saved");
   assert.equal(first.language.dailyWriting.evidence.plan.editorial.entry.key, frame().key);
   assert.equal(first.reading.prompt, frame().reflection);
   assert.equal(first.reading.headline, frame().headline);
   assert.ok(first.reading.body.startsWith(frame().fallbackParagraphs.join("\n\n")));
-  assert.equal(h.gatewayRequests.length + h.geminiEnterpriseRequests.length, 0);
+  assert.equal(h.gatewayRequests.length, 1);
   const saved = rowFor(first.reading.id);
   const meta = JSON.parse(saved.language_meta);
   assert.equal(meta.diagnostics.promptVersion, "daily-editorial-body-2");
-  assert.equal(meta.diagnostics.code, "authored_editorial");
-  assert.equal(meta.diagnostics.outcome, "skipped");
-  assert.equal(meta.diagnostics.attempted, false);
-  assert.equal(meta.diagnostics.durationMs, null);
-  assert.equal(first.language.dailyWriting.evidence.candidateQuality.outcome, "not_evaluated");
+  assert.equal(meta.diagnostics.code, "accepted");
+  assert.equal(meta.diagnostics.outcome, "accepted");
+  assert.equal(meta.diagnostics.attempted, true);
   assert.equal(first.language.dailyWriting.evidence.finalQuality.outcome, "pass");
   assert.deepEqual(
     first.reading.paragraphs.slice(0, meta.astroParagraphCount),
@@ -116,12 +127,12 @@ test("eligible member authored prose is encrypted, saved and reopened without an
   const cached = await today();
   assert.deepEqual(cached.reading, first.reading);
   assert.deepEqual(cached.language, first.language);
-  assert.equal(h.gatewayRequests.length + h.geminiEnterpriseRequests.length, 0);
+  assert.equal(h.gatewayRequests.length, 1);
   const exported = await h.app.exportEverything(h.records(), h.userA);
   const archived = exported.readings.find((reading) => reading.id === first.reading.id);
   assert.equal(archived.body, first.reading.body);
   assert.deepEqual(archived.language.dailyWriting, first.language.dailyWriting);
-  assert.equal(h.gatewayRequests.length + h.geminiEnterpriseRequests.length, 0);
+  assert.equal(h.gatewayRequests.length + h.geminiEnterpriseRequests.length, 1);
   assert.equal(h.sqlite.prepare("SELECT COUNT(*) n FROM daily_readings").get().n, 1);
 });
 
@@ -142,7 +153,7 @@ test("quiet editorial readings retain encrypted reflection and reload without re
   const saved = rowFor(first.reading.id);
   assert.equal(saved.prompt, null);
   assert.equal(typeof JSON.parse(saved.language_meta).daily_writing_ct, "string");
-  assert.equal(JSON.parse(saved.language_meta).diagnostics.code, "authored_editorial");
+  assert.equal(JSON.parse(saved.language_meta).diagnostics.code, "no_cycle");
   h.reopen();
   assert.deepEqual((await today()).reading, first.reading);
   assert.equal(h.gatewayRequests.length, 0);
@@ -208,17 +219,14 @@ test("activating the numeric release creates a new same-day cache entry while pr
   assert.equal(old.reading.release_version, "0.7.1");
   const preserved = rowFor(old.reading.id);
   await activate(candidate);
-  forbidEditorialProviderCalls();
+  answerWithFrame();
   const current = await today();
   assert.notEqual(current.reading.id, old.reading.id);
   assert.equal(current.reading.release_version, "0.9.0");
-  assert.equal(current.language.mode, "template");
-  assert.equal(
-    JSON.parse(rowFor(current.reading.id).language_meta).diagnostics.code,
-    "authored_editorial",
-  );
+  assert.equal(current.language.mode, "model");
+  assert.equal(JSON.parse(rowFor(current.reading.id).language_meta).diagnostics.code, "accepted");
   assert.equal((await today()).reading.id, current.reading.id);
   assert.deepEqual(rowFor(old.reading.id), preserved);
   assert.equal(h.sqlite.prepare("SELECT COUNT(*) n FROM daily_readings").get().n, 2);
-  assert.equal(h.gatewayRequests.length + h.geminiEnterpriseRequests.length, 0);
+  assert.equal(h.gatewayRequests.length, 1);
 });

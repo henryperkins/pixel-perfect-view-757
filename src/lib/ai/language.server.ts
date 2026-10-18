@@ -1014,7 +1014,6 @@ async function generateDailyProse(
   provider: LanguageProvider = "lovable",
   control: SyntheticTransportControl = {},
   options: {
-    authoredEditorial?: boolean;
     authoredContext?: boolean;
     contextCandidate?: boolean;
     recordMemberTransport?: boolean;
@@ -1160,11 +1159,6 @@ async function generateDailyProse(
     if (quality(template.paragraphs, template.renderMode).outcome === "reject")
       throw Error("Required template failed writing quality validation.");
   }
-  if (options.authoredEditorial && editorial)
-    return fallbackResult(
-      diagnosticLabel("authored_editorial"),
-      diagnose("skipped", "authored_editorial", null),
-    );
   if (options.authoredContext && contextCandidate)
     return fallbackResult(
       diagnosticLabel("authored_context"),
@@ -1378,10 +1372,6 @@ function memberReadingSelection(
     options: {
       contextCandidate: !!context,
       authoredContext: !!context && renderMode === "authored",
-      // 0.9.1 and 0.9.2 revise ordinary source copy; their reviewed editorial catalogue is unchanged.
-      authoredEditorial: ["0.9.0", "0.9.1", "0.9.2"].includes(
-        selected.writing?.plan.editorial?.releaseVersion ?? "",
-      ),
     },
   };
 }

@@ -5,7 +5,6 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
-import { prepareEditorialMemberDelivery } from "../scripts/editorial-member-delivery.mjs";
 import {
   EDITORIAL_RELEASE_DIRECTORY,
   verifyEditorialReleaseArchive,
@@ -18,64 +17,6 @@ const cli = (script, ...args) =>
     encoding: "utf8",
     timeout: 30_000,
   });
-
-test("current release verification measures authored delivery for both providers and restores the caller environment", async () => {
-  const beforeFetch = globalThis.fetch;
-  const envNames = [
-    "LOVABLE_API_KEY",
-    "GEMINI_ENTERPRISE_API_KEY",
-    "PATTERN_MEMBER_LANGUAGE_PROVIDER",
-  ];
-  const beforeEnv = Object.fromEntries(envNames.map((name) => [name, process.env[name]]));
-  const plan = await prepareEditorialMemberDelivery(root);
-  assert.equal(plan.providerAttempts, 0);
-  assert.equal(plan.plannedProviderAttempts, 0);
-  assert.equal(plan.cases.length, 18);
-  assert.deepEqual(
-    plan.policies.map((policy) => [policy.model, policy.thinkingLevel]),
-    [
-      ["google/gemini-3.8-flash", null],
-      ["gemini-enterprise/gemini-4-argon", "HIGH"],
-    ],
-  );
-  for (const result of plan.cases) {
-    assert.equal(result.prose.meta.diagnostics.code, "authored_editorial");
-    assert.equal(result.request, null);
-    assert.equal(result.transport, null);
-  }
-  assert.equal(globalThis.fetch, beforeFetch);
-  assert.deepEqual(
-    Object.fromEntries(envNames.map((name) => [name, process.env[name]])),
-    beforeEnv,
-  );
-  assert.doesNotMatch(JSON.stringify(plan), /offline-delivery-check/);
-});
-
-test("the current delivery CLI prepares and verifies a separate immutable offline plan and detects policy drift", async () => {
-  const temporary = await mkdtemp(join(tmpdir(), "pattern-delivery-validation-"));
-  try {
-    const output = join(temporary, "current");
-    const prepared = cli("validate-editorial-release.mjs", "--prepare", "--output-dir", output);
-    assert.equal(prepared.status, 0, prepared.stderr);
-    assert.equal(JSON.parse(prepared.stdout).providerAttempts, 0);
-    const file = join(output, "plan.json");
-    const original = await readFile(file, "utf8");
-    const verified = cli("validate-editorial-release.mjs", "--verify", "--output-dir", output);
-    assert.equal(verified.status, 0, verified.stderr);
-    assert.equal(JSON.parse(verified.stdout).status, "verified-current-delivery");
-    const duplicate = cli("validate-editorial-release.mjs", "--prepare", "--output-dir", output);
-    assert.notEqual(duplicate.status, 0);
-    assert.equal(await readFile(file, "utf8"), original);
-    const tampered = JSON.parse(original);
-    tampered.policies[1].thinkingLevel = "LOW";
-    await writeFile(file, JSON.stringify(tampered));
-    const drift = cli("validate-editorial-release.mjs", "--verify", "--output-dir", output);
-    assert.notEqual(drift.status, 0);
-    assert.match(drift.stderr, /Current member policy, runtime or delivery changed/);
-  } finally {
-    await rm(temporary, { recursive: true, force: true });
-  }
-});
 
 test("the completed Flash campaign is verifiable independently of current model changes but cannot be rerun", async () => {
   const archive = await verifyEditorialReleaseArchive(root);

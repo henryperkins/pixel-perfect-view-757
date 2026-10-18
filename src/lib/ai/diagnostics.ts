@@ -50,7 +50,6 @@ export function memberDailyLanguagePolicy(provider: LanguageProvider) {
 
 export const DAILY_DIAGNOSTIC_CODES = [
   "accepted",
-  "authored_editorial",
   "authored_context",
   "no_cycle",
   "no_interpretation",
@@ -106,12 +105,7 @@ export type DailyGatewayCode =
   | "empty_response";
 export type DailyRejectionCode = Exclude<
   DailyDiagnosticCode,
-  | DailyGatewayCode
-  | "accepted"
-  | "authored_editorial"
-  | "authored_context"
-  | "no_cycle"
-  | "no_interpretation"
+  DailyGatewayCode | "accepted" | "authored_context" | "no_cycle" | "no_interpretation"
 >;
 
 /** Contains bounded measurement fields only. Never put prose, facts or errors here. */
@@ -134,7 +128,6 @@ export interface DailyDiagnostics {
 
 const LABELS: Record<DailyDiagnosticCode, string> = {
   accepted: "Accepted model wording",
-  authored_editorial: "Published authored editorial reading",
   authored_context: "Published authored context reading",
   no_cycle: "No eligible cycle",
   no_interpretation: "No published primary interpretation",
@@ -248,9 +241,7 @@ export function readDailyDiagnostics(value: unknown): DailyDiagnostics | null {
     if (code !== "accepted" || !attempted || paragraph !== null) return null;
   } else if (outcome === "skipped") {
     if (
-      !(
-        ["authored_editorial", "authored_context", "no_cycle", "no_interpretation"] as string[]
-      ).includes(code) ||
+      !(["authored_context", "no_cycle", "no_interpretation"] as string[]).includes(code) ||
       attempted ||
       paragraph !== null
     )
@@ -261,7 +252,6 @@ export function readDailyDiagnostics(value: unknown): DailyDiagnostics | null {
   } else if (outcome === "rejected") {
     if (
       code === "accepted" ||
-      code === "authored_editorial" ||
       code === "authored_context" ||
       code === "no_cycle" ||
       code === "no_interpretation" ||
