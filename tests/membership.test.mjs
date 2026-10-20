@@ -5,7 +5,7 @@ import { createRecordsHarness } from "./helpers/records-harness.mjs";
 
 let h, billing, policy, account, auth, readers, security, originalFetch, sub, sessions, calls;
 let failCancel, stripeEmail, failEmailUpdate, customerRetrieveGate, customerUpdateGate;
-let subscriptionUpdateResponses, failNextSubscriptionUpdate;
+let subscriptionUpdateResponses, failNextSubscriptionUpdate, forceManagedPayments;
 const keys = [
   "STRIPE_SANDBOX_API_KEY",
   "LOVABLE_API_KEY",
@@ -162,6 +162,10 @@ before(async () => {
         payment_status: "unpaid",
         client_secret: "cs_test_a_secret_fixture",
         metadata: { checkout_policy: body.get("metadata[checkout_policy]") },
+        // Like the Pattern Stripe accounts, Managed Payments stays on unless the request opts out.
+        managed_payments: {
+          enabled: forceManagedPayments || body.get("managed_payments[enabled]") !== "false",
+        },
       };
       sessions.push(session);
       return json(session);
@@ -196,6 +200,7 @@ beforeEach(async () => {
   failEmailUpdate = false;
   customerRetrieveGate = null;
   customerUpdateGate = null;
+  forceManagedPayments = false;
   subscriptionUpdateResponses = new Map();
   failNextSubscriptionUpdate = false;
   await h
@@ -814,25 +819,45 @@ test("checkout is embedded, uses gateway headers and carries customer ownership"
   const request = calls.find((c) => c.path === "/v1/checkout/sessions" && c.method === "POST");
   assert.equal(request.body.get("ui_mode"), "embedded_page");
   assert.equal(request.body.has("success_url"), false);
-  assert.equal(request.body.has("managed_payments[enabled]"), false);
+  assert.equal(request.body.get("managed_payments[enabled]"), "false");
   assert.equal(request.body.get("metadata[userId]"), h.userA);
   assert.equal(request.body.get("subscription_data[metadata][userId]"), h.userA);
 });
-test("new checkout calculates tax without requiring Link or forcing payment methods", async () => {
+test("new checkout opts out of Managed Payments, calculates tax and leaves payment methods open", async () => {
   await billing.startCheckout(h.userA, "fixture@example.invalid", "month", h.records());
   const request = calls.find((c) => c.path === "/v1/checkout/sessions" && c.method === "POST");
   assert.equal(request.body.get("automatic_tax[enabled]"), "true");
   assert.equal(request.body.get("customer_update[address]"), "auto");
   assert.equal(request.body.get("metadata[managed_payments]"), "false");
   assert.equal(request.body.has("payment_method_types[0]"), false);
+  assert.equal(sessions[0].managed_payments.enabled, false);
 });
 test("an older open Link-required checkout is expired rather than reused", async () => {
   await billing.startCheckout(h.userA, "fixture@example.invalid", "month", h.records());
-  sessions[0].metadata = { managed_payments: "true" };
+  sessions[0].metadata = { checkout_policy: "standard_tax_v1" };
   await billing.startCheckout(h.userA, "fixture@example.invalid", "month", h.records());
   assert.equal(sessions[0].status, "expired");
-  assert.equal(calls.filter((c) => c.path === "/v1/checkout/sessions" && c.method === "POST").length, 2);
-  assert.equal(sessions[1].metadata.checkout_policy, "standard_tax_v1");
+  assert.equal(
+    calls.filter((c) => c.path === "/v1/checkout/sessions" && c.method === "POST").length,
+    2,
+  );
+  assert.equal(sessions[1].metadata.checkout_policy, "standard_tax_v2");
+});
+test("an open checkout Stripe reports as managed is not reused under the current policy", async () => {
+  await billing.startCheckout(h.userA, "fixture@example.invalid", "month", h.records());
+  sessions[0].managed_payments = { enabled: true };
+  await billing.startCheckout(h.userA, "fixture@example.invalid", "month", h.records());
+  assert.equal(sessions[0].status, "expired");
+  assert.equal(sessions[1].managed_payments.enabled, false);
+});
+test("a checkout Stripe opens with Managed Payments is expired instead of served", async () => {
+  forceManagedPayments = true;
+  await assert.rejects(
+    billing.startCheckout(h.userA, "fixture@example.invalid", "month", h.records()),
+    /Membership checkout could not be prepared/,
+  );
+  assert.equal(sessions[0].status, "expired");
+  assert.equal(calls.filter((c) => c.path.endsWith("/expire")).length, 1);
 });
 test("pausing sales never removes paid entitlement", async () => {
   await customer();
