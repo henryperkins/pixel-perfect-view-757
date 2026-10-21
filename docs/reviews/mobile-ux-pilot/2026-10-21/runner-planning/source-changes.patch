@@ -1,0 +1,944 @@
+diff -ru before/.codex-plugin/plugin.json source/.codex-plugin/plugin.json
+--- before/.codex-plugin/plugin.json	2026-10-20 22:08:51.041905082 +0000
++++ source/.codex-plugin/plugin.json	2026-10-21 00:37:27.084926119 +0000
+@@ -9,7 +9,7 @@
+     "capabilities": []
+   },
+   "name": "mobile-web-ux-runner",
+-  "version": "2.0.0",
++  "version": "2.0.1",
+   "description": "An agent workflow for inspecting, fixing, and verifying mobile web UX with Impeccable, scoped changes, and evidence-backed reporting.",
+   "author": {
+     "name": "Henry Perkins",
+diff -ru before/README.md source/README.md
+--- before/README.md	2026-10-20 22:08:51.040785517 +0000
++++ source/README.md	2026-10-21 00:43:16.855401956 +0000
+@@ -1,11 +1,15 @@
+ # Mobile Web UX Runner
+ 
+-Private skills-only plugin, version 2.0.0. The existing plugin identity and presentation are preserved.
++Private skills-only plugin, local candidate version 2.0.1. The existing plugin identity and presentation are preserved. This authoring copy has not been published or installed.
+ 
+ The runner integrates the October 20, 2026 r2 mobile-web audit contract with the project's installed Impeccable skill. Audit-only is the default; device-dependent fixes require separate apply-and-hand-off authorization and complete remaining coverage within half the human check-entry budget. The application, installed Impeccable version, tools, and actual evidence determine what can be claimed.
+ 
+ The active workflow is `skills/mobile-web-ux-runner/SKILL.md`. Its references contain the contract, module checks, reporting procedure, and schema-2 ledger. `scripts/run_state.py` supports init, validation, reporting, conservative migration of schema-1 ledgers, and results-only updates. It does not launch an app, execute tests, authenticate evidence, or provide devices.
+ 
++Version 2.0.1 separates an observed mechanism/proxy scope from the device regression requirements of its fix. Requirements use `fix.device_regressions`, checks link them through `regression_covers`, and reported results use `regression_results`. Original `affects`, evidence, and `covers` retain their meaning. Separate planned state snapshots support grouped entries without treating planned conditions as observations. Legacy target-scoped plans remain supported; authorization, complete planning, distinct-entry budgeting, and original-scope verification gates remain in force.
++
+ The original r2 suite is identified by filename, revision, and SHA-256 in `references/sources.md`; active references replace the old bundled v3 instructions. The test catalog separates behavioral scenarios from recorded test executions. An installed test case is not proof that it passed.
+ 
++The local planning-fix validation is recorded separately in `skills/mobile-web-ux-runner/tests/planning-validation.json`: 115 helper tests (86 retained and 29 new), 12 focused CLI checks, independent code/ledger review, and focused documentation scenarios. The historical 49-case behavior record was preserved and was not rerun as part of this change. Pattern's copied ledger is valid but incomplete with a proxy ceiling; physical-device verification remains unrun.
++
+ Impeccable remains a separately installed dependency. No MCP service, application deployment, or physical-device validation is bundled or implied.
+diff -ru before/plugin.json source/plugin.json
+--- before/plugin.json	2026-10-20 22:08:51.041932471 +0000
++++ source/plugin.json	2026-10-21 00:37:27.083926132 +0000
+@@ -18,5 +18,5 @@
+     }
+   },
+   "name": "mobile-web-ux-runner",
+-  "version": "2.0.0"
++  "version": "2.0.1"
+ }
+diff -ru before/skills/mobile-web-ux-runner/SKILL.md source/skills/mobile-web-ux-runner/SKILL.md
+--- before/skills/mobile-web-ux-runner/SKILL.md	2026-10-20 22:08:51.041313380 +0000
++++ source/skills/mobile-web-ux-runner/SKILL.md	2026-10-21 00:37:27.084926119 +0000
+@@ -21,6 +21,8 @@
+ 
+ Device-dependent fixes default to **propose only**. Apply them only with **apply and hand off**, and only when all required checks still needing a person fit within `floor(device check budget / 2)` across applied fixes. Count distinct entries, including separate browser/device configurations, not fixes. The total script budget defaults to 10; zero is valid. Keep known valid input formats in both applied and proposed changes.
+ 
++Keep an observed mechanism/proxy scope separate from future device regressions. Preserve its `affects` and evidence; declare `fix.device_regressions` with source scope IDs and complete target conditions, link checks using `regression_covers`, and record actual portions in `regression_results`. `covers` still means original-scope coverage. Use `regression_conditions` for separate planned states within one browser/device entry. All requirements must have a runnable or reserved plan; target or unclassified original observations keep their original scope gate. A regression pass does not itself verify or refute the original finding. See [ledger schema](references/ledger-schema.md).
++
+ State the target, mode, principal task, and achieved verification ceiling. Use each available environment against the target before claiming it; declared human devices are not confirmed capabilities.
+ 
+ ## Execute
+diff -ru before/skills/mobile-web-ux-runner/references/evidence-contract.md source/skills/mobile-web-ux-runner/references/evidence-contract.md
+--- before/skills/mobile-web-ux-runner/references/evidence-contract.md	2026-10-20 22:08:51.041558176 +0000
++++ source/skills/mobile-web-ux-runner/references/evidence-contract.md	2026-10-21 00:42:43.707830710 +0000
+@@ -68,6 +68,8 @@
+ - A fix is device-dependent when any plausible regression from it would show only in environments you can't run. Typical cases: viewport units, safe areas, keyboard handling, `interactive-widget`, iOS scroll locking, `touch-action` and gesture code, page-level `overscroll-behavior`, Back and history handling, and legacy iOS declarations. Labels, image dimensions, and font sizes aren't device-dependent; check them by rendering. Nor are `autocomplete`, `enterkeyhint`, and `autocapitalize` changes, once checked against each field's purpose. A `type` or `inputmode` change is device-dependent unless its keyboard is documented to include every accepted character. Numeric and decimal keyboards may omit the minus key.
+ - Apply device-dependent fixes only when Device-dependent fixes says apply and hand off. Otherwise, including when that line is blank, propose them as diffs. Before applying one, identify its target checks across all affected browsers and states. All required checks still needing a person must fit within `floor(device check budget / 2)` script entries across the applied device-dependent fixes. Count entries, not fixes, and count separately the browser/device configurations that need separate results. If a fix's complete remaining coverage does not fit, propose it. Don't shrink the affected scope or bundle independent outcomes to fit the cap.
+ - When a fix depends on a result you can't get, propose it with the condition stated, and script the check.
++
++  This applies when the missing result is needed to establish the repair or choose a safe change. Pending regression results may instead be reserved under the explicit apply-and-hand-off gate above; they remain unrun and do not verify the edit. A reserved plan may name an unprovisioned future fixed build, with reachability and unknown wiring explicit prerequisites. Do not call it executable or observed until the required build, safe setup and actual device access exist. Budget admission validates the complete declared plan, not build availability or execution.
+ - Before editing, state the expected result and the regression checks. After editing, rerun the affected journey and the checks you can run. Script the rest.
+ - Preserve zoom, native navigation, focus behavior, valid input formats, and existing recovery paths in both applied and proposed fixes. Do not propose a keyboard configuration known to omit a required character on a supported target.
+ - Never disable or cap page zoom (`user-scalable=no`, a low `maximum-scale`). Keep `pinch-zoom` in `touch-action` unless the component handles pinch itself. Never remove focus indicators without a replacement.
+@@ -110,6 +112,8 @@
+ 
+ ## Ledger interpretation
+ 
++Schema 2 in runner 2.0.1 distinguishes original observation scope from a fix's independent device regression plan. Preserve mechanism/proxy `affects` and evidence. Declare target regression requirements with source scope IDs in `fix.device_regressions`, link them through `regression_covers`, and retain actual results in `regression_results`; these are independent of original-scope `covers` and `scope_results`. Explicit non-target origin evidence is required for this plan. Target or unclassified observations keep their original strict scope gate. Every requirement must map to a runnable or reserved entry before application, under the same authorization, completeness, priority and half-budget rules. Grouped state plans use `regression_conditions` snapshots, never fabricated observations. A passing regression establishes only its own qualified target behavior; it does not automatically verify, refute or supersede the original observed scope. Planned target acquisition remains unrun until actual evidence is reported.
++
+ Use the structured fields described in [reporting](reporting.md) and [ledger schema](ledger-schema.md). Evidence class, acquisition method/environment, and verification level are separate dimensions. Static review maps to static acquisition; automated tests to automated; desktop emulation and OS simulators to emulation; physical devices to physical_device. Field-data retrieval uses automated for an API and manual for a dashboard/export, while retaining **field data** as the environment. Always preserve source, collection window, URL/origin scope, metrics and browser populations. Acquisition does not turn field data into lab data or change its supported level.
+ 
+ Assess the ten master-audit areas even when the seven module checklists share a root cause. A module marked reviewed does not establish that every area or target scenario passed. Validator acceptance checks the submitted record, not omitted tests, authentic evidence, browser conformance, or production readiness.
+diff -ru before/skills/mobile-web-ux-runner/references/ledger-schema.md source/skills/mobile-web-ux-runner/references/ledger-schema.md
+--- before/skills/mobile-web-ux-runner/references/ledger-schema.md	2026-10-20 22:08:51.041627635 +0000
++++ source/skills/mobile-web-ux-runner/references/ledger-schema.md	2026-10-21 00:42:43.708830697 +0000
+@@ -19,7 +19,7 @@
+ 
+ ## Top-level records
+ 
+-- `schema_version: 2`, `skill_version: "2.0.0"`, `contract_revision: "2026-10-20-r2"`, run ID, project, target, principal task, revisions, mode, device policy, budget.
++- `schema_version: 2`, `skill_version: "2.0.1"`, `contract_revision: "2026-10-20-r2"`, run ID, project, target, principal task, revisions, mode, device policy, budget. Version 2.0.1 adds optional independent regression records; existing target-scoped plans keep their legacy representation and validation behavior.
+ - `capabilities`: objects with `id`, `environment`, `driver` (`agent` or `person`), `status` (`available`, `unavailable`, `declared`, `not_checked`), `evidence`, `reason`. Available requires actual probe evidence; a person's promised device is declared until a reported execution. Environment is one of `static_review`, `automated_test`, `desktop_emulation`, `os_simulator`, `physical_device`, `field_data`.
+ - `builds`: objects with `id`, `description`, `contains_fixes` (finding IDs), and `substitutions`.
+ - `standing_substitutions`: objects with `id`, `environments` and `build_ids` (explicit scopes; `*` means all), plus substitution fields below. Never scope a local harness stub to the phone.
+@@ -47,6 +47,59 @@
+ 
+ Acquisition mapping: static review → `static`; automated test → `automated`; desktop emulation and OS simulator → `emulation`; physical device → `physical_device`; field data → `automated` (API) or `manual` (dashboard/export). Field checks retain `field_data: {source, collection_window, scope, populations, metrics}`. A finding verified by field data also needs `metric_claim: {scope, populations, metrics}`; the check must cover that URL/origin scope, every claimed metric and the claimed browser populations. Level remains separate. Simulator target is allowed for browser UI, rendering, safe areas, software keyboard and focus zoom; performance, touch feel and hardware remain proxy. Desktop emulation cannot be target.
+ 
++## Independent device regression plans
++
++Original `affects` and `covers` describe the observed or claimed finding scope. A mechanism/proxy observation on a desktop is not a phone observation. For a device-dependent fix, `fix.device_regressions` can declare the separate target regressions that protect that fix without changing the original scope or evidence. This is an optional schema-2 extension; do not add it to bypass a genuinely target-observed or unclassified original scope.
++
++Each requirement has a stable `id`, nonempty `source_scope_ids` referring to original Affects, `environment` (`physical_device` or a supported `os_simulator` behavior), `behavior`, `expected`, complete `conditions`, and `depends_on`. Every referenced source scope must have explicit structured evidence whose relevant levels are mechanism/proxy and whose observations are recorded. Target or unclassified origin evidence retains the original scope gate. Each active non-target origin needs a requirement, and every requirement needs a linked required check. The helper cannot infer omitted regressions; compare the complete plan with the actual fix before admission.
++
++The following fields are excerpts of a finding's fix and its matching check, not a complete ledger. Keep the original desktop `affects` and evidence unchanged.
++
++```json
++{
++  "fix": {
++    "applied": true,
++    "device_dependent": true,
++    "build_id": "B-local-fixed",
++    "evidence": ["local diff and proxy trace"],
++    "required_check_ids": ["C-PHONE"],
++    "device_regressions": [{
++      "id": "DR-KEYBOARD",
++      "source_scope_ids": ["desktop-proxy"],
++      "environment": "physical_device",
++      "behavior": "software_keyboard",
++      "expected": "Main focus preserves reading scroll; actual fields remain reachable",
++      "conditions": {
++        "build_id": "B-phone-fixed",
++        "browser": "Safari",
++        "device": "iPhone",
++        "state": "portrait; keyboard open then closed",
++        "account_data": "isolated test account A",
++        "setup": "confirm the isolated backend and record build/setup wiring",
++        "steps": ["Scroll Today", "Focus main", "Focus the final field", "Close the keyboard"],
++        "timing": "after each focus and viewport transition settles",
++        "substitutions": "unknown until independently inspected"
++      },
++      "depends_on": []
++    }]
++  },
++  "check_links": {
++    "covers": [],
++    "regression_covers": [{"finding_id": "F-02", "regression_id": "DR-KEYBOARD"}]
++  }
++}
++```
++
++`B-phone-fixed` must be a named build whose `contains_fixes` includes F-02. It may differ from `fix.build_id`; this does not prove it was provisioned or executed. Its actual wiring may remain unknown. The linked check must match the requirement's environment, behavior, build, browser/device configuration, and every condition. A runnable available agent target needs no human slot; otherwise the matching person entry must be in the script. Applied entries retain their original authorization, complete union, reserved priority and `floor(budget / 2)` cap. Shared entries count once, with independently reportable portions. A missing, wrong-configuration or over-budget plan remains invalid.
++
++`check.regression_covers` is independent of `covers`. Never place a phone regression in original desktop scope coverage. One entry can cover several requirements in one browser/device configuration. If their states or steps differ, add `regression_conditions: [{finding_id, regression_id, conditions}]` planned snapshots. Each snapshot must match its requirement, with unique in-plan IDs; otherwise the check's common `conditions` supplies the planned set. These snapshots support planning only. They cannot override actual reported conditions or qualify a result.
++
++Browser/device families such as Safari/iPhone can describe a future configuration when that is the intended support scope; require the tester to report the actual model, OS/browser versions and viewport. If a particular version/model/width/display is needed to exercise the regression or the support matrix, include it in the requirement's conditions and steps before admission; do not invent it or drop it because it is unavailable. Unprovisioned builds and declared/unavailable human capabilities may have reserved entries, but remain explicit execution prerequisites and unrun limitations. Missing evidence needed to establish the repair itself still requires a proposal. A locally applied fix also always needs its genuine edit evidence; excerpts do not excuse an empty `fix.evidence` in a submitted ledger.
++
++`check.regression_results: [{finding_id, regression_id, status, actual, evidence, conditions}]` holds actual independent outcomes. Status per portion is `pass`, `fail` or `not_run`; the containing check can be `partial`. A qualified regression pass needs actual/evidence, an available target capability, matching actual conditions and configuration, a confirmed fixed build for a person, and no relevant unknown/replaced finding or requirement dependency. Requirements and results remain in the report even when unrun. The summary's `device_regressions` lists each requirement's qualified state: `pass`, `fail`, `not_run` or `unestablished`. A supplied but unqualified pass is unestablished. Regression results do not automatically change original evidence, `verification_ids`, refutations, finding status or baseline supersession. Original-scope verification still uses its original gate.
++
++`application_basis` freezes the complete independent fix specification and original admission when results are first applied. Results cannot repair an invalid admission, rewrite requirements, or authorize a new fix. Do not fabricate this snapshot or use `applied_before_run` to erase a planning error.
++
+ ## Results-only input
+ 
+ ```json
+@@ -66,7 +119,13 @@
+ }
+ ```
+ 
+-Only use `conditions_confirmed: true` when the tester explicitly confirmed all planned reproduction conditions (including steps, timing and account/data). Build/setup confirmation alone does not establish this. Supply actual `conditions` instead when different. For a single-scope check the overall result can supply that scope; with multiple scopes give explicit `scope_results` or `all_steps_confirmed: true`. Never-reported portions remain not run. Complementary updates retain earlier clear portions only when build, configuration, conditions and substitutions are unchanged and confirmed; explicit partial results take precedence over a generic all-steps flag. A differing build requires a new check ID through `new_check_id`, retaining the old entry.
++Only use `conditions_confirmed: true` when the tester explicitly confirmed all planned reproduction conditions (including steps, timing and account/data). Build/setup confirmation alone does not establish this. Supply actual `conditions` instead when different. A per-portion confirmation can confirm that requirement's planned conditions. Planned snapshots alone do not confirm anything.
++
++Per-portion `conditions` and `conditions_confirmed` are alternative input forms: give the actual condition object, or confirm that portion's entire planned condition set. `apply-results` normalizes a genuine confirmation to stored `conditions`. If actual conditions differ, report those actual conditions; confirmation cannot overwrite them. Stored planned `regression_conditions` is separate from both forms.
++
++For a check with one total scope/regression portion, the overall pass/fail can supply the omitted portion. Count original scopes and independent regressions together. With multiple total portions give explicit `scope_results` and/or `regression_results`, or a whole pass/fail with `all_steps_confirmed: true`. A whole `partial` result never becomes an individual portion status. An explicit empty regression-results array reports no portions; it does not inherit an aggregate pass. Empty scope-results arrays follow that rule on checks with independent regression links; pure legacy checks retain their older fallback for compatibility. Malformed, duplicate and out-of-plan regression results are invalid. Never-reported portions remain not run. Complementary updates retain earlier clear portions only when build, configuration, conditions and substitutions are unchanged and confirmed; explicit partial results take precedence over a generic all-steps flag. A differing build requires a new check ID through `new_check_id`, retaining the old entry.
++
++For an independent result use, for example, `regression_results: [{"finding_id": "F-02", "regression_id": "DR-KEYBOARD", "status": "pass", "actual": "Field stayed visible in the reported portrait state", "evidence": ["tester: portrait screenshot"], "conditions_confirmed": true}]` with top-level status `partial` when another portion is missing. Leave each missing state unrun. A recorded failed portion makes verification failed even when the containing check is partial.
+ 
+ Results may name `relation`: `defect_reproduced`, `prediction_contradicted`, `cause_only`, or `unrelated`; do not infer that every failure reproduces the finding. `cause_only` may supply `cause` but cannot change disposition. Refutation of an earlier target-observed failure needs `contrary_explanation` and `explains_prior_observation: true` supported by reported evidence. Intermittent/unknown claims additionally need `pass_count`, `causal_explanation`, and `mechanism_ruled_out: true`. An independent requirement needs its own `requirement_refutation`. Passing observations alone do not invent any of these facts.
+ 
+diff -ru before/skills/mobile-web-ux-runner/references/reporting.md source/skills/mobile-web-ux-runner/references/reporting.md
+--- before/skills/mobile-web-ux-runner/references/reporting.md	2026-10-20 22:08:51.041662065 +0000
++++ source/skills/mobile-web-ux-runner/references/reporting.md	2026-10-21 00:42:43.707830710 +0000
+@@ -20,6 +20,10 @@
+ 
+ A check can contain explicit state transitions with expected results per step. Preserve each reported portion; a portrait pass does not imply landscape passed. Build and setup substitutions must be distinguishable. Do not copy a local Playwright stub into a phone script unless it actually exists in that phone build/setup. Write none (checked) only with evidence; otherwise name unknown wiring and its limit.
+ 
++Separate original finding-scope coverage from independent device regression plans. List each `fix.device_regressions` requirement, its source scope IDs, linked checks, planned conditions and qualified result. Mark a `regression_covers` link as a device regression link, not original-scope `covers`. Use `regression_conditions` for independently planned states in a grouped entry and `regression_results` for reported portions. The script's target level describes intended acquisition; `not_run`, blank actual and empty evidence establish no target observation. A phone build can contain the fix without being the local proxy build; preserve both identities and unknown wiring. Regression passes never automatically verify/refute the original observation or retire its historical failure.
++
++Phone reachability is an execution prerequisite. A complete reserved plan can name an unprovisioned future build, but must state that limitation and the missing build/setup/access under open questions. Do not present those entries as ready to run or as completed. This does not waive a missing result needed to establish the repair itself; that fix remains proposed. Target plan completeness and entry-budget admission alone do not establish access, safety of actual writes or qualification.
++
+ Before handing off, map every required target condition to an entry and an explicit setup or step. For layout/content-growth findings, carry the relevant narrow width, orientation, content length, and text enlargement into the target script; listing them only in a desktop plan leaves target coverage missing. “Phone portrait” alone does not specify a narrow viewport. Name the required CSS width or supported narrow configuration and have the tester record the actual width. Do not invent compatible hardware or treat a resized desktop viewport as the target. If a required target configuration is unavailable, keep that portion unrun and visible; if it needs a separate entry, count it against the budget. The helper can check only scopes that were recorded, so review this mapping against the original finding before trusting the ledger.
+ 
+ Example entry structure (illustrative, not executed):
+@@ -71,7 +75,7 @@
+ 
+ 1. Match the existing C-ID and F-IDs. Preserve raw results and prior evidence in history. A changed scenario/build gets a new C-ID linked to the earlier entry; unchanged checks retain their IDs.
+ 2. Record reported device, OS, browser, build, setup, state, actual behavior and evidence. Confirm build and setup independently. Confirmed portions inherit their listed substitutions, including unknown. Unconfirmed portions become not reported. Build confirmation alone does not establish setup, account/data, timing, all steps, or missing boundaries.
+-3. Preserve clear passes/failures at their reported scope. Mark missing or ambiguous portions not run. For multi-state checks, use explicit partial scope outcomes; do not promote one reported step to all steps.
++3. Preserve clear passes/failures at their reported scope or independent regression. Mark missing or ambiguous portions not run. For multi-state or mixed scope/regression checks, use explicit `scope_results` and `regression_results`; count both families before considering any aggregate result. Explicit empty regression results never inherit a pass. Do not promote one reported step to all steps, copy `partial` into a portion, or use planned snapshots as actual evidence. Keep partial failures visible in the overall verdict.
+ 4. Evaluate behavior and cause separately. A failure that reproduces the defect confirms it within the tested conditions and dependencies. An unrelated failure does not. A recurrence after a fix reopens the affected scope. Cause-only evidence revises the causal explanation without automatically reopening or closing the defect.
+ 5. Implemented fixes need target passes on a build containing the fix across every unresolved affected scope, with no relevant unknown/replaced dependency. A layout observation can remain target when an unrelated backend is unknown; that does not verify persistence or identify an unconfirmed fix build.
+ 6. An unfixed pass is normally not reproduced in this run. Apply the contract's contrary-evidence rules to the finding's claimed target conditions, not the earlier static/proxy environment. Deterministic source/proxy predictions can be refuted by a matching target result contradicting the prediction. A prior target-observed failure needs reported explanation of the discrepancy. Intermittent/unknown determinism needs pass count and causal exclusion; passes alone do not close, narrow, or downgrade it. Independently established source/accessibility requirements need their own refutation. Whole-scope qualifying contrary evidence permits not an issue, never Verified for an unfixed finding.
+diff -ru before/skills/mobile-web-ux-runner/references/workflow.md source/skills/mobile-web-ux-runner/references/workflow.md
+--- before/skills/mobile-web-ux-runner/references/workflow.md	2026-10-20 22:08:51.041698214 +0000
++++ source/skills/mobile-web-ux-runner/references/workflow.md	2026-10-21 00:37:27.084926119 +0000
+@@ -44,6 +44,10 @@
+ 
+ When a needed result is unavailable, propose the conditional diff and script the check. Preserve valid characters, page zoom, focus, native navigation and recovery even in proposals. Avoid blanket viewport, touch-action, history, scroll-lock, blur, lazy-load, optimistic-completion or retry changes. Add automated regression coverage where it meaningfully exercises the defect; do not fabricate a phone test by renaming a mocked resize.
+ 
++For a fix whose observed origin is explicitly mechanism/proxy evidence, preserve that original scope and declare its independent device regression requirements in `fix.device_regressions`. Each requirement names its source scope IDs, expected behavior, environment, complete device/build conditions and relevant dependencies. Map every requirement to `required_check_ids` through `check.regression_covers`; use `covers` only for actual original-scope coverage. A phone regression build may differ from the local fix build if its named build contains the fix. Every remaining human entry still counts against the same half-budget reservation and priority. Mixed findings retain the strict original-scope plan for target or unclassified evidence. Do not relabel desktop evidence, rewrite Affects, mark a new edit as pre-existing, or fabricate an application basis to make admission pass.
++
++Within one browser/device entry, list state transitions and use `regression_conditions` snapshots when requirements have different planned conditions. Keep those snapshots separate from actual `regression_results`. A partial report must preserve each executed portion and leave missing portions not run. Passing all independent regressions does not automatically verify or refute the original finding.
++
+ ## Confirmation and handoff
+ 
+ Batch related baseline and confirmation views for efficiency. There is no inherited global two-round stop that prevents completing an authorized repair. Rerun the affected journey and necessary project gates after changes. Expand testing only to resolve a concrete remaining risk or required gate. Preserve baseline failures, current failures, and unrun checks; do not overwrite history to obtain a green summary.
+diff -ru before/skills/mobile-web-ux-runner/scripts/run_state.py source/skills/mobile-web-ux-runner/scripts/run_state.py
+--- before/skills/mobile-web-ux-runner/scripts/run_state.py	2026-10-20 22:08:51.041219911 +0000
++++ source/skills/mobile-web-ux-runner/scripts/run_state.py	2026-10-21 00:37:49.645634307 +0000
+@@ -16,7 +16,7 @@
+ from typing import Any
+ import uuid
+ 
+-VERSION = '2.0.0'
++VERSION = '2.0.1'
+ CONTRACT_REVISION = '2026-10-20-r2'
+ MODULES = ('Principal journey and mobile UX', 'Viewport, browser chrome and safe areas',
+            'Virtual keyboard and forms', 'Touch targets, reach and feedback',
+@@ -129,9 +129,11 @@
+ 
+ def outcome_for(check: dict, fid: str, sid: str) -> dict:
+     rows = objects(check.get('scope_results'))
+-    if rows:
++    if rows or 'scope_results' in check and regression_covers(check):
+         return next((r for r in rows if r.get('finding_id') == fid and r.get('scope_id') == sid),
+                     {'status': 'not_run', 'reason': 'This portion was not reported'})
++    if regression_covers(check) and len(covers(check)) + len(regression_covers(check)) > 1:
++        return {'status': 'not_run', 'reason': 'Separate scope/regression portions were not reported'}
+     return check
+ 
+ 
+@@ -253,6 +255,78 @@
+     return not match_conditions(scope.get('conditions'), check_conditions(check, finding.get('id'), scope.get('id')), fixed=True)
+ 
+ 
++def regression_covers(check: dict) -> set:
++    return {(x.get('finding_id'), x.get('regression_id')) for x in objects(check.get('regression_covers'))
++            if isinstance(x.get('finding_id'), str) and isinstance(x.get('regression_id'), str)}
++
++
++def regression_for(finding: dict, rid: str) -> dict:
++    return next((r for r in objects(finding.get('fix', {}).get('device_regressions')) if r.get('id') == rid), {})
++
++
++def non_target_origin(finding: dict, sid: str) -> bool:
++    """Only explicit scoped mechanism/proxy evidence permits independent device plans."""
++    relevant = []
++    for item in finding.get('evidence', []):
++        if not isinstance(item, dict):
++            return False  # Unclassified provenance cannot silently weaken the original gate.
++        if item.get('scope_ids') and sid not in ids(item.get('scope_ids')):
++            continue
++        relevant.append(item)
++    return bool(relevant) and all(item.get('level') in ('mechanism', 'proxy')
++                                  and nonblank(item.get('observation')) for item in relevant)
++
++
++def regression_outcome_for(check: dict, fid: str, rid: str) -> dict:
++    rows = objects(check.get('regression_results'))
++    if 'regression_results' in check:
++        return next((r for r in rows if r.get('finding_id') == fid and r.get('regression_id') == rid),
++                    {'status': 'not_run', 'reason': 'This regression portion was not reported'})
++    if len(covers(check)) + len(regression_covers(check)) > 1:
++        return {'status': 'not_run', 'reason': 'Separate regression portions were not reported'}
++    return check
++
++
++def regression_conditions_match(state: dict, check: dict, finding: dict, regression: dict, conditions: Any) -> bool:
++    """Match the device requirement, never the source/proxy observation it protects."""
++    if (check.get('level') != 'target' or check.get('environment') != regression.get('environment')
++            or check.get('environment') not in ('physical_device', 'os_simulator')
++            or check.get('behavior') != regression.get('behavior')):
++        return False
++    if check.get('environment') == 'os_simulator' and check.get('behavior') not in SIMULATOR_TARGET:
++        return False
++    expected = regression.get('conditions', {})
++    build = index(state.get('builds')).get(check.get('build_id'), {})
++    if (check.get('build_id') != expected.get('build_id')
++            or finding.get('id') not in ids(build.get('contains_fixes'))):
++        return False
++    configuration = check.get('configuration', {})
++    return isinstance(configuration, dict) and all(configuration.get(k) == expected.get(k)
++            for k in ('browser', 'device')) and not match_conditions(expected, conditions)
++
++
++def planned_regression_matches(state: dict, check: dict, finding: dict, regression: dict) -> bool:
++    snapshot = next((r for r in objects(check.get('regression_conditions'))
++                     if r.get('finding_id') == finding.get('id') and r.get('regression_id') == regression.get('id')), {})
++    return regression_conditions_match(state, check, finding, regression, snapshot.get('conditions', check.get('conditions')))
++
++
++def pass_for_regression(state: dict, check: dict, finding: dict, regression: dict) -> bool:
++    fid, rid = finding.get('id'), regression.get('id')
++    if (fid, rid) not in regression_covers(check):
++        return False
++    out = regression_outcome_for(check, fid, rid)
++    if (out.get('status') != 'pass' or not nonblank(out.get('actual'))
++            or not evidence_ok(out.get('evidence')) or not target_valid(state, check)):
++        return False
++    if not regression_conditions_match(state, check, finding, regression, out.get('conditions', check.get('conditions'))):
++        return False
++    if check.get('driver') == 'person' and not check.get('build_confirmed'):
++        return False
++    dependencies = ids(finding.get('depends_on', [])) + ids(regression.get('depends_on', []))
++    return not dependency_limits(state, check, dependencies)
++
++
+ def contrary_qualification(state: dict, check: dict, finding: dict, scope: dict, reported: dict) -> tuple:
+     fid, sid = finding.get('id'), scope.get('id')
+     out = outcome_for(check, fid, sid)
+@@ -311,7 +385,7 @@
+     errors, gaps = [], []
+     result = {'errors': errors, 'gaps': gaps, 'coverage': 'incomplete', 'assessment_complete': False,
+               'verification': 'incomplete', 'verification_ceiling': 'none', 'impeccable': 'not_run',
+-              'open_p0_p1': [], 'applied_device_entries': [], 'claimable_complete': False}
++              'open_p0_p1': [], 'applied_device_entries': [], 'device_regressions': [], 'claimable_complete': False}
+     if not isinstance(state, dict):
+         errors.append('The ledger must be an object')
+         return result
+@@ -410,6 +484,7 @@
+     if not any(c.get('status') == 'available' for c in capabilities):
+         gaps.append('No environment has a successful capability probe or reported execution')
+     builds = rows('builds')
++    build_index = index(builds)
+     buildids = [b.get('id') for b in builds]
+     if any(not nonblank(x) for x in buildids) or len(set(map(str, buildids))) != len(buildids):
+         errors.append('Builds require unique IDs')
+@@ -503,6 +578,9 @@
+             override = c['build_substitution_override']
+             if not isinstance(override, dict) or not nonblank(override.get('reason')) or not evidence_ok(override.get('evidence')):
+                 errors.append(f'{cid}: a build-wiring override needs its reported reason and evidence')
++        raw_portions = c.get('scope_results', [])
++        if regression_covers(c) and (not isinstance(raw_portions, list) or len(objects(raw_portions)) != len(raw_portions)):
++            errors.append(f'{cid}: scope results must be a list of reported portions')
+         seen = set()
+         for o in objects(c.get('scope_results')):
+             key = (o.get('finding_id'), o.get('scope_id'))
+@@ -513,7 +591,8 @@
+                 errors.append(f'{cid}: invalid portion status')
+             if o.get('status') in ('pass', 'fail') and (not nonblank(o.get('actual')) or not evidence_ok(o.get('evidence'))):
+                 errors.append(f'{cid}: executed portion needs actual and evidence')
+-        if status == 'pass' and any(o.get('status') != 'pass' for o in objects(c.get('scope_results'))):
++        if status == 'pass' and (any(o.get('status') != 'pass' for o in objects(raw_portions))
++                                 or regression_covers(c) and 'scope_results' in c and seen != covers(c)):
+             errors.append(f'{cid}: whole pass cannot contain nonpassing portions')
+         if c.get('replaces_check_id'):
+             prior = check_index.get(c['replaces_check_id'])
+@@ -612,6 +691,45 @@
+             result['open_p0_p1'].append(fid)
+         if mode == 'audit_and_fix' and f.get('severity') in ('P0', 'P1', 'P2') and f.get('evidence_class') in ('observed', 'code_supported') and fs not in ('verified', 'not_an_issue'):
+             gaps.append(f'{fid}: confirmed finding is {fs}')
++        independent_plan = 'device_regressions' in fix
++        regressions = objects(fix.get('device_regressions'))
++        origin_finding = index(application_basis.get('findings')).get(fid, f) if historical_application else f
++        if independent_plan:
++            raw_regressions = fix.get('device_regressions')
++            if not isinstance(raw_regressions, list) or not regressions or len(regressions) != len(raw_regressions):
++                errors.append(f'{fid}: device_regressions requires a nonempty list of requirements')
++            rids = [r.get('id') for r in regressions]
++            if any(not nonblank(rid) for rid in rids) or len(set(map(str, rids))) != len(rids):
++                errors.append(f'{fid}: device regression IDs must be unique and nonempty')
++            for regression in regressions:
++                rid = regression.get('id')
++                origins = ids(regression.get('source_scope_ids'))
++                if not origins or len(set(origins)) != len(origins) or any(sid not in scopeids for sid in origins):
++                    errors.append(f'{fid}/{rid}: device regression requires existing source scope IDs')
++                elif any(not non_target_origin(origin_finding, sid) for sid in origins):
++                    errors.append(f'{fid}/{rid}: independent device regression requires explicit non-target origin evidence')
++                env, behavior = regression.get('environment'), regression.get('behavior')
++                if (env not in ('physical_device', 'os_simulator') or not nonblank(behavior)
++                        or env == 'os_simulator' and behavior not in SIMULATOR_TARGET):
++                    errors.append(f'{fid}/{rid}: unsupported device regression environment/behavior')
++                if not nonblank(regression.get('expected')):
++                    errors.append(f'{fid}/{rid}: device regression needs expected behavior')
++                rc = regression.get('conditions')
++                if (not isinstance(rc, dict) or any(not rc.get(key) for key in CONDITION_FIELDS)
++                        or not isinstance(rc.get('steps'), list) or not all(nonblank(x) for x in rc.get('steps', []))):
++                    errors.append(f'{fid}/{rid}: device regression requires complete planned conditions')
++                elif fid not in ids(build_index.get(rc.get('build_id'), {}).get('contains_fixes')):
++                    errors.append(f'{fid}/{rid}: planned device build must contain the fix')
++                if not isinstance(regression.get('depends_on', []), list) or any(not nonblank(x) for x in regression.get('depends_on', [])):
++                    errors.append(f'{fid}/{rid}: invalid device regression dependencies')
++                linked = [c for c in checks if (fid, rid) in regression_covers(c)]
++                passed = any(pass_for_regression(state, c, f, regression) for c in linked)
++                raw_statuses = {regression_outcome_for(c, fid, rid).get('status') for c in linked}
++                status = 'pass' if passed else 'fail' if 'fail' in raw_statuses else 'unestablished' if raw_statuses & {'pass', 'partial'} else 'not_run'
++                result['device_regressions'].append({'finding_id': fid, 'regression_id': rid,
++                    'source_scope_ids': origins, 'check_ids': [c.get('id') for c in linked], 'status': status})
++                if not passed:
++                    gaps.append(f'{fid}/{rid}: device regression target verification {status}')
+         if fix.get('applied') and fix.get('device_dependent') and not fix.get('applied_before_run') and not historical_application:
+             if state.get('device_dependent_fixes') != 'apply_and_hand_off':
+                 errors.append(f'{fid}: device-dependent application is not authorized')
+@@ -619,6 +737,10 @@
+             if not required_ids or any(c not in check_index for c in required_ids):
+                 errors.append(f'{fid}: applied device fix requires its complete target-check plan')
+             for scope in active_scopes(f):
++                if independent_plan and non_target_origin(origin_finding, scope['id']):
++                    if not any(scope['id'] in ids(r.get('source_scope_ids')) for r in regressions):
++                        errors.append(f'{fid}/{scope["id"]}: applied device fix omits source scope regression requirements')
++                    continue
+                 relevant = [check_index[c] for c in required_ids if c in check_index and (fid, scope['id']) in covers(check_index[c])]
+                 if not relevant:
+                     errors.append(f'{fid}/{scope["id"]}: applied device fix omits affected scope')
+@@ -633,16 +755,29 @@
+             for required_id in required_ids:
+                 planned = check_index.get(required_id, {})
+                 planned_scopes = [s for s in active_scopes(f) if (fid, s['id']) in covers(planned)]
+-                if not planned_scopes:
+-                    errors.append(f'{fid}/{required_id}: required fix check does not cover an affected scope')
+-                elif not all(pass_for_scope(state, planned, f, s) for s in planned_scopes):
++                planned_regressions = [r for r in regressions if (fid, r.get('id')) in regression_covers(planned)]
++                if not planned_scopes and not planned_regressions:
++                    errors.append(f'{fid}/{required_id}: required fix check does not cover an affected scope or device regression')
++                if planned_scopes and not all(pass_for_scope(state, planned, f, s) for s in planned_scopes):
+                     matches = all(planned_target_matches(planned, f, s) for s in planned_scopes)
++                    runnable = planned.get('driver') == 'agent' and target_valid(state, planned) and matches
++                    if not runnable and (planned.get('driver') != 'person' or required_id not in script or not matches):
++                        errors.append(f'{fid}/{required_id}: every required remaining entry must fit before application')
++                    elif not runnable:
++                        applied_entries.add(required_id)
++                for regression in planned_regressions:
++                    if pass_for_regression(state, planned, f, regression):
++                        continue
++                    matches = planned_regression_matches(state, planned, f, regression)
+                     if planned.get('driver') == 'agent' and target_valid(state, planned) and matches:
+                         continue
+                     if planned.get('driver') != 'person' or required_id not in script or not matches:
+-                        errors.append(f'{fid}/{required_id}: every required remaining entry must fit before application')
++                        errors.append(f'{fid}/{required_id}: required device regression must match a runnable target plan')
+                     else:
+                         applied_entries.add(required_id)
++            for regression in regressions:
++                if not any((fid, regression.get('id')) in regression_covers(check_index.get(cid, {})) for cid in required_ids):
++                    errors.append(f'{fid}/{regression.get("id")}: device regression has no required check')
+     if historical_application:
+         applied_entries = basis_entries.intersection(script)
+     result['applied_device_entries'] = sorted(applied_entries)
+@@ -651,6 +786,40 @@
+     if applied_entries and set(script[:len(applied_entries)]) != applied_entries:
+         errors.append('Applied device-dependent entries must receive reserved script priority')
+     for c in checks:
++        raw_links = c.get('regression_covers', [])
++        links = regression_covers(c)
++        if not isinstance(raw_links, list) or len(links) != len(raw_links):
++            errors.append(f'{c.get("id")}: device regression links must be well formed and unique')
++        for fid, rid in links:
++            if not regression_for(finding_index.get(fid, {}), rid):
++                errors.append(f'{c.get("id")}: unknown covered finding/device regression')
++        raw_snapshots = c.get('regression_conditions', [])
++        if not isinstance(raw_snapshots, list) or len(objects(raw_snapshots)) != len(raw_snapshots):
++            errors.append(f'{c.get("id")}: regression conditions must be a list of planned snapshots')
++        seen_snapshots = set()
++        for snapshot in objects(raw_snapshots):
++            key = (snapshot.get('finding_id'), snapshot.get('regression_id'))
++            if key not in links or key in seen_snapshots:
++                errors.append(f'{c.get("id")}: duplicate or out-of-plan regression conditions')
++            seen_snapshots.add(key)
++            requirement = regression_for(finding_index.get(key[0], {}), key[1])
++            if not requirement or match_conditions(requirement.get('conditions'), snapshot.get('conditions')):
++                errors.append(f'{c.get("id")}: planned regression conditions must match their requirement')
++        raw_results = c.get('regression_results', [])
++        if not isinstance(raw_results, list) or len(objects(raw_results)) != len(raw_results):
++            errors.append(f'{c.get("id")}: regression results must be a list of reported portions')
++        seen_regressions = set()
++        for out in objects(c.get('regression_results')):
++            key = (out.get('finding_id'), out.get('regression_id'))
++            if key not in links or key in seen_regressions:
++                errors.append(f'{c.get("id")}: duplicate or out-of-plan regression result')
++            seen_regressions.add(key)
++            if out.get('status') not in ('pass', 'fail', 'not_run'):
++                errors.append(f'{c.get("id")}: invalid regression portion status')
++            if out.get('status') in ('pass', 'fail') and (not nonblank(out.get('actual')) or not evidence_ok(out.get('evidence'))):
++                errors.append(f'{c.get("id")}: executed regression portion needs actual and evidence')
++        if c.get('status') == 'pass' and 'regression_results' in c and (seen_regressions != links or any(o.get('status') != 'pass' for o in objects(raw_results))):
++            errors.append(f'{c.get("id")}: whole pass cannot contain nonpassing regressions')
+         for fid, sid in covers(c):
+             if fid not in finding_index or not scope_for(finding_index[fid], sid):
+                 errors.append(f"{c.get('id')}: unknown covered finding/scope")
+@@ -687,7 +856,7 @@
+ 
+     active_failures, pending = [], []
+     for c in checks:
+-        statuses = [o.get('status') for o in objects(c.get('scope_results'))] or [c.get('status')]
++        statuses = [c.get('status')] + [o.get('status') for o in objects(c.get('scope_results')) + objects(c.get('regression_results'))]
+         resolved = bool(c.get('superseded_by')) and failed_superseded(state, c, check_index, finding_index)
+         if 'fail' in statuses and not resolved:
+             active_failures.append(c.get('id'))
+@@ -765,7 +934,7 @@
+             updated['checks'].append(c)
+             checks[new_id] = c
+         c.setdefault('result_history', []).append({'at': now(), 'prior': {k: copy.deepcopy(c.get(k)) for k in
+-             ('status', 'actual', 'evidence', 'scope_results', 'build_id', 'substitutions', 'conditions')}, 'reported': copy.deepcopy(reported)})
++             ('status', 'actual', 'evidence', 'scope_results', 'regression_results', 'build_id', 'substitutions', 'conditions')}, 'reported': copy.deepcopy(reported)})
+         if reported.get('relation') == 'cause_only':
+             for fid, sid in covers(c):
+                 f = findings.get(fid)
+@@ -778,11 +947,8 @@
+                         'note': reported.get('actual', '')})
+             continue  # A causal disagreement is not a new pass/fail of the defect's behavior.
+         prior_record = copy.deepcopy(c)
+-        prior_portions = objects(prior_record.get('scope_results')) or [
+-            {'finding_id': fid, 'scope_id': sid, 'status': prior_record.get('status'),
+-             'actual': prior_record.get('actual', ''), 'evidence': copy.deepcopy(prior_record.get('evidence', [])),
+-             'conditions': copy.deepcopy(prior_record.get('conditions', {}))}
+-            for fid, sid in covers(prior_record)]
++        prior_portions = [{**copy.deepcopy(outcome_for(prior_record, fid, sid)), 'finding_id': fid, 'scope_id': sid}
++                          for fid, sid in covers(prior_record)]
+         c['driver'] = 'person'
+         c['build_confirmed'] = reported.get('build_confirmed') is True and reported.get('build_id', c.get('build_id')) == c.get('build_id')
+         c['setup_confirmed'] = reported.get('setup_confirmed') is True
+@@ -808,13 +974,20 @@
+             c.setdefault('conditions', {})['build_id'] = c.get('build_id')
+         else:
+             c.setdefault('conditions', {}).pop('build_id', None)
+-        provided = objects(reported.get('scope_results'))
+         expected_covers = covers(c)
+-        if provided:
++        expected_regressions = regression_covers(c)
++        aggregate_allowed = (reported.get('status', 'not_run') in ('pass', 'fail', 'not_run')
++                             and (len(expected_covers) + len(expected_regressions) <= 1
++                                  or reported.get('all_steps_confirmed') is True))
++        raw_scopes = reported.get('scope_results', [])
++        if expected_regressions and (not isinstance(raw_scopes, list) or len(objects(raw_scopes)) != len(raw_scopes)):
++            raise ValueError('Scope results must be a list of reported portions')
++        provided = objects(raw_scopes)
++        if provided or expected_regressions and 'scope_results' in reported:
+             if any((o.get('finding_id'), o.get('scope_id')) not in expected_covers for o in provided):
+                 raise ValueError('Reported portion is outside the planned check scope')
+             portions = copy.deepcopy(provided)
+-        elif len(expected_covers) <= 1 or reported.get('all_steps_confirmed') is True:
++        elif aggregate_allowed:
+             portions = [dict(finding_id=fid, scope_id=sid, status=reported.get('status', 'not_run'),
+                              actual=reported.get('actual', ''), evidence=copy.deepcopy(reported.get('evidence', [])))
+                         for fid, sid in sorted(expected_covers)]
+@@ -844,11 +1017,48 @@
+                 else:
+                     o['conditions'].pop('build_id', None)
+             o.setdefault('conditions', copy.deepcopy(c.get('conditions', {})))
++        raw_regressions = reported.get('regression_results', [])
++        if not isinstance(raw_regressions, list) or len(objects(raw_regressions)) != len(raw_regressions):
++            raise ValueError('Regression results must be a list of reported portions')
++        provided_regressions = objects(raw_regressions)
++        if any((o.get('finding_id'), o.get('regression_id')) not in expected_regressions for o in provided_regressions):
++            raise ValueError('Reported regression portion is outside the planned check')
++        if len({(o.get('finding_id'), o.get('regression_id')) for o in provided_regressions}) != len(provided_regressions):
++            raise ValueError('Duplicate regression results must be consolidated')
++        if 'regression_results' in reported:
++            regression_portions = copy.deepcopy(provided_regressions)
++        elif aggregate_allowed:
++            regression_portions = [dict(finding_id=fid, regression_id=rid, status=reported.get('status', 'not_run'),
++                actual=reported.get('actual', ''), evidence=copy.deepcopy(reported.get('evidence', [])))
++                for fid, rid in sorted(expected_regressions)]
++        else:
++            regression_portions = []
++        reported_regressions = {(o.get('finding_id'), o.get('regression_id')) for o in regression_portions}
++        for fid, rid in sorted(expected_regressions - reported_regressions):
++            prior = regression_outcome_for(prior_record, fid, rid)
++            if can_retain and prior.get('status') in ('pass', 'fail') and evidence_ok(prior.get('evidence')):
++                retained = {**copy.deepcopy(prior), 'finding_id': fid, 'regression_id': rid, 'retained_from_prior_result': True}
++                regression_portions.append(retained)
++            else:
++                regression_portions.append({'finding_id': fid, 'regression_id': rid, 'status': 'not_run',
++                    'actual': '', 'evidence': [], 'reason': 'This regression portion was not reported'})
++        for out in regression_portions:
++            if out.get('conditions_confirmed') is True or reported.get('all_steps_confirmed') is True and reported.get('conditions_confirmed') is True:
++                requirement = regression_for(findings.get(out.get('finding_id'), {}), out.get('regression_id'))
++                out.setdefault('conditions', copy.deepcopy(requirement.get('conditions', {})))
++                if c['build_confirmed']:
++                    out['conditions']['build_id'] = c.get('build_id')
++                else:
++                    out['conditions'].pop('build_id', None)
++            out.setdefault('conditions', copy.deepcopy(c.get('conditions', {})))
++        if expected_regressions:
++            c['regression_results'] = regression_portions
+         c['scope_results'] = portions
+-        statuses = {o.get('status') for o in portions} if portions else {reported.get('status', 'not_run')}
++        all_portions = portions + regression_portions
++        statuses = {o.get('status') for o in all_portions} if all_portions else {reported.get('status', 'not_run')}
+         c['status'] = next(iter(statuses)) if len(statuses) == 1 else 'partial'
+-        c['actual'] = reported.get('actual', '') or '; '.join(o.get('actual', '') for o in portions if o.get('actual'))
+-        c['evidence'] = copy.deepcopy(reported.get('evidence', [])) or [e for o in portions for e in o.get('evidence', [])]
++        c['actual'] = reported.get('actual', '') or '; '.join(o.get('actual', '') for o in all_portions if o.get('actual'))
++        c['evidence'] = copy.deepcopy(reported.get('evidence', [])) or [e for o in all_portions for e in o.get('evidence', [])]
+         c['reason'] = reported.get('reason', '') or ('Some portions were missing or mixed; rerun only those portions' if c['status'] == 'partial'
+                                                    else 'Tester did not run/report this check' if c['status'] == 'not_run' else '')
+         c['notes'] = reported.get('notes', '')
+@@ -1029,7 +1239,12 @@
+                   f"Cause: {f.get('cause', 'unestablished')}. Disposition reason: {f.get('reason', '')}", '',
+                   'Affected scope, retained evidence, fix and history:']
+         lines += json_block({k: f.get(k) for k in ('affects', 'refuted_scopes', 'evidence', 'fix', 'contrary_evidence', 'status_history')})
+-        related = [c for c in checks.values() if any(fid == f.get('id') for fid, _ in covers(c))]
++        if f.get('fix', {}).get('device_regressions'):
++            lines += ['', 'Device regression requirements (independent of observed scope):']
++            lines += json_block({'requirements': f['fix']['device_regressions'],
++                'qualification': [r for r in assessment.get('device_regressions', []) if r.get('finding_id') == f.get('id')],
++                'note': 'Regression results do not verify or refute the original observed scopes.'})
++        related = [c for c in checks.values() if any(fid == f.get('id') for fid, _ in covers(c) | regression_covers(c))]
+         lines += ['', 'Checks (environment, level, substitutions, expected and actual):'] + json_block(related) + ['']
+     if not findings:
+         lines += ['None recorded.', '']
+@@ -1039,9 +1254,11 @@
+     lines += ['', '## 6. Device check script', '', f"Budget: {state.get('device_check_budget')} entries. Applied device-fix reservation: {len(assessment['applied_device_entries'])}/{state.get('device_check_budget', 0) // 2}.", '']
+     for cid in ids(state.get('device_script')):
+         c = checks.get(cid, {})
+-        lines += [f"### {cid} [{', '.join(sorted({fid for fid, _ in covers(c)}))}] {md(c.get('configuration', {}))}", '',
++        lines += [f"### {cid} [{', '.join(sorted({fid for fid, _ in covers(c) | regression_covers(c)}))}] {md(c.get('configuration', {}))}", '',
+                   f"Build: {c.get('build_id')}", 'Substitutions active in this check (build/setup/additional):']
+         lines += json_block(c.get('substitutions', {}))
++        if regression_covers(c):
++            lines += ['', 'Device regression links (not original-scope coverage):'] + json_block(c.get('regression_covers'))
+         lines += ['', f"Setup: {c.get('setup', c.get('conditions', {}).get('setup', 'not reported'))}", '', 'Steps:']
+         lines += [f'{i}. {step}' for i, step in enumerate(c.get('steps', []), 1)]
+         lines += ['', f"Expected: {c.get('expected')}", '', 'Result: ___', 'Build and setup as tested (confirm each, or note differences): ___', 'Notes: ___', 'Screenshot: ___', '']
+Only in source/skills/mobile-web-ux-runner/tests: planning-validation.json
+diff -ru before/skills/mobile-web-ux-runner/tests/test_run_state.py source/skills/mobile-web-ux-runner/tests/test_run_state.py
+--- before/skills/mobile-web-ux-runner/tests/test_run_state.py	2026-10-20 22:08:51.041138712 +0000
++++ source/skills/mobile-web-ux-runner/tests/test_run_state.py	2026-10-21 00:37:42.009733074 +0000
+@@ -145,6 +145,332 @@
+         result = runner.apply_results(state, self.result())
+         self.assertTrue(runner.assess(result)['errors'])
+ 
++    def proxy_device_fix(self, budget=6, requirements=1):
++        s, f = self.with_finding()
++        s.update(mode='audit_and_fix', device_dependent_fixes='apply_and_hand_off', device_check_budget=budget)
++        proxy_conditions = conditions(browser='Playwright WebKit 26.6', device='Linux desktop emulation', state='mouse at 390px')
++        f['affects'] = [{'id': 'proxy-mouse', 'conditions': proxy_conditions}]
++        f['evidence_class'] = 'observed'
++        f['evidence'] = [{'ref': 'fixture: mouse trace', 'level': 'proxy', 'observation': 'fail', 'scope_ids': ['proxy-mouse']}]
++        f['fix'].update(applied_before_run=False, device_dependent=True)
++        f['fix']['device_regressions'] = []
++        s['builds'].append({'id': 'B-phone', 'description': 'planned fixed phone build', 'contains_fixes': ['F-01'], 'substitutions': none()})
++        s['capabilities'][0].update(status='declared', evidence=[], reason='Phone not run')
++        s['capabilities'].append({'id': 'E-proxy', 'environment': 'desktop_emulation', 'driver': 'agent', 'status': 'available', 'evidence': ['fixture: proxy trace'], 'reason': ''})
++        proxy = self.check(cid='C-PROXY', build='B-2', browser='Playwright WebKit 26.6', device='Linux desktop emulation')
++        proxy.update(environment='desktop_emulation', driver='agent', evidence_type='emulation', level='proxy', capability_id='E-proxy', conditions={**proxy_conditions, 'build_id': 'B-2'}, covers=[{'finding_id': 'F-01', 'scope_id': 'proxy-mouse'}])
++        s['checks'] = [proxy]
++        for i in range(requirements):
++            c = self.check(cid=f'C-{i+1:02}', sid=f'phone-state-{i}', build='B-phone', status='not_run')
++            c.update(build_confirmed=False, setup_confirmed=False, covers=[], regression_covers=[{'finding_id': 'F-01', 'regression_id': f'DR-{i+1}'}])
++            f['fix']['device_regressions'].append({'id': f'DR-{i+1}', 'source_scope_ids': ['proxy-mouse'], 'environment': 'physical_device', 'behavior': 'software_keyboard', 'expected': 'Focused controls remain visible without a main-landmark scroll reset', 'conditions': copy.deepcopy(c['conditions']), 'depends_on': []})
++            s['checks'].append(c)
++        f['fix']['required_check_ids'] = [c['id'] for c in s['checks'][1:]]
++        f['verification_ids'] = ['C-PROXY']
++        s['device_script'] = f['fix']['required_check_ids'][:]
++        for area in s['coverage']:
++            area.update(check_ids=['C-PROXY'], disposition='no_defect_found')
++        s['coverage'][1].update(disposition='defects_found', finding_ids=['F-01'])
++        return s, f
++
++    def test_proxy_plan_admits_distinct_phone_build_without_rewriting_scope(self):
++        s, f = self.proxy_device_fix()
++        before = copy.deepcopy(s)
++        a = self.assert_valid(s)
++        self.assertEqual(a['applied_device_entries'], ['C-01'])
++        self.assertEqual(a['verification_ceiling'], 'proxy')
++        self.assertFalse(a['claimable_complete'])
++        self.assertEqual(s, before)
++        self.assertEqual(f['status'], 'implemented')
++        self.assertEqual(s['checks'][1]['status'], 'not_run')
++
++    def test_proxy_plan_rejects_missing_origin_requirement(self):
++        s, f = self.proxy_device_fix()
++        self.assert_valid(s)
++        f['affects'].append({'id': 'another-proxy', 'conditions': conditions(state='another')})
++        f['evidence'].append({'ref': 'fixture: another trace', 'level': 'proxy', 'observation': 'fail', 'scope_ids': ['another-proxy']})
++        self.assertTrue(runner.assess(s)['errors'])
++
++    def test_proxy_plan_rejects_target_or_unclassified_observation_shortcut(self):
++        for evidence in [[{'ref': 'fixture: real failure', 'level': 'target', 'observation': 'fail', 'scope_ids': ['proxy-mouse']}], ['fixture: unclassified observed failure']]:
++            s, f = self.proxy_device_fix()
++            self.assert_valid(s)
++            f['evidence'] = evidence
++            self.assertTrue(runner.assess(s)['errors'])
++
++    def test_proxy_plan_rejects_missing_required_entry(self):
++        s, f = self.proxy_device_fix(requirements=2)
++        self.assert_valid(s)
++        f['fix']['required_check_ids'] = ['C-01']
++        self.assertTrue(runner.assess(s)['errors'])
++
++    def test_proxy_plan_rejects_wrong_regression_configuration(self):
++        for field in ['browser', 'device']:
++            s, f = self.proxy_device_fix()
++            self.assert_valid(s)
++            s['checks'][1]['configuration'][field] = 'different'
++            self.assertTrue(runner.assess(s)['errors'])
++
++    def test_proxy_plan_rejects_wrong_regression_build_or_missing_fix(self):
++        for mutation in ['wrong-build', 'missing-fix']:
++            s, f = self.proxy_device_fix()
++            self.assert_valid(s)
++            if mutation == 'wrong-build': s['checks'][1]['build_id'] = 'B-2'
++            else: s['builds'][-1]['contains_fixes'] = []
++            self.assertTrue(runner.assess(s)['errors'])
++
++    def test_proxy_plan_rejects_incomplete_regression_conditions(self):
++        for field in ['steps', 'timing', 'account_data', 'setup', 'substitutions']:
++            s, f = self.proxy_device_fix()
++            self.assert_valid(s)
++            f['fix']['device_regressions'][0]['conditions'].pop(field)
++            self.assertTrue(runner.assess(s)['errors'])
++
++    def test_proxy_plan_rejects_empty_duplicate_and_unknown_links(self):
++        for mutation in ['empty', 'duplicate', 'unknown-origin', 'unknown-regression', 'duplicate-link']:
++            s, f = self.proxy_device_fix()
++            self.assert_valid(s)
++            if mutation == 'empty': f['fix']['device_regressions'] = []
++            elif mutation == 'duplicate': f['fix']['device_regressions'].append(copy.deepcopy(f['fix']['device_regressions'][0]))
++            elif mutation == 'unknown-origin': f['fix']['device_regressions'][0]['source_scope_ids'] = ['missing']
++            elif mutation == 'unknown-regression': s['checks'][1]['regression_covers'][0]['regression_id'] = 'missing'
++            else: s['checks'][1]['regression_covers'].append(copy.deepcopy(s['checks'][1]['regression_covers'][0]))
++            self.assertTrue(runner.assess(s)['errors'])
++
++    def test_proxy_plan_keeps_authorization_budget_and_priority_guards(self):
++        for mutation in ['policy', 'budget', 'priority']:
++            s, f = self.proxy_device_fix(budget=3)
++            self.assert_valid(s)
++            if mutation == 'policy': s['device_dependent_fixes'] = 'propose_only'
++            elif mutation == 'budget': s['device_check_budget'] = 1
++            else:
++                extra = self.check(cid='C-extra', status='not_run')
++                extra['covers'] = []
++                s['checks'].append(extra)
++                s['device_script'].insert(0, 'C-extra')
++            self.assertTrue(runner.assess(s)['errors'])
++
++    def test_proxy_plan_shared_entry_counts_once(self):
++        s, f = self.proxy_device_fix(budget=2)
++        g = copy.deepcopy(f)
++        g['id'] = 'F-02'
++        s['findings'].append(g)
++        s['builds'][1]['contains_fixes'].append('F-02')
++        s['builds'][-1]['contains_fixes'].append('F-02')
++        s['checks'][1]['regression_covers'].append({'finding_id': 'F-02', 'regression_id': 'DR-1'})
++        self.assertEqual(self.assert_valid(s)['applied_device_entries'], ['C-01'])
++
++    def test_proxy_plan_simulator_cannot_stand_in_for_hardware(self):
++        s, f = self.proxy_device_fix()
++        self.assert_valid(s)
++        r = f['fix']['device_regressions'][0]
++        r.update(environment='os_simulator', behavior='performance')
++        s['checks'][1].update(environment='os_simulator', evidence_type='emulation', behavior='performance')
++        self.assertTrue(runner.assess(s)['errors'])
++
++    def test_proxy_plan_phone_pass_is_not_original_scope_verification(self):
++        s, f = self.proxy_device_fix()
++        before_scope, before_evidence = copy.deepcopy(f['affects']), copy.deepcopy(f['evidence'])
++        result = runner.apply_results(s, self.result())
++        self.assert_valid(result)
++        self.assertEqual(result['findings'][0]['status'], 'implemented')
++        self.assertEqual(result['findings'][0]['affects'], before_scope)
++        self.assertEqual(result['findings'][0]['evidence'], before_evidence)
++        self.assertEqual(result['checks'][0], s['checks'][0])
++        self.assertEqual(result['application_basis']['findings'][0]['fix'], f['fix'])
++
++    def test_proxy_plan_failure_and_unconfirmed_build_remain_recordable(self):
++        for payload in [self.result(status='fail', actual='Control obscured', relation='unrelated'), self.result(build_confirmed=False)]:
++            s, f = self.proxy_device_fix()
++            result = runner.apply_results(s, payload)
++            self.assert_valid(result)
++            self.assertFalse(runner.assess(result)['claimable_complete'])
++            self.assertEqual(result['findings'][0]['status'], 'implemented')
++
++    def test_proxy_plan_results_cannot_launder_invalid_admission_or_rewrite_plan(self):
++        s, f = self.proxy_device_fix()
++        s['device_check_budget'] = 0
++        self.assertTrue(runner.assess(runner.apply_results(s, self.result()))['errors'])
++        s, f = self.proxy_device_fix()
++        result = runner.apply_results(s, self.result())
++        self.assert_valid(result)
++        result['findings'][0]['fix']['device_regressions'][0]['conditions']['device'] = 'other'
++        self.assertTrue(runner.assess(result)['errors'])
++
++    def test_proxy_plan_partial_shared_result_does_not_invent_second_pass(self):
++        s, f = self.proxy_device_fix(budget=2)
++        second = copy.deepcopy(f['fix']['device_regressions'][0]);second['id'] = 'DR-2'
++        f['fix']['device_regressions'].append(second)
++        s['checks'][1]['regression_covers'].append({'finding_id': 'F-01', 'regression_id': 'DR-2'})
++        self.assert_valid(s)
++        payload = self.result(status='partial', regression_results=[{'finding_id': 'F-01', 'regression_id': 'DR-1', 'status': 'pass', 'actual': 'Visible', 'evidence': ['fixture: partial target'], 'conditions_confirmed': True}])
++        result = runner.apply_results(s, payload)
++        self.assert_valid(result)
++        record = result['checks'][1]
++        self.assertEqual(record['status'], 'partial')
++        self.assertEqual({x['regression_id']: x['status'] for x in record['regression_results']}, {'DR-1': 'pass', 'DR-2': 'not_run'})
++        self.assertEqual(result['findings'][0]['status'], 'implemented')
++
++    def test_proxy_plan_rejects_out_of_plan_regression_result(self):
++        s, f = self.proxy_device_fix()
++        with self.assertRaises(ValueError):
++            runner.apply_results(s, self.result(regression_results=[{'finding_id': 'F-01', 'regression_id': 'missing', 'status': 'pass'}]))
++
++    def test_proxy_plan_render_separates_observed_scope_from_device_regressions(self):
++        s, f = self.proxy_device_fix()
++        report = runner.render_report(s, runner.assess(s))
++        self.assertIn('Device regression requirements', report)
++        self.assertIn('DR-1', report)
++        self.assertIn('C-01 [F-01]', report)
++        self.assertEqual(f['affects'][0]['conditions']['device'], 'Linux desktop emulation')
++
++    def test_proxy_plan_cli_valid_incomplete_generates_reports_without_device_pass(self):
++        s, f = self.proxy_device_fix()
++        file = self.project / 'proxy-plan.json';file.write_text(json.dumps(s))
++        out = subprocess.run([sys.executable, str(SCRIPT), 'report', str(file)], capture_output=True, text=True)
++        self.assertEqual(out.returncode, 3, out.stdout + out.stderr)
++        data = json.loads(out.stdout)
++        self.assertEqual(data['errors'], [])
++        self.assertEqual(data['verification_ceiling'], 'proxy')
++        self.assertEqual(data['applied_device_entries'], ['C-01'])
++        self.assertEqual(json.loads(file.read_text()), s)
++        self.assertTrue((self.project / 'report.md').exists())
++        self.assertTrue((self.project / 'summary.json').exists())
++
++    def test_proxy_plan_mixed_legacy_agent_entry_still_validates_regressions(self):
++        s, f = self.proxy_device_fix()
++        c = s['checks'][1]
++        # The entry also covers a real target-origin scope; its agent acquisition
++        # must not skip an independent, mismatching regression requirement.
++        target_scope = {'id': 'target-portrait', 'conditions': copy.deepcopy(c['conditions'])}
++        f['affects'].append(target_scope)
++        f['evidence'].append({'ref': 'fixture: device failure', 'level': 'target', 'observation': 'fail', 'scope_ids': ['target-portrait']})
++        c['covers'] = [{'finding_id': 'F-01', 'scope_id': 'target-portrait'}]
++        c['driver'] = 'agent'
++        c['capability_id'] = 'E-1'
++        s['capabilities'][0].update(status='available', evidence=['fixture: agent phone probe'], reason='')
++        # Legacy matching uses the local fix build; keep both requirements initially valid.
++        c['build_id'] = 'B-2';c['conditions']['build_id'] = 'B-2'
++        f['affects'][-1]['conditions']['build_id'] = 'B-2'
++        f['fix']['device_regressions'][0]['conditions']['build_id'] = 'B-2'
++        s['device_script'] = []
++        self.assert_valid(s)
++        f['fix']['device_regressions'][0]['conditions']['state'] = 'a different phone state'
++        self.assertTrue(runner.assess(s)['errors'])
++
++    def test_proxy_plan_partial_recorded_failure_is_failed_verification(self):
++        s, f = self.proxy_device_fix()
++        second = copy.deepcopy(f['fix']['device_regressions'][0]);second['id'] = 'DR-2'
++        f['fix']['device_regressions'].append(second)
++        s['checks'][1]['regression_covers'].append({'finding_id': 'F-01', 'regression_id': 'DR-2'})
++        payload = self.result(status='partial', actual='One state failed, another missing', regression_results=[{'finding_id': 'F-01', 'regression_id': 'DR-1', 'status': 'fail', 'actual': 'Obscured', 'evidence': ['fixture: failure'], 'conditions_confirmed': True}])
++        updated = runner.apply_results(s, payload)
++        self.assert_valid(updated)
++        self.assertEqual(runner.assess(updated)['verification'], 'failed')
++        self.assertEqual(updated['findings'][0]['status'], 'implemented')
++
++    def test_proxy_plan_assessment_rejects_malformed_or_empty_explicit_results(self):
++        for malformed in [['not a result'], {'status': 'pass'}, []]:
++            s, f = self.proxy_device_fix()
++            updated = runner.apply_results(s, self.result())
++            self.assert_valid(updated)
++            updated['checks'][1]['regression_results'] = malformed
++            self.assertTrue(runner.assess(updated)['errors'])
++
++    def mixed_proxy_device_fix(self):
++        s, f = self.proxy_device_fix()
++        c = s['checks'][1]
++        c['build_id'] = 'B-2';c['conditions']['build_id'] = 'B-2'
++        f['fix']['device_regressions'][0]['conditions']['build_id'] = 'B-2'
++        f['affects'].append({'id': 'target-portrait', 'conditions': copy.deepcopy(c['conditions'])})
++        f['evidence'].append({'ref': 'fixture: device failure', 'level': 'target', 'observation': 'fail', 'scope_ids': ['target-portrait']})
++        c['covers'] = [{'finding_id': 'F-01', 'scope_id': 'target-portrait'}]
++        self.assert_valid(s)
++        return s, f
++
++    def test_mixed_plan_scope_only_pass_does_not_invent_regression_pass(self):
++        s, f = self.mixed_proxy_device_fix()
++        payload = self.result(scope_results=[{'finding_id': 'F-01', 'scope_id': 'target-portrait', 'status': 'pass', 'actual': 'Visible in another state', 'evidence': ['fixture: scope result'], 'conditions': {**s['checks'][1]['conditions'], 'state': 'other'}}])
++        updated = runner.apply_results(s, payload)
++        self.assert_valid(updated)
++        self.assertEqual(updated['checks'][1]['status'], 'partial')
++        self.assertEqual(updated['checks'][1]['regression_results'][0]['status'], 'not_run')
++
++    def test_mixed_plan_partial_reports_in_either_family_remain_recordable(self):
++        for family, id_key, portion_id, missing_family in [('scope_results', 'scope_id', 'target-portrait', 'regression_results'), ('regression_results', 'regression_id', 'DR-1', 'scope_results')]:
++            s, f = self.mixed_proxy_device_fix()
++            portion = {'finding_id': 'F-01', id_key: portion_id, 'status': 'pass', 'actual': 'Visible', 'evidence': ['fixture: portion result'], 'conditions_confirmed': True}
++            updated = runner.apply_results(s, self.result(status='partial', **{family: [portion]}))
++            self.assert_valid(updated)
++            self.assertEqual(updated['checks'][1]['status'], 'partial')
++            self.assertEqual(updated['checks'][1][family][0]['status'], 'pass')
++            self.assertEqual(updated['checks'][1][missing_family][0]['status'], 'not_run')
++
++    def test_proxy_plan_explicit_empty_results_do_not_inherit_whole_pass(self):
++        s, f = self.proxy_device_fix()
++        updated = runner.apply_results(s, self.result(regression_results=[]))
++        self.assert_valid(updated)
++        self.assertEqual(updated['checks'][1]['regression_results'][0]['status'], 'not_run')
++        self.assertEqual(runner.assess(updated)['device_regressions'][0]['status'], 'not_run')
++
++    def test_mixed_plan_raw_aggregate_pass_cannot_qualify_unreported_portions(self):
++        s, f = self.mixed_proxy_device_fix()
++        c = s['checks'][1]
++        c.update(status='pass', actual='Unpartitioned report', evidence=['fixture: aggregate'], build_confirmed=True)
++        s['capabilities'][0].update(status='available', evidence=['fixture: device report'], reason='')
++        s['device_script'] = []
++        self.assertFalse(runner.pass_for_scope(s, c, f, f['affects'][1]))
++        self.assertFalse(runner.pass_for_regression(s, c, f, f['fix']['device_regressions'][0]))
++
++    def grouped_regression_fix(self):
++        s, f = self.proxy_device_fix(budget=2)
++        c = s['checks'][1]
++        first = f['fix']['device_regressions'][0]
++        second = copy.deepcopy(first);second['id'] = 'DR-2'
++        second['conditions']['state'] = 'landscape'
++        second['conditions']['steps'] = ['Rotate to landscape', 'Focus final field']
++        f['fix']['device_regressions'].append(second)
++        c['regression_covers'].append({'finding_id': 'F-01', 'regression_id': 'DR-2'})
++        c['regression_conditions'] = [{'finding_id': 'F-01', 'regression_id': r['id'], 'conditions': copy.deepcopy(r['conditions'])} for r in (first, second)]
++        c['conditions']['state'] = 'portrait then landscape'
++        c['steps'] = ['Focus final field', 'Rotate to landscape', 'Focus final field']
++        return s, f
++
++    def test_proxy_plan_shared_states_use_separate_planned_snapshots_and_partial_results(self):
++        s, f = self.grouped_regression_fix()
++        self.assertEqual(self.assert_valid(s)['applied_device_entries'], ['C-01'])
++        updated = runner.apply_results(s, self.result(status='partial', regression_results=[{'finding_id': 'F-01', 'regression_id': 'DR-1', 'status': 'pass', 'actual': 'Portrait visible', 'evidence': ['fixture: portrait'], 'conditions_confirmed': True}]))
++        summary = self.assert_valid(updated)
++        self.assertEqual([r['status'] for r in summary['device_regressions']], ['pass', 'not_run'])
++        self.assertEqual(updated['device_script'], ['C-01'])
++
++    def test_proxy_plan_planned_snapshots_never_override_actual_mismatches(self):
++        s, f = self.grouped_regression_fix()
++        self.assert_valid(s)
++        actual = {**f['fix']['device_regressions'][0]['conditions'], 'state': 'other'}
++        updated = runner.apply_results(s, self.result(status='partial', regression_results=[{'finding_id': 'F-01', 'regression_id': 'DR-1', 'status': 'pass', 'actual': 'Visible in other state', 'evidence': ['fixture: wrong state'], 'conditions': actual}]))
++        self.assertEqual(self.assert_valid(updated)['device_regressions'][0]['status'], 'unestablished')
++
++    def test_proxy_plan_rejects_invalid_planned_regression_snapshots(self):
++        for mutation in ['duplicate', 'unknown', 'malformed', 'wrong-state']:
++            s, f = self.proxy_device_fix()
++            row = {'finding_id': 'F-01', 'regression_id': 'DR-1', 'conditions': copy.deepcopy(f['fix']['device_regressions'][0]['conditions'])}
++            s['checks'][1]['regression_conditions'] = [row]
++            self.assert_valid(s)
++            if mutation == 'duplicate': s['checks'][1]['regression_conditions'].append(copy.deepcopy(row))
++            elif mutation == 'unknown': row['regression_id'] = 'missing'
++            elif mutation == 'malformed': s['checks'][1]['regression_conditions'] = ['bad snapshot']
++            else: row['conditions']['state'] = 'wrong'
++            self.assertTrue(runner.assess(s)['errors'])
++
++    def test_legacy_target_plan_retains_empty_scope_results_compatibility(self):
++        s, f = self.with_finding(status='verified')
++        s['checks'][0]['scope_results'] = []
++        self.assertTrue(self.assert_valid(s)['claimable_complete'])
++        updated = runner.apply_results(s, self.result(scope_results=[]))
++        self.assert_valid(updated)
++        self.assertEqual(updated['checks'][0]['status'], 'pass')
++
+     def test_defaults_are_audit_only_and_propose(self):
+         self.assertEqual((self.s['mode'], self.s['device_dependent_fixes'], self.s['device_check_budget']), ('audit_only', 'propose_only', 10))
+         self.assert_valid()

@@ -1,0 +1,45 @@
+✔ all four consented bands and encrypted note round-trip through signed SQL and a reopened database (1096.429827ms)
+✔ same-day saves upsert one row, preserve its identity, and persist cleared values (16.779091ms)
+✔ per-source consent gates Sleep and Stress before they reach storage (15.086764ms)
+✔ same-day records, notes, and returned check-ins remain scoped to their account (15.271672ms)
+✔ 180-day retention clears only expired wellness bands and only the current account (15.484127ms)
+✔ cached Today and Journal load the persisted check-in from the checked-in schema (119.507762ms)
+✔ concurrent first use establishes one encryption key for an account (11.56081ms)
+✔ failed writes and missing RETURNING rows cannot report a successful save (13.052319ms)
+✔ check-in reads, consent reads, and retention failures propagate instead of looking empty (21.352151ms)
+✔ malformed encrypted notes surface an error without returning a false empty note (10.601082ms)
+✔ the shared input schema accepts unset bands and rejects invalid bands, dates, and oversized notes (7.200726ms)
+✔ server save validates its input before executing any records statement (9.538265ms)
+✔ root-lifetime edits survive a new route consumer and acknowledge only their revision (5.676726ms)
+✔ owner transition clears active plaintext and never loads another account candidates (0.433135ms)
+✔ storage failure keeps editable memory with an explicit durability error (0.607021ms)
+✔ discard invalidates active state without deleting a different draft (0.478954ms)
+✔ a new edit at write completion is queued before flush finishes (0.695121ms)
+✔ the next day offers the earlier active check-in as a dated recovery candidate (0.547622ms)
+✔ submission waits for its checkpoint even when a conflict forks the draft (10.586212ms)
+✔ a deferred checkpoint cannot restore optional values after consent is withdrawn and re-enabled (0.895528ms)
+✔ drafts expire seven days after their latest edit and retain their original day (4.173825ms)
+✔ validation rejects unknown schemas, invalid bands, mismatched day scope, and invalid owner (8.286473ms)
+✔ revoking optional sources strips values from current, baseline, and pending snapshot (0.310495ms)
+✔ a submitted revision is immutable while later edits remain recoverable (0.350935ms)
+✔ a different canonical result never acknowledges unsaved text (0.413605ms)
+✔ a checkpoint cannot mutate its callers nested values or submission baseline (0.151448ms)
+✔ birth drafts round-trip partial and invalid answers without treating them as valid birth data (4.058836ms)
+✔ birth drafts reject malformed enums, entity scope and oversized answers in every snapshot (12.879452ms)
+✔ acknowledging a saved birth preserves edits made after its submitted snapshot (0.308886ms)
+✔ birth draft copy includes every answer and never represents unknown noon as an exact time (0.467184ms)
+✔ saved source illustrations explain their possible status and link to the exact saved source and paragraph (450.938902ms)
+✔ synthesis has a distinct published category and saved text is presented without its instruction prefix (0.349715ms)
+✔ synthesis descriptions support published rule keys containing spaces (3.184188ms)
+✔ saved synthesis renders its relationship, version and four local parent links (3.10681ms)
+✔ historical metadata and missing parents never fabricate synthesis links or new editorial identity (5.841343ms)
+✔ archived paragraphs without saved boundaries keep fact links but no invented paragraph target (2.205551ms)
+✔ todayHeadline formats raw lowercase contact labels in sentence case and preserves authored headlines (0.351916ms)
+ℹ tests 37
+ℹ suites 0
+ℹ pass 37
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2572.952168

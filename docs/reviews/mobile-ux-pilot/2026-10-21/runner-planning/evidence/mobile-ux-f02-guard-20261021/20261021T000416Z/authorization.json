@@ -1,0 +1,12 @@
+{
+  "request": "Apply the minimal F-02 guard locally and rerun the focused Chromium/WebKit checks. Keep physical-device verification explicitly unrun. No commit, push, deployment, or plugin updates.",
+  "head": "8e0e5c933ab8bad2b3e186e70501ef8e31d82570",
+  "mode": "audit_and_fix",
+  "device_dependent_fixes": "apply_and_hand_off",
+  "physical_device_verification": "not_run",
+  "source_scope": [
+    "src/components/pattern/Shell.tsx",
+    "tests/helpers/mobile-ui/shell-focus.cases.txt"
+  ],
+  "parent_run": "/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/run.json"
+}

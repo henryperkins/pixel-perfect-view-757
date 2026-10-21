@@ -1,0 +1,113 @@
+{
+  "errors": [],
+  "gaps": [
+    "F-01: confirmed finding is implemented",
+    "F-02: confirmed finding is implemented",
+    "F-02/DR-F02-SAFARI-COMPACT: device regression target verification not_run",
+    "F-02/DR-F02-SAFARI-BOTTOM: device regression target verification not_run",
+    "F-02/DR-F02-SAFARI-TOP: device regression target verification not_run",
+    "F-02/DR-F02-ANDROID: device regression target verification not_run",
+    "F-02/DR-F02-SAFARI-POINTER: device regression target verification not_run",
+    "F-03: confirmed finding is implemented",
+    "C-CH-CONTRAST: current recorded failure",
+    "C-CH-FOCUS: current recorded failure",
+    "C-WK-JOURNEY: current recorded failure",
+    "C-WK-CONTRAST: current recorded failure",
+    "C-WK-FOCUS: current recorded failure",
+    "C-WK-MOUSE: current recorded failure",
+    "C-L-FOCUS-RED: current recorded failure",
+    "C-L-F02-BASE: current recorded failure",
+    "C-L-F02-LOCAL: current recorded failure",
+    "C-G-CH-SHELL-RED: current recorded failure",
+    "C-G-WK-SHELL-RED: current recorded failure",
+    "C-CH-CONTRAST: required verification incomplete",
+    "C-CH-FOCUS: required verification incomplete",
+    "C-WK-JOURNEY: required verification incomplete",
+    "C-WK-CONTRAST: required verification incomplete",
+    "C-WK-FOCUS: required verification incomplete",
+    "C-WK-MOUSE: required verification incomplete",
+    "C-L-F02-BASE: required verification incomplete",
+    "C-L-F02-LOCAL: required verification incomplete",
+    "C-GD01: required verification incomplete",
+    "C-GD02: required verification incomplete",
+    "C-GD03: required verification incomplete",
+    "C-GD04: required verification incomplete",
+    "C-GD05: required verification incomplete",
+    "C-GD06: required verification incomplete",
+    "C-GD07: required verification incomplete",
+    "C-GD08: required verification incomplete",
+    "C-GD09: required verification incomplete",
+    "C-GD10: required verification incomplete"
+  ],
+  "coverage": "complete",
+  "assessment_complete": true,
+  "verification": "failed",
+  "verification_ceiling": "proxy",
+  "impeccable": "executed",
+  "open_p0_p1": [],
+  "applied_device_entries": [
+    "C-GD01",
+    "C-GD02",
+    "C-GD03",
+    "C-GD04",
+    "C-GD10"
+  ],
+  "device_regressions": [
+    {
+      "finding_id": "F-02",
+      "regression_id": "DR-F02-SAFARI-COMPACT",
+      "source_scope_ids": [
+        "webkit-mouse-390"
+      ],
+      "check_ids": [
+        "C-GD01"
+      ],
+      "status": "not_run"
+    },
+    {
+      "finding_id": "F-02",
+      "regression_id": "DR-F02-SAFARI-BOTTOM",
+      "source_scope_ids": [
+        "webkit-mouse-390"
+      ],
+      "check_ids": [
+        "C-GD02"
+      ],
+      "status": "not_run"
+    },
+    {
+      "finding_id": "F-02",
+      "regression_id": "DR-F02-SAFARI-TOP",
+      "source_scope_ids": [
+        "webkit-mouse-390"
+      ],
+      "check_ids": [
+        "C-GD03"
+      ],
+      "status": "not_run"
+    },
+    {
+      "finding_id": "F-02",
+      "regression_id": "DR-F02-ANDROID",
+      "source_scope_ids": [
+        "webkit-mouse-390"
+      ],
+      "check_ids": [
+        "C-GD04"
+      ],
+      "status": "not_run"
+    },
+    {
+      "finding_id": "F-02",
+      "regression_id": "DR-F02-SAFARI-POINTER",
+      "source_scope_ids": [
+        "webkit-mouse-390"
+      ],
+      "check_ids": [
+        "C-GD10"
+      ],
+      "status": "not_run"
+    }
+  ],
+  "claimable_complete": false
+}

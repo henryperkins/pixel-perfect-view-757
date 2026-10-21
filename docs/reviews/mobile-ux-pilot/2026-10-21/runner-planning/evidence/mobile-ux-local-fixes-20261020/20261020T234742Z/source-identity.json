@@ -1,0 +1,11 @@
+{
+  "head": "8e0e5c933ab8bad2b3e186e70501ef8e31d82570",
+  "task_files_sha256": {
+    "src/components/pattern/TodayCheckIn.tsx": "2e05b0060e5da5fa0126db456f1525b6a7dce68ee35aca2a477f96694ec8f4b8",
+    "src/routes/__root.tsx": "5199922e344eae03095897191f8576c4c9a9ea6f3bf5b48daeb9018eca1ae678",
+    "tests/helpers/mobile-ui/main.tsx": "1abee438c0e03e70df4bd2fe560ac8000ce20cb4378bd6f89a2c6b11659b4c92",
+    "src/components/pattern/RouteFocus.tsx": "602f72e8f79ee842958fd67b673b96ff4198c361a62707c6e68932f5f46ce011",
+    "tests/helpers/mobile-ui/route-focus.cases.txt": "07b159161564fdb4ff6ad4496d6dca6b5e5586ebb52725b7c817fe8f35c9b01c"
+  },
+  "Shell_sha256": "fd00a682e3b3cf49f9a033c75a2145b1f176df6b4166a2741923ca92f96183c3"
+}

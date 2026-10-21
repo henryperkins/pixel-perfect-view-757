@@ -1,0 +1,38 @@
+{
+  "baseline_hashed_file_count": 1985,
+  "baseline_files_unchanged": 1982,
+  "baseline_files_changed": [
+    "src/components/pattern/TodayCheckIn.tsx",
+    "src/routes/__root.tsx",
+    "tests/helpers/mobile-ui/main.tsx"
+  ],
+  "baseline_files_missing": [],
+  "authorized_existing_files": [
+    "src/components/pattern/TodayCheckIn.tsx",
+    "src/routes/__root.tsx",
+    "tests/helpers/mobile-ui/main.tsx"
+  ],
+  "authorized_new_files": [
+    "src/components/pattern/RouteFocus.tsx",
+    "tests/helpers/mobile-ui/route-focus.cases.txt"
+  ],
+  "new_status_paths": [
+    "src/components/pattern/RouteFocus.tsx",
+    "src/components/pattern/TodayCheckIn.tsx",
+    "src/routes/__root.tsx",
+    "tests/helpers/mobile-ui/main.tsx",
+    "tests/helpers/mobile-ui/route-focus.cases.txt"
+  ],
+  "original_dirty_paths_all_retained": true,
+  "unexpected_status_paths": [],
+  "unrelated_baseline_hashes_unchanged": true,
+  "head": "8e0e5c933ab8bad2b3e186e70501ef8e31d82570",
+  "head_unchanged": true,
+  "staged_index_still_empty": true,
+  "task_source_identity_matches": true,
+  "git_diff_check_exit_code": 0,
+  "inspected_runner_impeccable_and_instruction_files_checked": 20,
+  "tooling_files_changed": [],
+  "shell_unchanged": true,
+  "claude_settings_preserved": true
+}

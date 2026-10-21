@@ -1,0 +1,9 @@
+{
+  "owned_fixture_pid": 1288438,
+  "signal": "SIGTERM",
+  "browser_sessions_closed": [
+    "pattern-publish-ch",
+    "pattern-publish-wk"
+  ],
+  "physical_device_verification": "not_run"
+}

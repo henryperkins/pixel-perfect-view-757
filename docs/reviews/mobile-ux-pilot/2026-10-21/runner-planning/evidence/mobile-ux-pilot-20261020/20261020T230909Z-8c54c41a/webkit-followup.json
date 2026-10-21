@@ -1,0 +1,1066 @@
+{
+  "engine": "webkit",
+  "version": "26.6",
+  "storage": {
+    "injectionCallCount": 1,
+    "notice": "This draft is only kept while this page stays open. Save it to your account or copy it before leaving.\n\nCopy draft\nDiscard draft\n\nDevice drafts expire after seven days without edits and are cleared when you sign out. Save to keep this in your account.",
+    "note": "A draft with confirmed blocked IndexedDB"
+  },
+  "selectionTrials": [
+    {
+      "checked": [
+        "Mood: 4 of 5, Good",
+        "Energy: 3 of 5, Steady"
+      ],
+      "trace": [
+        {
+          "name": "pointerdown",
+          "time": 818,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "focusin",
+          "time": 820,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": null
+        },
+        {
+          "name": "pointerup",
+          "time": 820,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "click",
+          "time": 820,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "pointerdown",
+          "time": 930,
+          "target": "4",
+          "scrollY": 801,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "focusin",
+          "time": 931,
+          "target": "Today · Oct 20, 2026Leave room for an un",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "pointerup",
+          "time": 932,
+          "target": "4",
+          "scrollY": 801,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "click",
+          "time": 932,
+          "target": "4",
+          "scrollY": 801,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "click",
+          "time": 933,
+          "target": "Mood: 4 of 5, Good",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "change",
+          "time": 968,
+          "target": "Mood: 4 of 5, Good",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "focusin",
+          "time": 979,
+          "target": "Mood: 4 of 5, Good",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "pointerdown",
+          "time": 1093,
+          "target": "3",
+          "scrollY": 801,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "focusin",
+          "time": 1094,
+          "target": "Today · Oct 20, 2026Leave room for an un",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "pointerup",
+          "time": 1097,
+          "target": "3",
+          "scrollY": 801,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "click",
+          "time": 1098,
+          "target": "3",
+          "scrollY": 801,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "click",
+          "time": 1098,
+          "target": "Energy: 3 of 5, Steady",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "change",
+          "time": 1108,
+          "target": "Energy: 3 of 5, Steady",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "focusin",
+          "time": 1112,
+          "target": "Energy: 3 of 5, Steady",
+          "scrollY": 801,
+          "pointerType": null
+        }
+      ],
+      "scrollY": 801,
+      "method": "mouse-label",
+      "trial": 1,
+      "pass": true
+    },
+    {
+      "checked": [
+        "Mood: 4 of 5, Good"
+      ],
+      "trace": [
+        {
+          "name": "pointerdown",
+          "time": 1082,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "focusin",
+          "time": 1083,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": null
+        },
+        {
+          "name": "pointerup",
+          "time": 1084,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "click",
+          "time": 1085,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "pointerdown",
+          "time": 1166,
+          "target": "4",
+          "scrollY": 801,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "focusin",
+          "time": 1166,
+          "target": "Today · Oct 20, 2026Leave room for an un",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "pointerup",
+          "time": 1169,
+          "target": "4",
+          "scrollY": 801,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "click",
+          "time": 1169,
+          "target": "4",
+          "scrollY": 801,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "click",
+          "time": 1169,
+          "target": "Mood: 4 of 5, Good",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "change",
+          "time": 1190,
+          "target": "Mood: 4 of 5, Good",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "focusin",
+          "time": 1198,
+          "target": "Mood: 4 of 5, Good",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "pointerdown",
+          "time": 1296,
+          "target": "3",
+          "scrollY": 801,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "focusin",
+          "time": 1297,
+          "target": "Today · Oct 20, 2026Leave room for an un",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "pointerup",
+          "time": 1303,
+          "target": "One clear conversation can make the next",
+          "scrollY": 0,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "click",
+          "time": 1303,
+          "target": "Today · Oct 20, 2026Leave room for an un",
+          "scrollY": 0,
+          "pointerType": "mouse"
+        }
+      ],
+      "scrollY": 0,
+      "method": "mouse-label",
+      "trial": 2,
+      "pass": false
+    },
+    {
+      "checked": [
+        "Mood: 4 of 5, Good",
+        "Energy: 3 of 5, Steady"
+      ],
+      "trace": [
+        {
+          "name": "pointerdown",
+          "time": 920,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "focusin",
+          "time": 923,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": null
+        },
+        {
+          "name": "pointerup",
+          "time": 924,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "click",
+          "time": 924,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "pointerdown",
+          "time": 1018,
+          "target": "4",
+          "scrollY": 801,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "focusin",
+          "time": 1018,
+          "target": "Today · Oct 20, 2026Leave room for an un",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "pointerup",
+          "time": 1020,
+          "target": "4",
+          "scrollY": 801,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "click",
+          "time": 1020,
+          "target": "4",
+          "scrollY": 801,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "click",
+          "time": 1020,
+          "target": "Mood: 4 of 5, Good",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "change",
+          "time": 1042,
+          "target": "Mood: 4 of 5, Good",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "focusin",
+          "time": 1049,
+          "target": "Mood: 4 of 5, Good",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "pointerdown",
+          "time": 1156,
+          "target": "3",
+          "scrollY": 801,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "focusin",
+          "time": 1157,
+          "target": "Today · Oct 20, 2026Leave room for an un",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "pointerup",
+          "time": 1158,
+          "target": "3",
+          "scrollY": 801,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "click",
+          "time": 1158,
+          "target": "3",
+          "scrollY": 801,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "click",
+          "time": 1158,
+          "target": "Energy: 3 of 5, Steady",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "change",
+          "time": 1163,
+          "target": "Energy: 3 of 5, Steady",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "focusin",
+          "time": 1167,
+          "target": "Energy: 3 of 5, Steady",
+          "scrollY": 801,
+          "pointerType": null
+        }
+      ],
+      "scrollY": 801,
+      "method": "mouse-label",
+      "trial": 3,
+      "pass": true
+    },
+    {
+      "checked": [
+        "Mood: 4 of 5, Good",
+        "Energy: 3 of 5, Steady"
+      ],
+      "trace": [
+        {
+          "name": "pointerdown",
+          "time": 1087,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "focusin",
+          "time": 1088,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": null
+        },
+        {
+          "name": "pointerup",
+          "time": 1088,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "click",
+          "time": 1088,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "pointerdown",
+          "time": 1162,
+          "target": "4",
+          "scrollY": 801,
+          "pointerType": "touch"
+        },
+        {
+          "name": "pointerup",
+          "time": 1162,
+          "target": "4",
+          "scrollY": 801,
+          "pointerType": "touch"
+        },
+        {
+          "name": "focusin",
+          "time": 1164,
+          "target": "Today · Oct 20, 2026Leave room for an un",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "click",
+          "time": 1165,
+          "target": "4",
+          "scrollY": 801,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "click",
+          "time": 1165,
+          "target": "Mood: 4 of 5, Good",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "change",
+          "time": 1178,
+          "target": "Mood: 4 of 5, Good",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "focusin",
+          "time": 1184,
+          "target": "Mood: 4 of 5, Good",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "pointerdown",
+          "time": 1299,
+          "target": "3",
+          "scrollY": 801,
+          "pointerType": "touch"
+        },
+        {
+          "name": "pointerup",
+          "time": 1299,
+          "target": "3",
+          "scrollY": 801,
+          "pointerType": "touch"
+        },
+        {
+          "name": "focusin",
+          "time": 1300,
+          "target": "Today · Oct 20, 2026Leave room for an un",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "click",
+          "time": 1300,
+          "target": "3",
+          "scrollY": 801,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "click",
+          "time": 1300,
+          "target": "Energy: 3 of 5, Steady",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "change",
+          "time": 1306,
+          "target": "Energy: 3 of 5, Steady",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "focusin",
+          "time": 1308,
+          "target": "Energy: 3 of 5, Steady",
+          "scrollY": 801,
+          "pointerType": null
+        }
+      ],
+      "scrollY": 801,
+      "method": "touch-label",
+      "trial": 1,
+      "pass": true
+    },
+    {
+      "checked": [
+        "Mood: 4 of 5, Good",
+        "Energy: 3 of 5, Steady"
+      ],
+      "trace": [
+        {
+          "name": "pointerdown",
+          "time": 2343,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "focusin",
+          "time": 2346,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": null
+        },
+        {
+          "name": "pointerup",
+          "time": 2347,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "click",
+          "time": 2348,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "pointerdown",
+          "time": 2440,
+          "target": "4",
+          "scrollY": 801,
+          "pointerType": "touch"
+        },
+        {
+          "name": "pointerup",
+          "time": 2440,
+          "target": "4",
+          "scrollY": 801,
+          "pointerType": "touch"
+        },
+        {
+          "name": "focusin",
+          "time": 2441,
+          "target": "Today · Oct 20, 2026Leave room for an un",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "click",
+          "time": 2442,
+          "target": "4",
+          "scrollY": 801,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "click",
+          "time": 2442,
+          "target": "Mood: 4 of 5, Good",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "change",
+          "time": 2458,
+          "target": "Mood: 4 of 5, Good",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "focusin",
+          "time": 2467,
+          "target": "Mood: 4 of 5, Good",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "pointerdown",
+          "time": 2576,
+          "target": "3",
+          "scrollY": 801,
+          "pointerType": "touch"
+        },
+        {
+          "name": "pointerup",
+          "time": 2577,
+          "target": "3",
+          "scrollY": 801,
+          "pointerType": "touch"
+        },
+        {
+          "name": "focusin",
+          "time": 2579,
+          "target": "Today · Oct 20, 2026Leave room for an un",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "click",
+          "time": 2579,
+          "target": "3",
+          "scrollY": 801,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "click",
+          "time": 2579,
+          "target": "Energy: 3 of 5, Steady",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "change",
+          "time": 2584,
+          "target": "Energy: 3 of 5, Steady",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "focusin",
+          "time": 2586,
+          "target": "Energy: 3 of 5, Steady",
+          "scrollY": 801,
+          "pointerType": null
+        }
+      ],
+      "scrollY": 801,
+      "method": "touch-label",
+      "trial": 2,
+      "pass": true
+    },
+    {
+      "checked": [
+        "Mood: 4 of 5, Good",
+        "Energy: 3 of 5, Steady"
+      ],
+      "trace": [
+        {
+          "name": "pointerdown",
+          "time": 856,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "focusin",
+          "time": 856,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": null
+        },
+        {
+          "name": "pointerup",
+          "time": 859,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "click",
+          "time": 860,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "pointerdown",
+          "time": 928,
+          "target": "4",
+          "scrollY": 801,
+          "pointerType": "touch"
+        },
+        {
+          "name": "pointerup",
+          "time": 928,
+          "target": "4",
+          "scrollY": 801,
+          "pointerType": "touch"
+        },
+        {
+          "name": "focusin",
+          "time": 930,
+          "target": "Today · Oct 20, 2026Leave room for an un",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "click",
+          "time": 930,
+          "target": "4",
+          "scrollY": 801,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "click",
+          "time": 930,
+          "target": "Mood: 4 of 5, Good",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "change",
+          "time": 948,
+          "target": "Mood: 4 of 5, Good",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "focusin",
+          "time": 953,
+          "target": "Mood: 4 of 5, Good",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "pointerdown",
+          "time": 1063,
+          "target": "3",
+          "scrollY": 801,
+          "pointerType": "touch"
+        },
+        {
+          "name": "pointerup",
+          "time": 1064,
+          "target": "3",
+          "scrollY": 801,
+          "pointerType": "touch"
+        },
+        {
+          "name": "focusin",
+          "time": 1068,
+          "target": "Today · Oct 20, 2026Leave room for an un",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "click",
+          "time": 1069,
+          "target": "3",
+          "scrollY": 801,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "click",
+          "time": 1069,
+          "target": "Energy: 3 of 5, Steady",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "change",
+          "time": 1078,
+          "target": "Energy: 3 of 5, Steady",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "focusin",
+          "time": 1081,
+          "target": "Energy: 3 of 5, Steady",
+          "scrollY": 801,
+          "pointerType": null
+        }
+      ],
+      "scrollY": 801,
+      "method": "touch-label",
+      "trial": 3,
+      "pass": true
+    },
+    {
+      "checked": [
+        "Mood: 4 of 5, Good",
+        "Energy: 3 of 5, Steady"
+      ],
+      "trace": [
+        {
+          "name": "pointerdown",
+          "time": 975,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "focusin",
+          "time": 976,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": null
+        },
+        {
+          "name": "pointerup",
+          "time": 976,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "click",
+          "time": 977,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "focusin",
+          "time": 1014,
+          "target": "Mood: 4 of 5, Good",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "click",
+          "time": 1025,
+          "target": "Mood: 4 of 5, Good",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "change",
+          "time": 1037,
+          "target": "Mood: 4 of 5, Good",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "focusin",
+          "time": 1063,
+          "target": "Energy: 3 of 5, Steady",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "click",
+          "time": 1068,
+          "target": "Energy: 3 of 5, Steady",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "change",
+          "time": 1074,
+          "target": "Energy: 3 of 5, Steady",
+          "scrollY": 801,
+          "pointerType": null
+        }
+      ],
+      "scrollY": 801,
+      "method": "keyboard",
+      "trial": 1,
+      "pass": true
+    },
+    {
+      "checked": [
+        "Mood: 4 of 5, Good",
+        "Energy: 3 of 5, Steady"
+      ],
+      "trace": [
+        {
+          "name": "pointerdown",
+          "time": 865,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "focusin",
+          "time": 865,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": null
+        },
+        {
+          "name": "pointerup",
+          "time": 866,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "click",
+          "time": 866,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "focusin",
+          "time": 904,
+          "target": "Mood: 4 of 5, Good",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "click",
+          "time": 908,
+          "target": "Mood: 4 of 5, Good",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "change",
+          "time": 922,
+          "target": "Mood: 4 of 5, Good",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "focusin",
+          "time": 939,
+          "target": "Energy: 3 of 5, Steady",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "click",
+          "time": 943,
+          "target": "Energy: 3 of 5, Steady",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "change",
+          "time": 947,
+          "target": "Energy: 3 of 5, Steady",
+          "scrollY": 801,
+          "pointerType": null
+        }
+      ],
+      "scrollY": 801,
+      "method": "keyboard",
+      "trial": 2,
+      "pass": true
+    },
+    {
+      "checked": [
+        "Mood: 4 of 5, Good",
+        "Energy: 3 of 5, Steady"
+      ],
+      "trace": [
+        {
+          "name": "pointerdown",
+          "time": 752,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "focusin",
+          "time": 753,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": null
+        },
+        {
+          "name": "pointerup",
+          "time": 753,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "click",
+          "time": 754,
+          "target": "Check-in",
+          "scrollY": 0,
+          "pointerType": "mouse"
+        },
+        {
+          "name": "focusin",
+          "time": 785,
+          "target": "Mood: 4 of 5, Good",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "click",
+          "time": 790,
+          "target": "Mood: 4 of 5, Good",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "change",
+          "time": 804,
+          "target": "Mood: 4 of 5, Good",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "focusin",
+          "time": 820,
+          "target": "Energy: 3 of 5, Steady",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "click",
+          "time": 827,
+          "target": "Energy: 3 of 5, Steady",
+          "scrollY": 801,
+          "pointerType": null
+        },
+        {
+          "name": "change",
+          "time": 832,
+          "target": "Energy: 3 of 5, Steady",
+          "scrollY": 801,
+          "pointerType": null
+        }
+      ],
+      "scrollY": 801,
+      "method": "keyboard",
+      "trial": 3,
+      "pass": true
+    }
+  ],
+  "navigation": {},
+  "scrolling": {},
+  "performance": {}
+}

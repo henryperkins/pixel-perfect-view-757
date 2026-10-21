@@ -1,0 +1,6 @@
+interface:
+  display_name: "Mobile Web UX Runner"
+  short_description: "Run, fix, and verify mobile web UX"
+  default_prompt: "Use $mobile-web-ux-runner to run the complete Impeccable mobile-web UX workflow against the current project. Resolve the main journey, apply confirmed in-scope fixes, verify actual results, and report missing checks. Do not commit, push, or deploy."
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,15 @@
+{
+  "verified_owned_pid": 1177198,
+  "verified_command": [
+    "node",
+    "/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/fixture-server.mjs"
+  ],
+  "signal": "SIGTERM",
+  "loopback_port": 4208,
+  "port_closed": true,
+  "browser_sessions_closed": [
+    "pattern-fix20-chromium",
+    "pattern-fix20-webkit"
+  ],
+  "review_browser_session": "pattern-focus-review20 already closed by reviewer"
+}

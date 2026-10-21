@@ -1,0 +1,662 @@
+{
+  "probe": "mixed_agent_admission",
+  "requirement_matches": false,
+  "assessment": {
+    "errors": [
+      "F-01/C-01: required device regression must match a runnable target plan"
+    ],
+    "gaps": [
+      "F-01: confirmed finding is implemented",
+      "F-01/DR-1: device regression target verification not_run",
+      "Required checks remain unrun or no required checks were recorded",
+      "C-01: required verification incomplete"
+    ],
+    "coverage": "complete",
+    "assessment_complete": true,
+    "verification": "incomplete",
+    "verification_ceiling": "proxy",
+    "impeccable": "executed",
+    "open_p0_p1": [
+      "F-01"
+    ],
+    "applied_device_entries": [],
+    "device_regressions": [
+      {
+        "finding_id": "F-01",
+        "regression_id": "DR-1",
+        "source_scope_ids": [
+          "proxy-mouse"
+        ],
+        "check_ids": [
+          "C-01"
+        ],
+        "status": "not_run"
+      }
+    ],
+    "claimable_complete": false
+  }
+}
+{
+  "probe": "partial_failure_classification",
+  "assessment": {
+    "errors": [],
+    "gaps": [
+      "F-01: confirmed finding is implemented",
+      "F-01/DR-1: device regression target verification fail",
+      "F-01/DR-2: device regression target verification not_run",
+      "C-01: current recorded failure",
+      "C-01: required verification incomplete"
+    ],
+    "coverage": "complete",
+    "assessment_complete": true,
+    "verification": "failed",
+    "verification_ceiling": "target",
+    "impeccable": "executed",
+    "open_p0_p1": [
+      "F-01"
+    ],
+    "applied_device_entries": [
+      "C-01"
+    ],
+    "device_regressions": [
+      {
+        "finding_id": "F-01",
+        "regression_id": "DR-1",
+        "source_scope_ids": [
+          "proxy-mouse"
+        ],
+        "check_ids": [
+          "C-01"
+        ],
+        "status": "fail"
+      },
+      {
+        "finding_id": "F-01",
+        "regression_id": "DR-2",
+        "source_scope_ids": [
+          "proxy-mouse"
+        ],
+        "check_ids": [
+          "C-01"
+        ],
+        "status": "not_run"
+      }
+    ],
+    "claimable_complete": false
+  }
+}
+{
+  "probe": "malformed_or_empty_results",
+  "raw": [
+    "not a result"
+  ],
+  "assessment": {
+    "errors": [
+      "C-01: regression results must be a list of reported portions",
+      "C-01: whole pass cannot contain nonpassing regressions"
+    ],
+    "gaps": [
+      "F-01: confirmed finding is implemented",
+      "F-01/DR-1: device regression target verification not_run"
+    ],
+    "coverage": "complete",
+    "assessment_complete": true,
+    "verification": "checks_passed_within_recorded_scope",
+    "verification_ceiling": "target",
+    "impeccable": "executed",
+    "open_p0_p1": [
+      "F-01"
+    ],
+    "applied_device_entries": [],
+    "device_regressions": [
+      {
+        "finding_id": "F-01",
+        "regression_id": "DR-1",
+        "source_scope_ids": [
+          "proxy-mouse"
+        ],
+        "check_ids": [
+          "C-01"
+        ],
+        "status": "not_run"
+      }
+    ],
+    "claimable_complete": false
+  }
+}
+{
+  "probe": "malformed_or_empty_results",
+  "raw": "not a result",
+  "assessment": {
+    "errors": [
+      "C-01: regression results must be a list of reported portions",
+      "C-01: whole pass cannot contain nonpassing regressions"
+    ],
+    "gaps": [
+      "F-01: confirmed finding is implemented",
+      "F-01/DR-1: device regression target verification not_run"
+    ],
+    "coverage": "complete",
+    "assessment_complete": true,
+    "verification": "checks_passed_within_recorded_scope",
+    "verification_ceiling": "target",
+    "impeccable": "executed",
+    "open_p0_p1": [
+      "F-01"
+    ],
+    "applied_device_entries": [],
+    "device_regressions": [
+      {
+        "finding_id": "F-01",
+        "regression_id": "DR-1",
+        "source_scope_ids": [
+          "proxy-mouse"
+        ],
+        "check_ids": [
+          "C-01"
+        ],
+        "status": "not_run"
+      }
+    ],
+    "claimable_complete": false
+  }
+}
+{
+  "probe": "malformed_or_empty_results",
+  "raw": null,
+  "assessment": {
+    "errors": [
+      "C-01: regression results must be a list of reported portions",
+      "C-01: whole pass cannot contain nonpassing regressions"
+    ],
+    "gaps": [
+      "F-01: confirmed finding is implemented",
+      "F-01/DR-1: device regression target verification not_run"
+    ],
+    "coverage": "complete",
+    "assessment_complete": true,
+    "verification": "checks_passed_within_recorded_scope",
+    "verification_ceiling": "target",
+    "impeccable": "executed",
+    "open_p0_p1": [
+      "F-01"
+    ],
+    "applied_device_entries": [],
+    "device_regressions": [
+      {
+        "finding_id": "F-01",
+        "regression_id": "DR-1",
+        "source_scope_ids": [
+          "proxy-mouse"
+        ],
+        "check_ids": [
+          "C-01"
+        ],
+        "status": "not_run"
+      }
+    ],
+    "claimable_complete": false
+  }
+}
+{
+  "probe": "malformed_or_empty_results",
+  "raw": [],
+  "assessment": {
+    "errors": [
+      "C-01: whole pass cannot contain nonpassing regressions"
+    ],
+    "gaps": [
+      "F-01: confirmed finding is implemented",
+      "F-01/DR-1: device regression target verification not_run"
+    ],
+    "coverage": "complete",
+    "assessment_complete": true,
+    "verification": "checks_passed_within_recorded_scope",
+    "verification_ceiling": "target",
+    "impeccable": "executed",
+    "open_p0_p1": [
+      "F-01"
+    ],
+    "applied_device_entries": [],
+    "device_regressions": [
+      {
+        "finding_id": "F-01",
+        "regression_id": "DR-1",
+        "source_scope_ids": [
+          "proxy-mouse"
+        ],
+        "check_ids": [
+          "C-01"
+        ],
+        "status": "not_run"
+      }
+    ],
+    "claimable_complete": false
+  }
+}
+{
+  "probe": "omitted_or_empty_payload",
+  "payload_fields": [],
+  "regression_results": [
+    {
+      "finding_id": "F-01",
+      "regression_id": "DR-1",
+      "status": "pass",
+      "actual": "CTA visible",
+      "evidence": [
+        "fixture: human result"
+      ],
+      "conditions": {
+        "build_id": "B-phone",
+        "browser": "Safari",
+        "device": "iPhone",
+        "state": "phone-state-0",
+        "account_data": "seeded test account A",
+        "setup": "open /checkout",
+        "steps": [
+          "Focus final field"
+        ],
+        "timing": "after layout settles",
+        "substitutions": "test fixture A"
+      }
+    }
+  ],
+  "assessment": {
+    "errors": [],
+    "gaps": [
+      "F-01: confirmed finding is implemented"
+    ],
+    "coverage": "complete",
+    "assessment_complete": true,
+    "verification": "checks_passed_within_recorded_scope",
+    "verification_ceiling": "target",
+    "impeccable": "executed",
+    "open_p0_p1": [
+      "F-01"
+    ],
+    "applied_device_entries": [],
+    "device_regressions": [
+      {
+        "finding_id": "F-01",
+        "regression_id": "DR-1",
+        "source_scope_ids": [
+          "proxy-mouse"
+        ],
+        "check_ids": [
+          "C-01"
+        ],
+        "status": "pass"
+      }
+    ],
+    "claimable_complete": false
+  }
+}
+{
+  "probe": "omitted_or_empty_payload",
+  "payload_fields": [
+    "regression_results"
+  ],
+  "regression_results": [
+    {
+      "finding_id": "F-01",
+      "regression_id": "DR-1",
+      "status": "not_run",
+      "actual": "",
+      "evidence": [],
+      "reason": "This regression portion was not reported",
+      "conditions": {
+        "build_id": "B-phone",
+        "browser": "Safari",
+        "device": "iPhone",
+        "state": "phone-state-0",
+        "account_data": "seeded test account A",
+        "setup": "open /checkout",
+        "steps": [
+          "Focus final field"
+        ],
+        "timing": "after layout settles",
+        "substitutions": "test fixture A"
+      }
+    }
+  ],
+  "assessment": {
+    "errors": [],
+    "gaps": [
+      "F-01: confirmed finding is implemented",
+      "F-01/DR-1: device regression target verification not_run",
+      "Required checks remain unrun or no required checks were recorded",
+      "C-01: required verification incomplete"
+    ],
+    "coverage": "complete",
+    "assessment_complete": true,
+    "verification": "incomplete",
+    "verification_ceiling": "proxy",
+    "impeccable": "executed",
+    "open_p0_p1": [
+      "F-01"
+    ],
+    "applied_device_entries": [
+      "C-01"
+    ],
+    "device_regressions": [
+      {
+        "finding_id": "F-01",
+        "regression_id": "DR-1",
+        "source_scope_ids": [
+          "proxy-mouse"
+        ],
+        "check_ids": [
+          "C-01"
+        ],
+        "status": "not_run"
+      }
+    ],
+    "claimable_complete": false
+  }
+}
+{
+  "probe": "mixed_partial_regression_only",
+  "initial_errors": [],
+  "assessment": {
+    "errors": [],
+    "gaps": [
+      "F-01: confirmed finding is implemented",
+      "Required checks remain unrun or no required checks were recorded",
+      "C-01: required verification incomplete"
+    ],
+    "coverage": "complete",
+    "assessment_complete": true,
+    "verification": "incomplete",
+    "verification_ceiling": "target",
+    "impeccable": "executed",
+    "open_p0_p1": [
+      "F-01"
+    ],
+    "applied_device_entries": [
+      "C-01"
+    ],
+    "device_regressions": [
+      {
+        "finding_id": "F-01",
+        "regression_id": "DR-1",
+        "source_scope_ids": [
+          "proxy-mouse"
+        ],
+        "check_ids": [
+          "C-01"
+        ],
+        "status": "pass"
+      }
+    ],
+    "claimable_complete": false
+  },
+  "scope_results": [
+    {
+      "finding_id": "F-01",
+      "scope_id": "phone-original",
+      "status": "not_run",
+      "actual": "",
+      "evidence": [],
+      "reason": "This portion was not reported",
+      "conditions": {
+        "build_id": "B-phone",
+        "browser": "Safari",
+        "device": "iPhone",
+        "state": "phone-state-0",
+        "account_data": "seeded test account A",
+        "setup": "open /checkout",
+        "steps": [
+          "Focus final field"
+        ],
+        "timing": "after layout settles",
+        "substitutions": "test fixture A"
+      }
+    }
+  ],
+  "regression_results": [
+    {
+      "finding_id": "F-01",
+      "regression_id": "DR-1",
+      "status": "pass",
+      "actual": "Visible",
+      "evidence": [
+        "fixture: regression"
+      ],
+      "conditions_confirmed": true,
+      "conditions": {
+        "build_id": "B-phone",
+        "browser": "Safari",
+        "device": "iPhone",
+        "state": "phone-state-0",
+        "account_data": "seeded test account A",
+        "setup": "open /checkout",
+        "steps": [
+          "Focus final field"
+        ],
+        "timing": "after layout settles",
+        "substitutions": "test fixture A"
+      }
+    }
+  ]
+}
+{
+  "probe": "mixed_partial_scope_only",
+  "initial_errors": [],
+  "assessment": {
+    "errors": [],
+    "gaps": [
+      "F-01: confirmed finding is implemented",
+      "F-01/DR-1: device regression target verification not_run",
+      "Required checks remain unrun or no required checks were recorded",
+      "C-01: required verification incomplete"
+    ],
+    "coverage": "complete",
+    "assessment_complete": true,
+    "verification": "incomplete",
+    "verification_ceiling": "target",
+    "impeccable": "executed",
+    "open_p0_p1": [
+      "F-01"
+    ],
+    "applied_device_entries": [
+      "C-01"
+    ],
+    "device_regressions": [
+      {
+        "finding_id": "F-01",
+        "regression_id": "DR-1",
+        "source_scope_ids": [
+          "proxy-mouse"
+        ],
+        "check_ids": [
+          "C-01"
+        ],
+        "status": "not_run"
+      }
+    ],
+    "claimable_complete": false
+  },
+  "scope_results": [
+    {
+      "finding_id": "F-01",
+      "scope_id": "phone-original",
+      "status": "pass",
+      "actual": "Visible",
+      "evidence": [
+        "fixture: scope"
+      ],
+      "conditions_confirmed": true,
+      "conditions": {
+        "build_id": "B-phone",
+        "browser": "Safari",
+        "device": "iPhone",
+        "state": "phone-state-0",
+        "account_data": "seeded test account A",
+        "setup": "open /checkout",
+        "steps": [
+          "Focus final field"
+        ],
+        "timing": "after layout settles",
+        "substitutions": "test fixture A"
+      }
+    }
+  ],
+  "regression_results": [
+    {
+      "finding_id": "F-01",
+      "regression_id": "DR-1",
+      "status": "not_run",
+      "actual": "",
+      "evidence": [],
+      "reason": "This regression portion was not reported",
+      "conditions": {
+        "build_id": "B-phone",
+        "browser": "Safari",
+        "device": "iPhone",
+        "state": "phone-state-0",
+        "account_data": "seeded test account A",
+        "setup": "open /checkout",
+        "steps": [
+          "Focus final field"
+        ],
+        "timing": "after layout settles",
+        "substitutions": "test fixture A"
+      }
+    }
+  ]
+}
+{
+  "probe": "mixed_original_only_aggregate_pass",
+  "assessment": {
+    "errors": [],
+    "gaps": [
+      "F-01: confirmed finding is implemented",
+      "F-01/DR-1: device regression target verification not_run",
+      "Required checks remain unrun or no required checks were recorded",
+      "C-01: required verification incomplete"
+    ],
+    "coverage": "complete",
+    "assessment_complete": true,
+    "verification": "incomplete",
+    "verification_ceiling": "target",
+    "impeccable": "executed",
+    "open_p0_p1": [
+      "F-01"
+    ],
+    "applied_device_entries": [
+      "C-01"
+    ],
+    "device_regressions": [
+      {
+        "finding_id": "F-01",
+        "regression_id": "DR-1",
+        "source_scope_ids": [
+          "proxy-mouse"
+        ],
+        "check_ids": [
+          "C-01"
+        ],
+        "status": "not_run"
+      }
+    ],
+    "claimable_complete": false
+  },
+  "scope_results": [
+    {
+      "finding_id": "F-01",
+      "scope_id": "phone-original",
+      "status": "pass",
+      "actual": "Visible elsewhere",
+      "evidence": [
+        "fixture: original only"
+      ],
+      "conditions": {
+        "build_id": "B-phone",
+        "browser": "Safari",
+        "device": "iPhone",
+        "state": "other-state",
+        "account_data": "seeded test account A",
+        "setup": "open /checkout",
+        "steps": [
+          "Focus final field"
+        ],
+        "timing": "after layout settles",
+        "substitutions": "test fixture A"
+      }
+    }
+  ],
+  "regression_results": [
+    {
+      "finding_id": "F-01",
+      "regression_id": "DR-1",
+      "status": "not_run",
+      "actual": "",
+      "evidence": [],
+      "reason": "This regression portion was not reported",
+      "conditions": {
+        "build_id": "B-phone",
+        "browser": "Safari",
+        "device": "iPhone",
+        "state": "phone-state-0",
+        "account_data": "seeded test account A",
+        "setup": "open /checkout",
+        "steps": [
+          "Focus final field"
+        ],
+        "timing": "after layout settles",
+        "substitutions": "test fixture A"
+      }
+    }
+  ]
+}
+{
+  "probe": "distinct_conditions_shared_plan",
+  "assessment": {
+    "errors": [
+      "F-01/C-01: required device regression must match a runnable target plan"
+    ],
+    "gaps": [
+      "F-01: confirmed finding is implemented",
+      "F-01/DR-1: device regression target verification not_run",
+      "F-01/DR-2: device regression target verification not_run",
+      "Required checks remain unrun or no required checks were recorded",
+      "C-01: required verification incomplete"
+    ],
+    "coverage": "complete",
+    "assessment_complete": true,
+    "verification": "incomplete",
+    "verification_ceiling": "proxy",
+    "impeccable": "executed",
+    "open_p0_p1": [
+      "F-01"
+    ],
+    "applied_device_entries": [
+      "C-01"
+    ],
+    "device_regressions": [
+      {
+        "finding_id": "F-01",
+        "regression_id": "DR-1",
+        "source_scope_ids": [
+          "proxy-mouse"
+        ],
+        "check_ids": [
+          "C-01"
+        ],
+        "status": "not_run"
+      },
+      {
+        "finding_id": "F-01",
+        "regression_id": "DR-2",
+        "source_scope_ids": [
+          "proxy-mouse"
+        ],
+        "check_ids": [
+          "C-01"
+        ],
+        "status": "not_run"
+      }
+    ],
+    "claimable_complete": false
+  }
+}

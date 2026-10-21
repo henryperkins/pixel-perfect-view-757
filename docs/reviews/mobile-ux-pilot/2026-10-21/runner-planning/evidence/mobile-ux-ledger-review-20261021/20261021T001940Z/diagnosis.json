@@ -1,0 +1,277 @@
+{
+  "source_ledger": "/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-ux-f02-guard-20261021/20261021T000416Z/run.json",
+  "helper": "/home/ubuntu/.codex/plugins/cache/created-by-me-remote/mobile-web-ux-runner/2.0.0/skills/mobile-web-ux-runner/scripts/run_state.py",
+  "helper_sha256": "8e1665420c2ca1bda910627cd9ec1e684b08999d9cf71fc9c46cf553b5863a33",
+  "scope": {
+    "id": "webkit-mouse-390",
+    "conditions": {
+      "build_id": "B-PILOT",
+      "browser": "Playwright WebKit 26.6",
+      "device": "Linux desktop host with mobile viewport/touch media emulation",
+      "os": "Linux",
+      "viewport": "390x844 unless stated in state",
+      "display_mode": "regular browser tab",
+      "state": "390x844; ordinary synthetic responses; pointer=mouse; no consent bands",
+      "account_data": "mobile-audit-member; synthetic Today/check-in data",
+      "setup": "B-PILOT compile-time service/bootstrap replacements plus SS-STRIPE; fresh context per recovery or selection trial",
+      "steps": [
+        "Load a fresh Today fixture",
+        "Click Today sections / Check-in",
+        "Click the Mood 4 label",
+        "Immediately click the Energy 3 label",
+        "Observe selection and submit once if continuing the journey"
+      ],
+      "timing": "normal synthetic response unless a check declares delay/failure",
+      "substitutions": "B-PILOT + SS-STRIPE"
+    }
+  },
+  "fix_build_id": "B-F02-GUARD",
+  "original_assessment": {
+    "errors": [
+      "F-02/webkit-mouse-390: required remaining target entry must fit the script before application",
+      "F-02/C-GD01: required fix check does not cover an affected scope",
+      "F-02/C-GD02: required fix check does not cover an affected scope",
+      "F-02/C-GD03: required fix check does not cover an affected scope",
+      "F-02/C-GD04: required fix check does not cover an affected scope",
+      "F-02/C-GD10: every required remaining entry must fit before application"
+    ],
+    "gaps": [
+      "F-01: confirmed finding is implemented",
+      "F-02: confirmed finding is implemented",
+      "F-03: confirmed finding is implemented",
+      "C-CH-CONTRAST: current recorded failure",
+      "C-CH-FOCUS: current recorded failure",
+      "C-WK-JOURNEY: current recorded failure",
+      "C-WK-CONTRAST: current recorded failure",
+      "C-WK-FOCUS: current recorded failure",
+      "C-WK-MOUSE: current recorded failure",
+      "C-L-FOCUS-RED: current recorded failure",
+      "C-L-F02-BASE: current recorded failure",
+      "C-L-F02-LOCAL: current recorded failure",
+      "C-G-CH-SHELL-RED: current recorded failure",
+      "C-G-WK-SHELL-RED: current recorded failure",
+      "C-CH-CONTRAST: required verification incomplete",
+      "C-CH-FOCUS: required verification incomplete",
+      "C-WK-JOURNEY: required verification incomplete",
+      "C-WK-CONTRAST: required verification incomplete",
+      "C-WK-FOCUS: required verification incomplete",
+      "C-WK-MOUSE: required verification incomplete",
+      "C-L-F02-BASE: required verification incomplete",
+      "C-L-F02-LOCAL: required verification incomplete",
+      "C-GD01: required verification incomplete",
+      "C-GD02: required verification incomplete",
+      "C-GD03: required verification incomplete",
+      "C-GD04: required verification incomplete",
+      "C-GD05: required verification incomplete",
+      "C-GD06: required verification incomplete",
+      "C-GD07: required verification incomplete",
+      "C-GD08: required verification incomplete",
+      "C-GD09: required verification incomplete",
+      "C-GD10: required verification incomplete"
+    ],
+    "coverage": "complete",
+    "assessment_complete": true,
+    "verification": "failed",
+    "verification_ceiling": "proxy",
+    "impeccable": "executed",
+    "open_p0_p1": [],
+    "applied_device_entries": [],
+    "claimable_complete": false
+  },
+  "required_entries": [
+    {
+      "id": "C-GD01",
+      "covers_original_scope": false,
+      "related_finding_ids": [
+        "F-01",
+        "F-02",
+        "F-03"
+      ],
+      "status": "not_run",
+      "level": "unestablished",
+      "planned_level_expected_by_helper": "target",
+      "check_build_id": "B-PHONE-GUARD",
+      "fix_build_id": "B-F02-GUARD",
+      "build_ids_match": false,
+      "configuration_comparison": {
+        "browser": {
+          "original_scope": "Playwright WebKit 26.6",
+          "planned_entry": "Safari",
+          "matches": false
+        },
+        "device": {
+          "original_scope": "Linux desktop host with mobile viewport/touch media emulation",
+          "planned_entry": "iPhone",
+          "matches": false
+        }
+      },
+      "condition_mismatches": [
+        "account_data differs",
+        "browser differs",
+        "device differs",
+        "display_mode unreported",
+        "os unreported",
+        "setup differs",
+        "state differs",
+        "steps differs",
+        "timing differs",
+        "viewport unreported"
+      ],
+      "helper_planned_target_matches": false
+    },
+    {
+      "id": "C-GD02",
+      "covers_original_scope": false,
+      "related_finding_ids": [
+        "F-02"
+      ],
+      "status": "not_run",
+      "level": "unestablished",
+      "planned_level_expected_by_helper": "target",
+      "check_build_id": "B-PHONE-GUARD",
+      "fix_build_id": "B-F02-GUARD",
+      "build_ids_match": false,
+      "configuration_comparison": {
+        "browser": {
+          "original_scope": "Playwright WebKit 26.6",
+          "planned_entry": "Safari",
+          "matches": false
+        },
+        "device": {
+          "original_scope": "Linux desktop host with mobile viewport/touch media emulation",
+          "planned_entry": "iPhone",
+          "matches": false
+        }
+      },
+      "condition_mismatches": [
+        "account_data differs",
+        "browser differs",
+        "device differs",
+        "display_mode unreported",
+        "os unreported",
+        "setup differs",
+        "state differs",
+        "steps differs",
+        "timing differs",
+        "viewport unreported"
+      ],
+      "helper_planned_target_matches": false
+    },
+    {
+      "id": "C-GD03",
+      "covers_original_scope": false,
+      "related_finding_ids": [
+        "F-02"
+      ],
+      "status": "not_run",
+      "level": "unestablished",
+      "planned_level_expected_by_helper": "target",
+      "check_build_id": "B-PHONE-GUARD",
+      "fix_build_id": "B-F02-GUARD",
+      "build_ids_match": false,
+      "configuration_comparison": {
+        "browser": {
+          "original_scope": "Playwright WebKit 26.6",
+          "planned_entry": "Safari",
+          "matches": false
+        },
+        "device": {
+          "original_scope": "Linux desktop host with mobile viewport/touch media emulation",
+          "planned_entry": "iPhone",
+          "matches": false
+        }
+      },
+      "condition_mismatches": [
+        "account_data differs",
+        "browser differs",
+        "device differs",
+        "display_mode unreported",
+        "os unreported",
+        "setup differs",
+        "state differs",
+        "steps differs",
+        "timing differs",
+        "viewport unreported"
+      ],
+      "helper_planned_target_matches": false
+    },
+    {
+      "id": "C-GD04",
+      "covers_original_scope": false,
+      "related_finding_ids": [
+        "F-01",
+        "F-02",
+        "F-03"
+      ],
+      "status": "not_run",
+      "level": "unestablished",
+      "planned_level_expected_by_helper": "target",
+      "check_build_id": "B-PHONE-GUARD",
+      "fix_build_id": "B-F02-GUARD",
+      "build_ids_match": false,
+      "configuration_comparison": {
+        "browser": {
+          "original_scope": "Playwright WebKit 26.6",
+          "planned_entry": "Chrome",
+          "matches": false
+        },
+        "device": {
+          "original_scope": "Linux desktop host with mobile viewport/touch media emulation",
+          "planned_entry": "Android phone",
+          "matches": false
+        }
+      },
+      "condition_mismatches": [
+        "account_data differs",
+        "browser differs",
+        "device differs",
+        "display_mode unreported",
+        "os unreported",
+        "setup differs",
+        "state differs",
+        "steps differs",
+        "timing differs",
+        "viewport unreported"
+      ],
+      "helper_planned_target_matches": false
+    },
+    {
+      "id": "C-GD10",
+      "covers_original_scope": true,
+      "related_finding_ids": [
+        "F-02"
+      ],
+      "status": "not_run",
+      "level": "unestablished",
+      "planned_level_expected_by_helper": "target",
+      "check_build_id": "B-PHONE-GUARD",
+      "fix_build_id": "B-F02-GUARD",
+      "build_ids_match": false,
+      "configuration_comparison": {
+        "browser": {
+          "original_scope": "Playwright WebKit 26.6",
+          "planned_entry": "Safari",
+          "matches": false
+        },
+        "device": {
+          "original_scope": "Linux desktop host with mobile viewport/touch media emulation",
+          "planned_entry": "iPhone with supported external pointer",
+          "matches": false
+        }
+      },
+      "condition_mismatches": [
+        "account_data differs",
+        "browser differs",
+        "device differs",
+        "display_mode unreported",
+        "os unreported",
+        "setup differs",
+        "state differs",
+        "steps differs",
+        "timing differs",
+        "viewport unreported"
+      ],
+      "helper_planned_target_matches": false
+    }
+  ]
+}

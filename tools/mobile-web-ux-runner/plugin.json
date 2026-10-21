@@ -1,0 +1,22 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "author": {
+    "email": "htperkins@gmail.com",
+    "name": "Henry Perkins"
+  },
+  "description": "An agent workflow for inspecting, fixing, and verifying mobile web UX with Impeccable, scoped changes, and evidence-backed reporting.",
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "category": "Productivity",
+        "defaultPrompt": "Use Mobile Web UX Runner to execute the complete Impeccable mobile-web UX workflow on the current project: audit all seven areas, apply confirmed in-scope fixes, verify actual results, and report untested checks. Do not commit, push, or deploy.",
+        "developerName": "Henry Perkins",
+        "displayName": "Mobile Web UX Runner",
+        "longDescription": "Run the seven-part mobile web UX workflow against an existing project. Resolve and launch a safe preview, assess mobile behavior, apply confirmed scoped fixes, and record verification and limitations. Requires an agent with source, terminal, browser access, and the separately installed Impeccable skill. Does not provision devices, deploy, or run unattended.",
+        "shortDescription": "Run and verify mobile web UX"
+      }
+    }
+  },
+  "name": "mobile-web-ux-runner",
+  "version": "2.0.1"
+}

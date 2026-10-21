@@ -1,0 +1,56 @@
+{
+  "engine": "webkit",
+  "version": "26.6",
+  "level": "proxy",
+  "checks": [
+    {
+      "name": "New route places focus in destination content and Tab continues there",
+      "passed": true,
+      "details": {
+        "focused": "main-content",
+        "next": {
+          "inMain": true,
+          "tag": "INPUT"
+        }
+      }
+    },
+    {
+      "name": "Initial load and reload preserve the browser focus default",
+      "passed": true,
+      "details": {
+        "active": "BODY"
+      }
+    },
+    {
+      "name": "Same-page hash and query navigation preserve deliberate field focus",
+      "passed": true,
+      "details": {
+        "note": "Keep editing through same-page navigation",
+        "mainFocusCalls": 0
+      }
+    },
+    {
+      "name": "Route refresh preserves field focus and unsaved input",
+      "passed": true,
+      "details": {
+        "mainFocusCalls": 0
+      }
+    },
+    {
+      "name": "Back and Forward retain router restoration and do not force destination focus",
+      "passed": true,
+      "details": {
+        "mainFocusCalls": 1,
+        "draftPreserved": true
+      }
+    },
+    {
+      "name": "Same-page menu entries and cross-route hash targets keep their own focus behavior",
+      "passed": true,
+      "details": {
+        "mainFocusCalls": 1,
+        "hash": "#today-reflection"
+      }
+    }
+  ]
+}

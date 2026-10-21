@@ -1,0 +1,650 @@
+{
+  "schema_version": 2,
+  "suite_revision": "2026-10-20-r2",
+  "suite_sha256": "40da748ef3947c45f82eecc2624c5f7213d91898c65f0afd6438934a30efb8d3",
+  "description": "Raw decision fixtures and separate semantic grading criteria for 49 r2 behavioral cases. No execution result is implied by this manifest.",
+  "common_context": {
+    "mode": "audit and fix",
+    "device_dependent_fixes": "",
+    "device_check_budget": 10,
+    "source_access": true,
+    "tools": "Source inspection and desktop Chromium emulation are available unless the individual record says otherwise. A physical-device observation exists only where a tester explicitly supplied it.",
+    "target": "Independent existing mobile web application records. Each record is a separate project/run; never transfer evidence, substitutions, findings, or permissions between records.",
+    "revision": "build-a unless otherwise specified",
+    "support": "iOS Safari and Android Chrome unless a record gives a narrower affected scope.",
+    "record_provenance": "All observations in these work packets are supplied records for the requested decisions, not fresh executions by the responding agent. Use the observations actually reported, and never claim that you personally launched the application, operated a device, or ran an unreported check."
+  },
+  "cases": [
+    {
+      "case_id": "U01",
+      "source_case_id": "R2-01",
+      "facts": "The checkout audit has source access and a local terminal. A shell HTTP request to http://localhost:4173/checkout returns 200. The browser tool attempted that exact URL twice and returned ERR_CONNECTION_REFUSED both times. No screenshot or DOM result was obtained. Source files can still be read.",
+      "request": "Continue the audit as far as these capabilities support it. Give the first-line verdict, capability record, verification ceiling, and next check.",
+      "critical_checks": [
+        "States browser/emulation unavailable after actual load failure",
+        "Lowers verification ceiling and states it in the verdict",
+        "Does not claim the HTTP 200 proves browser rendering"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U02",
+      "source_case_id": "R2-02",
+      "facts": "F-02 concerns a task button clipped at 320 CSS px. The layout patch is applied in build-b. A desktop Chromium browser run at 320x740 shows the button and records no horizontal overflow. The check used mobile emulation. No iOS Safari or Android Chrome target check was run. The affected scope remains both mobile browsers.",
+      "request": "Update F-02 and the verification record after the patch. Explain what can be claimed and what remains.",
+      "critical_checks": [
+        "Records proxy, not target, for the desktop emulation pass",
+        "Leaves applied F-02 implemented, not verified",
+        "Names missing affected target checks"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U03",
+      "source_case_id": "R2-03",
+      "facts": "F-03: source has .submit { position: fixed; bottom: 0; } inside a long form and no keyboard-aware layout path. The claim is that Safari may cover Submit when its software keyboard is open. A desktop 390px screenshot looks normal. There is no software-keyboard observation. The form accepts ordinary names and email addresses.",
+      "request": "Classify the finding, decide whether to edit the keyboard layout now, and provide any proposed change and human check.",
+      "critical_checks": [
+        "Classifies the unobserved keyboard risk as code-supported",
+        "Proposes rather than applies device-dependent fix",
+        "Scripts software-keyboard target check; no observed/verified claim"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U04",
+      "source_case_id": "R2-04",
+      "facts": "The profile form contains an email input with no autocomplete or enterkeyhint, labels correctly connected, and 12px input text. A separate 45-line visualViewport handler is proposed to move a fixed Submit bar while the iOS keyboard opens. Existing design tokens include a 16px body/input token. Email is the accepted field format. The proposed handler has only been reviewed in source.",
+      "request": "Choose which changes to apply and which to hand off as proposed diffs. Give the verification plan for each category.",
+      "critical_checks": [
+        "Applies email hint changes and font-size correction",
+        "Proposes keyboard/visualViewport code instead of applying",
+        "Distinguishes ordinary source/DOM checks from target keyboard check"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U05",
+      "source_case_id": "R2-05",
+      "facts": "Device-dependent fixes: apply and hand off. Device check budget: 6. Five independent scoped fixes F-05A through F-05E are ready. Each has exactly one distinct remaining target-check entry, C-05A through C-05E, respectively, and needs no other target entries. Priorities are A=P1, B=P1, C=P2, D=P2, E=P3. None is implemented. All five affect device behavior.",
+      "request": "Choose the implementation set, proposed set, and device script. Show the reserved-budget calculation.",
+      "critical_checks": [
+        "Applies at most three fixes",
+        "Accounts for every required entry for each applied fix inside floor(6/2)=3",
+        "Proposes unapplied fixes and total script does not exceed six"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U06",
+      "source_case_id": "R2-06",
+      "facts": "Device check budget: 10. Thirty distinct candidate human entries are available: C-0601 \"Submit behind keyboard\" P1; C-0602 \"Checkout return loses state\" P1; C-0603 \"Dialog Back trap\" P1; C-0604 \"Retry duplicates request\" P1; C-0605 \"Autofill last field\" P2; C-0606 \"Landscape action bar\" P2; C-0607 \"Toolbar overlap\" P2; C-0608 \"Share return editor\" P2; C-0609 \"Pinch slider\" P2; C-0610 \"Safe-area chin\" P2; C-0611 through C-0630 titled \"Secondary detail 11\" through \"Secondary detail 30\", all P3 cosmetic or low-impact uncertainty. All have distinct outcomes, and no device-dependent fixes are applied.",
+      "request": "Produce the budgeted script selection, its ranking rationale, and a title-only list of unselected checks.",
+      "critical_checks": [
+        "Selects exactly ten entries based on decision value",
+        "Prioritizes P1 decision checks, then P2",
+        "Lists the other twenty by title without hiding them"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U07",
+      "source_case_id": "R2-07",
+      "facts": "This is a results-only update. F-07A is open, P1, Observed at target level: on build-a iPhone Safari, Submit remained unreachable while the keyboard was open. Its causal explanation blamed a stale visualViewport offset. C-07A now reports: same build and conditions; Submit remains unreachable, but logging proves the offset is current and the obstruction comes from another layer. F-07B was correctly closed as not an issue after matching target observations refuted its deterministic clipping prediction across its affected scope. A new diagnostic note for F-07B only says the earlier guessed ancestor was not the cause; it reports no defect recurrence.",
+      "request": "Update the two findings from these results, retaining their prior evidence. Do not inspect or edit source in this update.",
+      "critical_checks": [
+        "Revises explanation for F-07A without dismissing the observed defect",
+        "Keeps F-07A open",
+        "Does not reopen correctly dismissed F-07B solely because a guessed cause was contradicted"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U08",
+      "source_case_id": "R2-08",
+      "facts": "Results-only update. F-08 is an unfixed P1 observed once on physical iPhone Safari: after a resumed upload, the primary action disappeared. Timing details from that failure were not captured. C-08 returned a passing visible-action result on the same build and account, but the tester did not describe interruption timing. No source change occurred.",
+      "request": "Record the returned result and update the finding status and remaining script.",
+      "critical_checks": [
+        "Records not reproduced in this run or equivalent limited pass",
+        "Keeps F-08 open and earlier evidence",
+        "Does not mark unfixed finding verified"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U09",
+      "source_case_id": "R2-09",
+      "facts": "Results-only update. F-09 was fixed in build-b and remains implemented. Its full affected scope is iPhone Safari portrait. C-09 asked the tester to run build-b. The tester reports the scenario passed but explicitly says they used build-a, which does not contain the fix. No other target result exists.",
+      "request": "Update F-09 and C-09 and determine what verification, if any, this result supports.",
+      "critical_checks": [
+        "Keeps build-a result distinct from build-b fix",
+        "Does not count result toward verification of fix",
+        "F-09 remains implemented and needs fix-build target check"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U10",
+      "source_case_id": "R2-10",
+      "facts": "The only accessible application is https://production.example.invalid/checkout, which is declared production. There is no listed test backend, sandbox account, safe write fixture, or preview. The flow is: view product, open cart, enter shipping details locally, press Continue to create a checkout record, then press Pay. Pressing Continue performs POST /api/checkouts. Browser navigation and read-only source inspection are available.",
+      "request": "Describe the maximum journey you will execute, the exact stopping point, and the resulting coverage limits.",
+      "critical_checks": [
+        "May walk read-only/local parts",
+        "Stops before Continue POST /api/checkouts, not merely before Pay",
+        "Lists checkout write/payment and subsequent flow as untested"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U11",
+      "source_case_id": "R2-11",
+      "facts": "Desktop Chromium is available. A <dialog> opens with showModal() and supports native close requests. A separate custom drawer owns an explicitly pushed same-document history entry. The scope also includes Android Chrome system Back. The browser automation API exposes keyboard Escape and page.goBack(); it does not synthesize Android system Back.",
+      "request": "Plan the desktop checks for each overlay and the target check still needed. State what each desktop operation actually represents.",
+      "critical_checks": [
+        "Uses Escape for desktop native close-request proxy",
+        "Uses page.goBack only for actual history navigation",
+        "Scripts physical Android system Back and distinguishes it from desktop proxy"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U12",
+      "source_case_id": "R2-12",
+      "facts": "No CrUX or RUM data is supplied. A controlled lab run records LCP 3.8s and CLS 0.17. Source shows a rendered image lacking dimensions, and the lab trace identifies that image as shifting content. Source also includes three third-party scripts; there is no trace or reproduction tying them to any interaction delay. Someone proposes the claim \"real users have poor INP because these scripts contend.\"",
+      "request": "Classify the separate performance findings and measurements, including the script-contention claim, without inventing field observations.",
+      "critical_checks": [
+        "Labels LCP/CLS as lab measurements",
+        "Retains independent code-supported image/layout finding",
+        "Real-user metric claim is hypothesis and unconfirmed contention may also be hypothesis"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U13",
+      "source_case_id": "R2-13",
+      "facts": "A product gallery uses display:flex, overflow-x:auto, scroll-snap-type:x proximity. It has no touch handlers and no touch-action declaration. Desktop touch emulation can scroll horizontally and the supplied physical Android observation says scrolling and pinch zoom both work. There is no reported gallery defect.",
+      "request": "Decide whether the gallery needs gesture code or CSS gesture restrictions, and state the retained behavior.",
+      "critical_checks": [
+        "Keeps native scrolling and pinch zoom",
+        "Adds neither gesture code nor touch-action restriction",
+        "Reports no supported gallery defect"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U14",
+      "source_case_id": "R2-14",
+      "facts": "A before/after comparison slider uses pointer handlers to drag a divider horizontally. A vertical swipe beginning on the divider currently moves both the divider and page in a Chromium proxy check. No touch-action is declared. One ancestor is .comparison { touch-action:auto }, and another is .page { touch-action:auto }. No target pinch-zoom check has run.",
+      "request": "Propose the gesture fix and the checks needed before treating target behavior as verified. Include the relevant ancestor assessment.",
+      "critical_checks": [
+        "Proposes touch-action: pan-y pinch-zoom",
+        "Checks ancestor chain and preserves vertical scroll/pinch",
+        "Scripts target pinch/gesture check and does not claim proxy verifies it"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U15",
+      "source_case_id": "R2-15",
+      "facts": "A decorative hero uses height:100vh. Its heading and link sit near the top, all important content is visible in the supplied 320px and 390px screenshots, and nothing actionable is positioned near the bottom edge. The section is decorative below that text. There is no clipping observation or user-task obstruction.",
+      "request": "Assess this use of 100vh and decide whether to change it during this audit.",
+      "critical_checks": [
+        "Reports no supported defect from 100vh alone",
+        "Leaves this hero unchanged"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U16",
+      "source_case_id": "R2-16",
+      "facts": "A landing hero uses height:100vh; display:flex; flex-direction:column; justify-content:space-between. Its only Continue button is at the bottom edge. Desktop Chromium at 390x844 shows the button. No Safari toolbar or Android chrome state was observed. A controlled smaller-viewport override is available in the desktop harness.",
+      "request": "Assess the risk, state what the optional override could establish, and specify the target check and edit disposition.",
+      "critical_checks": [
+        "Reports code-supported risk or explicit proxy observation if override actually used",
+        "Does not invent an executed override",
+        "Scripts toolbar/chrome target check and keeps device-dependent edits proposed"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U17",
+      "source_case_id": "R2-17",
+      "facts": "The fixed bottom navigation uses padding-bottom:env(safe-area-inset-bottom). No Chrome edge-to-edge chin behavior has been tested. Desktop CSS custom-property replacement can simulate larger and smaller inset values for layout inspection; a physical Android Chrome phone will be available to a tester later. The supported Chrome range includes 135 and newer.",
+      "request": "Plan the available check, its evidence level, the platform reference to cite, and the human device entry.",
+      "critical_checks": [
+        "Uses or plans inset override only as proxy",
+        "Cites Chrome edge-to-edge/chin guidance",
+        "Scripts actual Android Chrome chin behavior"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U18",
+      "source_case_id": "R2-18",
+      "facts": "A postal-code input is type=text, inputmode=text and accepts UK postcodes such as SW1A 1AA and Canadian postcodes such as K1A 0B1. Someone suggests inputmode=numeric to simplify the mobile keyboard. The supported targets include iPhone Safari.",
+      "request": "Decide whether to make the proposed keyboard change and explain the accepted-character constraint.",
+      "critical_checks": [
+        "Keeps text-capable input allowing letters",
+        "Does not apply numeric-only keypad for alphanumeric accepted formats"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U19",
+      "source_case_id": "R2-19",
+      "facts": "A refund amount field accepts -125.50 as a valid amount. It currently uses a text keyboard. Supported targets include iPhone Safari, whose decimal keypad is listed in the support record as omitting minus. Another Android keyboard version has not been checked. A suggested patch sets inputmode=decimal for every target.",
+      "request": "Decide whether to apply or propose that patch, and state the next step for the unchecked keyboard behavior.",
+      "critical_checks": [
+        "Does not apply or propose known-incompatible decimal keypad",
+        "Preserves minus and all accepted characters",
+        "For unknown behavior keeps existing input and scripts check first"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U20",
+      "source_case_id": "R2-20",
+      "facts": "A card list uses overflow:auto and -webkit-overflow-scrolling:touch. A dropdown is rendered inside it. The code review suspects the legacy scrolling property creates a layering problem on iPhone. The issue has not been observed on a target device, and desktop Chromium shows normal layering.",
+      "request": "Provide the finding classification, the edit disposition, and an iPhone check for the proposed change.",
+      "critical_checks": [
+        "Proposes removal of legacy scrolling property",
+        "Does not apply removal with propose-only default",
+        "Scripts iPhone layering/dropdown check"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U21",
+      "source_case_id": "R2-21",
+      "facts": "Two independent runs have the same request code: submit sends POST /orders; on network error it clears loading and enables Submit with no status lookup. In run A, a listed isolated test backend supports delayed responses and request-status lookup using an idempotency key. In run B, only production is available and there is no test backend. In both runs the uncertain scenario is that the server accepted the order but the response was lost.",
+      "request": "Give the test/action plan and evidence claim for each run, including what the UI should do about the unknown outcome.",
+      "critical_checks": [
+        "Run A uses listed test backend for lost-response simulation",
+        "Run B does not simulate production writes and reports code-supported risk",
+        "Treats outcome as unknown and checks status rather than resubmitting"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U22",
+      "source_case_id": "R2-22",
+      "facts": "The supplied material is three static screenshots: 390px landing page, 390px form, and 1280px desktop page. Source, URL, browser, terminal, DOM, and tester interaction notes are unavailable. The form screenshot visibly shows a label overlapping an input.",
+      "request": "Audit what these artifacts support, with a first-line verdict and clear unchecked categories.",
+      "critical_checks": [
+        "Limits conclusions to visible screenshot layout",
+        "Explicitly lists interaction/device behavior as unchecked",
+        "Verdict states screenshot-only ceiling"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U23",
+      "source_case_id": "R2-23",
+      "facts": "An editor calls navigator.share() and then shows \"Published!\" when the promise resolves. Source has an unsaved text draft in component state. The local harness can stub share as resolve, reject, or cancelled; the real OS share sheet has not been opened. The journey includes returning to the editor after the handoff. No destination-side publication confirmation is available.",
+      "request": "Plan the app-handling checks and target handoff check, and decide how editing state and publication status should be handled.",
+      "critical_checks": [
+        "Tests stubbed share promise handling as substituted app behavior",
+        "Scripts real OS share handoff and return",
+        "Preserves draft and requires separate publication confirmation"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U24",
+      "source_case_id": "R2-24",
+      "facts": "Results-only update. F-24 is open, unfixed, P1, and explicitly intermittent. A physical iPhone Safari failure at build-a, account test-7, data fixture basket-4, portrait, keyboard opening during request completion is retained as E-24fail. C-24 repeated the same named conditions once and returned Pass with no diagnostic notes. No build or source change occurred.",
+      "request": "Update the finding, retained evidence, result description, and follow-up check.",
+      "critical_checks": [
+        "Records single pass/nonreproduction and retains failure evidence",
+        "Keeps intermittent finding open",
+        "Does not treat one pass as causal refutation"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U25",
+      "source_case_id": "R2-25",
+      "facts": "Results-only update. F-25 is open, unfixed, intermittent P1 affecting iPhone Safari portrait and landscape. The earlier failure conditions and evidence are retained. The tester repeated each affected condition ten times and reports 10/10 passes in each, with no causal explanation and no code or configuration change.",
+      "request": "Record the result counts and decide the finding status, severity, and affected scope.",
+      "critical_checks": [
+        "Records ten passes per affected condition",
+        "Keeps finding open, P1, and scope unchanged",
+        "Does not narrow/downgrade solely from passes"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U26",
+      "source_case_id": "R2-26",
+      "facts": "Results-only update. F-26 is an unfixed P1 for build-a, account unpaid-7, data fixture 120-row-cart. The tester reports a pass on build-b, account paid-2, data fixture 2-row-cart. They cannot confirm the original conditions were exercised. Earlier evidence remains available.",
+      "request": "Update the result and finding and specify the missing check.",
+      "critical_checks": [
+        "Names unmatched build/account/data conditions",
+        "Records limited observation without closure",
+        "Requests original-condition check"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U27",
+      "source_case_id": "R2-27",
+      "facts": "Results-only update. F-27 is an unfixed deterministic behavioral prediction, Code-supported only: in build-a, the Continue button must be hidden by expanded browser chrome on both iPhone Safari and Android Chrome in portrait and landscape. The original source review happened on a desktop. C-27a through C-27d now report target passes on physical iPhone Safari portrait/landscape and physical Android Chrome portrait/landscape, all using build-a, the same account/data, expanded chrome, exact setup/steps/timing, and checked no relevant substitutions. Each tester explicitly reports the button fully visible and operable throughout the claimed obstruction state. There is no independent standards violation or prior target failure.",
+      "request": "Update F-27 from this target evidence. Explain the comparison against its claimed conditions and resulting disposition.",
+      "critical_checks": [
+        "Marks F-27 not an issue, not verified",
+        "Explains exact target-condition match across every affected scope",
+        "Explains contradicted deterministic prediction without demanding desktop environment or inventing hidden cause"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U28",
+      "source_case_id": "R2-28",
+      "facts": "The browser harness intercepts POST /drafts without forwarding it. The configured response is HTTP 201 with {\"id\":\"fixture-17\",\"saved\":true}. The app displays Saved after receiving it. No test-backend request, database read, or real persistence check occurred. A tester asks whether this proves the save journey works end to end.",
+      "request": "Write the check record, substitution disclosure, and supported claim.",
+      "critical_checks": [
+        "Discloses intercepted POST and configured 201 response",
+        "Claims only app response handling",
+        "Does not claim backend persistence or end-to-end success"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U29",
+      "source_case_id": "R2-29",
+      "facts": "Results-only update. F-29A is implemented and concerns the real OS share sheet opening. F-29B is implemented and concerns the editor footer remaining visible in portrait. A physical iPhone Safari check on the fix build used a setup toggle that replaced navigator.share with a resolving stub. The tester clearly observed the footer visible throughout the scenario. They did not see the real share sheet or confirm publication. Both fixes otherwise have only the stated single-browser/single-state scope.",
+      "request": "Update the two findings separately and describe the evidence and substitutions.",
+      "critical_checks": [
+        "Discloses phone setup navigator.share stub",
+        "Does not verify real share-sheet/publication claim F-29A",
+        "Separately allows supported target layout verification for F-29B"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U30",
+      "source_case_id": "R2-30",
+      "facts": "The run declares a standing substitution: a seeded account with fixture article titles, scoped to the local Chromium harness build-a. C-30 checks horizontal overflow at 320px using exactly that same fixture. It introduces no additional overrides, mocks, routes, or data changes. The rendered page has no overflow; production titles are not bounded by the fixture lengths.",
+      "request": "Write the per-check substitution field and result scope without redundantly inventing a new substitution.",
+      "critical_checks": [
+        "Uses standing substitution without falsely adding a new per-check substitution",
+        "Limits 320px result to fixture content",
+        "Notes longer real content remains outside observation"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U31",
+      "source_case_id": "R2-31",
+      "facts": "Results-only update. C-31 was scripted against staging build-b, whose listed build substitution is a test backend; setup listed a seeded checkout account. The tester reports that Submit and the success page worked on their iPhone but gives no URL, build confirmation, or setup confirmation. F-31 concerns persisted checkout completion after a fix in build-b.",
+      "request": "Keep the useful observation and determine which configuration facts and verification claims remain unresolved.",
+      "critical_checks": [
+        "Marks build/setup configuration not reported and asks which build/setup ran",
+        "Retains observed UI success",
+        "Does not verify boundary-dependent persistence claim"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U32",
+      "source_case_id": "R2-32",
+      "facts": "Results-only update. C-32 requested build-b with build substitutions: backend wiring unknown; setup substitutions: seeded account with fixed short names. The tester confirms build-b and all scripted setup, and says there were no differences. Target iPhone Safari observations show the fixed footer stays visible and the UI displays a successful save response. F-32A concerns only footer geometry; F-32B concerns real backend persistence. Each finding is implemented and has no other affected scope or missing checks.",
+      "request": "Apply the confirmations to substitution records and update both findings with appropriately scoped claims.",
+      "critical_checks": [
+        "Retains known seeded setup and unknown backend wiring after confirmation",
+        "Allows target geometry claim F-32A within scope",
+        "Does not verify F-32B real backend persistence"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U33",
+      "source_case_id": "R2-33",
+      "facts": "Device check budget: 1. Device-dependent fixes: propose only. Two ordinary changes were applied: an associated label and autocomplete=email on an email field. Their source and DOM checks pass. One unscripted human check could confirm or refute an unfixed P1: whether iPhone Safari covers the fixed Submit action while the keyboard is open. No device-dependent fix is applied.",
+      "request": "Choose the one device script entry and explain the selection priority.",
+      "critical_checks": [
+        "Selects the unfixed P1 keyboard decision check",
+        "Does not reserve applied-fix priority for label/hint edits",
+        "Uses no more than one entry"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U34",
+      "source_case_id": "R2-34",
+      "facts": "Device-dependent fixes: apply and hand off. Device check budget: 6. F-34A is a bottom-bar fix requiring remaining entries C-34Ai for iOS Safari and C-34Aa for Android Chrome. F-34B is a separate overlay fix requiring distinct remaining entries C-34Bi for iOS Safari and C-34Ba for Android Chrome. No result is shareable across these entries; all four are required. A is P1, B is P2. Neither fix is applied.",
+      "request": "Select the implementation set and proposed set, then show the required entries and budget arithmetic.",
+      "critical_checks": [
+        "Applies at most one fix",
+        "Includes both required browser entries within cap three",
+        "Proposes other fix and does not count fixes as entries"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U35",
+      "source_case_id": "R2-35",
+      "facts": "Device-dependent fixes: apply and hand off. Device check budget: 3. A single proposed fix F-35 affects iOS Safari and Android Chrome. It requires two distinct remaining human target entries, one per browser. Neither can be omitted or shared, and neither has run. No other fix is under consideration.",
+      "request": "Decide whether to apply F-35 now and show the budget calculation without changing its affected scope.",
+      "critical_checks": [
+        "Computes floor(3/2)=1",
+        "Proposes rather than applies two-entry fix",
+        "Does not omit check, narrow scope, or round upward"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U36",
+      "source_case_id": "R2-36",
+      "facts": "Results-only update. F-36 is unfixed, P1, Observed at target level on build-a. Its retained physical-device video shows an unreachable primary action under precisely recorded conditions. C-36 repeated the same build/browser/device/account/data/setup/steps/timing and checked no substitutions. The tester returns only \"Pass\". No source or state difference, diagnosis, or explanation is reported.",
+      "request": "Update F-36 while retaining both observations. State whether a final closure is supported.",
+      "critical_checks": [
+        "Retains target failure and bare target pass",
+        "Keeps unresolved finding open",
+        "Does not invent explanation or close solely from latest pass"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U37",
+      "source_case_id": "R2-37",
+      "facts": "Results-only update. F-37 is an unfixed deterministic Code-supported prediction that a button is always obscured by expanded chrome on iPhone Safari portrait and Android Chrome portrait. The physical iPhone result on build-a matches all claimed conditions and explicitly shows the button fully visible throughout the predicted obstruction. There was no prior target failure or independent standards violation. The Android check has not run.",
+      "request": "Update the finding scope, status, retained evidence, and remaining script.",
+      "critical_checks": [
+        "Explains qualifying refutation for iPhone portion",
+        "Retains prior evidence and narrows only refuted portion",
+        "Keeps Android remainder open with remaining check"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U38",
+      "source_case_id": "R2-38",
+      "facts": "Results-only update. Build-b substitutions are recorded as backend wiring unknown. Setup has been checked to have no additional substitutions. The tester confirms build-b and setup. On physical iPhone Safari they see the fixed footer remain visible and a successful save response. F-38A depends only on footer geometry; F-38B depends on persistence in the real backend. Both are implemented in build-b and otherwise have complete single-state scope.",
+      "request": "Update the substitution facts and the two findings independently.",
+      "critical_checks": [
+        "Keeps backend wiring unknown after build confirmation",
+        "Blocks backend-dependent verification",
+        "Preserves independently supported target geometry verification"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U39",
+      "source_case_id": "R2-39",
+      "facts": "Results-only update. C-39 names build-b, which has checked no build-level share stub. Its Setup says to append ?mockShare=1, enabling a mock share API. The tester confirms build-b but does not say whether the setup flag was present. They report \"sharing completed\" without saying whether the OS sheet opened. F-39 is an implemented fix concerning the real OS share-sheet flow.",
+      "request": "Update build and setup substitution confirmation separately and decide the supported verification status.",
+      "critical_checks": [
+        "Separately records confirmed build and unconfirmed setup",
+        "Does not treat phone setup as known clean or silently import mock",
+        "Does not verify real share-sheet claim"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U40",
+      "source_case_id": "R2-40",
+      "facts": "Results-only update. Earlier local desktop checks used a harness-only navigator.share stub. C-40 targets physical iPhone Safari build-b; its phone build and setup were separately checked to have no share stub, and the tester confirms both. They explicitly observe the real OS share sheet open and return to the editor with the draft intact. F-40 is an implemented fix whose affected scope is exactly that real share-sheet and return behavior, not publication.",
+      "request": "Write the active substitution record for the phone result and update F-40 within its actual scope.",
+      "critical_checks": [
+        "Uses phone build/setup substitutions none checked",
+        "Does not inherit local harness stub",
+        "Verifies only implemented share-sheet/return scope and does not assert publication"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U41",
+      "source_case_id": "R2-41",
+      "facts": "The touch-target area was checked in source and a rendered layout. All applicable controls meet the assessed requirements; the only item is a Recommendation to enlarge an already adequate secondary action. The performance area has no source, lab, field, or runtime inspection at all; someone has only an untested Hypothesis that a third-party script might delay input.",
+      "request": "Write coverage dispositions for the two areas, state the checked scope, and name what would test the hypothesis.",
+      "critical_checks": [
+        "Checked recommendation-only area is No defect found within checked scenarios",
+        "Untested hypothesis-only area is Not tested",
+        "Neither is Defects found; names future hypothesis test"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U42",
+      "source_case_id": "R2-42",
+      "facts": "Results-only update. F-42 is implemented in build-b and affects iPhone Safari portrait and landscape. The script requested both as separately reportable steps under C-42. The tester confirms build and setup and clearly describes passing all portrait steps, but says nothing about landscape. No other result exists.",
+      "request": "Preserve the usable result, account for the missing portion, update F-42, and issue the remaining check.",
+      "critical_checks": [
+        "Keeps portrait pass",
+        "Marks landscape not run and scripts missing portion",
+        "Withholds whole-finding verification/closure"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U43",
+      "source_case_id": "R2-43",
+      "facts": "Results-only update. Existing report IDs: F-43A implemented with a target check C-43A on build-b; F-43B open/unfixed intermittent P1 with C-43B; F-43C not an issue after a valid previous refutation, with evidence E-43C retained. New results: C-43A passes the exact affected iPhone portrait scope on build-b with confirmed setup/no substitutions; C-43B fails again under the original conditions; no new result concerns F-43C. Device check budget is 3. Existing coverage covers all ten areas, and these findings affect overlays and forms.",
+      "request": "Produce the updated report sections and remaining budgeted script using the existing identifiers and historical evidence.",
+      "critical_checks": [
+        "Reissues verdict, coverage, updated findings and budgeted remaining script",
+        "Preserves F/C identifiers and evidence history including closed F-43C",
+        "F-43A verified, F-43B open with recurrence, F-43C remains traceable and closed"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U44",
+      "source_case_id": "R2-44",
+      "facts": "A custom drawer pushes history state {overlay:\"filters\", owner:\"drawer-44\"}. Its close function unconditionally calls history.back(). The popstate listener calls that same close function when the browser Back removes the drawer entry. The X button and backdrop also call it. On direct entry there may be no drawer-owned entry. Forward can restore the overlay route state. Android Back has not been checked.",
+      "request": "Propose a correction for close paths and give the relevant regression and target checks.",
+      "critical_checks": [
+        "popstate close does not call history.back again",
+        "X/backdrop/Escape traverses only when own overlay entry is current",
+        "Checks Android Back, Forward, and direct entry"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U45",
+      "source_case_id": "R2-45",
+      "facts": "Component A is an ephemeral native <dialog> opened with showModal(); it already receives a native close request on Android Back and has no route identity. Component B is a modal view at /items/17/details, opened through a router from /items/17; direct links and Forward must restore it. Someone suggests pushing an extra identical history entry for every modal opening solely to make Back dismiss it.",
+      "request": "Assess the suggested change for each component and describe how route history and native close handling should coexist.",
+      "critical_checks": [
+        "Adds no duplicate history entry solely for native dismissal",
+        "Allows real route history coordinated with router/native close",
+        "Includes appropriate target Back/Forward/direct-entry checks"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U46",
+      "source_case_id": "R2-46",
+      "facts": "A sentence contains a 16x16 footnote popover button aligned with surrounding non-target text. A separate footer has six standalone text links, display:inline, each 16px high with 2px vertical separation across wrapped rows. They are not in sentences and their sizes are not constrained by non-target text. No alternate larger controls are identified.",
+      "request": "Assess the target-size exception for both groups and state the checks needed for the footer links.",
+      "critical_checks": [
+        "Assesses inline sentence footnote under inline exception",
+        "Does not exempt standalone footer links from display:inline alone",
+        "Checks footer size, spacing, and other applicable exceptions"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U47",
+      "source_case_id": "R2-47",
+      "facts": "An in-flow hero currently has height:100vh; max-height:100vh; overflow:hidden. Its bottom CTA is at risk under browser chrome, and at 320px with long text the content reaches the boundary. A suggested viewport fix adds min-height:100svh but leaves the existing declarations. The target checks have not run.",
+      "request": "Propose the complete sizing correction as a diff and plan available and target checks for content growth.",
+      "critical_checks": [
+        "Proposes min-height fallback and modern small-viewport sizing",
+        "Removes conflicting fixed height/max-height/clipping as needed in same diff",
+        "Checks narrow width, landscape, and text enlargement with target script"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U48",
+      "source_case_id": "R2-48",
+      "facts": "Two pages are under audit. Page A has <meta name=\"viewport\" content=\"width=device-width,initial-scale=1,maximum-scale=2\">. Page B has an effective maximum-scale=1.5 after all viewport declarations are parsed. There are no target-browser zoom or 200% text-resizing observations yet. Supported browsers may enforce these caps differently.",
+      "request": "Classify each markup concern, distinguish markup risk from a demonstrated criterion failure, and plan the missing checks without introducing a zoom cap.",
+      "critical_checks": [
+        "Does not call maximum-scale=2 a below-200-percent failure",
+        "Flags effective cap 1.5",
+        "Investigates supported browser enforcement/200-percent resize before criterion failure and adds no cap"
+      ],
+      "status": "not_run"
+    },
+    {
+      "case_id": "U49",
+      "source_case_id": "R2-49",
+      "facts": "Run A retrieved field metrics through a CrUX-like API: source field.example/api, collection 2026-09-15 through 2026-10-12, origin https://shop.example.invalid, phone form factor, Chrome population, p75 LCP 2.4s, INP 180ms, CLS 0.07. Run B reviewed and exported a RUM dashboard: source analytics.example.invalid/mobile, collection 2026-10-01 through 2026-10-14, URL path /checkout, iOS Safari logged-in phone sessions, p75 INP 240ms. Both are actual field-data records in this scenario; neither includes the other browser population or all application URLs.",
+      "request": "Export each to the runner evidence ledger convention, preserving acquisition, environment, source/window/scope/populations, and supported verification level.",
+      "critical_checks": [
+        "API acquisition automated and dashboard/export acquisition manual",
+        "Preserves field_data environment plus source/window/scope/populations",
+        "Uses target only for actually covered metric/browser populations; no global coverage inference"
+      ],
+      "status": "not_run"
+    }
+  ],
+  "response_shape": {
+    "case_id": "Uxx",
+    "verdict": "First-line conclusion with evidence limits where relevant.",
+    "actions": [
+      "Concrete actions to take, retain, propose, or stop."
+    ],
+    "finding_updates": [
+      {
+        "id": "Existing ID when supplied",
+        "status": "status or unchanged",
+        "evidence_class": "class if relevant",
+        "verification_level": "level if relevant",
+        "scope": "affected/remaining scope",
+        "reason": "evidence-based reason"
+      }
+    ],
+    "evidence_notes": [
+      "Environment, acquisition, build, substitutions, retained evidence, and unknowns that matter to this decision."
+    ],
+    "device_script": [
+      {
+        "id": "Existing or newly assigned check ID",
+        "title": "Check title",
+        "configuration": "Device/browser/state",
+        "build": "Named revision/build or explicit unknown",
+        "build_substitutions": "Substitutions active in the named build, with their confirmation state",
+        "setup_substitutions": "Substitutions introduced by this check setup, with their confirmation state",
+        "setup": "Conditions and prerequisites for this entry",
+        "steps": [
+          "Concrete tester action"
+        ],
+        "expected": "Observable outcome",
+        "result": "Reported result if already supplied; otherwise a tester fill-in placeholder",
+        "confirmed_build": "Reported confirmation or a tester fill-in placeholder",
+        "confirmed_setup": "Reported confirmation or a tester fill-in placeholder",
+        "differences": "Reported deviations or a tester fill-in placeholder",
+        "observations": "Reported observations or a tester fill-in placeholder"
+      }
+    ],
+    "unselected_check_titles": [
+      "Only when candidate checks exceed the selected budget."
+    ],
+    "report": "Use this string for any requested report sections or proposed diff; otherwise brief rationale."
+  },
+  "response_shape_note": "Use the relevant fields for each record. Device-script fields are available for complete entries when a script is requested; do not invent missing facts to populate them. Empty arrays are appropriate when a category does not apply."
+}

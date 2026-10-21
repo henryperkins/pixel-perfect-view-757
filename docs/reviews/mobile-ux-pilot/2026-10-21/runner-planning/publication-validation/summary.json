@@ -1,0 +1,83 @@
+{
+  "base_commit": "c6fae4573d312acb9dd6bc2f41ee7b9c7f66b30f",
+  "app_fix_commit": "0bac41dee01ceb1bf2a8284fe721ea07627c5fce",
+  "node_tests": {
+    "passed": 1209,
+    "failed": 0,
+    "skipped": 4,
+    "total": 1213
+  },
+  "typecheck": "passed",
+  "scoped_eslint": "passed",
+  "prettier": "passed",
+  "build": "passed (local only)",
+  "browser": [
+    {
+      "file": "browser/route-focus-chromium.json",
+      "engine": "chromium",
+      "version": "149.0.7827.55",
+      "passed": 7,
+      "failed": 0,
+      "level": "proxy"
+    },
+    {
+      "file": "browser/route-focus-webkit.json",
+      "engine": "webkit",
+      "version": "26.6",
+      "passed": 7,
+      "failed": 0,
+      "level": "proxy"
+    },
+    {
+      "file": "browser/selection-chromium.json",
+      "engine": "chromium",
+      "version": "149.0.7827.55",
+      "passed": 20,
+      "failed": 0,
+      "level": "proxy"
+    },
+    {
+      "file": "browser/selection-webkit.json",
+      "engine": "webkit",
+      "version": "26.6",
+      "passed": 20,
+      "failed": 0,
+      "level": "proxy"
+    },
+    {
+      "file": "browser/shell-focus-chromium.json",
+      "engine": "chromium",
+      "version": "149.0.7827.55",
+      "passed": 3,
+      "failed": 0,
+      "level": "proxy"
+    },
+    {
+      "file": "browser/shell-focus-webkit.json",
+      "engine": "webkit",
+      "version": "26.6",
+      "passed": 3,
+      "failed": 0,
+      "level": "proxy"
+    }
+  ],
+  "runner_unit_tests": {
+    "passed": 115,
+    "failed": 0
+  },
+  "runner_cli_checks": {
+    "passed": 12,
+    "failed": 0
+  },
+  "ledger": {
+    "exit": 3,
+    "errors": [],
+    "ceiling": "proxy",
+    "verification": "failed",
+    "claimable_complete": false,
+    "sha256": "d1b23122f922471e11aa346e2dfac7b9baf94ff027db7a29f6c584aefb836a9c"
+  },
+  "physical_device_verification": "not_run",
+  "deployment": "not performed",
+  "plugin_installation_or_release": "not performed"
+}

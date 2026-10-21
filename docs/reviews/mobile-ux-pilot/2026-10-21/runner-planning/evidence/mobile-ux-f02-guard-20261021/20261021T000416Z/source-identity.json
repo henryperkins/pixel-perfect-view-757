@@ -1,0 +1,14 @@
+{
+  "head": "8e0e5c933ab8bad2b3e186e70501ef8e31d82570",
+  "files_sha256": {
+    "src/components/pattern/Shell.tsx": "93544ab7f8c160cb5493eb1d2cc62d8a90b7fc5e4b6d86e12e6416991cc36ff4",
+    "tests/helpers/mobile-ui/shell-focus.cases.txt": "2f0bb356fe543315ccb897fe2c9be9777cab7a4e5ac2fa9c2e0f995abba5cc14",
+    "src/components/pattern/TodayCheckIn.tsx": "2e05b0060e5da5fa0126db456f1525b6a7dce68ee35aca2a477f96694ec8f4b8",
+    "src/components/pattern/RouteFocus.tsx": "602f72e8f79ee842958fd67b673b96ff4198c361a62707c6e68932f5f46ce011",
+    "src/routes/__root.tsx": "5199922e344eae03095897191f8576c4c9a9ea6f3bf5b48daeb9018eca1ae678",
+    "tests/helpers/mobile-ui/main.tsx": "1abee438c0e03e70df4bd2fe560ac8000ce20cb4378bd6f89a2c6b11659b4c92",
+    "tests/helpers/mobile-ui/route-focus.cases.txt": "07b159161564fdb4ff6ad4496d6dca6b5e5586ebb52725b7c817fe8f35c9b01c"
+  },
+  "selection_tested_guard_sha256": "b2cf24826968f06d4c52d376c249b2c7ceda27f6424bddb3e8302608e83d3570",
+  "selection_tested_guard_differs_only_in_whitespace": true
+}

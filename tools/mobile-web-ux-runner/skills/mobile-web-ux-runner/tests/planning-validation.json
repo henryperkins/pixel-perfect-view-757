@@ -1,0 +1,53 @@
+{
+  "candidate_version": "2.0.1",
+  "schema_version": 2,
+  "contract_revision": "2026-10-20-r2",
+  "executed_at": "2026-10-21T00:43:16.824434+00:00",
+  "context": "Local unpublished authoring copy; installed package and cloud release unchanged.",
+  "helper_sha256": "98c4001bc9af594662dad09cbfcade491b8d0e35dac704fb1035d8eb53149696",
+  "unit_test_source_sha256": "f0fbd9eb8f93e0db7f2bb664d8eac29c67fc6e0fcf46941f97818ef6136390a2",
+  "unit_tests": {
+    "passed": 115,
+    "failed": 0,
+    "original_tests": 86,
+    "new_regression_tests": 29,
+    "evidence": "validation/unit-tests-final.txt"
+  },
+  "focused_cli_checks": {
+    "passed": 12,
+    "failed": 0,
+    "evidence": "validation/cli-results.json"
+  },
+  "independent_review": {
+    "remaining_critical_or_important_findings": 0,
+    "code_evidence": "validation/independent-review.md",
+    "ledger_and_documentation_evidence": "validation/pattern-ledger-review.md"
+  },
+  "pattern_ledger": {
+    "report_exit": 3,
+    "validation_errors": [],
+    "verification_ceiling": "proxy",
+    "claimable_complete": false,
+    "verification": "failed (retained historical checks)",
+    "executed_check_records_preserved": 69,
+    "all_check_ids_preserved": 99,
+    "current_device_script_entries": 10,
+    "reserved_guard_entries": 5,
+    "budget": 10,
+    "physical_records_not_run": 30,
+    "evidence": "pattern/revalidation.md"
+  },
+  "physical_device_verification": "not_run",
+  "new_browser_or_app_execution": "not_run",
+  "historical_behavior_suite": {
+    "rerun_in_this_continuation": false,
+    "record_and_catalog": "unchanged",
+    "note": "The bundled 49-case record remains historical; it is not a 2.0.1 full-suite run."
+  },
+  "documentation_application": {
+    "control": "validation/docs-control.md",
+    "candidate": "validation/docs-candidate.md",
+    "scope": "Focused documentation scenarios only; not a rerun of the 49-case agent suite."
+  },
+  "evidence_paths_relative_to": "authoring workspace root, three levels above this skill directory"
+}

@@ -1,0 +1,118 @@
+async (page) => {
+  const browser = page.context().browser();
+  const origin = new URL(page.url()).origin;
+  const results = [];
+  const settle = (p) => p.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+  const assert = (ok, message, detail) => { if (!ok) throw new Error(message + ' ' + JSON.stringify(detail)); };
+  const run = async (name, task) => {
+    const context = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, reducedMotion: 'reduce' });
+    await context.route(/https:\/\/([^/]*\.)?stripe\.(com|network)\//, (route) => route.abort('blockedbyclient'));
+    const p = await context.newPage();
+    p.setDefaultTimeout(7000);
+    try {
+      await p.goto(origin + '/');
+      await p.locator('.today-check-in').waitFor();
+      await p.waitForFunction(() => !window.auditRouter.state.isLoading);
+      await settle(p);
+      await p.evaluate(() => {
+        window.__reviewFocusLog = [];
+        window.__reviewRenderedLog = [];
+        const focus = HTMLElement.prototype.focus;
+        HTMLElement.prototype.focus = function (...args) {
+          window.__reviewFocusLog.push({ id: this.id, tag: this.tagName, href: location.pathname + location.search, connected: this.isConnected });
+          return focus.apply(this, args);
+        };
+        window.auditRouter.subscribe('onRendered', (event) => window.__reviewRenderedLog.push({ path: event.toLocation.pathname, key: event.toLocation.state.__TSR_key, pathChanged: event.pathChanged }));
+      });
+      results.push({ name, passed: true, details: await task(p) });
+    } catch (error) {
+      results.push({ name, passed: false, error: String(error), state: await p.evaluate(() => ({ href: location.href, active: document.activeElement?.id, focusLog: window.__reviewFocusLog, rendered: window.__reviewRenderedLog })).catch(() => null) });
+    } finally { await context.close(); }
+  };
+
+  await run('React destination autofocus is preserved without a main-focus call', async (p) => {
+    await p.evaluate(async () => {
+      const url = performance.getEntriesByType('resource').find((entry) => /\/deps\/react\.js\?/.test(entry.name))?.name;
+      if (!url) throw new Error('Cannot identify already-served React module');
+      const React = (await import(url)).default;
+      window.auditRouter.routesById['/_authenticated/journal'].options.component = function ReviewAutofocus() {
+        return React.createElement('main', { id: 'main-content', tabIndex: -1 }, React.createElement('input', { id: 'review-destination-focus', autoFocus: true, 'aria-label': 'Review destination autofocus' }));
+      };
+      await window.auditRouter.navigate({ href: '/journal' });
+    });
+    await p.locator('#review-destination-focus').waitFor();
+    await settle(p);
+    const state = await p.evaluate(() => ({ active: document.activeElement.id, focusLog: window.__reviewFocusLog, rendered: window.__reviewRenderedLog }));
+    assert(state.active === 'review-destination-focus', 'Destination autofocus was overridden', state);
+    assert(!state.focusLog.some((entry) => entry.id === 'main-content'), 'Main focus stole destination autofocus', state);
+    return state;
+  });
+
+  await run('Destination layout-effect focus outside main is preserved', async (p) => {
+    await p.evaluate(async () => {
+      const url = performance.getEntriesByType('resource').find((entry) => /\/deps\/react\.js\?/.test(entry.name))?.name;
+      const React = (await import(url)).default;
+      window.auditRouter.routesById['/_authenticated/journal'].options.component = function ReviewOwnedFocus() {
+        const ref = React.useRef(null);
+        React.useLayoutEffect(() => ref.current?.focus(), []);
+        return React.createElement(React.Fragment, null, React.createElement('input', { id: 'review-outside-main-focus', ref, 'aria-label': 'Review outside-main focus' }), React.createElement('main', { id: 'main-content', tabIndex: -1 }, 'Review destination'));
+      };
+      await window.auditRouter.navigate({ href: '/journal' });
+    });
+    await p.locator('#review-outside-main-focus').waitFor();
+    await settle(p);
+    const state = await p.evaluate(() => ({ active: document.activeElement.id, focusLog: window.__reviewFocusLog, rendered: window.__reviewRenderedLog }));
+    assert(state.active === 'review-outside-main-focus', 'Destination-owned focus was overridden', state);
+    assert(!state.focusLog.some((entry) => entry.id === 'main-content'), 'Main focus stole destination-owned focus', state);
+    return state;
+  });
+
+  await run('A delayed superseded PUSH cannot refocus after the winning route', async (p) => {
+    await p.evaluate(() => {
+      const gate = new Promise((resolve) => { window.__reviewRelease = resolve; });
+      window.auditRouter.routesById['/_authenticated/journal'].options.beforeLoad = async () => {
+        window.__reviewGateEntered = true;
+        await gate;
+      };
+      window.__reviewFirstNavigation = window.auditRouter.navigate({ href: '/journal' });
+    });
+    await p.waitForFunction(() => window.__reviewGateEntered);
+    await p.evaluate(async () => { await window.auditRouter.navigate({ href: '/timing' }); });
+    await p.getByRole('heading', { name: 'Timing', exact: true }).waitFor();
+    await settle(p);
+    const before = await p.evaluate(() => ({ active: document.activeElement.id, mainCalls: window.__reviewFocusLog.filter((entry) => entry.id === 'main-content').length }));
+    assert(before.active === 'main-content' && before.mainCalls === 1, 'Winning PUSH did not focus main exactly once', before);
+    const destination = p.locator('main select').first();
+    await destination.focus();
+    await p.evaluate(async () => { window.__reviewRelease(); await window.__reviewFirstNavigation; });
+    await settle(p);
+    const state = await p.evaluate(() => ({ activeTag: document.activeElement.tagName, href: location.pathname, mainCalls: window.__reviewFocusLog.filter((entry) => entry.id === 'main-content').length, rendered: window.__reviewRenderedLog }));
+    assert(await destination.evaluate((element) => element === document.activeElement), 'Superseded PUSH stole newer deliberate focus', state);
+    assert(state.href === '/timing' && state.mainCalls === 1, 'Superseded PUSH affected the winning route', state);
+    return state;
+  });
+
+  await run('Back cancels a delayed PUSH without forcing main focus', async (p) => {
+    const note = p.getByRole('textbox', { name: 'Reflection note', exact: false });
+    await note.focus();
+    await p.evaluate(() => {
+      const gate = new Promise((resolve) => { window.__reviewRelease = resolve; });
+      window.auditRouter.routesById['/_authenticated/journal'].options.beforeLoad = async () => {
+        window.__reviewGateEntered = true;
+        await gate;
+      };
+      window.__reviewFirstNavigation = window.auditRouter.navigate({ href: '/journal' });
+    });
+    await p.waitForFunction(() => window.__reviewGateEntered);
+    await p.goBack();
+    await p.waitForFunction(() => location.pathname === '/' && !window.auditRouter.state.isLoading);
+    await p.evaluate(async () => { window.__reviewRelease(); await window.__reviewFirstNavigation; });
+    await settle(p);
+    const state = await p.evaluate(() => ({ href: location.pathname, mainCalls: window.__reviewFocusLog.filter((entry) => entry.id === 'main-content').length, rendered: window.__reviewRenderedLog }));
+    assert(state.href === '/' && state.mainCalls === 0, 'Back or the superseded PUSH forced main focus', state);
+    assert(await note.evaluate((element) => element === document.activeElement), 'Back cancellation lost the retained source focus', state);
+    return state;
+  });
+
+  return { engine: browser.browserType().name(), version: browser.version(), evidence: 'Render; synthetic local services', substitutions: ['Two focus cases replace only the in-memory Journal component with tiny React components.', 'Two overlap cases gate only the in-memory Journal beforeLoad with an explicitly released promise.', 'Pass-through HTMLElement.focus wrapper records calls; router event subscriber records rendered paths.', 'Fresh isolated browser contexts; existing Stripe requests are aborted as in the baseline fixture.'], results };
+}

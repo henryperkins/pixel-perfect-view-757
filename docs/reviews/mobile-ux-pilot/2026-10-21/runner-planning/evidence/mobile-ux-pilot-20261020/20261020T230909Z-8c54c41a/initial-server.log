@@ -1,0 +1,4 @@
+The `envFile` option is deprecated, please use `envDir: false` instead.
+  ➜  Local:   http://127.0.0.1:4207/
+11:09:46 PM [vite] (client) dependencies optimized: @radix-ui/react-alert-dialog, @radix-ui/react-slot, @stripe/react-stripe-js, @stripe/stripe-js, @tanstack/react-query, @tanstack/react-router, class-variance-authority, clsx, lucide-react, react-dom/client, sonner, tailwind-merge, zod
+11:09:46 PM [vite] (client) optimized dependencies changed. reloading

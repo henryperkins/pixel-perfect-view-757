@@ -1,0 +1,26 @@
+.................................F.................................................................................
+======================================================================
+FAIL: test_legacy_target_plan_retains_empty_scope_results_compatibility (test_run_state.RunnerTests.test_legacy_target_plan_retains_empty_scope_results_compatibility)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 469, in test_legacy_target_plan_retains_empty_scope_results_compatibility
+    self.assertTrue(self.assert_valid(s)['claimable_complete'])
+                    ~~~~~~~~~~~~~~~~~^^^
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 103, in assert_valid
+    self.assertEqual(a['errors'], [], a['errors'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['C-01: whole pass cannot contain nonpassi[117 chars]ncy'] != []
+
+First list contains 2 additional elements.
+First extra element 0:
+'C-01: whole pass cannot contain nonpassing portions'
+
++ []
+- ['C-01: whole pass cannot contain nonpassing portions',
+-  'F-01: verified needs target passes on the fix build for every affected scope '
+-  'and relevant real dependency'] : ['C-01: whole pass cannot contain nonpassing portions', 'F-01: verified needs target passes on the fix build for every affected scope and relevant real dependency']
+
+----------------------------------------------------------------------
+Ran 115 tests in 0.775s
+
+FAILED (failures=1)

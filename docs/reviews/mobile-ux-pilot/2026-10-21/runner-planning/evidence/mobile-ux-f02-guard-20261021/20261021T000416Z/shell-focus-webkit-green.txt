@@ -1,0 +1,120 @@
+### Result
+{"engine":"webkit","version":"26.6","level":"proxy","checks":[{"name":"Focusing the main landmark preserves the current reading scroll","passed":true,"details":{"before":{"y":600,"active":"","rect":{"x":0,"y":-517,"width":390,"height":2351.171875,"top":-517,"right":390,"bottom":1834.171875,"left":0},"top":91,"bottom":763.03125,"scrolls":[]},"after":{"y":600,"active":"main-content","rect":{"x":0,"y":-517,"width":390,"height":2351.171875,"top":-517,"right":390,"bottom":1834.171875,"left":0},"top":91,"bottom":763.03125,"scrolls":[]}}},{"name":"A focused reflection field still clears the fixed navigation","passed":true,"details":{"before":{"y":554,"active":"","rect":{"x":37,"y":824.671875,"width":316,"height":90,"top":824.671875,"right":353,"bottom":914.671875,"left":37},"top":91,"bottom":763.03125,"scrolls":[]},"after":{"y":705,"active":"_r_0_-note","rect":{"x":37,"y":673.671875,"width":316,"height":90,"top":673.671875,"right":353,"bottom":763.671875,"left":37},"top":91,"bottom":763.03125,"scrolls":[{"args":[{"top":151.640625,"behavior":"instant"}],"activeTag":"TEXTAREA","activeId":"_r_0_-note"}]}}},{"name":"A focused native radio still reveals its visible label below the header","passed":true,"details":{"before":{"y":1154,"active":"","rect":{"x":229,"y":20.671875,"width":60,"height":48,"top":20.671875,"right":289,"bottom":68.671875,"left":229},"top":91,"bottom":763.03125,"scrolls":[]},"after":{"y":1083,"active":"","rect":{"x":229,"y":91.671875,"width":60,"height":48,"top":91.671875,"right":289,"bottom":139.671875,"left":229},"top":91,"bottom":763.03125,"scrolls":[{"args":[{"top":-70.328125,"behavior":"instant"}],"activeTag":"INPUT","activeId":""}]},"keyboardSelected":true}}]}
+### Ran Playwright code
+```js
+await (async (page) => {
+  const browser = page.context().browser();
+  const origin = new URL(page.url()).origin;
+  const checks = [];
+  const assert = (ok, message, detail) => {
+    if (!ok) throw new Error(message + ' ' + JSON.stringify(detail));
+  };
+  const settle = (p) => p.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+  const run = async (name, task) => {
+    const context = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, reducedMotion: 'reduce' });
+    await context.route(/https:\/\/([^/]*\.)?stripe\.(com|network)\//, (route) => route.abort('blockedbyclient'));
+    const p = await context.newPage();
+    p.setDefaultTimeout(7000);
+    const pageErrors = [];
+    p.on('pageerror', (error) => pageErrors.push(String(error)));
+    try {
+      await p.goto(origin + '/');
+      await p.locator('.today-check-in').waitFor();
+      await p.waitForFunction(() => !window.auditRouter.state.isLoading);
+      await settle(p);
+      await p.evaluate(() => {
+        window.__focusScrolls = [];
+        const original = window.scrollBy;
+        window.scrollBy = function (...args) {
+          window.__focusScrolls.push({ args, activeTag: document.activeElement?.tagName, activeId: document.activeElement?.id });
+          return original.apply(this, args);
+        };
+      });
+      const details = await task(p);
+      assert(pageErrors.length === 0, 'Unexpected page error', pageErrors);
+      checks.push({ name, passed: true, details });
+    } catch (error) {
+      checks.push({ name, passed: false, error: String(error), pageErrors });
+    } finally {
+      await context.close();
+    }
+  };
+  const geometry = (p, selector) => p.evaluate((selector) => {
+    const element = document.querySelector(selector);
+    const target = element.matches('input.sr-only') ? element.closest('label') : element;
+    const viewport = window.visualViewport;
+    const header = document.querySelector('header');
+    const nav = document.querySelector('nav[aria-label="Quick navigation"]');
+    return {
+      y: scrollY,
+      active: document.activeElement.id,
+      rect: target.getBoundingClientRect().toJSON(),
+      top: Math.max(viewport?.offsetTop ?? 0, header?.getBoundingClientRect().bottom ?? 0) + 8,
+      bottom: Math.min((viewport?.offsetTop ?? 0) + (viewport?.height ?? innerHeight), nav && getComputedStyle(nav).position === 'fixed' ? nav.getBoundingClientRect().top : Infinity) - 8,
+      scrolls: window.__focusScrolls,
+    };
+  }, selector);
+
+  // Removing the main-landmark exclusion must make this fail by scrolling to the top.
+  await run('Focusing the main landmark preserves the current reading scroll', async (p) => {
+    await p.evaluate(() => window.scrollTo({ top: 600, behavior: 'instant' }));
+    await settle(p);
+    const before = await geometry(p, '#main-content');
+    assert(before.y > 400, 'The reading was not scrolled before the focus probe', before);
+    await p.evaluate(() => {
+      window.__focusScrolls = [];
+      document.getElementById('main-content').focus({ preventScroll: true });
+    });
+    await settle(p);
+    const after = await geometry(p, '#main-content');
+    assert(after.active === 'main-content', 'Main did not receive focus', after);
+    assert(Math.abs(after.y - before.y) <= 1 && after.scrolls.length === 0, 'Main focus reset the reading scroll', { before, after });
+    return { before, after };
+  });
+
+  // An early return for every descendant would break actual field focus clearance.
+  await run('A focused reflection field still clears the fixed navigation', async (p) => {
+    const selector = 'textarea[name="note"]';
+    await p.evaluate((selector) => {
+      const field = document.querySelector(selector);
+      window.scrollTo({ top: field.getBoundingClientRect().top + scrollY - (innerHeight - 20), behavior: 'instant' });
+    }, selector);
+    await settle(p);
+    const before = await geometry(p, selector);
+    assert(before.rect.bottom > before.bottom + 5, 'The field was not obscured before focus', before);
+    await p.evaluate((selector) => {
+      window.__focusScrolls = [];
+      document.querySelector(selector).focus({ preventScroll: true });
+    }, selector);
+    await settle(p);
+    const after = await geometry(p, selector);
+    assert(after.scrolls.length > 0 && after.rect.top >= after.top - 1 && after.rect.bottom <= after.bottom + 1, 'Field focus clearance failed', { before, after });
+    return { before, after };
+  });
+
+  // Radio focus must continue measuring its visible label rather than the sr-only input.
+  await run('A focused native radio still reveals its visible label below the header', async (p) => {
+    const selector = 'input[aria-label="Mood: 4 of 5, Good"]';
+    await p.evaluate((selector) => {
+      const label = document.querySelector(selector).closest('label');
+      window.scrollTo({ top: label.getBoundingClientRect().top + scrollY - 20, behavior: 'instant' });
+    }, selector);
+    await settle(p);
+    const before = await geometry(p, selector);
+    assert(before.rect.top < before.top - 5, 'The label was not under the header before focus', before);
+    await p.evaluate((selector) => {
+      window.__focusScrolls = [];
+      document.querySelector(selector).focus({ preventScroll: true });
+    }, selector);
+    await settle(p);
+    const after = await geometry(p, selector);
+    assert(after.scrolls.length > 0 && after.rect.top >= after.top - 1 && after.rect.bottom <= after.bottom + 1, 'Radio label focus clearance failed', { before, after });
+    await p.keyboard.press('Space');
+    assert(await p.locator(selector).isChecked(), 'Keyboard selection failed after revealing the radio');
+    return { before, after, keyboardSelected: true };
+  });
+
+  return { engine: browser.browserType().name(), version: browser.version(), level: 'proxy', checks };
+}
+)(page);
+```

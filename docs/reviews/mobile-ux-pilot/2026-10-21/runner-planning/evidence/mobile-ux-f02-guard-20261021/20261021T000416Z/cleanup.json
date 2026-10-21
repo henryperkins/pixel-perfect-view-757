@@ -1,0 +1,15 @@
+{
+  "verified_owned_pid": 1216443,
+  "verified_command": [
+    "node",
+    "--experimental-strip-types",
+    "/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-ux-f02-guard-20261021/20261021T000416Z/fixture-server.mjs"
+  ],
+  "signal": "SIGTERM",
+  "port": 4209,
+  "port_closed": true,
+  "sessions_closed": [
+    "pattern-f0221-chromium",
+    "pattern-f0221-webkit"
+  ]
+}

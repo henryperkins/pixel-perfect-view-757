@@ -1,0 +1,89 @@
+{
+  "engine": "webkit",
+  "version": "26.6",
+  "evidence": "Render; synthetic local services",
+  "substitutions": [
+    "Two focus cases replace only the in-memory Journal component with tiny React components.",
+    "Two overlap cases gate only the in-memory Journal beforeLoad with an explicitly released promise.",
+    "Pass-through HTMLElement.focus wrapper records calls; router event subscriber records rendered paths.",
+    "Fresh isolated browser contexts; existing Stripe requests are aborted as in the baseline fixture."
+  ],
+  "results": [
+    {
+      "name": "React destination autofocus is preserved without a main-focus call",
+      "passed": true,
+      "details": {
+        "active": "review-destination-focus",
+        "focusLog": [
+          {
+            "id": "review-destination-focus",
+            "tag": "INPUT",
+            "href": "/journal",
+            "connected": true
+          }
+        ],
+        "rendered": [
+          {
+            "path": "/journal",
+            "key": "3l245",
+            "pathChanged": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Destination layout-effect focus outside main is preserved",
+      "passed": true,
+      "details": {
+        "active": "review-outside-main-focus",
+        "focusLog": [
+          {
+            "id": "review-outside-main-focus",
+            "tag": "INPUT",
+            "href": "/journal",
+            "connected": true
+          }
+        ],
+        "rendered": [
+          {
+            "path": "/journal",
+            "key": "6nppg",
+            "pathChanged": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "A delayed superseded PUSH cannot refocus after the winning route",
+      "passed": true,
+      "details": {
+        "activeTag": "BUTTON",
+        "href": "/timing",
+        "mainCalls": 1,
+        "rendered": [
+          {
+            "path": "/timing",
+            "key": "af1bi",
+            "pathChanged": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Back cancels a delayed PUSH without forcing main focus",
+      "passed": true,
+      "details": {
+        "href": "/",
+        "activeTag": "BODY",
+        "mainCalls": 0,
+        "rendered": [
+          {
+            "path": "/",
+            "key": "1rsko",
+            "pathChanged": false
+          }
+        ]
+      }
+    }
+  ]
+}

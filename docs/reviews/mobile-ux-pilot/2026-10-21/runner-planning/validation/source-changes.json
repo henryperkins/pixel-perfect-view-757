@@ -1,0 +1,17 @@
+{
+  "changed_files": [
+    ".codex-plugin/plugin.json",
+    "README.md",
+    "plugin.json",
+    "skills/mobile-web-ux-runner/SKILL.md",
+    "skills/mobile-web-ux-runner/references/evidence-contract.md",
+    "skills/mobile-web-ux-runner/references/ledger-schema.md",
+    "skills/mobile-web-ux-runner/references/reporting.md",
+    "skills/mobile-web-ux-runner/references/workflow.md",
+    "skills/mobile-web-ux-runner/scripts/run_state.py",
+    "skills/mobile-web-ux-runner/tests/planning-validation.json",
+    "skills/mobile-web-ux-runner/tests/test_run_state.py"
+  ],
+  "removed_files": [],
+  "historical_behavior_run_and_catalog": "unchanged"
+}

@@ -1,0 +1,31 @@
+{
+  "engine": "chromium",
+  "version": "149.0.7827.55",
+  "navigation": {
+    "journal": {
+      "path": "/journal",
+      "activeTag": "BODY",
+      "activeText": "Skip to contentPatternpersonal ephemerisTodayYour ",
+      "activeHref": null
+    },
+    "firstTab": {
+      "tag": "A",
+      "text": "Skip to content",
+      "href": "#main-content"
+    },
+    "back": "Keep while visiting the Journal",
+    "menuOpened": "true",
+    "menuAfterHistoryBack": "false",
+    "menuAfterHistoryForward": "true"
+  },
+  "scrolling": {
+    "rootOverflowY": "visible",
+    "rootOverscrollY": "auto",
+    "noteOverscrollY": "auto",
+    "noteTouchAction": "auto",
+    "scrollPaddingTop": "91px",
+    "scrollPaddingBottom": "85px",
+    "animations": 0
+  },
+  "status": "pass"
+}

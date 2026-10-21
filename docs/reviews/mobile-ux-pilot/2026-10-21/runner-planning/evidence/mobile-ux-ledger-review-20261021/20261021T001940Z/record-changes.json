@@ -1,0 +1,1448 @@
+[
+  {
+    "path": "/checks/C-GD01/achieved_level",
+    "added": "unestablished"
+  },
+  {
+    "path": "/checks/C-GD01/level",
+    "before": "unestablished",
+    "after": "target"
+  },
+  {
+    "path": "/checks/C-GD01/level_basis",
+    "added": "Planned physical target acquisition only; status not_run, actual empty, evidence empty, capability not available. No target observation exists."
+  },
+  {
+    "path": "/checks/C-GD01/planned_only",
+    "added": true
+  },
+  {
+    "path": "/checks/C-GD01/planning_limit",
+    "added": "This phone configuration is not direct coverage of preserved scope webkit-mouse-390 (Linux desktop Playwright WebKit)."
+  },
+  {
+    "path": "/checks/C-GD01/planning_role",
+    "added": "related_guard_regression"
+  },
+  {
+    "path": "/checks/C-GD02/achieved_level",
+    "added": "unestablished"
+  },
+  {
+    "path": "/checks/C-GD02/level",
+    "before": "unestablished",
+    "after": "target"
+  },
+  {
+    "path": "/checks/C-GD02/level_basis",
+    "added": "Planned physical target acquisition only; status not_run, actual empty, evidence empty, capability not available. No target observation exists."
+  },
+  {
+    "path": "/checks/C-GD02/planned_only",
+    "added": true
+  },
+  {
+    "path": "/checks/C-GD02/planning_limit",
+    "added": "This phone configuration is not direct coverage of preserved scope webkit-mouse-390 (Linux desktop Playwright WebKit)."
+  },
+  {
+    "path": "/checks/C-GD02/planning_role",
+    "added": "related_guard_regression"
+  },
+  {
+    "path": "/checks/C-GD03/achieved_level",
+    "added": "unestablished"
+  },
+  {
+    "path": "/checks/C-GD03/level",
+    "before": "unestablished",
+    "after": "target"
+  },
+  {
+    "path": "/checks/C-GD03/level_basis",
+    "added": "Planned physical target acquisition only; status not_run, actual empty, evidence empty, capability not available. No target observation exists."
+  },
+  {
+    "path": "/checks/C-GD03/planned_only",
+    "added": true
+  },
+  {
+    "path": "/checks/C-GD03/planning_limit",
+    "added": "This phone configuration is not direct coverage of preserved scope webkit-mouse-390 (Linux desktop Playwright WebKit)."
+  },
+  {
+    "path": "/checks/C-GD03/planning_role",
+    "added": "related_guard_regression"
+  },
+  {
+    "path": "/checks/C-GD04/achieved_level",
+    "added": "unestablished"
+  },
+  {
+    "path": "/checks/C-GD04/level",
+    "before": "unestablished",
+    "after": "target"
+  },
+  {
+    "path": "/checks/C-GD04/level_basis",
+    "added": "Planned physical target acquisition only; status not_run, actual empty, evidence empty, capability not available. No target observation exists."
+  },
+  {
+    "path": "/checks/C-GD04/planned_only",
+    "added": true
+  },
+  {
+    "path": "/checks/C-GD04/planning_limit",
+    "added": "This phone configuration is not direct coverage of preserved scope webkit-mouse-390 (Linux desktop Playwright WebKit)."
+  },
+  {
+    "path": "/checks/C-GD04/planning_role",
+    "added": "related_guard_regression"
+  },
+  {
+    "path": "/checks/C-GD05/achieved_level",
+    "added": "unestablished"
+  },
+  {
+    "path": "/checks/C-GD05/level",
+    "before": "unestablished",
+    "after": "target"
+  },
+  {
+    "path": "/checks/C-GD05/level_basis",
+    "added": "Planned physical target acquisition only; status not_run, actual empty, evidence empty, capability not available. No target observation exists."
+  },
+  {
+    "path": "/checks/C-GD05/planned_only",
+    "added": true
+  },
+  {
+    "path": "/checks/C-GD05/planning_role",
+    "added": "broader_audit_follow_up"
+  },
+  {
+    "path": "/checks/C-GD06/achieved_level",
+    "added": "unestablished"
+  },
+  {
+    "path": "/checks/C-GD06/level",
+    "before": "unestablished",
+    "after": "target"
+  },
+  {
+    "path": "/checks/C-GD06/level_basis",
+    "added": "Planned physical target acquisition only; status not_run, actual empty, evidence empty, capability not available. No target observation exists."
+  },
+  {
+    "path": "/checks/C-GD06/planned_only",
+    "added": true
+  },
+  {
+    "path": "/checks/C-GD06/planning_role",
+    "added": "broader_audit_follow_up"
+  },
+  {
+    "path": "/checks/C-GD07/achieved_level",
+    "added": "unestablished"
+  },
+  {
+    "path": "/checks/C-GD07/level",
+    "before": "unestablished",
+    "after": "target"
+  },
+  {
+    "path": "/checks/C-GD07/level_basis",
+    "added": "Planned physical target acquisition only; status not_run, actual empty, evidence empty, capability not available. No target observation exists."
+  },
+  {
+    "path": "/checks/C-GD07/planned_only",
+    "added": true
+  },
+  {
+    "path": "/checks/C-GD07/planning_role",
+    "added": "broader_audit_follow_up"
+  },
+  {
+    "path": "/checks/C-GD08/achieved_level",
+    "added": "unestablished"
+  },
+  {
+    "path": "/checks/C-GD08/level",
+    "before": "unestablished",
+    "after": "target"
+  },
+  {
+    "path": "/checks/C-GD08/level_basis",
+    "added": "Planned physical target acquisition only; status not_run, actual empty, evidence empty, capability not available. No target observation exists."
+  },
+  {
+    "path": "/checks/C-GD08/planned_only",
+    "added": true
+  },
+  {
+    "path": "/checks/C-GD08/planning_role",
+    "added": "broader_audit_follow_up"
+  },
+  {
+    "path": "/checks/C-GD09/achieved_level",
+    "added": "unestablished"
+  },
+  {
+    "path": "/checks/C-GD09/level",
+    "before": "unestablished",
+    "after": "target"
+  },
+  {
+    "path": "/checks/C-GD09/level_basis",
+    "added": "Planned physical target acquisition only; status not_run, actual empty, evidence empty, capability not available. No target observation exists."
+  },
+  {
+    "path": "/checks/C-GD09/planned_only",
+    "added": true
+  },
+  {
+    "path": "/checks/C-GD09/planning_role",
+    "added": "broader_audit_follow_up"
+  },
+  {
+    "path": "/checks/C-GD10/achieved_level",
+    "added": "unestablished"
+  },
+  {
+    "path": "/checks/C-GD10/covers",
+    "before": [
+      {
+        "finding_id": "F-02",
+        "scope_id": "webkit-mouse-390"
+      }
+    ],
+    "after": []
+  },
+  {
+    "path": "/checks/C-GD10/level",
+    "before": "unestablished",
+    "after": "target"
+  },
+  {
+    "path": "/checks/C-GD10/level_basis",
+    "added": "Planned physical target acquisition only; status not_run, actual empty, evidence empty, capability not available. No target observation exists."
+  },
+  {
+    "path": "/checks/C-GD10/planned_only",
+    "added": true
+  },
+  {
+    "path": "/checks/C-GD10/planning_limit",
+    "added": "This phone configuration is not direct coverage of preserved scope webkit-mouse-390 (Linux desktop Playwright WebKit)."
+  },
+  {
+    "path": "/checks/C-GD10/planning_role",
+    "added": "related_guard_regression"
+  },
+  {
+    "path": "/device_script",
+    "before": [
+      "C-GD01",
+      "C-GD02",
+      "C-GD03",
+      "C-GD04",
+      "C-GD05",
+      "C-GD06",
+      "C-GD07",
+      "C-GD08",
+      "C-GD09",
+      "C-GD10"
+    ],
+    "after": [
+      "C-GD01",
+      "C-GD02",
+      "C-GD03",
+      "C-GD04",
+      "C-GD10",
+      "C-GD05",
+      "C-GD06",
+      "C-GD07",
+      "C-GD08",
+      "C-GD09"
+    ]
+  },
+  {
+    "path": "/findings/F-02/fix/device_regression_check_ids",
+    "added": [
+      "C-GD01",
+      "C-GD02",
+      "C-GD03",
+      "C-GD04",
+      "C-GD10"
+    ]
+  },
+  {
+    "path": "/findings/F-02/fix/required_check_ids",
+    "before": [
+      "C-GD01",
+      "C-GD02",
+      "C-GD03",
+      "C-GD04",
+      "C-GD10"
+    ],
+    "after": []
+  },
+  {
+    "path": "/findings/F-02/fix/scope_verification_plan",
+    "added": {
+      "status": "unmapped",
+      "scope_id": "webkit-mouse-390",
+      "required_target_check_ids": [],
+      "reason": "No existing physical-device entry matches the preserved Linux desktop Playwright WebKit scope. Phone follow-ups are related guard regressions, not direct scope verification. The original application-plan gate remains unsatisfied."
+    }
+  },
+  {
+    "path": "/findings/F-02/reason",
+    "before": "Explicit new user authorization permits the formerly proposed guard; remaining five distinct guard target entries fit the reserved 5 of the unchanged 10-entry budget. Physical-device verification remains unrun.",
+    "after": "The guard remains implemented from the prior authorized application. The earlier record conflated related physical-device regressions with direct coverage of the original desktop-WebKit scope. Count fitting the budget did not establish application-plan admission. The corrected original-scope target plan remains incomplete; no device test or target verification is claimed."
+  },
+  {
+    "path": "/findings/F-02/related_regression_check_ids",
+    "added": [
+      "C-GD01",
+      "C-GD02",
+      "C-GD03",
+      "C-GD04",
+      "C-GD10"
+    ]
+  },
+  {
+    "path": "/findings/F-02/verification_ids",
+    "before": [
+      "C-WK-JOURNEY",
+      "C-WK-MOUSE",
+      "C-L-F02-BASE",
+      "C-L-F02-LOCAL",
+      "C-G-CH-SHELL",
+      "C-G-WK-SHELL",
+      "C-G-CH-SELECT",
+      "C-G-WK-SELECT",
+      "C-GD01",
+      "C-GD02",
+      "C-GD03",
+      "C-GD04",
+      "C-GD10"
+    ],
+    "after": [
+      "C-WK-JOURNEY",
+      "C-WK-MOUSE",
+      "C-L-F02-BASE",
+      "C-L-F02-LOCAL",
+      "C-G-CH-SHELL",
+      "C-G-WK-SHELL",
+      "C-G-CH-SELECT",
+      "C-G-WK-SELECT"
+    ]
+  },
+  {
+    "path": "/history",
+    "before": [
+      {
+        "event": "audit_initialized",
+        "at": "2026-10-20T23:09:09.107589+00:00",
+        "revision": "8e0e5c933ab8bad2b3e186e70501ef8e31d82570",
+        "mode": "audit_only"
+      },
+      {
+        "event": "prior_audit_used_as_lead",
+        "detail": "October 18 findings were not transferred to this different build; current Sources expansion, band descriptors and sign-out error handling have updated source."
+      },
+      {
+        "event": "setup_and_probe_corrections",
+        "detail": "Retained initial Vite 504s, an unreturned exploratory result, the ineffective first WebKit IndexedDB override, and the menu label selector timeout. None is hidden as an app pass or defect."
+      },
+      {
+        "event": "evidence_consolidated",
+        "detail": "Seven main recovery cases passed in each engine; confirmed storage failure passed separately in each. WebKit mouse failure, contrast failure and route focus friction remain open; no applied fixes."
+      },
+      {
+        "at": "2026-10-20T23:56:55.611247+00:00",
+        "event": "explicit_authorization",
+        "evidence": "/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/authorization.json",
+        "mode": "audit_and_fix",
+        "device_dependent_fixes": "propose_only"
+      },
+      {
+        "at": "2026-10-20T23:56:55.611247+00:00",
+        "event": "local_ordinary_fixes",
+        "detail": "F-01 and F-03 implemented on a new dirty-source identity; no target Verified claim; original evidence/check IDs retained; F-02 cause revised without closure."
+      },
+      {
+        "at": "2026-10-21T00:10:04.872234+00:00",
+        "event": "explicit_F02_guard_authorization",
+        "evidence": "/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-ux-f02-guard-20261021/20261021T000416Z/authorization.json",
+        "mode": "audit_and_fix",
+        "device_dependent_fixes": "apply_and_hand_off"
+      },
+      {
+        "at": "2026-10-21T00:10:04.872234+00:00",
+        "event": "minimal_F02_guard_implemented",
+        "evidence": [
+          "/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-ux-f02-guard-20261021/20261021T000416Z/changes.patch",
+          "/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-ux-f02-guard-20261021/20261021T000416Z/validation.json"
+        ],
+        "physical_device_verification": "not_run",
+        "target_plan": "/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-ux-f02-guard-20261021/20261021T000416Z/target-plan.json"
+      }
+    ],
+    "after": [
+      {
+        "event": "audit_initialized",
+        "at": "2026-10-20T23:09:09.107589+00:00",
+        "revision": "8e0e5c933ab8bad2b3e186e70501ef8e31d82570",
+        "mode": "audit_only"
+      },
+      {
+        "event": "prior_audit_used_as_lead",
+        "detail": "October 18 findings were not transferred to this different build; current Sources expansion, band descriptors and sign-out error handling have updated source."
+      },
+      {
+        "event": "setup_and_probe_corrections",
+        "detail": "Retained initial Vite 504s, an unreturned exploratory result, the ineffective first WebKit IndexedDB override, and the menu label selector timeout. None is hidden as an app pass or defect."
+      },
+      {
+        "event": "evidence_consolidated",
+        "detail": "Seven main recovery cases passed in each engine; confirmed storage failure passed separately in each. WebKit mouse failure, contrast failure and route focus friction remain open; no applied fixes."
+      },
+      {
+        "at": "2026-10-20T23:56:55.611247+00:00",
+        "event": "explicit_authorization",
+        "evidence": "/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/authorization.json",
+        "mode": "audit_and_fix",
+        "device_dependent_fixes": "propose_only"
+      },
+      {
+        "at": "2026-10-20T23:56:55.611247+00:00",
+        "event": "local_ordinary_fixes",
+        "detail": "F-01 and F-03 implemented on a new dirty-source identity; no target Verified claim; original evidence/check IDs retained; F-02 cause revised without closure."
+      },
+      {
+        "at": "2026-10-21T00:10:04.872234+00:00",
+        "event": "explicit_F02_guard_authorization",
+        "evidence": "/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-ux-f02-guard-20261021/20261021T000416Z/authorization.json",
+        "mode": "audit_and_fix",
+        "device_dependent_fixes": "apply_and_hand_off"
+      },
+      {
+        "at": "2026-10-21T00:10:04.872234+00:00",
+        "event": "minimal_F02_guard_implemented",
+        "evidence": [
+          "/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-ux-f02-guard-20261021/20261021T000416Z/changes.patch",
+          "/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-ux-f02-guard-20261021/20261021T000416Z/validation.json"
+        ],
+        "physical_device_verification": "not_run",
+        "target_plan": "/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-ux-f02-guard-20261021/20261021T000416Z/target-plan.json"
+      },
+      {
+        "event": "record_planning_correction",
+        "at": "2026-10-21T00:20:40.265196+00:00",
+        "source_ledger": "/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-ux-f02-guard-20261021/20261021T000416Z/run.json",
+        "source_sha256": "d6fcd8f295b03af4be19f6a2515d8dd5f505196453df08d25c56af1a324b21b9",
+        "prior_F02_fix": {
+          "applied": true,
+          "device_dependent": true,
+          "build_id": "B-F02-GUARD",
+          "evidence": [
+            "/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-ux-f02-guard-20261021/20261021T000416Z/changes.patch",
+            "/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-ux-f02-guard-20261021/20261021T000416Z/source-identity.json",
+            "/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-ux-f02-guard-20261021/20261021T000416Z/target-plan.json"
+          ],
+          "required_check_ids": [
+            "C-GD01",
+            "C-GD02",
+            "C-GD03",
+            "C-GD04",
+            "C-GD10"
+          ],
+          "proposal": "Applied only the main-landmark exclusion in revealFocus. All geometry, actual-control label targeting, native input, viewport and history behavior are retained."
+        },
+        "prior_F02_verification_ids": [
+          "C-WK-JOURNEY",
+          "C-WK-MOUSE",
+          "C-L-F02-BASE",
+          "C-L-F02-LOCAL",
+          "C-G-CH-SHELL",
+          "C-G-WK-SHELL",
+          "C-G-CH-SELECT",
+          "C-G-WK-SELECT",
+          "C-GD01",
+          "C-GD02",
+          "C-GD03",
+          "C-GD04",
+          "C-GD10"
+        ],
+        "prior_F02_reason": "Explicit new user authorization permits the formerly proposed guard; remaining five distinct guard target entries fit the reserved 5 of the unchanged 10-entry budget. Physical-device verification remains unrun.",
+        "prior_device_checks": {
+          "C-GD01": {
+            "id": "C-GD01",
+            "module": 3,
+            "required": true,
+            "scenario": "Read Today and complete the check-in with real keyboard, expanded/collapsed chrome, touch selection and large-text/narrow layouts",
+            "expected": "Complete each stated step using test data; controls remain visible/operable, choices and notes persist truthfully, recovery/status and focus are usable. Report each actual state and any failure; for performance return measured traces without assumed values.",
+            "actual": "",
+            "evidence": [],
+            "reason": "Physical-device verification explicitly unrun; current phone build/backend is unprovisioned.",
+            "status": "not_run",
+            "environment": "physical_device",
+            "driver": "person",
+            "evidence_type": "physical_device",
+            "level": "unestablished",
+            "behavior": "Read Today and complete the check-in with real keyboard, expanded/collapsed chrome, touch selection and large-text/narrow layouts",
+            "capability_id": "CAP-HUMAN",
+            "build_id": "B-PHONE-GUARD",
+            "configuration": {
+              "browser": "Safari",
+              "device": "iPhone",
+              "os": "record actual version",
+              "version": "record actual version",
+              "display": "Compact tabs"
+            },
+            "conditions": {
+              "build_id": "B-PHONE-GUARD",
+              "browser": "Safari",
+              "device": "iPhone",
+              "state": "Compact tabs",
+              "account_data": "isolated synthetic test account",
+              "setup": "Confirm test-only backend and record all build/setup substitutions; local harness aliases are not assumed to run on the phone",
+              "steps": [
+                "Confirm a non-production phone build containing F-01, F-02 and F-03 matches source-identity.json and record all actual test-backend/build/setup substitutions. Use a non-production build/account; record model, OS, Safari version, Compact tab setting, source identity, actual CSS width and backend/test substitutions. Do not continue a write if routing to the test backend is unconfirmed.",
+                "At the narrowest supported phone configuration available, record actual CSS width; separately use 200% text/page enlargement. Read Today, choose Mood 4 and Energy 3 with a finger, enter a Unicode reflection, and verify each selected value before saving once.",
+                "Repeat the selection sequence three times in independent fresh test states and record each result. If a pointer is supported, record its trials separately from finger taps. A touch pass does not refute F-02 desktop mouse behavior.",
+                "With the keyboard open and closed, expand/collapse Safari chrome; rotate to landscape; verify note and save remain reachable, pinch zoom works, and the home/notch regions do not cover controls.",
+                "Use one thumb, two thumbs and a cradled grip; record missed taps/regrips. For a long note, scroll inside it and at each end; for a short note, scroll the document. Return to Today after opening Journal and record focus and draft state.",
+                "Check F-02 guard explicitly: repeat native Mood 4 / Energy 3 activation three times in independent test states; compare each selection before saving. Move between the main landmark and actual fields/radio labels while scrolled. Main focus should not reset reading scroll; controls must still clear fixed chrome with keyboard open/closed, expanded/collapsed browser bars, portrait/short landscape and enlarged text. Record each state separately."
+              ],
+              "timing": "record actual timing, connection and every tested state",
+              "substitutions": "unknown until independently confirmed"
+            },
+            "depends_on": [
+              "member APIs"
+            ],
+            "substitutions": {
+              "build": {
+                "status": "unknown",
+                "items": [],
+                "unknown_boundaries": [
+                  "test backend routing",
+                  "production bootstrap",
+                  "member APIs"
+                ],
+                "evidence": [],
+                "reason": "No phone-accessible test build/backend has been provisioned or inspected; confirm build and all wiring before a human writes test data"
+              },
+              "setup": {
+                "status": "unknown",
+                "items": [],
+                "unknown_boundaries": [
+                  "test account/backend routing",
+                  "device settings"
+                ],
+                "evidence": [],
+                "reason": "Tester must confirm the test account, endpoint routing, display/browser settings and any fault controls"
+              },
+              "additional": {
+                "status": "unknown",
+                "items": [],
+                "unknown_boundaries": [
+                  "per-device additions"
+                ],
+                "evidence": [],
+                "reason": "Record any actual on-device interception or fault injection; no local-only stub is inherited"
+              }
+            },
+            "covers": [],
+            "setup": "Test-only build and synthetic account. Confirm source/build and setup separately; stop before writing if test routing is not established.",
+            "steps": [
+              "Confirm a non-production phone build containing F-01, F-02 and F-03 matches source-identity.json and record all actual test-backend/build/setup substitutions. Use a non-production build/account; record model, OS, Safari version, Compact tab setting, source identity, actual CSS width and backend/test substitutions. Do not continue a write if routing to the test backend is unconfirmed.",
+              "At the narrowest supported phone configuration available, record actual CSS width; separately use 200% text/page enlargement. Read Today, choose Mood 4 and Energy 3 with a finger, enter a Unicode reflection, and verify each selected value before saving once.",
+              "Repeat the selection sequence three times in independent fresh test states and record each result. If a pointer is supported, record its trials separately from finger taps. A touch pass does not refute F-02 desktop mouse behavior.",
+              "With the keyboard open and closed, expand/collapse Safari chrome; rotate to landscape; verify note and save remain reachable, pinch zoom works, and the home/notch regions do not cover controls.",
+              "Use one thumb, two thumbs and a cradled grip; record missed taps/regrips. For a long note, scroll inside it and at each end; for a short note, scroll the document. Return to Today after opening Journal and record focus and draft state.",
+              "Check F-02 guard explicitly: repeat native Mood 4 / Energy 3 activation three times in independent test states; compare each selection before saving. Move between the main landmark and actual fields/radio labels while scrolled. Main focus should not reset reading scroll; controls must still clear fixed chrome with keyboard open/closed, expanded/collapsed browser bars, portrait/short landscape and enlarged text. Record each state separately."
+            ],
+            "related_finding_ids": [
+              "F-01",
+              "F-02",
+              "F-03"
+            ],
+            "replaces_check_id": "C-LD01"
+          },
+          "C-GD02": {
+            "id": "C-GD02",
+            "module": 3,
+            "required": true,
+            "scenario": "Check Bottom-tab chrome, keyboard and orientation transitions",
+            "expected": "Complete each stated step using test data; controls remain visible/operable, choices and notes persist truthfully, recovery/status and focus are usable. Report each actual state and any failure; for performance return measured traces without assumed values.",
+            "actual": "",
+            "evidence": [],
+            "reason": "Physical-device verification explicitly unrun; current phone build/backend is unprovisioned.",
+            "status": "not_run",
+            "environment": "physical_device",
+            "driver": "person",
+            "evidence_type": "physical_device",
+            "level": "unestablished",
+            "behavior": "Check Bottom-tab chrome, keyboard and orientation transitions",
+            "capability_id": "CAP-HUMAN",
+            "build_id": "B-PHONE-GUARD",
+            "configuration": {
+              "browser": "Safari",
+              "device": "iPhone",
+              "os": "record actual version",
+              "version": "record actual version",
+              "display": "Bottom tabs"
+            },
+            "conditions": {
+              "build_id": "B-PHONE-GUARD",
+              "browser": "Safari",
+              "device": "iPhone",
+              "state": "Bottom tabs",
+              "account_data": "isolated synthetic test account",
+              "setup": "Confirm test-only backend and record all build/setup substitutions; local harness aliases are not assumed to run on the phone",
+              "steps": [
+                "Confirm a non-production phone build containing F-01, F-02 and F-03 matches source-identity.json and record all actual test-backend/build/setup substitutions. Confirm the same test-only source/build/backend; record actual device/OS/version/width and Bottom tab setting independently.",
+                "Enter a near-2000-character optional reflection; test first/last field and Save with keyboard open/closed, toolbar expanded/collapsed, portrait and short landscape.",
+                "Repeat with enlarged text and the narrowest supported configuration available, recording actual CSS width. Verify visible focus, note scrolling, pinch zoom, and notch/home-indicator clearance. Record each state separately.",
+                "Check F-02 guard explicitly: repeat native Mood 4 / Energy 3 activation three times in independent test states; compare each selection before saving. Move between the main landmark and actual fields/radio labels while scrolled. Main focus should not reset reading scroll; controls must still clear fixed chrome with keyboard open/closed, expanded/collapsed browser bars, portrait/short landscape and enlarged text. Record each state separately."
+              ],
+              "timing": "record actual timing, connection and every tested state",
+              "substitutions": "unknown until independently confirmed"
+            },
+            "depends_on": [],
+            "substitutions": {
+              "build": {
+                "status": "unknown",
+                "items": [],
+                "unknown_boundaries": [
+                  "test backend routing",
+                  "production bootstrap",
+                  "member APIs"
+                ],
+                "evidence": [],
+                "reason": "No phone-accessible test build/backend has been provisioned or inspected; confirm build and all wiring before a human writes test data"
+              },
+              "setup": {
+                "status": "unknown",
+                "items": [],
+                "unknown_boundaries": [
+                  "test account/backend routing",
+                  "device settings"
+                ],
+                "evidence": [],
+                "reason": "Tester must confirm the test account, endpoint routing, display/browser settings and any fault controls"
+              },
+              "additional": {
+                "status": "unknown",
+                "items": [],
+                "unknown_boundaries": [
+                  "per-device additions"
+                ],
+                "evidence": [],
+                "reason": "Record any actual on-device interception or fault injection; no local-only stub is inherited"
+              }
+            },
+            "covers": [],
+            "setup": "Test-only build and synthetic account. Confirm source/build and setup separately; stop before writing if test routing is not established.",
+            "steps": [
+              "Confirm a non-production phone build containing F-01, F-02 and F-03 matches source-identity.json and record all actual test-backend/build/setup substitutions. Confirm the same test-only source/build/backend; record actual device/OS/version/width and Bottom tab setting independently.",
+              "Enter a near-2000-character optional reflection; test first/last field and Save with keyboard open/closed, toolbar expanded/collapsed, portrait and short landscape.",
+              "Repeat with enlarged text and the narrowest supported configuration available, recording actual CSS width. Verify visible focus, note scrolling, pinch zoom, and notch/home-indicator clearance. Record each state separately.",
+              "Check F-02 guard explicitly: repeat native Mood 4 / Energy 3 activation three times in independent test states; compare each selection before saving. Move between the main landmark and actual fields/radio labels while scrolled. Main focus should not reset reading scroll; controls must still clear fixed chrome with keyboard open/closed, expanded/collapsed browser bars, portrait/short landscape and enlarged text. Record each state separately."
+            ],
+            "replaces_check_id": "C-LD02",
+            "related_finding_ids": [
+              "F-02"
+            ]
+          },
+          "C-GD03": {
+            "id": "C-GD03",
+            "module": 3,
+            "required": true,
+            "scenario": "Check Top-tab chrome, keyboard and orientation transitions",
+            "expected": "Complete each stated step using test data; controls remain visible/operable, choices and notes persist truthfully, recovery/status and focus are usable. Report each actual state and any failure; for performance return measured traces without assumed values.",
+            "actual": "",
+            "evidence": [],
+            "reason": "Physical-device verification explicitly unrun; current phone build/backend is unprovisioned.",
+            "status": "not_run",
+            "environment": "physical_device",
+            "driver": "person",
+            "evidence_type": "physical_device",
+            "level": "unestablished",
+            "behavior": "Check Top-tab chrome, keyboard and orientation transitions",
+            "capability_id": "CAP-HUMAN",
+            "build_id": "B-PHONE-GUARD",
+            "configuration": {
+              "browser": "Safari",
+              "device": "iPhone",
+              "os": "record actual version",
+              "version": "record actual version",
+              "display": "Top tabs"
+            },
+            "conditions": {
+              "build_id": "B-PHONE-GUARD",
+              "browser": "Safari",
+              "device": "iPhone",
+              "state": "Top tabs",
+              "account_data": "isolated synthetic test account",
+              "setup": "Confirm test-only backend and record all build/setup substitutions; local harness aliases are not assumed to run on the phone",
+              "steps": [
+                "Confirm a non-production phone build containing F-01, F-02 and F-03 matches source-identity.json and record all actual test-backend/build/setup substitutions. Confirm the test-only build/backend and record device/OS/version/width with Top tabs selected.",
+                "Repeat note focus, keyboard open/close, toolbar expansion/collapse, long-note scrolling, portrait/landscape, and 200% text enlargement.",
+                "Verify note, save and navigation remain reachable and focus is visible. Record a result per state rather than treating portrait as a landscape pass.",
+                "Check F-02 guard explicitly: repeat native Mood 4 / Energy 3 activation three times in independent test states; compare each selection before saving. Move between the main landmark and actual fields/radio labels while scrolled. Main focus should not reset reading scroll; controls must still clear fixed chrome with keyboard open/closed, expanded/collapsed browser bars, portrait/short landscape and enlarged text. Record each state separately."
+              ],
+              "timing": "record actual timing, connection and every tested state",
+              "substitutions": "unknown until independently confirmed"
+            },
+            "depends_on": [],
+            "substitutions": {
+              "build": {
+                "status": "unknown",
+                "items": [],
+                "unknown_boundaries": [
+                  "test backend routing",
+                  "production bootstrap",
+                  "member APIs"
+                ],
+                "evidence": [],
+                "reason": "No phone-accessible test build/backend has been provisioned or inspected; confirm build and all wiring before a human writes test data"
+              },
+              "setup": {
+                "status": "unknown",
+                "items": [],
+                "unknown_boundaries": [
+                  "test account/backend routing",
+                  "device settings"
+                ],
+                "evidence": [],
+                "reason": "Tester must confirm the test account, endpoint routing, display/browser settings and any fault controls"
+              },
+              "additional": {
+                "status": "unknown",
+                "items": [],
+                "unknown_boundaries": [
+                  "per-device additions"
+                ],
+                "evidence": [],
+                "reason": "Record any actual on-device interception or fault injection; no local-only stub is inherited"
+              }
+            },
+            "covers": [],
+            "setup": "Test-only build and synthetic account. Confirm source/build and setup separately; stop before writing if test routing is not established.",
+            "steps": [
+              "Confirm a non-production phone build containing F-01, F-02 and F-03 matches source-identity.json and record all actual test-backend/build/setup substitutions. Confirm the test-only build/backend and record device/OS/version/width with Top tabs selected.",
+              "Repeat note focus, keyboard open/close, toolbar expansion/collapse, long-note scrolling, portrait/landscape, and 200% text enlargement.",
+              "Verify note, save and navigation remain reachable and focus is visible. Record a result per state rather than treating portrait as a landscape pass.",
+              "Check F-02 guard explicitly: repeat native Mood 4 / Energy 3 activation three times in independent test states; compare each selection before saving. Move between the main landmark and actual fields/radio labels while scrolled. Main focus should not reset reading scroll; controls must still clear fixed chrome with keyboard open/closed, expanded/collapsed browser bars, portrait/short landscape and enlarged text. Record each state separately."
+            ],
+            "replaces_check_id": "C-LD03",
+            "related_finding_ids": [
+              "F-02"
+            ]
+          },
+          "C-GD04": {
+            "id": "C-GD04",
+            "module": 3,
+            "required": true,
+            "scenario": "Exercise real Android keyboard, gesture bar and Back/Forward",
+            "expected": "Complete each stated step using test data; controls remain visible/operable, choices and notes persist truthfully, recovery/status and focus are usable. Report each actual state and any failure; for performance return measured traces without assumed values.",
+            "actual": "",
+            "evidence": [],
+            "reason": "Physical-device verification explicitly unrun; current phone build/backend is unprovisioned.",
+            "status": "not_run",
+            "environment": "physical_device",
+            "driver": "person",
+            "evidence_type": "physical_device",
+            "level": "unestablished",
+            "behavior": "Exercise real Android keyboard, gesture bar and Back/Forward",
+            "capability_id": "CAP-HUMAN",
+            "build_id": "B-PHONE-GUARD",
+            "configuration": {
+              "browser": "Chrome",
+              "device": "Android phone",
+              "os": "record actual version",
+              "version": "record actual version",
+              "display": "regular tabs / gesture navigation"
+            },
+            "conditions": {
+              "build_id": "B-PHONE-GUARD",
+              "browser": "Chrome",
+              "device": "Android phone",
+              "state": "regular tabs / gesture navigation",
+              "account_data": "isolated synthetic test account",
+              "setup": "Confirm test-only backend and record all build/setup substitutions; local harness aliases are not assumed to run on the phone",
+              "steps": [
+                "Confirm a non-production phone build containing F-01, F-02 and F-03 matches source-identity.json and record all actual test-backend/build/setup substitutions. Confirm the non-production source/build/backend; record phone, Android and Chrome versions, CSS width, keyboard and gesture-navigation mode.",
+                "Read Today; select both bands; type a Unicode note. Check keyboard/submit visibility in portrait and landscape with chrome expanded/collapsed and enlarged text; record grip/missed-tap observations.",
+                "Open the menu and press Android system Back, then use Forward if exposed; distinguish overlay dismissal from leaving Today. Verify focus and draft state. Test the long note at its scroll boundaries and pinch zoom starting on the note.",
+                "Save only against the confirmed test backend, reopen Today, and compare both bands and note with the server-returned test record.",
+                "Check F-02 guard explicitly: repeat native Mood 4 / Energy 3 activation three times in independent test states; compare each selection before saving. Move between the main landmark and actual fields/radio labels while scrolled. Main focus should not reset reading scroll; controls must still clear fixed chrome with keyboard open/closed, expanded/collapsed browser bars, portrait/short landscape and enlarged text. Record each state separately."
+              ],
+              "timing": "record actual timing, connection and every tested state",
+              "substitutions": "unknown until independently confirmed"
+            },
+            "depends_on": [
+              "member APIs"
+            ],
+            "substitutions": {
+              "build": {
+                "status": "unknown",
+                "items": [],
+                "unknown_boundaries": [
+                  "test backend routing",
+                  "production bootstrap",
+                  "member APIs"
+                ],
+                "evidence": [],
+                "reason": "No phone-accessible test build/backend has been provisioned or inspected; confirm build and all wiring before a human writes test data"
+              },
+              "setup": {
+                "status": "unknown",
+                "items": [],
+                "unknown_boundaries": [
+                  "test account/backend routing",
+                  "device settings"
+                ],
+                "evidence": [],
+                "reason": "Tester must confirm the test account, endpoint routing, display/browser settings and any fault controls"
+              },
+              "additional": {
+                "status": "unknown",
+                "items": [],
+                "unknown_boundaries": [
+                  "per-device additions"
+                ],
+                "evidence": [],
+                "reason": "Record any actual on-device interception or fault injection; no local-only stub is inherited"
+              }
+            },
+            "covers": [],
+            "setup": "Test-only build and synthetic account. Confirm source/build and setup separately; stop before writing if test routing is not established.",
+            "steps": [
+              "Confirm a non-production phone build containing F-01, F-02 and F-03 matches source-identity.json and record all actual test-backend/build/setup substitutions. Confirm the non-production source/build/backend; record phone, Android and Chrome versions, CSS width, keyboard and gesture-navigation mode.",
+              "Read Today; select both bands; type a Unicode note. Check keyboard/submit visibility in portrait and landscape with chrome expanded/collapsed and enlarged text; record grip/missed-tap observations.",
+              "Open the menu and press Android system Back, then use Forward if exposed; distinguish overlay dismissal from leaving Today. Verify focus and draft state. Test the long note at its scroll boundaries and pinch zoom starting on the note.",
+              "Save only against the confirmed test backend, reopen Today, and compare both bands and note with the server-returned test record.",
+              "Check F-02 guard explicitly: repeat native Mood 4 / Energy 3 activation three times in independent test states; compare each selection before saving. Move between the main landmark and actual fields/radio labels while scrolled. Main focus should not reset reading scroll; controls must still clear fixed chrome with keyboard open/closed, expanded/collapsed browser bars, portrait/short landscape and enlarged text. Record each state separately."
+            ],
+            "replaces_check_id": "C-LD04",
+            "related_finding_ids": [
+              "F-01",
+              "F-02",
+              "F-03"
+            ]
+          },
+          "C-GD05": {
+            "id": "C-GD05",
+            "module": 1,
+            "required": true,
+            "scenario": "Complete the reader/check-in journey with VoiceOver",
+            "expected": "Complete each stated step using test data; controls remain visible/operable, choices and notes persist truthfully, recovery/status and focus are usable. Report each actual state and any failure; for performance return measured traces without assumed values.",
+            "actual": "",
+            "evidence": [],
+            "reason": "Physical-device verification explicitly unrun; current phone build/backend is unprovisioned.",
+            "status": "not_run",
+            "environment": "physical_device",
+            "driver": "person",
+            "evidence_type": "physical_device",
+            "level": "unestablished",
+            "behavior": "Complete the reader/check-in journey with VoiceOver",
+            "capability_id": "CAP-HUMAN",
+            "build_id": "B-PHONE-GUARD",
+            "configuration": {
+              "browser": "Safari + VoiceOver",
+              "device": "iPhone",
+              "os": "record actual version",
+              "version": "record actual version",
+              "display": "Compact tabs / VoiceOver enabled"
+            },
+            "conditions": {
+              "build_id": "B-PHONE-GUARD",
+              "browser": "Safari + VoiceOver",
+              "device": "iPhone",
+              "state": "Compact tabs / VoiceOver enabled",
+              "account_data": "isolated synthetic test account",
+              "setup": "Confirm test-only backend and record all build/setup substitutions; local harness aliases are not assumed to run on the phone",
+              "steps": [
+                "Confirm a non-production phone build containing F-01, F-02 and F-03 matches source-identity.json and record all actual test-backend/build/setup substitutions. Confirm test build/backend and record device/OS/Safari/VoiceOver settings and actual CSS width.",
+                "Read the headline and prose, navigate to Check-in, hear Mood/Energy names/options/selected states, enter a note, and save against the test backend.",
+                "Confirm pending/saved or error announcements are understandable and not duplicated; use Sources, open/close menu, navigate Journal and return. Record destination focus/order, including F-03."
+              ],
+              "timing": "record actual timing, connection and every tested state",
+              "substitutions": "unknown until independently confirmed"
+            },
+            "depends_on": [
+              "member APIs"
+            ],
+            "substitutions": {
+              "build": {
+                "status": "unknown",
+                "items": [],
+                "unknown_boundaries": [
+                  "test backend routing",
+                  "production bootstrap",
+                  "member APIs"
+                ],
+                "evidence": [],
+                "reason": "No phone-accessible test build/backend has been provisioned or inspected; confirm build and all wiring before a human writes test data"
+              },
+              "setup": {
+                "status": "unknown",
+                "items": [],
+                "unknown_boundaries": [
+                  "test account/backend routing",
+                  "device settings"
+                ],
+                "evidence": [],
+                "reason": "Tester must confirm the test account, endpoint routing, display/browser settings and any fault controls"
+              },
+              "additional": {
+                "status": "unknown",
+                "items": [],
+                "unknown_boundaries": [
+                  "per-device additions"
+                ],
+                "evidence": [],
+                "reason": "Record any actual on-device interception or fault injection; no local-only stub is inherited"
+              }
+            },
+            "covers": [],
+            "setup": "Test-only build and synthetic account. Confirm source/build and setup separately; stop before writing if test routing is not established.",
+            "steps": [
+              "Confirm a non-production phone build containing F-01, F-02 and F-03 matches source-identity.json and record all actual test-backend/build/setup substitutions. Confirm test build/backend and record device/OS/Safari/VoiceOver settings and actual CSS width.",
+              "Read the headline and prose, navigate to Check-in, hear Mood/Energy names/options/selected states, enter a note, and save against the test backend.",
+              "Confirm pending/saved or error announcements are understandable and not duplicated; use Sources, open/close menu, navigate Journal and return. Record destination focus/order, including F-03."
+            ],
+            "related_finding_ids": [
+              "F-03"
+            ],
+            "replaces_check_id": "C-LD05"
+          },
+          "C-GD06": {
+            "id": "C-GD06",
+            "module": 1,
+            "required": true,
+            "scenario": "Complete the reader/check-in journey with TalkBack",
+            "expected": "Complete each stated step using test data; controls remain visible/operable, choices and notes persist truthfully, recovery/status and focus are usable. Report each actual state and any failure; for performance return measured traces without assumed values.",
+            "actual": "",
+            "evidence": [],
+            "reason": "Physical-device verification explicitly unrun; current phone build/backend is unprovisioned.",
+            "status": "not_run",
+            "environment": "physical_device",
+            "driver": "person",
+            "evidence_type": "physical_device",
+            "level": "unestablished",
+            "behavior": "Complete the reader/check-in journey with TalkBack",
+            "capability_id": "CAP-HUMAN",
+            "build_id": "B-PHONE-GUARD",
+            "configuration": {
+              "browser": "Chrome + TalkBack",
+              "device": "Android phone",
+              "os": "record actual version",
+              "version": "record actual version",
+              "display": "regular tabs / TalkBack enabled"
+            },
+            "conditions": {
+              "build_id": "B-PHONE-GUARD",
+              "browser": "Chrome + TalkBack",
+              "device": "Android phone",
+              "state": "regular tabs / TalkBack enabled",
+              "account_data": "isolated synthetic test account",
+              "setup": "Confirm test-only backend and record all build/setup substitutions; local harness aliases are not assumed to run on the phone",
+              "steps": [
+                "Confirm a non-production phone build containing F-01, F-02 and F-03 matches source-identity.json and record all actual test-backend/build/setup substitutions. Confirm test build/backend and record phone/OS/Chrome/TalkBack settings and actual CSS width.",
+                "Read Today and reach Check-in; hear optional field names, band descriptions and selection states; type and save a test note.",
+                "Inspect pending/saved/error announcements, Sources disclosure, menu dismissal, Android Back and route focus/order. Record failures separately from visual layout."
+              ],
+              "timing": "record actual timing, connection and every tested state",
+              "substitutions": "unknown until independently confirmed"
+            },
+            "depends_on": [
+              "member APIs"
+            ],
+            "substitutions": {
+              "build": {
+                "status": "unknown",
+                "items": [],
+                "unknown_boundaries": [
+                  "test backend routing",
+                  "production bootstrap",
+                  "member APIs"
+                ],
+                "evidence": [],
+                "reason": "No phone-accessible test build/backend has been provisioned or inspected; confirm build and all wiring before a human writes test data"
+              },
+              "setup": {
+                "status": "unknown",
+                "items": [],
+                "unknown_boundaries": [
+                  "test account/backend routing",
+                  "device settings"
+                ],
+                "evidence": [],
+                "reason": "Tester must confirm the test account, endpoint routing, display/browser settings and any fault controls"
+              },
+              "additional": {
+                "status": "unknown",
+                "items": [],
+                "unknown_boundaries": [
+                  "per-device additions"
+                ],
+                "evidence": [],
+                "reason": "Record any actual on-device interception or fault injection; no local-only stub is inherited"
+              }
+            },
+            "covers": [],
+            "setup": "Test-only build and synthetic account. Confirm source/build and setup separately; stop before writing if test routing is not established.",
+            "steps": [
+              "Confirm a non-production phone build containing F-01, F-02 and F-03 matches source-identity.json and record all actual test-backend/build/setup substitutions. Confirm test build/backend and record phone/OS/Chrome/TalkBack settings and actual CSS width.",
+              "Read Today and reach Check-in; hear optional field names, band descriptions and selection states; type and save a test note.",
+              "Inspect pending/saved/error announcements, Sources disclosure, menu dismissal, Android Back and route focus/order. Record failures separately from visual layout."
+            ],
+            "related_finding_ids": [
+              "F-03"
+            ],
+            "replaces_check_id": "C-LD06"
+          },
+          "C-GD07": {
+            "id": "C-GD07",
+            "module": 7,
+            "required": true,
+            "scenario": "Test real browser interruption and draft recovery",
+            "expected": "Complete each stated step using test data; controls remain visible/operable, choices and notes persist truthfully, recovery/status and focus are usable. Report each actual state and any failure; for performance return measured traces without assumed values.",
+            "actual": "",
+            "evidence": [],
+            "reason": "Physical-device verification explicitly unrun; current phone build/backend is unprovisioned.",
+            "status": "not_run",
+            "environment": "physical_device",
+            "driver": "person",
+            "evidence_type": "physical_device",
+            "level": "unestablished",
+            "behavior": "Test real browser interruption and draft recovery",
+            "capability_id": "CAP-HUMAN",
+            "build_id": "B-PHONE-GUARD",
+            "configuration": {
+              "browser": "Safari",
+              "device": "iPhone",
+              "os": "record actual version",
+              "version": "record actual version",
+              "display": "Compact tabs / browser interruption"
+            },
+            "conditions": {
+              "build_id": "B-PHONE-GUARD",
+              "browser": "Safari",
+              "device": "iPhone",
+              "state": "Compact tabs / browser interruption",
+              "account_data": "isolated synthetic test account",
+              "setup": "Confirm test-only backend and record all build/setup substitutions; local harness aliases are not assumed to run on the phone",
+              "steps": [
+                "Confirm a non-production phone build containing F-01, F-02 and F-03 matches source-identity.json and record all actual test-backend/build/setup substitutions. Confirm test build/backend. Enter a distinctive unsaved note and wait until the UI reports the device draft is stored.",
+                "Background Safari, force-close the browser through the app switcher, reopen the same test URL and account, then inspect and resume the draft. Record the actual interruption; do not call an ordinary reload an OS tab discard.",
+                "Compare the full note and bands, save once against the test backend, and revisit Today. Confirm the recovered draft did not silently submit or overwrite a later saved version."
+              ],
+              "timing": "record actual timing, connection and every tested state",
+              "substitutions": "unknown until independently confirmed"
+            },
+            "depends_on": [
+              "member APIs"
+            ],
+            "substitutions": {
+              "build": {
+                "status": "unknown",
+                "items": [],
+                "unknown_boundaries": [
+                  "test backend routing",
+                  "production bootstrap",
+                  "member APIs"
+                ],
+                "evidence": [],
+                "reason": "No phone-accessible test build/backend has been provisioned or inspected; confirm build and all wiring before a human writes test data"
+              },
+              "setup": {
+                "status": "unknown",
+                "items": [],
+                "unknown_boundaries": [
+                  "test account/backend routing",
+                  "device settings"
+                ],
+                "evidence": [],
+                "reason": "Tester must confirm the test account, endpoint routing, display/browser settings and any fault controls"
+              },
+              "additional": {
+                "status": "unknown",
+                "items": [],
+                "unknown_boundaries": [
+                  "per-device additions"
+                ],
+                "evidence": [],
+                "reason": "Record any actual on-device interception or fault injection; no local-only stub is inherited"
+              }
+            },
+            "covers": [],
+            "setup": "Test-only build and synthetic account. Confirm source/build and setup separately; stop before writing if test routing is not established.",
+            "steps": [
+              "Confirm a non-production phone build containing F-01, F-02 and F-03 matches source-identity.json and record all actual test-backend/build/setup substitutions. Confirm test build/backend. Enter a distinctive unsaved note and wait until the UI reports the device draft is stored.",
+              "Background Safari, force-close the browser through the app switcher, reopen the same test URL and account, then inspect and resume the draft. Record the actual interruption; do not call an ordinary reload an OS tab discard.",
+              "Compare the full note and bands, save once against the test backend, and revisit Today. Confirm the recovered draft did not silently submit or overwrite a later saved version."
+            ],
+            "replaces_check_id": "C-LD07",
+            "related_finding_ids": []
+          },
+          "C-GD08": {
+            "id": "C-GD08",
+            "module": 7,
+            "required": true,
+            "scenario": "Test Android interruption and draft recovery",
+            "expected": "Complete each stated step using test data; controls remain visible/operable, choices and notes persist truthfully, recovery/status and focus are usable. Report each actual state and any failure; for performance return measured traces without assumed values.",
+            "actual": "",
+            "evidence": [],
+            "reason": "Physical-device verification explicitly unrun; current phone build/backend is unprovisioned.",
+            "status": "not_run",
+            "environment": "physical_device",
+            "driver": "person",
+            "evidence_type": "physical_device",
+            "level": "unestablished",
+            "behavior": "Test Android interruption and draft recovery",
+            "capability_id": "CAP-HUMAN",
+            "build_id": "B-PHONE-GUARD",
+            "configuration": {
+              "browser": "Chrome",
+              "device": "Android phone",
+              "os": "record actual version",
+              "version": "record actual version",
+              "display": "regular tabs / browser interruption"
+            },
+            "conditions": {
+              "build_id": "B-PHONE-GUARD",
+              "browser": "Chrome",
+              "device": "Android phone",
+              "state": "regular tabs / browser interruption",
+              "account_data": "isolated synthetic test account",
+              "setup": "Confirm test-only backend and record all build/setup substitutions; local harness aliases are not assumed to run on the phone",
+              "steps": [
+                "Confirm a non-production phone build containing F-01, F-02 and F-03 matches source-identity.json and record all actual test-backend/build/setup substitutions. Confirm test build/backend; enter a distinctive unsaved note and wait for the stored-device-draft message.",
+                "Background and force-close Chrome through the app switcher; reopen the test URL/account and resume the draft. If an actual system tab discard is observed, record that event independently.",
+                "Compare all text/bands, save once to the test backend and revisit. Record any recovery candidate, conflict or unavailable-storage message accurately."
+              ],
+              "timing": "record actual timing, connection and every tested state",
+              "substitutions": "unknown until independently confirmed"
+            },
+            "depends_on": [
+              "member APIs"
+            ],
+            "substitutions": {
+              "build": {
+                "status": "unknown",
+                "items": [],
+                "unknown_boundaries": [
+                  "test backend routing",
+                  "production bootstrap",
+                  "member APIs"
+                ],
+                "evidence": [],
+                "reason": "No phone-accessible test build/backend has been provisioned or inspected; confirm build and all wiring before a human writes test data"
+              },
+              "setup": {
+                "status": "unknown",
+                "items": [],
+                "unknown_boundaries": [
+                  "test account/backend routing",
+                  "device settings"
+                ],
+                "evidence": [],
+                "reason": "Tester must confirm the test account, endpoint routing, display/browser settings and any fault controls"
+              },
+              "additional": {
+                "status": "unknown",
+                "items": [],
+                "unknown_boundaries": [
+                  "per-device additions"
+                ],
+                "evidence": [],
+                "reason": "Record any actual on-device interception or fault injection; no local-only stub is inherited"
+              }
+            },
+            "covers": [],
+            "setup": "Test-only build and synthetic account. Confirm source/build and setup separately; stop before writing if test routing is not established.",
+            "steps": [
+              "Confirm a non-production phone build containing F-01, F-02 and F-03 matches source-identity.json and record all actual test-backend/build/setup substitutions. Confirm test build/backend; enter a distinctive unsaved note and wait for the stored-device-draft message.",
+              "Background and force-close Chrome through the app switcher; reopen the test URL/account and resume the draft. If an actual system tab discard is observed, record that event independently.",
+              "Compare all text/bands, save once to the test backend and revisit. Record any recovery candidate, conflict or unavailable-storage message accurately."
+            ],
+            "replaces_check_id": "C-LD08",
+            "related_finding_ids": []
+          },
+          "C-GD09": {
+            "id": "C-GD09",
+            "module": 7,
+            "required": true,
+            "scenario": "Measure the optimized reading on real Android hardware",
+            "expected": "Complete each stated step using test data; controls remain visible/operable, choices and notes persist truthfully, recovery/status and focus are usable. Report each actual state and any failure; for performance return measured traces without assumed values.",
+            "actual": "",
+            "evidence": [],
+            "reason": "Physical-device verification explicitly unrun; current phone build/backend is unprovisioned.",
+            "status": "not_run",
+            "environment": "physical_device",
+            "driver": "person",
+            "evidence_type": "physical_device",
+            "level": "unestablished",
+            "behavior": "Measure the optimized reading on real Android hardware",
+            "capability_id": "CAP-HUMAN",
+            "build_id": "B-PHONE-GUARD",
+            "configuration": {
+              "browser": "Chrome",
+              "device": "Android phone",
+              "os": "record actual version",
+              "version": "record actual version",
+              "display": "regular tabs / remote DevTools"
+            },
+            "conditions": {
+              "build_id": "B-PHONE-GUARD",
+              "browser": "Chrome",
+              "device": "Android phone",
+              "state": "regular tabs / remote DevTools",
+              "account_data": "isolated synthetic test account",
+              "setup": "Confirm test-only backend and record all build/setup substitutions; local harness aliases are not assumed to run on the phone",
+              "steps": [
+                "Confirm a non-production phone build containing F-01, F-02 and F-03 matches source-identity.json and record all actual test-backend/build/setup substitutions. Use an optimized non-production build with confirmed test-only API routing; record build, phone, Android/Chrome, actual network conditions and throttling. Do not measure the local Vite development fixture as production performance.",
+                "Connect Chrome remote DevTools Performance panel; record a navigation and the full read/select/type/save interaction. Export the trace with synthetic data only.",
+                "Report measured LCP, CLS, long tasks, interaction timings and request timing with units/tool versions. Distinguish lab measurements from field percentiles; do not label TBT or a navigation-only trace as INP."
+              ],
+              "timing": "record actual timing, connection and every tested state",
+              "substitutions": "unknown until independently confirmed"
+            },
+            "depends_on": [
+              "member APIs"
+            ],
+            "substitutions": {
+              "build": {
+                "status": "unknown",
+                "items": [],
+                "unknown_boundaries": [
+                  "test backend routing",
+                  "production bootstrap",
+                  "member APIs"
+                ],
+                "evidence": [],
+                "reason": "No phone-accessible test build/backend has been provisioned or inspected; confirm build and all wiring before a human writes test data"
+              },
+              "setup": {
+                "status": "unknown",
+                "items": [],
+                "unknown_boundaries": [
+                  "test account/backend routing",
+                  "device settings"
+                ],
+                "evidence": [],
+                "reason": "Tester must confirm the test account, endpoint routing, display/browser settings and any fault controls"
+              },
+              "additional": {
+                "status": "unknown",
+                "items": [],
+                "unknown_boundaries": [
+                  "per-device additions"
+                ],
+                "evidence": [],
+                "reason": "Record any actual on-device interception or fault injection; no local-only stub is inherited"
+              }
+            },
+            "covers": [],
+            "setup": "Test-only build and synthetic account. Confirm source/build and setup separately; stop before writing if test routing is not established.",
+            "steps": [
+              "Confirm a non-production phone build containing F-01, F-02 and F-03 matches source-identity.json and record all actual test-backend/build/setup substitutions. Use an optimized non-production build with confirmed test-only API routing; record build, phone, Android/Chrome, actual network conditions and throttling. Do not measure the local Vite development fixture as production performance.",
+              "Connect Chrome remote DevTools Performance panel; record a navigation and the full read/select/type/save interaction. Export the trace with synthetic data only.",
+              "Report measured LCP, CLS, long tasks, interaction timings and request timing with units/tool versions. Distinguish lab measurements from field percentiles; do not label TBT or a navigation-only trace as INP."
+            ],
+            "replaces_check_id": "C-LD09",
+            "related_finding_ids": []
+          },
+          "C-GD10": {
+            "id": "C-GD10",
+            "module": 7,
+            "required": true,
+            "scenario": "Repeat original F-02 mouse-label activation using a supported external pointer on iPhone Safari",
+            "expected": "Both intended bands remain selected in every recorded trial, without an extra main-focus scroll reset; actual fields/radio labels still clear fixed chrome and the Unicode note persists only after the confirmed test-backend save. Report every requested state independently.",
+            "actual": "",
+            "evidence": [],
+            "reason": "Physical-device verification explicitly unrun; current phone build/backend is unprovisioned.",
+            "status": "not_run",
+            "environment": "physical_device",
+            "driver": "person",
+            "evidence_type": "physical_device",
+            "level": "unestablished",
+            "behavior": "Repeat original F-02 mouse-label activation using a supported external pointer on iPhone Safari",
+            "capability_id": "CAP-HUMAN",
+            "build_id": "B-PHONE-GUARD",
+            "configuration": {
+              "browser": "Safari",
+              "device": "iPhone with supported external pointer",
+              "os": "record actual version",
+              "version": "record actual version",
+              "display": "Compact tabs; external mouse/pointer; record exact hardware and input mode"
+            },
+            "conditions": {
+              "build_id": "B-PHONE-GUARD",
+              "browser": "Safari",
+              "device": "iPhone with supported external pointer",
+              "state": "Compact tabs; external pointer; original rapid native-anchor mouse-label activation",
+              "account_data": "isolated synthetic test account",
+              "setup": "Confirm test-only backend and record all build/setup substitutions; local harness aliases are not assumed to run on the phone",
+              "steps": [
+                "Confirm a non-production phone build containing F-01/F-02/F-03 matches source-identity.json; independently verify isolated backend/account routing, actual build/setup substitutions and external-pointer support. Record device, OS, Safari, pointer hardware/settings and CSS width.",
+                "With keyboard closed and Safari chrome expanded then collapsed, use the native Check-in anchor and rapidly click Mood 4 then Energy 3 with the external pointer. Run at least six fresh independent test states and record every result and pointer/scroll behavior; do not merge finger-tap outcomes.",
+                "Verify that focus on main does not reset scroll while actual radio labels and fields still reveal. Repeat keyboard open/closed, portrait/short landscape and enlarged text; enter a Unicode note and save once only against the confirmed test backend. Record selection, scroll, focus and persisted values for each state."
+              ],
+              "timing": "record actual timing, connection and every tested state",
+              "substitutions": "unknown until independently confirmed"
+            },
+            "depends_on": [
+              "member APIs"
+            ],
+            "substitutions": {
+              "build": {
+                "status": "unknown",
+                "items": [],
+                "unknown_boundaries": [
+                  "test backend routing",
+                  "production bootstrap",
+                  "member APIs"
+                ],
+                "evidence": [],
+                "reason": "No phone-accessible test build/backend has been provisioned or inspected; confirm build and all wiring before a human writes test data"
+              },
+              "setup": {
+                "status": "unknown",
+                "items": [],
+                "unknown_boundaries": [
+                  "test account/backend routing",
+                  "device settings"
+                ],
+                "evidence": [],
+                "reason": "Tester must confirm the test account, endpoint routing, display/browser settings and any fault controls"
+              },
+              "additional": {
+                "status": "unknown",
+                "items": [],
+                "unknown_boundaries": [
+                  "per-device additions"
+                ],
+                "evidence": [],
+                "reason": "Record any actual on-device interception or fault injection; no local-only stub is inherited"
+              }
+            },
+            "covers": [
+              {
+                "finding_id": "F-02",
+                "scope_id": "webkit-mouse-390"
+              }
+            ],
+            "setup": "Test-only build and synthetic account. Confirm source/build and setup separately; stop before writing if test routing is not established.",
+            "steps": [
+              "Confirm a non-production phone build containing F-01/F-02/F-03 matches source-identity.json; independently verify isolated backend/account routing, actual build/setup substitutions and external-pointer support. Record device, OS, Safari, pointer hardware/settings and CSS width.",
+              "With keyboard closed and Safari chrome expanded then collapsed, use the native Check-in anchor and rapidly click Mood 4 then Energy 3 with the external pointer. Run at least six fresh independent test states and record every result and pointer/scroll behavior; do not merge finger-tap outcomes.",
+              "Verify that focus on main does not reset scroll while actual radio labels and fields still reveal. Repeat keyboard open/closed, portrait/short landscape and enlarged text; enter a Unicode note and save once only against the confirmed test backend. Record selection, scroll, focus and persisted values for each state."
+            ],
+            "replaces_check_id": "C-LD10",
+            "related_finding_ids": [
+              "F-02"
+            ]
+          }
+        },
+        "prior_tooling_limitations": [
+          "The installed helper cannot validate the applied guard physical regression plan against F-02 original proxy-only affected scope. That scope names Linux desktop Playwright WebKit, while the planned checks correctly name actual phone browsers/configurations and an unprovisioned phone build. Native-control regression entries are related coverage, not evidence that the original desktop-mouse condition affected those phones. Source/proxy checks remain separate from required target checks. No original scope, browser/device, build, or achieved verification level was relabelled to obtain helper approval."
+        ],
+        "detail": "Corrected false direct-coverage and required-target associations; preserved original scope/evidence and applied history. All device entries remain unrun. No applied_before_run flag, fabricated application basis, reclassification or source edit was used to bypass the original gate."
+      }
+    ]
+  },
+  {
+    "path": "/limitations",
+    "before": [
+      "Ceiling proxy: Linux Chromium 149.0.7827.55 and desktop Playwright WebKit 26.6; no physical-device, OS keyboard/chrome, VoiceOver/TalkBack or simulator verification.",
+      "F-02 is implemented with passing local checks; all physical checks are not_run and no finding is promoted to target Verified.",
+      "Member-service and client-bootstrap substitutions remain; six save/reload checks establish synthetic fixture behavior only, not real backend persistence.",
+      "Original failures and prior-build passes remain historical. Only new checks ran for the guard; broader retained audit coverage was not rerun wholesale.",
+      "Existing F-01/F-03 source and unrelated settings/editorial work are preserved. No commit, push, deployment, dependency or plugin update.",
+      "The final formatter changed only whitespace after selection trials; shell-focus and route-focus checks were rerun on final bytes, with equivalence recorded in source-identity.json.",
+      "No production build was rerun for this focused guard change."
+    ],
+    "after": [
+      "Ceiling proxy: Linux Chromium 149.0.7827.55 and desktop Playwright WebKit 26.6; no physical-device, OS keyboard/chrome, VoiceOver/TalkBack or simulator verification.",
+      "F-02 is implemented with passing local checks; all physical checks are not_run and no finding is promoted to target Verified.",
+      "Member-service and client-bootstrap substitutions remain; six save/reload checks establish synthetic fixture behavior only, not real backend persistence.",
+      "Original failures and prior-build passes remain historical. Only new checks ran for the guard; broader retained audit coverage was not rerun wholesale.",
+      "Existing F-01/F-03 source and unrelated settings/editorial work are preserved. No commit, push, deployment, dependency or plugin update.",
+      "The final formatter changed only whitespace after selection trials; shell-focus and route-focus checks were rerun on final bytes, with equivalence recorded in source-identity.json.",
+      "No production build was rerun for this focused guard change.",
+      "Record correction does not retroactively validate the original application plan. Physical-device checks are still unrun; planned target levels do not raise the achieved proxy ceiling."
+    ]
+  },
+  {
+    "path": "/next_steps",
+    "before": [
+      "Physical-device verification remains explicitly unrun. If later pursued, use the ten-entry current-build script with independently confirmed test backend/build/setup."
+    ],
+    "after": [
+      "Retain the original-scope planning gap explicitly. The existing phone entries can support future related guard regression checks only; they cannot close the preserved desktop-emulation scope under the current helper.",
+      "Keep all physical-device checks unrun until separately executed with actual device/build/setup evidence; no such execution occurred in this records-only review."
+    ]
+  },
+  {
+    "path": "/record_review",
+    "added": {
+      "at": "2026-10-21T00:20:40.265196+00:00",
+      "operation": "records_only",
+      "source_ledger": "/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-ux-f02-guard-20261021/20261021T000416Z/run.json",
+      "source_sha256": "d6fcd8f295b03af4be19f6a2515d8dd5f505196453df08d25c56af1a324b21b9",
+      "new_app_or_plugin_changes": false,
+      "new_runtime_or_device_checks": false,
+      "outcome": "records corrected; original application planning remains invalid/incomplete",
+      "preserved_fields": [
+        "scope",
+        "all finding affects and evidence",
+        "all executed check records",
+        "all check statuses, actual results and evidence",
+        "original mode, operation, applied fix facts, device policy and budget"
+      ],
+      "prior_required_check_ids": [
+        "C-GD01",
+        "C-GD02",
+        "C-GD03",
+        "C-GD04",
+        "C-GD10"
+      ],
+      "prior_device_script": [
+        "C-GD01",
+        "C-GD02",
+        "C-GD03",
+        "C-GD04",
+        "C-GD05",
+        "C-GD06",
+        "C-GD07",
+        "C-GD08",
+        "C-GD09",
+        "C-GD10"
+      ],
+      "diagnosis": "/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-ux-ledger-review-20261021/20261021T001940Z/diagnosis.json"
+    }
+  },
+  {
+    "path": "/record_revision",
+    "added": 2
+  },
+  {
+    "path": "/tooling_limitations",
+    "before": [
+      "The installed helper cannot validate the applied guard physical regression plan against F-02 original proxy-only affected scope. That scope names Linux desktop Playwright WebKit, while the planned checks correctly name actual phone browsers/configurations and an unprovisioned phone build. Native-control regression entries are related coverage, not evidence that the original desktop-mouse condition affected those phones. Source/proxy checks remain separate from required target checks. No original scope, browser/device, build, or achieved verification level was relabelled to obtain helper approval."
+    ],
+    "after": [
+      "Original record error: related phone regressions were listed as exact verification of a desktop-emulation scope; the pointer entry also had an unsupported direct covers link. Those associations are corrected.",
+      "Remaining contract/model gap: the original scope names desktop emulation, which the helper cannot accept as target. The planned phone browser/device, future build, states, steps and setup legitimately differ. Preserving these facts prevents complete original-scope target-plan admission under the installed helper.",
+      "An unrun phone check now has planned level target with achieved_level unestablished, unchanged not_run/empty result/evidence and unavailable or declared capability. This is a plan correction, not an observed device result."
+    ]
+  }
+]

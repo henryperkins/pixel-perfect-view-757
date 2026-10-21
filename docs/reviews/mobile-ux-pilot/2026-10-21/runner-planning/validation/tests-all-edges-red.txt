@@ -1,0 +1,136 @@
+.........................................FFF...........F.F..FF..F..F.........F....................................
+======================================================================
+FAIL: test_mixed_plan_partial_reports_in_either_family_remain_recordable (test_run_state.RunnerTests.test_mixed_plan_partial_reports_in_either_family_remain_recordable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 404, in test_mixed_plan_partial_reports_in_either_family_remain_recordable
+    self.assert_valid(updated)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 103, in assert_valid
+    self.assertEqual(a['errors'], [], a['errors'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['C-01: invalid regression portion status'] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+'C-01: invalid regression portion status'
+
+- ['C-01: invalid regression portion status']
++ [] : ['C-01: invalid regression portion status']
+
+======================================================================
+FAIL: test_mixed_plan_raw_aggregate_pass_cannot_qualify_unreported_portions (test_run_state.RunnerTests.test_mixed_plan_raw_aggregate_pass_cannot_qualify_unreported_portions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 422, in test_mixed_plan_raw_aggregate_pass_cannot_qualify_unreported_portions
+    self.assertFalse(runner.pass_for_scope(s, c, f, f['affects'][1]))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_mixed_plan_scope_only_pass_does_not_invent_regression_pass (test_run_state.RunnerTests.test_mixed_plan_scope_only_pass_does_not_invent_regression_pass)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 396, in test_mixed_plan_scope_only_pass_does_not_invent_regression_pass
+    self.assertEqual(updated['checks'][1]['status'], 'partial')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'pass' != 'partial'
+- pass
++ partial
+
+
+======================================================================
+FAIL: test_proxy_plan_assessment_rejects_malformed_or_empty_explicit_results (test_run_state.RunnerTests.test_proxy_plan_assessment_rejects_malformed_or_empty_explicit_results)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 378, in test_proxy_plan_assessment_rejects_malformed_or_empty_explicit_results
+    self.assertTrue(runner.assess(updated)['errors'])
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_proxy_plan_explicit_empty_results_do_not_inherit_whole_pass (test_run_state.RunnerTests.test_proxy_plan_explicit_empty_results_do_not_inherit_whole_pass)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 413, in test_proxy_plan_explicit_empty_results_do_not_inherit_whole_pass
+    self.assertEqual(updated['checks'][1]['regression_results'][0]['status'], 'not_run')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'pass' != 'not_run'
+- pass
++ not_run
+
+
+======================================================================
+FAIL: test_proxy_plan_mixed_legacy_agent_entry_still_validates_regressions (test_run_state.RunnerTests.test_proxy_plan_mixed_legacy_agent_entry_still_validates_regressions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 359, in test_proxy_plan_mixed_legacy_agent_entry_still_validates_regressions
+    self.assertTrue(runner.assess(s)['errors'])
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_proxy_plan_partial_recorded_failure_is_failed_verification (test_run_state.RunnerTests.test_proxy_plan_partial_recorded_failure_is_failed_verification)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 369, in test_proxy_plan_partial_recorded_failure_is_failed_verification
+    self.assertEqual(runner.assess(updated)['verification'], 'failed')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'incomplete' != 'failed'
+- incomplete
++ failed
+
+
+======================================================================
+FAIL: test_proxy_plan_planned_snapshots_never_override_actual_mismatches (test_run_state.RunnerTests.test_proxy_plan_planned_snapshots_never_override_actual_mismatches)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 449, in test_proxy_plan_planned_snapshots_never_override_actual_mismatches
+    self.assert_valid(s)
+    ~~~~~~~~~~~~~~~~~^^^
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 103, in assert_valid
+    self.assertEqual(a['errors'], [], a['errors'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['F-01/C-01: required device regression mu[103 chars]lan'] != []
+
+First list contains 2 additional elements.
+First extra element 0:
+'F-01/C-01: required device regression must match a runnable target plan'
+
++ []
+- ['F-01/C-01: required device regression must match a runnable target plan',
+-  'F-01/C-01: required device regression must match a runnable target plan'] : ['F-01/C-01: required device regression must match a runnable target plan', 'F-01/C-01: required device regression must match a runnable target plan']
+
+======================================================================
+FAIL: test_proxy_plan_rejects_invalid_planned_regression_snapshots (test_run_state.RunnerTests.test_proxy_plan_rejects_invalid_planned_regression_snapshots)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 464, in test_proxy_plan_rejects_invalid_planned_regression_snapshots
+    self.assertTrue(runner.assess(s)['errors'])
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_proxy_plan_shared_states_use_separate_planned_snapshots_and_partial_results (test_run_state.RunnerTests.test_proxy_plan_shared_states_use_separate_planned_snapshots_and_partial_results)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 441, in test_proxy_plan_shared_states_use_separate_planned_snapshots_and_partial_results
+    self.assertEqual(self.assert_valid(s)['applied_device_entries'], ['C-01'])
+                     ~~~~~~~~~~~~~~~~~^^^
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 103, in assert_valid
+    self.assertEqual(a['errors'], [], a['errors'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['F-01/C-01: required device regression mu[103 chars]lan'] != []
+
+First list contains 2 additional elements.
+First extra element 0:
+'F-01/C-01: required device regression must match a runnable target plan'
+
++ []
+- ['F-01/C-01: required device regression must match a runnable target plan',
+-  'F-01/C-01: required device regression must match a runnable target plan'] : ['F-01/C-01: required device regression must match a runnable target plan', 'F-01/C-01: required device regression must match a runnable target plan']
+
+----------------------------------------------------------------------
+Ran 114 tests in 0.804s
+
+FAILED (failures=10)

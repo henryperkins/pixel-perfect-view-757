@@ -1,0 +1,4679 @@
+{
+  "engine": "webkit",
+  "version": "26.6",
+  "sourceState": "before F-01/F-03 changes",
+  "level": "proxy",
+  "instrumentation": "pass-through scroll/focus wrappers log stacks; no source behavior changed; instrumentation timing may affect reproduction",
+  "additionalSubstitutions": {
+    "native": "none beyond standing fixture",
+    "settled-native": "wait for router resolution and two animation frames before selecting",
+    "router-hash": "test-only navigation uses router.navigate instead of native anchor activation",
+    "restoration-disabled": "test-only router option scrollRestoration function returns false; no application code edit"
+  },
+  "results": [
+    {
+      "group": "native",
+      "trial": 1,
+      "pass": false,
+      "checked": [
+        "Energy: 3 of 5, Steady"
+      ],
+      "trace": [
+        {
+          "kind": "scrollTo",
+          "t": 1565,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "args": [
+            {
+              "top": 0,
+              "left": 0
+            }
+          ],
+          "stack": "@web-inspector://bootstrap.js:21:94\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1296:35\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1983,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1985,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1987,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1987,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "onBeforeNavigate",
+          "t": 1991,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "o4jqe",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeLoad",
+          "t": 1997,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "o4jqe",
+          "pathChanged": false
+        },
+        {
+          "kind": "onLoad",
+          "t": 2015,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "o4jqe",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeRouteMount",
+          "t": 2017,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "o4jqe",
+          "pathChanged": false
+        },
+        {
+          "kind": "onResolved",
+          "t": 2026,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "o4jqe",
+          "pathChanged": false
+        },
+        {
+          "kind": "scrollIntoView",
+          "t": 2026,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "today-reflection",
+          "args": [
+            true
+          ],
+          "stack": "@web-inspector://bootstrap.js:24:154\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1300:107\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "onRendered",
+          "t": 2026,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "o4jqe",
+          "pathChanged": false
+        },
+        {
+          "kind": "pointerdown",
+          "t": 2182,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 2184,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "scrollBy",
+          "t": 2185,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "args": [
+            {
+              "top": -809,
+              "behavior": "instant"
+            }
+          ],
+          "stack": "@web-inspector://bootstrap.js:21:94\nrevealFocus@http://127.0.0.1:4208/src/components/pattern/Shell.tsx:121:44\n@http://127.0.0.1:4208/src/components/pattern/Shell.tsx:130:16"
+        },
+        {
+          "kind": "pointerup",
+          "t": 2190,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "One clear conversation can make the next step",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 2190,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "pointerdown",
+          "t": 2283,
+          "y": 882,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "pointerup",
+          "t": 2284,
+          "y": 882,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 2284,
+          "y": 882,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 2285,
+          "y": 882,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 2312,
+          "y": 882,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 2319,
+          "y": 882,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        }
+      ],
+      "y": 882,
+      "router": {
+        "href": "/#today-reflection",
+        "resolved": "/#today-reflection",
+        "isLoading": false
+      }
+    },
+    {
+      "group": "native",
+      "trial": 2,
+      "pass": true,
+      "checked": [
+        "Mood: 4 of 5, Good",
+        "Energy: 3 of 5, Steady"
+      ],
+      "trace": [
+        {
+          "kind": "scrollTo",
+          "t": 1203,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "args": [
+            {
+              "top": 0,
+              "left": 0
+            }
+          ],
+          "stack": "@web-inspector://bootstrap.js:21:94\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1296:35\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1656,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1656,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1665,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1665,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "onBeforeNavigate",
+          "t": 1667,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "e58fd",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeLoad",
+          "t": 1668,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "e58fd",
+          "pathChanged": false
+        },
+        {
+          "kind": "onLoad",
+          "t": 1675,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "e58fd",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeRouteMount",
+          "t": 1675,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "e58fd",
+          "pathChanged": false
+        },
+        {
+          "kind": "onResolved",
+          "t": 1684,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "e58fd",
+          "pathChanged": false
+        },
+        {
+          "kind": "scrollIntoView",
+          "t": 1684,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "today-reflection",
+          "args": [
+            true
+          ],
+          "stack": "@web-inspector://bootstrap.js:24:154\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1300:107\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "onRendered",
+          "t": 1685,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "e58fd",
+          "pathChanged": false
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1760,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1761,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1761,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1761,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1761,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 1784,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 1799,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1980,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1981,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1983,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1983,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1983,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 1989,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 1996,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        }
+      ],
+      "y": 801,
+      "router": {
+        "href": "/#today-reflection",
+        "resolved": "/#today-reflection",
+        "isLoading": false
+      }
+    },
+    {
+      "group": "native",
+      "trial": 3,
+      "pass": true,
+      "checked": [
+        "Mood: 4 of 5, Good",
+        "Energy: 3 of 5, Steady"
+      ],
+      "trace": [
+        {
+          "kind": "scrollTo",
+          "t": 1264,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "args": [
+            {
+              "top": 0,
+              "left": 0
+            }
+          ],
+          "stack": "@web-inspector://bootstrap.js:21:94\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1296:35\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1762,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1762,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1769,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1769,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "onBeforeNavigate",
+          "t": 1776,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "ergw",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeLoad",
+          "t": 1778,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "ergw",
+          "pathChanged": false
+        },
+        {
+          "kind": "onLoad",
+          "t": 1792,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "ergw",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeRouteMount",
+          "t": 1792,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "ergw",
+          "pathChanged": false
+        },
+        {
+          "kind": "onResolved",
+          "t": 1797,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "ergw",
+          "pathChanged": false
+        },
+        {
+          "kind": "scrollIntoView",
+          "t": 1798,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "today-reflection",
+          "args": [
+            true
+          ],
+          "stack": "@web-inspector://bootstrap.js:24:154\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1300:107\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "onRendered",
+          "t": 1798,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "ergw",
+          "pathChanged": false
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1928,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1928,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1935,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1935,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1935,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 1963,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 1984,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "pointerdown",
+          "t": 2291,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 2291,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 2298,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 2298,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 2298,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 2307,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 2312,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        }
+      ],
+      "y": 801,
+      "router": {
+        "href": "/#today-reflection",
+        "resolved": "/#today-reflection",
+        "isLoading": false
+      }
+    },
+    {
+      "group": "native",
+      "trial": 4,
+      "pass": true,
+      "checked": [
+        "Mood: 4 of 5, Good",
+        "Energy: 3 of 5, Steady"
+      ],
+      "trace": [
+        {
+          "kind": "scrollTo",
+          "t": 1398,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "args": [
+            {
+              "top": 0,
+              "left": 0
+            }
+          ],
+          "stack": "@web-inspector://bootstrap.js:21:94\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1296:35\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1960,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1961,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1967,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1967,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "onBeforeNavigate",
+          "t": 1975,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "posl7h",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeLoad",
+          "t": 1975,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "posl7h",
+          "pathChanged": false
+        },
+        {
+          "kind": "onLoad",
+          "t": 1985,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "posl7h",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeRouteMount",
+          "t": 1985,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "posl7h",
+          "pathChanged": false
+        },
+        {
+          "kind": "onResolved",
+          "t": 1993,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "posl7h",
+          "pathChanged": false
+        },
+        {
+          "kind": "scrollIntoView",
+          "t": 1993,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "today-reflection",
+          "args": [
+            true
+          ],
+          "stack": "@web-inspector://bootstrap.js:24:154\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1300:107\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "onRendered",
+          "t": 1993,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "posl7h",
+          "pathChanged": false
+        },
+        {
+          "kind": "pointerdown",
+          "t": 2095,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 2095,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 2097,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 2097,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 2097,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 2118,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 2127,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "pointerdown",
+          "t": 2306,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 2310,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 2311,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 2311,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 2312,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 2321,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 2328,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        }
+      ],
+      "y": 801,
+      "router": {
+        "href": "/#today-reflection",
+        "resolved": "/#today-reflection",
+        "isLoading": false
+      }
+    },
+    {
+      "group": "native",
+      "trial": 5,
+      "pass": true,
+      "checked": [
+        "Mood: 4 of 5, Good",
+        "Energy: 3 of 5, Steady"
+      ],
+      "trace": [
+        {
+          "kind": "scrollTo",
+          "t": 1030,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "args": [
+            {
+              "top": 0,
+              "left": 0
+            }
+          ],
+          "stack": "@web-inspector://bootstrap.js:21:94\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1296:35\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1473,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1474,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1474,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1474,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "onBeforeNavigate",
+          "t": 1479,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "e0zvf",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeLoad",
+          "t": 1479,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "e0zvf",
+          "pathChanged": false
+        },
+        {
+          "kind": "onLoad",
+          "t": 1485,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "e0zvf",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeRouteMount",
+          "t": 1485,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "e0zvf",
+          "pathChanged": false
+        },
+        {
+          "kind": "onResolved",
+          "t": 1487,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "e0zvf",
+          "pathChanged": false
+        },
+        {
+          "kind": "scrollIntoView",
+          "t": 1487,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "today-reflection",
+          "args": [
+            true
+          ],
+          "stack": "@web-inspector://bootstrap.js:24:154\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1300:107\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "onRendered",
+          "t": 1488,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "e0zvf",
+          "pathChanged": false
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1611,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1618,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1622,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1622,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1622,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 1643,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 1649,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1766,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1767,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1767,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1767,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1768,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 1780,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 1789,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        }
+      ],
+      "y": 801,
+      "router": {
+        "href": "/#today-reflection",
+        "resolved": "/#today-reflection",
+        "isLoading": false
+      }
+    },
+    {
+      "group": "native",
+      "trial": 6,
+      "pass": true,
+      "checked": [
+        "Mood: 4 of 5, Good",
+        "Energy: 3 of 5, Steady"
+      ],
+      "trace": [
+        {
+          "kind": "scrollTo",
+          "t": 712,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "args": [
+            {
+              "top": 0,
+              "left": 0
+            }
+          ],
+          "stack": "@web-inspector://bootstrap.js:21:94\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1296:35\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1024,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1024,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1025,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1025,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "onBeforeNavigate",
+          "t": 1027,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "40xf6i",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeLoad",
+          "t": 1028,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "40xf6i",
+          "pathChanged": false
+        },
+        {
+          "kind": "onLoad",
+          "t": 1032,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "40xf6i",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeRouteMount",
+          "t": 1032,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "40xf6i",
+          "pathChanged": false
+        },
+        {
+          "kind": "onResolved",
+          "t": 1035,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "40xf6i",
+          "pathChanged": false
+        },
+        {
+          "kind": "scrollIntoView",
+          "t": 1035,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "today-reflection",
+          "args": [
+            true
+          ],
+          "stack": "@web-inspector://bootstrap.js:24:154\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1300:107\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "onRendered",
+          "t": 1035,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "40xf6i",
+          "pathChanged": false
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1113,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1115,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1120,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1120,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1120,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 1135,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 1149,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1266,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1267,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1268,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1268,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1268,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 1272,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 1275,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        }
+      ],
+      "y": 801,
+      "router": {
+        "href": "/#today-reflection",
+        "resolved": "/#today-reflection",
+        "isLoading": false
+      }
+    },
+    {
+      "group": "native",
+      "trial": 7,
+      "pass": true,
+      "checked": [
+        "Mood: 4 of 5, Good",
+        "Energy: 3 of 5, Steady"
+      ],
+      "trace": [
+        {
+          "kind": "scrollTo",
+          "t": 843,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "args": [
+            {
+              "top": 0,
+              "left": 0
+            }
+          ],
+          "stack": "@web-inspector://bootstrap.js:21:94\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1296:35\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1173,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1173,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1174,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1174,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "onBeforeNavigate",
+          "t": 1176,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "ewhj9",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeLoad",
+          "t": 1177,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "ewhj9",
+          "pathChanged": false
+        },
+        {
+          "kind": "onLoad",
+          "t": 1182,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "ewhj9",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeRouteMount",
+          "t": 1182,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "ewhj9",
+          "pathChanged": false
+        },
+        {
+          "kind": "onResolved",
+          "t": 1189,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "ewhj9",
+          "pathChanged": false
+        },
+        {
+          "kind": "scrollIntoView",
+          "t": 1189,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "today-reflection",
+          "args": [
+            true
+          ],
+          "stack": "@web-inspector://bootstrap.js:24:154\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1300:107\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "onRendered",
+          "t": 1190,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "ewhj9",
+          "pathChanged": false
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1275,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1276,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1276,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1276,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1277,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 1290,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 1296,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1401,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1402,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1405,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1405,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1405,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 1410,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 1414,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        }
+      ],
+      "y": 801,
+      "router": {
+        "href": "/#today-reflection",
+        "resolved": "/#today-reflection",
+        "isLoading": false
+      }
+    },
+    {
+      "group": "native",
+      "trial": 8,
+      "pass": true,
+      "checked": [
+        "Mood: 4 of 5, Good",
+        "Energy: 3 of 5, Steady"
+      ],
+      "trace": [
+        {
+          "kind": "scrollTo",
+          "t": 778,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "args": [
+            {
+              "top": 0,
+              "left": 0
+            }
+          ],
+          "stack": "@web-inspector://bootstrap.js:21:94\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1296:35\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1073,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1073,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1080,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1080,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "onBeforeNavigate",
+          "t": 1088,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "nv99k",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeLoad",
+          "t": 1089,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "nv99k",
+          "pathChanged": false
+        },
+        {
+          "kind": "onLoad",
+          "t": 1095,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "nv99k",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeRouteMount",
+          "t": 1095,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "nv99k",
+          "pathChanged": false
+        },
+        {
+          "kind": "onResolved",
+          "t": 1102,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "nv99k",
+          "pathChanged": false
+        },
+        {
+          "kind": "scrollIntoView",
+          "t": 1102,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "today-reflection",
+          "args": [
+            true
+          ],
+          "stack": "@web-inspector://bootstrap.js:24:154\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1300:107\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "onRendered",
+          "t": 1103,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "nv99k",
+          "pathChanged": false
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1214,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1214,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1217,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1217,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1217,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 1234,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 1245,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1404,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1404,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1407,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1407,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1407,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 1414,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 1419,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        }
+      ],
+      "y": 801,
+      "router": {
+        "href": "/#today-reflection",
+        "resolved": "/#today-reflection",
+        "isLoading": false
+      }
+    },
+    {
+      "group": "settled-native",
+      "trial": 1,
+      "pass": true,
+      "checked": [
+        "Mood: 4 of 5, Good",
+        "Energy: 3 of 5, Steady"
+      ],
+      "trace": [
+        {
+          "kind": "scrollTo",
+          "t": 989,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "args": [
+            {
+              "top": 0,
+              "left": 0
+            }
+          ],
+          "stack": "@web-inspector://bootstrap.js:21:94\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1296:35\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1363,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1366,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1370,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1370,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "onBeforeNavigate",
+          "t": 1373,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "vrvo1",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeLoad",
+          "t": 1373,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "vrvo1",
+          "pathChanged": false
+        },
+        {
+          "kind": "onLoad",
+          "t": 1380,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "vrvo1",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeRouteMount",
+          "t": 1380,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "vrvo1",
+          "pathChanged": false
+        },
+        {
+          "kind": "onResolved",
+          "t": 1385,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "vrvo1",
+          "pathChanged": false
+        },
+        {
+          "kind": "scrollIntoView",
+          "t": 1385,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "today-reflection",
+          "args": [
+            true
+          ],
+          "stack": "@web-inspector://bootstrap.js:24:154\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1300:107\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "onRendered",
+          "t": 1385,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "vrvo1",
+          "pathChanged": false
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1528,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1528,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1532,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1532,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1532,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 1547,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 1557,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1666,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1667,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1670,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1670,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1670,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 1677,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 1682,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        }
+      ],
+      "y": 801,
+      "router": {
+        "href": "/#today-reflection",
+        "resolved": "/#today-reflection",
+        "isLoading": false
+      }
+    },
+    {
+      "group": "settled-native",
+      "trial": 2,
+      "pass": true,
+      "checked": [
+        "Mood: 4 of 5, Good",
+        "Energy: 3 of 5, Steady"
+      ],
+      "trace": [
+        {
+          "kind": "scrollTo",
+          "t": 588,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "args": [
+            {
+              "top": 0,
+              "left": 0
+            }
+          ],
+          "stack": "@web-inspector://bootstrap.js:21:94\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1296:35\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "pointerdown",
+          "t": 827,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 828,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 828,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 829,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "onBeforeNavigate",
+          "t": 831,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "wkr3jl",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeLoad",
+          "t": 831,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "wkr3jl",
+          "pathChanged": false
+        },
+        {
+          "kind": "onLoad",
+          "t": 836,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "wkr3jl",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeRouteMount",
+          "t": 836,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "wkr3jl",
+          "pathChanged": false
+        },
+        {
+          "kind": "onResolved",
+          "t": 838,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "wkr3jl",
+          "pathChanged": false
+        },
+        {
+          "kind": "scrollIntoView",
+          "t": 838,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "today-reflection",
+          "args": [
+            true
+          ],
+          "stack": "@web-inspector://bootstrap.js:24:154\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1300:107\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "onRendered",
+          "t": 838,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "wkr3jl",
+          "pathChanged": false
+        },
+        {
+          "kind": "pointerdown",
+          "t": 929,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 930,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 930,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 930,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 930,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 947,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 954,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1064,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1064,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1068,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1068,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1068,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 1074,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 1077,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        }
+      ],
+      "y": 801,
+      "router": {
+        "href": "/#today-reflection",
+        "resolved": "/#today-reflection",
+        "isLoading": false
+      }
+    },
+    {
+      "group": "settled-native",
+      "trial": 3,
+      "pass": false,
+      "checked": [
+        "Mood: 4 of 5, Good"
+      ],
+      "trace": [
+        {
+          "kind": "scrollTo",
+          "t": 555,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "args": [
+            {
+              "top": 0,
+              "left": 0
+            }
+          ],
+          "stack": "@web-inspector://bootstrap.js:21:94\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1296:35\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "pointerdown",
+          "t": 976,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 977,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 977,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 978,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "onBeforeNavigate",
+          "t": 981,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "sfef9",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeLoad",
+          "t": 982,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "sfef9",
+          "pathChanged": false
+        },
+        {
+          "kind": "onLoad",
+          "t": 992,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "sfef9",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeRouteMount",
+          "t": 992,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "sfef9",
+          "pathChanged": false
+        },
+        {
+          "kind": "onResolved",
+          "t": 995,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "sfef9",
+          "pathChanged": false
+        },
+        {
+          "kind": "scrollIntoView",
+          "t": 995,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "today-reflection",
+          "args": [
+            true
+          ],
+          "stack": "@web-inspector://bootstrap.js:24:154\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1300:107\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "onRendered",
+          "t": 996,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "sfef9",
+          "pathChanged": false
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1077,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1077,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1078,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1078,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1078,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 1091,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 1096,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1273,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1274,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "scrollBy",
+          "t": 1279,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "args": [
+            {
+              "top": -809,
+              "behavior": "instant"
+            }
+          ],
+          "stack": "@web-inspector://bootstrap.js:21:94\nrevealFocus@http://127.0.0.1:4208/src/components/pattern/Shell.tsx:121:44\n@http://127.0.0.1:4208/src/components/pattern/Shell.tsx:130:16"
+        },
+        {
+          "kind": "pointerup",
+          "t": 1284,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "One clear conversation can make the next step",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1284,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": "mouse"
+        }
+      ],
+      "y": 0,
+      "router": {
+        "href": "/#today-reflection",
+        "resolved": "/#today-reflection",
+        "isLoading": false
+      }
+    },
+    {
+      "group": "settled-native",
+      "trial": 4,
+      "pass": true,
+      "checked": [
+        "Mood: 4 of 5, Good",
+        "Energy: 3 of 5, Steady"
+      ],
+      "trace": [
+        {
+          "kind": "scrollTo",
+          "t": 907,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "args": [
+            {
+              "top": 0,
+              "left": 0
+            }
+          ],
+          "stack": "@web-inspector://bootstrap.js:21:94\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1296:35\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1288,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1289,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1289,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1289,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "onBeforeNavigate",
+          "t": 1298,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "2rbzd",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeLoad",
+          "t": 1299,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "2rbzd",
+          "pathChanged": false
+        },
+        {
+          "kind": "onLoad",
+          "t": 1306,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "2rbzd",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeRouteMount",
+          "t": 1306,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "2rbzd",
+          "pathChanged": false
+        },
+        {
+          "kind": "onResolved",
+          "t": 1308,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "2rbzd",
+          "pathChanged": false
+        },
+        {
+          "kind": "scrollIntoView",
+          "t": 1308,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "today-reflection",
+          "args": [
+            true
+          ],
+          "stack": "@web-inspector://bootstrap.js:24:154\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1300:107\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "onRendered",
+          "t": 1308,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "2rbzd",
+          "pathChanged": false
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1445,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1446,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1446,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1446,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1447,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 1459,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 1465,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1556,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1557,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1558,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1558,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1558,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 1565,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 1567,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        }
+      ],
+      "y": 801,
+      "router": {
+        "href": "/#today-reflection",
+        "resolved": "/#today-reflection",
+        "isLoading": false
+      }
+    },
+    {
+      "group": "router-hash",
+      "trial": 1,
+      "pass": false,
+      "checked": [
+        "Mood: 4 of 5, Good"
+      ],
+      "trace": [
+        {
+          "kind": "scrollTo",
+          "t": 730,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "args": [
+            {
+              "top": 0,
+              "left": 0
+            }
+          ],
+          "stack": "@web-inspector://bootstrap.js:21:94\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1296:35\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "onBeforeNavigate",
+          "t": 895,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "orqxc",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeLoad",
+          "t": 895,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "orqxc",
+          "pathChanged": false
+        },
+        {
+          "kind": "onLoad",
+          "t": 899,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "orqxc",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeRouteMount",
+          "t": 899,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "orqxc",
+          "pathChanged": false
+        },
+        {
+          "kind": "onResolved",
+          "t": 901,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "orqxc",
+          "pathChanged": false
+        },
+        {
+          "kind": "scrollIntoView",
+          "t": 901,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "today-reflection",
+          "args": [
+            true
+          ],
+          "stack": "@web-inspector://bootstrap.js:24:154\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1300:107\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "onRendered",
+          "t": 901,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "orqxc",
+          "pathChanged": false
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1108,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1109,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1109,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1110,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1110,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 1126,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 1132,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1394,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1395,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "scrollBy",
+          "t": 1396,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "args": [
+            {
+              "top": -809,
+              "behavior": "instant"
+            }
+          ],
+          "stack": "@web-inspector://bootstrap.js:21:94\nrevealFocus@http://127.0.0.1:4208/src/components/pattern/Shell.tsx:121:44\n@http://127.0.0.1:4208/src/components/pattern/Shell.tsx:130:16"
+        },
+        {
+          "kind": "pointerup",
+          "t": 1411,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "One clear conversation can make the next step",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1412,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": "mouse"
+        }
+      ],
+      "y": 0,
+      "router": {
+        "href": "/#today-reflection",
+        "resolved": "/#today-reflection",
+        "isLoading": false
+      }
+    },
+    {
+      "group": "router-hash",
+      "trial": 2,
+      "pass": false,
+      "checked": [
+        "Energy: 3 of 5, Steady"
+      ],
+      "trace": [
+        {
+          "kind": "scrollTo",
+          "t": 688,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "args": [
+            {
+              "top": 0,
+              "left": 0
+            }
+          ],
+          "stack": "@web-inspector://bootstrap.js:21:94\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1296:35\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "onBeforeNavigate",
+          "t": 804,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "z2wmxh",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeLoad",
+          "t": 804,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "z2wmxh",
+          "pathChanged": false
+        },
+        {
+          "kind": "onLoad",
+          "t": 810,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "z2wmxh",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeRouteMount",
+          "t": 810,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "z2wmxh",
+          "pathChanged": false
+        },
+        {
+          "kind": "onResolved",
+          "t": 811,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "z2wmxh",
+          "pathChanged": false
+        },
+        {
+          "kind": "scrollIntoView",
+          "t": 811,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "today-reflection",
+          "args": [
+            true
+          ],
+          "stack": "@web-inspector://bootstrap.js:24:154\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1300:107\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "onRendered",
+          "t": 811,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "z2wmxh",
+          "pathChanged": false
+        },
+        {
+          "kind": "pointerdown",
+          "t": 958,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 960,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "scrollBy",
+          "t": 961,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "args": [
+            {
+              "top": -809,
+              "behavior": "instant"
+            }
+          ],
+          "stack": "@web-inspector://bootstrap.js:21:94\nrevealFocus@http://127.0.0.1:4208/src/components/pattern/Shell.tsx:121:44\n@http://127.0.0.1:4208/src/components/pattern/Shell.tsx:130:16"
+        },
+        {
+          "kind": "pointerup",
+          "t": 966,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "One clear conversation can make the next step",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 966,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1062,
+          "y": 882,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "pointerup",
+          "t": 1062,
+          "y": 882,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1062,
+          "y": 882,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1062,
+          "y": 882,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 1083,
+          "y": 882,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 1091,
+          "y": 882,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        }
+      ],
+      "y": 882,
+      "router": {
+        "href": "/#today-reflection",
+        "resolved": "/#today-reflection",
+        "isLoading": false
+      }
+    },
+    {
+      "group": "router-hash",
+      "trial": 3,
+      "pass": true,
+      "checked": [
+        "Mood: 4 of 5, Good",
+        "Energy: 3 of 5, Steady"
+      ],
+      "trace": [
+        {
+          "kind": "scrollTo",
+          "t": 692,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "args": [
+            {
+              "top": 0,
+              "left": 0
+            }
+          ],
+          "stack": "@web-inspector://bootstrap.js:21:94\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1296:35\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "onBeforeNavigate",
+          "t": 842,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "znlvo",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeLoad",
+          "t": 842,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "znlvo",
+          "pathChanged": false
+        },
+        {
+          "kind": "onLoad",
+          "t": 846,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "znlvo",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeRouteMount",
+          "t": 846,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "znlvo",
+          "pathChanged": false
+        },
+        {
+          "kind": "onResolved",
+          "t": 848,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "znlvo",
+          "pathChanged": false
+        },
+        {
+          "kind": "scrollIntoView",
+          "t": 848,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "today-reflection",
+          "args": [
+            true
+          ],
+          "stack": "@web-inspector://bootstrap.js:24:154\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1300:107\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "onRendered",
+          "t": 848,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "znlvo",
+          "pathChanged": false
+        },
+        {
+          "kind": "pointerdown",
+          "t": 953,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 954,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 954,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 954,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 955,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 965,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 969,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1079,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1080,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1080,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1080,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1081,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 1085,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 1087,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        }
+      ],
+      "y": 801,
+      "router": {
+        "href": "/#today-reflection",
+        "resolved": "/#today-reflection",
+        "isLoading": false
+      }
+    },
+    {
+      "group": "router-hash",
+      "trial": 4,
+      "pass": true,
+      "checked": [
+        "Mood: 4 of 5, Good",
+        "Energy: 3 of 5, Steady"
+      ],
+      "trace": [
+        {
+          "kind": "scrollTo",
+          "t": 815,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "args": [
+            {
+              "top": 0,
+              "left": 0
+            }
+          ],
+          "stack": "@web-inspector://bootstrap.js:21:94\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1296:35\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "onBeforeNavigate",
+          "t": 1047,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "f2rcp",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeLoad",
+          "t": 1047,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "f2rcp",
+          "pathChanged": false
+        },
+        {
+          "kind": "onLoad",
+          "t": 1052,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "f2rcp",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeRouteMount",
+          "t": 1052,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "f2rcp",
+          "pathChanged": false
+        },
+        {
+          "kind": "onResolved",
+          "t": 1053,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "f2rcp",
+          "pathChanged": false
+        },
+        {
+          "kind": "scrollIntoView",
+          "t": 1053,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "today-reflection",
+          "args": [
+            true
+          ],
+          "stack": "@web-inspector://bootstrap.js:24:154\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1300:107\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "onRendered",
+          "t": 1054,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "f2rcp",
+          "pathChanged": false
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1178,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1178,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1180,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1180,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1185,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 1197,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 1202,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "pointerdown",
+          "t": 1305,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 1306,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 1307,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1307,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 1307,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 1314,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 1320,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        }
+      ],
+      "y": 801,
+      "router": {
+        "href": "/#today-reflection",
+        "resolved": "/#today-reflection",
+        "isLoading": false
+      }
+    },
+    {
+      "group": "restoration-disabled",
+      "trial": 1,
+      "pass": true,
+      "checked": [
+        "Mood: 4 of 5, Good",
+        "Energy: 3 of 5, Steady"
+      ],
+      "trace": [
+        {
+          "kind": "scrollTo",
+          "t": 516,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "args": [
+            {
+              "top": 0,
+              "left": 0
+            }
+          ],
+          "stack": "@web-inspector://bootstrap.js:21:94\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1296:35\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "pointerdown",
+          "t": 730,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 731,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 731,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 731,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "onBeforeNavigate",
+          "t": 733,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "jcom6g",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeLoad",
+          "t": 733,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "jcom6g",
+          "pathChanged": false
+        },
+        {
+          "kind": "onLoad",
+          "t": 738,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "jcom6g",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeRouteMount",
+          "t": 738,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "jcom6g",
+          "pathChanged": false
+        },
+        {
+          "kind": "onResolved",
+          "t": 739,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "jcom6g",
+          "pathChanged": false
+        },
+        {
+          "kind": "onRendered",
+          "t": 739,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "jcom6g",
+          "pathChanged": false
+        },
+        {
+          "kind": "pointerdown",
+          "t": 777,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 778,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 778,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 778,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 778,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 788,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 792,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "pointerdown",
+          "t": 859,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 860,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 860,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 860,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 861,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 864,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 866,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        }
+      ],
+      "y": 801,
+      "router": {
+        "href": "/#today-reflection",
+        "resolved": "/#today-reflection",
+        "isLoading": false
+      }
+    },
+    {
+      "group": "restoration-disabled",
+      "trial": 2,
+      "pass": true,
+      "checked": [
+        "Mood: 4 of 5, Good",
+        "Energy: 3 of 5, Steady"
+      ],
+      "trace": [
+        {
+          "kind": "scrollTo",
+          "t": 502,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "args": [
+            {
+              "top": 0,
+              "left": 0
+            }
+          ],
+          "stack": "@web-inspector://bootstrap.js:21:94\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1296:35\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "pointerdown",
+          "t": 711,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 712,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 712,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 712,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "onBeforeNavigate",
+          "t": 714,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "m4jir",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeLoad",
+          "t": 715,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "m4jir",
+          "pathChanged": false
+        },
+        {
+          "kind": "onLoad",
+          "t": 719,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "m4jir",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeRouteMount",
+          "t": 719,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "m4jir",
+          "pathChanged": false
+        },
+        {
+          "kind": "onResolved",
+          "t": 721,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "m4jir",
+          "pathChanged": false
+        },
+        {
+          "kind": "onRendered",
+          "t": 721,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "m4jir",
+          "pathChanged": false
+        },
+        {
+          "kind": "pointerdown",
+          "t": 759,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 760,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 760,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 760,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 760,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 772,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 776,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "pointerdown",
+          "t": 839,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 840,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 841,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 841,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 841,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 844,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 846,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        }
+      ],
+      "y": 801,
+      "router": {
+        "href": "/#today-reflection",
+        "resolved": "/#today-reflection",
+        "isLoading": false
+      }
+    },
+    {
+      "group": "restoration-disabled",
+      "trial": 3,
+      "pass": true,
+      "checked": [
+        "Mood: 4 of 5, Good",
+        "Energy: 3 of 5, Steady"
+      ],
+      "trace": [
+        {
+          "kind": "scrollTo",
+          "t": 525,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "args": [
+            {
+              "top": 0,
+              "left": 0
+            }
+          ],
+          "stack": "@web-inspector://bootstrap.js:21:94\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1296:35\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "pointerdown",
+          "t": 739,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 740,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 740,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 740,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "onBeforeNavigate",
+          "t": 742,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "c3t6ul",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeLoad",
+          "t": 743,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "c3t6ul",
+          "pathChanged": false
+        },
+        {
+          "kind": "onLoad",
+          "t": 747,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "c3t6ul",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeRouteMount",
+          "t": 747,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "c3t6ul",
+          "pathChanged": false
+        },
+        {
+          "kind": "onResolved",
+          "t": 749,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "c3t6ul",
+          "pathChanged": false
+        },
+        {
+          "kind": "onRendered",
+          "t": 749,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "c3t6ul",
+          "pathChanged": false
+        },
+        {
+          "kind": "pointerdown",
+          "t": 796,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 796,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 797,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 797,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 797,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 810,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 815,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "pointerdown",
+          "t": 896,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 897,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 897,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 897,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 898,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 902,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 904,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        }
+      ],
+      "y": 801,
+      "router": {
+        "href": "/#today-reflection",
+        "resolved": "/#today-reflection",
+        "isLoading": false
+      }
+    },
+    {
+      "group": "restoration-disabled",
+      "trial": 4,
+      "pass": true,
+      "checked": [
+        "Mood: 4 of 5, Good",
+        "Energy: 3 of 5, Steady"
+      ],
+      "trace": [
+        {
+          "kind": "scrollTo",
+          "t": 513,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "args": [
+            {
+              "top": 0,
+              "left": 0
+            }
+          ],
+          "stack": "@web-inspector://bootstrap.js:21:94\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:1296:35\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:2140:16\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3866:50\nbatch@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:5334:5\n@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3859:15\nasync runClientTransaction@http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@tanstack_react-router.js:3831:34"
+        },
+        {
+          "kind": "pointerdown",
+          "t": 726,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 727,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 727,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 728,
+          "y": 0,
+          "href": "http://127.0.0.1:4208/",
+          "target": "Check-in",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "onBeforeNavigate",
+          "t": 731,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "ytldu",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeLoad",
+          "t": 732,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "ytldu",
+          "pathChanged": false
+        },
+        {
+          "kind": "onLoad",
+          "t": 741,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "ytldu",
+          "pathChanged": false
+        },
+        {
+          "kind": "onBeforeRouteMount",
+          "t": 741,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "ytldu",
+          "pathChanged": false
+        },
+        {
+          "kind": "onResolved",
+          "t": 743,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "ytldu",
+          "pathChanged": false
+        },
+        {
+          "kind": "onRendered",
+          "t": 743,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "from": "/",
+          "to": "/#today-reflection",
+          "key": "ytldu",
+          "pathChanged": false
+        },
+        {
+          "kind": "pointerdown",
+          "t": 803,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 803,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 804,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 804,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "4",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 804,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 814,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 819,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Mood: 4 of 5, Good",
+          "pointer": null
+        },
+        {
+          "kind": "pointerdown",
+          "t": 896,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "focusin",
+          "t": 897,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Today · Oct 20, 2026Leave room for an unhurri",
+          "pointer": null
+        },
+        {
+          "kind": "pointerup",
+          "t": 897,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 897,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "3",
+          "pointer": "mouse"
+        },
+        {
+          "kind": "click",
+          "t": 898,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "change",
+          "t": 901,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        },
+        {
+          "kind": "focusin",
+          "t": 903,
+          "y": 801,
+          "href": "http://127.0.0.1:4208/#today-reflection",
+          "target": "Energy: 3 of 5, Steady",
+          "pointer": null
+        }
+      ],
+      "y": 801,
+      "router": {
+        "href": "/#today-reflection",
+        "resolved": "/#today-reflection",
+        "isLoading": false
+      }
+    }
+  ]
+}

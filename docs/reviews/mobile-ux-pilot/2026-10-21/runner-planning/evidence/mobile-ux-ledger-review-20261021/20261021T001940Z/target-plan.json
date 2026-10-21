@@ -1,0 +1,41 @@
+{
+  "status": "incomplete_original_scope_mapping",
+  "original_scope": {
+    "id": "webkit-mouse-390",
+    "conditions": {
+      "build_id": "B-PILOT",
+      "browser": "Playwright WebKit 26.6",
+      "device": "Linux desktop host with mobile viewport/touch media emulation",
+      "os": "Linux",
+      "viewport": "390x844 unless stated in state",
+      "display_mode": "regular browser tab",
+      "state": "390x844; ordinary synthetic responses; pointer=mouse; no consent bands",
+      "account_data": "mobile-audit-member; synthetic Today/check-in data",
+      "setup": "B-PILOT compile-time service/bootstrap replacements plus SS-STRIPE; fresh context per recovery or selection trial",
+      "steps": [
+        "Load a fresh Today fixture",
+        "Click Today sections / Check-in",
+        "Click the Mood 4 label",
+        "Immediately click the Energy 3 label",
+        "Observe selection and submit once if continuing the journey"
+      ],
+      "timing": "normal synthetic response unless a check declares delay/failure",
+      "substitutions": "B-PILOT + SS-STRIPE"
+    }
+  },
+  "original_scope_target_check_ids": [],
+  "device_regression_check_ids": [
+    "C-GD01",
+    "C-GD02",
+    "C-GD03",
+    "C-GD04",
+    "C-GD10"
+  ],
+  "planned_device_count": 10,
+  "guard_regression_count": 5,
+  "budget": 10,
+  "count_fits_half_budget": true,
+  "application_plan_admitted": false,
+  "physical_device_verification": "not_run",
+  "reason": "Count fits capacity, but no plan entry qualifies for the original scope; count alone is not admission."
+}

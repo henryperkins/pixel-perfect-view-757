@@ -1,0 +1,160 @@
+{
+  "engine": "webkit",
+  "version": "26.6",
+  "environment": "desktop_emulation",
+  "level": "proxy",
+  "cases": [
+    {
+      "name": "rejected-save",
+      "status": "pass",
+      "additionalSubstitutions": [
+        {
+          "boundary": "check-in API",
+          "configured_response": "saveDailyCheckIn throws Synthetic network failure before persisting"
+        }
+      ],
+      "observations": {
+        "failure": {
+          "status": "This save hasn’t been confirmed. Check whether it saved before retrying. Your edits are still here.",
+          "note": "Keep this rejected-save draft",
+          "calls": 1
+        },
+        "recovered": {
+          "status": "Saved 11:13 PM",
+          "note": "Keep this rejected-save draft",
+          "calls": 2
+        }
+      }
+    },
+    {
+      "name": "lost-response",
+      "status": "pass",
+      "additionalSubstitutions": [
+        {
+          "boundary": "check-in API",
+          "configured_response": "saveDailyCheckIn applies the fixture write then throws Synthetic lost acknowledgement"
+        }
+      ],
+      "observations": {
+        "unknown": {
+          "status": "This save hasn’t been confirmed. Check whether it saved before retrying. Your edits are still here.",
+          "note": "A saved reflection with a lost acknowledgement",
+          "fixtureSaved": "A saved reflection with a lost acknowledgement",
+          "calls": 1
+        },
+        "confirmed": {
+          "status": "Saved 11:13 PM",
+          "note": "A saved reflection with a lost acknowledgement",
+          "calls": 1
+        }
+      }
+    },
+    {
+      "name": "edit-during-save",
+      "status": "pass",
+      "additionalSubstitutions": [
+        {
+          "boundary": "all fixture API calls",
+          "configured_response": "450ms delay; normal synthetic responses"
+        }
+      ],
+      "observations": {
+        "afterFirstSave": {
+          "status": "Unsaved changes · last saved 11:13 PM",
+          "note": "Newer unsaved note typed during the request",
+          "fixtureSaved": "Earlier submitted note"
+        },
+        "afterSecondSave": {
+          "status": "Saved 11:13 PM",
+          "fixtureSaved": "Newer unsaved note typed during the request",
+          "calls": 2
+        }
+      }
+    },
+    {
+      "name": "unsaved-reload",
+      "status": "pass",
+      "additionalSubstitutions": [],
+      "observations": {
+        "before": "Draft saved on this device\n\nCopy draft\nDiscard draft\n\nDevice drafts expire after seven days without edits and are cleared when you sign out. Save to keep this in your account.",
+        "after": {
+          "note": "Unsubmitted draft survives an ordinary reload",
+          "status": "Unsaved changes",
+          "calls": 0
+        }
+      }
+    },
+    {
+      "name": "offline-queue",
+      "status": "pass",
+      "additionalSubstitutions": [],
+      "observations": {
+        "offline": {
+          "status": "Waiting for a connection. Earlier changes will save when you’re back online; newer edits are unsaved.",
+          "calls": 0,
+          "online": false
+        },
+        "reconnected": {
+          "status": "Unsaved changes · last saved 11:13 PM",
+          "note": "Newer offline edit is still unsaved",
+          "fixtureSaved": "Offline submitted checkpoint",
+          "calls": 1
+        }
+      },
+      "scenarioState": "Playwright browser context offline; API remains the standing local function fixture"
+    },
+    {
+      "name": "reading-retry",
+      "status": "pass",
+      "additionalSubstitutions": [
+        {
+          "boundary": "Today API",
+          "configured_response": "fetchToday throws Synthetic network failure on forced foreground refetch; returns normal response after clearing failure"
+        }
+      ],
+      "observations": {
+        "failed": {
+          "message": "Your reading couldn’t refresh. You’re viewing the last version loaded.",
+          "readingVisible": "Leave room for an unhurried answer"
+        },
+        "retried": {
+          "heading": "Leave room for an unhurried answer"
+        }
+      }
+    },
+    {
+      "name": "long-note",
+      "status": "pass",
+      "additionalSubstitutions": [],
+      "observations": {
+        "long": {
+          "length": 2000,
+          "maxLength": 2000,
+          "scrollHeight": 1216,
+          "clientHeight": 88,
+          "overscrollY": "contain",
+          "touchAction": "auto"
+        },
+        "short": {
+          "scrollHeight": 88,
+          "clientHeight": 88,
+          "overscrollY": "auto"
+        }
+      }
+    },
+    {
+      "name": "storage-unavailable",
+      "status": "fail",
+      "additionalSubstitutions": [
+        {
+          "boundary": "IndexedDB draft store",
+          "configured_response": "indexedDB.open throws synthetic SecurityError; sessionStorage fixture backend remains available"
+        }
+      ],
+      "observations": {
+        "failure": "Today’s check-in\n\nChoose what fits. Every field is optional.\n\nMood\nMood1 low · 2 muted · 3 steady · 4 good · 5 bright\nClear\n1\n2\n3\n4\n5\nEnergy\nEnergy1 flat · 2 low · 3 steady · 4 lively · 5 charged\nClear\n1\n2\n3\n4\n5\nReflection note · optional\n\n\nUp to 2,000 characters.\n\nDraft saved on this device\n\nCopy draft\nDiscard draft\n\nDevice drafts expire after seven days without edits and are cleared when you sign out. Save to keep this in your account.\n\nSave check-in\nUnsaved changes\n\nPrivate to your account. Notes are encrypted; check-in data is never sent to the language model.\n\nHow your check-in is used"
+      },
+      "error": "TimeoutError: locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText('This draft is only kept while this page stays open. Save it to your account or copy it before leaving.', { exact: true }) to be visible\u001b[22m\n"
+    }
+  ]
+}

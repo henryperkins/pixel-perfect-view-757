@@ -1,0 +1,462 @@
+test_audit_source_changes_rejected (test_run_state.RunnerTests.test_audit_source_changes_rejected) ... ok
+test_available_agent_target_check_does_not_consume_human_cap (test_run_state.RunnerTests.test_available_agent_target_check_does_not_consume_human_cap) ... ok
+test_bare_pass_after_target_failure_stays_open (test_run_state.RunnerTests.test_bare_pass_after_target_failure_stays_open) ... ok
+test_blocked_requires_explicit_assignment (test_run_state.RunnerTests.test_blocked_requires_explicit_assignment) ... ok
+test_build_confirmation_does_not_confirm_setup (test_run_state.RunnerTests.test_build_confirmation_does_not_confirm_setup) ... ok
+test_build_without_fix_rejected (test_run_state.RunnerTests.test_build_without_fix_rejected) ... ok
+test_cannot_shrink_fix_check_scope (test_run_state.RunnerTests.test_cannot_shrink_fix_check_scope) ... ok
+test_cause_only_keeps_disposition (test_run_state.RunnerTests.test_cause_only_keeps_disposition) ... ok
+test_ceiling_names_actual_environment_and_target_limit (test_run_state.RunnerTests.test_ceiling_names_actual_environment_and_target_limit) ... ok
+test_changed_build_requires_new_check_id (test_run_state.RunnerTests.test_changed_build_requires_new_check_id) ... ok
+test_cli_default_and_new_file_output (test_run_state.RunnerTests.test_cli_default_and_new_file_output) ... ok
+test_cli_migrate_results_report_round_trip (test_run_state.RunnerTests.test_cli_migrate_results_report_round_trip) ... ok
+test_complementary_results_retain_prior_clear_portion (test_run_state.RunnerTests.test_complementary_results_retain_prior_clear_portion) ... ok
+test_default_policy_forbids_device_fix (test_run_state.RunnerTests.test_default_policy_forbids_device_fix) ... ok
+test_defaults_are_audit_only_and_propose (test_run_state.RunnerTests.test_defaults_are_audit_only_and_propose) ... ok
+test_dependency_wildcard_blocks_any_replacement (test_run_state.RunnerTests.test_dependency_wildcard_blocks_any_replacement) ... ok
+test_dependency_wildcard_blocks_specific_unknown (test_run_state.RunnerTests.test_dependency_wildcard_blocks_specific_unknown) ... ok
+test_desktop_cannot_relabel_target (test_run_state.RunnerTests.test_desktop_cannot_relabel_target) ... ok
+test_desktop_proxy_verified_rejected (test_run_state.RunnerTests.test_desktop_proxy_verified_rejected) ... ok
+test_different_account_does_not_close (test_run_state.RunnerTests.test_different_account_does_not_close) ... ok
+test_existing_alphanumeric_ids_survive_result_update (test_run_state.RunnerTests.test_existing_alphanumeric_ids_survive_result_update) ... ok
+test_explicit_legacy_run_alias (test_run_state.RunnerTests.test_explicit_legacy_run_alias) ... ok
+test_explicit_missing_portion_does_not_invent_pass (test_run_state.RunnerTests.test_explicit_missing_portion_does_not_invent_pass) ... ok
+test_explicit_proxy_observation_can_be_refuted (test_run_state.RunnerTests.test_explicit_proxy_observation_can_be_refuted) ... ok
+test_failed_applied_device_fix_result_remains_recordable (test_run_state.RunnerTests.test_failed_applied_device_fix_result_remains_recordable) ... ok
+test_field_acquisition_and_scope_metadata (test_run_state.RunnerTests.test_field_acquisition_and_scope_metadata) ... ok
+test_field_target_cannot_verify_uncovered_population (test_run_state.RunnerTests.test_field_target_cannot_verify_uncovered_population) ... ok
+test_fully_recorded_fixture_can_complete (test_run_state.RunnerTests.test_fully_recorded_fixture_can_complete) ... ok
+test_human_does_not_inherit_local_harness (test_run_state.RunnerTests.test_human_does_not_inherit_local_harness) ... ok
+test_interaction_does_not_refute_independent_requirement (test_run_state.RunnerTests.test_interaction_does_not_refute_independent_requirement) ... ok
+test_intermittent_ten_passes_do_not_narrow_or_downgrade (test_run_state.RunnerTests.test_intermittent_ten_passes_do_not_narrow_or_downgrade) ... ok
+test_invalid_application_plan_is_not_laundered_by_result (test_run_state.RunnerTests.test_invalid_application_plan_is_not_laundered_by_result) ... ok
+test_legacy_migration_preserves_snapshot_without_authorization_upgrade (test_run_state.RunnerTests.test_legacy_migration_preserves_snapshot_without_authorization_upgrade) ... ok
+test_lost_verification_support_demotes_without_inventing_recurrence (test_run_state.RunnerTests.test_lost_verification_support_demotes_without_inventing_recurrence) ... ok
+test_matched_deterministic_prediction_can_close (test_run_state.RunnerTests.test_matched_deterministic_prediction_can_close) ... ok
+test_migration_preserves_unavailable_project_identity (test_run_state.RunnerTests.test_migration_preserves_unavailable_project_identity) ... ok
+test_migration_preserves_valid_ids_and_avoids_generated_collisions (test_run_state.RunnerTests.test_migration_preserves_valid_ids_and_avoids_generated_collisions) ... ok
+test_missing_area_rejected (test_run_state.RunnerTests.test_missing_area_rejected) ... ok
+test_missing_field_data_is_not_a_device_script_entry (test_run_state.RunnerTests.test_missing_field_data_is_not_a_device_script_entry) ... ok
+test_missing_module_rejected (test_run_state.RunnerTests.test_missing_module_rejected) ... ok
+test_missing_required_device_entry_rejected (test_run_state.RunnerTests.test_missing_required_device_entry_rejected) ... ok
+test_named_build_unknown_cannot_be_erased_by_check (test_run_state.RunnerTests.test_named_build_unknown_cannot_be_erased_by_check) ... ok
+test_negative_and_boolean_budgets_rejected (test_run_state.RunnerTests.test_negative_and_boolean_budgets_rejected) ... ok
+test_none_checked_requires_evidence (test_run_state.RunnerTests.test_none_checked_requires_evidence) ... ok
+test_odd_budget_floors (test_run_state.RunnerTests.test_odd_budget_floors) ... ok
+test_optional_current_failure_still_blocks (test_run_state.RunnerTests.test_optional_current_failure_still_blocks) ... ok
+test_ordinary_edits_do_not_consume_reservation (test_run_state.RunnerTests.test_ordinary_edits_do_not_consume_reservation) ... ok
+test_partial_portrait_preserved_landscape_not_run (test_run_state.RunnerTests.test_partial_portrait_preserved_landscape_not_run) ... ok
+test_partial_refutation_keeps_remaining_scope (test_run_state.RunnerTests.test_partial_refutation_keeps_remaining_scope) ... ok
+test_pass_without_actual_or_evidence_rejected (test_run_state.RunnerTests.test_pass_without_actual_or_evidence_rejected) ... ok
+test_passthrough_not_replacement (test_run_state.RunnerTests.test_passthrough_not_replacement) ... ok
+test_proxy_plan_admits_distinct_phone_build_without_rewriting_scope (test_run_state.RunnerTests.test_proxy_plan_admits_distinct_phone_build_without_rewriting_scope) ... FAIL
+test_proxy_plan_cli_valid_incomplete_generates_reports_without_device_pass (test_run_state.RunnerTests.test_proxy_plan_cli_valid_incomplete_generates_reports_without_device_pass) ... FAIL
+test_proxy_plan_failure_and_unconfirmed_build_remain_recordable (test_run_state.RunnerTests.test_proxy_plan_failure_and_unconfirmed_build_remain_recordable) ... FAIL
+test_proxy_plan_keeps_authorization_budget_and_priority_guards (test_run_state.RunnerTests.test_proxy_plan_keeps_authorization_budget_and_priority_guards) ... FAIL
+test_proxy_plan_partial_shared_result_does_not_invent_second_pass (test_run_state.RunnerTests.test_proxy_plan_partial_shared_result_does_not_invent_second_pass) ... FAIL
+test_proxy_plan_phone_pass_is_not_original_scope_verification (test_run_state.RunnerTests.test_proxy_plan_phone_pass_is_not_original_scope_verification) ... FAIL
+test_proxy_plan_rejects_empty_duplicate_and_unknown_links (test_run_state.RunnerTests.test_proxy_plan_rejects_empty_duplicate_and_unknown_links) ... FAIL
+test_proxy_plan_rejects_incomplete_regression_conditions (test_run_state.RunnerTests.test_proxy_plan_rejects_incomplete_regression_conditions) ... FAIL
+test_proxy_plan_rejects_missing_origin_requirement (test_run_state.RunnerTests.test_proxy_plan_rejects_missing_origin_requirement) ... FAIL
+test_proxy_plan_rejects_missing_required_entry (test_run_state.RunnerTests.test_proxy_plan_rejects_missing_required_entry) ... FAIL
+test_proxy_plan_rejects_out_of_plan_regression_result (test_run_state.RunnerTests.test_proxy_plan_rejects_out_of_plan_regression_result) ... FAIL
+test_proxy_plan_rejects_target_or_unclassified_observation_shortcut (test_run_state.RunnerTests.test_proxy_plan_rejects_target_or_unclassified_observation_shortcut) ... FAIL
+test_proxy_plan_rejects_wrong_regression_build_or_missing_fix (test_run_state.RunnerTests.test_proxy_plan_rejects_wrong_regression_build_or_missing_fix) ... FAIL
+test_proxy_plan_rejects_wrong_regression_configuration (test_run_state.RunnerTests.test_proxy_plan_rejects_wrong_regression_configuration) ... FAIL
+test_proxy_plan_render_separates_observed_scope_from_device_regressions (test_run_state.RunnerTests.test_proxy_plan_render_separates_observed_scope_from_device_regressions) ... FAIL
+test_proxy_plan_results_cannot_launder_invalid_admission_or_rewrite_plan (test_run_state.RunnerTests.test_proxy_plan_results_cannot_launder_invalid_admission_or_rewrite_plan) ... FAIL
+test_proxy_plan_shared_entry_counts_once (test_run_state.RunnerTests.test_proxy_plan_shared_entry_counts_once) ... FAIL
+test_proxy_plan_simulator_cannot_stand_in_for_hardware (test_run_state.RunnerTests.test_proxy_plan_simulator_cannot_stand_in_for_hardware) ... FAIL
+test_recommendation_is_not_defect (test_run_state.RunnerTests.test_recommendation_is_not_defect) ... ok
+test_recurring_defect_reopens_verified (test_run_state.RunnerTests.test_recurring_defect_reopens_verified) ... ok
+test_refuted_scope_cannot_be_prefilled (test_run_state.RunnerTests.test_refuted_scope_cannot_be_prefilled) ... ok
+test_renderer_has_seven_numbered_outputs_and_findings (test_run_state.RunnerTests.test_renderer_has_seven_numbered_outputs_and_findings) ... ok
+test_reported_explanation_can_refute_earlier_target_observation (test_run_state.RunnerTests.test_reported_explanation_can_refute_earlier_target_observation) ... ok
+test_reported_wiring_override_requires_evidence (test_run_state.RunnerTests.test_reported_wiring_override_requires_evidence) ... ok
+test_results_application_basis_cannot_authorize_new_fix_or_changes (test_run_state.RunnerTests.test_results_application_basis_cannot_authorize_new_fix_or_changes) ... ok
+test_results_do_not_mutate_input (test_run_state.RunnerTests.test_results_do_not_mutate_input) ... ok
+test_script_total_budget (test_run_state.RunnerTests.test_script_total_budget) ... ok
+test_seven_modules_ten_areas (test_run_state.RunnerTests.test_seven_modules_ten_areas) ... ok
+test_shared_entry_counts_once (test_run_state.RunnerTests.test_shared_entry_counts_once) ... ok
+test_simulator_keyboard_target_allowed (test_run_state.RunnerTests.test_simulator_keyboard_target_allowed) ... ok
+test_simulator_performance_target_rejected (test_run_state.RunnerTests.test_simulator_performance_target_rejected) ... ok
+test_static_only_verified_rejected (test_run_state.RunnerTests.test_static_only_verified_rejected) ... ok
+test_stub_blocks_real_share_claim (test_run_state.RunnerTests.test_stub_blocks_real_share_claim) ... ok
+test_supported_baseline_supersession_keeps_history (test_run_state.RunnerTests.test_supported_baseline_supersession_keeps_history) ... ok
+test_two_entries_fit_three_entry_reservation (test_run_state.RunnerTests.test_two_entries_fit_three_entry_reservation) ... ok
+test_unavailable_capability_cannot_claim_execution (test_run_state.RunnerTests.test_unavailable_capability_cannot_claim_execution) ... ok
+test_unclassified_observed_failure_is_not_assumed_proxy (test_run_state.RunnerTests.test_unclassified_observed_failure_is_not_assumed_proxy) ... ok
+test_unconfirmed_build_stays_limited (test_run_state.RunnerTests.test_unconfirmed_build_stays_limited) ... ok
+test_unconfirmed_device_fix_build_result_remains_recordable (test_run_state.RunnerTests.test_unconfirmed_device_fix_build_result_remains_recordable) ... ok
+test_unfixed_bare_pass_stays_open (test_run_state.RunnerTests.test_unfixed_bare_pass_stays_open) ... ok
+test_unfixed_verified_rejected (test_run_state.RunnerTests.test_unfixed_verified_rejected) ... ok
+test_unknown_build_stays_unknown_when_confirmed (test_run_state.RunnerTests.test_unknown_build_stays_unknown_when_confirmed) ... ok
+test_unknown_dependency_blocks_verified (test_run_state.RunnerTests.test_unknown_dependency_blocks_verified) ... ok
+test_unknown_determinism_is_intermittent (test_run_state.RunnerTests.test_unknown_determinism_is_intermittent) ... ok
+test_unrelated_failure_does_not_erase_valid_prior_refutation (test_run_state.RunnerTests.test_unrelated_failure_does_not_erase_valid_prior_refutation) ... ok
+test_unrelated_unknown_preserves_geometry (test_run_state.RunnerTests.test_unrelated_unknown_preserves_geometry) ... ok
+test_untested_hypothesis_not_no_defect (test_run_state.RunnerTests.test_untested_hypothesis_not_no_defect) ... ok
+test_verified_target_fix_accepted (test_run_state.RunnerTests.test_verified_target_fix_accepted) ... ok
+test_wrong_actual_configuration_rejected (test_run_state.RunnerTests.test_wrong_actual_configuration_rejected) ... ok
+test_wrong_build_rejected (test_run_state.RunnerTests.test_wrong_build_rejected) ... ok
+test_wrong_configuration_cannot_fill_applied_fix_plan (test_run_state.RunnerTests.test_wrong_configuration_cannot_fill_applied_fix_plan) ... ok
+test_wrong_scope_supersession_rejected (test_run_state.RunnerTests.test_wrong_scope_supersession_rejected) ... ok
+test_wrong_state_rejected (test_run_state.RunnerTests.test_wrong_state_rejected) ... ok
+
+======================================================================
+FAIL: test_proxy_plan_admits_distinct_phone_build_without_rewriting_scope (test_run_state.RunnerTests.test_proxy_plan_admits_distinct_phone_build_without_rewriting_scope)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 179, in test_proxy_plan_admits_distinct_phone_build_without_rewriting_scope
+    a = self.assert_valid(s)
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 103, in assert_valid
+    self.assertEqual(a['errors'], [], a['errors'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['F-01/proxy-mouse: applied device fix omi[80 chars]ope'] != []
+
+First list contains 2 additional elements.
+First extra element 0:
+'F-01/proxy-mouse: applied device fix omits affected scope'
+
++ []
+- ['F-01/proxy-mouse: applied device fix omits affected scope',
+-  'F-01/C-01: required fix check does not cover an affected scope'] : ['F-01/proxy-mouse: applied device fix omits affected scope', 'F-01/C-01: required fix check does not cover an affected scope']
+
+======================================================================
+FAIL: test_proxy_plan_cli_valid_incomplete_generates_reports_without_device_pass (test_run_state.RunnerTests.test_proxy_plan_cli_valid_incomplete_generates_reports_without_device_pass)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 331, in test_proxy_plan_cli_valid_incomplete_generates_reports_without_device_pass
+    self.assertEqual(out.returncode, 3, out.stdout + out.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 3 : {
+  "errors": [
+    "F-01/proxy-mouse: applied device fix omits affected scope",
+    "F-01/C-01: required fix check does not cover an affected scope"
+  ],
+  "gaps": [
+    "F-01: confirmed finding is implemented",
+    "Required checks remain unrun or no required checks were recorded",
+    "C-01: required verification incomplete"
+  ],
+  "coverage": "complete",
+  "assessment_complete": true,
+  "verification": "incomplete",
+  "verification_ceiling": "proxy",
+  "impeccable": "executed",
+  "open_p0_p1": [
+    "F-01"
+  ],
+  "applied_device_entries": [],
+  "claimable_complete": false
+}
+
+
+======================================================================
+FAIL: test_proxy_plan_failure_and_unconfirmed_build_remain_recordable (test_run_state.RunnerTests.test_proxy_plan_failure_and_unconfirmed_build_remain_recordable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 286, in test_proxy_plan_failure_and_unconfirmed_build_remain_recordable
+    self.assert_valid(result)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 103, in assert_valid
+    self.assertEqual(a['errors'], [], a['errors'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['Pre-results application basis is invalid[120 chars]ope'] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+'Pre-results application basis is invalid: F-01/proxy-mouse: applied device fix omits affected scope; F-01/C-01: required fix check does not cover an affected scope'
+
++ []
+- ['Pre-results application basis is invalid: F-01/proxy-mouse: applied device '
+-  'fix omits affected scope; F-01/C-01: required fix check does not cover an '
+-  'affected scope'] : ['Pre-results application basis is invalid: F-01/proxy-mouse: applied device fix omits affected scope; F-01/C-01: required fix check does not cover an affected scope']
+
+======================================================================
+FAIL: test_proxy_plan_keeps_authorization_budget_and_priority_guards (test_run_state.RunnerTests.test_proxy_plan_keeps_authorization_budget_and_priority_guards)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 243, in test_proxy_plan_keeps_authorization_budget_and_priority_guards
+    self.assert_valid(s)
+    ~~~~~~~~~~~~~~~~~^^^
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 103, in assert_valid
+    self.assertEqual(a['errors'], [], a['errors'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['F-01/proxy-mouse: applied device fix omi[80 chars]ope'] != []
+
+First list contains 2 additional elements.
+First extra element 0:
+'F-01/proxy-mouse: applied device fix omits affected scope'
+
++ []
+- ['F-01/proxy-mouse: applied device fix omits affected scope',
+-  'F-01/C-01: required fix check does not cover an affected scope'] : ['F-01/proxy-mouse: applied device fix omits affected scope', 'F-01/C-01: required fix check does not cover an affected scope']
+
+======================================================================
+FAIL: test_proxy_plan_partial_shared_result_does_not_invent_second_pass (test_run_state.RunnerTests.test_proxy_plan_partial_shared_result_does_not_invent_second_pass)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 305, in test_proxy_plan_partial_shared_result_does_not_invent_second_pass
+    self.assert_valid(s)
+    ~~~~~~~~~~~~~~~~~^^^
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 103, in assert_valid
+    self.assertEqual(a['errors'], [], a['errors'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['F-01/proxy-mouse: applied device fix omi[80 chars]ope'] != []
+
+First list contains 2 additional elements.
+First extra element 0:
+'F-01/proxy-mouse: applied device fix omits affected scope'
+
++ []
+- ['F-01/proxy-mouse: applied device fix omits affected scope',
+-  'F-01/C-01: required fix check does not cover an affected scope'] : ['F-01/proxy-mouse: applied device fix omits affected scope', 'F-01/C-01: required fix check does not cover an affected scope']
+
+======================================================================
+FAIL: test_proxy_plan_phone_pass_is_not_original_scope_verification (test_run_state.RunnerTests.test_proxy_plan_phone_pass_is_not_original_scope_verification)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 275, in test_proxy_plan_phone_pass_is_not_original_scope_verification
+    self.assert_valid(result)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 103, in assert_valid
+    self.assertEqual(a['errors'], [], a['errors'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['Pre-results application basis is invalid[120 chars]ope'] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+'Pre-results application basis is invalid: F-01/proxy-mouse: applied device fix omits affected scope; F-01/C-01: required fix check does not cover an affected scope'
+
++ []
+- ['Pre-results application basis is invalid: F-01/proxy-mouse: applied device '
+-  'fix omits affected scope; F-01/C-01: required fix check does not cover an '
+-  'affected scope'] : ['Pre-results application basis is invalid: F-01/proxy-mouse: applied device fix omits affected scope; F-01/C-01: required fix check does not cover an affected scope']
+
+======================================================================
+FAIL: test_proxy_plan_rejects_empty_duplicate_and_unknown_links (test_run_state.RunnerTests.test_proxy_plan_rejects_empty_duplicate_and_unknown_links)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 232, in test_proxy_plan_rejects_empty_duplicate_and_unknown_links
+    self.assert_valid(s)
+    ~~~~~~~~~~~~~~~~~^^^
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 103, in assert_valid
+    self.assertEqual(a['errors'], [], a['errors'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['F-01/proxy-mouse: applied device fix omi[80 chars]ope'] != []
+
+First list contains 2 additional elements.
+First extra element 0:
+'F-01/proxy-mouse: applied device fix omits affected scope'
+
++ []
+- ['F-01/proxy-mouse: applied device fix omits affected scope',
+-  'F-01/C-01: required fix check does not cover an affected scope'] : ['F-01/proxy-mouse: applied device fix omits affected scope', 'F-01/C-01: required fix check does not cover an affected scope']
+
+======================================================================
+FAIL: test_proxy_plan_rejects_incomplete_regression_conditions (test_run_state.RunnerTests.test_proxy_plan_rejects_incomplete_regression_conditions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 225, in test_proxy_plan_rejects_incomplete_regression_conditions
+    self.assert_valid(s)
+    ~~~~~~~~~~~~~~~~~^^^
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 103, in assert_valid
+    self.assertEqual(a['errors'], [], a['errors'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['F-01/proxy-mouse: applied device fix omi[80 chars]ope'] != []
+
+First list contains 2 additional elements.
+First extra element 0:
+'F-01/proxy-mouse: applied device fix omits affected scope'
+
++ []
+- ['F-01/proxy-mouse: applied device fix omits affected scope',
+-  'F-01/C-01: required fix check does not cover an affected scope'] : ['F-01/proxy-mouse: applied device fix omits affected scope', 'F-01/C-01: required fix check does not cover an affected scope']
+
+======================================================================
+FAIL: test_proxy_plan_rejects_missing_origin_requirement (test_run_state.RunnerTests.test_proxy_plan_rejects_missing_origin_requirement)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 189, in test_proxy_plan_rejects_missing_origin_requirement
+    self.assert_valid(s)
+    ~~~~~~~~~~~~~~~~~^^^
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 103, in assert_valid
+    self.assertEqual(a['errors'], [], a['errors'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['F-01/proxy-mouse: applied device fix omi[80 chars]ope'] != []
+
+First list contains 2 additional elements.
+First extra element 0:
+'F-01/proxy-mouse: applied device fix omits affected scope'
+
++ []
+- ['F-01/proxy-mouse: applied device fix omits affected scope',
+-  'F-01/C-01: required fix check does not cover an affected scope'] : ['F-01/proxy-mouse: applied device fix omits affected scope', 'F-01/C-01: required fix check does not cover an affected scope']
+
+======================================================================
+FAIL: test_proxy_plan_rejects_missing_required_entry (test_run_state.RunnerTests.test_proxy_plan_rejects_missing_required_entry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 203, in test_proxy_plan_rejects_missing_required_entry
+    self.assert_valid(s)
+    ~~~~~~~~~~~~~~~~~^^^
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 103, in assert_valid
+    self.assertEqual(a['errors'], [], a['errors'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['F-01/proxy-mouse: applied device fix omi[146 chars]ope'] != []
+
+First list contains 3 additional elements.
+First extra element 0:
+'F-01/proxy-mouse: applied device fix omits affected scope'
+
++ []
+- ['F-01/proxy-mouse: applied device fix omits affected scope',
+-  'F-01/C-01: required fix check does not cover an affected scope',
+-  'F-01/C-02: required fix check does not cover an affected scope'] : ['F-01/proxy-mouse: applied device fix omits affected scope', 'F-01/C-01: required fix check does not cover an affected scope', 'F-01/C-02: required fix check does not cover an affected scope']
+
+======================================================================
+FAIL: test_proxy_plan_rejects_out_of_plan_regression_result (test_run_state.RunnerTests.test_proxy_plan_rejects_out_of_plan_regression_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 316, in test_proxy_plan_rejects_out_of_plan_regression_result
+    with self.assertRaises(ValueError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_proxy_plan_rejects_target_or_unclassified_observation_shortcut (test_run_state.RunnerTests.test_proxy_plan_rejects_target_or_unclassified_observation_shortcut)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 197, in test_proxy_plan_rejects_target_or_unclassified_observation_shortcut
+    self.assert_valid(s)
+    ~~~~~~~~~~~~~~~~~^^^
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 103, in assert_valid
+    self.assertEqual(a['errors'], [], a['errors'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['F-01/proxy-mouse: applied device fix omi[80 chars]ope'] != []
+
+First list contains 2 additional elements.
+First extra element 0:
+'F-01/proxy-mouse: applied device fix omits affected scope'
+
++ []
+- ['F-01/proxy-mouse: applied device fix omits affected scope',
+-  'F-01/C-01: required fix check does not cover an affected scope'] : ['F-01/proxy-mouse: applied device fix omits affected scope', 'F-01/C-01: required fix check does not cover an affected scope']
+
+======================================================================
+FAIL: test_proxy_plan_rejects_wrong_regression_build_or_missing_fix (test_run_state.RunnerTests.test_proxy_plan_rejects_wrong_regression_build_or_missing_fix)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 217, in test_proxy_plan_rejects_wrong_regression_build_or_missing_fix
+    self.assert_valid(s)
+    ~~~~~~~~~~~~~~~~~^^^
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 103, in assert_valid
+    self.assertEqual(a['errors'], [], a['errors'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['F-01/proxy-mouse: applied device fix omi[80 chars]ope'] != []
+
+First list contains 2 additional elements.
+First extra element 0:
+'F-01/proxy-mouse: applied device fix omits affected scope'
+
++ []
+- ['F-01/proxy-mouse: applied device fix omits affected scope',
+-  'F-01/C-01: required fix check does not cover an affected scope'] : ['F-01/proxy-mouse: applied device fix omits affected scope', 'F-01/C-01: required fix check does not cover an affected scope']
+
+======================================================================
+FAIL: test_proxy_plan_rejects_wrong_regression_configuration (test_run_state.RunnerTests.test_proxy_plan_rejects_wrong_regression_configuration)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 210, in test_proxy_plan_rejects_wrong_regression_configuration
+    self.assert_valid(s)
+    ~~~~~~~~~~~~~~~~~^^^
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 103, in assert_valid
+    self.assertEqual(a['errors'], [], a['errors'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['F-01/proxy-mouse: applied device fix omi[80 chars]ope'] != []
+
+First list contains 2 additional elements.
+First extra element 0:
+'F-01/proxy-mouse: applied device fix omits affected scope'
+
++ []
+- ['F-01/proxy-mouse: applied device fix omits affected scope',
+-  'F-01/C-01: required fix check does not cover an affected scope'] : ['F-01/proxy-mouse: applied device fix omits affected scope', 'F-01/C-01: required fix check does not cover an affected scope']
+
+======================================================================
+FAIL: test_proxy_plan_render_separates_observed_scope_from_device_regressions (test_run_state.RunnerTests.test_proxy_plan_render_separates_observed_scope_from_device_regressions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 322, in test_proxy_plan_render_separates_observed_scope_from_device_regressions
+    self.assertIn('Device regression requirements', report)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'Device regression requirements' not found in 'Ceiling: proxy (desktop_emulation); limits: physical_device declared, no available simulator or physical device; assessment complete; verification incomplete.\n\n# Mobile UX audit — 20261021T002919Z-78f8fbe6\n\n## 1. Verdict\n\nMode: audit_and_fix. Principal task: Complete checkout.\nOpen P0/P1: F-01.\nEvidence declarations are not independently authenticated by the helper.\n\n## 2. Coverage\n\nStanding substitutions (scoped to environment/build):\n```json\n[]\n```\n\n| Area | Disposition | Environments used | Highest level | What remains |\n| --- | --- | --- | --- | --- |\n| 1. Reach and placement | no_defect_found | desktop_emulation | proxy | Checked fixture scenario |\n| 2. Viewport and safe areas | defects_found | desktop_emulation | proxy | Checked fixture scenario |\n| 3. Touch targets | no_defect_found | desktop_emulation | proxy | Checked fixture scenario |\n| 4. Forms and keyboard | no_defect_found | desktop_emulation | proxy | Checked fixture scenario |\n| 5. Gestures and scrolling | no_defect_found | desktop_emulation | proxy | Checked fixture scenario |\n| 6. Overlays, navigation and dense data | no_defect_found | desktop_emulation | proxy | Checked fixture scenario |\n| 7. Content priority | no_defect_found | desktop_emulation | proxy | Checked fixture scenario |\n| 8. Performance | no_defect_found | desktop_emulation | proxy | Checked fixture scenario |\n| 9. Errors and recovery | no_defect_found | desktop_emulation | proxy | Checked fixture scenario |\n| 10. Accessibility on mobile | no_defect_found | desktop_emulation | proxy | Checked fixture scenario |\n\n## 3. Findings by severity\n\n### F-01: CTA may be hidden\n\nP1 · observed · **implemented**\n\nWhere: form.css:10. Expected: CTA visible. Actual: CTA predicted hidden.\nCause: Fixed sizing. Disposition reason: \n\nAffected scope, retained evidence, fix and history:\n```json\n{\n  "affects": [\n    {\n      "id": "proxy-mouse",\n      "conditions": {\n        "build_id": "B-1",\n        "browser": "Playwright WebKit 26.6",\n        "device": "Linux desktop emulation",\n        "state": "mouse at 390px",\n        "account_data": "seeded test account A",\n        "setup": "open /checkout",\n        "steps": [\n          "Focus final field"\n        ],\n        "timing": "after layout settles",\n        "substitutions": "test fixture A"\n      }\n    }\n  ],\n  "refuted_scopes": [],\n  "evidence": [\n    {\n      "ref": "fixture: mouse trace",\n      "level": "proxy",\n      "observation": "fail",\n      "scope_ids": [\n        "proxy-mouse"\n      ]\n    }\n  ],\n  "fix": {\n    "applied": true,\n    "applied_before_run": false,\n    "device_dependent": true,\n    "build_id": "B-2",\n    "evidence": [\n      "fixture: diff"\n    ],\n    "required_check_ids": [\n      "C-01"\n    ],\n    "device_regressions": [\n      {\n        "id": "DR-1",\n        "source_scope_ids": [\n          "proxy-mouse"\n        ],\n        "environment": "physical_device",\n        "behavior": "software_keyboard",\n        "expected": "Focused controls remain visible without a main-landmark scroll reset",\n        "conditions": {\n          "build_id": "B-phone",\n          "browser": "Safari",\n          "device": "iPhone",\n          "state": "phone-state-0",\n          "account_data": "seeded test account A",\n          "setup": "open /checkout",\n          "steps": [\n            "Focus final field"\n          ],\n          "timing": "after layout settles",\n          "substitutions": "test fixture A"\n        },\n        "depends_on": []\n      }\n    ]\n  },\n  "contrary_evidence": [],\n  "status_history": null\n}\n```\n\nChecks (environment, level, substitutions, expected and actual):\n```json\n[\n  {\n    "id": "C-PROXY",\n    "module": 2,\n    "required": true,\n    "scenario": "Keyboard visibility",\n    "environment": "desktop_emulation",\n    "evidence_type": "emulation",\n    "driver": "agent",\n    "capability_id": "E-proxy",\n    "level": "proxy",\n    "behavior": "software_keyboard",\n    "build_id": "B-2",\n    "build_confirmed": true,\n    "setup_confirmed": true,\n    "configuration": {\n      "browser": "Playwright WebKit 26.6",\n      "device": "Linux desktop emulation",\n      "os": "iOS 26",\n      "version": "26.1"\n    },\n    "conditions": {\n      "build_id": "B-2",\n      "browser": "Playwright WebKit 26.6",\n      "device": "Linux desktop emulation",\n      "state": "mouse at 390px",\n      "account_data": "seeded test account A",\n      "setup": "open /checkout",\n      "steps": [\n        "Focus final field"\n      ],\n      "timing": "after layout settles",\n      "substitutions": "test fixture A"\n    },\n    "expected": "CTA remains visible",\n    "actual": "CTA remains visible",\n    "status": "pass",\n    "evidence": [\n      "fixture: screenshot"\n    ],\n    "reason": "",\n    "depends_on": [],\n    "substitutions": {\n      "build": {\n        "status": "none_checked",\n        "items": [],\n        "unknown_boundaries": [],\n        "evidence": [\n          "fixture: wiring inspected"\n        ],\n        "reason": ""\n      },\n      "setup": {\n        "status": "none_checked",\n        "items": [],\n        "unknown_boundaries": [],\n        "evidence": [\n          "fixture: wiring inspected"\n        ],\n        "reason": ""\n      },\n      "additional": {\n        "status": "none_checked",\n        "items": [],\n        "unknown_boundaries": [],\n        "evidence": [\n          "fixture: wiring inspected"\n        ],\n        "reason": ""\n      }\n    },\n    "covers": [\n      {\n        "finding_id": "F-01",\n        "scope_id": "proxy-mouse"\n      }\n    ],\n    "steps": [\n      "Focus final field"\n    ],\n    "setup": "Test account"\n  }\n]\n```\n\n## 4. Recommendations\n\n```json\n[]\n```\n\n## 5. Changes made\n\n```json\n[]\n```\n\n## 6. Device check script\n\nBudget: 6 entries. Applied device-fix reservation: 0/3.\n\n### C-01 [] {\'browser\': \'Safari\', \'device\': \'iPhone\', \'os\': \'iOS 26\', \'version\': \'26.1\'}\n\nBuild: B-phone\nSubstitutions active in this check (build/setup/additional):\n```json\n{\n  "build": {\n    "status": "none_checked",\n    "items": [],\n    "unknown_boundaries": [],\n    "evidence": [\n      "fixture: wiring inspected"\n    ],\n    "reason": ""\n  },\n  "setup": {\n    "status": "none_checked",\n    "items": [],\n    "unknown_boundaries": [],\n    "evidence": [\n      "fixture: wiring inspected"\n    ],\n    "reason": ""\n  },\n  "additional": {\n    "status": "none_checked",\n    "items": [],\n    "unknown_boundaries": [],\n    "evidence": [\n      "fixture: wiring inspected"\n    ],\n    "reason": ""\n  }\n}\n```\n\nSetup: Test account\n\nSteps:\n1. Focus final field\n\nExpected: CTA remains visible\n\nResult: ___\nBuild and setup as tested (confirm each, or note differences): ___\nNotes: ___\nScreenshot: ___\n\nBeyond budget (titles only):\n\nNone.\n\n## 7. Open questions\n\n- F-01/proxy-mouse: applied device fix omits affected scope\n- F-01/C-01: required fix check does not cover an affected scope\n- F-01: confirmed finding is implemented\n- Required checks remain unrun or no required checks were recorded\n- C-01: required verification incomplete\n\n## Run provenance\n\n```json\n{\n  "capabilities": [\n    {\n      "id": "E-1",\n      "environment": "physical_device",\n      "driver": "person",\n      "status": "declared",\n      "evidence": [],\n      "reason": "Phone not run"\n    },\n    {\n      "id": "E-proxy",\n      "environment": "desktop_emulation",\n      "driver": "agent",\n      "status": "available",\n      "evidence": [\n        "fixture: proxy trace"\n      ],\n      "reason": ""\n    }\n  ],\n  "builds": [\n    {\n      "id": "B-1",\n      "description": "baseline",\n      "contains_fixes": [],\n      "substitutions": {\n        "status": "none_checked",\n        "items": [],\n        "unknown_boundaries": [],\n        "evidence": [\n          "fixture: wiring inspected"\n        ],\n        "reason": ""\n      }\n    },\n    {\n      "id": "B-2",\n      "description": "fixed",\n      "contains_fixes": [\n        "F-01"\n      ],\n      "substitutions": {\n        "status": "none_checked",\n        "items": [],\n        "unknown_boundaries": [],\n        "evidence": [\n          "fixture: wiring inspected"\n        ],\n        "reason": ""\n      }\n    },\n    {\n      "id": "B-phone",\n      "description": "planned fixed phone build",\n      "contains_fixes": [\n        "F-01"\n      ],\n      "substitutions": {\n        "status": "none_checked",\n        "items": [],\n        "unknown_boundaries": [],\n        "evidence": [\n          "fixture: wiring inspected"\n        ],\n        "reason": ""\n      }\n    }\n  ],\n  "modules": [\n    {\n      "id": 1,\n      "name": "Principal journey and mobile UX",\n      "status": "reviewed",\n      "evidence": [\n        "fixture: reviewed"\n      ],\n      "reason": ""\n    },\n    {\n      "id": 2,\n      "name": "Viewport, browser chrome and safe areas",\n      "status": "reviewed",\n      "evidence": [\n        "fixture: reviewed"\n      ],\n      "reason": ""\n    },\n    {\n      "id": 3,\n      "name": "Virtual keyboard and forms",\n      "status": "reviewed",\n      "evidence": [\n        "fixture: reviewed"\n      ],\n      "reason": ""\n    },\n    {\n      "id": 4,\n      "name": "Touch targets, reach and feedback",\n      "status": "reviewed",\n      "evidence": [\n        "fixture: reviewed"\n      ],\n      "reason": ""\n    },\n    {\n      "id": 5,\n      "name": "Overlays, navigation and data",\n      "status": "reviewed",\n      "evidence": [\n        "fixture: reviewed"\n      ],\n      "reason": ""\n    },\n    {\n      "id": 6,\n      "name": "Gestures and scrolling",\n      "status": "reviewed",\n      "evidence": [\n        "fixture: reviewed"\n      ],\n      "reason": ""\n    },\n    {\n      "id": 7,\n      "name": "Performance, pending states and recovery",\n      "status": "reviewed",\n      "evidence": [\n        "fixture: reviewed"\n      ],\n      "reason": ""\n    }\n  ],\n  "commands": [],\n  "cleanup": {\n    "status": "done",\n    "evidence": [\n      "fixture: no owned processes remain"\n    ],\n    "reason": ""\n  },\n  "history": []\n}\n```\n'
+
+======================================================================
+FAIL: test_proxy_plan_results_cannot_launder_invalid_admission_or_rewrite_plan (test_run_state.RunnerTests.test_proxy_plan_results_cannot_launder_invalid_admission_or_rewrite_plan)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 296, in test_proxy_plan_results_cannot_launder_invalid_admission_or_rewrite_plan
+    self.assert_valid(result)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 103, in assert_valid
+    self.assertEqual(a['errors'], [], a['errors'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['Pre-results application basis is invalid[120 chars]ope'] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+'Pre-results application basis is invalid: F-01/proxy-mouse: applied device fix omits affected scope; F-01/C-01: required fix check does not cover an affected scope'
+
++ []
+- ['Pre-results application basis is invalid: F-01/proxy-mouse: applied device '
+-  'fix omits affected scope; F-01/C-01: required fix check does not cover an '
+-  'affected scope'] : ['Pre-results application basis is invalid: F-01/proxy-mouse: applied device fix omits affected scope; F-01/C-01: required fix check does not cover an affected scope']
+
+======================================================================
+FAIL: test_proxy_plan_shared_entry_counts_once (test_run_state.RunnerTests.test_proxy_plan_shared_entry_counts_once)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 261, in test_proxy_plan_shared_entry_counts_once
+    self.assertEqual(self.assert_valid(s)['applied_device_entries'], ['C-01'])
+                     ~~~~~~~~~~~~~~~~~^^^
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 103, in assert_valid
+    self.assertEqual(a['errors'], [], a['errors'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['F-01/proxy-mouse: applied device fix omi[207 chars]ope'] != []
+
+First list contains 4 additional elements.
+First extra element 0:
+'F-01/proxy-mouse: applied device fix omits affected scope'
+
++ []
+- ['F-01/proxy-mouse: applied device fix omits affected scope',
+-  'F-01/C-01: required fix check does not cover an affected scope',
+-  'F-02/proxy-mouse: applied device fix omits affected scope',
+-  'F-02/C-01: required fix check does not cover an affected scope'] : ['F-01/proxy-mouse: applied device fix omits affected scope', 'F-01/C-01: required fix check does not cover an affected scope', 'F-02/proxy-mouse: applied device fix omits affected scope', 'F-02/C-01: required fix check does not cover an affected scope']
+
+======================================================================
+FAIL: test_proxy_plan_simulator_cannot_stand_in_for_hardware (test_run_state.RunnerTests.test_proxy_plan_simulator_cannot_stand_in_for_hardware)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 265, in test_proxy_plan_simulator_cannot_stand_in_for_hardware
+    self.assert_valid(s)
+    ~~~~~~~~~~~~~~~~~^^^
+  File "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source/skills/mobile-web-ux-runner/tests/test_run_state.py", line 103, in assert_valid
+    self.assertEqual(a['errors'], [], a['errors'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['F-01/proxy-mouse: applied device fix omi[80 chars]ope'] != []
+
+First list contains 2 additional elements.
+First extra element 0:
+'F-01/proxy-mouse: applied device fix omits affected scope'
+
++ []
+- ['F-01/proxy-mouse: applied device fix omits affected scope',
+-  'F-01/C-01: required fix check does not cover an affected scope'] : ['F-01/proxy-mouse: applied device fix omits affected scope', 'F-01/C-01: required fix check does not cover an affected scope']
+
+----------------------------------------------------------------------
+Ran 104 tests in 0.733s
+
+FAILED (failures=18)

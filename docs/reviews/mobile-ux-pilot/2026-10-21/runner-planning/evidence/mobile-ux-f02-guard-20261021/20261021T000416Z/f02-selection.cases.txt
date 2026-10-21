@@ -1,0 +1,63 @@
+async (page) => {
+  const browser = page.context().browser();
+  const origin = new URL(page.url()).origin;
+  const checks = [];
+  const expected = ['Mood: 4 of 5, Good', 'Energy: 3 of 5, Steady'];
+  const assert = (ok, message, detail) => { if (!ok) throw new Error(message + ' ' + JSON.stringify(detail)); };
+  const settle = (p) => p.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+  for (const [method, total] of [['mouse', 12], ['touch', 4], ['keyboard', 4]]) {
+    for (let trial = 1; trial <= total; trial++) {
+      const context = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, reducedMotion: 'reduce' });
+      await context.route(/https:\/\/([^/]*\.)?stripe\.(com|network)\//, (route) => route.abort('blockedbyclient'));
+      await context.addInitScript(() => {
+        window.__bandTrace = [];
+        const record = (kind, extra) => window.__bandTrace.push({ kind, y: scrollY, t: performance.now(), activeTag: document.activeElement?.tagName, activeId: document.activeElement?.id, ...extra });
+        const original = window.scrollBy;
+        window.scrollBy = function (...args) { record('scrollBy', { args }); return original.apply(this, args); };
+        for (const type of ['pointerdown', 'pointerup', 'focusin', 'change']) document.addEventListener(type, (e) => record(type, { target: e.target?.getAttribute?.('aria-label') || e.target?.id || e.target?.tagName, pointerType: e.pointerType || null }), true);
+      });
+      const p = await context.newPage();
+      p.setDefaultTimeout(7000);
+      const pageErrors = [];
+      p.on('pageerror', (error) => pageErrors.push(String(error)));
+      try {
+        await p.goto(origin + '/');
+        await p.locator('.today-check-in').waitFor();
+        // Keep the original rapid native-anchor/label sequence; no diagnostic suppression or router settling control.
+        await p.getByRole('navigation', { name: 'Today sections' }).getByRole('link', { name: 'Check-in', exact: true }).click();
+        for (const name of expected) {
+          const radio = p.getByRole('radio', { name, exact: true });
+          if (method === 'mouse') await radio.locator('..').click();
+          else if (method === 'touch') await radio.locator('..').tap();
+          else await radio.press('Space');
+        }
+        await settle(p);
+        const selection = await p.evaluate(() => ({ checked: [...document.querySelectorAll('.today-check-in input:checked')].map((e) => e.getAttribute('aria-label')), trace: window.__bandTrace, y: scrollY }));
+        assert(expected.every((name) => selection.checked.includes(name)), 'Band selection was lost', selection);
+        assert(!selection.trace.some((e) => e.kind === 'scrollBy' && e.activeTag === 'MAIN'), 'Main landmark triggered focus-reveal scrolling', selection);
+        let saved = null;
+        if (trial === 1) {
+          const note = 'F-02 local check: café — 日本語 🙂';
+          await p.getByRole('textbox', { name: 'Reflection note', exact: false }).fill(note);
+          await p.getByRole('button', { name: 'Save check-in', exact: true }).click();
+          await p.waitForFunction(() => /^Saved /.test(document.querySelector('.today-check-in-status').textContent));
+          const calls = await p.evaluate(() => window.mobileAudit.state.calls.filter((x) => x.name === 'saveDailyCheckIn').length);
+          assert(calls === 1, 'Unexpected synthetic save count', calls);
+          await p.reload();
+          await p.locator('.today-check-in').waitFor();
+          await settle(p);
+          saved = await p.evaluate(() => ({ note: document.querySelector('textarea[name=note]').value, checked: [...document.querySelectorAll('.today-check-in input:checked')].map((e) => e.getAttribute('aria-label')) }));
+          assert(saved.note === note && expected.every((name) => saved.checked.includes(name)), 'Reload did not retain the synthetic save', saved);
+        }
+        assert(pageErrors.length === 0, 'Unexpected page errors', pageErrors);
+        checks.push({ name: method + ' band activation trial ' + trial, method, trial, passed: true, details: { ...selection, saved } });
+      } catch (error) {
+        const trace = await p.evaluate(() => window.__bandTrace).catch(() => []);
+        checks.push({ name: method + ' band activation trial ' + trial, method, trial, passed: false, error: String(error), trace, pageErrors });
+      } finally {
+        await context.close();
+      }
+    }
+  }
+  return { engine: browser.browserType().name(), version: browser.version(), level: 'proxy', sourceState: 'F-01/F-03 plus exact minimal F-02 guard; no diagnostic event suppression', inputLimits: 'Desktop mouse, synthetic touch and keyboard at mobile viewport; not physical-device evidence', checks };
+}

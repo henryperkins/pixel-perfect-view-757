@@ -1,0 +1,483 @@
+{
+  "suite_revision": "2026-10-20-r2",
+  "suite_sha256": "40da748ef3947c45f82eecc2624c5f7213d91898c65f0afd6438934a30efb8d3",
+  "executed_on": "2026-10-20",
+  "harness": "Seven fresh-context agents handled seven independent records each; one further fresh agent handled the unchanged U47 input. Separate graders inspected complete responses. Exact backend model identity, tokens and latency were not exposed.",
+  "scope": "Agent decision fixtures only. No live app, browser, backend or device audit. Native plugin-eval benchmark unavailable because Codex CLI is absent.",
+  "first_pass": {
+    "attempt": "r1",
+    "case_count": 49,
+    "pass": 48,
+    "fail": 1,
+    "critical_checks": 145,
+    "critical_checks_passed": 144
+  },
+  "latest_summary": {
+    "cases": 49,
+    "pass": 49,
+    "fail": 0,
+    "critical_checks": 145,
+    "critical_checks_passed": 145
+  },
+  "interpretation": "Latest per-case outcomes across the full first pass and a targeted U47 rerun; the other 48 cases were not rerun after the targeted reporting clarification. Final helper was tested separately.",
+  "runtime_r1_hashes": {
+    "SKILL.md": "f6a38a5b4920b1aec0d67c7b3062f57f3bfc420cb44f61f610c3f9f68fbb70a6",
+    "agents/openai.yaml": "43b19b88c35566d3bda085db964ba23558784c5d9a37dfb6b21275c3078ed8b6",
+    "references/checks-01.md": "22118b7b698362d5437893b5cedf311dacbc1a6a5d6ad5c08e31e454a94de812",
+    "references/checks-02.md": "a384383530bed52424715e97bb70bc987ae7b0b531d672166aad05614ae9e2dc",
+    "references/checks-03.md": "4f35fd82b8bef720db11d30e1418e1d328d28fac48d381bb946ad1a942b4f605",
+    "references/checks-04.md": "cc1d9a4a8a94b822617c7c8504797519545a1708092d3ae01641500deda3d4eb",
+    "references/checks-05.md": "1f65bd83873aab6989605606c2df5cb1908b4199401d1f143f3630554463013c",
+    "references/checks-06.md": "7527fbaaeb263a6e82ae768a54433f761b9602c88486db0cf463188b140e0a29",
+    "references/checks-07.md": "fffd6ef20140b3ae1ad263cb86413c0457e02d8fc4776ac70e7c8f769764a9c1",
+    "references/evidence-contract.md": "d60f15a5cab4985d8901ef9674c708e4d6722cccb5031877b00b2b2ce437c907",
+    "references/impeccable-routing.md": "ba362f0d8dc808d34e4506dc536b6676e1a3bbdf0f6bdc43f16afd91c5be01ea",
+    "references/ledger-schema.md": "2766803bea3b02b5dd63a876360bfd67da9870888287e8cfcfe23c9949bf2648",
+    "references/reporting.md": "e94295128603d77020e5e382c2eb3ce9c31a5f405fd73c925113cc83eac1cb42",
+    "references/sources.md": "4541daa563147916b8b4751444f4222396468692ac93e2b3c678163991c36726",
+    "references/workflow.md": "1e04dfcf79f32e72956120881a8aecd0dc691f784ceeb8c995dd62f123c9e26f",
+    "scripts/run_state.py": "aea2c080f7224bdabc041899d4c08d410f9c50cc15707a922dccc5eb48613680"
+  },
+  "runtime_r2_hashes": {
+    "SKILL.md": "f6a38a5b4920b1aec0d67c7b3062f57f3bfc420cb44f61f610c3f9f68fbb70a6",
+    "agents/openai.yaml": "43b19b88c35566d3bda085db964ba23558784c5d9a37dfb6b21275c3078ed8b6",
+    "references/checks-01.md": "22118b7b698362d5437893b5cedf311dacbc1a6a5d6ad5c08e31e454a94de812",
+    "references/checks-02.md": "a384383530bed52424715e97bb70bc987ae7b0b531d672166aad05614ae9e2dc",
+    "references/checks-03.md": "4f35fd82b8bef720db11d30e1418e1d328d28fac48d381bb946ad1a942b4f605",
+    "references/checks-04.md": "cc1d9a4a8a94b822617c7c8504797519545a1708092d3ae01641500deda3d4eb",
+    "references/checks-05.md": "1f65bd83873aab6989605606c2df5cb1908b4199401d1f143f3630554463013c",
+    "references/checks-06.md": "7527fbaaeb263a6e82ae768a54433f761b9602c88486db0cf463188b140e0a29",
+    "references/checks-07.md": "fffd6ef20140b3ae1ad263cb86413c0457e02d8fc4776ac70e7c8f769764a9c1",
+    "references/evidence-contract.md": "d60f15a5cab4985d8901ef9674c708e4d6722cccb5031877b00b2b2ce437c907",
+    "references/impeccable-routing.md": "ba362f0d8dc808d34e4506dc536b6676e1a3bbdf0f6bdc43f16afd91c5be01ea",
+    "references/ledger-schema.md": "6563ccf61466b8847d2f9ab1d80f311d3c85360fa0690dc91f950549812d0d8f",
+    "references/reporting.md": "a36dbb66260ce55946077d3163ee50414247be37fac84fe1bbb2d72e176c93f3",
+    "references/sources.md": "4541daa563147916b8b4751444f4222396468692ac93e2b3c678163991c36726",
+    "references/workflow.md": "1e04dfcf79f32e72956120881a8aecd0dc691f784ceeb8c995dd62f123c9e26f",
+    "scripts/run_state.py": "8e1665420c2ca1bda910627cd9ec1e684b08999d9cf71fc9c46cf553b5863a33"
+  },
+  "targeted_retest": {
+    "case_id": "U47",
+    "reason": "Narrow-width target-script omission",
+    "correction": "Explicit required-condition-to-entry mapping in reporting.md",
+    "runtime": "runtime-r2",
+    "response_sha256": "f869816314598fee601a058897415ba0de0650d715d83be1d2c673fce51b2eb0",
+    "result": "pass"
+  },
+  "mechanical_tests": {
+    "unit_tests": 86,
+    "cli_checks": 8,
+    "legacy_migrations": 12,
+    "helper_sha256": "8e1665420c2ca1bda910627cd9ec1e684b08999d9cf71fc9c46cf553b5863a33"
+  },
+  "response_hashes": {
+    "responses/r1/packet-01.json": "138d9de85f4c9f17f39ee3adc9d9fbec16ad6277ce57dc3e5d1fbc5c134b3c91",
+    "responses/r1/packet-02.json": "1f419c9326779ffb8c62002dc6e09f4f773a7a53dd5bd445dfb084c551b5ce1e",
+    "responses/r1/packet-03.json": "ee3753fa917556258e102c0146404394366dddbcb26ecbadc5f3d1d07a87afda",
+    "responses/r1/packet-04.json": "ad0a39741114f31ba96fc3f739000cd0a48c626d88bc22bb92fe7c074432462b",
+    "responses/r1/packet-05.json": "a8d5bc3d01c3df6a8ceab1ed5630882e0e83b895350ff00d2b7907d73e2adcf2",
+    "responses/r1/packet-06.json": "149530142dcf5f01b51b5a8f63f6a674d5d4f46cb1c3ba5ff92425f3d1d5a522",
+    "responses/r1/packet-07.json": "98df1816fa5d9200a11469f6f0a06f6e2cf9741f44623a33579e53c1bffa714a",
+    "responses/r2/record-U47.json": "f869816314598fee601a058897415ba0de0650d715d83be1d2c673fce51b2eb0"
+  },
+  "cases": [
+    {
+      "case_id": "U01",
+      "source_case_id": "R2-01",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U02",
+      "source_case_id": "R2-02",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U03",
+      "source_case_id": "R2-03",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U04",
+      "source_case_id": "R2-04",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U05",
+      "source_case_id": "R2-05",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U06",
+      "source_case_id": "R2-06",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U07",
+      "source_case_id": "R2-07",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U08",
+      "source_case_id": "R2-08",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U09",
+      "source_case_id": "R2-09",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U10",
+      "source_case_id": "R2-10",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U11",
+      "source_case_id": "R2-11",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U12",
+      "source_case_id": "R2-12",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U13",
+      "source_case_id": "R2-13",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U14",
+      "source_case_id": "R2-14",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U15",
+      "source_case_id": "R2-15",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 2
+    },
+    {
+      "case_id": "U16",
+      "source_case_id": "R2-16",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U17",
+      "source_case_id": "R2-17",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U18",
+      "source_case_id": "R2-18",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 2
+    },
+    {
+      "case_id": "U19",
+      "source_case_id": "R2-19",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U20",
+      "source_case_id": "R2-20",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U21",
+      "source_case_id": "R2-21",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U22",
+      "source_case_id": "R2-22",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U23",
+      "source_case_id": "R2-23",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U24",
+      "source_case_id": "R2-24",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U25",
+      "source_case_id": "R2-25",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U26",
+      "source_case_id": "R2-26",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U27",
+      "source_case_id": "R2-27",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U28",
+      "source_case_id": "R2-28",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U29",
+      "source_case_id": "R2-29",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U30",
+      "source_case_id": "R2-30",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U31",
+      "source_case_id": "R2-31",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U32",
+      "source_case_id": "R2-32",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U33",
+      "source_case_id": "R2-33",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U34",
+      "source_case_id": "R2-34",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U35",
+      "source_case_id": "R2-35",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U36",
+      "source_case_id": "R2-36",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U37",
+      "source_case_id": "R2-37",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U38",
+      "source_case_id": "R2-38",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U39",
+      "source_case_id": "R2-39",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U40",
+      "source_case_id": "R2-40",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U41",
+      "source_case_id": "R2-41",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U42",
+      "source_case_id": "R2-42",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U43",
+      "source_case_id": "R2-43",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U44",
+      "source_case_id": "R2-44",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U45",
+      "source_case_id": "R2-45",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U46",
+      "source_case_id": "R2-46",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U47",
+      "source_case_id": "R2-47",
+      "first_pass": "fail",
+      "latest": "pass",
+      "latest_attempt": "r2",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U48",
+      "source_case_id": "R2-48",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    },
+    {
+      "case_id": "U49",
+      "source_case_id": "R2-49",
+      "first_pass": "pass",
+      "latest": "pass",
+      "latest_attempt": "r1",
+      "critical_checks": 3
+    }
+  ],
+  "noncritical_notes": [
+    "U32 first-pass wording calls supplied target iPhone evidence physical without explicit hardware provenance. It does not change the required geometry-versus-persistence decision.",
+    "U47 retest Android entry C-04 retains an inapplicable Safari-layout template sentence; its selected browser, actions and outcomes remain explicitly Android.",
+    "Allocation-only cases report decisions and entry mappings; they do not claim source edits or fabricate executable app details absent from fixtures."
+  ],
+  "evidence_report": "mobile-web-ux-runner-r2-migration-2026-10-20.md retains complete raw packets, responses, criterion-level grades and validation records."
+}

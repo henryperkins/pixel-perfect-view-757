@@ -1,0 +1,63 @@
+{
+  "npm_test": {
+    "exit_code": 0,
+    "total": 1211,
+    "passed": 1207,
+    "failed": 0,
+    "skipped": 4,
+    "log": "/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/npm-test.txt",
+    "skips": [
+      "real Swiss episode output retains enough evidence for existing app acceptance",
+      "explicit birth recalculation stores owned source anchors while preserving the legacy snapshot",
+      "Node and workerd produce identical complete plans for the new case sets and both bundles",
+      "strict archived-source workerd replay reproduces captured requests and outputs without provider calls"
+    ]
+  },
+  "build": {
+    "exit_code": 0,
+    "log": "/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/build.txt",
+    "warnings": [
+      "chunk larger than 500kB",
+      "ineffective dynamic import for pattern.server.ts",
+      "dependency use-client module directive warnings"
+    ]
+  },
+  "typecheck": {
+    "exit_code": 0
+  },
+  "scoped_eslint": {
+    "exit_code": 0
+  },
+  "prettier": {
+    "exit_code": 0
+  },
+  "impeccable_changed_scan": [],
+  "route_focus_browser_cases": {
+    "chromium": 7,
+    "webkit": 7,
+    "failures": 0
+  },
+  "contrast": {
+    "light_border_to_outer": 5.217826019025188,
+    "dark_border_to_outer": 6.645490175284531
+  },
+  "layout_samples": 18,
+  "layout_overflows": 0,
+  "axe_scans": 4,
+  "axe_reported_violations": 0,
+  "independent_review": {
+    "result": "No actionable findings",
+    "chromium_cases_passed": 4,
+    "webkit_cases_passed": 4,
+    "failures": 0,
+    "report": "/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/independent-review.md",
+    "limits": "Extra focus destinations and delayed navigation use declared in-memory component/loader substitutions; proxy evidence only."
+  },
+  "ledger_validation": {
+    "exit_code": 3,
+    "errors": [],
+    "state": "valid but incomplete",
+    "verification_ceiling": "proxy",
+    "remaining": "F-02 open, F-01/F-03 implemented without target verification; historical failures retained; ten physical-device entries unrun."
+  }
+}

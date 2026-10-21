@@ -1,0 +1,73 @@
+{
+  "npm_test": {
+    "exit_code": 0,
+    "total": 1211,
+    "passed": 1207,
+    "failed": 0,
+    "skipped": 4,
+    "log": "/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-ux-f02-guard-20261021/20261021T000416Z/npm-test.txt",
+    "skipped_test_lines": [
+      "\ufe63 real Swiss episode output retains enough evidence for existing app acceptance (3.182048ms) # Run the standalone Swiss service installation first.",
+      "\ufe63 explicit birth recalculation stores owned source anchors while preserving the legacy snapshot (0.136488ms) # Run the standalone Swiss service installation first.",
+      "\ufe63 Node and workerd produce identical complete plans for the new case sets and both bundles (0.364675ms) # SKIP",
+      "\ufe63 strict archived-source workerd replay reproduces captured requests and outputs without provider calls (0.524343ms) # SKIP"
+    ]
+  },
+  "typecheck": {
+    "exit_code": 0
+  },
+  "scoped_eslint": {
+    "exit_code": 0,
+    "initial_prettier_only_failure": "Retained eslint.txt; guard return was wrapped by the formatter, then eslint-final.txt passed."
+  },
+  "prettier": {
+    "exit_code": 0,
+    "initial_failure": "Retained prettier.txt; only guard return wrapping changed."
+  },
+  "git_diff_check": {
+    "exit_code": 0
+  },
+  "browser": {
+    "chromium": {
+      "version": "149.0.7827.55",
+      "shell_focus": 3,
+      "band_selection": {
+        "mouse": 12,
+        "touch": 4,
+        "keyboard": 4
+      },
+      "synthetic_save_reload_cases": 3,
+      "route_focus": 7,
+      "failures": 0,
+      "level": "proxy"
+    },
+    "webkit": {
+      "version": "26.6",
+      "shell_focus": 3,
+      "band_selection": {
+        "mouse": 12,
+        "touch": 4,
+        "keyboard": 4
+      },
+      "synthetic_save_reload_cases": 3,
+      "route_focus": 7,
+      "failures": 0,
+      "level": "proxy"
+    }
+  },
+  "physical_device_verification": "not_run",
+  "build": "not rerun for this focused guard change; no new build claim",
+  "ledger_helper": {
+    "exit_code": 2,
+    "errors": [
+      "F-02/webkit-mouse-390: required remaining target entry must fit the script before application",
+      "F-02/C-GD01: required fix check does not cover an affected scope",
+      "F-02/C-GD02: required fix check does not cover an affected scope",
+      "F-02/C-GD03: required fix check does not cover an affected scope",
+      "F-02/C-GD04: required fix check does not cover an affected scope",
+      "F-02/C-GD10: every required remaining entry must fit before application"
+    ],
+    "explanation": "The installed helper cannot validate the applied guard physical regression plan against F-02 original proxy-only affected scope. That scope names Linux desktop Playwright WebKit, while the planned checks correctly name actual phone browsers/configurations and an unprovisioned phone build. Native-control regression entries are related coverage, not evidence that the original desktop-mouse condition affected those phones. Source/proxy checks remain separate from required target checks. No original scope, browser/device, build, or achieved verification level was relabelled to obtain helper approval.",
+    "application_checks_affected": false
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "request": "Investigate ledger planning and correct records if possible, preserving scope and evidence. Physical-device checks unrun; no app/plugin changes or Git/release actions.",
+  "source_ledger": "/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-ux-f02-guard-20261021/20261021T000416Z/run.json",
+  "authorized_mutations": "New evidence/record artifacts only; prior artifact directories kept byte-identical",
+  "new_runtime_tests": false
+}

@@ -1,0 +1,13 @@
+{
+  "local_authoring_root": "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z",
+  "source_directory": "tools/mobile-web-ux-runner",
+  "ledger_directory": "docs/reviews/mobile-ux-pilot/2026-10-21/runner-planning",
+  "source_files": 25,
+  "source_hashes_unchanged": true,
+  "ledger_sha256": "d1b23122f922471e11aa346e2dfac7b9baf94ff027db7a29f6c584aefb836a9c",
+  "copied_original_evidence_files": 225,
+  "omitted_generated_cache_files": 156,
+  "original_record_paths": "preserved in raw ledgers; resolve using evidence-manifest.json",
+  "physical_device_verification": "not_run",
+  "plugin_installation_or_release": "not performed"
+}

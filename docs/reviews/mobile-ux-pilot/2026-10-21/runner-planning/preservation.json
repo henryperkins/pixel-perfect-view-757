@@ -1,0 +1,20 @@
+{
+  "original_findings": 3,
+  "original_checks": 99,
+  "executed_checks_unchanged": 69,
+  "physical_checks": 30,
+  "current_physical_checks": 10,
+  "original_scope_and_evidence_unchanged": true,
+  "validation_errors": [],
+  "candidate_report_exit": 3,
+  "candidate_ceiling": "proxy",
+  "claimable_complete": false,
+  "recorded_verification": "failed",
+  "reserved_entries": [
+    "C-GD01",
+    "C-GD02",
+    "C-GD03",
+    "C-GD04",
+    "C-GD10"
+  ]
+}

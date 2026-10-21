@@ -1,0 +1,105 @@
+The `envFile` option is deprecated, please use `envDir: false` instead.
+  ➜  Local:   http://127.0.0.1:4211/
+1:14:28 AM [vite] (client) [optimizer] bundling dependencies...
+1:15:15 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:15:15 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:15:16 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:15:16 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:15:16 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:15:17 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:15:47 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:15:47 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:15:48 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:15:48 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:15:48 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:15:49 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:15:49 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:15:49 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:15:50 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:15:50 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:15:51 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:15:51 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:15:51 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:15:52 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:15:52 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:15:54 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:16:04 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:16:04 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:16:04 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:16:05 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:16:05 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:16:05 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:16:06 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:16:06 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:16:07 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:16:07 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:16:07 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:16:08 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:16:08 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:16:09 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:16:09 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:16:10 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:16:10 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:16:10 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:16:11 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:16:11 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:16:12 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:16:12 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:16:13 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:16:13 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:16:14 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:16:14 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:16:14 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:16:15 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:16:15 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:16:16 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:16:16 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:16:17 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:16:17 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:16:18 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:16:18 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:16:18 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:16:19 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:16:19 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:16:20 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:16:20 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:16:20 AM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js?v=755b9f2a:55:10)
+1:16:21 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:16:22 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:16:23 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:16:24 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19
+1:16:25 AM [vite] (client) [console.warn] @http://127.0.0.1:4211/output/playwright/publication-20261021/vite-cache/deps/@stripe_stripe-js.js:55:19

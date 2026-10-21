@@ -1,0 +1,119 @@
+The `envFile` option is deprecated, please use `envDir: false` instead.
+  ➜  Local:   http://127.0.0.1:4208/
+11:49:20 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:49:20 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:49:22 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:49:22 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:49:23 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:49:24 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:49:25 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:49:26 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:49:28 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:49:28 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:49:30 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:49:30 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:49:32 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:49:34 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:49:36 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:49:38 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:49:40 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:49:41 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:49:43 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:49:45 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:49:47 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:49:49 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:49:50 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:49:52 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:49:53 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:49:54 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:49:55 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:50:27 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:50:28 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:50:28 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:50:29 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:50:30 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:50:30 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:50:31 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:50:32 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:50:32 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:50:33 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:50:34 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:50:35 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:50:36 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:50:38 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:51:03 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:51:03 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:51:04 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:51:04 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:52:28 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:52:30 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:52:32 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:52:34 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:52:36 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:52:38 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:52:40 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:52:41 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:52:43 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:52:45 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:52:46 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:52:48 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:53:39 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:53:39 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:53:40 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:53:40 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:53:40 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:53:41 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:53:41 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:53:42 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:53:42 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:53:43 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:53:43 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:53:44 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:53:44 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:53:45 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:53:45 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:53:47 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:54:31 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:54:32 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:54:33 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:54:34 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:54:59 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:55:00 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:55:01 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:55:03 PM [vite] (client) [console.warn] Error: Failed to load Stripe.js
+    at HTMLScriptElement.<anonymous> (http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js?v=e8bcb26f:55:10)
+11:55:14 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:55:15 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:55:16 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19
+11:55:17 PM [vite] (client) [console.warn] @http://127.0.0.1:4208/output/playwright/mobile-ux-local-fixes-20261020/20261020T234742Z/vite-cache/deps/@stripe_stripe-js.js:55:19

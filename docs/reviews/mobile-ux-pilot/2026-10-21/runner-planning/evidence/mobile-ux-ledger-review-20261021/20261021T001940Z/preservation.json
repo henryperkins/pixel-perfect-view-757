@@ -1,0 +1,19 @@
+{
+  "repo_files_checked": 2266,
+  "repo_file_changes": [],
+  "prior_artifact_files_checked": 360,
+  "prior_artifact_changes": [],
+  "plugin_instruction_files_checked": 29,
+  "plugin_instruction_changes": [],
+  "plugin_files_added": [],
+  "git_status_identical": true,
+  "head_identical": true,
+  "staged_index_identical": true,
+  "all_original_scope_and_finding_evidence_preserved": true,
+  "all_executed_check_records_preserved": true,
+  "all_check_results_and_conditions_preserved": true,
+  "current_device_entries": 10,
+  "all_physical_entries_including_history": 30,
+  "all_physical_entries_not_run": true,
+  "original_application_flags_and_mode_preserved": true
+}

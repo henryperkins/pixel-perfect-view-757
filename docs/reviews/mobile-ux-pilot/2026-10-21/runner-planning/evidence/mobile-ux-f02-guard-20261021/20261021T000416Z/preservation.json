@@ -1,0 +1,20 @@
+{
+  "baseline_file_count": 2265,
+  "baseline_files_unchanged": 2264,
+  "baseline_files_changed": [
+    "src/components/pattern/Shell.tsx"
+  ],
+  "new_status_paths": [
+    "src/components/pattern/Shell.tsx",
+    "tests/helpers/mobile-ui/shell-focus.cases.txt"
+  ],
+  "original_dirty_paths_retained": true,
+  "head": "8e0e5c933ab8bad2b3e186e70501ef8e31d82570",
+  "head_unchanged": true,
+  "index_still_empty": true,
+  "tooling_files_checked": 20,
+  "tooling_files_changed": [],
+  "source_identity_mismatches": [],
+  "prior_F01_F03_files_unchanged": true,
+  "claude_settings_preserved": true
+}

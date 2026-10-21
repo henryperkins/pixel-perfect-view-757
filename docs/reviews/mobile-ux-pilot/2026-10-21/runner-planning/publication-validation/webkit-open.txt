@@ -1,0 +1,10 @@
+### Browser `pattern-publish-wk` opened with pid 1294346.
+### Ran Playwright code
+```js
+await page.goto('http://127.0.0.1:4211');
+```
+### Page
+- Page URL: http://127.0.0.1:4211/
+- Page Title: Pattern mobile fixture
+### Snapshot
+- [Snapshot](.playwright-cli/page-2026-10-21T01-14-54-436Z.yml)

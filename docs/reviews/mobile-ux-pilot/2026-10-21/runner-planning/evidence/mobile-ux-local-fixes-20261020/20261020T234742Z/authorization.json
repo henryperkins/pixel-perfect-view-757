@@ -1,0 +1,7 @@
+{
+  "prior_run": "/home/ubuntu/pixel-perfect-view-757/output/playwright/mobile-ux-pilot-20261020/20261020T230909Z-8c54c41a/run.json",
+  "request": "Fix F-01 and F-03; investigate F-02 without applying device-dependent changes; local only, no commit/push/deployment/plugin update",
+  "mode": "audit_and_fix",
+  "device_dependent_fixes": "propose_only",
+  "head": "8e0e5c933ab8bad2b3e186e70501ef8e31d82570"
+}

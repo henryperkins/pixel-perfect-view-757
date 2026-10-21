@@ -1,0 +1,20 @@
+{
+  "pattern-before.json": {
+    "files_checked": 2266,
+    "changed": []
+  },
+  "pattern-evidence-before.json": {
+    "files_checked": 381,
+    "changed": []
+  },
+  "installed-before.json": {
+    "files_checked": 24,
+    "changed": []
+  },
+  "pattern-status-before.txt": "unchanged",
+  "pattern-head-before.txt": "unchanged",
+  "pattern-index-before.patch": "unchanged",
+  "physical_device_execution": "not_run",
+  "app_changes": false,
+  "installed_plugin_changes": false
+}

@@ -1,0 +1,11 @@
+{
+  "named_browser_sessions_closed": [
+    "pattern20-chromium",
+    "pattern20-webkit"
+  ],
+  "owned_fixture_pid": 1135772,
+  "owned_fixture_pid_present": false,
+  "loopback_4207_open": false,
+  "other_processes_stopped": false,
+  "artifacts_retained": true
+}

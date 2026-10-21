@@ -1,0 +1,23 @@
+{
+  "finding_id": "F-02",
+  "user_authorized": "Apply minimal guard locally; keep physical-device verification explicitly unrun",
+  "policy": "apply_and_hand_off",
+  "device_check_budget": 10,
+  "reserved_limit": 5,
+  "required_target_entries": [
+    "C-GD01",
+    "C-GD02",
+    "C-GD03",
+    "C-GD04",
+    "C-GD10"
+  ],
+  "entries": {
+    "C-GD01": "iPhone Safari Compact tabs: finger/native band selection, main/control focus, software keyboard/chrome/orientation/large-text transitions",
+    "C-GD02": "iPhone Safari Bottom tabs: same native selection and focus-clearance transitions",
+    "C-GD03": "iPhone Safari Top tabs: same native selection and focus-clearance transitions",
+    "C-GD04": "Android Chrome: same native selection/focus transitions plus Android Back",
+    "C-GD10": "iPhone Safari with supported external pointer, Compact tabs: original repeated mouse-label activation and focus/scroll timing"
+  },
+  "state": "All target checks not_run; no physical device/build provisioned",
+  "budget_reallocation": "Prior unrun iPhone performance trace remains historical and becomes a title-only beyond-budget item; new pointer entry receives the applied-fix priority slot. Existing VoiceOver/TalkBack and interruption entries remain unrun."
+}

@@ -1,0 +1,150 @@
+{
+  "engine": "webkit",
+  "version": "26.6",
+  "level": "proxy",
+  "checks": [
+    {
+      "name": "Focusing the main landmark preserves the current reading scroll",
+      "passed": true,
+      "details": {
+        "before": {
+          "y": 600,
+          "active": "",
+          "rect": {
+            "x": 0,
+            "y": -517,
+            "width": 390,
+            "height": 2351.171875,
+            "top": -517,
+            "right": 390,
+            "bottom": 1834.171875,
+            "left": 0
+          },
+          "top": 91,
+          "bottom": 763.03125,
+          "scrolls": []
+        },
+        "after": {
+          "y": 600,
+          "active": "main-content",
+          "rect": {
+            "x": 0,
+            "y": -517,
+            "width": 390,
+            "height": 2351.171875,
+            "top": -517,
+            "right": 390,
+            "bottom": 1834.171875,
+            "left": 0
+          },
+          "top": 91,
+          "bottom": 763.03125,
+          "scrolls": []
+        }
+      }
+    },
+    {
+      "name": "A focused reflection field still clears the fixed navigation",
+      "passed": true,
+      "details": {
+        "before": {
+          "y": 554,
+          "active": "",
+          "rect": {
+            "x": 37,
+            "y": 824.671875,
+            "width": 316,
+            "height": 90,
+            "top": 824.671875,
+            "right": 353,
+            "bottom": 914.671875,
+            "left": 37
+          },
+          "top": 91,
+          "bottom": 763.03125,
+          "scrolls": []
+        },
+        "after": {
+          "y": 705,
+          "active": "_r_0_-note",
+          "rect": {
+            "x": 37,
+            "y": 673.671875,
+            "width": 316,
+            "height": 90,
+            "top": 673.671875,
+            "right": 353,
+            "bottom": 763.671875,
+            "left": 37
+          },
+          "top": 91,
+          "bottom": 763.03125,
+          "scrolls": [
+            {
+              "args": [
+                {
+                  "top": 151.640625,
+                  "behavior": "instant"
+                }
+              ],
+              "activeTag": "TEXTAREA",
+              "activeId": "_r_0_-note"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "A focused native radio still reveals its visible label below the header",
+      "passed": true,
+      "details": {
+        "before": {
+          "y": 1154,
+          "active": "",
+          "rect": {
+            "x": 229,
+            "y": 20.671875,
+            "width": 60,
+            "height": 48,
+            "top": 20.671875,
+            "right": 289,
+            "bottom": 68.671875,
+            "left": 229
+          },
+          "top": 91,
+          "bottom": 763.03125,
+          "scrolls": []
+        },
+        "after": {
+          "y": 1083,
+          "active": "",
+          "rect": {
+            "x": 229,
+            "y": 91.671875,
+            "width": 60,
+            "height": 48,
+            "top": 91.671875,
+            "right": 289,
+            "bottom": 139.671875,
+            "left": 229
+          },
+          "top": 91,
+          "bottom": 763.03125,
+          "scrolls": [
+            {
+              "args": [
+                {
+                  "top": -70.328125,
+                  "behavior": "instant"
+                }
+              ],
+              "activeTag": "INPUT",
+              "activeId": ""
+            }
+          ]
+        },
+        "keyboardSelected": true
+      }
+    }
+  ]
+}

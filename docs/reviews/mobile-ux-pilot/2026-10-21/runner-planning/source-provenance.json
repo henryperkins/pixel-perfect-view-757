@@ -1,0 +1,112 @@
+{
+  "plugin": {
+    "plugin_id": "plugins_6acd791b10e48191967666ff64396e9a",
+    "name": "mobile-web-ux-runner",
+    "description": "An agent workflow for inspecting, fixing, and verifying mobile web UX with Impeccable, scoped changes, and evidence-backed reporting.",
+    "version": "2.0.0",
+    "current_release_id": "pluginrel_6ad7e587558c8191b51df80c5d4732c8",
+    "scope": "USER",
+    "discoverability": "PRIVATE"
+  },
+  "source_files": [
+    {
+      "path": ".codex-plugin/plugin.json",
+      "size_bytes": 1207
+    },
+    {
+      "path": "README.md",
+      "size_bytes": 1339
+    },
+    {
+      "path": "plugin.json",
+      "size_bytes": 1296
+    },
+    {
+      "path": "skills/mobile-web-ux-runner/SKILL.md",
+      "size_bytes": 5123
+    },
+    {
+      "path": "skills/mobile-web-ux-runner/agents/openai.yaml",
+      "size_bytes": 420
+    },
+    {
+      "path": "skills/mobile-web-ux-runner/references/checks-01.md",
+      "size_bytes": 4473
+    },
+    {
+      "path": "skills/mobile-web-ux-runner/references/checks-02.md",
+      "size_bytes": 6383
+    },
+    {
+      "path": "skills/mobile-web-ux-runner/references/checks-03.md",
+      "size_bytes": 6241
+    },
+    {
+      "path": "skills/mobile-web-ux-runner/references/checks-04.md",
+      "size_bytes": 3850
+    },
+    {
+      "path": "skills/mobile-web-ux-runner/references/checks-05.md",
+      "size_bytes": 5050
+    },
+    {
+      "path": "skills/mobile-web-ux-runner/references/checks-06.md",
+      "size_bytes": 3697
+    },
+    {
+      "path": "skills/mobile-web-ux-runner/references/checks-07.md",
+      "size_bytes": 6180
+    },
+    {
+      "path": "skills/mobile-web-ux-runner/references/evidence-contract.md",
+      "size_bytes": 21471
+    },
+    {
+      "path": "skills/mobile-web-ux-runner/references/impeccable-routing.md",
+      "size_bytes": 6392
+    },
+    {
+      "path": "skills/mobile-web-ux-runner/references/ledger-schema.md",
+      "size_bytes": 11533
+    },
+    {
+      "path": "skills/mobile-web-ux-runner/references/reporting.md",
+      "size_bytes": 13392
+    },
+    {
+      "path": "skills/mobile-web-ux-runner/references/sources.md",
+      "size_bytes": 8104
+    },
+    {
+      "path": "skills/mobile-web-ux-runner/references/workflow.md",
+      "size_bytes": 9466
+    },
+    {
+      "path": "skills/mobile-web-ux-runner/scripts/run_state.py",
+      "size_bytes": 72604
+    },
+    {
+      "path": "skills/mobile-web-ux-runner/tests/behavior_protocol.md",
+      "size_bytes": 2225
+    },
+    {
+      "path": "skills/mobile-web-ux-runner/tests/eval_scenarios.json",
+      "size_bytes": 45381
+    },
+    {
+      "path": "skills/mobile-web-ux-runner/tests/export_behavior_packets.py",
+      "size_bytes": 1502
+    },
+    {
+      "path": "skills/mobile-web-ux-runner/tests/last-behavior-run.json",
+      "size_bytes": 15147
+    },
+    {
+      "path": "skills/mobile-web-ux-runner/tests/test_run_state.py",
+      "size_bytes": 40615
+    }
+  ],
+  "verified_against_installed": "Same current 2.0.0 source, ignoring the extra final newline added while materializing source-reader text.",
+  "working_source": "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/source",
+  "publication": "not authorized; no update/release API will be called"
+}

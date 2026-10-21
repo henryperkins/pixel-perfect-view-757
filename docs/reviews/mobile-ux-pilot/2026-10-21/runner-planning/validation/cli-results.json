@@ -1,0 +1,146 @@
+{
+  "kind": "synthetic_cli_checks",
+  "passed": 12,
+  "failed": 0,
+  "input_preserved": true,
+  "physical_device_execution": "not_run",
+  "checks": [
+    {
+      "name": "01-init-default",
+      "args": [
+        "init",
+        "--project",
+        "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/validation/cli-fixtures",
+        "--target",
+        "/checkout",
+        "--task",
+        "Synthetic CLI fixture",
+        "--output-dir",
+        "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/validation/cli-fixtures/initialized"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "name": "02-check-incomplete",
+      "args": [
+        "check",
+        "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/validation/cli-fixtures/initialized/20261021T004010Z-a5e9d395/run.json"
+      ],
+      "expected_exit": 3,
+      "actual_exit": 3
+    },
+    {
+      "name": "03-report-incomplete",
+      "args": [
+        "report",
+        "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/validation/cli-fixtures/initialized/20261021T004010Z-a5e9d395/run.json"
+      ],
+      "expected_exit": 3,
+      "actual_exit": 3
+    },
+    {
+      "name": "04-negative-budget",
+      "args": [
+        "init",
+        "--project",
+        "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/validation/cli-fixtures",
+        "--target",
+        "/checkout",
+        "--task",
+        "Synthetic CLI fixture",
+        "--device-check-budget",
+        "-1"
+      ],
+      "expected_exit": 2,
+      "actual_exit": 2
+    },
+    {
+      "name": "05-check-complete-fixture",
+      "args": [
+        "check",
+        "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/validation/cli-fixtures/complete.json"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "name": "06-check-proxy-plan",
+      "args": [
+        "check",
+        "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/validation/cli-fixtures/proxy.json"
+      ],
+      "expected_exit": 3,
+      "actual_exit": 3
+    },
+    {
+      "name": "07-report-proxy-plan",
+      "args": [
+        "report",
+        "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/validation/cli-fixtures/proxy.json"
+      ],
+      "expected_exit": 3,
+      "actual_exit": 3
+    },
+    {
+      "name": "08-apply-partial",
+      "args": [
+        "apply-results",
+        "--input",
+        "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/validation/cli-fixtures/proxy.json",
+        "--results",
+        "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/validation/cli-fixtures/portrait-only.json",
+        "--output",
+        "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/validation/cli-fixtures/partial.json"
+      ],
+      "expected_exit": 0,
+      "actual_exit": 0
+    },
+    {
+      "name": "09-check-partial",
+      "args": [
+        "check",
+        "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/validation/cli-fixtures/partial.json"
+      ],
+      "expected_exit": 3,
+      "actual_exit": 3
+    },
+    {
+      "name": "10-reject-out-of-plan-result",
+      "args": [
+        "apply-results",
+        "--input",
+        "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/validation/cli-fixtures/proxy.json",
+        "--results",
+        "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/validation/cli-fixtures/wrong-result.json",
+        "--output",
+        "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/validation/cli-fixtures/rejected.json"
+      ],
+      "expected_exit": 2,
+      "actual_exit": 2
+    },
+    {
+      "name": "11-refuse-overwrite",
+      "args": [
+        "apply-results",
+        "--input",
+        "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/validation/cli-fixtures/proxy.json",
+        "--results",
+        "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/validation/cli-fixtures/portrait-only.json",
+        "--output",
+        "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/validation/cli-fixtures/partial.json"
+      ],
+      "expected_exit": 2,
+      "actual_exit": 2
+    },
+    {
+      "name": "12-reject-malformed-ledger",
+      "args": [
+        "check",
+        "/home/ubuntu/mobile-web-ux-runner-planning-fix-20261021/20261021T002732Z/validation/cli-fixtures/malformed.json"
+      ],
+      "expected_exit": 2,
+      "actual_exit": 2
+    }
+  ]
+}
