@@ -11,6 +11,7 @@ const server = await createServer({
   root,
   configFile: false,
   envFile: false,
+  optimizeDeps: { entries: [resolve(root, "tests/helpers/mobile-ui/main.tsx")] },
   cacheDir: resolve(
     root,
     `.playwright-cli/vite-cache-${process.env.PATTERN_MOBILE_UI_PORT ?? 4198}`,

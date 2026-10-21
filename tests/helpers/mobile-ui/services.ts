@@ -13,6 +13,10 @@ const state = {
   admin: false,
   overrides: {} as Record<string, unknown>,
   delay: 0,
+  hold: [] as string[],
+  upcomingResponses: null as Record<string, unknown> | null,
+  upcomingActive: 0,
+  upcomingMaximumActive: 0,
   fail: [],
   events: [
     {
@@ -59,6 +63,7 @@ const persist = () => {
     /* Fault fixture: server remains in memory. */
   }
 };
+const heldCalls: { name: string; resolve: () => void }[] = [];
 const ephemeris = {
   engine: "Swiss fixture",
   precision: "high",
@@ -147,6 +152,8 @@ const today = () => ({
 });
 async function call(name, args) {
   state.calls.push({ name, args: structuredClone(args), at: Date.now() });
+  if (state.hold.includes(name))
+    await new Promise<void>((resolve) => heldCalls.push({ name, resolve }));
   const wait = state.delay;
   if (wait) await new Promise((r) => setTimeout(r, wait));
   if (state.fail.includes(name)) throw new Error("Synthetic network failure");
@@ -208,6 +215,10 @@ async function call(name, args) {
         preferredDomain: null,
       };
     case "fetchUpcomingCycles":
+      if (state.upcomingResponses)
+        return structuredClone(
+          state.upcomingResponses[args.data.domain + "/" + args.data.duration],
+        );
       return {
         needsOnboarding: false,
         calculation: { status: "unavailable", reason: "Synthetic empty state" },
@@ -305,7 +316,16 @@ async function call(name, args) {
   }
 }
 Object.assign(window, {
-  mobileAudit: { state, today, pattern, resetCalls: () => (state.calls = []) },
+  mobileAudit: {
+    state,
+    today,
+    pattern,
+    resetCalls: () => (state.calls = []),
+    releaseNext: (name: string) => {
+      const index = heldCalls.findIndex((call) => call.name === name);
+      if (index !== -1) heldCalls.splice(index, 1)[0]!.resolve();
+    },
+  },
 });
 export const useServerFn = (fn) => fn;
 export const useAssistantSession = () => ({
@@ -365,7 +385,15 @@ export const fetchRememberedAssistantGrants = (args) =>
   call("fetchRememberedAssistantGrants", args);
 export const fetchSkyEvents = (args) => call("fetchSkyEvents", args);
 export const fetchToday = (args) => call("fetchToday", args);
-export const fetchUpcomingCycles = (args) => call("fetchUpcomingCycles", args);
+export const fetchUpcomingCycles = async (args) => {
+  state.upcomingActive++;
+  state.upcomingMaximumActive = Math.max(state.upcomingMaximumActive, state.upcomingActive);
+  try {
+    return await call("fetchUpcomingCycles", args);
+  } finally {
+    state.upcomingActive--;
+  }
+};
 export const linkAssistantIdentity = (args) => call("linkAssistantIdentity", args);
 export const openMembershipPortal = (args) => call("openMembershipPortal", args);
 export const previewReadingEvaluationPlan = (args) => call("previewReadingEvaluationPlan", args);
