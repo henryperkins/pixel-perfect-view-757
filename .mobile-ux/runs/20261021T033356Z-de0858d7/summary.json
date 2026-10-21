@@ -1,0 +1,125 @@
+{
+  "errors": [],
+  "gaps": [
+    "F-06/DR-F06-D01: device regression target verification not_run",
+    "F-06/DR-F06-D02: device regression target verification not_run",
+    "F-06/DR-F06-D03: device regression target verification not_run",
+    "F-06/DR-F06-D04: device regression target verification not_run",
+    "C-CUR-CH-ACCOUNT-001: current recorded failure",
+    "C-CUR-CH-ACCOUNT-002: current recorded failure",
+    "C-CUR-CH-ACCOUNT-003: current recorded failure",
+    "C-CUR-CH-ACCOUNT-004: current recorded failure",
+    "C-CUR-CH-ACCOUNT-005: current recorded failure",
+    "C-CUR-CH-ACCOUNT-006: current recorded failure",
+    "C-CUR-CH-ACCOUNT-007: current recorded failure",
+    "C-CUR-CH-ACCOUNT-008: current recorded failure",
+    "C-CUR-CH-ACCOUNT-009: current recorded failure",
+    "C-CUR-CH-ACCOUNT-010: current recorded failure",
+    "C-CUR-CH-ACCOUNT-011: current recorded failure",
+    "C-CUR-CH-ACCOUNT-012: current recorded failure",
+    "C-CUR-WK-ACCOUNT-001: current recorded failure",
+    "C-CUR-WK-ACCOUNT-002: current recorded failure",
+    "C-CUR-WK-ACCOUNT-003: current recorded failure",
+    "C-CUR-WK-ACCOUNT-004: current recorded failure",
+    "C-CUR-WK-ACCOUNT-005: current recorded failure",
+    "C-CUR-WK-ACCOUNT-006: current recorded failure",
+    "C-CUR-WK-ACCOUNT-007: current recorded failure",
+    "C-CUR-WK-ACCOUNT-008: current recorded failure",
+    "C-CUR-WK-ACCOUNT-009: current recorded failure",
+    "C-CUR-WK-ACCOUNT-010: current recorded failure",
+    "C-CUR-WK-ACCOUNT-011: current recorded failure",
+    "C-CUR-WK-ACCOUNT-012: current recorded failure",
+    "C-CUR-CH-ACCOUNT-001: required verification incomplete",
+    "C-CUR-CH-ACCOUNT-002: required verification incomplete",
+    "C-CUR-CH-ACCOUNT-003: required verification incomplete",
+    "C-CUR-CH-ACCOUNT-004: required verification incomplete",
+    "C-CUR-CH-ACCOUNT-005: required verification incomplete",
+    "C-CUR-CH-ACCOUNT-006: required verification incomplete",
+    "C-CUR-CH-ACCOUNT-007: required verification incomplete",
+    "C-CUR-CH-ACCOUNT-008: required verification incomplete",
+    "C-CUR-CH-ACCOUNT-009: required verification incomplete",
+    "C-CUR-CH-ACCOUNT-010: required verification incomplete",
+    "C-CUR-CH-ACCOUNT-011: required verification incomplete",
+    "C-CUR-CH-ACCOUNT-012: required verification incomplete",
+    "C-CUR-WK-ACCOUNT-001: required verification incomplete",
+    "C-CUR-WK-ACCOUNT-002: required verification incomplete",
+    "C-CUR-WK-ACCOUNT-003: required verification incomplete",
+    "C-CUR-WK-ACCOUNT-004: required verification incomplete",
+    "C-CUR-WK-ACCOUNT-005: required verification incomplete",
+    "C-CUR-WK-ACCOUNT-006: required verification incomplete",
+    "C-CUR-WK-ACCOUNT-007: required verification incomplete",
+    "C-CUR-WK-ACCOUNT-008: required verification incomplete",
+    "C-CUR-WK-ACCOUNT-009: required verification incomplete",
+    "C-CUR-WK-ACCOUNT-010: required verification incomplete",
+    "C-CUR-WK-ACCOUNT-011: required verification incomplete",
+    "C-CUR-WK-ACCOUNT-012: required verification incomplete",
+    "C-CUR-D01: required verification incomplete",
+    "C-CUR-D02: required verification incomplete",
+    "C-CUR-D03: required verification incomplete",
+    "C-CUR-D04: required verification incomplete",
+    "C-CUR-D05: required verification incomplete",
+    "C-CUR-D06: required verification incomplete",
+    "C-CUR-D07: required verification incomplete",
+    "C-CUR-D08: required verification incomplete",
+    "C-CUR-D09: required verification incomplete",
+    "C-CUR-D10: required verification incomplete"
+  ],
+  "coverage": "complete",
+  "assessment_complete": true,
+  "verification": "failed",
+  "verification_ceiling": "proxy",
+  "impeccable": "executed",
+  "open_p0_p1": [],
+  "applied_device_entries": [],
+  "device_regressions": [
+    {
+      "finding_id": "F-06",
+      "regression_id": "DR-F06-D01",
+      "source_scope_ids": [
+        "signed-source-policy"
+      ],
+      "check_ids": [
+        "C-FIX-D01",
+        "C-CUR-D01"
+      ],
+      "status": "not_run"
+    },
+    {
+      "finding_id": "F-06",
+      "regression_id": "DR-F06-D02",
+      "source_scope_ids": [
+        "signed-source-policy"
+      ],
+      "check_ids": [
+        "C-FIX-D02",
+        "C-CUR-D02"
+      ],
+      "status": "not_run"
+    },
+    {
+      "finding_id": "F-06",
+      "regression_id": "DR-F06-D03",
+      "source_scope_ids": [
+        "signed-source-policy"
+      ],
+      "check_ids": [
+        "C-FIX-D03",
+        "C-CUR-D03"
+      ],
+      "status": "not_run"
+    },
+    {
+      "finding_id": "F-06",
+      "regression_id": "DR-F06-D04",
+      "source_scope_ids": [
+        "signed-source-policy"
+      ],
+      "check_ids": [
+        "C-FIX-D04",
+        "C-CUR-D04"
+      ],
+      "status": "not_run"
+    }
+  ],
+  "claimable_complete": false
+}

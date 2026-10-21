@@ -1,0 +1,116 @@
+{
+  "errors": [],
+  "gaps": [
+    "F-04: confirmed finding is implemented",
+    "F-05: confirmed finding is implemented",
+    "F-06: confirmed finding is implemented",
+    "F-06/DR-F06-D01: device regression target verification not_run",
+    "F-06/DR-F06-D02: device regression target verification not_run",
+    "F-06/DR-F06-D03: device regression target verification not_run",
+    "F-06/DR-F06-D04: device regression target verification not_run",
+    "area 8: not tested",
+    "C-CH-AXE-05: current recorded failure",
+    "C-CH-AXE-06: current recorded failure",
+    "C-CH-AXE-07: current recorded failure",
+    "C-CH-EMPTY-LIGHT: current recorded failure",
+    "C-CH-EMPTY-DARK: current recorded failure",
+    "C-WK-AXE-05: current recorded failure",
+    "C-WK-AXE-06: current recorded failure",
+    "C-WK-AXE-07: current recorded failure",
+    "C-WK-EMPTY-LIGHT: current recorded failure",
+    "C-WK-EMPTY-DARK: current recorded failure",
+    "C-SOURCE-SIGNED: current recorded failure",
+    "C-CH-AXE-05: required verification incomplete",
+    "C-CH-AXE-06: required verification incomplete",
+    "C-CH-AXE-07: required verification incomplete",
+    "C-CH-EMPTY-LIGHT: required verification incomplete",
+    "C-CH-EMPTY-DARK: required verification incomplete",
+    "C-WK-AXE-05: required verification incomplete",
+    "C-WK-AXE-06: required verification incomplete",
+    "C-WK-AXE-07: required verification incomplete",
+    "C-WK-EMPTY-LIGHT: required verification incomplete",
+    "C-WK-EMPTY-DARK: required verification incomplete",
+    "C-SOURCE-SIGNED: required verification incomplete",
+    "C-LAB-ACQUISITION: required verification incomplete",
+    "C-P01: required verification incomplete",
+    "C-P02: required verification incomplete",
+    "C-P03: required verification incomplete",
+    "C-P04: required verification incomplete",
+    "C-P05: required verification incomplete",
+    "C-P06: required verification incomplete",
+    "C-P07: required verification incomplete",
+    "C-P08: required verification incomplete",
+    "C-P09: required verification incomplete",
+    "C-P10: required verification incomplete",
+    "C-FIX-D01: required verification incomplete",
+    "C-FIX-D02: required verification incomplete",
+    "C-FIX-D03: required verification incomplete",
+    "C-FIX-D04: required verification incomplete",
+    "C-FIX-D05: required verification incomplete",
+    "C-FIX-D06: required verification incomplete",
+    "C-FIX-D07: required verification incomplete",
+    "C-FIX-D08: required verification incomplete",
+    "C-FIX-D09: required verification incomplete",
+    "C-FIX-D10: required verification incomplete",
+    "Unresolved failed command: Throttled Chromium development-harness lab navigation, CPU4x/network200000Bps/150ms"
+  ],
+  "coverage": "incomplete",
+  "assessment_complete": false,
+  "verification": "failed",
+  "verification_ceiling": "proxy",
+  "impeccable": "executed",
+  "open_p0_p1": [],
+  "applied_device_entries": [
+    "C-FIX-D01",
+    "C-FIX-D02",
+    "C-FIX-D03",
+    "C-FIX-D04"
+  ],
+  "device_regressions": [
+    {
+      "finding_id": "F-06",
+      "regression_id": "DR-F06-D01",
+      "source_scope_ids": [
+        "signed-source-policy"
+      ],
+      "check_ids": [
+        "C-FIX-D01"
+      ],
+      "status": "not_run"
+    },
+    {
+      "finding_id": "F-06",
+      "regression_id": "DR-F06-D02",
+      "source_scope_ids": [
+        "signed-source-policy"
+      ],
+      "check_ids": [
+        "C-FIX-D02"
+      ],
+      "status": "not_run"
+    },
+    {
+      "finding_id": "F-06",
+      "regression_id": "DR-F06-D03",
+      "source_scope_ids": [
+        "signed-source-policy"
+      ],
+      "check_ids": [
+        "C-FIX-D03"
+      ],
+      "status": "not_run"
+    },
+    {
+      "finding_id": "F-06",
+      "regression_id": "DR-F06-D04",
+      "source_scope_ids": [
+        "signed-source-policy"
+      ],
+      "check_ids": [
+        "C-FIX-D04"
+      ],
+      "status": "not_run"
+    }
+  ],
+  "claimable_complete": false
+}
