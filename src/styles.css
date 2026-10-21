@@ -62,6 +62,7 @@
   --color-rule: var(--rule);
   --color-evidence: var(--evidence);
   --color-evidence-foreground: var(--evidence-foreground);
+  --color-scrim: var(--scrim);
   --font-serif: "Lora", Georgia, serif;
   --font-sans: "Nunito Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
@@ -91,6 +92,7 @@
   --rule: oklch(0.845 0.014 79);
   --evidence: oklch(0.956 0.015 143);
   --evidence-foreground: oklch(0.395 0.014 66);
+  --scrim: oklch(0.222 0.011 61.2 / 0.6);
   --chart-1: oklch(0.58 0.082 144);
   --chart-2: oklch(0.58 0.07 196);
   --chart-3: oklch(0.6 0.09 63);
@@ -129,6 +131,7 @@
   --rule: oklch(1 0 0 / 18%);
   --evidence: oklch(0.255 0.022 150);
   --evidence-foreground: oklch(0.79 0.012 66);
+  --scrim: oklch(0.12 0.008 61.2 / 0.72);
   --chart-1: var(--primary);
   --chart-2: oklch(0.7 0.07 196);
   --chart-3: oklch(0.74 0.09 63);
@@ -167,6 +170,25 @@
     font-family: var(--font-serif);
     font-weight: 500;
     letter-spacing: 0;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p,
+  li,
+  dd {
+    text-wrap: pretty;
+  }
+
+  /* Placeholders are examples, so they sit one step below entered text yet stay legible. */
+  ::placeholder {
+    color: var(--muted-foreground);
+    opacity: 1;
   }
 }
 
@@ -2809,7 +2831,7 @@ body {
   color: var(--foreground);
 }
 .calculator-section-note {
-  max-width: 40rem;
+  max-width: 62ch;
   margin-top: 28px;
   font-size: 0.9375rem;
   line-height: 1.75;
@@ -3012,6 +3034,7 @@ input.calculator-control {
 }
 .calculator-lists dd,
 .calculator-sources dd {
+  max-width: 62ch;
   margin-top: 6px;
   font-size: 0.9375rem;
   line-height: 1.7;
@@ -3416,6 +3439,10 @@ html[data-constrained-viewport] .mobile-journey {
 .pattern-mobile-field {
   min-width: 0;
   max-width: 100%;
+}
+/* Settings explanations keep a reading measure inside the wide privacy column. */
+.privacy-main p {
+  max-width: 62ch;
 }
 
 .today-reading h1 {

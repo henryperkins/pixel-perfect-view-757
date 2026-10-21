@@ -18,6 +18,7 @@ import {
   type BirthFormRecord,
   type BirthFormValues,
 } from "@/lib/birth-form";
+import { userFacingError } from "@/lib/user-facing-error";
 
 const inputClass =
   "pattern-mobile-field mt-1.5 w-full min-w-0 rounded-sm border border-muted-foreground bg-card px-3 py-2 text-sm focus:border-ring";
@@ -141,9 +142,7 @@ export function BirthDetailsForm({
       // Mutation errors remain beside the form; checkpoint errors need the same persistence.
       if (mounted.current)
         setCheckError(
-          error instanceof Error
-            ? error.message
-            : "Your birth details could not be saved. Please try again.",
+          userFacingError(error, "Your birth details could not be saved. Please try again."),
         );
     } finally {
       sending.current = false;
@@ -184,9 +183,7 @@ export function BirthDetailsForm({
       }
     } catch (error) {
       setCheckError(
-        error instanceof Error
-          ? error.message
-          : "Saved details could not be checked. Your draft is kept.",
+        userFacingError(error, "Saved details could not be checked. Your draft is kept."),
       );
     } finally {
       if (mounted.current) setChecking(false);
@@ -475,7 +472,10 @@ export function BirthDetailsForm({
       </fieldset>
       {(mutation.error || checkError) && (
         <div role="alert" className="border-l-2 border-destructive bg-card p-4 text-sm">
-          <p>{checkError || mutation.error?.message}</p>
+          <p>
+            {checkError ||
+              userFacingError(mutation.error, "Your birth details could not be saved.")}
+          </p>
           <p className="mt-2">
             Your draft is kept. You can check whether the save reached your account.
           </p>

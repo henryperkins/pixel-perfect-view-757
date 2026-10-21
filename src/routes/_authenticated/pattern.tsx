@@ -31,6 +31,7 @@ import {
   type PatternFeature,
 } from "@/components/pattern/pattern-view";
 import { fetchPattern } from "@/lib/pattern.functions";
+import { userFacingError } from "@/lib/user-facing-error";
 import { useAuth } from "@/hooks/useAuth";
 
 export const Route = createFileRoute("/_authenticated/pattern")({
@@ -82,7 +83,9 @@ function PatternPage() {
         ) : query.error ? (
           <div className="pattern-page-empty">
             <h2>Your chart couldn’t load</h2>
-            <p role="status">{query.error.message}</p>
+            <p role="alert">
+              {userFacingError(query.error, "We couldn’t complete the request. You can try again.")}
+            </p>
             <Button
               variant="outline"
               disabled={query.isFetching}

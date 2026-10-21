@@ -12,6 +12,7 @@ import { TimingWindow } from "@/components/pattern/TimingWindow";
 import { DOMAIN_LABEL, pointName, timingDate } from "@/components/pattern/timing";
 import { useAuth } from "@/hooks/useAuth";
 import { useCalendarQueryRefresh, useCalendarRefresh } from "@/hooks/useCalendarRefresh";
+import { userFacingError } from "@/lib/user-facing-error";
 import {
   dayRelation,
   isTravelDate,
@@ -296,7 +297,9 @@ function TimeTravelPage() {
         ) : past.error ? (
           <div className="travel-error" role="alert">
             <h2>This day couldn’t be reconstructed</h2>
-            <p>{past.error.message}</p>
+            <p>
+              {userFacingError(past.error, "We couldn’t complete the request. You can try again.")}
+            </p>
             <Button type="button" variant="outline" onClick={() => past.refetch()}>
               <RotateCcw aria-hidden="true" />
               Retry reconstruction

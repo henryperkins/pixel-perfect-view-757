@@ -52,7 +52,7 @@ export function CelestialScene({ src, children }: { src: string; children: React
       onPointerLeave={reset}
     >
       <div className="landing-art" aria-hidden="true">
-        <img src={src} width={1600} height={900} alt="" />
+        <img src={src} width={1600} height={912} alt="" decoding="async" />
       </div>
       {children}
     </section>

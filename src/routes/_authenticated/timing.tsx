@@ -14,6 +14,7 @@ import { MotionSelection } from "@/components/pattern/MotionSelection";
 import { useResultMotion } from "@/components/pattern/useBrowsingMotion";
 import { useAuth } from "@/hooks/useAuth";
 import { useCalendarQueryRefresh, useCalendarRefresh } from "@/hooks/useCalendarRefresh";
+import { userFacingError } from "@/lib/user-facing-error";
 import {
   PHASE_LABEL,
   timingDate,
@@ -177,7 +178,9 @@ function TimingPage() {
       ) : query.error ? (
         <div role="alert" className="max-w-xl rounded-md border border-destructive/40 bg-card p-5">
           <h1 className="text-3xl">Timing</h1>
-          <p className="mt-3 text-sm text-destructive">{query.error.message}</p>
+          <p className="mt-3 text-sm text-destructive">
+            {userFacingError(query.error, "Your timing windows couldn’t load. You can try again.")}
+          </p>
           <Button variant="outline" type="button" onClick={() => query.refetch()} className="mt-4">
             <RotateCcw aria-hidden="true" />
             Retry

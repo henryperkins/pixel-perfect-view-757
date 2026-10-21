@@ -9,6 +9,7 @@ import { requestPasswordReset } from "@/lib/account-security.functions";
 import { useQueryClient } from "@tanstack/react-query";
 import { currentSession } from "@/lib/auth.shared";
 import { Button } from "@/components/ui/button";
+import { userFacingError } from "@/lib/user-facing-error";
 
 export const Route = createFileRoute("/auth")({
   validateSearch: (search: Record<string, unknown>): { next?: string } =>
@@ -72,7 +73,7 @@ function AuthPage() {
       if (next) window.location.assign(next);
       else void navigate({ to: "/" });
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Sign-in failed. Please try again.");
+      setError(userFacingError(err, "Sign-in failed. Please try again."));
     } finally {
       setBusy(false);
     }

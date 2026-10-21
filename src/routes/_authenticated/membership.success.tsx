@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { Shell } from "@/components/pattern/Shell";
 import { Button } from "@/components/ui/button";
 import { refreshMembership, retryBillingContention, unwrapBilling } from "@/lib/billing.functions";
+import { userFacingError } from "@/lib/user-facing-error";
 
 export const Route = createFileRoute("/_authenticated/membership/success")({
   validateSearch: (search: Record<string, unknown>) => ({
@@ -66,7 +67,10 @@ function MembershipSuccess() {
           </p>
         ) : query.error ? (
           <p role="alert" className="mt-4">
-            {query.error.message}
+            {userFacingError(
+              query.error,
+              "We couldn’t confirm your payment yet. Check again, or manage your membership.",
+            )}
           </p>
         ) : (
           <p role="status" className="mt-4">

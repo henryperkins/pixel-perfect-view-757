@@ -11,6 +11,7 @@ import {
   signOutAll,
 } from "@/lib/account-security.functions";
 import { useAuth } from "@/hooks/useAuth";
+import { userFacingError } from "@/lib/user-facing-error";
 
 export function AccountSecurity() {
   const { session } = useAuth();
@@ -63,9 +64,7 @@ export function AccountSecurity() {
       setValue("");
       setRepeat("");
     } catch (e) {
-      setError(
-        e instanceof Error ? e.message : "Your account could not be updated. Please try again.",
-      );
+      setError(userFacingError(e, "Your account could not be updated. Please try again."));
     } finally {
       setBusy(false);
     }
@@ -135,9 +134,7 @@ export function AccountSecurity() {
                   await purgeAccountDrafts();
                   window.location.assign("/auth");
                 } catch (e) {
-                  setError(
-                    e instanceof Error ? e.message : "Sign-out could not finish. Please retry.",
-                  );
+                  setError(userFacingError(e, "Sign-out could not finish. Please retry."));
                 } finally {
                   setBusy(false);
                 }

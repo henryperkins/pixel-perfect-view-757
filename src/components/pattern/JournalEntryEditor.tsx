@@ -5,6 +5,7 @@ import type { DraftValuesMap } from "@/lib/member-drafts";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useScrollableField } from "@/hooks/useScrollableField";
+import { userFacingError } from "@/lib/user-facing-error";
 
 export interface EditableJournalEntry {
   id: string;
@@ -119,11 +120,7 @@ export function JournalEntryEditor({
             String(attempt.values.expectedRevision + 1),
           );
         } catch (failure) {
-          setError(
-            failure instanceof Error
-              ? failure.message
-              : "Your entry could not be saved. Your draft is kept.",
-          );
+          setError(userFacingError(failure, "Your entry could not be saved. Your draft is kept."));
         }
       }}
     >

@@ -8,6 +8,7 @@ import type { BirthChangeSummary } from "@/lib/pattern.server";
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import { BirthDetailsForm } from "@/components/pattern/BirthDetailsForm";
 import { fetchBirthRecord } from "@/lib/pattern.functions";
+import { userFacingError } from "@/lib/user-facing-error";
 
 export const Route = createFileRoute("/_authenticated/birth")({
   head: () => ({
@@ -117,7 +118,10 @@ function BirthPage() {
           ) : query.error ? (
             <div className="mt-8 border-l-2 border-destructive bg-card p-4">
               <p role="alert" className="text-sm text-destructive">
-                {query.error.message}
+                {userFacingError(
+                  query.error,
+                  "Your saved birth details couldn’t load. You can try again.",
+                )}
               </p>
               <Button
                 type="button"

@@ -28,6 +28,8 @@ via `@theme inline`. Components use semantic utilities only — never raw hex or
 - Evidence: `--evidence` / `--evidence-foreground` — the dedicated surface for
   provenance, calculated facts and technical disclosure blocks.
 - `--destructive` for failure states only.
+- `--scrim` warm ink overlay behind dialogs, sheets and drawers (`bg-scrim`), redefined
+  darker for `.dark`.
 - `--radius` 0.25rem. Corners stay nearly square; `rounded-sm` is the default.
 - Dark theme tokens are fully specified under `.dark` in `src/styles.css`, though the live app currently renders in warm light paper.
 
@@ -44,6 +46,12 @@ Short notes that sit under a hero (the landing principles) open with a run-in le
 `<b>` at weight 600 in `--foreground`, the rest of the sentence in `--muted-foreground`,
 each note under a hairline rule rather than a typed bullet.
 
+Headings `h1`–`h4` use `text-wrap: balance`; paragraphs, list items and definitions use
+`text-wrap: pretty`. Explanatory text inside wide columns (Privacy, the Journal intro,
+calculator notes and sources) stops at a 62ch measure. Placeholders use
+`--muted-foreground` and hold examples only; "· optional" and privacy notes sit in the
+label or help text.
+
 ## Layout
 
 - Sticky blurred header with the Pattern wordmark, tagline, active-route underline
@@ -54,7 +62,9 @@ each note under a hairline rule rather than a typed bullet.
 - `Rail` + `Field` carry calculation status: day, engine, precision, contract
   version, refresh time, row counts, time accuracy.
 - Sections are numbered where a page has a sequence ("1 · Active windows").
-- Wide tables become stacked rows on mobile rather than horizontal scroll.
+- Wide tables become stacked rows on mobile rather than horizontal scroll. The natal
+  placement table is the exception: it keeps a pinned first column and scrolls sideways
+  inside a focusable, labelled region.
 
 ## Components and patterns
 
@@ -91,3 +101,8 @@ Sentence case. Plain language first, exact values one disclosure away. Phases ar
 named Building / Exact / Fading in the interface and kept as raw engine values
 (`approaching` / `exact` / `separating`) in technical blocks. Never a promise about
 outcomes.
+
+Failure copy shows the server's member-written message, or the page's own recovery
+sentence when the failure carries browser transport or runtime wording
+(`userFacingError` in `src/lib/user-facing-error.ts`). It never claims an outcome the
+client cannot know: an unconfirmed delete or reset says it "wasn't confirmed".

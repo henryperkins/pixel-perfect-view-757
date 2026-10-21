@@ -18,7 +18,7 @@ export const Route = createFileRoute("/assistant-auth")({
   }),
   component: AssistantAuthPage,
 });
-export function AssistantAuthPage() {
+function AssistantAuthPage() {
   const { next, recovery: recoveryLink } = Route.useSearch();
   const { session, loading, error: sessionError, recovery } = useAssistantSession();
   const [mode, setMode] = useState<"signin" | "signup" | "reset">("signin");

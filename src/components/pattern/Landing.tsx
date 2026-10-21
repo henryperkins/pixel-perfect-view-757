@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 
-import celestialScene from "@/assets/celestial-browsing.jpg";
+import celestialScene from "@/assets/celestial-browsing.webp";
 import { CelestialScene } from "@/components/pattern/CelestialScene";
 import { Button } from "@/components/ui/button";
 

@@ -80,7 +80,7 @@ async (page) => {
   };
   const fields = {
     compose: async (p) => {
-      const field = p.getByRole("textbox", { name: "Entry", exact: true }).first();
+      const field = p.getByRole("textbox", { name: "Entry · optional", exact: true }).first();
       await field.waitFor();
       return field;
     },

@@ -12,6 +12,7 @@ import {
   fetchRememberedAssistantGrants,
   resetRememberedAssistantGrant,
 } from "@/lib/assistant.functions";
+import { userFacingError } from "@/lib/user-facing-error";
 
 export const Route = createFileRoute("/_authenticated/assistants")({
   head: () => ({ meta: [{ title: "Connected assistants — Pattern" }] }),
@@ -22,7 +23,7 @@ const names: Record<string, string> = {
   pattern: "Pattern and chapters",
   journal: "Journal",
 };
-export function AssistantsPage() {
+function AssistantsPage() {
   const { user } = Route.useRouteContext();
   const access = useQuery({
     queryKey: ["assistant-access", user.userId],
@@ -51,9 +52,7 @@ export function AssistantsPage() {
       await action();
       setMessage(success);
     } catch (error) {
-      setError(
-        error instanceof Error ? error.message : "The change could not be saved. Try again.",
-      );
+      setError(userFacingError(error, "The change could not be saved. Try again."));
     } finally {
       await access.refetch();
       if (session && access.data?.link) await remembered.refetch();
@@ -274,7 +273,12 @@ export function AssistantsPage() {
                   </p>
                 ) : remembered.error ? (
                   <div className="mt-3 text-sm">
-                    <p role="alert">{remembered.error.message}</p>
+                    <p role="alert">
+                      {userFacingError(
+                        remembered.error,
+                        "Remembered approvals couldn’t load. You can try again.",
+                      )}
+                    </p>
                     <Button
                       variant="outline"
                       className="mt-3 min-h-11"

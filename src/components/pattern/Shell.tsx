@@ -1,6 +1,6 @@
 import { AccountSignOutButton } from "./AccountSignOutButton";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigationMenu } from "@/hooks/useNavigationMenu";
@@ -36,7 +36,8 @@ function navLinkClass(active: boolean) {
 
 export function Shell({ children, signedIn = true }: { children: ReactNode; signedIn?: boolean }) {
   const { isAdmin } = useAuth();
-  const [progress, setProgress] = useState(0);
+  // Scroll position drives the bar directly, so scrolling never re-renders the Shell.
+  const progressRef = useRef<HTMLProgressElement>(null);
   const mainRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLElement>(null);
   const headerBarRef = useRef<HTMLDivElement>(null);
@@ -56,6 +57,8 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
     const root = document.documentElement;
     let frame = 0;
     let measureFrame = 0;
+    // Visual viewport scroll fires continuously; unchanged values must not restyle the page.
+    let written = "";
     const measure = () => {
       const headerBarHeight = headerBarRef.current?.getBoundingClientRect().height ?? 0;
       const headerHeight = headerRef.current?.getBoundingClientRect().height ?? 0;
@@ -87,6 +90,9 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
         headerRef.current && getComputedStyle(headerRef.current).position === "sticky"
           ? headerHeight
           : 0;
+      const next = `${stickyHeight}|${headerBarHeight}|${fixedHeight}`;
+      if (next === written) return;
+      written = next;
       root.style.setProperty("--pattern-header-height", `${stickyHeight}px`);
       root.style.setProperty("--pattern-header-bar-height", `${headerBarHeight}px`);
       root.style.setProperty("--pattern-bottom-nav-height", `${fixedHeight}px`);
@@ -167,7 +173,7 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
   }, [signedIn, pathname]);
 
   useEffect(() => {
-    setProgress(0);
+    if (progressRef.current) progressRef.current.value = 0;
   }, [pathname]);
 
   useEffect(() => {
@@ -290,9 +296,9 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
       if (progressFrame !== null) return;
       progressFrame = requestAnimationFrame(() => {
         const distance = document.documentElement.scrollHeight - window.innerHeight;
-        setProgress(
-          distance > 0 ? Math.min(100, Math.max(0, (window.scrollY / distance) * 100)) : 0,
-        );
+        if (progressRef.current)
+          progressRef.current.value =
+            distance > 0 ? Math.min(100, Math.max(0, (window.scrollY / distance) * 100)) : 0;
         progressFrame = null;
       });
     };
@@ -466,8 +472,9 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
           </nav>
         ) : null}
         <progress
+          ref={progressRef}
           className="reading-progress"
-          value={progress}
+          value={0}
           max={100}
           aria-label="Page reading progress"
         />

@@ -6,6 +6,7 @@ import { Shell } from "@/components/pattern/Shell";
 import { BirthDetailsForm } from "@/components/pattern/BirthDetailsForm";
 import { Button } from "@/components/ui/button";
 import { fetchBirthRecord } from "@/lib/pattern.functions";
+import { userFacingError } from "@/lib/user-facing-error";
 
 export const Route = createFileRoute("/_authenticated/onboarding")({
   head: () => ({
@@ -55,7 +56,10 @@ function Onboarding() {
         ) : query.error ? (
           <div className="mt-8 space-y-3">
             <p role="alert" className="text-sm text-destructive">
-              {query.error.message}
+              {userFacingError(
+                query.error,
+                "We couldn’t check for saved birth details. You can try again.",
+              )}
             </p>
             <Button type="button" variant="outline" onClick={() => void query.refetch()}>
               Try again

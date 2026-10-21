@@ -9,6 +9,7 @@ import {
   decideAssistantAuthorization,
 } from "@/lib/assistant.functions";
 import type { AssistantScope } from "@/lib/assistant.server";
+import { userFacingError } from "@/lib/user-facing-error";
 
 export const Route = createFileRoute("/oauth/consent")({
   ssr: false,
@@ -50,7 +51,7 @@ const identityPermissions: Record<string, string> = {
   phone: "Your phone number and its verification status, if present",
   offline_access: "Keep the connection active by renewing access tokens until you revoke access",
 };
-export function ConsentPage() {
+function ConsentPage() {
   const { authorization_id: authorizationId } = Route.useSearch();
   const { session, loading, error: sessionError } = useAssistantSession();
   const [scopes, setScopes] = useState<AssistantScope[]>(["today", "pattern"]);
@@ -84,9 +85,10 @@ export function ConsentPage() {
       window.location.assign(result.redirectUrl);
     } catch (error) {
       setError(
-        error instanceof Error
-          ? error.message
-          : "The request could not be completed. Connect again from your assistant.",
+        userFacingError(
+          error,
+          "The request could not be completed. Connect again from your assistant.",
+        ),
       );
       setBusy(false);
     }

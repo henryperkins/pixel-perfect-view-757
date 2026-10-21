@@ -9,6 +9,7 @@ import {
 } from "@/lib/pattern.functions";
 import { clearReadingContextQueries } from "@/lib/pattern-query-cache";
 import { browserTimeZone } from "@/lib/local-day";
+import { userFacingError } from "@/lib/user-facing-error";
 export function CurrentLocation({
   ownerId,
   permitted,
@@ -35,12 +36,14 @@ export function CurrentLocation({
   const edit = useMutation({
     mutationFn: (data: { latitude: number; longitude: number; timeZone: string }) => save({ data }),
     onSuccess: changed,
-    onError: (e: Error) => toast.error(e.message),
+    onError: (e: Error) =>
+      toast.error(userFacingError(e, "Your location couldn’t be saved. Try again.")),
   });
   const remove = useMutation({
     mutationFn: () => clear({}),
     onSuccess: changed,
-    onError: (e: Error) => toast.error(e.message),
+    onError: (e: Error) =>
+      toast.error(userFacingError(e, "Your location couldn’t be cleared. Try again.")),
   });
   const blocked = disabled || !permitted || query.isFetching || edit.isPending || remove.isPending;
   const current = query.data;

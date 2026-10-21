@@ -10,6 +10,7 @@ import {
   refreshMembership,
   unwrapBilling,
 } from "@/lib/billing.functions";
+import { userFacingError } from "@/lib/user-facing-error";
 
 export function MembershipSettings() {
   const query = useMembership(),
@@ -50,9 +51,7 @@ export function MembershipSettings() {
         if (action === "cancel") returnFocus();
       }
     } catch (e) {
-      setError(
-        e instanceof Error ? e.message : "Membership could not be updated. Please try again.",
-      );
+      setError(userFacingError(e, "Membership could not be updated. Please try again."));
     } finally {
       setBusy(false);
     }

@@ -26,6 +26,7 @@ import {
   updateConsent,
 } from "@/lib/pattern.functions";
 import { PROHIBITED_SOURCES, TIERS, sourcesForTier, type Tier } from "@/lib/registry";
+import { userFacingError } from "@/lib/user-facing-error";
 
 export const Route = createFileRoute("/_authenticated/privacy")({
   head: () => ({
@@ -114,7 +115,7 @@ function PrivacyPage() {
     onError: async (e: Error) => {
       await clearReadingContextQueries(qc);
       void qc.invalidateQueries({ queryKey: ["bootstrap"] });
-      toast.error(e.message);
+      toast.error(userFacingError(e, "That source setting couldn’t be changed. Try again."));
     },
   });
   const consentControlsDisabled = consentUnknown || boot.isFetching || toggle.isPending;
@@ -141,7 +142,8 @@ function PrivacyPage() {
       void qc.invalidateQueries({ queryKey: ["bootstrap"] });
       void qc.invalidateQueries({ queryKey: ["today"] });
     },
-    onError: (e: Error) => toast.error(e.message),
+    onError: (e: Error) =>
+      toast.error(userFacingError(e, "Preferences couldn’t be saved. Try again.")),
   });
 
   const addMoment = useMutation({
@@ -154,7 +156,8 @@ function PrivacyPage() {
       toast.success("Marked moment saved (encrypted).");
       void qc.invalidateQueries({ queryKey: ["journal"] });
     },
-    onError: (e: Error) => toast.error(e.message),
+    onError: (e: Error) =>
+      toast.error(userFacingError(e, "The moment couldn’t be saved. Try again.")),
   });
 
   const doExport = useMutation({
@@ -170,7 +173,8 @@ function PrivacyPage() {
       a.click();
       URL.revokeObjectURL(url);
     },
-    onError: (e: Error) => toast.error(e.message),
+    onError: (e: Error) =>
+      toast.error(userFacingError(e, "Your export couldn’t be prepared. Try again.")),
   });
 
   const doReset = useMutation({
@@ -183,7 +187,8 @@ function PrivacyPage() {
       await deviceDrafts.invalidateConsentFields({ sleep: false, stress: false });
       toast.success("Personalization reset. Your account, chart and journal are kept.");
     },
-    onError: (e: Error) => toast.error(e.message),
+    onError: (e: Error) =>
+      toast.error(userFacingError(e, "The reset wasn’t confirmed. Try again.")),
   });
   const doDelete = useMutation({
     mutationFn: () => deleteFn({ data: { password } }),
@@ -695,7 +700,10 @@ function PrivacyPage() {
                 </label>
                 {doDelete.error ? (
                   <p role="alert" className="text-sm text-destructive">
-                    {doDelete.error.message}
+                    {userFacingError(
+                      doDelete.error,
+                      "Deletion wasn’t confirmed. Pattern couldn’t be reached. Try again.",
+                    )}
                   </p>
                 ) : null}
                 <div className="flex flex-wrap gap-3">

@@ -3,6 +3,7 @@ import { EmbeddedCheckout, EmbeddedCheckoutProvider } from "@stripe/react-stripe
 import { getStripe } from "@/lib/stripe";
 import { startCheckout, unwrapBilling } from "@/lib/billing.functions";
 import type { MembershipPlan } from "@/lib/billing-policy";
+import { userFacingError } from "@/lib/user-facing-error";
 export function StripeEmbeddedCheckout({
   plan,
   onError,
@@ -14,7 +15,7 @@ export function StripeEmbeddedCheckout({
     try {
       return unwrapBilling(await startCheckout({ data: { plan } })).clientSecret;
     } catch (error) {
-      onError(error instanceof Error ? error.message : "Checkout could not open.");
+      onError(userFacingError(error, "Checkout could not open."));
       throw error;
     }
   }, [plan, onError]);

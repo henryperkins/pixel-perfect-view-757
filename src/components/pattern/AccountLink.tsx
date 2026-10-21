@@ -4,6 +4,7 @@ import { Shell } from "./Shell";
 import { Button } from "@/components/ui/button";
 import { confirmEmail, resetPassword } from "@/lib/account-security.functions";
 import { useQueryClient } from "@tanstack/react-query";
+import { userFacingError } from "@/lib/user-facing-error";
 
 export function AccountLink({ reset = false }: { reset?: boolean }) {
   const queryClient = useQueryClient();
@@ -42,7 +43,7 @@ export function AccountLink({ reset = false }: { reset?: boolean }) {
       await queryClient.invalidateQueries({ queryKey: ["session"] });
       await queryClient.invalidateQueries({ queryKey: ["account-security"] });
     } catch (e) {
-      setError(e instanceof Error ? e.message : "This link could not be used. Request a new one.");
+      setError(userFacingError(e, "This link could not be used. Request a new one."));
     } finally {
       setBusy(false);
     }

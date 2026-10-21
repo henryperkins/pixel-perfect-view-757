@@ -1,9 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
+import { RotateCcw } from "lucide-react";
 
 import { Shell } from "@/components/pattern/Shell";
+import { Button } from "@/components/ui/button";
 import { fetchPattern } from "@/lib/pattern.functions";
+import { userFacingError } from "@/lib/user-facing-error";
 
 export const Route = createFileRoute("/_authenticated/sources")({
   head: () => ({
@@ -71,11 +74,21 @@ function SourcesPage() {
           <div className="h-40 animate-pulse bg-muted" />
         </div>
       ) : q.error ? (
-        <div role="alert" className="border border-destructive p-4">
-          <p className="text-sm text-destructive">{q.error.message}</p>
-          <button className="technical mt-2 text-primary" onClick={() => q.refetch()}>
-            Retry
-          </button>
+        <div role="alert" className="max-w-xl border border-destructive p-4">
+          <h1 className="text-2xl sm:text-3xl">Chart sources</h1>
+          <p className="mt-3 text-sm text-destructive">
+            {userFacingError(q.error, "Your chart sources couldn’t load. You can try again.")}
+          </p>
+          <Button
+            type="button"
+            variant="outline"
+            disabled={q.isFetching}
+            onClick={() => void q.refetch()}
+            className="mt-4"
+          >
+            <RotateCcw aria-hidden="true" />
+            {q.isFetching ? "Trying again…" : "Try again"}
+          </Button>
         </div>
       ) : !q.data || q.data.needsOnboarding ? (
         <div className="max-w-xl">

@@ -8,6 +8,7 @@ import { PaymentTestModeBanner } from "@/components/pattern/PaymentTestModeBanne
 import { StripeEmbeddedCheckout } from "@/components/pattern/StripeEmbeddedCheckout";
 import { getStripeEnvironment } from "@/lib/stripe";
 import { AccountSignOutButton } from "@/components/pattern/AccountSignOutButton";
+import { userFacingError } from "@/lib/user-facing-error";
 
 export const Route = createFileRoute("/_authenticated/plans")({
   validateSearch: (search: Record<string, unknown>): { canceled?: boolean } => ({
@@ -51,7 +52,7 @@ function PlansPage() {
       getStripeEnvironment();
       setBusy(plan);
     } catch (e) {
-      checkoutError(e instanceof Error ? e.message : "Checkout is unavailable.");
+      checkoutError(userFacingError(e, "Checkout is unavailable."));
     }
   }
   return (

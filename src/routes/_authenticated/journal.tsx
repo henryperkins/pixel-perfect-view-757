@@ -25,6 +25,7 @@ import { useCalendarQueryRefresh, useCalendarRefresh } from "@/hooks/useCalendar
 import { useScrollableField } from "@/hooks/useScrollableField";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
+import { userFacingError } from "@/lib/user-facing-error";
 import {
   addEvent,
   editEvent,
@@ -237,7 +238,8 @@ function JournalPage() {
       await qc.invalidateQueries({ queryKey: ["journal"] });
       await qc.invalidateQueries({ queryKey: ["today"] });
     },
-    onError: (e: Error) => toast.error(e.message),
+    onError: (e: Error) =>
+      toast.error(userFacingError(e, "The entry couldn’t be saved. Your draft is kept.")),
   });
   const checkSave = async () => {
     const pending = recovery.current()?.submission;
@@ -284,7 +286,7 @@ function JournalPage() {
       });
       await qc.invalidateQueries({ queryKey: ["today"] });
     },
-    onError: (e: Error) => toast.error(e.message),
+    onError: (e: Error) => toast.error(userFacingError(e, "The entry couldn’t be deleted.")),
   });
 
   const edit = useMutation({
@@ -314,7 +316,7 @@ function JournalPage() {
         entry={entries.find((entry) => entry.id === deleteEntry) ?? null}
         open={deleteOpen}
         pending={remove.isPending}
-        error={remove.error?.message ?? null}
+        error={remove.error ? userFacingError(remove.error, "Pattern couldn’t be reached.") : null}
         onConfirm={() => {
           if (deleteEntry && !remove.isPending) remove.mutate(deleteEntry);
         }}
@@ -337,13 +339,14 @@ function JournalPage() {
       )}
       {remove.isError && !deleteOpen && (
         <p role="alert" className="text-sm text-destructive">
-          Deletion wasn’t confirmed. {remove.error.message} Check your entries before trying again.
+          Deletion wasn’t confirmed. {userFacingError(remove.error, "Pattern couldn’t be reached.")}{" "}
+          Check your entries before trying again.
         </p>
       )}
       <div className="grid animate-rise gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1fr)_16rem]">
         <div className="min-w-0">
           <h1 className="text-2xl sm:text-3xl">Journal</h1>
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+          <p className="mt-3 max-w-[62ch] text-sm leading-relaxed text-muted-foreground">
             Write what actually happened. You can attach an entry to one of today's timing windows
             and to a chapter of your pattern; the attachment is stored as it was at the moment you
             wrote, so a later recalculation never rewrites your record.
@@ -435,19 +438,25 @@ function JournalPage() {
                 />
               </label>
 
-              <label className="block">
-                <span className="technical text-muted-foreground">Entry</span>
-                <textarea
-                  ref={bodyRef}
-                  readOnly={save.isPending || checkingSave}
-                  value={body}
-                  onChange={(e) => setBody(e.target.value)}
-                  rows={6}
-                  maxLength={4000}
-                  placeholder="Optional longer note — stored encrypted"
-                  className="pattern-mobile-field mt-1 w-full rounded-sm border border-input bg-background px-3 py-2 text-sm leading-relaxed"
-                />
-              </label>
+              <div>
+                <label className="block">
+                  <span className="technical text-muted-foreground">Entry · optional</span>
+                  <textarea
+                    ref={bodyRef}
+                    readOnly={save.isPending || checkingSave}
+                    value={body}
+                    onChange={(e) => setBody(e.target.value)}
+                    rows={6}
+                    maxLength={4000}
+                    aria-describedby="journal-entry-privacy"
+                    placeholder="A longer note, if it helps"
+                    className="pattern-mobile-field mt-1 w-full rounded-sm border border-input bg-background px-3 py-2 text-sm leading-relaxed"
+                  />
+                </label>
+                <p id="journal-entry-privacy" className="mt-1 text-xs text-muted-foreground">
+                  Stored encrypted.
+                </p>
+              </div>
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="block">
@@ -567,7 +576,9 @@ function JournalPage() {
               </div>
             ) : journal.error ? (
               <div role="alert" className="mt-4 border border-destructive p-4 text-sm">
-                <p className="text-destructive">{journal.error.message}</p>
+                <p className="text-destructive">
+                  {userFacingError(journal.error, "Your entries couldn’t load. You can try again.")}
+                </p>
                 <Button
                   variant="outline"
                   type="button"
