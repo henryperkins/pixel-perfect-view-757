@@ -477,21 +477,6 @@ export function TodayCheckIn({
           </span>
         </p>
       </div>
-      <DraftRecoveryNotice
-        draft={recovery.draft}
-        candidates={recovery.recoveryCandidates}
-        durability={recovery.durability}
-        error={recovery.error}
-        onResume={recovery.resume}
-        onDiscard={async (id) => {
-          if (id === recovery.current()?.draftId) {
-            setState((previous) => ({ ...previous, draft: previous.saved, error: null }));
-            setReview(null);
-          }
-          await recovery.discard(id);
-        }}
-        entityKey={day}
-      />
       <div className="today-check-in-save mt-4 space-y-3">
         <div className="flex flex-wrap items-center gap-3">
           {needsSaveCheck ? (
@@ -566,6 +551,22 @@ export function TodayCheckIn({
           </div>
         )}
       </div>
+      {/* Below the Save row: the notice clears when a save is confirmed, and the button must not move. */}
+      <DraftRecoveryNotice
+        draft={recovery.draft}
+        candidates={recovery.recoveryCandidates}
+        durability={recovery.durability}
+        error={recovery.error}
+        onResume={recovery.resume}
+        onDiscard={async (id) => {
+          if (id === recovery.current()?.draftId) {
+            setState((previous) => ({ ...previous, draft: previous.saved, error: null }));
+            setReview(null);
+          }
+          await recovery.discard(id);
+        }}
+        entityKey={day}
+      />
       <div className="today-check-in-privacy mt-4 text-xs text-muted-foreground">
         <p id={`${formId}-privacy`}>
           Private to your account. Notes are encrypted; check-in data is never sent to the language

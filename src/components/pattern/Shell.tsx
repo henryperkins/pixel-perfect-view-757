@@ -84,6 +84,12 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
         "data-constrained-viewport",
         available - headerHeight - navHeight < Math.max(160, fieldHeight + 16),
       );
+      // Enlarged text can grow the header and bottom navigation past a third of the
+      // screen. The header then scrolls away so the page keeps the room.
+      root.toggleAttribute(
+        "data-enlarged-chrome",
+        headerHeight + navHeight > window.innerHeight / 3,
+      );
       const fixedHeight = nav && getComputedStyle(nav).position === "fixed" ? navHeight : 0;
       // A short landscape viewport keeps the header in flow, so it covers nothing.
       const stickyHeight =
@@ -169,6 +175,7 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
       root.style.removeProperty("--pattern-header-bar-height");
       root.style.removeProperty("--pattern-bottom-nav-height");
       root.removeAttribute("data-constrained-viewport");
+      root.removeAttribute("data-enlarged-chrome");
     };
   }, [signedIn, pathname]);
 

@@ -2258,6 +2258,11 @@ body {
   max-width: 46rem;
   min-width: 0;
 }
+/* Reading prose keeps a book measure (about 72 Lora characters) while panels and lists use the
+   full column. Lora's wide figures make ch overstate the measure, so it is set in em. */
+.today-reading .prose-reading {
+  max-width: 34em;
+}
 .today-sidebar {
   align-self: start;
   display: grid;
@@ -2302,6 +2307,13 @@ body {
   justify-content: space-between;
   gap: 0.5rem;
 }
+/* A saved check-in can reframe the suggestion: the old copy stays put, quieted, then settles. */
+.today-guidance :is(p:not(.today-guidance-status), li) {
+  transition: color var(--motion-fast);
+}
+.today-guidance[aria-busy="true"] :is(p, li) {
+  color: var(--muted-foreground);
+}
 .today-text-link {
   display: inline-flex;
   align-items: center;
@@ -2320,7 +2332,7 @@ body {
   justify-items: start;
   gap: 1rem;
   border: 1px solid var(--rule);
-  border-radius: 6px;
+  border-radius: var(--radius);
   padding: min(1.25rem, 20px);
   background: var(--secondary);
   font-size: 0.875rem;
@@ -2344,13 +2356,13 @@ body {
 }
 .today-window {
   border: 1px solid var(--rule);
-  border-radius: 8px;
+  border-radius: var(--radius);
   background: var(--card);
 }
 .today-window > summary {
   min-height: 72px;
   padding: 0.75rem;
-  border-radius: 8px;
+  border-radius: var(--radius);
   transition: background-color var(--motion-fast);
 }
 .today-window > summary:hover {
@@ -3428,6 +3440,9 @@ html[data-constrained-viewport] .timing-filters {
   top: auto;
 }
 html[data-constrained-viewport] .mobile-journey {
+  position: static;
+}
+html[data-enlarged-chrome] .pattern-header:not([data-menu-open="true"]) {
   position: static;
 }
 @media (prefers-reduced-motion: reduce) {

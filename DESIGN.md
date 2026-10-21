@@ -50,19 +50,23 @@ each note under a hairline rule rather than a typed bullet.
 
 Headings `h1`–`h4` use `text-wrap: balance`; paragraphs, list items and definitions use
 `text-wrap: pretty`. Explanatory text inside wide columns (Privacy, the Journal intro,
-calculator notes and sources) stops at a 62ch measure. Placeholders use
+calculator notes and sources) stops at a 62ch measure. Today's reading prose stops at
+`34em` (about 72 Lora characters; Lora's wide figures make `ch` overstate it). Placeholders use
 `--muted-foreground` and hold examples only; "· optional" and privacy notes sit in the
 label or help text.
 
 ## Layout
 
 - Sticky blurred header with the Pattern wordmark, tagline, active-route underline
-  and `aria-current`; hamburger navigation below `md`.
+  and `aria-current`; hamburger navigation below `md`. When enlarged text makes the
+  header and bottom navigation exceed a third of the viewport (`data-enlarged-chrome`),
+  the header scrolls with the page.
 - Content pages use a three-part editorial grid on wide screens
   (`Rail` · article · secondary rail) and collapse to a single column on mobile,
   with the calculation rail moved below the content.
 - `Rail` + `Field` carry calculation status: day, engine, precision, contract
-  version, refresh time, row counts, time accuracy.
+  version, refresh time, row counts, time accuracy. Today's "Reading details" opens by
+  default on wide screens and stays one tap away on phones.
 - Sections are numbered where a page has a sequence ("1 · Active windows").
 - Wide tables become stacked rows on mobile rather than horizontal scroll. The natal
   placement table is the exception: it keeps a pinned first column and scrolls sideways

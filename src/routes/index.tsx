@@ -1,7 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { createIsomorphicFn, useServerFn } from "@tanstack/react-start";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import { Button } from "@/components/ui/button";
 import { RotateCcw } from "lucide-react";
@@ -70,15 +70,32 @@ export const Route = createFileRoute("/")({
 
 function TodayPage() {
   const { visitor } = Route.useLoaderData();
-  const { session, loading } = useAuth();
+  const { session, loading, fetching, paused, status, refresh } = useAuth();
 
+  // The server saw a session, so keep the member frame while the browser confirms it.
   if (loading && !visitor) {
     return (
-      <Shell signedIn={false}>
-        <p className="technical text-muted-foreground">Loading…</p>
+      <Shell>
+        <ReadingPending paused={paused} busy={fetching} />
       </Shell>
     );
   }
+
+  // A failed check is not a signed-out answer; never show a member the landing page.
+  if (!session && status === "unavailable" && !visitor)
+    return (
+      <Shell signedIn={false}>
+        <section className="today-recovery max-w-xl">
+          <h1 className="text-3xl text-primary">We couldn’t check your sign-in</h1>
+          <p role="alert">
+            Pattern couldn’t reach your account, so today’s reading isn’t shown. You can try again.
+          </p>
+          <Button disabled={fetching} onClick={() => void refresh()}>
+            <RotateCcw aria-hidden="true" /> {fetching ? "Checking…" : "Try again"}
+          </Button>
+        </section>
+      </Shell>
+    );
 
   if (!session)
     return (
@@ -96,8 +113,30 @@ function TodayPage() {
 
 type TodayData = Extract<Awaited<ReturnType<typeof fetchToday>>, { needsOnboarding: false }>;
 
+function ReadingPending({ paused, busy }: { paused: boolean; busy: boolean }) {
+  return (
+    <div className="max-w-2xl space-y-4 [overflow-wrap:anywhere]" aria-busy={busy}>
+      <h1 className="text-3xl text-primary">
+        {paused ? "Waiting for a connection" : "Your day is taking shape"}
+      </h1>
+      <p role="status" className="text-sm text-muted-foreground">
+        {paused
+          ? "Today’s reading will load automatically when you’re back online."
+          : "Preparing today’s reading from your chart. The first reading of the day can take a little longer."}
+      </p>
+      <div aria-hidden="true" className="space-y-4">
+        <div className="h-10 w-3/4 animate-pulse rounded-sm bg-secondary" />
+        <div className="h-4 w-full animate-pulse rounded-sm bg-secondary" />
+        <div className="h-4 w-11/12 animate-pulse rounded-sm bg-secondary" />
+        <div className="h-4 w-4/5 animate-pulse rounded-sm bg-secondary" />
+      </div>
+    </div>
+  );
+}
+
 function TodayReading({ accountId }: { accountId: string }) {
   const today = useServerFn(fetchToday);
+  const client = useQueryClient();
   const [openEvidence, setOpenEvidence] = useState(false);
   const calendar = useCalendarRefresh();
   const query = useQuery({
@@ -109,24 +148,7 @@ function TodayReading({ accountId }: { accountId: string }) {
   useCalendarQueryRefresh(calendar, ["today", accountId]);
 
   if (query.isPending) {
-    return (
-      <div className="max-w-2xl space-y-4 [overflow-wrap:anywhere]" aria-busy={query.isFetching}>
-        <h1 className="text-3xl text-primary">
-          {query.isPaused ? "Waiting for a connection" : "Your day is taking shape"}
-        </h1>
-        <p role="status" className="text-sm text-muted-foreground">
-          {query.isPaused
-            ? "Today’s reading will load automatically when you’re back online."
-            : "Preparing today’s reading from your chart. The first reading of the day can take a little longer."}
-        </p>
-        <div aria-hidden="true" className="space-y-4">
-          <div className="h-10 w-3/4 animate-pulse rounded-sm bg-secondary" />
-          <div className="h-4 w-full animate-pulse rounded-sm bg-secondary" />
-          <div className="h-4 w-11/12 animate-pulse rounded-sm bg-secondary" />
-          <div className="h-4 w-4/5 animate-pulse rounded-sm bg-secondary" />
-        </div>
-      </div>
-    );
+    return <ReadingPending paused={query.isPaused} busy={query.isFetching} />;
   }
   if (query.error && !query.data) {
     return (
@@ -164,6 +186,11 @@ function TodayReading({ accountId }: { accountId: string }) {
       setOpenEvidence={setOpenEvidence}
       refreshFailed={Boolean(query.error)}
       refreshing={query.isFetching || query.isPaused}
+      // Focus refreshes repeat the same reading. Only an invalidated read, such as a
+      // saved check-in, can change the suggestion.
+      suggestionUpdating={
+        query.isFetching && Boolean(client.getQueryState(["today", accountId])?.isInvalidated)
+      }
       readingRevision={query.dataUpdatedAt}
       retry={() => void query.refetch()}
     />
@@ -177,6 +204,7 @@ function TodayContent({
   setOpenEvidence,
   refreshFailed,
   refreshing,
+  suggestionUpdating,
   readingRevision,
   retry,
 }: {
@@ -186,6 +214,7 @@ function TodayContent({
   setOpenEvidence: (open: boolean) => void;
   refreshFailed: boolean;
   refreshing: boolean;
+  suggestionUpdating: boolean;
   readingRevision: number;
   retry: () => void;
 }) {
@@ -194,6 +223,12 @@ function TodayContent({
   const phase = primary
     ? windowPhase(primary, data.day, data.timezone, data.storyCalculation)
     : null;
+  const metadataRef = useRef<HTMLDetailsElement>(null);
+  useEffect(() => {
+    // The wide layout gives these values a rail; phones keep them one tap away.
+    if (metadataRef.current && window.matchMedia("(min-width: 1024px)").matches)
+      metadataRef.current.open = true;
+  }, []);
 
   return (
     <div className="today-flow">
@@ -250,14 +285,25 @@ function TodayContent({
             </p>
           ))}
         </div>
+        <nav aria-label="Today sections" className="section-nav mt-6">
+          <a href="#today-reflection">Check-in</a>
+          <a href="#today-timing">Timing</a>
+          <a href="#today-journal">Journal</a>
+          <a
+            href="#today-evidence-section"
+            onClick={() => {
+              flushSync(() => setOpenEvidence(true));
+            }}
+          >
+            Sources
+          </a>
+        </nav>
         {!refreshFailed && !staleDay && data.localContext?.guidance ? (
-          refreshing ? (
-            <p role="status" className="mt-6 text-sm text-muted-foreground">
-              Updating today’s suggestion…
-            </p>
-          ) : (
-            <TodayGuidance guidance={data.localContext.guidance} timezone={data.timezone} />
-          )
+          <TodayGuidance
+            guidance={data.localContext.guidance}
+            timezone={data.timezone}
+            updating={suggestionUpdating}
+          />
         ) : null}
         {data.localContext?.solar ? (
           <section className="mt-5 border-t border-rule pt-4" aria-labelledby="today-solar-context">
@@ -304,19 +350,6 @@ function TodayContent({
             <EphemerisNotice state={data.ephemeris} className="mt-4" />
           ) : null}
         </details>
-        <nav aria-label="Today sections" className="section-nav mt-4">
-          <a href="#today-reflection">Check-in</a>
-          <a href="#today-timing">Timing</a>
-          <a href="#today-journal">Journal</a>
-          <a
-            href="#today-evidence-section"
-            onClick={() => {
-              flushSync(() => setOpenEvidence(true));
-            }}
-          >
-            Sources
-          </a>
-        </nav>
         <TodayFeedback
           key={data.reading.id}
           readingId={data.reading.id}
@@ -366,19 +399,21 @@ function TodayContent({
           permission={data.localContext?.markedMoments ?? false}
         />
         <section id="today-evidence-section" className="today-section">
-          <Button
-            variant="ghost"
-            type="button"
-            aria-expanded={openEvidence}
-            aria-controls="today-evidence"
-            onClick={() => setOpenEvidence(!openEvidence)}
-            className="today-evidence-toggle -mx-2 h-auto px-2 py-1.5 text-primary"
-          >
-            <span aria-hidden="true" className="today-evidence-mark">
-              {openEvidence ? "−" : "+"}
-            </span>
-            {openEvidence ? "Hide sources behind this reading" : "Sources behind this reading"}
-          </Button>
+          <h2>
+            <Button
+              variant="ghost"
+              type="button"
+              aria-expanded={openEvidence}
+              aria-controls="today-evidence"
+              onClick={() => setOpenEvidence(!openEvidence)}
+              className="today-evidence-toggle -mx-2 h-auto px-2 py-1.5 text-primary"
+            >
+              <span aria-hidden="true" className="today-evidence-mark">
+                {openEvidence ? "−" : "+"}
+              </span>
+              {openEvidence ? "Hide sources behind this reading" : "Sources behind this reading"}
+            </Button>
+          </h2>
           {openEvidence ? (
             <TodayEvidence
               readingId={data.reading.id}
@@ -393,7 +428,7 @@ function TodayContent({
         </section>
       </article>
       <aside className="today-sidebar" aria-label="Reading details">
-        <details className="today-metadata">
+        <details ref={metadataRef} className="today-metadata">
           <summary className="text-sm text-primary">Reading details</summary>
           <div className="mt-3 space-y-3">
             <Field label="Date" value={timingDate(data.day)} />

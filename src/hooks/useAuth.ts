@@ -31,6 +31,8 @@ export function useAuth() {
     user: session,
     isAdmin: session?.isAdmin ?? false,
     loading: query.isPending,
+    fetching: query.isFetching,
+    paused: query.isPaused,
     status,
     refresh,
   };
