@@ -192,7 +192,7 @@ export function AccountSecurity() {
               <label className="block text-sm">
                 Current password
                 <input
-                  className="pattern-mobile-field mt-2 min-h-11 w-full rounded-sm border border-input bg-card px-3"
+                  className="pattern-mobile-field mt-2 min-h-11 w-full rounded-sm border border-muted-foreground bg-card px-3"
                   type="password"
                   enterKeyHint="done"
                   autoComplete="current-password"
@@ -205,7 +205,7 @@ export function AccountSecurity() {
               <label className="block text-sm">
                 New {mode}
                 <input
-                  className="pattern-mobile-field mt-2 min-h-11 w-full rounded-sm border border-input bg-card px-3"
+                  className="pattern-mobile-field mt-2 min-h-11 w-full rounded-sm border border-muted-foreground bg-card px-3"
                   type={mode === "email" ? "email" : "password"}
                   autoComplete={mode === "email" ? "email" : "new-password"}
                   required
@@ -219,7 +219,7 @@ export function AccountSecurity() {
                 <label className="block text-sm">
                   Repeat new password
                   <input
-                    className="pattern-mobile-field mt-2 min-h-11 w-full rounded-sm border border-input bg-card px-3"
+                    className="pattern-mobile-field mt-2 min-h-11 w-full rounded-sm border border-muted-foreground bg-card px-3"
                     type="password"
                     enterKeyHint="done"
                     autoComplete="new-password"

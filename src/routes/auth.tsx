@@ -104,7 +104,7 @@ function AuthPage() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="pattern-mobile-field mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 font-mono text-sm outline-none focus:border-ring"
+              className="pattern-mobile-field mt-1.5 w-full rounded-sm border border-muted-foreground bg-card px-3 py-2 font-mono text-sm outline-none focus:border-ring"
             />
           </label>
           {mode !== "reset" && (
@@ -119,7 +119,7 @@ function AuthPage() {
                 minLength={8}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="pattern-mobile-field mt-1.5 w-full rounded-sm border border-input bg-card px-3 py-2 font-mono text-sm outline-none focus:border-ring"
+                className="pattern-mobile-field mt-1.5 w-full rounded-sm border border-muted-foreground bg-card px-3 py-2 font-mono text-sm outline-none focus:border-ring"
               />
             </label>
           )}
