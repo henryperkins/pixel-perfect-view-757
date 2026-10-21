@@ -20,7 +20,7 @@ import {
 } from "@/lib/birth-form";
 
 const inputClass =
-  "pattern-mobile-field mt-1.5 w-full min-w-0 rounded-sm border border-input bg-card px-3 py-2 text-sm focus:border-ring";
+  "pattern-mobile-field mt-1.5 w-full min-w-0 rounded-sm border border-muted-foreground bg-card px-3 py-2 text-sm focus:border-ring";
 const baselineFor = (record: BirthFormRecord | null) => ({
   values: birthFormValues(record),
   version: record?.revision ?? null,
@@ -311,7 +311,11 @@ export function BirthDetailsForm({
                   className="sr-only"
                 />
                 <span className="block font-medium">{option.label}</span>
-                <span className="block text-xs text-muted-foreground">{option.note}</span>
+                <span
+                  className={`block text-xs ${values.accuracy === option.value ? "text-accent-foreground" : "text-muted-foreground"}`}
+                >
+                  {option.note}
+                </span>
               </label>
             ))}
           </div>
@@ -446,9 +450,10 @@ export function BirthDetailsForm({
                         ? "Longitude"
                         : "Timezone"}
                   </span>
+                  {/* Decimal keypads can omit the minus key required by signed coordinates. */}
                   <input
                     value={values[field]}
-                    inputMode={field === "timezone" ? "text" : "decimal"}
+                    inputMode="text"
                     autoCapitalize="none"
                     autoCorrect="off"
                     spellCheck={false}
