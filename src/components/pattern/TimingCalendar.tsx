@@ -1,5 +1,5 @@
-import { useState, type ReactNode } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useRef, useState, type ReactNode } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { Button } from "@/components/ui/button";
 import { fetchUpcomingCycles, fetchSkyEvents } from "@/lib/pattern.functions";
@@ -7,6 +7,7 @@ import { LIFE_DOMAINS, type LifeDomain } from "@/lib/context-policy";
 import { useCalendarRefresh } from "@/hooks/useCalendarRefresh";
 import { CYCLE_QUERY_RETENTION, DOMAIN_LABEL, pointName } from "./timing";
 import type { UpcomingWindow, DurationFilter } from "@/lib/astro/upcoming.server";
+import { runUpcomingRequest } from "@/lib/upcoming-request";
 const EVENT_LABEL: Record<string, string> = {
   "new-moon": "New Moon",
   "full-moon": "Full Moon",
@@ -27,6 +28,8 @@ export function TimingCalendar({
   ownerId: string;
   defaultDomain: LifeDomain | "all";
 }) {
+  const queryClient = useQueryClient();
+  const upcomingHeading = useRef<HTMLHeadingElement>(null);
   const [view, setView] = useState<"active" | "upcoming" | "sky">("active"),
     [visited, setVisited] = useState<string[]>(["active"]);
   const [horizon, setHorizon] = useState<90 | 365>(90),
@@ -47,8 +50,25 @@ export function TimingCalendar({
       domain,
       duration,
     ],
-    queryFn: () =>
-      futureFn({ data: { timezone: calendar.timezone, horizonDays: horizon, domain, duration } }),
+    queryFn: ({ signal, queryKey }) =>
+      runUpcomingRequest(queryClient, signal, async (requestSignal) => {
+        const result = await futureFn({
+          data: { timezone: calendar.timezone, horizonDays: horizon, domain, duration },
+          signal: requestSignal,
+        });
+        const previous = queryClient.getQueryData<typeof result>(queryKey);
+        if (
+          !result.needsOnboarding &&
+          result.calculation.status === "unavailable" &&
+          ["transport", "timeout", "invalid_response"].includes(result.calculation.reason) &&
+          previous &&
+          !previous.needsOnboarding &&
+          previous.calculation.status === "available"
+        )
+          throw new Error("Future timing could not refresh.");
+        return result;
+      }),
+    retry: false,
     enabled: visited.includes("upcoming"),
     ...CYCLE_QUERY_RETENTION,
   });
@@ -68,6 +88,20 @@ export function TimingCalendar({
       calculation?.status === "available"
         ? calculation.windows.filter((w) => w.phase === "uncertain")
         : [];
+  const retryCalculation = (
+    <Button
+      type="button"
+      variant="outline"
+      className="my-3"
+      disabled={future.isFetching}
+      onClick={() => {
+        upcomingHeading.current?.focus();
+        void future.refetch({ cancelRefetch: false });
+      }}
+    >
+      Retry calculation
+    </Button>
+  );
   const stamp = (at: string, zone: string) =>
     new Intl.DateTimeFormat("en", {
       timeZone: zone,
@@ -101,7 +135,9 @@ export function TimingCalendar({
     <li key={w.id} className="border-b border-rule py-4">
       <details>
         <summary className="cursor-pointer py-2 font-serif text-xl">
-          {pointName(w.transitBody)} {w.aspect} natal {pointName(w.natalPoint)}
+          <span>
+            {pointName(w.transitBody)} {w.aspect} natal {pointName(w.natalPoint)}
+          </span>
         </summary>
         <dl className="mt-3 grid gap-3 text-sm sm:grid-cols-2">
           <div>
@@ -176,8 +212,12 @@ export function TimingCalendar({
         ))}
       </nav>
       <div hidden={view !== "active"}>{children}</div>
-      <section hidden={view !== "upcoming"} aria-labelledby="upcoming-title">
-        <h2 id="upcoming-title" className="font-serif text-2xl">
+      <section
+        hidden={view !== "upcoming"}
+        aria-labelledby="upcoming-title"
+        className="timing-upcoming"
+      >
+        <h2 id="upcoming-title" ref={upcomingHeading} tabIndex={-1} className="font-serif text-2xl">
           Upcoming windows
         </h2>
         <p className="mt-2 text-sm text-muted-foreground">
@@ -225,25 +265,31 @@ export function TimingCalendar({
             Clear future filters
           </Button>
         </div>
+        {future.isFetching && !future.isPending ? (
+          <p role="status">Calculating future windows…</p>
+        ) : null}
         {future.isPending ? (
           <p role="status">Calculating future windows…</p>
-        ) : future.isError ? (
-          <p role="alert">
-            Future timing could not load.{" "}
-            <Button variant="outline" onClick={() => future.refetch()}>
-              Retry calculation
-            </Button>
-          </p>
+        ) : future.isError && calculation?.status !== "available" ? (
+          <p role="alert">Future timing could not load. {retryCalculation}</p>
         ) : calculation?.status === "unavailable" ? (
-          <p role="status">
-            Future timing is unavailable
-            {calculation.reason === "unknown_time"
-              ? " with an unknown birth time"
-              : ". The qualified calculation service or natal anchors are unavailable"}
-            . Your active view remains available.
-          </p>
+          <>
+            <p role="status">
+              Future timing is unavailable
+              {calculation.reason === "unknown_time"
+                ? " with an unknown birth time"
+                : ". The qualified calculation service or natal anchors are unavailable"}
+              . Your active view remains available.
+            </p>
+            {calculation.reason !== "unknown_time" ? retryCalculation : null}
+          </>
         ) : calculation?.status === "available" ? (
           <>
+            {future.isError ? (
+              <p role="alert">
+                Future timing could not refresh. The previous calculation is still shown.
+              </p>
+            ) : null}
             {calculation.calculationStatus === "partial" ? (
               <p role="status" className="mb-4 text-sm">
                 Coverage is partial.
@@ -260,8 +306,11 @@ export function TimingCalendar({
                   : ""}
               </p>
             ) : null}
+            {future.isError || calculation.missingTargets.length ? retryCalculation : null}
             {rows.length ? (
-              <ul aria-label="Upcoming calculated windows">{rows.map(window)}</ul>
+              <ul aria-label="Upcoming calculated windows" aria-busy={future.isFetching}>
+                {rows.map(window)}
+              </ul>
             ) : (
               <p>No confirmed future starts match these filters in the calculated range.</p>
             )}
@@ -272,7 +321,7 @@ export function TimingCalendar({
                   These windows cannot be placed wholly in Active or Upcoming from the sampled birth
                   times and available bounds.
                 </p>
-                <ul>{uncertain.map(window)}</ul>
+                <ul aria-busy={future.isFetching}>{uncertain.map(window)}</ul>
               </section>
             ) : null}
             <details className="mt-5 text-sm">

@@ -1651,6 +1651,15 @@ body {
 }
 
 /* Timing: browse one calculated window at a time, with a quiet rail around it. */
+.timing-upcoming :where(label, summary, summary > span, button) {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.timing-upcoming button {
+  height: auto;
+  white-space: normal;
+}
 .timing-page {
   max-width: 58rem;
   margin-inline: auto;
