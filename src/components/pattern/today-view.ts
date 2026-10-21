@@ -60,10 +60,10 @@ export function todayFactLabel(id: string) {
   const cycle = id.match(/^C(\d+)$/);
   if (cycle) return cycle[1] === "1" ? "Primary calculated cycle" : `Calculated cycle ${cycle[1]}`;
   if (/^I\d+$/.test(id)) return "Interpretation reference";
-  if (id === "S1") return "Published synthesis";
-  if (id === "N1") return "Published natal lens";
+  if (id === "S1") return "Combined interpretation";
+  if (id === "N1") return "Published chart interpretation";
   if (id === "A1") return "Calculated contact sequence";
-  if (id === "P2") return "Published transit chapter";
+  if (id === "P2") return "Published contact interpretation";
   if (/^D\d+$/.test(id)) return "Area-of-life framing";
   if (/^P\d+$/.test(id)) return "Phase wording";
   if (/^T\d+$/.test(id)) return "Timing wording";
@@ -92,6 +92,20 @@ export function todaySourceCategory(lane: string, sourceId: string) {
   if (lane === "context") return "Your context";
   if (lane === "reflection") return "Reflection";
   return "Source";
+}
+
+/** Describe the saved source without exposing registry, rule or prompt identifiers. */
+export function todaySourceLabel(source: { label: string; detail?: unknown }) {
+  const detail = source.detail;
+  const factId =
+    (detail && typeof detail === "object" && !Array.isArray(detail)
+      ? (detail as Record<string, unknown>)["factId"]
+      : null) ?? source.label.match(/ · ([A-Z]\d+)$/)?.[1];
+  if (typeof factId === "string" && /^[A-Z]\d+$/.test(factId)) return todayFactLabel(factId);
+  if (source.label.startsWith("Interpretation ")) return "Published interpretation";
+  if (source.label.startsWith("Language layer")) return "Reading wording";
+  if (source.label.startsWith("Domain framing ")) return "Life-area context";
+  return todayHeadline(source.label);
 }
 
 export type TodayFactDescription = {
@@ -181,7 +195,7 @@ export function describeTodayFact(fact: { id: string; statement: string }): Toda
         ],
       };
     }
-    // Instructions addressed to the model are retained in Original supplied text.
+    // Do not show writing instructions as reader-facing uncertainty.
     return {
       label,
       text: fact.statement.replace(/ Their caveat will be appended separately;.*$/s, ""),

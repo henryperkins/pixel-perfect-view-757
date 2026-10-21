@@ -97,7 +97,7 @@ test("saved source illustrations explain their possible status and link to the e
 });
 
 test("synthesis has a distinct published category and saved text is presented without its instruction prefix", () => {
-  assert.equal(view.todayFactLabel("S1"), "Published synthesis");
+  assert.equal(view.todayFactLabel("S1"), "Combined interpretation");
   assert.equal(view.todayFactCategory("S1"), "Published synthesis");
   assert.equal(view.todayFactCategory("C1"), "Calculated cycle");
   assert.equal(
@@ -125,7 +125,8 @@ test("synthesis descriptions support published rule keys containing spaces", () 
     "More scope can call for a clearer structure.",
   );
   const html = render(p);
-  assert.ok(html.includes(ruleKey));
+  assert.ok(!html.includes(ruleKey));
+  assert.match(html, /saved-content-1/);
   assert.match(
     html,
     /class="mt-3 whitespace-pre-line[^"]*">More scope can call for a clearer structure\.<\/p>/,
@@ -134,10 +135,10 @@ test("synthesis descriptions support published rule keys containing spaces", () 
 
 test("saved synthesis renders its relationship, version and four local parent links", () => {
   const html = render();
-  assert.match(html, /Published synthesis/);
+  assert.match(html, /Combined interpretation/);
   assert.match(html, /Tension/);
   assert.match(html, /saved-content-1/);
-  assert.match(html, /saved-rule/);
+  assert.doesNotMatch(html, /saved-rule/);
   assert.match(html, /aria-label="Published synthesis parents"/);
   const parentList = html.match(
     /<ul[^>]*aria-label="Published synthesis parents"[^>]*>(.*?)<\/ul>/s,
@@ -147,8 +148,10 @@ test("saved synthesis renders its relationship, version and four local parent li
     assert.ok(parentList.includes(`href="#${view.todayFactId("archived/reading-1", id)}"`));
     assert.ok(html.includes(`id="${view.todayFactId("archived/reading-1", id)}"`));
   }
-  assert.match(html, /Original supplied text/);
-  assert.match(html, /Supplied · not cited in model paragraphs/);
+  assert.doesNotMatch(html, /Original supplied text/);
+  assert.match(html, /Supplied, not linked from a paragraph/);
+  assert.match(html, /Linked from a paragraph/);
+  assert.match(html, /does not prove every sentence/);
   assert.ok(!parentList.includes("I3"));
 });
 
@@ -182,9 +185,50 @@ test("archived paragraphs without saved boundaries keep fact links but no invent
   assert.ok(html.includes(`href="#${view.todayFactId(p.readingId, "S1")}"`));
 });
 
+test("source trail names saved references without raw rules, registry IDs or duplicate rows", () => {
+  const p = props();
+  p.provenance = [
+    {
+      lane: "content",
+      source_id: "AST-05",
+      label: "Interpretation hard:saturn:*",
+      detail: { bundle: "saved-content-1" },
+    },
+    {
+      lane: "content",
+      source_id: "AST-05",
+      label: "Published reference cited by language layer · S1",
+      detail: { factId: "S1" },
+    },
+    {
+      lane: "content",
+      source_id: "AST-20",
+      label: "Published natal lens reference · N1",
+      detail: { factId: "N1" },
+    },
+    {
+      lane: "content",
+      source_id: "AST-07",
+      label: "Published natal lens reference · N1",
+      detail: { factId: "N1" },
+    },
+  ];
+  const html = render(p);
+  assert.match(html, /Published interpretation/);
+  assert.match(html, /Combined interpretation/);
+  assert.equal((html.match(/Published chart interpretation/g) ?? []).length, 1);
+  assert.doesNotMatch(
+    html,
+    /hard:saturn:\*|AST-05|AST-07| · N1|Published reference cited by language layer/,
+  );
+});
+
 test("todayHeadline formats raw lowercase contact labels in sentence case and preserves authored headlines", () => {
   assert.equal(view.todayHeadline("mars square natal mercury"), "Mars square natal Mercury");
-  assert.equal(view.todayHeadline("node conjunction natal ascendant"), "North Node conjunction natal Ascendant");
+  assert.equal(
+    view.todayHeadline("node conjunction natal ascendant"),
+    "North Node conjunction natal Ascendant",
+  );
   assert.equal(
     view.todayHeadline("Leave room for an unhurried answer"),
     "Leave room for an unhurried answer",

@@ -69,8 +69,7 @@ function AssistantsPage() {
   return (
     <Shell>
       <div className="max-w-2xl">
-        <p className="technical text-muted-foreground">Your account</p>
-        <h1 className="mt-3 text-3xl">Connected assistants</h1>
+        <h1 className="text-3xl">Connected assistants</h1>
         <p className="mt-3 text-sm text-muted-foreground">
           Let an assistant read selected saved content from Pattern. You choose the areas for each
           assistant, and can stop access here at any time.
@@ -298,9 +297,6 @@ function AssistantsPage() {
                       >
                         <div className="min-w-0">
                           <h3 className="break-words font-medium">{grant.clientName}</h3>
-                          <p className="mt-1 break-all text-xs text-muted-foreground">
-                            Client: {grant.clientId}
-                          </p>
                         </div>
                         <Button
                           variant="outline"

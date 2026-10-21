@@ -69,7 +69,6 @@ function PatternPage() {
       <div className="pattern-page animate-rise">
         <header className="pattern-page-heading">
           <h1>Your pattern</h1>
-          <p>Explore the threads in your birth chart, one chapter at a time.</p>
         </header>
         {query.isPending ? (
           <div className="pattern-page-loading" aria-busy="true" aria-label="Loading your chart">
@@ -100,8 +99,8 @@ function PatternPage() {
             <span className="pattern-empty-mark">
               <Orbit aria-hidden="true" />
             </span>
-            <h2>Your pattern starts with a moment</h2>
-            <p>Add your birth details to explore your chapters and the chart behind them.</p>
+            <h2>Birth details needed</h2>
+            <p>Add your birth details to open your chapters and the chart behind them.</p>
             <Button asChild>
               <Link to="/onboarding">
                 Enter birth details <ArrowRight aria-hidden="true" />
@@ -207,14 +206,9 @@ function PatternView({ data }: { data: PatternData }) {
               : `${visible.length} of ${features.length} chapters`}
           </p>
         </div>
-        {features.length > 0 ? (
-          <p className="pattern-detail-copy">
-            Start with the strongest threads, or choose a part of your chart.
-          </p>
-        ) : (
+        {features.length > 0 ? null : (
           <p className="pattern-chapters-empty">
-            No structural patterns passed the strength threshold for this chart. Your placements and
-            connections are still available below.
+            No chapters were strong enough to list. Placements and connections are below.
           </p>
         )}
 
@@ -277,9 +271,6 @@ function PatternView({ data }: { data: PatternData }) {
                         {CHAPTER_FAMILIES[feature.family] ?? bodyName(feature.family)} ·{" "}
                         {strengthLabel(feature, rank, features.length)}
                       </span>
-                    </span>
-                    <span className="pattern-chapter-index">
-                      {(rank + 1).toString().padStart(2, "0")}
                     </span>
                     <span className="pattern-chapter-chevron">
                       <ChevronDown aria-hidden="true" />

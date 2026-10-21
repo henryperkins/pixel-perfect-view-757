@@ -89,7 +89,6 @@ import {
   DAILY_GATEWAY_TIMEOUT_MS,
   MAX_DAILY_DURATION_MS,
   GEMINI_ENTERPRISE_MODEL,
-  geminiEnterpriseURL,
   LANGUAGE_PROVIDERS,
   LANGUAGE_PROVIDER_LABELS,
   diagnosticLabel,
@@ -100,6 +99,7 @@ import {
   type DailyRejectionCode,
   type LanguageProvider,
 } from "./diagnostics";
+import { geminiEnterpriseURL } from "./gemini-enterprise.server";
 export { LANGUAGE_MODEL, DAILY_PROMPT_VERSION, DAILY_VALIDATOR_VERSION } from "./diagnostics";
 
 const GATEWAY = "https://ai.gateway.lovable.dev/v1/chat/completions";

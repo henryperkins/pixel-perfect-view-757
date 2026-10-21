@@ -1,10 +1,10 @@
 /** Browser-safe synthetic evaluation catalog and report helpers. No account or gateway access. */
 import { z } from "zod";
-import { getEvaluationCaseSet } from "./evaluation-case-sets";
 import {
-  READING_EVAL_CASES,
+  EVALUATION_CASE_CATALOG,
+  getEvaluationCaseInventory,
   READING_EVAL_FIXTURE_VERSION,
-} from "./reading-evaluation.fixtures.mjs";
+} from "./evaluation-catalog";
 import type { DailyTransitStoryPlan } from "../content/transit-story";
 import type { FactAtom } from "./facts";
 import { LANGUAGE_PROVIDERS, type DailyDiagnostics, type LanguageProvider } from "./diagnostics";
@@ -21,7 +21,7 @@ import { editorialPilotPreviewSchema, editorialPilotRunSchema } from "./editoria
 import { contextPilotPreviewSchema, contextPilotRunSchema } from "./context-pilot";
 
 export { READING_EVAL_FIXTURE_VERSION };
-export const READING_EVALUATION_CATALOG = READING_EVAL_CASES.map((fixed) => ({
+export const READING_EVALUATION_CATALOG = EVALUATION_CASE_CATALOG.map((fixed) => ({
   id: fixed.id,
   label: fixed.id
     .split("-")
@@ -479,7 +479,7 @@ export function combineReadingEvaluationResults(
     throw new Error("Synthetic evaluation configuration requires transit policy identities");
   // Persisted completed runs retain the fixture inventory that generated them.
   // Adding current cases must not turn an old complete download into a partial run.
-  let catalog = READING_EVAL_CASES;
+  let catalog: { id: string }[] = EVALUATION_CASE_CATALOG;
   if (first.metadata.fixtureVersion !== "synthetic-daily-7")
     catalog = catalog.filter((fixed) => !fixed.id.startsWith("writing-"));
   if (first.metadata.fixtureVersion === "synthetic-daily-5") {
@@ -495,7 +495,7 @@ export function combineReadingEvaluationResults(
     );
   }
   if (first.metadata.caseSetId) {
-    const manifest = getEvaluationCaseSet(first.metadata.caseSetId);
+    const manifest = getEvaluationCaseInventory(first.metadata.caseSetId);
     if (
       manifest.fixtureVersion !== first.metadata.fixtureVersion ||
       manifest.caseSetHash !== first.metadata.caseSetHash

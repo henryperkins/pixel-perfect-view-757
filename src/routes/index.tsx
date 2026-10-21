@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { createIsomorphicFn, useServerFn } from "@tanstack/react-start";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { flushSync } from "react-dom";
 import { Button } from "@/components/ui/button";
 import { RotateCcw } from "lucide-react";
@@ -16,12 +16,10 @@ import { solarContextLine } from "@/lib/solar-context";
 import { absoluteUrl, jsonLd, publicPageHead, SITE_NAME } from "@/lib/seo";
 import {
   cycleTimingPhrase,
-  DOMAIN_LABEL,
   PHASE_LABEL,
   timingDate,
   weightLabel,
   windowPhase,
-  windowTitle,
 } from "@/components/pattern/timing";
 import { fetchToday } from "@/lib/pattern.functions";
 import { EphemerisNotice } from "@/components/pattern/EphemerisNotice";
@@ -31,7 +29,8 @@ import { TodayTiming } from "@/components/pattern/TodayTiming";
 import { TodayEvidence } from "@/components/pattern/TodayEvidence";
 import { TodayFeedback } from "@/components/pattern/TodayFeedback";
 import { TodayGuidance } from "@/components/pattern/TodayGuidance";
-import { todayHeadline, todayParagraphId, todayPointLabel } from "@/components/pattern/today-view";
+import { todayHeadline, todayParagraphId } from "@/components/pattern/today-view";
+import { plainAccuracy } from "@/lib/plain-engine";
 
 const HOME_TITLE = "Pattern — Birth chart, transit timing and daily readings";
 const HOME_DESCRIPTION =
@@ -223,12 +222,7 @@ function TodayContent({
   const phase = primary
     ? windowPhase(primary, data.day, data.timezone, data.storyCalculation)
     : null;
-  const metadataRef = useRef<HTMLDetailsElement>(null);
-  useEffect(() => {
-    // The wide layout gives these values a rail; phones keep them one tap away.
-    if (metadataRef.current && window.matchMedia("(min-width: 1024px)").matches)
-      metadataRef.current.open = true;
-  }, []);
+  const housesSuppressed = data.uncertainty ? !data.uncertainty.housesReliable : false;
 
   return (
     <div className="today-flow">
@@ -273,6 +267,11 @@ function TodayContent({
         {data.ephemeris?.degraded ? (
           <EphemerisNotice state={data.ephemeris} className="mt-5" />
         ) : null}
+        {housesSuppressed ? (
+          <p className="mt-4 text-sm text-muted-foreground">
+            House descriptions are left out because the birth time isn’t precise enough.
+          </p>
+        ) : null}
         <div className="prose-reading mt-6 space-y-5 text-foreground">
           {data.reading.paragraphs.map((paragraph, index) => (
             <p
@@ -312,71 +311,23 @@ function TodayContent({
             </h2>
             <p className="mt-2 text-sm">{solarContextLine(data.localContext.solar)}</p>
             <p className="mt-2 text-xs text-muted-foreground">
-              <span className="font-mono">{data.localContext.solar.timeZone}</span> · selected
-              current location on a <span className="font-mono">1°</span> grid ·{" "}
-              <span className="font-mono">{data.localContext.solar.source}</span>. Daylight is
-              calculated with standard refraction at sea level; seasons use calendar months outside
-              the tropics.
+              From your approximate current location, not your birthplace.
             </p>
           </section>
         ) : null}
-        <details className="today-reading-calculation mt-5">
-          <summary className="text-sm text-primary">Reading calculation</summary>
-          {primary ? (
-            <dl className="today-calculated-values mt-3">
-              <div>
-                <dt>Cycle</dt>
-                <dd>{windowTitle(primary)}</dd>
-              </div>
-              <div>
-                <dt>Current orb</dt>
-                <dd>{primary.orb.toFixed(2)}° from exact</dd>
-              </div>
-              <div>
-                <dt>Closest pass</dt>
-                <dd>{timingDate(primary.exact_at, data.timezone)}</dd>
-              </div>
-              <div>
-                <dt>Area</dt>
-                <dd>{DOMAIN_LABEL[primary.domain] ?? primary.domain}</dd>
-              </div>
-            </dl>
-          ) : (
-            <p className="mt-3 text-sm text-muted-foreground">
-              No measurable primary window today.
-            </p>
-          )}
-          {!data.ephemeris?.degraded ? (
-            <EphemerisNotice state={data.ephemeris} className="mt-4" />
-          ) : null}
-        </details>
         <TodayFeedback
           key={data.reading.id}
           readingId={data.reading.id}
           accountId={accountId}
           saved={data.feedback}
+          previous={data.localContext?.previousResonance}
           readingRevision={readingRevision}
         />
         <section id="today-reflection" className="today-section">
-          <h2 className="flow-section-title">Reflection &amp; check-in</h2>
+          <h2 id="today-reflection-title" className="flow-section-title">
+            Reflection &amp; check-in
+          </h2>
           <p className="prose-reading mt-2 text-foreground">{data.reading.prompt}</p>
-          {data.localContext?.preferredDomain ? (
-            <p className="mt-3 text-sm text-muted-foreground">
-              Your chosen focus: {DOMAIN_LABEL[data.localContext.preferredDomain]}. This sets the
-              initial area filter in Timing.
-            </p>
-          ) : null}
-          {data.localContext?.previousResonance ? (
-            <p className="mt-3 text-sm text-muted-foreground">
-              You rated this interpretation{" "}
-              {data.localContext.previousResonance.score === 1
-                ? "resonant"
-                : data.localContext.previousResonance.score === -1
-                  ? "not resonant"
-                  : "mixed"}{" "}
-              on {timingDate(data.localContext.previousResonance.day)}.
-            </p>
-          ) : null}
           <TodayCheckIn
             key={`${accountId}:${data.day}`}
             day={data.day}
@@ -428,26 +379,25 @@ function TodayContent({
         </section>
       </article>
       <aside className="today-sidebar" aria-label="Reading details">
-        <details ref={metadataRef} className="today-metadata">
+        <details className="today-metadata">
           <summary className="text-sm text-primary">Reading details</summary>
           <div className="mt-3 space-y-3">
-            <Field label="Date" value={timingDate(data.day)} />
             <Field label="Time zone" value={<span className="break-all">{data.timezone}</span>} />
-            <Field label="Signal strength" value={todayPointLabel(data.reading.confidence)} />
             <Field
-              label="Content version"
-              value={<span className="break-all">{data.reading.release_version}</span>}
+              label="Interpretation version"
+              value={data.reading.release_version ?? "Unrecorded"}
             />
-            <Field label="Wording" value={data.language?.mode === "model" ? "Model" : "Template"} />
             <Field
               label="Birth-time accuracy"
-              value={todayPointLabel(data.uncertainty?.accuracy ?? "unknown")}
+              value={plainAccuracy(data.uncertainty?.accuracy ?? "unknown")}
             />
             <Field
               label="House claims"
-              value={data.uncertainty?.housesReliable ? "Supported" : "Suppressed"}
+              value={data.uncertainty?.housesReliable ? "Included" : "Left out"}
             />
-            <Field label="Active windows" value={data.cycles.length} />
+            {!data.ephemeris?.degraded ? (
+              <EphemerisNotice state={data.ephemeris} className="pt-1" />
+            ) : null}
           </div>
         </details>
       </aside>

@@ -34,7 +34,9 @@ test("episode_timeline_preserves_out_of_orb_gaps", () => {
   const html = renderToStaticMarkup(createElement(sequence, { calculation: c }));
   assert.equal((html.match(/data-contact-window=/g) || []).length, 3);
   assert.match(html, /Contact 2 of 3/);
-  assert.match(html, /Calculated contacts, not a record of events in your life/);
+  assert.match(html, /calculated contacts,\s*not a record of events in your life/);
+  assert.match(html, /Timing calculation source/);
+  assert.match(html, /calculation\s*tolerance, not personal timing accuracy/);
 });
 test("uncertain_contacts_render_ranges_without_exact_today", () => {
   const { c, f } = calculate({ shifts: [-0.6, 0, 0.6] });
@@ -119,7 +121,7 @@ test("source_notice_distinguishes_natal_and_transit_and_story_atoms_are_distinct
   assert.match(html, /Current transit geometry.*approximate/);
   assert.match(html, /Primary event timing/);
   assert.equal(v.todayFactLabel("A1"), "Calculated contact sequence");
-  assert.equal(v.todayFactLabel("P2"), "Published transit chapter");
+  assert.equal(v.todayFactLabel("P2"), "Published contact interpretation");
 });
 test("qualified primary geometry notice distinguishes remaining approximate contacts", () => {
   const html = renderToStaticMarkup(
@@ -144,7 +146,32 @@ test("qualified primary geometry notice distinguishes remaining approximate cont
       },
     }),
   );
-  assert.match(html, /Primary transit geometry and orb.*swiss@qualified/);
+  assert.match(html, /main contact’s angle and orb use that qualified timing/);
   assert.match(html, /Other transit geometry and orbs are approximate/);
   assert.doesNotMatch(html, /Current transit geometry and orb are approximate/);
+});
+
+test("uncertain window values do not promote the central sample to a single closest day", () => {
+  const { c, f } = calculate({ shifts: [-0.6, 0, 0.6] });
+  assert.equal(c.timingOverlay.qualifiedExactDay, null);
+  const router = createRouter({ routeTree: createRootRoute(), history: createMemoryHistory() });
+  const html = renderToStaticMarkup(
+    createElement(
+      RouterContextProvider,
+      { router },
+      createElement(TimingWindow, {
+        cycle: f.primary,
+        day: f.day,
+        timezone: f.timezone,
+        calculation: c,
+        open: true,
+        visited: true,
+        onToggle() {},
+        onBrowse() {},
+      }),
+    ),
+  );
+  assert.match(html, /Sampled range/);
+  assert.doesNotMatch(html, /<dt>Closest pass<\/dt>/);
+  assert.doesNotMatch(html, /Exact today/);
 });

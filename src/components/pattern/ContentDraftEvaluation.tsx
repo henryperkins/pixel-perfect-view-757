@@ -359,20 +359,25 @@ export function ContentComparisonEvaluation({
                 Frozen model: {pair.model} · {pair.caseSetId} · {pair.changedKeys.length} changed
                 keys
               </p>
-              <p>
-                Baseline {pair.identities.baseline.version}:{" "}
-                <code>{pair.identities.baseline.canonicalHash}</code>
-              </p>
-              <p>
-                Candidate {pair.identities.candidate.version}:{" "}
-                <code>{pair.identities.candidate.canonicalHash}</code>
-              </p>
-              <p>
-                Application source: <code>{pair.sourceSha}</code>
-              </p>
-              <p>
-                Pair: <code>{pair.hash}</code>
-              </p>
+              <details>
+                <summary className="cursor-pointer text-sm text-primary">
+                  Frozen source identities
+                </summary>
+                <p className="mt-2">
+                  Baseline {pair.identities.baseline.version}:{" "}
+                  <code>{pair.identities.baseline.canonicalHash}</code>
+                </p>
+                <p>
+                  Candidate {pair.identities.candidate.version}:{" "}
+                  <code>{pair.identities.candidate.canonicalHash}</code>
+                </p>
+                <p>
+                  Application source: <code>{pair.sourceSha}</code>
+                </p>
+                <p>
+                  Pair: <code>{pair.hash}</code>
+                </p>
+              </details>
               <Button
                 className="min-h-11 h-auto whitespace-normal"
                 type="button"

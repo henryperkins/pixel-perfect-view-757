@@ -53,7 +53,6 @@ function WindowRow({
           </span>
         </summary>
         <div className="today-window-values">
-          <p className="text-sm text-muted-foreground">{PHASE_LABEL[phase].help}</p>
           <dl>
             <div>
               <dt>Area</dt>
@@ -107,11 +106,11 @@ export function TodayTiming({
           All windows <ArrowRight aria-hidden="true" className="h-4 w-4" />
         </Link>
       </div>
-      <p className="mt-2 text-sm text-muted-foreground">
-        {cycles.length
-          ? "Windows calculated from today’s sky and your birth chart. Open one to see its details."
-          : "No measurable window against your chart today. A quiet result is a valid one."}
-      </p>
+      {cycles.length ? null : (
+        <p className="mt-2 text-sm text-muted-foreground">
+          No measurable window against your chart today. A quiet result is a valid one.
+        </p>
+      )}
       {visible.length ? (
         <ul className="today-window-list mt-4">
           {visible.map((cycle) => (

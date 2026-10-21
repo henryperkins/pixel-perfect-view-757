@@ -24,7 +24,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { useCalendarQueryRefresh, useCalendarRefresh } from "@/hooks/useCalendarRefresh";
 import { useScrollableField } from "@/hooks/useScrollableField";
 
-import { Field, Rail, Shell } from "@/components/pattern/Shell";
+import { Shell } from "@/components/pattern/Shell";
+import { contactTitle, DOMAIN_LABEL } from "@/components/pattern/timing";
 import { userFacingError } from "@/lib/user-facing-error";
 import {
   addEvent,
@@ -73,6 +74,39 @@ export const Route = createFileRoute("/_authenticated/journal")({
 });
 
 const DOMAINS = ["general", "work", "relationships", "health", "money"] as const;
+const JOURNAL_DOMAIN_LABEL: Record<(typeof DOMAINS)[number], string> = {
+  general: "General",
+  work: "Work",
+  relationships: "Relationships",
+  health: "Health",
+  money: "Money",
+};
+
+function journalEntryContext(
+  entry: { domain: string; cycle_key?: string | null; feature_key?: string | null },
+  cycles: { cycle_key: string; transit_body: string; aspect: string; natal_point: string }[],
+  features: { feature_key: string; title: string }[],
+) {
+  const cycle = entry.cycle_key
+    ? cycles.find((item) => item.cycle_key === entry.cycle_key)
+    : undefined;
+  const chapter = entry.feature_key
+    ? features.find((item) => item.feature_key === entry.feature_key)?.title
+    : undefined;
+  return [
+    JOURNAL_DOMAIN_LABEL[entry.domain as (typeof DOMAINS)[number]] ??
+      DOMAIN_LABEL[entry.domain] ??
+      entry.domain,
+    cycle
+      ? contactTitle(cycle.transit_body, cycle.aspect, cycle.natal_point)
+      : entry.cycle_key
+        ? "Timing window"
+        : null,
+    chapter ?? (entry.feature_key ? "Chapter" : null),
+  ]
+    .filter(Boolean)
+    .join(" · ");
+}
 
 function JournalPage() {
   const { chapter, deleteEntry } = Route.useSearch();
@@ -141,8 +175,6 @@ function JournalPage() {
     queryFn: () => patternFn({}),
     enabled: Boolean(session),
   });
-
-  const prettyKey = (key: string) => key.replace(/[_-]+/g, " ");
 
   const [defaults, setDefaults] = useState<DraftValuesMap["journal-new"] | null>(null);
   const initialValues = defaults ?? {
@@ -343,13 +375,12 @@ function JournalPage() {
           Check your entries before trying again.
         </p>
       )}
-      <div className="grid animate-rise gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1fr)_16rem]">
+      <div className="animate-rise">
         <div className="min-w-0">
           <h1 className="text-2xl sm:text-3xl">Journal</h1>
           <p className="mt-3 max-w-[62ch] text-sm leading-relaxed text-muted-foreground">
-            Write what actually happened. You can attach an entry to one of today's timing windows
-            and to a chapter of your pattern; the attachment is stored as it was at the moment you
-            wrote, so a later recalculation never rewrites your record.
+            Write what happened. You can attach today’s timing window or a chapter. The attachment
+            stays as it was when you saved it.
           </p>
 
           <section className="journal-compose mt-8">
@@ -419,7 +450,7 @@ function JournalPage() {
                   >
                     {DOMAINS.map((d) => (
                       <option key={d} value={d}>
-                        {d}
+                        {JOURNAL_DOMAIN_LABEL[d]}
                       </option>
                     ))}
                   </select>
@@ -470,7 +501,7 @@ function JournalPage() {
                     <option value="">No window</option>
                     {cycles.map((c) => (
                       <option key={c.cycle_key} value={c.cycle_key}>
-                        {c.transit_body} {c.aspect} {c.natal_point}
+                        {contactTitle(c.transit_body, c.aspect, c.natal_point)}
                       </option>
                     ))}
                   </select>
@@ -549,7 +580,7 @@ function JournalPage() {
               tabIndex={-1}
               className="technical border-b border-rule pb-2 text-muted-foreground"
             >
-              2 · Entries ({entries.length})
+              Entries
             </h2>
 
             {editing ? (
@@ -590,9 +621,7 @@ function JournalPage() {
               </div>
             ) : entries.length === 0 ? (
               <p className="mt-4 border border-rule bg-evidence p-4 text-sm text-evidence-foreground">
-                Nothing written yet. The journal is where your own account of events lives, so that
-                over time you can compare what you noticed against what was calculated. Nothing here
-                is a prediction.
+                Nothing written yet. Use the form above to record what happened.
               </p>
             ) : (
               <ul className="mt-4 space-y-3">
@@ -609,15 +638,8 @@ function JournalPage() {
                         {e.body}
                       </p>
                     ) : null}
-                    <p className="mt-2 font-mono text-[0.7rem] text-muted-foreground">
-                      {e.domain}
-                      {e.cycle_key ? ` · window ${prettyKey(e.cycle_key)}` : ""}
-                      {e.feature_key
-                        ? ` · chapter ${
-                            features.find((f) => f.feature_key === e.feature_key)?.title ??
-                            prettyKey(e.feature_key)
-                          }`
-                        : ""}
+                    <p className="mt-2 text-xs text-muted-foreground">
+                      {journalEntryContext(e, cycles, features)}
                     </p>
                     <Button
                       variant="outline"
@@ -656,18 +678,6 @@ function JournalPage() {
               </ul>
             )}
           </section>
-        </div>
-
-        <div className="border-t border-rule pt-6 lg:border-t-0 lg:pt-0">
-          <Rail title="This record">
-            <Field label="Entries" value={String(entries.length)} />
-            <Field label="Windows today" value={String(cycles.length)} />
-            <Field label="Chapters" value={String(features.length)} />
-            <p className="pt-2 text-sm leading-relaxed text-muted-foreground">
-              Titles and entry text are encrypted with your own key before they are stored.
-              Attachments are captured at write time and never re-derived.
-            </p>
-          </Rail>
         </div>
       </div>
     </Shell>

@@ -11,7 +11,10 @@ const server = await createServer({
   root,
   configFile: false,
   envFile: false,
-  cacheDir: resolve(root, ".playwright-cli/vite-cache"),
+  cacheDir: resolve(
+    root,
+    `.playwright-cli/vite-cache-${process.env.PATTERN_MOBILE_UI_PORT ?? 4198}`,
+  ),
   plugins: [
     react(),
     tailwind(),
@@ -43,6 +46,7 @@ const server = await createServer({
       "@/lib/account-security.functions",
       "@/lib/billing.functions",
       "@/lib/assistant.functions",
+      "@/hooks/useAssistantSession",
       "@tanstack/react-start",
     ]
       .map((find) => ({ find, replacement: services }))

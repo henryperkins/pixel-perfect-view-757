@@ -76,10 +76,7 @@ export function PatternChapter({
         </div>
       ) : query.isPending || (query.isFetching && !narrative) ? (
         <div className="pattern-narrative-loading" aria-busy="true" aria-label="Preparing chapter">
-          <p role="status">
-            Your chapter is taking shape. The first reading can take up to 90 seconds; it stays
-            ready for this chart after that.
-          </p>
+          <p role="status">Preparing this chapter. The first reading can take a little longer.</p>
           <div aria-hidden="true" className="pattern-reading-skeleton">
             {[100, 95, 88, 70].map((width) => (
               <span key={width} style={{ width: `${width}%` }} />
@@ -136,8 +133,7 @@ export function PatternChapter({
               : "No verified reading is available for this chapter."}
           </p>
           <p className="mt-2 text-sm text-muted-foreground">
-            {query.data?.reason ?? "Nothing supportable to say."} The calculated values below are
-            still available to explore.
+            {query.data?.reason ?? "The calculated values below are still available."}
           </p>
           {retryable ? (
             <Button variant="outline" className="mt-4" onClick={() => void query.refetch()}>

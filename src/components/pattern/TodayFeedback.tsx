@@ -6,6 +6,7 @@ import { useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { sendFeedback, type fetchToday } from "@/lib/pattern.functions";
+import { timingDate } from "./timing";
 
 type TodayData = Extract<Awaited<ReturnType<typeof fetchToday>>, { needsOnboarding: false }>;
 
@@ -14,11 +15,13 @@ export function TodayFeedback({
   accountId,
   saved,
   readingRevision,
+  previous = null,
 }: {
   readingId: string;
   accountId: string;
   saved: TodayData["feedback"];
   readingRevision: number;
+  previous?: { day: string; score: number } | null;
 }) {
   const client = useQueryClient();
   const send = useServerFn(sendFeedback);
@@ -104,6 +107,14 @@ export function TodayFeedback({
           </Button>
         ))}
       </div>
+      {previous ? (
+        <p className="mt-3 text-xs text-muted-foreground">
+          Earlier response to this interpretation:{" "}
+          {previous.score === 1 ? "Yes" : previous.score === -1 ? "No" : "Unsure"}
+          {" · "}
+          {timingDate(previous.day)}
+        </p>
+      ) : null}
       <p
         className={`mt-3 flex items-center gap-1.5 text-sm ${mutation.isError ? "text-destructive" : "text-muted-foreground"}`}
         role={mutation.isError ? "alert" : "status"}
@@ -122,9 +133,7 @@ export function TodayFeedback({
             <Check aria-hidden="true" className="h-4 w-4" />
             Response saved
           </>
-        ) : (
-          "Your response stays with this reading."
-        )}
+        ) : null}
       </p>
       {mutation.isError ? (
         <Button

@@ -230,10 +230,6 @@ export function TimingWindow({
                 <summary>Calculated values</summary>
                 <dl>
                   <div>
-                    <dt>Cycle key</dt>
-                    <dd className="break-all">{cycle.cycle_key}</dd>
-                  </div>
-                  <div>
                     <dt>Aspect</dt>
                     <dd>{cycle.aspect}</dd>
                   </div>
@@ -241,19 +237,11 @@ export function TimingWindow({
                     <dt>Orb</dt>
                     <dd>{cycle.orb.toFixed(2)}° from exact</dd>
                   </div>
-                  <div>
-                    <dt>Calculated phase</dt>
-                    <dd>{overlay?.phase ?? cycle.phase}</dd>
-                  </div>
-                  <div>
-                    <dt>Strength</dt>
-                    <dd>{cycle.importance.toFixed(4)}</dd>
-                  </div>
-                  {(overlay ? overlay.centralExactAt : cycle.exact_at) ? (
+                  {(overlay ? overlay.qualifiedExactDay : cycle.exact_at) ? (
                     <div>
-                      <dt>Closest pass (UTC)</dt>
-                      <dd className="break-all">
-                        {overlay ? overlay.centralExactAt : cycle.exact_at}
+                      <dt>Closest pass</dt>
+                      <dd>
+                        {timingDate(overlay ? overlay.qualifiedExactDay : cycle.exact_at, timezone)}
                       </dd>
                     </div>
                   ) : null}

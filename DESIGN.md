@@ -57,17 +57,18 @@ label or help text.
 
 ## Layout
 
-- Sticky blurred header with the Pattern wordmark, tagline, active-route underline
+- Sticky blurred header with the Pattern wordmark and active-route underline
   and `aria-current`; hamburger navigation below `md`. When enlarged text makes the
   header and bottom navigation exceed a third of the viewport (`data-enlarged-chrome`),
   the header scrolls with the page.
 - Content pages use a three-part editorial grid on wide screens
   (`Rail` · article · secondary rail) and collapse to a single column on mobile,
   with the calculation rail moved below the content.
-- `Rail` + `Field` carry calculation status: day, engine, precision, contract
-  version, refresh time, row counts, time accuracy. Today's "Reading details" opens by
-  default on wide screens and stays one tap away on phones.
-- Sections are numbered where a page has a sequence ("1 · Active windows").
+- `Rail` + `Field` carry relevant calculation status inside disclosures, with plain
+  source and accuracy labels. Today's "Reading details" stays collapsed on every
+  screen size; it retains the saved interpretation version and calculation limits.
+- Numbering is reserved for meaningful sequences such as worked calculation steps,
+  not decorative indexes on chapters, settings or reference sections.
 - Wide tables become stacked rows on mobile rather than horizontal scroll. The natal
   placement table is the exception: it keeps a pinned first column and scrolls sideways
   inside a focusable, labelled region.
@@ -85,7 +86,8 @@ label or help text.
   strength chip (Major / Prominent / Background) and a phase chip
   (Building / Exact / Fading), then a mono line of exact values.
 - **Timeline bar** — proportional opens · peak · closes track with a today marker.
-- **Band picker** — 1–5 monospace squares for mood, energy, sleep, stress.
+- **Band picker** — 1–5 monospace squares for mood, energy, sleep, stress, with visible
+  endpoint meanings, the selected meaning, and a full accessible label for every value.
 - **EphemerisNotice** — states precision and any degradation inline.
 - **Disclosure marker** — every `<summary>` carries the shared `+` / `−` marker in a
   small sage circle (`.pattern-shell summary::before`).

@@ -31,22 +31,11 @@ function BandPicker({
           <span className="text-sm font-medium text-foreground" aria-hidden="true">
             {label}
           </span>
-          <span className="ml-2 text-xs text-muted-foreground" aria-hidden="true">
-            {options.map((opt, index) => {
-              const band = index + 1;
-              const selected = value === band;
-              return (
-                <span key={band}>
-                  {index > 0 ? " · " : ""}
-                  <span
-                    className={`whitespace-nowrap ${selected ? "font-semibold text-primary" : ""}`}
-                  >
-                    {band} {opt.toLowerCase()}
-                  </span>
-                </span>
-              );
-            })}
-          </span>
+          {value ? (
+            <span className="ml-2 text-xs text-muted-foreground" aria-hidden="true">
+              {options[value - 1]}
+            </span>
+          ) : null}
         </div>
         <Button
           variant="ghost"
@@ -83,6 +72,13 @@ function BandPicker({
           </label>
         ))}
       </div>
+      <p
+        className="mt-1 flex justify-between gap-2 text-xs text-muted-foreground"
+        aria-hidden="true"
+      >
+        <span>1 · {options[0]}</span>
+        <span>5 · {options[4]}</span>
+      </p>
     </fieldset>
   );
 }
@@ -396,19 +392,13 @@ export function TodayCheckIn({
   return (
     <form
       className="today-check-in mt-5 rounded-sm border border-rule bg-secondary/30 p-4"
-      aria-labelledby={`${formId}-heading`}
+      aria-label="Daily check-in"
       onSubmit={(event) => {
         event.preventDefault();
         if (canSave) saveNote.mutate({ ...draft });
       }}
     >
-      <h3 id={`${formId}-heading`} className="font-serif text-xl text-foreground">
-        Today’s check-in
-      </h3>
-      <p className="mt-1 text-sm text-muted-foreground">
-        Choose what fits. Every field is optional.
-      </p>
-      <div className="mt-3 space-y-3">
+      <div className="space-y-3">
         <BandPicker
           label="Mood"
           disabled={disabled}
@@ -469,10 +459,9 @@ export function TodayCheckIn({
           className="pattern-mobile-field mt-2 w-full rounded-sm border border-muted-foreground bg-card px-3 py-2 text-base outline-none focus:border-ring focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm"
         />
         <p id={`${formId}-note-limit`} className="mt-2 text-xs text-muted-foreground">
-          Up to 2,000 characters.
           <span role="status" aria-atomic="true">
             {draft.note.length === 2000
-              ? " Character limit reached. Edit the note to add more."
+              ? "Character limit reached. Edit the note to add more."
               : ""}
           </span>
         </p>
@@ -569,8 +558,7 @@ export function TodayCheckIn({
       />
       <div className="today-check-in-privacy mt-4 text-xs text-muted-foreground">
         <p id={`${formId}-privacy`}>
-          Private to your account. Notes are encrypted; check-in data is never sent to the language
-          model.
+          Private to your account. Notes are encrypted and are not sent out to write readings.
         </p>
         <details className="mt-1">
           <summary className="min-h-11 cursor-pointer py-3 text-sm underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">

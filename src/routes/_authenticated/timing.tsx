@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { Check, CircleDot, RotateCcw, Sunrise, Sunset, Waves } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
+import { plainAccuracy, plainEngineLabel, plainPrecision } from "@/lib/plain-engine";
 import { fetchCycles } from "@/lib/pattern.functions";
 import { EphemerisNotice } from "@/components/pattern/EphemerisNotice";
 import { TimingWindow } from "@/components/pattern/TimingWindow";
@@ -200,10 +201,9 @@ function TimingPage() {
         <div className="timing-page">
           <div className="timing-intro">
             <h1>Timing</h1>
-            <p>
-              Your chart stays still. The sky keeps moving. Explore the windows active around you.
-            </p>
-            <EphemerisNotice state={data.ephemeris} className="mt-4" />
+            {data.ephemeris?.degraded ? (
+              <EphemerisNotice state={data.ephemeris} className="mt-4" />
+            ) : null}
           </div>
           <TimingCalendar ownerId={session!.userId} defaultDomain={domain}>
             <div ref={filtersRef} className="timing-filters timing-explorer-filters">
@@ -297,7 +297,7 @@ function TimingPage() {
               {rows.length === 0 ? (
                 <div className="timing-empty">
                   <Waves aria-hidden="true" />
-                  <h3>{filtered ? "A little quiet in this view" : "A quieter sky today"}</h3>
+                  <h3>{filtered ? "No matching windows" : "No windows today"}</h3>
                   <p>
                     {filtered
                       ? "No active windows match these filters. Explore another area or phase."
@@ -339,15 +339,8 @@ function TimingPage() {
                 <summary>How to read these windows</summary>
                 <div>
                   <p>
-                    Your natal chart is fixed; the planets keep moving. These windows show where
-                    today's sky forms measurable angles to your birth positions — each one opens,
-                    peaks, and closes. Think of them as weather windows: they describe the terrain,
-                    never what will happen.
-                  </p>
-                  <p>
-                    Windows are ordered by calculated strength. Major windows involve slow-moving
-                    bodies and can last months; background windows are briefer and subtler. “Slow
-                    movers” hides Sun, Moon, Mercury, and Venus.
+                    Windows open, reach a closest pass, and close. They describe conditions, not
+                    what will happen. “Slow movers” hides Sun, Moon, Mercury, and Venus.
                   </p>
                 </div>
               </details>
@@ -356,19 +349,20 @@ function TimingPage() {
                   Calculation record <span>{timingDate(data.day)}</span>
                 </summary>
                 <div>
+                  {!data.ephemeris.degraded ? <EphemerisNotice state={data.ephemeris} /> : null}
                   <Rail title="Calculation status">
-                    <Field label="Reference day" value={data.day} />
+                    <Field label="Reference day" value={timingDate(data.day)} />
                     <Field label="Calendar zone" value={data.timezone} />
-                    <Field label="Reference instant" value={data.referenceAt} />
-                    <Field label="Engine" value={data.engine} />
-                    <Field label="Precision" value={data.ephemeris.precision} />
-                    <Field label="Contract" value={data.contractVersion} />
-                    <Field label="Refreshed" value={data.computedAt.slice(11, 19) + "Z"} />
+                    <Field label="Calculation source" value={plainEngineLabel(data.engine)} />
+                    <Field label="Precision" value={plainPrecision(data.ephemeris.precision)} />
                     <Field
                       label="Windows shown"
                       value={String(rows.length) + "/" + data.cycles.length}
                     />
-                    <Field label="Time accuracy" value={data.uncertainty.accuracy} />
+                    <Field
+                      label="Birth-time accuracy"
+                      value={plainAccuracy(data.uncertainty.accuracy)}
+                    />
                     <Link to="/sources" className="inline-flex min-h-11 items-center text-primary">
                       Explore chart sources
                     </Link>

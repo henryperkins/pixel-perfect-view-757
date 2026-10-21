@@ -89,10 +89,6 @@ function AuthPage() {
               ? "Reset your password"
               : "Create an account"}
         </h1>
-        <p className="mt-3 text-sm text-muted-foreground">
-          Your birth details are encrypted per account and never leave the calculation layer.
-        </p>
-
         <form onSubmit={submit} className="mt-8 space-y-4">
           <label className="block">
             <span className="technical text-muted-foreground">Email</span>
@@ -110,7 +106,9 @@ function AuthPage() {
           </label>
           {mode !== "reset" && (
             <label className="block">
-              <span className="technical text-muted-foreground">Password</span>
+              <span className="technical text-muted-foreground">
+                Password{mode === "signup" ? " · at least 8 characters" : ""}
+              </span>
               <input
                 type="password"
                 enterKeyHint="done"

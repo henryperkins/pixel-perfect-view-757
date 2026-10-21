@@ -19,7 +19,8 @@ export const Route = createFileRoute("/_authenticated/onboarding")({
       { property: "og:title", content: "Birth details — Pattern" },
       {
         property: "og:description",
-        content: "Time accuracy is first class: unknown time suppresses angle claims.",
+        content:
+          "An unknown birth time is supported, with unreliable house and angle descriptions left out.",
       },
     ],
   }),
@@ -46,8 +47,7 @@ function Onboarding() {
       <div className="mx-auto max-w-xl animate-rise">
         <h1 className="text-3xl">Birth details</h1>
         <p className="mt-3 text-sm text-muted-foreground">
-          Stored encrypted. Used only to compute positions, angles and cycles — never shared with
-          the editorial system.
+          Used to calculate your chart and stored encrypted. An unknown birth time is fine.
         </p>
         {query.isPending ? (
           <p role="status" className="mt-8">

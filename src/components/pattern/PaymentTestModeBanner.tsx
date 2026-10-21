@@ -7,8 +7,8 @@ export function PaymentTestModeBanner() {
       role="status"
     >
       {token?.startsWith("pk_test_")
-        ? "All payments made in the preview are in test mode. No real money is charged."
-        : "Production checkout is not configured. Complete Stripe go-live in your Lovable project to accept real payments."}
+        ? "Payments are in test mode. No real money is charged."
+        : "Checkout is not available in this environment."}
     </div>
   );
 }

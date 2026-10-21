@@ -566,12 +566,12 @@ export function BirthDetailsForm({
         <details className="border-t border-rule pt-3 text-sm">
           <summary className="min-h-11 py-2">How time accuracy affects your chart</summary>
           <p className="mt-3 leading-relaxed text-muted-foreground">
-            This is your declared accuracy, not a verified birth time. Saving or recalculating
-            checks eligible natal origins at the recorded time and both uncertainty boundaries. This
-            also prepares transit-story timing from the same calculation source. Saving recalculates
-            your chart; existing readings keep their original evidence. Unknown time omits daily
-            natal lenses and transit stories; if the service or a sample is unavailable, the
-            ordinary reading remains available.
+            This is the accuracy you record, not a verified birth time. Pattern checks eligible
+            chart interpretations and contact dates at the recorded time and both uncertainty
+            boundaries, not every moment between them. Saving recalculates your chart; existing
+            readings keep their original evidence. Unknown time leaves those interpretations and
+            contact sequences out of daily readings. If the calculation service or a sample is
+            unavailable, the ordinary reading remains available.
           </p>
         </details>
       )}

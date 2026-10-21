@@ -354,9 +354,6 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
           >
             <OrbitMark />
             <span className="min-w-0 [overflow-wrap:anywhere]">Pattern</span>
-            <span className="hidden font-sans text-xs text-muted-foreground xl:inline">
-              personal ephemeris
-            </span>
           </Link>
 
           {signedIn ? (
@@ -520,10 +517,7 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
         </nav>
       ) : null}
       <footer className="mt-16 border-t border-rule">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-1 px-6 py-4 technical text-muted-foreground">
-          <span className="py-2">
-            Deterministic assembly · no prediction · evidence on every claim
-          </span>
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-end gap-x-6 gap-y-1 px-6 py-4 text-sm text-muted-foreground">
           <Link
             to="/transit-chart-calculator"
             className="inline-flex min-h-11 items-center transition-colors hover:text-foreground"

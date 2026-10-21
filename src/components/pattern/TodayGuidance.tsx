@@ -33,61 +33,40 @@ export function TodayGuidance({
       <p className="prose-reading mt-2 text-foreground">{guidance.action}</p>
       {guidance.framing ? <p className="mt-3 text-sm">{guidance.framing}</p> : null}
       {guidance.reflection ? <p className="mt-3 text-sm">{guidance.reflection}</p> : null}
-      {guidance.focus ? (
-        <p className="mt-3 text-sm text-muted-foreground">
-          Your chosen focus: {DOMAIN_LABEL[guidance.focus]}.
-        </p>
-      ) : null}
       <details className="mt-3 text-sm">
         <summary className="cursor-pointer text-primary">Why this suggestion</summary>
         <div className="mt-2 space-y-2 text-muted-foreground">
           {calculation && interpretation ? (
             <p>
               {interpretation.theme
-                ? `The published reading for ${calculation.label} centres on ${interpretation.theme}. This suggestion offers one way to explore that theme.`
-                : `This published reflection comes from the reading for ${calculation.label}. Use it only if it fits your experience.`}
+                ? `From the reading for ${calculation.label}, which centres on ${interpretation.theme}.`
+                : `From the reading for ${calculation.label}. Use it only if it fits.`}
             </p>
           ) : (
-            <p>
-              This is an open reflection suggestion; no published calculation theme was used to
-              select it.
-            </p>
+            <p>No published calculation theme was used to choose this suggestion.</p>
           )}
           {context.length ? (
             <ul className="list-disc space-y-1 pl-5">
               {context.map((item) => (
-                <li key={`${item.sourceId}:${item.label}`}>
+                <li key={`${item.label}:${String(item.value)}`}>
                   {item.label}:{" "}
                   {typeof item.value === "number"
                     ? `${item.value}/5`
                     : (DOMAIN_LABEL[item.value] ?? item.value)}
-                  {item.use === "reflection_prompt"
-                    ? " — shapes the reflection question"
-                    : item.sourceId === "USR-14"
-                      ? " — shown as your focus label"
-                      : item.label === "Energy"
-                        ? interpretation?.theme
-                          ? " — shapes the step’s size"
-                          : " — shapes the suggested approach"
-                        : " — shapes the framing"}
-                  .
                 </li>
               ))}
             </ul>
           ) : (
-            <p>No personal context was used for this suggestion.</p>
+            <p>No personal context was used.</p>
           )}
-          <p>
-            Your check-in describes what you reported. It does not change the chart calculation.
-            Personal context stays within Pattern.
-          </p>
-          {calculation && interpretation ? (
+          <p>A check-in can shape this suggestion. It does not change the chart.</p>
+          {calculation ? (
             <p className="font-mono text-xs">
-              {interpretation.key} · source release {interpretation.releaseVersion} · current orb{" "}
-              {calculation.orb.toFixed(2)}°
+              Current orb {calculation.orb.toFixed(2)}°
               {calculation.exactAt
-                ? ` · exact contact ${timingDate(calculation.exactAt, timezone)}`
+                ? ` · closest pass ${timingDate(calculation.exactAt, timezone)}`
                 : ""}
+              {interpretation ? ` · source ${interpretation.releaseVersion}` : ""}
             </p>
           ) : null}
         </div>

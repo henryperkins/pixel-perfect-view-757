@@ -1,12 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { RotateCcw } from "lucide-react";
+import { ArrowLeft, RotateCcw } from "lucide-react";
 
 import { Shell } from "@/components/pattern/Shell";
 import { Button } from "@/components/ui/button";
 import { fetchPattern } from "@/lib/pattern.functions";
 import { userFacingError } from "@/lib/user-facing-error";
+import { plainAccuracy, plainEngineLabel, plainPrecision } from "@/lib/plain-engine";
 
 export const Route = createFileRoute("/_authenticated/sources")({
   head: () => ({
@@ -31,8 +32,18 @@ export const Route = createFileRoute("/_authenticated/sources")({
 type Src = "service" | "in-app" | undefined | null;
 
 const SIGNS = [
-  "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
-  "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces",
+  "Aries",
+  "Taurus",
+  "Gemini",
+  "Cancer",
+  "Leo",
+  "Virgo",
+  "Libra",
+  "Scorpio",
+  "Sagittarius",
+  "Capricorn",
+  "Aquarius",
+  "Pisces",
 ];
 
 function fmtLon(lon: number) {
@@ -54,10 +65,12 @@ function SourceChip({ src }: { src: Src }) {
   return (
     <span
       className={`technical inline-block rounded-sm border px-1.5 py-0.5 ${
-        service ? "border-rule bg-accent text-accent-foreground" : "border-rule bg-secondary text-muted-foreground"
+        service
+          ? "border-rule bg-accent text-accent-foreground"
+          : "border-rule bg-secondary text-muted-foreground"
       }`}
     >
-      {service ? "Swiss Ephemeris" : src === "in-app" ? "In-app math" : "Unrecorded"}
+      {service ? "Swiss Ephemeris" : src === "in-app" ? "Calculated in Pattern" : "Unrecorded"}
     </span>
   );
 }
@@ -120,7 +133,7 @@ function SourcesView({
   return (
     <div className="animate-rise max-w-3xl">
       <Link to="/pattern" className="technical inline-flex min-h-11 items-center text-primary">
-        ← Your pattern
+        <ArrowLeft aria-hidden="true" className="mr-2 h-4 w-4" /> Your pattern
       </Link>
       <h1 className="mt-4 text-2xl sm:text-3xl">Chart sources</h1>
       <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
@@ -133,9 +146,7 @@ function SourcesView({
           <dt className="text-muted-foreground">Moment (UTC)</dt>
           <dd>{s?.utcISO ?? "—"}</dd>
           <dt className="text-muted-foreground">Latitude, longitude</dt>
-          <dd>
-            {s ? `${s.latitude.toFixed(4)}, ${s.longitude.toFixed(4)}` : "—"}
-          </dd>
+          <dd>{s ? `${s.latitude.toFixed(4)}, ${s.longitude.toFixed(4)}` : "—"}</dd>
           {birth ? (
             <>
               <dt className="text-muted-foreground">Birthplace</dt>
@@ -146,46 +157,58 @@ function SourcesView({
               </dd>
             </>
           ) : null}
-          <dt className="text-muted-foreground">Engine</dt>
-          <dd>{data.engine}</dd>
+          <dt className="text-muted-foreground">Calculation source</dt>
+          <dd>{plainEngineLabel(data.engine)}</dd>
+          <dt className="text-muted-foreground">Precision</dt>
+          <dd>{plainPrecision(data.ephemeris.precision)}</dd>
+          <dt className="text-muted-foreground">Birth-time accuracy</dt>
+          <dd>{plainAccuracy(data.uncertainty.accuracy)}</dd>
           <dt className="text-muted-foreground">House system</dt>
           <dd>{data.houseSystem}</dd>
         </dl>
+        {!data.uncertainty.housesReliable ? (
+          <p className="mt-3 text-sm text-muted-foreground">
+            Calculated house values are shown for reference, but house descriptions are left out
+            because the birth time is uncertain.
+            {data.uncertainty.angleClaimsSuppressed ? " Angle descriptions are also left out." : ""}
+          </p>
+        ) : null}
       </section>
 
-      <Section title="1 · Placements" src={s?.positions}>
+      <Section title="Placements" src={s?.positions ?? null}>
         {bodies.map((p) => (
-          <Row key={p.key} label={p.label} value={`${p.position}${p.retrograde ? " ℞" : ""}`} src={s?.positions} />
+          <Row
+            key={p.key}
+            label={p.label}
+            value={`${p.position}${p.retrograde ? " · retrograde" : ""}`}
+          />
         ))}
       </Section>
 
-      <Section title="2 · Angles" src={s?.angles}>
+      <Section title="Angles" src={s?.angles ?? null}>
         {angles.map((p) => (
           <Row
             key={p.key}
             label={p.key === "midheaven" ? "Midheaven (MC)" : p.label}
             value={p.key === "midheaven" ? `${p.position} · House ${p.house}` : p.position}
-            src={s?.angles}
           />
         ))}
         <li className="py-3 text-xs leading-relaxed text-muted-foreground">
-          {s?.angles === "service" && data.houseSystem.toLowerCase() === "placidus" ? (
-            "In the Placidus system the Midheaven defines where the tenth house begins, so “House 10” is its definition here—not a separate score assigned by Pattern."
-          ) : (
-            "The Midheaven’s house follows the house system shown above; under whole-sign houses it can land in houses 9–11 rather than 10, and the house number then comes from the same calculation as the source chip here."
-          )}
+          {s?.angles === "service" && data.houseSystem.toLowerCase() === "placidus"
+            ? "In the Placidus system the Midheaven defines where the tenth house begins, so “House 10” is its definition here—not a separate score assigned by Pattern."
+            : "The Midheaven’s house follows the house system shown above; under whole-sign houses it can land in houses 9–11 rather than 10, and the house number then comes from the same calculation as the source chip here."}
         </li>
       </Section>
 
-      <Section title="3 · House cusps" src={s?.houses}>
+      <Section title="House boundaries" src={s?.houses ?? null}>
         {data.houseCusps.map((c, i) => (
-          <Row key={i} label={`House ${i + 1}`} value={fmtLon(c)} src={s?.houses} />
+          <Row key={i} label={`House ${i + 1}`} value={fmtLon(c)} />
         ))}
       </Section>
 
-      <Section title="4 · Connections">
+      <Section title="Connections">
         {data.allAspects.length === 0 ? (
-          <p className="text-sm text-muted-foreground">No connections within orb.</p>
+          <li className="py-3 text-sm text-muted-foreground">No connections within orb.</li>
         ) : (
           data.allAspects.map((a) => (
             <Row
@@ -201,7 +224,15 @@ function SourcesView({
   );
 }
 
-function Section({ title, src, children }: { title: string; src?: Src; children: React.ReactNode }) {
+function Section({
+  title,
+  src,
+  children,
+}: {
+  title: string;
+  src?: Src;
+  children: React.ReactNode;
+}) {
   return (
     <section className="mt-10">
       <div className="flex items-baseline justify-between border-b border-rule pb-2">
@@ -213,13 +244,13 @@ function Section({ title, src, children }: { title: string; src?: Src; children:
   );
 }
 
-function Row({ label, value, src }: { label: string; value: string; src: Src }) {
+function Row({ label, value, src }: { label: string; value: string; src?: Src }) {
   return (
     <li className="flex flex-wrap items-baseline justify-between gap-2 py-2">
       <span className="text-sm">{label}</span>
-      <span className="flex items-baseline gap-3">
+      <span className="flex flex-wrap items-baseline gap-3">
         <span className="font-mono text-xs">{value}</span>
-        <SourceChip src={src} />
+        {src !== undefined ? <SourceChip src={src} /> : null}
       </span>
     </li>
   );

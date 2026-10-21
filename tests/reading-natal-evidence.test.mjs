@@ -28,21 +28,24 @@ function render(language = today.language) {
   );
 }
 test("daily_natal_evidence_labels_interpretation_not_measurement", () => {
-  assert.equal(view.todayFactLabel("N1"), "Published natal lens");
+  assert.equal(view.todayFactLabel("N1"), "Published chart interpretation");
   assert.equal(view.todayFactCategory("N1"), "Interpretive reference");
   const html = render();
   assert.match(html, /Checked at the recorded time and both uncertainty boundaries/);
   assert.match(html, /recognize or reject/);
   assert.match(html, /Capricorn/);
-  assert.match(html, /synthetic-1/);
-  assert.match(html, /Declared accuracy/);
+  assert.match(html, /Swiss Ephemeris/);
+  assert.match(html, /Birth-time accuracy/);
+  assert.match(html, /do not confirm the birth time or every moment between them/);
+  assert.doesNotMatch(html, /Saved sample geometry|<pre/);
   assert.ok(!html.includes("verified temperament"));
   for (const id of ["C1", "I1"])
     assert.ok(html.includes(`href="#${view.todayFactId("archived-natal", id)}"`));
 });
 test("archived_origin_is_not_recomputed_and_legacy_absence_adds_no_origin", () => {
   const html = render();
-  assert.ok(html.includes(today.language.natalLens.plan.lens.ruleKey));
+  assert.ok(html.includes(today.language.natalLens.plan.releaseVersion));
+  assert.ok(!html.includes(today.language.natalLens.plan.lens.ruleKey));
   assert.ok(
     !render({
       ...today.language,

@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { plainEngineLabel } from "@/lib/plain-engine";
 import type { PatternData } from "./pattern-view";
 
 const TIME_ACCURACY: Record<PatternData["uncertainty"]["accuracy"], string> = {
@@ -15,7 +16,7 @@ const TIME_ACCURACY: Record<PatternData["uncertainty"]["accuracy"], string> = {
 export function PatternChartSummary({ data }: { data: PatternData }) {
   const highPrecision = data.ephemeris.precision === "high" && !data.ephemeris.degraded;
   const fields = [
-    { label: "Engine", value: data.engine },
+    { label: "Calculation source", value: plainEngineLabel(data.engine) },
     {
       label: "Position precision",
       value: highPrecision
@@ -29,11 +30,11 @@ export function PatternChartSummary({ data }: { data: PatternData }) {
   ];
   const limits =
     !data.uncertainty.housesReliable && data.uncertainty.angleClaimsSuppressed
-      ? "House and angle claims are suppressed for this birth-time estimate."
+      ? "House and angle descriptions are left out because the birth time is uncertain."
       : !data.uncertainty.housesReliable
-        ? "House claims and the rising lens are suppressed for this birth-time estimate."
+        ? "House and rising-sign descriptions are left out because the birth time is uncertain."
         : data.uncertainty.angleClaimsSuppressed
-          ? "Angle claims are suppressed for this birth-time estimate."
+          ? "Angle descriptions are left out because the birth time is uncertain."
           : !data.rising
             ? "Rising details are unavailable for this chart snapshot."
             : null;

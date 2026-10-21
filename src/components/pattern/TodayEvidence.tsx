@@ -5,15 +5,16 @@ import type { ReactNode } from "react";
 import type { fetchToday } from "@/lib/pattern.functions";
 import { timingDate } from "./timing";
 import type { NatalLensEvidence } from "@/lib/astro/natal-reliability";
+import { plainEngineLabel } from "@/lib/plain-engine";
 import {
   describeTodayFact,
-  todayFactCategory,
   todayFactId,
   todayFactLabel,
   todayParagraphId,
   todayPhaseLabel,
   todayPointLabel,
   todaySourceCategory,
+  todaySourceLabel,
 } from "./today-view";
 
 type TodayData = Extract<Awaited<ReturnType<typeof fetchToday>>, { needsOnboarding: false }>;
@@ -84,16 +85,10 @@ function NatalOrigin({ evidence }: { evidence: NatalLensEvidence }) {
       : `Boundary margins: ${evidence.marginsDeg.map((n) => `${n.toFixed(3)}°`).join(" · ")}`;
   return (
     <li className="min-w-0">
-      <p className="text-sm text-foreground">{origin} · service source</p>
+      <p className="text-sm text-foreground">{origin}</p>
       <p className="mt-1 break-words font-mono text-xs leading-relaxed text-muted-foreground">
         {proof} (before · recorded · after)
       </p>
-      <details className="mt-2 text-xs">
-        <summary className="cursor-pointer text-primary">Saved sample geometry</summary>
-        <pre className="mt-2 whitespace-pre-wrap break-all font-mono text-muted-foreground">
-          {JSON.stringify(evidence, null, 2)}
-        </pre>
-      </details>
     </li>
   );
 }
@@ -139,6 +134,17 @@ export function TodayEvidence({
       Array.isArray(citation.facts) &&
       citation.facts.every((id) => typeof id === "string"),
   );
+  const sources = provenance
+    .map((source) => ({
+      label: todaySourceLabel(source),
+      category: todaySourceCategory(source.lane, source.source_id),
+    }))
+    .filter(
+      (source, index, all) =>
+        all.findIndex(
+          (other) => other.label === source.label && other.category === source.category,
+        ) === index,
+    );
 
   return (
     <div id="today-evidence" className="today-evidence mt-4 space-y-8 bg-evidence p-4 sm:p-5">
@@ -153,7 +159,7 @@ export function TodayEvidence({
         {cycles.length ? (
           <ul className="today-evidence-calculations mt-4 grid gap-3">
             {cycles.map((cycle) => (
-              <li key={cycle.cycle_key} className="min-w-0 border border-rule bg-card p-4">
+              <li key={cycle.cycle_key} className="min-w-0 border-t border-rule pt-3">
                 <h4 className="mb-3 text-sm font-medium text-foreground">
                   {todayPointLabel(cycle.transit_body)} {cycle.aspect} natal{" "}
                   {todayPointLabel(cycle.natal_point)}
@@ -201,12 +207,14 @@ export function TodayEvidence({
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
               {language.mode === "model" ? (
                 <>
-                  {language.model ? `Wording by ${language.model}. ` : "Model-written wording. "}
-                  Paragraph citations identify the supplied references. They do not prove that every
-                  interpretation is supported by a reference.
+                  {language.model
+                    ? `Written by ${language.model} from the calculated facts. `
+                    : "Written from the calculated facts. "}
+                  A paragraph link names the reference supplied with that wording. It does not prove
+                  every sentence.
                 </>
               ) : (
-                "This reading uses published source wording. Paragraph links identify the references retained with that wording."
+                "This reading uses standard wording from published sources."
               )}
             </p>
             {!paragraphLinksAvailable && citations.length ? (
@@ -242,11 +250,11 @@ export function TodayEvidence({
                         <li key={id}>
                           {byId.has(id) ? (
                             <SourceLink id={todayFactId(readingId, id)}>
-                              {todayFactLabel(id)} <span className="ml-1 text-xs">({id})</span>
+                              {todayFactLabel(id)}
                             </SourceLink>
                           ) : (
                             <span className="inline-block py-3 text-sm text-muted-foreground">
-                              {todayFactLabel(id)} ({id}) · archived text unavailable
+                              {todayFactLabel(id)} · archived text unavailable
                             </span>
                           )}
                         </li>
@@ -263,8 +271,8 @@ export function TodayEvidence({
           </>
         ) : (
           <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-            This reading uses published template wording. Model paragraph citations do not apply;
-            the source trail below identifies its calculations, reference copy, and local context.
+            This reading uses standard wording from published sources. The references below are the
+            calculations, published copy, and context retained with it.
           </p>
         )}
 
@@ -287,9 +295,7 @@ export function TodayEvidence({
                 const use = saved?.sceneUse.find((item) => item.id === scene.id);
                 return (
                   <li key={scene.id} className="min-w-0 border-t border-rule pt-4">
-                    <h5 className="text-sm font-medium text-foreground">
-                      Published illustration · {saved?.releaseVersion}
-                    </h5>
+                    <h5 className="text-sm font-medium text-foreground">Published illustration</h5>
                     <p className="mt-2 break-words text-sm leading-relaxed text-foreground">
                       {scene.situation} {scene.focus}
                     </p>
@@ -343,16 +349,13 @@ export function TodayEvidence({
                     className="today-evidence-target min-w-0 border-t border-rule pt-4"
                   >
                     <div className="flex flex-wrap items-center gap-2">
-                      <h5 className="text-sm font-medium text-foreground">
-                        {described.label} <span className="font-mono text-xs">({fact.id})</span>
-                      </h5>
-                      <Category>{todayFactCategory(fact.id)}</Category>
+                      <h5 className="text-sm font-medium text-foreground">{described.label}</h5>
                     </div>
                     {language?.mode === "model" ? (
                       <p className="mt-2 text-xs text-muted-foreground">
                         {citations.some((citation) => citation.facts.includes(fact.id))
-                          ? "Cited in model paragraphs"
-                          : "Supplied · not cited in model paragraphs"}
+                          ? "Linked from a paragraph"
+                          : "Supplied, not linked from a paragraph"}
                       </p>
                     ) : null}
                     {described.values ? (
@@ -373,7 +376,6 @@ export function TodayEvidence({
                               value: todayPointLabel(synthesis.relationship),
                             },
                             { label: "Source version", value: synthesis.releaseVersion },
-                            { label: "Published rule", value: synthesis.ruleKey },
                           ]}
                         />
                         <ul
@@ -383,7 +385,7 @@ export function TodayEvidence({
                           {synthesis.dependsOn.map((id) => (
                             <li key={id}>
                               <SourceLink id={todayFactId(readingId, id)}>
-                                {todayFactLabel(id)} <span className="ml-1 text-xs">({id})</span>
+                                {todayFactLabel(id)}
                               </SourceLink>
                             </li>
                           ))}
@@ -393,9 +395,7 @@ export function TodayEvidence({
                     {fact.id === "A1" ? <TransitSequence calculation={calculation} /> : null}
                     {fact.id === "P2" && story?.plan.status === "selected" ? (
                       <div className="mt-3 space-y-2">
-                        <p className="text-sm">
-                          Published chapter {story.plan.copy.key} · {story.plan.releaseVersion}
-                        </p>
+                        <p className="text-sm">Published chapter · {story.plan.releaseVersion}</p>
                         <ul
                           className="flex flex-wrap gap-x-4"
                           aria-label="Published chapter parents"
@@ -403,7 +403,7 @@ export function TodayEvidence({
                           {["C1", "I1", "A1"].map((id) => (
                             <li key={id}>
                               <SourceLink id={todayFactId(readingId, id)}>
-                                {todayFactLabel(id)} ({id})
+                                {todayFactLabel(id)}
                               </SourceLink>
                             </li>
                           ))}
@@ -418,22 +418,26 @@ export function TodayEvidence({
                         </p>
                         <LabelledValues
                           values={[
-                            { label: "Published rule", value: natal.plan.lens.ruleKey },
                             { label: "Source version", value: natal.plan.releaseVersion },
                             {
-                              label: "Qualified service",
-                              value: [...new Set(natal.plan.lens.screen.sampleEngines)].join(" · "),
+                              label: "Calculation source",
+                              value: [
+                                ...new Set(
+                                  natal.plan.lens.screen.sampleEngines.map((engine) =>
+                                    plainEngineLabel(engine),
+                                  ),
+                                ),
+                              ].join(" · "),
                             },
                             {
-                              label: "Declared accuracy",
+                              label: "Birth-time accuracy",
                               value: `${todayPointLabel(natal.plan.lens.screen.accuracy)} · ±${natal.plan.lens.screen.sampleOffsetsMinutes[2]} minutes`,
                             },
                           ]}
                         />
                         <p className="text-sm leading-relaxed text-muted-foreground">
-                          Checked at the recorded time and both uncertainty boundaries. This
-                          three-sample screen does not certify every instant in the interval or
-                          confirm the birth time.
+                          Checked at the recorded time and both uncertainty boundaries. Those three
+                          samples do not confirm the birth time or every moment between them.
                         </p>
                         <h6 className="text-sm font-medium text-foreground">
                           Natal origin saved with this reading
@@ -450,15 +454,15 @@ export function TodayEvidence({
                           {natal.plan.lens.dependsOn.map((id) => (
                             <li key={id}>
                               <SourceLink id={todayFactId(readingId, id)}>
-                                {todayFactLabel(id)} <span className="ml-1 text-xs">({id})</span>
+                                {todayFactLabel(id)}
                               </SourceLink>
                             </li>
                           ))}
                         </ul>
                         <p className="text-xs text-muted-foreground">
                           {language?.mode === "model"
-                            ? "Used in cited model paragraphs"
-                            : "Used in published template wording"}
+                            ? "Linked from the wording"
+                            : "Used in the standard wording"}
                         </p>
                         <ul
                           className="flex flex-wrap gap-x-4"
@@ -478,14 +482,6 @@ export function TodayEvidence({
                         </ul>
                       </div>
                     ) : null}
-                    <details className="mt-3">
-                      <summary className="cursor-pointer text-xs text-primary">
-                        Original supplied text
-                      </summary>
-                      <p className="mt-2 whitespace-pre-wrap break-words font-mono text-xs leading-relaxed text-muted-foreground">
-                        {fact.statement}
-                      </p>
-                    </details>
                   </li>
                 );
               })}
@@ -507,18 +503,14 @@ export function TodayEvidence({
           The categories distinguish calculations, published wording, and context you chose to
           record. Personal context is added locally and does not change the chart calculation.
         </p>
-        {provenance.length ? (
+        {sources.length ? (
           <ul className="mt-4 space-y-3">
-            {provenance.map((source, index) => (
-              <li
-                key={`${source.source_id}-${index}`}
-                className="min-w-0 border-t border-rule pt-3"
-              >
+            {sources.map((source, index) => (
+              <li key={`${source.label}-${index}`} className="min-w-0 border-t border-rule pt-3">
                 <div className="flex flex-wrap items-center gap-2">
                   <p className="break-words text-sm text-foreground">{source.label}</p>
-                  <Category>{todaySourceCategory(source.lane, source.source_id)}</Category>
+                  <Category>{source.category}</Category>
                 </div>
-                <p className="mt-1 font-mono text-xs text-muted-foreground">{source.source_id}</p>
               </li>
             ))}
           </ul>

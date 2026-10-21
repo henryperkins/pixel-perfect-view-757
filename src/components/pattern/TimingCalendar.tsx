@@ -81,7 +81,7 @@ export function TimingCalendar({
   const controls = (
     <div className="my-5 flex flex-wrap gap-4">
       <label className="grid gap-1 text-sm">
-        Future horizon
+        Date range
         <select
           className="pattern-mobile-field min-h-11 rounded border border-input bg-background px-3"
           value={horizon}
@@ -141,14 +141,13 @@ export function TimingCalendar({
           </div>
         </dl>
         <p className="mt-3 text-xs text-muted-foreground">
-          Swiss Ephemeris · native relative geometry · {data?.timezone}. These are calculated
-          contacts; they do not predict events in your life.
+          Calculated contacts, not predictions of events in your life.
         </p>
       </details>
     </li>
   );
   function bound(at: string | null, range: [string, string] | null) {
-    if (!at) return "Outside the calculated scan";
+    if (!at) return "Outside the calculated range";
     if (range && Date.parse(range[1]) - Date.parse(range[0]) > 60000)
       return (
         stamp(range[0], data?.timezone ?? "UTC") + " – " + stamp(range[1], data?.timezone ?? "UTC")
@@ -182,8 +181,7 @@ export function TimingCalendar({
           Upcoming windows
         </h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          A native scan includes windows outside today’s orb. Starts and exact dates can vary with
-          your birth-time range.
+          Dates can vary with uncertainty in your birth time.
         </p>
         {controls}
         <div className="mb-5 flex flex-wrap gap-4">
@@ -265,7 +263,7 @@ export function TimingCalendar({
             {rows.length ? (
               <ul aria-label="Upcoming calculated windows">{rows.map(window)}</ul>
             ) : (
-              <p>No certain future starts match these filters in the calculated range.</p>
+              <p>No confirmed future starts match these filters in the calculated range.</p>
             )}
             {uncertain.length ? (
               <section className="mt-6">
@@ -277,12 +275,15 @@ export function TimingCalendar({
                 <ul>{uncertain.map(window)}</ul>
               </section>
             ) : null}
-            <p className="mt-5 text-xs text-muted-foreground">
-              Range: {stamp(calculation.from, data!.timezone)} –{" "}
-              {stamp(calculation.to, data!.timezone)} · {data!.timezone}.{" "}
-              {calculation.windows.length} retained of {calculation.totalMatched} matched windows,
-              including active windows. Refreshed {stamp(data!.computedAt, data!.timezone)}.
-            </p>
+            <details className="mt-5 text-sm">
+              <summary className="cursor-pointer text-primary">Calculation record</summary>
+              <p className="mt-2 text-muted-foreground">
+                Swiss Ephemeris · {data!.timezone}. Range: {stamp(calculation.from, data!.timezone)}{" "}
+                – {stamp(calculation.to, data!.timezone)}. {calculation.windows.length} retained of{" "}
+                {calculation.totalMatched} matching windows, including active windows. Refreshed{" "}
+                {stamp(data!.computedAt, data!.timezone)}.
+              </p>
+            </details>
           </>
         ) : null}
       </section>
@@ -338,11 +339,8 @@ export function TimingCalendar({
                       </summary>
                       <p className="mt-3 text-sm">
                         Sun {e.sunLongitude.toFixed(3)}° · Moon {e.moonLongitude.toFixed(3)}°
-                        tropical longitude.{" "}
-                        {e.nativeClassification === null
-                          ? "Native phase geometry."
-                          : "Native eclipse classification."}{" "}
-                        Timing rounded to the nearest second, with a 60-second comparison tolerance.
+                        tropical longitude. Timing rounded to the nearest second, with a 60-second
+                        comparison tolerance.
                       </p>
                     </details>
                   </li>

@@ -5,7 +5,7 @@ import { useState } from "react";
 import { clearPatternQueries, clearReadingContextQueries } from "@/lib/pattern-query-cache";
 import { Button } from "@/components/ui/button";
 import type { BirthChangeSummary } from "@/lib/pattern.server";
-import { Field, Rail, Shell } from "@/components/pattern/Shell";
+import { Shell } from "@/components/pattern/Shell";
 import { BirthDetailsForm } from "@/components/pattern/BirthDetailsForm";
 import { fetchBirthRecord } from "@/lib/pattern.functions";
 import { userFacingError } from "@/lib/user-facing-error";
@@ -23,7 +23,7 @@ export const Route = createFileRoute("/_authenticated/birth")({
       {
         property: "og:description",
         content:
-          "Correcting a birth detail recalculates the chart and re-fingerprints the snapshot.",
+          "Correcting a birth detail recalculates your chart. Existing readings keep their original evidence.",
       },
     ],
   }),
@@ -104,13 +104,18 @@ function BirthPage() {
   }
   return (
     <Shell>
-      <div className="grid animate-rise gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1fr)_16rem]">
+      <div className="max-w-2xl animate-rise">
         <div className="min-w-0">
           <h1 className="text-2xl sm:text-3xl">Birth record</h1>
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
             Review and correct the details your chart is calculated from. Saved details are
             encrypted in your account.
           </p>
+          {record ? (
+            <p className="mt-2 text-xs text-muted-foreground">
+              Last saved {new Date(record.updated_at).toLocaleString()}.
+            </p>
+          ) : null}
           {query.isPending ? (
             <p role="status" className="mt-8">
               Loading your saved birth details…
@@ -159,32 +164,11 @@ function BirthPage() {
                 to="/pattern"
                 className="technical mt-4 inline-flex min-h-11 items-center text-primary"
               >
-                See the chart snapshot
+                View your chart
               </Link>
             </>
           )}
         </div>
-        <Rail title="Stored record">
-          {record ? (
-            <>
-              <Field label="Date" value={record.birthDate} />
-              <Field
-                label="Time"
-                value={record.accuracy === "unknown" ? "unknown" : record.birthTime}
-              />
-              <Field label="Accuracy" value={record.accuracy} />
-              <Field label="Place" value={record.placeLabel} />
-              <Field label="Zone" value={record.timezone} />
-              <Field
-                label="Fingerprint"
-                value={<span className="break-all">{record.fingerprint.slice(0, 16)}…</span>}
-              />
-              <Field label="Last changed" value={new Date(record.updated_at).toLocaleString()} />
-            </>
-          ) : (
-            <p className="text-xs text-muted-foreground">Nothing stored yet.</p>
-          )}
-        </Rail>
       </div>
     </Shell>
   );

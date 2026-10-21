@@ -28,55 +28,34 @@ export function EphemerisNotice({
 
   if (!state.degraded) {
     return (
-      <p className={`technical text-muted-foreground ${className}`}>
-        Natal positions from the Swiss Ephemeris service ·{" "}
-        <span className="font-mono text-xs text-foreground">{state.engine}</span>
+      <p className={`text-sm text-muted-foreground ${className}`}>
+        Natal positions come from the Swiss Ephemeris.
         {state.primaryTransitGeometry ? (
-          <>
-            . Primary transit geometry and orb ·{" "}
-            <span className="font-mono text-xs text-foreground">
-              {state.primaryTransitGeometry.engine}
-            </span>
-          </>
+          <> The main contact’s angle and orb use that qualified timing.</>
         ) : null}
         {state.transitEngine ? (
           <>
-            .{" "}
+            {" "}
             {state.primaryTransitGeometry
-              ? "Other transit geometry and orbs are approximate"
-              : "Current transit geometry and orb are approximate"}{" "}
-            · <span className="font-mono text-xs text-foreground">{state.transitEngine}</span>
+              ? "Other transit geometry and orbs are approximate."
+              : "Current transit geometry and orb are approximate."}
           </>
         ) : null}
-        {state.eventTiming ? (
-          <>
-            . Primary event timing ·{" "}
-            <span className="font-mono text-xs text-foreground">{state.eventTiming.engine}</span>
-          </>
-        ) : null}
+        {state.eventTiming ? <> Primary event timing uses the qualified timing service.</> : null}
       </p>
     );
   }
 
   return (
-    <div role="status" className={`border-l-2 border-l-primary bg-evidence px-4 py-3 ${className}`}>
-      <p className="technical text-evidence-foreground">
-        Approximate ephemeris — degraded precision
+    <div role="status" className={`border border-rule bg-evidence px-4 py-3 ${className}`}>
+      <p className="text-sm font-medium text-evidence-foreground">
+        Approximate positions — reduced precision
       </p>
-      <p className="mt-1.5 font-mono text-xs leading-relaxed text-muted-foreground">
+      <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
         {state.degradedReason ??
-          "The Swiss Ephemeris service was unavailable, so positions come from the in-app analytical engine."}{" "}
-        Positions are accurate to roughly arc-minutes, so degree-exact and fast-Moon claims below
-        should be read as indicative rather than precise.
-      </p>
-      <p className="mt-1.5 font-mono text-xs text-muted-foreground">
-        Engine <span className="text-foreground">{state.engine}</span>
-        {state.transitEngine ? (
-          <>
-            {" · transit scan "}
-            <span className="text-foreground">{state.transitEngine}</span>
-          </>
-        ) : null}
+          "The Swiss Ephemeris service was unavailable, so positions come from the in-app approximation."}{" "}
+        Positions are accurate to roughly arc-minutes, so degree-exact and fast-Moon claims should
+        be read as indicative rather than precise.
       </p>
     </div>
   );

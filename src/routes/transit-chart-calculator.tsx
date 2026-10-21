@@ -129,7 +129,7 @@ const FAQ: { question: string; answer: string }[] = [
   {
     question: "Is the reading written by AI?",
     answer:
-      "The calculation never is. The wording can be: Google Gemini, through the Lovable AI gateway, may write the day’s reading from the calculated facts and Pattern’s published interpretations, and has to cite them. Raw birth details are never sent to it. If a draft fails Pattern’s checks, the template wording is used instead, and each reading shows which one you got.",
+      "The calculation never is. Google Gemini, through Gemini Enterprise or the Lovable AI gateway, may write the day’s reading from calculated facts and Pattern’s published interpretations. Paragraph links name the references supplied with the wording; they do not prove every sentence. Raw birth details are never sent to the language provider. If a draft fails Pattern’s checks, published standard wording is used instead. Each reading shows which wording you received.",
   },
   {
     question: "What happens to my birth details?",
@@ -609,11 +609,11 @@ function PositionFields({
 
 // Shortcuts below the check; the hero and ledger keep the first viewport.
 const RULES = [
-  { href: "#calculator-compared", text: "1 · What gets compared" },
-  { href: "#calculator-orbs", text: "2 · How close counts" },
-  { href: "#calculator-window", text: "3 · When it opens, peaks and closes" },
-  { href: "#calculator-strength", text: "4 · How contacts are ranked" },
-  { href: "#calculator-sources", text: "5 · Birth time and sources" },
+  { href: "#calculator-compared", text: "What gets compared" },
+  { href: "#calculator-orbs", text: "How close counts" },
+  { href: "#calculator-window", text: "When it opens, peaks and closes" },
+  { href: "#calculator-strength", text: "How contacts are ranked" },
+  { href: "#calculator-sources", text: "Birth time and sources" },
   { href: "#calculator-faq-title", text: "Questions" },
 ] as const;
 
@@ -628,7 +628,7 @@ function RuleSections() {
     <>
       <section className="calculator-section" aria-labelledby="calculator-compared">
         <h2 id="calculator-compared" className="flow-section-title">
-          1 · What gets compared
+          What gets compared
         </h2>
         <p className="calculator-section-intro prose-reading">
           Each day Pattern takes the positions of {TRANSIT_BODIES.length} moving bodies and checks
@@ -679,7 +679,7 @@ function RuleSections() {
 
       <section className="calculator-section" aria-labelledby="calculator-orbs">
         <h2 id="calculator-orbs" className="flow-section-title">
-          2 · How close counts
+          How close counts
         </h2>
         <p className="calculator-section-intro prose-reading">
           The orb is how far a pair sits from its aspect’s exact angle. Pattern counts a contact
@@ -717,7 +717,7 @@ function RuleSections() {
 
       <section className="calculator-section" aria-labelledby="calculator-window">
         <h2 id="calculator-window" className="flow-section-title">
-          3 · When it opens, peaks and closes
+          When it opens, peaks and closes
         </h2>
         <p className="calculator-section-intro prose-reading">
           A transit is a window, not a day. Pattern scans backward and forward to find when the orb
@@ -788,7 +788,7 @@ function RuleSections() {
 
       <section className="calculator-section" aria-labelledby="calculator-strength">
         <h2 id="calculator-strength" className="flow-section-title">
-          4 · How contacts are ranked
+          How contacts are ranked
         </h2>
         <p className="calculator-section-intro prose-reading">
           Strength decides which contact leads your day. Slow movers and your Sun, Moon and angles
@@ -881,7 +881,7 @@ function RuleSections() {
 
       <section className="calculator-section" aria-labelledby="calculator-sources">
         <h2 id="calculator-sources" className="flow-section-title">
-          5 · Birth time and sources
+          Birth time and sources
         </h2>
         <p className="calculator-section-intro prose-reading">
           Unknown or approximate birth times are normal. Pattern grades what the time can support

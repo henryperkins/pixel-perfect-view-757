@@ -14,7 +14,7 @@ import { MembershipSettings } from "@/components/pattern/MembershipSettings";
 import { AccountSecurity } from "@/components/pattern/AccountSecurity";
 import { SectionNav } from "@/components/pattern/SectionNav";
 
-import { Field, Rail, Shell } from "@/components/pattern/Shell";
+import { Shell } from "@/components/pattern/Shell";
 import {
   addEvent,
   resetPersonalization,
@@ -37,12 +37,13 @@ export const Route = createFileRoute("/_authenticated/privacy")({
       {
         name: "description",
         content:
-          "Every data source Pattern may use, its permission tier, allowed uses and retention — with per-source controls.",
+          "Choose which context Pattern may use, see how long it is kept, and manage your saved data.",
       },
       { property: "og:title", content: "Context & privacy — Pattern" },
       {
         property: "og:description",
-        content: "Tier 0 is required for calculation; everything else is opt-in and revocable.",
+        content:
+          "Birth details are required for calculation. Optional context is opt-in and revocable.",
       },
     ],
   }),
@@ -209,12 +210,12 @@ function PrivacyPage() {
 
   return (
     <Shell>
-      <div className="grid animate-rise gap-10 lg:grid-cols-[minmax(0,1fr)_16rem]">
+      <div className="max-w-4xl animate-rise">
         <div className="privacy-main min-w-0">
           <h1 className="text-3xl">Context &amp; privacy</h1>
           <p className="mt-3 max-w-2xl text-sm text-muted-foreground">
-            This is the registry the reading engine actually enforces. A source can only be used for
-            the uses listed beside it; anything else fails at the policy boundary.
+            Choose what Pattern may use. Optional context never changes the chart, and you can turn
+            it off.
           </p>
           <SectionNav label="Context & privacy sections" links={SECTIONS} className="mt-5" />
 
@@ -307,45 +308,57 @@ function PrivacyPage() {
               Context switches allow only the local uses listed below; turning them on does not
               authorize sending that context to a model.
             </p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              A daily reading may also send one selected, chart-derived natal interpretation to the
-              language provider. Its raw natal origins—signs, houses, aspects and uncertainty
-              proofs—are omitted from the daily prompt. The derived wording remains personal
-              information and can allow inference; it is not anonymous data or a psychological
-              assessment. Its saved copy and detailed origins are encrypted and included in your own
-              export.
-            </p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              When qualified event timing is available, a daily reading may also send a calculated
-              contact count, chapter, approved dates and reviewed conditional interpretation to the
-              language provider. These derived dates remain personal information. Raw birth details,
-              anchor samples, numerical proofs and private episode identifiers stay out of the
-              prompt. The ephemeris service receives the selected transit, three natal longitudes
-              and the calculation time to determine contacts. Saved anchors and detailed story
-              evidence are encrypted, included in your export and removed with account erasure.
-              Reopening a saved reading restores its original evidence and does not recalculate its
-              history.
-            </p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Upcoming Timing sends the owned ephemeris service the requested range and up to nine
-              screened natal position triples, in bounded groups. Raw birth details and journal text
-              are omitted from these requests. Global Moon and eclipse queries need no member chart.
-              Daylight queries send only the coarse current location, calendar timezone and day that
-              you explicitly permit. That location is separate from birthplace, is encrypted in
-              Pattern, and is replaced on change or removed after 30 days. Daylight and seasonal
-              framing stay in Your Context and never enter a model request or cycle ranking.
-            </p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              The Daily check-in switch lets energy shape the size of a suggested next step and mood
-              frame it gently. These values stay within Pattern. You can still save a private
-              check-in with that switch off. Saving never turns the switch on.
-            </p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Feedback scores are never sent to the language provider. Scores count locally in
-              aggregate admin quality reports only when the Reading quality feedback switch is on.
-              Notes and labels are excluded. Turning this switch off excludes your saved scores from
-              future reports; saving a rating never turns it on.
-            </p>
+            <details className="mt-3">
+              <summary className="min-h-11 cursor-pointer py-3 text-sm text-primary">
+                Data flows, saved evidence and local context
+              </summary>
+              <div className="space-y-3 pb-3">
+                <p className="text-sm text-muted-foreground">
+                  The system used to publish interpretations never receives your chart, notes or
+                  readings.
+                </p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  A daily reading may also send one selected, chart-derived natal interpretation to
+                  the language provider. Its raw natal origins—signs, houses, aspects and
+                  uncertainty proofs—are omitted from the daily prompt. The derived wording remains
+                  personal information and can allow inference; it is not anonymous data or a
+                  psychological assessment. Its saved copy and detailed origins are encrypted and
+                  included in your own export.
+                </p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  When qualified event timing is available, a daily reading may also send a
+                  calculated contact count, chapter, approved dates and reviewed conditional
+                  interpretation to the language provider. These derived dates remain personal
+                  information. Raw birth details, anchor samples, numerical proofs and private
+                  episode identifiers stay out of the prompt. The ephemeris service receives the
+                  selected transit, three natal longitudes and the calculation time to determine
+                  contacts. Saved anchors and detailed story evidence are encrypted, included in
+                  your export and removed with account erasure. Reopening a saved reading restores
+                  its original evidence and does not recalculate its history.
+                </p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Upcoming Timing sends the owned ephemeris service the requested range and up to
+                  nine screened natal position triples, in bounded groups. Raw birth details and
+                  journal text are omitted from these requests. Global Moon and eclipse queries need
+                  no member chart. Daylight queries send only the coarse current location, calendar
+                  timezone and day that you explicitly permit. That location is separate from
+                  birthplace, is encrypted in Pattern, and is replaced on change or removed after 30
+                  days. Daylight and seasonal framing stay in Pattern and never enter a model
+                  request or cycle ranking.
+                </p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  The Daily check-in switch lets energy shape the size of a suggested next step and
+                  mood frame it gently. These values stay within Pattern. You can still save a
+                  private check-in with that switch off. Saving never turns the switch on.
+                </p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Feedback scores are never sent to the language provider. Scores count locally in
+                  aggregate admin quality reports only when the Reading quality feedback switch is
+                  on. Notes and labels are excluded. Turning this switch off excludes your saved
+                  scores from future reports; saving a rating never turns it on.
+                </p>
+              </div>
+            </details>
           </section>
 
           <section className="mt-8 max-w-2xl" aria-labelledby="assistant-privacy">
@@ -395,7 +408,7 @@ function PrivacyPage() {
               aria-labelledby={`privacy-tier-${tier.tier}`}
             >
               <h2 id={`privacy-tier-${tier.tier}`} className="font-serif text-xl">
-                Tier {tier.tier} · {tier.name}
+                {tier.name}
               </h2>
               <p className="mt-1 max-w-2xl text-sm text-muted-foreground">{tier.summary}</p>
               <div className="mt-4 space-y-2">
@@ -407,16 +420,7 @@ function PrivacyPage() {
                       className="flex flex-wrap items-start justify-between gap-4 border border-rule bg-card px-4 py-3"
                     >
                       <div className="min-w-0">
-                        <p
-                          id={`source-${s.id}-meta`}
-                          className="font-mono text-xs text-muted-foreground"
-                        >
-                          {s.id} · {s.sensitivity} ·{" "}
-                          {s.retention_days === null
-                            ? "retained until deletion"
-                            : `${s.retention_days}d retention`}
-                        </p>
-                        <p id={`source-${s.id}-label`} className="mt-1 text-sm font-medium">
+                        <p id={`source-${s.id}-label`} className="text-sm font-medium">
                           {s.label}
                         </p>
                         <p
@@ -424,13 +428,10 @@ function PrivacyPage() {
                           className="mt-1 max-w-xl text-sm text-muted-foreground"
                         >
                           {s.description}
-                          {s.available === false ? " This context is not available yet." : ""}
-                        </p>
-                        <p
-                          id={`source-${s.id}-uses`}
-                          className="mt-1.5 font-mono text-xs text-muted-foreground"
-                        >
-                          uses: {s.allowed_uses.map((use) => use.replaceAll("_", " ")).join(", ")}
+                          {s.available === false ? " This context is not available yet." : ""}{" "}
+                          {s.retention_days === null
+                            ? "Kept until you delete your account."
+                            : `Kept for ${s.retention_days} days.`}
                         </p>
                       </div>
                       {tier.required ? (
@@ -439,22 +440,24 @@ function PrivacyPage() {
                         <Button
                           variant={on ? "secondary" : "outline"}
                           type="button"
-                          aria-label={`Use ${s.label}`}
+                          aria-labelledby={`source-${s.id}-label source-${s.id}-state`}
                           aria-pressed={consentUnknown ? undefined : on}
-                          aria-describedby={`source-${s.id}-meta source-${s.id}-description source-${s.id}-uses`}
+                          aria-describedby={`source-${s.id}-description`}
                           disabled={consentControlsDisabled || (s.available === false && !on)}
                           onClick={() => toggle.mutate({ sourceId: s.id, granted: !on })}
                           className="shrink-0"
                         >
-                          {consentUnknown
-                            ? boot.isPending || boot.isFetching
-                              ? "loading…"
-                              : "unavailable"
-                            : s.available === false && !on
-                              ? "unavailable"
-                              : on
-                                ? "on"
-                                : "off"}
+                          <span id={`source-${s.id}-state`}>
+                            {consentUnknown
+                              ? boot.isPending || boot.isFetching
+                                ? "loading…"
+                                : "unavailable"
+                              : s.available === false && !on
+                                ? "unavailable"
+                                : on
+                                  ? "on"
+                                  : "off"}
+                          </span>
                         </Button>
                       )}
                     </div>
@@ -474,13 +477,11 @@ function PrivacyPage() {
           <section className="mt-12">
             <h2 className="font-serif text-xl">Never collected</h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              These are encoded as a rejected list. No code path can introduce them.
+              Pattern does not collect these, and turning a source on cannot add them.
             </p>
-            <ul className="mt-3 grid gap-1 font-mono text-xs text-muted-foreground sm:grid-cols-2">
+            <ul className="mt-3 grid gap-1 text-sm text-muted-foreground sm:grid-cols-2">
               {PROHIBITED_SOURCES.map((p) => (
-                <li key={p.id}>
-                  {p.id} · {p.label}
-                </li>
+                <li key={p.id}>{p.label}</li>
               ))}
             </ul>
           </section>
@@ -572,9 +573,8 @@ function PrivacyPage() {
               Marked moments
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              A dated moment you choose to record. With Marked moments reuse on, matching entries
-              appear as Your context beside a reading, timing window or chart chapter. Saving an
-              entry keeps it in your Journal even when reuse is off.
+              With Marked moments reuse on, matching entries appear beside a reading, timing window
+              or chart chapter. Saving an entry keeps it in your Journal even when reuse is off.
             </p>
             <div className="mt-4 flex flex-wrap items-end gap-3">
               <label className="block">
@@ -587,7 +587,7 @@ function PrivacyPage() {
                 />
               </label>
               <label className="block">
-                <span className="technical text-muted-foreground">Domain</span>
+                <span className="technical text-muted-foreground">Area of life</span>
                 <select
                   value={eventDomain}
                   onChange={(e) => setEventDomain(e.target.value)}
@@ -595,7 +595,7 @@ function PrivacyPage() {
                 >
                   {["identity", "relationships", "work", "inner-life", "structure"].map((d) => (
                     <option key={d} value={d}>
-                      {d}
+                      {DOMAIN_LABEL[d] ?? d}
                     </option>
                   ))}
                 </select>
@@ -614,13 +614,13 @@ function PrivacyPage() {
                 disabled={!eventDate || !eventLabel || addMoment.isPending}
                 onClick={() => addMoment.mutate()}
               >
-                Add
+                Save moment
               </Button>
             </div>
             <ul className="mt-4 space-y-1 font-mono text-xs text-muted-foreground">
               {(journal.data?.events ?? []).map((e) => (
                 <li key={e.id}>
-                  {e.occurred_on} · {e.domain} · {e.label}
+                  {e.occurred_on} · {DOMAIN_LABEL[e.domain] ?? e.domain} · {e.label}
                 </li>
               ))}
             </ul>
@@ -732,21 +732,6 @@ function PrivacyPage() {
             ) : null}
           </section>
         </div>
-
-        <Rail title="Status">
-          <Field
-            label="Chart"
-            value={boot.data ? (boot.data.hasChart ? "calculated" : "missing") : "—"}
-          />
-          <Field label="Tier 1 on" value={consentUnknown ? "—" : granted.size} />
-          <Field label="Check-ins" value={journal.data?.checkIns.length ?? "—"} />
-          <Field label="Moments" value={journal.data?.events.length ?? "—"} />
-          <Field label="Feedback" value={journal.data?.feedback.length ?? "—"} />
-          <p className="pt-2 text-xs">
-            Editorial content is published into the app by a signed release; it never receives your
-            chart, notes or readings.
-          </p>
-        </Rail>
       </div>
     </Shell>
   );

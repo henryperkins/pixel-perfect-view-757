@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useId, useRef, useState } from "react";
 
 import { Field } from "@/components/pattern/Shell";
+import { plainAccuracy, plainEngineLabel, plainPrecision } from "@/lib/plain-engine";
 import { Button } from "@/components/ui/button";
 import { bodyName, type PatternData } from "./pattern-view";
 
@@ -196,10 +197,7 @@ export function PatternChartDetails({ data }: { data: PatternData }) {
 
   return (
     <section className="pattern-chart-details" aria-labelledby="pattern-chart-heading">
-      <h2 id="pattern-chart-heading">A closer look at your chart</h2>
-      <p className="pattern-detail-copy">
-        Follow a little further into the positions and connections behind your chapters.
-      </p>
+      <h2 id="pattern-chart-heading">Chart details</h2>
 
       {data.rising ? (
         <details className="pattern-chart-foldout">
@@ -257,9 +255,6 @@ export function PatternChartDetails({ data }: { data: PatternData }) {
             <>
               {columns.overflowing && (
                 <div className="mt-4">
-                  <p className="text-sm text-muted-foreground">
-                    Scroll sideways or use the column buttons to compare.
-                  </p>
                   <div
                     className="pattern-placement-controls"
                     role="group"
@@ -341,32 +336,36 @@ export function PatternChartDetails({ data }: { data: PatternData }) {
               {data.snapshot.birth.birthDate} {data.snapshot.birth.birthTime} ·{" "}
               {data.snapshot.birth.placeLabel}
               <br />
-              {data.snapshot.birth.timezone} · time accuracy {data.snapshot.birth.accuracy}
+              {data.snapshot.birth.timezone} · {plainAccuracy(data.snapshot.birth.accuracy)}
             </p>
           ) : (
             <p className="pattern-detail-copy">No stored birth record for this snapshot.</p>
           )}
           <div className="pattern-record-fields">
-            <Field label="Engine" value={data.engine} />
-            <Field label="Snapshot engine" value={data.snapshot.engine} />
-            <Field label="Precision" value={data.ephemeris.precision} />
-            <Field label="Contract" value={data.contractVersion} />
-            <Field label="Snapshot contract" value={data.snapshot.contractVersion} />
-            <Field label="Houses" value={data.houseSystem} />
-            <Field label="Time accuracy" value={data.uncertainty.accuracy} />
-            <Field label="Placements" value={data.snapshot.placementCount} />
-            <Field label="Connections" value={data.snapshot.aspectCount} />
+            <Field label="Calculation source" value={plainEngineLabel(data.snapshot.engine)} />
+            {data.engine !== data.snapshot.engine ? (
+              <Field label="Current source" value={plainEngineLabel(data.engine)} />
+            ) : null}
+            <Field label="Precision" value={plainPrecision(data.ephemeris.precision)} />
+            <Field label="House system" value={data.houseSystem} />
+            <Field label="Birth-time accuracy" value={plainAccuracy(data.uncertainty.accuracy)} />
             <Field
-              label="ASC spread"
+              label="Ascendant could move"
               value={`${data.uncertainty.ascendantSpreadDeg.toFixed(2)}°`}
             />
-            <Field label="Moon spread" value={`${data.uncertainty.moonSpreadDeg.toFixed(2)}°`} />
+            <Field
+              label="Moon could move"
+              value={`${data.uncertainty.moonSpreadDeg.toFixed(2)}°`}
+            />
           </div>
           <p className="pattern-detail-copy mt-4">
-            “Spread” is how much a value could move given uncertainty in your birth time.
+            Those ranges are how far a value could move given uncertainty in the birth time.
             {data.uncertainty.housesReliable
-              ? " Your birth time is precise enough for house and angle claims."
-              : " House claims and the rising lens are suppressed because your birth time isn't precise enough."}
+              ? " This birth time supports house descriptions."
+              : " House descriptions are left out because the birth time isn’t precise enough."}
+            {data.uncertainty.angleClaimsSuppressed
+              ? " Angle descriptions are also left out."
+              : " Angle descriptions remain available within the recorded uncertainty."}
           </p>
           <div className="mt-4 flex flex-wrap gap-5 text-sm text-primary">
             <Link to="/sources" className="inline-flex min-h-11 items-center">

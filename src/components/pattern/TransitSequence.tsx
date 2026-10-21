@@ -1,5 +1,6 @@
 import type { DailyTransitCalculation } from "@/lib/astro/transit-episodes";
 import { timingDate } from "./timing";
+import { plainEngineLabel } from "@/lib/plain-engine";
 /** All data belongs to the saved calculation. Opening this panel makes no request. */
 export function TransitSequence({
   calculation,
@@ -23,9 +24,6 @@ export function TransitSequence({
           ? "Between calculated contacts"
           : `Contact ${e.passIndex} of ${e.passTotal}`}
       </h4>
-      <p className="text-sm text-muted-foreground">
-        Calculated contacts, not a record of events in your life.
-      </p>
       <div
         className="relative h-5"
         role="img"
@@ -72,8 +70,8 @@ export function TransitSequence({
       </ol>
       <dl className="grid gap-3 text-sm sm:grid-cols-2">
         <div>
-          <dt className="text-muted-foreground">First ingress</dt>
-          <dd>{timingDate(windows[0]!.ingress!.at, e.timezone)} · central calculation</dd>
+          <dt className="text-muted-foreground">Window opens</dt>
+          <dd>{timingDate(windows[0]!.ingress!.at, e.timezone)} · recorded-time sample</dd>
         </div>
         <div>
           <dt className="text-muted-foreground">First exact contact</dt>
@@ -85,36 +83,18 @@ export function TransitSequence({
         </div>
       </dl>
       <p className="text-sm text-muted-foreground">
-        Checked at the recorded birth time and both uncertainty boundaries. This three-sample screen
-        does not confirm the birth time or every instant between the samples.
+        Checked at the recorded birth time and both uncertainty boundaries. Those three samples do
+        not confirm the birth time or every moment between them. These are calculated contacts, not
+        a record of events in your life.
       </p>
       <details className="text-sm">
-        <summary className="cursor-pointer text-primary">Event timing source details</summary>
-        <dl className="mt-2 space-y-2 break-words">
-          <div>
-            <dt>Event timing engine</dt>
-            <dd>
-              {e.scan.source.engine} {e.scan.source.engineVersion}
-            </dd>
-          </div>
-          <div>
-            <dt>Source identity</dt>
-            <dd>
-              {e.scan.sourceId} · {e.scan.source.dataId}
-            </dd>
-          </div>
-          <div>
-            <dt>Numerical brackets</dt>
-            <dd>
-              At most {e.scan.tolerance.bracketSeconds} seconds; numerical tolerance is not personal
-              timing accuracy.
-            </dd>
-          </div>
-          <div>
-            <dt>Current orb and ranking</dt>
-            <dd>Approximate in-app geometry. It is separate from the exact-contact calculation.</dd>
-          </div>
-        </dl>
+        <summary className="cursor-pointer text-primary">Timing calculation source</summary>
+        <p className="mt-2 text-muted-foreground">
+          {plainEngineLabel(e.scan.source.engine)} · {e.scan.source.engineVersion}. Numerical
+          brackets are at most {e.scan.tolerance.bracketSeconds} seconds; this is calculation
+          tolerance, not personal timing accuracy. The current angle used for ranking is separate
+          from these contact dates.
+        </p>
       </details>
     </section>
   );

@@ -37,15 +37,15 @@ export function TodayJournal({
   return (
     <section id={surfaceId} className="today-section">
       <div className="today-section-heading">
-        <h2 className="flow-section-title">Your context</h2>
+        <h2 className="flow-section-title">Journal</h2>
         <Link to="/journal" className="today-text-link">
           Open journal <ArrowRight aria-hidden="true" className="h-4 w-4" />
         </Link>
       </div>
       {permission === false || query.data?.enabled === false ? (
         <p className="mt-3 text-sm text-muted-foreground">
-          Marked moments reuse is off. Your entries remain in your Journal. You can allow matching
-          entries here in{" "}
+          Matching journal entries are off. Your entries remain in your Journal. You can allow them
+          here in{" "}
           <Link to="/privacy" className="underline">
             Context &amp; privacy
           </Link>
@@ -64,7 +64,7 @@ export function TodayJournal({
       ) : null}
       {query.error ? (
         <div className="today-recovery mt-4">
-          <p role="alert">Your context couldn’t load. You can try again.</p>
+          <p role="alert">Your journal entries couldn’t load. You can try again.</p>
           <Button
             variant="outline"
             disabled={query.isFetching}
@@ -105,17 +105,10 @@ export function TodayJournal({
                 ) : null}
                 <p className="mt-2 text-xs text-muted-foreground">
                   {DOMAIN_LABEL[entry.domain] ?? entry.domain}
-                  {entry.cycle_key ? " · linked to a timing window" : ""}
-                  {entry.feature_key ? " · linked to a chart chapter" : ""}
                 </p>
               </li>
             ))}
           </ul>
-          {entries.length > previews.length ? (
-            <p className="mt-3 text-xs text-muted-foreground">
-              Showing {previews.length} of {entries.length} matching entries.
-            </p>
-          ) : null}
         </>
       ) : null}
     </section>

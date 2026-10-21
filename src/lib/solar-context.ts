@@ -8,16 +8,14 @@ export function solarContextLine(solar: SolarContext): string {
     month: "short",
     day: "numeric",
   }).format(new Date(solar.day + "T12:00:00.000Z"));
-  const season = solar.seasonalBand
-    ? " The local seasonal band is " + solar.seasonalBand + "."
-    : "";
+  const season = solar.seasonalBand ? " The season is " + solar.seasonalBand + "." : "";
   if (solar.daylight === "polar_day")
-    return "Continuous daylight on " + when + " at your selected coarse current location." + season;
+    return "Continuous daylight on " + when + " at your approximate current location." + season;
   if (solar.daylight === "polar_night")
     return (
       "The Sun stays below the horizon on " +
       when +
-      " at your selected coarse current location." +
+      " at your approximate current location." +
       season
     );
   const clock = (at: string) =>
@@ -40,7 +38,7 @@ export function solarContextLine(solar: SolarContext): string {
     length +
     " of daylight on " +
     when +
-    " at your selected coarse current location" +
+    " at your approximate current location" +
     (times ? " (" + times + ")" : "") +
     "." +
     season

@@ -119,8 +119,8 @@ export function PatternChapterEvidence({
         {evidenceAvailable ? (
           <>
             <p className="text-sm leading-relaxed text-muted-foreground">
-              These are the facts supplied for this saved reading. Each paragraph links to the facts
-              it cites; a citation identifies its sources, not proof of every interpretation.
+              These are the facts supplied for this saved reading. A paragraph link names its
+              sources. It does not prove every sentence.
             </p>
             <ol className="pattern-evidence-citations" aria-label="Sources by paragraph">
               {citations
@@ -150,10 +150,10 @@ export function PatternChapterEvidence({
                               focusTarget(factId(id));
                             }}
                           >
-                            {id} · {describeFact(fact).label}
+                            {describeFact(fact).label}
                           </a>
                         ) : (
-                          <span key={id}>{id} · Source unavailable</span>
+                          <span key={id}>Source unavailable</span>
                         );
                       })}
                     </div>
@@ -166,9 +166,7 @@ export function PatternChapterEvidence({
                 const described = describeFact(fact);
                 return (
                   <li id={factId(fact.id)} key={fact.id} tabIndex={-1}>
-                    <h5>
-                      {fact.id} · {described.label}
-                    </h5>
+                    <h5>{described.label}</h5>
                     <div>
                       <Value value={described.value} field={described.field ?? ""} />
                     </div>
@@ -176,17 +174,6 @@ export function PatternChapterEvidence({
                 );
               })}
             </ul>
-            <details className="mt-5">
-              <summary>Original supplied text</summary>
-              <ul className="pattern-evidence-facts">
-                {facts.map((fact) => (
-                  <li key={fact.id}>
-                    <strong>{fact.id}</strong>
-                    <p>{fact.statement}</p>
-                  </li>
-                ))}
-              </ul>
-            </details>
           </>
         ) : (
           <>

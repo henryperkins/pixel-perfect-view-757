@@ -1,10 +1,13 @@
 import { analyticEpisode } from "@/lib/ai/reading-evaluation.transit.fixtures.mjs";
+import { composeDailyGuidance } from "@/lib/daily-guidance";
 const day = new Date().toISOString().slice(0, 10);
 const state = {
   ownerId: "mobile-audit-member",
   day,
   dropResponse: [],
   member: !location.search.includes("visitor=1"),
+  admin: false,
+  overrides: {} as Record<string, unknown>,
   delay: 0,
   fail: [],
   events: [
@@ -40,6 +43,8 @@ try {
   /* Fault fixture: storage may be blocked. */
 }
 if (stored) Object.assign(state, JSON.parse(stored));
+// Local browser checks can select loading, empty, unavailable and administrator states.
+Object.assign(state, (window as unknown as { interfaceFixture?: object }).interfaceFixture);
 const persist = () => {
   try {
     sessionStorage.setItem(
@@ -55,6 +60,7 @@ const ephemeris = {
   precision: "high",
   degraded: false,
   degradedReason: null,
+  transitEngine: "kepler-approx@fixture",
 };
 const uncertainty = {
   accuracy: "unknown",
@@ -93,6 +99,7 @@ const pattern = {
   snapshot: { birth: null },
   placements: [],
   allAspects: [],
+  houseCusps: [],
   computedAt: day + "T12:00:00Z",
   fingerprint: "synthetic",
 };
@@ -117,7 +124,19 @@ const today = () => ({
   ephemeris,
   uncertainty,
   wellness: state.wellness,
-  localContext: { markedMoments: true },
+  localContext: {
+    markedMoments: true,
+    guidance: composeDailyGuidance({
+      day: state.day,
+      now: new Date(state.day + "T12:00:00Z"),
+      timezone: "UTC",
+      granted: new Set(),
+      primary: cycles[0],
+      source: { key: "hard:saturn:*", releaseVersion: "fixture", themes: ["structure"] },
+      checkIn: null,
+      preferredDomain: null,
+    }),
+  },
   feedback: null,
   provenance: [],
   language: { mode: "template" },
@@ -127,11 +146,12 @@ async function call(name, args) {
   const wait = state.delay;
   if (wait) await new Promise((r) => setTimeout(r, wait));
   if (state.fail.includes(name)) throw new Error("Synthetic network failure");
+  if (Object.hasOwn(state.overrides, name)) return structuredClone(state.overrides[name]);
   switch (name) {
     case "currentSession":
       return {
         session: state.member
-          ? { userId: state.ownerId, email: "member@example.invalid", isAdmin: false }
+          ? { userId: state.ownerId, email: "member@example.invalid", isAdmin: state.admin }
           : null,
       };
     case "signOut":
@@ -168,6 +188,8 @@ async function call(name, args) {
         accessUntil: "2027-01-01T00:00:00Z",
         membership: { status: "active", cancelAtPeriodEnd: false },
       };
+    case "fetchAssistantAccess":
+      return { enabled: true, link: null, grants: [] };
     case "fetchAccountSecurity":
       return { email: "member@example.invalid", confirmed: true };
     case "fetchEmailDelivery":
@@ -282,6 +304,12 @@ Object.assign(window, {
   mobileAudit: { state, today, pattern, resetCalls: () => (state.calls = []) },
 });
 export const useServerFn = (fn) => fn;
+export const useAssistantSession = () => ({
+  session: null,
+  loading: false,
+  error: "",
+  recovery: false,
+});
 export const createIsomorphicFn = () => {
   const o = { server: () => o, client: (fn) => fn };
   return o;

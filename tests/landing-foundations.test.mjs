@@ -49,8 +49,8 @@ test("the landing foundations list carries its three principles", async () => {
   assert.deepEqual(
     items.map((item) => item.replace(/<[^>]+>/g, "")),
     [
-      "Unknown birth time is first class — angle claims get suppressed, not faked.",
-      "Context you opt into can rank a theme, never invent a chart fact.",
+      "Unknown birth time is fine. Unreliable house and angle descriptions are left out.",
+      "Optional context stays optional. It can shape a suggestion, never change the chart.",
       "Birth details, notes and readings are stored encrypted.",
     ],
   );
@@ -58,8 +58,8 @@ test("the landing foundations list carries its three principles", async () => {
   assert.deepEqual(
     items.map((item) => item.match(/^<b>([^<]+)<\/b>/)?.[1]),
     [
-      "Unknown birth time is first class",
-      "Context you opt into can rank a theme,",
+      "Unknown birth time is fine.",
+      "Optional context stays optional.",
       "Birth details, notes and readings",
     ],
   );

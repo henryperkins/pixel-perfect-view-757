@@ -242,11 +242,8 @@ function ContentPage() {
           <div>
             <h1 className="text-3xl font-serif leading-snug">Content releases</h1>
             <p className="prose-reading mt-4 max-w-prose text-foreground">
-              Interpretation copy is published as immutable, checksummed releases. Admins can draft
-              candidate releases directly from the language model or ingest reviewed bundles via the
-              signed endpoint. Moving the live pointer activates that version for today’s and future
-              readings; previously published readings permanently retain the version they were
-              assembled from.
+              Draft, review and publish interpretation copy. Activating a release changes new
+              readings; saved readings keep their original version and evidence.
             </p>
           </div>
 
@@ -300,17 +297,12 @@ function ContentPage() {
           <section aria-labelledby="releases-heading" className="border-t border-rule pt-8">
             <div className="flex flex-wrap items-baseline justify-between gap-3">
               <h2 id="releases-heading" className="text-2xl font-serif leading-snug">
-                2 · Published releases
+                Published releases
               </h2>
               <span className="text-xs text-muted-foreground">
                 {releases.length} total {releases.length === 1 ? "release" : "releases"}
               </span>
             </div>
-            <p className="prose-reading mt-3 max-w-prose text-foreground">
-              Every published interpretation release, its checksum, and the active release for new
-              readings. Only one release is live at a time; activating another release flips the
-              pointer without modifying history.
-            </p>
 
             {query.isPending ? (
               <div className="mt-6 space-y-4" aria-busy="true" aria-live="polite">
@@ -336,9 +328,7 @@ function ContentPage() {
                   Release inventory unreachable
                 </p>
                 <p className="prose-reading mt-2 max-w-prose text-foreground">
-                  The editorial plane could not be read, so this list is unknown rather than empty.
-                  Published readings are unaffected — they record the release they were assembled
-                  from.
+                  The release list could not load. Published readings keep their recorded release.
                 </p>
                 <p className="mt-3 font-mono text-xs break-words text-muted-foreground">
                   {query.error.message}
@@ -360,9 +350,8 @@ function ContentPage() {
                   No published release
                 </p>
                 <p className="prose-reading mt-2 max-w-prose text-foreground">
-                  Nothing has been published or ingested yet, so readings are assembled from
-                  built-in fallback copy. Publish a draft from Section 1 or ingest via the signed
-                  endpoint.
+                  Readings use built-in copy until a release is published. Publish a reviewed draft
+                  above or use the signed publishing endpoint.
                 </p>
                 <Button
                   variant="outline"
@@ -411,46 +400,55 @@ function ContentPage() {
                         </span>
                       </div>
 
-                      <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2 border-t border-rule pt-3 text-xs text-muted-foreground">
-                        <span>
-                          Cycles ·{" "}
-                          <span className="font-mono text-foreground">{r.cycles ?? 0}</span>
-                        </span>
-                        <span>
-                          Rules ·{" "}
-                          <span className="font-mono text-foreground">{r.synthesisRules ?? 0}</span>
-                        </span>
-                        <span>
-                          Schema ·{" "}
-                          <span className="font-mono text-foreground">{r.schemaVersion ?? 1}</span>
-                        </span>
-                        <span>
-                          Transit chapters ·{" "}
-                          <span className="font-mono text-foreground">
-                            {r.transitChapters ?? 0}/5
+                      <details className="mt-3 border-t border-rule pt-3 text-xs text-muted-foreground">
+                        <summary className="cursor-pointer text-sm text-primary">
+                          Release details
+                        </summary>
+                        <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2">
+                          <span>
+                            Cycles ·{" "}
+                            <span className="font-mono text-foreground">{r.cycles ?? 0}</span>
                           </span>
-                        </span>
-                        <span>
-                          Natal lenses ·{" "}
-                          <span className="font-mono text-foreground">
-                            {r.natalLensCoverage?.base ?? 0} base,{" "}
-                            {r.natalLensCoverage?.compound ?? 0} compound ·{" "}
-                            {r.natalLensCoverage?.bodySigns ?? 0}/60 pairs
+                          <span>
+                            Rules ·{" "}
+                            <span className="font-mono text-foreground">
+                              {r.synthesisRules ?? 0}
+                            </span>
                           </span>
-                        </span>
-                        <span>
-                          Checksum ·{" "}
-                          <span className="font-mono text-foreground" title={r.checksum}>
-                            {r.checksum.slice(0, 16)}…
+                          <span>
+                            Schema ·{" "}
+                            <span className="font-mono text-foreground">
+                              {r.schemaVersion ?? 1}
+                            </span>
                           </span>
-                        </span>
-                        <span>Algorithm · {r.checksumAlgorithm ?? "legacy-unlabelled"}</span>
-                      </div>
+                          <span>
+                            Transit chapters ·{" "}
+                            <span className="font-mono text-foreground">
+                              {r.transitChapters ?? 0}/5
+                            </span>
+                          </span>
+                          <span>
+                            Natal lenses ·{" "}
+                            <span className="font-mono text-foreground">
+                              {r.natalLensCoverage?.base ?? 0} base,{" "}
+                              {r.natalLensCoverage?.compound ?? 0} compound ·{" "}
+                              {r.natalLensCoverage?.bodySigns ?? 0}/60 pairs
+                            </span>
+                          </span>
+                          <span>
+                            Checksum ·{" "}
+                            <span className="font-mono text-foreground" title={r.checksum}>
+                              {r.checksum.slice(0, 16)}…
+                            </span>
+                          </span>
+                          <span>Algorithm · {r.checksumAlgorithm ?? "legacy-unlabelled"}</span>
+                        </div>
+                      </details>
 
                       <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-rule pt-3">
                         {isLive ? (
                           <span className="text-xs text-muted-foreground">
-                            Currently active pointer — powers today's and upcoming readings
+                            Used for new readings
                           </span>
                         ) : (
                           <Button
@@ -517,7 +515,7 @@ function ContentPage() {
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
                 <h2 id="eval-heading" className="text-2xl font-serif leading-snug">
-                  5 · Synthetic evaluation
+                  Synthetic evaluation
                 </h2>
                 <p className="prose-reading mt-2 max-w-prose text-sm text-muted-foreground">
                   Run live language-provider requests against fixed synthetic facts to check reading
@@ -541,7 +539,7 @@ function ContentPage() {
           </section>
         </div>
 
-        <Rail title="Editorial plane">
+        <Rail title="Current release">
           <Field
             label="Active release"
             value={
@@ -552,29 +550,29 @@ function ContentPage() {
                   : (releases.find((r) => r.is_active)?.version ?? "built-in")
             }
           />
-          <Field
-            label="Checksum"
-            value={
-              query.isPending
-                ? "—"
-                : query.error
-                  ? "unknown"
-                  : activeRelease
-                    ? `${activeRelease.checksum.slice(0, 8)}…`
-                    : "built-in"
-            }
-          />
-          <Field
-            label="Releases"
-            value={query.isPending ? "—" : query.error ? "unknown" : releases.length}
-          />
-          <Field label="Publishing" value="Draft or signed ingest" />
-          <Field label="Action" value="Pointer activation" />
-          <p className="prose-reading pt-3 text-xs text-muted-foreground leading-relaxed">
-            Admins may draft candidate releases or activate an existing release. Moving the active
-            pointer directs today's and upcoming readings to that release; previously assembled
-            readings permanently preserve the release they were generated with.
-          </p>
+          <nav className="flex flex-col text-sm" aria-label="Content tools">
+            <a className="inline-flex min-h-11 items-center text-primary" href="#drafts-heading">
+              Candidate drafts
+            </a>
+            <a className="inline-flex min-h-11 items-center text-primary" href="#releases-heading">
+              Published releases
+            </a>
+            <a
+              className="inline-flex min-h-11 items-center text-primary"
+              href="#edge-plane-heading"
+            >
+              Reading runs
+            </a>
+            <a
+              className="inline-flex min-h-11 items-center text-primary"
+              href="#reading-quality-heading"
+            >
+              Reading quality
+            </a>
+            <a className="inline-flex min-h-11 items-center text-primary" href="#eval-heading">
+              Synthetic evaluation
+            </a>
+          </nav>
         </Rail>
       </div>
 
@@ -686,14 +684,13 @@ function EdgePlane({ isAdmin }: { isAdmin: boolean }) {
     <section className="border-t border-rule pt-8" aria-labelledby="edge-plane-heading">
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <h2 id="edge-plane-heading" className="text-2xl font-serif leading-snug">
-          3 · Durable run ledger
+          Reading runs
         </h2>
         <span className="text-xs text-muted-foreground">{runs.length} recorded runs</span>
       </div>
       <p className="prose-reading mt-3 max-w-prose text-foreground">
-        Release publication writes an immutable editorial bundle and delivery receipt. The release
-        inventory shows that delivery state. This ledger records nightly and manually started
-        reading workflows, with the artifact each completed instance produced.
+        Nightly and manually started reading workflows. Release delivery is tracked separately in
+        Published releases.
       </p>
 
       {query.isPending ? (
@@ -742,8 +739,7 @@ function EdgePlane({ isAdmin }: { isAdmin: boolean }) {
             No runs yet
           </p>
           <p className="prose-reading mt-2 max-w-prose text-foreground">
-            The ledger fills the first time a release is published, activated, or a run is started
-            by hand.
+            Runs appear after a nightly workflow or a manual start.
           </p>
         </div>
       ) : (
@@ -801,7 +797,7 @@ function EdgePlane({ isAdmin }: { isAdmin: boolean }) {
             onClick={() => start.mutate()}
             disabled={start.isPending}
           >
-            {start.isPending ? "Starting…" : "Start a durable run for today"}
+            {start.isPending ? "Starting…" : "Start a reading run for today"}
           </Button>
         </div>
       ) : null}
@@ -860,7 +856,7 @@ function QualityPlane({ isAdmin }: { isAdmin: boolean }) {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h2 id="reading-quality-heading" className="text-2xl font-serif leading-snug">
-            4 · Reading quality
+            Reading quality
           </h2>
           {data ? (
             <p className="mt-1 text-xs text-muted-foreground font-mono">
@@ -1410,13 +1406,13 @@ function DraftPlane({ isAdmin }: { isAdmin: boolean }) {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <h2 id="drafts-heading" className="text-2xl font-serif leading-snug">
-            1 · Candidate drafts
+            Candidate drafts
           </h2>
           <p className="prose-reading mt-2 max-w-prose text-foreground text-sm">
             Generate and review candidate interpretation copy before publication. The model drafts
             mechanism and reflection question copy for each cycle slot. Candidates that fail safety,
             phrase or schema checks are filtered before storage. A draft is inert until published as
-            an inactive release and activated in Section 2.
+            an inactive release and activated in Published releases.
           </p>
         </div>
         <div className="flex min-w-0 flex-wrap items-center gap-3">

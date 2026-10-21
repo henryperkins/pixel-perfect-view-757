@@ -13,6 +13,7 @@ import { DOMAIN_LABEL, pointName, timingDate } from "@/components/pattern/timing
 import { useAuth } from "@/hooks/useAuth";
 import { useCalendarQueryRefresh, useCalendarRefresh } from "@/hooks/useCalendarRefresh";
 import { userFacingError } from "@/lib/user-facing-error";
+import { plainEngineLabel, plainPrecision } from "@/lib/plain-engine";
 import {
   dayRelation,
   isTravelDate,
@@ -269,7 +270,7 @@ function TimeTravelPage() {
                     aria-invalid={date !== applied && !isTravelDate(date)}
                   />
                   <Button type="submit" disabled={!isTravelDate(date) || date === applied}>
-                    Reconstruct <ArrowRight aria-hidden="true" />
+                    Show day <ArrowRight aria-hidden="true" />
                   </Button>
                 </div>
                 {date !== applied && !isTravelDate(date) ? (
@@ -315,7 +316,12 @@ function TimeTravelPage() {
           </div>
         ) : (
           <div key={pastData.day} className="travel-arrival">
-            <EphemerisNotice state={pastData.ephemeris} className="travel-ephemeris" />
+            {pastData.ephemeris.degraded ? (
+              <EphemerisNotice state={pastData.ephemeris} className="travel-ephemeris" />
+            ) : null}
+            <p className="mb-4 text-sm text-muted-foreground">
+              Calculated for this day, not a saved reading or a record of what happened.
+            </p>
             <section className="travel-windows" aria-labelledby="travel-windows-title">
               <div className="timing-section-heading">
                 <h2 id="travel-windows-title">Windows on this day</h2>
@@ -341,7 +347,7 @@ function TimeTravelPage() {
                     <strong>
                       {shared} of {rows.length}
                     </strong>{" "}
-                    planet-to-point aspects also active today · {timingDate(today)}
+                    contacts also active today · {timingDate(today)}
                   </p>
                 ) : (
                   <p>Today’s chart is unavailable for comparison.</p>
@@ -459,16 +465,15 @@ function TimeTravelPage() {
               Comparison & calculation record <span>{timingDate(pastData.day)}</span>
             </summary>
             <div>
+              {!pastData.ephemeris.degraded ? <EphemerisNotice state={pastData.ephemeris} /> : null}
               <Rail title="Calculation status">
                 <Field label="Selected day" value={pastData.day} />
                 <Field label="Calendar zone" value={pastData.timezone} />
-                <Field label="Reference instant" value={pastData.referenceAt} />
                 <Field label="Today" value={nowData?.day ?? "—"} />
                 <Field label="Windows on selected day" value={pastData.cycles.length} />
                 <Field label="Windows today" value={canCompare ? nowData.cycles.length : "—"} />
-                <Field label="Engine" value={pastData.engine} />
-                <Field label="Precision" value={pastData.ephemeris.precision} />
-                <Field label="Contract" value={pastData.contractVersion} />
+                <Field label="Calculation source" value={plainEngineLabel(pastData.engine)} />
+                <Field label="Precision" value={plainPrecision(pastData.ephemeris.precision)} />
                 <p>
                   Each day is recalculated from your chart. Today’s comparison matches the same
                   planet-to-point aspect; it does not establish that a window has stayed open
