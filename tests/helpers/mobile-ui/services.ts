@@ -17,6 +17,7 @@ const state = {
   upcomingResponses: null as Record<string, unknown> | null,
   upcomingActive: 0,
   upcomingMaximumActive: 0,
+  upcomingSignals: [] as (AbortSignal | undefined)[],
   fail: [],
   events: [
     {
@@ -151,7 +152,11 @@ const today = () => ({
   language: { mode: "template" },
 });
 async function call(name, args) {
-  state.calls.push({ name, args: structuredClone(args), at: Date.now() });
+  state.calls.push({
+    name,
+    args: structuredClone(args?.signal ? { ...args, signal: undefined } : args),
+    at: Date.now(),
+  });
   if (state.hold.includes(name))
     await new Promise<void>((resolve) => heldCalls.push({ name, resolve }));
   const wait = state.delay;
@@ -387,6 +392,7 @@ export const fetchSkyEvents = (args) => call("fetchSkyEvents", args);
 export const fetchToday = (args) => call("fetchToday", args);
 export const fetchUpcomingCycles = async (args) => {
   state.upcomingActive++;
+  state.upcomingSignals.push(args.signal);
   state.upcomingMaximumActive = Math.max(state.upcomingMaximumActive, state.upcomingActive);
   try {
     return await call("fetchUpcomingCycles", args);

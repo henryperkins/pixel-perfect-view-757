@@ -36,11 +36,18 @@ fixture identity and refuses another origin. It writes captures under the ignore
 results; every result must pass. Changing the `stage` constant only changes
 artifact filenames.
 
-The 34 checks cover desktop (1440 × 1000), phone (390 × 844), and 200% text at
+The 36 checks cover desktop (1440 × 1000), phone (390 × 844), and 200% text at
 1440, 390, and 320 px. They exercise held requests, rapid filter changes, route
 remounts, explicit retry, loading/failure announcements, keyboard order and focus,
-partial results, transient refresh failures, unsupported calculations, and reflow.
+partial results, transient refresh failures, unsupported calculations, stalled
+transport deadlines, ignored late results, and reflow.
 Request-queue and account-cache cancellation tests also run through `npm test`.
+
+A dispatched browser call has a 60-second transport deadline, starting after its
+queue wait. Filter cancellation does not release an active call early. The
+deadline aborts its transport and restores explicit recovery even if a connection
+does not settle. Browser abortion does not prove remote execution has stopped;
+the service's existing limits and guards remain authoritative.
 
 This evidence does not cover physical devices, screen-reader speech, native
 browser zoom, or the live Swiss service. The fixture performs no live calculation,

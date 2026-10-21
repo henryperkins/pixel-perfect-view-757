@@ -51,9 +51,10 @@ export function TimingCalendar({
       duration,
     ],
     queryFn: ({ signal, queryKey }) =>
-      runUpcomingRequest(queryClient, signal, async () => {
+      runUpcomingRequest(queryClient, signal, async (requestSignal) => {
         const result = await futureFn({
           data: { timezone: calendar.timezone, horizonDays: horizon, domain, duration },
+          signal: requestSignal,
         });
         const previous = queryClient.getQueryData<typeof result>(queryKey);
         if (

@@ -180,3 +180,70 @@ test("cancelled account queries cannot restore erased results or overlap the nex
   assert.deepEqual(client.getQueryData(nextKey), { owner: "next-owner" });
   client.clear();
 });
+
+test("a stalled transport is aborted after one minute and releases the next selection", async (t) => {
+  t.mock.timers.enable({ apis: ["setTimeout"] });
+  const scope = {},
+    started = gate(),
+    signal = new AbortController().signal;
+  let transportSignal,
+    attempts = 0;
+  const stalled = runUpcomingRequest(scope, signal, (deadlineSignal) => {
+    transportSignal = deadlineSignal;
+    attempts++;
+    started.resolve();
+    return new Promise(() => {});
+  });
+  let timedOut = false;
+  const rejected = assert.rejects(stalled, (error) => {
+    timedOut = error.name === "TimeoutError";
+    return timedOut;
+  });
+  await started.promise;
+  let nextStarted = false;
+  const next = runUpcomingRequest(scope, signal, async () => {
+    nextStarted = true;
+    return "recovered";
+  });
+  t.mock.timers.tick(59_999);
+  await Promise.resolve();
+  assert.equal(nextStarted, false, "a filter change must not release the active call early");
+  t.mock.timers.tick(1);
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(timedOut, true, "a stalled call must reach a recoverable error state");
+  await rejected;
+  assert.equal(transportSignal.aborted, true, "the browser transport must receive the deadline");
+  assert.equal(await next, "recovered");
+  assert.equal(attempts, 1, "a timeout must not retry the original calculation");
+});
+
+test("a queued selection gets a fresh deadline only when its transport starts", async (t) => {
+  t.mock.timers.enable({ apis: ["setTimeout"] });
+  const scope = {},
+    firstResult = gate(),
+    firstStarted = gate(),
+    nextResult = gate(),
+    nextStarted = gate(),
+    signal = new AbortController().signal;
+  let firstTransportSignal, nextTransportSignal;
+  const first = runUpcomingRequest(scope, signal, (deadlineSignal) => {
+    firstTransportSignal = deadlineSignal;
+    firstStarted.resolve();
+    return firstResult.promise;
+  });
+  await firstStarted.promise;
+  t.mock.timers.tick(45_000);
+  const next = runUpcomingRequest(scope, signal, (deadlineSignal) => {
+    nextTransportSignal = deadlineSignal;
+    nextStarted.resolve();
+    return nextResult.promise;
+  });
+  firstResult.resolve("first");
+  await first;
+  await nextStarted.promise;
+  t.mock.timers.tick(59_999);
+  assert.equal(firstTransportSignal.aborted, false, "a settled call must clear its deadline");
+  assert.equal(nextTransportSignal.aborted, false, "queue wait must not consume the next deadline");
+  nextResult.resolve("next");
+  assert.equal(await next, "next");
+});

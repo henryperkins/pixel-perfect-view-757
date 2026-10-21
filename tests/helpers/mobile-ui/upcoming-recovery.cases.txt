@@ -21,10 +21,11 @@ async (page) => {
   const long = available('saturn', 'mercury', { calculationStatus: 'complete', incompleteWindows: 0 });
   long.to = long.calculation.to = '2031-01-01T12:00:00.000Z';
   Object.assign(long.calculation.windows[0], { end: '2030-03-10T12:00:00.000Z', endRange: ['2030-03-10T11:00:00.000Z', '2030-03-10T13:00:00.000Z'], duration: 'long', durationDays: 59, complete: true, confidence: 'range' });
-  const run = async (name, size, task, initial = {}) => {
+  const run = async (name, size, task, initial = {}, clock = false) => {
     const context = await browser.newContext({ viewport: size, isMobile: size.width < 700, hasTouch: size.width < 700, reducedMotion: 'reduce', timezoneId: 'UTC' });
     await context.addInitScript(value => { window.interfaceFixture = value; }, initial);
     const p = await context.newPage();
+    if (clock) await p.clock.install();
     p.setDefaultTimeout(7000);
     const errors = [];
     const consoleMessages = [];
@@ -54,6 +55,27 @@ async (page) => {
   const rows = r => r.locator('ul[aria-label="Upcoming calculated windows"] > li');
   const settle = p => p.waitForFunction(() => window.mobileAudit.state.upcomingActive === 0 && window.auditQueryClient.getQueryCache().getAll().filter(q => q.queryKey[0] === 'upcoming-cycles').every(q => q.state.fetchStatus === 'idle'));
   for (const size of [{ width: 1440, height: 1000 }, { width: 390, height: 844 }]) {
+    await run('Stalled transport reaches an explicit retry and ignores its late result', size, async (p, r) => {
+      await p.waitForFunction(() => window.mobileAudit.state.upcomingActive === 1);
+      await p.clock.runFor(60_001);
+      const retry = r.getByRole('button', { name: 'Retry calculation', exact: true });
+      await retry.waitFor();
+      assert(await r.getByRole('alert').isVisible() && await retry.isEnabled(), 'A stalled connection did not reach recovery');
+      assert(await p.evaluate(() => window.mobileAudit.state.upcomingSignals[0]?.aborted === true), 'The server function did not receive the transport deadline signal');
+      assert((await calls(p)).length === 1, 'The stalled request retried automatically');
+      await release(p);
+      await settle(p);
+      assert(await rows(r).count() === 0 && await r.getByRole('alert').isVisible(), 'A timed-out result replaced the recovery state');
+      await p.evaluate(() => { window.mobileAudit.state.hold = []; });
+      await retry.focus();
+      await p.keyboard.press('Enter');
+      await rows(r).first().waitFor();
+      await settle(p);
+      assert((await calls(p)).length === 2, 'Explicit recovery did not make one new request');
+      assert(await r.getByRole('heading', { name: 'Upcoming windows', exact: true }).evaluate(el => document.activeElement === el), 'Timeout recovery lost keyboard focus');
+      return { stalledSignalAborted: true, lateResultIgnored: true, attempts: 2, keyboardRecovery: true };
+    }, { hold: ['fetchUpcomingCycles'], overrides: { fetchUpcomingCycles: available() } }, true);
+
     await run('Rapid filters retain only the newest queued selection', size, async (p, r) => {
       await p.waitForFunction(() => window.mobileAudit.state.upcomingActive === 1);
       await r.getByRole('combobox', { name: 'Upcoming area', exact: true }).selectOption('work');
