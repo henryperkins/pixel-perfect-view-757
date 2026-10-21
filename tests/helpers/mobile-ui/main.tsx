@@ -1,4 +1,5 @@
 import { MemberDraftProvider } from "@/components/pattern/MemberDraftProvider";
+import { RouteFocus } from "@/components/pattern/RouteFocus";
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { createRootRoute, createRouter, Outlet, RouterProvider } from "@tanstack/react-router";
@@ -26,6 +27,7 @@ const root = createRootRoute({
   component: () => (
     <QueryClientProvider client={queryClient}>
       <MemberDraftProvider>
+        <RouteFocus />
         <Outlet />
         <Toaster />
       </MemberDraftProvider>

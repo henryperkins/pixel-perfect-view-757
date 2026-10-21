@@ -466,7 +466,7 @@ export function TodayCheckIn({
           rows={3}
           maxLength={2000}
           placeholder="A few words about today…"
-          className="pattern-mobile-field mt-2 w-full rounded-sm border border-input bg-card px-3 py-2 text-base outline-none focus:border-ring focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm"
+          className="pattern-mobile-field mt-2 w-full rounded-sm border border-muted-foreground bg-card px-3 py-2 text-base outline-none focus:border-ring focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 sm:text-sm"
         />
         <p id={`${formId}-note-limit`} className="mt-2 text-xs text-muted-foreground">
           Up to 2,000 characters.

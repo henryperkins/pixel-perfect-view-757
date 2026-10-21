@@ -93,7 +93,9 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
     };
     const revealFocus = () => {
       const active = document.activeElement;
-      if (!(active instanceof HTMLElement) || !mainRef.current?.contains(active)) return;
+      const main = mainRef.current;
+      if (!(active instanceof HTMLElement) || !main || active === main || !main.contains(active))
+        return;
       const viewport = window.visualViewport;
       if (viewport && viewport.scale !== 1) return;
       const target = active.matches("input.sr-only") ? (active.closest("label") ?? active) : active;

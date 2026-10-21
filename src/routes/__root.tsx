@@ -1,4 +1,5 @@
 import { MemberDraftProvider } from "@/components/pattern/MemberDraftProvider";
+import { RouteFocus } from "@/components/pattern/RouteFocus";
 import type { ErrorComponentProps } from "@tanstack/react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
@@ -125,6 +126,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <MemberDraftProvider>
+        <RouteFocus />
         <Outlet />
         <Toaster />
       </MemberDraftProvider>

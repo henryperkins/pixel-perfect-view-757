@@ -1,0 +1,128 @@
+async (page) => {
+  const browser = page.context().browser();
+  const origin = new URL(page.url()).origin;
+  const checks = [];
+  const assert = (ok, message, detail) => {
+    if (!ok) throw new Error(message + ' ' + JSON.stringify(detail));
+  };
+  const settle = (p) => p.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+  const run = async (name, task) => {
+    const context = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, reducedMotion: 'reduce' });
+    await context.route(/https:\/\/([^/]*\.)?stripe\.(com|network)\//, (route) => route.abort('blockedbyclient'));
+    const p = await context.newPage();
+    p.setDefaultTimeout(7000);
+    try {
+      await p.goto(origin + '/');
+      await p.locator('.today-check-in').waitFor();
+      await p.waitForFunction(() => !window.auditRouter.state.isLoading);
+      await settle(p);
+      await p.evaluate(() => {
+        window.__mainFocusCalls = 0;
+        const original = HTMLElement.prototype.focus;
+        HTMLElement.prototype.focus = function (...args) {
+          if (this.id === 'main-content') window.__mainFocusCalls++;
+          return original.apply(this, args);
+        };
+      });
+      checks.push({ name, passed: true, details: await task(p) });
+    } catch (error) {
+      checks.push({ name, passed: false, error: String(error) });
+    } finally {
+      await context.close();
+    }
+  };
+  const goJournal = async (p) => {
+    await p.getByRole('navigation', { name: 'Quick navigation' }).getByRole('link', { name: 'Journal', exact: true }).click();
+    await p.getByRole('heading', { name: 'Journal', exact: true }).waitFor();
+    await settle(p);
+  };
+
+  await run('New route places focus in destination content and Tab continues there', async (p) => {
+    await goJournal(p);
+    const focused = await p.evaluate(() => document.activeElement.id);
+    assert(focused === 'main-content', 'Destination main was not focused', focused);
+    await p.keyboard.press('Tab');
+    const next = await p.evaluate(() => ({ inMain: !!document.activeElement.closest('main'), tag: document.activeElement.tagName }));
+    assert(next.inMain, 'Tab restarted at document chrome', next);
+    return { focused, next };
+  });
+
+  await run('Initial load and reload preserve the browser focus default', async (p) => {
+    assert(await p.evaluate(() => document.activeElement.id !== 'main-content'), 'Initial load focused main');
+    await p.reload();
+    await p.locator('.today-check-in').waitFor();
+    await settle(p);
+    const active = await p.evaluate(() => document.activeElement.tagName);
+    assert(await p.evaluate(() => document.activeElement.id !== 'main-content'), 'Reload focused main');
+    return { active };
+  });
+
+  await run('Replacing the current route also focuses the completed destination', async (p) => {
+    await p.evaluate(async () => { await window.auditRouter.navigate({ href: '/journal', replace: true }); });
+    await p.getByRole('heading', { name: 'Journal', exact: true }).waitFor();
+    await settle(p);
+    const active = await p.evaluate(() => document.activeElement.id);
+    assert(active === 'main-content', 'Replacement route did not focus destination', active);
+    return { active };
+  });
+
+  await run('Same-page hash and query navigation preserve deliberate field focus', async (p) => {
+    const note = p.getByRole('textbox', { name: 'Reflection note', exact: false });
+    await note.fill('Keep editing through same-page navigation');
+    await note.focus();
+    await p.evaluate(async () => { await window.auditRouter.navigate({ hash: 'today-reflection' }); });
+    await settle(p);
+    assert(await note.evaluate((e) => document.activeElement === e), 'Hash navigation stole note focus');
+    await p.evaluate(async () => { await window.auditRouter.navigate({ href: '/?focusProbe=1#today-reflection' }); });
+    await settle(p);
+    assert(await note.evaluate((e) => document.activeElement === e), 'Query navigation stole note focus');
+    return { note: await note.inputValue(), mainFocusCalls: await p.evaluate(() => window.__mainFocusCalls) };
+  });
+
+  await run('Route refresh preserves field focus and unsaved input', async (p) => {
+    const note = p.getByRole('textbox', { name: 'Reflection note', exact: false });
+    await note.fill('Keep this unsaved reflection during refresh');
+    await note.focus();
+    await p.evaluate(async () => { await window.auditRouter.invalidate(); });
+    await settle(p);
+    assert(await note.evaluate((e) => document.activeElement === e), 'Refresh stole field focus');
+    assert(await note.inputValue() === 'Keep this unsaved reflection during refresh', 'Refresh changed draft');
+    return { mainFocusCalls: await p.evaluate(() => window.__mainFocusCalls) };
+  });
+
+  await run('Back and Forward retain router restoration and do not force destination focus', async (p) => {
+    const note = p.getByRole('textbox', { name: 'Reflection note', exact: false });
+    await note.fill('Keep this reflection when returning from Journal');
+    await goJournal(p);
+    const count = await p.evaluate(() => window.__mainFocusCalls);
+    await p.goBack();
+    await p.locator('.today-check-in').waitFor();
+    await settle(p);
+    assert(await note.inputValue() === 'Keep this reflection when returning from Journal', 'Back lost draft');
+    assert(await p.evaluate(() => window.__mainFocusCalls) === count, 'Back forced main focus');
+    await p.goForward();
+    await p.getByRole('heading', { name: 'Journal', exact: true }).waitFor();
+    await settle(p);
+    assert(await p.evaluate(() => window.__mainFocusCalls) === count, 'Forward forced main focus');
+    return { mainFocusCalls: count, draftPreserved: true };
+  });
+
+  await run('Same-page menu entries and cross-route hash targets keep their own focus behavior', async (p) => {
+    const trigger = p.locator('button[aria-controls=mobile-navigation]');
+    await trigger.click();
+    await p.locator('#mobile-navigation').waitFor();
+    await p.keyboard.press('Escape');
+    await p.locator('#mobile-navigation').waitFor({ state: 'detached' });
+    assert(await trigger.evaluate((e) => document.activeElement === e), 'Menu lost trigger focus');
+    assert(await p.evaluate(() => window.__mainFocusCalls) === 0, 'Same-page menu focused main');
+    await goJournal(p);
+    const count = await p.evaluate(() => window.__mainFocusCalls);
+    await p.evaluate(async () => { await window.auditRouter.navigate({ href: '/#today-reflection' }); });
+    await p.locator('.today-check-in').waitFor();
+    await settle(p);
+    assert(await p.evaluate(() => window.__mainFocusCalls) === count, 'Cross-route anchor was overridden by main focus');
+    return { mainFocusCalls: count, hash: await p.evaluate(() => location.hash) };
+  });
+
+  return { engine: browser.browserType().name(), version: browser.version(), level: 'proxy', checks };
+}
