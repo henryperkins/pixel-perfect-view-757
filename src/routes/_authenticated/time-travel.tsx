@@ -7,7 +7,7 @@ import { ArrowLeft, ArrowRight, CalendarDays, NotebookPen, RotateCcw, Waves } fr
 import { Button } from "@/components/ui/button";
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import { fetchCycles, fetchJournal } from "@/lib/pattern.functions";
-import { EphemerisNotice } from "@/components/pattern/EphemerisNotice";
+import { EphemerisNotice, TransitPrecisionNotice } from "@/components/pattern/EphemerisNotice";
 import { TimingWindow } from "@/components/pattern/TimingWindow";
 import { DOMAIN_LABEL, pointName, timingDate } from "@/components/pattern/timing";
 import { useAuth } from "@/hooks/useAuth";
@@ -319,6 +319,7 @@ function TimeTravelPage() {
             {pastData.ephemeris.degraded ? (
               <EphemerisNotice state={pastData.ephemeris} className="travel-ephemeris" />
             ) : null}
+            <TransitPrecisionNotice state={pastData.ephemeris} className="mb-4" />
             <p className="mb-4 text-sm text-muted-foreground">
               Calculated for this day, not a saved reading or a record of what happened.
             </p>

@@ -286,7 +286,7 @@ async (page) => {
     assert(fallback === chosen && fallback.includes('OLDER synthetic note') && !fallback.includes('CURRENT synthetic note'), 'Manual copy displays a different draft', { chosen, fallback });
     assert(await note.inputValue() === 'CURRENT synthetic note, not the selected candidate.', 'Copying replaced the active draft');
     await click(p, candidate.getByRole('button', { name: 'Discard draft', exact: true }));
-    await click(p, p.getByRole('group', { name: 'Confirm draft action', exact: true }).getByRole('button', { name: 'Confirm', exact: true }));
+    await click(p, p.getByRole('group', { name: 'Confirm draft action', exact: true }).getByRole('button', { name: 'Discard draft', exact: true }));
     await p.locator('.draft-recovery > pre').waitFor({ state: 'detached' });
     await click(p, p.getByRole('button', { name: 'Copy draft', exact: true }));
     await p.locator('.draft-recovery > pre').waitFor();
@@ -340,7 +340,7 @@ async (page) => {
     await click(p, p.getByRole('button', { name: 'Save check-in', exact: true }));
     await p.waitForFunction(() => window.auditQueryClient.getMutationCache().getAll().some((m) => m.state.isPaused));
     await click(p, p.getByRole('button', { name: 'Discard draft', exact: true }));
-    await click(p, p.getByRole('group', { name: 'Confirm draft action', exact: true }).getByRole('button', { name: 'Confirm', exact: true }));
+    await click(p, p.getByRole('group', { name: 'Confirm draft action', exact: true }).getByRole('button', { name: 'Discard draft', exact: true }));
     await p.waitForFunction(() => document.querySelector('textarea').value === '');
     await note.fill('Replacement draft requires its own Save.');
     await p.getByText('Draft saved on this device', { exact: true }).waitFor();

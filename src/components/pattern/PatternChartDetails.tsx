@@ -202,7 +202,7 @@ export function PatternChartDetails({ data }: { data: PatternData }) {
       {data.rising ? (
         <details className="pattern-chart-foldout">
           <summary>
-            <span>Your main lens</span>
+            <span>Rising sign &amp; houses</span>
             <span>{data.rising.sign} rising</span>
           </summary>
           <div>
@@ -236,7 +236,7 @@ export function PatternChartDetails({ data }: { data: PatternData }) {
 
       <details className="pattern-chart-foldout" id="pattern-placements">
         <summary>
-          <span>Where your bodies sit</span>
+          <span>Positions in your chart</span>
           <span>{data.placements.length} placements</span>
         </summary>
         <div>
@@ -318,7 +318,7 @@ export function PatternChartDetails({ data }: { data: PatternData }) {
 
       <details className="pattern-chart-foldout" id="pattern-connections-foldout">
         <summary>
-          <span>How your bodies connect</span>
+          <span>Chart connections</span>
           <span>{data.allAspects.length} connections</span>
         </summary>
         <div>

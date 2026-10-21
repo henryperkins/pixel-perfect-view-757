@@ -148,7 +148,7 @@ export function DraftRecoveryNotice({
                 closeConfirmation(true);
               }}
             >
-              Confirm
+              {confirm.startsWith("replace:") ? "Use this draft" : "Discard draft"}
             </Button>
           </div>
         </div>

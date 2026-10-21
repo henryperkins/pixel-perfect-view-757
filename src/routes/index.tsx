@@ -16,13 +16,14 @@ import { solarContextLine } from "@/lib/solar-context";
 import { absoluteUrl, jsonLd, publicPageHead, SITE_NAME } from "@/lib/seo";
 import {
   cycleTimingPhrase,
+  daysToExact,
   PHASE_LABEL,
   timingDate,
   weightLabel,
   windowPhase,
 } from "@/components/pattern/timing";
 import { fetchToday } from "@/lib/pattern.functions";
-import { EphemerisNotice } from "@/components/pattern/EphemerisNotice";
+import { EphemerisNotice, TransitPrecisionNotice } from "@/components/pattern/EphemerisNotice";
 import { TodayCheckIn } from "@/components/pattern/TodayCheckIn";
 import { TodayJournal } from "@/components/pattern/TodayJournal";
 import { TodayTiming } from "@/components/pattern/TodayTiming";
@@ -116,7 +117,7 @@ function ReadingPending({ paused, busy }: { paused: boolean; busy: boolean }) {
   return (
     <div className="max-w-2xl space-y-4 [overflow-wrap:anywhere]" aria-busy={busy}>
       <h1 className="text-3xl text-primary">
-        {paused ? "Waiting for a connection" : "Your day is taking shape"}
+        {paused ? "Waiting for a connection" : "Preparing your reading"}
       </h1>
       <p role="status" className="text-sm text-muted-foreground">
         {paused
@@ -223,6 +224,15 @@ function TodayContent({
     ? windowPhase(primary, data.day, data.timezone, data.storyCalculation)
     : null;
   const housesSuppressed = data.uncertainty ? !data.uncertainty.housesReliable : false;
+  const timing = primary
+    ? cycleTimingPhrase(primary, data.day, data.timezone, data.storyCalculation)
+    : null;
+  const showPhase =
+    phase === "building" ||
+    phase === "fading" ||
+    (phase === "exact" &&
+      primary &&
+      daysToExact(primary, data.day, data.timezone, data.storyCalculation) === null);
 
   return (
     <div className="today-flow">
@@ -250,23 +260,26 @@ function TodayContent({
         </h1>
         {primary && phase ? (
           <dl className="today-cycle-summary mt-5">
-            <div>
-              <dt>Phase</dt>
-              <dd>{PHASE_LABEL[phase].label}</dd>
-            </div>
+            {showPhase ? (
+              <div>
+                <dt>Phase</dt>
+                <dd>{PHASE_LABEL[phase].label}</dd>
+              </div>
+            ) : null}
             <div>
               <dt>Strength</dt>
               <dd>{weightLabel(primary.importance)}</dd>
             </div>
             <div>
               <dt>Timing</dt>
-              <dd>{cycleTimingPhrase(primary, data.day, data.timezone, data.storyCalculation)}</dd>
+              <dd>{timing}</dd>
             </div>
           </dl>
         ) : null}
         {data.ephemeris?.degraded ? (
           <EphemerisNotice state={data.ephemeris} className="mt-5" />
         ) : null}
+        <TransitPrecisionNotice state={data.ephemeris} className="mt-4" />
         {housesSuppressed ? (
           <p className="mt-4 text-sm text-muted-foreground">
             House descriptions are left out because the birth time isn’t precise enough.

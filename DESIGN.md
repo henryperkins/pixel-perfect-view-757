@@ -82,13 +82,19 @@ label or help text.
   height, and root recovery actions use Button.
 - **Evidence disclosure** — collapsed "Evidence & provenance" region on the
   `--evidence` surface, listing celestial facts, orbs, phases and source lanes.
-- **Cycle card** — plain-language sentence ("Saturn pressing on your Sun"), a
-  strength chip (Major / Prominent / Background) and a phase chip
-  (Building / Exact / Fading), then a mono line of exact values.
+- **Timing window** — plain-language sentence ("Saturn pressing on your Sun"),
+  strength (Major / Prominent / Background) and timing. Building and Fading remain
+  explicit; Exact, Between contacts and variable-date states are stated once.
+  Orb and exact dates remain in the calculated-values disclosure.
 - **Timeline bar** — proportional opens · peak · closes track with a today marker.
 - **Band picker** — 1–5 monospace squares for mood, energy, sleep, stress, with visible
   endpoint meanings, the selected meaning, and a full accessible label for every value.
-- **EphemerisNotice** — states precision and any degradation inline.
+- **Reading sections** — Today's suggestion and check-in use the page's hairline
+  sections. Fields retain their own boundaries; the form does not need another box.
+- **EphemerisNotice** — states precision and any degradation inline. Approximate
+  transit angles stay visible with the reading even when natal positions have high
+  precision. Active Timing's source notices stay with Active; Upcoming and Moon &
+  eclipses use their own source and availability notices.
 - **Disclosure marker** — every `<summary>` carries the shared `+` / `−` marker in a
   small sage circle (`.pattern-shell summary::before`).
 - **Contrast ledger** (`/transit-chart-calculator`) — hairline table of topic ·

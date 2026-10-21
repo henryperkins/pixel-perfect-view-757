@@ -391,7 +391,7 @@ export function TodayCheckIn({
 
   return (
     <form
-      className="today-check-in mt-5 rounded-sm border border-rule bg-secondary/30 p-4"
+      className="today-check-in mt-5"
       aria-label="Daily check-in"
       onSubmit={(event) => {
         event.preventDefault();

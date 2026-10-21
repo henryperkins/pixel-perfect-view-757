@@ -1,0 +1,431 @@
+{
+  "recordedAt": "2026-10-21T15:25:04.405317+00:00",
+  "baseCommit": "cf32b14a79debc96506ad7e0e4a97e7decc50fdb",
+  "originalBaseCommit": "a0f41df47c4917d2472fdeb66d13a51d91b672a9",
+  "branch": "clarify/daily-journey-20261021",
+  "sourceFingerprint": "e3498ed6cd3741c4915d7f6f2f84d21f228be1646ea021b82b2db808c9e6e82a",
+  "sourceFiles": {
+    "DESIGN.md": "064a6ceae073bb0605c87ee629060bf16dcf83af1b6d0b3b4fb2e6933c892bc8",
+    "src/components/pattern/DraftRecoveryNotice.tsx": "d9de30dcdbac25313996e63bd2a55f7262e22e31c17c3149b6412d17a0227c9d",
+    "src/components/pattern/EphemerisNotice.tsx": "6f5f29660666203672fbe05d18cc6ad770ea0632049ea03f69c71afb562b2107",
+    "src/components/pattern/PatternChapter.tsx": "827662d708af0a6acf45f717d1b1c35e1e7b322a4ef98fb79cc3785ab08da138",
+    "src/components/pattern/PatternChartDetails.tsx": "e489f4366c6f9c1ee2f1a51079a28b67066adb0530c32d27a964ec3e2f57a485",
+    "src/components/pattern/TimingWindow.tsx": "e98892bdc92600317eeec99bdd553ea39a7d13e4f565af72ebee1846f71de912",
+    "src/components/pattern/TodayCheckIn.tsx": "9ef4d4931e7ca9be532931d07e2f47ed138708756a3ddf615b71144497f88045",
+    "src/components/pattern/TodayEvidence.tsx": "166985a2dad32153e21fd57ceffebd40ea0e991d6327bd123e3f261db049cb99",
+    "src/components/pattern/TodayFeedback.tsx": "3a0ac7f77d9a4fbea1fe634c5289706c47e4fc6cdf3ba27712b97bc94ebc857a",
+    "src/components/pattern/TodayGuidance.tsx": "a9b53b10bfd3662e8bd31534387f1a440e1077acd05f025543699d38bb887f22",
+    "src/components/pattern/TodayJournal.tsx": "debe552329a86fc6f6d891276874ef05f17e0124be3107cfe3db61244717b369",
+    "src/components/pattern/TodayTiming.tsx": "0c4627a27a1564ff545b1bc125168755e7f086c3f31fdcf5b658495148c69c6a",
+    "src/lib/birth-form.ts": "e61a82660183120eb52beb03d94c415f03752beaa533c6e6a551c3fb7a35cda7",
+    "src/routes/_authenticated/content.tsx": "9093e687ef45cdeff565285eaf0cc639d4ce2ffb7cf39e7128c390784b426fc7",
+    "src/routes/_authenticated/journal.tsx": "517e8ec48be823169a677632b9341ac66308bd64d0c0d3a91f0ac842bc918a19",
+    "src/routes/_authenticated/pattern.tsx": "1f50f13781819403bfec5082f92392ea1828370132bd1b9f0c1a088140322066",
+    "src/routes/_authenticated/time-travel.tsx": "5f689fbad24a2c05b72ceb520cdac4082949a8d5de569c2bf97a32bed6d85985",
+    "src/routes/_authenticated/timing.tsx": "46e0c1c831db8c83c4e075c2031c2c93c457a3507f9c0c55c3c1813ddc8bbeda",
+    "src/routes/index.tsx": "ea5667dad4554807df202b32b9fb43f241cbccb90351e55985228a440a2a9843",
+    "src/styles.css": "d7d3b2fc3d3751d84c4730a50a19603ad492008b0836f3190ab81fd4258bae62",
+    "tests/helpers/mobile-ui/interface-clarity.cases.txt": "03e07b6ce33495199f9fa17cc254d629541d343dabb89bbeb63fb49f32bf7b49",
+    "tests/helpers/mobile-ui/review.cases.txt": "61e8035ba626db6702be7a4fa1f1363a3ec92a5c5166f89b480e4558f0977089",
+    "tests/helpers/mobile-ui/today-forms.cases.txt": "65eb236ac941f89b1a003c0e2b0a996d56b48057f7399ee4541389a2f124b839",
+    "tests/helpers/mobile-ui/today.cases.txt": "97705882895c609d1c26e6361151f93792f7042837b16ba6ed1139f09d4b265a",
+    "tests/interface-review-fixes.test.mjs": "7abfd6d69bd440134749363642e45756ed51fe5d86a420738439b2f9a4594c72"
+  },
+  "commands": {
+    "npm test": {
+      "exitCode": 0,
+      "passed": 1242,
+      "skipped": 4,
+      "failed": 0,
+      "skips": [
+        "\ufe63 real Swiss episode output retains enough evidence for existing app acceptance (0.282076ms) # Run the standalone Swiss service installation first.",
+        "\ufe63 explicit birth recalculation stores owned source anchors while preserving the legacy snapshot (0.141748ms) # Run the standalone Swiss service installation first.",
+        "\ufe63 Node and workerd produce identical complete plans for the new case sets and both bundles (0.564953ms) # SKIP",
+        "\ufe63 strict archived-source workerd replay reproduces captured requests and outputs without provider calls (3.442454ms) # SKIP"
+      ]
+    },
+    "npm run build": {
+      "exitCode": 0
+    },
+    "npx tsc --noEmit": {
+      "exitCode": 0
+    },
+    "changed-file ESLint": {
+      "exitCode": 0,
+      "files": 19
+    },
+    "npm run lint": {
+      "exitCode": 1,
+      "errors": 925,
+      "warnings": 8,
+      "errorsInCleanupFiles": 0,
+      "initialBaseErrors": 923,
+      "upstreamAdapterErrorDelta": 2
+    },
+    "git diff --check": {
+      "exitCode": 0
+    }
+  },
+  "browser": {
+    "browser-regressions": [
+      {
+        "name": "Daily reading, keyboard check-in, feedback and sources",
+        "size": {
+          "width": 390,
+          "height": 844
+        },
+        "passed": true,
+        "details": {
+          "saved": true,
+          "savePositionStable": true,
+          "keyboard": true,
+          "sources": true
+        }
+      },
+      {
+        "name": "Lost acknowledgement, save reconciliation and explicit draft discard",
+        "size": {
+          "width": 390,
+          "height": 844
+        },
+        "passed": true,
+        "details": {
+          "writes": 1,
+          "reconciliationDidNotWrite": true,
+          "discardRestoresSavedValue": true,
+          "focusReturned": true
+        }
+      },
+      {
+        "name": "Refresh failure keeps reading and draft, then recovers",
+        "size": {
+          "width": 390,
+          "height": 844
+        },
+        "passed": true,
+        "details": {
+          "readingRetained": true,
+          "draftRetained": true,
+          "retry": true
+        }
+      },
+      {
+        "name": "Single journal actions, retained chapters and chapter attachment",
+        "size": {
+          "width": 390,
+          "height": 844
+        },
+        "passed": true,
+        "details": {
+          "singleJournalActions": true,
+          "retainedChapter": true,
+          "attachment": "sun_aries"
+        }
+      },
+      {
+        "name": "Saved citations have distinct targets and legacy paragraph limits stay explicit",
+        "size": {
+          "width": 390,
+          "height": 844
+        },
+        "passed": true,
+        "details": {
+          "distinctReferences": true,
+          "referenceAndParagraphFocus": true,
+          "legacyBoundaries": true
+        }
+      },
+      {
+        "name": "Daily reading, keyboard check-in, feedback and sources",
+        "size": {
+          "width": 1440,
+          "height": 1000
+        },
+        "passed": true,
+        "details": {
+          "saved": true,
+          "savePositionStable": true,
+          "keyboard": true,
+          "sources": true
+        }
+      },
+      {
+        "name": "Lost acknowledgement, save reconciliation and explicit draft discard",
+        "size": {
+          "width": 1440,
+          "height": 1000
+        },
+        "passed": true,
+        "details": {
+          "writes": 1,
+          "reconciliationDidNotWrite": true,
+          "discardRestoresSavedValue": true,
+          "focusReturned": true
+        }
+      },
+      {
+        "name": "Refresh failure keeps reading and draft, then recovers",
+        "size": {
+          "width": 1440,
+          "height": 1000
+        },
+        "passed": true,
+        "details": {
+          "readingRetained": true,
+          "draftRetained": true,
+          "retry": true
+        }
+      },
+      {
+        "name": "Single journal actions, retained chapters and chapter attachment",
+        "size": {
+          "width": 1440,
+          "height": 1000
+        },
+        "passed": true,
+        "details": {
+          "singleJournalActions": true,
+          "retainedChapter": true,
+          "attachment": "sun_aries"
+        }
+      },
+      {
+        "name": "Saved citations have distinct targets and legacy paragraph limits stay explicit",
+        "size": {
+          "width": 1440,
+          "height": 1000
+        },
+        "passed": true,
+        "details": {
+          "distinctReferences": true,
+          "referenceAndParagraphFocus": true,
+          "legacyBoundaries": true
+        }
+      },
+      {
+        "name": "Enlarged text, narrow layout and mobile menu keyboard dismissal",
+        "size": {
+          "width": 320,
+          "height": 740
+        },
+        "passed": true,
+        "details": {
+          "textSize": "200%",
+          "width": 320,
+          "routes": 5,
+          "reducedMotion": true
+        }
+      }
+    ],
+    "supporting-audit": [
+      {
+        "name": "13-signup-reset-error",
+        "passed": true,
+        "result": {
+          "signupMinimum": true,
+          "signinError": true,
+          "resetConfirmation": true
+        },
+        "snapshot": "- link \"Skip to content\":\n  - /url: \"#main-content\"\n- banner:\n  - link \"Pattern\":\n    - /url: /\n  - link \"Sign in\":\n    - /url: /auth\n  - progressbar \"Page reading progress\"\n- main:\n  - heading \"Reset your password\" [level=1]\n  - text: Email\n  - textbox \"Email\": reader@example.invalid\n  - button \"Email reset link\"\n  - status: If this email belongs to a Pattern account, you\u2019ll receive a password reset link. Check your inbox and spam folder.\n  - button \"Back to sign in\"\n  - paragraph:\n    - link \"Back to Pattern\":\n      - /url: /\n- contentinfo:\n  - link \"Transit chart calculator\":\n    - /url: /transit-chart-calculator\n- region \"Notifications alt+T\""
+      },
+      {
+        "name": "14-onboarding-unknown",
+        "passed": true,
+        "result": {
+          "unknownTime": true,
+          "manualCoordinates": true
+        },
+        "snapshot": "- link \"Skip to content\":\n  - /url: \"#main-content\"\n- banner:\n  - link \"Pattern\":\n    - /url: /\n  - button \"Open menu\"\n  - progressbar \"Page reading progress\"\n- main:\n  - heading \"Birth details\" [level=1]\n  - paragraph: Used to calculate your chart and stored encrypted. An unknown birth time is fine.\n  - group \"Birth details\":\n    - text: Birth details\n    - status: Draft saved on this device\n    - button \"Copy draft\"\n    - button \"Discard draft\"\n    - paragraph: Device drafts expire after seven days without edits and are cleared when you sign out. Save to keep this in your account.\n    - text: Birth date\n    - textbox \"Birth date\"\n    - group \"Time accuracy\":\n      - text: Time accuracy\n      - radio \"Exact From a record, to the minute.\"\n      - text: Exact From a record, to the minute.\n      - radio \"Within ~15 min Remembered closely.\"\n      - text: Within ~15 min Remembered closely.\n      - radio \"Within an hour Rough recollection.\"\n      - text: Within an hour Rough recollection.\n      - radio \"Unknown House and angle descriptions are left out.\" [checked]\n      - text: Unknown House and angle descriptions are left out.\n    - paragraph: With an unknown time, houses, ascendant, midheaven and fast Moon claims are suppressed rather than guessed. Everything else still calculates.\n    - text: Birth place\n    - textbox \"Birth place\":\n      - /placeholder: City, country\n    - button \"Find place\" [disabled]\n    - paragraph: Search for your town, then choose the matching region and country.\n    - status\n    - group:\n      - text: \u2212 Enter coordinates manually\n      - paragraph: Use signed decimal coordinates and the timezone at your birth place. You can refine your search above instead.\n      - text: Latitude\n      - textbox \"Latitude\"\n      - text: Longitude\n      - textbox \"Longitude\"\n      - text: Timezone\n      - textbox \"Timezone\"\n  - status: Enter a valid birth date.\n  - button \"Calculate my chart\" [disabled]\n- navigation \"Quick navigation\":\n  - link \"Today\":\n    - /url: /\n  - link \"Your pattern\":\n    - /url: /pattern\n  - link \"Timing\":\n    - /url: /timing\n  - link \"Journal\":\n    - /url: /journal\n- contentinfo:\n  - link \"Transit chart calculator\":\n    - /url: /transit-chart-calculator\n- region \"Notifications alt+T\""
+      },
+      {
+        "name": "15-journal-edit-delete",
+        "passed": true,
+        "result": {
+          "editSave": true,
+          "deleteCancel": true,
+          "focusReturn": true
+        },
+        "snapshot": "- link \"Skip to content\":\n  - /url: \"#main-content\"\n- banner:\n  - link \"Pattern\":\n    - /url: /\n  - button \"Open menu\"\n  - progressbar \"Page reading progress\"\n- main:\n  - heading \"Journal\" [level=1]\n  - paragraph: Write what happened. You can attach today\u2019s timing window or a chapter. The attachment stays as it was when you saved it.\n  - heading \"New entry\" [level=2]\n  - text: Date\n  - textbox \"Date\": 2026-10-21\n  - text: Area of life\n  - combobox \"Area of life\":\n    - option \"General\" [selected]\n    - option \"Work\"\n    - option \"Relationships\"\n    - option \"Health\"\n    - option \"Money\"\n  - text: Title\n  - textbox \"Title\":\n    - /placeholder: What happened, in a line\n  - text: Entry \u00b7 optional\n  - textbox \"Entry \u00b7 optional\":\n    - /placeholder: A longer note, if it helps\n  - paragraph: Stored encrypted.\n  - text: Attach a timing window\n  - combobox \"Attach a timing window\":\n    - option \"No window\" [selected]\n    - option \"Saturn pressing on your Sun\"\n  - text: Attach a chapter\n  - combobox \"Attach a chapter\":\n    - option \"No chapter\" [selected]\n    - option \"Sun in Aries\"\n    - option \"Moon square Saturn\"\n  - button \"Save entry\"\n  - heading \"Entries\" [level=2]\n  - list:\n    - listitem:\n      - paragraph: Edited saved entry\n      - text: 2026-10-21\n      - paragraph: I took a different route home and had time to think.\n      - paragraph: General\n      - button \"Edit\"\n      - button \"Delete\"\n- navigation \"Quick navigation\":\n  - link \"Today\":\n    - /url: /\n  - link \"Your pattern\":\n    - /url: /pattern\n  - link \"Timing\":\n    - /url: /timing\n  - link \"Journal\":\n    - /url: /journal\n- contentinfo:\n  - link \"Transit chart calculator\":\n    - /url: /transit-chart-calculator\n- region \"Notifications alt+T\":\n  - list:\n    - listitem: Entry updated"
+      },
+      {
+        "name": "16-membership-cancel",
+        "passed": true,
+        "result": {
+          "cancellationTerms": true,
+          "cancelFocus": true,
+          "passwordConsequences": true
+        },
+        "snapshot": "- link \"Skip to content\":\n  - /url: \"#main-content\"\n- banner:\n  - link \"Pattern\":\n    - /url: /\n  - button \"Open menu\"\n  - progressbar \"Page reading progress\"\n- main:\n  - heading \"Context & privacy\" [level=1]\n  - paragraph: Choose what Pattern may use. Optional context never changes the chart, and you can turn it off.\n  - navigation \"Context & privacy sections\":\n    - link \"Membership\":\n      - /url: \"#membership-heading\"\n    - link \"Email & password\":\n      - /url: \"#account-security-heading\"\n    - link \"Reading language\":\n      - /url: \"#reading-language-privacy\"\n    - link \"Assistants\":\n      - /url: \"#assistant-privacy\"\n    - link \"Context sources\":\n      - /url: \"#privacy-tier-0\"\n    - link \"Preferences\":\n      - /url: \"#reading-preferences\"\n    - link \"Marked moments\":\n      - /url: \"#marked-moments\"\n    - link \"Your data\":\n      - /url: \"#your-data\"\n  - region \"Manage membership\":\n    - heading \"Manage membership\" [level=2]\n    - paragraph: Your Pattern Plus membership is active.\n    - button \"Switch to monthly, prorated\"\n    - button \"Update card or billing details\"\n    - button \"Refresh membership\"\n    - button \"Cancel membership\"\n  - region \"Drafts on this device\":\n    - heading \"Drafts on this device\" [level=2]\n    - paragraph: Unfinished birth details, check-ins and journal entries are encrypted in this browser. Drafts expire after seven days without edits and are cleared when you sign out. Save your details or entry to keep them in your account.\n    - group: + Clear device drafts\n  - region \"Email & password\":\n    - heading \"Email & password\" [level=2]\n    - paragraph: member@example.invalid\n    - paragraph: Email confirmed.\n    - button \"Change email\"\n    - button \"Change password\"\n    - button \"Check email delivery\"\n    - button \"Sign out all devices and assistants\"\n    - text: Current password\n    - textbox \"Current password\"\n    - text: New password\n    - textbox \"New password\"\n    - text: Repeat new password\n    - textbox \"Repeat new password\"\n    - paragraph: Changing your password signs out every device and disconnects assistants. Sign in again with your new password.\n    - button \"Save new password\"\n    - button \"Cancel\"\n  - region \"How reading language is written\":\n    - heading \"How reading language is written\" [level=2]\n    - paragraph:\n      - text: Chart calculations use Swiss Ephemeris through AstroWay or Pattern\u2019s own calculation service hosted on Fly.io. The configured service receives birth date, time and coordinates. Pattern\u2019s service does not store calculation requests or log their contents. Its\n      - link \"calculation source code\":\n        - /url: https://pattern-transit-calc.fly.dev/source\n      - text: is available under the GNU Affero General Public License.\n    - paragraph: Google Gemini, through Gemini Enterprise or the Lovable AI gateway, can write from calculated chart facts and curated interpretation text. Tone and depth preferences are included only when their source switches are on. With those switches off, readings use plain tone and standard depth.\n    - paragraph: Raw birth details, journal notes, check-in bands, sleep and stress bands, device timezone and local time-of-day context are never sent to the language provider. Context switches allow only the local uses listed below; turning them on does not authorize sending that context to a model.\n    - group: + Data flows, saved evidence and local context\n  - region \"Connected assistants\":\n    - heading \"Connected assistants\" [level=2]\n    - paragraph: Connecting an assistant is optional and uses a separate sign-in linked from your Pattern account. You approve each assistant and choose Today and timing, Pattern and chapters, and optionally Journal. Tools read saved results only; they cannot edit your data or generate new readings.\n    - paragraph: The connection also shares information from your separate assistant sign-in, including its account ID, email and any profile or phone information saved with it. The consent page shows the requested identity permissions alongside your Pattern sharing choices. Approving access requires both your Pattern and assistant sign-ins.\n    - paragraph: The sign-in provider also lets connected assistants edit profile information on that separate assistant account. Pattern content remains read-only through these tools; changes to your Pattern account or sharing permissions require your normal Pattern sign-in.\n    - paragraph: Structured birth details, coordinates and check-ins are excluded. Readings influenced by check-ins and older readings without a separate chart-only copy are withheld. Journal sharing includes your own written titles and entry text, which may contain sensitive details. Calculated chart information and interpretations are personal data and can allow inferences about you.\n    - paragraph: Your selected content is decrypted on the server for an authorized read and sent to the assistant. The assistant\u2019s own privacy and retention policies apply to copies it receives. Revoking or unlinking stops future reads, but cannot delete copies already received. Deleting your Pattern data also removes every assistant link and grant.\n    - link \"Manage connected assistants\":\n      - /url: /assistants\n  - region \"Calculation minimum\":\n    - heading \"Calculation minimum\" [level=2]\n    - paragraph: The irreducible inputs needed to place the sky. Without these there is no chart and no reading.\n    - paragraph: Birth date\n    - paragraph: Calendar date of birth in the local civil calendar. Kept until you delete your account.\n    - paragraph: Used for calculations, showing saved sources.\n    - text: required\n    - paragraph: Birth time\n    - paragraph: Clock time of birth, with a declared accuracy band. Kept until you delete your account.\n    - paragraph: Used for calculations, showing saved sources.\n    - text: required\n    - paragraph: Birth place\n    - paragraph: Latitude and longitude of the birth location. Kept until you delete your account.\n    - paragraph: Used for calculations, showing saved sources.\n    - text: required\n    - paragraph: Historical timezone offset\n    - paragraph: Offset in force at the birth moment, including wartime rules. Kept until you delete your account.\n    - paragraph: Used for calculations, showing saved sources.\n    - text: required\n    - paragraph: Planetary ephemeris\n    - paragraph: Geocentric positions of Sun through Pluto. Kept until you delete your account.\n    - paragraph: Used for calculations, showing timing windows, showing saved sources, writing through the language provider.\n    - text: required\n    - paragraph: Lunar nodes\n    - paragraph: Mean lunar node positions. Kept until you delete your account.\n    - paragraph: Used for calculations, showing timing windows, showing saved sources.\n    - text: required\n    - paragraph: Angles and houses\n    - paragraph: Ascendant, Midheaven and the declared house division. Kept until you delete your account.\n    - paragraph: Used for calculations, showing saved sources, writing through the language provider.\n    - text: required\n    - paragraph: Aspect geometry\n    - paragraph: Angular separations and orbs between chart points. Kept until you delete your account.\n    - paragraph: Used for calculations, showing timing windows, showing saved sources, writing through the language provider.\n    - text: required\n    - paragraph: Birth-time uncertainty band\n    - paragraph: Declared confidence in the birth time, propagated into every angle-dependent claim. Kept until you delete your account.\n    - paragraph: Used for calculations, framing readings, showing saved sources, writing through the language provider.\n    - text: required\n  - region \"Reflective\":\n    - heading \"Reflective\" [level=2]\n    - paragraph: \"What you tell the app about yourself on purpose: preferences, check-ins, marked moments.\"\n    - paragraph: Tone preference\n    - paragraph: How direct or gentle the language should be. Kept until you delete your account.\n    - paragraph: Used for framing readings, personalising your experience, writing through the language provider.\n    - button \"Tone preference off\": \"off\"\n    - paragraph: Depth preference\n    - paragraph: How much technical detail to surface by default. Kept until you delete your account.\n    - paragraph: Used for framing readings, personalising your experience, writing through the language provider.\n    - button \"Depth preference off\": \"off\"\n    - paragraph: Daily check-in\n    - paragraph: Self-reported mood and energy for a given day. With reuse enabled, energy shapes the size of a suggested next step and mood can frame it gently. These values stay within Pattern and never change chart calculations. Kept for 730 days.\n    - paragraph: Used for framing readings, personalising your experience.\n    - button \"Daily check-in off\": \"off\"\n    - paragraph: Marked moments\n    - paragraph: Show your saved entries beside the matching day or timing window. Your Journal remains available with this reuse switched off; entries never change calculated cycles. Kept for 1825 days.\n    - paragraph: Used for framing readings, showing saved sources.\n    - button \"Marked moments off\": \"off\"\n    - paragraph: Resonance feedback\n    - paragraph: Show your previous resonance on the same published interpretation in a local context panel. Your ratings are never sent to a model or used to infer personality. Kept for 730 days.\n    - paragraph: Used for personalising your experience, showing saved sources.\n    - button \"Resonance feedback off\": \"off\"\n    - paragraph: Life domain focus\n    - paragraph: Apply your chosen life area to local context labels and the default Timing filter. This never changes chart facts, cycle ranking, or model requests. Kept until you delete your account.\n    - paragraph: Used for framing readings, personalising your experience.\n    - button \"Life domain focus off\": \"off\"\n    - paragraph: Reading quality feedback\n    - paragraph: Opt in to counting your saved resonance scores in aggregate admin quality reports. Notes and labels are excluded. Revoking this permission excludes your existing saved scores from future reports. Kept for 730 days.\n    - paragraph: Used for aggregate reading quality reports.\n    - button \"Reading quality feedback off\": \"off\"\n  - region \"Situational\":\n    - heading \"Situational\" [level=2]\n    - paragraph: Coarse ambient context \u2014 local time of day, season, device locale. Never continuous tracking.\n    - paragraph: Device locale and timezone\n    - paragraph: Current timezone, used only to pick the right local day. Kept for 90 days.\n    - paragraph: Used for choosing the local day.\n    - button \"Device locale and timezone off\": \"off\"\n    - paragraph: Coarse current location\n    - paragraph: A location you select on a one-degree grid with its calendar timezone. One encrypted value, replaced on change; no GPS or location history. Used only to calculate local daylight. Kept for 30 days.\n    - paragraph: Used for calculating local daylight.\n    - button \"Coarse current location off\": \"off\"\n    - paragraph: Local time of day\n    - paragraph: Morning / afternoon / evening bucket at read time. Kept for 30 days.\n    - paragraph: Used for framing readings.\n    - button \"Local time of day off\": \"off\"\n    - paragraph: Season and daylight\n    - paragraph: Native sunrise, sunset and daylight for your selected coarse current location, plus a hemisphere-based seasonal band outside the tropics. Local Your Context only; never sent to a model or used to rank cycles. Requires Coarse current location permission. Kept for 30 days.\n    - paragraph: Used for framing readings.\n    - button \"Season and daylight off\": \"off\"\n  - region \"Sensitive wellness\":\n    - heading \"Sensitive wellness\" [level=2]\n    - paragraph: Self-reported wellbeing signals. Off by default, purged aggressively, never used to diagnose.\n    - paragraph: Sleep quality (self-reported)\n    - paragraph: A single coarse band you type in yourself. Never device-derived. Kept for 180 days.\n    - paragraph: Used for framing readings, choosing reflection questions.\n    - button \"Sleep quality (self-reported) off\": \"off\"\n    - paragraph: Stress load (self-reported)\n    - paragraph: A coarse band describing current pressure. Kept for 180 days.\n    - paragraph: Used for framing readings, choosing reflection questions.\n    - button \"Stress load (self-reported) off\": \"off\"\n  - region \"Current location for daylight\":\n    - heading \"Current location for daylight\" [level=2]\n    - paragraph: Choose a coarse location using whole degrees and its calendar timezone. One encrypted value is kept for 30 days and replaced when you change it. Your birthplace is separate. This uses no GPS or location history.\n    - status: Turn on Coarse current location above to save a location. Season and daylight also needs its own permission.\n    - text: Latitude (whole degrees; north positive)\n    - spinbutton \"Latitude (whole degrees; north positive)\" [disabled]\n    - text: Longitude (whole degrees; east positive)\n    - spinbutton \"Longitude (whole degrees; east positive)\" [disabled]\n    - text: Location timezone\n    - textbox \"Location timezone An IANA timezone, such as Europe/London or America/Chicago. Check it matches your chosen location.\" [disabled]: UTC\n    - text: An IANA timezone, such as Europe/London or America/Chicago. Check it matches your chosen location.\n    - button \"Save current location\" [disabled]\n    - button \"Clear current location\"\n  - heading \"Never collected\" [level=2]\n  - paragraph: Pattern does not collect these, and turning a source on cannot add them.\n  - list:\n    - listitem: Raw email or message contents\n    - listitem: Contact lists and address books\n    - listitem: Continuous location history\n    - listitem: Biometric streams (heart rate, HRV, sleep staging)\n    - listitem: Microphone or camera capture\n    - listitem: Keystroke or typing dynamics\n    - listitem: Browsing history and web trackers\n    - listitem: Purchase and financial transaction records\n    - listitem: Health records or clinical diagnoses\n    - listitem: Medication and prescription data\n    - listitem: Genetic or ancestry data\n    - listitem: Reproductive and fertility tracking\n    - listitem: Sexual orientation inference\n    - listitem: Religious affiliation inference\n    - listitem: Political affiliation inference\n    - listitem: Immigration or citizenship status\n    - listitem: Criminal record data\n    - listitem: Credit scores and creditworthiness\n    - listitem: Employer surveillance feeds\n    - listitem: Third-party data broker profiles\n    - listitem: Social graph scraping\n    - listitem: Facial recognition or emotion inference\n    - listitem: Children's data under the age gate\n    - listitem: Cross-app advertising identifiers\n  - region \"Reading preferences\":\n    - heading \"Reading preferences\" [level=2]\n    - paragraph: Saved tone, depth and life-area focus apply when their source switches above are on. Focus sets the initial Timing filter. Saving does not turn a source on.\n    - text: Display name\n    - textbox \"Display name\": Alex\n    - text: Tone\n    - combobox \"Tone\":\n      - option \"plain\" [selected]\n      - option \"warm\"\n      - option \"clinical\"\n    - text: Depth\n    - combobox \"Depth\":\n      - option \"standard\" [selected]\n      - option \"technical\"\n    - text: Life-area focus\n    - combobox \"Life-area focus\":\n      - option \"Every area\" [selected]\n      - option \"Identity and direction\"\n      - option \"Relationships and affection\"\n      - option \"Work and output\"\n      - option \"Inner life and rest\"\n      - option \"Structure and commitments\"\n    - button \"Save preferences\"\n  - region \"Marked moments\":\n    - heading \"Marked moments\" [level=2]\n    - paragraph: With Marked moments reuse on, matching entries appear beside a reading, timing window or chart chapter. Saving an entry keeps it in your Journal even when reuse is off.\n    - text: Date\n    - textbox \"Date\"\n    - text: Area of life\n    - combobox \"Area of life\":\n      - option \"Identity and direction\" [selected]\n      - option \"Relationships and affection\"\n      - option \"Work and output\"\n      - option \"Inner life and rest\"\n      - option \"Structure and commitments\"\n    - text: What happened\n    - textbox \"What happened\"\n    - button \"Save moment\" [disabled]\n    - list:\n      - listitem: 2026-10-21 \u00b7 General \u00b7 A walk after work\n  - region \"Your data\":\n    - heading \"Your data\" [level=2]\n    - paragraph: Export reads your retained saved data. Reset clears optional permissions and preferences while keeping your login, chart, readings and Journal.\n    - button \"Export saved data (JSON)\"\n    - button \"Reset personalization\"\n    - button \"Delete account\"\n- navigation \"Quick navigation\":\n  - link \"Today\":\n    - /url: /\n  - link \"Your pattern\":\n    - /url: /pattern\n  - link \"Timing\":\n    - /url: /timing\n  - link \"Journal\":\n    - /url: /journal\n- contentinfo:\n  - link \"Transit chart calculator\":\n    - /url: /transit-chart-calculator\n- region \"Notifications alt+T\""
+      },
+      {
+        "name": "17-plan-offer",
+        "passed": true,
+        "result": {
+          "prices": true,
+          "trialCardTaxRenewal": true,
+          "checkoutUnavailable": true
+        },
+        "snapshot": "- link \"Skip to content\":\n  - /url: \"#main-content\"\n- banner:\n  - link \"Pattern\":\n    - /url: /\n  - button \"Open menu\"\n  - progressbar \"Page reading progress\"\n- main:\n  - status: Checkout is not available in this environment.\n  - heading \"Go deeper with Pattern Plus\" [level=1]\n  - paragraph: Read every chapter of your natal pattern, with its calculated evidence and a question to reflect on.\n  - paragraph: Your chart, daily reading, journal and chapter openings remain available on the free plan.\n  - paragraph: Prices are in USD, before applicable tax.\n  - paragraph: Start with 7 days free. A card is required. Your plan renews automatically after the trial unless you cancel. Cancel in Context & privacy; access lasts through your current trial or paid period.\n  - status: Checkout is being prepared. Please try again later.\n  - region \"Monthly\":\n    - heading \"Monthly\" [level=2]\n    - paragraph: $8/ month\n    - paragraph: Billed monthly after your trial.\n    - button \"Choose $8/month\" [disabled]\n  - region \"Yearly\":\n    - heading \"Yearly\" [level=2]\n    - paragraph: $72/ year\n    - paragraph: $6 per month, billed as $72 each year.\n    - button \"Choose $72/year\" [disabled]\n  - paragraph: Checkout and card updates are handled by Stripe. Pattern does not store your card number.\n- navigation \"Quick navigation\":\n  - link \"Today\":\n    - /url: /\n  - link \"Your pattern\":\n    - /url: /pattern\n  - link \"Timing\":\n    - /url: /timing\n  - link \"Journal\":\n    - /url: /journal\n- contentinfo:\n  - link \"Transit chart calculator\":\n    - /url: /transit-chart-calculator\n- region \"Notifications alt+T\""
+      },
+      {
+        "name": "18-assistant-duplicate-names",
+        "passed": true,
+        "result": {
+          "duplicateNamesDistinguished": true,
+          "unnamedRememberedActions": true
+        },
+        "snapshot": "- link \"Skip to content\":\n  - /url: \"#main-content\"\n- banner:\n  - link \"Pattern\":\n    - /url: /\n  - button \"Open menu\"\n  - progressbar \"Page reading progress\"\n- main:\n  - heading \"Connected assistants\" [level=1]\n  - paragraph: Let an assistant read selected saved content from Pattern. You choose the areas for each assistant, and can stop access here at any time.\n  - region \"Your assistant sign-in\":\n    - heading \"Your assistant sign-in\" [level=2]\n    - paragraph: Linked to assistant@example.invalid.\n    - paragraph: Unlinking immediately removes every assistant\u2019s access. You can do this even if you lose access to that sign-in.\n    - button \"Unlink and stop all access\"\n    - paragraph: Currently signed in for assistants as assistant@example.invalid.\n    - link \"Change assistant sign-in\":\n      - /url: /assistant-auth?next=%2Fassistants&recovery=false\n  - region \"Assistants with access\":\n    - heading \"Assistants with access\" [level=2]\n    - list:\n      - listitem:\n        - heading \"Same assistant\" [level=3]\n        - paragraph: \"Client: client-a\"\n        - paragraph: Today and timing\n        - button \"Revoke access for Same assistant, client client-a\"\n      - listitem:\n        - heading \"Same assistant\" [level=3]\n        - paragraph: \"Client: client-b\"\n        - paragraph: Pattern and chapters\n        - button \"Revoke access for Same assistant, client client-b\"\n    - paragraph: \"For assistants that ask for a server URL:\"\n    - code: http://127.0.0.1:4206/mcp\n  - region \"Remembered sign-in approvals\":\n    - heading \"Remembered sign-in approvals\" [level=2]\n    - paragraph: To reconnect after unlinking or to change shared areas, clear the assistant\u2019s remembered approval here. This stops its current Pattern access and sign-in connection. Then connect again from that assistant and choose new permissions.\n    - list:\n      - listitem:\n        - heading \"Unnamed assistant\" [level=3]\n        - paragraph: \"Client: remembered-a\"\n        - button \"Clear remembered approval for Unnamed assistant, client remembered-a\"\n      - listitem:\n        - heading \"Unnamed assistant\" [level=3]\n        - paragraph: \"Client: remembered-b\"\n        - button \"Clear remembered approval for Unnamed assistant, client remembered-b\"\n  - paragraph:\n    - text: Assistant access is read-only.\n    - link \"Learn what is shared\":\n      - /url: /privacy\n    - text: .\n- navigation \"Quick navigation\":\n  - link \"Today\":\n    - /url: /\n  - link \"Your pattern\":\n    - /url: /pattern\n  - link \"Timing\":\n    - /url: /timing\n  - link \"Journal\":\n    - /url: /journal\n- contentinfo:\n  - link \"Transit chart calculator\":\n    - /url: /transit-chart-calculator\n- region \"Notifications alt+T\""
+      },
+      {
+        "name": "19-chart-sources",
+        "passed": true,
+        "result": {
+          "calculationSources": true,
+          "uncertainty": true
+        },
+        "snapshot": "- link \"Skip to content\":\n  - /url: \"#main-content\"\n- banner:\n  - link \"Pattern\":\n    - /url: /\n  - button \"Open menu\"\n  - progressbar \"Page reading progress\"\n- main:\n  - link \"Your pattern\":\n    - /url: /pattern\n  - heading \"Chart sources\" [level=1]\n  - paragraph: Each value below shows where it came from, so you can check it in any chart program.\n  - heading \"Calculated for\" [level=2]\n  - term: Moment (UTC)\n  - definition: \u2014\n  - term: Latitude, longitude\n  - definition: \u2014\n  - term: Calculation source\n  - definition: Swiss Ephemeris\n  - term: Precision\n  - definition: High\n  - term: Birth-time accuracy\n  - definition: Unknown \u00b7 noon assumed\n  - term: House system\n  - definition: Placidus\n  - paragraph: Calculated house values are shown for reference, but house descriptions are left out because the birth time is uncertain. Angle descriptions are also left out.\n  - heading \"Placements\" [level=2]\n  - text: Unrecorded\n  - list\n  - heading \"Angles\" [level=2]\n  - text: Unrecorded\n  - list:\n    - listitem: The Midheaven\u2019s house follows the house system shown above; under whole-sign houses it can land in houses 9\u201311 rather than 10, and the house number then comes from the same calculation as the source chip here.\n  - heading \"House boundaries\" [level=2]\n  - text: Unrecorded\n  - list\n  - heading \"Connections\" [level=2]\n  - list:\n    - listitem: No connections within orb.\n- navigation \"Quick navigation\":\n  - link \"Today\":\n    - /url: /\n  - link \"Your pattern\":\n    - /url: /pattern\n  - link \"Timing\":\n    - /url: /timing\n  - link \"Journal\":\n    - /url: /journal\n- contentinfo:\n  - link \"Transit chart calculator\":\n    - /url: /transit-chart-calculator\n- region \"Notifications alt+T\""
+      },
+      {
+        "name": "20-unsupported-timing",
+        "passed": true,
+        "result": {
+          "futureUnavailable": true,
+          "skyUnavailable": true,
+          "visibilityLimit": true
+        },
+        "snapshot": "- link \"Skip to content\":\n  - /url: \"#main-content\"\n- banner:\n  - link \"Pattern\":\n    - /url: /\n  - button \"Open menu\"\n  - progressbar \"Page reading progress\"\n- main:\n  - heading \"Timing\" [level=1]\n  - navigation \"Timing views\":\n    - button \"Active\"\n    - button \"Upcoming\"\n    - button \"Moon & eclipses\" [pressed]\n  - region \"Moon & eclipses\":\n    - heading \"Moon & eclipses\" [level=2]\n    - paragraph: Global phase and eclipse timing from Swiss Ephemeris. Visibility at your location is not calculated.\n    - text: Date range\n    - combobox \"Date range\":\n      - option \"Next 90 days\" [selected]\n      - option \"Next 365 days\"\n    - text: Sky event type\n    - combobox \"Sky event type\":\n      - option \"All sky events\" [selected]\n      - option \"New & full Moons\"\n      - option \"Solar eclipses\"\n      - option \"Lunar eclipses\"\n    - status: Sky event timing is unavailable from the qualified service.\n- navigation \"Quick navigation\":\n  - link \"Today\":\n    - /url: /\n  - link \"Your pattern\":\n    - /url: /pattern\n  - link \"Timing\":\n    - /url: /timing\n  - link \"Journal\":\n    - /url: /journal\n- contentinfo:\n  - link \"Transit chart calculator\":\n    - /url: /transit-chart-calculator\n- region \"Notifications alt+T\""
+      }
+    ],
+    "daily-states": [
+      {
+        "name": "loading",
+        "passed": true,
+        "snapshot": "- main:\n  - article:\n    - paragraph:\n      - text: Today \u00b7\n      - time: Oct 21, 2026\n    - heading \"Leave room for an unhurried answer\" [level=1]\n    - paragraph: Transit angles and orbs are approximate.\n    - paragraph: House descriptions are left out because the birth time isn\u2019t precise enough.\n    - paragraph: You may want to settle a decision quickly today. Give the question a little room before you commit.\n    - paragraph: One clear conversation can make the next step easier. Write down what you want to ask, then choose a time when you can both listen.\n    - navigation \"Today sections\":\n      - link \"Check-in\":\n        - /url: \"#today-reflection\"\n      - link \"Timing\":\n        - /url: \"#today-timing\"\n      - link \"Journal\":\n        - /url: \"#today-journal\"\n      - link \"Sources\":\n        - /url: \"#today-evidence-section\"\n    - region \"Try this today\":\n      - heading \"Try this today\" [level=2]\n      - status\n      - paragraph: Break one task you choose into three clear steps.\n      - group: + Why this suggestion\n    - region \"Does this reading fit your day?\":\n      - heading \"Does this reading fit your day?\" [level=2]\n      - group \"Your response to this reading\":\n        - button \"Yes\"\n        - button \"Unsure\"\n        - button \"No\"\n      - status\n      - group: + How your response is used\n    - heading \"Reflection & check-in\" [level=2]\n    - paragraph: Which conversation would benefit from a little more time?\n    - form \"Daily check-in\":\n      - group \"Mood\":\n        - text: Mood\n        - button \"Clear mood selection\" [disabled]: Clear\n        - 'radio \"Mood: 1 of 5, Low\"'\n        - 'radio \"Mood: 2 of 5, Muted\"'\n        - 'radio \"Mood: 3 of 5, Steady\"'\n        - 'radio \"Mood: 4 of 5, Good\"'\n        - 'radio \"Mood: 5 of 5, Bright\"'\n      - group \"Energy\":\n        - text: Energy\n        - button \"Clear energy selection\" [disabled]: Clear\n        - 'radio \"Energy: 1 of 5, Flat\"'\n        - 'radio \"Energy: 2 of 5, Low\"'\n        - 'radio \"Energy: 3 of 5, Steady\"'\n        - 'radio \"Energy: 4 of 5, Lively\"'\n        - 'radio \"Energy: 5 of 5, Charged\"'\n      - text: Reflection note \u00b7 optional\n      - textbox \"Reflection note \u00b7 optional\":\n        - /placeholder: A few words about today\u2026\n      - paragraph:\n        - status\n      - button \"Save check-in\" [disabled]\n      - status: Not saved yet today\n      - paragraph: Private to your account. Notes are encrypted and are not sent out to write readings.\n      - group: + How your check-in is used\n    - heading \"Timing today\" [level=2]\n    - link \"All windows\":\n      - /url: /timing\n    - list:\n      - listitem:\n        - group: + Saturn pressing on your Sun Exact today\n    - heading \"Journal\" [level=2]\n    - link \"Open journal\":\n      - /url: /journal\n    - status: Loading your entries\u2026\n    - heading \"Sources behind this reading\" [level=2]:\n      - button \"Sources behind this reading\"\n  - complementary \"Reading details\":\n    - group: + Reading details"
+      },
+      {
+        "name": "initial-error",
+        "passed": true,
+        "snapshot": "- main:\n  - article:\n    - paragraph:\n      - text: Today \u00b7\n      - time: Oct 21, 2026\n    - heading \"Leave room for an unhurried answer\" [level=1]\n    - paragraph: Transit angles and orbs are approximate.\n    - paragraph: House descriptions are left out because the birth time isn\u2019t precise enough.\n    - paragraph: You may want to settle a decision quickly today. Give the question a little room before you commit.\n    - paragraph: One clear conversation can make the next step easier. Write down what you want to ask, then choose a time when you can both listen.\n    - navigation \"Today sections\":\n      - link \"Check-in\":\n        - /url: \"#today-reflection\"\n      - link \"Timing\":\n        - /url: \"#today-timing\"\n      - link \"Journal\":\n        - /url: \"#today-journal\"\n      - link \"Sources\":\n        - /url: \"#today-evidence-section\"\n    - region \"Try this today\":\n      - heading \"Try this today\" [level=2]\n      - status\n      - paragraph: Break one task you choose into three clear steps.\n      - group: + Why this suggestion\n    - region \"Does this reading fit your day?\":\n      - heading \"Does this reading fit your day?\" [level=2]\n      - group \"Your response to this reading\":\n        - button \"Yes\"\n        - button \"Unsure\"\n        - button \"No\"\n      - status\n      - group: + How your response is used\n    - heading \"Reflection & check-in\" [level=2]\n    - paragraph: Which conversation would benefit from a little more time?\n    - form \"Daily check-in\":\n      - group \"Mood\":\n        - text: Mood\n        - button \"Clear mood selection\" [disabled]: Clear\n        - 'radio \"Mood: 1 of 5, Low\"'\n        - 'radio \"Mood: 2 of 5, Muted\"'\n        - 'radio \"Mood: 3 of 5, Steady\"'\n        - 'radio \"Mood: 4 of 5, Good\"'\n        - 'radio \"Mood: 5 of 5, Bright\"'\n      - group \"Energy\":\n        - text: Energy\n        - button \"Clear energy selection\" [disabled]: Clear\n        - 'radio \"Energy: 1 of 5, Flat\"'\n        - 'radio \"Energy: 2 of 5, Low\"'\n        - 'radio \"Energy: 3 of 5, Steady\"'\n        - 'radio \"Energy: 4 of 5, Lively\"'\n        - 'radio \"Energy: 5 of 5, Charged\"'\n      - text: Reflection note \u00b7 optional\n      - textbox \"Reflection note \u00b7 optional\":\n        - /placeholder: A few words about today\u2026\n      - paragraph:\n        - status\n      - button \"Save check-in\" [disabled]\n      - status: Not saved yet today\n      - paragraph: Private to your account. Notes are encrypted and are not sent out to write readings.\n      - group: + How your check-in is used\n    - heading \"Timing today\" [level=2]\n    - link \"All windows\":\n      - /url: /timing\n    - list:\n      - listitem:\n        - group: + Saturn pressing on your Sun Exact today\n    - heading \"Journal\" [level=2]\n    - link \"Open journal\":\n      - /url: /journal\n    - list:\n      - listitem:\n        - paragraph: A walk after work\n        - time: Oct 21, 2026\n        - paragraph: I took a different route home and had time to think.\n        - paragraph: General\n    - heading \"Sources behind this reading\" [level=2]:\n      - button \"Sources behind this reading\"\n  - complementary \"Reading details\":\n    - group: + Reading details"
+      },
+      {
+        "name": "quiet-day",
+        "passed": true,
+        "snapshot": "- main:\n  - article:\n    - paragraph:\n      - text: Today \u00b7\n      - time: Oct 21, 2026\n    - heading \"Your reading for today\" [level=1]\n    - paragraph: Transit angles and orbs are approximate.\n    - paragraph: House descriptions are left out because the birth time isn\u2019t precise enough.\n    - paragraph: No timing windows meet the calculation limits today.\n    - navigation \"Today sections\":\n      - link \"Check-in\":\n        - /url: \"#today-reflection\"\n      - link \"Timing\":\n        - /url: \"#today-timing\"\n      - link \"Journal\":\n        - /url: \"#today-journal\"\n      - link \"Sources\":\n        - /url: \"#today-evidence-section\"\n    - region \"Try this today\":\n      - heading \"Try this today\" [level=2]\n      - status\n      - paragraph: Break one task you choose into three clear steps.\n      - group: + Why this suggestion\n    - region \"Does this reading fit your day?\":\n      - heading \"Does this reading fit your day?\" [level=2]\n      - group \"Your response to this reading\":\n        - button \"Yes\"\n        - button \"Unsure\"\n        - button \"No\"\n      - status\n      - group: + How your response is used\n    - heading \"Reflection & check-in\" [level=2]\n    - paragraph: Which conversation would benefit from a little more time?\n    - form \"Daily check-in\":\n      - group \"Mood\":\n        - text: Mood\n        - button \"Clear mood selection\" [disabled]: Clear\n        - 'radio \"Mood: 1 of 5, Low\"'\n        - 'radio \"Mood: 2 of 5, Muted\"'\n        - 'radio \"Mood: 3 of 5, Steady\"'\n        - 'radio \"Mood: 4 of 5, Good\"'\n        - 'radio \"Mood: 5 of 5, Bright\"'\n      - group \"Energy\":\n        - text: Energy\n        - button \"Clear energy selection\" [disabled]: Clear\n        - 'radio \"Energy: 1 of 5, Flat\"'\n        - 'radio \"Energy: 2 of 5, Low\"'\n        - 'radio \"Energy: 3 of 5, Steady\"'\n        - 'radio \"Energy: 4 of 5, Lively\"'\n        - 'radio \"Energy: 5 of 5, Charged\"'\n      - text: Reflection note \u00b7 optional\n      - textbox \"Reflection note \u00b7 optional\":\n        - /placeholder: A few words about today\u2026\n      - paragraph:\n        - status\n      - button \"Save check-in\" [disabled]\n      - status: Not saved yet today\n      - paragraph: Private to your account. Notes are encrypted and are not sent out to write readings.\n      - group: + How your check-in is used\n    - heading \"Timing today\" [level=2]\n    - link \"All windows\":\n      - /url: /timing\n    - paragraph: No measurable window against your chart today.\n    - heading \"Journal\" [level=2]\n    - link \"Write an entry\":\n      - /url: /journal\n    - paragraph: No saved entries match this reading yet.\n    - heading \"Sources behind this reading\" [level=2]:\n      - button \"Sources behind this reading\"\n  - complementary \"Reading details\":\n    - group: + Reading details"
+      },
+      {
+        "name": "stale-day",
+        "passed": true,
+        "snapshot": "- main:\n  - article:\n    - status: Showing your reading for Oct 20, 2026. Refresh to load the new day before checking in.\n    - button \"Refresh reading\"\n    - paragraph:\n      - text: Today \u00b7\n      - time: Oct 20, 2026\n    - heading \"Leave room for an unhurried answer\" [level=1]\n    - paragraph: Transit angles and orbs are approximate.\n    - paragraph: House descriptions are left out because the birth time isn\u2019t precise enough.\n    - paragraph: You may want to settle a decision quickly today. Give the question a little room before you commit.\n    - paragraph: One clear conversation can make the next step easier. Write down what you want to ask, then choose a time when you can both listen.\n    - navigation \"Today sections\":\n      - link \"Check-in\":\n        - /url: \"#today-reflection\"\n      - link \"Timing\":\n        - /url: \"#today-timing\"\n      - link \"Journal\":\n        - /url: \"#today-journal\"\n      - link \"Sources\":\n        - /url: \"#today-evidence-section\"\n    - region \"Does this reading fit your day?\":\n      - heading \"Does this reading fit your day?\" [level=2]\n      - group \"Your response to this reading\":\n        - button \"Yes\"\n        - button \"Unsure\"\n        - button \"No\"\n      - status\n      - group: + How your response is used\n    - heading \"Reflection & check-in\" [level=2]\n    - paragraph: Which conversation would benefit from a little more time?\n    - form \"Daily check-in\":\n      - group \"Mood\":\n        - text: Mood\n        - button \"Clear mood selection\" [disabled]: Clear\n        - 'radio \"Mood: 1 of 5, Low\" [disabled]'\n        - 'radio \"Mood: 2 of 5, Muted\" [disabled]'\n        - 'radio \"Mood: 3 of 5, Steady\" [disabled]'\n        - 'radio \"Mood: 4 of 5, Good\" [disabled]'\n        - 'radio \"Mood: 5 of 5, Bright\" [disabled]'\n      - group \"Energy\":\n        - text: Energy\n        - button \"Clear energy selection\" [disabled]: Clear\n        - 'radio \"Energy: 1 of 5, Flat\" [disabled]'\n        - 'radio \"Energy: 2 of 5, Low\" [disabled]'\n        - 'radio \"Energy: 3 of 5, Steady\" [disabled]'\n        - 'radio \"Energy: 4 of 5, Lively\" [disabled]'\n        - 'radio \"Energy: 5 of 5, Charged\" [disabled]'\n      - status: Refresh today\u2019s reading to check in for the new day.\n      - text: Reflection note \u00b7 optional\n      - textbox \"Reflection note \u00b7 optional\" [disabled]:\n        - /placeholder: A few words about today\u2026\n      - paragraph:\n        - status\n      - button \"Save check-in\" [disabled]\n      - status: Not saved yet today\n      - paragraph: Private to your account. Notes are encrypted and are not sent out to write readings.\n      - group: + How your check-in is used\n    - heading \"Timing today\" [level=2]\n    - link \"All windows\":\n      - /url: /timing\n    - list:\n      - listitem:\n        - group: + Saturn pressing on your Sun Exact today\n    - heading \"Journal\" [level=2]\n    - link \"Open journal\":\n      - /url: /journal\n    - list:\n      - listitem:\n        - paragraph: A walk after work\n        - time: Oct 21, 2026\n        - paragraph: I took a different route home and had time to think.\n        - paragraph: General\n    - heading \"Sources behind this reading\" [level=2]:\n      - button \"Sources behind this reading\"\n  - complementary \"Reading details\":\n    - group: + Reading details"
+      }
+    ],
+    "final-layout-checks": [
+      {
+        "name": "Primary reading summary",
+        "size": {
+          "width": 390,
+          "height": 844
+        },
+        "passed": true,
+        "snapshot": "- term: Strength\n- definition: Major\n- term: Timing\n- definition: Exact today"
+      },
+      {
+        "name": "Primary reading summary",
+        "size": {
+          "width": 1440,
+          "height": 1000
+        },
+        "passed": true,
+        "snapshot": "- term: Strength\n- definition: Major\n- term: Timing\n- definition: Exact today"
+      },
+      {
+        "name": "Primary reading summary",
+        "size": {
+          "width": 320,
+          "height": 740
+        },
+        "passed": true,
+        "snapshot": "- term: Strength\n- definition: Major\n- term: Timing\n- definition: Exact today"
+      },
+      {
+        "name": "Admin incomplete release, quality failure and rollback cancellation",
+        "size": {
+          "width": 390,
+          "height": 844
+        },
+        "passed": true,
+        "snapshot": "- main:\n  - heading \"Content releases\" [level=1]\n  - paragraph: Draft, review and publish interpretation copy. Activating a release changes new readings; saved readings keep their original version and evidence.\n  - region \"Candidate drafts\":\n    - heading \"Candidate drafts\" [level=2]\n    - paragraph: Generate and review candidate interpretation copy before publication. The model drafts mechanism and reflection question copy for each cycle slot. Candidates that fail safety, phrase or schema checks are filtered before storage. A draft is inert until published as an inactive release and activated in Published releases.\n    - group \"Language provider\":\n      - text: Language provider\n      - button \"Lovable AI gateway \u00b7 not configured\" [disabled] [pressed]\n      - button \"Gemini Enterprise \u00b7 not configured\" [disabled]\n    - paragraph: Gemini Enterprise needs a GEMINI_ENTERPRISE_API_KEY secret on the server.\n    - button \"Draft a release\"\n    - paragraph: No open drafts. Choose a language provider above and select \"Draft a release\" to generate a candidate release for editorial review.\n  - region \"Published releases\":\n    - heading \"Published releases\" [level=2]\n    - text: 2 total releases\n    - article:\n      - heading \"0.9.9\" [level=3]\n      - text: Active \u00b7 delivery incomplete 2026-10-20\n      - group: + Release details\n      - text: Used for new readings\n      - button \"Reconcile publication\"\n    - article:\n      - heading \"0.9.8\" [level=3]\n      - text: Prior version 2026-10-19\n      - group: + Release details\n      - button \"Roll back to this release\"\n      - text: Evaluation baseline for 0.9.8\n      - combobox \"Evaluation baseline for 0.9.8\":\n        - option \"Choose a baseline release\" [disabled]\n        - option \"0.9.9 \u00b7 currently live\" [selected]\n      - paragraph: \"Candidate release ID: release-b. Baseline release ID: release-a.\"\n      - button \"Evaluate this release\"\n      - paragraph: \"Pilot: 4 of 20 body-specific fallback slots, up to eight calls across both copies, $5 total generation cap. Evaluation does not approve or activate this release.\"\n  - region \"Reading runs\":\n    - heading \"Reading runs\" [level=2]\n    - text: 0 recorded runs\n    - paragraph: Nightly and manually started reading workflows. Release delivery is tracked separately in Published releases.\n    - paragraph: No runs yet\n    - paragraph: Runs appear after a nightly workflow or a manual start.\n    - button \"Start a reading run for today\"\n  - region \"Reading quality\":\n    - heading \"Reading quality\" [level=2]\n    - button \"Refresh measurements\"\n    - group: + Measurement methodology and validation caveats\n    - alert:\n      - paragraph: Generation measurements unreachable\n      - paragraph: Stored metadata could not be read. These measurements are unavailable; readings themselves are unaffected.\n      - button \"Retry measurements\"\n  - region \"Synthetic evaluation\":\n    - heading \"Synthetic evaluation\" [level=2]\n    - paragraph: Run live language-provider requests against fixed synthetic facts to check reading assembly and validation. Runs continue on the server when you leave this page; selecting evaluation copy does not publish or activate it.\n    - region \"Inactive daily editorial pilot\":\n      - heading \"Inactive daily editorial pilot\" [level=3]\n      - paragraph: \"Six warm/standard scenarios, nine outputs: five possible model outputs and four authored quiet outputs across October 11\u201314. At most five attempts and $5 in reserved generation cost. Quiet variation uses no model requests. This pilot does not publish, activate, or establish writing qualification.\"\n      - paragraph: Previewing is model-free. Start uses the exact reviewed plan and the configured member provider. The server continues after this page closes; failed requests are never retried.\n      - button \"Preview exact pilot\"\n      - button \"Start five-attempt pilot\" [disabled]\n      - button \"Recover saved status\"\n      - status: No saved pilot is loaded. Preview its frozen plan before starting.\n      - text: Saved run ID, if available\n      - textbox \"Saved run ID, if available\"\n    - region \"Synthetic reading evaluation\":\n      - heading \"Synthetic reading evaluation\" [level=3]\n      - text: Evaluation scope\n      - combobox \"Evaluation scope\":\n        - option \"Fixed suite\" [selected]\n        - option \"Matched writing qualification\"\n        - option \"Enterprise LOW / MEDIUM pilot\"\n      - paragraph: \"Run the 50 fixed synthetic cases against the selected provider and copy, one at a time: up to 49 model calls. Quiet days and cases without a published primary interpretation skip the model. This uses synthetic chart inputs and no account readings or notes. The run continues on the server if you leave or close this page; your latest run and its results load when you return.\"\n      - paragraph: Acceptance measures the current validator on this case set. Review specificity, voice, repetition, grounding, natal lens integration, temporal coherence and chapter integration yourself, including invented history, promised resolution and unsupported personal claims; these results do not assign writing-quality scores or establish a production acceptance rate.\n      - text: Evaluation copy\n      - combobox \"Evaluation copy\":\n        - option \"Current active copy\" [selected]\n        - option \"Natal-free built-in baseline\"\n        - option \"Inactive natal candidate\"\n        - option \"Inactive transit candidate\"\n        - option \"Inactive concrete-writing candidate\"\n      - paragraph: Uses the effective published release, or the built-in fallback when no release is active. The choice is fixed when a run starts.\n      - group \"Language provider\":\n        - text: Language provider\n        - button \"Lovable AI gateway \u00b7 not configured\" [disabled] [pressed]\n        - button \"Gemini Enterprise \u00b7 not configured\" [disabled]\n      - paragraph: Gemini Enterprise needs a GEMINI_ENTERPRISE_API_KEY secret on the server.\n      - button \"Prepare and download source plans\"\n      - button \"Run synthetic evaluation\"\n      - status: No synthetic evaluation has run yet.\n  - complementary:\n    - heading \"Current release\" [level=2]\n    - text: Active release 0.9.9\n    - navigation \"Content tools\":\n      - link \"Candidate drafts\":\n        - /url: \"#drafts-heading\"\n      - link \"Published releases\":\n        - /url: \"#releases-heading\"\n      - link \"Reading runs\":\n        - /url: \"#edge-plane-heading\"\n      - link \"Reading quality\":\n        - /url: \"#reading-quality-heading\"\n      - link \"Synthetic evaluation\":\n        - /url: \"#eval-heading\""
+      },
+      {
+        "name": "Admin incomplete release, quality failure and rollback cancellation",
+        "size": {
+          "width": 1440,
+          "height": 1000
+        },
+        "passed": true,
+        "snapshot": "- main:\n  - heading \"Content releases\" [level=1]\n  - paragraph: Draft, review and publish interpretation copy. Activating a release changes new readings; saved readings keep their original version and evidence.\n  - region \"Candidate drafts\":\n    - heading \"Candidate drafts\" [level=2]\n    - paragraph: Generate and review candidate interpretation copy before publication. The model drafts mechanism and reflection question copy for each cycle slot. Candidates that fail safety, phrase or schema checks are filtered before storage. A draft is inert until published as an inactive release and activated in Published releases.\n    - group \"Language provider\":\n      - text: Language provider\n      - button \"Lovable AI gateway \u00b7 not configured\" [disabled] [pressed]\n      - button \"Gemini Enterprise \u00b7 not configured\" [disabled]\n    - paragraph: Gemini Enterprise needs a GEMINI_ENTERPRISE_API_KEY secret on the server.\n    - button \"Draft a release\"\n    - paragraph: No open drafts. Choose a language provider above and select \"Draft a release\" to generate a candidate release for editorial review.\n  - region \"Published releases\":\n    - heading \"Published releases\" [level=2]\n    - text: 2 total releases\n    - article:\n      - heading \"0.9.9\" [level=3]\n      - text: Active \u00b7 delivery incomplete 2026-10-20\n      - group: + Release details\n      - text: Used for new readings\n      - button \"Reconcile publication\"\n    - article:\n      - heading \"0.9.8\" [level=3]\n      - text: Prior version 2026-10-19\n      - group: + Release details\n      - button \"Roll back to this release\"\n      - text: Evaluation baseline for 0.9.8\n      - combobox \"Evaluation baseline for 0.9.8\":\n        - option \"Choose a baseline release\" [disabled]\n        - option \"0.9.9 \u00b7 currently live\" [selected]\n      - paragraph: \"Candidate release ID: release-b. Baseline release ID: release-a.\"\n      - button \"Evaluate this release\"\n      - paragraph: \"Pilot: 4 of 20 body-specific fallback slots, up to eight calls across both copies, $5 total generation cap. Evaluation does not approve or activate this release.\"\n  - region \"Reading runs\":\n    - heading \"Reading runs\" [level=2]\n    - text: 0 recorded runs\n    - paragraph: Nightly and manually started reading workflows. Release delivery is tracked separately in Published releases.\n    - paragraph: No runs yet\n    - paragraph: Runs appear after a nightly workflow or a manual start.\n    - button \"Start a reading run for today\"\n  - region \"Reading quality\":\n    - heading \"Reading quality\" [level=2]\n    - button \"Refresh measurements\"\n    - group: + Measurement methodology and validation caveats\n    - alert:\n      - paragraph: Generation measurements unreachable\n      - paragraph: Stored metadata could not be read. These measurements are unavailable; readings themselves are unaffected.\n      - button \"Retry measurements\"\n  - region \"Synthetic evaluation\":\n    - heading \"Synthetic evaluation\" [level=2]\n    - paragraph: Run live language-provider requests against fixed synthetic facts to check reading assembly and validation. Runs continue on the server when you leave this page; selecting evaluation copy does not publish or activate it.\n    - region \"Inactive daily editorial pilot\":\n      - heading \"Inactive daily editorial pilot\" [level=3]\n      - paragraph: \"Six warm/standard scenarios, nine outputs: five possible model outputs and four authored quiet outputs across October 11\u201314. At most five attempts and $5 in reserved generation cost. Quiet variation uses no model requests. This pilot does not publish, activate, or establish writing qualification.\"\n      - paragraph: Previewing is model-free. Start uses the exact reviewed plan and the configured member provider. The server continues after this page closes; failed requests are never retried.\n      - button \"Preview exact pilot\"\n      - button \"Start five-attempt pilot\" [disabled]\n      - button \"Recover saved status\"\n      - status: No saved pilot is loaded. Preview its frozen plan before starting.\n      - text: Saved run ID, if available\n      - textbox \"Saved run ID, if available\"\n    - region \"Synthetic reading evaluation\":\n      - heading \"Synthetic reading evaluation\" [level=3]\n      - text: Evaluation scope\n      - combobox \"Evaluation scope\":\n        - option \"Fixed suite\" [selected]\n        - option \"Matched writing qualification\"\n        - option \"Enterprise LOW / MEDIUM pilot\"\n      - paragraph: \"Run the 50 fixed synthetic cases against the selected provider and copy, one at a time: up to 49 model calls. Quiet days and cases without a published primary interpretation skip the model. This uses synthetic chart inputs and no account readings or notes. The run continues on the server if you leave or close this page; your latest run and its results load when you return.\"\n      - paragraph: Acceptance measures the current validator on this case set. Review specificity, voice, repetition, grounding, natal lens integration, temporal coherence and chapter integration yourself, including invented history, promised resolution and unsupported personal claims; these results do not assign writing-quality scores or establish a production acceptance rate.\n      - text: Evaluation copy\n      - combobox \"Evaluation copy\":\n        - option \"Current active copy\" [selected]\n        - option \"Natal-free built-in baseline\"\n        - option \"Inactive natal candidate\"\n        - option \"Inactive transit candidate\"\n        - option \"Inactive concrete-writing candidate\"\n      - paragraph: Uses the effective published release, or the built-in fallback when no release is active. The choice is fixed when a run starts.\n      - group \"Language provider\":\n        - text: Language provider\n        - button \"Lovable AI gateway \u00b7 not configured\" [disabled] [pressed]\n        - button \"Gemini Enterprise \u00b7 not configured\" [disabled]\n      - paragraph: Gemini Enterprise needs a GEMINI_ENTERPRISE_API_KEY secret on the server.\n      - button \"Prepare and download source plans\"\n      - button \"Run synthetic evaluation\"\n      - status: No synthetic evaluation has run yet.\n  - complementary:\n    - heading \"Current release\" [level=2]\n    - text: Active release 0.9.9\n    - navigation \"Content tools\":\n      - link \"Candidate drafts\":\n        - /url: \"#drafts-heading\"\n      - link \"Published releases\":\n        - /url: \"#releases-heading\"\n      - link \"Reading runs\":\n        - /url: \"#edge-plane-heading\"\n      - link \"Reading quality\":\n        - /url: \"#reading-quality-heading\"\n      - link \"Synthetic evaluation\":\n        - /url: \"#eval-heading\""
+      }
+    ]
+  },
+  "assets": {
+    "clientChunks": 59,
+    "clientModules": 417,
+    "forbiddenClientModules": [],
+    "operationalCatalogInClient": true,
+    "publicFiles": 66,
+    "publicSentinelHits": [],
+    "assetsBindingDirectory": "../public",
+    "originalPublicFiles": [
+      "public/favicon.ico",
+      "public/og-image.jpg",
+      "public/robots.txt",
+      "public/sitemap.xml"
+    ],
+    "reviewFilesInPublic": [],
+    "lintInCleanupFiles": []
+  },
+  "captures": {
+    "01-today-desktop-after.png": {
+      "sha256": "20d783443f516ea52e8bc954a233a953b40c02570db6e1530b3fbe01ce8ce743",
+      "bytes": 160770
+    },
+    "01-today-desktop-before.png": {
+      "sha256": "547cd24950941f6b5b79eecf7b0484fc1e6a7e79ee6ed0799e64e92fb1ff0691",
+      "bytes": 184185
+    },
+    "01-today-mobile-after.png": {
+      "sha256": "fab5283234c5af3c082883c51880b856934f2a13bbc7e18e6bc9514cff6f6ecb",
+      "bytes": 150110
+    },
+    "01-today-mobile-before.png": {
+      "sha256": "af5dfcee1ac8a0b2078187c319951ece3cdcda1e78465f27b7c69e8a9ff3c70f",
+      "bytes": 148533
+    },
+    "03-timing-desktop-after.png": {
+      "sha256": "e33641c9d0e8cf5ab99aab01b615be502487cc161292451b9bcca92be71d273b",
+      "bytes": 104921
+    },
+    "03-timing-desktop-before.png": {
+      "sha256": "6cc1075171bf294bd8b44e2dea14987c7654451385f6fa321d0eec6fe0f4ac6a",
+      "bytes": 115318
+    },
+    "03-timing-mobile-after.png": {
+      "sha256": "cdbfbb005d0d57e508c30fd385243bb89ac1710b6f79bc9d12232c61aa4b7de1",
+      "bytes": 91971
+    },
+    "03-timing-mobile-before.png": {
+      "sha256": "22efaef294a20689a2031af21c975b55a71e2342d3b241384b76f6356053e6f1",
+      "bytes": 98920
+    },
+    "26-primary-summary-enlarged-after.png": {
+      "sha256": "b88db429f6aed1a33f7971099ff6b2f28758db871acfb0cbef4660a8393cf459",
+      "bytes": 7523
+    }
+  },
+  "limits": [
+    "Synthetic local services only; no live account/email/model/Stripe/assistant operations.",
+    "No physical-device, native keyboard/autofill/browser chrome, pinch-zoom or manual screen-reader verification.",
+    "Populated admin draft review and quality-result tables source-reviewed; not live exercised.",
+    "Static admin screen code and operational evaluation catalog metadata remain downloadable.",
+    "No deployment or merge performed."
+  ]
+}

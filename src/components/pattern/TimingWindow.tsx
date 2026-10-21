@@ -11,11 +11,11 @@ import {
   Sunset,
   Waves,
 } from "lucide-react";
-import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import {
   arcSentence,
   cycleTimingPhrase,
+  daysToExact,
   DOMAIN_LABEL,
   PHASE_LABEL,
   timelinePositions,
@@ -161,6 +161,10 @@ export function TimingWindow({
     calculation,
     referenceLabel === "Selected day",
   );
+  const showPhase =
+    phase === "building" ||
+    phase === "fading" ||
+    (phase === "exact" && daysToExact(cycle, day, timezone, calculation) === null);
   const overlay = primaryStoryOverlay(calculation, cycle.cycle_key);
   const arc = overlay ? null : arcSentence(cycle);
   const toggleId = "timing-toggle-" + cycle.cycle_key;
@@ -187,10 +191,12 @@ export function TimingWindow({
           </span>
         </span>
         <span className="timing-window-when">
-          <span className="timing-phase-label">
-            <span aria-hidden="true" />
-            {copy.label}
-          </span>
+          {showPhase ? (
+            <span className="timing-phase-label">
+              <span aria-hidden="true" />
+              {copy.label}
+            </span>
+          ) : null}
           <span>{timing}</span>
         </span>
         <ChevronDown aria-hidden="true" className="timing-window-chevron" />
@@ -248,8 +254,8 @@ export function TimingWindow({
                 </dl>
               </details>
               <AttachedJournalContext cycleKey={cycle.cycle_key} />
-              <div className="timing-window-footer">
-                {previous || next ? (
+              {previous || next ? (
+                <div className="timing-window-footer">
                   <nav aria-label="Nearby timing windows">
                     <Button
                       variant="ghost"
@@ -270,11 +276,8 @@ export function TimingWindow({
                       <ArrowRight aria-hidden="true" />
                     </Button>
                   </nav>
-                ) : null}
-                <Link to="/journal">
-                  Open journal <ArrowRight aria-hidden="true" />
-                </Link>
-              </div>
+                </div>
+              ) : null}
             </div>
           ) : null}
         </div>
