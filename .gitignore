@@ -41,5 +41,6 @@ dist-ssr
 /.opencode/
 /.playwright-cli/
 /.impeccable/critique/
+/.mobile-ux/
 /output/playwright/
 /session-ses_*.md
