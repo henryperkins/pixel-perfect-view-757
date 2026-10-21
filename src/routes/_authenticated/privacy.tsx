@@ -25,7 +25,13 @@ import {
   savePrefs,
   updateConsent,
 } from "@/lib/pattern.functions";
-import { PROHIBITED_SOURCES, TIERS, sourcesForTier, type Tier } from "@/lib/registry";
+import {
+  PROHIBITED_SOURCES,
+  TIERS,
+  sourcesForTier,
+  type AllowedUse,
+  type Tier,
+} from "@/lib/registry";
 import { userFacingError } from "@/lib/user-facing-error";
 
 export const Route = createFileRoute("/_authenticated/privacy")({
@@ -60,6 +66,38 @@ const SECTIONS = [
   { href: "#marked-moments", text: "Marked moments" },
   { href: "#your-data", text: "Your data" },
 ] as const;
+
+const SOURCE_USE_LABEL: Record<AllowedUse, string> = {
+  calculation: "calculations",
+  timing: "showing timing windows",
+  framing: "framing readings",
+  personalisation: "personalising your experience",
+  reflection_prompt: "choosing reflection questions",
+  external_language: "writing through the language provider",
+  quality_measurement: "aggregate reading quality reports",
+  provenance: "showing saved sources",
+};
+
+// These registry uses have no reader path, so a shared phrase would describe a use the source does not perform.
+const OMITTED_USE_PHRASES: Partial<Record<string, readonly AllowedUse[]>> = {
+  "DEV-01": ["framing"],
+  "DEV-02": ["framing"],
+  "USR-04": ["reflection_prompt"],
+  "USR-07": ["reflection_prompt"],
+};
+
+const SOURCE_USE_PHRASE: Partial<Record<string, Partial<Record<AllowedUse, string>>>> = {
+  "DEV-01": { timing: "choosing the local day" },
+  "DEV-02": { calculation: "calculating local daylight" },
+};
+
+function sourceUseSentence(source: { id: string; allowed_uses: readonly AllowedUse[] }): string {
+  const omitted = new Set(OMITTED_USE_PHRASES[source.id] ?? []);
+  const phrases = source.allowed_uses
+    .filter((use) => !omitted.has(use))
+    .map((use) => SOURCE_USE_PHRASE[source.id]?.[use] ?? SOURCE_USE_LABEL[use]);
+  return `Used for ${phrases.join(", ")}.`;
+}
 
 function PrivacyPage() {
   const { session } = useAuth();
@@ -433,6 +471,12 @@ function PrivacyPage() {
                             ? "Kept until you delete your account."
                             : `Kept for ${s.retention_days} days.`}
                         </p>
+                        <p
+                          id={`source-${s.id}-uses`}
+                          className="mt-1 text-sm text-muted-foreground"
+                        >
+                          {sourceUseSentence(s)}
+                        </p>
                       </div>
                       {tier.required ? (
                         <span className="technical shrink-0 text-muted-foreground">required</span>
@@ -442,7 +486,7 @@ function PrivacyPage() {
                           type="button"
                           aria-labelledby={`source-${s.id}-label source-${s.id}-state`}
                           aria-pressed={consentUnknown ? undefined : on}
-                          aria-describedby={`source-${s.id}-description`}
+                          aria-describedby={`source-${s.id}-description source-${s.id}-uses`}
                           disabled={consentControlsDisabled || (s.available === false && !on)}
                           onClick={() => toggle.mutate({ sourceId: s.id, granted: !on })}
                           className="shrink-0"

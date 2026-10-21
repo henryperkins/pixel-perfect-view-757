@@ -211,6 +211,9 @@ function AssistantsPage() {
                       <h3 className="break-words font-medium">
                         {grant.clientName || "Unnamed assistant"}
                       </h3>
+                      <p className="mt-1 break-all text-xs text-muted-foreground">
+                        Client: {grant.clientId}
+                      </p>
                       <p className="mt-1 text-sm text-muted-foreground">
                         {grant.scopes.map((s) => names[s]).join(" · ")}
                       </p>
@@ -233,7 +236,10 @@ function AssistantsPage() {
                       }
                     >
                       Revoke access
-                      <span className="sr-only"> for {grant.clientName || "this assistant"}</span>
+                      <span className="sr-only">
+                        {" "}
+                        for {grant.clientName || "Unnamed assistant"}, client {grant.clientId}
+                      </span>
                     </Button>
                   </li>
                 ))}
@@ -297,6 +303,9 @@ function AssistantsPage() {
                       >
                         <div className="min-w-0">
                           <h3 className="break-words font-medium">{grant.clientName}</h3>
+                          <p className="mt-1 break-all text-xs text-muted-foreground">
+                            Client: {grant.clientId}
+                          </p>
                         </div>
                         <Button
                           variant="outline"
@@ -316,7 +325,10 @@ function AssistantsPage() {
                           }
                         >
                           Clear remembered approval
-                          <span className="sr-only"> for {grant.clientName}</span>
+                          <span className="sr-only">
+                            {" "}
+                            for {grant.clientName}, client {grant.clientId}
+                          </span>
                         </Button>
                       </li>
                     ))}

@@ -26,6 +26,7 @@ import { useScrollableField } from "@/hooks/useScrollableField";
 
 import { Shell } from "@/components/pattern/Shell";
 import { contactTitle, DOMAIN_LABEL } from "@/components/pattern/timing";
+import { bodyName } from "@/components/pattern/pattern-view";
 import { userFacingError } from "@/lib/user-facing-error";
 import {
   addEvent,
@@ -82,6 +83,15 @@ const JOURNAL_DOMAIN_LABEL: Record<(typeof DOMAINS)[number], string> = {
   money: "Money",
 };
 
+function savedWindowTitle(key: string) {
+  const contact = key.match(
+    /^([a-z_]+)_(conjunction|opposition|square|trine|sextile|quincunx)_([a-z_]+)$/,
+  );
+  if (!contact) return `Timing window: ${key}`;
+  const [, transit = "", aspect = "", natal = ""] = contact;
+  return contactTitle(transit, aspect, natal).replaceAll("_", " ");
+}
+
 function journalEntryContext(
   entry: { domain: string; cycle_key?: string | null; feature_key?: string | null },
   cycles: { cycle_key: string; transit_body: string; aspect: string; natal_point: string }[],
@@ -100,9 +110,9 @@ function journalEntryContext(
     cycle
       ? contactTitle(cycle.transit_body, cycle.aspect, cycle.natal_point)
       : entry.cycle_key
-        ? "Timing window"
+        ? savedWindowTitle(entry.cycle_key)
         : null,
-    chapter ?? (entry.feature_key ? "Chapter" : null),
+    chapter ?? (entry.feature_key ? `Chapter: ${bodyName(entry.feature_key)}` : null),
   ]
     .filter(Boolean)
     .join(" · ");

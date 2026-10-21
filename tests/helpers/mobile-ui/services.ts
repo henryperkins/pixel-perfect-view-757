@@ -6,6 +6,10 @@ const state = {
   day,
   dropResponse: [],
   member: !location.search.includes("visitor=1"),
+  assistantSession: null as {
+    access_token: string;
+    user: { id: string; email: string };
+  } | null,
   admin: false,
   overrides: {} as Record<string, unknown>,
   delay: 0,
@@ -305,7 +309,7 @@ Object.assign(window, {
 });
 export const useServerFn = (fn) => fn;
 export const useAssistantSession = () => ({
-  session: null,
+  session: state.assistantSession,
   loading: false,
   error: "",
   recovery: false,

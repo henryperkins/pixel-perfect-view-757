@@ -112,6 +112,9 @@ export function PatternChapterEvidence({
 }) {
   const factId = (id: string) => `chapter-${feature.feature_key}-fact-${id}`;
   const byId = new Map(facts.map((fact) => [fact.id, fact]));
+  const referenceLabels = new Map(
+    facts.map((fact, index) => [fact.id, `${describeFact(fact).label} · Reference ${index + 1}`]),
+  );
   return (
     <details className="pattern-chapter-evidence">
       <summary>Behind this chapter</summary>
@@ -150,7 +153,7 @@ export function PatternChapterEvidence({
                               focusTarget(factId(id));
                             }}
                           >
-                            {describeFact(fact).label}
+                            {referenceLabels.get(id)}
                           </a>
                         ) : (
                           <span key={id}>Source unavailable</span>
@@ -166,7 +169,7 @@ export function PatternChapterEvidence({
                 const described = describeFact(fact);
                 return (
                   <li id={factId(fact.id)} key={fact.id} tabIndex={-1}>
-                    <h5>{described.label}</h5>
+                    <h5>{referenceLabels.get(fact.id)}</h5>
                     <div>
                       <Value value={described.value} field={described.field ?? ""} />
                     </div>

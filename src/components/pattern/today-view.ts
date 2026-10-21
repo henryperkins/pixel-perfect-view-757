@@ -59,18 +59,18 @@ export function todayPhaseLabel(value: string) {
 export function todayFactLabel(id: string) {
   const cycle = id.match(/^C(\d+)$/);
   if (cycle) return cycle[1] === "1" ? "Primary calculated cycle" : `Calculated cycle ${cycle[1]}`;
-  if (/^I\d+$/.test(id)) return "Interpretation reference";
+  if (/^I\d+$/.test(id)) return `Interpretation reference ${id.slice(1)}`;
   if (id === "S1") return "Combined interpretation";
   if (id === "N1") return "Published chart interpretation";
   if (id === "A1") return "Calculated contact sequence";
   if (id === "P2") return "Published contact interpretation";
-  if (/^D\d+$/.test(id)) return "Area-of-life framing";
-  if (/^P\d+$/.test(id)) return "Phase wording";
-  if (/^T\d+$/.test(id)) return "Timing wording";
-  if (/^E\d+$/.test(id)) return "Calculation source";
-  if (/^U\d+$/.test(id)) return "Birth-time limits";
-  if (/^R\d+$/.test(id)) return "Reflection reference";
-  return "Supplied reference";
+  if (/^D\d+$/.test(id)) return `Area-of-life framing ${id.slice(1)}`;
+  if (/^P\d+$/.test(id)) return `Phase wording ${id.slice(1)}`;
+  if (/^T\d+$/.test(id)) return `Timing wording ${id.slice(1)}`;
+  if (/^E\d+$/.test(id)) return `Calculation source ${id.slice(1)}`;
+  if (/^U\d+$/.test(id)) return `Birth-time limits ${id.slice(1)}`;
+  if (/^R\d+$/.test(id)) return `Reflection reference ${id.slice(1)}`;
+  return `Supplied reference ${id}`;
 }
 
 export function todayFactCategory(id: string) {

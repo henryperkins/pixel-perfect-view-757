@@ -28,7 +28,7 @@ test("a saved source with legacy or malformed details has a safe reader label", 
   for (const detail of [null, [], "legacy", 7]) {
     assert.equal(
       view.todaySourceLabel({ label: "Published template reference · P1", detail }),
-      "Phase wording",
+      "Phase wording 1",
     );
   }
   assert.equal(
