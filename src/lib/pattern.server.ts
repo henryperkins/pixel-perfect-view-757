@@ -3302,9 +3302,11 @@ export async function getUpcomingCycles(
   const anchors = (
     await ensureTransitAnchors(db, userId, snapshot, await getDek(db, userId), new Date())
   ).manifest;
-  const { getUpcomingFromAnchors } = await import("./astro/upcoming.server");
+  const { getUpcomingFromAnchors, UPCOMING_SOLVER_VERSION } =
+    await import("./astro/upcoming.server");
   const key = await keyedFingerprint(userId, {
-    version: "future-timing-cache-1",
+    version: "future-timing-cache-2",
+    solverVersion: UPCOMING_SOLVER_VERSION,
     snapshotId: snapshot.id,
     fingerprint: snapshot.fingerprint,
     anchors,
@@ -3314,17 +3316,23 @@ export async function getUpcomingCycles(
     duration,
     policy: transitEpisodePolicy(),
   });
-  const saved = await cachedTimingCalculation(userId, key, async () => ({
-    calculation: await getUpcomingFromAnchors(
-      anchors,
-      from,
-      to,
-      domain,
-      duration,
-      birth.assertCurrent,
-    ),
-    computedAt: new Date().toISOString(),
-  }));
+  const saved = await cachedTimingCalculation(
+    userId,
+    key,
+    async () => ({
+      calculation: await getUpcomingFromAnchors(
+        anchors,
+        from,
+        to,
+        domain,
+        duration,
+        birth.assertCurrent,
+      ),
+      computedAt: new Date().toISOString(),
+    }),
+    ({ calculation }) =>
+      calculation.status === "available" && calculation.missingTargets.length === 0,
+  );
   await birth.assertCurrent();
   const current = await grantedSet(db, userId);
   if (isPermitted("DEV-01", "timing", current) !== isPermitted("DEV-01", "timing", granted))

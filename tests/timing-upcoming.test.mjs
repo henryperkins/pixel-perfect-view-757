@@ -33,6 +33,7 @@ const manifest = (patch = {}) => ({
 test("full future scan preserves native anchor bindings, all sampled targets, partial counts and unique window IDs across three bounded requests", async () => {
   const a = fixtures[0].input;
   h.setSwissCalculations((body) => {
+    assert.equal(body.solverVersion, "upcoming-cycles-2");
     const f = fixtures.find(
       (f) => JSON.stringify(f.input.targets) === JSON.stringify(body.targets),
     );
@@ -53,6 +54,17 @@ test("full future scan preserves native anchor bindings, all sampled targets, pa
   assert.ok(r.windows.some((w) => w.natalPoint === "ascendant" || w.natalPoint === "midheaven"));
   const active = new Set(r.windows.filter((w) => w.phase === "active").map((w) => w.id));
   assert.ok(r.windows.filter((w) => w.phase === "upcoming").every((w) => !active.has(w.id)));
+});
+test("old solver responses cannot become corrected coverage or trigger a retry", async () => {
+  const a = fixtures[0].input;
+  h.setSwissCalculations((body) => {
+    const f = fixtures.find((f) => f.input.targets[0].name === body.targets[0].name);
+    return Response.json({ ...f.actual, solverVersion: "upcoming-cycles-1" });
+  });
+  const r = await upcoming.getUpcomingFromAnchors(manifest(), a.from, a.to, "all", "all");
+  assert.deepEqual(r, { status: "unavailable", reason: "invalid_response" });
+  assert.equal(h.calculationRequests.length, 3);
+  assert.equal(h.gatewayRequests.length, 0);
 });
 test("unqualified and unknown-time anchors are suppressed without requests; failed batches remain explicit and are never retried", async () => {
   const a = fixtures[0].input;
@@ -157,4 +169,79 @@ test("authenticated calculation is owner scoped and cached, and calendar timezon
   assert.equal(local.timezone, "Pacific/Honolulu");
   assert.equal(local.from, "2026-10-13T22:00:00.000Z");
   assert.equal(h.gatewayRequests.length, 0);
+});
+test("legacy future coverage caches are bypassed while corrected calculations are reused", async (t) => {
+  t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-10-13T10:00:00.000Z") });
+  const db = h.records(),
+    anchors = manifest();
+  const snapshot = await h.seedChart(db, h.userA, {
+    fingerprint: "synthetic-future-test",
+    transitAnchors: anchors,
+  });
+  h.setSwissCalculations((body) =>
+    Response.json(fixtures.find((f) => f.input.targets[0].name === body.targets[0].name).actual),
+  );
+  const cache = await h.vite.ssrLoadModule("/src/lib/astro/transit-timing-cache.server.ts");
+  const { transitEpisodePolicy } = await h.vite.ssrLoadModule(
+    "/src/lib/astro/transit-episodes.server.ts",
+  );
+  const oldKey = await h.cryptoModule.keyedFingerprint(h.userA, {
+    version: "future-timing-cache-1",
+    snapshotId: snapshot.snapshotId,
+    fingerprint: snapshot.fingerprint,
+    anchors,
+    from: fixtures[0].input.from,
+    to: fixtures[0].input.to,
+    domain: "all",
+    duration: "all",
+    policy: transitEpisodePolicy(),
+  });
+  await cache.cachedTimingCalculation(h.userA, oldKey, async () => ({
+    calculation: { status: "available", calculationStatus: "complete", windows: [] },
+    computedAt: "legacy-coverage-sentinel",
+  }));
+  const corrected = await h.app.getUpcomingCycles(db, h.userA, "UTC", 365, "all", "all");
+  assert.equal(h.calculationRequests.length, 3);
+  assert.notEqual(corrected.computedAt, "legacy-coverage-sentinel");
+  assert.equal(corrected.calculation.status, "available");
+  const cached = await h.app.getUpcomingCycles(db, h.userA, "UTC", 365, "all", "all");
+  assert.equal(h.calculationRequests.length, 3);
+  assert.equal(cached.computedAt, corrected.computedAt);
+});
+test("Upcoming recovers immediately after unavailable or missing-target results without retrying an attempt", async (t) => {
+  t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-10-13T10:00:00.000Z") });
+  const db = h.records();
+  await h.seedChart(db, h.userA, {
+    fingerprint: "synthetic-future-test",
+    transitAnchors: manifest(),
+  });
+  const read = () => h.app.getUpcomingCycles(db, h.userA, "UTC", 365, "all", "all");
+  for (const failure of ["version", "transport", "missing-targets"]) {
+    const cache = await h.vite.ssrLoadModule("/src/lib/astro/transit-timing-cache.server.ts");
+    cache.clearTimingCalculations(h.userA);
+    h.calculationRequests.length = 0;
+    h.setSwissCalculations((body) => {
+      const f = fixtures.find((f) => f.input.targets[0].name === body.targets[0].name);
+      if (failure === "version")
+        return Response.json({ ...f.actual, solverVersion: "upcoming-cycles-1" });
+      if (failure === "missing-targets" && body.targets[0].name === "sun")
+        return Response.json(f.actual);
+      return Response.json({}, { status: 503 });
+    });
+    const failed = await read();
+    assert.equal(h.calculationRequests.length, 3, failure);
+    if (failure === "missing-targets") {
+      assert.equal(failed.calculation.status, "available");
+      assert.equal(failed.calculation.missingTargets.length, 6);
+    } else assert.equal(failed.calculation.status, "unavailable");
+    h.setSwissCalculations((body) =>
+      Response.json(fixtures.find((f) => f.input.targets[0].name === body.targets[0].name).actual),
+    );
+    const recovered = await read();
+    assert.equal(recovered.calculation.status, "available", failure);
+    assert.deepEqual(recovered.calculation.missingTargets, []);
+    assert.equal(h.calculationRequests.length, 6, failure);
+    await read();
+    assert.equal(h.calculationRequests.length, 6, "successful calculations remain cached");
+  }
 });

@@ -7,13 +7,14 @@ export function sampleScan(
   target,
   track,
   geometry,
-  { maxContacts = 16, maxWindows = 32 } = {},
+  { maxContacts = 16, maxWindows = 32, collectOrbWindows = false } = {},
 ) {
   const { legs, stations } = geometry,
     angle = ASPECTS[request.aspect];
   const branches = angle === 0 || angle === 180 ? ["plus"] : ["plus", "minus"];
   const contacts = [],
     windows = [],
+    orbWindows = [],
     components = [];
   let needsLeft = false,
     needsRight = false;
@@ -62,6 +63,25 @@ export function sampleScan(
       `${c.branch}/${c.targetTurn}`,
       target.longitude + (c.branch === "plus" ? angle : -angle) + 360 * c.targetTurn,
     );
+  // Upcoming must also detect open orb intervals whose exact pass is outside
+  // its bounded scan. The transit-episode contract keeps its contact-only path.
+  if (collectOrbWindows)
+    for (const leg of legs)
+      for (const branch of branches) {
+        const base = target.longitude + (branch === "plus" ? angle : -angle),
+          min =
+            Math.min(leg.start.unwrappedLongitude, leg.end.unwrappedLongitude) -
+            request.maxOrbDegrees,
+          max =
+            Math.max(leg.start.unwrappedLongitude, leg.end.unwrappedLongitude) +
+            request.maxOrbDegrees;
+        for (
+          let turn = Math.ceil((min - base) / 360);
+          turn <= Math.floor((max - base) / 360);
+          turn++
+        )
+          targets.set(`${branch}/${turn}`, base + 360 * turn);
+      }
   for (const [key, level] of targets) {
     const cs = contacts.filter((c) => `${c.branch}/${c.targetTurn}` === key),
       edges = [];
@@ -85,6 +105,16 @@ export function sampleScan(
           time(c) >= (ingress ? time(ingress) : -Infinity) &&
           time(c) <= (egress ? time(egress) : Infinity),
       );
+      if (collectOrbWindows) {
+        const [branch, turn] = key.split("/");
+        orbWindows.push({
+          branch,
+          targetTurn: Number(turn),
+          ingress,
+          egress,
+          contactIds: members.map((c) => c.id),
+        });
+      }
       if (!members.length) return;
       const id = `w${windows.length}`;
       members.forEach((c) => {
@@ -104,6 +134,7 @@ export function sampleScan(
     (a, b) => (a.ingress ? time(a.ingress) : -Infinity) - (b.ingress ? time(b.ingress) : -Infinity),
   );
   if (windows.length > maxWindows) throw new Error("output_limit");
+  if (orbWindows.length > maxWindows) throw new Error("output_limit");
   const groups = [];
   for (const c of contacts) {
     const previous = groups.at(-1),
@@ -161,6 +192,7 @@ export function sampleScan(
     },
     needsLeft,
     needsRight,
+    orbWindows,
   };
 }
 
