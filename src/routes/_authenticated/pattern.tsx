@@ -320,7 +320,7 @@ function PatternView({ data }: { data: PatternData }) {
                               search={{ chapter: feature.feature_key }}
                               className="pattern-journal-link"
                             >
-                              Open journal <ArrowRight aria-hidden="true" />
+                              Write about this chapter <ArrowRight aria-hidden="true" />
                             </Link>
                           </nav>
                         </>

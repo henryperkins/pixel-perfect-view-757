@@ -1,0 +1,226 @@
+async (page) => {
+  const browser = page.context().browser();
+  const origin = new URL(page.url()).origin;
+  const results = [];
+  const assert = (condition, message) => { if (!condition) throw new Error(message); };
+  const snapshot = (p) => p.locator('body').ariaSnapshot();
+  const activate = async (p, control) => {
+    await snapshot(p);
+    await control.focus();
+    await p.keyboard.press('Enter');
+  };
+  const run = async (name, size, task, initial = {}) => {
+    const context = await browser.newContext({ viewport: size, reducedMotion: 'reduce' });
+    await context.addInitScript((value) => { window.interfaceFixture = value; }, initial);
+    const p = await context.newPage();
+    p.setDefaultTimeout(10000);
+    try {
+      await p.goto(origin + '/');
+      await p.getByRole('textbox', { name: 'Reflection note' }).waitFor();
+      assert(await p.evaluate(() => Boolean(window.mobileAudit)), 'Synthetic services required');
+      const details = await task(p, context);
+      results.push({ name, size, passed: true, details });
+    } catch (error) {
+      results.push({ name, size, passed: false, error: String(error) });
+    } finally {
+      await context.close();
+    }
+  };
+
+  for (const size of [{ width: 390, height: 844 }, { width: 1440, height: 1000 }]) {
+    await run('Daily reading, keyboard check-in, feedback and sources', size, async (p) => {
+      assert(await p.locator('.today-metadata:not([open])').count() === 1, 'Reading details must start closed');
+      assert(await p.getByText('Transit angles and orbs are approximate.', { exact: true }).isVisible(), 'Transit precision hidden');
+      await activate(p, p.locator('.today-guidance summary'));
+      assert(await p.locator('.today-guidance details[open]').count() === 1, 'Suggestion help inaccessible');
+      await activate(p, p.locator('.today-guidance summary'));
+      const mood = p.getByRole('radio', { name: 'Mood: 3 of 5, Steady', exact: true });
+      await snapshot(p);
+      await mood.focus();
+      await p.keyboard.press('ArrowRight');
+      assert(await p.getByRole('radio', { name: 'Mood: 4 of 5, Good', exact: true }).isChecked(), 'Mood radio keyboard behavior lost');
+      const note = p.getByRole('textbox', { name: 'Reflection note' });
+      await snapshot(p);
+      await note.fill('A little time to listen.\nA second thought.');
+      await p.getByText('Draft saved on this device', { exact: true }).waitFor();
+      const save = p.getByRole('button', { name: 'Save check-in', exact: true });
+      const before = await save.evaluate((el) => el.getBoundingClientRect().top + scrollY);
+      await activate(p, save);
+      await p.waitForFunction(() => window.mobileAudit.state.wellness.note === 'A little time to listen.\nA second thought.');
+      await p.waitForFunction(() => document.querySelector('.today-check-in-status')?.textContent.startsWith('Saved '));
+      const after = await save.evaluate((el) => el.getBoundingClientRect().top + scrollY);
+      assert(Math.abs(before - after) < 3, 'Confirmed save shifted the action in the document: ' + (after - before));
+      assert(await note.inputValue() === 'A little time to listen.\nA second thought.', 'Saved reflection was lost');
+      assert(await save.evaluate((el) => document.activeElement === el), 'Save lost keyboard focus');
+      await activate(p, p.getByRole('button', { name: 'Yes', exact: true }));
+      await p.getByRole('button', { name: 'Yes', exact: true }).getAttribute('aria-pressed').then((value) => assert(value === 'true', 'Feedback selection lost'));
+      await activate(p, p.getByRole('button', { name: 'Sources behind this reading', exact: true }));
+      assert(await p.locator('#today-evidence').isVisible(), 'Sources disclosure inaccessible');
+      assert(await p.getByText('An interpretation or a reflection is separate from the calculation.', { exact: false }).isVisible(), 'Calculation/interpretation distinction lost');
+      await activate(p, p.getByRole('button', { name: 'Hide sources behind this reading', exact: true }));
+      assert(await note.inputValue() !== '', 'Closing sources lost the saved reflection');
+      return { saved: true, savePositionStable: true, keyboard: true, sources: true };
+    });
+
+    await run('Lost acknowledgement, save reconciliation and explicit draft discard', size, async (p) => {
+      const note = p.getByRole('textbox', { name: 'Reflection note' });
+      await p.evaluate(() => { window.mobileAudit.state.dropResponse = ['saveDailyCheckIn']; });
+      await snapshot(p);
+      await note.fill('A retained reflection.');
+      await activate(p, p.getByRole('button', { name: 'Save check-in', exact: true }));
+      const check = p.getByRole('button', { name: 'Check save', exact: true });
+      await check.waitFor();
+      assert(await note.inputValue() === 'A retained reflection.', 'Unconfirmed save lost text');
+      const writes = await p.evaluate(() => window.mobileAudit.state.calls.filter((c) => c.name === 'saveDailyCheckIn').length);
+      await activate(p, check);
+      await p.getByRole('button', { name: 'Save check-in', exact: true }).waitFor();
+      assert(await p.evaluate(() => window.mobileAudit.state.calls.filter((c) => c.name === 'saveDailyCheckIn').length) === writes, 'Checking a save repeated the write');
+      await snapshot(p);
+      await note.fill('An unsaved replacement.');
+      await p.getByText('Draft saved on this device', { exact: true }).waitFor();
+      await activate(p, p.getByRole('button', { name: 'Discard draft', exact: true }));
+      const confirmation = p.getByRole('group', { name: 'Confirm draft action', exact: true });
+      await confirmation.waitFor();
+      assert(await confirmation.getByRole('button', { name: 'Discard draft', exact: true }).count() === 1, 'Confirmation action does not identify its consequence');
+      await activate(p, confirmation.getByRole('button', { name: 'Keep editing', exact: true }));
+      assert(await note.inputValue() === 'An unsaved replacement.', 'Cancel discarded text');
+      await activate(p, p.getByRole('button', { name: 'Discard draft', exact: true }));
+      await activate(p, confirmation.getByRole('button', { name: 'Discard draft', exact: true }));
+      await p.waitForFunction(() => document.querySelector('textarea[name=note]')?.value === 'A retained reflection.');
+      await p.waitForFunction(() => document.activeElement === document.querySelector('textarea[name=note]'));
+      return { writes, reconciliationDidNotWrite: true, discardRestoresSavedValue: true, focusReturned: true };
+    });
+
+    await run('Refresh failure keeps reading and draft, then recovers', size, async (p) => {
+      const note = p.getByRole('textbox', { name: 'Reflection note' });
+      await snapshot(p);
+      await note.fill('Keep this while offline.');
+      await p.evaluate(async () => {
+        window.mobileAudit.state.fail = ['fetchToday'];
+        await window.auditQueryClient.invalidateQueries({ queryKey: ['today'] });
+      });
+      await p.getByText('Your reading couldn’t refresh. You’re viewing the last version loaded.', { exact: true }).waitFor();
+      assert(await p.getByRole('heading', { name: 'Leave room for an unhurried answer', exact: true }).isVisible(), 'Refresh failure removed reading');
+      assert(await note.inputValue() === 'Keep this while offline.', 'Refresh failure removed draft');
+      await p.evaluate(() => { window.mobileAudit.state.fail = []; });
+      await activate(p, p.getByRole('button', { name: 'Refresh reading', exact: true }));
+      await p.getByRole('button', { name: 'Refresh reading', exact: true }).waitFor({ state: 'hidden' });
+      assert(await note.inputValue() === 'Keep this while offline.', 'Recovery removed draft');
+      return { readingRetained: true, draftRetained: true, retry: true };
+    });
+
+    await run('Single journal actions, retained chapters and chapter attachment', size, async (p) => {
+      await p.evaluate(async () => {
+        window.mobileAudit.state.overrides.fetchReadingJournal = { enabled: true, entries: [] };
+        await window.auditQueryClient.invalidateQueries({ queryKey: ['journal'] });
+      });
+      await p.getByText('No saved entries match this reading yet.', { exact: true }).waitFor();
+      assert(await p.locator('#today-journal a[href="/journal"]').count() === 1, 'Empty journal has duplicate actions');
+      await p.goto(origin + '/timing');
+      const window = p.locator('article.timing-window').first();
+      await window.getByRole('link', { name: 'Open journal', exact: true }).waitFor();
+      assert(await window.locator('a[href="/journal"]').count() === 1, 'Window lost or duplicated journal route');
+      const timingValues = window.locator('.timing-calculated-values summary');
+      await activate(p, timingValues);
+      assert(await window.locator('.timing-calculated-values[open]').count() === 1, 'Calculated values inaccessible');
+      for (const view of ['Upcoming', 'Moon & eclipses']) {
+        await activate(p, p.getByRole('button', { name: view, exact: true }));
+        assert(!(await p.getByText('Transit angles and orbs are approximate.', { exact: true }).isVisible()), 'Active transit precision was applied to ' + view);
+      }
+      await activate(p, p.getByRole('button', { name: 'Active', exact: true }));
+      assert(await p.getByText('Transit angles and orbs are approximate.', { exact: true }).isVisible(), 'Active transit precision disappeared');
+      await p.evaluate(async () => {
+        const data = window.mobileAudit.today();
+        data.ephemeris = { ...data.ephemeris, degraded: true, precision: 'approximate', degradedReason: 'The natal calculation used approximate positions.' };
+        window.mobileAudit.state.overrides.fetchCycles = data;
+        await window.auditQueryClient.invalidateQueries({ queryKey: ['cycles'] });
+      });
+      const degraded = p.getByText('Approximate positions — reduced precision', { exact: true });
+      await degraded.waitFor();
+      for (const view of ['Upcoming', 'Moon & eclipses']) {
+        await activate(p, p.getByRole('button', { name: view, exact: true }));
+        assert(!(await degraded.isVisible()), 'Natal fallback warning was applied to ' + view);
+      }
+      await activate(p, p.getByRole('button', { name: 'Active', exact: true }));
+      assert(await degraded.isVisible(), 'Active fallback limitation disappeared');
+      await p.goto(origin + '/pattern');
+      const chapter = p.getByRole('button', { name: /^Sun in Aries/ });
+      await p.getByRole('link', { name: 'Write about this chapter', exact: true }).waitFor();
+      const loads = await p.evaluate(() => window.mobileAudit.state.calls.filter((c) => c.name === 'fetchFeatureNarrative').length);
+      await activate(p, chapter);
+      assert(await chapter.getAttribute('aria-expanded') === 'false', 'Chapter did not close');
+      await activate(p, chapter);
+      assert(await p.evaluate(() => window.mobileAudit.state.calls.filter((c) => c.name === 'fetchFeatureNarrative').length) === loads, 'Reopening refetched chapter');
+      await activate(p, p.getByRole('link', { name: 'Write about this chapter', exact: true }));
+      await p.getByRole('combobox', { name: 'Attach a chapter', exact: true }).waitFor();
+      assert(await p.getByRole('combobox', { name: 'Attach a chapter', exact: true }).inputValue() === 'sun_aries', 'Chapter action lost attachment');
+      return { singleJournalActions: true, retainedChapter: true, attachment: 'sun_aries' };
+    });
+
+    await run('Saved citations have distinct targets and legacy paragraph limits stay explicit', size, async (p) => {
+      await p.evaluate(async () => {
+        const data = window.mobileAudit.today();
+        data.reading.paragraphLinksAvailable = true;
+        data.language = {
+          mode: 'model',
+          model: 'synthetic-saved-writer',
+          facts: [
+            { id: 'I1', statement: 'Published interpretation saved-one: Time to consider a commitment.' },
+            { id: 'I2', statement: 'Published interpretation saved-two: Space to consider another option.' }
+          ],
+          citations: [{ paragraph: 1, facts: ['I1', 'I2'] }]
+        };
+        window.mobileAudit.state.overrides.fetchToday = data;
+        await window.auditQueryClient.invalidateQueries({ queryKey: ['today'] });
+      });
+      await activate(p, p.getByRole('button', { name: 'Sources behind this reading', exact: true }));
+      const links = p.locator('.today-evidence-citations a[href*="-fact-"]');
+      assert(await links.count() === 2, 'Saved citations missing');
+      const labels = await links.allTextContents();
+      const hrefs = await links.evaluateAll((items) => items.map((el) => el.getAttribute('href')));
+      assert(labels[0] !== labels[1] && hrefs[0] !== hrefs[1], 'Citations became indistinguishable');
+      await activate(p, links.nth(1));
+      assert(await p.evaluate((id) => document.activeElement?.id === id, hrefs[1].slice(1)), 'Citation did not focus its saved reference');
+      assert(await p.locator(hrefs[1]).innerText().then((value) => value.includes(labels[1])), 'Citation label differs from destination heading');
+      await activate(p, p.locator('.today-evidence-citations').getByRole('link', { name: 'Paragraph 1', exact: true }));
+      assert(await p.locator('.today-reading .prose-reading p').first().evaluate((el) => document.activeElement === el), 'Paragraph link lost focus target');
+      await p.evaluate(async () => {
+        window.mobileAudit.state.overrides.fetchToday.reading.paragraphLinksAvailable = false;
+        await window.auditQueryClient.invalidateQueries({ queryKey: ['today'] });
+      });
+      await p.getByText('Paragraph 1 · link unavailable', { exact: true }).waitFor();
+      assert(await p.locator('.today-evidence-citations a[href*="-paragraph-"]').count() === 0, 'Unverified historical paragraph link was invented');
+      return { distinctReferences: true, referenceAndParagraphFocus: true, legacyBoundaries: true };
+    });
+  }
+
+  await run('Enlarged text, narrow layout and mobile menu keyboard dismissal', { width: 320, height: 740 }, async (p) => {
+    await p.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+    await p.evaluate(async () => {
+      const data = window.mobileAudit.today();
+      data.reading.primary_cycle_key = data.cycles[0].cycle_key;
+      window.mobileAudit.state.overrides.fetchToday = data;
+      await window.auditQueryClient.invalidateQueries({ queryKey: ['today'] });
+    });
+    await p.locator('.today-cycle-summary').waitFor();
+    assert(await p.locator('.today-cycle-summary dt').evaluateAll((items) => items.every((item) => {
+      const range = document.createRange(); range.selectNodeContents(item);
+      return range.getBoundingClientRect().right <= item.getBoundingClientRect().right + 1;
+    })), 'Reading summary labels overlap with enlarged text');
+    await p.evaluate(() => document.fonts.ready);
+    await p.waitForFunction(() => document.documentElement.hasAttribute('data-enlarged-chrome'));
+    await activate(p, p.getByRole('button', { name: 'Open menu', exact: true }));
+    await snapshot(p);
+    await p.keyboard.press('Escape');
+    assert(await p.getByRole('button', { name: 'Open menu', exact: true }).evaluate((el) => document.activeElement === el), 'Menu dismissal lost focus');
+    for (const path of ['/', '/pattern', '/timing', '/time-travel', '/birth']) {
+      await p.goto(origin + path);
+      await p.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+      await p.locator('h1').first().waitFor();
+      await p.locator('main [aria-busy=true]').first().waitFor({ state: 'hidden' });
+      assert(await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'Horizontal page overflow at ' + path);
+    }
+    return { textSize: '200%', width: 320, routes: 5, reducedMotion: true };
+  });
+  return results;
+}

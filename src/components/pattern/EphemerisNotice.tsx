@@ -13,6 +13,24 @@ interface EphemerisState {
   eventTiming?: { engine: string; sourceId: string; solverVersion: string } | null;
 }
 
+/** Keep a material reading limit visible even when the source record is collapsed. */
+export function TransitPrecisionNotice({
+  state,
+  className = "",
+}: {
+  state: EphemerisState | null | undefined;
+  className?: string;
+}) {
+  if (!state?.transitEngine || (state.degraded && !state.primaryTransitGeometry)) return null;
+  return (
+    <p className={`text-sm text-muted-foreground ${className}`}>
+      {state.primaryTransitGeometry
+        ? "The main contact’s angle and orb use the timing calculation. Other transit angles and orbs are approximate."
+        : "Transit angles and orbs are approximate."}
+    </p>
+  );
+}
+
 /**
  * Visible degraded state when the high-precision Swiss Ephemeris service was
  * not the source of the positions behind a claim.

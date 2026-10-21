@@ -13,6 +13,7 @@ import {
 } from "@tanstack/react-router";
 
 let vite, Journal, Assistants, Privacy, MemberDraftProvider, TodayEvidence, ChapterEvidence;
+let Today, Timing, TimeTravel, TodayTiming;
 before(async () => {
   vite = await createServer({
     configFile: false,
@@ -44,6 +45,11 @@ before(async () => {
   ({ PatternChapterEvidence: ChapterEvidence } = await vite.ssrLoadModule(
     "/src/components/pattern/PatternChapterEvidence.tsx",
   ));
+  ({ Route: Today } = await vite.ssrLoadModule("/src/routes/index.tsx"));
+  ({ Route: Timing } = await vite.ssrLoadModule("/src/routes/_authenticated/timing.tsx"));
+  ({ Route: TimeTravel } = await vite.ssrLoadModule("/src/routes/_authenticated/time-travel.tsx"));
+  ({ TodayTiming } = await vite.ssrLoadModule("/src/components/pattern/TodayTiming.tsx"));
+  Today.useLoaderData = () => ({ visitor: false });
   Journal.useSearch = () => ({});
   Journal.useNavigate = () => () => {};
   Assistants.useRouteContext = () => ({ user: { userId: "member" } });
@@ -74,6 +80,152 @@ function renderPage(Route, queries = []) {
   }
 }
 const text = (html) => html.replace(/<[^>]+>/g, "");
+const precisionState = {
+  engine: "swiss-ephemeris@2.10",
+  precision: "high",
+  degraded: false,
+  degradedReason: null,
+  transitEngine: "kepler-approx@1.0.0",
+};
+function dailyData(ephemeris = precisionState) {
+  return {
+    needsOnboarding: false,
+    day: new Date().toISOString().slice(0, 10),
+    timezone: "UTC",
+    cycles: [],
+    ephemeris,
+    uncertainty: { accuracy: "exact", housesReliable: true, angleClaimsSuppressed: false },
+    reading: {
+      id: "saved",
+      headline: "A saved reading",
+      paragraphs: ["Saved wording."],
+      prompt: "Your reflection?",
+    },
+    wellness: {
+      mood: null,
+      energy: null,
+      sleep: null,
+      stress: null,
+      note: null,
+      savedAt: null,
+      retentionDays: 90,
+    },
+    localContext: { markedMoments: true },
+    feedback: null,
+    provenance: [],
+  };
+}
+function dailyQueries(data) {
+  return [
+    [["today", "member"], data],
+    [["cycles", "member", "current"], data],
+    [["journal", "member"], { events: [], checkIns: [], feedback: [] }],
+  ];
+}
+
+for (const [name, getRoute] of [
+  ["Today", () => Today],
+  ["Timing", () => Timing],
+  ["Time travel", () => TimeTravel],
+]) {
+  test(`${name} keeps approximate transit precision visible when birth positions have high precision`, () => {
+    const html = renderPage(getRoute(), dailyQueries(dailyData()));
+    // Details must remain closed; their descendants do not establish an inline limitation.
+    const visible = text(html.replace(/<details\b[^>]*>[\s\S]*?<\/details>/g, ""));
+    assert.match(visible, /transit (?:angles|geometry).*approximate/i);
+    assert.doesNotMatch(visible, /natal positions.*approximate/i);
+  });
+}
+
+test("a precise main contact is distinguished from the remaining approximate transit angles", () => {
+  const state = {
+    ...precisionState,
+    primaryTransitGeometry: {
+      engine: "swiss-ephemeris@2.10",
+      sourceId: "saved-source",
+      cycleKey: "saturn_square_sun",
+      referenceAt: "2026-10-21T12:00:00Z",
+    },
+  };
+  const html = renderPage(Today, dailyQueries(dailyData(state)));
+  const visible = text(html.replace(/<details\b[^>]*>[\s\S]*?<\/details>/g, ""));
+  assert.match(visible, /main contact.*angle.*orb/i);
+  assert.match(visible, /Other transit (?:angles|geometry).*approximate/i);
+});
+
+test("an empty reading journal has one action that still reaches the full journal", () => {
+  const data = dailyData();
+  const html = renderPage(Today, [
+    ...dailyQueries(data),
+    [["journal", "member", "reading-context", data.day, [], []], { enabled: true, entries: [] }],
+  ]);
+  const section = html.match(/<section[^>]*id="today-journal"[^>]*>(.*?)<\/section>/s)?.[1];
+  assert.ok(section);
+  assert.equal([...section.matchAll(/<a\b[^>]*href="\/journal"/g)].length, 1);
+  assert.match(text(section), /No saved entries/);
+});
+
+test("a timing window retains one journal route after its duplicate action is removed", () => {
+  const data = dailyData();
+  data.cycles = [
+    {
+      cycle_key: "saturn_square_sun",
+      transit_body: "saturn",
+      natal_point: "sun",
+      aspect: "square",
+      phase: "approaching",
+      orb: 1,
+      importance: 0.8,
+      domain: "identity",
+      exact_at: null,
+      ingress_at: null,
+      egress_at: null,
+    },
+  ];
+  const html = renderPage(Timing, dailyQueries(data));
+  const window = html.match(
+    /<article\b[^>]*class="timing-window [^"]*"[^>]*>(.*?)<\/article>/s,
+  )?.[1];
+  assert.ok(window);
+  assert.equal([...window.matchAll(/<a\b[^>]*href="\/journal"/g)].length, 1);
+  assert.match(window, /aria-controls="timing-panel-saturn_square_sun"/);
+});
+
+test("Today timing removes duplicate phase wording but keeps unknown closest-pass and phase states", () => {
+  const cycle = {
+    cycle_key: "saturn_square_sun",
+    transit_body: "saturn",
+    natal_point: "sun",
+    aspect: "square",
+    phase: "exact",
+    orb: 0.1,
+    importance: 0.8,
+    domain: "identity",
+    days_to_exact: 0,
+    exact_at: null,
+  };
+  const render = (value) =>
+    renderPage({
+      options: {
+        component: () =>
+          createElement(TodayTiming, { cycles: [value], day: "2026-10-21", timezone: "UTC" }),
+      },
+    });
+  const summary = (html) =>
+    text(html.match(/<span class="today-window-context">(.*?)<\/span>/s)?.[1] ?? "");
+  assert.equal((summary(render(cycle)).match(/Exact/g) ?? []).length, 1);
+  const missingDate = summary(render({ ...cycle, phase: "approaching", days_to_exact: null }));
+  assert.match(missingDate, /Building/);
+  assert.match(missingDate, /No closest pass/);
+  for (const [phase, label] of [
+    ["separating", "Fading"],
+    ["exact", "Exact"],
+  ]) {
+    const missing = summary(render({ ...cycle, phase, days_to_exact: null }));
+    assert.ok(missing.includes(label));
+    assert.match(missing, /No closest pass/);
+  }
+});
 const entries = (html) =>
   [...html.matchAll(/<li[^>]*class="journal-entry"[^>]*>(.*?)<\/li>/gs)].map((m) => text(m[1]));
 function journalRows(events, cycles = [], features = []) {

@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import { plainAccuracy, plainEngineLabel, plainPrecision } from "@/lib/plain-engine";
 import { fetchCycles } from "@/lib/pattern.functions";
-import { EphemerisNotice } from "@/components/pattern/EphemerisNotice";
+import { EphemerisNotice, TransitPrecisionNotice } from "@/components/pattern/EphemerisNotice";
 import { TimingWindow } from "@/components/pattern/TimingWindow";
 import { TimingCalendar } from "@/components/pattern/TimingCalendar";
 import { MotionSelection } from "@/components/pattern/MotionSelection";
@@ -201,11 +201,12 @@ function TimingPage() {
         <div className="timing-page">
           <div className="timing-intro">
             <h1>Timing</h1>
-            {data.ephemeris?.degraded ? (
-              <EphemerisNotice state={data.ephemeris} className="mt-4" />
-            ) : null}
           </div>
           <TimingCalendar ownerId={session!.userId} defaultDomain={domain}>
+            {data.ephemeris?.degraded ? (
+              <EphemerisNotice state={data.ephemeris} className="mb-4" />
+            ) : null}
+            <TransitPrecisionNotice state={data.ephemeris} className="mb-4" />
             <div ref={filtersRef} className="timing-filters timing-explorer-filters">
               <MotionSelection
                 className="timing-area-options"

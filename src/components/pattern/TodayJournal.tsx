@@ -39,7 +39,8 @@ export function TodayJournal({
       <div className="today-section-heading">
         <h2 className="flow-section-title">Journal</h2>
         <Link to="/journal" className="today-text-link">
-          Open journal <ArrowRight aria-hidden="true" className="h-4 w-4" />
+          {permitted && !entries.length ? "Write an entry" : "Open journal"}{" "}
+          <ArrowRight aria-hidden="true" className="h-4 w-4" />
         </Link>
       </div>
       {permission === false || query.data?.enabled === false ? (
@@ -77,11 +78,7 @@ export function TodayJournal({
       ) : null}
       {permitted && entries.length === 0 ? (
         <p className="mt-3 text-sm text-muted-foreground">
-          No saved entries match this reading yet.{" "}
-          <Link to="/journal" className="underline underline-offset-4 text-primary">
-            Write an entry
-          </Link>
-          .
+          No saved entries match this reading yet.
         </p>
       ) : null}
       {previews.length ? (

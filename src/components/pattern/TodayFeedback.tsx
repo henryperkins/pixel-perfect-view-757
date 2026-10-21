@@ -70,7 +70,7 @@ export function TodayFeedback({
   return (
     <section className="today-feedback" aria-labelledby="today-feedback-title">
       <h2 id="today-feedback-title" className="text-base font-serif text-primary">
-        Does this reading land?
+        Does this reading fit your day?
       </h2>
       <div
         className="mt-3 flex flex-wrap gap-2"

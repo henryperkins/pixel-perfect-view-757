@@ -221,9 +221,7 @@ function ContentPage() {
         <div className="mx-auto max-w-xl py-16">
           <h1 className="text-2xl font-serif">Administrator access required</h1>
           <p className="mt-4 text-muted-foreground leading-relaxed">
-            Content releases, draft reviews, and evaluation pipelines are reserved for
-            administrators. Your personal reading provenance and content checksums remain accessible
-            directly on each reading.
+            Only administrators can manage interpretation releases and evaluations.
           </p>
           <div className="mt-8">
             <Button variant="outline" asChild>

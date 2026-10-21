@@ -15,7 +15,7 @@ export const BIRTH_ACCURACY = [
   { value: "exact", label: "Exact", note: "From a record, to the minute." },
   { value: "near", label: "Within ~15 min", note: "Remembered closely." },
   { value: "hour", label: "Within an hour", note: "Rough recollection." },
-  { value: "unknown", label: "Unknown", note: "Houses and angles get suppressed." },
+  { value: "unknown", label: "Unknown", note: "House and angle descriptions are left out." },
 ] as const;
 
 export function birthFormValues(record: BirthFormRecord | null): BirthFormValues {

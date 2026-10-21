@@ -193,7 +193,7 @@ export function TodayEvidence({
           </ul>
         ) : (
           <p className="mt-3 text-sm text-muted-foreground">
-            No calculated windows were returned for this day. An empty result is valid.
+            No calculated windows were returned for this day.
           </p>
         )}
       </section>

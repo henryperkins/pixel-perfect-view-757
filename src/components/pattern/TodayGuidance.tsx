@@ -16,7 +16,7 @@ export function TodayGuidance({
     <section
       aria-labelledby="today-guidance-title"
       aria-busy={updating}
-      className="today-guidance mt-6 rounded-sm border border-rule bg-secondary/40 p-5"
+      className="today-guidance mt-6 border-t border-rule pt-5"
     >
       <div className="flex flex-wrap items-baseline justify-between gap-x-3">
         <h2 id="today-guidance-title" className="flow-section-title">
@@ -43,7 +43,7 @@ export function TodayGuidance({
                 : `From the reading for ${calculation.label}. Use it only if it fits.`}
             </p>
           ) : (
-            <p>No published calculation theme was used to choose this suggestion.</p>
+            <p>No published interpretation was used to choose this suggestion.</p>
           )}
           {context.length ? (
             <ul className="list-disc space-y-1 pl-5">

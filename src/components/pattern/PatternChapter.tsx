@@ -99,9 +99,6 @@ export function PatternChapter({
       ) : query.error ? (
         <div className="pattern-narrative-fallback">
           <p role="status">This chapter couldn’t load. Its calculated values are still below.</p>
-          <p className="mt-2 text-sm text-muted-foreground">
-            The request did not complete. You can try again.
-          </p>
           <Button
             variant="outline"
             className="mt-4"

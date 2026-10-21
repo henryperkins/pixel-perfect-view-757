@@ -7,6 +7,7 @@ import { ArrowRight, CircleDot, Sunrise, Sunset } from "lucide-react";
 import type { fetchToday } from "@/lib/pattern.functions";
 import {
   cycleTimingPhrase,
+  daysToExact,
   DOMAIN_LABEL,
   PHASE_LABEL,
   timingDate,
@@ -39,6 +40,11 @@ function WindowRow({
   const overlay = primaryStoryOverlay(calculation, cycle.cycle_key);
   const phase = windowPhase(cycle, day, timezone, calculation);
   const Icon = PHASE_ICONS[phase];
+  const timing = cycleTimingPhrase(cycle, day, timezone, calculation);
+  const showPhase =
+    phase === "building" ||
+    phase === "fading" ||
+    (phase === "exact" && daysToExact(cycle, day, timezone, calculation) === null);
 
   return (
     <li>
@@ -48,7 +54,8 @@ function WindowRow({
           <span className="today-window-heading">
             <span className="today-window-title">{windowTitle(cycle)}</span>
             <span className="today-window-context">
-              {PHASE_LABEL[phase].label} · {cycleTimingPhrase(cycle, day, timezone, calculation)}
+              {showPhase ? `${PHASE_LABEL[phase].label} · ` : ""}
+              {timing}
             </span>
           </span>
         </summary>
@@ -108,7 +115,7 @@ export function TodayTiming({
       </div>
       {cycles.length ? null : (
         <p className="mt-2 text-sm text-muted-foreground">
-          No measurable window against your chart today. A quiet result is a valid one.
+          No measurable window against your chart today.
         </p>
       )}
       {visible.length ? (

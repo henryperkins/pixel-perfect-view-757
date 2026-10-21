@@ -132,7 +132,7 @@ async (page) => {
       const cancelFocus = await focused(discard);
       assert(await note.inputValue() === 'A recoverable reflection.', 'Cancellation removed input');
       await activate(p, discard);
-      await activate(p, p.getByRole('group', { name: 'Confirm draft action' }).getByRole('button', { name: 'Confirm', exact: true }));
+      await activate(p, p.getByRole('group', { name: 'Confirm draft action' }).getByRole('button', { name: 'Discard draft', exact: true }));
       await p.getByRole('button', { name: 'Discard draft', exact: true }).waitFor({ state: 'detached' });
       await settle(p);
       const discardFocus = await focused(note);

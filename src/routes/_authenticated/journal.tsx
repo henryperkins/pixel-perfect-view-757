@@ -631,7 +631,7 @@ function JournalPage() {
               </div>
             ) : entries.length === 0 ? (
               <p className="mt-4 border border-rule bg-evidence p-4 text-sm text-evidence-foreground">
-                Nothing written yet. Use the form above to record what happened.
+                No journal entries yet.
               </p>
             ) : (
               <ul className="mt-4 space-y-3">
