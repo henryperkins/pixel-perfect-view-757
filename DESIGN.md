@@ -25,13 +25,15 @@ via `@theme inline`. Components use semantic utilities only — never raw hex or
 - Ink: `--foreground` warm near-black, `--muted-foreground` for secondary text.
 - Accent: `--primary` botanical sage-green (oklch hue 155); `--accent` pale sage (oklch hue 138) for state chips and quiet highlights.
 - Structure: `--rule` hairline for every divider and card border.
+- Control boundaries: `--input` follows `--muted-foreground` in both palettes,
+  keeping editable areas distinct from decorative hairlines.
 - Evidence: `--evidence` / `--evidence-foreground` — the dedicated surface for
   provenance, calculated facts and technical disclosure blocks.
 - `--destructive` for failure states only.
 - `--scrim` warm ink overlay behind dialogs, sheets and drawers (`bg-scrim`), redefined
   darker for `.dark`.
 - `--radius` 0.25rem. Corners stay nearly square; `rounded-sm` is the default.
-- Dark theme tokens are fully specified under `.dark` in `src/styles.css`, though the live app currently renders in warm light paper.
+- Dark theme tokens are fully specified under `.dark` in `src/styles.css`, though the live app currently renders in warm light paper. The root and `.dark` also set the matching native `color-scheme` for form controls.
 
 ## Typography
 
@@ -65,9 +67,14 @@ label or help text.
 - Wide tables become stacked rows on mobile rather than horizontal scroll. The natal
   placement table is the exception: it keeps a pinned first column and scrolls sideways
   inside a focusable, labelled region.
+- Time travel controls wrap with enlarged text. Its date uses a full row when the
+  heading container is narrow, while the date field retains room for the native value.
 
 ## Components and patterns
 
+- **Action targets** — Button controls, including anchor-based `asChild` actions,
+  keep a 44px minimum height and width. The brand home link keeps the same minimum
+  height, and root recovery actions use Button.
 - **Evidence disclosure** — collapsed "Evidence & provenance" region on the
   `--evidence` surface, listing celestial facts, orbs, phases and source lanes.
 - **Cycle card** — plain-language sentence ("Saturn pressing on your Sun"), a

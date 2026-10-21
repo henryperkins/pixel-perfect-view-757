@@ -343,7 +343,7 @@ export function Shell({ children, signedIn = true }: { children: ReactNode; sign
         >
           <Link
             to="/"
-            className="brand-link flex min-w-0 shrink-0 items-center gap-2 font-serif text-2xl text-primary"
+            className="brand-link flex min-h-[44px] min-w-0 shrink-0 items-center gap-2 font-serif text-2xl text-primary"
           >
             <OrbitMark />
             <span className="min-w-0 [overflow-wrap:anywhere]">Pattern</span>

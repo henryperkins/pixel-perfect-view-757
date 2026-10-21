@@ -69,6 +69,7 @@
 }
 
 :root {
+  color-scheme: light;
   --radius: 0.25rem;
   --background: oklch(0.977 0.009 84.6);
   --foreground: oklch(0.222 0.011 61.2);
@@ -87,7 +88,7 @@
   --destructive: oklch(0.494 0.163 25.5);
   --destructive-foreground: oklch(0.985 0.006 84.6);
   --border: oklch(0.883 0.012 79);
-  --input: oklch(0.883 0.012 79);
+  --input: var(--muted-foreground);
   --ring: oklch(0.58 0.082 144);
   --rule: oklch(0.845 0.014 79);
   --evidence: oklch(0.956 0.015 143);
@@ -109,6 +110,7 @@
 }
 
 .dark {
+  color-scheme: dark;
   --background: oklch(0.201 0.011 61.2);
   --foreground: oklch(0.945 0.008 84.6);
   --card: oklch(0.245 0.011 61.2);
@@ -126,7 +128,7 @@
   --destructive: oklch(0.63 0.15 25.5);
   --destructive-foreground: oklch(0.201 0.011 61.2);
   --border: oklch(1 0 0 / 14%);
-  --input: oklch(1 0 0 / 18%);
+  --input: var(--muted-foreground);
   --ring: var(--primary);
   --rule: oklch(1 0 0 / 18%);
   --evidence: oklch(0.255 0.022 150);
@@ -1277,6 +1279,7 @@ body {
   border-block: 1px solid var(--rule);
 }
 .travel-date-heading {
+  container: travel-date / inline-size;
   display: grid;
   grid-template-columns: 48px minmax(0, 1fr) 48px;
   gap: 20px;
@@ -1301,6 +1304,7 @@ body {
 }
 .travel-date-display time {
   display: block;
+  overflow-wrap: anywhere;
   font-family: var(--font-serif);
   color: var(--primary);
   font-size: clamp(1.625rem, 1rem + 1.6vw, 2.375rem);
@@ -1366,12 +1370,13 @@ body {
 }
 .travel-date-form > div {
   display: flex;
+  flex-wrap: wrap;
   align-items: stretch;
   gap: 8px;
   margin-top: 8px;
 }
 .travel-date-form input {
-  width: 156px;
+  width: max(156px, 8rem);
   min-width: 0;
   min-height: 44px;
   padding: 8px 10px;
@@ -1381,10 +1386,6 @@ body {
   font-family: var(--font-sans);
   font-size: 0.875rem;
   color: var(--foreground);
-  color-scheme: light;
-}
-.dark .travel-date-form input {
-  color-scheme: dark;
 }
 .travel-date-form input:focus-visible {
   outline: 2px solid var(--ring);
@@ -1576,6 +1577,21 @@ body {
     transform: translateX(2px);
   }
 }
+@container travel-date (width < 16rem) {
+  .travel-date-display {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+  .travel-direction {
+    grid-row: 2;
+  }
+  .travel-direction:first-child {
+    grid-column: 1;
+  }
+  .travel-direction:last-child {
+    grid-column: 3;
+  }
+}
 @media (max-width: 639px) {
   .travel-navigator {
     margin-block: 20px;
@@ -1592,11 +1608,12 @@ body {
   }
   .travel-step-options button {
     min-width: 0;
-    flex: 1;
-    max-width: 80px;
+    flex: 1 1 auto;
+    max-width: none;
     padding-inline: 10px;
   }
   .travel-step-options {
+    flex-wrap: wrap;
     margin-top: 8px;
   }
   .travel-date-tools {
@@ -1605,7 +1622,7 @@ body {
   }
   .travel-jumps {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 4.25rem), 1fr));
     width: 100%;
   }
   .travel-jumps button {
@@ -1619,7 +1636,7 @@ body {
     width: 100%;
   }
   .travel-date-form input {
-    flex: 1;
+    flex: 1 1 8rem;
     width: 0;
   }
   .travel-ephemeris {
