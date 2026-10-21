@@ -233,7 +233,10 @@ export function calculateUpcoming(
             continue;
           const durationDays = start && end ? (Date.parse(end) - Date.parse(start)) / DAY : null,
             duration = bucket(durationDays);
-          if (input.duration !== "all" && input.duration !== duration) continue;
+          if (input.duration !== "all" && input.duration !== duration) {
+            if (duration === "unknown") unresolved.add(incompleteKey(results[1], orbWindow));
+            continue;
+          }
           const complete = !!start && !!end && !!startRange && !!endRange;
           if (!complete) unresolved.add(incompleteKey(results[1], orbWindow));
           const id =

@@ -208,3 +208,40 @@ test("legacy future coverage caches are bypassed while corrected calculations ar
   assert.equal(h.calculationRequests.length, 3);
   assert.equal(cached.computedAt, corrected.computedAt);
 });
+test("Upcoming recovers immediately after unavailable or missing-target results without retrying an attempt", async (t) => {
+  t.mock.timers.enable({ apis: ["Date"], now: new Date("2026-10-13T10:00:00.000Z") });
+  const db = h.records();
+  await h.seedChart(db, h.userA, {
+    fingerprint: "synthetic-future-test",
+    transitAnchors: manifest(),
+  });
+  const read = () => h.app.getUpcomingCycles(db, h.userA, "UTC", 365, "all", "all");
+  for (const failure of ["version", "transport", "missing-targets"]) {
+    const cache = await h.vite.ssrLoadModule("/src/lib/astro/transit-timing-cache.server.ts");
+    cache.clearTimingCalculations(h.userA);
+    h.calculationRequests.length = 0;
+    h.setSwissCalculations((body) => {
+      const f = fixtures.find((f) => f.input.targets[0].name === body.targets[0].name);
+      if (failure === "version")
+        return Response.json({ ...f.actual, solverVersion: "upcoming-cycles-1" });
+      if (failure === "missing-targets" && body.targets[0].name === "sun")
+        return Response.json(f.actual);
+      return Response.json({}, { status: 503 });
+    });
+    const failed = await read();
+    assert.equal(h.calculationRequests.length, 3, failure);
+    if (failure === "missing-targets") {
+      assert.equal(failed.calculation.status, "available");
+      assert.equal(failed.calculation.missingTargets.length, 6);
+    } else assert.equal(failed.calculation.status, "unavailable");
+    h.setSwissCalculations((body) =>
+      Response.json(fixtures.find((f) => f.input.targets[0].name === body.targets[0].name).actual),
+    );
+    const recovered = await read();
+    assert.equal(recovered.calculation.status, "available", failure);
+    assert.deepEqual(recovered.calculation.missingTargets, []);
+    assert.equal(h.calculationRequests.length, 6, failure);
+    await read();
+    assert.equal(h.calculationRequests.length, 6, "successful calculations remain cached");
+  }
+});

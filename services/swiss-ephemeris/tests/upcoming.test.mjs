@@ -3,6 +3,8 @@ import { test } from "node:test";
 import { calculateUpcoming, UPCOMING_SOLVER_VERSION } from "../src/upcoming.mjs";
 import { createEngine } from "../src/engine.mjs";
 import { curve, BASE } from "./helpers/curves.mjs";
+import { sampleScan } from "../src/episodes.mjs";
+import { makeTrack } from "../src/track.mjs";
 const DAY = 86400000,
   zero = Date.parse("2026-01-01T00:00:00.000Z");
 const source = { engine: "synthetic-curve", engineVersion: "fixture-1" };
@@ -193,6 +195,25 @@ test("open orb intervals without a scanned exact pass cannot become complete emp
     assert.equal(r.truncated, false);
   }
 });
+test("open nominal windows keep duration-filtered coverage partial without inventing a duration", () => {
+  for (const exactDay of [-100, 200]) {
+    const engine = linearMotion(0.02, exactDay);
+    const input = request(engine, { bodies: ["pluto"], to: "2026-04-01T00:00:00.000Z" });
+    const all = calculateUpcoming(input, engine);
+    assert.equal(all.windows.length, 1);
+    assert.equal(all.windows[0].duration, "unknown");
+    assert.equal(all.windows[0].complete, false);
+    for (const duration of ["short", "medium", "long"]) {
+      const filtered = calculateUpcoming({ ...input, duration }, engine);
+      assert.equal(filtered.status, "partial", `${exactDay}: ${duration}`);
+      assert.equal(filtered.incompleteWindows, 1);
+      assert.deepEqual(filtered.windows, []);
+    }
+    const unknown = calculateUpcoming({ ...input, duration: "unknown" }, engine);
+    assert.deepEqual(unknown.windows, all.windows);
+    assert.equal(unknown.status, "partial");
+  }
+});
 test("a native slow window starting inside ninety days stays unresolved until its exact pass is scanned", () => {
   const engine = createEngine();
   const input = request(engine, {
@@ -356,6 +377,30 @@ test("phase caps still retain forty of ninety-five future matches after duration
   assert.equal(filtered.totalMatched, 0);
   assert.equal(filtered.truncated, false);
   assert.equal(filtered.status, "complete");
+});
+test("orb collection retains every contact window or fails closed at the output limit", () => {
+  const engine = linearMotion(13, 5),
+    track = makeTrack(engine, "moon", { speedCeiling: 40 }),
+    geometry = track.scan(zero - 3 * DAY, zero + 93 * DAY),
+    args = [
+      { aspect: "conjunction", maxOrbDegrees: 1.5 },
+      { longitude: 0, offsetMinutes: 0 },
+      track,
+      geometry,
+    ];
+  const r = sampleScan(...args, { collectOrbWindows: true, maxContacts: 100, maxWindows: 100 });
+  assert.ok(r.sample.windows.length > 1);
+  assert.ok(
+    r.sample.windows.every(
+      (w) =>
+        w.contactIds.length > 0 &&
+        r.orbWindows.some((orb) => w.contactIds.every((id) => orb.contactIds.includes(id))),
+    ),
+  );
+  assert.throws(
+    () => sampleScan(...args, { collectOrbWindows: true, maxContacts: 100, maxWindows: 1 }),
+    /output_limit/,
+  );
 });
 test("duration filters use the same canonical boundary dates as the displayed window", () => {
   for (const [rawDays, exactDay, days] of [

@@ -10,6 +10,7 @@ export async function cachedTimingCalculation<T>(
   ownerId: string,
   key: string,
   calculate: () => Promise<T>,
+  shouldRetain?: (result: T) => boolean,
 ): Promise<T> {
   const now = Date.now();
   for (const [id, item] of selections) if (item.expires <= now) selections.delete(id);
@@ -20,7 +21,10 @@ export async function cachedTimingCalculation<T>(
     selections.set(key, entry);
   }
   try {
-    return structuredClone(await entry.result) as T;
+    const result = (await entry.result) as T;
+    if (shouldRetain && !shouldRetain(result) && selections.get(key) === entry)
+      selections.delete(key);
+    return structuredClone(result);
   } catch (error) {
     if (selections.get(key) === entry) selections.delete(key);
     throw error;
