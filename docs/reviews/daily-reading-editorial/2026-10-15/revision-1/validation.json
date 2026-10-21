@@ -1,0 +1,214 @@
+{
+  "version": "editorial-artifact-validation-1",
+  "sourceCommit": "8f7caa9f80adcb513b0ebcd1149ea23eb5a9f445",
+  "networkAttempts": 0,
+  "provider": "none",
+  "baselinePairCount": 6,
+  "targetCount": 6,
+  "baselineExactTextPreserved": true,
+  "draftFileSha256": "d2e814c7a855646a6283f82dabf1978d5dc83efcbea7ae9de0e0553d08f1893a",
+  "samplePackSha256": "3f8956ac755c9102655cba01db80084f06f19b9fc8e2750ff7100df403a79b37",
+  "readerPacketSha256": "05f2fb081dc10a3e053ec8dded82279beba2417d4f4cbeb4474f933903ab92a0",
+  "checks": [
+    {
+      "caseId": "writing-reply-scene",
+      "revision": 1,
+      "bodyWords": 156,
+      "reflectionCharacters": 52,
+      "paragraphSentenceCounts": [
+        3,
+        3,
+        3
+      ],
+      "questionProblem": null,
+      "fieldChecks": [
+        {
+          "field": "headline",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph1",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph2",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph3",
+          "safetyFlags": []
+        },
+        {
+          "field": "reflection",
+          "safetyFlags": []
+        }
+      ]
+    },
+    {
+      "caseId": "venus-opposition-venus",
+      "revision": 1,
+      "bodyWords": 152,
+      "reflectionCharacters": 61,
+      "paragraphSentenceCounts": [
+        3,
+        3,
+        4
+      ],
+      "questionProblem": null,
+      "fieldChecks": [
+        {
+          "field": "headline",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph1",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph2",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph3",
+          "safetyFlags": []
+        },
+        {
+          "field": "reflection",
+          "safetyFlags": []
+        }
+      ]
+    },
+    {
+      "caseId": "synthesis-tension",
+      "revision": 1,
+      "bodyWords": 162,
+      "reflectionCharacters": 60,
+      "paragraphSentenceCounts": [
+        3,
+        3,
+        3
+      ],
+      "questionProblem": null,
+      "fieldChecks": [
+        {
+          "field": "headline",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph1",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph2",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph3",
+          "safetyFlags": []
+        },
+        {
+          "field": "reflection",
+          "safetyFlags": []
+        }
+      ]
+    },
+    {
+      "caseId": "jupiter-trine-sun-technical",
+      "revision": 1,
+      "bodyWords": 156,
+      "reflectionCharacters": 69,
+      "paragraphSentenceCounts": [
+        3,
+        3,
+        3
+      ],
+      "questionProblem": null,
+      "fieldChecks": [
+        {
+          "field": "headline",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph1",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph2",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph3",
+          "safetyFlags": []
+        },
+        {
+          "field": "reflection",
+          "safetyFlags": []
+        }
+      ]
+    },
+    {
+      "caseId": "fallback-hard-neptune-mercury",
+      "revision": 1,
+      "bodyWords": 148,
+      "reflectionCharacters": 62,
+      "paragraphSentenceCounts": [
+        3,
+        3,
+        3
+      ],
+      "questionProblem": null,
+      "fieldChecks": [
+        {
+          "field": "headline",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph1",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph2",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph3",
+          "safetyFlags": []
+        },
+        {
+          "field": "reflection",
+          "safetyFlags": []
+        }
+      ]
+    },
+    {
+      "caseId": "quiet-threshold",
+      "revision": 1,
+      "bodyWords": 87,
+      "reflectionCharacters": 56,
+      "paragraphSentenceCounts": [
+        3,
+        3
+      ],
+      "questionProblem": null,
+      "fieldChecks": [
+        {
+          "field": "headline",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph1",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph2",
+          "safetyFlags": []
+        },
+        {
+          "field": "reflection",
+          "safetyFlags": []
+        }
+      ]
+    }
+  ],
+  "policyLimit": "Shape and bounded safety checks only. No citation compatibility claimed for source proposals. Optional guidance and reassurance remain unresolved under current writing policy; zero flags is not qualification."
+}

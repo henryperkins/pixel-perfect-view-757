@@ -1,0 +1,220 @@
+{
+  "version": "editorial-artifact-validation-1",
+  "sourceCommit": "8f7caa9f80adcb513b0ebcd1149ea23eb5a9f445",
+  "networkAttempts": 0,
+  "provider": "none",
+  "baselinePairCount": 6,
+  "targetCount": 6,
+  "baselineExactTextPreserved": true,
+  "draftFileSha256": "882e26fc3cbd3b9c84c5965e9b040d349f3d6eeb5b0e0d52cccedda61b845518",
+  "samplePackSha256": "e991458eab6f52e48101d2d8a8cd11b0527a106d3679be4a79d2cbc3068b5332",
+  "readerPacketSha256": "809fea236114b0604741172623bc1413e4ac8aa944f449c330c4ea820516707d",
+  "checks": [
+    {
+      "caseId": "writing-reply-scene",
+      "revision": 2,
+      "bodyWords": 155,
+      "lengthException": null,
+      "reflectionCharacters": 52,
+      "paragraphSentenceCounts": [
+        3,
+        3,
+        3
+      ],
+      "questionProblem": null,
+      "fieldChecks": [
+        {
+          "field": "headline",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph1",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph2",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph3",
+          "safetyFlags": []
+        },
+        {
+          "field": "reflection",
+          "safetyFlags": []
+        }
+      ]
+    },
+    {
+      "caseId": "venus-opposition-venus",
+      "revision": 2,
+      "bodyWords": 151,
+      "lengthException": null,
+      "reflectionCharacters": 61,
+      "paragraphSentenceCounts": [
+        3,
+        3,
+        4
+      ],
+      "questionProblem": null,
+      "fieldChecks": [
+        {
+          "field": "headline",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph1",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph2",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph3",
+          "safetyFlags": []
+        },
+        {
+          "field": "reflection",
+          "safetyFlags": []
+        }
+      ]
+    },
+    {
+      "caseId": "synthesis-tension",
+      "revision": 3,
+      "bodyWords": 135,
+      "lengthException": null,
+      "reflectionCharacters": 72,
+      "paragraphSentenceCounts": [
+        2,
+        3,
+        2
+      ],
+      "questionProblem": null,
+      "fieldChecks": [
+        {
+          "field": "headline",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph1",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph2",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph3",
+          "safetyFlags": []
+        },
+        {
+          "field": "reflection",
+          "safetyFlags": []
+        }
+      ]
+    },
+    {
+      "caseId": "jupiter-trine-sun-technical",
+      "revision": 2,
+      "bodyWords": 146,
+      "lengthException": null,
+      "reflectionCharacters": 69,
+      "paragraphSentenceCounts": [
+        2,
+        3,
+        2
+      ],
+      "questionProblem": null,
+      "fieldChecks": [
+        {
+          "field": "headline",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph1",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph2",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph3",
+          "safetyFlags": []
+        },
+        {
+          "field": "reflection",
+          "safetyFlags": []
+        }
+      ]
+    },
+    {
+      "caseId": "fallback-hard-neptune-mercury",
+      "revision": 3,
+      "bodyWords": 122,
+      "lengthException": "122 words: removed two repeated explanations after reader review. The scene, meaning, astrological lens, optional response, and reflection remain complete; padding to 130 would repeat the insight.",
+      "reflectionCharacters": 62,
+      "paragraphSentenceCounts": [
+        2,
+        3,
+        2
+      ],
+      "questionProblem": null,
+      "fieldChecks": [
+        {
+          "field": "headline",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph1",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph2",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph3",
+          "safetyFlags": []
+        },
+        {
+          "field": "reflection",
+          "safetyFlags": []
+        }
+      ]
+    },
+    {
+      "caseId": "quiet-threshold",
+      "revision": 2,
+      "bodyWords": 71,
+      "lengthException": null,
+      "reflectionCharacters": 56,
+      "paragraphSentenceCounts": [
+        3,
+        2
+      ],
+      "questionProblem": null,
+      "fieldChecks": [
+        {
+          "field": "headline",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph1",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph2",
+          "safetyFlags": []
+        },
+        {
+          "field": "reflection",
+          "safetyFlags": []
+        }
+      ]
+    }
+  ],
+  "policyLimit": "Shape and bounded safety checks only. No citation compatibility claimed for source proposals. Optional guidance and reassurance remain unresolved under current writing policy; zero flags is not qualification."
+}

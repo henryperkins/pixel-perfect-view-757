@@ -1,0 +1,12 @@
+{
+  "reason": "Preserve all revision-1 inputs reviewed by the two independent reviewers before any authored revisions.",
+  "files": {
+    "drafts.json": "d2e814c7a855646a6283f82dabf1978d5dc83efcbea7ae9de0e0553d08f1893a",
+    "author-notes.md": "f869d6ad4999ef45958bd4979ad1884545b18099125706e884cba82f5319dc85",
+    "sample-pack.md": "3f8956ac755c9102655cba01db80084f06f19b9fc8e2750ff7100df403a79b37",
+    "reader-packet.md": "05f2fb081dc10a3e053ec8dded82279beba2417d4f4cbeb4474f933903ab92a0",
+    "reader-assignment.json": "cf6284fca4dad38f566c89fb0f8403ba6b716d830826300819a2ffbc56e76e1b",
+    "validation.json": "49c8f9c6362211ee076f6a16c39829f4bc6192dd8f68c883285e79900aefce3a",
+    "editorial-standard.md": "6e73e0d9c739ce1bfa6643327f2bf28acf6895db27f356ecbd00af5e67b9a867"
+  }
+}

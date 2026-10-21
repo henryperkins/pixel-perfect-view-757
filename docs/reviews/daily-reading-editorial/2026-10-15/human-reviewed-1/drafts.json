@@ -1,0 +1,73 @@
+{
+  "version": "editorial-target-drafts-1",
+  "authorship": "Original assistant-authored editorial exploration; no provider requests",
+  "provider": "none",
+  "cases": [
+    {
+      "id": "writing-reply-scene",
+      "revision": 2,
+      "headline": "Your meaning, still intact",
+      "paragraphs": [
+        "If you've rewritten a work message until every sentence sounds agreeable, the point you wanted to make may have become harder to find. Perhaps the question has become a suggestion, or an important reservation is buried under explanations. In that kind of draft, it can feel as though your own position has gone missing.",
+        "Mercury meeting your natal Mercury gives this reading its theme: finding fresh language for what you mean. A useful distinction here is between making a sentence kinder and making its meaning smaller. Warmth can live in a direct sentence, including one that asks for something or acknowledges a difference.",
+        "You could write the central point once, in the words you would use out loud, before deciding how to frame it. That sentence needn't be the whole message. It can give the rest of your reply a clear point to return to, with your meaning intact if you choose to send it."
+      ],
+      "prompt": "What is the point you most want your words to carry?"
+    },
+    {
+      "id": "venus-opposition-venus",
+      "revision": 2,
+      "headline": "Room for both preferences",
+      "paragraphs": [
+        "Wanting to see someone and wanting a different kind of evening can both be true. If an invitation sounds more tiring than enjoyable, saying yes may seem easier than explaining that you'd prefer something quieter. The tender part can be the fear that a different preference will sound like less affection.",
+        "Venus opposing your natal Venus brings the contrast between personal taste and shared pleasure into this reading. A different preference doesn't, on its own, mean something is wrong between you. It can simply reveal what would make being together enjoyable for you, a detail that deserves a place in the conversation.",
+        "One option is to put the preference beside the wish for company: 'I'd love to see you. A quiet dinner sounds good to me.' The response remains theirs to give. Your part can be that small act of honesty, leaving room to discover a plan you can both enjoy."
+      ],
+      "prompt": "What would make spending time together feel enjoyable to you?"
+    },
+    {
+      "id": "synthesis-tension",
+      "revision": 3,
+      "headline": "An ambition you can carry",
+      "paragraphs": [
+        "If you're excited about a project, 'I can do this much' may feel like too little enthusiasm for an idea you care about. In that situation, promising more can become a way of trying to show how much the project matters.",
+        "Saturn's square to your natal Sun brings responsibility and capacity into focus, while Jupiter's trine to your natal Mars speaks to enthusiasm and initiative. Together, they frame a tension between growing scope and the structure that may be needed to carry it. You can express your enthusiasm separately from what you are promising to do.",
+        "If that fits, you could describe both what you want to make possible and the part you can take on now. 'I'd love to help bring this to life, and I can take on the first stage' holds both."
+      ],
+      "prompt": "What would taking an idea seriously look like at a scale you can manage?"
+    },
+    {
+      "id": "jupiter-trine-sun-technical",
+      "revision": 2,
+      "headline": "An interest worth naming",
+      "paragraphs": [
+        "If you light up while talking about something you love, then quickly call it 'just a hobby,' there may be something worth hearing in that change of tone. Perhaps you enjoy making music, yet feel that saying so needs a qualification about how good you are or how little time you spend on it.",
+        "Jupiter's trine to your natal Sun offers a theme of giving an existing interest more room in how you describe yourself. That room can be small and personal. Enjoyment can be a reason to acknowledge the interest, even while you are learning, finding your rhythm, or keeping it entirely for yourself.",
+        "In an ordinary conversation, you could name that interest without the word 'just' and see how the sentence feels. A plain 'I enjoy making music' can give something you return to a place in your own account of who you are."
+      ],
+      "prompt": "What interest would you like to name without making it sound smaller?"
+    },
+    {
+      "id": "fallback-hard-neptune-mercury",
+      "revision": 3,
+      "lengthException": "122 words: removed two repeated explanations after reader review. The scene, meaning, astrological lens, optional response, and reflection remain complete; padding to 130 would repeat the insight.",
+      "headline": "Before a feeling becomes a verdict",
+      "paragraphs": [
+        "After a conversation, a pause or a shift in tone can stay with you longer than the words. If that happens, you might find yourself going over what was said, adding an explanation to the memory.",
+        "Neptune's square to your natal Mercury offers a symbolic lens for that gap between impression and interpretation. A feeling can deserve your attention while leaving another person's intentions unknown. There is room to take your experience seriously and still leave the meaning of that moment open.",
+        "If an explanation starts to harden, you could separate the words you remember hearing from the meaning you have added to them. For now, 'I felt unsettled, and I'm not sure why' can be an honest place to leave it."
+      ],
+      "prompt": "What could you leave open when a conversation is hard to read?"
+    },
+    {
+      "id": "quiet-threshold",
+      "revision": 2,
+      "headline": "A little room for the ordinary",
+      "paragraphs": [
+        "No contact stands out strongly enough to shape this reading today. Your day may still be full of feeling or activity; the chart simply isn't supplying a particular theme here. Whatever has your attention can matter without a special explanation from the sky.",
+        "If there's room for a small pleasure, you could let a song you enjoy play all the way through. It can be enough to enjoy those few minutes."
+      ],
+      "prompt": "What ordinary moment would you enjoy lingering in today?"
+    }
+  ]
+}

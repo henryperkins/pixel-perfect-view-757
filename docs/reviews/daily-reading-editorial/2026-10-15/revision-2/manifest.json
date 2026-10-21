@@ -1,0 +1,12 @@
+{
+  "reason": "Preserve exact revision-2 review inputs before final narrow revisions.",
+  "files": {
+    "drafts.json": "9a371106a840442e32412a0093e5b3a616eeaa937e7fed084638c72413d1f7f4",
+    "author-notes.md": "e39aa5e47b4bc34c7e943b728f233f01cda3dee56d4f60cac2f1bc776c57a0f7",
+    "sample-pack.md": "1c1a85adf2a493ade101e592c1a8e64683984f24a0a0c22f54ba0220f61a5413",
+    "reader-packet.md": "1d9d552e6d95c1f2fdb4dd03c83b281362c6b9c047e4c60aac24b562b5cd4ea5",
+    "reader-assignment.json": "ef6b3cc17e4b217c575b09b75dfaef636fc6ea2b3d1ddd8954eb3727487482a7",
+    "validation.json": "9f3593598dd2a537e822a99e7425149471e8d92e52071f75f2c8c08541bf4156",
+    "editorial-standard.md": "6e73e0d9c739ce1bfa6643327f2bf28acf6895db27f356ecbd00af5e67b9a867"
+  }
+}

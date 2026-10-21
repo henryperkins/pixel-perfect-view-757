@@ -1,0 +1,93 @@
+{
+  "version": "editorial-reader-assignment-1",
+  "shuffle": "ascending SHA-256 of fixed namespace, caseId, variant",
+  "packetSha256": "05f2fb081dc10a3e053ec8dded82279beba2417d4f4cbeb4474f933903ab92a0",
+  "standardSha256": "6e73e0d9c739ce1bfa6643327f2bf28acf6895db27f356ecbd00af5e67b9a867",
+  "entries": [
+    {
+      "item": "Item 01",
+      "caseId": "synthesis-tension",
+      "variant": "target",
+      "revision": 1,
+      "textSha256": "1db25d42eac84abfb2dec79f046e5ef3637f6a0290612b83c43e56b199ce578e"
+    },
+    {
+      "item": "Item 02",
+      "caseId": "fallback-hard-neptune-mercury",
+      "variant": "target",
+      "revision": 1,
+      "textSha256": "52d3fbd8b3398f98154683e81c4b24f6eaa95124cd9513a8aa252ac8524be8f1"
+    },
+    {
+      "item": "Item 03",
+      "caseId": "fallback-hard-neptune-mercury",
+      "variant": "baseline",
+      "revision": null,
+      "textSha256": "df9d3b661c69c4ca4399234120ddaaf6197af7e451b45445e831ed645ff1c137"
+    },
+    {
+      "item": "Item 04",
+      "caseId": "synthesis-tension",
+      "variant": "baseline",
+      "revision": null,
+      "textSha256": "640a4b4b5ad3a1e76b2d949359693fe89d310e5b4252207d9d8a5b03d6053718"
+    },
+    {
+      "item": "Item 05",
+      "caseId": "venus-opposition-venus",
+      "variant": "baseline",
+      "revision": null,
+      "textSha256": "6a124f384ace2432672905bb23425d49c2a1aeb806e99491c590df6bedcc97d0"
+    },
+    {
+      "item": "Item 06",
+      "caseId": "writing-reply-scene",
+      "variant": "baseline",
+      "revision": null,
+      "textSha256": "c846030688f0e90fd3b4892f4bce3211b42e93dd20ea26e833f1821f30ed435b"
+    },
+    {
+      "item": "Item 07",
+      "caseId": "jupiter-trine-sun-technical",
+      "variant": "baseline",
+      "revision": null,
+      "textSha256": "80dde0d56fd6c1d9efd87940f59ce0aaaf20a800df92ec53e5738a5c83a7c6a7"
+    },
+    {
+      "item": "Item 08",
+      "caseId": "quiet-threshold",
+      "variant": "baseline",
+      "revision": null,
+      "textSha256": "58136954cc6e520de18c7187601e6bcc307fd3abf54357f75ae40637479808ab"
+    },
+    {
+      "item": "Item 09",
+      "caseId": "quiet-threshold",
+      "variant": "target",
+      "revision": 1,
+      "textSha256": "6e9943c1ebb91356f7ba1c12354de252a30086ebbb3b3dacb01a1ddccd71ff2d"
+    },
+    {
+      "item": "Item 10",
+      "caseId": "writing-reply-scene",
+      "variant": "target",
+      "revision": 1,
+      "textSha256": "07941ed52a92090307f91ff3af86332bfb6f5504fb94c9fdae22c58ce84f3e4a"
+    },
+    {
+      "item": "Item 11",
+      "caseId": "jupiter-trine-sun-technical",
+      "variant": "target",
+      "revision": 1,
+      "textSha256": "fbe38a2b63eecda24b76461e26294ac1a625795e185bf0fcd21cbeadf37fac2e"
+    },
+    {
+      "item": "Item 12",
+      "caseId": "venus-opposition-venus",
+      "variant": "target",
+      "revision": 1,
+      "textSha256": "8c254df1739b5ac215d58147705dd25382395eb8236f75a517442ab9f939404f"
+    }
+  ],
+  "reviewLimit": "Reviewer sees only packet and standard; content differences may reveal authorship or variant. Not empirically blinded human research."
+}

@@ -1,0 +1,217 @@
+{
+  "version": "editorial-artifact-validation-2",
+  "sourceCommit": "8f7caa9f80adcb513b0ebcd1149ea23eb5a9f445",
+  "networkAttempts": 0,
+  "provider": "none",
+  "baselinePairCount": 6,
+  "targetCount": 6,
+  "baselineExactTextPreserved": true,
+  "draftFileSha256": "f6444a0201ef4816d5794d783c6c17bd09018632d860600cb19c87617f7cae81",
+  "sourceProposalFileSha256": "c32a625fc322e9b5c63fbab2eae4435f426da79a7528967284662ab8d5c850a7",
+  "sourceSeparation": "Documentation-only writing material, constraints and provenance; no runtime schema or prompt integration",
+  "samplePackSha256": "8a8185fe1589d617b97c7b7f2e26b9a59e96d7460c4c22b31c55e4a1012cb70c",
+  "readerPacketSha256": "4ffad6f03a8969f81345dfc9020e8562a7421469bccd2e862a1cafaaba87e4a6",
+  "checks": [
+    {
+      "caseId": "writing-reply-scene",
+      "revision": 3,
+      "bodyWords": 126,
+      "lengthException": "126 words: the human review requested removal of scaffolding, repeated examples, and redundant reassurance. The complete observation, distinction, astrology, direction, and separate reflection are retained without padding.",
+      "reflectionCharacters": 37,
+      "paragraphSentenceCounts": [
+        3,
+        3,
+        2
+      ],
+      "questionProblem": null,
+      "fieldChecks": [
+        {
+          "field": "headline",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph1",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph2",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph3",
+          "safetyFlags": []
+        },
+        {
+          "field": "reflection",
+          "safetyFlags": []
+        }
+      ]
+    },
+    {
+      "caseId": "venus-opposition-venus",
+      "revision": 3,
+      "bodyWords": 131,
+      "lengthException": null,
+      "reflectionCharacters": 77,
+      "paragraphSentenceCounts": [
+        3,
+        3,
+        3
+      ],
+      "questionProblem": null,
+      "fieldChecks": [
+        {
+          "field": "headline",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph1",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph2",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph3",
+          "safetyFlags": []
+        },
+        {
+          "field": "reflection",
+          "safetyFlags": []
+        }
+      ]
+    },
+    {
+      "caseId": "synthesis-tension",
+      "revision": 4,
+      "bodyWords": 134,
+      "lengthException": null,
+      "reflectionCharacters": 72,
+      "paragraphSentenceCounts": [
+        2,
+        3,
+        3
+      ],
+      "questionProblem": null,
+      "fieldChecks": [
+        {
+          "field": "headline",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph1",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph2",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph3",
+          "safetyFlags": []
+        },
+        {
+          "field": "reflection",
+          "safetyFlags": []
+        }
+      ]
+    },
+    {
+      "caseId": "jupiter-trine-sun-technical",
+      "revision": 3,
+      "bodyWords": 109,
+      "lengthException": "109 words: the human review requested removal of scaffolding, repeated examples, and redundant reassurance. The complete observation, distinction, astrology, direction, and separate reflection are retained without padding.",
+      "reflectionCharacters": 80,
+      "paragraphSentenceCounts": [
+        3,
+        3
+      ],
+      "questionProblem": null,
+      "fieldChecks": [
+        {
+          "field": "headline",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph1",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph2",
+          "safetyFlags": []
+        },
+        {
+          "field": "reflection",
+          "safetyFlags": []
+        }
+      ]
+    },
+    {
+      "caseId": "fallback-hard-neptune-mercury",
+      "revision": 4,
+      "bodyWords": 102,
+      "lengthException": "102 words: the human review requested removal of scaffolding, repeated examples, and redundant reassurance. The complete observation, distinction, astrology, direction, and separate reflection are retained without padding.",
+      "reflectionCharacters": 61,
+      "paragraphSentenceCounts": [
+        2,
+        3,
+        2
+      ],
+      "questionProblem": null,
+      "fieldChecks": [
+        {
+          "field": "headline",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph1",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph2",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph3",
+          "safetyFlags": []
+        },
+        {
+          "field": "reflection",
+          "safetyFlags": []
+        }
+      ]
+    },
+    {
+      "caseId": "quiet-threshold",
+      "revision": 3,
+      "bodyWords": 69,
+      "lengthException": null,
+      "reflectionCharacters": 51,
+      "paragraphSentenceCounts": [
+        2,
+        3
+      ],
+      "questionProblem": null,
+      "fieldChecks": [
+        {
+          "field": "headline",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph1",
+          "safetyFlags": []
+        },
+        {
+          "field": "paragraph2",
+          "safetyFlags": []
+        },
+        {
+          "field": "reflection",
+          "safetyFlags": []
+        }
+      ]
+    }
+  ],
+  "policyLimit": "Shape and bounded safety checks only. No citation compatibility claimed for source proposals. Optional guidance, imagery and reassurance remain unresolved under current writing policy; zero flags is not qualification."
+}

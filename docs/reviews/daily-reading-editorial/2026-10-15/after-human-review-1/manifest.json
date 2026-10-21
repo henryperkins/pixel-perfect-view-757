@@ -1,0 +1,14 @@
+{
+  "reason": "Exact inputs assessed in reader, source, and structure review human revision 1, before the final line edits.",
+  "files": {
+    "drafts.json": "f6444a0201ef4816d5794d783c6c17bd09018632d860600cb19c87617f7cae81",
+    "author-notes.md": "e35c951fd6e18c222fc5c29f80cfd9c1e944a2906b0763f9286a3a9826efff1d",
+    "sample-pack.md": "8a8185fe1589d617b97c7b7f2e26b9a59e96d7460c4c22b31c55e4a1012cb70c",
+    "reader-packet.md": "4ffad6f03a8969f81345dfc9020e8562a7421469bccd2e862a1cafaaba87e4a6",
+    "reader-assignment.json": "ee0226f035c1818772734974b41e17f3272229ce110d795453f522273d5d100a",
+    "validation.json": "e311fa38583d2b9b5f70eb288085040237ce3d2d3b425f9c325d54015ba057cb",
+    "editorial-standard.md": "42125184e40b74e6532dba7b78cd7d284517053650bf396cbcad2229086bb28f",
+    "source-proposals.json": "c32a625fc322e9b5c63fbab2eae4435f426da79a7528967284662ab8d5c850a7",
+    "quiet-variation-plan.md": "c6b4e5307f760640f34888e14168567cbb0cd9065bb0a002df89c731a3711a85"
+  }
+}
