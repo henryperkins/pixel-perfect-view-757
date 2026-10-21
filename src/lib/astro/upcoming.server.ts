@@ -25,6 +25,7 @@ export const UPCOMING_ASPECTS = [
   "opposition",
 ] as const;
 export const DURATION_FILTERS = ["all", "short", "medium", "long", "unknown"] as const;
+export const UPCOMING_SOLVER_VERSION = "upcoming-cycles-2";
 export type DurationFilter = (typeof DURATION_FILTERS)[number];
 const at = z.string().datetime({ precision: 3 }),
   range = z.tuple([at, at]);
@@ -52,7 +53,7 @@ const windowSchema = z
 export type UpcomingWindow = z.infer<typeof windowSchema>;
 interface Request {
   contract: "swiss-upcoming-cycles/1";
-  solverVersion: "upcoming-cycles-1";
+  solverVersion: typeof UPCOMING_SOLVER_VERSION;
   sourceId: string;
   from: string;
   to: string;
@@ -276,7 +277,7 @@ export async function getUpcomingFromAnchors(
     }));
     const input: Request = {
       contract: "swiss-upcoming-cycles/1",
-      solverVersion: "upcoming-cycles-1",
+      solverVersion: UPCOMING_SOLVER_VERSION,
       sourceId: policy.sourceId,
       from,
       to,

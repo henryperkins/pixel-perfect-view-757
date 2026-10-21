@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { ASPECTS, DAY, utcInstant, time } from "./contract.mjs";
 import { makeTrack } from "./track.mjs";
 import { sampleScan } from "./episodes.mjs";
-export const UPCOMING_SOLVER_VERSION = "upcoming-cycles-1";
+export const UPCOMING_SOLVER_VERSION = "upcoming-cycles-2";
 const BODIES = [
   "moon",
   "sun",
@@ -38,10 +38,13 @@ const meanRange = (values) => [
   new Date(Math.floor(Math.min(...values) / 1000) * 1000).toISOString(),
   new Date(Math.ceil(Math.max(...values) / 1000) * 1000).toISOString(),
 ];
-const windowSignature = (scan, w) => {
-  const cs = w.contactIds.map((id) => scan.contacts.find((c) => c.id === id));
-  return JSON.stringify([cs[0].branch, cs[0].targetTurn, cs.map((c) => c.direction)]);
-};
+const intersects = (w, from, to) =>
+  (!w.ingress || Math.floor(time(w.ingress) / 1000) * 1000 < to) &&
+  (!w.egress || Math.ceil(time(w.egress) / 1000) * 1000 > from);
+const windowDuration = (w) =>
+  w.ingress && w.egress
+    ? bucket((Date.parse(canonical(w.egress.at)) - Date.parse(canonical(w.ingress.at))) / DAY)
+    : null;
 /** Stateless bounded future geometry; saved natal anchors are supplied by the app. */
 export function calculateUpcoming(
   input,
@@ -132,36 +135,81 @@ export function calculateUpcoming(
       for (const aspect of input.aspects) {
         check();
         const request = { aspect, maxOrbDegrees: orb(body, aspect) };
-        const scans = target.longitudes.map(
-          (longitude, i) =>
-            sampleScan(
-              request,
-              {
-                longitude: longitude + 360 * Math.round((target.longitudes[1] - longitude) / 360),
-                offsetMinutes: target.offsets[i],
-              },
-              track,
-              geometry,
-              { maxContacts: 100, maxWindows: 100 },
-            ).sample,
+        const results = target.longitudes.map((longitude, i) =>
+          sampleScan(
+            request,
+            {
+              longitude: longitude + 360 * Math.round((target.longitudes[1] - longitude) / 360),
+              offsetMinutes: target.offsets[i],
+            },
+            track,
+            geometry,
+            { maxContacts: 100, maxWindows: 100, collectOrbWindows: true },
+          ),
         );
-        const nominal = scans[1];
+        const scans = results.map((r) => r.sample),
+          nominal = scans[1],
+          unresolved = new Set();
+        const groupFor = (result, w) =>
+          result.orbWindows.filter(
+            (other) => other.branch === w.branch && other.targetTurn === w.targetTurn,
+          );
+        const incompleteKey = (result, w) =>
+          JSON.stringify([w.branch, w.targetTurn, groupFor(result, w).indexOf(w)]);
+        for (const result of results)
+          for (const w of result.orbWindows) {
+            if (!intersects(w, from, to)) continue;
+            const duration = windowDuration(w);
+            if (input.duration !== "all" && duration && input.duration !== duration) continue;
+            const sampleGroup = groupFor(result, w),
+              nominalGroup = groupFor(results[1], w),
+              corresponding =
+                sampleGroup.length === nominalGroup.length
+                  ? nominalGroup[sampleGroup.indexOf(w)]
+                  : undefined;
+            // A boundary sample can contain a real contact absent from the
+            // nominal sample. Never present it as a nominal reading or silently
+            // claim complete coverage. Closed contactless near misses are known.
+            if (
+              !corresponding?.contactIds.length &&
+              (w.contactIds.length || !w.ingress || !w.egress)
+            )
+              unresolved.add(incompleteKey(result, w));
+          }
         for (const w of nominal.windows) {
           const contacts = w.contactIds.map((id) => nominal.contacts.find((c) => c.id === id)),
             first = contacts[0];
-          const signature = windowSignature(nominal, w),
-            group = nominal.windows.filter(
-              (other) => windowSignature(nominal, other) === signature,
+          const orbWindow = results[1].orbWindows.find((other) =>
+              other.contactIds.includes(first.id),
             ),
-            ordinal = group.indexOf(w);
-          const matches = scans.map((scan) => {
-            const candidates = scan.windows.filter(
-              (other) => windowSignature(scan, other) === signature,
+            orbGroup = groupFor(results[1], orbWindow),
+            orbOrdinal = orbGroup.indexOf(orbWindow);
+          // When sample contact groups differ, use the independently scanned
+          // orb intervals to exclude only provably irrelevant matches.
+          const candidates = results.flatMap((result) => {
+            const group = groupFor(result, orbWindow);
+            return group.length === orbGroup.length ? [group[orbOrdinal]] : group;
+          });
+          if (!candidates.some((candidate) => intersects(candidate, from, to))) continue;
+          const knownDuration = windowDuration(orbWindow);
+          if (input.duration !== "all" && knownDuration && input.duration !== knownDuration)
+            continue;
+          const matches = results.map((result) => {
+            const group = groupFor(result, orbWindow),
+              candidate = group.length === orbGroup.length ? group[orbOrdinal] : undefined;
+            if (!candidate || candidate.contactIds.length !== contacts.length) return undefined;
+            const directions = candidate.contactIds.map(
+              (id) => result.sample.contacts.find((contact) => contact.id === id).direction,
             );
-            return candidates.length === group.length ? candidates[ordinal] : undefined;
+            // Equal signature totals do not prove correspondence when samples
+            // merge/split different windows around stations. Bind roots to the
+            // same orb interval before comparing their ordered directions.
+            return directions.every((direction, i) => direction === contacts[i].direction)
+              ? candidate
+              : undefined;
           });
           if (matches.some((m) => !m)) {
-            incomplete++;
+            unresolved.add(incompleteKey(results[1], orbWindow));
             continue;
           }
           const start = canonical(w.ingress?.at),
@@ -187,7 +235,7 @@ export function calculateUpcoming(
             duration = bucket(durationDays);
           if (input.duration !== "all" && input.duration !== duration) continue;
           const complete = !!start && !!end && !!startRange && !!endRange;
-          if (!complete) incomplete++;
+          if (!complete) unresolved.add(incompleteKey(results[1], orbWindow));
           const id =
             "cycle:" +
             createHash("sha256")
@@ -241,6 +289,7 @@ export function calculateUpcoming(
             sourceId: engine.sourceId,
           });
         }
+        incomplete += unresolved.size;
       }
     track.check();
     evaluationCount += track.evaluations();

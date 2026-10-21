@@ -153,7 +153,7 @@ for (const body of [
     longitude = referencePosition(body, Date.parse("2026-02-01T12:00:00.000Z")).longitude;
   const input = {
     contract: "swiss-upcoming-cycles/1",
-    solverVersion: "upcoming-cycles-1",
+    solverVersion: "upcoming-cycles-2",
     sourceId: engine.sourceId,
     from,
     to,
@@ -262,7 +262,7 @@ const targets = [
 for (let i = 0; i < targets.length; i += 3) {
   const input = {
     contract: "swiss-upcoming-cycles/1",
-    solverVersion: "upcoming-cycles-1",
+    solverVersion: "upcoming-cycles-2",
     sourceId: engine.sourceId,
     from: "2026-10-13T12:00:00.000Z",
     to: "2027-10-13T12:00:00.000Z",

@@ -230,7 +230,7 @@ export function createEngine({
       },
       upcomingCycles: {
         contract: "swiss-upcoming-cycles/1",
-        solverVersion: "upcoming-cycles-1",
+        solverVersion: "upcoming-cycles-2",
         maximumRangeDays: 365,
         maximumTargets: 3,
         maximumEvaluations: 120000,

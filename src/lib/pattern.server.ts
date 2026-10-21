@@ -3302,9 +3302,11 @@ export async function getUpcomingCycles(
   const anchors = (
     await ensureTransitAnchors(db, userId, snapshot, await getDek(db, userId), new Date())
   ).manifest;
-  const { getUpcomingFromAnchors } = await import("./astro/upcoming.server");
+  const { getUpcomingFromAnchors, UPCOMING_SOLVER_VERSION } =
+    await import("./astro/upcoming.server");
   const key = await keyedFingerprint(userId, {
-    version: "future-timing-cache-1",
+    version: "future-timing-cache-2",
+    solverVersion: UPCOMING_SOLVER_VERSION,
     snapshotId: snapshot.id,
     fingerprint: snapshot.fingerprint,
     anchors,

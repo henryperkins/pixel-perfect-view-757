@@ -1,7 +1,7 @@
 {
   "input": {
     "contract": "swiss-upcoming-cycles/1",
-    "solverVersion": "upcoming-cycles-1",
+    "solverVersion": "upcoming-cycles-2",
     "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
     "from": "2026-10-13T12:00:00.000Z",
     "to": "2027-10-13T12:00:00.000Z",
@@ -39,7 +39,7 @@
   },
   "actual": {
     "contract": "swiss-upcoming-cycles/1",
-    "solverVersion": "upcoming-cycles-1",
+    "solverVersion": "upcoming-cycles-2",
     "status": "partial",
     "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a",
     "source": {
@@ -74,7 +74,7 @@
     },
     "windows": [
       {
-        "id": "cycle:d45e82061a3972e4f58e4fc8f5b329b1",
+        "id": "cycle:b12f4baa901be474ef9f4131b0c45594",
         "transitBody": "saturn",
         "natalPoint": "mars",
         "aspect": "trine",
@@ -96,7 +96,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:df6a9a5fc419eda3178fd43eb925c3a1",
+        "id": "cycle:ecb1c0c515250c966fc1f2977baa85db",
         "transitBody": "venus",
         "natalPoint": "venus",
         "aspect": "square",
@@ -118,7 +118,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:072b9b66b075621b2d0277af34efd3ec",
+        "id": "cycle:07fd10cd12d15668be3933a1258103a7",
         "transitBody": "mars",
         "natalPoint": "venus",
         "aspect": "opposition",
@@ -137,7 +137,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:1560eac2e5bd358a13d3d54daba9f9c1",
+        "id": "cycle:3d53674bf6fd433502be9d25550fca4f",
         "transitBody": "venus",
         "natalPoint": "jupiter",
         "aspect": "trine",
@@ -156,7 +156,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:c237b85ecb2161769793d273464ccc1b",
+        "id": "cycle:5ef0745bf4637f9d242feafce16c8e6b",
         "transitBody": "mars",
         "natalPoint": "mars",
         "aspect": "trine",
@@ -175,7 +175,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:87859f92bd8f6a6cbad73139ea03e32d",
+        "id": "cycle:fb00fa541ae055b22d83b4d78c169bf7",
         "transitBody": "moon",
         "natalPoint": "jupiter",
         "aspect": "quincunx",
@@ -194,7 +194,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:10ac5f00e578eff6abb21dc02fbe5972",
+        "id": "cycle:0716c68f05201c0da500d4ce07708b1e",
         "transitBody": "moon",
         "natalPoint": "venus",
         "aspect": "sextile",
@@ -213,7 +213,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:fa2b221f099b051714c3287c6e45179a",
+        "id": "cycle:4c8f590ec87250169db34e0d7284fbee",
         "transitBody": "moon",
         "natalPoint": "mars",
         "aspect": "conjunction",
@@ -232,7 +232,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:fe88bc7cf5ea203720f7134707b740ba",
+        "id": "cycle:a5db8e68c53bdf63602bd238b3378af6",
         "transitBody": "moon",
         "natalPoint": "jupiter",
         "aspect": "opposition",
@@ -251,7 +251,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:2d51c52dbb870c5dbb9775278e320836",
+        "id": "cycle:fd339dae024aadfa3200accc9186c5e1",
         "transitBody": "moon",
         "natalPoint": "jupiter",
         "aspect": "quincunx",
@@ -270,7 +270,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:4f58e66cd6e63bdc9723912679a71748",
+        "id": "cycle:9a2819dce61705d7f8a961f21ae26267",
         "transitBody": "moon",
         "natalPoint": "venus",
         "aspect": "conjunction",
@@ -289,7 +289,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:d501f13749a3c262b4b2663edafccfe0",
+        "id": "cycle:8c1f327b702a64aae2db5b894b9425c9",
         "transitBody": "moon",
         "natalPoint": "mars",
         "aspect": "sextile",
@@ -308,7 +308,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:1a5e8cce55d3a364bf020ac7d3f8a043",
+        "id": "cycle:bfd941495184a8f31424e38d64c3811d",
         "transitBody": "moon",
         "natalPoint": "jupiter",
         "aspect": "trine",
@@ -327,7 +327,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:66158d2d5b5a8d2b71c9f1bdbe8170ca",
+        "id": "cycle:ae084d76bb4cda5d2c6112aef2c18a50",
         "transitBody": "moon",
         "natalPoint": "mars",
         "aspect": "square",
@@ -346,7 +346,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:75308b3b08f04c8e2255f96b9124fbc1",
+        "id": "cycle:e1fd572a1040b2b727b6abed4307b8d7",
         "transitBody": "moon",
         "natalPoint": "jupiter",
         "aspect": "square",
@@ -365,7 +365,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:dd2f722275a3f300e2735016a765e952",
+        "id": "cycle:31f97212e3b5cf43607956a1259c39f6",
         "transitBody": "moon",
         "natalPoint": "venus",
         "aspect": "sextile",
@@ -384,7 +384,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:c7de1858c19a9ebceb1174610a34296b",
+        "id": "cycle:555a3f61be4c293f12051a5e4684ebeb",
         "transitBody": "moon",
         "natalPoint": "mars",
         "aspect": "trine",
@@ -403,7 +403,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:e74b3733cbc379d07967a41f488d04d5",
+        "id": "cycle:e589c7744ae7c1cc7b4db21485193983",
         "transitBody": "sun",
         "natalPoint": "jupiter",
         "aspect": "trine",
@@ -422,7 +422,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:f531e78d011aa5aafbe17b475530d42c",
+        "id": "cycle:124e221db83cf8173fb2e6849239cb5f",
         "transitBody": "moon",
         "natalPoint": "jupiter",
         "aspect": "sextile",
@@ -441,7 +441,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:da3292c5e28b06f8dc24c029ab8743da",
+        "id": "cycle:f11ac31982025d88418b417814084bf2",
         "transitBody": "moon",
         "natalPoint": "venus",
         "aspect": "square",
@@ -460,7 +460,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:76918013b7ac7dcb9bf620b003a8ab54",
+        "id": "cycle:0ae6085e4e3a598844823da84df2f979",
         "transitBody": "moon",
         "natalPoint": "mars",
         "aspect": "quincunx",
@@ -479,7 +479,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:c3d9aa3988de4e2fc5acc4273234e91e",
+        "id": "cycle:62e1ea99ac47f49c6199c3e86f6b4c5d",
         "transitBody": "sun",
         "natalPoint": "venus",
         "aspect": "square",
@@ -498,7 +498,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:b2dd595549179726b8185ddf2b190ba3",
+        "id": "cycle:93e76b71447f6d01734a360bb2117710",
         "transitBody": "moon",
         "natalPoint": "venus",
         "aspect": "trine",
@@ -517,7 +517,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:02e8242cab048a970c32f03d8da01c79",
+        "id": "cycle:31d9dc96b8e1e32b2ae773fb81ad3ef8",
         "transitBody": "moon",
         "natalPoint": "mars",
         "aspect": "opposition",
@@ -536,7 +536,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:e2c71a8b9198549536e4d771378abab8",
+        "id": "cycle:6d4f4d866059bfa7f75dbd1390d5342f",
         "transitBody": "moon",
         "natalPoint": "jupiter",
         "aspect": "conjunction",
@@ -555,7 +555,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:8408160b4546cbb607ad555ea7044bbb",
+        "id": "cycle:8cec7614925fad54a5d0e34eb00bd17f",
         "transitBody": "moon",
         "natalPoint": "venus",
         "aspect": "quincunx",
@@ -574,7 +574,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:da79488010c1a7025e50ef5c6f8d06d7",
+        "id": "cycle:dad711d71370be2af914430c1b5c4c26",
         "transitBody": "moon",
         "natalPoint": "mars",
         "aspect": "quincunx",
@@ -593,7 +593,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:5ba284344816281ef072568de66ad544",
+        "id": "cycle:a0e6ba41804fbbd3df2e7163c31804cc",
         "transitBody": "moon",
         "natalPoint": "venus",
         "aspect": "opposition",
@@ -612,7 +612,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:a2da1fc0cdcaf2f0ef22213d860687af",
+        "id": "cycle:f3e0f9b653c74782d4de6fed7fe453b5",
         "transitBody": "moon",
         "natalPoint": "mars",
         "aspect": "trine",
@@ -631,7 +631,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:023d0f06e3c83b167ff73e3683bbfcf6",
+        "id": "cycle:688cfff3788924985e9b8660ceb6de49",
         "transitBody": "moon",
         "natalPoint": "jupiter",
         "aspect": "sextile",
@@ -650,7 +650,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:c6cc07a57aa111bf648063d5e6646ac4",
+        "id": "cycle:4189b15d433545f941bc8aa43cd5060c",
         "transitBody": "moon",
         "natalPoint": "venus",
         "aspect": "quincunx",
@@ -669,7 +669,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:3e0bc0d280e3c0d73e2c01b1055b6cf2",
+        "id": "cycle:17014ffd3c375ef41a8981fc4a747b4e",
         "transitBody": "moon",
         "natalPoint": "mars",
         "aspect": "square",
@@ -688,7 +688,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:22c4f99ed2f3e9c5c4a98a66ebc550b4",
+        "id": "cycle:2d84415e9dd329fc043d0370c8368dfc",
         "transitBody": "moon",
         "natalPoint": "jupiter",
         "aspect": "square",
@@ -707,7 +707,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:1d830f1600da1612cd6cb14b8cad5a44",
+        "id": "cycle:23b563fbeaf68b62de9211f98f8f73da",
         "transitBody": "moon",
         "natalPoint": "venus",
         "aspect": "trine",
@@ -726,7 +726,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:cea28e059fce332d8ac0607788b93e54",
+        "id": "cycle:79109d400e92490c27fad8996cee6c74",
         "transitBody": "moon",
         "natalPoint": "mars",
         "aspect": "sextile",
@@ -745,7 +745,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:70a0805933d6fd8fc94cc7ed00796965",
+        "id": "cycle:fcfe5fb8bf1e49a24bcac92a2a03b04a",
         "transitBody": "mercury",
         "natalPoint": "venus",
         "aspect": "square",
@@ -767,7 +767,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:4f03cc2c87098524dc7ee8ef25e6bb6f",
+        "id": "cycle:9aeefc8ce004cd73d0f60a402a3b10a5",
         "transitBody": "moon",
         "natalPoint": "jupiter",
         "aspect": "trine",
@@ -786,7 +786,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:a4408f50a60b07fb79bc3d941f7a24bd",
+        "id": "cycle:3fac81e0d7c95db0dd6d0ce5f59c9b8d",
         "transitBody": "moon",
         "natalPoint": "venus",
         "aspect": "square",
@@ -805,7 +805,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:2b7c8ed9d4a3fe291b9e2f015e0a3275",
+        "id": "cycle:a8c1569b27490cb60e40f78d147ac3e4",
         "transitBody": "mercury",
         "natalPoint": "jupiter",
         "aspect": "trine",
@@ -827,7 +827,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:4fb3bf2cb6564d8a50184a869dcbd8e2",
+        "id": "cycle:7ac32b9940d2431704eda7e676cea932",
         "transitBody": "pluto",
         "natalPoint": "venus",
         "aspect": "conjunction",
@@ -854,7 +854,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:b0b95fa00995bd1ce284ea13f004bd49",
+        "id": "cycle:befc712af613cfef3052a378cf4d45dd",
         "transitBody": "moon",
         "natalPoint": "jupiter",
         "aspect": "quincunx",
@@ -873,7 +873,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:acf9cfdba7aa156d930f6a3f15707eb1",
+        "id": "cycle:3c207e15556f62ed73795b1458ab3740",
         "transitBody": "moon",
         "natalPoint": "venus",
         "aspect": "sextile",
@@ -892,7 +892,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:ed91072284cff70592d8ec80ad1fc382",
+        "id": "cycle:f04d30591f83e303b9081f6326ac0c3c",
         "transitBody": "moon",
         "natalPoint": "mars",
         "aspect": "conjunction",
@@ -911,7 +911,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:d2e1bd272a4c526da4c9bfd3848b7b4f",
+        "id": "cycle:c1178132e888f6c7f8d7b6306d1e3dfb",
         "transitBody": "moon",
         "natalPoint": "jupiter",
         "aspect": "opposition",
@@ -930,7 +930,7 @@
         "sourceId": "pattern-swiss-1:c8ebf2f4f7e7f377aa22ff0776a8e54a"
       },
       {
-        "id": "cycle:95b9075857db79704ef6c75ab985f23c",
+        "id": "cycle:aadd26247677e59c60a09f31dc46c498",
         "transitBody": "moon",
         "natalPoint": "jupiter",
         "aspect": "quincunx",
@@ -954,7 +954,7 @@
     "uncertainMatched": 0,
     "totalMatched": 521,
     "truncated": true,
-    "incompleteWindows": 3,
-    "evaluations": 74427
+    "incompleteWindows": 4,
+    "evaluations": 74943
   }
 }
