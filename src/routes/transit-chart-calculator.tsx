@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useId, useState, type ReactNode } from "react";
 import { ArrowRight, ChevronDown, CircleDot, Sunrise, Sunset } from "lucide-react";
 
+import { SectionNav } from "@/components/pattern/SectionNav";
 import { Shell } from "@/components/pattern/Shell";
 import {
   contactTitle,
@@ -228,6 +229,7 @@ function TransitChartCalculatorPage() {
         </section>
         <Ledger />
         <ContactCheckSection />
+        <SectionNav label="Calculation rules" links={RULES} className="calculator-contents" />
         <RuleSections />
         <section className="calculator-section" aria-labelledby="calculator-faq-title">
           <h2 id="calculator-faq-title" className="flow-section-title">
@@ -604,6 +606,16 @@ function PositionFields({
     </div>
   );
 }
+
+// Shortcuts below the check; the hero and ledger keep the first viewport.
+const RULES = [
+  { href: "#calculator-compared", text: "1 · What gets compared" },
+  { href: "#calculator-orbs", text: "2 · How close counts" },
+  { href: "#calculator-window", text: "3 · When it opens, peaks and closes" },
+  { href: "#calculator-strength", text: "4 · How contacts are ranked" },
+  { href: "#calculator-sources", text: "5 · Birth time and sources" },
+  { href: "#calculator-faq-title", text: "Questions" },
+] as const;
 
 const PHASES = [
   { key: "building", Icon: Sunrise },

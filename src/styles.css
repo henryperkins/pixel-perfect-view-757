@@ -2414,11 +2414,15 @@ body {
 .today-evidence-values {
   min-width: 0;
 }
-.today-section-nav {
+/* Section shortcuts on long pages: Today, Context & privacy and the calculator rules. */
+.section-nav {
   position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   gap: 0.375rem 0.625rem;
 }
-.today-section-nav a {
+.section-nav a {
   min-height: 44px;
   display: inline-flex;
   align-items: center;
@@ -2433,7 +2437,7 @@ body {
     color var(--motion-fast),
     border-color var(--motion-fast);
 }
-.today-section-nav a:hover {
+.section-nav a:hover {
   background: var(--secondary);
   color: var(--primary);
 }
@@ -2790,6 +2794,14 @@ body {
 }
 .calculator-section {
   margin-top: 96px;
+}
+/* The rule shortcuts open the five sections that follow them. */
+.calculator-contents {
+  max-width: 46rem;
+  margin-top: 96px;
+}
+.calculator-contents + .calculator-section {
+  margin-top: 56px;
 }
 .calculator-section-intro {
   max-width: 40rem;

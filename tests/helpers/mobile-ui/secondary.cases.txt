@@ -111,6 +111,83 @@ async (page) => {
     });
   }
 
+  // The long privacy and calculator pages reuse the same shortcuts; every rendered link is checked.
+  for (const size of [
+    { width: 390, height: 844 },
+    { width: 667, height: 375 },
+  ]) {
+    await run("R-02: privacy and calculator shortcuts clear only the covering header", size, async (p) => {
+      const rows = [];
+      for (const [route, label] of [
+        ["/privacy", "Context & privacy sections"],
+        ["/transit-chart-calculator", "Calculation rules"],
+      ]) {
+        await p.goto(origin + route);
+        await p.locator(`nav[aria-label="${label}"]`).waitFor();
+        await p.waitForFunction(
+          () =>
+            ![...document.querySelectorAll("main [role=status]")].some((e) =>
+              e.textContent.startsWith("Loading"),
+            ),
+        );
+        await p.evaluate(() => document.fonts.ready);
+        const links = p.locator(`nav[aria-label="${label}"] a`);
+        const count = await links.count();
+        assert(count > 0, "Shortcuts must render", { route, label });
+        for (let index = 0; index < count; index++) {
+          await p.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+          await settle(p);
+          const link = links.nth(index);
+          const [id, name] = await link.evaluate((a) => [a.hash.slice(1), a.textContent.trim()]);
+          await link.click();
+          await p.waitForTimeout(300);
+          const row = await p.evaluate(
+            ({ id, name }) => {
+              const header = document.querySelector(".pattern-header");
+              const nav = document.querySelector(".mobile-journey");
+              const target = document.getElementById(id);
+              const covering = getComputedStyle(header).position === "sticky";
+              return {
+                id,
+                name,
+                heading: target?.textContent.trim() ?? null,
+                hash: location.hash,
+                covering,
+                clearance: covering ? header.getBoundingClientRect().bottom : 0,
+                // Focusable headings keep the shared 8px focus clearance as scroll margin.
+                margin: target ? parseFloat(getComputedStyle(target).scrollMarginTop) : 0,
+                sectionTop: target ? target.getBoundingClientRect().top : null,
+                navTop: nav ? nav.getBoundingClientRect().top : innerHeight,
+                atEnd: Math.ceil(scrollY + innerHeight) >= document.documentElement.scrollHeight,
+              };
+            },
+            { id, name },
+          );
+          rows.push({ route, ...row });
+          assert(
+            row.sectionTop !== null && row.hash === `#${id}`,
+            "Shortcut must target a rendered heading",
+            row,
+          );
+          // Calculator shortcuts repeat their numbered headings; privacy labels are shortened.
+          assert(
+            route !== "/transit-chart-calculator" || row.heading === row.name,
+            "Rule shortcut must match its heading",
+            row,
+          );
+          assert(
+            row.atEnd
+              ? row.sectionTop >= row.clearance && row.sectionTop < row.navTop
+              : Math.abs(row.sectionTop - (row.clearance + 8 + row.margin)) <= 2,
+            "Section must land 8px below the covering header",
+            row,
+          );
+        }
+      }
+      return rows;
+    });
+  }
+
   await run("F-04: Timing filters and reset-password fields stay 16px", { width: 390, height: 844 }, async (p) => {
     await p.goto(origin + "/timing");
     await p.getByRole("button", { name: "Upcoming", exact: true }).click();

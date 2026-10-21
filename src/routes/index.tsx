@@ -304,10 +304,7 @@ function TodayContent({
             <EphemerisNotice state={data.ephemeris} className="mt-4" />
           ) : null}
         </details>
-        <nav
-          aria-label="Today sections"
-          className="today-section-nav mt-4 flex flex-wrap items-center text-sm text-primary"
-        >
+        <nav aria-label="Today sections" className="section-nav mt-4">
           <a href="#today-reflection">Check-in</a>
           <a href="#today-timing">Timing</a>
           <a href="#today-journal">Journal</a>

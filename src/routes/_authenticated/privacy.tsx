@@ -12,6 +12,7 @@ import { DOMAIN_LABEL } from "@/components/pattern/timing";
 import { CurrentLocation } from "@/components/pattern/CurrentLocation";
 import { MembershipSettings } from "@/components/pattern/MembershipSettings";
 import { AccountSecurity } from "@/components/pattern/AccountSecurity";
+import { SectionNav } from "@/components/pattern/SectionNav";
 
 import { Field, Rail, Shell } from "@/components/pattern/Shell";
 import {
@@ -46,6 +47,17 @@ export const Route = createFileRoute("/_authenticated/privacy")({
   }),
   component: PrivacyPage,
 });
+
+const SECTIONS = [
+  { href: "#membership-heading", text: "Membership" },
+  { href: "#account-security-heading", text: "Email & password" },
+  { href: "#reading-language-privacy", text: "Reading language" },
+  { href: "#assistant-privacy", text: "Assistants" },
+  { href: "#privacy-tier-0", text: "Context sources" },
+  { href: "#reading-preferences", text: "Preferences" },
+  { href: "#marked-moments", text: "Marked moments" },
+  { href: "#your-data", text: "Your data" },
+] as const;
 
 function PrivacyPage() {
   const { session } = useAuth();
@@ -199,6 +211,7 @@ function PrivacyPage() {
             This is the registry the reading engine actually enforces. A source can only be used for
             the uses listed beside it; anything else fails at the policy boundary.
           </p>
+          <SectionNav label="Context & privacy sections" links={SECTIONS} className="mt-5" />
 
           {boot.isPending || boot.isFetching ? (
             <p role="status" className="mt-4 text-sm text-muted-foreground">
@@ -371,8 +384,12 @@ function PrivacyPage() {
           </section>
 
           {TIERS.filter((t) => t.tier !== 3 || sourcesForTier(3).length > 0).map((tier) => (
-            <section key={tier.tier} className="mt-10">
-              <h2 className="font-serif text-xl">
+            <section
+              key={tier.tier}
+              className="mt-10"
+              aria-labelledby={`privacy-tier-${tier.tier}`}
+            >
+              <h2 id={`privacy-tier-${tier.tier}`} className="font-serif text-xl">
                 Tier {tier.tier} · {tier.name}
               </h2>
               <p className="mt-1 max-w-2xl text-sm text-muted-foreground">{tier.summary}</p>
@@ -463,8 +480,10 @@ function PrivacyPage() {
             </ul>
           </section>
 
-          <section className="mt-12">
-            <h2 className="font-serif text-xl">Reading preferences</h2>
+          <section className="mt-12" aria-labelledby="reading-preferences">
+            <h2 id="reading-preferences" className="font-serif text-xl">
+              Reading preferences
+            </h2>
             <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
               Saved tone, depth and life-area focus apply when their source switches above are on.
               Focus sets the initial Timing filter. Saving does not turn a source on.
@@ -543,8 +562,10 @@ function PrivacyPage() {
             ) : null}
           </section>
 
-          <section className="mt-12">
-            <h2 className="font-serif text-xl">Marked moments</h2>
+          <section className="mt-12" aria-labelledby="marked-moments">
+            <h2 id="marked-moments" className="font-serif text-xl">
+              Marked moments
+            </h2>
             <p className="mt-1 text-sm text-muted-foreground">
               A dated moment you choose to record. With Marked moments reuse on, matching entries
               appear as Your context beside a reading, timing window or chart chapter. Saving an
@@ -600,8 +621,10 @@ function PrivacyPage() {
             </ul>
           </section>
 
-          <section className="mt-12 border-t border-rule pt-6">
-            <h2 className="font-serif text-xl">Your data</h2>
+          <section className="mt-12 border-t border-rule pt-6" aria-labelledby="your-data">
+            <h2 id="your-data" className="font-serif text-xl">
+              Your data
+            </h2>
             <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
               Export reads your retained saved data. Reset clears optional permissions and
               preferences while keeping your login, chart, readings and Journal.
