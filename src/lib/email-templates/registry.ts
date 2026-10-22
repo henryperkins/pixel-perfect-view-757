@@ -30,9 +30,40 @@ export interface TemplateEntry {
  *   import { template as welcomeTemplate } from './welcome'
  *   // then add to TEMPLATES: 'welcome': welcomeTemplate
  */
+// Preview-only sample data; never used for real sends.
+const PREVIEW_DATA: EmailTemplateData = {
+  siteName: "Pattern",
+  siteUrl: "https://patterns.lakefrontdigital.io",
+  recipient: "user@example.test",
+  confirmationUrl: "https://patterns.lakefrontdigital.io/auth",
+  oldEmail: "old@example.test",
+  email: "user@example.test",
+  newEmail: "new@example.test",
+};
+
 export const TEMPLATES: Record<string, TemplateEntry> = {
-  "security-alert": { component: SecurityAlertEmail, subject: "Your Pattern account was updated" },
-  "account-confirmation": { component: SignupEmail, subject: "Confirm your Pattern email" },
-  "password-reset": { component: RecoveryEmail, subject: "Reset your Pattern password" },
-  "email-change": { component: EmailChangeEmail, subject: "Confirm your new Pattern email" },
+  "security-alert": {
+    component: SecurityAlertEmail,
+    subject: "Your Pattern account was updated",
+    displayName: "Security alert",
+    previewData: PREVIEW_DATA,
+  },
+  "account-confirmation": {
+    component: SignupEmail,
+    subject: "Confirm your Pattern email",
+    displayName: "Account confirmation",
+    previewData: PREVIEW_DATA,
+  },
+  "password-reset": {
+    component: RecoveryEmail,
+    subject: "Reset your Pattern password",
+    displayName: "Password reset",
+    previewData: PREVIEW_DATA,
+  },
+  "email-change": {
+    component: EmailChangeEmail,
+    subject: "Confirm your new Pattern email",
+    displayName: "Email change",
+    previewData: PREVIEW_DATA,
+  },
 };
