@@ -461,8 +461,8 @@ export function TodayCheckIn({
         <p id={`${formId}-note-limit`} className="mt-2 text-xs text-muted-foreground">
           <span role="status" aria-atomic="true">
             {draft.note.length === 2000
-              ? "Character limit reached. Edit the note to add more."
-              : ""}
+              ? "2,000-character limit reached. Edit the note to add more."
+              : "Up to 2,000 characters."}
           </span>
         </p>
       </div>

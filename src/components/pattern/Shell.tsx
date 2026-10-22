@@ -541,9 +541,11 @@ export function Rail({ title, children }: { title: string; children: ReactNode }
 
 export function Field({ label, value }: { label: string; value: ReactNode }) {
   return (
-    <div className="flex items-baseline justify-between gap-3 border-b border-rule pb-2">
-      <span className="technical text-muted-foreground">{label}</span>
-      <span className="font-mono text-xs text-foreground">{value}</span>
+    <div className="flex min-w-0 flex-wrap items-baseline justify-between gap-x-3 gap-y-1 border-b border-rule pb-2">
+      <span className="technical min-w-0 max-w-full text-muted-foreground">{label}</span>
+      <span className="min-w-0 max-w-full font-mono text-xs text-foreground [overflow-wrap:anywhere]">
+        {value}
+      </span>
     </div>
   );
 }

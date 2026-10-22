@@ -68,7 +68,7 @@ function AssistantsPage() {
   );
   return (
     <Shell>
-      <div className="max-w-2xl">
+      <div className="account-access max-w-2xl">
         <h1 className="text-3xl">Connected assistants</h1>
         <p className="mt-3 text-sm text-muted-foreground">
           Let an assistant read selected saved content from Pattern. You choose the areas for each

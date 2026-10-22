@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { Shell } from "./Shell";
 import { Button } from "@/components/ui/button";
 import { confirmEmail, resetPassword } from "@/lib/account-security.functions";
@@ -8,6 +8,9 @@ import { userFacingError } from "@/lib/user-facing-error";
 
 export function AccountLink({ reset = false }: { reset?: boolean }) {
   const queryClient = useQueryClient();
+  const errorId = useId();
+  const repeatRef = useRef<HTMLInputElement>(null);
+  const [passwordMismatch, setPasswordMismatch] = useState(false);
   const [token, setToken] = useState(""),
     [ready, setReady] = useState(false),
     [password, setPassword] = useState(""),
@@ -24,11 +27,18 @@ export function AccountLink({ reset = false }: { reset?: boolean }) {
   }, []);
   async function submit(event: React.FormEvent) {
     event.preventDefault();
+    if (busy) return;
+    if (reset && password !== repeat) {
+      setPasswordMismatch(true);
+      setError("Your passwords do not match.");
+      repeatRef.current?.focus();
+      return;
+    }
+    setPasswordMismatch(false);
     setBusy(true);
     setError("");
     try {
       if (reset) {
-        if (password !== repeat) throw new Error("Your passwords do not match.");
         await resetPassword({ data: { token, password } });
         setSignInRequired(true);
       } else {
@@ -91,8 +101,8 @@ export function AccountLink({ reset = false }: { reset?: boolean }) {
             {reset ? (
               <>
                 {[
-                  { label: "New password", value: password, update: setPassword },
-                  { label: "Repeat new password", value: repeat, update: setRepeat },
+                  { label: "New password", value: password, update: setPassword, repeat: false },
+                  { label: "Repeat new password", value: repeat, update: setRepeat, repeat: true },
                 ].map((field) => (
                   <label key={field.label} className="block text-sm">
                     {field.label}
@@ -103,8 +113,17 @@ export function AccountLink({ reset = false }: { reset?: boolean }) {
                       required
                       minLength={8}
                       maxLength={200}
+                      ref={field.repeat ? repeatRef : undefined}
+                      aria-invalid={field.repeat && passwordMismatch ? true : undefined}
+                      aria-describedby={field.repeat && passwordMismatch ? errorId : undefined}
                       value={field.value}
-                      onChange={(e) => field.update(e.target.value)}
+                      onChange={(e) => {
+                        field.update(e.target.value);
+                        if (passwordMismatch) {
+                          setPasswordMismatch(false);
+                          setError("");
+                        }
+                      }}
                     />
                   </label>
                 ))}
@@ -121,7 +140,7 @@ export function AccountLink({ reset = false }: { reset?: boolean }) {
           </form>
         )}
         {error && (
-          <p role="alert" className="mt-4 text-sm text-destructive">
+          <p id={errorId} role="alert" className="mt-4 text-sm text-destructive">
             {error}
           </p>
         )}

@@ -95,7 +95,7 @@ function ConsentPage() {
   }
   return (
     <Shell signedIn={false}>
-      <div className="mx-auto max-w-xl">
+      <div className="account-access mx-auto max-w-xl">
         <p className="technical text-muted-foreground">You choose what to share</p>
         <h1 className="mt-3 text-3xl">Connect an assistant</h1>
         {(error || sessionError) && (

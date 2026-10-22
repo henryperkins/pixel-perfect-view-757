@@ -1,0 +1,9 @@
+# Frozen captures must retain the exact Git blob bytes, including intentional CRLF.
+docs/reviews/** -text
+
+# These active inputs participate in byte-pinned archive and runtime identities.
+src/lib/ai/context-writing-benchmarks.json text eol=lf
+src/lib/ai/context-writing-material.json text eol=lf
+src/lib/ai/member-context-reading.ts text eol=lf
+src/lib/ai/member-context-readings.json text eol=lf
+src/lib/content/context-pilot-bundle.json text eol=lf

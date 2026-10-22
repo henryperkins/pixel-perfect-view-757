@@ -57,6 +57,13 @@ npm test
 npm run test:reading
 ```
 
+On Windows, the repository's `.gitattributes` preserves frozen review captures as
+exact bytes and pins the raw application inputs used by archive identities to LF.
+This remains necessary when Git has `core.autocrlf=true`. Archive verifiers still
+hash the original bytes; they do not normalize line endings or accept alternate
+hashes. The Vite MCP adapter supplies a native filesystem root to Lovable's plugin
+while retaining its route-containment checks and OAuth metadata generation.
+
 Reading tests use the actual server, registry, encryption and SQL against disposable
 SQLite storage. Model responses are intercepted fixtures; no live model, account,
 ephemeris service or production database is called. Browser checks use isolated

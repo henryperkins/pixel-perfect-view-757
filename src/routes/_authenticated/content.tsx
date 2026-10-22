@@ -235,7 +235,7 @@ function ContentPage() {
 
   return (
     <Shell>
-      <div className="grid animate-rise gap-10 lg:grid-cols-[minmax(0,1fr)_15rem]">
+      <div className="content-tools grid animate-rise gap-10 lg:grid-cols-[minmax(0,1fr)_15rem]">
         <div className="min-w-0 space-y-12">
           <div>
             <h1 className="text-3xl font-serif leading-snug">Content releases</h1>
@@ -793,6 +793,7 @@ function EdgePlane({ isAdmin }: { isAdmin: boolean }) {
             size="sm"
             type="button"
             onClick={() => start.mutate()}
+            className="h-auto min-h-11 max-w-full whitespace-normal [overflow-wrap:anywhere]"
             disabled={start.isPending}
           >
             {start.isPending ? "Starting…" : "Start a reading run for today"}

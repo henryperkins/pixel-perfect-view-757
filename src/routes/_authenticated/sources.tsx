@@ -64,7 +64,7 @@ function SourceChip({ src }: { src: Src }) {
   const service = src === "service";
   return (
     <span
-      className={`technical inline-block rounded-sm border px-1.5 py-0.5 ${
+      className={`technical inline-block min-w-0 max-w-full rounded-sm border px-1.5 py-0.5 [overflow-wrap:anywhere] ${
         service
           ? "border-rule bg-accent text-accent-foreground"
           : "border-rule bg-secondary text-muted-foreground"
@@ -235,8 +235,8 @@ function Section({
 }) {
   return (
     <section className="mt-10">
-      <div className="flex items-baseline justify-between border-b border-rule pb-2">
-        <h2 className="text-lg">{title}</h2>
+      <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-2 border-b border-rule pb-2">
+        <h2 className="min-w-0 text-lg">{title}</h2>
         {src !== undefined ? <SourceChip src={src} /> : null}
       </div>
       <ul className="divide-y divide-rule">{children}</ul>

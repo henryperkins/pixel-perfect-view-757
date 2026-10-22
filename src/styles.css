@@ -3428,6 +3428,9 @@ input.calculator-control {
     );
   }
   .pattern-mobile-field,
+  .content-tools input:not([type="checkbox"]):not([type="radio"]),
+  .content-tools select,
+  .content-tools textarea,
   .travel-date-form input,
   .calculator-control,
   input.calculator-control {
@@ -3462,12 +3465,18 @@ html[data-enlarged-chrome] .pattern-header:not([data-menu-open="true"]) {
   }
 }
 
-/* Keep contextual recovery, settings, plan and calculator actions inside their column with enlarged text. */
+.account-access {
+  overflow-wrap: anywhere;
+}
+
+/* Keep contextual recovery, settings, account, plan and calculator actions inside their column with enlarged text. */
 .draft-recovery button,
 .privacy-main button,
 .privacy-main a.inline-flex,
 .plans-main button,
 .plans-main a.inline-flex,
+.account-access button,
+.account-access a.inline-flex,
 .calculator-action a.inline-flex {
   max-width: 100%;
   height: auto;

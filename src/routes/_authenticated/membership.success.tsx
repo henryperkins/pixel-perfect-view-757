@@ -53,7 +53,7 @@ function MembershipSuccess() {
   }, [query.data, client]);
   return (
     <Shell>
-      <div className="mx-auto max-w-xl">
+      <div className="account-access mx-auto max-w-xl">
         <h1 className="text-3xl">
           {query.data?.fullAccess ? "Your full chapters are ready" : "Confirming your membership"}
         </h1>

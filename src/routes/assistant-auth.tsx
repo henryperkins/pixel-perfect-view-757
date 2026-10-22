@@ -82,7 +82,7 @@ function AssistantAuthPage() {
   }
   return (
     <Shell signedIn={false}>
-      <div className="mx-auto max-w-md">
+      <div className="account-access mx-auto max-w-md">
         <p className="technical text-muted-foreground">Connected assistants</p>
         <h1 className="mt-3 text-3xl">{updating ? "Set a new password" : "Assistant sign-in"}</h1>
         <p className="mt-3 text-sm text-muted-foreground">
