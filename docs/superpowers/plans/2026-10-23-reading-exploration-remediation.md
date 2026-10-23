@@ -1,6 +1,6 @@
 # Reading exploration remediation plan
 
-- **Status:** Implemented on 2026-10-23 in `c406239..adb20bc`; baseline `f7d1b37`; verification record in Section 12
+- **Status:** Implemented on 2026-10-23 in `c406239..4348fac`; baseline `f7d1b37`; verification record in Section 12
 - **Date:** 2026-10-23
 - **Baseline:** `main` at `f7d1b37`; application tree clean before this untracked plan was added
 - **Scope:** Pattern chapter reader, chapter evidence, Today reading evidence, chart summary/details, and shared timing evidence
