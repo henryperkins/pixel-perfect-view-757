@@ -1,0 +1,195 @@
+{
+  "engine": "155.0.8059.12",
+  "checks": [
+    {
+      "name": "access-remount-unlocks",
+      "passed": true,
+      "chapterRequests": 1
+    },
+    {
+      "name": "access-remount-stays-locked",
+      "passed": true,
+      "chapterRequests": 2
+    },
+    {
+      "name": "access-initial-order",
+      "passed": true,
+      "chapterRequests": 2,
+      "order": "narrative-first"
+    },
+    {
+      "name": "access-initial-order-reversed",
+      "passed": true,
+      "chapterRequests": 2,
+      "order": "membership-first"
+    },
+    {
+      "name": "access-remount-preview",
+      "passed": true,
+      "chapterRequests": 1
+    },
+    {
+      "name": "access-reconciled-polls",
+      "passed": true,
+      "chapterRequests": 2,
+      "additionalAfterPolls": 0
+    },
+    {
+      "name": "access-unavailable-remount",
+      "passed": true,
+      "chapterRequests": 0
+    },
+    {
+      "name": "access-explicit-retry",
+      "passed": true,
+      "chapterRequests": 1
+    },
+    {
+      "name": "access-retained-reopen",
+      "passed": true,
+      "chapterRequests": 1
+    },
+    {
+      "name": "access-changed-chart",
+      "passed": true,
+      "chapterRequests": 1
+    },
+    {
+      "name": "evidence-focus-390",
+      "passed": true,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "paragraphFocus": {
+        "id": "chapter-sun_aries-paragraph-1",
+        "outlineStyle": "solid",
+        "outlineWidth": "2px",
+        "top": 98.734375,
+        "header": 83
+      },
+      "factFocus": {
+        "id": "chapter-sun_aries-fact-N1",
+        "outlineStyle": "solid"
+      },
+      "upsell": {
+        "tag": "H4",
+        "weight": "500",
+        "family": "Lora, Georgia, serif",
+        "size": "20px",
+        "titleFamily": "Lora, Georgia, serif"
+      },
+      "connection": {
+        "tag": "H3",
+        "weight": "400",
+        "family": "Lora, Georgia, serif",
+        "size": "18px",
+        "headingFamily": "Lora, Georgia, serif"
+      }
+    },
+    {
+      "name": "evidence-focus-1440",
+      "passed": true,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "paragraphFocus": {
+        "id": "chapter-sun_aries-paragraph-1",
+        "outlineStyle": "solid",
+        "outlineWidth": "2px",
+        "top": 98.546875,
+        "header": 83
+      },
+      "factFocus": {
+        "id": "chapter-sun_aries-fact-N1",
+        "outlineStyle": "solid"
+      },
+      "upsell": {
+        "tag": "H4",
+        "weight": "500",
+        "family": "Lora, Georgia, serif",
+        "size": "20px",
+        "titleFamily": "Lora, Georgia, serif"
+      },
+      "connection": {
+        "tag": "H3",
+        "weight": "400",
+        "family": "Lora, Georgia, serif",
+        "size": "18px",
+        "headingFamily": "Lora, Georgia, serif"
+      }
+    },
+    {
+      "name": "chapter-toggle-enlarged-text",
+      "passed": true,
+      "labelRight": 235,
+      "chevronLeft": 247,
+      "overflow": 0
+    },
+    {
+      "name": "arrival-motion-no-preference",
+      "passed": true,
+      "reducedMotion": "no-preference",
+      "animations": 1,
+      "afterReopen": 1
+    },
+    {
+      "name": "arrival-motion-reduce",
+      "passed": true,
+      "reducedMotion": "reduce",
+      "animations": 0,
+      "afterReopen": 0
+    },
+    {
+      "name": "today-plain-sources",
+      "passed": true,
+      "accuracy": "Within about an hour"
+    },
+    {
+      "name": "transit-sequence-valid",
+      "passed": true,
+      "windows": 3
+    },
+    {
+      "name": "transit-sequence-damaged",
+      "passed": true,
+      "fallback": true
+    },
+    {
+      "name": "access-membership-failure",
+      "passed": true,
+      "chapterRequests": 2
+    },
+    {
+      "name": "access-initial-membership-failure",
+      "passed": true,
+      "chapterRequests": 1
+    },
+    {
+      "name": "access-held-initial-writing",
+      "passed": true,
+      "chapterRequests": 1
+    },
+    {
+      "name": "access-server-expiry",
+      "passed": true,
+      "chapterRequests": 2
+    },
+    {
+      "name": "access-omitted-expiry-revalidates-only",
+      "passed": true,
+      "chapterRequests": 2
+    },
+    {
+      "name": "access-omitted-expiry-future",
+      "passed": true,
+      "chapterRequests": 2
+    },
+    {
+      "name": "access-null-expiry-no-timer",
+      "passed": true,
+      "chapterRequests": 1
+    }
+  ]
+}

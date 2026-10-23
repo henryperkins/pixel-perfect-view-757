@@ -1,16 +1,19 @@
 # Browsing refresh
 
 ## Standard Stripe checkout
+
 - [x] Add Pattern sign-out outside checkout, including retry on failure and draft cleanup; Link and cards already enabled in sandbox/live default settings. Isolated desktop/mobile warning checks and 67 account/payment tests pass; build OK. Stripe exposes no merchant-controlled Link logout API, so Link-session logout remains unavailable, not implemented. Real returning-Link checkout verification and publication remain blocked as below.
 - [x] Replace Link-required handling for new checkouts with automatic tax and optional eligible payment methods; expire older open Link-required sessions.
 - [x] Run checkout regression tests (35 passed) and inspect preview diagnostics (build OK).
 - [ ] Verify standard checkout with a signed-in returning Link buyer: needs an owner-approved isolated test account with a normal inbox; no real member or live payment was changed. Publish this subsequent checkout change only with explicit approval.
 
 ## Dependency security repair
+
 - [ ] Resolve the remaining @lovable.dev/mcp-js advisory: updated to 3.1.1, but its exact SDK dependency still locks to 1.28.0; blocked on a compatible upstream release using SDK >=1.31.0, without forced versions.
 - [x] Re-scan production dependencies (one remaining advisory), run 26 assistant regression tests (all passed), and check the automatic app build (build OK).
 
 ## Purchase and account audit
+
 - [x] Research current catalog, authentication, payments, account changes, entitlements, and renewals; document evidence and gaps in docs/reviews/membership/2026-10-17-audit.md (54 tests passed; live onboarding incomplete).
 - [x] Resolve business-policy questions and present the repair plan for approval.
 - [x] Implement connected embedded checkout, environment-scoped D1 billing migration, invoice coverage, plan changes, verification and recovery protections with regression tests.
@@ -66,6 +69,16 @@ Verification: production build, TypeScript, changed-component lint, formatting, 
 
 Verification: production build, TypeScript, changed-component lint, formatting, and whitespace checks passed. Playwright exercised the actual Your Pattern route and components with synthetic chart/narrative fixtures at 320, 390, 768, 1024, 1440, and 1920px. Chapter filters, retained readings and evidence, previous/next focus and sticky-header offsets, complete connection filtering and numeric orbs, journal/source/birth navigation, loading and late responses, independent retries, missing/empty/single/uncertain/degraded data, unfamiliar categories, 42-chapter long-content browsing, keyboard controls, and reduced motion passed without browser errors or warnings. Light and dark screenshots were compared with the approved Timing design and the previous Your Pattern page. Live authenticated charts and database persistence were not exercised.
 
+# Reading exploration remediation
+
+- [x] Make the server chapter response authoritative for access, revalidate readable cached chapters on route return, and keep background membership/narrative failures non-blocking.
+- [x] Validate and sanitize saved chapter citations at the persistence boundary, and render malformed or shortened evidence defensively.
+- [x] Give citation targets a visible focus outline, correct heading levels and weights, and use plain accuracy and degraded-reason copy.
+- [x] Remove the dead chapter-toggle column and guard saved transit sequences against incomplete evidence.
+
+Verification: the remediation plan records the exact commands, fixtures and results in its Section 12. The focused Node suites, full `npm test`, typecheck, build, scoped lint, formatting and whitespace checks passed. The tracked `pattern-evidence` browser case file passed all 25 mounted lifecycle, focus, heading, layout, motion, Today copy and transit-sequence checks in WebKit 26.6 and bundled Chromium 155 at 390×844, 1440×1000 and 320×740 with 200% root text, including controlled-clock expiry and recorded chapter-request counts. Live billing, provider and database services were not exercised.
+
 ## Agent integrations (MCP)
+
 - [ ] Revise MCP plan per the uploaded review (opt-in account link, delegated-token isolation, grants/revocation, saved-only readers, private-data exclusion)
 - [ ] Implement approved revised plan

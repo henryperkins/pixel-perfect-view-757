@@ -1,0 +1,937 @@
+
+> build
+> vite build
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - `__dirname` (vite.config.ts:29:48). Use `import.meta.dirname` instead
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+The plugin "vite-tsconfig-paths" is detected. Vite now supports tsconfig paths resolution natively via the resolve.tsconfigPaths option. You can remove the plugin and set resolve.tsconfigPaths: true in your Vite config instead.
+vite v8.3.4 building client environment for production...
+transforming...
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/billing.functions.ts:20:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/billing.functions.ts:51:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/billing.functions.ts:59:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/account-security.functions.ts:8:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/account-security.functions.ts:17:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/account-security.functions.ts:26:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/account-security.functions.ts:50:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/account-security.functions.ts:66:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:13:27 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:21:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:45:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:66:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:102:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:124:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:139:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:161:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:178:26 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:216:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:227:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:252:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:284:25 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:314:39 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:322:26 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:339:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:359:39 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:379:44 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:400:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:422:38 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:452:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:467:42 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:476:45 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:484:42 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:500:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:513:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:526:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:543:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:551:42 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:567:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:583:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:598:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/auth.functions.ts:10:23 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/auth.functions.ts:17:23 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/assistant.functions.ts:9:38 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/assistant.functions.ts:17:40 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/assistant.functions.ts:34:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/assistant.functions.ts:49:47 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/assistant.functions.ts:57:46 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/assistant.functions.ts:66:44 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:client] /home/ubuntu/pixel-perfect-view-757/src/lib/assistant.functions.ts:75:45 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+✓ 2244 modules transformed.
+rendering chunks...
+computing gzip size...
+.output/public/assets/celestial-browsing-BvtxswAt.webp        106.90 kB
+.output/public/assets/styles-zq5xXcEl.css                     145.99 kB │ gzip:  25.09 kB
+.output/public/assets/root-DLTE-HSj.js                          0.03 kB │ gzip:   0.05 kB
+.output/public/assets/auth-middleware-BSwfNw1Y.js               0.07 kB │ gzip:   0.09 kB
+.output/public/assets/context-policy-B-j_A00A.js                0.08 kB │ gzip:   0.09 kB
+.output/public/assets/check-DbMcgXVX.js                         0.11 kB │ gzip:   0.13 kB
+.output/public/assets/route-ZfQfcaLR.js                         0.14 kB │ gzip:   0.14 kB
+.output/public/assets/confirm-email-BNiRac1z.js                 0.14 kB │ gzip:   0.14 kB
+.output/public/assets/evidence-focus-CQ5wkZHg.js                0.14 kB │ gzip:   0.14 kB
+.output/public/assets/reset-password-vz3e4MKw.js                0.15 kB │ gzip:   0.14 kB
+.output/public/assets/arrow-left-CnN99mZp.js                    0.15 kB │ gzip:   0.15 kB
+.output/public/assets/useNavigate-BR4U6F24.js                   0.19 kB │ gzip:   0.17 kB
+.output/public/assets/SectionNav-DfztFxRu.js                    0.25 kB │ gzip:   0.20 kB
+.output/public/assets/useMembership-CzULtHHD.js                 0.26 kB │ gzip:   0.22 kB
+.output/public/assets/billing-policy-BS8ShTtF.js                0.32 kB │ gzip:   0.24 kB
+.output/public/assets/useScrollableField-DclKmdet.js            0.35 kB │ gzip:   0.27 kB
+.output/public/assets/user-facing-error-D71rhhZz.js             0.50 kB │ gzip:   0.33 kB
+.output/public/assets/pattern-query-cache-Biwod78K.js           0.51 kB │ gzip:   0.22 kB
+.output/public/assets/sunrise-B-Lg7ulO.js                       0.52 kB │ gzip:   0.29 kB
+.output/public/assets/sunset-Pz9tiZlc.js                        0.53 kB │ gzip:   0.29 kB
+.output/public/assets/pattern-view-DWMMJtsP.js                  0.81 kB │ gzip:   0.51 kB
+.output/public/assets/useCalendarRefresh-CMt7PdKF.js            1.01 kB │ gzip:   0.53 kB
+.output/public/assets/assistant.functions-Bxdtyvb4.js           1.06 kB │ gzip:   0.54 kB
+.output/public/assets/tslib.es6-Tae09705.js                     1.06 kB │ gzip:   0.52 kB
+.output/public/assets/billing.functions-CHN-quhY.js             1.07 kB │ gzip:   0.60 kB
+.output/public/assets/account-security.functions-DNOH5m5T.js    1.16 kB │ gzip:   0.59 kB
+.output/public/assets/plain-engine-D0oIKNAM.js                  1.67 kB │ gzip:   0.69 kB
+.output/public/assets/onboarding-BnvqUIVs.js                    1.73 kB │ gzip:   0.90 kB
+.output/public/assets/membership.success-KCFwSZKS.js            2.14 kB │ gzip:   1.01 kB
+.output/public/assets/useMutation-DjTCVtVX.js                   2.32 kB │ gzip:   0.96 kB
+.output/public/assets/MotionSelection-CHjmbC8z.js               2.88 kB │ gzip:   1.20 kB
+.output/public/assets/TodayJournal-Cdy13FJ1.js                  3.12 kB │ gzip:   1.35 kB
+.output/public/assets/AccountLink-C7exipfW.js                   3.14 kB │ gzip:   1.39 kB
+.output/public/assets/auth-CyFD1iS-.js                          3.48 kB │ gzip:   1.48 kB
+.output/public/assets/DraftRecoveryNotice-ImTEV_x5.js           3.62 kB │ gzip:   1.52 kB
+.output/public/assets/lazyRouteComponent-DZR_ubRD.js            3.65 kB │ gzip:   1.33 kB
+.output/public/assets/birth-DCgC3Std.js                         3.93 kB │ gzip:   1.63 kB
+.output/public/assets/member-draft-store.client-D8QRtxn2.js     4.39 kB │ gzip:   1.74 kB
+.output/public/assets/TimingWindow-DgvkaBul.js                  5.16 kB │ gzip:   1.78 kB
+.output/public/assets/TransitSequence-DVxddRyL.js               5.23 kB │ gzip:   2.04 kB
+.output/public/assets/pattern.functions-Bccu5C2f.js             5.95 kB │ gzip:   2.42 kB
+.output/public/assets/sources-B_PB5bmQ.js                       6.70 kB │ gzip:   2.48 kB
+.output/public/assets/assistant-auth-DsffMhYQ.js                7.90 kB │ gzip:   3.16 kB
+.output/public/assets/assistants-DR_XuwXb.js                    8.34 kB │ gzip:   2.48 kB
+.output/public/assets/consent-CYslBl17.js                       8.39 kB │ gzip:   2.92 kB
+.output/public/assets/useSelector-dW4koh07.js                  10.99 kB │ gzip:   4.11 kB
+.output/public/assets/time-travel-Bwhqa7gT.js                  13.26 kB │ gzip:   4.55 kB
+.output/public/assets/BirthDetailsForm-BE8Nz3Zo.js             18.03 kB │ gzip:   6.12 kB
+.output/public/assets/Shell-QDwnKfSP.js                        19.32 kB │ gzip:   6.62 kB
+.output/public/assets/timing-Cq-Ct_Gy.js                       19.62 kB │ gzip:   6.31 kB
+.output/public/assets/journal-0CvWMAvn.js                      21.55 kB │ gzip:   6.63 kB
+.output/public/assets/plans-CNOAm5Ne.js                        21.98 kB │ gzip:   7.73 kB
+.output/public/assets/transit-chart-calculator-CK6i03bt.js     23.63 kB │ gzip:   6.21 kB
+.output/public/assets/pattern-DccAfSoI.js                      32.29 kB │ gzip:  10.02 kB
+.output/public/assets/alert-dialog-CKeoHFmr.js                 43.80 kB │ gzip:  13.87 kB
+.output/public/assets/privacy-LUr0wujD.js                      43.97 kB │ gzip:  12.19 kB
+.output/public/assets/routes-Wi6tzL36.js                       49.82 kB │ gzip:  14.59 kB
+.output/public/assets/member-drafts-BnGWTBFq.js                90.53 kB │ gzip:  26.02 kB
+.output/public/assets/content-Dp47OMvA.js                     118.92 kB │ gzip:  29.49 kB
+.output/public/assets/button-BKRrKwOS.js                      127.34 kB │ gzip:  40.74 kB
+.output/public/assets/useAssistantSession-DiNZm6O5.js         218.89 kB │ gzip:  56.77 kB
+.output/public/assets/index-ADd2-H5A.js                       346.56 kB │ gzip: 109.60 kB
+
+✓ built in 1.84s
+vite v8.3.4 building ssr environment for production...
+transforming...
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/account-security.functions.ts?tss-serverfn-split:8:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/account-security.functions.ts?tss-serverfn-split:17:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/account-security.functions.ts?tss-serverfn-split:26:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/account-security.functions.ts?tss-serverfn-split:50:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/account-security.functions.ts?tss-serverfn-split:66:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/billing.functions.ts?tss-serverfn-split:20:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/billing.functions.ts?tss-serverfn-split:51:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/billing.functions.ts?tss-serverfn-split:59:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:13:27 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:21:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:45:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:66:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:102:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:124:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:139:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:161:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:178:26 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:216:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:227:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:252:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:284:25 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:314:39 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:322:26 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:339:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:359:39 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:379:44 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:400:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:422:38 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:452:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:467:42 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:476:45 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:484:42 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:500:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:513:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:526:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:543:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:551:42 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:567:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:583:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts?tss-serverfn-split:598:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/assistant.functions.ts?tss-serverfn-split:9:38 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/assistant.functions.ts?tss-serverfn-split:17:40 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/assistant.functions.ts?tss-serverfn-split:34:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/assistant.functions.ts?tss-serverfn-split:49:47 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/assistant.functions.ts?tss-serverfn-split:57:46 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/assistant.functions.ts?tss-serverfn-split:66:44 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/assistant.functions.ts?tss-serverfn-split:75:45 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/auth.functions.ts?tss-serverfn-split:10:23 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/auth.functions.ts?tss-serverfn-split:17:23 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/account-security.functions.ts:8:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/account-security.functions.ts:17:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/account-security.functions.ts:26:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/account-security.functions.ts:50:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/account-security.functions.ts:66:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:13:27 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:21:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:45:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:66:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:102:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:124:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:139:29 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:161:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:178:26 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:216:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:227:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:252:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:284:25 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:314:39 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:322:26 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:339:28 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:359:39 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:379:44 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:400:31 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:422:38 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:452:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:467:42 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:476:45 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:484:42 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:500:41 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:513:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:526:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:543:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:551:42 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:567:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:583:35 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/pattern.functions.ts:598:36 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/billing.functions.ts:20:30 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/billing.functions.ts:51:33 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/billing.functions.ts:59:34 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/auth.functions.ts:10:23 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/auth.functions.ts:17:23 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/assistant.functions.ts:9:38 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/assistant.functions.ts:17:40 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/assistant.functions.ts:34:37 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/assistant.functions.ts:49:47 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/assistant.functions.ts:57:46 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/assistant.functions.ts:66:44 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+[plugin tanstack-start-core::server-fn:ssr] /home/ubuntu/pixel-perfect-view-757/src/lib/assistant.functions.ts:75:45 createServerFn().inputValidator() is deprecated. Use createServerFn().validator() instead.
+✓ 340 modules transformed.
+rendering chunks...
+computing gzip size...
+node_modules/.nitro/vite/services/ssr/assets/celestial-browsing-BvtxswAt.webp         106.90 kB
+node_modules/.nitro/vite/services/ssr/assets/styles-zq5xXcEl.css                      145.99 kB │ gzip: 25.09 kB
+node_modules/.nitro/vite/services/ssr/assets/server-13rbKLcs.js                         0.05 kB │ gzip:  0.07 kB
+node_modules/.nitro/vite/services/ssr/assets/empty-plugin-adapters-D9UWiqvJ.js          0.22 kB │ gzip:  0.16 kB
+node_modules/.nitro/vite/services/ssr/assets/route-Di7iQBCH.js                          0.26 kB │ gzip:  0.19 kB
+node_modules/.nitro/vite/services/ssr/assets/confirm-email-BfwLOhQj.js                  0.28 kB │ gzip:  0.21 kB
+node_modules/.nitro/vite/services/ssr/assets/reset-password-CVX-tIeu.js                 0.29 kB │ gzip:  0.21 kB
+node_modules/.nitro/vite/services/ssr/assets/rolldown-runtime-D7D4PA-g.js               0.36 kB │ gzip:  0.25 kB
+node_modules/.nitro/vite/services/ssr/assets/evidence-focus-ur2xOjYm.js                 0.37 kB │ gzip:  0.26 kB
+node_modules/.nitro/vite/services/ssr/assets/createServerRpc-CrbX1m-r.js                0.39 kB │ gzip:  0.27 kB
+node_modules/.nitro/vite/services/ssr/assets/SectionNav-BY02w8Un.js                     0.50 kB │ gzip:  0.33 kB
+node_modules/.nitro/vite/services/ssr/assets/useMembership-DEYRvYr9.js                  0.50 kB │ gzip:  0.32 kB
+node_modules/.nitro/vite/services/ssr/assets/assistant-navigation-DqpQAFbz.js           0.62 kB │ gzip:  0.39 kB
+node_modules/.nitro/vite/services/ssr/assets/useScrollableField-Y9RjjrRW.js             0.69 kB │ gzip:  0.39 kB
+node_modules/.nitro/vite/services/ssr/assets/chapter-policy-CjZ_GsQc.js                 0.69 kB │ gzip:  0.46 kB
+node_modules/.nitro/vite/services/ssr/assets/user-facing-error-Dj65ELmn.js              0.78 kB │ gzip:  0.45 kB
+node_modules/.nitro/vite/services/ssr/assets/createMiddleware-B_4t7rW1.js               0.83 kB │ gzip:  0.32 kB
+node_modules/.nitro/vite/services/ssr/assets/auth-middleware-D5gtUc_C.js                0.88 kB │ gzip:  0.50 kB
+node_modules/.nitro/vite/services/ssr/assets/pattern-query-cache-DmSZhuFR.js            0.97 kB │ gzip:  0.40 kB
+node_modules/.nitro/vite/services/ssr/assets/billing-webhook.server-DWWTwtRj.js         0.99 kB │ gzip:  0.52 kB
+node_modules/.nitro/vite/services/ssr/assets/pattern-view-BC1Hp3lH.js                   1.43 kB │ gzip:  0.76 kB
+node_modules/.nitro/vite/services/ssr/assets/narrative-citations-D7z6pbRj.js            1.57 kB │ gzip:  0.76 kB
+node_modules/.nitro/vite/services/ssr/assets/start-z_c7L99l.js                          1.69 kB │ gzip:  0.77 kB
+node_modules/.nitro/vite/services/ssr/assets/transit-candidate-bundle-C_OUqFvx.js       2.04 kB │ gzip:  0.93 kB
+node_modules/.nitro/vite/services/ssr/assets/useCalendarRefresh--mDPgUjI.js             2.04 kB │ gzip:  0.85 kB
+node_modules/.nitro/vite/services/ssr/assets/stripe.server-DROfOnyW.js                  2.07 kB │ gzip:  0.92 kB
+node_modules/.nitro/vite/services/ssr/assets/billing-policy-CmvjX7on.js                 2.15 kB │ gzip:  1.02 kB
+node_modules/.nitro/vite/services/ssr/assets/billing.functions-DHn-S28Z.js              2.23 kB │ gzip:  1.03 kB
+node_modules/.nitro/vite/services/ssr/assets/plain-engine-DUEtouX4.js                   2.24 kB │ gzip:  0.78 kB
+node_modules/.nitro/vite/services/ssr/assets/account-security.functions-BwTFpoGk.js     2.41 kB │ gzip:  0.95 kB
+node_modules/.nitro/vite/services/ssr/assets/auth.functions-wAPGLMl6.js                 2.45 kB │ gzip:  0.82 kB
+node_modules/.nitro/vite/services/ssr/assets/onboarding-B19v-0qC.js                     2.80 kB │ gzip:  1.16 kB
+node_modules/.nitro/vite/services/ssr/assets/workflows.server-DIo6GrrV.js               2.85 kB │ gzip:  1.31 kB
+node_modules/.nitro/vite/services/ssr/assets/assistant.functions-B5mwrO2j.js            2.88 kB │ gzip:  1.06 kB
+node_modules/.nitro/vite/services/ssr/assets/lunations.server-BXlK6wLx.js               3.18 kB │ gzip:  1.41 kB
+node_modules/.nitro/vite/services/ssr/assets/membership.success-BYeIRapE.js             3.32 kB │ gzip:  1.27 kB
+node_modules/.nitro/vite/services/ssr/assets/alert-dialog-uaBAxH4S.js                   3.32 kB │ gzip:  0.89 kB
+node_modules/.nitro/vite/services/ssr/assets/swiss-calculations.server-LFk820xv.js      3.38 kB │ gzip:  1.43 kB
+node_modules/.nitro/vite/services/ssr/assets/crypto.server-CI5fzjee.js                  3.51 kB │ gzip:  1.36 kB
+node_modules/.nitro/vite/services/ssr/assets/billing.functions-KoPcnQRW.js              4.38 kB │ gzip:  1.23 kB
+node_modules/.nitro/vite/services/ssr/assets/TodayJournal-BIhZyKE1.js                   4.88 kB │ gzip:  1.72 kB
+node_modules/.nitro/vite/services/ssr/assets/AccountLink-Bt3IIlyY.js                    4.92 kB │ gzip:  1.75 kB
+node_modules/.nitro/vite/services/ssr/assets/transit-episodes.server-Hiuivalf.js        5.09 kB │ gzip:  1.99 kB
+node_modules/.nitro/vite/services/ssr/index.js                                          5.09 kB │ gzip:  2.18 kB
+node_modules/.nitro/vite/services/ssr/assets/MotionSelection-DVpXDN2J.js                5.11 kB │ gzip:  1.73 kB
+node_modules/.nitro/vite/services/ssr/assets/auth-BnH4o6BM.js                           5.44 kB │ gzip:  1.83 kB
+node_modules/.nitro/vite/services/ssr/assets/timing-DVsZYnih.js                         5.99 kB │ gzip:  2.28 kB
+node_modules/.nitro/vite/services/ssr/assets/DraftRecoveryNotice-DAGmDmuA.js            6.01 kB │ gzip:  1.92 kB
+node_modules/.nitro/vite/services/ssr/assets/birth-cX7hu1Ky.js                          6.09 kB │ gzip:  2.06 kB
+node_modules/.nitro/vite/services/ssr/assets/assistant.functions-B9by_n47.js            6.19 kB │ gzip:  1.37 kB
+node_modules/.nitro/vite/services/ssr/assets/account-security.functions-ByGMLkI4.js     6.60 kB │ gzip:  1.50 kB
+node_modules/.nitro/vite/services/ssr/assets/qualification-plan.server-CF8jbv5T.js      7.17 kB │ gzip:  2.44 kB
+node_modules/.nitro/vite/services/ssr/assets/auth.server-BN3g8DLQ.js                    7.19 kB │ gzip:  2.64 kB
+node_modules/.nitro/vite/services/ssr/assets/assistant-auth-CDObNUKU.js                 8.02 kB │ gzip:  2.37 kB
+node_modules/.nitro/vite/services/ssr/assets/TransitSequence-BL69kYFo.js                8.02 kB │ gzip:  2.61 kB
+node_modules/.nitro/vite/services/ssr/assets/TimingWindow-CRqNUCtu.js                   8.40 kB │ gzip:  2.27 kB
+node_modules/.nitro/vite/services/ssr/assets/useAssistantSession-C_xudAax.js            8.95 kB │ gzip:  3.14 kB
+node_modules/.nitro/vite/services/ssr/assets/upcoming.server-Wb-1ii5L.js                9.08 kB │ gzip:  3.05 kB
+node_modules/.nitro/vite/services/ssr/assets/registry-8P4EGDJ8.js                       9.22 kB │ gzip:  1.91 kB
+node_modules/.nitro/vite/services/ssr/assets/plans-DgqFBY2_.js                          9.58 kB │ gzip:  3.15 kB
+node_modules/.nitro/vite/services/ssr/assets/sources-DdeEZjaS.js                        9.60 kB │ gzip:  2.99 kB
+node_modules/.nitro/vite/services/ssr/assets/_tanstack-start-manifest_v-oGov5uCG.js     9.91 kB │ gzip:  1.78 kB
+node_modules/.nitro/vite/services/ssr/assets/registry-CaB7wMpG.js                      10.50 kB │ gzip:  3.11 kB
+node_modules/.nitro/vite/services/ssr/assets/readers.server-DPDIpzDo.js                11.45 kB │ gzip:  3.82 kB
+node_modules/.nitro/vite/services/ssr/assets/solar-location.server-D8ZD_F8z.js         11.51 kB │ gzip:  3.45 kB
+node_modules/.nitro/vite/services/ssr/assets/consent-FGwrEKkU.js                       12.08 kB │ gzip:  3.47 kB
+node_modules/.nitro/vite/services/ssr/assets/account-data.server-CxkgVD6f.js           12.18 kB │ gzip:  4.06 kB
+node_modules/.nitro/vite/services/ssr/assets/assistants-CFMqxIo0.js                    12.94 kB │ gzip:  3.15 kB
+node_modules/.nitro/vite/services/ssr/assets/d1.server-1lsvffbA.js                     13.73 kB │ gzip:  4.50 kB
+node_modules/.nitro/vite/services/ssr/assets/release-lifecycle.server-C3PlDhJw.js      14.11 kB │ gzip:  4.01 kB
+node_modules/.nitro/vite/services/ssr/assets/pattern.functions-Djrnfuop.js             14.87 kB │ gzip:  4.32 kB
+node_modules/.nitro/vite/services/ssr/assets/retention.server-7uZFYqxX.js              15.10 kB │ gzip:  4.59 kB
+node_modules/.nitro/vite/services/ssr/assets/natal-candidate-bundle-C5WEGPCW.js        15.77 kB │ gzip:  5.44 kB
+node_modules/.nitro/vite/services/ssr/assets/account-security.server-DkgvTnSn.js       15.87 kB │ gzip:  4.72 kB
+node_modules/.nitro/vite/services/ssr/assets/assistant.server-BklKrNUu.js              17.28 kB │ gzip:  4.95 kB
+node_modules/.nitro/vite/services/ssr/assets/context-pilot-BdH34fir.js                 17.32 kB │ gzip:  5.55 kB
+node_modules/.nitro/vite/services/ssr/assets/reading-evaluation.fixtures-cMabVhQ1.js   21.69 kB │ gzip:  7.17 kB
+node_modules/.nitro/vite/services/ssr/assets/time-travel-BjD2VRW9.js                   22.29 kB │ gzip:  5.84 kB
+node_modules/.nitro/vite/services/ssr/assets/check-in-DpZkCyg-.js                      24.47 kB │ gzip:  8.36 kB
+node_modules/.nitro/vite/services/ssr/assets/billing.server-DQTMp42c.js                25.83 kB │ gzip:  7.52 kB
+node_modules/.nitro/vite/services/ssr/assets/local-day-CHV_Ich6.js                     27.24 kB │ gzip:  9.66 kB
+node_modules/.nitro/vite/services/ssr/assets/Shell-BXeLUeZx.js                         27.34 kB │ gzip:  7.29 kB
+node_modules/.nitro/vite/services/ssr/assets/button-DLJ2xgmy.js                        28.50 kB │ gzip:  7.87 kB
+node_modules/.nitro/vite/services/ssr/assets/BirthDetailsForm-B6rm_mJ-.js              29.29 kB │ gzip:  7.67 kB
+node_modules/.nitro/vite/services/ssr/assets/timing-Cv8Dom3E.js                        31.99 kB │ gzip:  8.19 kB
+node_modules/.nitro/vite/services/ssr/assets/pattern.functions-BVNpRVJN.js             33.39 kB │ gzip:  6.11 kB
+node_modules/.nitro/vite/services/ssr/assets/transit-episodes-CRrlIg8Y.js              36.42 kB │ gzip:  9.65 kB
+node_modules/.nitro/vite/services/ssr/assets/journal-DfS_Gb0q.js                       36.55 kB │ gzip:  8.59 kB
+node_modules/.nitro/vite/services/ssr/assets/transit-chart-calculator-0aWIuUod.js      38.01 kB │ gzip:  8.16 kB
+node_modules/.nitro/vite/services/ssr/assets/writing-candidate-bundle-DOB1eb_J.js      38.16 kB │ gzip:  9.09 kB
+node_modules/.nitro/vite/services/ssr/assets/pattern-CnTjXWQu.js                       49.57 kB │ gzip: 12.53 kB
+node_modules/.nitro/vite/services/ssr/assets/privacy-C5MeyUdu.js                       54.85 kB │ gzip: 12.53 kB
+node_modules/.nitro/vite/services/ssr/assets/router-DkKBzPQo.js                        67.07 kB │ gzip: 16.91 kB
+node_modules/.nitro/vite/services/ssr/assets/content-drafts.server-CkyUeLc2.js         73.44 kB │ gzip: 20.50 kB
+node_modules/.nitro/vite/services/ssr/assets/routes-esGpHEbl.js                        79.77 kB │ gzip: 19.42 kB
+node_modules/.nitro/vite/services/ssr/assets/language.server-D5xUBpGp.js               82.46 kB │ gzip: 26.30 kB
+node_modules/.nitro/vite/services/ssr/assets/server-ULFIRAYM.js                        89.90 kB │ gzip: 24.02 kB
+node_modules/.nitro/vite/services/ssr/assets/member-context-reading-Dm13qzkZ.js       134.34 kB │ gzip: 36.85 kB
+node_modules/.nitro/vite/services/ssr/assets/content-Bkn4B3tn.js                      161.15 kB │ gzip: 30.87 kB
+node_modules/.nitro/vite/services/ssr/assets/evaluation-runs.server-DC8S3kWR.js       236.16 kB │ gzip: 53.16 kB
+node_modules/.nitro/vite/services/ssr/assets/pattern.server-N8ZJtgrM.js               326.68 kB │ gzip: 84.87 kB
+node_modules/.nitro/vite/services/ssr/assets/reading-evaluation.server-DPbaca9H.js    403.58 kB │ gzip: 27.62 kB
+
+[33m[INEFFECTIVE_DYNAMIC_IMPORT] [0msrc/lib/pattern.server.ts is dynamically imported by src/lib/astro/transit-anchors.server.ts, src/lib/content/content-drafts.server.ts, src/lib/pattern.functions.ts?tss-serverfn-split, src/lib/solar-location.server.ts but also statically imported by src/lib/account-data.server.ts, src/lib/evaluation-runs.server.ts, src/lib/mcp/readers.server.ts, dynamic import will not move module into another chunk.
+
+✓ built in 1.56s
+
+[nitro] ◐ Building [Nitro] (preset: cloudflare-module, compatibility: 2026-10-23)
+[nitro] ✔ Generated public .output/public
+vite v8.3.4 building nitro environment for production...
+
+ WARN  inlineDynamicImports option is ignored because the codeSplitting option is specified.
+
+`output.codeSplitting.groups[0].name` is a function. Set `output.codeSplitting.groups[0].debugName` so the bundler timing report can identify this group.
+transforming...
+✓ 2641 modules transformed.
+rendering chunks...
+computing gzip size...
+.output/server/_ssr/server-13rbKLcs.mjs                         0.05 kB │ gzip:   0.07 kB
+.output/server/_ssr/empty-plugin-adapters-D9UWiqvJ.mjs          0.23 kB │ gzip:   0.16 kB
+.output/server/_libs/unenv.mjs                                  0.34 kB │ gzip:   0.21 kB
+.output/server/_ssr/createServerRpc-CrbX1m-r.mjs                0.39 kB │ gzip:   0.27 kB
+.output/server/_ssr/evidence-focus-ur2xOjYm.mjs                 0.40 kB │ gzip:   0.29 kB
+.output/server/_ssr/rolldown-runtime-D7D4PA-g.mjs               0.41 kB │ gzip:   0.29 kB
+.output/server/_ssr/route-Di7iQBCH.mjs                          0.42 kB │ gzip:   0.27 kB
+.output/server/_ssr/confirm-email-BfwLOhQj.mjs                  0.42 kB │ gzip:   0.28 kB
+.output/server/_ssr/reset-password-CVX-tIeu.mjs                 0.44 kB │ gzip:   0.29 kB
+.output/server/_ssr/useMembership-DEYRvYr9.mjs                  0.57 kB │ gzip:   0.36 kB
+.output/server/_libs/react-email__html.mjs                      0.57 kB │ gzip:   0.34 kB
+.output/server/_chunks/ssr-renderer.mjs                         0.60 kB │ gzip:   0.36 kB
+.output/server/_libs/react-email__link.mjs                      0.65 kB │ gzip:   0.39 kB
+.output/server/_ssr/SectionNav-BY02w8Un.mjs                     0.68 kB │ gzip:   0.42 kB
+.output/server/_ssr/chapter-policy-CjZ_GsQc.mjs                 0.73 kB │ gzip:   0.49 kB
+.output/server/_libs/react-email__head.mjs                      0.79 kB │ gzip:   0.42 kB
+.output/server/_ssr/user-facing-error-Dj65ELmn.mjs              0.82 kB │ gzip:   0.49 kB
+.output/server/_ssr/useScrollableField-Y9RjjrRW.mjs             0.91 kB │ gzip:   0.51 kB
+.output/server/_ssr/auth-middleware-D5gtUc_C.mjs                0.92 kB │ gzip:   0.52 kB
+.output/server/_libs/react-email__container.mjs                 0.98 kB │ gzip:   0.46 kB
+.output/server/_ssr/pattern-query-cache-DmSZhuFR.mjs            1.01 kB │ gzip:   0.43 kB
+.output/server/_ssr/billing-webhook.server-DWWTwtRj.mjs         1.09 kB │ gzip:   0.56 kB
+.output/server/_libs/react-email__preview.mjs                   1.16 kB │ gzip:   0.62 kB
+.output/server/_libs/hookable.mjs                               1.17 kB │ gzip:   0.52 kB
+.output/server/_ssr/pattern-view-BC1Hp3lH.mjs                   1.46 kB │ gzip:   0.79 kB
+.output/server/_libs/react-email__heading.mjs                   1.48 kB │ gzip:   0.67 kB
+.output/server/_ssr/start-z_c7L99l.mjs                          1.60 kB │ gzip:   0.75 kB
+.output/server/_runtime.mjs                                     1.61 kB │ gzip:   0.74 kB
+.output/server/_libs/react-email__body.mjs                      1.67 kB │ gzip:   0.66 kB
+.output/server/_ssr/narrative-citations-D7z6pbRj.mjs            1.69 kB │ gzip:   0.84 kB
+.output/server/_libs/radix-ui__primitive.mjs                    1.83 kB │ gzip:   0.72 kB
+.output/server/_ssr/transit-candidate-bundle-C_OUqFvx.mjs       2.01 kB │ gzip:   0.94 kB
+.output/server/_ssr/plain-engine-DUEtouX4.mjs                   2.29 kB │ gzip:   0.81 kB
+.output/server/_ssr/useCalendarRefresh--mDPgUjI.mjs             2.33 kB │ gzip:   0.97 kB
+.output/server/_ssr/billing.functions-DHn-S28Z.mjs              2.34 kB │ gzip:   1.10 kB
+.output/server/_ssr/billing-policy-CmvjX7on.mjs                 2.44 kB │ gzip:   1.11 kB
+.output/server/_ssr/stripe.server-DROfOnyW.mjs                  2.44 kB │ gzip:   1.02 kB
+.output/server/_ssr/account-security.functions-BwTFpoGk.mjs     2.50 kB │ gzip:   1.02 kB
+.output/server/_ssr/auth.functions-wAPGLMl6.mjs                 2.61 kB │ gzip:   0.89 kB
+.output/server/_libs/react-email__text.mjs                      2.92 kB │ gzip:   1.02 kB
+.output/server/_ssr/workflows.server-DIo6GrrV.mjs               2.95 kB │ gzip:   1.35 kB
+.output/server/_ssr/assistant.functions-B5mwrO2j.mjs            2.98 kB │ gzip:   1.14 kB
+.output/server/_libs/class-variance-authority+clsx.mjs          3.17 kB │ gzip:   1.24 kB
+.output/server/_ssr/lunations.server-BXlK6wLx.mjs               3.32 kB │ gzip:   1.50 kB
+.output/server/_ssr/onboarding-B19v-0qC.mjs                     3.34 kB │ gzip:   1.28 kB
+.output/server/_ssr/swiss-calculations.server-LFk820xv.mjs      3.47 kB │ gzip:   1.47 kB
+.output/server/_ssr/crypto.server-CI5fzjee.mjs                  3.61 kB │ gzip:   1.41 kB
+.output/server/_ssr/alert-dialog-uaBAxH4S.mjs                   3.85 kB │ gzip:   1.02 kB
+.output/server/_ssr/membership.success-BYeIRapE.mjs             3.90 kB │ gzip:   1.39 kB
+.output/server/_libs/jose.mjs                                   4.06 kB │ gzip:   1.61 kB
+.output/server/_ssr/billing.functions-KoPcnQRW.mjs              4.49 kB │ gzip:   1.30 kB
+.output/server/_libs/react-email__button.mjs                    5.02 kB │ gzip:   1.70 kB
+.output/server/_ssr/ssr.mjs                                     5.08 kB │ gzip:   2.19 kB
+.output/server/_ssr/transit-episodes.server-Hiuivalf.mjs        5.20 kB │ gzip:   2.03 kB
+.output/server/_libs/stripe__stripe-js.mjs                      5.43 kB │ gzip:   1.88 kB
+.output/server/_ssr/MotionSelection-DVpXDN2J.mjs                5.50 kB │ gzip:   1.83 kB
+.output/server/_ssr/TodayJournal-BIhZyKE1.mjs                   5.66 kB │ gzip:   1.82 kB
+.output/server/_ssr/AccountLink-Bt3IIlyY.mjs                    5.82 kB │ gzip:   1.87 kB
+.output/server/_libs/lovable.dev__cloud-auth-js.mjs             6.12 kB │ gzip:   2.22 kB
+.output/server/_libs/radix-ui__react-slot.mjs                   6.22 kB │ gzip:   1.93 kB
+.output/server/_ssr/auth-BnH4o6BM.mjs                           6.25 kB │ gzip:   1.97 kB
+.output/server/_ssr/assistant.functions-B9by_n47.mjs            6.28 kB │ gzip:   1.45 kB
+.output/server/_ssr/DraftRecoveryNotice-DAGmDmuA.mjs            6.82 kB │ gzip:   2.05 kB
+.output/server/_ssr/birth-cX7hu1Ky.mjs                          6.85 kB │ gzip:   2.17 kB
+.output/server/_ssr/account-security.functions-ByGMLkI4.mjs     6.90 kB │ gzip:   1.56 kB
+.output/server/_ssr/qualification-plan.server-CF8jbv5T.mjs      7.22 kB │ gzip:   2.45 kB
+.output/server/_ssr/auth.server-BN3g8DLQ.mjs                    7.48 kB │ gzip:   2.72 kB
+.output/server/_ssr/TransitSequence-BL69kYFo.mjs                8.87 kB │ gzip:   2.70 kB
+.output/server/_ssr/assistant-auth-CDObNUKU.mjs                 8.92 kB │ gzip:   2.46 kB
+.output/server/_ssr/useAssistantSession-C_xudAax.mjs            9.17 kB │ gzip:   3.26 kB
+.output/server/_ssr/upcoming.server-Wb-1ii5L.mjs                9.20 kB │ gzip:   3.15 kB
+.output/server/_libs/h3-v2+rou3+srvx.mjs                        9.89 kB │ gzip:   3.06 kB
+.output/server/_tanstack-start-manifest_v-oGov5uCG.mjs          9.97 kB │ gzip:   1.81 kB
+.output/server/_ssr/TimingWindow-CRqNUCtu.mjs                  10.04 kB │ gzip:   2.40 kB
+.output/server/_ssr/registry-CaB7wMpG.mjs                      10.55 kB │ gzip:   3.15 kB
+.output/server/_ssr/registry-8P4EGDJ8.mjs                      10.60 kB │ gzip:   1.99 kB
+.output/server/_ssr/plans-DgqFBY2_.mjs                         10.66 kB │ gzip:   3.24 kB
+.output/server/_ssr/sources-DdeEZjaS.mjs                       11.22 kB │ gzip:   3.09 kB
+.output/server/_ssr/readers.server-DPDIpzDo.mjs                11.56 kB │ gzip:   3.88 kB
+.output/server/_libs/@lovable.dev/email-js+[...].mjs           11.57 kB │ gzip:   3.94 kB
+.output/server/_ssr/solar-location.server-D8ZD_F8z.mjs         11.58 kB │ gzip:   3.52 kB
+.output/server/_ssr/account-data.server-CxkgVD6f.mjs           12.23 kB │ gzip:   4.09 kB
+.output/server/_libs/tanstack__history.mjs                     12.50 kB │ gzip:   3.70 kB
+.output/server/_libs/supabase__functions-js.mjs                12.57 kB │ gzip:   3.48 kB
+.output/server/_ssr/consent-FGwrEKkU.mjs                       13.68 kB │ gzip:   3.61 kB
+.output/server/_ssr/d1.server-1lsvffbA.mjs                     14.04 kB │ gzip:   4.59 kB
+.output/server/_ssr/release-lifecycle.server-C3PlDhJw.mjs      14.10 kB │ gzip:   4.04 kB
+.output/server/_libs/lucide-react.mjs                          14.75 kB │ gzip:   3.20 kB
+.output/server/_ssr/assistants-CFMqxIo0.mjs                    14.78 kB │ gzip:   3.28 kB
+.output/server/_ssr/pattern.functions-Djrnfuop.mjs             15.00 kB │ gzip:   4.46 kB
+.output/server/_ssr/retention.server-7uZFYqxX.mjs              15.75 kB │ gzip:   4.75 kB
+.output/server/_ssr/natal-candidate-bundle-C5WEGPCW.mjs        16.00 kB │ gzip:   5.50 kB
+.output/server/_ssr/account-security.server-DkgvTnSn.mjs       16.32 kB │ gzip:   4.84 kB
+.output/server/_ssr/context-pilot-BdH34fir.mjs                 17.29 kB │ gzip:   5.61 kB
+.output/server/_libs/h3+rou3+srvx.mjs                          17.31 kB │ gzip:   4.99 kB
+.output/server/_ssr/assistant.server-BklKrNUu.mjs              17.53 kB │ gzip:   5.04 kB
+.output/server/_libs/tanstack__react-query.mjs                 18.06 kB │ gzip:   5.06 kB
+.output/server/_ssr/reading-evaluation.fixtures-cMabVhQ1.mjs   21.92 kB │ gzip:   7.24 kB
+.output/server/_ssr/check-in-DpZkCyg-.mjs                      24.05 kB │ gzip:   8.30 kB
+.output/server/index.mjs                                       24.56 kB │ gzip:   6.55 kB
+.output/server/_ssr/time-travel-BjD2VRW9.mjs                   25.30 kB │ gzip:   5.99 kB
+.output/server/_ssr/billing.server-DQTMp42c.mjs                25.89 kB │ gzip:   7.56 kB
+.output/server/_ssr/local-day-CHV_Ich6.mjs                     27.08 kB │ gzip:   9.65 kB
+.output/server/_libs/@stripe/react-stripe-js+[...].mjs         28.29 kB │ gzip:   6.81 kB
+.output/server/_ssr/button-DLJ2xgmy.mjs                        29.10 kB │ gzip:   7.93 kB
+.output/server/_ssr/Shell-BXeLUeZx.mjs                         29.13 kB │ gzip:   7.41 kB
+.output/server/_libs/@tanstack/router-core+[...].mjs           29.60 kB │ gzip:   7.98 kB
+.output/server/_ssr/BirthDetailsForm-B6rm_mJ-.mjs              31.20 kB │ gzip:   7.79 kB
+.output/server/_ssr/pattern.functions-BVNpRVJN.mjs             33.45 kB │ gzip:   6.22 kB
+.output/server/_ssr/timing-Cv8Dom3E.mjs                        36.22 kB │ gzip:   8.37 kB
+.output/server/_ssr/transit-episodes-CRrlIg8Y.mjs              36.27 kB │ gzip:   9.72 kB
+.output/server/_libs/supabase__supabase-js.mjs                 37.86 kB │ gzip:  11.17 kB
+.output/server/_ssr/writing-candidate-bundle-DOB1eb_J.mjs      38.13 kB │ gzip:   9.12 kB
+.output/server/_ssr/journal-DfS_Gb0q.mjs                       39.62 kB │ gzip:   8.70 kB
+.output/server/_ssr/transit-chart-calculator-0aWIuUod.mjs      44.81 kB │ gzip:   8.35 kB
+.output/server/_libs/supabase__phoenix.mjs                     50.54 kB │ gzip:  12.76 kB
+.output/server/_libs/sonner.mjs                                53.63 kB │ gzip:  12.12 kB
+.output/server/_ssr/pattern-CnTjXWQu.mjs                       55.77 kB │ gzip:  12.78 kB
+.output/server/_ssr/privacy-C5MeyUdu.mjs                       60.07 kB │ gzip:  12.70 kB
+.output/server/_ssr/router-DkKBzPQo.mjs                        73.35 kB │ gzip:  19.12 kB
+.output/server/_ssr/content-drafts.server-CkyUeLc2.mjs         74.29 kB │ gzip:  20.88 kB
+.output/server/_libs/supabase__realtime-js+unenv.mjs           82.10 kB │ gzip:  20.99 kB
+.output/server/_ssr/language.server-D5xUBpGp.mjs               82.42 kB │ gzip:  26.33 kB
+.output/server/_ssr/routes-esGpHEbl.mjs                        87.48 kB │ gzip:  19.66 kB
+.output/server/_ssr/server-ULFIRAYM.mjs                        88.68 kB │ gzip:  23.97 kB
+.output/server/_libs/tailwind-merge.mjs                        88.92 kB │ gzip:  15.71 kB
+.output/server/_libs/supabase__postgrest-js.mjs               110.46 kB │ gzip:  23.20 kB
+.output/server/_libs/@radix-ui/react-alert-dialog+[...].mjs   125.12 kB │ gzip:  28.07 kB
+.output/server/_libs/@supabase/storage-js+[...].mjs           126.15 kB │ gzip:  23.59 kB
+.output/server/_ssr/member-context-reading-Dm13qzkZ.mjs       135.75 kB │ gzip:  37.35 kB
+.output/server/_libs/tanstack__query-core.mjs                 142.53 kB │ gzip:  33.82 kB
+.output/server/_ssr/content-Bkn4B3tn.mjs                      177.79 kB │ gzip:  31.49 kB
+.output/server/_ssr/evaluation-runs.server-DC8S3kWR.mjs       235.86 kB │ gzip:  53.07 kB
+.output/server/_libs/supabase__auth-js.mjs                    319.55 kB │ gzip:  64.78 kB
+.output/server/_ssr/pattern.server-N8ZJtgrM.mjs               325.93 kB │ gzip:  84.79 kB
+.output/server/_ssr/reading-evaluation.server-DPbaca9H.mjs    403.30 kB │ gzip:  27.57 kB
+.output/server/_libs/stripe.mjs                               498.84 kB │ gzip:  71.44 kB
+.output/server/_libs/@react-email/render+[...].mjs            525.94 kB │ gzip: 153.31 kB
+.output/server/_libs/@tanstack/react-router+[...].mjs         779.23 kB │ gzip: 164.26 kB
+.output/server/_libs/@lovable.dev/mcp-js+[...].mjs            968.91 kB │ gzip: 222.45 kB
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-router/dist/esm/index.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-router/dist/esm/index.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-router/dist/esm/utils.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-router/dist/esm/utils.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-router/dist/esm/ClientOnly.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-router/dist/esm/ClientOnly.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-router/dist/esm/useRouter.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-router/dist/esm/useRouter.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-router/dist/esm/useNavigate.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-router/dist/esm/useNavigate.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-router/dist/esm/useMatch.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-router/dist/esm/useMatch.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-router/dist/esm/CatchBoundary.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-router/dist/esm/CatchBoundary.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-router/dist/esm/RouterProvider.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-router/dist/esm/RouterProvider.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-router/dist/esm/useRouterState.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-router/dist/esm/useRouterState.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-router/dist/esm/useLocation.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-router/dist/esm/useLocation.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-router/dist/esm/useBlocker.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-router/dist/esm/useBlocker.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-router/dist/esm/HeadContent.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-router/dist/esm/HeadContent.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-router/dist/esm/Matches.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-router/dist/esm/Matches.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-router/dist/esm/Match.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-router/dist/esm/Match.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-router/dist/esm/Asset.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-router/dist/esm/Asset.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-router/dist/esm/link.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-router/dist/esm/link.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-router/dist/esm/routerContext.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-router/dist/esm/routerContext.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-router/dist/esm/matchContext.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-router/dist/esm/matchContext.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-router/dist/esm/nonRouteComponentContext.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-router/dist/esm/nonRouteComponentContext.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-router/dist/esm/Transitioner.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-router/dist/esm/Transitioner.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/sonner/dist/index.mjs" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/sonner/dist/index.mjs:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m 'use client';
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-query/build/modern/QueryClientProvider.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-query/build/modern/IsRestoringProvider.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-query/build/modern/IsRestoringProvider.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-query/build/modern/HydrationBoundary.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-query/build/modern/HydrationBoundary.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-query/build/modern/useQuery.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-query/build/modern/useQuery.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-query/build/modern/QueryErrorResetBoundary.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-query/build/modern/QueryErrorResetBoundary.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-query/build/modern/useSuspenseQuery.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-query/build/modern/useSuspenseQuery.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-query/build/modern/useSuspenseQueries.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-query/build/modern/useSuspenseQueries.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-query/build/modern/useSuspenseInfiniteQuery.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-query/build/modern/useSuspenseInfiniteQuery.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-query/build/modern/useIsFetching.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-query/build/modern/useIsFetching.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-query/build/modern/useMutationState.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-query/build/modern/useMutationState.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-query/build/modern/useMutation.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-query/build/modern/useMutation.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-query/build/modern/useInfiniteQuery.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-query/build/modern/useInfiniteQuery.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-query/build/modern/useQueries.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-query/build/modern/useQueries.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@radix-ui/react-alert-dialog/dist/index.mjs" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@radix-ui/react-alert-dialog/dist/index.mjs:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-query/build/modern/useBaseQuery.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-query/build/modern/useBaseQuery.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@tanstack/react-query/build/modern/errorBoundaryUtils.js" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@tanstack/react-query/build/modern/errorBoundaryUtils.js:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@radix-ui/react-dialog/dist/index.mjs" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@radix-ui/react-dialog/dist/index.mjs:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@radix-ui/react-dismissable-layer/dist/index.mjs" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@radix-ui/react-dismissable-layer/dist/index.mjs:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@radix-ui/react-portal/dist/index.mjs" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@radix-ui/react-portal/dist/index.mjs:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@radix-ui/react-focus-scope/dist/index.mjs" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@radix-ui/react-focus-scope/dist/index.mjs:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@radix-ui/react-focus-guards/dist/index.mjs" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@radix-ui/react-focus-guards/dist/index.mjs:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@radix-ui/react-primitive/dist/index.mjs" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@radix-ui/react-primitive/dist/index.mjs:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+[33m[MODULE_LEVEL_DIRECTIVE] [0mThe semantics of the module level directive "use client" in "node_modules/@radix-ui/react-presence/dist/index.mjs" may not be preserved when bundling.
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m node_modules/@radix-ui/react-presence/dist/index.mjs:1:1 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m "use client";
+ [38;5;240m  │[0m ──────┬──────  
+ [38;5;240m  │[0m       ╰──────── module level directive may not be preserved
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: For more information, see https://rolldown.rs/in-depth/directives#other-directives
+[38;5;246m───╯[0m
+
+✓ built in 583ms
+[nitro] ℹ Using auto generated worker name: henryperkins-pixel-perfect-view-757
+ℹ Generated .output/server/wrangler.json
+ℹ Generated .wrangler/deploy/config.json
+ℹ Generated .output/public/_headers
+ℹ Generated .output/nitro.json
+
+[nitro] ✔ You can preview this build using npx vite preview
+[nitro] ✔ You can deploy this build using npx nitro deploy --prebuilt

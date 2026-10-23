@@ -8,15 +8,59 @@ export function TransitSequence({
   calculation: DailyTransitCalculation | null | undefined;
 }) {
   if (calculation?.status !== "qualified") return null;
-  const e = calculation.evidence,
-    s = e.scan.samples[1],
-    component = s.components.find((c) => c.id === e.componentIds[1])!;
-  const windows = s.windows.filter((w) =>
-    w.contactIds.some((id) => component.contactIds.includes(id)),
+  const e = calculation.evidence;
+  const sample = e.scan.samples[1];
+  const componentId = e.componentIds[1];
+  const component = sample?.components.find((item) => item.id === componentId);
+  const contactIds = component?.contactIds ?? [];
+  const windows =
+    sample?.windows.filter((window) => window.contactIds.some((id) => contactIds.includes(id))) ??
+    [];
+  // Every rendered window must have two valid, ordered boundaries.
+  const sequenceWindows = windows.flatMap((window) => {
+    if (!window.ingress || !window.egress) return [];
+    const start = Date.parse(window.ingress.at);
+    const end = Date.parse(window.egress.at);
+    if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start) return [];
+    return [
+      {
+        id: window.id,
+        ingressAt: window.ingress.at,
+        egressAt: window.egress.at,
+        start,
+        end,
+      },
+    ];
+  });
+  const firstWindow = sequenceWindows[0];
+  const lastWindow = sequenceWindows.at(-1);
+  const invalidContact = e.contactRanges.some(
+    (contact) =>
+      !Number.isFinite(Date.parse(contact.centralAt)) ||
+      !contact.civilDays[0] ||
+      contact.civilDays.some((day) => !Number.isFinite(Date.parse(day))),
   );
-  const start = Date.parse(windows[0]!.ingress!.at),
-    end = Date.parse(windows.at(-1)!.egress!.at);
+
+  if (
+    !sample ||
+    !component ||
+    !firstWindow ||
+    !lastWindow ||
+    // A damaged middle window must not become a shortened but complete-looking timeline.
+    sequenceWindows.length !== windows.length ||
+    lastWindow.end <= firstWindow.start ||
+    invalidContact
+  ) {
+    return (
+      <p className="mt-4 text-sm text-muted-foreground">
+        The saved contact sequence is incomplete.
+      </p>
+    );
+  }
+  const start = firstWindow.start;
+  const end = lastWindow.end;
   const percent = (at: string) => ((Date.parse(at) - start) / (end - start)) * 100;
+  const firstContact = e.contactRanges[0];
   return (
     <section className="transit-sequence mt-4 space-y-3" aria-label="Calculated contact sequence">
       <h4 className="text-base text-foreground">
@@ -27,16 +71,16 @@ export function TransitSequence({
       <div
         className="relative h-5"
         role="img"
-        aria-label={`${windows.length} connected windows. Gaps are outside the calculated orb; contact dates are listed below.`}
+        aria-label={`${sequenceWindows.length} connected windows. Gaps are outside the calculated orb; contact dates are listed below.`}
       >
-        {windows.map((w) => (
+        {sequenceWindows.map((w) => (
           <span
             key={w.id}
             data-contact-window={w.id}
             className="absolute top-2 h-1 bg-primary/40"
             style={{
-              left: `${percent(w.ingress!.at)}%`,
-              width: `${percent(w.egress!.at) - percent(w.ingress!.at)}%`,
+              left: `${percent(w.ingressAt)}%`,
+              width: `${percent(w.egressAt) - percent(w.ingressAt)}%`,
             }}
           />
         ))}
@@ -48,37 +92,46 @@ export function TransitSequence({
           />
         ))}
       </div>
-      <ol className="space-y-2 text-sm" aria-label="Exact contacts in chronological order">
-        {e.contactRanges.map((c, i) => {
-          const days = [...c.civilDays].sort();
-          const uncertain = days[0] !== days.at(-1);
-          return (
-            <li key={c.eventId}>
-              <span className="font-medium">Contact {i + 1}: </span>
-              {uncertain ? (
-                <>
-                  Sampled range {timingDate(days[0]!, e.timezone)} –{" "}
-                  {timingDate(days.at(-1)!, e.timezone)}
-                </>
-              ) : (
-                timingDate(days[0]!, e.timezone)
-              )}
-              {e.passIndex === i + 1 ? " · current passage" : ""}
-            </li>
-          );
-        })}
-      </ol>
+      {e.contactRanges.length ? (
+        <ol className="space-y-2 text-sm" aria-label="Exact contacts in chronological order">
+          {e.contactRanges.map((c, i) => {
+            const days = [...c.civilDays].sort();
+            const firstDay = days[0];
+            const lastDay = days.at(-1);
+            if (!firstDay || !lastDay) return null;
+            const uncertain = firstDay !== lastDay;
+            return (
+              <li key={c.eventId}>
+                <span className="font-medium">Contact {i + 1}: </span>
+                {uncertain ? (
+                  <>
+                    Sampled range {timingDate(firstDay, e.timezone)} –{" "}
+                    {timingDate(lastDay, e.timezone)}
+                  </>
+                ) : (
+                  timingDate(firstDay, e.timezone)
+                )}
+                {e.passIndex === i + 1 ? " · current passage" : ""}
+              </li>
+            );
+          })}
+        </ol>
+      ) : (
+        <p className="text-sm text-muted-foreground">No exact contact was recorded.</p>
+      )}
       <dl className="grid gap-3 text-sm sm:grid-cols-2">
         <div>
           <dt className="text-muted-foreground">Window opens</dt>
-          <dd>{timingDate(windows[0]!.ingress!.at, e.timezone)} · recorded-time sample</dd>
+          <dd>{timingDate(firstWindow.ingressAt, e.timezone)} · recorded-time sample</dd>
         </div>
         <div>
           <dt className="text-muted-foreground">First exact contact</dt>
           <dd>
-            {new Set(e.contactRanges[0]!.civilDays).size === 1
-              ? timingDate(e.contactRanges[0]!.civilDays[0], e.timezone)
-              : "See sampled range above"}
+            {firstContact
+              ? new Set(firstContact.civilDays).size === 1
+                ? timingDate(firstContact.civilDays[0], e.timezone)
+                : "See sampled range above"
+              : "No exact contact recorded"}
           </dd>
         </div>
       </dl>

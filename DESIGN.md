@@ -82,6 +82,9 @@ label or help text.
   height, and root recovery actions use Button.
 - **Evidence disclosure** — collapsed "Evidence & provenance" region on the
   `--evidence` surface, listing celestial facts, orbs, phases and source lanes.
+  Citation links move focus to their paragraph or saved fact; those programmatic
+  targets use a visible `:focus` outline (not only `:focus-visible`) and keep clear
+  of the sticky header.
 - **Timing window** — plain-language sentence ("Saturn pressing on your Sun"),
   strength (Major / Prominent / Background) and timing. Building and Fading remain
   explicit; Exact, Between contacts and variable-date states are stated once.

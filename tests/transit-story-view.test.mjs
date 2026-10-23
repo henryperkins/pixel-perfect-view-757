@@ -175,3 +175,68 @@ test("uncertain window values do not promote the central sample to a single clos
   assert.doesNotMatch(html, /<dt>Closest pass<\/dt>/);
   assert.doesNotMatch(html, /Exact today/);
 });
+
+const renderSequence = (calculation) =>
+  renderToStaticMarkup(createElement(sequence, { calculation }));
+
+function damaged(mutate) {
+  const { c } = calculate({});
+  const clone = structuredClone(c);
+  mutate(clone);
+  return renderSequence(clone);
+}
+
+function assertIncomplete(html) {
+  assert.match(html, /The saved contact sequence is incomplete\./);
+  assert.doesNotMatch(html, /data-contact-window=/);
+  assert.doesNotMatch(html, /NaN|Infinity/);
+}
+
+test("missing samples or windows render the incomplete-sequence fallback", () => {
+  assertIncomplete(damaged((c) => (c.evidence.scan.samples = [])));
+  assertIncomplete(damaged((c) => (c.evidence.scan.samples[1].windows = [])));
+  assertIncomplete(damaged((c) => (c.evidence.scan.samples[1].components[0].contactIds = [])));
+});
+
+test("a missing boundary in any window rejects the whole sequence", () => {
+  for (const mutate of [
+    (c) => delete c.evidence.scan.samples[1].windows[1].ingress,
+    (c) => delete c.evidence.scan.samples[1].windows[1].egress,
+    (c) => delete c.evidence.scan.samples[1].windows[0].egress,
+    (c) => delete c.evidence.scan.samples[1].windows.at(-1).ingress,
+  ]) {
+    assertIncomplete(damaged(mutate));
+  }
+});
+
+test("invalid or unordered window boundaries reject the whole sequence", () => {
+  assertIncomplete(
+    damaged((c) => (c.evidence.scan.samples[1].windows[1].ingress.at = "not-a-date")),
+  );
+  assertIncomplete(
+    damaged((c) => {
+      const window = c.evidence.scan.samples[1].windows[1];
+      window.egress.at = window.ingress.at;
+    }),
+  );
+  assertIncomplete(
+    damaged((c) => {
+      const window = c.evidence.scan.samples[1].windows[1];
+      window.egress.at = "2020-01-01T00:00:00.000Z";
+    }),
+  );
+});
+
+test("an empty contact range keeps the windows and states no exact contact", () => {
+  const html = damaged((c) => (c.evidence.contactRanges = []));
+  assert.equal((html.match(/data-contact-window=/g) ?? []).length, 3);
+  assert.match(html, /No exact contact was recorded\./);
+  assert.match(html, /No exact contact recorded/);
+  assert.doesNotMatch(html, /NaN|Infinity/);
+});
+
+test("an invalid retained contact rejects the sequence without a date-format exception", () => {
+  assertIncomplete(damaged((c) => (c.evidence.contactRanges[0].centralAt = "not-a-date")));
+  assertIncomplete(damaged((c) => (c.evidence.contactRanges[0].civilDays = [])));
+  assertIncomplete(damaged((c) => (c.evidence.contactRanges[0].civilDays[1] = "not-a-date")));
+});
