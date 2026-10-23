@@ -26,6 +26,7 @@ import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authentic
 import { Route as AuthenticatedPatternRouteImport } from './routes/_authenticated/pattern'
 import { Route as AuthenticatedPlansRouteImport } from './routes/_authenticated/plans'
 import { Route as AuthenticatedPrivacyRouteImport } from './routes/_authenticated/privacy'
+import { Route as AuthenticatedRelocationRouteImport } from './routes/_authenticated/relocation'
 import { Route as AuthenticatedSourcesRouteImport } from './routes/_authenticated/sources'
 import { Route as AuthenticatedTimeTravelRouteImport } from './routes/_authenticated/time-travel'
 import { Route as AuthenticatedTimingRouteImport } from './routes/_authenticated/timing'
@@ -127,6 +128,11 @@ const AuthenticatedPlansRoute = AuthenticatedPlansRouteImport.update({
 const AuthenticatedPrivacyRoute = AuthenticatedPrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedRelocationRoute = AuthenticatedRelocationRouteImport.update({
+  id: '/relocation',
+  path: '/relocation',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedSourcesRoute = AuthenticatedSourcesRouteImport.update({
@@ -240,6 +246,7 @@ export interface FileRoutesByFullPath {
   '/pattern': typeof AuthenticatedPatternRoute
   '/plans': typeof AuthenticatedPlansRoute
   '/privacy': typeof AuthenticatedPrivacyRoute
+  '/relocation': typeof AuthenticatedRelocationRoute
   '/sources': typeof AuthenticatedSourcesRoute
   '/time-travel': typeof AuthenticatedTimeTravelRoute
   '/timing': typeof AuthenticatedTimingRoute
@@ -275,6 +282,7 @@ export interface FileRoutesByTo {
   '/pattern': typeof AuthenticatedPatternRoute
   '/plans': typeof AuthenticatedPlansRoute
   '/privacy': typeof AuthenticatedPrivacyRoute
+  '/relocation': typeof AuthenticatedRelocationRoute
   '/sources': typeof AuthenticatedSourcesRoute
   '/time-travel': typeof AuthenticatedTimeTravelRoute
   '/timing': typeof AuthenticatedTimingRoute
@@ -312,6 +320,7 @@ export interface FileRoutesById {
   '/_authenticated/pattern': typeof AuthenticatedPatternRoute
   '/_authenticated/plans': typeof AuthenticatedPlansRoute
   '/_authenticated/privacy': typeof AuthenticatedPrivacyRoute
+  '/_authenticated/relocation': typeof AuthenticatedRelocationRoute
   '/_authenticated/sources': typeof AuthenticatedSourcesRoute
   '/_authenticated/time-travel': typeof AuthenticatedTimeTravelRoute
   '/_authenticated/timing': typeof AuthenticatedTimingRoute
@@ -349,6 +358,7 @@ export interface FileRouteTypes {
     | '/pattern'
     | '/plans'
     | '/privacy'
+    | '/relocation'
     | '/sources'
     | '/time-travel'
     | '/timing'
@@ -384,6 +394,7 @@ export interface FileRouteTypes {
     | '/pattern'
     | '/plans'
     | '/privacy'
+    | '/relocation'
     | '/sources'
     | '/time-travel'
     | '/timing'
@@ -420,6 +431,7 @@ export interface FileRouteTypes {
     | '/_authenticated/pattern'
     | '/_authenticated/plans'
     | '/_authenticated/privacy'
+    | '/_authenticated/relocation'
     | '/_authenticated/sources'
     | '/_authenticated/time-travel'
     | '/_authenticated/timing'
@@ -584,6 +596,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPrivacyRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/relocation': {
+      id: '/_authenticated/relocation'
+      path: '/relocation'
+      fullPath: '/relocation'
+      preLoaderRoute: typeof AuthenticatedRelocationRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/sources': {
       id: '/_authenticated/sources'
       path: '/sources'
@@ -715,6 +734,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedPatternRoute: typeof AuthenticatedPatternRoute
   AuthenticatedPlansRoute: typeof AuthenticatedPlansRoute
   AuthenticatedPrivacyRoute: typeof AuthenticatedPrivacyRoute
+  AuthenticatedRelocationRoute: typeof AuthenticatedRelocationRoute
   AuthenticatedSourcesRoute: typeof AuthenticatedSourcesRoute
   AuthenticatedTimeTravelRoute: typeof AuthenticatedTimeTravelRoute
   AuthenticatedTimingRoute: typeof AuthenticatedTimingRoute
@@ -730,6 +750,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedPatternRoute: AuthenticatedPatternRoute,
   AuthenticatedPlansRoute: AuthenticatedPlansRoute,
   AuthenticatedPrivacyRoute: AuthenticatedPrivacyRoute,
+  AuthenticatedRelocationRoute: AuthenticatedRelocationRoute,
   AuthenticatedSourcesRoute: AuthenticatedSourcesRoute,
   AuthenticatedTimeTravelRoute: AuthenticatedTimeTravelRoute,
   AuthenticatedTimingRoute: AuthenticatedTimingRoute,
