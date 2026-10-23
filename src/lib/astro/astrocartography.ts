@@ -112,9 +112,9 @@ export function distanceToLineKm(line: CartoLine, point: [number, number]): numb
     const lon = line.segments[0]![0]![0];
     const dLon = Math.abs(wrapLon(point[0] - lon)) * DEG;
     const lat = point[1] * DEG;
-    // Great-circle distance from a point to a meridian.
-    return EARTH_KM * Math.asin(Math.min(1, Math.abs(Math.sin(dLon) * Math.cos(lat)))) *
-      (Math.abs(dLon) > Math.PI / 2 ? Infinity : 1);
+    // Great-circle distance from a point to a meridian (nearer than a quarter turn).
+    if (dLon > Math.PI / 2) return Infinity;
+    return EARTH_KM * Math.asin(Math.min(1, Math.abs(Math.sin(dLon) * Math.cos(lat))));
   }
   let best = Infinity;
   for (const seg of line.segments) {
