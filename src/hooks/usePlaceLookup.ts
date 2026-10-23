@@ -5,6 +5,10 @@ import {
   type PlaceCandidate,
   type PlaceFields,
 } from "@/lib/place-lookup";
+
+const TYPEAHEAD_DEBOUNCE_MS = 350;
+const TYPEAHEAD_MIN_CHARS = 2;
+
 export function usePlaceLookup({
   fields,
   onResolve,
@@ -16,6 +20,7 @@ export function usePlaceLookup({
 }) {
   const [request] = useState(() => createPlaceLookup());
   const version = useRef(0);
+  const debounce = useRef<ReturnType<typeof setTimeout> | null>(null);
   const candidatesRef = useRef<PlaceCandidate[]>([]);
   const [candidates, setCandidates] = useState<PlaceCandidate[]>([]);
   const [pending, setPending] = useState(false),
@@ -27,16 +32,22 @@ export function usePlaceLookup({
     () => () => {
       version.current++;
       candidatesRef.current = [];
+      if (debounce.current) clearTimeout(debounce.current);
       request.invalidate();
     },
     [request],
   );
+  function cancelScheduled() {
+    if (debounce.current) clearTimeout(debounce.current);
+    debounce.current = null;
+  }
   function replaceCandidates(next: PlaceCandidate[]) {
     candidatesRef.current = next;
     setCandidates(next);
   }
   function invalidate(next: "unresolved" | "manual" | "saved" = "unresolved") {
     version.current++;
+    cancelScheduled();
     request.invalidate();
     setPending(false);
     setError(null);
@@ -49,6 +60,7 @@ export function usePlaceLookup({
     const selected = candidatesRef.current.find((item) => item.id === candidate.id);
     if (!selected) return false;
     version.current++;
+    cancelScheduled();
     request.invalidate();
     replaceCandidates([]);
     setPending(false);
@@ -62,9 +74,9 @@ export function usePlaceLookup({
     setResolution("lookup");
     return true;
   }
-  async function lookup() {
+  async function lookup(query: string = fields.placeLabel) {
     invalidate();
-    if (!fields.placeLabel.trim()) {
+    if (!query.trim()) {
       setError("Enter a city or town to search.");
       return;
     }
@@ -73,7 +85,7 @@ export function usePlaceLookup({
     setError(null);
     setResolution("unresolved");
     try {
-      const result = await request.lookup(fields.placeLabel);
+      const result = await request.lookup(query);
       if (mine === version.current && result.status === "candidates") {
         replaceCandidates(result.candidates);
       }
@@ -88,8 +100,18 @@ export function usePlaceLookup({
       if (mine === version.current) setPending(false);
     }
   }
+  /** Debounced typeahead: silently skips short input; never replaces explicit search errors. */
+  function scheduleLookup(query: string) {
+    cancelScheduled();
+    if (query.trim().length < TYPEAHEAD_MIN_CHARS) return;
+    debounce.current = setTimeout(() => {
+      debounce.current = null;
+      void lookup(query);
+    }, TYPEAHEAD_DEBOUNCE_MS);
+  }
   return {
     lookup,
+    scheduleLookup,
     select,
     invalidate,
     candidates,

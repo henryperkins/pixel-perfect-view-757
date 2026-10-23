@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { Suspense, lazy, useEffect, useId, useRef, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { Button } from "@/components/ui/button";
@@ -19,6 +19,8 @@ import {
   type BirthFormValues,
 } from "@/lib/birth-form";
 import { userFacingError } from "@/lib/user-facing-error";
+
+const BirthPlaceMap = lazy(() => import("./BirthPlaceMap"));
 
 const inputClass =
   "pattern-mobile-field mt-1.5 w-full min-w-0 rounded-sm border border-muted-foreground bg-card px-3 py-2 text-sm focus:border-ring";
@@ -366,6 +368,7 @@ export function BirthDetailsForm({
                   timezone: "",
                   placeResolution: "unresolved",
                 });
+                place.scheduleLookup(e.target.value);
               }}
               className={`${inputClass} mt-0 flex-1 basis-40`}
             />
@@ -403,6 +406,18 @@ export function BirthDetailsForm({
                   ? `Birth place: ${values.placeLabel} · ${values.latitude}, ${values.longitude} · ${values.timezone}`
                   : ""}
           </p>
+          {values.placeResolution !== "unresolved" &&
+            !issues.latitude &&
+            !issues.longitude &&
+            values.placeLabel.trim() && (
+              <Suspense fallback={null}>
+                <BirthPlaceMap
+                  latitude={Number(values.latitude)}
+                  longitude={Number(values.longitude)}
+                  label={values.placeLabel}
+                />
+              </Suspense>
+            )}
           {place.candidates.length > 0 && (
             <ul aria-label="Matching birth places" className="mt-2 space-y-2">
               {place.candidates.map((candidate) => (
