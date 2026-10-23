@@ -5,7 +5,8 @@ import type { ReactNode } from "react";
 import type { fetchToday } from "@/lib/pattern.functions";
 import { timingDate } from "./timing";
 import type { NatalLensEvidence } from "@/lib/astro/natal-reliability";
-import { plainEngineLabel } from "@/lib/plain-engine";
+import { plainAccuracy, plainEngineLabel } from "@/lib/plain-engine";
+import { focusEvidenceTarget } from "./evidence-focus";
 import {
   describeTodayFact,
   todayFactId,
@@ -30,24 +31,55 @@ export type TodayEvidenceProps = {
   paragraphLinksAvailable: boolean;
 };
 
-function focusTarget(id: string) {
-  const target = document.getElementById(id);
-  target?.focus({ preventScroll: true });
-  target?.scrollIntoView({ block: "start", behavior: "instant" });
-}
-
 function SourceLink({ id, children }: { id: string; children: ReactNode }) {
   return (
     <a
       href={`#${id}`}
       onClick={(event) => {
         event.preventDefault();
-        focusTarget(id);
+        focusEvidenceTarget(id);
       }}
       className="today-evidence-link inline-flex min-h-11 items-center text-primary underline underline-offset-4"
     >
       {children}
     </a>
+  );
+}
+
+/** Only retained parent facts become links; missing parents are stated plainly. */
+function ParentLinks({
+  ids,
+  byId,
+  readingId,
+  label,
+  missingCopy,
+}: {
+  ids: string[];
+  byId: ReadonlyMap<string, { id: string; statement: string }>;
+  readingId: string;
+  label: string;
+  missingCopy: string;
+}) {
+  const unique = [...new Set(ids)];
+  const available = unique.filter((id) => byId.has(id));
+  if (!available.length) {
+    return <p className="text-xs text-muted-foreground">{missingCopy}</p>;
+  }
+  return (
+    <>
+      <ul className="flex flex-wrap gap-x-4" aria-label={label}>
+        {available.map((id) => (
+          <li key={id}>
+            <SourceLink id={todayFactId(readingId, id)}>{todayFactLabel(id)}</SourceLink>
+          </li>
+        ))}
+      </ul>
+      {available.length < unique.length ? (
+        <p className="text-xs text-muted-foreground">
+          Some parent sources were not retained with this reading.
+        </p>
+      ) : null}
+    </>
   );
 }
 
@@ -378,36 +410,26 @@ export function TodayEvidence({
                             { label: "Source version", value: synthesis.releaseVersion },
                           ]}
                         />
-                        <ul
-                          className="flex flex-wrap gap-x-4"
-                          aria-label="Published synthesis parents"
-                        >
-                          {synthesis.dependsOn.map((id) => (
-                            <li key={id}>
-                              <SourceLink id={todayFactId(readingId, id)}>
-                                {todayFactLabel(id)}
-                              </SourceLink>
-                            </li>
-                          ))}
-                        </ul>
+                        <ParentLinks
+                          ids={synthesis.dependsOn}
+                          byId={byId}
+                          readingId={readingId}
+                          label="Published synthesis parents"
+                          missingCopy="No published synthesis sources were retained with this reading."
+                        />
                       </div>
                     ) : null}
                     {fact.id === "A1" ? <TransitSequence calculation={calculation} /> : null}
                     {fact.id === "P2" && story?.plan.status === "selected" ? (
                       <div className="mt-3 space-y-2">
                         <p className="text-sm">Published chapter · {story.plan.releaseVersion}</p>
-                        <ul
-                          className="flex flex-wrap gap-x-4"
-                          aria-label="Published chapter parents"
-                        >
-                          {["C1", "I1", "A1"].map((id) => (
-                            <li key={id}>
-                              <SourceLink id={todayFactId(readingId, id)}>
-                                {todayFactLabel(id)}
-                              </SourceLink>
-                            </li>
-                          ))}
-                        </ul>
+                        <ParentLinks
+                          ids={["C1", "I1", "A1"]}
+                          byId={byId}
+                          readingId={readingId}
+                          label="Published chapter parents"
+                          missingCopy="No published chapter sources were retained with this reading."
+                        />
                       </div>
                     ) : null}
                     {fact.id === "N1" && natal?.plan.lens ? (
@@ -431,7 +453,7 @@ export function TodayEvidence({
                             },
                             {
                               label: "Birth-time accuracy",
-                              value: `${todayPointLabel(natal.plan.lens.screen.accuracy)} · ±${natal.plan.lens.screen.sampleOffsetsMinutes[2]} minutes`,
+                              value: `${plainAccuracy(natal.plan.lens.screen.accuracy)} · ±${natal.plan.lens.screen.sampleOffsetsMinutes[2]} minutes`,
                             },
                           ]}
                         />
@@ -447,18 +469,13 @@ export function TodayEvidence({
                             <NatalOrigin key={index} evidence={evidence} />
                           ))}
                         </ul>
-                        <ul
-                          className="flex flex-wrap gap-x-4"
-                          aria-label="Published natal lens parents"
-                        >
-                          {natal.plan.lens.dependsOn.map((id) => (
-                            <li key={id}>
-                              <SourceLink id={todayFactId(readingId, id)}>
-                                {todayFactLabel(id)}
-                              </SourceLink>
-                            </li>
-                          ))}
-                        </ul>
+                        <ParentLinks
+                          ids={natal.plan.lens.dependsOn}
+                          byId={byId}
+                          readingId={readingId}
+                          label="Published natal lens parents"
+                          missingCopy="No published natal lens sources were retained with this reading."
+                        />
                         <p className="text-xs text-muted-foreground">
                           {language?.mode === "model"
                             ? "Linked from the wording"

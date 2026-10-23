@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { plainEngineLabel } from "@/lib/plain-engine";
+import { plainDegradedReason, plainEngineLabel } from "@/lib/plain-engine";
 import type { PatternData } from "./pattern-view";
 
 const TIME_ACCURACY: Record<PatternData["uncertainty"]["accuracy"], string> = {
@@ -69,10 +69,7 @@ export function PatternChartSummary({ data }: { data: PatternData }) {
       </details>
       {data.ephemeris.degraded ? (
         <div className="pattern-summary-warning" role="status">
-          <p>
-            {data.ephemeris.degradedReason ??
-              "The Swiss Ephemeris service was unavailable, so positions come from the in-app analytical engine."}
-          </p>
+          <p>{plainDegradedReason(data.ephemeris.degradedReason)}</p>
           <p>
             Positions are accurate to roughly arc-minutes. Degree-exact and fast-Moon claims are
             indicative rather than precise.

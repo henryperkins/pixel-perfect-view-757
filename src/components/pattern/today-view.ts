@@ -1,4 +1,6 @@
 /** Stable targets for one saved reading, using the model's one-based paragraph numbers. */
+import { plainAccuracy } from "@/lib/plain-engine";
+
 export function todayParagraphId(readingId: string, paragraph: number) {
   return `today-${encodeURIComponent(readingId)}-paragraph-${paragraph}`;
 }
@@ -190,7 +192,7 @@ export function describeTodayFact(fact: { id: string; statement: string }): Toda
       return {
         label,
         values: [
-          { label: "Recorded birth-time accuracy", value: todayPointLabel(recorded) },
+          { label: "Recorded birth-time accuracy", value: plainAccuracy(recorded) },
           { label: "Time uncertainty", value: `Approximately ±${minutes} minutes` },
         ],
       };

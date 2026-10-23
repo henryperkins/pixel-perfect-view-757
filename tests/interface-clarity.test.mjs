@@ -12,6 +12,7 @@ import {
 import { createRecordsHarness } from "./helpers/records-harness.mjs";
 
 let h, PatternChartDetails, TodayFeedback, TodayGuidance, composeDailyGuidance, plain, view;
+let ChapterNarrativeState, EphemerisNotice;
 before(async () => {
   h = await createRecordsHarness();
   ({ PatternChartDetails } = await h.vite.ssrLoadModule(
@@ -22,6 +23,10 @@ before(async () => {
   ({ TodayGuidance } = await h.vite.ssrLoadModule("/src/components/pattern/TodayGuidance.tsx"));
   ({ composeDailyGuidance } = await h.vite.ssrLoadModule("/src/lib/daily-guidance.ts"));
   view = await h.vite.ssrLoadModule("/src/components/pattern/today-view.ts");
+  ({ ChapterNarrativeState } = await h.vite.ssrLoadModule(
+    "/src/components/pattern/ChapterNarrativeState.tsx",
+  ));
+  ({ EphemerisNotice } = await h.vite.ssrLoadModule("/src/components/pattern/EphemerisNotice.tsx"));
 });
 
 test("a saved source with legacy or malformed details has a safe reader label", () => {
@@ -137,4 +142,116 @@ test("house suppression does not imply that angle descriptions are also suppress
   assert.doesNotMatch(approximate, /Angle descriptions are also left out/);
   assert.match(render(true), /Angle descriptions are also left out/);
   assert.doesNotMatch(approximate, /Fingerprint|Contract|<pre/);
+});
+
+function chartDetails(aspects) {
+  const router = createRouter({ routeTree: createRootRoute(), history: createMemoryHistory() });
+  return renderToStaticMarkup(
+    createElement(
+      RouterContextProvider,
+      { router },
+      createElement(PatternChartDetails, {
+        data: {
+          rising: null,
+          placements: [],
+          allAspects: aspects,
+          snapshot: { birth: null, engine: "swiss-ephemeris@fixture" },
+          engine: "swiss-ephemeris@fixture",
+          ephemeris: { precision: "high" },
+          houseSystem: "Placidus",
+          uncertainty: {
+            accuracy: "hour",
+            housesReliable: false,
+            angleClaimsSuppressed: false,
+            ascendantSpreadDeg: 30,
+            moonSpreadDeg: 1,
+          },
+        },
+      }),
+    ),
+  );
+}
+
+test("chart connection groups use h3 headings without skipping a level", () => {
+  const html = chartDetails([{ a: "sun", b: "moon", aspect: "square", orb: 1.2 }]);
+  const group = html.match(/<div class="pattern-connection-group">(.*?)<\/div>/s)?.[1];
+  assert.ok(group);
+  assert.match(group, /<h3>Friction/);
+  assert.doesNotMatch(html, /<h4/);
+});
+
+test("the locked chapter upsell renders as an h4", () => {
+  const router = createRouter({ routeTree: createRootRoute(), history: createMemoryHistory() });
+  const html = renderToStaticMarkup(
+    createElement(
+      RouterContextProvider,
+      { router },
+      createElement(ChapterNarrativeState, {
+        state: {
+          kind: "ready",
+          locked: true,
+          staleError: false,
+          narrative: {
+            available: true,
+            cacheKey: "chart-key",
+            narrative: "A readable paragraph.",
+            paragraphs: ["A readable paragraph."],
+            facts: [],
+            evidenceAvailable: false,
+            model: null,
+            citations: [],
+            locked: false,
+            accessUntil: null,
+          },
+        },
+        feature: { feature_key: "sun_in_aries", title: "Sun in Aries" },
+        narrativeRef: null,
+        isFetching: false,
+        onRetry() {},
+        onRefreshChapters() {},
+      }),
+    ),
+  );
+  assert.match(
+    html,
+    /<h4 class="font-serif text-xl font-medium">Continue this chapter with Pattern Plus<\/h4>/,
+  );
+});
+
+test("degraded reasons become plain copy without transport detail", () => {
+  assert.equal(
+    plain.plainDegradedReason(null),
+    "The Swiss Ephemeris service was unavailable, so this chart uses the in-app approximate engine.",
+  );
+  assert.equal(
+    plain.plainDegradedReason("Swiss Ephemeris service returned HTTP 503."),
+    "The Swiss Ephemeris service was unavailable, so this chart uses the in-app approximate engine.",
+  );
+  assert.equal(
+    plain.plainDegradedReason("Swiss Ephemeris service unreachable: fetch failed"),
+    "The Swiss Ephemeris service was unavailable, so this chart uses the in-app approximate engine.",
+  );
+  assert.equal(
+    plain.plainDegradedReason("Swiss Ephemeris response omitted Chiron."),
+    "The Swiss Ephemeris service returned incomplete positions, so this chart uses the in-app approximate engine.",
+  );
+  assert.equal(
+    plain.plainDegradedReason("This chart was computed with the in-app approximate engine."),
+    "This chart was computed with the in-app approximate engine.",
+  );
+});
+
+test("the degraded notice never renders raw transport wording", () => {
+  const html = renderToStaticMarkup(
+    createElement(EphemerisNotice, {
+      state: {
+        engine: "in-app@fixture",
+        precision: "approximate",
+        degraded: true,
+        degradedReason: "Swiss Ephemeris service unreachable: fetch failed with HTTP 503",
+      },
+    }),
+  );
+  assert.match(html, /Swiss Ephemeris service was unavailable/);
+  assert.doesNotMatch(html, /HTTP|fetch|unreachable/i);
 });

@@ -235,3 +235,92 @@ test("todayHeadline formats raw lowercase contact labels in sentence case and pr
   );
   assert.equal(view.todayHeadline("A quiet day in the pattern"), "A quiet day in the pattern");
 });
+
+test("saved birth-time accuracy uses plain words instead of a bare hour label", () => {
+  const described = view.describeTodayFact({
+    id: "U1",
+    statement: 'recorded birth-time accuracy is "hour" (about plus or minus 60 minutes)',
+  });
+  assert.deepEqual(described.values, [
+    { label: "Recorded birth-time accuracy", value: "Within about an hour" },
+    { label: "Time uncertainty", value: "Approximately ±60 minutes" },
+  ]);
+  const p = props();
+  p.language.facts = [
+    {
+      id: "U1",
+      statement: 'recorded birth-time accuracy is "hour" (about plus or minus 60 minutes)',
+    },
+  ];
+  p.language.citations = [];
+  const html = render(p);
+  assert.match(html, /Within about an hour/);
+  assert.doesNotMatch(html, />\s*Hour\s*</);
+});
+
+const natalLens = (overrides = {}) => ({
+  usedParagraphs: [1],
+  plan: {
+    releaseVersion: "saved-natal-1",
+    lens: {
+      dependsOn: ["C1", "I1"],
+      evidence: [{ kind: "sign", body: "moon", sign: "Cancer", marginsDeg: [1.2, 1.4, 1.6] }],
+      screen: {
+        accuracy: "hour",
+        sampleEngines: ["swiss-ephemeris@2.10", "swiss-ephemeris@2.10", "swiss-ephemeris@2.10"],
+        sampleOffsetsMinutes: [-60, 0, 60],
+      },
+      ...overrides,
+    },
+  },
+});
+
+test("the natal lens accuracy label is plain and keeps its minutes", () => {
+  const p = props();
+  p.language.facts = [
+    { id: "N1", statement: "Published natal lens, an interpretive possibility: A saved lens." },
+    { id: "C1", statement: "Saved C1 reference." },
+    { id: "I1", statement: "Saved I1 reference." },
+  ];
+  p.language.citations = [];
+  p.language.natalLens = natalLens();
+  const html = render(p);
+  assert.match(html, /Within about an hour · ±60 minutes/);
+  assert.doesNotMatch(html, />\s*Hour\s*</);
+});
+
+test("a natal lens parent missing from the saved facts is not linked", () => {
+  const p = props();
+  p.language.facts = [
+    { id: "N1", statement: "Published natal lens, an interpretive possibility: A saved lens." },
+    { id: "C1", statement: "Saved C1 reference." },
+  ];
+  p.language.citations = [];
+  p.language.natalLens = natalLens();
+  const html = render(p);
+  assert.ok(html.includes(`href="#${view.todayFactId(p.readingId, "C1")}"`));
+  assert.ok(!html.includes(`href="#${view.todayFactId(p.readingId, "I1")}"`));
+  assert.match(html, /Some parent sources were not retained with this reading\./);
+});
+
+test("a published chapter parent missing from the saved facts is not linked", () => {
+  const p = props();
+  p.language.facts = [
+    { id: "P2", statement: "Published transit chapter: A saved chapter." },
+    { id: "C1", statement: "Saved C1 reference." },
+    { id: "I1", statement: "Saved I1 reference." },
+  ];
+  p.language.citations = [];
+  p.language.transitStory = {
+    plan: { status: "selected", releaseVersion: "saved-story-1", evidence: { timingOverlay: {} } },
+  };
+  const html = render(p);
+  const block = html.match(
+    /<div class="mt-3 space-y-2"><p class="text-sm">Published chapter · saved-story-1<\/p>(.*?)<\/div>/s,
+  )?.[1];
+  assert.ok(block, "the published chapter block renders");
+  assert.ok(block.includes(`href="#${view.todayFactId(p.readingId, "C1")}"`));
+  assert.ok(block.includes(`href="#${view.todayFactId(p.readingId, "I1")}"`));
+  assert.ok(!block.includes(`href="#${view.todayFactId(p.readingId, "A1")}"`));
+  assert.match(block, /Some parent sources were not retained with this reading\./);
+});

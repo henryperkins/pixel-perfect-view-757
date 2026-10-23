@@ -749,7 +749,7 @@ body {
 }
 .pattern-chapter-toggle {
   display: grid;
-  grid-template-columns: 48px minmax(0, 1fr) 24px 16px;
+  grid-template-columns: 48px minmax(0, 1fr) 16px;
   align-items: center;
   width: 100%;
   height: auto;
@@ -806,13 +806,6 @@ body {
   font-weight: 400;
   line-height: 1.6;
   color: var(--muted-foreground);
-}
-.pattern-chapter-index {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 400;
-  color: var(--muted-foreground);
-  text-align: right;
 }
 .pattern-chapter-chevron {
   display: block;
@@ -1034,9 +1027,10 @@ body {
   flex-shrink: 0;
   color: var(--primary);
 }
-.pattern-connection-group h4 {
+.pattern-connection-group h3 {
   font-family: var(--font-serif);
   font-size: 1.125rem;
+  font-weight: 400;
 }
 .pattern-connection-group ul {
   margin-top: 16px;
@@ -1150,9 +1144,6 @@ body {
   }
   .pattern-chapter-title {
     font-size: 1.25rem;
-  }
-  .pattern-chapter-index {
-    display: none;
   }
   .pattern-chapter-content {
     padding: 4px 16px 20px;
@@ -2463,7 +2454,11 @@ body {
 .today-evidence-target {
   scroll-margin-top: 110px;
 }
-.today-evidence-target:focus-visible {
+/* Evidence targets receive programmatic focus; `:focus` keeps the outline visible
+   after pointer activation, where `:focus-visible` may not match. */
+.pattern-evidence-target:focus,
+.pattern-evidence-facts > li:focus,
+.today-evidence-target:focus {
   outline: 2px solid var(--ring);
   outline-offset: 4px;
   border-radius: var(--radius);

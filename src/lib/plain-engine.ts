@@ -33,3 +33,35 @@ export function plainAccuracy(accuracy: string | null | undefined): string {
       return accuracy ? accuracy.replace(/[_-]+/g, " ") : "Unrecorded";
   }
 }
+
+/** Reader-facing explanation of a fallback calculation; raw transport text stays in logs. */
+export function plainDegradedReason(reason: string | null | undefined): string {
+  if (!reason) {
+    return "The Swiss Ephemeris service was unavailable, so this chart uses the in-app approximate engine.";
+  }
+  const value = reason.toLowerCase();
+  if (value.includes("not configured")) {
+    return "High-precision positions were not configured, so this chart uses the in-app approximate engine.";
+  }
+  if (
+    value.includes("http") ||
+    value.includes("unreachable") ||
+    value.includes("timeout") ||
+    value.includes("did not respond") ||
+    value.includes("fetch")
+  ) {
+    return "The Swiss Ephemeris service was unavailable, so this chart uses the in-app approximate engine.";
+  }
+  if (
+    value.includes("omitted") ||
+    value.includes("recognisable") ||
+    value.includes("recognizable") ||
+    value.includes("incomplete")
+  ) {
+    return "The Swiss Ephemeris service returned incomplete positions, so this chart uses the in-app approximate engine.";
+  }
+  if (value.includes("in-app") || value.includes("approximate")) {
+    return "This chart was computed with the in-app approximate engine.";
+  }
+  return "This chart uses the in-app approximate engine.";
+}

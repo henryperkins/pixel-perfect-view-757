@@ -1,3 +1,5 @@
+import { plainDegradedReason } from "@/lib/plain-engine";
+
 interface EphemerisState {
   engine: string;
   precision: "high" | "approximate";
@@ -70,10 +72,8 @@ export function EphemerisNotice({
         Approximate positions — reduced precision
       </p>
       <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-        {state.degradedReason ??
-          "The Swiss Ephemeris service was unavailable, so positions come from the in-app approximation."}{" "}
-        Positions are accurate to roughly arc-minutes, so degree-exact and fast-Moon claims should
-        be read as indicative rather than precise.
+        {plainDegradedReason(state.degradedReason)} Positions are accurate to roughly arc-minutes,
+        so degree-exact and fast-Moon claims should be read as indicative rather than precise.
       </p>
     </div>
   );

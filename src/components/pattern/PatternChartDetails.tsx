@@ -101,12 +101,12 @@ function PatternConnections({ data }: { data: PatternData }) {
                     <div className="flex items-center gap-3">
                       <AngleGlyph kind={value} />
                       <div className="min-w-0">
-                        <h4>
+                        <h3>
                           {ASPECT_LABEL[value] ?? bodyName(value)}
                           <span className="ml-2 font-sans text-xs text-muted-foreground">
                             {rows.length}
                           </span>
-                        </h4>
+                        </h3>
                         <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
                           {ASPECT_MEANING[value] ?? "Measured angle between two bodies."}
                         </p>
