@@ -13,6 +13,7 @@ import {
 } from "@tanstack/react-router";
 
 let vite, Journal, Assistants, Privacy, MemberDraftProvider, TodayEvidence, ChapterEvidence;
+let PatternChapter;
 let Today, Timing, TimeTravel, TodayTiming;
 before(async () => {
   vite = await createServer({
@@ -45,6 +46,7 @@ before(async () => {
   ({ PatternChapterEvidence: ChapterEvidence } = await vite.ssrLoadModule(
     "/src/components/pattern/PatternChapterEvidence.tsx",
   ));
+  ({ PatternChapter } = await vite.ssrLoadModule("/src/components/pattern/PatternChapter.tsx"));
   ({ Route: Today } = await vite.ssrLoadModule("/src/routes/index.tsx"));
   ({ Route: Timing } = await vite.ssrLoadModule("/src/routes/_authenticated/timing.tsx"));
   ({ Route: TimeTravel } = await vite.ssrLoadModule("/src/routes/_authenticated/time-travel.tsx"));
@@ -58,7 +60,9 @@ after(async () => vite?.close());
 
 function renderPage(Route, queries = []) {
   const client = new QueryClient({
-    defaultOptions: { queries: { retry: false, staleTime: Infinity, gcTime: Infinity } },
+    defaultOptions: {
+      queries: { retry: false, retryOnMount: false, staleTime: Infinity, gcTime: Infinity },
+    },
   });
   client.setQueryData(["session"], { session: { userId: "member", isAdmin: false } });
   for (const [key, data] of queries) client.setQueryData(key, data);
@@ -444,4 +448,208 @@ test("natal citations use distinct names that match the saved fact headings", ()
     }),
   );
   assertDistinctTargets(html, /<a[^>]*href="#(chapter-review-fact-[^"]+)"[^>]*>(.*?)<\/a>/gs);
+});
+
+function chapterEvidence(props) {
+  return renderToStaticMarkup(
+    createElement(ChapterEvidence, {
+      feature: { feature_key: "review", title: "Saved chapter", payload: { sign: "Aries" } },
+      facts: [],
+      citations: [],
+      evidenceAvailable: true,
+      model: null,
+      paragraphCount: 1,
+      ...props,
+    }),
+  );
+}
+
+test("malformed cached citations and facts never throw and valid links remain", () => {
+  const html = chapterEvidence({
+    facts: [
+      null,
+      "bad",
+      { id: "N1" },
+      { id: "N1", statement: "Saved structure" },
+      { id: "N2", statement: "sign: Aries" },
+    ],
+    citations: [null, "bad", { paragraph: 1 }, { paragraph: 1, facts: ["N1", "N1", "MISSING"] }],
+  });
+  assert.match(html, /href="#chapter-review-fact-N1"/);
+  assert.match(html, /Saved structure/);
+  assert.equal((html.match(/Saved structure/g) ?? []).length, 1, "duplicate facts render once");
+  assert.match(html, /Source unavailable/);
+});
+
+test("empty citations with retained facts state the limit and list the saved facts", () => {
+  const html = chapterEvidence({ facts: [{ id: "N1", statement: "Saved structure" }] });
+  assert.match(
+    html,
+    /No paragraph source links are available for the displayed reading\. Saved source facts are listed below\./,
+  );
+  assert.match(html, /Facts behind the wording/);
+  assert.match(html, /Saved structure/);
+  assert.doesNotMatch(html, /aria-label="Sources by paragraph"/);
+});
+
+test("citations entirely outside the displayed range use the same empty state", () => {
+  const html = chapterEvidence({
+    facts: [{ id: "N1", statement: "Saved structure" }],
+    citations: [{ paragraph: 2, facts: ["N1"] }],
+    paragraphCount: 1,
+  });
+  assert.match(html, /No paragraph source links are available for the displayed reading\./);
+  assert.match(html, /Saved source facts are listed below\./);
+  assert.doesNotMatch(html, /aria-label="Sources by paragraph"/);
+  assert.doesNotMatch(html, /Paragraph 2/);
+});
+
+test("rejected facts state that no saved source facts are available", () => {
+  const html = chapterEvidence({
+    facts: [null, { id: 7 }, { statement: "no id" }, "bad"],
+    citations: [],
+  });
+  assert.match(html, /No saved source facts are available for this reading\./);
+  assert.doesNotMatch(html, /listed below/);
+  assert.doesNotMatch(html, /pattern-evidence-facts/);
+});
+
+test("saved-evidence empty states never promise current calculated values", () => {
+  const html = chapterEvidence({ facts: [], citations: [] });
+  assert.doesNotMatch(html, /calculated values/i);
+  assert.doesNotMatch(html, /below\./);
+  const legacy = chapterEvidence({
+    evidenceAvailable: false,
+    facts: [],
+    citations: [],
+    paragraphCount: 2,
+    feature: { feature_key: "review", title: "Saved chapter", payload: { sign: "Aries" } },
+  });
+  assert.match(legacy, /Calculated values/);
+  assert.match(legacy, /Aries/);
+  assert.match(legacy, /older reading was saved before its source facts were retained/);
+  assert.doesNotMatch(legacy, /aria-label="Sources by paragraph"/);
+});
+
+test("a shortened structured fact renders verbatim instead of renamed", () => {
+  const html = chapterEvidence({
+    facts: [
+      {
+        id: "N2",
+        statement: 'members: {"a":"north_node","b":"true_node","list":["north_node","sou',
+      },
+    ],
+  });
+  assert.match(html, /north_node/);
+  assert.doesNotMatch(html, /North Node/);
+  assert.match(html, /This recorded value was shortened when the chapter was saved\./);
+});
+
+const chapterFeature = {
+  feature_key: "sun_aries",
+  title: "Sun in Aries",
+  family: "luminary",
+  strength: 0.9,
+  payload: { sign: "Aries", degree: 5 },
+};
+const chapterNarrative = (extra = {}) => ({
+  available: true,
+  cacheKey: "chart-key",
+  narrative: "A readable paragraph.\n\nA second paragraph.",
+  paragraphs: ["A readable paragraph.", "A second paragraph."],
+  facts: [{ id: "N1", statement: "Old saved fact statement" }],
+  evidenceAvailable: true,
+  model: "synthetic/model",
+  citations: [{ paragraph: 1, facts: ["N1"] }],
+  locked: false,
+  accessUntil: "2027-01-01T00:00:00Z",
+  ...extra,
+});
+
+function renderChapter({ data, queryState, cacheKey = "chart-key" } = {}) {
+  const client = new QueryClient({
+    defaultOptions: {
+      queries: { retry: false, retryOnMount: false, staleTime: Infinity, gcTime: Infinity },
+    },
+  });
+  client.setQueryData(["session"], { session: { userId: "member", isAdmin: false } });
+  client.setQueryData(["membership", "member"], {
+    enabled: true,
+    fullAccess: true,
+    accessUntil: "2027-01-01T00:00:00Z",
+  });
+  client.setQueryData(["journal", "member", "reading-context", undefined, [], ["sun_aries"]], {
+    enabled: true,
+    entries: [],
+  });
+  const key = ["feature-narrative", cacheKey, "sun_aries"];
+  if (data !== undefined) client.setQueryData(key, data);
+  if (queryState) {
+    const query = client.getQueryCache().build(client, {
+      queryKey: key,
+      queryFn: async () => undefined,
+    });
+    query.setState(queryState);
+  }
+  const router = createRouter({ routeTree: createRootRoute(), history: createMemoryHistory() });
+  try {
+    return renderToStaticMarkup(
+      createElement(
+        QueryClientProvider,
+        { client },
+        createElement(
+          RouterContextProvider,
+          { router },
+          createElement(PatternChapter, { feature: chapterFeature, cacheKey }),
+        ),
+      ),
+    );
+  } finally {
+    client.clear();
+  }
+}
+
+function assertCalculatedEvidence(html) {
+  assert.match(html, /Behind this chapter/);
+  assert.match(html, /Calculated values/);
+  assert.match(html, /Aries/);
+  assert.match(html, /id="context-sun_aries"/);
+}
+
+test("calculated evidence and the journal stay available while a chapter is loading", () => {
+  assertCalculatedEvidence(renderChapter());
+  assert.match(renderChapter(), /Preparing this chapter/);
+});
+
+test("calculated evidence and the journal stay available after a chapter error", () => {
+  const html = renderChapter({
+    queryState: { status: "error", error: new Error("synthetic"), fetchStatus: "idle" },
+  });
+  assertCalculatedEvidence(html);
+  assert.match(html, /This chapter couldn’t load/);
+  assert.doesNotMatch(html, /Old saved fact statement/);
+});
+
+test("calculated evidence and the journal stay available for an unavailable chapter", () => {
+  const html = renderChapter({
+    data: { available: false, retryable: true, reason: "Try this chapter again." },
+  });
+  assertCalculatedEvidence(html);
+  assert.match(html, /Try this chapter again/);
+});
+
+test("a changed chart never contributes its saved facts to the current chapter", () => {
+  const html = renderChapter({ data: chapterNarrative({ cacheKey: "old-chart" }) });
+  assertCalculatedEvidence(html);
+  assert.match(html, /Your chart or reading preferences changed/);
+  assert.doesNotMatch(html, /Old saved fact statement/);
+  assert.doesNotMatch(html, /aria-label="Sources by paragraph"/);
+});
+
+test("a readable chapter keeps its narrative and saved evidence visible", () => {
+  const html = renderChapter({ data: chapterNarrative() });
+  assert.match(html, /A readable paragraph/);
+  assert.match(html, /Old saved fact statement/);
+  assert.doesNotMatch(html, /Calculated values/);
+  assert.match(html, /id="context-sun_aries"/);
 });

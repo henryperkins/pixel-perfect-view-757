@@ -12,6 +12,7 @@ const state = {
   } | null,
   admin: false,
   overrides: {} as Record<string, unknown>,
+  responses: {} as Record<string, unknown[]>,
   delay: 0,
   hold: [] as string[],
   upcomingResponses: null as Record<string, unknown> | null,
@@ -108,7 +109,7 @@ const pattern = {
   rising: null,
   snapshot: { birth: null },
   placements: [],
-  allAspects: [],
+  allAspects: [{ a: "sun", b: "moon", aspect: "square", orb: 1.2 }],
   houseCusps: [],
   computedAt: day + "T12:00:00Z",
   fingerprint: "synthetic",
@@ -163,6 +164,8 @@ async function call(name, args) {
   if (wait) await new Promise((r) => setTimeout(r, wait));
   if (state.fail.includes(name)) throw new Error("Synthetic network failure");
   if (Object.hasOwn(state.overrides, name)) return structuredClone(state.overrides[name]);
+  const queued = state.responses[name];
+  if (queued?.length) return structuredClone(queued.shift());
   switch (name) {
     case "currentSession":
       return {

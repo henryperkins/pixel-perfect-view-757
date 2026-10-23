@@ -1,0 +1,905 @@
+async (page) => {
+  const browser = page.context().browser();
+  const origin = new URL(page.url()).origin;
+  const checks = [];
+  const assert = (condition, message) => {
+    if (!condition) throw new Error(message);
+  };
+  const MEMBER = "mobile-audit-member";
+  const CHAPTER_KEY = ["feature-narrative", "fixture", "sun_aries"];
+  const MEMBERSHIP_KEY = ["membership", MEMBER];
+  const FUTURE = "2027-01-01T00:00:00Z";
+
+  const membership = ({ fullAccess = true, accessUntil = FUTURE } = {}) => ({
+    enabled: true,
+    fullAccess,
+    hasCustomer: true,
+    checkoutReady: true,
+    trialEligible: false,
+    accessUntil,
+    membership: { status: "active", cancelAtPeriodEnd: false },
+  });
+  const narrative = ({
+    paragraphs = ["Opening paragraph.", "Second paragraph."],
+    locked = false,
+    cacheKey = "fixture",
+    facts = [],
+    citations = [],
+    accessUntil = FUTURE,
+  } = {}) => ({
+    available: true,
+    cacheKey,
+    narrative: paragraphs.join("\n\n"),
+    paragraphs,
+    facts,
+    citations,
+    evidenceAvailable: facts.length > 0,
+    model: null,
+    locked,
+    accessUntil,
+  });
+  const preview = () =>
+    narrative({ paragraphs: ["Opening paragraph."], locked: true, citations: [] });
+  const unavailable = (retryable = true) => ({
+    available: false,
+    retryable,
+    reason: retryable
+      ? "This chapter couldn’t be prepared just now."
+      : "No verified reading is available for this chapter.",
+  });
+
+  const run = async (
+    name,
+    task,
+    {
+      init = {},
+      scripts = [],
+      viewport = { width: 390, height: 844 },
+      reducedMotion = "no-preference",
+      clock = null,
+    } = {},
+  ) => {
+    const context = await browser.newContext({ viewport, reducedMotion });
+    for (const script of scripts) await context.addInitScript(script);
+    await context.addInitScript((value) => {
+      window.interfaceFixture = value;
+    }, init);
+    const p = await context.newPage();
+    if (clock) await p.clock.install({ time: new Date(clock) });
+    p.setDefaultTimeout(10000);
+    try {
+      await p.goto(origin + "/");
+      await p.getByRole("textbox", { name: "Reflection note" }).waitFor();
+      assert(await p.evaluate(() => Boolean(window.mobileAudit)), "Synthetic services required");
+      const details = await task(p, context);
+      checks.push({ name, passed: true, ...(details ?? {}) });
+    } catch (error) {
+      checks.push({ name, passed: false, error: String(error) });
+    } finally {
+      await context.close();
+    }
+  };
+
+  const go = (p, to) => p.evaluate((path) => window.auditRouter.navigate({ to: path }), to);
+  const seed = (p, key, value) =>
+    p.evaluate(([k, v]) => window.auditQueryClient.setQueryData(k, v), [key, value]);
+  const queue = (p, list) =>
+    p.evaluate((value) => {
+      window.mobileAudit.state.responses.fetchFeatureNarrative = value;
+    }, list);
+  const hold = (p, names) =>
+    p.evaluate((value) => {
+      window.mobileAudit.state.hold = value;
+    }, names);
+  const release = (p, name) => p.evaluate((value) => window.mobileAudit.releaseNext(value), name);
+  const chapterCalls = (p) =>
+    p.evaluate(
+      () =>
+        window.mobileAudit.state.calls.filter((call) => call.name === "fetchFeatureNarrative")
+          .length,
+    );
+  const resetCalls = (p) => p.evaluate(() => window.mobileAudit.resetCalls());
+  const waitForCalls = (p, count) =>
+    p.waitForFunction(
+      (expected) =>
+        window.mobileAudit.state.calls.filter((call) => call.name === "fetchFeatureNarrative")
+          .length >= expected,
+      count,
+    );
+  const setMembership = async (p, value) => {
+    await p.evaluate((next) => {
+      window.mobileAudit.state.overrides.fetchMembership = next;
+      return window.auditQueryClient.invalidateQueries({ queryKey: ["membership"] });
+    }, value);
+  };
+  const applyMembership = async (p, value) => {
+    await p.evaluate((next) => {
+      window.mobileAudit.state.overrides.fetchMembership = next;
+    }, value);
+    await seed(p, MEMBERSHIP_KEY, value);
+  };
+  const openChapter = async (p) => {
+    const toggle = p.locator("#chapter-toggle-sun_aries");
+    if ((await toggle.getAttribute("aria-expanded")) !== "true") await toggle.click();
+    await p.locator("#chapter-content-sun_aries").waitFor();
+  };
+  const chapterText = (p, text) => p.getByText(text, { exact: false }).first().waitFor();
+  const upsellCount = (p) =>
+    p.getByText("Continue this chapter with Pattern Plus", { exact: true }).count();
+  const settle = (p, ms = 400) => p.waitForTimeout(ms);
+
+  const seedLockedRemount = async (p) => {
+    await seed(p, CHAPTER_KEY, preview());
+    await applyMembership(p, membership());
+    await queue(p, [
+      narrative({ locked: true, paragraphs: ["Opening paragraph."] }),
+      narrative({ locked: true, paragraphs: ["Opening paragraph."] }),
+    ]);
+    await hold(p, ["fetchFeatureNarrative"]);
+  };
+
+  const facts = [
+    {
+      id: "N1",
+      statement:
+        'detected natal structure "Sun in Aries" of family luminary (key sun_aries), ranked among the most prominent structures in this chart (an app ranking, not a measurement; never quote it as a number)',
+    },
+    { id: "N2", statement: "sign: Aries" },
+  ];
+  const evidenceNarrative = (locked = false) =>
+    narrative({
+      locked,
+      facts,
+      citations: [{ paragraph: 1, facts: ["N1", "N2"] }],
+    });
+
+  // --- Mounted access lifecycle (exact request counts) ---------------------
+
+  await run("access-remount-unlocks", async (p) => {
+    await seed(p, CHAPTER_KEY, preview());
+    await applyMembership(p, membership());
+    await queue(p, [narrative()]);
+    await resetCalls(p);
+    await go(p, "/pattern");
+    await p.locator("#chapter-toggle-sun_aries").waitFor();
+    await openChapter(p);
+    await chapterText(p, "Second paragraph.");
+    assert((await upsellCount(p)) === 0, "A full server answer must remove the upsell");
+    const count = await chapterCalls(p);
+    assert(count === 1, `Expected 1 mount refresh, got ${count}`);
+    return { chapterRequests: count };
+  });
+
+  await run("access-remount-stays-locked", async (p) => {
+    await seedLockedRemount(p);
+    await resetCalls(p);
+    await go(p, "/pattern");
+    await p.locator("#chapter-toggle-sun_aries").waitFor();
+    await openChapter(p);
+    await waitForCalls(p, 1);
+    await release(p, "fetchFeatureNarrative");
+    await waitForCalls(p, 2);
+    await release(p, "fetchFeatureNarrative");
+    await settle(p, 600);
+    const count = await chapterCalls(p);
+    assert(count === 2, `Expected exactly 2 chapter requests, got ${count}`);
+    assert((await upsellCount(p)) === 1, "The preview and upsell must stay visible");
+    return { chapterRequests: count };
+  });
+
+  await run("access-initial-order", async (p) => {
+    await applyMembership(p, membership());
+    await queue(p, [
+      narrative({ locked: true, paragraphs: ["Opening paragraph."] }),
+      narrative({ locked: true, paragraphs: ["Opening paragraph."] }),
+    ]);
+    await hold(p, ["fetchFeatureNarrative"]);
+    await resetCalls(p);
+    await go(p, "/pattern");
+    await p.locator("#chapter-toggle-sun_aries").waitFor();
+    await openChapter(p);
+    await waitForCalls(p, 1);
+    await release(p, "fetchFeatureNarrative");
+    await waitForCalls(p, 2);
+    await release(p, "fetchFeatureNarrative");
+    await settle(p, 500);
+    const count = await chapterCalls(p);
+    assert(count === 2, `Expected 1 initial + 1 reconciliation, got ${count}`);
+    assert((await upsellCount(p)) === 1, "A locked server answer must stay locked");
+    return { chapterRequests: count, order: "narrative-first" };
+  });
+
+  await run(
+    "access-initial-order-reversed",
+    async (p) => {
+      await queue(p, [
+        narrative({ locked: true, paragraphs: ["Opening paragraph."] }),
+        narrative({ locked: true, paragraphs: ["Opening paragraph."] }),
+      ]);
+      await hold(p, ["fetchMembership", "fetchFeatureNarrative"]);
+      await resetCalls(p);
+      await go(p, "/pattern");
+      await p.locator("#chapter-toggle-sun_aries").waitFor();
+      await openChapter(p);
+      await waitForCalls(p, 1);
+      await release(p, "fetchMembership");
+      await settle(p, 200);
+      await release(p, "fetchFeatureNarrative");
+      await waitForCalls(p, 2);
+      await release(p, "fetchFeatureNarrative");
+      await settle(p, 500);
+      const count = await chapterCalls(p);
+      assert(count === 2, `Expected 1 initial + 1 reconciliation, got ${count}`);
+      return { chapterRequests: count, order: "membership-first" };
+    },
+    { init: { hold: ["fetchMembership"] } },
+  );
+
+  await run("access-remount-preview", async (p) => {
+    await seed(p, CHAPTER_KEY, narrative());
+    await applyMembership(p, membership({ fullAccess: false }));
+    await queue(p, [narrative({ locked: true, paragraphs: ["Opening paragraph."] })]);
+    await resetCalls(p);
+    await go(p, "/pattern");
+    await p.locator("#chapter-toggle-sun_aries").waitFor();
+    await openChapter(p);
+    await settle(p, 600);
+    const count = await chapterCalls(p);
+    assert(count === 1, `Expected 1 mount refresh, got ${count}`);
+    assert((await upsellCount(p)) === 1, "The server preview must win over cached full text");
+    return { chapterRequests: count };
+  });
+
+  await run("access-reconciled-polls", async (p) => {
+    await seedLockedRemount(p);
+    await resetCalls(p);
+    await go(p, "/pattern");
+    await p.locator("#chapter-toggle-sun_aries").waitFor();
+    await openChapter(p);
+    await waitForCalls(p, 1);
+    await release(p, "fetchFeatureNarrative");
+    await waitForCalls(p, 2);
+    await release(p, "fetchFeatureNarrative");
+    await settle(p, 600);
+    for (let index = 0; index < 3; index += 1) await setMembership(p, membership());
+    await settle(p, 700);
+    const count = await chapterCalls(p);
+    assert(count === 2, `Identical polls added ${count - 2} chapter requests`);
+    return { chapterRequests: count, additionalAfterPolls: count - 2 };
+  });
+
+  await run("access-unavailable-remount", async (p) => {
+    await seed(p, CHAPTER_KEY, unavailable());
+    await resetCalls(p);
+    await go(p, "/pattern");
+    await p.locator("#chapter-toggle-sun_aries").waitFor();
+    await openChapter(p);
+    await chapterText(p, "couldn’t be prepared");
+    await setMembership(p, membership({ fullAccess: false }));
+    await setMembership(p, membership());
+    await settle(p, 600);
+    const count = await chapterCalls(p);
+    assert(count === 0, `Unavailable writing was retried ${count} times`);
+    return { chapterRequests: count };
+  });
+
+  await run("access-explicit-retry", async (p) => {
+    await seed(p, CHAPTER_KEY, unavailable());
+    await resetCalls(p);
+    await go(p, "/pattern");
+    await p.locator("#chapter-toggle-sun_aries").waitFor();
+    await openChapter(p);
+    await chapterText(p, "couldn’t be prepared");
+    await setMembership(p, membership({ fullAccess: false }));
+    await setMembership(p, membership());
+    await settle(p, 300);
+    await queue(p, [narrative()]);
+    await p.getByRole("button", { name: "Try this chapter again", exact: true }).click();
+    await chapterText(p, "Second paragraph.");
+    await settle(p, 300);
+    const count = await chapterCalls(p);
+    assert(count === 1, `Expected 1 explicit retry and no follow-up, got ${count}`);
+    await setMembership(p, membership());
+    await settle(p, 500);
+    assert((await chapterCalls(p)) === 1, "An unchanged signature retried the chapter again");
+    return { chapterRequests: count };
+  });
+
+  await run("access-retained-reopen", async (p) => {
+    await queue(p, [narrative()]);
+    await resetCalls(p);
+    await go(p, "/pattern");
+    await p.locator("#chapter-toggle-sun_aries").waitFor();
+    await openChapter(p);
+    await chapterText(p, "Second paragraph.");
+    await p.locator("#chapter-toggle-sun_aries").click();
+    await p.locator("#chapter-toggle-sun_aries").click();
+    await settle(p, 500);
+    const count = await chapterCalls(p);
+    assert(count === 1, `Retained reopen made ${count - 1} extra requests`);
+    return { chapterRequests: count };
+  });
+
+  await run("access-changed-chart", async (p) => {
+    await queue(p, [
+      narrative({
+        cacheKey: "other-chart",
+        facts: [{ id: "N1", statement: "Old saved fact statement" }],
+        citations: [{ paragraph: 1, facts: ["N1"] }],
+      }),
+    ]);
+    await resetCalls(p);
+    await go(p, "/pattern");
+    await p.locator("#chapter-toggle-sun_aries").waitFor();
+    await openChapter(p);
+    await chapterText(p, "Your chart or reading preferences changed");
+    const body = await p.locator("#chapter-content-sun_aries").evaluate((el) => el.textContent);
+    assert(!body.includes("Old saved fact statement"), "Mismatched saved evidence was displayed");
+    assert(body.includes("Calculated values"), "Calculated evidence must remain available");
+    return { chapterRequests: 1 };
+  });
+
+  // --- Accessibility and visual preservation ------------------------------
+
+  for (const viewport of [
+    { width: 390, height: 844 },
+    { width: 1440, height: 1000 },
+  ]) {
+    await run(
+      `evidence-focus-${viewport.width}`,
+      async (p) => {
+        await applyMembership(p, membership({ fullAccess: false }));
+        await queue(p, [evidenceNarrative(true)]);
+        await go(p, "/pattern");
+        await p.locator("#chapter-toggle-sun_aries").waitFor();
+        const loadFocus = await p.evaluate(() => {
+          const active = document.activeElement;
+          const evidence = document.querySelector(
+            ".pattern-evidence-target:focus, .pattern-evidence-facts > li:focus, .today-evidence-target:focus",
+          );
+          return {
+            tag: active?.tagName,
+            id: active?.id ?? "",
+            evidenceFocused: Boolean(evidence),
+            outline: getComputedStyle(active ?? document.body).outlineStyle,
+          };
+        });
+        assert(!loadFocus.evidenceFocused, "An evidence target was focused on page load");
+        assert(!loadFocus.id.startsWith("chapter-"), `Page load focused ${loadFocus.id}`);
+        await openChapter(p);
+        await chapterText(p, "Opening paragraph.");
+        await p.locator(".pattern-chapter-evidence summary").click();
+        // Let the details content become visible before querying the accessibility tree.
+        await p.locator(".pattern-evidence-citations a").first().waitFor({ state: "visible" });
+        await settle(p, 400);
+        await p.getByRole("link", { name: "Paragraph 1", exact: true }).click();
+        const paragraphFocus = await p.evaluate(() => {
+          const active = document.activeElement;
+          const header =
+            document.querySelector(".pattern-header")?.getBoundingClientRect().height ?? 0;
+          return {
+            id: active?.id,
+            outlineStyle: getComputedStyle(active).outlineStyle,
+            outlineWidth: getComputedStyle(active).outlineWidth,
+            top: active?.getBoundingClientRect().top ?? 0,
+            header,
+          };
+        });
+        assert(
+          paragraphFocus.id === "chapter-sun_aries-paragraph-1",
+          `Paragraph focus landed on ${paragraphFocus.id}`,
+        );
+        assert(paragraphFocus.outlineStyle !== "none", "Paragraph target has no focus outline");
+        assert(
+          paragraphFocus.top >= paragraphFocus.header - 1,
+          "Paragraph target scrolled under the sticky header",
+        );
+        const paragraphLink = p.getByRole("link", { name: "Paragraph 1", exact: true });
+        await paragraphLink.focus();
+        await p.keyboard.press("Enter");
+        await settle(p, 100);
+        const keyboardFocus = await p.evaluate(() => ({
+          id: document.activeElement?.id,
+          outlineStyle: getComputedStyle(document.activeElement).outlineStyle,
+        }));
+        assert(
+          keyboardFocus.id === "chapter-sun_aries-paragraph-1",
+          `Keyboard focus landed on ${keyboardFocus.id}`,
+        );
+        assert(keyboardFocus.outlineStyle !== "none", "Keyboard activation has no focus outline");
+        await p.getByRole("link", { name: /Reference 1/ }).click();
+        const factFocus = await p.evaluate(() => ({
+          id: document.activeElement?.id,
+          outlineStyle: getComputedStyle(document.activeElement).outlineStyle,
+        }));
+        assert(
+          factFocus.id === "chapter-sun_aries-fact-N1",
+          `Fact focus landed on ${factFocus.id}`,
+        );
+        assert(factFocus.outlineStyle !== "none", "Fact target has no focus outline");
+
+        const upsell = await p.evaluate(() => {
+          const heading = [...document.querySelectorAll("h4")].find((item) =>
+            item.textContent.startsWith("Continue this chapter"),
+          );
+          const title = document.querySelector(".pattern-chapter-title");
+          if (!heading) return null;
+          const style = getComputedStyle(heading);
+          return {
+            tag: heading.tagName,
+            weight: style.fontWeight,
+            family: style.fontFamily,
+            size: style.fontSize,
+            titleFamily: title ? getComputedStyle(title).fontFamily : null,
+          };
+        });
+        assert(upsell?.tag === "H4", `Upsell heading is ${upsell?.tag}`);
+        assert(upsell.weight === "500", `Upsell weight is ${upsell?.weight}`);
+        assert(upsell.family === upsell.titleFamily, "Upsell serif family changed");
+        assert(upsell.size === "20px", `Upsell size is ${upsell?.size}`);
+
+        await p.locator("#pattern-connections-foldout summary").click();
+        const connection = await p.evaluate(() => {
+          const heading = document.querySelector(".pattern-connection-group h3");
+          const details = document.querySelector("#pattern-chart-heading");
+          if (!heading) return null;
+          const style = getComputedStyle(heading);
+          return {
+            tag: heading.tagName,
+            weight: style.fontWeight,
+            family: style.fontFamily,
+            size: style.fontSize,
+            headingFamily: details ? getComputedStyle(details).fontFamily : null,
+          };
+        });
+        assert(connection?.tag === "H3", `Connection heading is ${connection?.tag}`);
+        assert(connection.weight === "400", `Connection weight is ${connection?.weight}`);
+        assert(connection.size === "18px", `Connection size is ${connection?.size}`);
+        assert(connection.family === connection.headingFamily, "Connection serif family changed");
+        return { viewport, paragraphFocus, factFocus, upsell, connection };
+      },
+      { viewport },
+    );
+  }
+
+  await run(
+    "chapter-toggle-enlarged-text",
+    async (p) => {
+      await p.evaluate(() => {
+        document.documentElement.style.fontSize = "32px";
+      });
+      await go(p, "/pattern");
+      await p.locator("#chapter-toggle-sun_aries").waitFor();
+      const geometry = await p.evaluate(() => {
+        const label = document.querySelector(".pattern-chapter-label")?.getBoundingClientRect();
+        const chevron = document.querySelector(".pattern-chapter-chevron")?.getBoundingClientRect();
+        return {
+          labelRight: label?.right ?? 0,
+          chevronLeft: chevron?.left ?? 0,
+          overflow: document.documentElement.scrollWidth - window.innerWidth,
+        };
+      });
+      assert(geometry.labelRight <= geometry.chevronLeft + 1, "Chapter label overlaps the chevron");
+      assert(geometry.overflow <= 1, `Horizontal overflow at 320px/200%: ${geometry.overflow}px`);
+      return geometry;
+    },
+    { viewport: { width: 320, height: 740 } },
+  );
+
+  const motionInit = () => {
+    window.__patternAnimations = 0;
+    const original = Element.prototype.animate;
+    Element.prototype.animate = function (keyframes, options) {
+      if (String(this.className).includes("pattern-narrative")) window.__patternAnimations += 1;
+      return original.call(this, keyframes, options);
+    };
+  };
+
+  for (const reducedMotion of ["no-preference", "reduce"]) {
+    await run(
+      `arrival-motion-${reducedMotion}`,
+      async (p) => {
+        await queue(p, [narrative()]);
+        await go(p, "/pattern");
+        await p.locator("#chapter-toggle-sun_aries").waitFor();
+        await openChapter(p);
+        await chapterText(p, "Second paragraph.");
+        await settle(p, 600);
+        const first = await p.evaluate(() => window.__patternAnimations);
+        await p.locator("#chapter-toggle-sun_aries").click();
+        await p.locator("#chapter-toggle-sun_aries").click();
+        await settle(p, 600);
+        const second = await p.evaluate(() => window.__patternAnimations);
+        assert(second === first, "Reopening a retained chapter replayed the arrival animation");
+        if (reducedMotion === "reduce") {
+          assert(first === 0, `Reduced motion still ran ${first} arrival animations`);
+        } else {
+          assert(first === 1, `Expected one arrival animation, saw ${first}`);
+        }
+        return { reducedMotion, animations: first, afterReopen: second };
+      },
+      { reducedMotion, scripts: [motionInit] },
+    );
+  }
+
+  // --- Today source clarity and saved transit evidence --------------------
+
+  const todayOverride = async (p, mutate) => {
+    const data = await p.evaluate(() => structuredClone(window.mobileAudit.today()));
+    mutate(data);
+    await p.evaluate((next) => {
+      window.mobileAudit.state.overrides.fetchToday = next;
+      return window.auditQueryClient.invalidateQueries({ queryKey: ["today"] });
+    }, data);
+  };
+
+  await run("today-plain-sources", async (p) => {
+    await todayOverride(p, (data) => {
+      data.ephemeris = {
+        ...data.ephemeris,
+        degraded: true,
+        degradedReason: "Swiss Ephemeris service returned HTTP 503.",
+      };
+      data.reading.paragraphLinksAvailable = true;
+      data.language = {
+        mode: "model",
+        model: "synthetic/model",
+        facts: [
+          {
+            id: "U1",
+            statement: 'recorded birth-time accuracy is "hour" (about plus or minus 60 minutes)',
+          },
+          { id: "P2", statement: "Published transit chapter: A saved chapter." },
+          { id: "C1", statement: "Saved C1 reference." },
+          {
+            id: "N1",
+            statement: "Published natal lens, an interpretive possibility: A saved lens.",
+          },
+        ],
+        citations: [],
+        natalLens: {
+          usedParagraphs: [1],
+          plan: {
+            releaseVersion: "saved-natal-1",
+            lens: {
+              dependsOn: ["C1", "I1"],
+              evidence: [
+                { kind: "sign", body: "moon", sign: "Cancer", marginsDeg: [1.2, 1.4, 1.6] },
+              ],
+              screen: {
+                accuracy: "hour",
+                sampleEngines: [
+                  "swiss-ephemeris@2.10",
+                  "swiss-ephemeris@2.10",
+                  "swiss-ephemeris@2.10",
+                ],
+                sampleOffsetsMinutes: [-60, 0, 60],
+              },
+            },
+          },
+        },
+        transitStory: {
+          plan: {
+            status: "selected",
+            releaseVersion: "saved-story-1",
+            evidence: { timingOverlay: {} },
+          },
+        },
+      };
+    });
+    await p.getByRole("button", { name: "Sources behind this reading", exact: true }).click();
+    await p.locator("#today-evidence").waitFor();
+    const text = await p.locator("#today-evidence").innerText();
+    assert(text.includes("Within about an hour"), "Plain birth-time accuracy is missing");
+    assert(!text.includes("Hour"), "A bare Hour label is still rendered");
+    assert(
+      text.includes("Some parent sources were not retained with this reading."),
+      "Missing parents are not stated",
+    );
+    assert(
+      (await p.locator('a[href="#today-reading-1-fact-A1"]').count()) === 0,
+      "A dead A1 parent link is still rendered",
+    );
+    const pageText = await p.locator("body").innerText();
+    assert(
+      pageText.includes("Swiss Ephemeris service was unavailable"),
+      "Plain degraded copy is missing",
+    );
+    assert(
+      !/HTTP 503|fetch failed|unreachable/i.test(pageText),
+      "Raw transport wording reached the reader",
+    );
+    return { accuracy: "Within about an hour" };
+  });
+
+  const transitEvidence = (damage = false) => {
+    const windows = [
+      {
+        id: "w1",
+        ingress: { at: "2026-10-01T00:00:00.000Z" },
+        egress: { at: "2026-10-02T00:00:00.000Z" },
+        contactIds: ["c1"],
+      },
+      {
+        id: "w2",
+        ingress: { at: "2026-10-03T00:00:00.000Z" },
+        egress: { at: "2026-10-04T00:00:00.000Z" },
+        contactIds: ["c2"],
+      },
+      {
+        id: "w3",
+        ingress: { at: "2026-10-05T00:00:00.000Z" },
+        egress: { at: "2026-10-06T00:00:00.000Z" },
+        contactIds: ["c2"],
+      },
+    ];
+    if (damage) delete windows[1].ingress;
+    return {
+      scan: {
+        samples: [
+          null,
+          {
+            components: [{ id: "component-1", contactIds: ["c1", "c2"] }],
+            windows,
+          },
+        ],
+        source: { engine: "swiss-ephemeris", engineVersion: "synthetic-1" },
+        tolerance: { bracketSeconds: 60 },
+      },
+      componentIds: ["unused", "component-1", "unused"],
+      contactRanges: [
+        {
+          eventId: "c1",
+          centralAt: "2026-10-01T12:00:00.000Z",
+          civilDays: ["2026-10-01", "2026-10-01", "2026-10-01"],
+        },
+        {
+          eventId: "c2",
+          centralAt: "2026-10-03T12:00:00.000Z",
+          civilDays: ["2026-10-03", "2026-10-03", "2026-10-03"],
+        },
+      ],
+      passIndex: 1,
+      passTotal: 2,
+      timezone: "UTC",
+      timingOverlay: {},
+    };
+  };
+  const transitToday = (evidence) => (data) => {
+    data.reading.paragraphLinksAvailable = true;
+    data.language = {
+      mode: "model",
+      model: "synthetic/model",
+      facts: [{ id: "A1", statement: "Calculated contact sequence" }],
+      citations: [],
+      transitStory: {
+        plan: { status: "selected", releaseVersion: "saved-story-1", evidence },
+      },
+    };
+  };
+
+  await run("transit-sequence-valid", async (p) => {
+    await todayOverride(p, transitToday(transitEvidence(false)));
+    await p.getByRole("button", { name: "Sources behind this reading", exact: true }).click();
+    await p.locator(".transit-sequence").waitFor();
+    assert(
+      (await p.locator(".transit-sequence [data-contact-window]").count()) === 3,
+      "Valid sequence lost a window",
+    );
+    assert(
+      (await p.locator(".transit-sequence").innerText()).includes("Contact 1 of 2"),
+      "Ordinal is missing",
+    );
+    return { windows: 3 };
+  });
+
+  await run("transit-sequence-damaged", async (p) => {
+    await todayOverride(p, transitToday(transitEvidence(true)));
+    await p.getByRole("button", { name: "Sources behind this reading", exact: true }).click();
+    await p.getByText("The saved contact sequence is incomplete.", { exact: true }).waitFor();
+    assert(
+      (await p.locator(".transit-sequence [data-contact-window]").count()) === 0,
+      "A damaged middle window rendered a partial timeline",
+    );
+    const pageText = await p.locator("body").innerText();
+    assert(!/NaN|Infinity/.test(pageText), "An invalid date reached the rendered output");
+    return { fallback: true };
+  });
+
+  // --- Failure isolation and expiry authority -----------------------------
+
+  await run("access-membership-failure", async (p) => {
+    await seed(p, CHAPTER_KEY, narrative());
+    await applyMembership(p, membership());
+    await queue(p, [narrative()]);
+    await resetCalls(p);
+    await go(p, "/pattern");
+    await p.locator("#chapter-toggle-sun_aries").waitFor();
+    await openChapter(p);
+    await chapterText(p, "Second paragraph.");
+    await p.evaluate(() => {
+      window.mobileAudit.state.fail = ["fetchMembership"];
+      return window.auditQueryClient.invalidateQueries({ queryKey: ["membership"] });
+    });
+    await settle(p, 600);
+    assert((await chapterCalls(p)) === 1, "A membership failure triggered a chapter request");
+    assert(
+      (await p.getByText("Second paragraph.").count()) === 1,
+      "A membership failure hid the chapter",
+    );
+    await p.evaluate(() => {
+      window.mobileAudit.state.fail = ["fetchFeatureNarrative"];
+      return window.auditQueryClient.invalidateQueries({
+        queryKey: ["feature-narrative", "fixture", "sun_aries"],
+      });
+    });
+    await p.getByText("This chapter is the last version loaded. We couldn’t refresh it.").waitFor();
+    assert(
+      (await p.getByText("Second paragraph.").count()) === 1,
+      "A failed refresh hid the chapter",
+    );
+    assert((await chapterCalls(p)) === 2, "A failed refresh did not run exactly once");
+    assert(
+      (await p.locator(".pattern-chapter-evidence").evaluate((el) => el.textContent)).includes(
+        "Calculated values",
+      ),
+      "Evidence disappeared after a failed refresh",
+    );
+    return { chapterRequests: 2 };
+  });
+
+  await run(
+    "access-initial-membership-failure",
+    async (p) => {
+      await queue(p, [narrative()]);
+      await resetCalls(p);
+      await go(p, "/pattern");
+      await p.locator("#chapter-toggle-sun_aries").waitFor();
+      await openChapter(p);
+      await chapterText(p, "Second paragraph.");
+      assert((await chapterCalls(p)) === 1, "The chapter request depended on membership");
+      assert(
+        (await p.getByText("Your membership could not be checked just now.").count()) === 1,
+        "The membership failure was not reported non-blockingly",
+      );
+      return { chapterRequests: 1 };
+    },
+    { init: { fail: ["fetchMembership"] } },
+  );
+
+  await run("access-held-initial-writing", async (p) => {
+    await queue(p, [narrative()]);
+    await hold(p, ["fetchFeatureNarrative"]);
+    await resetCalls(p);
+    await go(p, "/pattern");
+    await p.locator("#chapter-toggle-sun_aries").waitFor();
+    await openChapter(p);
+    await p.getByText("Preparing this chapter.").waitFor();
+    assert(
+      (await p.locator(".pattern-chapter-evidence").evaluate((el) => el.textContent)).includes(
+        "Calculated values",
+      ),
+      "Calculated evidence is unavailable while writing is held",
+    );
+    assert(
+      (await p.locator("#context-sun_aries").count()) === 1,
+      "The journal attachment is missing",
+    );
+    await release(p, "fetchFeatureNarrative");
+    await chapterText(p, "Second paragraph.");
+    return { chapterRequests: 1 };
+  });
+
+  const omitted = (options = {}) => {
+    const value = narrative(options);
+    delete value.accessUntil;
+    return value;
+  };
+
+  await run(
+    "access-server-expiry",
+    async (p) => {
+      await applyMembership(p, membership());
+      await queue(p, [narrative({ accessUntil: "2026-10-23T12:05:00.000Z" })]);
+      await resetCalls(p);
+      await go(p, "/pattern");
+      await p.locator("#chapter-toggle-sun_aries").waitFor();
+      await openChapter(p);
+      await chapterText(p, "Second paragraph.");
+      await queue(p, [narrative({ accessUntil: "2026-10-23T13:00:00.000Z" })]);
+      await hold(p, ["fetchFeatureNarrative"]);
+      await p.clock.fastForward("00:06:00");
+      await p.waitForFunction(
+        () =>
+          window.mobileAudit.state.calls.filter((call) => call.name === "fetchFeatureNarrative")
+            .length >= 2,
+      );
+      await settle(p, 300);
+      assert(
+        (await p.getByText("Second paragraph.").count()) === 0,
+        "Expired full text stayed visible",
+      );
+      assert((await upsellCount(p)) === 1, "Expiry did not show the local preview");
+      await release(p, "fetchFeatureNarrative");
+      await chapterText(p, "Second paragraph.");
+      assert((await upsellCount(p)) === 0, "The server answer did not restore full access");
+      assert((await chapterCalls(p)) === 2, "Expiry did not revalidate the chapter once");
+      return { chapterRequests: 2 };
+    },
+    { clock: "2026-10-23T12:00:00.000Z" },
+  );
+
+  await run(
+    "access-omitted-expiry-revalidates-only",
+    async (p) => {
+      await applyMembership(p, membership({ accessUntil: "2026-10-23T11:00:00.000Z" }));
+      await queue(p, [omitted(), omitted()]);
+      await resetCalls(p);
+      await go(p, "/pattern");
+      await p.locator("#chapter-toggle-sun_aries").waitFor();
+      await openChapter(p);
+      await chapterText(p, "Second paragraph.");
+      await settle(p, 800);
+      assert(
+        (await p.getByText("Second paragraph.").count()) === 1,
+        "Membership deadline truncated the chapter",
+      );
+      assert((await upsellCount(p)) === 0, "Membership deadline showed a preview");
+      assert((await chapterCalls(p)) === 2, "The membership deadline did not revalidate once");
+      await setMembership(p, membership({ accessUntil: "2026-10-23T11:00:00.000Z" }));
+      await settle(p, 500);
+      assert((await chapterCalls(p)) === 2, "An unchanged consumed deadline re-armed");
+      return { chapterRequests: 2 };
+    },
+    { clock: "2026-10-23T12:00:00.000Z" },
+  );
+
+  await run(
+    "access-omitted-expiry-future",
+    async (p) => {
+      await applyMembership(p, membership({ accessUntil: "2026-10-23T12:05:00.000Z" }));
+      await queue(p, [omitted(), omitted()]);
+      await resetCalls(p);
+      await go(p, "/pattern");
+      await p.locator("#chapter-toggle-sun_aries").waitFor();
+      await openChapter(p);
+      await chapterText(p, "Second paragraph.");
+      await p.clock.fastForward("00:06:00");
+      await settle(p, 400);
+      assert(
+        (await p.getByText("Second paragraph.").count()) === 1,
+        "Membership deadline truncated the chapter",
+      );
+      assert(
+        (await chapterCalls(p)) === 2,
+        "The future membership deadline did not revalidate once",
+      );
+      return { chapterRequests: 2 };
+    },
+    { clock: "2026-10-23T12:00:00.000Z" },
+  );
+
+  await run(
+    "access-null-expiry-no-timer",
+    async (p) => {
+      await applyMembership(p, membership({ accessUntil: "2026-10-23T11:00:00.000Z" }));
+      await queue(p, [narrative({ accessUntil: null })]);
+      await resetCalls(p);
+      await go(p, "/pattern");
+      await p.locator("#chapter-toggle-sun_aries").waitFor();
+      await openChapter(p);
+      await chapterText(p, "Second paragraph.");
+      await p.clock.fastForward("00:10:00");
+      await settle(p, 400);
+      assert(
+        (await p.getByText("Second paragraph.").count()) === 1,
+        "A null server expiry truncated the chapter",
+      );
+      assert((await chapterCalls(p)) === 1, "A null server expiry scheduled a fallback timer");
+      return { chapterRequests: 1 };
+    },
+    { clock: "2026-10-23T12:00:00.000Z" },
+  );
+
+  return { engine: await browser.version(), checks };
+}
