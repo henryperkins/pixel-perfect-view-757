@@ -2775,6 +2775,7 @@ export async function getPattern(db: DB, userId: string) {
     key: p.key,
     label: p.label,
     position: formatPosition(p.lon),
+    lon: p.lon,
     house: p.house,
     retrograde: p.retrograde,
     angleDependent: p.angleDependent,
