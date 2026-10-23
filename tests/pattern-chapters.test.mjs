@@ -199,6 +199,116 @@ test("legacy encrypted essays remain readable without manufactured citation evid
   assert.deepEqual(h.sqlite.prepare("SELECT * FROM feature_narratives").get(), row);
 });
 
+test("cached citations are sanitized instead of cast, and the essay stays readable", async () => {
+  await prepare();
+  const generated = await chapter();
+  const row = h.sqlite.prepare("SELECT * FROM feature_narratives").get();
+  h.sqlite
+    .prepare("UPDATE feature_narratives SET citations=? WHERE id=?")
+    .run(
+      JSON.stringify([
+        null,
+        "bad",
+        { paragraph: 1 },
+        { paragraph: -1, facts: ["N1"] },
+        { paragraph: 1, facts: ["N1", "N1", "NOT_A_FACT"] },
+        { paragraph: 2, facts: ["R1"] },
+        { paragraph: 1, facts: ["N2"] },
+      ]),
+      row.id,
+    );
+  await h.reopen();
+  const cached = await chapter();
+  assert.equal(cached.available, true);
+  assert.equal(cached.narrative, generated.narrative);
+  assert.deepEqual(cached.facts, generated.facts);
+  assert.deepEqual(cached.citations, [
+    { paragraph: 1, facts: ["N1", "N2"] },
+    { paragraph: 2, facts: ["R1"] },
+  ]);
+  assert.ok(
+    cached.citations.every((citation) =>
+      citation.facts.every((id) => cached.facts.some((fact) => fact.id === id)),
+    ),
+  );
+  assert.equal(h.gatewayRequests.length, 1);
+});
+
+test("legacy citations are structurally validated without inventing saved evidence", async () => {
+  const fixture = await prepare();
+  await chapter();
+  const legacyText =
+    "Legacy chapter retained verbatim.\n\nSomething to sit with: Where do you see this pattern?";
+  h.sqlite
+    .prepare("UPDATE feature_narratives SET narrative_ct=?, citations=?")
+    .run(
+      await h.cryptoModule.encryptField(fixture.dek, legacyText),
+      JSON.stringify([
+        null,
+        "bad",
+        { paragraph: 1 },
+        { paragraph: -1, facts: ["N1"] },
+        { paragraph: 1, facts: ["N1", "N1"] },
+      ]),
+    );
+  await h.reopen();
+  const legacy = await chapter();
+  assert.equal(legacy.available, true);
+  assert.equal(legacy.narrative, legacyText);
+  assert.equal(legacy.evidenceAvailable, false);
+  assert.deepEqual(legacy.facts, []);
+  assert.deepEqual(legacy.citations, [{ paragraph: 1, facts: ["N1"] }]);
+  assert.equal(h.gatewayRequests.length, 1);
+});
+
+test("a known empty saved fact set removes every cached citation", async () => {
+  const fixture = await prepare();
+  await chapter();
+  const row = h.sqlite.prepare("SELECT * FROM feature_narratives").get();
+  const envelope = await h.cryptoModule.decryptJson(fixture.dek, row.narrative_ct);
+  h.sqlite
+    .prepare("UPDATE feature_narratives SET narrative_ct=? WHERE id=?")
+    .run(await h.cryptoModule.encryptJson(fixture.dek, { ...envelope, facts: [] }), row.id);
+  await h.reopen();
+  const cached = await chapter();
+  assert.equal(cached.available, true);
+  assert.equal(cached.evidenceAvailable, true);
+  assert.deepEqual(cached.facts, []);
+  assert.deepEqual(cached.citations, []);
+  assert.equal(h.gatewayRequests.length, 1);
+});
+
+test("a generated chapter saves sanitized citations before persistence", async () => {
+  await prepare();
+  h.setGateway(() =>
+    Response.json({
+      choices: [
+        {
+          message: {
+            content: JSON.stringify({
+              paragraphs: [
+                {
+                  text: "You recognise the supplied structure as a reflective pattern. Its calculated position provides the reference for this chapter. Your own experience can differ from this framing.",
+                  facts: ["N1", "N1", "N2"],
+                },
+              ],
+              reflection_question: "Where do you recognise this pattern in your everyday life?",
+            }),
+          },
+        },
+      ],
+    }),
+  );
+  const generated = await chapter();
+  assert.equal(generated.available, true);
+  assert.deepEqual(generated.citations, [{ paragraph: 1, facts: ["N1", "N2"] }]);
+  const stored = h.sqlite.prepare("SELECT * FROM feature_narratives").get();
+  assert.deepEqual(JSON.parse(stored.citations), [{ paragraph: 1, facts: ["N1", "N2"] }]);
+  await h.reopen();
+  assert.deepEqual((await chapter()).citations, [{ paragraph: 1, facts: ["N1", "N2"] }]);
+  assert.equal(h.gatewayRequests.length, 1);
+});
+
 test("embedded blank lines never shift chapter citation boundaries, including after reopening", async () => {
   await prepare();
   const firstText =

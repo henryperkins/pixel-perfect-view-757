@@ -120,6 +120,7 @@ import {
 import { assertUse, isPermitted, LAUNCH_SOURCES, PROHIBITED_SOURCES, SOURCE_MAP } from "./registry";
 import { checkInInputSchema } from "./check-in";
 import { daysToLocalDate, localDayString, localNoon, validTimeZone, zonedToUtc } from "./local-day";
+import { readableNarrativeCitations, sanitizeNarrativeCitations } from "./narrative-citations";
 import { summarizeReadingQuality, type QualityReading, type QualityFeedback } from "./ai/quality";
 import {
   diagnosticLabel,
@@ -3746,17 +3747,24 @@ async function loadFeatureNarrative(db: DB, userId: string, featureKey: string) 
       .eq("feature_key", featureKey);
     if (error) throw new Error("This chapter could not be refreshed. Please try again.");
   } else if (cached) {
+    const unpacked = unpackNarrative(await decryptField(dek, cached.narrative_ct));
+    // Legacy plaintext essays carry no saved fact set: validate their metadata
+    // structurally without inventing or filtering evidence.
+    const citations = unpacked.evidenceAvailable
+      ? sanitizeNarrativeCitations(
+          cached.citations,
+          unpacked.facts.map((fact) => fact.id),
+        )
+      : readableNarrativeCitations(cached.citations);
+    logSanitizedCitations(featureKey, cached.citations, citations);
     return {
       available: true as const,
       featureKey,
       cacheKey,
-      ...unpackNarrative(await decryptField(dek, cached.narrative_ct)),
+      ...unpacked,
       mode: cached.mode === "model" ? ("model" as const) : ("template" as const),
       model: cached.model,
-      citations: (Array.isArray(cached.citations) ? cached.citations : []) as {
-        paragraph: number;
-        facts: string[];
-      }[],
+      citations,
       reason: null as string | null,
     };
   }
@@ -3814,6 +3822,12 @@ async function loadFeatureNarrative(db: DB, userId: string, featureKey: string) 
     return unavailableNarrative(written.meta.reason);
   }
 
+  const citations = sanitizeNarrativeCitations(
+    written.meta.citations,
+    facts.map((fact) => fact.id),
+  );
+  logSanitizedCitations(featureKey, written.meta.citations, citations);
+
   const { error: saveError } = await db.from("feature_narratives").insert({
     user_id: userId,
     snapshot_id: snapRow.id,
@@ -3826,7 +3840,7 @@ async function loadFeatureNarrative(db: DB, userId: string, featureKey: string) 
       paragraphs: written.paragraphs,
       facts,
     }),
-    citations: written.meta.citations,
+    citations,
     essay_version: essayKey,
   });
   if (saveError) throw new Error("This chapter could not be saved. Please try again.");
@@ -3841,9 +3855,23 @@ async function loadFeatureNarrative(db: DB, userId: string, featureKey: string) 
     evidenceAvailable: true,
     mode: written.meta.mode,
     model: written.meta.model,
-    citations: written.meta.citations,
+    citations,
     reason: null as string | null,
   };
+}
+
+/** Counts only: citation statements, fact text and prose never reach the log. */
+function logSanitizedCitations(
+  featureKey: string,
+  raw: unknown,
+  citations: { paragraph: number; facts: string[] }[],
+) {
+  if (!Array.isArray(raw) || raw.length === citations.length) return;
+  console.warn("[pattern] sanitized chapter citations", {
+    featureKey,
+    rawCount: raw.length,
+    keptCount: citations.length,
+  });
 }
 
 // ---------------------------------------------------------------------------

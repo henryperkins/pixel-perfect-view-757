@@ -1,7 +1,9 @@
+import { readableNarrativeCitations } from "@/lib/narrative-citations";
+
+import { focusEvidenceTarget } from "./evidence-focus";
 import { bodyName, chapterParagraphId, type PatternFeature } from "./pattern-view";
 
 type Fact = { id: string; statement: string };
-type Citation = { paragraph: number; facts: string[] };
 
 const LABELS: Record<string, string> = {
   a: "First body",
@@ -23,7 +25,15 @@ function labelFor(key: string) {
   return LABELS[key] ?? bodyName(key.replace(/([a-z])([A-Z])/g, "$1 $2"));
 }
 
-function Value({ value, field = "" }: { value: unknown; field?: string }) {
+function Value({
+  value,
+  field = "",
+  raw = false,
+}: {
+  value: unknown;
+  field?: string;
+  raw?: boolean;
+}) {
   if (value === null || value === undefined) return <>Not recorded</>;
   if (typeof value === "boolean") return <>{value ? "Yes" : "No"}</>;
   if (typeof value === "number") {
@@ -39,13 +49,20 @@ function Value({ value, field = "" }: { value: unknown; field?: string }) {
       <ul className="list-inside list-disc">
         {value.map((item, i) => (
           <li key={i}>
-            <Value value={item} />
+            <Value value={item} field={field} />
           </li>
         ))}
       </ul>
     );
   }
   if (typeof value === "object") return <Values payload={value} />;
+  if (raw) {
+    return (
+      <span className="block whitespace-pre-wrap break-words font-mono text-xs">
+        {String(value)}
+      </span>
+    );
+  }
   return <>{bodyName(String(value))}</>;
 }
 
@@ -64,7 +81,31 @@ function Values({ payload }: { payload: object }) {
   );
 }
 
-function describeFact(fact: Fact): { label: string; value: unknown; field?: string } {
+type DescribedFact = {
+  label: string;
+  value: unknown;
+  field?: string;
+  raw?: boolean;
+};
+
+/** A value that cannot be parsed is shown verbatim rather than renamed. */
+function parseFactValue(text: string): { value: unknown; raw: boolean } {
+  try {
+    return { value: JSON.parse(text), raw: false };
+  } catch {
+    return { value: text, raw: true };
+  }
+}
+
+/** A shortened structured value has no closing token and cannot be repaired. */
+function isTruncatedJson(value: string) {
+  const trimmed = value.trim();
+  if (!trimmed.startsWith("{") && !trimmed.startsWith("[")) return false;
+  const last = trimmed.at(-1);
+  return last !== "}" && last !== "]";
+}
+
+function describeFact(fact: Fact): DescribedFact {
   if (fact.id === "N1")
     return {
       label: "Chart structure",
@@ -80,19 +121,8 @@ function describeFact(fact: Fact): { label: string; value: unknown; field?: stri
   const match = fact.statement.match(/^([a-zA-Z_]+):\s*(.*)$/s);
   if (!match || match[1] === undefined || match[2] === undefined)
     return { label: "Supplied fact", value: fact.statement };
-  let value: unknown = match[2];
-  try {
-    value = JSON.parse(match[2]);
-  } catch {
-    /* Plain text is already a complete value. */
-  }
-  return { label: labelFor(match[1]), value, field: match[1] };
-}
-
-function focusTarget(id: string) {
-  const target = document.getElementById(id);
-  target?.focus({ preventScroll: true });
-  target?.scrollIntoView({ block: "start", behavior: "instant" });
+  const parsed = parseFactValue(match[2]);
+  return { label: labelFor(match[1]), value: parsed.value, field: match[1], raw: parsed.raw };
 }
 
 export function PatternChapterEvidence({
@@ -105,15 +135,31 @@ export function PatternChapterEvidence({
 }: {
   feature: PatternFeature;
   facts: Fact[];
-  citations: Citation[];
+  citations: { paragraph: number; facts: string[] }[];
   evidenceAvailable: boolean;
   model: string | null;
   paragraphCount: number;
 }) {
   const factId = (id: string) => `chapter-${feature.feature_key}-fact-${id}`;
-  const byId = new Map(facts.map((fact) => [fact.id, fact]));
+  const safeFacts: Fact[] = Array.isArray(facts)
+    ? facts.filter(
+        (fact): fact is Fact =>
+          Boolean(fact) &&
+          typeof fact === "object" &&
+          typeof fact.id === "string" &&
+          typeof fact.statement === "string",
+      )
+    : [];
+  const uniqueFacts = [...new Map(safeFacts.map((fact) => [fact.id, fact])).values()];
+  const byId = new Map(uniqueFacts.map((fact) => [fact.id, fact]));
   const referenceLabels = new Map(
-    facts.map((fact, index) => [fact.id, `${describeFact(fact).label} · Reference ${index + 1}`]),
+    uniqueFacts.map((fact, index) => [
+      fact.id,
+      `${describeFact(fact).label} · Reference ${index + 1}`,
+    ]),
+  );
+  const visibleCitations = readableNarrativeCitations(citations).filter(
+    (citation) => citation.paragraph <= paragraphCount,
   );
   return (
     <details className="pattern-chapter-evidence">
@@ -125,18 +171,17 @@ export function PatternChapterEvidence({
               These are the facts supplied for this saved reading. A paragraph link names its
               sources. It does not prove every sentence.
             </p>
-            <ol className="pattern-evidence-citations" aria-label="Sources by paragraph">
-              {citations
-                .filter(
-                  (citation) => citation.paragraph >= 1 && citation.paragraph <= paragraphCount,
-                )
-                .map((citation) => (
-                  <li key={citation.paragraph}>
+            {visibleCitations.length ? (
+              <ol className="pattern-evidence-citations" aria-label="Sources by paragraph">
+                {visibleCitations.map((citation, index) => (
+                  <li key={`${citation.paragraph}-${index}`}>
                     <a
                       href={`#${chapterParagraphId(feature.feature_key, citation.paragraph)}`}
                       onClick={(event) => {
                         event.preventDefault();
-                        focusTarget(chapterParagraphId(feature.feature_key, citation.paragraph));
+                        focusEvidenceTarget(
+                          chapterParagraphId(feature.feature_key, citation.paragraph),
+                        );
                       }}
                     >
                       Paragraph {citation.paragraph}
@@ -150,7 +195,7 @@ export function PatternChapterEvidence({
                             href={`#${factId(id)}`}
                             onClick={(event) => {
                               event.preventDefault();
-                              focusTarget(factId(id));
+                              focusEvidenceTarget(factId(id));
                             }}
                           >
                             {referenceLabels.get(id)}
@@ -162,21 +207,46 @@ export function PatternChapterEvidence({
                     </div>
                   </li>
                 ))}
-            </ol>
-            <h4 className="mt-5 text-base">Facts behind the wording</h4>
-            <ul className="pattern-evidence-facts">
-              {facts.map((fact) => {
-                const described = describeFact(fact);
-                return (
-                  <li id={factId(fact.id)} key={fact.id} tabIndex={-1}>
-                    <h5>{referenceLabels.get(fact.id)}</h5>
-                    <div>
-                      <Value value={described.value} field={described.field ?? ""} />
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
+              </ol>
+            ) : (
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                No paragraph source links are available for the displayed reading.
+                {uniqueFacts.length > 0 ? " Saved source facts are listed below." : null}
+              </p>
+            )}
+            {uniqueFacts.length ? (
+              <>
+                <h4 className="mt-5 text-base">Facts behind the wording</h4>
+                <ul className="pattern-evidence-facts">
+                  {uniqueFacts.map((fact) => {
+                    const described = describeFact(fact);
+                    return (
+                      <li id={factId(fact.id)} key={fact.id} tabIndex={-1}>
+                        <h5>{referenceLabels.get(fact.id)}</h5>
+                        <div>
+                          <Value
+                            value={described.value}
+                            field={described.field ?? ""}
+                            raw={described.raw ?? false}
+                          />
+                          {described.raw &&
+                          typeof described.value === "string" &&
+                          isTruncatedJson(described.value) ? (
+                            <p className="mt-2 text-xs text-muted-foreground">
+                              This recorded value was shortened when the chapter was saved.
+                            </p>
+                          ) : null}
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </>
+            ) : (
+              <p className="mt-5 text-sm leading-relaxed text-muted-foreground">
+                No saved source facts are available for this reading.
+              </p>
+            )}
           </>
         ) : (
           <>
