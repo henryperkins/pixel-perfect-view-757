@@ -1,8 +1,8 @@
 {
-  "baseline": "f7d1b37cdd99603339826f975d311a1a57e77c92",
+  "baseline": "f7d1b37",
   "files": {
     "DESIGN.md": "be6438a29dccf7117d3d4297f80194eb66b63c04540ef7513f5eedbe28da7352",
-    "docs/superpowers/plans/2026-10-23-reading-exploration-remediation.md": "cb00475cbf90ce1ab19845fe520f8bc432365b5c344f74335db42f30d345d899",
+    "docs/superpowers/plans/2026-10-23-reading-exploration-remediation.md": "c3c3309bfe62bd796eada722ce0a3bcd74a40d32938283f37c5e1b2ec96c2335",
     "roadmap.md": "d605968c8e112798108a16b0506db100c7658a7076716dc8d4944ee4d0ce8b8b",
     "src/components/pattern/ChapterNarrativeState.tsx": "c781165fd440b23ef0559eb191595a037e2caa46067fbbb45bb696f43c2f62e3",
     "src/components/pattern/EphemerisNotice.tsx": "74010b18e4fc688af81ef240e5b745c80387b20ce265e0ca05d204c1f8e3ccb5",
@@ -31,5 +31,6 @@
     "tests/today-evidence.test.mjs": "42456fcd2b2330791044bfae68c970f38bf4e5e18b252f5391e4a10d6e8dd232",
     "tests/transit-story-view.test.mjs": "29c95591ffca8bb2dbc3500f234677f1c1396757b3f768a47b03f5a33bf1c23a"
   },
-  "note": "Working-tree implementation on the baseline; source and fixture checksums at verification time."
+  "implementationRange": "c406239..4348fac",
+  "note": "SHA-256 of the changed source, test and fixture files at the recorded verification revision."
 }

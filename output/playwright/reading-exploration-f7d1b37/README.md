@@ -1,6 +1,6 @@
 # Reading exploration remediation verification
 
-Baseline application revision: `f7d1b37` (`main`). The implementation and its fixtures are the working-tree change set described in `docs/superpowers/plans/2026-10-23-reading-exploration-remediation.md`.
+Baseline application revision: `f7d1b37` (`main`). The implementation is committed in `c406239..4348fac`; its fixtures and verification record follow `docs/superpowers/plans/2026-10-23-reading-exploration-remediation.md`.
 
 ## Contents
 
