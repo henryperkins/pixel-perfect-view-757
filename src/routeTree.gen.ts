@@ -18,6 +18,7 @@ import { Route as McpRouteImport } from './routes/mcp'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as TransitChartCalculatorRouteImport } from './routes/transit-chart-calculator'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
+import { Route as AuthenticatedAccuracyRouteImport } from './routes/_authenticated/accuracy'
 import { Route as AuthenticatedAssistantsRouteImport } from './routes/_authenticated/assistants'
 import { Route as AuthenticatedBirthRouteImport } from './routes/_authenticated/birth'
 import { Route as AuthenticatedContentRouteImport } from './routes/_authenticated/content'
@@ -90,6 +91,11 @@ const Char91DotwellKnownChar93OauthProtectedResourceRoute =
     path: '/.well-known/oauth-protected-resource',
     getParentRoute: () => rootRouteImport,
   } as any)
+const AuthenticatedAccuracyRoute = AuthenticatedAccuracyRouteImport.update({
+  id: '/accuracy',
+  path: '/accuracy',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedAssistantsRoute = AuthenticatedAssistantsRouteImport.update({
   id: '/assistants',
   path: '/assistants',
@@ -238,6 +244,7 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/transit-chart-calculator': typeof TransitChartCalculatorRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/accuracy': typeof AuthenticatedAccuracyRoute
   '/assistants': typeof AuthenticatedAssistantsRoute
   '/birth': typeof AuthenticatedBirthRoute
   '/content': typeof AuthenticatedContentRoute
@@ -274,6 +281,7 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/transit-chart-calculator': typeof TransitChartCalculatorRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/accuracy': typeof AuthenticatedAccuracyRoute
   '/assistants': typeof AuthenticatedAssistantsRoute
   '/birth': typeof AuthenticatedBirthRoute
   '/content': typeof AuthenticatedContentRoute
@@ -312,6 +320,7 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/transit-chart-calculator': typeof TransitChartCalculatorRoute
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
+  '/_authenticated/accuracy': typeof AuthenticatedAccuracyRoute
   '/_authenticated/assistants': typeof AuthenticatedAssistantsRoute
   '/_authenticated/birth': typeof AuthenticatedBirthRoute
   '/_authenticated/content': typeof AuthenticatedContentRoute
@@ -350,6 +359,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/transit-chart-calculator'
     | '/.well-known/oauth-protected-resource'
+    | '/accuracy'
     | '/assistants'
     | '/birth'
     | '/content'
@@ -386,6 +396,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/transit-chart-calculator'
     | '/.well-known/oauth-protected-resource'
+    | '/accuracy'
     | '/assistants'
     | '/birth'
     | '/content'
@@ -423,6 +434,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/transit-chart-calculator'
     | '/.well-known/oauth-protected-resource'
+    | '/_authenticated/accuracy'
     | '/_authenticated/assistants'
     | '/_authenticated/birth'
     | '/_authenticated/content'
@@ -539,6 +551,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/.well-known/oauth-protected-resource'
       preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/accuracy': {
+      id: '/_authenticated/accuracy'
+      path: '/accuracy'
+      fullPath: '/accuracy'
+      preLoaderRoute: typeof AuthenticatedAccuracyRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/assistants': {
       id: '/_authenticated/assistants'
@@ -726,6 +745,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAccuracyRoute: typeof AuthenticatedAccuracyRoute
   AuthenticatedAssistantsRoute: typeof AuthenticatedAssistantsRoute
   AuthenticatedBirthRoute: typeof AuthenticatedBirthRoute
   AuthenticatedContentRoute: typeof AuthenticatedContentRoute
@@ -742,6 +762,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAccuracyRoute: AuthenticatedAccuracyRoute,
   AuthenticatedAssistantsRoute: AuthenticatedAssistantsRoute,
   AuthenticatedBirthRoute: AuthenticatedBirthRoute,
   AuthenticatedContentRoute: AuthenticatedContentRoute,
