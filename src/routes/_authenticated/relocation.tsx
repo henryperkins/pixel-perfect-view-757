@@ -11,12 +11,15 @@ import { usePlaceLookup } from "@/hooks/usePlaceLookup";
 import {
   ANGLE_KINDS,
   ANGLE_THEME,
+  crossingsNear,
+  lineCrossings,
   linesFor,
   nearbyLines,
   relocatedAngles,
   type AngleKind,
 } from "@/lib/astro/astrocartography";
 import { fetchPattern } from "@/lib/pattern.functions";
+import { ANGLE_LENS, crossingReading, HISTORY, lineReading, PLANET_THEME } from "@/lib/astro/relocation-editorial";
 import type { PlaceFields } from "@/lib/place-lookup";
 import { userFacingError } from "@/lib/user-facing-error";
 
@@ -156,6 +159,8 @@ function RelocationView({ data }: { data: PatternData }) {
   }
 
   const nearby = selected ? nearbyLines(allLines, [selected.longitude, selected.latitude], 800) : [];
+  const crossings = useMemo(() => lineCrossings(allLines), [allLines]);
+  const nearCross = selected ? crossingsNear(crossings, selected.latitude).slice(0, 6) : [];
   const relocated = selected && utcISO && !suppressed
     ? relocatedAngles(utcISO, selected.latitude, selected.longitude)
     : null;
@@ -317,7 +322,7 @@ function RelocationView({ data }: { data: PatternData }) {
                         {km < 50 ? "right here" : `about ${Math.round(km / 10) * 10} km away`}
                       </span>
                       <span className="basis-full text-sm text-muted-foreground">
-                        Traditionally tied to {ANGLE_THEME[line.angle].theme}.
+                        {lineReading(line.body, line.label, line.angle)}
                       </span>
                     </li>
                   ))}
@@ -327,13 +332,72 @@ function RelocationView({ data }: { data: PatternData }) {
                   No planetary lines run within 800 km of here.
                 </p>
               )}
+              {nearCross.length ? (
+                <div className="mt-6">
+                  <h3 className="technical text-muted-foreground">Line crossings on this latitude</h3>
+                  <ul className="mt-2 divide-y divide-rule">
+                    {nearCross.map((c) => (
+                      <li key={c.id} className="py-3 text-sm">
+                        <span className="font-medium">
+                          {c.a.label} {c.a.angle} × {c.b.label} {c.b.angle}
+                        </span>{" "}
+                        <span className="technical text-muted-foreground">
+                          at {Math.abs(c.lat).toFixed(1)}°{c.lat >= 0 ? "N" : "S"}
+                        </span>
+                        <p className="mt-1 text-muted-foreground">{crossingReading(c.a, c.b)}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
             </section>
           ) : null}
 
+          <section aria-labelledby={`${id}-guide`} className="mt-10">
+            <h2 id={`${id}-guide`} className="text-xl">Reading the lines</h2>
+            <dl className="mt-4 grid gap-4 sm:grid-cols-2">
+              {ANGLE_KINDS.map((a) => (
+                <div key={a} className="border border-rule p-4">
+                  <dt className="flex items-center gap-2 font-medium">
+                    <span aria-hidden="true" className={`h-2.5 w-2.5 rounded-full ${ANGLE_SWATCH[a]}`} />
+                    {a} · {ANGLE_THEME[a].name}
+                  </dt>
+                  <dd className="mt-2 text-sm text-muted-foreground">A planet here {ANGLE_LENS[a]}</dd>
+                </div>
+              ))}
+            </dl>
+            <details className="mt-4 border border-rule p-4">
+              <summary className="min-h-11 cursor-pointer font-medium">What each planet brings</summary>
+              <ul className="mt-3 space-y-2 text-sm">
+                {bodies.map((b) => (
+                  <li key={b.key}>
+                    <span className="font-medium">{b.label}</span>{" "}
+                    <span className="text-muted-foreground">— {PLANET_THEME[b.key]}</span>
+                  </li>
+                ))}
+              </ul>
+            </details>
+            <details className="mt-3 border border-rule p-4">
+              <summary className="min-h-11 cursor-pointer font-medium">History and context</summary>
+              <div className="mt-3 space-y-4 text-sm">
+                {HISTORY.map((h) => (
+                  <div key={h.title}>
+                    <h3 className="font-medium">{h.title}</h3>
+                    <p className="mt-1 leading-relaxed text-muted-foreground">{h.body}</p>
+                  </div>
+                ))}
+              </div>
+            </details>
+          </section>
+
           <p className="mt-8 max-w-2xl text-xs leading-relaxed text-muted-foreground">
             Lines and relocated angles are calculated in Pattern from your chart’s planet
-            positions and birth moment, treating each planet as sitting on the ecliptic. That is
-            exact for the Sun and can shift Moon and Pluto lines by a few degrees.
+            positions and birth moment, using each planet’s real orbital latitude so Moon and
+            Pluto lines follow their true paths.{" "}
+            <Link to="/accuracy" className="text-primary underline">
+              Check the birth details used
+            </Link>
+            .
           </p>
         </>
       )}
