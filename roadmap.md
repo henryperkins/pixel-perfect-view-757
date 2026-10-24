@@ -85,6 +85,12 @@ Verification: the remediation plan records the exact commands, fixtures and resu
 
 # Relocation map
 
+## Chart engine comparison
+
+- [ ] Add a reproducible known-chart comparison with independently generated reference data and explicit source/convention labels.
+- [ ] Refine orbital latitude, sidereal rotation and line geometry; retain honest approximation limits.
+- [ ] Run reference regression tests and verify comparison controls and layout in the browser.
+
 - [x] Group angle-color filters with line meanings and nearby readings; filters also apply to crossings, with a visible line count and reset. Eight relocation tests, scoped lint and automatic build passed; isolated desktop/mobile browser checks verified combined filters and reset without overflow or browser errors. Live authenticated charts and map rendering were not reverified; no member records changed.
 - [x] Compute planetary lines and relocated angles in-browser from saved placement longitudes and the chart's UTC instant; hide them when birth-time uncertainty suppresses angle claims.
 - [x] Add the Mapbox world map with per-angle line colors, city search reusing the gateway geocode path, and nearby-line readouts.
