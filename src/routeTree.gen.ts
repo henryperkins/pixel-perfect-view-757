@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AssistantAuthRouteImport } from './routes/assistant-auth'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ChartComparisonRouteImport } from './routes/chart-comparison'
 import { Route as ConfirmEmailRouteImport } from './routes/confirm-email'
 import { Route as McpRouteImport } from './routes/mcp'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
@@ -63,6 +64,11 @@ const AssistantAuthRoute = AssistantAuthRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChartComparisonRoute = ChartComparisonRouteImport.update({
+  id: '/chart-comparison',
+  path: '/chart-comparison',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConfirmEmailRoute = ConfirmEmailRouteImport.update({
@@ -239,6 +245,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/assistant-auth': typeof AssistantAuthRoute
   '/auth': typeof AuthRoute
+  '/chart-comparison': typeof ChartComparisonRoute
   '/confirm-email': typeof ConfirmEmailRoute
   '/mcp': typeof McpRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -276,6 +283,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/assistant-auth': typeof AssistantAuthRoute
   '/auth': typeof AuthRoute
+  '/chart-comparison': typeof ChartComparisonRoute
   '/confirm-email': typeof ConfirmEmailRoute
   '/mcp': typeof McpRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -315,6 +323,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/assistant-auth': typeof AssistantAuthRoute
   '/auth': typeof AuthRoute
+  '/chart-comparison': typeof ChartComparisonRoute
   '/confirm-email': typeof ConfirmEmailRoute
   '/mcp': typeof McpRoute
   '/reset-password': typeof ResetPasswordRoute
@@ -354,6 +363,7 @@ export interface FileRouteTypes {
     | '/'
     | '/assistant-auth'
     | '/auth'
+    | '/chart-comparison'
     | '/confirm-email'
     | '/mcp'
     | '/reset-password'
@@ -391,6 +401,7 @@ export interface FileRouteTypes {
     | '/'
     | '/assistant-auth'
     | '/auth'
+    | '/chart-comparison'
     | '/confirm-email'
     | '/mcp'
     | '/reset-password'
@@ -429,6 +440,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/assistant-auth'
     | '/auth'
+    | '/chart-comparison'
     | '/confirm-email'
     | '/mcp'
     | '/reset-password'
@@ -468,6 +480,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AssistantAuthRoute: typeof AssistantAuthRoute
   AuthRoute: typeof AuthRoute
+  ChartComparisonRoute: typeof ChartComparisonRoute
   ConfirmEmailRoute: typeof ConfirmEmailRoute
   McpRoute: typeof McpRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
@@ -515,6 +528,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chart-comparison': {
+      id: '/chart-comparison'
+      path: '/chart-comparison'
+      fullPath: '/chart-comparison'
+      preLoaderRoute: typeof ChartComparisonRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/confirm-email': {
@@ -801,6 +821,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AssistantAuthRoute: AssistantAuthRoute,
   AuthRoute: AuthRoute,
+  ChartComparisonRoute: ChartComparisonRoute,
   ConfirmEmailRoute: ConfirmEmailRoute,
   McpRoute: McpRoute,
   ResetPasswordRoute: ResetPasswordRoute,
