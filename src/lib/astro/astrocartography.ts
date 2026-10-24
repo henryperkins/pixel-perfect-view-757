@@ -1,21 +1,12 @@
 /**
  * Astro-cartography lines (Jim Lewis A*C*G model) from natal ecliptic
  * longitudes and the birth instant. Each body's ecliptic latitude (the Moon
- * up to ~5°, Pluto up to ~17°) is taken from its real orbit at the birth
- * instant via the in-app ephemeris, so lines follow true declination.
+ * up to ~5°, Pluto up to ~17°) uses Astronomy Engine when not supplied.
+ * Apparent sidereal time and true obliquity keep the coordinate frames aligned.
  * Pure and browser-safe: no I/O, no chart storage.
  */
-import {
-  BODIES,
-  computeAngles,
-  gmst,
-  norm360,
-  obliquity,
-  positionOf,
-  signOf,
-  toJulianDay,
-  type Body,
-} from "./ephemeris.ts";
+import { Body as AstronomyBody, Ecliptic, GeoVector, MakeTime, SiderealTime, e_tilt } from "astronomy-engine";
+import { norm360, signOf, toJulianDay } from "./ephemeris.ts";
 
 const DEG = Math.PI / 180;
 const EARTH_KM = 6371;
@@ -54,7 +45,7 @@ export function wrapLon(x: number): number {
 }
 
 export function equatorial(lon: number, jd: number, lat = 0) {
-  const eps = obliquity(jd) * DEG;
+  const eps = trueObliquity(jd) * DEG;
   const l = lon * DEG;
   const b = lat * DEG;
   const ra = norm360(
@@ -65,10 +56,36 @@ export function equatorial(lon: number, jd: number, lat = 0) {
   return { ra, dec };
 }
 
-/** Real ecliptic latitude of a body at the instant (0 for unknown bodies). */
+export function trueObliquity(jd: number): number {
+  return e_tilt(MakeTime(jd - 2451545)).tobl;
+}
+
+export function apparentSiderealDegrees(jd: number): number {
+  return SiderealTime(jd - 2451545) * 15;
+}
+
+const ORBIT_BODY: Record<string, AstronomyBody> = {
+  sun: AstronomyBody.Sun, moon: AstronomyBody.Moon, mercury: AstronomyBody.Mercury,
+  venus: AstronomyBody.Venus, mars: AstronomyBody.Mars, jupiter: AstronomyBody.Jupiter,
+  saturn: AstronomyBody.Saturn, uranus: AstronomyBody.Uranus,
+  neptune: AstronomyBody.Neptune, pluto: AstronomyBody.Pluto,
+};
+
+/** Geocentric apparent latitude; independent analytical engine, not Swiss-grade data. */
 export function orbitalLatitude(key: string, jd: number): number {
   if (key === "sun" || key === "node") return 0;
-  return (BODIES as readonly string[]).includes(key) ? positionOf(key as Body, jd).lat : 0;
+  const body = ORBIT_BODY[key];
+  return body ? Ecliptic(GeoVector(body, jd - 2451545, true)).elat : 0;
+}
+
+/** Exact spherical horizon at a latitude; null means the body never crosses it. */
+export function lineLongitudeAt(ra: number, dec: number, theta: number, angle: AngleKind, latitude: number): number | null {
+  if (angle === "MC") return wrapLon(ra - theta);
+  if (angle === "IC") return wrapLon(ra - theta + 180);
+  const c = -Math.tan(latitude * DEG) * Math.tan(dec * DEG);
+  if (Math.abs(c) > 1) return null;
+  const h = Math.acos(c) / DEG;
+  return wrapLon(ra + (angle === "AC" ? -h : h) - theta);
 }
 
 function splitSegments(points: [number, number][]): [number, number][][] {
@@ -86,9 +103,10 @@ function splitSegments(points: [number, number][]): [number, number][][] {
   return out;
 }
 
-export function linesFor(bodies: LineBody[], utcISO: string, step = 1): CartoLine[] {
+export function linesFor(bodies: LineBody[], utcISO: string, step = 0.25): CartoLine[] {
+  if (!Number.isFinite(step) || step <= 0 || step > 5) throw new RangeError("Line step must be greater than zero and at most five degrees.");
   const jd = toJulianDay(new Date(utcISO));
-  const theta0 = gmst(jd);
+  const theta0 = apparentSiderealDegrees(jd);
   const lines: CartoLine[] = [];
   for (const b of bodies) {
     const { ra, dec } = equatorial(b.lon, jd, b.lat ?? orbitalLatitude(b.key, jd));
@@ -116,13 +134,12 @@ export function linesFor(bodies: LineBody[], utcISO: string, step = 1): CartoLin
     });
     const rise: [number, number][] = [];
     const set: [number, number][] = [];
-    const tanDec = Math.tan(dec * DEG);
     for (let lat = -MAX_LAT; lat <= MAX_LAT + 1e-9; lat += step) {
-      const c = -Math.tan(lat * DEG) * tanDec;
-      if (c < -1 || c > 1) continue;
-      const h = Math.acos(c) / DEG;
-      rise.push([wrapLon(ra - h - theta0), lat]);
-      set.push([wrapLon(ra + h - theta0), lat]);
+      const ac = lineLongitudeAt(ra, dec, theta0, "AC", lat);
+      const dc = lineLongitudeAt(ra, dec, theta0, "DC", lat);
+      if (ac === null || dc === null) continue;
+      rise.push([ac, lat]);
+      set.push([dc, lat]);
     }
     lines.push({
       id: `${b.key}-AC`,
@@ -155,7 +172,8 @@ export function haversineKm(a: [number, number], b: [number, number]): number {
 /** Distance from a point to a line; meridians are exact, curves use densified samples. */
 export function distanceToLineKm(line: CartoLine, point: [number, number]): number {
   if (line.angle === "MC" || line.angle === "IC") {
-    const lon = line.segments[0]![0]![0];
+    const lon = line.segments[0]?.[0]?.[0];
+    if (lon === undefined) return Infinity;
     const dLon = Math.abs(wrapLon(point[0] - lon)) * DEG;
     const lat = point[1] * DEG;
     // Great-circle distance from a point to a meridian (nearer than a quarter turn).
@@ -165,8 +183,9 @@ export function distanceToLineKm(line: CartoLine, point: [number, number]): numb
   let best = Infinity;
   for (const seg of line.segments) {
     for (let i = 0; i < seg.length - 1; i++) {
-      const a = seg[i]!;
-      const b = seg[i + 1]!;
+      const a = seg[i];
+      const b = seg[i + 1];
+      if (!a || !b) continue;
       for (let t = 0; t <= 1; t += 0.1) {
         const p: [number, number] = [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
         best = Math.min(best, haversineKm(p, point));
@@ -188,9 +207,15 @@ export function nearbyLines(lines: CartoLine[], point: [number, number], withinK
     .sort((a, b) => a.km - b.km);
 }
 
-/** Relocated angles: same birth instant, new place. In-app approximation. */
+/** Relocated ecliptic angles using the same true-of-date frame as the lines. */
 export function relocatedAngles(utcISO: string, latitude: number, longitude: number) {
-  const a = computeAngles(toJulianDay(new Date(utcISO)), latitude, longitude);
+  const jd = toJulianDay(new Date(utcISO));
+  const theta = norm360(apparentSiderealDegrees(jd) + longitude) * DEG;
+  const eps = trueObliquity(jd) * DEG;
+  const a = {
+    midheaven: norm360(Math.atan2(Math.sin(theta), Math.cos(theta) * Math.cos(eps)) / DEG),
+    ascendant: norm360(Math.atan2(Math.cos(theta), -(Math.sin(theta) * Math.cos(eps) + Math.tan(latitude * DEG) * Math.sin(eps))) / DEG),
+  };
   return {
     ascendant: a.ascendant,
     midheaven: a.midheaven,
@@ -213,13 +238,15 @@ export function lineCrossings(lines: CartoLine[]): LineCrossing[] {
   const curves = lines.filter((l) => l.angle === "AC" || l.angle === "DC");
   const out: LineCrossing[] = [];
   for (const m of meridians) {
-    const mLon = m.segments[0]![0]![0];
+    const mLon = m.segments[0]?.[0]?.[0];
+    if (mLon === undefined) continue;
     for (const c of curves) {
       if (c.body === m.body) continue;
       for (const seg of c.segments) {
         for (let i = 0; i < seg.length - 1; i++) {
-          const p = seg[i]!;
-          const q = seg[i + 1]!;
+          const p = seg[i];
+          const q = seg[i + 1];
+          if (!p || !q) continue;
           const dp = wrapLon(p[0] - mLon);
           const dq = wrapLon(q[0] - mLon);
           if (Math.abs(dp - dq) > 180 || dp > 0 === dq > 0) continue;
