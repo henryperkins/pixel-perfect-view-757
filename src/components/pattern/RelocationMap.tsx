@@ -33,13 +33,13 @@ function tokenRgb(token: string, fallback: string) {
   return `rgb(${r}, ${g}, ${b})`;
 }
 
-function featureCollection(lines: CartoLine[]): GeoJSON.FeatureCollection {
+function featureCollection(lines: CartoLine[]) {
   return {
-    type: "FeatureCollection",
+    type: "FeatureCollection" as const,
     features: lines.map((l) => ({
-      type: "Feature",
+      type: "Feature" as const,
       properties: { id: l.id, angle: l.angle, label: `${l.label} ${l.angle}` },
-      geometry: { type: "MultiLineString", coordinates: l.segments },
+      geometry: { type: "MultiLineString" as const, coordinates: l.segments },
     })),
   };
 }
