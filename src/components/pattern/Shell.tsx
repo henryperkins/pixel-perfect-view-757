@@ -16,6 +16,7 @@ const NAV = [
   { to: "/birth", label: "Birth details" },
   { to: "/time-travel", label: "Time travel" },
   { to: "/relocation", label: "Relocation map" },
+  { to: "/accuracy", label: "Chart accuracy" },
   { to: "/privacy", label: "Context & privacy" },
   { to: "/plans", label: "Plans" },
   { to: "/assistants", label: "Connected assistants" },
