@@ -36,3 +36,39 @@ test("nearby lines report a place on a line at ~0 km and exclude far lines", () 
   assert.ok(near[0].km < 1);
   assert.ok(near.every((n) => n.km <= 300));
 });
+
+test("ecliptic latitude shifts declination (Pluto at +15° lat)", () => {
+  const jd = e.toJulianDay(new Date(UTC));
+  const flat = m.equatorial(90, jd, 0);
+  const real = m.equatorial(90, jd, 15);
+  assert.ok(Math.abs(real.dec - flat.dec - 15) < 0.01);
+});
+
+test("Moon and Pluto lines use their real orbital latitude", () => {
+  const jd = e.toJulianDay(new Date(UTC));
+  const lat = m.orbitalLatitude("pluto", jd);
+  assert.ok(Math.abs(lat) > 1, `pluto lat ${lat}`);
+  assert.equal(m.orbitalLatitude("sun", jd), 0);
+  const withOrbit = m.linesFor([{ key: "pluto", label: "Pluto", lon: 196 }], UTC);
+  const flat = m.linesFor([{ key: "pluto", label: "Pluto", lon: 196, lat: 0 }], UTC);
+  const a = withOrbit.find((l) => l.angle === "MC").segments[0][0][0];
+  const b = flat.find((l) => l.angle === "MC").segments[0][0][0];
+  assert.notEqual(a.toFixed(3), b.toFixed(3));
+});
+
+test("a rising curve crosses another body's meridian on that meridian", () => {
+  const lines = m.linesFor(
+    [
+      { key: "sun", label: "Sun", lon: 84 },
+      { key: "venus", label: "Venus", lon: 120, lat: 0 },
+    ],
+    UTC,
+  );
+  const xs = m.lineCrossings(lines);
+  assert.ok(xs.length > 0);
+  for (const x of xs) {
+    assert.ok(Math.abs(m.distanceToLineKm(x.a, [x.lon, x.lat])) < 120);
+    assert.notEqual(x.a.body, x.b.body);
+  }
+  assert.ok(m.crossingsNear(xs, xs[0].lat, 0.1).length >= 1);
+});
