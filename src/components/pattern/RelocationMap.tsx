@@ -48,16 +48,20 @@ export default function RelocationMap({
   lines,
   selected,
   onPick,
+  referenceLines = [],
 }: {
   lines: CartoLine[];
   selected: { latitude: number; longitude: number; label: string } | null;
   onPick: (latitude: number, longitude: number) => void;
+  referenceLines?: CartoLine[];
 }) {
   const container = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const markerRef = useRef<mapboxgl.Marker | null>(null);
   const linesRef = useRef(lines);
   linesRef.current = lines;
+  const referenceRef = useRef(referenceLines);
+  referenceRef.current = referenceLines;
   const pickRef = useRef(onPick);
   pickRef.current = onPick;
   const token = import.meta.env["VITE_LOVABLE_CONNECTOR_MAPBOX_PUBLIC_TOKEN"] as string | undefined;
@@ -83,6 +87,7 @@ export default function RelocationMap({
     const install = () => {
       if (map.getSource(SOURCE)) return;
       map.addSource(SOURCE, { type: "geojson", data: featureCollection(linesRef.current) });
+      map.addSource(`${SOURCE}-reference`, { type: "geojson", data: featureCollection(referenceRef.current) });
       const color: mapboxgl.ExpressionSpecification = [
         "match",
         ["get", "angle"],
@@ -94,6 +99,12 @@ export default function RelocationMap({
         tokenRgb(ANGLE_TOKEN.AC, "#a77a3a"),
         tokenRgb(ANGLE_TOKEN.DC, "#8a5a7a"),
       ];
+      map.addLayer({
+        id: `${SOURCE}-reference`,
+        type: "line",
+        source: `${SOURCE}-reference`,
+        paint: { "line-color": color, "line-width": 5, "line-dasharray": [2, 2], "line-opacity": 0.45 },
+      });
       map.addLayer({
         id: SOURCE,
         type: "line",
@@ -135,6 +146,11 @@ export default function RelocationMap({
     const src = mapRef.current?.getSource(SOURCE) as mapboxgl.GeoJSONSource | undefined;
     src?.setData(featureCollection(lines));
   }, [lines]);
+
+  useEffect(() => {
+    const src = mapRef.current?.getSource(`${SOURCE}-reference`) as mapboxgl.GeoJSONSource | undefined;
+    src?.setData(featureCollection(referenceLines));
+  }, [referenceLines]);
 
   useEffect(() => {
     const map = mapRef.current;
