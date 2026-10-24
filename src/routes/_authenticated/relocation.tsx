@@ -170,9 +170,7 @@ function RelocationView({ data }: { data: PatternData }) {
     apply(next);
   }
 
-  const nearby = selected
-    ? nearbyLines(lines, [selected.longitude, selected.latitude], 800)
-    : [];
+  const nearby = selected ? nearbyLines(lines, [selected.longitude, selected.latitude], 800) : [];
   const crossings = useMemo(() => lineCrossings(lines), [lines]);
   const nearCross = selected ? crossingsNear(crossings, selected.latitude).slice(0, 6) : [];
   const relocated =
@@ -283,7 +281,9 @@ function RelocationView({ data }: { data: PatternData }) {
                     className={`mt-1 h-3 w-3 shrink-0 rounded-full ${ANGLE_SWATCH[angle]} ${hiddenAngles.has(angle) ? "opacity-30" : ""}`}
                   />
                   <span className="min-w-0">
-                    <span className="block font-medium">{angle} · {ANGLE_THEME[angle].name}</span>
+                    <span className="block font-medium">
+                      {angle} · {ANGLE_THEME[angle].name}
+                    </span>
                     <span className="mt-1 block text-xs font-normal leading-relaxed">
                       {ANGLE_THEME[angle].theme}
                     </span>
@@ -370,29 +370,42 @@ function RelocationView({ data }: { data: PatternData }) {
                     if (!group.length) return null;
                     return (
                       <section key={angle} aria-labelledby={`${id}-nearby-${angle}`}>
-                        <h3 id={`${id}-nearby-${angle}`} className="flex items-center gap-2 font-medium">
-                          <span aria-hidden="true" className={`h-2.5 w-2.5 rounded-full ${ANGLE_SWATCH[angle]}`} />
+                        <h3
+                          id={`${id}-nearby-${angle}`}
+                          className="flex items-center gap-2 font-medium"
+                        >
+                          <span
+                            aria-hidden="true"
+                            className={`h-2.5 w-2.5 rounded-full ${ANGLE_SWATCH[angle]}`}
+                          />
                           {angle} · {ANGLE_THEME[angle].name}
                         </h3>
-                        <p className="mt-1 text-xs text-muted-foreground">{ANGLE_THEME[angle].theme}</p>
+                        <p className="mt-1 text-xs text-muted-foreground">
+                          {ANGLE_THEME[angle].theme}
+                        </p>
                         <ul className="mt-2 divide-y divide-rule">
-                  {group.map(({ line, km }) => (
-                    <li key={line.id} className="flex flex-wrap items-baseline gap-x-3 py-3">
-                      <span
-                        aria-hidden="true"
-                        className={`h-2.5 w-2.5 rounded-full ${ANGLE_SWATCH[line.angle]}`}
-                      />
-                      <span className="font-medium">
-                        {line.label} {ANGLE_THEME[line.angle].name}
-                      </span>
-                      <span className="technical text-muted-foreground">
-                        {km < 50 ? "right here" : `about ${Math.round(km / 10) * 10} km away`}
-                      </span>
-                      <span className="basis-full text-sm text-muted-foreground">
-                        {lineReading(line.body, line.label, line.angle)}
-                      </span>
-                    </li>
-                  ))}
+                          {group.map(({ line, km }) => (
+                            <li
+                              key={line.id}
+                              className="flex flex-wrap items-baseline gap-x-3 py-3"
+                            >
+                              <span
+                                aria-hidden="true"
+                                className={`h-2.5 w-2.5 rounded-full ${ANGLE_SWATCH[line.angle]}`}
+                              />
+                              <span className="font-medium">
+                                {line.label} {ANGLE_THEME[line.angle].name}
+                              </span>
+                              <span className="technical text-muted-foreground">
+                                {km < 50
+                                  ? "right here"
+                                  : `about ${Math.round(km / 10) * 10} km away`}
+                              </span>
+                              <span className="basis-full text-sm text-muted-foreground">
+                                {lineReading(line.body, line.label, line.angle)}
+                              </span>
+                            </li>
+                          ))}
                         </ul>
                       </section>
                     );
