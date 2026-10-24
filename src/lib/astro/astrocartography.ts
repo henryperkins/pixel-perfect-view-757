@@ -1,11 +1,21 @@
 /**
  * Astro-cartography lines (Jim Lewis A*C*G model) from natal ecliptic
- * longitudes and the birth instant. Bodies are treated as lying on the
- * ecliptic (latitude 0), which is exact for the Sun and within a few degrees
- * of longitude for the Moon and Pluto; the page discloses this.
+ * longitudes and the birth instant. Each body's ecliptic latitude (the Moon
+ * up to ~5°, Pluto up to ~17°) is taken from its real orbit at the birth
+ * instant via the in-app ephemeris, so lines follow true declination.
  * Pure and browser-safe: no I/O, no chart storage.
  */
-import { computeAngles, gmst, norm360, obliquity, signOf, toJulianDay } from "./ephemeris";
+import {
+  BODIES,
+  computeAngles,
+  gmst,
+  norm360,
+  obliquity,
+  positionOf,
+  signOf,
+  toJulianDay,
+  type Body,
+} from "./ephemeris";
 
 const DEG = Math.PI / 180;
 const EARTH_KM = 6371;
@@ -25,6 +35,8 @@ export interface LineBody {
   key: string;
   label: string;
   lon: number;
+  /** Ecliptic latitude; when omitted it is taken from the body's orbit. */
+  lat?: number;
 }
 
 export interface CartoLine {
@@ -41,12 +53,22 @@ export function wrapLon(x: number): number {
   return ((((x + 180) % 360) + 360) % 360) - 180;
 }
 
-export function equatorial(lon: number, jd: number) {
+export function equatorial(lon: number, jd: number, lat = 0) {
   const eps = obliquity(jd) * DEG;
   const l = lon * DEG;
-  const ra = norm360(Math.atan2(Math.sin(l) * Math.cos(eps), Math.cos(l)) / DEG);
-  const dec = Math.asin(Math.sin(eps) * Math.sin(l)) / DEG;
+  const b = lat * DEG;
+  const ra = norm360(
+    Math.atan2(Math.sin(l) * Math.cos(eps) - Math.tan(b) * Math.sin(eps), Math.cos(l)) / DEG,
+  );
+  const dec =
+    Math.asin(Math.sin(b) * Math.cos(eps) + Math.cos(b) * Math.sin(eps) * Math.sin(l)) / DEG;
   return { ra, dec };
+}
+
+/** Real ecliptic latitude of a body at the instant (0 for unknown bodies). */
+export function orbitalLatitude(key: string, jd: number): number {
+  if (key === "sun" || key === "node") return 0;
+  return (BODIES as readonly string[]).includes(key) ? positionOf(key as Body, jd).lat : 0;
 }
 
 function splitSegments(points: [number, number][]): [number, number][][] {
@@ -69,7 +91,7 @@ export function linesFor(bodies: LineBody[], utcISO: string, step = 1): CartoLin
   const theta0 = gmst(jd);
   const lines: CartoLine[] = [];
   for (const b of bodies) {
-    const { ra, dec } = equatorial(b.lon, jd);
+    const { ra, dec } = equatorial(b.lon, jd, b.lat ?? orbitalLatitude(b.key, jd));
     const mc = wrapLon(ra - theta0);
     const ic = wrapLon(mc + 180);
     const meridian = (lon: number): [number, number][][] => [
@@ -151,4 +173,50 @@ export function relocatedAngles(utcISO: string, latitude: number, longitude: num
     risingSign: signOf(a.ascendant),
     midheavenSign: signOf(a.midheaven),
   };
+}
+
+export interface LineCrossing {
+  id: string;
+  a: CartoLine;
+  b: CartoLine;
+  lon: number;
+  lat: number;
+}
+
+/** Where a rising/setting curve crosses another body's MC/IC meridian. */
+export function lineCrossings(lines: CartoLine[]): LineCrossing[] {
+  const meridians = lines.filter((l) => l.angle === "MC" || l.angle === "IC");
+  const curves = lines.filter((l) => l.angle === "AC" || l.angle === "DC");
+  const out: LineCrossing[] = [];
+  for (const m of meridians) {
+    const mLon = m.segments[0]![0]![0];
+    for (const c of curves) {
+      if (c.body === m.body) continue;
+      for (const seg of c.segments) {
+        for (let i = 0; i < seg.length - 1; i++) {
+          const p = seg[i]!;
+          const q = seg[i + 1]!;
+          const dp = wrapLon(p[0] - mLon);
+          const dq = wrapLon(q[0] - mLon);
+          if (Math.abs(dp - dq) > 180 || (dp > 0) === (dq > 0)) continue;
+          const t = dp / (dp - dq);
+          out.push({
+            id: `${c.id}x${m.id}`,
+            a: c,
+            b: m,
+            lon: mLon,
+            lat: p[1] + (q[1] - p[1]) * t,
+          });
+        }
+      }
+    }
+  }
+  return out;
+}
+
+/** Crossings whose latitude band runs near a place (parans act along a latitude). */
+export function crossingsNear(crossings: LineCrossing[], latitude: number, withinDeg = 1.5) {
+  return crossings
+    .filter((c) => Math.abs(c.lat - latitude) <= withinDeg)
+    .sort((x, y) => Math.abs(x.lat - latitude) - Math.abs(y.lat - latitude));
 }
