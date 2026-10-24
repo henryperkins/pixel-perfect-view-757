@@ -82,3 +82,12 @@ Verification: the remediation plan records the exact commands, fixtures and resu
 
 - [ ] Revise MCP plan per the uploaded review (opt-in account link, delegated-token isolation, grants/revocation, saved-only readers, private-data exclusion)
 - [ ] Implement approved revised plan
+
+# Relocation map
+
+- [x] Compute planetary lines and relocated angles in-browser from saved placement longitudes and the chart's UTC instant; hide them when birth-time uncertainty suppresses angle claims.
+- [x] Add the Mapbox world map with per-angle line colors, city search reusing the gateway geocode path, and nearby-line readouts.
+- [x] Verify with a real chart in the preview: owner confirmed the page is functional (map, lines, city search, pin).
+- [ ] Publish the relocation surface to the live site: requires explicit publication approval.
+- [ ] Narrow Moon and Pluto line placement by using their real ecliptic latitude instead of treating every planet as lying on the ecliptic: currently disclosed as a few-degree approximation.
+
