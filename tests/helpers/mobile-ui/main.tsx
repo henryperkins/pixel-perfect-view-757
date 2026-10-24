@@ -22,6 +22,8 @@ import { Route as R10 } from "@/routes/reset-password.tsx";
 import { Route as R11 } from "@/routes/_authenticated/sources.tsx";
 import { Route as R12 } from "@/routes/_authenticated/content.tsx";
 import { Route as R13 } from "@/routes/_authenticated/assistants.tsx";
+import { Route as R14 } from "@/routes/_authenticated/relocation.tsx";
+import { Route as R15 } from "@/routes/_authenticated/accuracy.tsx";
 import { Route as AppRoot } from "@/routes/__root.tsx";
 const queryClient = new QueryClient();
 const root = createRootRoute({
@@ -61,13 +63,15 @@ const r10 = R10.update({
 const r11 = R11.update({ id: "/sources", path: "/sources", getParentRoute: () => member });
 const r12 = R12.update({ id: "/content", path: "/content", getParentRoute: () => member });
 const r13 = R13.update({ id: "/assistants", path: "/assistants", getParentRoute: () => member });
+const r14 = R14.update({ id: "/relocation", path: "/relocation", getParentRoute: () => member });
+const r15 = R15.update({ id: "/accuracy", path: "/accuracy", getParentRoute: () => member });
 const router = createRouter({
   routeTree: root.addChildren([
     index,
     r0,
     r9,
     r10,
-    member.addChildren([r1, r2, r3, r4, r5, r6, r7, r8, r11, r12, r13]),
+    member.addChildren([r1, r2, r3, r4, r5, r6, r7, r8, r11, r12, r13, r14, r15]),
   ]),
   scrollRestoration: true,
 });

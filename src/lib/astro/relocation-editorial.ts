@@ -17,16 +17,33 @@ export const PLANET_THEME: Record<string, string> = {
   pluto: "intensity, transformation and questions of power",
 };
 
+/** Where each angle's line plays out, with its verb in singular and plural form. */
+const ANGLE_SCENE: Record<AngleKind, [one: string, many: string, scene: string]> = {
+  MC: ["shows up", "show up", "in your public life — career, ambitions and how strangers see you."],
+  IC: ["settles", "settle", "into your private life — home, family, roots and what restores you."],
+  AC: ["colours", "colour", "your body and presence — how you feel, act and first come across."],
+  DC: ["arrives", "arrive", "through other people — partners, close collaborators and rivals."],
+};
+
+function lens(angle: AngleKind, plural: boolean): string {
+  const [one, many, scene] = ANGLE_SCENE[angle];
+  return `${plural ? many : one} ${scene}`;
+}
+
+/** Singular lens, for "A planet here …". */
 export const ANGLE_LENS: Record<AngleKind, string> = {
-  MC: "shows up in your public life — career, ambitions and how strangers see you.",
-  IC: "settles into your private life — home, family, roots and what restores you.",
-  AC: "colours your body and presence — how you feel, act and first come across.",
-  DC: "arrives through other people — partners, close collaborators and rivals.",
+  MC: lens("MC", false),
+  IC: lens("IC", false),
+  AC: lens("AC", false),
+  DC: lens("DC", false),
 };
 
 export function lineReading(bodyKey: string, bodyLabel: string, angle: AngleKind): string {
-  const theme = PLANET_THEME[bodyKey] ?? "this planet’s themes";
-  return `${bodyLabel}’s themes of ${theme} ${ANGLE_LENS[angle]}`;
+  const theme = PLANET_THEME[bodyKey];
+  // The verb agrees with "themes", not with the planet.
+  return theme
+    ? `${bodyLabel}’s themes of ${theme} ${lens(angle, true)}`
+    : `${bodyLabel} ${lens(angle, false)}`;
 }
 
 export function crossingReading(

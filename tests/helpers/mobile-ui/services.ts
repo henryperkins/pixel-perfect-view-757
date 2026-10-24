@@ -114,6 +114,62 @@ const pattern = {
   computedAt: day + "T12:00:00Z",
   fingerprint: "synthetic",
 };
+const PRECISE_BODIES = [
+  ["sun", "Sun", 84],
+  ["moon", "Moon", 210],
+  ["mercury", "Mercury", 70],
+  ["venus", "Venus", 100],
+  ["mars", "Mars", 200],
+  ["jupiter", "Jupiter", 150],
+  ["saturn", "Saturn", 280],
+  ["uranus", "Uranus", 275],
+  ["neptune", "Neptune", 290],
+  ["pluto", "Pluto", 196],
+];
+function precisePattern() {
+  return {
+    ...pattern,
+    engine: "swiss-ephemeris@2.10.3-7",
+    houseSystem: "placidus",
+    uncertainty: {
+      accuracy: "exact",
+      minutes: 2,
+      housesReliable: true,
+      angleClaimsSuppressed: false,
+      ascendantSpreadDeg: 0.5,
+      moonSpreadDeg: 0.1,
+    },
+    sources: {
+      positions: "service",
+      houses: "service",
+      angles: "service",
+      latitude: 48.8566,
+      longitude: 2.3522,
+      utcISO: "1990-06-15T14:30:00.000Z",
+    },
+    placements: PRECISE_BODIES.map(([key, label, lon]) => ({
+      key,
+      label,
+      lon,
+      position: `${lon}°`,
+      house: 1,
+      retrograde: false,
+      angleDependent: false,
+    })),
+    snapshot: {
+      birth: {
+        birthDate: "1990-06-15",
+        birthTime: "16:30",
+        placeLabel: "Paris, France",
+        latitude: 48.8566,
+        longitude: 2.3522,
+        accuracy: "exact",
+        timezone: "Europe/Paris",
+        updated_at: "2026-10-01T12:00:00Z",
+      },
+    },
+  };
+}
 const cycles = [analyticEpisode().primary];
 const today = () => ({
   needsOnboarding: false,
@@ -183,7 +239,10 @@ async function call(name, args) {
     case "fetchToday":
       return today();
     case "fetchPattern":
-      return pattern;
+      return typeof location !== "undefined" &&
+        new URLSearchParams(location.search).get("chart") === "precise"
+        ? precisePattern()
+        : pattern;
     case "fetchJournal":
       return { events: structuredClone(state.events), checkIns: [], feedback: [] };
     case "fetchReadingJournal":

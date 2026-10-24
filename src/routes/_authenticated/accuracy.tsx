@@ -6,6 +6,7 @@ import { RotateCcw } from "lucide-react";
 import { Shell } from "@/components/pattern/Shell";
 import { Button } from "@/components/ui/button";
 import { fetchPattern } from "@/lib/pattern.functions";
+import { plainAccuracy, plainDegradedReason, plainEngineLabel } from "@/lib/plain-engine";
 import { userFacingError } from "@/lib/user-facing-error";
 
 export const Route = createFileRoute("/_authenticated/accuracy")({
@@ -14,12 +15,14 @@ export const Route = createFileRoute("/_authenticated/accuracy")({
       { title: "Chart accuracy — Pattern" },
       {
         name: "description",
-        content: "See the exact birth time, timezone and coordinates your chart is calculated from.",
+        content:
+          "See the exact birth time, timezone and coordinates your chart is calculated from.",
       },
       { property: "og:title", content: "Chart accuracy — Pattern" },
       {
         property: "og:description",
-        content: "See the exact birth time, timezone and coordinates your chart is calculated from.",
+        content:
+          "See the exact birth time, timezone and coordinates your chart is calculated from.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -31,20 +34,25 @@ export const Route = createFileRoute("/_authenticated/accuracy")({
 function formatUtc(iso: string): string {
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return iso;
-  return `${new Intl.DateTimeFormat("en-US", {
+  // The long time style already ends in "UTC".
+  return new Intl.DateTimeFormat("en-US", {
     dateStyle: "full",
     timeStyle: "long",
     timeZone: "UTC",
-  }).format(d)} (UTC)`;
+  }).format(d);
 }
 
-const ACCURACY_LABEL: Record<string, string> = {
-  exact: "recorded to the minute",
-  minute: "recorded to the minute",
-  hour: "known within about an hour",
-  half_day: "known within half a day",
-  unknown: "unknown",
-};
+function formatBand(minutes: number): string {
+  return minutes >= 60 && minutes % 60 === 0 ? `±${minutes / 60} h` : `±${minutes} min`;
+}
+
+function formatDeg(deg: number): string {
+  return `${deg < 1 ? deg.toFixed(2) : deg < 10 ? deg.toFixed(1) : Math.round(deg)}°`;
+}
+
+function houseSystemLabel(system: string): string {
+  return system.charAt(0).toUpperCase() + system.slice(1);
+}
 
 function AccuracyPage() {
   const load = useServerFn(fetchPattern);
@@ -87,7 +95,10 @@ function AccuracyPage() {
       <Shell>
         <div className="max-w-xl">
           <h1 className="text-2xl sm:text-3xl">No chart yet</h1>
-          <Link to="/onboarding" className="technical mt-6 inline-flex min-h-11 items-center text-primary">
+          <Link
+            to="/onboarding"
+            className="technical mt-6 inline-flex min-h-11 items-center text-primary"
+          >
             Enter birth details
           </Link>
         </div>
@@ -99,15 +110,14 @@ function AccuracyPage() {
   const birth = data.snapshot.birth;
   const sources = data.sources;
   const uncertainty = data.uncertainty;
-  const engineIsSwiss = data.engine.startsWith("swiss-ephemeris");
 
   return (
     <Shell>
       <div className="animate-rise max-w-2xl">
         <h1 className="text-2xl sm:text-3xl">Chart accuracy</h1>
         <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
-          Everything Pattern calculates — placements, houses, timing windows and relocation
-          lines — starts from these birth details. This is exactly what the chart uses.
+          Everything Pattern calculates — placements, houses, timing windows and relocation lines —
+          starts from these birth details. This is exactly what the chart uses.
         </p>
 
         <dl className="mt-8 divide-y divide-rule border border-rule">
@@ -118,11 +128,18 @@ function AccuracyPage() {
           <div className="grid gap-1 p-4 sm:grid-cols-[180px_1fr]">
             <dt className="technical text-muted-foreground">Birth time</dt>
             <dd>
-              {birth?.birthTime ?? "Not recorded"}{" "}
-              <span className="text-muted-foreground">
-                ({ACCURACY_LABEL[uncertainty.accuracy] ?? uncertainty.accuracy}
-                {uncertainty.minutes > 0 ? `, ±${uncertainty.minutes} min` : ""})
-              </span>
+              {uncertainty.accuracy === "unknown" ? (
+                // The chart uses local noon; any saved clock time is not part of it.
+                plainAccuracy("unknown")
+              ) : (
+                <>
+                  {birth?.birthTime ?? "Not recorded"}{" "}
+                  <span className="text-muted-foreground">
+                    ({plainAccuracy(uncertainty.accuracy)}
+                    {uncertainty.minutes > 0 ? `, ${formatBand(uncertainty.minutes)}` : ""})
+                  </span>
+                </>
+              )}
             </dd>
           </div>
           <div className="grid gap-1 p-4 sm:grid-cols-[180px_1fr]">
@@ -148,13 +165,20 @@ function AccuracyPage() {
         </dl>
 
         <section aria-labelledby="accuracy-calc" className="mt-6 border border-rule p-4 sm:p-5">
-          <h2 id="accuracy-calc" className="text-xl">How it’s calculated</h2>
+          <h2 id="accuracy-calc" className="text-xl">
+            How it’s calculated
+          </h2>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
             <li>
-              <span className="font-medium text-foreground">Positions:</span>{" "}
-              {engineIsSwiss ? "Swiss Ephemeris service" : "in-app approximation"}
-              {sources ? ` (${sources.positions === "service" ? "service" : "in-app"})` : ""} ·{" "}
-              {data.houseSystem} houses · engine {data.engine}
+              <span className="font-medium text-foreground">Calculation:</span>{" "}
+              {plainEngineLabel(data.engine)} ·{" "}
+              {data.ephemeris.precision === "high"
+                ? "high-precision positions"
+                : "approximate positions"}{" "}
+              · {houseSystemLabel(data.houseSystem)} houses.
+              {data.ephemeris.degraded
+                ? ` ${plainDegradedReason(data.ephemeris.degradedReason)}`
+                : ""}
             </li>
             <li>
               <span className="font-medium text-foreground">Angles and houses:</span>{" "}
@@ -165,9 +189,9 @@ function AccuracyPage() {
                   : "angles available; house placements are suppressed at this time accuracy."}
             </li>
             <li>
-              <span className="font-medium text-foreground">Sensitivity:</span> four minutes of
-              birth time moves the rising sign and relocation lines by about one degree of
-              longitude.
+              <span className="font-medium text-foreground">Sensitivity:</span> every four minutes
+              of birth time moves relocation lines one degree of longitude. At this accuracy your
+              rising degree could shift by up to {formatDeg(uncertainty.ascendantSpreadDeg)}.
             </li>
           </ul>
         </section>
@@ -181,8 +205,8 @@ function AccuracyPage() {
           </Link>
         </div>
         <p className="mt-4 text-xs text-muted-foreground">
-          Correcting a detail recalculates your chart; existing readings keep the evidence they
-          were written from.
+          Correcting a detail recalculates your chart; existing readings keep the evidence they were
+          written from.
         </p>
       </div>
     </Shell>

@@ -7,7 +7,7 @@ import type { AngleKind, CartoLine } from "@/lib/astro/astrocartography";
 const LIGHT_STYLE = "mapbox://styles/mapbox/light-v11";
 const DARK_STYLE = "mapbox://styles/mapbox/dark-v11";
 const SOURCE = "carto-lines";
-export const ANGLE_TOKEN: Record<AngleKind, string> = {
+const ANGLE_TOKEN: Record<AngleKind, string> = {
   MC: "--chart-1",
   IC: "--chart-2",
   AC: "--chart-3",
@@ -110,7 +110,11 @@ export default function RelocationMap({
           "text-size": 11,
           "symbol-spacing": 320,
         },
-        paint: { "text-color": color, "text-halo-width": 1.5, "text-halo-color": isDark() ? "#111" : "#fff" },
+        paint: {
+          "text-color": color,
+          "text-halo-width": 1.5,
+          "text-halo-color": isDark() ? "#111" : "#fff",
+        },
       });
     };
     map.on("style.load", install);
@@ -146,7 +150,7 @@ export default function RelocationMap({
   if (!token)
     return (
       <p className="border border-rule p-4 text-sm text-muted-foreground">
-        The world map isn’t available right now. You can still search a city below.
+        The world map isn’t available right now. You can still search a city above.
       </p>
     );
   return (

@@ -3,11 +3,14 @@ import { test } from "node:test";
 
 const m = await import("../src/lib/astro/astrocartography.ts");
 const e = await import("../src/lib/astro/ephemeris.ts");
+const ed = await import("../src/lib/astro/relocation-editorial.ts");
 
 const UTC = "1990-06-15T14:30:00.000Z";
 
 test("a body's MC line is where it culminates at birth", () => {
-  const [mc] = m.linesFor([{ key: "sun", label: "Sun", lon: 84 }], UTC).filter((l) => l.angle === "MC");
+  const [mc] = m
+    .linesFor([{ key: "sun", label: "Sun", lon: 84 }], UTC)
+    .filter((l) => l.angle === "MC");
   const lon = mc.segments[0][0][0];
   const angles = e.computeAngles(e.toJulianDay(new Date(UTC)), 40, lon);
   assert.ok(Math.abs(e.signedDelta(angles.midheaven, 84)) < 0.01);
@@ -71,4 +74,15 @@ test("a rising curve crosses another body's meridian on that meridian", () => {
     assert.notEqual(x.a.body, x.b.body);
   }
   assert.ok(m.crossingsNear(xs, xs[0].lat, 0.1).length >= 1);
+});
+
+test("line readings agree with their plural subject; the guide keeps the singular", () => {
+  assert.equal(
+    ed.lineReading("venus", "Venus", "MC"),
+    "Venus’s themes of affection, pleasure, beauty and easy social warmth show up in your public life — career, ambitions and how strangers see you.",
+  );
+  assert.match(ed.lineReading("neptune", "Neptune", "IC"), /edges settle into your private life/);
+  assert.match(ed.lineReading("mars", "Mars", "AC"), /friction colour your body/);
+  assert.match(ed.lineReading("saturn", "Saturn", "DC"), /patience arrive through other people/);
+  assert.match(ed.ANGLE_LENS.IC, /^settles into your private life/);
 });

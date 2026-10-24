@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { ClientOnly, createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { lazy, Suspense, useId, useMemo, useState } from "react";
+import { lazy, Suspense, useId, useMemo, useRef, useState } from "react";
 import { RotateCcw } from "lucide-react";
 
 import { Shell } from "@/components/pattern/Shell";
@@ -19,7 +19,13 @@ import {
   type AngleKind,
 } from "@/lib/astro/astrocartography";
 import { fetchPattern } from "@/lib/pattern.functions";
-import { ANGLE_LENS, crossingReading, HISTORY, lineReading, PLANET_THEME } from "@/lib/astro/relocation-editorial";
+import {
+  ANGLE_LENS,
+  crossingReading,
+  HISTORY,
+  lineReading,
+  PLANET_THEME,
+} from "@/lib/astro/relocation-editorial";
 import type { PlaceFields } from "@/lib/place-lookup";
 import { userFacingError } from "@/lib/user-facing-error";
 
@@ -31,7 +37,8 @@ export const Route = createFileRoute("/_authenticated/relocation")({
       { title: "Relocation map — Pattern" },
       {
         name: "description",
-        content: "See where on Earth each planet in your birth chart was rising, setting or overhead.",
+        content:
+          "See where on Earth each planet in your birth chart was rising, setting or overhead.",
       },
       { property: "og:title", content: "Relocation map — Pattern" },
       {
@@ -96,7 +103,10 @@ function RelocationPage() {
       ) : !q.data || q.data.needsOnboarding ? (
         <div className="max-w-xl">
           <h1 className="text-2xl sm:text-3xl">No chart yet</h1>
-          <Link to="/onboarding" className="technical mt-6 inline-flex min-h-11 items-center text-primary">
+          <Link
+            to="/onboarding"
+            className="technical mt-6 inline-flex min-h-11 items-center text-primary"
+          >
             Enter birth details
           </Link>
         </div>
@@ -118,11 +128,10 @@ function RelocationView({ data }: { data: PatternData }) {
         .map((p) => ({ key: p.key, label: p.label, lon: p.lon as number })),
     [data.placements],
   );
-  const allLines = useMemo(() => (utcISO && !suppressed ? linesFor(bodies, utcISO) : []), [
-    bodies,
-    utcISO,
-    suppressed,
-  ]);
+  const allLines = useMemo(
+    () => (utcISO && !suppressed ? linesFor(bodies, utcISO) : []),
+    [bodies, utcISO, suppressed],
+  );
   const [hiddenBodies, setHiddenBodies] = useState<Set<string>>(() => new Set());
   const [hiddenAngles, setHiddenAngles] = useState<Set<AngleKind>>(() => new Set());
   const lines = useMemo(
@@ -130,15 +139,18 @@ function RelocationView({ data }: { data: PatternData }) {
     [allLines, hiddenBodies, hiddenAngles],
   );
 
+  const cityInput = useRef<HTMLInputElement>(null);
   const [fields, setFields] = useState<PlaceFields>({
     placeLabel: "",
     latitude: "",
     longitude: "",
     timezone: "",
   });
-  const [selected, setSelected] = useState<{ latitude: number; longitude: number; label: string } | null>(
-    null,
-  );
+  const [selected, setSelected] = useState<{
+    latitude: number;
+    longitude: number;
+    label: string;
+  } | null>(null);
   const place = usePlaceLookup({
     fields,
     onResolve: (next) => {
@@ -158,20 +170,23 @@ function RelocationView({ data }: { data: PatternData }) {
     apply(next);
   }
 
-  const nearby = selected ? nearbyLines(allLines, [selected.longitude, selected.latitude], 800) : [];
+  const nearby = selected
+    ? nearbyLines(allLines, [selected.longitude, selected.latitude], 800)
+    : [];
   const crossings = useMemo(() => lineCrossings(allLines), [allLines]);
   const nearCross = selected ? crossingsNear(crossings, selected.latitude).slice(0, 6) : [];
-  const relocated = selected && utcISO && !suppressed
-    ? relocatedAngles(utcISO, selected.latitude, selected.longitude)
-    : null;
+  const relocated =
+    selected && utcISO && !suppressed
+      ? relocatedAngles(utcISO, selected.latitude, selected.longitude)
+      : null;
 
   return (
     <div className="animate-rise max-w-4xl">
       <h1 className="text-2xl sm:text-3xl">Relocation map</h1>
       <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
         Each line marks where on Earth one of your planets was rising, setting, overhead or
-        underfoot at the moment you were born. Search a city or tap the map to see which lines
-        run nearby.
+        underfoot at the moment you were born. Search a city or tap the map to see which lines run
+        nearby.
       </p>
 
       {suppressed ? (
@@ -180,7 +195,10 @@ function RelocationView({ data }: { data: PatternData }) {
             Planetary lines depend on your exact birth time—four minutes moves a line about one
             degree of longitude. Your saved birth time is too uncertain to place them honestly.
           </p>
-          <Link to="/birth" className="technical mt-4 inline-flex min-h-11 items-center text-primary">
+          <Link
+            to="/birth"
+            className="technical mt-4 inline-flex min-h-11 items-center text-primary"
+          >
             Update birth details
           </Link>
         </div>
@@ -198,6 +216,7 @@ function RelocationView({ data }: { data: PatternData }) {
               }}
             >
               <Input
+                ref={cityInput}
                 id={`${id}-city`}
                 value={fields.placeLabel}
                 autoComplete="off"
@@ -233,7 +252,10 @@ function RelocationView({ data }: { data: PatternData }) {
                       type="button"
                       variant="outline"
                       className="h-auto min-h-11 w-full justify-start whitespace-normal text-left"
-                      onClick={() => place.select(c)}
+                      onClick={() => {
+                        // The chosen button unmounts; keep focus in the search field.
+                        if (place.select(c)) cityInput.current?.focus({ preventScroll: true });
+                      }}
                     >
                       {c.label}
                     </Button>
@@ -244,8 +266,12 @@ function RelocationView({ data }: { data: PatternData }) {
           </section>
 
           <div className="mt-6">
-            <ClientOnly fallback={<div className="h-[340px] animate-pulse bg-muted sm:h-[460px]" />}>
-              <Suspense fallback={<div className="h-[340px] animate-pulse bg-muted sm:h-[460px]" />}>
+            <ClientOnly
+              fallback={<div className="h-[340px] animate-pulse bg-muted sm:h-[460px]" />}
+            >
+              <Suspense
+                fallback={<div className="h-[340px] animate-pulse bg-muted sm:h-[460px]" />}
+              >
                 <RelocationMap
                   lines={lines}
                   selected={selected}
@@ -275,7 +301,10 @@ function RelocationView({ data }: { data: PatternData }) {
                   aria-pressed={!hiddenAngles.has(a)}
                   onClick={() => toggle(hiddenAngles, a, setHiddenAngles)}
                 >
-                  <span aria-hidden="true" className={`h-2.5 w-2.5 rounded-full ${ANGLE_SWATCH[a]}`} />
+                  <span
+                    aria-hidden="true"
+                    className={`h-2.5 w-2.5 rounded-full ${ANGLE_SWATCH[a]}`}
+                  />
                   {a} · {ANGLE_THEME[a].name}
                 </Button>
               ))}
@@ -334,7 +363,9 @@ function RelocationView({ data }: { data: PatternData }) {
               )}
               {nearCross.length ? (
                 <div className="mt-6">
-                  <h3 className="technical text-muted-foreground">Line crossings on this latitude</h3>
+                  <h3 className="technical text-muted-foreground">
+                    Line crossings on this latitude
+                  </h3>
                   <ul className="mt-2 divide-y divide-rule">
                     {nearCross.map((c) => (
                       <li key={c.id} className="py-3 text-sm">
@@ -354,20 +385,29 @@ function RelocationView({ data }: { data: PatternData }) {
           ) : null}
 
           <section aria-labelledby={`${id}-guide`} className="mt-10">
-            <h2 id={`${id}-guide`} className="text-xl">Reading the lines</h2>
+            <h2 id={`${id}-guide`} className="text-xl">
+              Reading the lines
+            </h2>
             <dl className="mt-4 grid gap-4 sm:grid-cols-2">
               {ANGLE_KINDS.map((a) => (
                 <div key={a} className="border border-rule p-4">
                   <dt className="flex items-center gap-2 font-medium">
-                    <span aria-hidden="true" className={`h-2.5 w-2.5 rounded-full ${ANGLE_SWATCH[a]}`} />
+                    <span
+                      aria-hidden="true"
+                      className={`h-2.5 w-2.5 rounded-full ${ANGLE_SWATCH[a]}`}
+                    />
                     {a} · {ANGLE_THEME[a].name}
                   </dt>
-                  <dd className="mt-2 text-sm text-muted-foreground">A planet here {ANGLE_LENS[a]}</dd>
+                  <dd className="mt-2 text-sm text-muted-foreground">
+                    A planet here {ANGLE_LENS[a]}
+                  </dd>
                 </div>
               ))}
             </dl>
             <details className="mt-4 border border-rule p-4">
-              <summary className="min-h-11 cursor-pointer font-medium">What each planet brings</summary>
+              <summary className="min-h-11 cursor-pointer font-medium">
+                What each planet brings
+              </summary>
               <ul className="mt-3 space-y-2 text-sm">
                 {bodies.map((b) => (
                   <li key={b.key}>
@@ -391,9 +431,9 @@ function RelocationView({ data }: { data: PatternData }) {
           </section>
 
           <p className="mt-8 max-w-2xl text-xs leading-relaxed text-muted-foreground">
-            Lines and relocated angles are calculated in Pattern from your chart’s planet
-            positions and birth moment, using each planet’s real orbital latitude so Moon and
-            Pluto lines follow their true paths.{" "}
+            Lines and relocated angles are calculated in Pattern from your chart’s planet positions
+            and birth moment, using each planet’s real orbital latitude so Moon and Pluto lines
+            follow their true paths.{" "}
             <Link to="/accuracy" className="text-primary underline">
               Check the birth details used
             </Link>

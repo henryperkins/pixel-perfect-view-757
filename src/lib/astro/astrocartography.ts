@@ -15,7 +15,7 @@ import {
   signOf,
   toJulianDay,
   type Body,
-} from "./ephemeris";
+} from "./ephemeris.ts";
 
 const DEG = Math.PI / 180;
 const EARTH_KM = 6371;
@@ -100,8 +100,20 @@ export function linesFor(bodies: LineBody[], utcISO: string, step = 1): CartoLin
         [lon, MAX_LAT],
       ],
     ];
-    lines.push({ id: `${b.key}-MC`, body: b.key, label: b.label, angle: "MC", segments: meridian(mc) });
-    lines.push({ id: `${b.key}-IC`, body: b.key, label: b.label, angle: "IC", segments: meridian(ic) });
+    lines.push({
+      id: `${b.key}-MC`,
+      body: b.key,
+      label: b.label,
+      angle: "MC",
+      segments: meridian(mc),
+    });
+    lines.push({
+      id: `${b.key}-IC`,
+      body: b.key,
+      label: b.label,
+      angle: "IC",
+      segments: meridian(ic),
+    });
     const rise: [number, number][] = [];
     const set: [number, number][] = [];
     const tanDec = Math.tan(dec * DEG);
@@ -112,8 +124,20 @@ export function linesFor(bodies: LineBody[], utcISO: string, step = 1): CartoLin
       rise.push([wrapLon(ra - h - theta0), lat]);
       set.push([wrapLon(ra + h - theta0), lat]);
     }
-    lines.push({ id: `${b.key}-AC`, body: b.key, label: b.label, angle: "AC", segments: splitSegments(rise) });
-    lines.push({ id: `${b.key}-DC`, body: b.key, label: b.label, angle: "DC", segments: splitSegments(set) });
+    lines.push({
+      id: `${b.key}-AC`,
+      body: b.key,
+      label: b.label,
+      angle: "AC",
+      segments: splitSegments(rise),
+    });
+    lines.push({
+      id: `${b.key}-DC`,
+      body: b.key,
+      label: b.label,
+      angle: "DC",
+      segments: splitSegments(set),
+    });
   }
   return lines;
 }
@@ -198,7 +222,7 @@ export function lineCrossings(lines: CartoLine[]): LineCrossing[] {
           const q = seg[i + 1]!;
           const dp = wrapLon(p[0] - mLon);
           const dq = wrapLon(q[0] - mLon);
-          if (Math.abs(dp - dq) > 180 || (dp > 0) === (dq > 0)) continue;
+          if (Math.abs(dp - dq) > 180 || dp > 0 === dq > 0) continue;
           const t = dp / (dp - dq);
           out.push({
             id: `${c.id}x${m.id}`,
