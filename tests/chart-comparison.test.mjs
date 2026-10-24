@@ -1,7 +1,12 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { REFERENCE, compareChart } from "../src/lib/astro/chart-comparison.ts";
-import { linesFor, lineLongitudeAt, relocatedAngles, wrapLon } from "../src/lib/astro/astrocartography.ts";
+import {
+  linesFor,
+  lineLongitudeAt,
+  relocatedAngles,
+  wrapLon,
+} from "../src/lib/astro/astrocartography.ts";
 
 for (const chart of REFERENCE.charts) {
   test(`${chart.id}: refined Sun/Moon/Pluto lines agree with independent Swiss reference within 0.002 degrees`, () => {
@@ -9,7 +14,8 @@ for (const chart of REFERENCE.charts) {
     assert.equal(result.rows.length, 108);
     for (const row of result.rows) {
       assert.equal(row.actual === null, row.expected === null);
-      if (row.error !== null) assert.ok(row.error < 0.002, `${row.body} ${row.angle} at ${row.latitude}: ${row.error}`);
+      if (row.error !== null)
+        assert.ok(row.error < 0.002, `${row.body} ${row.angle} at ${row.latitude}: ${row.error}`);
     }
     assert.ok(result.maxError < compareChart(chart, "previous").maxError);
   });
@@ -29,7 +35,9 @@ test("curve generation rejects a zero step instead of looping forever", () => {
 });
 test("densified curves never bridge the antimeridian", () => {
   const chart = REFERENCE.charts[0];
-  for (const line of linesFor(chart.bodies, chart.utcISO)) for (const segment of line.segments) {
-    for (let i = 1; i < segment.length; i++) assert.ok(Math.abs(segment[i][0] - segment[i - 1][0]) <= 180);
-  }
+  for (const line of linesFor(chart.bodies, chart.utcISO))
+    for (const segment of line.segments) {
+      for (let i = 1; i < segment.length; i++)
+        assert.ok(Math.abs(segment[i][0] - segment[i - 1][0]) <= 180);
+    }
 });

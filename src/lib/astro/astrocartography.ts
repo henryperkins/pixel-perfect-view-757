@@ -5,7 +5,14 @@
  * Apparent sidereal time and true obliquity keep the coordinate frames aligned.
  * Pure and browser-safe: no I/O, no chart storage.
  */
-import { Body as AstronomyBody, Ecliptic, GeoVector, MakeTime, SiderealTime, e_tilt } from "astronomy-engine";
+import {
+  Body as AstronomyBody,
+  Ecliptic,
+  GeoVector,
+  MakeTime,
+  SiderealTime,
+  e_tilt,
+} from "astronomy-engine";
 import { norm360, signOf, toJulianDay } from "./ephemeris.ts";
 
 const DEG = Math.PI / 180;
@@ -65,10 +72,16 @@ export function apparentSiderealDegrees(jd: number): number {
 }
 
 const ORBIT_BODY: Record<string, AstronomyBody> = {
-  sun: AstronomyBody.Sun, moon: AstronomyBody.Moon, mercury: AstronomyBody.Mercury,
-  venus: AstronomyBody.Venus, mars: AstronomyBody.Mars, jupiter: AstronomyBody.Jupiter,
-  saturn: AstronomyBody.Saturn, uranus: AstronomyBody.Uranus,
-  neptune: AstronomyBody.Neptune, pluto: AstronomyBody.Pluto,
+  sun: AstronomyBody.Sun,
+  moon: AstronomyBody.Moon,
+  mercury: AstronomyBody.Mercury,
+  venus: AstronomyBody.Venus,
+  mars: AstronomyBody.Mars,
+  jupiter: AstronomyBody.Jupiter,
+  saturn: AstronomyBody.Saturn,
+  uranus: AstronomyBody.Uranus,
+  neptune: AstronomyBody.Neptune,
+  pluto: AstronomyBody.Pluto,
 };
 
 /** Geocentric apparent latitude; independent analytical engine, not Swiss-grade data. */
@@ -79,7 +92,13 @@ export function orbitalLatitude(key: string, jd: number): number {
 }
 
 /** Exact spherical horizon at a latitude; null means the body never crosses it. */
-export function lineLongitudeAt(ra: number, dec: number, theta: number, angle: AngleKind, latitude: number): number | null {
+export function lineLongitudeAt(
+  ra: number,
+  dec: number,
+  theta: number,
+  angle: AngleKind,
+  latitude: number,
+): number | null {
   if (angle === "MC") return wrapLon(ra - theta);
   if (angle === "IC") return wrapLon(ra - theta + 180);
   const c = -Math.tan(latitude * DEG) * Math.tan(dec * DEG);
@@ -104,7 +123,8 @@ function splitSegments(points: [number, number][]): [number, number][][] {
 }
 
 export function linesFor(bodies: LineBody[], utcISO: string, step = 0.25): CartoLine[] {
-  if (!Number.isFinite(step) || step <= 0 || step > 5) throw new RangeError("Line step must be greater than zero and at most five degrees.");
+  if (!Number.isFinite(step) || step <= 0 || step > 5)
+    throw new RangeError("Line step must be greater than zero and at most five degrees.");
   const jd = toJulianDay(new Date(utcISO));
   const theta0 = apparentSiderealDegrees(jd);
   const lines: CartoLine[] = [];
@@ -214,7 +234,12 @@ export function relocatedAngles(utcISO: string, latitude: number, longitude: num
   const eps = trueObliquity(jd) * DEG;
   const a = {
     midheaven: norm360(Math.atan2(Math.sin(theta), Math.cos(theta) * Math.cos(eps)) / DEG),
-    ascendant: norm360(Math.atan2(Math.cos(theta), -(Math.sin(theta) * Math.cos(eps) + Math.tan(latitude * DEG) * Math.sin(eps))) / DEG),
+    ascendant: norm360(
+      Math.atan2(
+        Math.cos(theta),
+        -(Math.sin(theta) * Math.cos(eps) + Math.tan(latitude * DEG) * Math.sin(eps)),
+      ) / DEG,
+    ),
   };
   return {
     ascendant: a.ascendant,

@@ -495,7 +495,9 @@ function RelocationView({ data }: { data: PatternData }) {
               Check the birth details used
             </Link>
             .{" "}
-            <Link to="/chart-comparison" className="text-primary underline">Compare the chart engines</Link>
+            <Link to="/chart-comparison" className="text-primary underline">
+              Compare the chart engines
+            </Link>
           </p>
         </>
       )}

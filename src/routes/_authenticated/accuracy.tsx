@@ -203,7 +203,10 @@ function AccuracyPage() {
           <Link to="/sources" className="technical inline-flex min-h-11 items-center text-primary">
             Where each value comes from
           </Link>
-          <Link to="/chart-comparison" className="technical inline-flex min-h-11 items-center text-primary">
+          <Link
+            to="/chart-comparison"
+            className="technical inline-flex min-h-11 items-center text-primary"
+          >
             Compare chart engines
           </Link>
         </div>

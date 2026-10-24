@@ -87,7 +87,10 @@ export default function RelocationMap({
     const install = () => {
       if (map.getSource(SOURCE)) return;
       map.addSource(SOURCE, { type: "geojson", data: featureCollection(linesRef.current) });
-      map.addSource(`${SOURCE}-reference`, { type: "geojson", data: featureCollection(referenceRef.current) });
+      map.addSource(`${SOURCE}-reference`, {
+        type: "geojson",
+        data: featureCollection(referenceRef.current),
+      });
       const color: mapboxgl.ExpressionSpecification = [
         "match",
         ["get", "angle"],
@@ -103,7 +106,12 @@ export default function RelocationMap({
         id: `${SOURCE}-reference`,
         type: "line",
         source: `${SOURCE}-reference`,
-        paint: { "line-color": color, "line-width": 5, "line-dasharray": [2, 2], "line-opacity": 0.45 },
+        paint: {
+          "line-color": color,
+          "line-width": 5,
+          "line-dasharray": [2, 2],
+          "line-opacity": 0.45,
+        },
       });
       map.addLayer({
         id: SOURCE,
@@ -148,7 +156,8 @@ export default function RelocationMap({
   }, [lines]);
 
   useEffect(() => {
-    const src = mapRef.current?.getSource(`${SOURCE}-reference`) as mapboxgl.GeoJSONSource | undefined;
+    const src = mapRef.current?.getSource(`${SOURCE}-reference`) as
+      mapboxgl.GeoJSONSource | undefined;
     src?.setData(featureCollection(referenceLines));
   }, [referenceLines]);
 
