@@ -171,9 +171,9 @@ function RelocationView({ data }: { data: PatternData }) {
   }
 
   const nearby = selected
-    ? nearbyLines(allLines, [selected.longitude, selected.latitude], 800)
+    ? nearbyLines(lines, [selected.longitude, selected.latitude], 800)
     : [];
-  const crossings = useMemo(() => lineCrossings(allLines), [allLines]);
+  const crossings = useMemo(() => lineCrossings(lines), [lines]);
   const nearCross = selected ? crossingsNear(crossings, selected.latitude).slice(0, 6) : [];
   const relocated =
     selected && utcISO && !suppressed
@@ -265,7 +265,35 @@ function RelocationView({ data }: { data: PatternData }) {
             )}
           </section>
 
-          <div className="mt-6">
+          <fieldset className="mt-6">
+            <legend className="technical text-muted-foreground">Line types</legend>
+            <div className="mt-2 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+              {ANGLE_KINDS.map((angle) => (
+                <Button
+                  key={angle}
+                  type="button"
+                  variant={hiddenAngles.has(angle) ? "outline" : "secondary"}
+                  aria-pressed={!hiddenAngles.has(angle)}
+                  aria-label={`${angle} · ${ANGLE_THEME[angle].name}`}
+                  onClick={() => toggle(hiddenAngles, angle, setHiddenAngles)}
+                  className="h-auto min-h-24 items-start justify-start gap-3 whitespace-normal p-3 text-left"
+                >
+                  <span
+                    aria-hidden="true"
+                    className={`mt-1 h-3 w-3 shrink-0 rounded-full ${ANGLE_SWATCH[angle]} ${hiddenAngles.has(angle) ? "opacity-30" : ""}`}
+                  />
+                  <span className="min-w-0">
+                    <span className="block font-medium">{angle} · {ANGLE_THEME[angle].name}</span>
+                    <span className="mt-1 block text-xs font-normal leading-relaxed">
+                      {ANGLE_THEME[angle].theme}
+                    </span>
+                  </span>
+                </Button>
+              ))}
+            </div>
+          </fieldset>
+
+          <div className="mt-4">
             <ClientOnly
               fallback={<div className="h-[340px] animate-pulse bg-muted sm:h-[460px]" />}
             >
@@ -290,27 +318,6 @@ function RelocationView({ data }: { data: PatternData }) {
           </div>
 
           <fieldset className="mt-4">
-            <legend className="technical text-muted-foreground">Angles</legend>
-            <div className="mt-2 flex flex-wrap gap-2">
-              {ANGLE_KINDS.map((a) => (
-                <Button
-                  key={a}
-                  type="button"
-                  size="sm"
-                  variant={hiddenAngles.has(a) ? "outline" : "secondary"}
-                  aria-pressed={!hiddenAngles.has(a)}
-                  onClick={() => toggle(hiddenAngles, a, setHiddenAngles)}
-                >
-                  <span
-                    aria-hidden="true"
-                    className={`h-2.5 w-2.5 rounded-full ${ANGLE_SWATCH[a]}`}
-                  />
-                  {a} · {ANGLE_THEME[a].name}
-                </Button>
-              ))}
-            </div>
-          </fieldset>
-          <fieldset className="mt-3">
             <legend className="technical text-muted-foreground">Planets</legend>
             <div className="mt-2 flex flex-wrap gap-2">
               {bodies.map((b) => (
@@ -328,6 +335,26 @@ function RelocationView({ data }: { data: PatternData }) {
             </div>
           </fieldset>
 
+          <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
+            <p role="status" className="technical text-muted-foreground">
+              {lines.length} of {allLines.length} lines visible
+            </p>
+            {hiddenBodies.size || hiddenAngles.size ? (
+              <Button
+                type="button"
+                size="sm"
+                variant="ghost"
+                onClick={() => {
+                  setHiddenBodies(new Set());
+                  setHiddenAngles(new Set());
+                }}
+              >
+                <RotateCcw aria-hidden="true" />
+                Show all lines
+              </Button>
+            ) : null}
+          </div>
+
           {selected && relocated ? (
             <section aria-live="polite" className="mt-8 border border-rule p-4 sm:p-5">
               <h2 className="text-xl">{selected.label}</h2>
@@ -337,8 +364,19 @@ function RelocationView({ data }: { data: PatternData }) {
                 Midheaven <strong className="text-foreground">{relocated.midheavenSign}</strong>.
               </p>
               {nearby.length ? (
-                <ul className="mt-4 divide-y divide-rule">
-                  {nearby.map(({ line, km }) => (
+                <div className="mt-4 space-y-5">
+                  {ANGLE_KINDS.map((angle) => {
+                    const group = nearby.filter(({ line }) => line.angle === angle);
+                    if (!group.length) return null;
+                    return (
+                      <section key={angle} aria-labelledby={`${id}-nearby-${angle}`}>
+                        <h3 id={`${id}-nearby-${angle}`} className="flex items-center gap-2 font-medium">
+                          <span aria-hidden="true" className={`h-2.5 w-2.5 rounded-full ${ANGLE_SWATCH[angle]}`} />
+                          {angle} · {ANGLE_THEME[angle].name}
+                        </h3>
+                        <p className="mt-1 text-xs text-muted-foreground">{ANGLE_THEME[angle].theme}</p>
+                        <ul className="mt-2 divide-y divide-rule">
+                  {group.map(({ line, km }) => (
                     <li key={line.id} className="flex flex-wrap items-baseline gap-x-3 py-3">
                       <span
                         aria-hidden="true"
@@ -355,10 +393,16 @@ function RelocationView({ data }: { data: PatternData }) {
                       </span>
                     </li>
                   ))}
-                </ul>
+                        </ul>
+                      </section>
+                    );
+                  })}
+                </div>
               ) : (
                 <p className="mt-4 text-sm text-muted-foreground">
-                  No planetary lines run within 800 km of here.
+                  {lines.length === 0
+                    ? "No line types or planets are selected."
+                    : "No selected planetary lines run within 800 km of here."}
                 </p>
               )}
               {nearCross.length ? (

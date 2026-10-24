@@ -85,6 +85,7 @@ Verification: the remediation plan records the exact commands, fixtures and resu
 
 # Relocation map
 
+- [ ] Group angle-color filters with line meanings and nearby readings; verify filter interactions without changing member records.
 - [x] Compute planetary lines and relocated angles in-browser from saved placement longitudes and the chart's UTC instant; hide them when birth-time uncertainty suppresses angle claims.
 - [x] Add the Mapbox world map with per-angle line colors, city search reusing the gateway geocode path, and nearby-line readouts.
 - [x] Verify with a real chart in the preview: owner confirmed the page is functional (map, lines, city search, pin).
