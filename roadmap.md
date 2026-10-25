@@ -85,6 +85,12 @@ Verification: the remediation plan records the exact commands, fixtures and resu
 
 # Relocation map
 
+## Chart engine comparison
+
+- [x] Add public `/chart-comparison`, linked from Accuracy and Relocation: three independently captured Swiss Ephemeris/Moshier reference charts, planet/angle filters, solid/dashed overlay and previous/refined numerical comparisons. Explicitly distinguish reproducible reference charts from published personal charts.
+- [x] Refine orbital latitude with Astronomy Engine, apparent sidereal time, true obliquity and quarter-degree curve sampling; disclose analytical latitude, geometric horizon and paran limitations.
+- [x] Verify 17 relocation/reference tests, scoped lint and automatic build. Browser checks exercised the real public comparison page, chart/planet/angle selection, previous/refined values, source disclosure and live map at desktop and 390px without overflow or browser errors. Independent reference maximum errors were 0.00061–0.00076° versus 0.01196–0.08211° before refinement; no private member chart or save flow was exercised, and nothing was published.
+
 - [x] Group angle-color filters with line meanings and nearby readings; filters also apply to crossings, with a visible line count and reset. Eight relocation tests, scoped lint and automatic build passed; isolated desktop/mobile browser checks verified combined filters and reset without overflow or browser errors. Live authenticated charts and map rendering were not reverified; no member records changed.
 - [x] Compute planetary lines and relocated angles in-browser from saved placement longitudes and the chart's UTC instant; hide them when birth-time uncertainty suppresses angle claims.
 - [x] Add the Mapbox world map with per-angle line colors, city search reusing the gateway geocode path, and nearby-line readouts.

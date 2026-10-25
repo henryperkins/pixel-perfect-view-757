@@ -489,12 +489,15 @@ function RelocationView({ data }: { data: PatternData }) {
 
           <p className="mt-8 max-w-2xl text-xs leading-relaxed text-muted-foreground">
             Lines and relocated angles are calculated in Pattern from your chart’s planet positions
-            and birth moment, using each planet’s real orbital latitude so Moon and Pluto lines
-            follow their true paths.{" "}
+            and birth moment, with Astronomy Engine orbital latitudes and apparent Earth rotation.
+            These latitudes are analytical approximations, not native Swiss positions.{" "}
             <Link to="/accuracy" className="text-primary underline">
               Check the birth details used
             </Link>
-            .
+            .{" "}
+            <Link to="/chart-comparison" className="text-primary underline">
+              Compare the chart engines
+            </Link>
           </p>
         </>
       )}
