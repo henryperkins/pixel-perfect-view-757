@@ -49,6 +49,22 @@ Confirmed capabilities:
 
 - Natal chart calculation with a high-precision ephemeris service and a fail-soft
   approximate fallback; precision and degradation are surfaced to the user.
+- Birthplace search through Mapbox, with offline IANA timezone resolution and a
+  confirmation map. Coordinates and timezone are saved with the birth record.
+- Chart accuracy (`/accuracy`) shows the recorded birth details, calculation UTC
+  instant, coordinates, source and uncertainty, with a link to edit birth details.
+  Saving changes refreshes the shared chart used by the relocation map.
+- Relocation (`/relocation`) maps planetary rising, setting, Midheaven and Imum
+  Coeli lines with angle colors, planet/angle filters, city search, relocated
+  angles and nearby-line readings. Planetary latitude is included; unreliable
+  birth-time angles suppress the lines.
+- Relocation themes, historical context and crossing readings are editorial
+  interpretations, not measured effects or predictions. Crossing latitude bands
+  are not a complete traditional paran calculation.
+- Public chart comparison (`/chart-comparison`) overlays calculated lines with
+  three independently captured Swiss Ephemeris/Moshier reference charts and
+  compares previous and refined calculations. These are reproducible reference
+  cases, not published member charts or a universal accuracy guarantee.
 - Transit ("cycle") detection with ingress, exact pass, egress, phase and weight.
 - Daily reading assembled deterministically from calculated facts, with an optional
   language layer that only rewords facts already computed and cites them.
@@ -70,15 +86,29 @@ Constraints that future work must preserve:
   the calculation or the ranking.
 - Cycle phase and strength are recomputed from the user's own natal positions, not
   read from stale cached rows.
+- Relocation uses Astronomy Engine when geocentric latitude is missing, with true
+  obliquity and apparent sidereal time. Analytical fallback, geometric-horizon and
+  sampling limits remain explicit; the reference comparisons do not certify
+  atmospheric refraction, every date/location or traditional parans.
 
-- Pattern Plus is authorized at $8/month or $72/year with a seven-day free trial.
-  This release uses Stripe test payments only; no real money is charged.
-  Full natal essays require active trial or paid access; the free plan keeps chapter
-  openings. Canceling renewal retains access through the current trial or paid
-  period, then access ends. While Stripe collects a renewal, including the first
-  payment after the trial, access continues for up to 24 hours past the period end;
-  a failed payment ends it. Stripe's customer email follows the account email.
-  Deleting the account cancels the membership immediately.
+- Pattern Plus is authorized at USD $8/month or $72/year before applicable tax,
+  with a seven-day trial. Existing subscribers retain their prices. Full natal
+  essays require eligible trial or paid access; the free plan keeps chapter openings.
+  Preview purchases grant preview access only; billing records are environment-scoped.
+- Eligible renewals, including failed renewals and the first payment after trial,
+  receive 24 hours of grace after the trial or paid-through boundary, then access
+  is restricted. Failed payments never create additional paid coverage. Scheduled
+  cancellation retains access through that boundary without renewal grace.
+- Plan changes apply immediately with proration. Full refunds and disputes suspend
+  affected paid coverage; account deletion cancels billing without an automatic refund.
+  Purchases and assistant linking require verified email. Stripe's customer email
+  follows the account email.
+- New checkouts use standard Stripe with optional Link and eligible cards/wallets,
+  plus automatic tax; existing subscriptions are not converted in place. Pattern
+  sign-out remains outside checkout and does not claim to clear a Link session.
+  Seller tax registration, filing and remittance remain the seller's responsibility.
+- Configuration and repository tests do not establish current live payment readiness
+  or a completed purchase/renewal journey; dated reviews describe their own checks only.
 
 Undecided / not established: accounts beyond a single owner, notifications,
 localisation, native apps.
@@ -95,8 +125,11 @@ localisation, native apps.
 - Real calculation engine and live ephemeris service; readings are genuinely computed.
 - Live content release records and workflow-run ledger.
 - Sandbox prices and membership terms are confirmed by the owner and Stripe test configuration.
+- Independent Swiss Ephemeris/Moshier reference captures and relocation regression
+  tests are checked into the repository; their results apply to those sampled cases.
 - No testimonials, customer names, benchmarks, press or usage numbers exist.
-  Future work must not invent any of these.
+  Numerical engine comparisons are technical validation, not customer benchmarks.
+  Future work must not invent customer evidence.
 
 ## Product Principles
 
