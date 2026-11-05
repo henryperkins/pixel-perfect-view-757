@@ -2,9 +2,9 @@
 
 ## Documentation alignment
 
-- [ ] Update PRODUCT.md for relocation, birthplace verification, chart accuracy and independent chart comparison; correct outdated membership wording against current policy and implementation.
-- [ ] Add a documentation index distinguishing current guides from dated plans, reviews and reference captures, preserving historical evidence and existing links.
-- [ ] Check changed documentation links and review the final scope; no app changes or deployment.
+- [x] Update PRODUCT.md for relocation, birthplace verification, chart accuracy and independent chart comparison; correct outdated membership wording against current policy and implementation.
+- [x] Add a documentation index distinguishing current guides from dated plans, reviews and reference captures, preserving historical evidence and existing links.
+- [x] Check changed documentation links and review the final scope: 42 local links resolve, whitespace check passed and preview diagnostics show build OK; no app changes or deployment.
 
 ## Standard Stripe checkout
 
