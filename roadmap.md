@@ -1,5 +1,11 @@
 # Browsing refresh
 
+## Documentation alignment
+
+- [ ] Update PRODUCT.md for relocation, birthplace verification, chart accuracy and independent chart comparison; correct outdated membership wording against current policy and implementation.
+- [ ] Add a documentation index distinguishing current guides from dated plans, reviews and reference captures, preserving historical evidence and existing links.
+- [ ] Check changed documentation links and review the final scope; no app changes or deployment.
+
 ## Standard Stripe checkout
 
 - [x] Add Pattern sign-out outside checkout, including retry on failure and draft cleanup; Link and cards already enabled in sandbox/live default settings. Isolated desktop/mobile warning checks and 67 account/payment tests pass; build OK. Stripe exposes no merchant-controlled Link logout API, so Link-session logout remains unavailable, not implemented. Real returning-Link checkout verification and publication remain blocked as below.
