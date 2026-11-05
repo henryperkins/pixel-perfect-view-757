@@ -6,7 +6,12 @@ of reflection notes and journal entries.
 
 This project was built with [Lovable](https://lovable.dev).
 
-**Live app**: https://pixel-perfect-view-757.lovable.app
+**Live app**: https://patterns.lakefrontdigital.io
+
+**Documentation**: [Product overview](PRODUCT.md) · [Documentation index](docs/README.md)
+
+Dated reviews and release notes describe their recorded checks, not necessarily
+the current live deployment or active content version.
 
 ## Build with Lovable
 
